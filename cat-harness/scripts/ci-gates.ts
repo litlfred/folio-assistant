@@ -33,8 +33,12 @@
  */
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { repoRootFor } from "../schemas/cat-harness.js";
 
-const ROOT = resolve(import.meta.dir, "..");
+// The REPOSITORY root: `WORKFLOW` names `.github/workflows/…`, which belongs to
+// the repository rather than to the instance. Written when the two were one
+// directory (bean `wggr`), so `".."` answered both questions at once.
+const ROOT = repoRootFor(resolve(import.meta.dir, ".."));
 export const WORKFLOW = ".github/workflows/code-quality-gates.yml";
 
 /**

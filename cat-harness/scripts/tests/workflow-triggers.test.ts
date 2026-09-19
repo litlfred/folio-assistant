@@ -22,7 +22,9 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 
-const DIR = join(import.meta.dir, "../../.github/workflows");
+// `.github/` belongs to the REPOSITORY, which is one level above the instance
+// this file now sits in. `"../../"` reached both while they were one directory.
+const DIR = join(import.meta.dir, "../../../.github/workflows");
 const FILES = readdirSync(DIR).filter((f) => f.endsWith(".yml"));
 
 /** The `on:` block's trigger names. */

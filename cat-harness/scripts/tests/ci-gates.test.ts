@@ -8,8 +8,11 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { WORKFLOW, gates, gatesIn, isMissingBrowser } from "../ci-gates.ts";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 
-const ROOT = resolve(import.meta.dir, "../..");
+// The REPOSITORY root — `WORKFLOW` is `.github/workflows/…`, which belongs to
+// the repository, not to the instance this file now sits inside.
+const ROOT = repoRootFor(resolve(import.meta.dir, "../.."));
 
 describe("commands inside a folded `run: |` block are found", () => {
   test("the hand-written grep's blind spot is covered", () => {

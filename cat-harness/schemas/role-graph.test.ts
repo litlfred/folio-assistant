@@ -215,7 +215,7 @@ describe("this repository's own role graph", () => {
 });
 
 describe("this repository's actor registry, after the roles[] migration", () => {
-  const actors = readActors(join(import.meta.dir, "..", ".claude", "skills", "actors"));
+  const actors = readActors(join(import.meta.dir, "..", "..", ".claude", "skills", "actors"));
   const g = readRoleGraph(join(import.meta.dir, "..", "skills"))!;
 
   test("no entry still carries the deprecated `inherits`", () => {
@@ -245,7 +245,7 @@ describe("this repository's actor registry, after the roles[] migration", () => 
 
 describe("permissions are an actor property, not a role property", () => {
   const kg = join(import.meta.dir, "..", "skills");
-  const actorsDir = join(import.meta.dir, "..", ".claude", "skills", "actors");
+  const actorsDir = join(import.meta.dir, "..", "..", ".claude", "skills", "actors");
 
   test("the vocabulary is declared and every id is unique", () => {
     const v = readPermissions(kg);
@@ -264,7 +264,7 @@ describe("permissions are an actor property, not a role property", () => {
   test("`capabilities[]` now holds probes only — no permission and no skill leaked back in", async () => {
     const { readdirSync } = await import("node:fs");
     const probes = new Set(
-      readdirSync(join(import.meta.dir, "..", ".claude", "skills", "capabilities")).map((f: string) =>
+      readdirSync(join(import.meta.dir, "..", "..", ".claude", "skills", "capabilities")).map((f: string) =>
         f.replace(/\.json$/, ""),
       ),
     );
@@ -295,7 +295,7 @@ describe("permissions are an actor property, not a role property", () => {
 });
 
 describe("the actor kind is three-way: human, agentic, mechanical", () => {
-  const actorsDir = join(import.meta.dir, "..", ".claude", "skills", "actors");
+  const actorsDir = join(import.meta.dir, "..", "..", ".claude", "skills", "actors");
 
   function withActor(entry: unknown): string {
     const dir = mkdtempSync(join(tmpdir(), "actors-"));
