@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-09-19T08:55:37Z
+updated_at: 2026-09-19T09:01:53Z
 parent: folio-assistant-5a3l
 ---
 
@@ -57,4 +57,4 @@ That is a far smaller artefact than a mode enum and it is checkable.
 
 ## Review
 
-Issue to be opened per #363's instruction.
+https://github.com/litlfred/folio-assistant/issues/371, opened per #363's instruction.

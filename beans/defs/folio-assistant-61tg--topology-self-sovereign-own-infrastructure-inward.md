@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-09-19T08:55:37Z
+updated_at: 2026-09-19T09:01:53Z
 parent: folio-assistant-5a3l
 ---
 
@@ -61,4 +61,4 @@ assuming.
 
 ## Review
 
-Issue to be opened per #363's instruction.
+https://github.com/litlfred/folio-assistant/issues/370, opened per #363's instruction.

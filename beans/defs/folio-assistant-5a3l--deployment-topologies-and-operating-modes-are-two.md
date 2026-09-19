@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-19T08:52:35Z
-updated_at: 2026-09-19T08:52:35Z
+updated_at: 2026-09-19T09:01:40Z
 ---
 
 Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),
@@ -61,9 +61,40 @@ changes. Each of those is a child bean.
 
 ## Done when
 
-- [ ] `docs/proposals/deployment-topologies.md` exists and every scenario named
+- [x] `docs/proposals/deployment-topologies.md` exists and every scenario named
       in #363 is a point in the axis product, with none left over
-- [ ] each scenario has a child bean
-- [ ] the three review issues #363 asks for are open and linked here
+- [x] each scenario has a child bean (13)
+- [x] the three review issues #363 asks for are open and linked here
 - [ ] the BA has said whether the axes are the right axes — that is the sign-off
       this epic is waiting on, and no child should be implemented before it
+
+## Summary of this round (2026-09-19)
+
+PR https://github.com/litlfred/folio-assistant/pull/368, branch `claude/brave-hypatia-r820sf`.
+
+Strawperson written; thirteen children opened; review issues #369 (sovereign
+cloud), #370 (self-sovereign) and #371 (mixed modalities) open.
+
+**Running the falsification test before writing changed the design twice**, and
+both are worth carrying forward:
+
+1. `tool surface` became a tenth axis. #363's "run CLI version of tools" is not
+   a fact about where anything lives — it survives every value of every other
+   axis. It also exposed unmeasured work: MCP-vs-CLI parity is asserted here and
+   has never been counted (bean `2ngl`).
+2. Splitting model cardinality from model provenance exposed a genuine
+   contradiction: `air-gapped` x `hosted` cannot co-occur, so #363's own mixed
+   example needs `egress-restricted`. As one axis it was invisible.
+
+`ingest` was also added as a sixth operating mode, from "have incoming DAK
+content".
+
+**Left unencoded, deliberately:** `visibility: private` x `publication:
+github-pages`. #363 states it as flatly unavailable; that is not universally
+true (Pages on private repos exists on paid plans) and this account's
+entitlement was not verified. Flagged in the proposal's §3 rather than put in
+the incompatibility table — refusing a working configuration is worse than
+staying silent. One row to add if the BA says assume unavailable.
+
+**Still open — the last Done-when box.** No child should be implemented until
+the BA says whether the axes are the right axes.

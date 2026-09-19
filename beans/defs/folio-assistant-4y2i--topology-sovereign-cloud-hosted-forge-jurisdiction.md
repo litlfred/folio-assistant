@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-09-19T08:55:37Z
+updated_at: 2026-09-19T09:01:53Z
 parent: folio-assistant-5a3l
 ---
 
@@ -59,5 +59,5 @@ outward-facing axis.
 
 ## Review
 
-Issue to be opened per #363's instruction. This bean is the input to that review,
-not its conclusion.
+https://github.com/litlfred/folio-assistant/issues/369, opened per #363's instruction. This bean is the input to
+that review, not its conclusion.
