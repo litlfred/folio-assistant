@@ -198,6 +198,50 @@ sweep can distinguish them from missing proofs (correct the `\bsorry\b`
 regex to `\bsorry\b(?!-)` so the docstring phrase `sorry-free` is not
 counted).
 
+
+## Where each section lives
+
+This skill was 842 lines. An agent reads it before acting, every time, and at
+that length it skims — so the detail sits beside it, grouped by *when you need
+it*. Nothing was deleted.
+
+| what | where |
+|---|---|
+| heavy-proof discipline, overview, when to use, MCP tools, workflow, checklist | **here** — read first, every time |
+| base ring convention, imports, library synthesis | [`formalizer/conventions.md`](#part-conventions) — before writing a declaration |
+| proven patterns, tactic ladder, authoring patterns, simplification pass | [`formalizer/patterns.md`](#part-patterns) — while proving |
+| proof-state export, output structure, dependencies, blueprint, content objects | [`formalizer/integration.md`](#part-integration) — when wiring a finished proof in |
+
+The **heavy-proof discipline** below is MANDATORY and stays here deliberately:
+it governs whether you should be formalising at all, and moving it behind a
+link would put the gate after the work.
+
+## Checklist
+
+- [ ] All theorem statements match the `.md` narrative originals
+- [ ] Import blocks are minimal and correct
+- [ ] Every `sorry` has a `-- Ref: [key] url` comment (citation-linked)
+- [ ] All `-- Ref:` keys exist in `content/schema/references.ts`
+- [ ] `lake build` succeeds (sorry warnings are expected)
+- [ ] Tactic choices match the narrative proof strategy
+- [ ] Proof state can be exported at every sorry site
+- [ ] `blueprint/src/content.tex` entries match Lean declarations
+- [ ] `\leanok` only on sorry-free declarations
+
+---
+
+
+
+---
+
+<a id="part-conventions"></a>
+
+# formalizer — Lean conventions that constrain what you may write
+
+The base ring rule, import ordering, and library synthesis. Read before
+writing a declaration; getting these wrong produces Lean that compiles and
+says the wrong thing.
+
 ## Base ring convention — generic `R` vs archimedean `ℝ` (STRICT)
 
 Per **the project authoring conventions**: every Lean declaration that holds in a generic
@@ -347,6 +391,18 @@ Based on the glossary types, import the correct Mathlib modules:
 | `FundamentalGroupoid`     | `Mathlib.Topology.AlgebraicTopology.FundamentalGroupoid` |
 | `ModuleCat`               | `Mathlib.Algebra.Category.ModuleCat`                 |
 
+
+
+---
+
+<a id="part-integration"></a>
+
+# formalizer — how Lean output meets the rest of the folio
+
+Where proofs land, how dependencies are added, and how a declaration connects
+to its content block, the blueprint and the ontologist. Read when wiring a
+finished proof in, not while writing it.
+
 ## Proof State Export
 
 **Preferred (MCP):** Use `lean_goal` with the file path and line/column of the
@@ -368,132 +424,6 @@ single Lake workspace. See [Root Lake workspace
 canonical layout, package registry, and build commands. Do **not**
 create a top-level `lean/` directory — that layout is deprecated.
 
-## Proven Patterns
-
-### Existence Constructors for Structure Definitions
-
-Every `structure` definition must have at least one **existence constructor**
-— a `def` or `noncomputable def` that builds an instance of the structure
-from its prerequisites. Without this, downstream theorems depend on
-structures that may be vacuously satisfiable.
-
-**Pattern**: The constructor takes upstream structures as parameters and
-returns the target structure. The type signature makes the dependency
-chain explicit — the type checker enforces it.
-
-```lean
--- Definition: declares WHAT the structure looks like
-structure WeightDecomposition (C : Type u) [Category.{v} C]
-    [MonoidalCategory C] [Preadditive C] where
-  forms : C
-  proj_H : forms ⟶ forms
-  proj_V : forms ⟶ forms
-  complementary : proj_H + proj_V = 𝟙 forms
-  ...
-
--- Existence constructor: proves THAT it can be built
-noncomputable def WeightDecomposition.ofMaximalTorus
-    {C : Type u} [Category.{v} C] [MonoidalCategory C] [Preadditive C]
-    (mt : MaximalTorus C) (forms : C) : WeightDecomposition C :=
-  { forms := forms
-    proj_H := sorry  -- Ref: [author1993] ...
-    proj_V := sorry  -- Ref: [author1993] ...
-    complementary := sorry  -- Ref: [author1993] ...
-    ... }
-```
-
-**Naming convention**: `StructureName.ofPrerequisite`.
-
-**When to use each variant**:
-
-| Situation | Pattern | Example |
-|-----------|---------|---------|
-| Concrete construction (no sorry) | Direct `def` | `MyParameter.ofConstant c hpos hge hroot` |
-| Construction from upstream structures | `noncomputable def` with sorry | `CategoricalReeb.ofWeightDecomposition mt wd` |
-| Canonical/unique choice | `instance : Inhabited T` | `instance : Inhabited (MyParameter ℝ)` |
-| Auto-resolved by typeclass | `class` + `instance` | `class HasMyParameter M` |
-
-**Content object requirements**: Each existence constructor gets its own
-content block triple (`.ts` + `.md` + `.lean`):
-- Block kind: `theorem` (label: `thm:<name>-exists`)
-- `uses[]`: must list the definition it constructs AND its immediate prerequisite (the structure it's built from) — not the full transitive chain
-- `.lean`: the constructor function, with sorry-annotated fields citing references
-
-**Dependency graph rule**: If definition B's `.lean` `structure` takes a
-parameter of type A (another project structure), there MUST exist a
-`thm:<b>-exists` block whose `uses[]` includes `def:b` (and `def:a`
-only if A is an **immediate** prerequisite of the existence theorem,
-not already reachable via `def:b`'s own `uses[]`). The `uses[]` field
-lists only direct neighbors — transitive deps are walked by the graph.
-
-**Checklist for every `structure` definition**:
-- [ ] At least one `.ofFoo` constructor exists in a sibling `.lean` file
-- [ ] A `thm:*-exists` content block triple references it
-- [ ] The constructor's parameters include all upstream structures
-- [ ] Each `sorry` in the constructor has a `-- Ref:` annotation
-- [ ] The chapter manifest places the existence theorem after the definition
-
-### Subsingleton as Categorical Vanishing
-
-Use `Subsingleton` to model vanishing conditions (e.g., a cohomology group
-equals 0) without requiring `Preadditive` or `AddCommGroup` structure:
-
-```lean
-/-- All morphisms 𝟙 → Ad(A) are equal ⟺ Hom(𝟙, Ad(A)) = 0. -/
-adjoint_vanishing : Subsingleton ((𝟙_ C) ⟶ adjointObj)
-
-/-- All global adjoint sections are equal ⟺ H⁰(M, Ad(P)) = 0. -/
-adjoint_cohomology_vanishes : Subsingleton adjointSections
-```
-
-**Why**: In a `k`-linear category, the zero morphism always exists, so
-`Subsingleton` implies the only morphism is zero — equivalent to the hom-space
-vanishing.  This avoids importing `Preadditive` just for a vanishing axiom.
-
-### Irreducibility via Subsingleton Propagation
-
-Prove irreducibility by propagating `Subsingleton` through an injective map.
-**Pattern**: Given `Subsingleton Y` and `f : X → Y` injective, conclude
-`Subsingleton X` by `⟨fun a b => h_inj (inst.allEq _ _)⟩`.
-
-### Coevaluation + Snake Identities for Exact Self-Pairing
-
-Model non-degeneracy of a bilinear form as a categorical self-duality
-(exact pairing) using coevaluation and snake identities:
-
-```lean
-coevaluation : (𝟙_ C) ⟶ (obj ⊗ obj)
-pairing_snake_left :
-  (ρ_ obj).inv ≫ (obj ◁ coevaluation) ≫ (α_ obj obj obj).inv ≫
-    ((mul ≫ form) ▷ obj) ≫ (λ_ obj).hom = 𝟙 obj
-pairing_snake_right :
-  (λ_ obj).inv ≫ (coevaluation ▷ obj) ≫ (α_ obj obj obj).hom ≫
-    (obj ◁ (mul ≫ form)) ≫ (ρ_ obj).hom = 𝟙 obj
-```
-
-**Why**: Non-degeneracy of a bilinear form is hard to state categorically
-without linear algebra.  The snake identities (`zig-zag`) are equivalent and
-work in any monoidal category.
-
-### Abstract Hodge Involution
-
-Model an involutive endomorphism — works at both the categorical level and
-the concrete level:
-
-```lean
--- Categorical level (any category with identity):
-structure CatHodgeInvolution {C : Type u} [Category.{v} C] (X : C) where
-  star : X ⟶ X
-  star_sq : star ≫ star = 𝟙 X
-
--- Concrete level (Type):
-structure HodgeInvolution (V : Type*) where
-  star : V → V
-  star_sq : ∀ v, star (star v) = v
-```
-
-Self-duality predicates follow as `f ≫ star = f` (categorical) or
-`star v = v` (concrete).
 
 ## Adding New Dependencies
 
@@ -657,6 +587,146 @@ Run `bun run pipeline/prune-transitive-deps.ts` to enforce this.
 - The Lean import graph should mirror the `uses[]` graph
 - Use `uses[]` to prioritize: formalize blocks with the most dependents first
 
+
+
+---
+
+<a id="part-patterns"></a>
+
+# formalizer — proof patterns and the tactic ladder
+
+What to reach for once the statement is written: patterns that are known to
+work here, the tactic ladder, authoring patterns, and the simplification pass
+that runs after a proof closes.
+
+## Proven Patterns
+
+### Existence Constructors for Structure Definitions
+
+Every `structure` definition must have at least one **existence constructor**
+— a `def` or `noncomputable def` that builds an instance of the structure
+from its prerequisites. Without this, downstream theorems depend on
+structures that may be vacuously satisfiable.
+
+**Pattern**: The constructor takes upstream structures as parameters and
+returns the target structure. The type signature makes the dependency
+chain explicit — the type checker enforces it.
+
+```lean
+-- Definition: declares WHAT the structure looks like
+structure WeightDecomposition (C : Type u) [Category.{v} C]
+    [MonoidalCategory C] [Preadditive C] where
+  forms : C
+  proj_H : forms ⟶ forms
+  proj_V : forms ⟶ forms
+  complementary : proj_H + proj_V = 𝟙 forms
+  ...
+
+-- Existence constructor: proves THAT it can be built
+noncomputable def WeightDecomposition.ofMaximalTorus
+    {C : Type u} [Category.{v} C] [MonoidalCategory C] [Preadditive C]
+    (mt : MaximalTorus C) (forms : C) : WeightDecomposition C :=
+  { forms := forms
+    proj_H := sorry  -- Ref: [author1993] ...
+    proj_V := sorry  -- Ref: [author1993] ...
+    complementary := sorry  -- Ref: [author1993] ...
+    ... }
+```
+
+**Naming convention**: `StructureName.ofPrerequisite`.
+
+**When to use each variant**:
+
+| Situation | Pattern | Example |
+|-----------|---------|---------|
+| Concrete construction (no sorry) | Direct `def` | `MyParameter.ofConstant c hpos hge hroot` |
+| Construction from upstream structures | `noncomputable def` with sorry | `CategoricalReeb.ofWeightDecomposition mt wd` |
+| Canonical/unique choice | `instance : Inhabited T` | `instance : Inhabited (MyParameter ℝ)` |
+| Auto-resolved by typeclass | `class` + `instance` | `class HasMyParameter M` |
+
+**Content object requirements**: Each existence constructor gets its own
+content block triple (`.ts` + `.md` + `.lean`):
+- Block kind: `theorem` (label: `thm:<name>-exists`)
+- `uses[]`: must list the definition it constructs AND its immediate prerequisite (the structure it's built from) — not the full transitive chain
+- `.lean`: the constructor function, with sorry-annotated fields citing references
+
+**Dependency graph rule**: If definition B's `.lean` `structure` takes a
+parameter of type A (another project structure), there MUST exist a
+`thm:<b>-exists` block whose `uses[]` includes `def:b` (and `def:a`
+only if A is an **immediate** prerequisite of the existence theorem,
+not already reachable via `def:b`'s own `uses[]`). The `uses[]` field
+lists only direct neighbors — transitive deps are walked by the graph.
+
+**Checklist for every `structure` definition**:
+- [ ] At least one `.ofFoo` constructor exists in a sibling `.lean` file
+- [ ] A `thm:*-exists` content block triple references it
+- [ ] The constructor's parameters include all upstream structures
+- [ ] Each `sorry` in the constructor has a `-- Ref:` annotation
+- [ ] The chapter manifest places the existence theorem after the definition
+
+### Subsingleton as Categorical Vanishing
+
+Use `Subsingleton` to model vanishing conditions (e.g., a cohomology group
+equals 0) without requiring `Preadditive` or `AddCommGroup` structure:
+
+```lean
+/-- All morphisms 𝟙 → Ad(A) are equal ⟺ Hom(𝟙, Ad(A)) = 0. -/
+adjoint_vanishing : Subsingleton ((𝟙_ C) ⟶ adjointObj)
+
+/-- All global adjoint sections are equal ⟺ H⁰(M, Ad(P)) = 0. -/
+adjoint_cohomology_vanishes : Subsingleton adjointSections
+```
+
+**Why**: In a `k`-linear category, the zero morphism always exists, so
+`Subsingleton` implies the only morphism is zero — equivalent to the hom-space
+vanishing.  This avoids importing `Preadditive` just for a vanishing axiom.
+
+### Irreducibility via Subsingleton Propagation
+
+Prove irreducibility by propagating `Subsingleton` through an injective map.
+**Pattern**: Given `Subsingleton Y` and `f : X → Y` injective, conclude
+`Subsingleton X` by `⟨fun a b => h_inj (inst.allEq _ _)⟩`.
+
+### Coevaluation + Snake Identities for Exact Self-Pairing
+
+Model non-degeneracy of a bilinear form as a categorical self-duality
+(exact pairing) using coevaluation and snake identities:
+
+```lean
+coevaluation : (𝟙_ C) ⟶ (obj ⊗ obj)
+pairing_snake_left :
+  (ρ_ obj).inv ≫ (obj ◁ coevaluation) ≫ (α_ obj obj obj).inv ≫
+    ((mul ≫ form) ▷ obj) ≫ (λ_ obj).hom = 𝟙 obj
+pairing_snake_right :
+  (λ_ obj).inv ≫ (coevaluation ▷ obj) ≫ (α_ obj obj obj).hom ≫
+    (obj ◁ (mul ≫ form)) ≫ (ρ_ obj).hom = 𝟙 obj
+```
+
+**Why**: Non-degeneracy of a bilinear form is hard to state categorically
+without linear algebra.  The snake identities (`zig-zag`) are equivalent and
+work in any monoidal category.
+
+### Abstract Hodge Involution
+
+Model an involutive endomorphism — works at both the categorical level and
+the concrete level:
+
+```lean
+-- Categorical level (any category with identity):
+structure CatHodgeInvolution {C : Type u} [Category.{v} C] (X : C) where
+  star : X ⟶ X
+  star_sq : star ≫ star = 𝟙 X
+
+-- Concrete level (Type):
+structure HodgeInvolution (V : Type*) where
+  star : V → V
+  star_sq : ∀ v, star (star v) = v
+```
+
+Self-duality predicates follow as `f ≫ star = f` (categorical) or
+`star v = v` (concrete).
+
+
 ## Post-proof simplification pass
 
 After completing a proof (or batch of proofs), run a simplification pass
@@ -707,19 +777,6 @@ iterative proof development.
 9. **Dead code** — remove duplicate docstrings, stale comments, and
    unreferenced helper lemmas.
 
-## Checklist
-
-- [ ] All theorem statements match the `.md` narrative originals
-- [ ] Import blocks are minimal and correct
-- [ ] Every `sorry` has a `-- Ref: [key] url` comment (citation-linked)
-- [ ] All `-- Ref:` keys exist in `content/schema/references.ts`
-- [ ] `lake build` succeeds (sorry warnings are expected)
-- [ ] Tactic choices match the narrative proof strategy
-- [ ] Proof state can be exported at every sorry site
-- [ ] `blueprint/src/content.tex` entries match Lean declarations
-- [ ] `\leanok` only on sorry-free declarations
-
----
 
 ## Tactic ladder
 

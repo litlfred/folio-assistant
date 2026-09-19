@@ -5,10 +5,10 @@
     "id": "code-reviewer",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:040ad22fd79d422b45acd779f7c8659a5342391b25ff6342d794b0dd21b9619b",
+  "source_hash": "sha256:73f27c62684cad388e99cfa8fb400516456b7940bb66a2a4d07ec17a775b44b6",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:c574597722ec5ee67674687382c9b00e84a9dee868a0efd86c6134c3d4fa3506",
+    "script_hash": "sha256:56f6e5e13e391484d26af5a9640eeae6b1e967cfaa7d4ed48812e472a7b69ab2",
     "engine_version": "1"
   },
   "criteria": {
@@ -25,31 +25,16 @@
       "findings": []
     },
     "role-has-persona": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "code-reviewer",
-          "detail": "role \"code-reviewer\" has no persona — an author has nobody to write for."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "role-declares-voice": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "code-reviewer",
-          "detail": "role \"code-reviewer\" declares no voice — authoring and QA would each pick their own."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "role-has-use-cases": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "code-reviewer",
-          "detail": "role \"code-reviewer\" declares no use cases — nothing says what this reader came to do."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "role-has-actor": {
       "result": "pass",
@@ -57,8 +42,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 3,
+    "pass": 6,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }
