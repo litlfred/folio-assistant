@@ -87,3 +87,83 @@ thing to end.
 - [ ] a check enforces it, and fails on a value that resolves to nothing
 - [ ] `y1w9`'s triage is re-run against the corrected field, and the
       evidence-backed bucket is recounted
+
+---
+
+## Decisive follow-up, same day: the field is INERT
+
+Before acting on the split, I checked what reads it. **Nothing does.**
+
+| probe | result |
+|---|---|
+| Skill nodes in the exported graph | 168 |
+| …carrying any role-ish key | **0** |
+| `gen-skill-docs` output front matter | `layout`, `title`, `parent` — `roles` dropped |
+| a validator resolving its values | none found |
+| `kg-export`'s `roles`/`permissions` handling | `group === "actors"` only — actor JSON, not skill markdown |
+
+`SkillDefinitionSchema` in `schemas/skill-package.ts` does require `roles`,
+but that schema describes a skill **definition object**, not the markdown
+front matter, and nothing parses the front matter against it.
+
+So this is not "one field, two vocabularies" — it is **one field, two
+vocabularies, and no reader**. 254 undeclared uses plus 52 declared ones,
+consumed by nobody, in a field whose name promises it is the role registry.
+
+## Why that changes the options rather than confirming them
+
+The three options above all assume the field MEANS something and the
+problem is which vocabulary it speaks. If nothing reads it, splitting it
+produces **two** inert fields and the name collision is the only thing
+fixed. That is work whose benefit is legibility alone, which may still be
+worth it — but it should be chosen knowing that, not by default.
+
+The revised set:
+
+1. **Make it mean something.** Export it, declare both vocabularies,
+   validate. Turns 306 annotations into graph edges — and would have made
+   `y1w9`'s triage mechanical, since a skill naming its performer is
+   exactly the evidence that triage lacks.
+2. **Split for legibility only.** As option 1 above, accepting that both
+   halves stay inert. Cheapest correct-looking fix; changes no behaviour.
+3. **Remove it.** It is documentation masquerading as a declaration.
+   **Never unilaterally** — 133 files, and
+   `deletion-requires-confirmation` governs.
+4. **Leave it and write down that it is inert**, so the next agent does
+   not spend an afternoon discovering it. The cheapest honest outcome.
+
+**I am not choosing.** Option 1 is the only one that pays for itself
+(it unblocks `y1w9`), but it is also the only one that commits to what
+`reader`/`collaborator`/`owner` MEAN — and if they are forge permission
+tiers, that is a deployment fact belonging to the topology axes rather
+than to a skill.
+
+## What this already earned
+
+`y1w9`'s blocker is now precise: its triage cannot be evidence-backed
+until this field either carries the swimlane vocabulary or is replaced by
+something that does. That is a smaller, answerable question than "triage
+110 skills".
+
+## Default taken 2026-09-19 21:0x — option 4, documented rather than fixed
+
+No answer after ~40 minutes, so the stated default applied: leave the
+field and write down that it is inert, so the next agent does not spend an
+afternoon rediscovering it. Deliberately the CHEAPEST option rather than
+the best — option 1 remains the one that pays for itself, and it is still
+open.
+
+Recorded in **`skills/folio-core/role-model.md`**, immediately under the
+four-object table. That placement is the point: `role-model.md` is the
+authority on what a Role is, and **its own front matter declares
+`roles: [reader, collaborator, owner]`** — the document defining the
+vocabulary uses the field with a vocabulary it does not define. A reader
+meeting the field meets the correction in the same breath.
+
+The note says three things and no more: the two vocabularies with counts,
+that nothing reads the field, and — the operative instruction — **do not
+read a skill's `roles:` as saying who performs it, and do not add a
+binding on its authority.**
+
+This bean stays OPEN. Documenting is not fixing; 306 annotations still
+resolve to nothing, and `y1w9` is still blocked.
