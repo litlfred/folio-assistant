@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T12:33:02.375Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8db4036eedb3621c6bbcf845728047e20bd4285c",
-  "sourceCommitSha": "8db4036eedb3621c6bbcf845728047e20bd4285c",
-  "sourceCommitAt": "2026-09-19T12:31:35Z",
+  "generatedAt": "2026-09-19T12:44:44.326Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5961005b0048af4fbb0d64f96bc99d7d92d33a20",
+  "sourceCommitSha": "5961005b0048af4fbb0d64f96bc99d7d92d33a20",
+  "sourceCommitAt": "2026-09-19T12:43:12Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 165,
@@ -262,7 +262,7 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 44,
+    "Schema": 45,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -19263,6 +19263,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/formalization-types"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/front-matter",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "front-matter",
+      "title": "The one YAML front-matter reader for this repository's self-declaring files.",
+      "module": "schemas/front-matter.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/front-matter"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/harness-config",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "harness-config",
@@ -20425,8 +20433,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "a1ed39a4b3d82b9d4ef3c53dc589cc889af0c026",
+    "sha": "09bc46f456973704b6f456539c99b2b68f07f754",
     "pr": "403/merge",
-    "run": "35443116075"
+    "run": "35443671807"
   }
 }
