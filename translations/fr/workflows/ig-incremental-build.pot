@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ig-incremental-build\n"
-"POT-Creation-Date: 2026-09-18T16:52:41.020Z\n"
+"POT-Creation-Date: 2026-09-19T10:47:34.741Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/ig-incremental-build.bpmn:214
+#: skills/workflows/ig-incremental-build.bpmn:247
 #. Diagram element documentation
 msgid "A preview never seeds the shared cache."
 msgstr ""
@@ -24,7 +24,7 @@ msgstr ""
 msgid "A push to a PR branch (review path) or to main / a release (publish path). Both run this process; only the publish path may seed the cache."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:176
+#: skills/workflows/ig-incremental-build.bpmn:209
 #. Diagram label
 msgid "Assemble the site (template · Jekyll) [ig-publication]"
 msgstr ""
@@ -44,12 +44,12 @@ msgstr ""
 msgid "content/pipeline/fsh-cone.ts over the changed files: the forward cone is what to rebuild, the backward cone is what to check out."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:213
+#: skills/workflows/ig-incremental-build.bpmn:246
 #. Diagram label
 msgid "Deploy the preview site [content-publish]"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:224
+#: skills/workflows/ig-incremental-build.bpmn:258
 #. Diagram label
 msgid "Deploy the site [content-publish] [ig-publication]"
 msgstr ""
@@ -64,12 +64,12 @@ msgstr ""
 msgid "FHIR modeller / PR author (person + authoring agent)"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:197
+#: skills/workflows/ig-incremental-build.bpmn:230
 #. Diagram label
 msgid "File QC findings as beans [todo-manager]"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:159
+#: skills/workflows/ig-incremental-build.bpmn:179
 #. Diagram label
 msgid "Findings back to the author"
 msgstr ""
@@ -79,12 +79,12 @@ msgstr ""
 msgid "Full publisher build [ig-publication]"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:123
+#: skills/workflows/ig-incremental-build.bpmn:133
 #. Diagram element documentation
 msgid "git sparse-checkout of the cone's files plus sushi-config.yaml, ig.ini and the alias files — a median of three files, p90 eleven, on smart-immunizations."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:237
+#: skills/workflows/ig-incremental-build.bpmn:278
 #. Diagram label
 msgid "IG site published, cache seeded"
 msgstr ""
@@ -104,32 +104,32 @@ msgstr ""
 msgid "Incremental IG build"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:134
+#: skills/workflows/ig-incremental-build.bpmn:149
 #. Diagram label
 msgid "Load or reuse the warm context (fhir_context_load)"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:151
+#: skills/workflows/ig-incremental-build.bpmn:171
 #. Diagram label
 msgid "Log findings on the bean [todo-manager]"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:264
+#: skills/workflows/ig-incremental-build.bpmn:305
 #. Diagram label
 msgid "main / release"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:167
+#: skills/workflows/ig-incremental-build.bpmn:192
 #. Diagram label
 msgid "Merge restored and rebuilt records"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:163
+#: skills/workflows/ig-incremental-build.bpmn:183
 #. Diagram element documentation
 msgid "Narrative and fragments for the cone only: the publisher's -no-validate / -no-narrative complements today, Rapido's differential build once its tracker is persisted."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:243
+#: skills/workflows/ig-incremental-build.bpmn:284
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -139,22 +139,22 @@ msgstr ""
 msgid "One change — a PR push or a push to main — through the incremental IG build of docs/proposals/ig-incremental-build.md: restore the derived state, compute the change's dependency cone, compile and validate only the cone against the warm validator, re-render the cone's records, rebuild the meta-index, assemble the site, gate on QA, then deploy — and, on main or a release only, seed the cache from the green build. A cache miss or a moved toolchain falls back to today's full build. Advisory, like the other content-type pipelines: the package that owns the content owns what adequate means."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:233
+#: skills/workflows/ig-incremental-build.bpmn:268
 #. Diagram element documentation
 msgid "Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:117
+#: skills/workflows/ig-incremental-build.bpmn:122
 #. Diagram label
 msgid "Post the cone report on the PR"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:262
+#: skills/workflows/ig-incremental-build.bpmn:303
 #. Diagram label
 msgid "PR branch"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:208
+#: skills/workflows/ig-incremental-build.bpmn:241
 #. Diagram label
 msgid "PR branch, or main / release?"
 msgstr ""
@@ -164,7 +164,7 @@ msgstr ""
 msgid "PR reviewer / QC reviewer"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:221
+#: skills/workflows/ig-incremental-build.bpmn:255
 #. Diagram label
 msgid "Preview published"
 msgstr ""
@@ -179,27 +179,27 @@ msgstr ""
 msgid "Publisher + validator services (JVM)"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:184
+#: skills/workflows/ig-incremental-build.bpmn:217
 #. Diagram element documentation
 msgid "qa.json is the aggregate of per-artefact outcomes; the reviewer reads the cone's rows first."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:192
+#: skills/workflows/ig-incremental-build.bpmn:225
 #. Diagram label
 msgid "QC clean?"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:183
+#: skills/workflows/ig-incremental-build.bpmn:216
 #. Diagram label
 msgid "QC gates on the aggregate QA [quality-control]"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:162
+#: skills/workflows/ig-incremental-build.bpmn:182
 #. Diagram label
 msgid "Re-render the cone's records (fhir_narrative · skip lists)"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:171
+#: skills/workflows/ig-incremental-build.bpmn:199
 #. Diagram label
 msgid "Rebuild the meta-index (ig_metaindex_rebuild)"
 msgstr ""
@@ -209,17 +209,17 @@ msgstr ""
 msgid "Restore derived state [ig-publication]"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:122
+#: skills/workflows/ig-incremental-build.bpmn:132
 #. Diagram label
 msgid "Restricted checkout of the backward cone"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:118
+#: skills/workflows/ig-incremental-build.bpmn:123
 #. Diagram element documentation
 msgid "Review path: the reviewer sees what this change rebuilds — how many artefacts, and whether a hub (a shared RuleSet, CQL library or value set) is touched — before the build finishes. On main it is a log line."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:232
+#: skills/workflows/ig-incremental-build.bpmn:267
 #. Diagram label
 msgid "Seed the cache from the green build (ig-cache seed · verify · promote)"
 msgstr ""
@@ -229,27 +229,27 @@ msgstr ""
 msgid "Source changed"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:127
+#: skills/workflows/ig-incremental-build.bpmn:142
 #. Diagram label
 msgid "SUSHI on the restricted tank [l3-fhir-authoring]"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:135
+#: skills/workflows/ig-incremental-build.bpmn:150
 #. Diagram element documentation
 msgid "The validator's server mode holds the loaded dependency packages, snapshots and expansions in its session cache. Cold start loads the restored derived FHIR rather than regenerating it."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:172
+#: skills/workflows/ig-incremental-build.bpmn:200
 #. Diagram element documentation
 msgid "The whole-IG aggregates only — artifacts, TOC, canonicals, expansions, package, QA aggregate. Never re-derives an artefact: a missing record is a miss (exit 1), not a silent rebuild."
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:146
+#: skills/workflows/ig-incremental-build.bpmn:166
 #. Diagram label
 msgid "Valid?"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:139
+#: skills/workflows/ig-incremental-build.bpmn:159
 #. Diagram label
 msgid "Validate the cone (fhir_validate) [fhir-validation]"
 msgstr ""
@@ -264,7 +264,7 @@ msgstr ""
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: skills/workflows/ig-incremental-build.bpmn:242
+#: skills/workflows/ig-incremental-build.bpmn:283
 #. Diagram label
 msgid "yes"
 msgstr ""

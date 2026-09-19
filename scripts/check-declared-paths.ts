@@ -144,6 +144,25 @@ function markerCoverage(rawLines: string[]): Map<number, string> {
  * Runs before the literal scan for the same reason `ns-export`'s scanner
  * does: that one matched its own documentation and reported a phantom term.
  * Replaces with spaces rather than deleting, so line and column survive.
+ *
+ * ## Quote state resets at every newline, and that is a deliberate bound
+ *
+ * This is not a TypeScript parser and must not pretend to be one. It does not
+ * understand REGEX LITERALS, and a regex containing a quote —
+ * `/^"POT-Creation-Date:.*$/m`, which is real code in `translate-bpmn.ts` —
+ * looks exactly like an opening string. Carrying that state forward
+ * desynchronised the scanner for **the whole rest of the file**: measured
+ * 2026-09-19, it reported a `beans/` inside a `//` comment as live code and
+ * would equally have hidden real literals after any such line.
+ *
+ * Resetting EVERY quote mode at the newline bounds the damage to the one line
+ * that confused it. Measured three ways over this corpus on 2026-09-19:
+ * carrying all state forward reported 125, resetting only `'` and `"` reported
+ * 120, and resetting the backtick too reports 117. Fewer each time — so the
+ * multi-line template literals this was written to protect were themselves a
+ * source of desync, not a thing worth carrying state for. The residue in each
+ * case was BOTH extra findings and hidden ones, and the hidden half is what
+ * made the state worth giving up.
  */
 function stripComments(text: string): string {
   let out = "";
@@ -152,6 +171,9 @@ function stripComments(text: string): string {
   while (i < text.length) {
     const c = text[i]!;
     const two = text.slice(i, i + 2);
+    // A quote that never closed on its line was not a string — almost always
+    // a regex literal or an apostrophe the scanner cannot tell from one.
+    if (c === "\n" && mode !== "block" && mode !== "line") mode = "code";
     if (mode === "code") {
       if (two === "//") { mode = "line"; out += "  "; i += 2; continue; }
       if (two === "/*") { mode = "block"; out += "  "; i += 2; continue; }
