@@ -36,8 +36,18 @@ import { dirname, join, resolve } from "node:path";
 
 import { declaredAssets } from "../schemas/cat-harness.js";
 
-/** Instances whose declarations this repository owns. */
-export const DECLARED_INSTANCES = [".", "bootstrap"] as const;
+/**
+ * Instances whose declarations this repository owns, as REPOSITORY-relative
+ * paths — `import.meta.main` resolves them against the repository root.
+ *
+ * The first entry was `"."`, which named the instance while the instance was
+ * the repository. After the move (bean `wggr`) it named the repository root,
+ * which carries no `harness.json`, so `declaredAssets` returned `[]` and this
+ * gate reported "1 declared asset across 2 instances, 0 findings" over a file
+ * it had not opened — a clean run across an empty set, which is `dh4f` in the
+ * one check whose whole subject is a file nobody was looking at.
+ */
+export const DECLARED_INSTANCES = ["cat-harness", "bootstrap"] as const;
 
 export interface AssetFinding {
   instance: string;

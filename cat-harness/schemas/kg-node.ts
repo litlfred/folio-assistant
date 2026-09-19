@@ -246,14 +246,65 @@ export type AssetSource = z.infer<typeof AssetSourceSchema>;
  *
  * Declaring it is what makes a check follow rather than be special-cased.
  */
+/**
+ * Which ROOT a declared path is relative to — the instance's, or the
+ * repository's.
+ *
+ * ## Why this exists
+ *
+ * An instance root and a repository root were the **same directory** until the
+ * move (bean `wggr`), so every declared path answered both questions at once
+ * and nothing had to say which it meant. Afterwards four directories and both
+ * assets resolved one level too deep, producing the `dh4f` shape from the
+ * inside: `beans/` resolved to `cat-harness/beans/`, a consumer scanned
+ * nothing, and 32 tests failed on a store that was sitting at the repository
+ * root the whole time.
+ *
+ * ## Why a field rather than `"../beans/"`
+ *
+ * A traversal spells the *mechanism* and states no fact. It is also refused:
+ * `check-harness-dirs.ts` rejects **every** dot-prefixed segment, and `..`
+ * is one — the guard would have to be weakened to admit the escape it exists
+ * to prevent. A declared `scope` says what the directory belongs to, leaves
+ * `path` clean, and puts the one `repoRootFor` call in the resolver instead of
+ * a `..` in each of six declarations.
+ *
+ * ## What `repository` implies beyond the path
+ *
+ * **It is not inherited.** A dependency's repository is not this one's, so a
+ * repository-scoped entry reaching this instance through the dependency chain
+ * would name somebody else's `beans/`. `resolveDirectories` skips those, which
+ * is how the never-overlaid property of `beans/` and `todos/` stops being
+ * something an agent has to remember.
+ *
+ * Absent means `instance`, which is what the overwhelming majority of entries
+ * are: a default that has to be written down is a default that gets it wrong
+ * somewhere.
+ */
+export const DeclarationScopeSchema = z.enum(["instance", "repository"]);
+export type DeclarationScope = z.infer<typeof DeclarationScopeSchema>;
+
+/** The shape both a directory entry and an asset entry share for scoping. */
+export const scopeShape = {
+  scope: DeclarationScopeSchema.optional(),
+} as const;
+
 export const KgAssetSchema = z.object({
   id: z.string().min(1),
-  /** Path within this instance, relative to its root. */
+  /**
+   * Path relative to the root {@link DeclarationScopeSchema | `scope`} names —
+   * this instance's by default, the repository's when `scope` says so.
+   *
+   * `AGENTS.md` and `README.md` are the repository's: a cold agent reads them
+   * at the top of the checkout, and the repository has exactly one of each
+   * however many instances it holds.
+   */
   src: z.string().min(1),
   /** What this artefact is FOR — `agent-instructions`, `licence`, … */
   role: z.string().min(1).optional(),
   /** Where it was copied from; absent means authored here. */
   source: AssetSourceSchema.optional(),
+  ...scopeShape,
   ...kgNodeLabelShape,
 });
 export type KgAsset = z.infer<typeof KgAssetSchema>;

@@ -15,9 +15,19 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { repoRootFor } from "../../schemas/cat-harness.js";
+
 // The `bean-defs` node of the bean graph (schemas/bean-graph.ts), not the
-// graph root — `beans/` itself holds only `graph.json`.
-const BEANS = join(import.meta.dir, "../../beans/defs");
+// graph root — `beans/` itself holds only `beans.json`.
+//
+// The REPOSITORY's, reached from this instance. `beans/` is declared
+// `scope: "repository"` because the work plan belongs to the checkout rather
+// than to any instance in it; `"../../beans/defs"` was written when the two
+// roots were one directory, and after the move it named a path that has never
+// existed — so `beanFiles()` returned `[]` and every hygiene assertion below
+// passed over an empty set. The emptiness guard is the only reason that was
+// visible at all, which is what it is for.
+const BEANS = join(repoRootFor(join(import.meta.dir, "../..")), "beans/defs");
 
 /** Exactly what `beans update --status` accepts. */
 const VALID = new Set(["draft", "todo", "in-progress", "completed", "scrapped"]);

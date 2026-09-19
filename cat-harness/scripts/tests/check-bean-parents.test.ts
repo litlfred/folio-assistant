@@ -25,7 +25,9 @@ afterEach(() => {
 function store(beans: Array<[string, string, string, string]>): string {
   const root = mkdtempSync(join(tmpdir(), "beanparents-"));
   made.push(root);
-  const dir = join(repoRootFor(root), "beans", "defs");
+  // `root` IS a repository root — a fixture has no enclosing instance, so
+  // `repoRootFor(root)` is `/tmp` and every store this made was the same one.
+  const dir = join(root, "beans", "defs");
   mkdirSync(dir, { recursive: true });
   for (const [id, status, type, parent] of beans) {
     writeFileSync(
@@ -98,7 +100,7 @@ describe("every open bean belongs to an epic", () => {
   });
 
   test("the real corpus passes", () => {
-    const r = checkBeanParents(join(import.meta.dir, "../.."));
+    const r = checkBeanParents(repoRootFor(join(import.meta.dir, "../..")));
     expect({ orphans: r.problems }).toEqual({ orphans: [] });
     expect(r.open).toBeGreaterThan(50);
   });

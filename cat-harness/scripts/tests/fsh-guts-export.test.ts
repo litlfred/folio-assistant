@@ -21,10 +21,21 @@ import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
-/** A throwaway instance that declares a trashcan. */
+/**
+ * A throwaway instance that declares a trashcan.
+ *
+ * A REPOSITORY holding an instance, which is the live shape: `fsh-guts/` is
+ * declared `scope: "repository"`, so the directory sits beside the instance
+ * rather than inside it. The fixture makes its own repository directory
+ * instead of letting `repoRootFor` reach `/tmp` — that was shared, so every
+ * fixture in this file wrote into one trashcan and the isolation each `try`
+ * block believed it had was not there.
+ */
 function instance(declare = true): string {
-  const root = mkdtempSync(join(tmpdir(), "fsh-guts-export-"));
-  mkdirSync(join(repoRootFor(root), "fsh-guts"), { recursive: true });
+  const repo = mkdtempSync(join(tmpdir(), "fsh-guts-export-"));
+  const root = join(repo, "inst");
+  mkdirSync(root, { recursive: true });
+  mkdirSync(join(repo, "fsh-guts"), { recursive: true });
   writeFileSync(
     join(root, "harness.json"),
     JSON.stringify({
@@ -32,7 +43,15 @@ function instance(declare = true): string {
       stub: "t",
       canonicalUrl: "https://example.invalid/t",
       directories: declare
-        ? [{ id: "fsh-guts", path: "fsh-guts/", description: "trashcan", graphs: ["fsh-guts"] }]
+        ? [
+            {
+              id: "fsh-guts",
+              path: "fsh-guts/",
+              scope: "repository",
+              description: "trashcan",
+              graphs: ["fsh-guts"],
+            },
+          ]
         : [],
     }),
   );
@@ -72,7 +91,9 @@ describe("the real corpus", () => {
   });
 
   test("the directory is resolved from the declaration, not spelled", () => {
-    expect(fshGutsDirs(ROOT)).toEqual([join(repoRootFor(ROOT), "fsh-guts")]);
+    expect(fshGutsDirs(ROOT)).toEqual([
+      { absPath: join(repoRootFor(ROOT), "fsh-guts"), path: "fsh-guts" },
+    ]);
     expect(fshGutsDirs(instance(false))).toEqual([]);
   });
 });

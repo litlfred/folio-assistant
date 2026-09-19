@@ -22,12 +22,17 @@ import { join, resolve } from "node:path";
 import { siteDirFor, repoRootFor } from "../../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
+// THE REPOSITORY root. `fsh-guts/` is declared `scope: "repository"` — it sits
+// at the top of the checkout, beside the instance rather than inside it, which
+// is what the first assertion below says in words and what `join(REPO_ROOT, GUTS)`
+// stopped meaning at the move (bean `wggr`).
+const REPO_ROOT = repoRootFor(ROOT);
 const GUTS = "fsh-guts";
 
 /** Every `source:` a publish workflow hands to the Jekyll build. */
 function jekyllSourceRoots(): { file: string; source: string }[] {
   const out: { file: string; source: string }[] = [];
-  const dir = join(repoRootFor(ROOT), ".github/workflows");
+  const dir = join(REPO_ROOT, ".github/workflows");
   for (const f of readdirSync(dir).filter((n) => n.endsWith(".yml") || n.endsWith(".yaml"))) {
     readFileSync(join(dir, f), "utf8")
       .split("\n")
@@ -44,7 +49,7 @@ describe("fsh-guts stays out of the render pipeline", () => {
     // If this fails the rest is vacuous — a test suite that passes because
     // its subject is missing is the shape of `pzdv` (two hard gates passing
     // over an empty corpus).
-    expect(existsSync(join(ROOT, GUTS))).toBe(true);
+    expect(existsSync(join(REPO_ROOT, GUTS))).toBe(true);
   });
 
   test("at least one workflow declares a Jekyll source, so the check has teeth", () => {
@@ -56,7 +61,10 @@ describe("fsh-guts stays out of the render pipeline", () => {
 
   test("no Jekyll source root contains it", () => {
     const offenders = jekyllSourceRoots()
-      .filter(({ source }) => existsSync(join(ROOT, source, GUTS)))
+      // A workflow's `source:` is REPOSITORY-relative — `cat-harness/docs`.
+      // Resolved against the instance it named nothing, so this filter was
+      // vacuous and the assertion passed without teeth.
+      .filter(({ source }) => existsSync(join(REPO_ROOT, source, GUTS)))
       .map(({ file, source }) => `${file}: source '${source}' contains ${GUTS}/`);
     expect(offenders).toEqual([]);
   });
@@ -73,7 +81,7 @@ describe("fsh-guts stays out of the render pipeline", () => {
     // A directory is a place to look; the file says what it is. Without this
     // the graph is duck-typed on location, which is the coincidence-not-
     // contract problem the bean and workflow stores already fixed.
-    const proposals = join(ROOT, GUTS, "proposals");
+    const proposals = join(REPO_ROOT, GUTS, "proposals");
     const files = existsSync(proposals)
       ? readdirSync(proposals).filter((f) => f.endsWith(".md"))
       : [];
@@ -102,7 +110,7 @@ describe("fsh-guts stays out of the render pipeline", () => {
     // check accepts either. It is not weaker — it is the same question asked
     // of both populations, where before it was asked only of one and the
     // other could not answer it truthfully.
-    const proposals = join(ROOT, GUTS, "proposals");
+    const proposals = join(REPO_ROOT, GUTS, "proposals");
     const orphans = readdirSync(proposals)
       .filter((f) => f.endsWith(".md"))
       .filter((f) => {
@@ -118,7 +126,7 @@ describe("fsh-guts stays out of the render pipeline", () => {
     // `movedFrom` without `movedOn` dates the move to "sometime", which is
     // the state the two fields exist together to avoid: a reader comparing
     // the trashcan against the site's history needs a point to compare at.
-    const proposals = join(ROOT, GUTS, "proposals");
+    const proposals = join(REPO_ROOT, GUTS, "proposals");
     const undated = readdirSync(proposals)
       .filter((f) => f.endsWith(".md"))
       .map((f) => [f, readFileSync(join(proposals, f), "utf8")] as const)

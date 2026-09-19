@@ -61,7 +61,7 @@ repository link rather than a site one.
 
 🤖 **Are you an LLM agent?** Start with
 **[Agent onboarding](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html)**
-(source: [`folio-assistant/docs/guides/agent-onboarding.md`](folio-assistant/docs/guides/agent-onboarding.md)) —
+(source: [`folio-assistant/docs/guides/agent-onboarding.md`](cat-harness/docs/guides/agent-onboarding.md)) —
 which repo you are in, your first five minutes, how to find the right skill, the
 content-object model, and the QA sidecar system. `AGENTS.md` is the command and
 convention reference to come back to.
@@ -111,7 +111,7 @@ flowchart LR
 ## How a change gets published
 
 The editing and publication processes are modelled as **BPMN 2.0 swimlane
-diagrams**. Sources live in [`skills/workflows/`](skills/workflows) — open them in
+diagrams**. Sources live in [`skills/workflows/`](cat-harness/skills/workflows) — open them in
 [bpmn.io](https://demo.bpmn.io/) or Camunda Modeler; the SVGs below are
 generated from them by `bun run render:bpmn`.
 
@@ -128,13 +128,13 @@ editor; only an accepted change is written to the corpus.
 
 <img src="folio-assistant/docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
-[BPMN source](skills/workflows/editing-hci-validation.bpmn)
+[BPMN source](cat-harness/skills/workflows/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
 <img src="folio-assistant/docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
-[BPMN source](skills/workflows/draft-to-publication.bpmn)
+[BPMN source](cat-harness/skills/workflows/draft-to-publication.bpmn)
 
 ### One cycle of a folio, plan → retire
 
@@ -145,16 +145,16 @@ findings, resolved on commit — so a human and an agent read the same answer to
 
 <img src="folio-assistant/docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
-[BPMN source](skills/workflows/content-lifecycle.bpmn)
+[BPMN source](cat-harness/skills/workflows/content-lifecycle.bpmn)
 
 ### Per content type
 
 | Diagram | Content type |
 |---------|--------------|
-| [`authoring-a-document.bpmn`](skills/workflows/authoring-a-document.bpmn) · [SVG](folio-assistant/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
-| [`authoring-a-paper.bpmn`](skills/workflows/authoring-a-paper.bpmn) · [SVG](folio-assistant/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](skills/workflows/l2-dak-authoring.bpmn) · [SVG](folio-assistant/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
-| [`l3-fhir-pipeline.bpmn`](skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](folio-assistant/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+| [`authoring-a-document.bpmn`](cat-harness/skills/workflows/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
+| [`authoring-a-paper.bpmn`](cat-harness/skills/workflows/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](cat-harness/skills/workflows/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](cat-harness/skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---
 

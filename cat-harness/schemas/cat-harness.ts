@@ -70,6 +70,8 @@ import {
   KgAssetSchema,
   KgImageSchema,
   kgNodeLabelShape,
+  scopeShape,
+  type DeclarationScope,
   type KgAsset,
   type KgImage,
   type KgNodeLabels,
@@ -534,8 +536,18 @@ export interface ContentDirectory extends KgNodeLabels {
    * on THIS, never on `path` — see the module note on relocation.
    */
   id: string;
-  /** Repo-relative directory, with or without a trailing slash. */
+  /**
+   * The directory, relative to the root {@link scope} names, with or without a
+   * trailing slash.
+   */
   path: string;
+  /**
+   * Which root `path` is relative to. Absent means this instance's.
+   *
+   * See `DeclarationScopeSchema` in `kg-node.ts` for what `repository` means
+   * and why it is a field rather than a `../` in the path.
+   */
+  scope?: DeclarationScope;
   /** What kind of graph lives there. */
   /**
    * Which parts of the knowledge graph this directory holds — an ARRAY,
@@ -653,6 +665,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
 export const ContentDirectorySchema = z.object({
   id: z.string().min(1),
   path: z.string().min(1),
+  ...scopeShape,
   // Open string here, checked against the registry in `readDeclaration`.
   // A closed enum would have to be built at module load, which is before core
   // has registered `folio` — so the enum would reject the one kind the whole
@@ -1090,6 +1103,18 @@ export function repoRootFor(instanceRoot: string): string {
 }
 
 /**
+ * The root a declared `path` or `src` is relative to.
+ *
+ * The ONE place a declared scope turns into a directory. Every consumer of a
+ * declared path goes through `resolveDirectories` or `declaredAssets`, and
+ * both go through here, so relocating an instance within its repository is a
+ * change to this function rather than a sweep over six declarations.
+ */
+export function rootForScope(instanceRoot: string, scope?: DeclarationScope): string {
+  return scope === "repository" ? repoRootFor(instanceRoot) : instanceRoot;
+}
+
+/**
  * `siteDir` for the instance rooted at `root`, read from its declaration.
  *
  * Deliberately a RAW read of `name`/`stub` rather than `readDeclaration`:
@@ -1517,12 +1542,19 @@ export function resolveDirectories(
     const decl = readDeclaration(link.root, registry);
     if (!decl) continue;
     for (const dir of decl.directories) {
+      // A REPOSITORY-scoped entry is not inherited. `beans/` and `todos/` are
+      // this repository's work plan and this person's outstanding items; a
+      // dependency's repository is a different checkout, so inheriting its
+      // entry would point every consumer at somebody else's store. The
+      // never-overlaid property of those two directories was a rule an agent
+      // had to remember until this line; now the resolver holds it.
+      if (dir.scope === "repository" && link.own !== true) continue;
       // Override by id, replacing in place so the inherited ORDER is kept: a
       // relocation should not reshuffle what a consumer scans first.
       byId.set(dir.id, {
         ...dir,
         declaredBy: decl.name,
-        absPath: resolve(link.root, dir.path),
+        absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
         own: link.own === true,
       });
     }
@@ -1561,7 +1593,7 @@ export function declaredAssets(
 ): Array<KgAsset & { absPath: string; exists: boolean }> {
   const decl = readDeclaration(root, registry);
   return (decl?.assets ?? []).map((a) => {
-    const absPath = resolve(root, a.src);
+    const absPath = resolve(rootForScope(root, a.scope), a.src);
     return { ...a, absPath, exists: existsSync(absPath) };
   });
 }

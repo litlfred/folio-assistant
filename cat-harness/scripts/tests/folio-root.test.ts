@@ -2,6 +2,7 @@ import { describe, test, expect } from "bun:test";
 import { isAbsolute } from "path";
 import { INSTANCE_ROOT, FOLIO_ROOT, hasFolio, LEAN_DIR, QOU_LEAN_DIR } from "./helpers";
 import { findContentRepoRoot, findPapers } from "../../content/pipeline/repo-root";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 
 /**
  * folio-assistant is the PLATFORM; papers, the Lake workspace,
@@ -18,7 +19,14 @@ import { findContentRepoRoot, findPapers } from "../../content/pipeline/repo-roo
 describe("FOLIO_ROOT detection", () => {
   test("INSTANCE_ROOT is this platform checkout", () => {
     expect(isAbsolute(INSTANCE_ROOT)).toBe(true);
-    expect(INSTANCE_ROOT.endsWith("folio-assistant")).toBe(true);
+    // `cat-harness`, not `folio-assistant`. The two were one directory until
+    // the move (bean `wggr`): this is the INSTANCE root, and the repository is
+    // still `folio-assistant`. Asserted on the directory rather than on the
+    // stub deliberately — the stub stays `folio-assistant` because it names
+    // published artefacts, so the two now differ and a test that conflated
+    // them would pass for the wrong reason.
+    expect(INSTANCE_ROOT.endsWith("cat-harness")).toBe(true);
+    expect(repoRootFor(INSTANCE_ROOT).endsWith("folio-assistant")).toBe(true);
   });
 
   test("agrees with hasFolio()", () => {

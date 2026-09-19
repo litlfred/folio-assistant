@@ -82,9 +82,26 @@ export function hasFolio(): boolean {
  * guard with `hasFolio()` before using.
  */
 export const LEAN_DIR = FOLIO_ROOT ?? "";
+
+/**
+ * The root every CONTENT path here resolves against: the folio when one is
+ * attached, and otherwise the platform's own content root — which is the
+ * INSTANCE, since `content/` sits beside `schemas/` and `scripts/` inside it.
+ *
+ * Named, rather than written `FOLIO_ROOT ?? REPO_ROOT` at each of the four
+ * sites that wanted it, because that expression was correct only while
+ * `REPO_ROOT` meant the instance. Renaming that constant to say what it is
+ * (bean `wggr`) changed all four lines' meaning without changing a character
+ * of them — the one hazard a clarifying rename carries, and the reason
+ * `folio-root.test.ts` failed on a `QOU_LEAN_DIR` that had silently moved one
+ * directory up. One constant, so the next time the roots move there is one
+ * line to check rather than four to find.
+ */
+const CONTENT_ROOT = FOLIO_ROOT ?? INSTANCE_ROOT;
+
 /** Legacy alias: default paper's Lake directory (QOU). */
 export const QOU_LEAN_DIR = join(
-  FOLIO_ROOT ?? REPO_ROOT,
+  CONTENT_ROOT,
   "content/quantum-observable-universe/lean",
 );
 /**
@@ -97,16 +114,14 @@ export const QOU_LEAN_DIR = join(
  * against `FOLIO_ROOT`; this is the same rule, and the same split-repo trap
  * the `FOLIO_ROOT` comment warns about.
  */
-// Falls back to the INSTANCE, not the repository. `chapters/` is CONTENT, and
-// the platform's own content root is its instance directory — `chapters-dir`'s
-// own test calls that fallback "the platform" and resolves it as
-// `resolve(import.meta.dir, "..", "..")`, which is this instance.
-//
-// It read `REPO_ROOT`, which was this instance until that constant was renamed
-// to say what it is. The rename made the line's meaning change without the
-// line changing, which is the one hazard a rename carries.
-export const CHAPTERS_DIR = join(FOLIO_ROOT ?? INSTANCE_ROOT, "chapters");
-export const SCHEMAS_DIR = join(REPO_ROOT, "schemas");
+// `chapters-dir`'s own test calls the no-folio fallback "the platform" and
+// resolves it as `resolve(import.meta.dir, "..", "..")` — this instance, which
+// is what `CONTENT_ROOT` is.
+export const CHAPTERS_DIR = join(CONTENT_ROOT, "chapters");
+// The INSTANCE's: `schemas/` is `cat-harness/schemas/`, and there is no
+// `schemas/` at the repository root at all. Unused today, which is the only
+// reason a path naming a directory that does not exist went unnoticed.
+export const SCHEMAS_DIR = join(INSTANCE_ROOT, "schemas");
 
 // ── Lean project discovery ──────────────────────────────────────
 
@@ -126,7 +141,7 @@ export function discoverLeanProjects(): string[] {
   // `REPO_ROOT + content/<paper>/lean` strings, so it pointed into the
   // platform (where no paper exists) AND silently missed any paper added
   // to the registry afterwards.
-  const root = FOLIO_ROOT ?? REPO_ROOT;
+  const root = CONTENT_ROOT;
   const lakefiles = [
     join(LEAN_DIR, "lakefile.toml"),
     ...LEAN_PACKAGES.map((p) => join(root, p.lakeRoot, "lakefile.toml")),
@@ -300,7 +315,10 @@ export function extractEnvironments(texFile: string): LatexEnvironment[] {
           leanDecl,
           hasLeanok: hasMacro(body, "leanok"),
           hasNotready: hasMacro(body, "notready"),
-          file: relative(REPO_ROOT, texFile),
+          // Relative to the root the chapter was FOUND under, which is what
+          // `CHAPTERS_DIR` resolved against — a folio's `.tex` reported
+          // against the platform's root reads as `../…/…`.
+          file: relative(CONTENT_ROOT, texFile),
           line,
         });
       }

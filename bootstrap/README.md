@@ -59,10 +59,10 @@ guessing produces a setup nobody asked for.
 ---
 
 **Terms, if you want the precise definitions:**
-[harness declaration](../schemas/cat-harness.ts) ·
-[skill](../schemas/skill-package.ts) ·
-[role](../schemas/role-graph.ts) ·
-[process](../skills/workflows) ·
-[tool](../schemas/tool.ts).
+[harness declaration](../cat-harness/schemas/cat-harness.ts) ·
+[skill](../cat-harness/schemas/skill-package.ts) ·
+[role](../cat-harness/schemas/role-graph.ts) ·
+[process](../cat-harness/skills/workflows) ·
+[tool](../cat-harness/schemas/tool.ts).
 Why bootstrapping is built this way:
 [the proposal](../fsh-guts/proposals/bootstrap.md).

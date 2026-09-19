@@ -68,13 +68,34 @@ export interface FshGutsDocument {
   scans: string[];
 }
 
+/** A declared trashcan directory: where it is, and what the declaration calls it. */
+export interface FshGutsDir {
+  /** Absolute, for walking. */
+  absPath: string;
+  /**
+   * The DECLARED path — `fsh-guts/` — which is what every published string is
+   * built from.
+   *
+   * Both are carried because they answer different questions and the answers
+   * diverged at the move (bean `wggr`). `fsh-guts/` is declared
+   * `scope: "repository"`, so its absolute path is no longer under the
+   * instance root and `relative(root, absPath)` came back `../fsh-guts`. That
+   * went into `scans`, into every node's `sourcePath`, and into every `@id` —
+   * whose sanitiser permits `.` and would have published
+   * `…/fsh-guts.jsonld#../fsh-guts/proposals/x.md`. A link-shaped value that
+   * dereferences to nothing is the `blv9` shape, and it would have been minted
+   * into a document whose whole job is to stay addressable.
+   */
+  path: string;
+}
+
 /** Every declared `fsh-guts` directory — not the literal path. */
-export function fshGutsDirs(root: string): string[] {
+export function fshGutsDirs(root: string): FshGutsDir[] {
   try {
     return resolveDirectories([{ name: "(local)", root, own: true }])
       .filter((d) => d.graphs.includes("fsh-guts"))
-      .map((d) => d.absPath)
-      .filter((p) => existsSync(p));
+      .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
+      .filter((d) => existsSync(d.absPath));
   } catch {
     return [];
   }
@@ -107,8 +128,9 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
   const skipped: SkippedFile[] = [];
 
   for (const dir of scans) {
-    for (const path of walk(dir)) {
-      const rel = relative(root, path);
+    for (const path of walk(dir.absPath)) {
+      // Relative to the DECLARED directory, not to `root`: see `FshGutsDir`.
+      const rel = join(dir.path, relative(dir.absPath, path));
       let text: string;
       try {
         text = readFileSync(path, "utf8");
@@ -186,7 +208,7 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
     nodeCount: graph.length,
     "@graph": graph,
     skipped,
-    scans: scans.map((d) => relative(root, d)),
+    scans: scans.map((d) => d.path),
   };
 }
 

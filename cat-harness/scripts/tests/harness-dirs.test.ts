@@ -37,24 +37,37 @@ import {
 } from "../beans-fallback.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
-const REPO_ROOT = resolve(import.meta.dir, "..", "..");
+// The REPOSITORY root, and it has to be said out loud now: `"..", ".."` from
+// here reaches the INSTANCE, and this file's subject — `.beans.yml`, `beans/`
+// and `workflow/store.ts` — is the repository's throughout. The constant kept
+// the right name and the wrong value through the move (bean `wggr`), so eleven
+// assertions ran against `cat-harness/beans/`, a directory that has never
+// existed, and read as a store that disagreed with itself.
+const REPO_ROOT = repoRootFor(resolve(import.meta.dir, "..", ".."));
 
-/** A throwaway store shaped exactly like the real one. */
+/**
+ * A throwaway store shaped exactly like the real one.
+ *
+ * `root` IS a repository root — a fixture has no enclosing instance, so
+ * `repoRootFor(root)` is `/tmp` and every file the fixture wrote landed beside
+ * every other test's. Same over-reach as the `check-agents-xref` fixture, and
+ * the same lesson: `repoRootFor` means "up from an INSTANCE root".
+ */
 function scratchStore(): string {
   const root = mkdtempSync(join(tmpdir(), "beans-fallback-"));
   writeFileSync(
     join(root, ".beans.yml"),
     "beans:\n    path: beans/defs\n    prefix: test-\n    id_length: 4\n    default_status: todo\n    default_type: task\n",
   );
-  mkdirSync(join(repoRootFor(root), "beans", "defs"), { recursive: true });
+  mkdirSync(join(root, "beans", "defs"), { recursive: true });
   return root;
 }
 
 /** Write a bean graph under `root/beans/`. */
 function writeGraph(root: string, directories: Array<{ id: string; path: string; graphs: string[] }>): void {
-  mkdirSync(join(repoRootFor(root), "beans"), { recursive: true });
+  mkdirSync(join(root, "beans"), { recursive: true });
   writeFileSync(
-    join(repoRootFor(root), "beans", "beans.json"),
+    join(root, "beans", "beans.json"),
     JSON.stringify({ name: "test", directories }, null, 2),
   );
 }
@@ -100,7 +113,7 @@ describe("the two stores are visible and agreed upon", () => {
       // graph root, so this is the shape the guard has to catch.
       writeGraph(root, [{ id: "defs", path: ".defs", graphs: ["bean-defs"] }]);
       writeFileSync(join(root, ".beans.yml"), "beans:\n    path: beans/.defs\n");
-      mkdirSync(join(repoRootFor(root), "beans", ".defs"), { recursive: true });
+      mkdirSync(join(root, "beans", ".defs"), { recursive: true });
       const r = checkHarnessDirs(root);
       expect(r.problems.some((p) => p.includes("hidden behind a dot"))).toBe(true);
     } finally {
@@ -299,8 +312,8 @@ describe("the config name — harness.config.json, and only that", () => {
     // graph nobody can parse leaves every consumer guessing where beans live.
     const root = scratchStore();
     try {
-      mkdirSync(join(repoRootFor(root), "beans"), { recursive: true });
-      writeFileSync(join(repoRootFor(root), "beans", "beans.json"), "{ not json");
+      mkdirSync(join(root, "beans"), { recursive: true });
+      writeFileSync(join(root, "beans", "beans.json"), "{ not json");
       const r = checkHarnessDirs(root);
       expect(r.problems.some((p) => p.includes("will not parse"))).toBe(true);
     } finally {
