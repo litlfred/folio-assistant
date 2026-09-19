@@ -640,10 +640,54 @@ fact in one of these areas adds it as a TRAP in the same PR; a session that
 re-measures a BASELINE updates the entry with the fresh number and date. A
 memory file that only accretes becomes the thing it exists to prevent.
 
-`MEMORY.md` is the injected entry point, so keep it under 200 lines — split
-detail into sibling files the agent reads on demand. `memory: project` writes
-under `.claude/agent-memory/`, which is **committed**; `memory: local` writes
-under `.claude/agent-memory-local/`, gitignored, for anything per-machine.
+### Entries are authored in `skills/memory/`, not in `MEMORY.md`
+
+**Edit the node, then run `bun run agent-memory`.** One entry per file under
+`skills/memory/`, carrying `$schema: folio-memory/v1`, a `label`, a `summary`
+and the agents it reaches. `bun run agent-memory:check` gates it in CI, so an
+entry edited and never assembled fails the build rather than quietly never
+reaching the agent.
+
+**`MEMORY.md` is generated — but only between its markers.** The tool writes
+between `<!-- folio:memory:begin -->` and `<!-- folio:memory:end -->` and
+touches nothing else, exactly as `readme-sections.ts` does. That is what keeps
+each file's `## Session log` — and `content-pipeline-navigator`'s
+`## Corrected invocations` — intact: those are the agent's own running notes,
+and a whole-file regenerator would delete them. A file with no markers is
+reported as not opted in and left alone; it is never rewritten and never
+counted as up to date.
+
+**One entry can reach several agents, and that is the point.** Before this,
+a fact two agents needed had to be written into two files — measured
+2026-09-19, **3 subject areas** were (the document render path taking no TeX,
+adapter-vs-profile, and what the schema structurally cannot catch). 28 entries
+became 25 nodes.
+
+**A `baseline` without `measured` is refused by the schema.** The rule above
+was prose; it is now structural. It bit immediately and correctly: all three
+entries labelled BASELINE stored no number — they are tables of commands to
+RUN — so they were relabelled `stable`. A table of how to measure is a stable
+fact, not a measurement.
+
+**Scoping is by agent today and that is transitional.** Memory is knowledge,
+and `AGENTS.md` puts knowledge in the lane, so it should scope by **role** —
+`memoryForRoles` exists for it. It is unused because the three memory-carrying
+subagents are **not declared actors at all**: `.claude/skills/actors/` holds 24
+participants and none of them. Declaring them, and choosing their roles, is
+open work — not something to guess, since inventing a role to absorb a tool is
+the failure `skill-in-role-or-process` is written not to force.
+
+**A `.md` under `skills/` that declares its own `$schema` is not a skill.** The
+`kg` directory's path is `skills/` and the audit walks it recursively, so
+without that rule all 25 memory nodes were audited as skills — measured, with
+25 bogus `kg-qa/` sidecars written beside them. Declaration over location, the
+same contract `part-of:` carries.
+
+`MEMORY.md` is the injected entry point, so keep it under 200 lines — the
+generator warns when a file passes it, because the harness silently drops the
+overflow. `memory: project` writes under `.claude/agent-memory/`, which is
+**committed**; `memory: local` writes under `.claude/agent-memory-local/`,
+gitignored, for anything per-machine.
 
 The agents defer to this file and to `skills/` as the source of truth. Memory
 summarises; the skill governs. Where the two disagree, the skill wins and the

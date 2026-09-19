@@ -6,6 +6,80 @@ Seeded 2026-08-29 from `AGENTS.md` and a listing of `content/pipeline/` +
 
 ---
 
+<!-- folio:memory:begin -->
+
+## STABLE — adapter vs profile: a different axis, and conflating them is costly
+
+- **Adapters** (`paper`, `dak`) partition block kinds into **disjoint**
+  namespaces. `adapterForKind` is what QA-criterion scoping reads, and it
+  must stay **total and unambiguous**.
+- **Profiles** (`document`, `paper`) **nest**: every document kind is also a
+  paper kind.
+
+Making `document` a third adapter would have made `adapterForKind` ambiguous
+on all **eight** shared kinds. When adding a content type, ask whether it
+needs different **code** (adapter) or only different **rules** (profile plus
+a subclass).
+
+`PaperContentAdapter` extends `DocumentContentAdapter`; `MATH_BLOCK_KINDS` is
+written out in `schemas/block-kinds.ts` and `DOCUMENT_BLOCK_KINDS` is its
+**derived** complement, so a kind added to `BLOCK_KINDS` cannot go
+unclassified. Keep that derivation — do not hand-maintain both lists.
+
+## STABLE — the document render path takes no TeX
+
+`content/pipeline/render-markdown.ts` assembles the folio to one Markdown
+file; `document_render_{md,html,pdf}` take it through pandoc, the PDF via
+weasyprint/prince/wkhtmltopdf. It **never** falls back to `latexmk`,
+deliberately — a PDF that silently came out of LaTeX would misreport what the
+folio needs to build, and the next person on a clean machine pays for that.
+Registered for **both** content types, because it is the render that works
+while drafting on a machine with no TeX.
+
+## STABLE — QA sidecars
+
+`<block>.qa.json` (block-qa/v1) carries per-criterion reviewer entries;
+`<criterion-id>.script.json` is qa-script/v1. Producing types are
+`schemas/block-qa.ts`. A sidecar is **stale** when the recorded source hashes
+or a reviewer `script_hash` drift from the current file contents; refresh by
+deleting the stale `criteria.<crit>` entry and re-running
+`bun run content/pipeline/qa-sweep.ts <path> --only <crit>`.
+
+`qa-staleness.ts` reports; `qa-sweep.ts` repairs.
+
+**A standalone library `.lean` file has no sidecar** and escapes every
+per-block checker. Nothing but an agent checks it.
+
+## STABLE — re-measure, do not quote
+
+| what | command |
+|---|---|
+| the pipeline's actual entrypoints | `ls content/pipeline/` |
+| the scripts that exist on this side | `bun run` with no args, or read `package.json` |
+| block kinds and their classification | read `schemas/block-kinds.ts` |
+| sidecar staleness | `bun run content/pipeline/qa-staleness.ts <path>` |
+
+> Relabelled from BASELINE to STABLE, 2026-09-19. `AGENTS.md` defines a
+> BASELINE as *"a measured number, stored with the command that produced it
+> and the date"* — and this entry stores no number. It is a table of commands
+> to RUN, which is the opposite thing: a stable fact about how to measure,
+> not a measurement. `MemoryNodeSchema` refused it as a baseline, correctly.
+
+## STABLE — the commands that do exist here
+
+```sh
+bun install
+bun run src/index.ts --http      # the assistant (HTTP); --stdio for stdio MCP
+bun test                         # unit tests
+bunx playwright test             # e2e  (npm script: test:e2e)
+eslint .
+bun run src/index.ts --check-deps   # probe environment capabilities
+bun run init-folio --help           # scaffold a new folio
+bun run readme:sync[:check] | readme:sections
+bun run check:ci-health | check:corpus-gate | check:workflow-policy
+bun run typecheck | lint | gen:jsonld[:check] | render:bpmn[:check]
+```
+
 ## STABLE — the stages, in order
 
 ```
@@ -17,6 +91,13 @@ Seeded 2026-08-29 from `AGENTS.md` and a listing of `content/pipeline/` +
   → AST validation of the rendered output
   → chapters/*.tex  or  one assembled .md
 ```
+
+## STABLE — `uses[]` is EDITORIAL, and immediate-neighbours only
+
+`uses[]` and `interprets` state what a *reader* must have read to follow a
+block — agent/human maintained, part of the authored content. It lists
+**immediate neighbours only**: if A→B and B→C, A lists only B. It is not the
+import graph and not a transitive closure.
 
 ## STABLE — who owns which file (the split agents get wrong)
 
@@ -40,44 +121,6 @@ Several convenience aliases were dropped in that migration and not re-wired
 (`validate-refs`, `export-bibtex`, `migrate-lean-refs`). Do not assume a
 `bun run <shortcut>` exists — check `package.json` on the side you are on.
 
-## STABLE — the commands that do exist here
-
-```sh
-bun install
-bun run src/index.ts --http      # the assistant (HTTP); --stdio for stdio MCP
-bun test                         # unit tests
-bunx playwright test             # e2e  (npm script: test:e2e)
-eslint .
-bun run src/index.ts --check-deps   # probe environment capabilities
-bun run init-folio --help           # scaffold a new folio
-bun run readme:sync[:check] | readme:sections
-bun run check:ci-health | check:corpus-gate | check:workflow-policy
-bun run typecheck | lint | gen:jsonld[:check] | render:bpmn[:check]
-```
-
-## STABLE — profiles vs adapters (read before adding a kind)
-
-- **Adapters** (`paper`, `dak`) partition kinds into **disjoint** namespaces;
-  `adapterForKind` is what QA-criterion scoping reads and must stay total and
-  unambiguous.
-- **Profiles** (`document`, `paper`) **nest**: every document kind is also a
-  paper kind. `PaperContentAdapter` extends `DocumentContentAdapter`.
-- `MATH_BLOCK_KINDS` is written out in `schemas/block-kinds.ts`;
-  `DOCUMENT_BLOCK_KINDS` is its **derived** complement, so a kind added to
-  `BLOCK_KINDS` cannot go unclassified. Keep it derived.
-
-Different **code** → adapter. Different **rules** → profile plus a subclass.
-
-## TRAP — the schema cannot catch a profile violation
-
-A `theorem` is a valid `theorem` whatever folio it sits in, and
-`constraints.ts` cannot read `harness.config.json`. `profile-check.ts` runs on
-every `content_validate` and enforces two rules the schema structurally
-cannot: kind-within-profile, and (document only) **no `lean` field and no
-`.lean` sibling** — because `remark`, `example`, `algorithm` and `simulator`
-all *declare* an optional `lean` that the type permits and the profile
-forbids.
-
 ## TRAP — adding a block kind is ~30 files, not one
 
 Builder, Zod schema, label prefix, viewer registration, constraint rows, QA
@@ -90,45 +133,19 @@ Known-wrong and predating the document profile: `document-intake.md` maps
 guideline recommendations onto `definition`, which is wrong for a document
 folio, where `definition`'s `lean` field is **required**.
 
-## STABLE — the document render path takes no TeX, deliberately
+## TRAP — the schema cannot catch a profile violation
 
-`render-markdown.ts` assembles the folio to one Markdown file;
-`document_render_{md,html,pdf}` take it through pandoc, the PDF via
-weasyprint/prince/wkhtmltopdf. It **never** falls back to `latexmk` — a PDF
-that silently came out of LaTeX would misreport what the folio needs to
-build, and the next person on a clean machine pays for that. Registered for
-**both** content types, because it is the render that works while drafting on
-a machine with no TeX.
+`content/pipeline/profile-check.ts` runs on every `content_validate` and
+catches what **Zod structurally cannot**: a `theorem` is a valid `theorem`
+whatever folio it sits in, and `constraints.ts` cannot read
+`harness.config.json`.
 
-## STABLE — QA sidecars
+Two rules: kind-within-profile, and (document only) **no `lean` field and no
+`.lean` sibling** — because `remark`, `example`, `algorithm` and `simulator`
+all *declare* an optional `lean` that the type permits and the profile
+forbids.
 
-`<block>.qa.json` (block-qa/v1) carries per-criterion reviewer entries;
-`<criterion-id>.script.json` is qa-script/v1. Producing types are
-`schemas/block-qa.ts`. A sidecar is **stale** when the recorded source hashes
-or a reviewer `script_hash` drift from the current file contents; refresh by
-deleting the stale `criteria.<crit>` entry and re-running
-`bun run content/pipeline/qa-sweep.ts <path> --only <crit>`.
-
-`qa-staleness.ts` reports; `qa-sweep.ts` repairs.
-
-**A standalone library `.lean` file has no sidecar** and escapes every
-per-block checker. Nothing but an agent checks it.
-
-## STABLE — `uses[]` is EDITORIAL, and immediate-neighbours only
-
-`uses[]` and `interprets` state what a *reader* must have read to follow a
-block — agent/human maintained, part of the authored content. It lists
-**immediate neighbours only**: if A→B and B→C, A lists only B. It is not the
-import graph and not a transitive closure.
-
-## BASELINE — re-measure, do not quote
-
-| what | command |
-|---|---|
-| the pipeline's actual entrypoints | `ls content/pipeline/` |
-| the scripts that exist on this side | `bun run` with no args, or read `package.json` |
-| block kinds and their classification | read `schemas/block-kinds.ts` |
-| sidecar staleness | `bun run content/pipeline/qa-staleness.ts <path>` |
+<!-- folio:memory:end -->
 
 ---
 

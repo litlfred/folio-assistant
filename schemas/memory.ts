@@ -25,13 +25,26 @@
  * lane.
  *
  * That is not a tidiness argument. Measured 2026-09-19 across
- * `.claude/agent-memory/`: **28 entries over 3 agents, with 5 subject areas
- * duplicated** between `content-pipeline-navigator` and
- * `platform-boundary-guard` — two of them near-verbatim, including the whole
- * "the document render path takes no TeX" entry and the BASELINE
- * "re-measure, do not quote". One fact, two files, free to drift apart. That
- * duplication is *caused by* agent-scoping: there is nowhere shared to put a
- * thing two agents both need.
+ * `.claude/agent-memory/`, by parsing all three files rather than reading
+ * them: **28 entries over 3 agents, with 3 subject areas duplicated** between
+ * `content-pipeline-navigator` and `platform-boundary-guard` — the document
+ * render path taking no TeX (near-verbatim), adapter-vs-profile, and what the
+ * schema structurally cannot catch. One fact, two files, free to drift apart,
+ * and that duplication is *caused by* agent-scoping: there is nowhere shared
+ * to put a thing two agents both need.
+ *
+ * **An earlier revision of this comment said 5, and named the BASELINE
+ * "re-measure, do not quote" as one of the two near-verbatim pairs. Both
+ * claims were wrong**, and the second is the instructive one: the two files DO
+ * carry that heading identically, and their bodies are **disjoint** — one
+ * tabulates pipeline entrypoints and sidecar staleness, the other
+ * folio-specific literals and README staleness. Same title, two different
+ * facts, and merging them would have destroyed one.
+ *
+ * The number came from reading the files; the correction came from parsing
+ * them. That is this module's own BASELINE rule turned on its own
+ * documentation — a count in prose is a claim, not evidence — and it is
+ * recorded here rather than quietly amended because the failure is the point.
  *
  * ## `BASELINE` must carry its provenance, and now structurally
  *
@@ -156,3 +169,43 @@ export function memoryForRoles(entries: readonly MemoryNode[], roles: readonly s
   const wanted = new Set(roles);
   return entries.filter((e) => e.tags.roles.length === 0 || e.tags.roles.some((r) => wanted.has(r)));
 }
+
+/**
+ * The entries an agent should be handed, by the agent it is.
+ *
+ * The **transitional** axis, and named as such so it is not mistaken for the
+ * answer. Memory is bound to the agent today; the argument in this module's
+ * header is that it should be bound to the ROLE, because memory is knowledge
+ * and `AGENTS.md` puts knowledge in the lane. That move needs the three
+ * memory-carrying subagents to be declared actors with roles, and **none of
+ * them is declared at all** — measured 2026-09-19 against
+ * `.claude/skills/actors/`, which holds 24 participants and not one of them.
+ *
+ * So this exists to make the duplication *expressible* before the role
+ * question is settled: an entry references the agents it reaches, and **one
+ * entry may reference several**. That is the whole difference from the
+ * directory-per-agent layout it replaces — there, a fact two agents need had
+ * to be written twice, and five subject areas were.
+ *
+ * An entry referencing no agent reaches every agent, the same rule
+ * {@link memoryForRoles} applies to an untagged entry. Absent is instance-wide,
+ * never "belongs to nobody".
+ */
+export function memoryForAgent(entries: readonly MemoryNode[], agent: string): MemoryNode[] {
+  return entries.filter((e) => {
+    const agents = e.tags.references.filter((r) => r.kind === AGENT_REF_KIND);
+    return agents.length === 0 || agents.some((r) => r.id === agent);
+  });
+}
+
+/**
+ * The `kind` a {@link KgRef} uses to name a subagent.
+ *
+ * A subagent is an **actor**, not a role and not a skill, so it is referenced
+ * rather than tagged: `tags.roles` means "outstanding in that lane" and an
+ * agent is not a lane. Spelled once here so the extractor, the generator and
+ * the scoping function cannot disagree about it — the `gh-pages-deploy`
+ * lesson, where a second name for one concurrency group serialised against
+ * nothing.
+ */
+export const AGENT_REF_KIND = "agent";
