@@ -17,6 +17,7 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 
 import { describe, expect, it } from "bun:test";
 
@@ -166,7 +167,7 @@ describe("staging-preview-orphans", () => {
     // shell step and the other in this process. What can be avoided is an
     // UNCHECKED duplication — a drift here would make the orphan check name
     // the wrong preview, on a finding whose action invites removal.
-    const wf = readFileSync(resolve(import.meta.dir, "..", "..", ".github/workflows/feature-staging.yml"), "utf-8");
+    const wf = readFileSync(resolve(repoRootFor(resolve(import.meta.dir, "..", "..")), ".github/workflows/feature-staging.yml"), "utf-8");
     const pipelines = [...wf.matchAll(/SLUG=\$\(echo "\$BRANCH" \| (.+)\)$/gm)].map((m) => m[1]);
     // Both occurrences, so a fix applied to one of them is caught.
     expect(pipelines.length).toBeGreaterThanOrEqual(2);

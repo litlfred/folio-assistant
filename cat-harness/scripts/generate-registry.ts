@@ -18,6 +18,7 @@ import type {
 } from "../schemas/assistant-types.ts";
 import type { SkillPackageManifest } from "../schemas/skill-package.ts";
 import { kgRoots } from "./known-skills.js";
+import { repoRootFor } from "../schemas/cat-harness.js";
 
 /**
  * The declared knowledge-graph root, or the convention.
@@ -36,7 +37,7 @@ function kgRoot(root: string): string {
 // file's own location is right here — unlike the content pipeline, which must
 // find the folio.
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const rootDir = join(__dirname, "..");
+const rootDir = repoRootFor(join(__dirname, ".."));
 
 /**
  * The registry, plus the generation stamp that is not part of the schema.

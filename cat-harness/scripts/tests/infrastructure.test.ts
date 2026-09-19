@@ -9,7 +9,7 @@ import { describe, test, expect } from "bun:test";
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { execSync } from "child_process";
-import { REPO_ROOT, FOLIO_ROOT, hasFolio } from "./helpers";
+import { INSTANCE_ROOT, FOLIO_ROOT, hasFolio, REPO_ROOT } from "./helpers";
 import { maskComments } from "../../content/pipeline/uses-field";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
@@ -19,7 +19,7 @@ const folio = hasFolio();
 // ── session-status.sh (replaced check-lean.sh) ─────────────────
 
 describe("session-status.sh", () => {
-  const script = join(REPO_ROOT, "scripts/session-status.sh");
+  const script = join(INSTANCE_ROOT, "scripts/session-status.sh");
 
   let output: string;
   let parsed: Record<string, unknown>;
@@ -63,9 +63,9 @@ describe("session-status.sh", () => {
 
 describe("check-no-lean-artifacts.sh", () => {
   test("passes on clean repo", () => {
-    const script = join(REPO_ROOT, "scripts/check-no-lean-artifacts.sh");
+    const script = join(INSTANCE_ROOT, "scripts/check-no-lean-artifacts.sh");
     expect(() =>
-      execSync(script, { cwd: REPO_ROOT, encoding: "utf-8", timeout: 5_000 })
+      execSync(script, { cwd: INSTANCE_ROOT, encoding: "utf-8", timeout: 5_000 })
     ).not.toThrow();
   });
 });
@@ -74,7 +74,7 @@ describe("check-no-lean-artifacts.sh", () => {
 
 describe.skipIf(!folio)("lean-mcp.config.json", () => {
   // Folio-side deployment config, not a platform artifact.
-  const configPath = join(FOLIO_ROOT ?? REPO_ROOT, "lean-mcp.config.json");
+  const configPath = join(FOLIO_ROOT ?? INSTANCE_ROOT, "lean-mcp.config.json");
 
   test("is valid JSON", () => {
     const content = readFileSync(configPath, "utf-8");
@@ -101,7 +101,7 @@ describe.skipIf(!folio)("lean-mcp.config.json", () => {
 describe.skipIf(!folio)(".mcp.json", () => {
   // The `paper-assistant` server is registered by the FOLIO, which points it
   // at the folio's own start script. The platform's .mcp.json registers `sage`.
-  const mcpPath = join(FOLIO_ROOT ?? REPO_ROOT, ".mcp.json");
+  const mcpPath = join(REPO_ROOT, ".mcp.json");
 
   test("is valid JSON", () => {
     const content = readFileSync(mcpPath, "utf-8");
@@ -118,22 +118,22 @@ describe.skipIf(!folio)(".mcp.json", () => {
 
 describe("Unified paper-assistant image", () => {
   test("Dockerfile exists", () => {
-    expect(existsSync(join(REPO_ROOT, "adapters/mcp-server/Dockerfile"))).toBe(true);
+    expect(existsSync(join(INSTANCE_ROOT, "adapters/mcp-server/Dockerfile"))).toBe(true);
   });
 
   test("Dockerfile includes TeX Live", () => {
-    const df = readFileSync(join(REPO_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
+    const df = readFileSync(join(INSTANCE_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
     expect(df).toContain("texlive-full");
   });
 
   test("Dockerfile includes gh CLI", () => {
-    const df = readFileSync(join(REPO_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
+    const df = readFileSync(join(INSTANCE_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
     expect(df).toMatch(/apt-get\s+install\b[^\n]*\bgh\b/);
     expect(df).toMatch(/\bgh\s+--version\b/);
   });
 
   test("Dockerfile includes Python requests", () => {
-    const df = readFileSync(join(REPO_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
+    const df = readFileSync(join(INSTANCE_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
     expect(df).toContain("requests");
   });
 
@@ -169,15 +169,15 @@ describe("Unified paper-assistant image", () => {
   });
 
   test("the platform ships no folio-specific builder Dockerfile", () => {
-    expect(existsSync(join(repoRootFor(REPO_ROOT), ".github/docker/Dockerfile.paper-builder"))).toBe(false);
-    expect(existsSync(join(repoRootFor(REPO_ROOT), ".github/workflows/paper-builder-image.yml"))).toBe(false);
+    expect(existsSync(join(repoRootFor(INSTANCE_ROOT), ".github/docker/Dockerfile.paper-builder"))).toBe(false);
+    expect(existsSync(join(repoRootFor(INSTANCE_ROOT), ".github/workflows/paper-builder-image.yml"))).toBe(false);
   });
 
   test("publish.yml is callable by folios and takes builder_image", () => {
     // It is invoked via `uses: .../publish.yml@main`, which requires a
     // `workflow_call` trigger — absent until now, so every such call failed
     // to start.
-    const content = readFileSync(join(repoRootFor(REPO_ROOT), ".github/workflows/publish.yml"), "utf-8");
+    const content = readFileSync(join(repoRootFor(INSTANCE_ROOT), ".github/workflows/publish.yml"), "utf-8");
     expect(content).toContain("workflow_call:");
     expect(content).toContain("builder_image:");
   });
@@ -192,25 +192,25 @@ describe("Unified paper-assistant image", () => {
   });
 
   test("docker-tex.sh helper exists", () => {
-    expect(existsSync(join(REPO_ROOT, "scripts/lib/docker-tex.sh"))).toBe(true);
+    expect(existsSync(join(INSTANCE_ROOT, "scripts/lib/docker-tex.sh"))).toBe(true);
   });
 
   test("render-on-change.sh uses docker-tex.sh", () => {
-    const script = readFileSync(join(REPO_ROOT, "scripts/render-on-change.sh"), "utf-8");
+    const script = readFileSync(join(INSTANCE_ROOT, "scripts/render-on-change.sh"), "utf-8");
     expect(script).toContain("docker-tex.sh");
   });
 
   test("render-pre-commit.sh uses docker-tex.sh", () => {
-    const script = readFileSync(join(REPO_ROOT, "scripts/render-pre-commit.sh"), "utf-8");
+    const script = readFileSync(join(INSTANCE_ROOT, "scripts/render-pre-commit.sh"), "utf-8");
     expect(script).toContain("docker-tex.sh");
   });
 
   test.skipIf(!folio)("config image matches build workflow", () => {
     // `lean-mcp.config.json` is a FOLIO artifact; the workflow is ours.
     const config = JSON.parse(
-      readFileSync(join(FOLIO_ROOT ?? REPO_ROOT, "lean-mcp.config.json"), "utf-8"),
+      readFileSync(join(FOLIO_ROOT ?? INSTANCE_ROOT, "lean-mcp.config.json"), "utf-8"),
     );
-    const workflow = readFileSync(join(repoRootFor(REPO_ROOT), ".github/workflows/build-lean-mcp.yml"), "utf-8");
+    const workflow = readFileSync(join(repoRootFor(INSTANCE_ROOT), ".github/workflows/build-lean-mcp.yml"), "utf-8");
     expect(config.image).toContain("paper-assistant");
     expect(workflow).toContain("paper-assistant");
   });
@@ -221,7 +221,7 @@ describe("Unified paper-assistant image", () => {
 describe("Deploy infrastructure", () => {
   test("Caddyfile.template uses domain variable", () => {
     const caddyfile = readFileSync(
-      join(REPO_ROOT, "deploy/Caddyfile.template"),
+      join(INSTANCE_ROOT, "deploy/Caddyfile.template"),
       "utf-8"
     );
     expect(caddyfile).toContain("${FOLIO_DOMAIN}");
@@ -229,7 +229,7 @@ describe("Deploy infrastructure", () => {
 
   test("self-update.sh preserves .env", () => {
     const script = readFileSync(
-      join(REPO_ROOT, "deploy/self-update.sh"),
+      join(INSTANCE_ROOT, "deploy/self-update.sh"),
       "utf-8"
     );
     expect(script).toContain("exclude='deploy/.env'");
@@ -240,7 +240,7 @@ describe("Deploy infrastructure", () => {
 
 describe.skipIf(!folio)(".gitignore", () => {
   // These rules (deploy/.env, the paper's lean/.lake/) belong to the FOLIO.
-  const gitignore = readFileSync(join(FOLIO_ROOT ?? REPO_ROOT, ".gitignore"), "utf-8");
+  const gitignore = readFileSync(join(REPO_ROOT, ".gitignore"), "utf-8");
 
   test("blocks deploy/.env", () => {
     expect(gitignore).toContain("deploy/.env");
@@ -264,7 +264,7 @@ describe.skipIf(!folio)(".gitignore", () => {
  * shape drift the guard exists to catch, and the test only ever passed when the
  * suite was invoked by hand from the repo root.
  *
- * Repo paths in tests anchor at `import.meta.dir` (`REPO_ROOT` in `helpers.ts`)
+ * Repo paths in tests anchor at `import.meta.dir` (`INSTANCE_ROOT` in `helpers.ts`)
  * — which is also what survives a folio embedding this repo by symlink.
  */
 describe("tests anchor repo paths at import.meta.dir, not process.cwd()", () => {
@@ -276,7 +276,7 @@ describe("tests anchor repo paths at import.meta.dir, not process.cwd()", () => 
   /** Opt-out for a test that genuinely means "relative to wherever we are". */
   const ALLOW = "allow-cwd-anchored-paths";
 
-  const dir = join(REPO_ROOT, "scripts/tests");
+  const dir = join(INSTANCE_ROOT, "scripts/tests");
   const files = readdirSync(dir).filter((f) => f.endsWith(".ts"));
 
   test("scans a plausible number of test files", () => {
@@ -306,12 +306,12 @@ describe("tests anchor repo paths at import.meta.dir, not process.cwd()", () => 
 
 describe("Schema files", () => {
   test("formalization-types.ts exists", () => {
-    expect(existsSync(join(REPO_ROOT, "schemas/formalization-types.ts"))).toBe(true);
+    expect(existsSync(join(INSTANCE_ROOT, "schemas/formalization-types.ts"))).toBe(true);
   });
 
   test("formalization-types.ts exports all key types", () => {
     const content = readFileSync(
-      join(REPO_ROOT, "schemas/formalization-types.ts"),
+      join(INSTANCE_ROOT, "schemas/formalization-types.ts"),
       "utf-8"
     );
     // Proof pipeline types
@@ -328,7 +328,7 @@ describe("Schema files", () => {
 
   test("constraints.ts exports Zod schemas for all block kinds", () => {
     const content = readFileSync(
-      join(REPO_ROOT, "schemas/constraints.ts"),
+      join(INSTANCE_ROOT, "schemas/constraints.ts"),
       "utf-8"
     );
     for (const schema of [
@@ -343,7 +343,7 @@ describe("Schema files", () => {
 
   test.skipIf(!folio)("proof-objects.json has valid structure", () => {
     const manifest = JSON.parse(
-      readFileSync(join(FOLIO_ROOT ?? REPO_ROOT, "proof-objects.json"), "utf-8")
+      readFileSync(join(FOLIO_ROOT ?? INSTANCE_ROOT, "proof-objects.json"), "utf-8")
     );
     // Version and top-level structure
     expect(manifest.version).toBe("1.0");

@@ -19,8 +19,9 @@ import {
   formatCapabilityReport,
   type Capability,
 } from "../../src/tools/capabilities";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 
-const REPO = join(import.meta.dir, "..", "..");
+const REPO = repoRootFor(join(import.meta.dir, "..", ".."));
 
 const cap = (id: string, detection: Capability["detection"], requires?: string[]): Capability => ({
   id,

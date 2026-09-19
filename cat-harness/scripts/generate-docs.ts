@@ -50,7 +50,7 @@ import type {
 // `skills/*/package-manifest.json` are the other thing of that name, matching
 // `SkillPackageManifestSchema` exactly on all nine keys.
 import type { SkillPackageManifest } from "../schemas/types.ts";
-import { directoryForGraph } from "../schemas/cat-harness.js";
+import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 
 /**
@@ -83,7 +83,7 @@ function schemasRoot(root: string): string {
 type RemotePackageRef = z.infer<typeof RemotePackageRefSchema>;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const rootDir = join(__dirname, "..");
+const rootDir = repoRootFor(join(__dirname, ".."));
 const outDir = join(schemasRoot(rootDir), "generated");
 
 mkdirSync(outDir, { recursive: true });

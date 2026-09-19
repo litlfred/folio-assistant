@@ -10,13 +10,35 @@ import { join, relative, resolve } from "path";
 import { execSync } from "child_process";
 import { findContentRepoRoot, findPapers } from "../../content/pipeline/repo-root";
 import { LEAN_PACKAGES } from "../../schemas/lean-packages";
+import { repoRootFor } from "../../schemas/cat-harness";
 import { complete, enabled, type InstanceState } from "../../src/workflow/instance";
 import type { ProcessModel } from "../../src/workflow/process-model";
 
 // ── Paths ───────────────────────────────────────────────────────
 
 /** Root of THIS repo — the folio-assistant platform checkout. */
-export const REPO_ROOT = resolve(import.meta.dir, "../..");
+/**
+ * The INSTANCE root — `<repo>/cat-harness`, where `harness.json` lives.
+ *
+ * This was called `REPO_ROOT` and the two were the same directory, so the name
+ * cost nothing. The move (bean `wggr`) separated them and the name became a
+ * false statement in 72 places at once: everything under here is the
+ * instance's, while `.gitignore`, `.mcp.json`, `Dockerfile` and
+ * `.github/workflows/` are the repository's and sit one level up.
+ *
+ * Renamed rather than repointed, so that every existing use keeps resolving to
+ * the directory it always did and only the handful that genuinely meant the
+ * repository had to move. A rename is checkable by the compiler; repointing a
+ * constant 72 call sites share is not.
+ */
+export const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
+
+/**
+ * The REPOSITORY root — one level up, holding what belongs to the repository
+ * rather than to any instance in it: CI config, the package manifest,
+ * `.gitignore`, `Dockerfile`, and the never-overlaid stores.
+ */
+export const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
 
 /**
  * Root of the CONTENT repo (the folio), when one is attached.

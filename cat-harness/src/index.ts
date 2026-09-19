@@ -17,6 +17,7 @@ import { resolveBuiltinAdapter } from "./builtin-adapters.js";
 import { GitHelper } from "./core/git.js";
 import { log } from "./core/logging.js";
 import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../schemas/harness-config";
+import { repoRootFor } from "../schemas/cat-harness.js";
 
 // ── Parse CLI args ───────────────────────────────────────────────
 
@@ -68,7 +69,7 @@ if (args.includes("--check-deps")) {
   // hardcoded lists remain (here and in src/tools/check-deps.ts); unifying
   // them is a separate change.
   const { loadCapabilities, probeAll, formatCapabilityReport } = await import("./tools/capabilities.js");
-  const caps = loadCapabilities(resolve(import.meta.dir, ".."));
+  const caps = loadCapabilities(repoRootFor(resolve(import.meta.dir, "..")));
   if (caps.length) {
     console.log("\nDeclared capabilities (.claude/skills/capabilities/):\n");
     console.log(formatCapabilityReport(probeAll(caps)));

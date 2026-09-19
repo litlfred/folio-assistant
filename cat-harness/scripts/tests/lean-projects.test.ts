@@ -21,7 +21,7 @@ import { join, relative } from "path";
 import {
   LEAN_DIR,
   FOLIO_ROOT,
-  REPO_ROOT,
+  INSTANCE_ROOT,
   hasFolio,
   discoverLeanProjects,
   discoverDependencies,
@@ -91,7 +91,7 @@ describe.skipIf(!folio)("Lean project discovery", () => {
 
 for (const pkg of LEAN_PACKAGES) {
   describe.skipIf(!folio)(`Paper package: ${pkg.name} (lib: ${pkg.lib})`, () => {
-    const pkgRoot = join(FOLIO_ROOT ?? REPO_ROOT, pkg.lakeRoot);
+    const pkgRoot = join(FOLIO_ROOT ?? INSTANCE_ROOT, pkg.lakeRoot);
     const projDir = join(pkgRoot, pkg.lib);
     const leanFiles = findLeanFiles(projDir);
 
@@ -108,7 +108,7 @@ for (const pkg of LEAN_PACKAGES) {
     });
 
     for (const file of leanFiles) {
-      const rel = relative(REPO_ROOT, file);
+      const rel = relative(INSTANCE_ROOT, file);
 
       test(`${rel} is non-empty`, () => {
         const content = readFileSync(file, "utf-8");
@@ -154,7 +154,7 @@ for (const pkg of LEAN_PACKAGES) {
         const count = (content.match(/\bsorry\b/g) || []).length;
         if (count > 0) {
           totalSorry += count;
-          sorryFiles.push(`${relative(REPO_ROOT, file)}(${count})`);
+          sorryFiles.push(`${relative(INSTANCE_ROOT, file)}(${count})`);
         }
       }
       if (totalSorry > 0) {
@@ -168,7 +168,7 @@ for (const pkg of LEAN_PACKAGES) {
     test("no .lake/ artifacts tracked in git", () => {
       try {
         const tracked = execSync(`git ls-files --cached ${pkg.lakeRoot}/.lake/`, {
-          cwd: REPO_ROOT,
+          cwd: INSTANCE_ROOT,
           encoding: "utf-8",
         }).trim();
         expect(tracked).toBe("");
