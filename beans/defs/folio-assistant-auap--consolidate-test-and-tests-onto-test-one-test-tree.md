@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:48:26Z
-updated_at: 2026-09-19T10:48:43Z
+updated_at: 2026-09-19T11:02:43Z
 ---
 
 
@@ -57,3 +57,13 @@ absolutely — recorded as an open risk rather than assumed away.
 `tests/health/**` — Playwright owns the e2e specs and two typecheckers over one
 file is a disagreement with no owner. Not editing bean bodies that mention a
 never-created `tests/fixtures/`: those are a historical record.
+
+_2026-09-19T11:02:43Z_ — Done on `claude/consolidate-test-dir`, PR #400 — NOT merged, owner decides.
+
+**Moved (18 files, all `git mv` so history follows):** 10 `*.e2e.ts`, `support/qa-fixture.ts`, `support/qa-badge-fixture.ts`, `health/{run,checks,probes}.ts`, `health/{checks,probes,workflow}.test.ts`, `health/results/repository.health-report.json`, and the orphan `test_pypdf_compat.py`. Empty `tests/` removed.
+
+**The four that a grep could not find, because each composes its path from segments — and each fails SILENTLY when stale:** `join("tests", "health", "results")` in `schemas/health-report.ts`; `SCAN_ROOTS` and the test-material prefix rule in `scripts/repo-partition.ts`; `TREES` in `scripts/tests/site-dir-single-answer.test.ts`. The partition one is measured: leaving it stale moved 14 modules from `(test material)` to `unassigned` (179/19 against the correct 193/5) while still printing a total, because the fallback rule keys on `.test.ts`/`.spec.ts` and an `.e2e.ts` matches neither.
+
+**Verified positively, not on a green `bun test`:** `harness:dirs:check` 11 declared / 0 missing with `test/health/results` ok; `health:list` all five checks; Playwright 140 passed from `test/`.
+
+**Open risk I could not close:** whether any instance outside this repository resolves against `tests/`. Override-by-id, `GRAPH_KIND_ALIASES` and the migration doc all say no, but my access is scoped to `litlfred/folio-assistant`, so this is unverified rather than ruled out.
