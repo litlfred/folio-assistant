@@ -78,3 +78,65 @@ export function repoFilesWithExt(
 ): string[] {
   return repoFiles(root, trees).filter((f) => exts.some((e) => f.endsWith(e)));
 }
+
+/**
+ * A TypeScript source with its comments removed, string literals intact.
+ *
+ * **For gates that assert about CODE and keep tripping over prose.** A check
+ * that greps a whole file cannot tell an implementation from a comment
+ * describing one — `manifest-remote-resolution.test.ts` records exactly that:
+ * *"Grepping for `shallow-clone` was the first attempt and is not evidence: it
+ * cannot tell an implementation from a comment, and it flagged the comment
+ * this very change added."* Its own sibling assertions then kept the naive
+ * form, and a documentation comment naming a directory tripped them.
+ *
+ * Tightening the pattern to quoted strings is not enough on its own, because
+ * a markdown code span in a comment is delimited by backticks and backticks
+ * quote strings in TypeScript. The comment has to go first.
+ *
+ * **String literals are skipped rather than stripped**, which is the whole
+ * difficulty: a naive `//`-to-end-of-line rule cuts `"https://example.com"` in
+ * half and invents a finding. Template-literal `${…}` is treated as ordinary
+ * literal text — a comment inside an interpolation is vanishingly rare and
+ * mis-keeping one is harmless here, whereas mis-cutting a URL is not.
+ */
+export function codeWithoutComments(src: string): string {
+  let out = "";
+  let i = 0;
+  while (i < src.length) {
+    const c = src[i]!;
+    const next = src[i + 1];
+    if (c === "/" && next === "/") {
+      while (i < src.length && src[i] !== "\n") i += 1;
+      continue;
+    }
+    if (c === "/" && next === "*") {
+      i += 2;
+      while (i < src.length && !(src[i] === "*" && src[i + 1] === "/")) i += 1;
+      i += 2;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === "`") {
+      const quote = c;
+      out += c;
+      i += 1;
+      while (i < src.length) {
+        if (src[i] === "\\") {
+          out += src.slice(i, i + 2);
+          i += 2;
+          continue;
+        }
+        out += src[i];
+        if (src[i] === quote) {
+          i += 1;
+          break;
+        }
+        i += 1;
+      }
+      continue;
+    }
+    out += c;
+    i += 1;
+  }
+  return out;
+}

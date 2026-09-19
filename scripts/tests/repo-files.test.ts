@@ -12,7 +12,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { repoFiles, repoFilesWithExt } from "../repo-files.js";
+import { codeWithoutComments, repoFiles, repoFilesWithExt } from "../repo-files.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -80,5 +80,38 @@ describe("a gate can see work that is not committed yet", () => {
     const ts = repoFilesWithExt(ROOT, ["schemas"], [".ts"]);
     expect(ts.length).toBeGreaterThan(0);
     expect(ts.every((f) => f.endsWith(".ts"))).toBe(true);
+  });
+});
+
+describe("a gate can look at code without tripping over prose", () => {
+  test("a line comment goes, a URL in a string survives", () => {
+    // The reason a naive `//`-to-end-of-line rule is wrong: it cuts
+    // "https://example.com" in half and invents a finding.
+    const src = 'const u = "https://example.com/x"; // remote-packages\n';
+    const code = codeWithoutComments(src);
+    expect(code).toContain("https://example.com/x");
+    expect(code).not.toContain("remote-packages");
+  });
+
+  test("a block comment goes, including a markdown code span in it", () => {
+    // The exact shape that turned two tests red on 2026-09-19: backticks
+    // delimit a markdown code span in a comment AND quote strings in
+    // TypeScript, so narrowing to "quoted strings" does not help.
+    const src = "/** adds `remote-packages` wrongly */\nconst a = 1;\n";
+    expect(codeWithoutComments(src)).not.toContain("remote-packages");
+  });
+
+  test("a real string literal is kept", () => {
+    expect(codeWithoutComments('const d = "skills/remote-packages";')).toContain(
+      "skills/remote-packages",
+    );
+  });
+
+  test("a comment marker INSIDE a string is not a comment", () => {
+    expect(codeWithoutComments('const s = "a // b"; const t = 1;')).toContain("a // b");
+  });
+
+  test("an escaped quote does not end the string early", () => {
+    expect(codeWithoutComments('const s = "he said \\" // x"; const t = 1;')).toContain("// x");
   });
 });

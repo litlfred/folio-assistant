@@ -26,7 +26,7 @@
  * |---|---|---|
  * | PO translations | ✅ | `translations/<locale>/`, fallback chain step 4 — the only path with a live consumer (`content/pipeline/po-resolve.ts`) |
  * | Kind headings | ✅ | `schemas/translation.ts` KIND_HEADINGS |
- * | Skills | ⚠️ | {@link resolveSkillDirs} now reads each instance's DECLARATION rather than a hardcoded `skills/`, and returns a correct overlay; the consumer side is still root-only — see its docs for the two hazards that block the obvious wiring |
+ * | Skills | ✅ | {@link resolveSkillDirs} reads each instance's DECLARATION, and `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` is built from it, so a dependency's packages are served. Two nearby call sites stay root-only on purpose — see its docs |
  * | Declared directories | ✅ | {@link declarationChain} + `resolveDirectories`, materialised by {@link materialiseDeclaredDirectories} |
  * | Block kinds | ✅ | {@link loadContributions} → `schemas/contributions.ts` |
  * | Adapters | ✅ | {@link loadContributions}, as a module specifier |
@@ -460,10 +460,14 @@ export function materialiseDeclaredDirectories(
  * that is kept deliberately: it is the only way an instance can depend on
  * another for content or translations without inheriting its skills.
  *
- * ## Still no consumer, and the two reasons are worth knowing
+ * ## Its consumer, and the two call sites that are still wrong for the job
  *
- * This returns the right answer; nothing loads skills through it yet. The two
- * obvious call sites both break in a specific way, so neither was forced:
+ * `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` is built from this — so a
+ * DEPENDENCY's skill packages are served, which is the overlay `AGENTS.md`
+ * records as outstanding Phase 0.1 work.
+ *
+ * Two nearby call sites deliberately still do NOT use it, because each would
+ * break in a specific way:
  *
  * 1. **`kgDirectories` in `scripts/known-skills.ts` composes IDS.** Its
  *    `path` field becomes a repo-relative skill id (`skillMdDirs`). Feeding a
@@ -473,12 +477,6 @@ export function materialiseDeclaredDirectories(
  *    `src/tools/workflow.ts` and `src/workflow/gate.ts`. Overlay order is
  *    deepest-dependency-FIRST, so making that function overlay-aware would
  *    hand those callers a dependency's role graph instead of the root's.
- *
- * The real consumer is the skill loader (`LOCAL_PACKAGES` in
- * `src/tools/skill-fetch.ts`), which is a hardcoded map and a larger change.
- * Wiring one of the two above to make this table say ✅ would be the
- * measurement-shaped mistake this repository keeps naming: a green cell over a
- * consumer that resolves the wrong thing.
  */
 export function resolveSkillDirs(folioRoot: string): string[] {
   const dirs: string[] = [];
