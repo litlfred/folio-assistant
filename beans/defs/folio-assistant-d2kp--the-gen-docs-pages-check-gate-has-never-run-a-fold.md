@@ -4,7 +4,7 @@ title: 'The gen-docs-pages --check gate has never run: a folded YAML line, and p
 status: todo
 type: task
 created_at: 2026-09-19T07:50:26Z
-updated_at: 2026-09-19T07:50:26Z
+updated_at: 2026-09-19T09:42:06Z
 ---
 
 
@@ -73,3 +73,5 @@ change is how a gate gets turned back off by the next person it blocks.
 ## Done when
 The step runs as its own step, and a red result means a real omission rather
 than a graph that changed.
+
+_2026-09-19T09:42:06Z_ — Two things, from the 1hsf session (branch claude/wonderful-bohr-6kxh7b), neither fixed here. (1) The staleness is growing fast: code-quality-gates.yml records '12 pages stale' measured 2026-09-19 on main at ed3403322; re-measured today on main at 4d76d9da from a clean tree, 113 stale. Roughly 9x in a day, so the cost of enabling this gate is rising faster than the comment assumes. (2) That same comment cites this work as bean '2u6m', which does not exist in beans/defs — this bean is d2kp. Left both alone deliberately: the comment's own warning is that smuggling the fix into an unrelated PR is how the gate gets turned back off.
