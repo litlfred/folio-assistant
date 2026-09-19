@@ -467,13 +467,13 @@ jobs:
       - name: Publish the QA witnesses and results
         run: |
           mkdir -p ./_site/assets
-          cp -rT test/results/witnesses ./_site/assets/qa
+          cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
-          find test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
           echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
@@ -801,7 +801,7 @@ jobs:
           git add -A "STAGING/$CLEANUP_SLUG"
           git commit \
             -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
-            -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in scripts/staging-cleanup-preflight.ts." \
+            -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness/scripts/staging-cleanup-preflight.ts." \
             -m "$RUN_URL" || true
           # Same race as every other writer of this ref, and the same reason a
           # queue is not enough: a PENDING job is cancelled by the next

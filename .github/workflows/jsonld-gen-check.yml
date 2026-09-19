@@ -31,7 +31,7 @@ on:
       - 'cat-harness/library/**/structure.json'
       - 'cat-harness/library/**/candidates.json'
       - 'cat-harness/scripts/gen-jsonld-context.ts'
-      - 'ns/content/v1.jsonld'
+      - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
   push:
     paths:
@@ -47,7 +47,7 @@ on:
       - 'cat-harness/library/**/structure.json'
       - 'cat-harness/library/**/candidates.json'
       - 'cat-harness/scripts/gen-jsonld-context.ts'
-      - 'ns/content/v1.jsonld'
+      - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
   workflow_dispatch:
 
@@ -96,7 +96,7 @@ jobs:
 
       - name: Label resolution + emitter tests
         run: |
-          bun test scripts/tests/jsonld-label-resolution.test.ts \
-                   scripts/tests/gen-block-jsonld.test.ts \
-                   scripts/tests/gen-library-jsonld.test.ts \
-                   scripts/tests/mcp-graph-tools.test.ts
+          bun test cat-harness/scripts/tests/jsonld-label-resolution.test.ts \
+                   cat-harness/scripts/tests/gen-block-jsonld.test.ts \
+                   cat-harness/scripts/tests/gen-library-jsonld.test.ts \
+                   cat-harness/scripts/tests/mcp-graph-tools.test.ts
