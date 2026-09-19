@@ -15,7 +15,6 @@ import { existsSync, readFileSync } from "fs";
 import { FolioServer } from "./server.js";
 import { resolveBuiltinAdapter } from "./builtin-adapters.js";
 import { GitHelper } from "./core/git.js";
-import { FeedbackStore } from "./core/feedback.js";
 import { log } from "./core/logging.js";
 import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../schemas/harness-config";
 
@@ -119,7 +118,6 @@ if (!viewerPort) {
 // ── Create adapter ───────────────────────────────────────────────
 
 const gitHelper = new GitHelper(repoRoot);
-const feedbackStore = new FeedbackStore(feedbackDir);
 const assistantDir = resolve(import.meta.dir, "../ui");
 
 let adapter;
@@ -130,7 +128,7 @@ if (adapterModule) {
     const modulePath = resolve(repoRoot, adapterModule);
     const mod = await import(modulePath);
     const AdapterClass = mod.default || mod[Object.keys(mod).find(k => k.includes("Adapter")) || ""];
-    adapter = new AdapterClass(repoRoot, gitHelper, feedbackStore);
+    adapter = new AdapterClass(repoRoot, gitHelper, feedbackDir);
     log("init", `Using custom adapter from ${adapterModule} (repo: ${repoRoot})`);
   } catch (e) {
     log("init", `Failed to load adapter from ${adapterModule}: ${e}`);
@@ -138,7 +136,7 @@ if (adapterModule) {
     const r = await resolveBuiltinAdapter(adapterType);
     if (r.fallbackReason) log("init", r.fallbackReason);
     adapter = new (r.ctor as new (...a: never[]) => unknown)(
-      repoRoot as never, gitHelper as never, feedbackStore as never,
+      repoRoot as never, gitHelper as never, feedbackDir as never,
     );
   }
 } else {
@@ -156,7 +154,7 @@ if (adapterModule) {
   const r = await resolveBuiltinAdapter(adapterType);
   if (r.fallbackReason) log("init", r.fallbackReason);
   adapter = new (r.ctor as new (...a: never[]) => unknown)(
-    repoRoot as never, gitHelper as never, feedbackStore as never,
+    repoRoot as never, gitHelper as never, feedbackDir as never,
   );
   log("init", `Using ${r.used.contentType} adapter (repo: ${repoRoot})`);
 }

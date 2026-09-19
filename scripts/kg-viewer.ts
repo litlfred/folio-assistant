@@ -15,10 +15,17 @@
  * project keeps re-learning. Generating it means the exporter — which already
  * knows the stub — writes it in, and the page resolves nothing.
  *
- * It fetches its sibling **relative to its own location**, so the same bytes
- * work at `<canonical>/kg/` and at `STAGING/<slug>/kg/` with no configuration.
- * A staging build that needed a different page would be a staging build
- * testing something other than what ships.
+ * It fetches the graph **relative to its own location**, so the same bytes work
+ * at `<canonical>/<stub>/` and at `STAGING/<slug>/<stub>/` with no
+ * configuration. A staging build that needed a different page would be a
+ * staging build testing something other than what ships.
+ *
+ * **The graph is its PARENT, not its sibling.** The renderings sit at the base
+ * — `<base>/<stub>.jsonld` — and the viewer is the directory that makes
+ * `<base>/<stub>` a page a browser can open, since GitHub Pages resolves an
+ * extensionless URL only to a directory index. So the page reads
+ * `../<stub>.jsonld`. It was a sibling while both lived in `kg/`; the relation
+ * moved with the layout, which is why it is written here rather than assumed.
  *
  * ## Why no dependencies, and no force-directed graph
  *
@@ -70,7 +77,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * identifiers in comments bare or in double quotes.
  */
 export function viewerHtml(stub: string): string {
-  const doc = `${stub}.jsonld`;
+  const doc = `../${stub}.jsonld`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -555,8 +562,8 @@ if (import.meta.main) {
     return i !== -1 ? process.argv[i + 1] : undefined;
   };
   const { stub } = exportIdentity({ baseUrl: arg("--base-url") ?? process.env.KG_BASE_URL });
-  const out = arg("--out") ?? join(ROOT, "_kg", "index.html");
+  const out = arg("--out") ?? join(ROOT, "_kg", stub, "index.html");
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, viewerHtml(stub));
-  console.log(`KG viewer → ${relative(ROOT, out)}\n  reads  ./${stub}.jsonld  (sibling, resolved at load)`);
+  console.log(`KG viewer → ${relative(ROOT, out)}\n  reads  ../${stub}.jsonld  (parent, resolved at load)`);
 }

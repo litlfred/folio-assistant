@@ -190,12 +190,24 @@ const RULES: Rule[] = [
       // The generic tool-group loader, shared by both servers. `src/` is
       // claimed by subdirectory, so a file at its top level falls through.
       "src/tool-groups.ts",
+      // The generic route loader. Same shape and same reason as the tool-group
+      // loader above, with one difference worth knowing: reclassifying the
+      // three CONTENT routes without it makes the count WORSE, measured — 10
+      // edges with them in the harness, 11 with them in core, because the
+      // composition root then crosses the line to mount them. This file is
+      // what lets the root stop naming them.
+      "src/route-groups.ts",
       // Two scripts that arrived from `main` and fell through every prefix.
       // Both are harness tooling about the KG's own artefacts, not about any
       // folio's content: one introspects which Tools this instance's MCP
       // server actually serves, the other refuses a `.bpmn`/`.dmn` whose
       // comments are not well-formed XML.
       "scripts/capture-mcp-tools.ts",
+      // Materialises the directories this instance DECLARES, from
+      // `harness-config.ts`. It acts on the declaration and needs no folio to
+      // have anything to do — arrived from `main` and fell through every
+      // prefix, which the tool reported as `unassigned` rather than guessing.
+      "scripts/harness-dirs.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -245,6 +257,33 @@ const RULES: Rule[] = [
   },
 
   // ── agentic-harness: Roles, Skills, Tools, BPMN, RBAC, the server itself
+  // ── Content handlers that live under a harness prefix (2026-09-19).
+  //
+  //    `src/` is claimed by SUBDIRECTORY, and `src/core/` and `src/routes/`
+  //    are claimed for the harness — but those directories hold modules from
+  //    both layers. These three act on a FOLIO's content: its feedback items,
+  //    its glossary candidates, its bibliography relevance. None of them has
+  //    anything to do without a folio, which is the same question every entry
+  //    in the harness triage list above was read against.
+  //
+  //    **Classifying them alone makes the count worse, and that was measured.**
+  //    `check:partition` at d26a96fd: 10 wrong-direction edges with them in
+  //    the harness, 11 with them here, because `src/server.ts`, `src/index.ts`
+  //    and `src/routes/chat.ts` then crossed the line to MOUNT them. Content
+  //    handlers mounted by a harness composition root cross whichever side
+  //    holds them. `src/route-groups.ts` is what removed the mounting edges
+  //    first; this rule is only safe after it.
+  {
+    repo: "core",
+    triaged: true,
+    exact: [
+      "src/core/feedback.ts",    // the feedback/<paper>/*.ts store
+      "src/routes/feedback.ts",  // /api/feedback
+      "src/routes/relevance.ts", // /api/relevance — bibliography adjudication
+      "src/routes/glossary.ts",  // /api/glossary — a folio's glossary candidates
+    ],
+  },
+
   {
     repo: "harness",
     exact: [
@@ -423,7 +462,15 @@ const RULES: Rule[] = [
   {
     repo: "core",
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
-    exact: ["src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts", "src/tools/preview.ts", "src/qa-agent-write.ts"],
+    exact: [
+      "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts",
+      "src/tools/preview.ts", "src/qa-agent-write.ts",
+      // The voice-graph validator. It resolves each rule's citation into
+      // `library/` — a FOLIO's reference library — and `schemas/voices.ts`,
+      // which it reads, is core by the `schemas/` prefix. Arrived from `main`
+      // and fell through every prefix.
+      "scripts/check-voices.ts",
+    ],
   },
 ];
 

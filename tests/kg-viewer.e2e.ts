@@ -21,9 +21,16 @@ import { execFileSync } from "node:child_process";
 // it if absent so the suite runs from a clean checkout with one command, and
 // so the artefacts under test are the ones the deploy actually emits rather
 // than a stand-in that could agree with the test and disagree with what ships.
+//
+// The viewer lives one level DOWN from the graph — `_kg/<stub>/index.html`
+// reading `../<stub>.jsonld` — mirroring the published layout, where
+// `<base>/<stub>/` is the directory that makes the extensionless
+// `<base>/<stub>` a page Pages can serve. Driving the real relative path is
+// the point: a viewer that resolved its document correctly in a flat fixture
+// and wrongly in the deployed tree is exactly the failure a stand-in hides.
 for (const [file, script] of [
   ["_kg/folio-assistant.jsonld", "scripts/kg-export.ts"],
-  ["_kg/index.html", "scripts/kg-viewer.ts"],
+  ["_kg/folio-assistant/index.html", "scripts/kg-viewer.ts"],
 ] as const) {
   if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
 }
@@ -37,7 +44,7 @@ const KG = JSON.parse(readFileSync("_kg/folio-assistant.jsonld", "utf-8")) as {
 
 test.describe("kg viewer", () => {
   test("loads the sibling document and reports the real node count", async ({ page }) => {
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     // The count comes from the document, so this fails if the page silently
     // fetched nothing — which is the failure mode that matters most.
     await expect(page.locator("#meta")).toContainText(`${KG["@graph"].length} nodes`);
@@ -45,7 +52,7 @@ test.describe("kg viewer", () => {
   });
 
   test("every type in the export is offered as a facet, with its count", async ({ page }) => {
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     for (const [type, n] of Object.entries(KG.counts)) {
       // Name THEN count — the facet button's DOM order, which is also the
       // order a screen reader reads ("ProcessNode 374", not "374 ProcessNode").
@@ -57,7 +64,7 @@ test.describe("kg viewer", () => {
   });
 
   test("filtering by a facet narrows the list to that kind", async ({ page }) => {
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     await page.locator(".facet", { hasText: /^Tool\d+$/ }).click();
     const kinds = await page.locator("#list li button .kind").allTextContents();
     expect(kinds.length).toBeGreaterThan(0);
@@ -65,7 +72,7 @@ test.describe("kg viewer", () => {
   });
 
   test("selecting a node shows its properties and its IRI", async ({ page }) => {
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     await page.locator("#q").fill("beans-cli");
     await page.locator("#list li button").first().click();
     await expect(page.locator(".detail h3")).toContainText("beans CLI");
@@ -74,7 +81,7 @@ test.describe("kg viewer", () => {
   });
 
   test("an edge is a link you can follow, and following it changes the panel", async ({ page }) => {
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     await page.locator("#q").fill("beans-cli");
     await page.locator("#list li button").first().click();
     const before = await page.locator(".detail h3").textContent();
@@ -85,7 +92,7 @@ test.describe("kg viewer", () => {
   });
 
   test("back-links are computed, so a node says what points AT it", async ({ page }) => {
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     await page.locator("#q").fill("todo-manager");
     await page.locator("#list li button").first().click();
     // Several Tools satisfy this skill; none of them is stored on the skill.
@@ -97,7 +104,7 @@ test.describe("kg viewer", () => {
     // property names a JSON-LD processor drops. Displaying them unmarked would
     // hide exactly what the first real consumer is for.
     expect(KG.undeclaredTerms.length).toBeGreaterThan(0);
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     await page.locator(".facet", { hasText: /^ProcessNode\d+$/ }).click();
     await page.locator("#list li button").first().click();
     await expect(page.locator(".detail .note")).toContainText("not in the");
@@ -105,7 +112,7 @@ test.describe("kg viewer", () => {
   });
 
   test("a one-hop neighbourhood is drawn, and is not the whole graph", async ({ page }) => {
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     await page.locator("#q").fill("beans-cli");
     await page.locator("#list li button").first().click();
     const circles = page.locator(".detail svg circle");
@@ -148,7 +155,7 @@ test.describe("kg viewer", () => {
     // Three states, not two. An empty index and a failed fetch look identical
     // on screen and mean opposite things.
     await page.route("**/folio-assistant.jsonld", (r) => r.fulfill({ status: 404, body: "" }));
-    await page.goto("/_kg/index.html");
+    await page.goto("/_kg/folio-assistant/index.html");
     await expect(page.locator("#meta")).toContainText("could not load");
     await expect(page.locator(".detail")).toContainText("not an empty graph");
   });

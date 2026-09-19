@@ -36,50 +36,39 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
-/**
- * The real block sidecar off disk, with ONE criterion put back into the state
- * this spec is about.
- *
- * ## Why it is derived rather than served straight
- *
- * It used to be served verbatim, on the strength of the corpus carrying
- * exactly one real failure — `voice-status-leak` on this block, over a
- * `**Not yet implemented:**` heading at line 36 of the `.md`.
- *
- * **A verdict is not a fixture.** PR #302 adjudicated that finding to `pass`
- * (the heading is the label over a deliberate inventory of gaps, not a
- * work-tracker marker that escaped into prose — which is correct), the
- * document went to `state: pass` with zero `fail`, and these two tests broke
- * having asserted nothing about the panel that had changed. The corpus is
- * *supposed* to reach zero failures; a spec that needs one is a spec that gets
- * worse as the content gets better.
- *
- * This is the same treatment `STALE_JSON` already had, and for the same reason
- * that comment gives: what belongs HERE is whether the panel RENDERS a state,
- * not whether the corpus happens to be in it today. The document's shape still
- * comes from the generator — every field, every witness, the criterion count —
- * so it cannot agree with the code while the code disagrees with the corpus.
- * Only the verdict on one named criterion is set, out of the exact values the
- * sweep itself wrote before the adjudication.
- *
- * ## It also makes the sort assertion mean something
- *
- * `voice-status-leak` is criterion **19** of 48, not 0. Under the verbatim
- * fixture the one failure happened to be first in document order, so "worst
- * criterion first" was satisfied by a panel that did no sorting at all. Now
- * the loud row has to be lifted past nineteen quiet ones to pass.
- */
-const CORPUS_BLOCK = readFileSync(
+/** A block sidecar from the corpus, and two states derived from it. */
+const CORPUS_JSON = readFileSync(
   join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
   "utf8",
 );
 
+/**
+ * The same document with one criterion made to FAIL.
+ *
+ * **This used to be served straight from the corpus, and that is why the suite
+ * went red on `main` at 78a399ee5.** The block really did carry a failing
+ * `voice-status-leak` — the assertions below were written against it — and
+ * #302 ("Adjudicate the remaining 12 voice findings") legitimately FIXED that
+ * finding. The sidecar is now 22 pass and 26 n/a with nothing failing, so
+ * "worst criterion first" had no worst criterion to put first, and a test of
+ * the PANEL failed because the CONTENT got better.
+ *
+ * The file already knew this shape of mistake: {@link STALE_JSON} exists
+ * because that block's verdict was stale on the day it was written and stopped
+ * being stale when the sweep re-ran. The same reasoning applies to a failing
+ * row and was simply not applied to it. A test of how the panel RENDERS a
+ * failure must not depend on the corpus containing one — otherwise every
+ * content fix is a CI failure, which teaches exactly the wrong lesson.
+ *
+ * The row is the real one, copied from the sidecar as it stood at c8fbad385^,
+ * so the hash and witness the assertions name are the generator's own output
+ * rather than invented values.
+ */
 /** The criterion this spec drives, named once so both fixtures agree. */
 const LOUD_ID = "voice-status-leak";
 
 interface Witness {
   kind: string;
-  id: string;
   freshness: string;
   changed?: string[];
 }
@@ -91,45 +80,76 @@ interface Criterion {
   witnesses: Witness[];
 }
 interface Sidecar {
-  state?: string;
-  counts?: Record<string, number>;
+  state: string;
+  counts: Record<string, number>;
   criteria: Criterion[];
 }
 
-/** The corpus document, freshly parsed. Each fixture gets its own copy. */
-function corpus(): Sidecar {
-  return JSON.parse(CORPUS_BLOCK) as Sidecar;
-}
-
-/** The one criterion under test, located by id — never by index. */
+/**
+ * The one criterion under test, located BY ID rather than by position.
+ *
+ * Two things follow from that and neither is cosmetic.
+ *
+ * **Its witness stays the corpus's own.** The alternative is writing the
+ * criterion out as a literal — id, evidence, and a witness carrying
+ * `scriptHash: "5af6856733f3"`. That hash is the thing test 2 asserts, so a
+ * frozen copy keeps passing after the voice checker changes, asserting a value
+ * the corpus no longer holds. A fixture drifting from the corpus is the exact
+ * defect this whole section exists to fix; it must not be reintroduced one
+ * field down.
+ *
+ * **A criterion that has LEFT the corpus is a different change from one that
+ * was adjudicated**, so it throws by name instead of reading as a pass.
+ */
 function loudCriterion(doc: Sidecar): Criterion {
   const c = doc.criteria.find((x) => x.id === LOUD_ID);
-  // A corpus that no longer carries the criterion at all is a different
-  // change from one that adjudicated it, and must not read as a passing test.
-  if (!c) throw new Error(`${LOUD_ID} is not in the block sidecar any more`);
+  if (!c) throw new Error(`${LOUD_ID} is no longer in the block sidecar`);
   return c;
 }
 
-/** A block sidecar with its one failure restored, exactly as the sweep wrote it. */
 const BLOCK_JSON = (() => {
-  const doc = corpus();
+  const doc = JSON.parse(CORPUS_JSON) as Sidecar;
   const c = loudCriterion(doc);
+
+  // FLIPPED WHERE IT SITS — criterion 19 of 48 — rather than hoisted to 0.
+  //
+  // This is what makes "worst criterion first" an assertion about the panel.
+  // Put the failure at index 0 and the row the spec reads is the first row in
+  // DOCUMENT order, so a panel that sorted nothing at all would pass; that is
+  // precisely how the original verbatim fixture managed to assert nothing here.
+  // Left in place, the row has to be lifted past nineteen quiet ones.
   c.result = "fail";
   c.severity = "critical";
   c.evidence = [
     "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
   ];
-  // The script verdict alone. The agent witness that overturned it is the
+  // The script verdict alone. The agent witness that overturned it IS the
   // adjudication, and a criterion shown as failing has not been adjudicated
   // yet — keeping both would render a panel no sweep ever produced.
   c.witnesses = c.witnesses.filter((w) => w.kind === "script");
+
   doc.state = "fail";
-  doc.counts = { fail: 1, warn: 0, pass: 21, na: 26, unknown: 0 };
+  doc.counts = {
+    fail: 1,
+    warn: 0,
+    pass: doc.criteria.filter((x) => x.result === "pass").length,
+    na: doc.criteria.filter((x) => x.result === "n/a").length,
+    unknown: 0,
+  };
   return JSON.stringify(doc);
 })();
 
 /**
- * The same document with that criterion's witness marked stale.
+ * How many rows the panel folds away behind its disclosure: everything but the
+ * one failure shown first.
+ *
+ * Computed from the fixture for the same reason the fixture is computed at all
+ * — the number belongs to this document, and a literal here is one more way for
+ * a content change to turn a panel test red.
+ */
+const FOLDED_COUNT = (JSON.parse(BLOCK_JSON) as { criteria: unknown[] }).criteria.length - 1;
+/**
+ * The same document with its witness marked stale.
  *
  * This was served straight from the corpus, where that block's verdict WAS
  * stale — measured at 17:33 against an `.md` edited at 19:06 the same day.
@@ -139,14 +159,14 @@ const BLOCK_JSON = (() => {
  * belongs HERE is whether the panel renders that state — which must not depend
  * on the corpus happening to hold an out-of-date verdict on the day the suite
  * runs.
- *
- * It marked `criteria[0]` and relied on that being the row the panel shows
- * first. It no longer is: the loud row is lifted out of document order, which
- * is the point of the panel. Marking the criterion this spec actually clicks
- * keeps the two in step whatever the corpus does next.
  */
 const STALE_JSON = (() => {
   const doc = JSON.parse(BLOCK_JSON) as Sidecar;
+  // BY ID, like the fixture above. Marking `criteria[0]` worked only while the
+  // failure was forced to sit there; the spec clicks the first RENDERED row,
+  // which is the loud one wherever it lives in the document. Index and render
+  // order coinciding is what let this test pass earlier while asserting a
+  // stale badge on a row it had never marked.
   const w = loudCriterion(doc).witnesses[0]!;
   w.freshness = "stale";
   w.changed = ["md"];
@@ -238,7 +258,13 @@ test("a block icon opens its sidecar, worst criterion first", async ({ page }) =
   await expect(firstRow.locator(".fa-qa-chip", { hasText: "critical" })).toBeVisible();
 
   // The passing bulk is behind one labelled control that states its own count.
-  await expect(panel.locator(".fa-qa-more")).toContainText("47");
+  //
+  // DERIVED, not pinned. `47` was a literal here, which is a property of the
+  // corpus — how many criteria this one block happens to carry — not of the
+  // panel. Perturbing the sidecar showed the assertion still failing after the
+  // failing row was made synthetic, so the corpus dependency this test was
+  // fixed for survived in the one number nobody looked at.
+  await expect(panel.locator(".fa-qa-more")).toContainText(String(FOLDED_COUNT));
   await expect(panel.locator(".fa-qa-crit-list").nth(1)).toBeHidden();
 });
 
