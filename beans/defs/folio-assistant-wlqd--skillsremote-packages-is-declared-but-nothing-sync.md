@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wlqd
 title: skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package
-status: in-progress
+status: todo
 type: bug
 priority: normal
 created_at: 2026-09-19T05:47:28Z
-updated_at: 2026-09-19T06:07:28Z
+updated_at: 2026-09-19T06:25:42Z
 ---
 
 Found 2026-09-19 while working `nup0`. Two remote packages are declared and
@@ -135,3 +135,15 @@ sync remains unimplemented; what is fixed is that nothing now says otherwise.
 Implementing it is a platform capability change, so per `AGENTS.md` it is a
 feature request needing an issue and the CRDM workflow, not a direct
 implementation — recorded here rather than started.
+
+### Released back to `todo`, 2026-09-19
+
+The honesty half shipped in #339 (merged `6b54cdfa`). **Nobody is working the
+rest**, so the status goes back to `todo` rather than staying `in-progress` —
+`in-progress` tells a sibling session that someone is on it, and claiming
+without working is the failure the claim protocol exists to prevent.
+
+What is left is the decision in `## Done when`, unchanged: implement the sync
+(a platform capability change, so a GitHub issue and the CRDM workflow first),
+or declare these files a docs input and drop `sync`. Nothing in the tree now
+overstates the position, so this is not urgent.
