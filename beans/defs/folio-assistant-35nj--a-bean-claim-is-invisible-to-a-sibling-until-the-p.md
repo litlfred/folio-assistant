@@ -1,10 +1,10 @@
 ---
 # folio-assistant-35nj
 title: A bean claim is invisible to a sibling until the PR exists, so claim-before-work does not prevent a same-minute duplicate
-status: todo
+status: completed
 type: task
 created_at: 2026-09-19T09:41:30Z
-updated_at: 2026-09-19T09:41:30Z
+updated_at: 2026-09-19T11:16:40Z
 ---
 
 
@@ -41,3 +41,83 @@ Recording rather than choosing, because the cheapest option is a wording change 
 4. **Accept it.** Two sessions duplicating an eight-minute fix costs one withdrawal, and the withdrawal produced a real comparison of two designs. Not obviously wrong, and worth saying out loud rather than treating collision as always a defect.
 
 Option 1 is what I would do, because it is honest about the mechanism without pretending to a lock the store cannot provide, and option 3 is a reasonable follow-on.
+
+## Done 2026-09-19 — option 2, the owner's choice: push the claim to the default branch
+
+`scripts/claim-bean.ts`, wired as `bun run beans:claim <id>`. It builds the
+status change as a commit of its **own** and pushes it to the default branch, so
+a sibling sees the claim immediately rather than when the PR opens. Chosen over
+the PR-list check on the stated cost: a session writes to the default branch for
+claims, which this repo otherwise routes through pull requests.
+
+### The design was reshaped by a measurement, not by a preference
+
+The brief said the whole approach dies if the default branch is protected, and
+that this would be checked first. It could not be: `GET /branches/main/protection`
+answers **403 "Resource not accessible by integration"**, and `git push --dry-run`
+does not run the receive hooks that enforce protection. So neither the API nor git
+can answer in advance.
+
+That did not kill the design, it **reshaped** it: the tool attempts the push and
+handles the rejection, rather than assuming either way. Which is better
+engineering than the version that would have shipped had the probe succeeded.
+
+### Five outcomes, three of them refusals
+
+| outcome | exit | meaning |
+|---|---|---|
+| `pushed` | 0 | on the default branch; every session sees it |
+| `already-claimed` | 0 | a sibling holds it, and is **named**. Nothing written |
+| `new-on-branch` | 0 | not on the default branch yet, so nobody can see it and there is nothing to race over |
+| `fell-back` | **3** | push REJECTED. Not claimed anywhere a sibling can see; the message names the fallback |
+| `unknown` | **2** | the branch could not be read. **Never** "the bean is free" |
+
+`new-on-branch` was **not** in the design and was added because the first run
+found it: a bean created on this branch reported COULD NOT DETERMINE, which is
+the one answer this tool must never give when it knows. `beans create` followed
+immediately by a claim is the common case, and pushing the bean itself would be
+pushing *work* to the default branch, which is not what a claim is.
+
+### Two bugs of mine, both found by running it
+
+1. **The store defaulted to the PLATFORM root.** Beans live in the *folio*;
+   `AGENTS.md` is explicit that folio-assistant is the platform, not the content.
+   Run from a folio it reported `no bean matching "<id>" in this store` for a bean
+   in front of it. Now defaults to `process.cwd()` with `--repo` to override.
+2. **`repoAt + 1` ate the id.** With no `--repo`, `repoAt` is `-1`, so `-1 + 1`
+   is index 0 — the id itself — and the CLI printed its own usage on a valid
+   call. Guarded on `repoAt >= 0`.
+
+And one real robustness fix: pushing by remote **name**, then by the raw
+`get-url` value, both failed from the temp worktree with *"'../remote.git' does
+not appear to be a git repository"* — a relative remote resolves against the
+**worktree**. `absoluteRemote` resolves a local path against the repo and leaves
+a scheme or scp-form URL untouched. Irrelevant for an `https://` remote, which is
+every real one; the failure it prevents looks like a permissions problem and
+would be diagnosed as one.
+
+### Verified against a real bare remote, seven cases
+
+Not stubbed, because the states that matter cannot be faked: protection rejects
+at the receive stage and a non-fast-forward is a genuine ref race.
+
+| case | result |
+|---|---|
+| free bean | `pushed`; status on the branch, claim note names the branch, **1 file** in the commit, working tree untouched, no leaked worktree |
+| different branch | `already-claimed`, holder named, **no** commit |
+| same branch again | idempotent, **no** second commit |
+| protection rejects | `fell-back`, exit 3, branch untouched, worktree cleaned, fallback spelled out |
+| remote unreadable | `unknown`, exit 2 |
+| bean new on branch | `new-on-branch`, exit 0, correct advice |
+| non-fast-forward | retried, succeeded on attempt 2, and **said so** |
+
+`scripts/tests/claim-bean.test.ts` — 9 tests, each building a real bare remote.
+
+### What this does NOT do
+
+It does not make the claim atomic with the decision to work: there is still a gap
+between reading the branch and the push landing, which the non-fast-forward retry
+handles by re-reading rather than by locking. And if the default branch refuses
+direct pushes in this repository, the mechanism degrades to exactly the old
+behaviour — a branch-local claim plus an early PR — and says so. Whether it
+actually works here will be known the first time somebody runs it.
