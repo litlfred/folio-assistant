@@ -360,6 +360,49 @@ const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
+      // ── Tooling that the `schemas/` and `content/pipeline/` PREFIXES had
+      //    claimed for core, on the content-versus-platform reading this list
+      //    predates. The owner's cut, 2026-09-19, is different and sharper:
+      //    "f-a-core has high level processes only, no tooling. f-a has all
+      //    tooling KG." The test that follows from it — needed to RUN a
+      //    process is tooling; DESCRIBES one is core — puts these six here.
+      //
+      //    Measured, because the prefix rules are load-bearing and a
+      //    re-bucket that felt right could easily be worse: assigning the
+      //    seven unassigned modules alone took wrong-direction edges from 5
+      //    to 15, since each reached into one of these. Moving these first
+      //    and the seven after gives 4 edges and 0 unassigned, against a
+      //    baseline of 5 edges, 7 unassigned and 23 edges the tool had
+      //    declined to judge. Better on every axis, and one baseline edge
+      //    (`check-workflow-refs` → `translation-tools`) cleared outright.
+      //
+      //    Agent memory and carried notes are the unambiguous pair: an
+      //    agent's memory has nothing to do with a folio, and `carried-note`
+      //    is what an ACTOR carries across knowledge-graph nodes. Neither
+      //    survives the "describes a process" test.
+      "schemas/memory.ts",
+      "schemas/carried-note.ts",
+      // Translation is cat-harness's, stated directly: "ui stuff like
+      // translations (skills, tooling) are not in bootstrap, it is in
+      // cat-harness/". These three are the gettext machinery and the registry
+      // that binds a content type to its extractors — the tools that DO the
+      // translating, not the translated content.
+      "content/pipeline/po-inject.ts",
+      "content/pipeline/pot-extract.ts",
+      "schemas/translation-tools.ts",
+      // A README generator, not a README. It was the shared target of two
+      // wrong-direction edges — `sync-docs-harness` and `site-links` both
+      // reach it — so one re-bucket cleared both.
+      "content/pipeline/readme-toc.ts",
+      // ── The modules that fell through every rule and were reported
+      //    `unassigned`. All are scripts or `src/` machinery, and with the
+      //    six above moved, none of them reaches into core any more.
+      "scripts/agent-memory.ts",
+      "scripts/check-upstream-pins.ts",
+      "scripts/kg-viewer-strings.ts",
+      "scripts/site-links.ts",
+      "scripts/translate-kg-viewer.ts",
+      "src/upstream/pins.ts",
     ],
     prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "skills/framework/", "skills/remote-packages/"],
   },
@@ -498,6 +541,12 @@ const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else,
+      // and its only consumer is `scripts/gen-docs-pages.ts`, which is core.
+      // A script is not automatically tooling-side: this one operates
+      // exclusively on core data for a core caller, and calling it harness
+      // bought two wrong-direction edges for nothing.
+      "scripts/todos.ts",
     ],
   },
 ];

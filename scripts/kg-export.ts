@@ -49,6 +49,7 @@ import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.j
 import { termLayer } from "../schemas/vocabulary.js";
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
 import { artefactStub, defaultGraphKinds, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
+import { firstHeading, frontMatter } from "./front-matter.js";
 import { skillMdDirs as knownSkillDirs } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
@@ -675,26 +676,6 @@ interface Export {
    */
   danglingLinks: Array<{ from: string; edge: string; to: string }>;
   "@graph": Node[];
-}
-
-/** Parse the `name:` and `description:` out of a skill's YAML front matter. */
-function frontMatter(text: string): { name?: string; description?: string } {
-  if (!text.startsWith("---")) return {};
-  const end = text.indexOf("\n---", 3);
-  if (end === -1) return {};
-  const block = text.slice(3, end);
-  const out: { name?: string; description?: string } = {};
-  const name = block.match(/^name:\s*(.+)$/m);
-  if (name) out.name = name[1].trim();
-  // `description: >` folds onto following indented lines.
-  const desc = block.match(/^description:\s*(?:>[-+]?\s*\n((?:[ \t]+.*\n?)+)|(.+))$/m);
-  if (desc) out.description = (desc[1] ?? desc[2] ?? "").split("\n").map((l) => l.trim()).join(" ").trim();
-  return out;
-}
-
-/** First `# heading` — the fallback title when there is no front matter. */
-function firstHeading(text: string): string | undefined {
-  return text.match(/^#\s+(.+)$/m)?.[1].trim();
 }
 
 interface SkillFacts {

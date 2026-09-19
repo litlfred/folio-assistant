@@ -20,6 +20,7 @@
  * test time or stated explicitly as a synthetic case in a temp instance.
  */
 import { describe, it, expect } from "bun:test";
+import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import {
   existsSync,
   mkdirSync,
@@ -64,7 +65,7 @@ function instance(
   config: Record<string, unknown> = { contentType: "document" },
 ): { root: string; dispose: () => void } {
   const root = mkdtempSync(join(tmpdir(), "translation-index-"));
-  writeFileSync(join(root, "harness.config.json"), JSON.stringify(config, null, 2), "utf-8");
+  writeFileSync(join(root, HARNESS_CONFIG), JSON.stringify(config, null, 2), "utf-8");
   mkdirSync(join(root, SITE_DIR), { recursive: true });
   writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: t\n", "utf-8");
   for (const [rel, body] of Object.entries(files)) {

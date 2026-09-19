@@ -296,7 +296,10 @@ beans <id> --status in-progress          # claim an item (durable, visible to si
   survives a resume in a fresh container.
 - **Cross-session / cross-agent todos:** the same committed `beans/` store is the
   shared work-plan. **Claim before you work** (set `in-progress` + note your
-  branch) so two sessions don't pick the same item; never resolve a sibling's
+  branch) so two sessions don't pick the same item — a claim is **branch-local
+  until your PR exists**, so it announces rather than reserves, and
+  [`bean-coordination.md` §"A claim is branch-local"](skills/folio-core/bean-coordination.md)
+  has the two checks to run before you start; never resolve a sibling's
   bean, and **never delete ANY bean, including your own**. Work that turns out
   not to be wanted is `scrapped`, with its reasons — a scrapped bean records
   that something was considered and rejected, which is what stops the next
@@ -1127,30 +1130,40 @@ Full protocol, with the worked example:
 > merged #153 with `TypeScript — tests, lint, types (hard)` red. Measured on
 > `main` at 2026-08-30, all three:
 >
+> **🛑 The unguarded-copy half of this note went stale, and is corrected below
+> (2026-09-19).** It said `.claude/skills/local/` "is not among" `GROUPS` in
+> `gen-skill-docs.ts`, so "the copy with the *most* inbound references is the
+> one with no guard at all." **That is no longer true.** `GROUPS` now carries
+> `{ category: "Local skills (.claude/skills/local)", repoPrefix:
+> ".claude/skills/local" }`, the generator emits `local-todo-manager.md`, and
+> `gen-skill-docs.ts --check` gates it. FOUR copies exist, not three. Same
+> defect as the "two" this note was written to correct, one layer up: a claim
+> in prose outlived the code it described. Re-measure before quoting any row.
+>
+> Measured on this branch, 2026-09-19 — `wc -l`, and inbound refs by `grep -rl`
+> over `*.md` / `*.ts` / `*.json` / `*.sh` excluding `node_modules`:
+>
 > | copy | lines | inbound refs | generated? | CI-gated? |
 > |---|---|---|---|---|
-> | `skills/folio-core/todo-manager.md` | 201 | 3 | no — hand-authored | yes, indirectly (its mirror drifts) |
-> | `docs/reference/skill-instructions/todo-manager.md` | 202 | 1 | **yes**, from the row above | **yes** — `gen-skill-docs.ts --check` |
-> | `.claude/skills/local/todo-manager.md` | 167 | **5** | no | **no** |
+> | `skills/folio-core/todo-manager.md` | 447 | 10 | no — hand-authored | yes, indirectly (its mirror drifts) |
+> | `docs/reference/skill-instructions/todo-manager.md` | 457 | 4 | **yes**, from the row above | **yes** — `gen-skill-docs.ts --check` |
+> | `.claude/skills/local/todo-manager.md` | 369 | **15** | no — hand-authored | **yes** — since `.claude/skills/local` joined `GROUPS` |
+> | `docs/reference/skill-instructions/local-todo-manager.md` | 389 | 0 | **yes**, from the row above | **yes** |
 >
-> **The divergence is still two-way**, so the open question below is unchanged:
-> the mirror tracks `folio-core` to within its 15 lines of injected front matter
-> and nav, while `.claude/skills/local/` differs from `folio-core` by **188**
-> diff lines. What the third copy changes is the *failure mode*, and the two
-> hand-authored copies fail in opposite directions:
+> **The divergence is still two-way and it has WIDENED**, so the open question
+> below is unchanged: `.claude/skills/local/` differs from `folio-core` by
+> **261** diff lines, against 188 when this was last measured. Both
+> hand-authored copies now fail the same way rather than in opposite
+> directions — edit either and forget `bun run scripts/gen-skill-docs.ts` and
+> CI goes red, which is the loud failure and an improvement. What is NOT fixed
+> is that two hand-authored copies of one skill still have to be edited in
+> step by hand, and nothing checks that they agree with each other.
 >
-> - Edit `skills/folio-core/` and forget `bun run scripts/gen-skill-docs.ts`,
->   and CI goes red. Loud, and it caught me.
-> - Edit `.claude/skills/local/` and nothing checks anything. `GROUPS` in
->   [`scripts/gen-skill-docs.ts`](scripts/gen-skill-docs.ts) lists
->   `skills/content-lifecycle`, `src/skills`, `skills/folio-core` and the two
->   adapter dirs — **`.claude/skills/local/` is not among them.** So the copy
->   with the *most* inbound references is the one with no guard at all.
->
-> Which copy is canonical remains a question for whoever owns the skills layout;
-> resolving a 188-line divergence as a side effect of an unrelated edit is still
-> how one of them quietly becomes wrong. §"Opening brief" is in both
-> hand-authored copies so this change does not widen the gap.
+> Which copy is canonical remains a question for whoever owns the skills
+> layout; resolving a 261-line divergence as a side effect of an unrelated
+> edit is still how one of them quietly becomes wrong. §"Opening brief" is in both hand-authored copies, and the
+> claim-visibility rule is a pointer to `bean-coordination.md` in both, so
+> neither change widens the gap.
 
 ## More
 

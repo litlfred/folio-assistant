@@ -24,11 +24,13 @@
  * - **A job that pushes `gh-pages` with no protection against the race.**
  *   Either the shared `gh-pages-push` concurrency group, or a retry. One or
  *   the other, because they all contend for a single ref.
+ * - **A job that REPLACES the whole publish branch without carrying the open
+ *   PRs' `STAGING/` previews across.** Bean `plj1`.
  *
  * @module scripts/check-workflows
  */
 import { readdirSync, readFileSync } from "node:fs";
-import { parseDocument } from "yaml";
+import { parse, parseDocument } from "yaml";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -57,7 +59,12 @@ const ATTACKER_CONTROLLED = [
 export interface WorkflowFinding {
   file: string;
   line: number;
-  kind: "duplicate-key" | "unparseable" | "interpolated-untrusted" | "gh-pages-ungrouped";
+  kind:
+    | "duplicate-key"
+    | "unparseable"
+    | "interpolated-untrusted"
+    | "gh-pages-ungrouped"
+    | "gh-pages-wipes-staging";
   detail: string;
 }
 
@@ -251,6 +258,95 @@ function ghPagesUngrouped(text: string, file: string): WorkflowFinding[] {
     }));
 }
 
+/** The directory on the publish branch that holds the per-PR review previews. */
+const STAGING_PREFIX = "STAGING";
+
+/** The script that carries them across a full replace. */
+const RESTORE_SCRIPT = "scripts/restore-staging.ts";
+
+/**
+ * A full-replace publish that would delete every open PR's review preview.
+ *
+ * ## The defect — bean `plj1`
+ *
+ * `peaceiris/actions-gh-pages` with `keep_files` unset and no
+ * `destination_dir` clones the publish branch, runs
+ * `git rm -r --ignore-unmatch '*'` over ALL of it and copies `publish_dir` in.
+ * `docs-site.yml` was the only one of this repository's six `gh-pages`
+ * publishers in that shape, and it is the one that fires on every push to
+ * `main` — so the most frequently run publisher was the only one that wiped,
+ * and what it wiped was `STAGING/`.
+ *
+ * Measured on the real branch, 2026-09-19: three `docs(gh-pages)` commits in a
+ * 25-minute window, carrying 1, 3 and 1 previews on their respective parents
+ * and **zero** after.
+ *
+ * ## Why this is checked structurally rather than left to a comment
+ *
+ * Because the failure is invisible to everything else. The staging push
+ * succeeds, the bot comments the URL on the PR, the check run is green, and
+ * the artefact is removed minutes later by an unrelated merge — so no red run,
+ * no annotation and no test would ever have reported it. The same reasoning as
+ * the retry detection above: a restore cannot be CLAIMED without being
+ * implemented, so what is looked for is the step that does it.
+ *
+ * ## What is exempt, and why each exemption is safe
+ *
+ * - **`keep_files: true`** — additive; it removes nothing, so there is nothing
+ *   to carry. (It is also why it is not the fix for `docs-site`: it would stop
+ *   the main site's own deleted pages from ever disappearing.)
+ * - **a non-empty `destination_dir`** — the replace is scoped to a
+ *   subdirectory, so the previews beside it are untouched. `feature-staging`
+ *   writes `STAGING/<slug>` this way.
+ * - **a publish branch other than the one the previews live on** — a different
+ *   branch is a different site.
+ */
+export function ghPagesWipesStaging(text: string, file: string): WorkflowFinding[] {
+  let doc: unknown;
+  try {
+    doc = parse(text);
+  } catch {
+    // `unparseable` already reports this; a second finding for one cause is noise.
+    return [];
+  }
+  const jobs = (doc as { jobs?: Record<string, unknown> } | null)?.jobs;
+  if (jobs === undefined || jobs === null || typeof jobs !== "object") return [];
+
+  const out: WorkflowFinding[] = [];
+  for (const [jobName, rawJob] of Object.entries(jobs)) {
+    const steps = (rawJob as { steps?: unknown })?.steps;
+    if (!Array.isArray(steps)) continue;
+
+    let restored = false;
+    for (const rawStep of steps) {
+      const step = rawStep as { uses?: unknown; with?: Record<string, unknown>; run?: unknown };
+      if (typeof step.run === "string" && step.run.includes(RESTORE_SCRIPT) && !step.run.includes("--verify")) {
+        restored = true;
+      }
+      if (typeof step.uses !== "string" || !step.uses.startsWith("peaceiris/actions-gh-pages@")) continue;
+
+      const w = step.with ?? {};
+      const branch = String(w.publish_branch ?? "gh-pages");
+      if (branch !== "gh-pages") continue;
+      if (String(w.keep_files ?? "false") === "true") continue;
+      if (String(w.destination_dir ?? "").trim() !== "") continue;
+      if (restored) continue;
+
+      out.push({
+        file,
+        line: text.split("\n").findIndex((l) => l.includes("peaceiris/actions-gh-pages@")) + 1,
+        kind: "gh-pages-wipes-staging" as const,
+        detail:
+          `job \`${jobName}\` replaces the whole of \`${branch}\` (no \`keep_files\`, no \`destination_dir\`) ` +
+          `without first restoring \`${STAGING_PREFIX}/\`, so every open PR's review preview is deleted by this ` +
+          `deploy — silently, because the push succeeds. Run \`${RESTORE_SCRIPT}\` into the publish directory ` +
+          "immediately before the push, or scope the replace with `destination_dir`.",
+      });
+    }
+  }
+  return out;
+}
+
 export function checkWorkflows(): WorkflowFinding[] {
   const out: WorkflowFinding[] = [];
   for (const f of readdirSync(DIR)) {
@@ -261,6 +357,7 @@ export function checkWorkflows(): WorkflowFinding[] {
       ...unparseable(text, f),
       ...interpolatedUntrusted(text, f),
       ...ghPagesUngrouped(text, f),
+      ...ghPagesWipesStaging(text, f),
     );
   }
   return out;
@@ -273,7 +370,8 @@ if (import.meta.main) {
   if (findings.length === 0) {
     console.log(
       "✓ all parse; no duplicate keys; no attacker-controlled expression in a run body; " +
-        `every gh-pages push is protected by the \`${GH_PAGES_GROUP}\` queue or a retry`,
+        `every gh-pages push is protected by the \`${GH_PAGES_GROUP}\` queue or a retry; ` +
+        `no full-replace publish drops the open PRs' \`${STAGING_PREFIX}/\` previews`,
     );
   } else {
     for (const f of findings) console.error(`  ✗ ${f.file}:${f.line}  [${f.kind}] ${f.detail}`);

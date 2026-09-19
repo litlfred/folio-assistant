@@ -58,13 +58,36 @@ result.
 ## 3. Find the right skill — don't improvise
 
 Skills are the unit of work here. Before hand-rolling a procedure, check
-whether one exists.
+whether one exists. **Ask for it; do not navigate to it.**
+
+```
+skill_list                                      # every skill, with its summary
+skill_fetch skill="<id>" package_name="<pkg>"   # the instruction body to follow
+work_plan_prime                                 # the work plan — see §6
+```
+
+No MCP server attached? The same graph is on disk, and reading it is three
+steps rather than a remembered path: open `harness.json` at the repository
+root, take each `directories[]` entry whose `graphs` includes `cat-harness`,
+and read the `.md` files under it.
+
+**Read [`kg-navigation`](../reference/skill-instructions/kg-navigation.md)
+before your first search.** It carries both routes in full, what counts as a
+skill (three node kinds under those paths are not skills), and the three ways
+the search goes wrong — including the one where you edit the wrong copy of a
+skill that exists in three.
+
+This section used to list three directory paths instead. That is the practice
+`AGENTS.md` opens by warning against — *"hardcoding a path is how a skill goes
+missing the moment the layout moves"* — and one of the three names a graph kind
+that has since been renamed. The declaration is the answer; a path is a
+snapshot of it.
+
+Two generated references are worth knowing about, and neither is where you
+start:
 
 | Where | What it gives you |
 |---|---|
-| `skills/folio-core/` | content-agnostic: coordination, watchers, QA, render, bibliography |
-| `skills/folio-paper-adapter/` | papers: Lean, LaTeX, proofs, simulators |
-| `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [Skill schema reference](../reference/skills/) | generated input/output contract per skill |
 | [Skill instructions](../reference/skill-instructions/) | generated full instruction bodies |
 | [Skills & roles](../skills.html) | how skills, roles, and capabilities compose |
