@@ -35,18 +35,47 @@ import { basename, join, relative, resolve } from "node:path";
 import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
 import { knownSkills } from "./known-skills.js";
 
-const root = resolve(import.meta.dir, "..");
+interface Dangling { file: string; node: string; ref: string }
+interface Coverage { file: string; covered: number; total: number; uncovered: string[] }
+
+const REPO = resolve(import.meta.dir, "..");
 const strict = process.argv.includes("--strict");
 
+/**
+ * Every instance whose diagrams this repository is responsible for.
+ *
+ * Root-only until 2026-09-19, and the comment below is the argument for the
+ * change: *"a dangling `<folio:skill ref>` in a diagram this checker never
+ * opens is a broken reference reported as clean."* `bootstrap/` is a separate
+ * instance with its own declaration and its own two skills, so
+ * `bootstrap/workflows/bootstrap.bpmn` was in exactly that state from the day
+ * it was written — unchecked, and reported clean by a checker scoped to
+ * somebody else's graph.
+ *
+ * Each instance's refs resolve against ITS OWN skills, never the union: a
+ * bootstrap diagram naming a harness skill is a real dangling ref, because
+ * bootstrap runs before the harness exists.
+ */
+const INSTANCES = [REPO, join(REPO, "bootstrap")];
+
+const dangling: Dangling[] = [];
+const coverage: Coverage[] = [];
+let knownCount = 0;
+let fileCount = 0;
+let rootFiles: string[] = [];
+
+for (const root of INSTANCES) {
 const skills = knownSkills(root);
+knownCount += skills.size;
 // Absolute paths from every declared directory. A dangling `<folio:skill
 // ref>` in a diagram this checker never opens is a broken reference reported
 // as clean, which is the exact failure this script exists to prevent.
 const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
+fileCount += files.length;
+// The sections after this loop are about the ROOT instance only — its
+// content-type translation declarations and its publication index.
+if (root === REPO) rootFiles = files;
 
-interface Dangling { file: string; node: string; ref: string }
-const dangling: Dangling[] = [];
-const coverage: { file: string; covered: number; total: number; uncovered: string[] }[] = [];
 
 for (const file of files) {
   const model = await loadProcessModel(file);
@@ -57,18 +86,19 @@ for (const file of files) {
     const refs = node.skills ?? [];
     if (refs.length === 0) uncovered.push(node.id);
     for (const ref of refs) {
-      if (!skills.has(ref)) dangling.push({ file: relative(root, file), node: node.id, ref });
+      if (!skills.has(ref)) dangling.push({ file: relative(REPO, file), node: node.id, ref });
     }
   }
   coverage.push({
-    file: relative(root, file),
+    file: relative(REPO, file),
     covered: activities.length - uncovered.length,
     total: activities.length,
     uncovered,
   });
 }
+}
 
-console.log(`Workflow skill refs  (${skills.size} skills known, ${files.length} diagrams)\n`);
+console.log(`Workflow skill refs  (${knownCount} skills known across ${INSTANCES.length} instances, ${fileCount} diagrams)\n`);
 
 console.log("Coverage — activities naming the skill that implements them");
 for (const c of coverage) {
@@ -112,7 +142,7 @@ const { CONTENT_TYPE_TRANSLATIONS } = await import("../schemas/translation-tools
 const missingDeclared: string[] = [];
 for (const ct of CONTENT_TYPE_TRANSLATIONS) {
   for (const rel of ct.bpmnDiagrams ?? []) {
-    if (!existsSync(join(root, rel))) missingDeclared.push(`${ct.contentType} → ${rel}`);
+    if (!existsSync(join(REPO, rel))) missingDeclared.push(`${ct.contentType} → ${rel}`);
   }
 }
 // Same class again: a format may declare the modules that implement its
@@ -121,7 +151,7 @@ for (const ct of CONTENT_TYPE_TRANSLATIONS) {
 for (const ct of CONTENT_TYPE_TRANSLATIONS) {
   for (const f of ct.formats) {
     for (const rel of [f.extractModule, f.injectModule]) {
-      if (rel && !existsSync(join(root, rel))) {
+      if (rel && !existsSync(join(REPO, rel))) {
         missingDeclared.push(`${ct.contentType}/${f.id} → ${rel}`);
       }
     }
@@ -141,7 +171,7 @@ if (missingDeclared.length) {
  * exist, and the miscount proves the list was not maintained alongside the
  * directory.
  */
-const INDEX_DIR = join(root, "content/docs/publication-workflow");
+const INDEX_DIR = join(REPO, "content/docs/publication-workflow");
 const unindexed: string[] = [];
 if (existsSync(INDEX_DIR)) {
   const indexText = readdirSync(INDEX_DIR)
@@ -161,9 +191,9 @@ if (existsSync(INDEX_DIR)) {
   // unindexed. A wall of false findings is the failure mode `known-skills.ts`
   // names: a check that cries wolf is a check somebody switches off.
   const byBase = new Map<string, number>();
-  for (const f of files) byBase.set(basename(f), (byBase.get(basename(f)) ?? 0) + 1);
-  for (const f of files) {
-    const rel = relative(root, f);
+  for (const f of rootFiles) byBase.set(basename(f), (byBase.get(basename(f)) ?? 0) + 1);
+  for (const f of rootFiles) {
+    const rel = relative(REPO, f);
     const base = basename(f);
     const named = indexText.includes(rel) || (byBase.get(base) === 1 && indexText.includes(base));
     if (!named) unindexed.push(rel);
