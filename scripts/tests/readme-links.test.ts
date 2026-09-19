@@ -93,6 +93,40 @@ describe("parsing", () => {
     expect(links).toEqual([{ line: 7, text: "real", target: "after.md" }]);
   });
 
+  /**
+   * Bean `t373`. HTML links were INVISIBLE to the parser, and the three it
+   * missed were the `<img src>` BPMN diagrams at the top of the README — so a
+   * reader met three broken images on the front page while the audit reported
+   * five problems, none of them those. Silent omission is worse than the
+   * unwired gate the same bean records, because it survives wiring the gate up.
+   */
+  test("HTML `<img src>` and `<a href>` are links too — the t373 hole", () => {
+    const got = parseLinks(
+      [
+        '<img width="700" src="docs/a.svg" alt="x">',
+        "<a href='docs/b.md'>text</a>",
+        '<img alt="attrs before src" src="docs/c.png">',
+      ].join("\n"),
+    );
+    expect(got.map((l) => l.target)).toEqual(["docs/a.svg", "docs/b.md", "docs/c.png"]);
+    // The line number is what makes a finding actionable.
+    expect(got.map((l) => l.line)).toEqual([1, 2, 3]);
+  });
+
+  test("the src attribute is found wherever it sits in the tag", () => {
+    // `<img width="700" src="…">` is the README's own form, so a positional
+    // match would have missed every real case while passing a naive fixture.
+    expect(parseLinks('<img src="a.svg">')[0].target).toBe("a.svg");
+    expect(parseLinks('<img class="c" width="9" src="b.svg" alt="z">')[0].target).toBe("b.svg");
+    expect(parseLinks('<IMG SRC="c.svg">')[0].target).toBe("c.svg");
+  });
+
+  test("an HTML tag with no src or href contributes no link", () => {
+    // A bare `<br>` or a wrapper `<div>` must not become an empty target that
+    // then reports as dead — a false finding is as costly as a missed one.
+    expect(parseLinks("<br>\n<div>\n<img alt=\"no src\">\n<a>no href</a>")).toEqual([]);
+  });
+
   test("a link title is not part of the target", () => {
     expect(parseLinks('[x](a.md "Title")')[0].target).toBe("a.md");
   });
@@ -195,6 +229,28 @@ describe("runReadmeAudit", () => {
 
     expect(result.exitCode).toBe(1);
     expect(result.text).toContain("README.md:3");
+    expect(result.text).toContain("1 dead");
+  });
+
+  /**
+   * The integration half of the `t373` fix. The parse tests above prove the
+   * links are SEEN; this proves they reach the checker and change the exit
+   * code, which is the only thing CI reads. Without it the extraction could be
+   * correct and the gate still green.
+   */
+  test("a dead HTML <img src> fails the audit, exactly as a dead Markdown link does", () => {
+    const root = repo(["README.md", "live.svg"]);
+    writeFileSync(
+      join(root, "README.md"),
+      '# T\n\n<img width="700" src="live.svg" alt="ok">\n<img width="700" src="gone.svg" alt="bad">\n',
+    );
+    const result = runReadmeAudit({ root });
+
+    expect(result.exitCode).toBe(1);
+    // Line 4, not line 3: the live one must not be blamed for the dead one.
+    expect(result.text).toContain("README.md:4");
+    expect(result.text).toContain("gone.svg");
+    expect(result.text).toContain("2 link(s) checked");
     expect(result.text).toContain("1 dead");
   });
 

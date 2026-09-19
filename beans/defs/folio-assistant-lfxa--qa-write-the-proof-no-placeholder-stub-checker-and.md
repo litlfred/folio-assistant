@@ -5,6 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-18T17:43:01Z
 updated_at: 2026-09-18T17:43:01Z
+parent: folio-assistant-1swy
 ---
 
 ## What

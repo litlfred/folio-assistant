@@ -5,6 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-19T08:11:21Z
 updated_at: 2026-09-19T08:11:21Z
+parent: folio-assistant-bzyu
 ---
 
 MEASURED 2026-09-19 while adding one string to `scripts/kg-viewer-strings.ts`.

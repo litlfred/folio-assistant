@@ -6,6 +6,7 @@ type: bug
 priority: normal
 created_at: 2026-09-19T09:29:50Z
 updated_at: 2026-09-19T10:57:05Z
+parent: folio-assistant-8jt6
 ---
 
 Found 2026-09-19 while adding the memory node for the owner's rule

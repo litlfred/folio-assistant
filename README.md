@@ -48,7 +48,9 @@ the bootstrap process.
 
 Design, open questions, and why intent is an *instance reference* rather than a
 menu of content types:
-[proposals/bootstrap](docs/folio-assistant/proposals/bootstrap.md).
+[proposals/bootstrap](fsh-guts/proposals/bootstrap.md) — in `fsh-guts/`, which
+is kept and addressable but deliberately not published as a page, so this is a
+repository link rather than a site one.
 **The graph itself is not built yet** — the README is the specification and the
 entry point.
 
