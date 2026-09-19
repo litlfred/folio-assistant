@@ -48,6 +48,14 @@
   //
   // Every tree is now compiled. A green `bun run typecheck` finally means what
   // it says.
-  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts", "adapters/**/*.ts", "types/**/*.d.ts"],
+  //
+  // `tests/health/**` is in scope, and `tests/**` deliberately is not. The
+  // health sweep is ordinary program code that ships behind a workflow, so a
+  // green `typecheck` has to mean something about it. The rest of `tests/` is
+  // Playwright specs, matched by `**/*.e2e.ts` and compiled by Playwright's
+  // own pipeline; pulling them in here would put a second typechecker over
+  // files that already have one, and a disagreement between the two is a
+  // failure with no owner.
+  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts", "adapters/**/*.ts", "tests/health/**/*.ts", "types/**/*.d.ts"],
   "exclude": ["dist", "node_modules"]
 }

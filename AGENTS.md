@@ -191,11 +191,19 @@ produced **14,688** duplicates, 92 % of every open bean in that repo.
 [`turn-reporting.md`](skills/folio-core/turn-reporting.md) carry the brief you
 open a topic with and the turn-report formats with their seven rules.
 [`skills/folio-core/bean-coordination.md`](skills/folio-core/bean-coordination.md)
-carries the cross-session half: **claim before you work**, never resolve a
-sibling's bean, and **never delete ANY bean** — unwanted work is `scrapped`,
-with its reasons, because a scrapped bean stops the next agent re-entering a
-dead end while a deleted one leaves a sibling unable to tell abandonment from
-accident.
+carries the cross-session half: **claim before you work** — and §"A claim is
+branch-local" for why a claim **announces rather than reserves** until your PR
+exists, with the two checks to run first — never resolve a sibling's bean, and
+**never delete ANY bean**. Unwanted work is `scrapped`, with its reasons,
+because a scrapped bean stops the next agent re-entering a dead end while a
+deleted one leaves a sibling unable to tell abandonment from accident.
+
+**That is one instance of a general rule, and the general rule is the source of
+truth** —
+[`deletion-requires-confirmation.md`](skills/folio-core/deletion-requires-confirmation.md):
+an agent never removes a durable artefact on its own initiative; it reports what
+would go, with sizes and ages, and waits to be told. The bean case is the
+strictest because a bean id is referenced from commits, issues and other beans.
 
 Two boundaries worth keeping in view. **`beans` are not sidecars**: never
 `beans create` bulk machine-generated queues (`*.qa.json`, witness files,
@@ -238,6 +246,29 @@ tracking issue are for (beans `ynu8`, `lq7e`).
 `witness-refresh` fail by design in this repo: the first preflights on
 `content/package.json`, the second needs `folio-assistant/computations/`, and
 the platform carries no folio.
+
+## Repository health — the same shape, one level out
+
+`check:ci-health` asks whether the **workflows** pass. `bun run health`
+(`tests/health/`, daily via `.github/workflows/health-check.yml`) asks about
+the **repository**: how much of `gh-pages` the review previews occupy, how big
+a clone costs, whether the work plan has duplicates or unhonoured claims.
+Results are committed under `tests/health/results/`, declared in
+`harness.json` as the `health` graph, and carry every threshold's **basis** —
+structurally, so a check cannot ship a bare number.
+
+Same three rules as above, and for the same reasons: **could-not-determine is
+never rendered as clean** (and outranks a finding — a sweep blind on one check
+has not cleared the others), the tracking issue is **edited in place** rather
+than commented on, and on `unknown` it is left **untouched** while the job
+fails. `bun run health:list` says what the checks are.
+
+**It reports and never acts.** Four of the five checks are about artefacts
+accumulating, and every finding's action names something a *person* does. That
+is [`deletion-requires-confirmation`](skills/folio-core/deletion-requires-confirmation.md)
+applied to the tool that most wants to break it — the skill's own worked
+example is `plj1`, a workflow whose shape deleted every open PR's preview
+without anybody deciding it.
 
 ## Actors, roles and skills — a role is a swimlane
 
