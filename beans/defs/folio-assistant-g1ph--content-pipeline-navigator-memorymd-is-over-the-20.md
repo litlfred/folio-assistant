@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g1ph
-title: 'content-pipeline-navigator MEMORY.md is at capacity, so no new entry can be added'
-status: todo
+title: content-pipeline-navigator MEMORY.md is at capacity, so no new entry can be added
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T08:50:00Z
-updated_at: 2026-09-19T08:55:00Z
+updated_at: 2026-09-19T08:58:33Z
 ---
 
 ## The finding
@@ -73,3 +73,54 @@ lands. All measured 2026-09-19 during bean `2634`:
       budget — the test gates entries falling past the cut, but nothing gates
       a file arriving at capacity, which is what made this a trap for the
       next writer rather than for the one who filled it
+
+---
+
+## Done, 2026-09-19 — the sibling mechanism, not smaller entries
+
+**The fix is a schema feature, because brevity had run out.** `AGENTS.md`
+prescribed *"split detail into sibling files the agent reads on demand"* and
+there was no mechanism, so the only lever was shortening prose — and the
+entries worth keeping are the ones with evidence in them.
+
+`MemoryNode` gains an optional `detail`, split from the body at a
+`<!-- detail -->` marker. `renderEntries` emits a one-line pointer; the
+generator writes the evidence to `.claude/agent-memory/<agent>/detail/<id>.md`
+and **prunes** files whose node no longer declares one — an orphan there says
+something the entry has stopped saying, which is the orphan-sidecar shape one
+directory along.
+
+**In the body, not the front matter**, and that was a correction mid-flight: I
+first carried it as a YAML block scalar, and the hand-rolled front-matter
+parser here has no block-scalar support, so nothing reached the node and no
+detail file was written. Detail is prose; indenting paragraphs into YAML is how
+a later code fence or colon breaks a parse for no gain. An HTML comment is
+invisible in rendered Markdown, so the source still reads as one document.
+
+Split so far: `who-owns-which-file`, `derive-the-gate-list`,
+`never-assert-on-a-qa-verdict`, `adapter-vs-profile`, `qa-sidecars`,
+`the-commands-that-do-exist-here`, plus the new `block-verdicts-moved`.
+
+**Result: 16 entries, region ending at line 193 of 200** — the four TRAPs from
+bean `2634` are in, every entry injects whole, and there is headroom for the
+next writer, which is the thing that was actually missing.
+
+### The gate was wrong, and only the fix revealed it
+
+`entriesPastBudget` reported entry HEADINGS past line 200. After the first
+split the region ended at **209**, so the last entry's body ran nine lines past
+the cut — and the check returned nothing, because that entry's heading sat
+comfortably inside. **A truncated entry is worse than a dropped one: it still
+looks complete to the agent reading it.**
+
+It now reports a heading past the budget as before, and a region ENDING past it
+too, naming the last entry. Pinned by four tests including a live one over this
+repo's own generated files — the assertion the heading check never made.
+
+## Summary of Changes
+
+- `schemas/memory.ts` — optional `detail`
+- `scripts/agent-memory.ts` — `splitDetail`, `detailRelPath`, `writeDetail`
+  with pruning, and the corrected `entriesPastBudget`
+- seven memory nodes split
+- `scripts/tests/agent-memory.test.ts` — four new tests

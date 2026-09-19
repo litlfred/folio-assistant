@@ -1,17 +1,5 @@
----
-$schema: folio-memory/v1
-id: qa-sidecars
-label: stable
-summary: "QA sidecars"
-createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
----
-`<block>.qa.json` (block-qa/v1) carries per-criterion reviewer entries;
-`<criterion-id>.script.json` is qa-script/v1. Producing types are
-`schemas/block-qa.ts`. `qa-staleness.ts` reports; `qa-sweep.ts` repairs.
-
-<!-- detail -->
+<!-- Generated from skills/memory/qa-sidecars.md by `bun run agent-memory`. -->
+<!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
 A sidecar is **stale** when the recorded source hashes or a reviewer
 `script_hash` drift from the current file contents. Refresh by deleting the

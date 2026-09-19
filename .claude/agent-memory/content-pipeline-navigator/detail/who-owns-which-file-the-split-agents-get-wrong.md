@@ -1,24 +1,5 @@
----
-$schema: folio-memory/v1
-id: who-owns-which-file-the-split-agents-get-wrong
-label: stable
-summary: "who owns which file (the split agents get wrong)"
-createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
----
-**The platform** holds the pipeline that ACTS ON content (`validate.ts`,
-`render-*.ts`, `build.ts`, `qa-sweep.ts`, `profile-check.ts`, the `validate-*`
-family, everything under `schemas/`). **A folio** holds its own audit scripts
-under its own `content/pipeline/`.
-
-From inside a folio the platform is symlinked under `folio-assistant/`, so the
-same script name resolves to two different paths. **Check which side you are on
-before invoking** — the wrong guess is a path that does not exist. Do not assume
-a `bun run <shortcut>` exists either; several aliases were dropped in the
-migration and never re-wired.
-
-<!-- detail -->
+<!-- Generated from skills/memory/who-owns-which-file-the-split-agents-get-wrong.md by `bun run agent-memory`. -->
+<!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
 Platform-side, in full: `validate.ts`, `render-latex.ts`,
 `render-markdown.ts`, `build.ts`, `qa-sweep.ts`, `qa-staleness.ts`,

@@ -1,17 +1,5 @@
----
-$schema: folio-memory/v1
-id: the-commands-that-do-exist-here
-label: stable
-summary: "the commands that do exist here"
-createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
----
-`bun install`, `bun test`, `bunx playwright test`, `eslint .`,
-`bun run typecheck`. The rest — the server, the scaffolder, the check: family
-and the generators — are in the detail file rather than memorised.
-
-<!-- detail -->
+<!-- Generated from skills/memory/the-commands-that-do-exist-here.md by `bun run agent-memory`. -->
+<!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
 ```sh
 bun install

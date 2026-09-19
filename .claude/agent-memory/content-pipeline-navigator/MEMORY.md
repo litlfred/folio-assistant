@@ -22,10 +22,7 @@ on all **eight** shared kinds. When adding a content type, ask whether it
 needs different **code** (adapter) or only different **rules** (profile plus
 a subclass).
 
-`PaperContentAdapter` extends `DocumentContentAdapter`; `MATH_BLOCK_KINDS` is
-written out in `schemas/block-kinds.ts` and `DOCUMENT_BLOCK_KINDS` is its
-**derived** complement, so a kind added to `BLOCK_KINDS` cannot go
-unclassified. Keep that derivation — do not hand-maintain both lists.
+More: `detail/adapter-vs-profile.md`
 
 ## STABLE — the document render path takes no TeX
 
@@ -41,15 +38,9 @@ while drafting on a machine with no TeX.
 
 `<block>.qa.json` (block-qa/v1) carries per-criterion reviewer entries;
 `<criterion-id>.script.json` is qa-script/v1. Producing types are
-`schemas/block-qa.ts`. A sidecar is **stale** when the recorded source hashes
-or a reviewer `script_hash` drift from the current file contents; refresh by
-deleting the stale `criteria.<crit>` entry and re-running
-`bun run content/pipeline/qa-sweep.ts <path> --only <crit>`.
+`schemas/block-qa.ts`. `qa-staleness.ts` reports; `qa-sweep.ts` repairs.
 
-`qa-staleness.ts` reports; `qa-sweep.ts` repairs.
-
-**A standalone library `.lean` file has no sidecar** and escapes every
-per-block checker. Nothing but an agent checks it.
+More: `detail/qa-sidecars.md`
 
 ## STABLE — re-measure, do not quote
 
@@ -68,18 +59,11 @@ per-block checker. Nothing but an agent checks it.
 
 ## STABLE — the commands that do exist here
 
-```sh
-bun install
-bun run src/index.ts --http      # the assistant (HTTP); --stdio for stdio MCP
-bun test                         # unit tests
-bunx playwright test             # e2e  (npm script: test:e2e)
-eslint .
-bun run src/index.ts --check-deps   # probe environment capabilities
-bun run init-folio --help           # scaffold a new folio
-bun run readme:sync[:check] | readme:sections
-bun run check:ci-health | check:corpus-gate | check:workflow-policy
-bun run typecheck | lint | gen:jsonld[:check] | render:bpmn[:check]
-```
+`bun install`, `bun test`, `bunx playwright test`, `eslint .`,
+`bun run typecheck`. The rest — the server, the scaffolder, the check: family
+and the generators — are in the detail file rather than memorised.
+
+More: `detail/the-commands-that-do-exist-here.md`
 
 ## STABLE — the stages, in order
 
@@ -93,6 +77,17 @@ bun run typecheck | lint | gen:jsonld[:check] | render:bpmn[:check]
   → chapters/*.tex  or  one assembled .md
 ```
 
+## STABLE — a mkdtemp fixture is outside every instance root, so it cannot test anything using findContentRepoRoot
+
+A check that has stopped working still passes such a test, because the test
+never reaches the path that broke. Measured 2026-09-19: every pre-existing
+`no-orphan-sidecar` fixture was `mkdtemp`, so none noticed that check becoming a
+no-op returning a clean bill of health.
+
+Build a miniature folio and `process.chdir` into it, restoring in `finally`.
+Stubbing the root is worse than nothing — the test then agrees with the code by
+construction.
+
 ## STABLE — `uses[]` is EDITORIAL, and immediate-neighbours only
 
 `uses[]` and `interprets` state what a *reader* must have read to follow a
@@ -102,25 +97,28 @@ import graph and not a transitive closure.
 
 ## STABLE — who owns which file (the split agents get wrong)
 
-**This repo (the platform)** holds the pipeline that *acts on* content:
-`validate.ts`, `render-latex.ts`, `render-markdown.ts`, `build.ts`,
-`qa-sweep.ts`, `qa-staleness.ts`, `profile-check.ts`, `export-bibtex.ts`,
-`citations.ts`, `build-glossary.ts`, the `validate-*` family, and every
-schema under `schemas/` (`types.ts`, `constraints.ts`, `builders.ts`,
-`block-kinds.ts`, `block-qa.ts`, `lean-packages.ts`).
+**The platform** holds the pipeline that ACTS ON content (`validate.ts`,
+`render-*.ts`, `build.ts`, `qa-sweep.ts`, `profile-check.ts`, the `validate-*`
+family, everything under `schemas/`). **A folio** holds its own audit scripts
+under its own `content/pipeline/`.
 
-**A folio** holds its own audit scripts — vacuity/axiom, clarity, orphan,
-trace-convention, and so on — under its own `content/pipeline/`.
+From inside a folio the platform is symlinked under `folio-assistant/`, so the
+same script name resolves to two different paths. **Check which side you are on
+before invoking** — the wrong guess is a path that does not exist. Do not assume
+a `bun run <shortcut>` exists either; several aliases were dropped in the
+migration and never re-wired.
 
-A folio reaches the platform through a clone-plus-symlink (in qou,
-`scripts/setup-folio-assistant.sh`), so from inside a folio the platform
-paths are prefixed `folio-assistant/`. **Check which side a script is on
-before invoking it**; qou's own `AGENTS.md` carries this warning because the
-wrong guess is a path that does not exist.
+More: `detail/who-owns-which-file-the-split-agents-get-wrong.md`
 
-Several convenience aliases were dropped in that migration and not re-wired
-(`validate-refs`, `export-bibtex`, `migrate-lean-refs`). Do not assume a
-`bun run <shortcut>` exists — check `package.json` on the side you are on.
+## TRAP — a 'could not check' notice reusing a finding's wording inflates the census it protects
+
+Consumers count findings by grepping the message, so a status line carrying the
+finding's phrase is counted as one.
+
+Measured 2026-09-19: a "could not read the results tree" warning worded with
+`orphan QA sidecar` turned ten assertions red — it inflated the orphan census
+the check exists to keep honest. Name the check by its **id** in a diagnostic,
+never by the finding's phrase.
 
 ## TRAP — adding a block kind is ~30 files, not one
 
@@ -134,55 +132,51 @@ Known-wrong and predating the document profile: `document-intake.md` maps
 guideline recommendations onto `definition`, which is wrong for a document
 folio, where `definition`'s `lean` field is **required**.
 
+## TRAP — a block's QA verdict is no longer beside the block — scanning its directory finds nothing
+
+`${block.root}.qa.json` has found nothing since bean `2634`, and finding
+nothing reads as "never audited" rather than as an error — a false pass.
+
+Never compose the path; the helpers in `content/pipeline/qa-paths.ts` are the
+one answer, and they differ for reading and writing.
+
+More: `detail/block-verdicts-moved-to-the-results-tree.md`
+
 ## TRAP — derive the gate list from the WORKFLOW, not from package.json
 
-Three CI checks are invoked **by path**, not by npm-script name, so a sweep over
-`bun run <script-name>` structurally cannot see them:
-`gen-docs-pages.ts`, `gen-schema-docs.ts`, `gen-skill-docs.ts`, each `--check`.
-`gen-docs-pages` has no `package.json` alias at all.
-
-> Measured `bun run scripts/gen-docs-pages.ts --check` on 2026-09-19 (bean
-> `nup0`): 18 named gates, `tsc`, `eslint`, `bun test` and 60 Playwright tests
-> all green, and `TypeScript — tests, lint, types (hard)` still red on 20 stale
-> `test/results/witnesses/**/*.kg.json` projections.
-
-Get the list from the workflow:
-`grep -oE "bun run (scripts/[a-z-]+\.ts[^ ]*|[a-z:.-]+)" .github/workflows/code-quality-gates.yml | sort -u`
+Three CI checks are invoked **by path**, not by npm-script name, so a sweep
+over `bun run <script-name>` structurally cannot see them: `gen-docs-pages.ts`,
+`gen-schema-docs.ts`, `gen-skill-docs.ts`, each `--check`. Get the list from the
+workflow itself, not from `package.json`.
 
 **Editing a script that WRITES a witness restales every published projection of
-it.** `kg-audit.ts` records its own `scriptHash` in 220 `kg-qa` sidecars *and*
-20 `test/results/witnesses/**/*.kg.json`. Regenerate both. Verify by parsing each side and
-blanking the hash keys — these are single-line JSON, so `grep -v scriptHash`
-filters nothing.
+it** — regenerate both sides and verify by parsing, not by grep.
 
-**`MEMORY.md` is generated** from `skills/memory/` by `bun run agent-memory`; a
-TRAP written into it directly is deleted by the next run. Keep the total under
-200 lines — past that the harness does not inject the entry at all.
+More: `detail/derive-the-gate-list-from-the-workflow.md`
+
+## TRAP — validateObjects detects 'validated nothing' via issues.length === 0, so any advisory issue turns invalid into valid
+
+`validateObjects` refuses success over a corpus it read nothing from, detected
+as `allBlocks.size === 0 && issues.length === 0`. **Any** issue raised in
+`loadBlocksFromDir` disarms it — including a warning that a check could not run.
+
+Measured 2026-09-19: a third-state notice on `no-orphan-sidecar` flipped "an
+empty directory is INVALID" to `valid: true`. Suppressed there; the fragility
+remains for the next check that adds an advisory issue.
 
 ## TRAP — never assert on a QA VERDICT from the published corpus
 
-`test/results/witnesses/**` is live state. A test that reads a VERDICT out of it breaks
-when somebody fixes or adjudicates the finding — which is the system working.
+`test/results/witnesses/**` is live state. A test that reads a VERDICT out of it
+breaks when somebody fixes or adjudicates the finding — which is the system
+working, not a regression.
 
-> Measured on 2026-09-19 (bean `tywj`): `tests/qa-panel.e2e.ts` pinned the first
-> row to `voice-status-leak`/`fail`/`critical`, the fold count to `47` and the
-> checker hash to `5af6856733f3`. An adjudication in `c8fbad385` turned that
-> criterion `pass`; four assertions went red for reasons unrelated to the panel.
+**Read the document live and flip the ONE criterion you test, BY ID, where it
+sits.** Do not freeze a captured copy: freezing the criterion freezes its
+witness, so the hash literal outlives the checker. And never hoist the failure
+to `criteria[0]` — the generator already sorts worst-first, so a panel that
+sorted nothing would pass.
 
-**Read the document live; flip the ONE criterion you test, BY ID, where it
-sits.** The settled answer (#319) keeps only the script witness, so the hash the
-spec asserts is still the corpus's own.
-
-**Do not freeze a captured copy.** I tried it and withdrew it: freezing the
-criterion freezes its witness, so the hash literal outlives the checker — the
-same defect one field down. Reading the value out of a frozen document makes the
-assertion self-consistent, not correct.
-
-**Never hoist the failure to `criteria[0]`.** The generator already sorts
-worst-first, so a panel that sorted nothing would pass.
-
-`severity`, `evidence` and `changed` exist only in states the corpus is not in,
-so no live sidecar vouches for them. Beans `tywj`, `qjyi`, `iumj`.
+More: `detail/never-assert-on-a-qa-verdict-from-the-published-corpus.md`
 
 ## TRAP — the schema cannot catch a profile violation
 
