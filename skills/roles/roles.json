@@ -43,12 +43,13 @@
         "Editor / author (person)"
       ],
       "skills": [
-        "content-plan",
         "content-author",
+        "content-plan",
         "content-review",
-        "staging-review",
         "decision-audit",
         "evidence-appraisal",
+        "milnor-exposition-standard",
+        "staging-review",
         "voice-authoring-guidance"
       ],
       "persona": "Knows the subject and is mid-edit. Came to change one block, not to learn the system. Has the folio open and the schema only half in mind; will follow a convention if it is stated where they already are, and invent one if it is not.",
@@ -74,6 +75,7 @@
       ],
       "skills": [
         "content-validate",
+        "milnor-exposition-standard",
         "voice-authoring-guidance"
       ],
       "persona": "Author plus the authority to accept. Sees QA findings and decides which are real. Under time pressure and accountable for what lands, so they need the evidence before the argument.",
@@ -103,13 +105,14 @@
         "Non-mechanical validation (review agent or SME)"
       ],
       "skills": [
-        "content-review",
         "content-feedback",
-        "staging-review",
-        "document-intake",
-        "translation-manager",
+        "content-review",
         "decision-audit",
+        "document-intake",
+        "milnor-exposition-standard",
         "semantic-review-scoping",
+        "staging-review",
+        "translation-manager",
         "voice-overlay-review"
       ],
       "persona": "Reading someone else's change, usually against a deadline, usually without the context that produced it. Needs to know what changed and what it affects before they need to know why.",
@@ -131,11 +134,12 @@
         "Narrative reviewer"
       ],
       "skills": [
-        "voice-editorial-review",
-        "uses-editorial-review",
-        "content-review",
         "content-feedback",
+        "content-review",
+        "milnor-exposition-standard",
         "translation-manager",
+        "uses-editorial-review",
+        "voice-editorial-review",
         "voice-overlay-review"
       ],
       "persona": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks — so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding.",
@@ -456,9 +460,12 @@
         "document-authoring",
         "document-structure",
         "feature-staging",
+        "github-state-inspection",
         "issue-working",
+        "library-ingestion",
         "normative-statements",
         "placement",
+        "platform-gates",
         "prepare-merge",
         "prepare-merge-auto",
         "semantic-review-scoping",
@@ -514,7 +521,8 @@
         "Ingestion Engine (agent, runs unattended)"
       ],
       "skills": [
-        "document-intake"
+        "document-intake",
+        "library-ingestion"
       ],
       "persona": "Turns an uploaded source into corpus. Works from documents of unknown quality and must record provenance for everything it derives, because a derived claim with no source is unusable later.",
       "voice": "Provenance-carrying. Every extracted fact names where it came from and how confident the extraction was.",

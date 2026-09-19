@@ -91,6 +91,8 @@
     "kg:schema:ids": "bun run scripts/harness-schema-export.ts --write-ids",
     "kg:viewer": "bun run scripts/kg-viewer.ts",
     "lint": "eslint .",
+    "gates": "bun run scripts/gates.ts",
+    "gates:list": "bun run scripts/gates.ts --list",
     "mcp:capture": "bun run scripts/capture-mcp-tools.ts",
     "ns:bootstrap": "bun run scripts/ns-export.ts --layer bootstrap",
     "ns:check": "bun run scripts/ns-export.ts --check",

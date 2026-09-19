@@ -144,10 +144,12 @@
         agent running only the tests would have pushed all three.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <!-- The audit's finding, recorded rather than papered over. This is
-             the ONE activity in this diagram with no skill to bind, and
-             that absence IS the Verification phase being unowned. -->
-        <folio:no-skill reason="No skill covers running the platform's own gates — they live in package.json and CI YAML and nowhere an agent is told to read, which is why an agent finds them by grepping. That gap is bean folio-assistant-n60j, and when the skill exists this exemption becomes a folio:skill ref."/>
+        <!-- This activity carried a `<folio:no-skill>` exemption when the
+             diagram landed: the SDLC audit had found that nothing told an
+             agent to run the platform's own gates, and the exemption WAS
+             the Verification phase being unowned, recorded rather than
+             papered over. Bean `folio-assistant-n60j` closed it. -->
+        <folio:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f4</bpmn:incoming>
       <bpmn:outgoing>f5</bpmn:outgoing>
