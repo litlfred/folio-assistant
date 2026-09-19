@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-19T09:29:50Z
-updated_at: 2026-09-19T10:20:53Z
+updated_at: 2026-09-19T10:46:38Z
 ---
 
 Found 2026-09-19 while adding the memory node for the owner's rule
@@ -96,3 +96,5 @@ failing state. Same shape as the trap this bean's sibling records — asserting
 something the machine never checked.
 
 _2026-09-19T10:20:53Z_ — Cross-link from oe8l (PR #392): skills/folio-core/placement.md now carries, as a procedure, what five of platform-boundary-guard's entries carry as prose - the shape of every defect, adapter-vs-profile, compose-nothing-resolve-everything, the README generator, and could-not-determine as a third state. That is a trimming opportunity for the second 'Done when' box, and the cheapest kind: those entries can shrink to a summary plus a pointer at the skill without losing anything, because AGENTS.md already says the skill governs and the memory entry summarises. I did NOT do it in #392 - editing the nodes changes what gets truncated, and mixing a memory-budget change into a skill PR is the scope creep the skill itself argues against. Leaving it to whoever holds this bean.
+
+_2026-09-19T10:46:38Z_ — Claimed on branch claude/4kiw-memory-pointer (worktree /home/user/wt-4kiw/folio-assistant). Working the second 'Done when' box: get platform-boundary-guard back under the 200-line injection budget by replacing entries that skills/folio-core/placement.md now supersedes with a pointer node, archiving rather than deleting.

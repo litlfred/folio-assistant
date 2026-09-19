@@ -9,21 +9,6 @@ Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote).
 
 <!-- folio:memory:begin -->
 
-## STABLE — adapter vs profile: a different axis, and conflating them is costly
-
-- **Adapters** (`paper`, `dak`) partition block kinds into **disjoint**
-  namespaces. `adapterForKind` is what QA-criterion scoping reads, and it
-  must stay **total and unambiguous**.
-- **Profiles** (`document`, `paper`) **nest**: every document kind is also a
-  paper kind.
-
-Making `document` a third adapter would have made `adapterForKind` ambiguous
-on all **eight** shared kinds. When adding a content type, ask whether it
-needs different **code** (adapter) or only different **rules** (profile plus
-a subclass).
-
-More: `detail/adapter-vs-profile.md`
-
 ## STABLE — the document render path takes no TeX
 
 `content/pipeline/render-markdown.ts` assembles the folio to one Markdown
@@ -46,6 +31,23 @@ the viewer's GitHub session, works public or private, renders PDFs inline.
 `pages` and `raw` remain available under `readme.linkStyle` in
 `harness.config.json`, and each prints a note under the table saying who can
 follow its links.
+
+## STABLE — placement is a SKILL — run it before the first file exists
+
+`skills/folio-core/placement.md` is a four-step decision procedure with a
+stop — **instance → declared graph → kind of node → which of the two
+unrelated "stub" conventions**, and when you cannot tell, ask rather than
+default to the repo you are standing in. Run it **before** adding a skill,
+role, actor, workflow, decision table, schema, tool or content object, and
+before writing any literal that names one folio.
+
+Four entries that restated parts of it are archived rather than kept here
+(`the-shape-of-every-defect-here`, `adapter-vs-profile`,
+`compose-nothing-resolve-everything`,
+`the-readme-generator-that-replaced-the-whole-file`) — still nodes under
+`skills/memory/`, in no prompt. **The skill governs; this is a pointer, not
+a summary of it.** Where they would disagree, the skill wins — so read it,
+and fix it there rather than restating it back into this file.
 
 ## STABLE — re-measure, do not quote
 
@@ -77,12 +79,6 @@ session-start hook and the beans store.
   back to the paper adapter, so an adapter-scoped tool would be unreachable
   in exactly the case it exists for.
 
-## STABLE — the shape of every defect here
-
-A folio's specifics written into platform code. It works for exactly one
-consumer and silently damages the rest. Ask of every change: **does this
-name, assume, or default to one folio?**
-
 ## STABLE — there is no `recommendation` block kind
 
 A normative statement is a labelled, titled `prose` block; the convention and
@@ -94,22 +90,6 @@ separately rather than half-done.
 Known-wrong and predating the document profile: `document-intake.md` maps
 guideline recommendations onto `definition`, which is wrong for a document
 folio, where `definition`'s `lean` field is required.
-
-## TRAP — compose nothing; resolve everything
-
-The old contents table built every PDF cell as
-`${PAGES}/papers/<paper>/chapters/<dir>.pdf` — by convention, checked against
-nothing. The folio's `gh-pages` has no `chapters/` directory, so **all
-twenty-three chapter links were 404 and always had been**; three of six
-appendix links happened to resolve. Every PDF cell is now looked up in a real
-`git ls-tree` of the publish ref, and a chapter with no published PDF renders
-`—`.
-
-The same script also **described one folio from inside the platform** (paper
-directory, title, badges and a `PAGES` constant as literals) in a repo whose
-`folio.ts` lists five papers, and resolved its helpers against the folio root
-(`bun run scripts/readme-metadata.ts`) where the platform's scripts are not —
-so it could only run from a platform checkout, which has no papers.
 
 ## TRAP — "could not determine" is a THIRD state, everywhere
 
@@ -152,30 +132,6 @@ Two rules: kind-within-profile, and (document only) **no `lean` field and no
 `.lean` sibling** — because `remark`, `example`, `algorithm` and `simulator`
 all *declare* an optional `lean` that the type permits and the profile
 forbids.
-
-## TRAP — the README generator that replaced the whole file
-
-`scripts/generate-readme.sh` ended in `cp "$OUT" README.md`. It held one
-folio's content **in the platform**: the title `# Quantum Observable
-Universe`, three `litlfred/qou` badges, a Knot Registry of Alexander-Briggs
-indices, a Project Structure table naming
-`content/quantum-observable-universe/lean/`, and a CC BY 4.0 licence block.
-Run it in any other folio and the author loses their README. Only five of its
-sections were derived from the tree at all; the rest was prose, and prose
-about a folio belongs to that folio. Deleted, with
-`scripts/readme-metadata.ts`, its only consumer.
-
-**The replacement inverts the ownership**: `content/pipeline/readme-sections.ts`
-holds a registry (`folio:toc`, `folio:lean-coverage`, `folio:lean-modules`,
-`folio:simulators`, `folio:workflows`) and writes each section **only where
-the README already carries its `<!-- marker:begin -->` / `<!-- marker:end -->`
-pair**. The folio opts in per section; nothing outside a marked region is
-ever touched. Adding a section is one entry in `SECTIONS` — the CLI, the MCP
-tool and the staleness check all read the registry.
-
-`readme_sync` is registered among the **generic** tools: a document folio has
-chapters, simulators and workflows for the same reason a paper folio does,
-and simply never carries the Lean markers.
 
 ## TRAP — three literals worth recognising in new code
 
