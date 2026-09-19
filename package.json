@@ -76,6 +76,8 @@
     "eval:crdm-detect": "bun run cat-harness/scripts/eval-crdm-detect.ts",
     "gen:jsonld": "bun run cat-harness/scripts/gen-jsonld-context.ts && bun run cat-harness/content/pipeline/gen-block-jsonld.ts && bun run cat-harness/content/pipeline/gen-library-jsonld.ts",
     "gen:jsonld:check": "bun run cat-harness/scripts/gen-jsonld-context.ts --check && bun run cat-harness/content/pipeline/gen-block-jsonld.ts --check && bun run cat-harness/content/pipeline/gen-library-jsonld.ts --check",
+    "gates": "bun run cat-harness/scripts/gates.ts",
+    "gates:list": "bun run cat-harness/scripts/gates.ts --list",
     "harness:dirs": "bun run cat-harness/scripts/harness-dirs.ts",
     "health": "bun run cat-harness/test/health/run.ts",
     "health:check": "bun run cat-harness/test/health/run.ts --no-write",
