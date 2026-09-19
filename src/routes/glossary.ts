@@ -22,6 +22,7 @@ import { join, resolve } from "path";
 
 import { hasRole, forbidden } from "../core/rbac.js";
 import { log } from "../core/logging.js";
+import type { MountedRoute, RouteDeps } from "../route-groups.js";
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
 
@@ -126,4 +127,15 @@ export async function handleGlossaryPost(
   }
 
   return null;
+}
+
+// ── Mount ────────────────────────────────────────────────────────
+
+/** Mount factory read by the route declaration in `src/server.ts`. */
+export function mountGlossaryRoutes(deps: RouteDeps): MountedRoute {
+  const config = { repoRoot: deps.repoRoot };
+  return {
+    get: (url) => handleGlossaryGet(url, config),
+    post: (url, req) => handleGlossaryPost(url, req, config),
+  };
 }

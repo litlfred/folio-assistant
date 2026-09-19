@@ -1,12 +1,17 @@
 /**
- * The two composition roots resolve their parts from declarations, and every
- * way of NOT resolving one is distinguishable from resolving it.
+ * The composition roots resolve their parts from declarations, and every way
+ * of NOT resolving one is distinguishable from resolving it.
  *
- * `server.ts` imported six tool registrars and `src/index.ts` imported two
- * adapter classes. Three of the registrars and one of the adapters belong to
- * the science layer, so both generic entry points named it — and after the
- * split those imports do not resolve, failing at MODULE LOAD, before either
- * file's own error handling can run.
+ * `server.ts` imported six tool registrars, five route modules and
+ * `src/index.ts` two adapter classes. Three of the registrars, three of the
+ * routes and one of the adapters belong to another layer, so both generic
+ * entry points named it — and after the split those imports do not resolve,
+ * failing at MODULE LOAD, before either file's own error handling can run.
+ *
+ * The routes are the case where naming them is not merely inelegant but
+ * measurably unfixable by reclassification: 10 wrong-direction edges with the
+ * three content routes in the harness, 11 with them in core, because the
+ * composition root then crosses the line to mount them.
  *
  * The negative cases are the ones worth having. A resolver that returned
  * nothing for every miss would pass "the platform's groups register" and still
@@ -28,6 +33,11 @@ import {
   BUILTIN_ADAPTERS,
   resolveBuiltinAdapter,
 } from "../../src/builtin-adapters.ts";
+import { SERVER_ROUTES } from "../../src/server.ts";
+import { dispatchGet, dispatchPost, mountDeclaredRoutes } from "../../src/route-groups.ts";
+
+/** The HTTP server's own root, which its route declarations resolve against. */
+const SERVER_ROOT = new URL("../..", import.meta.url).pathname;
 
 describe("MCP tool groups", () => {
   test("every declared group's module exists and registers here", async () => {
@@ -126,5 +136,96 @@ describe("built-in content adapters", () => {
       const r = await resolveBuiltinAdapter(d.contentType);
       expect(r.ctor.name).toBe(d.className);
     }
+  });
+});
+
+describe("HTTP routes", () => {
+  /**
+   * The same fixture the server builds. `adapter` is `{}` because nothing
+   * reached here calls into it — a route that DID would fail loudly, which is
+   * the point of leaving it minimal rather than mocking a whole adapter.
+   */
+  const deps = () => ({
+    repoRoot: SERVER_ROOT,
+    adapter: {},
+    services: { gitHelper: {}, feedbackStore: {} },
+  });
+
+  test("every declared route's module exists and mounts", async () => {
+    const { routes, outcomes } = await mountDeclaredRoutes(SERVER_ROUTES, SERVER_ROOT, deps());
+    expect(outcomes.filter((o) => o.state !== "mounted")).toEqual([]);
+    expect(routes).toHaveLength(SERVER_ROUTES.length);
+  });
+
+  test("the declaration covers all five routes the server used to import", () => {
+    expect(SERVER_ROUTES.map((r) => r.id)).toEqual(
+      ["branches", "feedback", "glossary", "relevance", "chat"],
+    );
+  });
+
+  test("declaration order IS dispatch order, and chat stays last", () => {
+    // Dispatch is first-match-wins, so this list reproduces the sequence of
+    // `if` blocks it replaced. A reordering is a behaviour change, which is
+    // exactly why the order is asserted rather than left to review.
+    expect(SERVER_ROUTES.at(-1)!.id).toBe("chat");
+  });
+
+  test("chat is POST-only, so GET dispatch is one shorter than POST", async () => {
+    const { routes } = await mountDeclaredRoutes(SERVER_ROUTES, SERVER_ROOT, deps());
+    expect(routes.filter((r) => r.get).length).toBe(routes.length - 1);
+    expect(routes.filter((r) => r.post).length).toBe(routes.length);
+  });
+
+  test("the three content routes are declared `core`", () => {
+    // The boundary is reviewable in one place rather than inferable from five
+    // import lines. Feedback, glossary and relevance all act on a folio's
+    // content; branches and chat are the harness's own.
+    const core = SERVER_ROUTES.filter((r) => r.layer === "core").map((r) => r.id).sort();
+    expect(core).toEqual(["feedback", "glossary", "relevance"]);
+  });
+
+  test("a missing service is reported BY NAME, not as a later TypeError", async () => {
+    // The negative case that matters: without this check a route mounts fine
+    // and blows up inside a handler on some request hours later, where the
+    // stack names neither the service nor the declaration.
+    const { routes, outcomes } = await mountDeclaredRoutes(SERVER_ROUTES, SERVER_ROOT, {
+      repoRoot: SERVER_ROOT,
+      adapter: {},
+      services: {},
+    });
+    const failed = outcomes.filter((o) => o.state === "failed");
+    expect(failed.map((o) => o.id).sort()).toEqual(["branches", "chat", "feedback"]);
+    for (const f of failed) expect((f as { detail: string }).detail).toMatch(/gitHelper|feedbackStore/);
+    // The two that need nothing still mount: one route's missing service must
+    // not take the others down.
+    expect(routes).toHaveLength(2);
+  });
+
+  test("an absent module is `absent`, a broken one is `failed`", async () => {
+    // Two states, never one. The remedies are opposite — install that layer
+    // versus fix the module — so collapsing them sends the operator the wrong
+    // way half the time.
+    const absent = await mountDeclaredRoutes(
+      [{ id: "ghost", module: "src/routes/ghost.ts", mount: "x", layer: "sci" }],
+      SERVER_ROOT,
+      deps(),
+    );
+    expect(absent.outcomes[0]!.state).toBe("absent");
+    expect(absent.routes).toHaveLength(0);
+
+    const broken = await mountDeclaredRoutes(
+      [{ id: "bad", module: "src/routes/feedback.ts", mount: "noSuchFactory", layer: "core" }],
+      SERVER_ROOT,
+      deps(),
+    );
+    expect(broken.outcomes[0]!.state).toBe("failed");
+    expect((broken.outcomes[0] as { detail: string }).detail).toContain("noSuchFactory");
+  });
+
+  test("dispatch returns null for a URL nobody claims", async () => {
+    const { routes } = await mountDeclaredRoutes(SERVER_ROUTES, SERVER_ROOT, deps());
+    const url = new URL("http://x/api/nothing-claims-this");
+    expect(await dispatchGet(routes, url)).toBeNull();
+    expect(await dispatchPost(routes, url, new Request(url, { method: "POST" }))).toBeNull();
   });
 });

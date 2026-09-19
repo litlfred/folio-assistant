@@ -190,6 +190,13 @@ const RULES: Rule[] = [
       // The generic tool-group loader, shared by both servers. `src/` is
       // claimed by subdirectory, so a file at its top level falls through.
       "src/tool-groups.ts",
+      // The generic route loader. Same shape and same reason as the tool-group
+      // loader above, with one difference worth knowing: reclassifying the
+      // three CONTENT routes without it makes the count WORSE, measured — 10
+      // edges with them in the harness, 11 with them in core, because the
+      // composition root then crosses the line to mount them. This file is
+      // what lets the root stop naming them.
+      "src/route-groups.ts",
       // Two scripts that arrived from `main` and fell through every prefix.
       // Both are harness tooling about the KG's own artefacts, not about any
       // folio's content: one introspects which Tools this instance's MCP
