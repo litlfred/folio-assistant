@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T08:55:36Z
+updated_at: 2026-09-19T09:56:19Z
 parent: folio-assistant-5a3l
 ---
 
@@ -61,3 +61,5 @@ is nothing for the declaration to range over.
 and `folio-assistant-lx2s` (feature-branch staging under gh-pages, issue #215)
 are both about staging and both assume Pages. Whoever takes this should check
 whether either needs the host to be a variable.
+
+**Unblocked 2026-09-19** — the owner accepted the axes ("yes on axes"), so the dependency stated above is discharged. Implement against the vocabulary in `docs/proposals/deployment-topologies.md`.

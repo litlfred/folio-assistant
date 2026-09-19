@@ -9,13 +9,14 @@
  * nothing and reports a clean run over it.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { readDeclaration } from "../../schemas/cat-harness.js";
 import { BEAN_GRAPH_FILE, parseBeanGraph } from "../../schemas/bean-graph.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../../schemas/todo-graph.js";
 import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../todos.js";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 describe("the declaration and the directory agree", () => {
   test("`harness.json` declares a `todos` graph", () => {
@@ -68,7 +69,7 @@ describe("the declaration and the directory agree", () => {
 describe("the published process hierarchy", () => {
   const index = () =>
     JSON.parse(
-      readFileSync(join(ROOT, "docs/assets/todos/index.json"), "utf8"),
+      readFileSync(join(ROOT, siteDirFor(ROOT), "assets/todos/index.json"), "utf8"),
     ) as { processes: Record<string, string[]>; items: Array<{ tags: { processes: string[] } }> };
 
   test("real call edges are present — a silent regex failure would flatten the board", () => {
@@ -84,6 +85,28 @@ describe("the published process hierarchy", () => {
     expect(h["Process_Publication"]).toContain("Process_Editing");
     expect(h["Process_Review"]).toContain("Process_CodeReview");
     expect(Object.values(h).filter((v) => v.length > 0).length).toBeGreaterThan(5);
+  });
+
+  test("the key order is the diagrams' sorted FILENAMES, not the directory's own order", () => {
+    // Reproducibility, and it is not theoretical. `processHierarchy` builds
+    // this object by walking `skills/workflows/`, and `readdirSync` under Bun
+    // returns RAW directory order — on ext4, a hash of each filename against
+    // the directory's own seed. `JSON.stringify` preserves insertion order, so
+    // the published index came out byte-different on every checkout, and
+    // `gen-docs-pages.ts --check` called a file stale that nobody had touched.
+    //
+    // It went unseen because that `--check` was a folded YAML continuation
+    // line and had never run (bean `d2kp`); it failed on its FIRST run, on the
+    // PR that un-folded it. Asserting the ORDER rather than merely the set is
+    // the point — a set assertion passes under either enumeration.
+    const bpmn = readdirSync(join(ROOT, "skills", "workflows"))
+      .filter((f) => f.endsWith(".bpmn"))
+      .sort();
+    const idOf = (f: string) =>
+      /<bpmn:process id="([^"]+)"/.exec(readFileSync(join(ROOT, "skills", "workflows", f), "utf8"))?.[1];
+    const expected = bpmn.map(idOf).filter((x): x is string => Boolean(x));
+    expect(expected.length).toBeGreaterThan(5);
+    expect(Object.keys(index().processes)).toEqual(expected);
   });
 
   test("every process a todo names exists in the hierarchy", () => {

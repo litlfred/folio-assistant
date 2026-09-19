@@ -20,6 +20,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 /**
@@ -39,7 +40,7 @@ const ROOT = resolve(import.meta.dir, "..");
 function bpmnSources(): string[] {
   return workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn")).sort();
 }
-const OUT_DIR = join(ROOT, "docs/assets/img/workflows");
+const OUT_DIR = join(ROOT, siteDirFor(ROOT), "assets/img/workflows");
 const VIEWER = join(ROOT, "node_modules/bpmn-js/dist/bpmn-viewer.production.min.js");
 
 const check = process.argv.includes("--check");

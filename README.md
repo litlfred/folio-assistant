@@ -36,7 +36,7 @@ not, do not.
 
 🤖 **Are you an LLM agent?** Start with
 **[Agent onboarding](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html)**
-(source: [`docs/guides/agent-onboarding.md`](docs/guides/agent-onboarding.md)) —
+(source: [`docs/folio-assistant/guides/agent-onboarding.md`](docs/folio-assistant/guides/agent-onboarding.md)) —
 which repo you are in, your first five minutes, how to find the right skill, the
 content-object model, and the QA sidecar system. `AGENTS.md` is the command and
 convention reference to come back to.
@@ -101,13 +101,13 @@ gates) and **non-mechanical** validation (a review agent, escalating to a human
 or SME on a judgement call). Both must report; the findings are shown to the
 editor; only an accepted change is written to the corpus.
 
-<img src="docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
+<img src="docs/folio-assistant/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
 [BPMN source](skills/workflows/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
-<img src="docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
+<img src="docs/folio-assistant/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
 [BPMN source](skills/workflows/draft-to-publication.bpmn)
 
@@ -118,7 +118,7 @@ Both diagrams above appear here as call activities, and the **work plan
 findings, resolved on commit — so a human and an agent read the same answer to
 *what is done, and what is next*.
 
-<img src="docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
+<img src="docs/folio-assistant/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
 [BPMN source](skills/workflows/content-lifecycle.bpmn)
 
@@ -126,10 +126,10 @@ findings, resolved on commit — so a human and an agent read the same answer to
 
 | Diagram | Content type |
 |---------|--------------|
-| [`authoring-a-document.bpmn`](skills/workflows/authoring-a-document.bpmn) · [SVG](docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
-| [`authoring-a-paper.bpmn`](skills/workflows/authoring-a-paper.bpmn) · [SVG](docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](skills/workflows/l2-dak-authoring.bpmn) · [SVG](docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
-| [`l3-fhir-pipeline.bpmn`](skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+| [`authoring-a-document.bpmn`](skills/workflows/authoring-a-document.bpmn) · [SVG](docs/folio-assistant/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
+| [`authoring-a-paper.bpmn`](skills/workflows/authoring-a-paper.bpmn) · [SVG](docs/folio-assistant/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](skills/workflows/l2-dak-authoring.bpmn) · [SVG](docs/folio-assistant/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](docs/folio-assistant/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---
 
