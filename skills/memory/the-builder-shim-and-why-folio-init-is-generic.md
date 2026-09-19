@@ -4,6 +4,8 @@ id: the-builder-shim-and-why-folio-init-is-generic
 label: stable
 summary: "the builder shim, and why `folio_init` is generic"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

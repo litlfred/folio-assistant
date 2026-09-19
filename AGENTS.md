@@ -631,7 +631,7 @@ put 46 non-skills in the set, so `<folio:skill ref="viewer"/>` would have resolv
 
 ## Subagents with persistent memory (`.claude/agents/`)
 
-Three subagents are defined under [`.claude/agents/`](.claude/agents/), each
+Two subagents are defined under [`.claude/agents/`](.claude/agents/), each
 carrying `memory: project` in its frontmatter. That gives the agent its own
 directory under `.claude/agent-memory/<agent-name>/`; the first 200 lines (or
 25 KB) of that directory's `MEMORY.md` are injected into the subagent's system
@@ -641,7 +641,6 @@ prompt when it starts, and it reads and writes the directory as it works.
 |---|---|
 | `platform-boundary-guard` | keeping folio specifics out of platform code; adapter-vs-profile; the qou↔platform split |
 | `ci-health-watcher` | whether a workflow is actually working on the default branch |
-| `content-pipeline-navigator` | validate / render / build / qa-sweep, schemas, block kinds, script ownership |
 
 Each `MEMORY.md` labels every entry as exactly one of:
 
@@ -671,8 +670,7 @@ reaching the agent.
 **`MEMORY.md` is generated — but only between its markers.** The tool writes
 between `<!-- folio:memory:begin -->` and `<!-- folio:memory:end -->` and
 touches nothing else, exactly as `readme-sections.ts` does. That is what keeps
-each file's `## Session log` — and `content-pipeline-navigator`'s
-`## Corrected invocations` — intact: those are the agent's own running notes,
+each file's `## Session log` intact: those are the agent's own running notes,
 and a whole-file regenerator would delete them. A file with no markers is
 reported as not opted in and left alone; it is never rewritten and never
 counted as up to date.
@@ -688,6 +686,43 @@ was prose; it is now structural. It bit immediately and correctly: all three
 entries labelled BASELINE stored no number — they are tables of commands to
 RUN — so they were relabelled `stable`. A table of how to measure is a stable
 fact, not a measurement.
+
+**Retiring a subagent archives its memory; it does not delete it.** An entry
+carrying `archived: "true"` is a node of the graph that reaches no agent's
+prompt — the third state between "untagged, so reaches everybody" and "gone".
+`content-pipeline-navigator` was retired 2026-09-19 and **seven** of its twelve
+entries had no other reader, two of them TRAPs written by other sessions. The
+only remaining agent with a related subject was already at 189 of its 200
+lines, so there was nowhere to inject them; deleting them would have thrown
+away work somebody else paid for. Same discipline as a `scrapped` bean.
+
+**Archived is checked BEFORE the untagged rule**, and the ordering is
+load-bearing: an archived entry has no agent tag once its agent is gone, so
+checking it second hands it to every agent — the opposite of archiving.
+Measured while doing exactly that: two entries went untagged and pushed
+`platform-boundary-guard` 39 lines over budget, dropping one of its own TRAPs
+past the line the harness truncates at.
+
+**Both remaining subagents are now declared actors, and the role axis carries
+their memory.** `ci-health-watcher` takes `build-pipeline` and
+`validation-pipeline`; `platform-boundary-guard` takes **`code-reviewer`**,
+whose own description is close to a definition of it — *"the question is
+whether the NODE is sound — does it declare what it is, do its references
+resolve, is the mechanism it advertises the one that runs — which a passing
+test suite does not answer."* That is the failure this repo keeps paying for:
+`part-of:`, `$schema` under `skills/`, and `@graphNode` each landed as a
+requirement, and the files predating each one silently failed it while their
+tests passed.
+
+Measured after tagging: **every live entry carries a lane** — a `code-reviewer`
+lane sees 12, a `build-pipeline` lane sees 8, an unrelated lane sees 0. So the
+"untagged reaches everybody" escape hatch currently has **no instances**, which
+is worth knowing before adding one: an untagged entry now goes to every agent
+in a corpus where nothing else does.
+
+Generation still goes through the AGENT axis, so tagging a lane is additive and
+changes no `MEMORY.md` byte. Wiring the two together is the composition mistake
+the role model already paid for once.
 
 **Scoping is by agent today and that is transitional.** Memory is knowledge,
 and `AGENTS.md` puts knowledge in the lane, so it should scope by **role** —

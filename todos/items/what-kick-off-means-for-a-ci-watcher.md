@@ -2,7 +2,7 @@
 $schema: folio-todo/v1
 id: what-kick-off-means-for-a-ci-watcher
 summary: "Decide what 'kick off' means mechanically for the two CI-watcher dispatch points"
-status: open
+status: in_progress
 priority: medium
 origin: agent
 createdAt: 2026-09-19
@@ -22,6 +22,25 @@ publication/merge to main."*
 
 The two dispatch points are clear. **What performs the dispatch is not**, and
 the three candidates differ enough that guessing would be wasted work.
+
+## ANSWERED, 2026-09-19
+
+Owner: *"kick off if like task or workflow initation or bean roast"*.
+
+**Option 2.** A dispatch point is a **task / workflow initiation**, and it
+opens a **bean** — not a GitHub Actions job. That is the answer the repo's own
+machinery is already shaped for: an activity carrying
+`<folio:bean op="claim"/>` performs the bean operation when the step
+completes, so "start the watcher" and "record that it is running" are one
+declared step rather than two mechanisms that can disagree.
+
+It also settles the cost I flagged against option 2 — that a BPMN activity
+only fires while somebody is working. With a bean opened at initiation, the
+work is *durable*: a later session sees the bean whether or not the session
+that opened it is still alive.
+
+Remaining, and now narrow: which diagrams host the two steps, and whether the
+feature-branch one needs a process that does not yet exist.
 
 ## Options, with what each costs
 

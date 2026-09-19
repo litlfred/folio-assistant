@@ -4,9 +4,16 @@ id: the-commands-that-do-exist-here
 label: stable
 summary: "the commands that do exist here"
 createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
+archived: "true"
 ---
+> **Archived 2026-09-19.** Its only reader, the `content-pipeline-navigator`
+> subagent, was retired. Kept rather than deleted: the record of what was
+> learned outlives the mechanism that carried it, which is why a bean is
+> `scrapped` and not removed. Not injected into any agent's prompt —
+> `platform-boundary-guard` was already at 189 of its 200 lines, so there
+> was nowhere to put it without pushing an entry past the line the harness
+> silently truncates at.
+
 ```sh
 bun install
 bun run src/index.ts --http      # the assistant (HTTP); --stdio for stdio MCP

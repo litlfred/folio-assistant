@@ -594,6 +594,39 @@
   opacity: 0.35;
 }
 
+/* LIGHT ONLY. `opacity: 0.35` composites the link toward whatever is behind
+ * it, so on white it lands at **2.22:1** — measured 2026-09-19, bean `y8cm`,
+ * on every `✎ Edit` on the site, not just the one in a sticky. In DARK the
+ * same declaration moves the colour AWAY from the background and measures
+ * clean, so the base rule above is left exactly as it is: the defect belongs
+ * to one scheme, and "fix it in both" would change a rendering that is already
+ * correct.
+ *
+ * Quiet is kept, by a different mechanism. The point of the opacity was that
+ * a full-strength link pulled up into a heading's line is noisy — and that is
+ * a real concern, so this does not simply delete it. A muted NEUTRAL reads as
+ * chrome rather than as body text: it is visibly not one of the page's purple
+ * links, which is what an edit affordance should look like, and it measures
+ * **6.78:1**.
+ *
+ * Worth knowing before changing this: the site's own `--link-color` (#7253ed)
+ * measures 5.03:1 on white and would also pass. It was rejected because it
+ * makes the control read as a content link, not because it was unsafe.
+ *
+ * The two schemes now differ in MECHANISM — dark mutes by opacity, light by
+ * colour. Do not "tidy" that into one: the tidy version is the defect. */
+:root[data-fa-scheme="light"] .fa-node-edit {
+  opacity: 1;
+  color: #5a5a68;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-fa-scheme="dark"]) .fa-node-edit {
+    opacity: 1;
+    color: #5a5a68;
+  }
+}
+
 .fa-node-edit:hover,
 .fa-node-edit:focus-visible {
   opacity: 1;

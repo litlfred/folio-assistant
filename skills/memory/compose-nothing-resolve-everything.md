@@ -4,6 +4,8 @@ id: compose-nothing-resolve-everything
 label: trap
 summary: "compose nothing; resolve everything"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

@@ -4,6 +4,8 @@ id: locale-directories-are-declared-not-inferred
 label: trap
 summary: "a page is a translation because it declares `lang`, never because of its directory's name"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

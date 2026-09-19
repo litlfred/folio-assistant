@@ -4,9 +4,16 @@ id: qa-sidecars
 label: stable
 summary: "QA sidecars"
 createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
+archived: "true"
 ---
+> **Archived 2026-09-19.** Its only reader, the `content-pipeline-navigator`
+> subagent, was retired. Kept rather than deleted: the record of what was
+> learned outlives the mechanism that carried it, which is why a bean is
+> `scrapped` and not removed. Not injected into any agent's prompt —
+> `platform-boundary-guard` was already at 189 of its 200 lines, so there
+> was nowhere to put it without pushing an entry past the line the harness
+> silently truncates at.
+
 `<block>.qa.json` (block-qa/v1) carries per-criterion reviewer entries;
 `<criterion-id>.script.json` is qa-script/v1. Producing types are
 `schemas/block-qa.ts`. A sidecar is **stale** when the recorded source hashes
