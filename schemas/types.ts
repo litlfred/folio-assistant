@@ -19,7 +19,7 @@ import type { BlockKind } from "./block-kinds.js";
 // module's header. Re-exported so existing importers are unaffected; harness
 // code should import it directly, which is what keeps the edge from returning.
 export type {
-  ActorType,
+  ActorKind,
   Conformance,
   DegradationStrategy,
   ScriptRuntime,
