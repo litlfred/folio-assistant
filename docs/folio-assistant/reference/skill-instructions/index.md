@@ -207,9 +207,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [Bean Coordination](local-bean-coordination.html) | `bean-coordination` | — | Canonical, repo-agnostic coordination skill for agents sharing a `beans` |
+| [bean-coordination](local-bean-coordination.html) | `bean-coordination` | — | **This is a stub. The skill lives in the `kg` graph, not here.** |
 | [/language-trap-agent-audit](local-language-trap-agent-audit.html) | `language-trap-agent-audit` | — | The mechanical scanner (`content/pipeline/language-trap-audit.ts`) |
-| [Todo Manager](local-todo-manager.html) | `todo-manager` | — | The session work-plan and cross-agent coordination tracker for this repo is |
+| [todo-manager](local-todo-manager.html) | `todo-manager` | — | **This is a stub. The skill lives in the `kg` graph, not here.** |
 
 > The `authoring-math` and `authoring-who-smart-guidelines` packages ship
 > skill *definitions* + typed schemas today; their prose instruction bodies
