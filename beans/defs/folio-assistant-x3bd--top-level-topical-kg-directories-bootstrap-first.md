@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-09-19T07:40:52Z
+updated_at: 2026-09-19T09:07:23Z
 ---
 
 
@@ -108,3 +108,21 @@ AND library/ RAISES A PRIOR QUESTION THE MOVE WOULD BURY. It holds 1402 tracked 
 THE STUB'S VALUE IS NOW A LAYOUT DECISION, NOT A COSMETIC ONE. cat-harness.json declares stub 'folio-assistant' explicitly (it is not derived — artefactStub reads the field). That string has until now named published artefacts: folio-assistant.jsonld, folio-assistant.schema.json, the viewer directory. Under this design it also becomes a DIRECTORY NAME REPEATED IN FOUR TREES. The open question recorded earlier on this bean — folio-assistant or cat-harness — therefore stops being one line in a JSON file and becomes the name a reader meets at every level of the tree. It should be settled BEFORE the first move, not after, because changing it afterwards is the same four moves again.
 
 BOOTSTRAP IS EXEMPT AND THAT IS CONSISTENT with everything else decided for it: it is its own top-level directory, not a stub subdivision of anything, because it is the BASE that other instances are loaded THROUGH rather than one contributor among several. A bootstrap/<stub>/ would be asking which instance contributed the thing you use before you have loaded any instance.
+
+_2026-09-19T09:07:22Z_ — THE SPLIT, REFINED BY THE OWNER, 2026-09-19: 'for separation what is in f-a-core vs f-a. f-a-core has high level processes only, no tooling. f-a has all tooling KG. use tools/<stub> pattern.' So the line between folio-assistant-core and folio-assistant is PROCESS versus TOOLING, not content versus platform as an earlier reading of this bean assumed. f-a-core carries the high-level processes — the BPMN layer, what happens in what order and who is accountable — and NO tooling. f-a carries all the tooling and its knowledge graph.
+
+THAT IS A CLEANER CUT THAN THE ONE repo-partition.ts CURRENTLY COMPUTES, and the two should be reconciled before any files move. The script assigns 454 modules across five targets by import-edge rules and hand triage; its folio-assist-core bucket (160 modules) was populated on a content-versus-platform reading, so a module that is tooling-with-content-knowledge sits there today. Under the owner's cut it would go to f-a. Nobody should move directories until the partition's rules encode the process/tooling line, because the partition is the only measured statement of where anything belongs and moving against it would make its 4 remaining wrong-direction edges meaningless.
+
+tools/<stub>/ IS CONFIRMED as the layout for the tooling side, consistent with the stub-pattern decision already recorded here (tools/ skills/ library/ docs/ take the stub; beans/ and todos/ do not; bootstrap/ is its own directory).
+
+A TEST OF THE CUT, since it should be falsifiable rather than a slogan: a BPMN diagram under skills/workflows/ is f-a-core. The BPMN LOADER, the workflow engine, workflow_start and the DMN evaluator are f-a. If a module is needed to RUN a process it is tooling; if it DESCRIBES one it is core. The awkward cases to check that against are scripts/render-bpmn.ts (renders a diagram — tooling), skills/workflows/*.bpmn (the diagrams — core), and schemas/kg-qa.ts (audits the join between them — tooling, because it is a checker).
+
+_2026-09-19T09:07:23Z_ — STOP — harness.config.json MUST NOT BE RENAMED TO folio.config.json, and this note exists so nobody proposes it a third time. I recommended exactly that on 2026-09-19 and the owner approved a HARD rename, no fallback. Both of us were working from my misreading, and I caught it before touching any of the 332 files.
+
+THE EVIDENCE. Commit 109beee02, 2026-09-18 — the DAY BEFORE — renamed folio.config.json TO harness.config.json, module and symbols together, with its message stating: 'The file configures the HARNESS — adapter selection, the skills directory, the viewer, simulators, translation, and the two work-plan stores. None of that is the folio's content. The old name described the wrong thing and invited people to look in it for settings that were never there.' Commit 211ab2cf3 then DROPPED the folio.config.json fallback. The reasoning also survives in schemas/harness-config.ts above HARNESS_CONFIG, where its first line reads 'The harness config file, and the name it used to have.'
+
+MY ERROR, named precisely so the same mistake is recognisable. I read the _comment FIELD inside this repo's own harness.config.json, which describes content/docs as a document-profile corpus, and concluded from it that the FILE is a content config. That comment is about one field's use in one instance; it says nothing about what the file is for. The schema's doc comment said the opposite and I did not read far enough before recommending.
+
+SO THE PREMISE OF THE RECOMMENDATION WAS FALSE. I told the owner the two root files are structure-versus-content and that the shared 'harness' stem plus a '.config' suffix invites a permanent misreading. They are both HARNESS concerns: harness.json says WHAT DIRECTORIES EXIST, harness.config.json says HOW THE HARNESS BEHAVES. On that reading the shared stem is correct and the pairing is informative rather than misleading, which removes the entire basis for the change.
+
+WHAT WOULD ACTUALLY BE WORTH DOING, if the pairing still reads badly to a fresh eye: the constant HARNESS_CONFIG already exists in schemas/harness-config.ts with resolveHarnessConfigPath beside it, and 110 of its occurrences across 39 .ts files are BARE LITERALS that ignore it. Routing those through the constant makes any future rename one line, which is what DECLARATION_FILENAME bought for harness.json — that rename cost 39 files and one constant edit, against this one's 332. That is a real improvement available at any time and it does not require deciding the name.
