@@ -114,10 +114,28 @@
 
   THREE STATES, and the third is the reason this is a JSON island rather than
   a conditional. (The tag name is written inside {% raw %}{% raw %}{% endraw %}
-  below because LIQUID PARSES TAGS INSIDE HTML COMMENTS -- `<!-- -->` means
-  nothing to it -- so naming one in prose is a syntax error at build time, and
-  the message points at the THEME's head.html because Liquid attributes an
-  include's line to the includer. This comment cost one red deploy.)
+  below because LIQUID PARSES TAGS INSIDE AN HTML COMMENT — the comment
+  wrapper means nothing to it — so naming a tag in prose is a syntax error at
+  build time, and the message points at the THEME's head.html because Liquid
+  attributes an include's line to the includer. This comment cost one red
+  deploy.
+
+  AND THEN IT COST A SECOND ONE, differently, which is why this paragraph now
+  describes the wrapper rather than spelling it. It used to SPELL both halves
+  as an example — and the closing half ENDED THIS COMMENT eighteen lines
+  early, so every line below it rendered as visible body text at the top of
+  EVERY PAGE on the site. Reported by the owner from the staging URL,
+  2026-09-19.
+
+  The asymmetry is the lesson: a Liquid tag has an escape, and the closing
+  comment delimiter has NONE. There is no way to write those three characters
+  inside a comment and have the comment survive them, because the parser is
+  not looking for an escape — it stops at the first match. So the rule is not
+  "escape it carefully", it is DO NOT WRITE IT: describe it, or name it one
+  character at a time. Guarded by
+  scripts/tests/html-comment-delimiters.test.ts, which fails on an opening
+  delimiter appearing inside an open comment — the one machine-detectable
+  signature of somebody trying.)
   A {% raw %}{% if %}{% endraw %} would have to choose between the second and
   third rows below, and there is no expression that can:
 
