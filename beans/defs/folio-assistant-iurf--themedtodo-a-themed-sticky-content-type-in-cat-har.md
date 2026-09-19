@@ -1,11 +1,11 @@
 ---
 # folio-assistant-iurf
 title: 'ThemedTodo: a themed sticky content type in cat-harness, with named CSS tokens instead of hardcoded colours'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:55:05Z
-updated_at: 2026-09-19T10:55:05Z
+updated_at: 2026-09-19T10:58:41Z
 ---
 
 ## The ask, owner 2026-09-19 (verbatim)
