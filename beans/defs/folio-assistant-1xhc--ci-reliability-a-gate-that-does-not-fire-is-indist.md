@@ -4,7 +4,7 @@ title: 'CI RELIABILITY: a gate that does not fire is indistinguishable from one 
 status: in-progress
 type: epic
 created_at: 2026-09-19T11:43:44Z
-updated_at: 2026-09-19T11:43:44Z
+updated_at: 2026-09-19T11:58:51Z
 ---
 
 A gate that does not fire is indistinguishable from one that passed.
@@ -19,3 +19,15 @@ are green), `dzl3` (playwright fails before any test body runs), `t373`
 `xd1s`, `w2g5` and `lx2s` are the staging and concurrency machinery those gates
 run inside. Fixing any one without the others leaves the same class of silence
 somewhere else.
+
+_2026-09-19T11:58:51Z_ — Wired 14 gates into CI that were registered in package.json and run by nobody.
+
+Measured 2026-09-19: of 33 check:/:check scripts, 21 appeared in NO workflow. That is 5rfy's defect (a gate that never fires) and it is worse than a missing gate, because package.json advertises it. I ran several of them by hand across this session, reported them green, and assumed CI did the same. It did not.
+
+All 14 pass on main as of this commit, so wiring locks in a property the repo HAS rather than demanding work.
+
+Deliberately NOT wired, each with a stated reason in the workflow: check:ci-health (a report, reads the default branch, so on a PR it describes main not the diff; ci-health.yml runs it), check:corpus-gate (needs a folio; the platform carries none), check:upstream-pins (upstream-pins.yml runs it weekly), check:partition:edges (prints the list; check:partition is the gate), translate-*:check (need a toolchain not on the runner).
+
+Also added check:bean-parents + 8 tests: every OPEN bean must carry a parent naming a real epic. That guards the invariant PR #410 established, which nothing enforced -- a sibling's Created folio-assistant-iqzy folio-assistant-iqzy--untitled.md would silently rebuild the Miscellaneous tail.
+
+A correction worth recording: I first reported check:declared-paths as pre-existing RED at 39-vs-37. It was not. My own new script hardcoded join(root,'beans','defs') and those were the 2 literals. The ratchet was right; I rewired the script to read the bean graph's declaration via parseBeanGraph/nodeOfKind, and declared-paths went green and is now wired too.

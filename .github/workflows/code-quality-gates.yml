@@ -323,6 +323,49 @@ jobs:
       - name: agent memory is assembled
         run: bun run agent-memory:check
 
+      # Fourteen gates that were REGISTERED IN package.json AND RUN BY NOBODY.
+      #
+      # Measured 2026-09-19: of 33 `check:`/`:check` scripts, 21 appeared in no
+      # workflow at all. That is bean `5rfy`'s defect -- a gate that never
+      # fires -- and it is worse than a missing gate, because `package.json`
+      # advertises it and an agent (this one, repeatedly, this session) runs it
+      # by hand, reports it green, and reasonably assumes CI does the same. It
+      # does not. A sibling who does not run them merges the break.
+      #
+      # All thirteen PASS on `main` as of this commit, so wiring them locks in
+      # a property the repo HAS rather than demanding work to reach one. They
+      # share a step because they are fast and because thirteen near-identical
+      # entries is noise; `-e` means the first failure names itself and stops.
+      #
+      # DELIBERATELY NOT WIRED, and each for a stated reason -- an unexplained
+      # omission here is how the next person re-derives this list:
+      #   check:ci-health       -- a REPORT, not a gate. It reads the default
+      #                            branch, so on a PR it describes main rather
+      #                            than the diff. `ci-health.yml` runs it.
+      #   check:corpus-gate     -- needs a folio; the platform carries none.
+      #   check:upstream-pins   -- `upstream-pins.yml` runs it weekly.
+      #   check:partition:edges -- prints the edge list; `check:partition` is
+      #                            the gate and is wired below.
+      #   translate-*:check     -- need a translation toolchain not installed
+      #                            on this runner.
+      - name: gates that were registered and never run
+        run: |
+          set -e
+          bun run check:bean-parents
+          bun run check:declared-paths
+          bun run check:harness-dirs
+          bun run harness:dirs:check
+          bun run check:schema-nodes
+          bun run check:xml-comments
+          bun run check:orphan-verdicts
+          bun run check:partition
+          bun run docs:harness:check
+          bun run gen:jsonld:check
+          bun run readme:sync:check
+          bun run render:bpmn:check
+          bun run themes:css:check
+          bun run translation:block-qa:check
+
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
       # This was a CONTINUATION LINE of the step above: more-indented, so YAML
