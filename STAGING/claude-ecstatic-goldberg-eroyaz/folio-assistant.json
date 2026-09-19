@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T10:21:42.216Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4c75cac60594b1e338dba114d349d27df91731f2",
-  "sourceCommitSha": "4c75cac60594b1e338dba114d349d27df91731f2",
-  "sourceCommitAt": "2026-09-19T10:19:49Z",
+  "generatedAt": "2026-09-19T12:35:51.152Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2fd0993bf8604d4483e254850a0d838baf20ff30",
+  "sourceCommitSha": "2fd0993bf8604d4483e254850a0d838baf20ff30",
+  "sourceCommitAt": "2026-09-19T12:33:10Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 154,
+    "Skill": 164,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -245,10 +245,10 @@
     "Process": 32,
     "SequenceFlow": 443,
     "ProcessNode": 414,
-    "Tool": 27,
-    "Schema": 40,
-    "GraphKind": 15,
-    "Directory": 10
+    "Tool": 28,
+    "Schema": 43,
+    "GraphKind": 16,
+    "Directory": 11
   },
   "@graph": [
     {
@@ -671,6 +671,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-publishing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/readme-sections",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "readme-sections",
+      "title": "A folio's README — the folio owns the file, the platform owns the markers",
+      "description": "A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the whole-file generator it replaced could not, and the third state both tools must report.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/readme-sections.md",
+      "instructionLines": 97,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/readme-sections"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/html-rendering-qc",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "html-rendering-qc",
@@ -806,7 +822,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/process-state.md",
-      "instructionLines": 91,
+      "instructionLines": 112,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -918,7 +934,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/uses-editorial-review.md",
-      "instructionLines": 280,
+      "instructionLines": 309,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -933,7 +949,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/crdm-requirements-workflow.md",
-      "instructionLines": 263,
+      "instructionLines": 266,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1012,7 +1028,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/devils-advocate-watcher.md",
-      "instructionLines": 419,
+      "instructionLines": 420,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1060,7 +1076,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 82,
+      "instructionLines": 127,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1131,6 +1147,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/docs-generation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/content-profiles",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "content-profiles",
+      "title": "Content types — `document` is the base, a paper extends it",
+      "description": "Adapters and profiles are different axes and conflating them is costly. What a document folio is, how a paper extends it, which distinction needs code and which needs only rules, and what profile enforcement catches that schema validation structurally cannot.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/content-profiles.md",
+      "instructionLines": 96,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-profiles"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/directory-conventions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "directory-conventions",
@@ -1139,11 +1171,27 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 463,
+      "instructionLines": 532,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/directory-conventions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/bpmn-processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bpmn-processes",
+      "title": "Processes are BPMN, and the diagrams are executable",
+      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/bpmn-processes.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-navigation",
@@ -1171,7 +1219,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 435,
+      "instructionLines": 456,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1218,7 +1266,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 289,
+      "instructionLines": 315,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1267,11 +1315,27 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 121,
+      "instructionLines": 211,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-coordination"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/issue-working",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "issue-working",
+      "title": "Working an issue — announce, then re-check",
+      "description": "Working a tracked issue — announce the branch when you create it rather than when you finish, and re-check the issue for new AND edited comments while you work. Both rules are about the gap between your view of an issue and everyone else's.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/issue-working.md",
+      "instructionLines": 84,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/issue-working"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/md-authoring",
@@ -1330,7 +1394,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/opening-brief.md",
-      "instructionLines": 105,
+      "instructionLines": 150,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1346,7 +1410,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/feature-staging.md",
-      "instructionLines": 118,
+      "instructionLines": 130,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1536,7 +1600,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 198,
+      "instructionLines": 231,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true,
@@ -1568,7 +1632,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 145,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1614,7 +1678,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/serving-renderings.md",
-      "instructionLines": 118,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1635,6 +1699,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/github-state-inspection",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "github-state-inspection",
+      "title": "Reading GitHub state — resolve the ref, do not compose the URL",
+      "description": "Answer questions about GitHub-hosted state — is a page published, where does it live, did CI pass, does a branch exist — by reading the ref or the API, never by composing a URL or fetching one. The first check for any deployment or 404 question is `git ls-tree` of the publish ref.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/github-state-inspection.md",
+      "instructionLines": 118,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/bib-qa",
@@ -1666,6 +1746,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/editor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/ci-health",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "ci-health",
+      "title": "CI health — a red workflow looks exactly like a green one from in here",
+      "description": "A red workflow looks exactly like a green one from inside a checkout. How to read a default-branch health report, the three verdicts that keep it honest, and why a watchdog needs both a session-start print and an unattended run.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/ci-health.md",
+      "instructionLines": 87,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ci-health"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/symbiotic-interaction",
@@ -1700,6 +1796,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/block-density"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/agent-memory",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "agent-memory",
+      "title": "Subagent memory — what a durable entry may claim",
+      "description": "Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between \"reaches everybody\" and \"deleted\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/agent-memory.md",
+      "instructionLines": 124,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/agent-memory"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/turn-reporting",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "turn-reporting",
@@ -1709,7 +1821,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/turn-reporting.md",
-      "instructionLines": 185,
+      "instructionLines": 218,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1803,7 +1915,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/integration-backlog.md",
-      "instructionLines": 309,
+      "instructionLines": 310,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1824,6 +1936,38 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-blocking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/deletion-requires-confirmation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "deletion-requires-confirmation",
+      "title": "Deletion requires explicit confirmation",
+      "description": "An agent never removes a durable artefact on its own initiative. Report what would go, with sizes and ages, and wait for the user to say so. Covers what counts as durable, the non-destructive move for each kind, and the rule that a workflow whose shape deletes something counts as a deletion nobody decided.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
+      "instructionLines": 223,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/placement",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "placement",
+      "title": "Placement — decide where it goes before you write it",
+      "description": "Establish where a new node belongs BEFORE you create it — which instance, which declared graph, which kind of node, and which of the two \"stub\" conventions applies. Read before adding a skill, role, actor, workflow, decision table, schema, tool or content object, and before writing any literal that names one folio.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/placement.md",
+      "instructionLines": 278,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/exposition-swarm-drain",
@@ -1904,6 +2048,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/one-voice-integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/library-ingestion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "library-ingestion",
+      "title": "Library ingestion",
+      "description": "Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach for and why, what a complete L1 entry holds, and why an inferred structure is refused rather than guessed. One entry point: `bun run ingest`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/library-ingestion.md",
+      "instructionLines": 105,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/coordinate",
@@ -2471,7 +2631,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/proof-editor.md",
-      "instructionLines": 247,
+      "instructionLines": 248,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3745,22 +3905,27 @@
       "path": "skills/folio-core",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/agent-memory",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/bean-coordination",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/bib-human-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/bib-qa",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/block-density",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/bpmn-processes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/canonical-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/chapter-complexity-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/code-node-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/compute-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/content-graph",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/deployment-auth",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/detangler-integration-watcher",
@@ -3773,6 +3938,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/idle-backlog",
@@ -3781,27 +3947,32 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/integration-watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-viewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/markdown-render-check",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/mcp-assembly",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/mcp-contract",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/mcp-projection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/md-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/milnor-exposition-standard",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/one-voice-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/one-voice-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/one-voice-style-guide",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/milnor-exposition-standard",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/ontologist",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/placement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/production-vs-exploratory-discipline",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/readability-editing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/scientific-accuracy",
@@ -3812,18 +3983,17 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/test-engineer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/todo-manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/uses-editorial-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/voice-authoring-guidance",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/voice-overlay-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/voice-authoring-guidance",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/watch"
       ],
       "providesCapability": [
@@ -17091,6 +17261,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/pages-publish"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#tool/serve-rendering",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "serve-rendering",
+      "title": "Local rendering server",
+      "description": "Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run serve:rendering"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "directory",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Tree to serve; defaults to the built site when present.",
+            "required": false,
+            "arg": {
+              "flag": "--dir"
+            }
+          },
+          {
+            "name": "port",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Port",
+            "description": "0 binds a free port, which is what the tests use.",
+            "required": false,
+            "arg": {
+              "flag": "--port"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Url",
+            "description": "Where the tree is being served."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/serving-renderings"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#tool/cat-harness-schema",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "cat-harness-schema",
@@ -18552,6 +18774,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/harness-config"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/health-report",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "health-report",
+      "title": "Repository health reports — what the daily sweep under `test/health/` wrote.",
+      "module": "schemas/health-report.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/health-report"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/jsonld",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "jsonld",
@@ -18654,6 +18884,22 @@
       "title": "Staging comparison schema — before/after URL pairs for content review.",
       "module": "schemas/staging.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/theme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "theme",
+      "title": "A sticky theme — named colour roles plus the three layouts, as a graph node.",
+      "module": "schemas/theme.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/themes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "themes",
+      "title": "The themes this instance ships, and the default.",
+      "module": "schemas/themes.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/themes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/todo-graph",
@@ -18780,6 +19026,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#QaGraph",
       "renderable": false,
       "summary": "QA witnesses — one `qa-witness/v1` document per audited subject, in three families (`block`, `kg`, `translation`), projected for the docs site from the verdicts that live beside their subjects. Generated; never hand-edited."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/health",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "health",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#HealthGraph",
+      "renderable": false,
+      "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/beans",
@@ -18915,6 +19169,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#directory/health",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "health",
+      "path": "test/health/results/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/health"
+      ],
+      "description": "Repository health reports — what the daily sweep under `test/health/` wrote. One `health-report/v1` document, declaring itself with a `$schema` tag rather than being duck-typed by path: a directory is a PLACE TO LOOK and the files inside say what they are. A SEPARATE graph from `qa`, and the line between them is about the SUBJECT, not the producer: a QA verdict judges an artefact this repository produced, against criteria that artefact is supposed to meet; a health report judges the REPOSITORY ITSELF — how big it has grown, how much of the publish branch the review previews occupy, whether the work plan has duplicates in it. Folding it into `qa` would leave a consumer asking for verdicts about this instance's content holding a fact about its clone. NOTE the path: it was `tests/health/results/` when this graph landed in #395, because this repository then had BOTH `test/` (the `qa` graph) and `tests/` (the Playwright e2e specs), and the owner asked for `tests/health`. #395 flagged that inconsistency in `skills/folio-core/directory-conventions.md` rather than resolving it, since relocating a declared directory as a side effect of adding a check is the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. The owner settled it on `test/` the same day and it moved as its own change — bean `auap`, PR #400. The `id` here is unchanged, deliberately: an inheriting instance overrides on the entry's id and never on its path, so `health` still binds after the relocation. The e2e specs came to the declaration rather than the declaration to the specs, because `testDir` is one line of one config file and a declared path is what every downstream override resolves against.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/health"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#directory/beans",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "beans",
@@ -18983,8 +19248,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "6ff61a895836ff07397f4c1b0925920a8855c310",
-    "pr": "393/merge",
-    "run": "35437119839"
+    "sha": "f5afa78b4cb3711ce72b0c3eedae842d6f816d1d",
+    "pr": "416/merge",
+    "run": "35443234127"
   }
 }
