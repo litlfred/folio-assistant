@@ -114,6 +114,13 @@ def main() -> int:
     ap.add_argument("--from-ocr", action="store_true",
                     help="read the cached OCR written by pdf-ocr.py instead of the text layer")
     ap.add_argument("--title", default=None, help="document title for the front matter")
+    ap.add_argument("--first-page-label", type=int, default=None, metavar="N",
+                    help="printed page number of the FIRST page that carries one, so sections are "
+                         "labelled as the source document numbers them (a scanned journal article "
+                         "is cited by its journal pages, not by its PDF pages)")
+    ap.add_argument("--label-starts-at", type=int, default=1, metavar="K",
+                    help="PDF page where --first-page-label applies; earlier pages keep PDF numbering "
+                         "(default 1). A JSTOR cover sheet is page 1, so the article's p. 177 is K=2.")
     a = ap.parse_args()
     if not a.pdfs:
         ap.error("no PDFs given")
@@ -125,7 +132,22 @@ def main() -> int:
         secdir = a.outdir / doc_id / "sections"
         secdir.mkdir(parents=True, exist_ok=True)
         written = 0
+        ids: list[tuple[str, str, str]] = []
         for i, text in enumerate(texts, start=1):
+            # The printed page number, where the caller gave one. A scholarly
+            # source is cited by the page the READER sees, and for a scanned
+            # journal article that is never the PDF page — "Link Groups" is
+            # pp. 177-195 of Annals of Mathematics 59(2) behind a JSTOR cover
+            # sheet, so its PDF page 2 is p. 177. A citation to "page 2" would
+            # not resolve for anyone holding the journal.
+            if a.first_page_label is not None and i >= a.label_starts_at:
+                label = str(a.first_page_label + (i - a.label_starts_at))
+                title = f"p. {label}"
+                section_id = f"page-{label}"
+            else:
+                label = str(i)
+                title = f"Page {i}"
+                section_id = f"page-{i:03d}"
             body = text.strip()
             if not body:
                 # A blank page is a determined blank, and is recorded as one
@@ -136,16 +158,18 @@ def main() -> int:
                 "---",
                 f"doc_id: {doc_id}",
                 f'doc_title: "{a.title or pdf.stem}"',
-                f"section_id: page-{i:03d}",
-                f'section_title: "Page {i}"',
-                f"pages: {i}-{i}",
+                f"section_id: {section_id}",
+                f'section_title: "{title}"',
+                f"pages: {label}-{label}",
+                f"pdf_page: {i}",
                 f"source_pdf: {pdf.name}",
                 f"source_sha256: {sha}",
                 f"text_source: {source}",
                 "granularity: page",
                 "---",
             ])
-            (secdir / f"page-{i:03d}.md").write_text(f"{fm}\n{body}\n", encoding="utf-8")
+            (secdir / f"{section_id}.md").write_text(f"{fm}\n{body}\n", encoding="utf-8")
+            ids.append((section_id, title, label))
             written += 1
         manifest = a.outdir / doc_id / "structure.json"
         existing = json.loads(manifest.read_text()) if manifest.exists() else {}
@@ -156,8 +180,7 @@ def main() -> int:
             "granularity": "page",
             "text_source": source,
             "sections": [
-                {"section_id": f"page-{i:03d}", "title": f"Page {i}", "pages": [i, i]}
-                for i in range(1, written + 1)
+                {"section_id": sid, "title": t, "pages": [lbl, lbl]} for sid, t, lbl in ids
             ],
             "structure_note": (
                 "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no "
