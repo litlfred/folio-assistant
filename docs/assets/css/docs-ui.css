@@ -1285,9 +1285,28 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 /* ── The sidebar mark and title ───────────────────────────────────
    just-the-docs draws `site.title` at the top left; `_includes/title.html`
    overrides it to read the instance's own declaration instead (see
-   scripts/sync-docs-harness.ts). The mark uses `currentColor` for its ring
-   and inner `a`, so it follows the sidebar's text colour in either scheme;
-   only its ears carry a fixed sage. */
+   scripts/sync-docs-harness.ts).
+
+   THIS COMMENT USED TO CLAIM the mark "uses `currentColor` for its ring and
+   inner `a`, so it follows the sidebar's text colour in either scheme; only
+   its ears carry a fixed sage." That was never true. Checked 2026-09-19
+   against every commit that has ever touched docs/assets/img/icons/
+   (e5c171029, 2d1b22905, c8c58f28b): `currentColor` appears zero times in
+   either mark, in all three. Both bake `#6f8b66`.
+
+   It could not have been true anyway, and that is the part worth keeping.
+   `title.html` renders the mark as an `<img>`, and an `<img>` is opaque to
+   CSS colour — `currentColor` inside an externally-referenced SVG resolves
+   against that SVG's own root, not against the page. Making the claim true
+   would take INLINING the mark, not editing it.
+
+   So the mark is fixed sage in both schemes. On the dark sidebar that is
+   dimmer than the text beside it. Left as-is deliberately: sage on near-black
+   still reads, and inlining the SVG is a real change to how the mark is
+   served rather than a colour tweak. Recorded here rather than silently
+   corrected, because a comment asserting behaviour the asset never had is the
+   same "declared, unread, unnoticed" failure as the unconsumed
+   `role: "browser-icon"` — see beans/defs/…blv9. */
 .fa-site-mark {
   width: 1.5rem;
   height: 1.5rem;
