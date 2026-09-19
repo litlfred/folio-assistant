@@ -131,7 +131,9 @@ Classified by reading each skill's description, not its filename — the
 | skill | why the harness |
 |---|---|
 | `bean-coordination` | cross-session claim discipline |
-| `todo-manager` | work-plan maintenance and the turn-report rules |
+| `todo-manager` | work-plan maintenance: the CLI, the STRICT create-check, coordination |
+| `opening-brief` | brief a bean or topic before touching anything |
+| `turn-reporting` | say which bean you are on, every turn |
 | `pending-show` | read-only view of session pending work |
 | `session-intent` | session-start intent, session-end results |
 | `continual-progress` | PR from the first commit; visibility of in-flight work |
