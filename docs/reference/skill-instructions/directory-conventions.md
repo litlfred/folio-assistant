@@ -53,7 +53,27 @@ The vocabulary is **open**, and split across two layers.
 | `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
 | `todo-items` | **harness** | todo nodes — one file each, `"$schema": "folio-todo/v1"`. Authored by people, and by agents on their behalf. | no |
 | `todo-feedback` | **harness** | feedback items — todos raised against a specific block, carrying the submitter's identity. Read by `todo-review`. | no |
+| `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
+| `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
 | `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
+
+> **`uploads` and `library` are two kinds, not one, and the split is
+> load-bearing.** They are the two stages of the document-ingestion pipeline,
+> and the corpus-grep checklist searches `library/` **only** — so a source
+> still sitting in `uploads/` does not merely go unread, it makes a clean grep
+> read as *"nobody has done this"* while the file is on disk. An un-ingested
+> source is worse than an absent one, because it produces false confidence
+> rather than a gap. One `sources` kind covering both would erase exactly the
+> distinction the pair exists to state.
+>
+> **They are also the reason `materialiseDirectories` exists.** `AGENTS.md`
+> says *"declare only what exists — a declared-but-absent directory is the bean
+> `dh4f` defect, where a consumer scans nothing and reports a clean run over
+> it"*. Absent and empty are indistinguishable to a consumer, so declaring a
+> directory without creating it converts a real gap into a false pass.
+> `bun run harness:dirs` creates every directory an instance declares or
+> inherits; the session-start sweep and `init-folio` both call it, so a
+> declaration is never left without the directory it names.
 
 > **`todos` is not a second work plan, and the distinction is the one
 > `AGENTS.md` already draws.** `beans/` is the AGENT work plan and no second

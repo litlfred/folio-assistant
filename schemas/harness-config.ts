@@ -27,6 +27,7 @@
  * | PO translations | ✅ | `translations/<locale>/`, fallback chain step 4 — the only path with a live consumer (`content/pipeline/po-resolve.ts`) |
  * | Kind headings | ✅ | `schemas/translation.ts` KIND_HEADINGS |
  * | Skills | ⚠️ | {@link resolveSkillDirs} exists and returns the overlay order; **no caller yet** |
+ * | Declared directories | ✅ | {@link declarationChain} + `resolveDirectories`, materialised by {@link materialiseDeclaredDirectories} |
  * | Block kinds | ✅ | {@link loadContributions} → `schemas/contributions.ts` |
  * | Adapters | ✅ | {@link loadContributions}, as a module specifier |
  * | MCP tools | ✅ | {@link loadContributions}, as registrar callbacks |
@@ -212,6 +213,11 @@ export const HarnessConfigSchema = z.object({
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { ContributionRegistry, type FolioContribution } from "./contributions";
+import {
+  materialiseDirectories,
+  resolveDirectories,
+  type MaterialisedDirectory,
+} from "./cat-harness";
 
 /**
  * Resolved dependency — a dependency that has been located on disk.
@@ -373,6 +379,51 @@ export function flattenDependencies(
     flat.push(dep);
   }
   return flat;
+}
+
+/**
+ * The declaration chain for an instance: deepest dependency first, root last.
+ *
+ * This is the argument `resolveDirectories` in `schemas/cat-harness.ts` asks
+ * for and documents ("callers usually get this from
+ * `flattenDependencies(resolveDependencyTree(root))` plus the root itself") and
+ * which, until now, nothing built — `resolveDirectories` had no caller outside
+ * its own tests, the same gap `resolveSkillDirs` carries and this file's own
+ * status table records. A resolver with no caller is a declaration nobody
+ * reads, which is how `uploads/` and `library/` came to be described in three
+ * documents and declared in none.
+ *
+ * Root LAST so a root redeclaring an inherited id wins, matching the overlay
+ * order `flattenDependencies` documents and `resolveDirectories` relies on.
+ */
+export function declarationChain(
+  folioRoot: string,
+): Array<{ name: string; root: string; own?: boolean }> {
+  const flat = flattenDependencies(resolveDependencyTree(folioRoot));
+  const chain: Array<{ name: string; root: string; own?: boolean }> = flat.map(
+    (d) => ({ name: d.dependency.name ?? d.rootPath, root: d.rootPath }),
+  );
+  chain.push({ name: "(root)", root: resolve(folioRoot), own: true });
+  return chain;
+}
+
+/**
+ * Create every directory this instance declares or inherits, if absent.
+ *
+ * THE ONE ANSWER for "which directories does an instance have", called by
+ * every getting-started / instantiation path so there is not a second one
+ * free to disagree. Discovery walks the dependency tree; creation happens in
+ * `folioRoot` — an instance inherits the CONVENTION (an id and a relative
+ * path), not a licence to write into a dependency's checkout.
+ *
+ * Returns what it did, so a caller can report it rather than guess. Idempotent.
+ */
+export function materialiseDeclaredDirectories(
+  folioRoot: string,
+  opts: { dryRun?: boolean } = {},
+): MaterialisedDirectory[] {
+  const dirs = resolveDirectories(declarationChain(folioRoot));
+  return materialiseDirectories(dirs, folioRoot, opts);
 }
 
 /**
