@@ -499,7 +499,7 @@ artefact.</p>
 fix lands in the wrong place.</p>
 
 <p>The <strong>verdict</strong> is produced by a sweep and lives beside its subject —
-<code class="language-plaintext highlighter-rouge">*.qa.json</code> beside a content block, <code class="language-plaintext highlighter-rouge">kg-qa/*.kg-qa.json</code> beside a skill or a
+<code class="language-plaintext highlighter-rouge">*.qa.json</code> beside a content block, <code class="language-plaintext highlighter-rouge">test/results/kg-qa/**/*.kg-qa.json</code> for a skill or a
 diagram. The <strong>witness</strong> is the same verdict rendered for the web, flattened
 into the shape the panel draws and placed where the site can fetch it.</p>
 
@@ -665,7 +665,7 @@ and render order coincide only while nothing sorts above it.</p>
     </tr>
     <tr>
       <td>kg verdicts</td>
-      <td><code class="language-plaintext highlighter-rouge">**/kg-qa/*.kg-qa.json</code>, auditor in <code class="language-plaintext highlighter-rouge">skills/kg-qa.manifest.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">test/results/kg-qa/&lt;subject-dir&gt;/&lt;stem&gt;.kg-qa.json</code> — the tree MIRRORS the subject’s path, because four basenames already collide across packages. Path from <code class="language-plaintext highlighter-rouge">kgQaSidecarPath</code> in <code class="language-plaintext highlighter-rouge">schemas/kg-qa.ts</code>, never composed by hand. Auditor in <code class="language-plaintext highlighter-rouge">skills/kg-qa.manifest.json</code></td>
     </tr>
   </tbody>
 </table></div>
@@ -687,7 +687,7 @@ the declared <code class="language-plaintext highlighter-rouge">schemas/</code> 
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35431170226"><code>46fe643</code></a> &middot; 2026-09-19T08:08:55Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
