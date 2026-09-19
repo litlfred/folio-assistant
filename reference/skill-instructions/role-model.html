@@ -675,6 +675,61 @@
 <p>Schema: <a href="../../schemas/role-graph.ts"><code class="language-plaintext highlighter-rouge">schemas/role-graph.ts</code></a>. Audit:
 <a href="../../scripts/kg-audit.ts"><code class="language-plaintext highlighter-rouge">scripts/kg-audit.ts</code></a>, sidecar schema
 <a href="../../schemas/kg-qa.ts"><code class="language-plaintext highlighter-rouge">schemas/kg-qa.ts</code></a>.</p>
+<h3 id="a-skills-own-roles-front-matter-is-not-this-tables-role">
+  
+  
+    <a href="#a-skills-own-roles-front-matter-is-not-this-tables-role" class="anchor-heading" aria-labelledby="a-skills-own-roles-front-matter-is-not-this-tables-role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A skill’s own <code class="language-plaintext highlighter-rouge">roles:</code> front matter is NOT this table’s Role
+  
+  
+</h3>
+    
+
+<p>Measured 2026-09-19, bean <code class="language-plaintext highlighter-rouge">folio-assistant-qif9</code>. <strong>Look at the top of this
+file</strong>: it declares <code class="language-plaintext highlighter-rouge">roles: [reader, collaborator, owner]</code>. None of those
+three is a Role in the sense the table above defines, and none is a
+Permission either — they are in neither registry.</p>
+
+<p>Across 178 skill files, 133 carry <code class="language-plaintext highlighter-rouge">roles:</code>, and the field holds <strong>two
+vocabularies at once</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>uses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">reader</code> / <code class="language-plaintext highlighter-rouge">collaborator</code> / <code class="language-plaintext highlighter-rouge">owner</code> / <code class="language-plaintext highlighter-rouge">admin</code> / <code class="language-plaintext highlighter-rouge">auditor</code> — <strong>in no registry</strong></td>
+      <td>254</td>
+    </tr>
+    <tr>
+      <td>real swimlane roles (<code class="language-plaintext highlighter-rouge">code-reviewer</code>, <code class="language-plaintext highlighter-rouge">build-pipeline</code>, …)</td>
+      <td>52</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>They mix inside single files: <code class="language-plaintext highlighter-rouge">library-ingestion.md</code> declares
+<code class="language-plaintext highlighter-rouge">roles: [ingestion-agent, authoring-agent, collaborator, owner]</code>.</p>
+
+<p><strong>And nothing reads the field.</strong> All 168 Skill nodes in the exported graph
+carry zero role-ish keys; <code class="language-plaintext highlighter-rouge">gen-skill-docs</code> drops it; no check resolves it.
+<code class="language-plaintext highlighter-rouge">SkillDefinitionSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/skill-package.ts</code> does require <code class="language-plaintext highlighter-rouge">roles</code>,
+but that describes a skill <em>definition object</em> and nothing parses front
+matter against it.</p>
+
+<p>So: <strong>do not read a skill’s <code class="language-plaintext highlighter-rouge">roles:</code> as saying who performs it, and do not
+add a binding on its authority.</strong> To learn who performs a skill, read
+<code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code> — the registry is the only answer that resolves.</p>
+
+<p>This is recorded rather than fixed because fixing it means deciding what
+the tier words MEAN, and if they are forge permission tiers that is a
+deployment fact belonging to the topology axes rather than to a skill.
+<code class="language-plaintext highlighter-rouge">qif9</code> carries the four options; <code class="language-plaintext highlighter-rouge">folio-assistant-y1w9</code> (110 skills bound
+to no role or process) is blocked on the answer, because the obvious
+evidence for that triage is exactly this field.</p>
 <h2 id="why-a-role-is-the-lane-and-not-the-person">
   
   
@@ -1292,7 +1347,7 @@ either a lane name has drifted, or the role is dead.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35461430266"><code>dcaee4f</code></a> &middot; 2026-09-19T18:31:33Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35469432298"><code>3eef389</code></a> &middot; 2026-09-19T21:08:17Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
