@@ -868,6 +868,16 @@
     // Search leads the grid. It is the one action here a reader reaches for
     // repeatedly, and it is the one that was taken off the main panel -- so
     // it gets the first cell rather than being buried behind the others.
+    //
+    // TWO PRESSES IS THE ANSWER, NOT A COMPROMISE. Reaching search costs
+    // launcher-then-tile, and the obvious "improvement" is a second, dedicated
+    // magnifier in the header row: one press instead of two. Do not make it.
+    // That row is capped at 3.75rem and shares its width with the site title,
+    // and a single launcher exists precisely because the navbar was getting
+    // crowded (bean `1le7`). Put to the repo owner on 2026-09-19 with both
+    // costs stated; the answer was "search is two". It is ~20 lines here and
+    // the CSS already exists, which is exactly why this comment is here: the
+    // change is cheap enough to look like a tidy-up.
     if (searchHolder) grid.appendChild(tileButton(SEARCH_GLYPH, "Search", "search"));
     grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
     grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
