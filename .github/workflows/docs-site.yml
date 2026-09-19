@@ -177,6 +177,25 @@ jobs:
           bun run scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
+      # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
+      # composed.
+      #
+      # The knowledge-graph tile's href was `'/kg/' | relative_url` written
+      # into `head_custom.html` by hand, and nothing has ever been published
+      # at `<base>/kg/`. The only entry point to the viewer anywhere on this
+      # site was a 404 from the day it was added, and no test caught it
+      # because every test asserted the attribute rather than the target --
+      # the same defect that left all twenty-three of the README's chapter
+      # PDF links dead. See bean `udx8`.
+      #
+      # This runs AFTER the export, against the real `_site`, so a tile that
+      # outlives the artefact it points at fails the build instead of
+      # shipping. Exit 2 ("could not determine" -- no build to check) is a
+      # failure here too: at this point in the job there IS a build, so not
+      # finding one means something earlier went wrong quietly.
+      - name: Check the navbar tiles resolve against the built site
+        run: bun run scripts/site-links.ts --site ./_site
+
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
 

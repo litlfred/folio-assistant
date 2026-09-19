@@ -551,6 +551,36 @@
     '<path d="M13.6 3.6 10 20.4l-1.9-.4L11.7 3.2z"/>' +
     "</svg>";
 
+  // A braced document: the graph as DATA, as against the net (the graph as a
+  // thing to browse) and the angle brackets (the code that produced it). The
+  // three tiles are three different artefacts and must not share a glyph.
+  var DATA_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path d="M13 3v5h5" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path d="M10.2 12.3c-1 0-1.2.5-1.2 1.2v.9c0 .7-.3 1.1-1 1.1.7 0 1 .4 1 1.1v.9c0 .7.2 1.2 1.2 1.2" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>' +
+    '<path d="M13.8 12.3c1 0 1.2.5 1.2 1.2v.9c0 .7.3 1.1 1 1.1-.7 0-1 .4-1 1.1v.9c0 .7-.2 1.2-1.2 1.2" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>' +
+    "</svg>";
+
+  // A magnifier: search. The owner asked for the search to leave the main
+  // panel and become "a icon in navbar that expands" -- this is the icon, and
+  // the launcher it lives in is the expansion.
+  var SEARCH_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+    '<path d="M15.2 15.2 20 20" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+    'stroke-linecap="round"/>' +
+    "</svg>";
+
+  // Where just-the-docs puts its search. `.search` is the container holding
+  // BOTH the input and the results list; moving the container keeps them
+  // together and keeps the theme's own handlers, which are bound to the
+  // elements rather than to their position.
+  var SEARCH_SELECTORS = [".search", "#search", ".main-header .search"];
+
   /**
    * Where the knowledge-graph and source tiles point.
    *
@@ -664,6 +694,59 @@
     panel.appendChild(view);
     mountPanelInSidebarColumn(host, panel);
 
+    /* ── The search field, adopted out of the main panel ────────────────── */
+
+    /*
+     * The owner: "move the search to a icon in navbar that expands.... keep
+     * main display panel uncluttered." just-the-docs renders its search at
+     * the top of `.main-header`, which is exactly the clutter named.
+     *
+     * ## Moved, never rebuilt
+     *
+     * The theme's own script binds to the input it rendered. A search box
+     * reconstructed here would look identical and do nothing -- the failure
+     * mode this file's header calls out, a feature that quietly does nothing.
+     * So the theme's `.search` container is MOVED, with its input, its label
+     * and its results list intact, and every handler moves with it because
+     * handlers belong to elements and not to positions.
+     *
+     * ## It must never leave the document
+     *
+     * just-the-docs looks its input up by id when it initialises, and
+     * `getElementById` does not find a detached node. Parking the container
+     * in a variable until the view is first opened would therefore kill
+     * search outright on any page where the theme initialises second.
+     *
+     * So it is moved at MOUNT time into a holder that is already inside the
+     * panel -- in the document, hidden by CSS -- and shuttled between that
+     * holder and the open view. `display: none` on an ancestor keeps a node
+     * in the tree; removing it from the tree does not.
+     *
+     * ## Absent is a real state
+     *
+     * `search_enabled: false`, or a theme that renamed the container, means
+     * there is nothing to adopt. The tile is then NOT DRAWN and the warning
+     * says what was looked for -- rather than a Search tile that opens onto
+     * an empty panel.
+     */
+    var searchHolder = null;
+    var adopted = firstMatch(SEARCH_SELECTORS);
+    if (adopted) {
+      searchHolder = el("div", { class: "fa-search-holder", hidden: "hidden" });
+      searchHolder.appendChild(adopted);
+      panel.appendChild(searchHolder);
+    } else {
+      console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
+                   "); the Search tile was not mounted and the theme's search, if any, " +
+                   "was left where it was.");
+    }
+
+    /** Put the search back in its always-in-document holder. */
+    function parkSearch() {
+      if (searchHolder && searchHolder.parentNode !== panel) panel.appendChild(searchHolder);
+      if (searchHolder) searchHolder.setAttribute("hidden", "hidden");
+    }
+
     /* ── The views ─────────────────────────────────────────────────────── */
 
     // Built once, on first open, and kept. Rebuilding on every open would
@@ -710,6 +793,9 @@
 
     function showGrid() {
       view.setAttribute("hidden", "hidden");
+      // Before the wipe: `innerHTML = ""` DETACHES, and a detached search
+      // input is one `getElementById` away from being dead.
+      parkSearch();
       view.innerHTML = "";
       grid.removeAttribute("hidden");
       if (openTile) openTile.focus();
@@ -720,6 +806,7 @@
       buildViews();
       openTile = tile;
       grid.setAttribute("hidden", "hidden");
+      parkSearch();
       view.innerHTML = "";
 
       var head = el("div", { class: "fa-tiles-head" });
@@ -735,13 +822,30 @@
       head.appendChild(back);
       head.appendChild(heading);
       view.appendChild(head);
-      view.appendChild(views[key]);
+      if (key === "search") {
+        // A move, not a copy: the holder travels into the view with the
+        // theme's own input inside it, and travels back on the way out.
+        view.appendChild(searchHolder);
+        searchHolder.removeAttribute("hidden");
+      } else {
+        view.appendChild(views[key]);
+      }
       view.removeAttribute("hidden");
 
       if (key === "qr") renderQr();
       // The panel is rewritten in place, so a reader whose cursor did not move
       // would be told nothing at all about what just happened.
-      heading.focus();
+      //
+      // Search is the exception, and deliberately: a reader who pressed a
+      // magnifier is going to type. The input carries the theme's own label,
+      // so a screen reader is still told what it landed on -- the heading is
+      // reachable by Shift+Tab, one key away, rather than in the way of the
+      // thing the tile exists for.
+      var input = key === "search" && searchHolder
+        ? searchHolder.querySelector("input")
+        : null;
+      if (input) input.focus();
+      else heading.focus();
     }
 
     /* ── The grid ──────────────────────────────────────────────────────── */
@@ -761,6 +865,10 @@
       return a;
     }
 
+    // Search leads the grid. It is the one action here a reader reaches for
+    // repeatedly, and it is the one that was taken off the main panel -- so
+    // it gets the first cell rather than being buried behind the others.
+    if (searchHolder) grid.appendChild(tileButton(SEARCH_GLYPH, "Search", "search"));
     grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
     grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
     // The encoder is a separate vendor script. Without it the OTHER tiles must
@@ -779,7 +887,20 @@
       grid.appendChild(tileLink(NET_GLYPH, "Knowledge graph", links.kg,
                                 "browse this instance's skills, tools and schemas"));
     }
+    // The owner: "the source goes to github, i wanted the jsonld and github
+    // available." One affordance was doing two jobs. They are two artefacts --
+    // the graph as data, and the code that produced it -- so they are two
+    // tiles, each saying where it goes.
+    if (links.jsonld) {
+      grid.appendChild(tileLink(DATA_GLYPH, "JSON-LD", links.jsonld,
+                                "this instance's knowledge graph as a JSON-LD document"));
+    }
     if (links.source) {
+      // A `github.com/<owner>/<repo>` link, never a `raw.githubusercontent`
+      // one: raw 404s on a private repository and a browser session cookie
+      // does not authenticate it, while the blob form follows the viewer's
+      // own GitHub session. Same rule as `readme-toc`'s `linkStyle: "blob"`
+      // default, and the reason it is the default there.
       grid.appendChild(tileLink(CODE_GLYPH, "Source", links.source,
                                 "this site's repository on the forge"));
     }
