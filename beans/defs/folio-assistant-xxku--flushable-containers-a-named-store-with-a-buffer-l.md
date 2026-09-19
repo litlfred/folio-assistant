@@ -276,11 +276,11 @@ closing delimiter and there is no escape for it. Same asymmetry
 - [x] The three SEO claims dropped from preview builds —
       `scripts/strip-preview-seo.ts`, 10 tests, wired into `feature-staging.yml`.
 - [x] The floor recorded in `STAGING_WARN_BYTES`'s basis, structurally.
-- [ ] Sources 1–3 above: move the per-preview facts into one small data file and
-      derive them in the browser, as the sidebar QR already does. Needs its own
-      bean, its own PR and a preview a person looks at — it changes the docs
-      build and the language switcher. Until then the badge is permanently red,
-      which trains a reader to ignore it.
+- [x] Sources 1–3 split out into bean `g196` with the measurement, the three
+      causes, the client-derived shape and the identity constraint — its own bean
+      as this one said it wanted, so `xxku` is not left carrying work it will not
+      do. Until `g196` lands the badge is permanently red, which trains a reader
+      to ignore it.
 - [ ] Revisit the limit's VALUE once sources 1–3 land. The projection is
       ~77 MB, whose own floor is the graph/search exports (one HTML copy +
       N x ~5 MB + assets) — so at ~18 concurrent previews 100 MB is breached by
