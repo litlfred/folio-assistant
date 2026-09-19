@@ -206,7 +206,7 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds — the harness declares thirteen, core adds folio", () => {
+describe("graph kinds — the harness declares its own, core adds folio", () => {
   it("the harness's own vocabulary contains no renderable kind", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
@@ -234,6 +234,13 @@ describe("graph kinds — the harness declares thirteen, core adds folio", () =>
       "todo-items",
       "todos",
       "tools",
+      // The two halves of translation, declared separately for the same
+      // reason as `uploads` / `library` above: they are not interchangeable.
+      // A `.po` is fixed by a translator, a rendered page by re-running
+      // injection. Neither is renderable — `translated-content` holds pages
+      // the SITE renders, which is not the same as being a website graph.
+      "translated-content",
+      "translation-sources",
       "uploads",
       "voices",
       "workflow-state",
@@ -251,7 +258,8 @@ describe("graph kinds — the harness declares thirteen, core adds folio", () =>
     expect(bare.names().sort()).toEqual([
       "bean-defs", "beans", "cat-harness", "library", "qa", "schemas",
       "todo-feedback", "todo-items", "todos",
-      "tools", "uploads", "voices", "workflow-state",
+      "tools", "translated-content", "translation-sources",
+      "uploads", "voices", "workflow-state",
     ]);
   });
 

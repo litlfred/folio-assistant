@@ -2,8 +2,11 @@
 layout: default
 title: "Incorporación del agente (ES)"
 parent: Authoring guides
-nav_order: 0.6
 lang: es
+# Out of the static nav; `mountNavLocale` (docs/assets/js/docs-ui.js) puts it
+# back in place of its source when this locale is selected. See
+# skills/folio-core/translation-manager.md #the-navbar-filters-by-locale
+nav_exclude: true
 translation_status: unverified
 translation_source: guides/agent-onboarding.md
 available_locales: ["ar", "zh", "en", "fr", "ru", "es"]

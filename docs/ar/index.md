@@ -1,8 +1,11 @@
 ---
 layout: default
 title: "الصفحة الرئيسية (AR)"
-nav_order: 1.2
 lang: ar
+# Out of the static nav; `mountNavLocale` (docs/assets/js/docs-ui.js) puts it
+# back in place of its source when this locale is selected. See
+# skills/folio-core/translation-manager.md #the-navbar-filters-by-locale
+nav_exclude: true
 dir: rtl
 translation_status: unverified
 translation_source: index.md

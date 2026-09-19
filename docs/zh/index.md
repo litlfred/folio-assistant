@@ -1,8 +1,11 @@
 ---
 layout: default
 title: 首页 (ZH)
-nav_order: 1.3
 lang: zh
+# Out of the static nav; `mountNavLocale` (docs/assets/js/docs-ui.js) puts it
+# back in place of its source when this locale is selected. See
+# skills/folio-core/translation-manager.md #the-navbar-filters-by-locale
+nav_exclude: true
 translation_status: unverified
 translation_source: index.md
 description: "folio-assistant — 内容无关的智能体技能框架。"

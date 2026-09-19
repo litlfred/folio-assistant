@@ -276,7 +276,24 @@ jobs:
       # because the generated file still reads perfectly well without it.
       - name: agent memory is assembled
         run: bun run agent-memory:check
-          bun run scripts/gen-docs-pages.ts --check
+
+      # Was a continuation line of the step above, so YAML folded it into that
+      # step's `run` as trailing ARGUMENTS to `agent-memory:check` — which
+      # ignores them. The gate has therefore never run. Restored as its own
+      # step; verified locally that the committed pages are in fact current, so
+      # this turns a silent no-op into a passing check rather than a new red.
+      - name: content-backed docs pages are current
+        run: bun run scripts/gen-docs-pages.ts --check
+
+      # The translation index is what the navbar's locale filter reads, and it
+      # is derived from the `translated-content` directories `cat-harness.json`
+      # declares. Three outcomes, and the third is why this is not a plain
+      # diff: exit 2 means the translation set could NOT BE DETERMINED (a
+      # declared directory missing, a page whose front matter will not parse
+      # and that something translates), which must never be published as "this
+      # folio has no translations".
+      - name: translation index is current
+        run: bun run translation:index:check
 
   # ── End-to-end, including the accessibility gate ────────────────────
   #
