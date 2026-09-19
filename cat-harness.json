@@ -1,8 +1,8 @@
 {
-  "_comment": "The CatHarness declaration for THIS instance \u2014 what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `schemas/` declares TWO graphs \u2014 the first real use of the array. A directory is a place to look and may hold more than one part of the graph; it does not say how to tell them apart, because the files declare what they are (see bean xxxb: schemas/*.ts does not yet do this well). `beans/` is declared ONCE, as a single `beans` graph. Its internal split \u2014 `defs` for work items, `workflows` for running BPMN state \u2014 is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
+  "_comment": "The CatHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `schemas/` declares TWO graphs — the first real use of the array. A directory is a place to look and may hold more than one part of the graph; it does not say how to tell them apart, because the files declare what they are (see bean xxxb: schemas/*.ts does not yet do this well). `beans/` is declared ONCE, as a single `beans` graph. Its internal split — `defs` for work items, `workflows` for running BPMN state — is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
   "name": "folio-assistant",
   "title": "c@t-harness",
-  "description": "computable adjudication and agentic test harness\ncaaat-harness\nc&at-harness\nc@t-harness",
+  "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
   "icon": "mark-small",
   "images": [
     {
@@ -27,13 +27,45 @@
       "width": 1671,
       "height": 941,
       "textRegion": {
-        "x": 0.205,
-        "y": 0.285,
-        "w": 0.625,
+        "x": 0.33,
+        "y": 0.25,
+        "w": 0.53,
+        "h": 0.28
+      },
+      "title": "Thinking about it — wide",
+      "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Wide crop. The region is the cloud's lower interior, below the mark and clear of the ear that rises into its lower left. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
+    },
+    {
+      "id": "landing-mobile",
+      "src": "docs/assets/img/harness/landing-mobile.webp",
+      "role": "landing",
+      "layout": "mobile",
+      "width": 941,
+      "height": 1670,
+      "textRegion": {
+        "x": 0.13,
+        "y": 0.225,
+        "w": 0.72,
+        "h": 0.225
+      },
+      "title": "Thinking about it — tall",
+      "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Portrait crop for a phone: the cloud fills the upper half and the cat sits below it, so the region is wider in fraction and shallower than the laptop's, and the cat is nowhere near it. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
+    },
+    {
+      "id": "landing-card",
+      "src": "docs/assets/img/harness/landing-card.webp",
+      "role": "landing",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "textRegion": {
+        "x": 0.3,
+        "y": 0.255,
+        "w": 0.58,
         "h": 0.235
       },
-      "title": "Thinking about it",
-      "description": "The landing backdrop, wide crop. A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. The text region is the cloud's lower interior, below the mark and clear of the ear that rises into the lower left \u2014 found by rendering candidate boxes over the image and looking at them, which is the only way to find it."
+      "title": "Thinking about it — square",
+      "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     }
   ],
   "stub": "folio-assistant",
@@ -42,7 +74,7 @@
     {
       "id": "tools",
       "path": "tools/",
-      "description": "Tool definitions \u2014 one concrete way to exercise a skill, each naming the skills it satisfies. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
+      "description": "Tool definitions — one concrete way to exercise a skill, each naming the skills it satisfies. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
       "graphs": [
         "tools"
       ]
@@ -50,7 +82,7 @@
     {
       "id": "schemas",
       "path": "schemas/",
-      "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node \u2014 the .ts files are part of the KG, not a separate island beside it.",
+      "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "graphs": [
         "schemas",
         "kg"
@@ -59,7 +91,7 @@
     {
       "id": "kg",
       "path": "skills/",
-      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), and the `kg-qa/` audit sidecars beside each. Note the id is `kg` while the path is `skills/` \u2014 ids are stable across a relocation, paths are not.",
+      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), and the `kg-qa/` audit sidecars beside each. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",
       "graphs": [
         "kg"
       ]
@@ -67,7 +99,7 @@
     {
       "id": "beans",
       "path": "beans/",
-      "description": "The work plan. `beans/beans.json` declares its nodes \u2014 `defs` (work items) and `workflows` (running BPMN instance state).",
+      "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state).",
       "graphs": [
         "beans"
       ]

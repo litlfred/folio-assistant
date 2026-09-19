@@ -557,8 +557,29 @@ that are *acted upon* rather than performed — the work plan, the corpus, the
 publish target, the external registries — marked `actedUpon` so their
 `role-has-actor` is `n/a` rather than a failure nobody can act on. **Zero
 `unknown` rows.** The 42 activities naming no skill are now **zero**, and the
-criterion is `major` rather than `minor` — see below. 6 unreachable skills
-remain, `minor` and real.
+criterion is `major` rather than `minor` — see below.
+
+**Do not quote "6 unreachable skills" from here — that line was stale and is
+the reason this paragraph now says so.** It sat in this file after the finding
+had been resolved, and was repeated back to the author as live. Measured
+2026-09-18: `skill-has-entry-point` reports **zero**. Run the audit against the
+corpus in front of you; a count in prose is a claim, not evidence.
+
+**Two different reachability questions, and conflating them is how the stale
+number survived.** `skill-has-entry-point` (renamed from `skill-reachable`)
+asks whether there is ANY way in — servable, in the harness, carried by a role,
+or named by an activity. The servable clause alone covers nearly the whole
+corpus, so it passes near-trivially, and its green was read as an answer to the
+question its old name implied. `skill-in-role-or-process` asks the other one:
+what does the actor → role → task model actually reach? **96 of 143** skills
+are carried by no role and named by no activity.
+
+That 96 is **coverage, not a defect list, and must never gate**. A skill
+invoked directly by name — `corpus-grep`, `diff`, `kg-export`, `mcp-contract`,
+the watcher family — is doing its job without appearing in any diagram, and
+`skill_fetch` by name is a first-class entry point. Driving it to zero would
+mean inventing roles and activities to absorb tools that do not want them.
+Watch it move; do not read it as debt.
 
 **`activity-names-skill` could not gate until its exemptions became
 declarations.** A stakeholder's sign-off, a corpus being written into, and a

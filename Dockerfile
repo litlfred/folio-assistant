@@ -14,7 +14,7 @@ FROM ubuntu:24.04 AS base
 LABEL org.opencontainers.image.title="folio-assistant"
 LABEL org.opencontainers.image.description="Cross-repository agent skills framework with unified skill management, RBAC, and capability detection"
 LABEL org.opencontainers.image.source="https://github.com/litlfred/folio-assistant"
-LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
