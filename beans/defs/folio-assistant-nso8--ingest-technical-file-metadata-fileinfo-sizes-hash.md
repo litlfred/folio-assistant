@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nso8
 title: 'INGEST: technical file metadata — fileinfo, sizes, hashes, timestamps, mimetype'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-16T06:44:43Z
+updated_at: 2026-09-19T15:02:07Z
 parent: folio-assistant-slw1
 ---
 
@@ -27,3 +27,5 @@ Every asset in `manifest.jsonld` carries these fields, and they are produced by
 the ingest path rather than backfilled.
 
 Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_TechMeta`.
+
+_2026-09-19T15:02:07Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
