@@ -245,6 +245,13 @@
       "description": "Dots per inch for rendered formulae.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "Port": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535,
+      "description": "TCP port for a locally bound server; 0 asks the OS for a free one.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "DecisionFacts": {
       "type": "object",
       "additionalProperties": {
@@ -260,8 +267,8 @@
   },
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "654930e84bbf5aa1d9cf367516eaab6327a03508",
+    "sha": "ddb3e8c71aa0c4602d469c0f3423450c1e7b5d72",
     "pr": "384/merge",
-    "run": "35436070206"
+    "run": "35436434725"
   }
 }

@@ -231,10 +231,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T09:58:15.994Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6f5c3d63403ce2374dce3a7a9e6d8ed56c84060b",
-  "sourceCommitSha": "6f5c3d63403ce2374dce3a7a9e6d8ed56c84060b",
-  "sourceCommitAt": "2026-09-19T09:56:40Z",
+  "generatedAt": "2026-09-19T10:06:30.747Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1ba1c6d64667317f7fd5e54d1551022fe92e10b6",
+  "sourceCommitSha": "1ba1c6d64667317f7fd5e54d1551022fe92e10b6",
+  "sourceCommitAt": "2026-09-19T10:05:02Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 152,
@@ -245,7 +245,7 @@
     "Process": 32,
     "SequenceFlow": 443,
     "ProcessNode": 414,
-    "Tool": 27,
+    "Tool": 28,
     "Schema": 40,
     "GraphKind": 15,
     "Directory": 10
@@ -1598,7 +1598,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/serving-renderings.md",
-      "instructionLines": 118,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -17057,6 +17057,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/pages-publish"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/serve-rendering",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "serve-rendering",
+      "title": "Local rendering server",
+      "description": "Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run serve:rendering"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "directory",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Tree to serve; defaults to the built site when present.",
+            "required": false,
+            "arg": {
+              "flag": "--dir"
+            }
+          },
+          {
+            "name": "port",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Port",
+            "description": "0 binds a free port, which is what the tests use.",
+            "required": false,
+            "arg": {
+              "flag": "--port"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Url",
+            "description": "Where the tree is being served."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/serving-renderings"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/cat-harness-schema",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "cat-harness-schema",
@@ -18949,8 +19001,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "654930e84bbf5aa1d9cf367516eaab6327a03508",
+    "sha": "ddb3e8c71aa0c4602d469c0f3423450c1e7b5d72",
     "pr": "384/merge",
-    "run": "35436070206"
+    "run": "35436434725"
   }
 }
