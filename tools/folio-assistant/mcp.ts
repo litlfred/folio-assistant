@@ -45,8 +45,8 @@
  *
  * @module tools/mcp
  */
-import { defineTool, type ToolDefinition } from "../schemas/tool.js";
-import type { ToolTypeName } from "../schemas/tool-types.js";
+import { defineTool, type ToolDefinition } from "../../schemas/tool.js";
+import type { ToolTypeName } from "../../schemas/tool-types.js";
 
 /** Mint the IRI for one shared type against the publication base. */
 type TypeIri = (name: ToolTypeName) => string;
