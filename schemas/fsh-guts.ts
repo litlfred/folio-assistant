@@ -47,14 +47,34 @@ export const FshGutsNodeSchema = z.object({
   /**
    * Where it used to live.
    *
-   * The field that earns the schema. Without it a node here is an orphan — a
+   * The field that earns the schema. Without it a MOVED node is an orphan — a
    * reader sees what it says and not where it came from, which is exactly the
    * "abandonment or accident" ambiguity the never-delete rule exists to
    * prevent.
+   *
+   * Optional because not every node was moved. One written here as working
+   * material has no prior location, and a `movedFrom` naming a path it never
+   * occupied would be a fabricated provenance — evidence-shaped and false.
+   * Such a node answers with {@link issue} or {@link bean} instead.
+   *
+   * **The disjunction is enforced by a test, not here, and that is
+   * deliberate.** This schema also CLASSIFIES: `isFshGutsNode` uses it to
+   * decide what belongs in the export. A refinement rejecting a node with no
+   * provenance would not flag it — it would classify it as not-a-node and
+   * drop it silently from the published document, which is the failure mode
+   * the whole directory exists to avoid.
    */
   movedFrom: z.string().min(1).optional(),
-  /** The issue that superseded it, where there is one. */
+  /** The issue that superseded it, or that it was written for. */
   issue: z.union([z.string(), z.number()]).optional(),
+  /**
+   * The work-plan item this was written under, where there is one.
+   *
+   * Declared rather than left to pass through as an unknown key: `z.object`
+   * strips what it does not name, so an undeclared `bean:` in front matter
+   * reads fine in the source and is absent from the exported node.
+   */
+  bean: z.string().min(1).optional(),
   summary: z.string().min(1).optional(),
 });
 
