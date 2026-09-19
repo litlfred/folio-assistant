@@ -132,7 +132,22 @@ previews stored nine copies of a site identical apart from its own address. The
 9× was in the addressing, not the docs, and no pruning policy could have found
 it — which is the general point: **a container that is over its limit is a
 question about the container, and "prune more" is the one answer that never
-asks it.** Worked out in bean `xxku`.
+asks it.**
+
+**But "make the references relative" is not the fix, and the owner caught this.**
+A reference is either an **address** or a **name**, and only addresses may be
+relativized. A stylesheet href is an address; a JSON-LD `@id` or a JSON Schema
+`$ref` is a name, and a relative one resolves against the *retrieval* URL — so
+the graph's identities become a function of how the file was fetched, and an
+out-of-band validator has no base at all. Deduplication is worth having; it is
+not worth buying with identity. The 5205 identity references in that corpus were
+left byte-for-byte alone, which is why the projection landed at ~77 MB rather
+than one copy: **the exports are a real floor, not a duplication artefact.**
+
+That is the rule's second application in one investigation. The first "prune
+more" was hiding a 9× duplication; a second one would hide a genuine floor —
+and a genuine floor is answered by a limit whose **basis states it**, never by a
+policy. Worked out in bean `xxku`.
 
 ## Adding a container
 

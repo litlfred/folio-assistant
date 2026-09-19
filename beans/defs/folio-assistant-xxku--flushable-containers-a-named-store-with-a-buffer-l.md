@@ -107,32 +107,71 @@ one-substring difference on 75 lines makes the page a wholly distinct object.
 **Nine previews therefore store nine full copies of a site that is
 byte-identical apart from its own address.**
 
-The arithmetic, which is what makes this the lever rather than a tidy-up:
-9 × 27.5 MB ≈ 247 MB of HTML today; with relative URLs it would collapse to one
-copy plus each branch's genuine deltas — roughly 27.5 MB + 10 MB of shared
-assets + deltas, i.e. **STAGING comes in under the 100 MB threshold with nothing
-pruned and nobody's preview destroyed.**
+### The owner's correction: relative URLs break identity resolution
 
-So the earlier finding stands but its conclusion moves: the limit is unreachable
-*by pruning*, and reachable *by fixing the build*. Prune-to-limit was never the
-right instrument here — it was being asked to compensate for a 9× duplication
-one layer down. Candidate fixes, in the order I would try them:
+My first proposal was "make the URLs relative", and the owner flagged that this
+**breaks `$schema`, JSON Schema and JSON-LD resolution**. Measured, and the
+objection is exactly right — the reference kinds are not one population:
 
-1. **Relative URLs** — just-the-docs supports `relative_url`; a `<base href>` or
-   root-relative-to-`.` emission removes the slug from asset hrefs entirely.
-   Biggest win, and it makes a preview directory portable, which is worth having
-   on its own.
-2. **Drop `canonical` and `og:url` from previews.** A preview should arguably not
-   claim a canonical URL at all — it is not the published page, and emitting one
-   invites a crawler to index a branch build.
-3. **Skip `reference/` and `api/` in previews** (16.6 + 6.8 MB) unless the branch
-   touched a schema or a public signature. Independent of the above and a large
-   win, but it changes what a reviewer can see, so it is the one to decide rather
-   than assume.
+| kind | per page / doc | relativize? |
+|---|---|---|
+| nav `href`, `<script src>`, stylesheets, icons, `<img>` | ~235 refs per page | **yes** |
+| `canonical`, `og:url`, inline `ld+json` `url` | 3 per page | no — see below |
+| `@id` (1244), `partOf` (857), `to`/`from` (443 each), `performedBy` (414), `schema` (104), `inputSchema`/`outputSchema` (22 each) | 5205 in `folio-assistant.jsonld` | **never** |
 
-Not mine to implement — the staging build is `w2g5` / #407 territory — but the
-measurement is here so nobody re-derives it, and #2 is a correctness point as
-much as a size one.
+A presentational reference is *an address to fetch, from this directory*;
+relative is strictly better and cannot change meaning. An **identity** reference
+is a name. A relative JSON-LD `@id` resolves against the document's **retrieval**
+URL, so the graph's node identities become a function of how you fetched the
+file — served from Pages, opened from disk, or embedded in another document give
+three different graphs. And `schema` / `inputSchema` / `outputSchema` are JSON
+Schema references: a validator handed the document out of band has no base to
+resolve them against. So the knowledge-graph exports stay **byte-for-byte as
+they are**.
+
+The three SEO claims are a separate case and go the other way: a preview
+**should not be emitting them at all**. `canonical` tells a crawler which URL is
+authoritative, and a branch build asserting a canonical STAGING URL invites the
+preview to be indexed. Same for `og:url` and the `jekyll-seo-tag` inline
+`WebPage.url`. Dropping them from preview builds is a correctness fix that
+happens also to be the last thing standing between HTML and deduplication —
+two slug-bearing lines are enough to make a blob distinct.
+
+**Note what this does NOT touch.** `@context` prefixes are already absolute and
+slug-free (`https://litlfred.github.io/folio-assistant/bootstrap/ns#`), so the
+vocabulary namespace is stable across previews and was never at risk.
+
+And a question I am deliberately not answering, because it is the owner's:
+a preview currently mints its own `@id` for all 1244 nodes, so nine previews are
+nine parallel identities for one graph. That may well be *correct* — a preview's
+graph genuinely differs in content, and an unstable id for an unstable artefact
+is honest. The clearly wrong alternative would be a preview claiming the
+published `@id`s, since two documents would then assert different facts about
+one node. Left alone.
+
+### Revised arithmetic, with the graph exports left absolute
+
+Per preview: 37.5 MB = 27.5 MB HTML + 10.0 MB other. Of the "other", the
+slug-bearing part is `search-data.json` (2.3 MB) + `folio-assistant.json`
+(1.33) + `.jsonld` (1.33) ≈ **4.96 MB that will never deduplicate**, and
+legitimately so: search must index the branch's own pages, and the graph export
+is the graph *of that branch*.
+
+After relativizing presentation and dropping the three SEO claims:
+
+    one HTML copy            ~27.5 MB
+    9 x graph/search exports ~44.6 MB
+    shared assets             ~5   MB
+                             --------
+                             ~77 MB + per-branch deltas
+
+**Under the 100 MB threshold with nothing pruned — but not by much.** The graph
+exports become the new binding constraint: at ~18 concurrent previews they alone
+exceed the limit. That is a real floor, not a duplication artefact, so at that
+point the honest move is a limit whose **basis** states it —
+`one HTML copy + N x 5 MB exports + assets` — rather than a prune policy. Which
+is the skill's own rule applied twice: the first "prune more" answer was hiding a
+9x duplication, and the second would be hiding a genuine floor.
 
 ## Done when
 
@@ -145,9 +184,15 @@ much as a size one.
 - [x] **The 38 MB question answered** — the preview slug in every page's
       `baseurl`, canonical and `og:url` defeats git deduplication; 0 HTML blobs
       shared between two previews. See §"The 38 MB is the slug".
-- [ ] One of the three fixes above landed, so the threshold is reachable without
-      pruning live work. Until then the badge is permanently red, which trains a
-      reader to ignore it.
+- [x] The owner's objection checked: relative URLs would break JSON Schema and
+      JSON-LD resolution. Proposal narrowed to presentational references only;
+      the graph exports stay byte-for-byte absolute. See §"The owner's
+      correction".
+- [ ] Presentational refs relativized and the three SEO claims dropped from
+      preview builds (~77 MB projected, under the limit). Until then the badge
+      is permanently red, which trains a reader to ignore it.
+- [ ] A basis recorded for whatever limit is chosen, stating the floor
+      explicitly: one HTML copy + N x ~5 MB graph/search exports + assets.
 - [ ] Either the buffer limit is raised to something above the live floor, with
       its basis recorded, **or** preview size comes down. Both is fine; neither
       leaves a check that cannot pass.
