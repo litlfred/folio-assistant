@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T11:22:01.553Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ca62e88924dd1a2ab11889308003fd665e012739",
-  "sourceCommitSha": "ca62e88924dd1a2ab11889308003fd665e012739",
-  "sourceCommitAt": "2026-09-19T11:20:29Z",
+  "generatedAt": "2026-09-19T11:58:23.330Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0573f4c01e8c05447913ce6c9dc984b173af23f1",
+  "sourceCommitSha": "0573f4c01e8c05447913ce6c9dc984b173af23f1",
+  "sourceCommitAt": "2026-09-19T11:56:49Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 162,
+    "Skill": 163,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -246,7 +246,7 @@
     "SequenceFlow": 443,
     "ProcessNode": 414,
     "Tool": 28,
-    "Schema": 41,
+    "Schema": 43,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -949,7 +949,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/crdm-requirements-workflow.md",
-      "instructionLines": 263,
+      "instructionLines": 266,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1171,7 +1171,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 511,
+      "instructionLines": 532,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1315,7 +1315,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 207,
+      "instructionLines": 211,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true,
@@ -1410,7 +1410,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/feature-staging.md",
-      "instructionLines": 118,
+      "instructionLines": 130,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1632,7 +1632,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 145,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1699,6 +1699,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/github-state-inspection",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "github-state-inspection",
+      "title": "Reading GitHub state — resolve the ref, do not compose the URL",
+      "description": "Answer questions about GitHub-hosted state — is a page published, where does it live, did CI pass, does a branch exist — by reading the ref or the API, never by composing a URL or fetching one. The first check for any deployment or 404 question is `git ls-tree` of the publish ref.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/github-state-inspection.md",
+      "instructionLines": 118,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/bib-qa",
@@ -1931,7 +1947,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 197,
+      "instructionLines": 223,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3906,6 +3922,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/idle-backlog",
@@ -18743,7 +18760,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#schema/health-report",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "health-report",
-      "title": "Repository health reports — what the daily sweep under `tests/health/` wrote.",
+      "title": "Repository health reports — what the daily sweep under `test/health/` wrote.",
       "module": "schemas/health-report.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/health-report"
     },
@@ -18850,6 +18867,22 @@
       "title": "Staging comparison schema — before/after URL pairs for content review.",
       "module": "schemas/staging.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#schema/theme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "theme",
+      "title": "A sticky theme — named colour roles plus the three layouts, as a graph node.",
+      "module": "schemas/theme.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#schema/themes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "themes",
+      "title": "The themes this instance ships, and the default.",
+      "module": "schemas/themes.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/themes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#schema/todo-graph",
@@ -18983,7 +19016,7 @@
       "name": "health",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#HealthGraph",
       "renderable": false,
-      "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `tests/health/run.ts`; never hand-edited."
+      "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/beans",
@@ -19122,11 +19155,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#directory/health",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "health",
-      "path": "tests/health/results/",
+      "path": "test/health/results/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/health"
       ],
-      "description": "Repository health reports — what the daily sweep under `tests/health/` wrote. One `health-report/v1` document, declaring itself with a `$schema` tag rather than being duck-typed by path: a directory is a PLACE TO LOOK and the files inside say what they are. A SEPARATE graph from `qa`, and the line between them is about the SUBJECT, not the producer: a QA verdict judges an artefact this repository produced, against criteria that artefact is supposed to meet; a health report judges the REPOSITORY ITSELF — how big it has grown, how much of the publish branch the review previews occupy, whether the work plan has duplicates in it. Folding it into `qa` would leave a consumer asking for verdicts about this instance's content holding a fact about its clone. NOTE the path: this repository has BOTH `test/` (the `qa` graph) and `tests/` (Playwright e2e specs), and the owner asked for `tests/health` on 2026-09-19. The inconsistency is real and is flagged in `skills/folio-core/directory-conventions.md` rather than resolved here — relocating a declared directory as a side effect of adding a check is the `dh4f` shape, where a consumer scans nothing and reports a clean run over it.",
+      "description": "Repository health reports — what the daily sweep under `test/health/` wrote. One `health-report/v1` document, declaring itself with a `$schema` tag rather than being duck-typed by path: a directory is a PLACE TO LOOK and the files inside say what they are. A SEPARATE graph from `qa`, and the line between them is about the SUBJECT, not the producer: a QA verdict judges an artefact this repository produced, against criteria that artefact is supposed to meet; a health report judges the REPOSITORY ITSELF — how big it has grown, how much of the publish branch the review previews occupy, whether the work plan has duplicates in it. Folding it into `qa` would leave a consumer asking for verdicts about this instance's content holding a fact about its clone. NOTE the path: it was `tests/health/results/` when this graph landed in #395, because this repository then had BOTH `test/` (the `qa` graph) and `tests/` (the Playwright e2e specs), and the owner asked for `tests/health`. #395 flagged that inconsistency in `skills/folio-core/directory-conventions.md` rather than resolving it, since relocating a declared directory as a side effect of adding a check is the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. The owner settled it on `test/` the same day and it moved as its own change — bean `auap`, PR #400. The `id` here is unchanged, deliberately: an inheriting instance overrides on the entry's id and never on its path, so `health` still binds after the relocation. The e2e specs came to the declaration rather than the declaration to the specs, because `testDir` is one line of one config file and a declared path is what every downstream override resolves against.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/health"
     },
     {
@@ -19198,8 +19231,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "f99d07be8bb00928ad6f26d671dadacf0cebf57e",
-    "pr": "399/merge",
-    "run": "35439847720"
+    "sha": "e4b7e156f15c383297a48c32cf057cba272dcd26",
+    "pr": "409/merge",
+    "run": "35441485444"
   }
 }
