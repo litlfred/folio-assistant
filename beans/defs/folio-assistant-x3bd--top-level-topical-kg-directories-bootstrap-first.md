@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-09-19T09:07:23Z
+updated_at: 2026-09-19T10:15:04Z
 ---
 
 
@@ -126,3 +126,27 @@ MY ERROR, named precisely so the same mistake is recognisable. I read the _comme
 SO THE PREMISE OF THE RECOMMENDATION WAS FALSE. I told the owner the two root files are structure-versus-content and that the shared 'harness' stem plus a '.config' suffix invites a permanent misreading. They are both HARNESS concerns: harness.json says WHAT DIRECTORIES EXIST, harness.config.json says HOW THE HARNESS BEHAVES. On that reading the shared stem is correct and the pairing is informative rather than misleading, which removes the entire basis for the change.
 
 WHAT WOULD ACTUALLY BE WORTH DOING, if the pairing still reads badly to a fresh eye: the constant HARNESS_CONFIG already exists in schemas/harness-config.ts with resolveHarnessConfigPath beside it, and 110 of its occurrences across 39 .ts files are BARE LITERALS that ignore it. Routing those through the constant makes any future rename one line, which is what DECLARATION_FILENAME bought for harness.json — that rename cost 39 files and one constant edit, against this one's 332. That is a real improvement available at any time and it does not require deciding the name.
+
+_2026-09-19T10:15:04Z_ — BOOTSTRAP INSTANTIATION INTO A REPO THAT IS NOT YET AN INSTANCE — owner, 2026-09-19, three messages that together describe the whole no-instance branch of the gateway, and the third one changes the shape of the other two.
+
+(1) 'when doing a boot strap instantation into a repo that is not an instnace, the bootrap/ skills should have the cat-harness library replicated under bootstrap/cat-harness/ etc. as local cache and dirs gets declared in bootstrap'.
+
+(2) 'the repo_name instance declaation needs to be made in repo once the user's intent on harnes type is known (e.g. folio, smart-guidewline DAK, smart guideline IG or whatever)'.
+
+(3) THE WORKED EXAMPLE, and it is the one to design against: 'typical command woudl be "make this repo into a litlfred/f-a-sci instnace" which would turn it into a folio with the f-a-sci knowldfge grpah loaded and using milnor as voice'.
+
+WHAT (3) CORRECTS. Reading (2) alone, I had the intent skill producing a HARNESS TYPE — folio, DAK, IG — as a value from a closed set. That is wrong, or at least far weaker than what (3) describes. THE USER NAMES AN UPSTREAM INSTANCE, and everything else is READ from that instance's declaration: `litlfred/f-a-sci` yields the harness type (folio), the knowledge graph to load (f-a-sci's), and the voice (milnor). Nobody is asked three questions; one reference answers all of them.
+
+So the intent skill's output is AN INSTANCE REFERENCE, not an enum. That is better in the way this repository keeps rediscovering: a declaration is read rather than a property re-stated. An enum would be a second answer to 'what kind of thing is this repo', free to disagree with the upstream declaration it came from, and a fourth place the harness type is written down.
+
+AND IT MAKES AN EARLIER DECISION ON THIS BEAN PAY OFF RATHER THAN MERELY BEING TIDY. The owner sent milnorlink and voices/milnor.json to folio-asst-sci, on the grounds that a library document, its voice and the skill derived from it are one bundle. (3) is what that buys: 'using milnor as voice' is not a fourth thing the command configures — it is a consequence of naming f-a-sci, because the voice LIVES there. Had milnor stayed in the platform, the command would have had to name it separately and the bundle argument would have been decoration.
+
+THE ORDER IS THEREFORE: instance reference -> read ITS declaration -> write this repo's declaration from what that says -> cache what the declaration needs. Not: ask the type, write a declaration, fetch things. The difference matters because writing a declaration before reading the upstream one leaves a window in which the repo declares something it is not, and every consumer that reads a declaration would believe it.
+
+THE CACHE IS bootstrap/cat-harness/, WHICH IS THE STUB PATTERN AGAIN — one subdirectory per contributing instance, the same shape as tools/<stub>/ (shipped 2026-09-19) and the skills//library//docs/ plan. So bootstrap invents no mechanism for vendoring; it uses the one in place, and the cached copy is DECLARED in bootstrap's own harness.json so ordinary resolution finds it with no special case. A cache needing its own lookup path would be a second answer to 'where do skills live'; a cache that is just another declared directory is not. Under (3) the cached directory is named for the instance it came from — bootstrap/f-a-sci/ alongside bootstrap/cat-harness/ — which is what the stub pattern is FOR and what makes two upstreams composable rather than colliding.
+
+TWO THINGS STILL UNANSWERED, recorded so they are not rediscovered.
+
+STALENESS, the question every cache owes. This repository's doctrine is that a copy with no staleness check drifts and is believed anyway — render:bpmn:check exists for that, translate-bpmn's missing equivalent is bean 0hd6, and check:harness-dirs gates the two duplicates AGENTS.md says cannot be removed. 'It was copied at init' is not an answer. The cheapest honest version records the source ref and compares against it, reporting COULD NOT DETERMINE when the upstream is unreachable rather than silently passing.
+
+WHAT SUBSET IS REPLICATED. f-a-sci's knowledge graph is not all of cat-harness, and a bootstrap that copies everything stops being lean in the way the owner asked for ('bootstrap is super lean, referencing only the minimum of schema'). Under (3) the named instance's own declaration is the obvious selector — it already says which directories it has — which would mean the subset needs no separate rule. Worth checking that claim against a real f-a-sci declaration before relying on it.
