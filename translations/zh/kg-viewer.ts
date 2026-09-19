@@ -16,20 +16,17 @@ const node: TranslationNode = {
   label: "trans:zh/kg-viewer",
   locale: "zh",
   sourceFile: "scripts/kg-viewer-strings.ts",
-  sourceHash: "a7ab6ebe9cf8",
+  sourceHash: "7587e3ba9260",
   potFile: "translations/zh/kg-viewer.pot",
   poFile: "translations/zh/kg-viewer.po",
   status: {
     locale: "zh",
     official: false,
-    generatedBy: "agent",
     generator: "folio-assistant translate-kg-viewer",
   },
-  coverage: { translated: 38, total: 38, pct: 100 },
+  coverage: { translated: 0, total: 38, pct: 0 },
   title: "中文 — knowledge-graph viewer interface",
   description:
-    "Interface strings for the knowledge-graph viewer. Unofficial: produced " +
-    "by an agent and not adjudicated by a person, which the page itself says " +
-    "while this stays false.",
+    "Interface strings for the knowledge-graph viewer. Not yet translated: the .po carries every msgid with an empty msgstr, awaiting a translator. The page falls back to the English msgid string by string, so nothing renders blank in the meantime.",
 };
 export default node;

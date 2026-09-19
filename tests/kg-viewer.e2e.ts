@@ -173,6 +173,152 @@ test.describe("kg viewer", () => {
     await expect(page.locator("#meta a", { hasText: "source commit" })).toHaveAttribute("href", commit);
   });
 
+  test("the interface is in English, because no catalogue is translated yet", async ({ page }) => {
+    // The shipped state, asserted rather than assumed. Every
+    // translations/<locale>/kg-viewer.po carries all 38 msgids with an empty msgstr,
+    // so there is nothing to switch TO and no switcher is drawn: a control
+    // with one option is furniture.
+    await page.goto(PAGE);
+    await expect(page.locator("#facets-h")).toHaveText("Kind");
+    await expect(page.locator("#list-h")).toHaveText("Nodes");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator("#langs")).toBeHidden();
+    // No boundary note either: in English there is no boundary to draw.
+    await expect(page.locator("#boundary")).toBeHidden();
+  });
+
+  test("asking for a language nobody has translated yet gets English, not a blank page", async ({ page }) => {
+    // The failure this guards against is the one that ships today: with every
+    // catalogue empty, EVERY string takes the fallback path. A lookup that
+    // returned the empty msgstr instead of the msgid would render a page of
+    // blank labels and no test would have been looking.
+    await page.goto(`${PAGE}?lang=fr`);
+    await expect(page.locator("#facets-h")).toHaveText("Kind");
+    await expect(page.locator("#list-h")).toHaveText("Nodes");
+    await expect(page.locator("#q")).toHaveAttribute("placeholder", "search name, id, title…");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator("#meta")).toContainText(`${KG["@graph"].length} nodes`);
+  });
+});
+
+/**
+ * The half no shipped catalogue exercises.
+ *
+ * `scripts/tests/kg-viewer-fixture.ts` calls the REAL generator with a
+ * catalogue of its own — a pseudolocalised, deliberately PARTIAL one under the
+ * reserved tag `qaa`, so no real language is impersonated and the strings it
+ * leaves out prove the English fallback. See that module for why the fixture
+ * exists rather than a shipped translation.
+ */
+test.describe("kg viewer — with a catalogue", () => {
+  execFileSync("bun", ["run", "scripts/tests/kg-viewer-fixture.ts"], { stdio: "inherit" });
+  const FIXTURE = "/_kg/folio-assistant-i18n-fixture/index.html";
+
+  test("the switcher appears once there is something to switch to", async ({ page }) => {
+    await page.goto(FIXTURE);
+    await expect(page.locator("#langs")).toBeVisible();
+    // English first, and always offered: it is the msgid, so it is never
+    // missing and it is the way back.
+    await expect(page.locator(".lang").first()).toHaveText("English");
+    await expect(page.locator('.lang[lang="qaa"]')).toHaveText("Qaa (fixture)");
+    await expect(page.locator('.lang[lang="en"]')).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("choosing a language translates the chrome and turns the page", async ({ page }) => {
+    await page.goto(FIXTURE);
+    await page.locator('.lang[lang="qaa"]').click();
+    await expect(page.locator("#list-h")).toHaveText("«Nodes»");
+    await expect(page.locator("#facets-h")).toHaveText("«Kind»");
+    await expect(page.locator("html")).toHaveAttribute("lang", "qaa");
+    // Right to left, because a frame that does not turn with the language is
+    // a translation of the words only.
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await expect(page.locator('.lang[lang="qaa"]')).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("a string the catalogue does not carry falls back to English, not to blank", async ({ page }) => {
+    await page.goto(`${FIXTURE}?lang=qaa`);
+    // Translated:
+    await expect(page.locator("#list-h")).toHaveText("«Nodes»");
+    // Not translated, and therefore English — per string, not per page.
+    await expect(page.locator("a.skip")).toHaveText("Skip to results");
+    await expect(page.locator(".facet").first()).toContainText("All");
+    await expect(page.locator("#meta")).toContainText(`${KG["@graph"].length} nodes`);
+  });
+
+  test("the page says where the translation stops, in the language chosen", async ({ page }) => {
+    // The chrome is translated; node names, descriptions and property names
+    // come from the corpus and cannot be reached from here. A screen that is
+    // two-thirds translated and silent about it is worse than one that states
+    // its edge — and the statement is itself translatable, because the person
+    // who needs it is reading the translated page.
+    await page.goto(`${FIXTURE}?lang=qaa`);
+    const note = page.locator("#boundary");
+    await expect(note).toBeVisible();
+    await expect(note).toContainText("«The interface is shown in Qaa (fixture); the graph is not.»");
+    // Unofficial, and it says so rather than letting a reader assume somebody
+    // adjudicated it. That sentence is untranslated here, so it arrives in
+    // English — which is the fallback doing its job inside a live sentence.
+    await expect(note).toContainText("has not been reviewed by a person");
+  });
+
+  test("the graph's own words stay in the graph's language", async ({ page }) => {
+    // The other half of the boundary, asserted rather than described. If this
+    // ever fails, the note above has become a lie.
+    await page.goto(`${FIXTURE}?lang=qaa`);
+    await page.locator("#q").fill("beans-cli");
+    await page.locator("#list li button").first().click();
+    await expect(page.locator(".detail h3")).toContainText("beans CLI");
+    await expect(page.locator(".detail th", { hasText: /^satisfies$/ })).toHaveCount(1);
+  });
+
+  test("switching language redraws the panel that is open, not just the frame", async ({ page }) => {
+    // The detail panel is built once per selection. A switcher that only
+    // relabelled the chrome would leave the node the reader is looking at in
+    // the language they just left.
+    await page.goto(FIXTURE);
+    await page.locator("#q").fill("beans-cli");
+    await page.locator("#list li button").first().click();
+    await expect(page.locator("#detail")).toHaveAttribute("aria-label", "Selected node");
+    await page.locator('.lang[lang="qaa"]').click();
+    await expect(page.locator("#detail")).toHaveAttribute("aria-label", "«Selected node»");
+    await expect(page.locator(".detail h3")).toContainText("beans CLI");
+  });
+
+  test("the choice is remembered under the same key the docs site writes", async ({ page }) => {
+    // fa-locale, not a second key: a reader who chose a language on the docs
+    // site arrives here in it, and a reader who chooses here keeps it there.
+    await page.goto(FIXTURE);
+    await page.locator('.lang[lang="qaa"]').click();
+    expect(await page.evaluate(() => localStorage.getItem("fa-locale"))).toBe("qaa");
+    // ...and the address is shareable to somebody whose browser asks for
+    // something else.
+    expect(new URL(page.url()).searchParams.get("lang")).toBe("qaa");
+    await page.goto(FIXTURE);
+    await expect(page.locator("#list-h")).toHaveText("«Nodes»");
+  });
+
+  test("a language with no catalogue is not offered and not selected", async ({ page }) => {
+    // A stale link or a browser set to Swedish is the ordinary case, and the
+    // answer is the source language rather than an empty page.
+    await page.goto(`${FIXTURE}?lang=sv`);
+    await expect(page.locator("#list-h")).toHaveText("Nodes");
+    await expect(page.locator('.lang[lang="sv"]')).toHaveCount(0);
+  });
+
+  test("an unreadable document says so in the reader's language, and is still not drawn as empty", async ({ page }) => {
+    await page.route("**/folio-assistant.jsonld", (r) => r.fulfill({ status: 404, body: "" }));
+    await page.goto(`${FIXTURE}?lang=qaa`);
+    await expect(page.locator("#meta")).toContainText("could not load");
+    await expect(page.locator(".detail")).toContainText("not an empty graph");
+    // Three states, in every language: no facets and no list, because an
+    // empty index and an unreadable document mean opposite things.
+    await expect(page.locator(".facet")).toHaveCount(0);
+    await expect(page.locator("#list li")).toHaveCount(0);
+  });
+});
+
+test.describe("kg viewer — the failed fetch", () => {
   test("a document that cannot be fetched says so, and is never drawn as empty", async ({ page }) => {
     // Three states, not two. An empty index and a failed fetch look identical
     // on screen and mean opposite things.

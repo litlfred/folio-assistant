@@ -119,9 +119,23 @@ if (wantExtract) {
   console.log("\nA .pot is a translator's input; nothing is translated until a .po sits beside it.");
 }
 
-/** The TranslationNode manifest that makes a `.po` a node rather than a file. */
+/**
+ * The TranslationNode manifest that makes a `.po` a node rather than a file.
+ *
+ * **Coverage is read from the `.po`, never asserted.** A stub with every
+ * msgid and no msgstr is the ordinary state here, and the node says 0% rather
+ * than implying a translation that does not exist — `translation_status`
+ * reads this, and a node that flattered itself would flatter every report
+ * downstream of it.
+ */
 function manifest(loc: string, translated: number): string {
   const pct = Math.round((translated / UI_STRINGS.length) * 100);
+  const state = translated === 0
+    ? "Not yet translated: the .po carries every msgid with an empty msgstr, " +
+      "awaiting a translator. The page falls back to the English msgid string " +
+      "by string, so nothing renders blank in the meantime."
+    : "Unofficial until a person signs it off, which the .po header declares " +
+      "and the page itself tells the reader.";
   return `import type { TranslationNode } from "../../schemas/translation";
 
 /**
@@ -146,15 +160,12 @@ const node: TranslationNode = {
   status: {
     locale: ${JSON.stringify(loc)},
     official: false,
-    generatedBy: "agent",
     generator: "folio-assistant translate-kg-viewer",
   },
   coverage: { translated: ${translated}, total: ${UI_STRINGS.length}, pct: ${pct} },
   title: "${localeName(loc)} — knowledge-graph viewer interface",
   description:
-    "Interface strings for the knowledge-graph viewer. Unofficial: produced " +
-    "by an agent and not adjudicated by a person, which the page itself says " +
-    "while this stays false.",
+    "Interface strings for the knowledge-graph viewer. ${state}",
 };
 export default node;
 `;

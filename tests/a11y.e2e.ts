@@ -96,6 +96,107 @@ test.describe("accessibility — automated", () => {
   }
 });
 
+/* ── The viewer, in a language that is not English ──────────────────────── */
+
+/**
+ * A translated interface is a DIFFERENT interface, and a gate that only ever
+ * ran in English is a gate over one of the pages this generator can produce.
+ *
+ * Nothing translated ships yet — every `translations/<locale>/kg-viewer.po` is a stub
+ * with empty msgstrs, awaiting a person — so the language switcher, the
+ * announcement, the right-to-left flip and the target sizes under a different
+ * script would be unchecked, in a repository whose own rule is that a check
+ * which does not run is a habit rather than a rule.
+ *
+ * `scripts/tests/kg-viewer-fixture.ts` therefore calls the REAL generator with
+ * a pseudolocalised catalogue of its own, under the reserved tag `qaa` so no
+ * real language is impersonated. It declares itself right-to-left, which is
+ * the one thing no left-to-right catalogue could exercise and the direction
+ * Arabic will arrive in.
+ */
+const I18N_PAGE = "/_kg/folio-assistant-i18n-fixture/index.html";
+execFileSync("bun", ["run", "scripts/tests/kg-viewer-fixture.ts"], { stdio: "inherit" });
+
+test.describe("accessibility — a translated, right-to-left interface", () => {
+  for (const colorScheme of ["light", "dark"] as const) {
+    test(`no WCAG A/AA violations — translated and RTL, ${colorScheme}`, async ({ browser }) => {
+      const ctx = await browser.newContext({ colorScheme, viewport: { width: 1280, height: 860 } });
+      const page = await ctx.newPage();
+      await page.goto(`${I18N_PAGE}?lang=qaa`);
+      await page.locator("#q").fill("beans-cli");
+      await page.locator("#list li button").first().click();
+      await expect(page.locator(".detail h3")).toBeVisible();
+      await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+      const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
+      expect(violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);
+      await ctx.close();
+    });
+  }
+
+  test("the language switcher is reachable and operable from the keyboard", async ({ page }) => {
+    // A switcher only a mouse can reach hands the choice to exactly the people
+    // this instance's declared interaction profile says to build for first.
+    await page.goto(I18N_PAGE);
+    const other = page.locator('.lang[lang="qaa"]');
+    await other.focus();
+    await expect(other).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#list-h")).toHaveText("«Nodes»");
+
+    // Space too: it is a button, and a button answers both.
+    await page.locator('.lang[lang="en"]').focus();
+    await page.keyboard.press(" ");
+    await expect(page.locator("#list-h")).toHaveText("Nodes");
+  });
+
+  test("changing language is announced, not just redrawn", async ({ page }) => {
+    // The whole page is rewritten in place and the reader's cursor does not
+    // move. Without a live region they are told nothing at all.
+    await page.goto(I18N_PAGE);
+    await expect(page.locator("#langstatus")).toHaveAttribute("aria-live", "polite");
+    await page.locator('.lang[lang="qaa"]').click();
+    await expect(page.locator("#langstatus")).toHaveText("«Interface language: Qaa (fixture)»");
+  });
+
+  test("a language button names its language, and declares it", async ({ page }) => {
+    // The name IS the accessible name, so there is nothing to mistranslate --
+    // and the lang attribute is what lets a screen reader switch voice rather
+    // than read one language's name in another's.
+    await page.goto(I18N_PAGE);
+    await expect(page.locator('.lang[lang="en"]')).toHaveText("English");
+    await expect(page.locator('.lang[lang="qaa"]')).toHaveText("Qaa (fixture)");
+    await expect(page.locator('.lang[lang="qaa"]')).toHaveAttribute("dir", "rtl");
+  });
+
+  test("no language button is under the 24px target floor", async ({ page }) => {
+    // Language names have very different widths -- 中文 beside Français -- so a
+    // control sized only by its own text is one that shrinks in some
+    // languages. The floor is held rather than assumed.
+    await page.goto(I18N_PAGE);
+    const small = await page.evaluate(() =>
+      [...document.querySelectorAll(".lang")]
+        .map((e) => e.getBoundingClientRect())
+        .filter((r) => r.height < 24 || r.width < 24).length);
+    expect(small).toBe(0);
+  });
+
+  test("the accessible names are translated too, not just the visible text", async ({ page }) => {
+    // Half a translation is a screen reader still reading English out of a
+    // translated page, with no visible text to say so.
+    await page.goto(`${I18N_PAGE}?lang=qaa`);
+    await expect(page.locator("#detail")).toHaveAttribute("aria-label", "«Selected node»");
+    await expect(page.locator("#langs")).toHaveAttribute("aria-label", "«Interface language»");
+    // And the field keeps a name of its own after typing, in any language.
+    await page.locator("#q").fill("beans");
+    const name = await page.locator("#q").evaluate((el) => {
+      const id = el.getAttribute("id");
+      const lab = id === null ? null : document.querySelector(`label[for="${id}"]`);
+      return el.getAttribute("aria-label") ?? lab?.textContent ?? null;
+    });
+    expect(name).toBeTruthy();
+  });
+});
+
 /* ── The docs site's action tiles ───────────────────────────────────────── */
 
 /**

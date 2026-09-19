@@ -878,8 +878,13 @@ function neighbourhood(n, back) {
     //
     // The sentence is the page's; the node's name and the property it travels
     // are the graph's, and are substituted into it untranslated.
-    const says = T(m.dir === "in" ? "Referenced by {name} via {via}" : "Links to {name} via {via}",
-      { name: name, via: m.via });
+    //
+    // Two calls rather than one with a conditional argument: a msgid that is
+    // computed cannot be read out of the source, and the check that every
+    // string the page asks for is one the table declares would skip both.
+    const says = m.dir === "in"
+      ? T("Referenced by {name} via {via}", { name: name, via: m.via })
+      : T("Links to {name} via {via}", { name: name, via: m.via });
     s += '<g class="node" role="button" tabindex="0" data-goto="' + escape(m.id) +
       '" aria-label="' + escape(says) + '">';
     // A 16px invisible disc, so the pointer target is not the 5px dot.

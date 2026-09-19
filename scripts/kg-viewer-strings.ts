@@ -212,7 +212,10 @@ export const UI_STRINGS: readonly UiString[] = [
   },
   {
     en: "Referenced by {name} via {via}",
-    comment: "As above, for a neighbour that points AT the selected node rather than away from it.",
+    comment:
+      "As above, for a neighbour that points AT the selected node rather than away " +
+      "from it. {name} is that node's name and {via} the property it points along; both " +
+      "stay in the graph's language.",
   },
 
   // ── Where the translation stops ───────────────────────────────
