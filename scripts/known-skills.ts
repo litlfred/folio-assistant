@@ -12,7 +12,7 @@
  *
  * @module scripts/known-skills
  */
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 /**
@@ -104,6 +104,69 @@ export function skillMdDirs(root: string): string[][] {
 }
 
 
+
+/**
+ * Skills a **declared remote package** supplies, which this instance does not hold.
+ *
+ * Two questions, and they must not be collapsed:
+ *
+ *  - **can this instance SERVE it** — {@link knownSkills}. A remote skill is
+ *    `false` here: its body is in another repository, so `skill_fetch` cannot
+ *    answer for it and an activity naming it is a real dangling reference.
+ *  - **is this entry a real skill SOMEWHERE** — this function, unioned with
+ *    {@link knownSkills}. A bundle manifest curating a remote skill is the
+ *    design, not a defect.
+ *
+ * This lived only in `kg-audit.ts`, whose own comment records the near-miss:
+ * *"collapsing them would have had this criterion demand the deletion of three
+ * correct manifest entries the first time it ran. That very nearly happened."*
+ *
+ * **It then happened anyway, because the answer was in one checker and not the
+ * other.** `d3e63f15a` set out to fix exactly the two-definitions defect — it
+ * pointed `skill-manifest-coverage.test.ts` at `knownSkills()` so the test and
+ * this module could not disagree — but `knownSkills()` had never read
+ * `remote-packages/`, so it was a THIRD definition. Under it,
+ * `scientific-visualization`, `hypothesis-generation` and
+ * `scientific-critical-thinking` read as dangling, and all three were deleted
+ * from `skills/authoring-math/package-manifest.json` two hours after bean
+ * `m4zg` recorded that deleting them would be wrong. The evidence offered was a
+ * `git log --diff-filter=A` search finding no file ever added for any of them —
+ * which is the wrong question, because a remote skill has no file here by
+ * design.
+ *
+ * So the answer lives beside the other one now. A checker that needs the wider
+ * question unions the two; a checker that needs the narrower one does not, and
+ * the difference is visible at the call site instead of buried in whether a
+ * module happened to scan a directory.
+ */
+export function remotePackageSkills(root: string): Set<string> {
+  const out = new Set<string>();
+  const dir = join(root, "skills", "remote-packages");
+  if (!existsSync(dir)) return out;
+  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
+    try {
+      const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as {
+        wrapper?: { skills?: string[] };
+      };
+      for (const s of p.wrapper?.skills ?? []) out.add(s);
+    } catch {
+      // A remote-package file that will not parse is validate-skills.ts's finding.
+    }
+  }
+  return out;
+}
+
+/**
+ * Every name a **manifest entry** may legitimately carry: held here, or
+ * declared by a remote package.
+ *
+ * The one answer to "is this a real skill somewhere". Named rather than left as
+ * a union at each call site, because the union IS the rule and two call sites
+ * spelling it out is how they come to disagree.
+ */
+export function manifestResolvableSkills(root: string): Set<string> {
+  return new Set([...knownSkills(root), ...remotePackageSkills(root)]);
+}
 
 /** Every skill name this instance can resolve. */
 export function knownSkills(root: string): Set<string> {
