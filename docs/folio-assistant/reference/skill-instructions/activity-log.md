@@ -190,6 +190,33 @@ So: logs may be emptied without confirmation; **everything else in
 finding no exception would either never empty the log or start deleting
 proposals, and both are wrong.
 
+### The exception was granted to a KIND OF FILE, not to a path
+
+`emptyLog(root, selector)` in `src/logging/log-sweep.ts`, with the selector
+being one of `{ id }`, `{ session }`, `{ before }` or `{ all: true }`. There
+is **no default selector**: an operation with no undo that empties everything
+when the caller passed nothing is the wrong way round.
+
+**A file is removed only if it declares itself a `folio-log/v1` entry.** The
+obvious implementation — `rm` the directory's contents — would relax the
+never-delete rule for a *path*, which is not what was granted. A stray
+proposal dropped in the log directory keeps every protection it would have
+had one folder up. Same `$schema` contract the bean and workflow stores use,
+and the same reason: extension is a coincidence of the current layout, a
+declaration inside the file is the contract.
+
+Three consequences worth knowing before you call it:
+
+- **"Could not tell" resolves to KEEP.** A file that will not parse is a file
+  whose kind could not be established, and this module deletes.
+- **A symlink out of the directory is refused**, checked by `realpath` rather
+  than `resolve` — string arithmetic would not catch it, and here the cost of
+  getting containment wrong is a loss rather than a leak.
+- **Everything not removed says WHY**, and `describeSweep` separates a
+  selector miss from a refusal. "Nothing to delete" and "nine files I would
+  not touch" must not read the same; the second is the one somebody needs to
+  know about. `scanned` is the vacuity guard on every other count.
+
 ## It is never published
 
 `fsh-guts/logs/` is inside `fsh-guts/`, which `UNPUBLISHED_GRAPH_KINDS`
