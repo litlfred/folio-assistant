@@ -4,7 +4,7 @@
  *
  * **This is a placeholder, and the placeholder is the point.** A repo declares
  * itself a DAK by carrying {@link DAK_MARKER_FILENAME} at its root, exactly as
- * it declares itself a harness instance by carrying `cat-harness.json`. That
+ * it declares itself a harness instance by carrying `harness.json`. That
  * much is settled and is modelled here. What is *not* settled is the shape of
  * the nine components inside it: WHO's `DAK` Logical Model is still being
  * finalised in FHIR upstream, so this module **records the components without
@@ -58,7 +58,7 @@ import { SMART_BASE_NS } from "./jsonld";
 /**
  * The file whose presence at a repository root declares it a DAK.
  *
- * Fixed, not stub-named, for the same reason `cat-harness.json` is: a consumer
+ * Fixed, not stub-named, for the same reason `harness.json` is: a consumer
  * bootstrapping into a repository it knows nothing about needs one filename to
  * open first. See `skills/folio-core/directory-conventions.md` §Naming.
  */

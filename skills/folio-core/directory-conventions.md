@@ -1,6 +1,6 @@
 # Directory conventions — what an instance declares it scans
 
-Every instance carries an **`cat-harness.json`** at its repository root. It declares the directories the instance scans for content,
+Every instance carries an **`harness.json`** at its repository root. It declares the directories the instance scans for content,
 and what **kind of graph** each one holds.
 
 Schema and resolution: `schemas/cat-harness.ts`.
@@ -33,7 +33,7 @@ The vocabulary is **open**, and split across two layers.
 > ### `kg` was renamed to `cat-harness` (2026-09-19)
 >
 > Every other harness concept is named for the **layer that defines it** —
-> `cat-harness.json`, the `CatHarness` declaration, the `cat-harness`
+> `harness.json`, the `CatHarness` declaration, the `cat-harness`
 > instance. `kg` named what the graph HOLDS instead, and was the odd one out.
 >
 > **The old spelling still reads, and that is load-bearing rather than
@@ -186,7 +186,7 @@ a file extension.
 
 ```
 agentic-harness/          folio-assist-core/
-  cat-harness.json        cat-harness.json
+  harness.json        harness.json
   tools/     → tools        folio/     → folio
   kg/        → kg           (inherits tools/, kg/, schemas/)
   schemas/   → schemas
@@ -217,7 +217,7 @@ moving to the end — a relocation should not reshuffle what is scanned first.
 
 ## Three states, as everywhere else here
 
-- **No `cat-harness.json`** → `readDeclaration` returns `undefined`. An
+- **No `harness.json`** → `readDeclaration` returns `undefined`. An
   instance not yet migrated is ordinary, and callers fall back to today's
   conventions. Not an error.
 - **Present but unreadable** → **throws.** A declaration nobody can parse
@@ -260,7 +260,7 @@ word.
   `<stub>.schema.json`. Never a generic `kg.json`. Compute it with
   `artefactStub()`, never by re-deriving it, so two exporters cannot disagree
   about what this instance is called.
-- **The declaration file is `cat-harness.json` and is NOT stub-named.**
+- **The declaration file is `harness.json` and is NOT stub-named.**
 
 That second half is the one that looks inconsistent, so here is why. A consumer
 bootstrapping into a repository it knows nothing about needs **one fixed

@@ -16,7 +16,7 @@
  * ## `title` is not `id`, and not `name`
  *
  * `id` is the handle other nodes reference. `name` — where a node still has one
- * — is the instance's own identifier, the thing `cat-harness.json` calls
+ * — is the instance's own identifier, the thing `harness.json` calls
  * `folio-assistant` and publishes artefacts under. `title` is neither: it is
  * display text, it may contain punctuation an identifier could not, and it is
  * **translatable**. `WHO SMART Base` is a title; `smart-base` is a name.
@@ -225,7 +225,7 @@ export function imagesForRole(
  * role whose images carry no layout returns an EMPTY MAP and says nothing about
  * why.
  *
- * That is not hypothetical. `cat-harness.json` declares `mark-small` with
+ * That is not hypothetical. `harness.json` declares `mark-small` with
  * `role: "browser-icon"`, and until 2026-09-19 nothing consumed it: the site
  * emitted no favicon at all, and the one function that could have found the
  * image structurally could not, because neither mark declares a layout. A

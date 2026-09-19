@@ -2,7 +2,7 @@
   The browser-tab icon, from the same declared mark the sidebar title
   (`title.html`) renders — reused rather than looked up by its own
   `browser-icon` role. There WAS a second role for exactly that, on
-  `mark-small` in `cat-harness.json`, and it went unread: nothing in this
+  `mark-small` in `harness.json`, and it went unread: nothing in this
   repo ever emitted a favicon at all, `rel="icon"` included. It also could
   not have driven this lookup as declared — `imagesForRole()`
   (`schemas/kg-node.ts`) requires an image's `layout` field, which neither
@@ -10,7 +10,7 @@
   the already-resolved `icon` (the same field `title.html` reads) sidesteps
   that and, more importantly, is what was asked for: the sidebar mark and the
   tab icon are meant to be the SAME glyph, so one declaration driving both is
-  correct, not just convenient — flip `icon` in `cat-harness.json` and both
+  correct, not just convenient — flip `icon` in `harness.json` and both
   follow in one edit, no template change needed.
 
   SVG-only. No PNG/ICO fallback exists in the repo and none is generated
@@ -143,7 +143,7 @@
   quiet part of its declared backdrop. Markup: `_includes/landing.html`.
 
   The region comes in as custom properties (`--fl-x` …) set per instance from
-  `cat-harness.json`, so this stylesheet knows nothing about where any
+  `harness.json`, so this stylesheet knows nothing about where any
   particular picture is quiet. That is the whole design: a downstream folio
   swaps the art and the numbers and needs no CSS.
 -->

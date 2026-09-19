@@ -25,7 +25,7 @@ are thin stubs pointing here.
 >
 > **Skills are knowledge-graph content, not a directory you memorise.** They
 > live in the `kg` graph an instance declares in its root
-> `cat-harness.json` — in this repo that id maps to `skills/`, but an
+> `harness.json` — in this repo that id maps to `skills/`, but an
 > instance may put it anywhere, and a downstream instance **inherits** its
 > dependencies' skills through the same declaration. Hardcoding a path is how
 > a skill goes missing the moment the layout moves.
@@ -35,7 +35,7 @@ are thin stubs pointing here.
 > - **`skill_list`** — what skills exist here, with their one-line summaries.
 > - **`skill_fetch`** — load a named skill's instructions.
 > - **`work_plan_prime`** — the work plan, for any MCP-connected agent.
-> - No MCP? Resolve the `kg` graph from `cat-harness.json`
+> - No MCP? Resolve the `kg` graph from `harness.json`
 >   (`schemas/cat-harness.ts`) and read from the directory it names.
 >
 > Conventions for the declaration and its graph kinds:
@@ -159,7 +159,7 @@ holds markdown. `beans/beans.json` declares it; the schema is
 | `defs` | `beans/defs/` | `bean-defs` — the work plan, WHAT is being worked on | yes |
 | `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |
 
-**It is the same schema as `cat-harness.json`, not a parallel one.** A
+**It is the same schema as `harness.json`, not a parallel one.** A
 bean-graph entry IS a `ContentDirectory`: an id, a path, and `graphs` — the
 kinds found there. Same shape, same open registry, same JSON-LD projection.
 `bean-defs` and `workflow-state` are registered in `BASE_GRAPH_KINDS`
@@ -213,7 +213,7 @@ first. A node declared `.defs` resolves to `beans/.defs` and is exactly as
 invisible as the stores this move existed to fix; checking only the head would
 have made the guard unfireable.
 
-`cat-harness.json` declares `beans/` **once**, as a `beans` graph, alongside
+`harness.json` declares `beans/` **once**, as a `beans` graph, alongside
 `schemas/` and `kg/`; `beans/beans.json` declares what is inside it — the
 `defs` node (work items) and the `workflows` node (running BPMN instance
 state). The harness says which directories exist and what kind of graph each
@@ -488,7 +488,7 @@ One sentence, and every word in it is a distinct declared object:
 | **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |
 | **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `skills/workflows/` |
 
-All four live in the **`kg` graph** the instance declares in `cat-harness.json`
+All four live in the **`kg` graph** the instance declares in `harness.json`
 — in this repo that id maps to `skills/`. BPMN and DMN are **not standalone
 artefacts**: a diagram is reached through the skill that describes the process,
 and a task is performed with the skills its lane's role carries.
@@ -1208,7 +1208,7 @@ Full protocol, with the worked example:
   and rough cost —
   [`skills/folio-core/swarm-management.md`](skills/folio-core/swarm-management.md)
   and the [reader-facing page](docs/swarm-management.md).
-- **An instance declares the directories it scans — `cat-harness.json` at
+- **An instance declares the directories it scans — `harness.json` at
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
   `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,

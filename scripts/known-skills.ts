@@ -173,7 +173,7 @@ export function skillMdDirs(root: string): string[][] {
   // This is what lets a topical directory (`bootstrap/`, `crdm/`, …) cost a
   // declaration line and no code change. The literal was the last thing
   // standing between the layout and the declaration that is supposed to
-  // describe it: `cat-harness.json` said where the knowledge graph lives and
+  // describe it: `harness.json` said where the knowledge graph lives and
   // this function did not read it.
   //
   // `resolveDirectories` supplies the defaults too, so an instance that

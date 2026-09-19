@@ -946,7 +946,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
  *
  * ## Why this did not exist until 2026-09-19
  *
- * `cat-harness.json` has declared `schemas/` with `graphs: ["schemas", "kg"]`
+ * `harness.json` has declared `schemas/` with `graphs: ["schemas", "kg"]`
  * since Phase 0.3, and the export produced **zero** nodes of that kind —
  * measured on `814b693e`, 11 node types and none a schema. So the instance's
  * own declaration promised a graph nothing backed: a consumer resolving the
@@ -1014,7 +1014,7 @@ function collectGraphKinds(): Node[] {
 }
 
 function collectDeclaration(doc: string, problems: string[]): Node[] {
-  const f = join(ROOT, "cat-harness.json");
+  const f = join(ROOT, "harness.json");
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
@@ -1047,7 +1047,7 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
       };
     });
   } catch (e) {
-    problems.push(`unparseable cat-harness.json: ${e instanceof Error ? e.message : String(e)}`);
+    problems.push(`unparseable harness.json: ${e instanceof Error ? e.message : String(e)}`);
     return [];
   }
 }
@@ -1300,7 +1300,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     // Reported, not silently tolerated: a graph whose nodes have no absolute
     // identity cannot be merged with anyone else's, which is most of the point.
     problems.push(
-      "no canonicalUrl in cat-harness.json and no --base-url given: " +
+      "no canonicalUrl in harness.json and no --base-url given: " +
         "@id values are document-relative and will not dereference",
     );
   }

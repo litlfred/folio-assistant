@@ -10,7 +10,7 @@
  * not: a Tool repo or a Test repo carries the same declaration.
  *
  * Issue #223, Phase 0.3. Every folio-assistant instance carries one of these
- * at its repository root (`cat-harness.json`). It declares the directories
+ * at its repository root (`harness.json`). It declares the directories
  * the instance scans for content, and what **kind of graph** each one holds.
  *
  * ## Why a directory declaration rather than a content-type field
@@ -70,7 +70,7 @@ import { KgImageSchema, kgNodeLabelShape, type KgImage, type KgNodeLabels } from
 import { NS_PREFIXES, termIri } from "./namespaces";
 
 /** Root-relative filename carrying an instance's declaration. */
-export const DECLARATION_FILENAME = "cat-harness.json";
+export const DECLARATION_FILENAME = "harness.json";
 
 // ── Graph kinds ─────────────────────────────────────────────────
 
@@ -151,7 +151,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // Named for the LAYER that defines it, like every other harness concept.
   //
   // It was `kg`, which named what the graph HOLDS rather than who owns it —
-  // the odd one out in a vocabulary where `cat-harness.json`, `CatHarness`
+  // the odd one out in a vocabulary where `harness.json`, `CatHarness`
   // and the `cat-harness` instance are all named for the harness. The owner,
   // 2026-09-19: "kg -> cat-harness for naming conventions, no? skills/
   // schemas beans all in cat-harness, voices, uploads library in
@@ -434,7 +434,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * the repository, so a reader who knows the repo knows the filename.
    *
    * Note the declaration file itself is **not** stub-named — it stays
-   * `cat-harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
+   * `harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
    * consumer must be able to find the config without already knowing the
    * repository's name; the artefacts it *describes* are free to be named.
    */
@@ -544,7 +544,7 @@ export function artefactStub(d: Pick<CatHarnessDeclaration, "name" | "stub">): s
  * published to.
  *
  * **They sit at the base, not in a subdirectory.** A cat-harness instance's
- * repository IS its declaration that it is a graph — `cat-harness.json` at the
+ * repository IS its declaration that it is a graph — `harness.json` at the
  * root says which graphs are here — so there is nothing for a `kg/` segment to
  * distinguish it from. The stub is what separates one instance's renderings
  * from another's in a tree that overlays several, which is the job a directory

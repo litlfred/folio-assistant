@@ -434,7 +434,7 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
 
   it("a declaration written against the OLD vocabulary still loads", () => {
     // The migration guarantee, end to end: this is verbatim what a downstream
-    // instance's `cat-harness.json` looked like before the rename.
+    // instance's `harness.json` looked like before the rename.
     const old = join(TMP, "old-vocabulary");
     mkdirSync(join(old, "skills"), { recursive: true });
     writeFileSync(

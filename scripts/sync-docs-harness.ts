@@ -14,7 +14,7 @@
  *
  * ## Why a copy at all
  *
- * Jekyll reads data only from `_data/`, and `cat-harness.json` belongs at the
+ * Jekyll reads data only from `_data/`, and `harness.json` belongs at the
  * repository root where every other consumer looks for it. Symlinking it in
  * would work on a developer's machine and not in the Pages build. So: one
  * generated file, gated, rather than a second authored one.
@@ -90,7 +90,7 @@ for (const [layout, img] of imagesForRole(decl.images, "landing")) {
 }
 
 const payload = {
-  _generated: "scripts/sync-docs-harness.ts — do not hand-edit; edit cat-harness.json",
+  _generated: "scripts/sync-docs-harness.ts — do not hand-edit; edit harness.json",
   name: decl.name,
   title: decl.title ?? decl.name,
   description: decl.description ?? "",

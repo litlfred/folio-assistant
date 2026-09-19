@@ -22,7 +22,7 @@
  *
  * `schemas/todo.ts`, `schemas/todo-graph.ts` and the `todos` / `todo-items`
  * graph kinds were all in place before any todo existed on disk, and
- * `cat-harness.json` did not declare `todos/`. A schema ahead of its graph is
+ * `harness.json` did not declare `todos/`. A schema ahead of its graph is
  * harmless; a **declared directory nothing reads** is not — that is the bean
  * `dh4f` defect, where a consumer scans nothing and reports a clean run over
  * it. So the declaration, the directory, the files and the reader land

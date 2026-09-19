@@ -213,7 +213,7 @@ const RULES: Rule[] = [
       "scripts/harness-dirs.ts",
       // The `@graphNode` declarations under `schemas/` and the gate over them.
       // Harness because the `schemas` GRAPH KIND is the harness's vocabulary —
-      // `cat-harness.json` declares it — even though the directory holds
+      // `harness.json` declares it — even though the directory holds
       // content-model schemas too. These read the declarations; they define no
       // part of the content model.
       "scripts/schema-nodes.ts",
