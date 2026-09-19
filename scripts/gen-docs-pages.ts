@@ -299,6 +299,23 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
   return ` <span class="fa-qa-badges">${out.join("").trim()}</span>`;
 }
 
+/**
+ * The block's label, read from its own module rather than composed.
+ *
+ * `sec:<page-slug>-<node-id>` is the convention every block follows, and
+ * composing it here would work until one block did not. The label is the
+ * block's own declaration; this reads it and returns `undefined` when the
+ * block has none, so a node with no label emits no attribute rather than a
+ * guessed one.
+ */
+function blockLabel(page: WebPage, node: WebPageNode): string | undefined {
+  const slug = page.slug.replace(/\//g, "-");
+  const file = join(REPO_ROOT, "content", "docs", slug, `${node.id}.ts`);
+  if (!existsSync(file)) return undefined;
+  const m = /^\s*label:\s*"([^"]+)"/m.exec(readFileSync(file, "utf-8"));
+  return m ? m[1] : undefined;
+}
+
 function emitNode(page: WebPage, node: WebPageNode): string[] {
   const out: string[] = [];
   const level = node.level ?? 2;
@@ -307,7 +324,15 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
     out.push(`${"#".repeat(level)} ${node.title}`);
     // The id is PINNED here rather than left to `heading_anchors`, which would
     // derive it from the words above. See the header comment.
-    out.push(`{: #${node.id} }`);
+    //
+    // `data-fa-label` carries the block's PAGE-QUALIFIED label alongside it,
+    // which is what a todo's `targetLabel` addresses. The bare `id` cannot
+    // serve: `what-is-not-built-yet` is a node on both `agentic-harness` and
+    // `crdm-methodology`, so matching on it would attach a todo to whichever
+    // page the reader happened to open. Same lesson as `TaskRef` carrying its
+    // process — an id is unique only within its container.
+    const label = blockLabel(page, node);
+    out.push(label ? `{: #${node.id} data-fa-label="${label}" }` : `{: #${node.id} }`);
     out.push("");
   }
 

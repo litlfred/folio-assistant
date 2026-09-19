@@ -26,7 +26,7 @@ validation gate, the skills, and the shared work plan all named.
 ---
 
 ## Every workflow in the repo
-{: #every-workflow-in-the-repo }
+{: #every-workflow-in-the-repo data-fa-label="sec:publication-workflow-every-workflow-in-the-repo" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/every-workflow-in-the-repo.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -126,7 +126,7 @@ the outer process; the rest are its call activities:
 > which is the same defect as a table of contents that stops halfway.
 
 ### They also run
-{: #they-also-run }
+{: #they-also-run data-fa-label="sec:publication-workflow-they-also-run" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/they-also-run.md){: .fa-node-edit title="Edit content/docs/publication-workflow/they-also-run.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/they-also-run.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -143,7 +143,7 @@ that the commit boundary is the right place — is in
 [Proposal: workflow orchestration](proposals/workflow-orchestration.html).
 
 ### Some decisions are computed, not judged
-{: #some-decisions-are-computed-not-judged }
+{: #some-decisions-are-computed-not-judged data-fa-label="sec:publication-workflow-some-decisions-are-computed-not-judged" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/some-decisions-are-computed-not-judged.md){: .fa-node-edit title="Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/some-decisions-are-computed-not-judged.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -168,7 +168,7 @@ tables — they wait on a WHO/FHIR adapter, because a table keyed to facts no
 tool emits looks authoritative and is not.
 
 ### The base processes are strict
-{: #the-base-processes-are-strict }
+{: #the-base-processes-are-strict data-fa-label="sec:publication-workflow-the-base-processes-are-strict" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-base-processes-are-strict.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-base-processes-are-strict.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/the-base-processes-are-strict.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -203,7 +203,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 ```
 
 ### How to read them
-{: #how-to-read-them }
+{: #how-to-read-them data-fa-label="sec:publication-workflow-how-to-read-them" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/how-to-read-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/how-to-read-them.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/how-to-read-them.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -237,7 +237,7 @@ content block**.
 [Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/editing-hci-validation.bpmn){: .btn .btn-outline }
 
 ### The one rule this diagram exists to state
-{: #the-one-rule-this-diagram-exists-to-state }
+{: #the-one-rule-this-diagram-exists-to-state data-fa-label="sec:publication-workflow-the-one-rule-this-diagram-exists-to-state" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/the-one-rule-this-diagram-exists-to-state.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -249,7 +249,7 @@ the corpus` activity sits *after* that decision, in its own lane, and is the
 only step that writes content.
 
 ### Mechanical vs non-mechanical validation
-{: #mechanical-vs-non-mechanical-validation }
+{: #mechanical-vs-non-mechanical-validation data-fa-label="sec:publication-workflow-mechanical-vs-non-mechanical-validation" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md){: .fa-node-edit title="Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/mechanical-vs-non-mechanical-validation.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -271,7 +271,7 @@ Both branches must report before the join. A green mechanical run does not
 excuse a missing review, and a clean review does not excuse a red build.
 
 ### Activities and the skills that implement them
-{: #activities-and-the-skills-that-implement-them }
+{: #activities-and-the-skills-that-implement-them data-fa-label="sec:publication-workflow-activities-and-the-skills-that-implement-them" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/activities-and-the-skills-that-implement-them.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -303,7 +303,7 @@ content type:
 ---
 
 ## From corpus to published folio
-{: #from-corpus-to-published-folio }
+{: #from-corpus-to-published-folio data-fa-label="sec:publication-workflow-from-corpus-to-published-folio" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/draft-to-publication.bpmn){: .fa-node-edit title="Edit skills/workflows/draft-to-publication.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/from-corpus-to-published-folio.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 9 pass, 0 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 9 pass, 0 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -354,7 +354,7 @@ This diagram implements the `req:content-lifecycle` phase gates —
 ---
 
 ## Content lifecycle overview
-{: #content-lifecycle-overview }
+{: #content-lifecycle-overview data-fa-label="sec:publication-workflow-content-lifecycle-overview" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/content-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/content-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/publication-workflow/content-lifecycle-overview.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -377,7 +377,7 @@ cycle — the linear strip flattens that.
 ---
 
 ## The work plan — tasks as beans
-{: #the-work-plan-tasks-as-beans }
+{: #the-work-plan-tasks-as-beans data-fa-label="sec:publication-workflow-the-work-plan-tasks-as-beans" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-work-plan-tasks-as-beans.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/the-work-plan-tasks-as-beans.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -412,7 +412,7 @@ Why it is modelled as a lane rather than a note:
 ---
 
 ## Who is who
-{: #who-is-who }
+{: #who-is-who data-fa-label="sec:publication-workflow-who-is-who" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/who-is-who.md){: .fa-node-edit title="Edit content/docs/publication-workflow/who-is-who.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/who-is-who.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -422,7 +422,7 @@ capabilities bound what the agent may do on its behalf (RBAC,
 `src/core/rbac.ts`).
 
 ### People
-{: #people }
+{: #people data-fa-label="sec:publication-workflow-people" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/people.md){: .fa-node-edit title="Edit content/docs/publication-workflow/people.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/people.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -443,7 +443,7 @@ own lane: `business-analyst` (L2 DAK), `fhir-modeller` (L3 FHIR),
 `terminologist` (code systems and value sets), `translator` (localisation).
 
 ### Agents and system actors
-{: #agents-and-system-actors }
+{: #agents-and-system-actors data-fa-label="sec:publication-workflow-agents-and-system-actors" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/agents-and-system-actors.md){: .fa-node-edit title="Edit content/docs/publication-workflow/agents-and-system-actors.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/agents-and-system-actors.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -465,7 +465,7 @@ see [Skills & roles](skills.html#roles-actors).
 ---
 
 ## Changing these diagrams
-{: #changing-these-diagrams }
+{: #changing-these-diagrams data-fa-label="sec:publication-workflow-changing-these-diagrams" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/changing-these-diagrams.md){: .fa-node-edit title="Edit content/docs/publication-workflow/changing-these-diagrams.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/changing-these-diagrams.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -490,7 +490,7 @@ row in the tables above — the diagram and the skill list drifting apart is the
 failure this page exists to prevent.
 
 ### Which diagrams are BPMN, and which are not
-{: #which-diagrams-are-bpmn-and-which-are-not }
+{: #which-diagrams-are-bpmn-and-which-are-not data-fa-label="sec:publication-workflow-which-diagrams-are-bpmn-and-which-are-not" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md){: .fa-node-edit title="Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -514,7 +514,7 @@ it belongs in `skills/workflows/` as BPMN, not in a Mermaid fence.
 ---
 
 ## See also
-{: #see-also }
+{: #see-also data-fa-label="sec:publication-workflow-see-also" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/see-also.md){: .fa-node-edit title="Edit content/docs/publication-workflow/see-also.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/see-also.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 

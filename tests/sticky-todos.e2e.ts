@@ -284,3 +284,102 @@ test("a missing index mounts nothing rather than an empty board", async ({ page 
   await expect(page.locator(".fa-tile", { hasText: "Todos" })).toHaveCount(0);
   await expect(page.locator(".fa-sticky-board")).toHaveCount(0);
 });
+
+/* ── Per-block stickies ─────────────────────────────────────────────────── */
+
+const LABELLED = `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Labelled harness</title>
+<meta name="fa-todo-src" content="/assets/todos/index.json">
+<style>${CSS}</style></head><body>
+<div class="side-bar"><div class="site-header"><a class="site-title">Site</a></div><nav class="site-nav"></nav></div>
+<div class="main-content-wrap"><div class="main-content" id="main-content">
+  <h1>Harness</h1>
+  <h2 id="one" data-fa-label="sec:page-one">Section one</h2>
+  <p>Body one.</p>
+  <h2 id="two" data-fa-label="sec:page-two">Section two</h2>
+  <p>Body two.</p>
+  <h2 id="three" data-fa-label="sec:page-three">Section three</h2>
+</div></div>
+<script>${JS}</script></body></html>`;
+
+const TARGETED = [
+  { ...ITEMS[0], id: "t1", targetLabel: "sec:page-one" },
+  { ...ITEMS[1], id: "t2", targetLabel: "sec:page-one" },
+  { ...ITEMS[0], id: "t3", summary: "Elsewhere", targetLabel: "sec:page-two" },
+  // Deliberately points at a block no page carries.
+  { ...ITEMS[1], id: "t4", summary: "Orphan", targetLabel: "sec:nowhere" },
+];
+
+test.describe("todos attached to a block", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route("http://todo.test/**", (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/page.html")) {
+        return route.fulfill({ contentType: "text/html", body: LABELLED });
+      }
+      if (url.endsWith("/assets/todos/index.json")) {
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({ items: TARGETED }),
+        });
+      }
+      return route.fulfill({ status: 404, body: "not found" });
+    });
+  });
+
+  test("a badge appears beside each block that has them, carrying its count", async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const badges = page.locator(".fa-sticky-badge");
+    await expect(badges).toHaveCount(2);
+    await expect(badges.nth(0).locator(".fa-sticky-badge-count")).toHaveText("2");
+    await expect(badges.nth(1).locator(".fa-sticky-badge-count")).toHaveText("1");
+    // The count is in the accessible name too, not only the glyph.
+    await expect(badges.nth(0)).toHaveAttribute("aria-label", "2 todo(s) on this section");
+  });
+
+  test("a block with no todos gets no badge", async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const third = page.locator("#three");
+    const next = await third.evaluate((n) => n.nextElementSibling?.className ?? "");
+    expect(next).not.toContain("fa-sticky-inline");
+  });
+
+  test("the badge is a SIBLING of the heading — a div inside an h2 is invalid", async ({ page }) => {
+    await page.goto(PAGE_URL);
+    const tag = await page
+      .locator(".fa-sticky-inline")
+      .first()
+      .evaluate((n) => n.parentElement?.tagName);
+    expect(tag).toBe("DIV");
+  });
+
+  test("opening a badge shows that block's todos and no others", async ({ page }) => {
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-sticky-badge").first().click();
+    const list = page.locator(".fa-sticky-inline-list").first();
+    await expect(list.locator(".fa-sticky")).toHaveCount(2);
+    await expect(list.getByText("Elsewhere")).toHaveCount(0);
+  });
+
+  test("an inline sticky carries no Pin and no Close", async ({ page }) => {
+    // It is already beside the content it annotates. Pinning would move it
+    // AWAY from that, and closing would hide a block annotation with no way
+    // back — the board is where those controls mean something.
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-sticky-badge").first().click();
+    const first = page.locator(".fa-sticky-inline-list .fa-sticky").first();
+    await expect(first.locator(".fa-sticky-pin")).toHaveCount(0);
+    await expect(first.locator(".fa-sticky-close")).toHaveCount(0);
+    // But it keeps the edit affordance, which is the point of the pencil.
+    await expect(first.locator("a.fa-node-edit")).toHaveCount(1);
+  });
+
+  test("a todo targeting a block this page lacks still reaches the board", async ({ page }) => {
+    // The orphan must not vanish. It is on no block here, and the board is the
+    // surface that shows everything regardless of where it is attached.
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+    await expect(page.locator(".fa-sticky-board").getByText("Orphan")).toHaveCount(1);
+  });
+});

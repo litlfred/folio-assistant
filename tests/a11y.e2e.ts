@@ -331,6 +331,10 @@ test.describe("the sticky todo board", () => {
         { axis: "PR", label: "#314", href: "https://example.invalid/pr/314" },
         { axis: "bean", label: "unresolvable-bean" },
       ],
+      // Attached to the section above, so the per-block badge and its inline
+      // list are ON SCREEN when axe looks. A surface the run never renders is
+      // a green that means nothing.
+      targetLabel: "sec:a11y-one",
       editHref: "https://example.invalid/edit/main/todos/items/a.md",
     },
     {
@@ -347,7 +351,8 @@ test.describe("the sticky todo board", () => {
 <meta name="fa-todo-src" content="/assets/todos/index.json">
 <style>${readFileSync(join(ROOT2, "docs/assets/css/docs-ui.css"), "utf8")}</style></head><body>
 <div class="side-bar"><div class="site-header"><a class="site-title">Site</a></div><nav class="site-nav"></nav></div>
-<div class="main-content-wrap"><div class="main-content" id="main-content"><h1>Harness</h1><p>Body.</p></div></div>
+<div class="main-content-wrap"><div class="main-content" id="main-content"><h1>Harness</h1>
+<h2 id="s" data-fa-label="sec:a11y-one">A section</h2><p>Body.</p></div></div>
 <script>${readFileSync(join(ROOT2, "docs/assets/js/docs-ui.js"), "utf8")}</script></body></html>`;
 
   for (const colorScheme of ["light", "dark"] as const) {
@@ -376,8 +381,10 @@ test.describe("the sticky todo board", () => {
         await page.locator(".fa-tile", { hasText: "Todos" }).click();
         // Expand one body and pin one sticky, so every surface this PR adds is
         // actually on screen when axe looks at it.
-        await page.locator(".fa-sticky").first().locator(".fa-sticky-toggle").click();
-        await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+        // Open the per-block badge first, so its inline sticky renders too.
+        await page.locator(".fa-sticky-badge").first().click();
+        await page.locator(".fa-sticky-board .fa-sticky").first().locator(".fa-sticky-toggle").click();
+        await page.locator(".fa-sticky-board .fa-sticky").first().locator(".fa-sticky-pin").click();
 
         const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
         expect(violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);

@@ -185,6 +185,12 @@ export function readTodoFiles(root: string = TODO_ROOT): Array<{ todo: TodoNode;
         status: String(fm["status"] ?? ""),
         priority: String(fm["priority"] ?? ""),
         origin: String(fm["origin"] ?? ""),
+        // The block this todo is attached to. Page-QUALIFIED
+        // (`sec:<page>-<node>`), which is what makes it an address: the node
+        // id `what-is-not-built-yet` exists on two different pages, so a bare
+        // id would resolve to whichever one a consumer happened to look at
+        // first. Same lesson as `TaskRef` carrying its process.
+        targetLabel: typeof fm["targetLabel"] === "string" ? fm["targetLabel"] : undefined,
         tags: tagsFrom(fm),
         $schema: TODO_SCHEMA_TAG,
       });

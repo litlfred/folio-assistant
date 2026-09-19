@@ -31,7 +31,7 @@ LLM workflow** are.
 ---
 
 ## The end-to-end workflow
-{: #the-end-to-end-workflow }
+{: #the-end-to-end-workflow data-fa-label="sec:guides-writing-a-paper-the-end-to-end-workflow" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-paper.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-paper.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/the-end-to-end-workflow.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/the-end-to-end-workflow.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -53,7 +53,7 @@ review and release that follow, as BPMN swimlane diagrams.
 ---
 
 ## Before you start
-{: #before-you-start }
+{: #before-you-start data-fa-label="sec:guides-writing-a-paper-before-you-start" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/before-you-start.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/before-you-start.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/before-you-start.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -67,7 +67,7 @@ review and release that follow, as BPMN swimlane diagrams.
 ---
 
 ## Step 1 — Plan the paper
-{: #step-1-plan-the-paper }
+{: #step-1-plan-the-paper data-fa-label="sec:guides-writing-a-paper-step-1-plan-the-paper" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-1-plan-the-paper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-1-plan-the-paper.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/step-1-plan-the-paper.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -100,7 +100,7 @@ beans <id> --status in-progress
 ```
 
 ## Step 2 — Scaffold the repository
-{: #step-2-scaffold-the-repository }
+{: #step-2-scaffold-the-repository data-fa-label="sec:guides-writing-a-paper-step-2-scaffold-the-repository" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-2-scaffold-the-repository.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-2-scaffold-the-repository.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/step-2-scaffold-the-repository.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -108,7 +108,7 @@ The agent creates the block files and a `main.tex`, then confirms with
 `content_list`.
 
 ### Required `.gitignore` baseline
-{: #required-gitignore-baseline }
+{: #required-gitignore-baseline data-fa-label="sec:guides-writing-a-paper-required-gitignore-baseline" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/required-gitignore-baseline.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/required-gitignore-baseline.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/required-gitignore-baseline.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -184,7 +184,7 @@ $$ H_n = \sum_{k=1}^{n} \frac{1}{k}. $$
 ```
 
 ## Step 3 — Author the content
-{: #step-3-author-the-content }
+{: #step-3-author-the-content data-fa-label="sec:guides-writing-a-paper-step-3-author-the-content" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-3-author-the-content.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-3-author-the-content.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/step-3-author-the-content.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -201,7 +201,7 @@ A mock of the chat-driven authoring session:
 ![Mock chat: the author and the assistant drafting blocks](../assets/img/mock-chat.svg)
 
 ## Step 4 — Formalize in Lean
-{: #step-4-formalize-in-lean }
+{: #step-4-formalize-in-lean data-fa-label="sec:guides-writing-a-paper-step-4-formalize-in-lean" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-4-formalize-in-lean.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-4-formalize-in-lean.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/step-4-formalize-in-lean.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -247,7 +247,7 @@ sequenceDiagram
 ```
 
 ## Step 5 — Validate
-{: #step-5-validate }
+{: #step-5-validate data-fa-label="sec:guides-writing-a-paper-step-5-validate" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-5-validate.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-5-validate.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/step-5-validate.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -261,7 +261,7 @@ rules (label prefixes, required Lean links, citation resolution, …).
 > references a defined symbol ✓.
 
 ## Step 6 — Render
-{: #step-6-render }
+{: #step-6-render data-fa-label="sec:guides-writing-a-paper-step-6-render" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-6-render.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-6-render.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/step-6-render.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -282,7 +282,7 @@ You can set rendering preferences (engine, scope, math renderer) via the
 > **Assistant:** *(calls `paper_preferences action=set latex_engine=lualatex render_scope=section`)* Saved.
 
 ## Step 7 — Review & feedback
-{: #step-7-review-feedback }
+{: #step-7-review-feedback data-fa-label="sec:guides-writing-a-paper-step-7-review-feedback" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-7-review-feedback.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-7-review-feedback.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/step-7-review-feedback.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -295,7 +295,7 @@ authoring loop (`content-review` / `content-feedback`).
 > re-renders)* Done; feedback item resolved.
 
 ## Step 8 — Publish
-{: #step-8-publish }
+{: #step-8-publish data-fa-label="sec:guides-writing-a-paper-step-8-publish" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/step-8-publish.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/step-8-publish.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/step-8-publish.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -315,7 +315,7 @@ beans <id> --status resolved
 ---
 
 ## What you end up with
-{: #what-you-end-up-with }
+{: #what-you-end-up-with data-fa-label="sec:guides-writing-a-paper-what-you-end-up-with" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/what-you-end-up-with.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/what-you-end-up-with.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/what-you-end-up-with.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -325,7 +325,7 @@ beans <id> --status resolved
 - A reproducible **CI pipeline** (validate → build → render → publish)
 
 ## Where to go deeper
-{: #where-to-go-deeper }
+{: #where-to-go-deeper data-fa-label="sec:guides-writing-a-paper-where-to-go-deeper" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/where-to-go-deeper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/where-to-go-deeper.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/where-to-go-deeper.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 

@@ -26,7 +26,7 @@ with an LLM, published without a TeX installation.
 ---
 
 ## What a document folio is
-{: #what-a-document-folio-is }
+{: #what-a-document-folio-is data-fa-label="sec:guides-writing-a-document-what-a-document-folio-is" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-document.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -54,7 +54,7 @@ them. No Lean. No LaTeX.
 ---
 
 ## 1 · Scaffold the folio
-{: #1-scaffold-the-folio }
+{: #1-scaffold-the-folio data-fa-label="sec:guides-writing-a-document-1-scaffold-the-folio" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/1-scaffold-the-folio.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/1-scaffold-the-folio.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/1-scaffold-the-folio.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -88,7 +88,7 @@ The starter block is a placeholder that says so. Replace it.
 ---
 
 ## 2 · The content model
-{: #2-the-content-model }
+{: #2-the-content-model data-fa-label="sec:guides-writing-a-document-2-the-content-model" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/2-the-content-model.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/2-the-content-model.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/2-the-content-model.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -108,7 +108,7 @@ authored work disappears: the `.ts` and `.md` are written, committed and
 reviewed, and the block renders nowhere because nothing lists it.
 
 ### The kinds you may use
-{: #the-kinds-you-may-use }
+{: #the-kinds-you-may-use data-fa-label="sec:guides-writing-a-document-the-kinds-you-may-use" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/the-kinds-you-may-use.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/the-kinds-you-may-use.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/the-kinds-you-may-use.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -121,7 +121,7 @@ or `proof`. `content_profile_check` rejects them, and runs on every
 when you try to publish.
 
 ### `uses[]` matters more here than in a paper
-{: #uses-matters-more-here-than-in-a-paper }
+{: #uses-matters-more-here-than-in-a-paper data-fa-label="sec:guides-writing-a-document-uses-matters-more-here-than-in-a-paper" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/uses-matters-more-here-than-in-a-paper.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -137,7 +137,7 @@ it. List direct neighbours only.
 ---
 
 ## 3 · Author with the agent
-{: #3-author-with-the-agent }
+{: #3-author-with-the-agent data-fa-label="sec:guides-writing-a-document-3-author-with-the-agent" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/3-author-with-the-agent.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/3-author-with-the-agent.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/3-author-with-the-agent.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -159,7 +159,7 @@ the recommendation.
 Reads `uses[]` and the content graph.
 
 ### Carrying a recommendation
-{: #carrying-a-recommendation }
+{: #carrying-a-recommendation data-fa-label="sec:guides-writing-a-document-carrying-a-recommendation" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/carrying-a-recommendation.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/carrying-a-recommendation.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/carrying-a-recommendation.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -196,7 +196,7 @@ skill.
 ---
 
 ## 4 · Validate
-{: #4-validate }
+{: #4-validate data-fa-label="sec:guides-writing-a-document-4-validate" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/4-validate.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/4-validate.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/4-validate.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -221,7 +221,7 @@ when that is what you actually meant.
 ---
 
 ## 5 · Render
-{: #5-render }
+{: #5-render data-fa-label="sec:guides-writing-a-document-5-render" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/5-render.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/5-render.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/5-render.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -255,7 +255,7 @@ page breaks, running heads) in the same file as the screen rules, so the two
 outputs cannot drift.
 
 ### Not implemented
-{: #not-implemented }
+{: #not-implemented data-fa-label="sec:guides-writing-a-document-not-implemented" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/not-implemented.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/not-implemented.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/not-implemented.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -273,7 +273,7 @@ working.
 ---
 
 ## Moving between content types
-{: #moving-between-content-types }
+{: #moving-between-content-types data-fa-label="sec:guides-writing-a-document-moving-between-content-types" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/moving-between-content-types.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/moving-between-content-types.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/moving-between-content-types.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -289,7 +289,7 @@ lists exactly what is in the way.
 ---
 
 ## Where things are
-{: #where-things-are }
+{: #where-things-are data-fa-label="sec:guides-writing-a-document-where-things-are" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/where-things-are.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/where-things-are.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/where-things-are.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 

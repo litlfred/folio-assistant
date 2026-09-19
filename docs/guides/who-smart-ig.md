@@ -29,7 +29,7 @@ validating, and publishing with the HL7 IG Publisher — all driven by the LLM.
 ---
 
 ## Prerequisites
-{: #prerequisites }
+{: #prerequisites data-fa-label="sec:guides-who-smart-ig-prerequisites" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/prerequisites.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/prerequisites.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-ig/prerequisites.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -47,7 +47,7 @@ locally you need:
 Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 
 ## The L3 pipeline
-{: #the-l3-pipeline }
+{: #the-l3-pipeline data-fa-label="sec:guides-who-smart-ig-the-l3-pipeline" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit skills/workflows/l3-fhir-pipeline.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-ig/the-l3-pipeline.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/guides-who-smart-ig/the-l3-pipeline.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -67,7 +67,7 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 | Publish the IG | [`ig-publication`](../reference/skills/ig-publication.html) |
 
 ## Workflow
-{: #workflow }
+{: #workflow data-fa-label="sec:guides-who-smart-ig-workflow" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/workflow.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-ig/workflow.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -81,7 +81,7 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 5. **Publish** — `ig-publication` runs the IG Publisher and renders the site.
 
 ## Making the build incremental
-{: #making-the-build-incremental }
+{: #making-the-build-incremental data-fa-label="sec:guides-who-smart-ig-making-the-build-incremental" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ig-incremental-build.bpmn){: .fa-node-edit title="Edit skills/workflows/ig-incremental-build.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-ig/making-the-build-incremental.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/guides-who-smart-ig/making-the-build-incremental.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -118,7 +118,7 @@ to today's full build, and only a green build of `main` or a release seeds the c
 | QC gates, deploy | [`quality-control`](../reference/skills/quality-control.html), [`content-publish`](../reference/skills/content-publish.html) |
 
 ## A mock session
-{: #a-mock-session }
+{: #a-mock-session data-fa-label="sec:guides-who-smart-ig-a-mock-session" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/a-mock-session.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-ig/a-mock-session.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -136,7 +136,7 @@ to today's full build, and only a green build of `main` or a release seeds the c
 > conformance ✓, terminology bindings resolved ✓.
 
 ## Next
-{: #next }
+{: #next data-fa-label="sec:guides-who-smart-ig-next" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-ig/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-ig/next.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-ig/next.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 

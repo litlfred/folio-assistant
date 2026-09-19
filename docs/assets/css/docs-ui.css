@@ -1728,3 +1728,37 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   border-bottom: 1px dashed currentColor;
   font-style: italic;
 }
+
+/* A per-block todo badge, beside the heading its todos are attached to. */
+.fa-sticky-inline { margin: 0.2em 0 0.4em; }
+
+.fa-sticky-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 2.75rem;
+  padding: 0.2em 0.7em;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 999px;
+  background: rgba(128, 128, 128, 0.08);
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.fa-sticky-badge .fa-tile-glyph { width: 1em; height: 1em; }
+
+.fa-sticky-badge-count {
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: rgba(128, 128, 128, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-sticky-inline-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 0.7em;
+  margin: 0 0 1.2em;
+}

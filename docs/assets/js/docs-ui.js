@@ -1001,7 +1001,8 @@
     return wrap;
   }
 
-  function buildSticky(todo, onFloat, onDock) {
+  function buildSticky(todo, onFloat, onDock, opts) {
+    var compact = opts && opts.compact;
     var card = el("article", {
       class: "fa-sticky fa-sticky-p-" + (todo.priority || "medium"),
       "data-todo-id": todo.id,
@@ -1064,21 +1065,28 @@
       }, "✎ Edit");
       tools.appendChild(pencil);
     }
-    var pin = el("button", {
-      type: "button",
-      class: "fa-sticky-pin",
-      "aria-label": "Pin " + todo.summary + " to the page",
-    }, "⇱ Pin");
-    pin.addEventListener("click", function () { onFloat(todo); });
-    tools.appendChild(pin);
+    // An INLINE sticky is already beside the content it is about, so Pin and
+    // Close have nothing to do: pinning it would move it AWAY from the thing
+    // it annotates, and closing it would hide a block-level annotation with no
+    // way back. The board is where those two controls mean something.
+    if (!compact) {
+      var pin = el("button", {
+        type: "button",
+        class: "fa-sticky-pin",
+        "aria-label": "Pin " + todo.summary + " to the page",
+      }, "⇱ Pin");
+      pin.addEventListener("click", function () { onFloat(todo); });
+      tools.appendChild(pin);
 
-    var close = el("button", {
-      type: "button",
-      class: "fa-sticky-close",
-      "aria-label": "Close " + todo.summary,
-    }, "×");
-    close.addEventListener("click", function () { onDock(todo); });
-    tools.appendChild(close);
+      var close = el("button", {
+        type: "button",
+        class: "fa-sticky-close",
+        "aria-label": "Close " + todo.summary,
+      }, "×");
+      close.addEventListener("click", function () { onDock(todo); });
+      tools.appendChild(close);
+    }
+
     head.appendChild(tools);
 
     card.appendChild(head);
@@ -1229,6 +1237,81 @@
     };
   }
 
+  /**
+   * Todos attached to a block ON THIS PAGE, rendered beside the block.
+   *
+   * Matched on `targetLabel` against the heading's `data-fa-label`, which is
+   * PAGE-QUALIFIED (`sec:<page>-<node>`). The bare heading id cannot serve:
+   * `what-is-not-built-yet` is a node on two different pages, so matching on
+   * it would attach a todo to whichever page the reader opened.
+   *
+   * The count sits on a toggle beside the heading rather than at the top of
+   * the page. The owner asked for "a sticky icon with a count" at the top and
+   * for the stickies to appear "relative to content they are assigned to" —
+   * and those pull apart once a page has blocks with different counts. One
+   * badge per block says which block, which is the half that carries
+   * information; a single page-level number cannot say where to look.
+   */
+  function mountPageStickies(items, board) {
+    var byLabel = {};
+    for (var i = 0; i < items.length; i++) {
+      var t = items[i];
+      if (!t.targetLabel) continue;
+      (byLabel[t.targetLabel] = byLabel[t.targetLabel] || []).push(t);
+    }
+
+    var heads = document.querySelectorAll("[data-fa-label]");
+    var placed = 0;
+    for (var h = 0; h < heads.length; h++) {
+      var head = heads[h];
+      var mine = byLabel[head.getAttribute("data-fa-label")];
+      if (!mine || mine.length === 0) continue;
+
+      var host = el("div", { class: "fa-sticky-inline" });
+      var badge = el("button", {
+        type: "button",
+        class: "fa-sticky-badge",
+        "aria-expanded": "false",
+        "aria-label": mine.length + " todo(s) on this section",
+      });
+      badge.innerHTML = STICKY_GLYPH;
+      badge.appendChild(el("span", { class: "fa-sticky-badge-count" }, String(mine.length)));
+
+      var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
+      (function (list, mine) {
+        for (var k = 0; k < mine.length; k++) {
+          list.appendChild(buildSticky(mine[k], function () {}, function () {}, { compact: true }));
+        }
+      })(list, mine);
+
+      (function (badge, list) {
+        badge.addEventListener("click", function () {
+          var open = badge.getAttribute("aria-expanded") === "true";
+          badge.setAttribute("aria-expanded", open ? "false" : "true");
+          if (open) list.setAttribute("hidden", "hidden");
+          else list.removeAttribute("hidden");
+        });
+      })(badge, list);
+
+      host.appendChild(badge);
+      // A SIBLING of the heading, not a child: a <div> inside an <h2> is not
+      // valid HTML and the browser would reparent it -- the same rule the QA
+      // panel already follows for the same reason.
+      head.parentNode.insertBefore(host, head.nextSibling);
+      host.parentNode.insertBefore(list, host.nextSibling);
+      placed += mine.length;
+    }
+
+    // Reported, not silent. A todo carrying a `targetLabel` that matches no
+    // block on any page is a dangling edge, and the reader would otherwise
+    // only ever see it on the board -- where nothing says it was SUPPOSED to
+    // appear somewhere and did not.
+    var tagged = 0;
+    for (var j = 0; j < items.length; j++) if (items[j].targetLabel) tagged++;
+    if (board) board.placed = placed;
+    return { placed: placed, tagged: tagged };
+  }
+
   /** Fetch, then mount the board and hand the launcher a way to open it. */
   function mountTodoStickies() {
     fetchTodoIndex(function (items) {
@@ -1236,6 +1319,7 @@
       todoState.items = items;
       var board = mountTodoBoard(items);
       if (!board) return;
+      mountPageStickies(items, board);
       window.__faTodoBoard = board;
       document.dispatchEvent(new CustomEvent("fa:todos-ready", { detail: board }));
     });
