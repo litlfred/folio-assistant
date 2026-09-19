@@ -1,0 +1,120 @@
+---
+name: kg-viewer
+description: >
+  Render a published knowledge-graph document so a person can read it — faceted
+  index, node detail, followable edges, and an honest account of what the
+  document is missing. Host-agnostic; the publishing is a separate Tool.
+---
+
+# Rendering the knowledge graph
+
+`kg-export` serialises the instance's graph to one JSON-LD document. This skill
+is the other half of bean `1dfh`: **making that document legible to a person.**
+The two are deliberately separate capabilities — serialising is mechanical and
+host-agnostic, rendering is a design problem, and posting the result to a host
+is a third thing that belongs to the `pages-publish` Tool.
+
+## The page is generated, not committed
+
+The viewer must fetch the graph document, and that document is named after the
+repository — `<stub>.jsonld`, never a generic `kg.json`. A committed page would
+have to do one of two things, and both are defects this project has already
+paid for:
+
+- **Hardcode one instance's stub**, which is the genericity failure `AGENTS.md`
+  catalogues — a platform script carrying `quantum-observable-universe` and
+  working in exactly one repository.
+- **Compose the name at runtime** from the URL or a convention, which is the
+  "resolve, do not compose" rule. A consumer should never have to manipulate a
+  string to find a document.
+
+So the exporter, which already knows the stub, writes it into the page. The
+page resolves nothing.
+
+**It fetches its sibling relative to its own location.** The same bytes work at
+`<canonical>/kg/` and at `STAGING/<slug>/kg/` with no configuration, no
+`--base-url`, and no build-time branch. A staging build that needed a different
+page would be a staging build testing something other than what ships.
+
+## No dependencies, and that is a requirement rather than a preference
+
+No CDN, no framework, no build step — one HTML file.
+
+A page that needs a network fetch to render cannot be opened from a file,
+cannot be reviewed offline or from a restricted network, and adds a third party
+to the trust boundary of a page whose entire job is to display *this
+repository's own data*. The graph is the thing being made trustworthy; loading
+it through someone else's script tag is at odds with that.
+
+## Do not draw the whole graph
+
+**The instinct is a force-directed node-link diagram of everything. Resist it.**
+Measured on this instance: 1111 nodes and roughly 2000 edges. That renders as a
+hairball — it looks like a knowledge graph and answers no question about one,
+while costing a layout library and a frame budget.
+
+The questions people actually arrive with are local:
+
+- *What is this node?* → a detail panel with every property.
+- *What does it point at?* → edges rendered as controls you can follow.
+- *What points at it?* → back-links, **computed at load** rather than published.
+  An inverse index stored in the document is a second copy of the edge set that
+  can disagree with the first.
+- *What else is of this kind?* → facets, with counts from the document's own
+  `counts` rather than recounted.
+
+A **one-hop** neighbourhood diagram for the selected node is worth drawing,
+because at that scale a picture beats a list. Cap it; a node with two hundred
+neighbours is a list, not a diagram.
+
+## Render what the document is missing, in the document's own terms
+
+**The first real consumer of a graph is the right place to surface what the
+graph lacks**, and a viewer that quietly displayed everything as though it were
+all part of the graph would be hiding exactly what it exists to reveal.
+
+Two things the export reports and the viewer must not swallow:
+
+- **`undeclaredTerms`** — property names absent from the `@context`. Every one
+  is *dropped* when the document is processed as the JSON-LD it claims to be.
+  Measured on this instance at the time of writing: 34 names, 3461 occurrences.
+  Mark them in the detail panel; do not silently show them as ordinary
+  properties.
+- **`danglingLinks`** and **`problems`** — a link with no target node, and a
+  source that could not be read.
+
+## Three states, on the page as everywhere
+
+A document that **could not be fetched** is never drawn as an empty graph. On
+screen the two are identical and they mean opposite things: "this instance has
+no nodes" versus "I could not read it". Say which. The same applies to a
+property that is absent versus one that is present and empty.
+
+## Provenance belongs on the page
+
+The export carries `sourceCommitSha`, `sourceCommitAt`, `sourceTreeDirty` and,
+for a preview, a `PreviewGraph` type and a `canonicalDocument` link. Show them.
+A reader looking at a staged graph must be able to tell it is staged **from the
+data**, not from an injected banner that a JSON file would not carry anyway —
+and `sourceTreeDirty` is the difference between a graph a SHA reproduces and
+one it does not.
+
+## Verifying it
+
+**A rendered artefact is not verified by reading its source.** `AGENTS.md` is
+explicit that a human cannot assess a rendering from a description of it; the
+same holds for the agent that wrote it. "The HTML looks right" is not evidence
+that the document loads, that an edge is clickable, or that a failed fetch says
+so.
+
+Drive the real page in a real browser. `tests/kg-viewer.e2e.ts` is the worked
+example, and it asserts against the *generated* artefacts rather than a fixture,
+so a test cannot agree with a stand-in while disagreeing with what ships. It
+generates them if absent, so the suite runs from a clean checkout.
+
+**Look at it, too.** Collapsing nested objects behind a disclosure was not a
+design decision made in advance — it came from taking a screenshot and seeing
+that a Tool's `io`, ~900 characters of JSON rendered inline, pushed `satisfies`
+and the neighbourhood diagram off the bottom of the screen. The most
+interesting property on the node was the one making the node unreadable, and no
+test would have said so.

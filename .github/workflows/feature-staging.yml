@@ -199,6 +199,19 @@ jobs:
       # banner exists to convey was invisible to exactly the readers using
       # the default theme. A <span> the theme has no selector for cannot
       # regress that way in either mode.
+      # The graph's viewer page, emitted BEFORE the banner injection below so
+      # the `find ./_site -name "*.html"` picks it up like every other page. It
+      # is a page, not data: a reviewer opening it under STAGING/ should get
+      # the same way back to the branch and the PR that every other page gives
+      # them. The export itself runs later and stays unbannered, correctly —
+      # injecting HTML into a JSON-LD document would corrupt it.
+      #
+      # It needs nothing from the export: the page resolves its document at
+      # load time, from a path written in at generation time. So the order here
+      # is free, and this is the useful end of it.
+      - name: Emit the knowledge-graph viewer
+        run: bun run scripts/kg-viewer.ts --out ./_site/kg/index.html
+
       - name: Inject staging banner
         # PR title and body come through `env`, NOT `${{ }}` interpolation.
         # An expression is substituted into the script TEXT before bash sees

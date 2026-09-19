@@ -167,6 +167,34 @@ grep route answers the same questions in seconds.
 | "toolchain not installed" | Wrong lean version | `elan toolchain install $(cat lean-toolchain)` from the repo root |
 | paper-assistant shows `✗ lean` | lean not on PATH | Add `$HOME/.elan/bin` to PATH in shell profile |
 
+
+## Where the cache workaround went
+
+This skill was 587 lines, and 419 of them were one workaround for `lake exe
+cache get` returning 403 — a case most sessions never hit, read by every session
+that loads the skill. It now sits beside this file. Nothing was deleted.
+
+| what | where |
+|---|---|
+| FAST ROUTE, architecture, prerequisites, setup, Docker, no-Lean fallback, troubleshooting | **here** |
+| Mathlib cache 403 fallback — packing oleans, orphan branch, chunking | [`lean-environment-setup/mathlib-cache-fallback.md`](#part-mathlib-cache-fallback) |
+
+Go there only once the FAST ROUTE below has actually failed.
+
+
+---
+
+<a id="part-mathlib-cache-fallback"></a>
+
+# lean-environment-setup — the Mathlib cache 403 workaround
+
+A proven workaround for one specific failure: `lake exe cache get` returning
+403. Four hundred lines of procedure for a case most sessions never hit, which
+is why it is here and not in the parent.
+
+**Do not start here.** Read the parent's FAST ROUTE first — it exists to stop
+you declaring Lean unavailable when it is merely slow to reach.
+
 ## Mathlib cache 403 fallback (proven workaround)
 
 **Symptom.** In sandboxed cloud environments, `lake exe cache get` returns
