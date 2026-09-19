@@ -68,7 +68,7 @@ If the answer to the first is yes and to the second is no, it is durable.
 |---|---|---|
 | a **bean** (`beans/defs/*.md`) | records that something was considered; ids are referenced from commits, issues and other beans | set `status: scrapped` with the reasons; `beans archive` MOVES resolved ones |
 | a **todo** (`todos/items/*.md`) | it is a *person's* outstanding work, not an agent's | ask the person; an agent may neither close nor remove one |
-| a **staging preview** (`STAGING/<slug>/` on the publish branch) | it is the artefact a human assesses a rendered change from | the `staging:cleanup` label on that PR, applied by a person |
+| a **staging preview** (`STAGING/<slug>/` on the publish branch) | it is the artefact a human assesses a rendered change from | while the PR is open, the `staging:cleanup` label, applied by a person; once it is closed, a `feature-staging.yml` dispatch with `cleanup_slug` + a matching `cleanup_confirm` — the label cannot reach a closed PR (bean `w2g5`) |
 | a **published page** on the site | a URL somebody has linked or bookmarked | say what would 404 and let the owner decide; a redirect is often the answer |
 | a **QA verdict or witness** (`test/results/**`) | the previous answer is what separates "this broke today" from "this has been broken since it was written" | regenerate it in place; never remove the file to make a sweep clean |
 | **library / uploads content** | every knowledge-graph reference to a source resolves through `library/`; a file in `uploads/` reads as absent to every consumer while still on disk | move it forward through the pipeline, or ask |
@@ -167,6 +167,32 @@ Four things about it are worth carrying forward:
 Fixed in #377 by restoring `STAGING/` into the publish directory before the
 push — which keeps both halves, since the main site is still a full replace so
 a removed page goes, while the previews are part of what is published.
+
+### The sequel, and why "no remedy" is its own hazard — bean `w2g5`
+
+The same family, 2026-09-19, and it cuts the other way. `cleanup` in
+`feature-staging.yml` removes a preview only on a `staging:cleanup` label, and
+only on the `pull_request_target: closed` event — so once a PR is closed the
+label can no longer reach it, and re-running the old run replays a payload that
+still carries no label. Meanwhile `staging-preview-orphans` can only ever name
+a preview whose PR is *already* closed. **The one remedy the finding documented
+was unreachable for every artefact it could ever name.**
+
+That is not a safe failure. It leaves a person holding a report with no
+sanctioned action in it, and the two unsanctioned ones are a hand-pushed
+`gh-pages` commit — this skill's whole subject — or switching the check off. A
+policy of "confirm before removing" needs a removal that can actually be
+confirmed; otherwise the confirmation has nowhere to go. The fix was a
+`workflow_dispatch` path whose confirmation input repeats the slug, and which
+re-evaluates liveness at removal time rather than trusting a report that may be
+a day old.
+
+**And the check itself had the opposite defect at the same moment**: it read
+"no open pull request" as "abandoned" and named a branch that had been
+committed to two minutes earlier. Reporting rather than acting is what kept
+that from becoming a deletion — but a report that names live work still invites
+one, which is why the list a person is asked to act on has to be as careful as
+the action itself.
 
 ## Applying it to your own code
 

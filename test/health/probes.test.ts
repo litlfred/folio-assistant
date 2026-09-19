@@ -16,7 +16,7 @@ import { join } from "node:path";
 
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { frontMatter, frontMatterValue, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
+import { frontMatter, frontMatterValue, probeBranches, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -44,6 +44,159 @@ function repo(files: Record<string, string>): string {
   run(dir, "git", ["commit", "-qm", "fixture"]);
   return dir;
 }
+
+/**
+ * The branch evidence, against a real remote with a real merge in it.
+ *
+ * The three answers this probe can give about one branch are different facts
+ * and are tested separately: **merged**, **carries unmerged work**, and **I
+ * could not tell**. Collapsing the third into either of the first two is what
+ * bean `w2g5` is about, and a probe that returned `mergedIntoDefault: true`
+ * whenever it failed would pass any test that only looked at the two decided
+ * cases.
+ */
+describe("probeBranches", () => {
+  /** `git`, at a fixed commit date — the dates are what the frontier test turns on. */
+  function runAt(cwd: string, iso: string, args: string[]): void {
+    const r = spawnSync("git", args, {
+      cwd,
+      encoding: "utf-8",
+      env: { ...process.env, GIT_AUTHOR_DATE: iso, GIT_COMMITTER_DATE: iso },
+    });
+    if (r.status !== 0) throw new Error(`git ${args.join(" ")} failed: ${r.stderr}`);
+  }
+
+  /**
+   * A remote carrying `main`, a branch merged into it, and one that is not.
+   *
+   * Dated deliberately and in order: `claude/merged`'s tip is BEFORE the merge
+   * commit and `claude/still-going`'s is AFTER it, which is what lets the
+   * shallow tests tell "the answer is unreliable" from "the answer is sound
+   * even here".
+   */
+  function remoteWithBranches(): string {
+    const dir = repo({ "a.txt": "a" });
+    run(dir, "git", ["checkout", "-q", "-b", "claude/merged"]);
+    writeFileSync(join(dir, "b.txt"), "b");
+    run(dir, "git", ["add", "-A"]);
+    runAt(dir, "2026-09-02T00:00:00Z", ["commit", "-qm", "work that landed"]);
+    run(dir, "git", ["checkout", "-q", "main"]);
+    // A merge COMMIT, which is how this repository merges — the tip of
+    // `claude/merged` becomes an ancestor of `main`. Under squash-merge it
+    // would not, and the probe would report every branch as unmerged; that is
+    // stated in the check's own documentation as an assumption.
+    runAt(dir, "2026-09-03T00:00:00Z", ["merge", "-q", "--no-ff", "-m", "Merge pull request #1", "claude/merged"]);
+    run(dir, "git", ["checkout", "-q", "-b", "claude/still-going"]);
+    writeFileSync(join(dir, "c.txt"), "c");
+    run(dir, "git", ["add", "-A"]);
+    runAt(dir, "2026-09-04T00:00:00Z", ["commit", "-qm", "work that has not landed"]);
+    run(dir, "git", ["checkout", "-q", "main"]);
+    run(dir, "git", ["config", "--bool", "core.bare", "true"]);
+    return dir;
+  }
+
+  function local(remote: string): string {
+    const dir = repo({ "unrelated.txt": "x" });
+    run(dir, "git", ["remote", "add", "origin", remote]);
+    return dir;
+  }
+
+  it("tells a merged branch from one that carries unmerged work, and dates both", () => {
+    const dir = local(remoteWithBranches());
+    const p = probeBranches({
+      repoRoot: dir,
+      remote: "origin",
+      previewSlugs: ["claude-merged", "claude-still-going"],
+    });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.defaultBranch).toBe("main");
+    const by = new Map(p.value.candidates.map((c) => [c.ref, c]));
+    expect([...by.keys()].sort()).toEqual(["claude/merged", "claude/still-going"]);
+    expect(by.get("claude/merged")?.mergedIntoDefault).toBe(true);
+    expect(by.get("claude/still-going")?.mergedIntoDefault).toBe(false);
+    for (const c of p.value.candidates) {
+      expect(c.unevaluated).toBeUndefined();
+      expect(Number.isNaN(Date.parse(c.headCommittedAt ?? ""))).toBe(false);
+    }
+  });
+
+  it("carries only the branches a preview slug asks about — 226 branches must not cost 226 fetches", () => {
+    const dir = local(remoteWithBranches());
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-still-going"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.candidates.map((c) => c.ref)).toEqual(["claude/still-going"]);
+  });
+
+  it("an empty candidate set is a DETERMINED answer, not a failure to look", () => {
+    const dir = local(remoteWithBranches());
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-no-such-branch"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.candidates).toEqual([]);
+    expect(p.value.defaultBranch).toBe("main");
+  });
+
+  it("a remote that cannot be reached is `unknown`, never an empty candidate set", () => {
+    // An empty set means "no branch answers for this preview", which sends it
+    // to the orphan list. A remote that could not be asked must not produce it.
+    const dir = repo({ "a.txt": "a" });
+    run(dir, "git", ["remote", "add", "origin", join(dir, "no-such-remote.git")]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-anything"] });
+    expect(p.state).toBe("unknown");
+    if (p.state !== "unknown") return;
+    expect(p.reason).toContain("ls-remote");
+  });
+
+  it("is NOT blinded by a shallow fetch of a DIFFERENT branch — the `gh-pages --depth=1` case", () => {
+    // `probeStaging` runs first in `gatherContext` and fetches the publish
+    // branch with `--depth=1`, which writes a graft into `.git/shallow` and
+    // makes `--is-shallow-repository` say yes. The default branch's own
+    // history is untouched, and a guard that used that flag would report
+    // every sweep blind.
+    const dir = local(remoteWithBranches());
+    run(dir, "git", ["fetch", "-q", "--depth=1", "origin", "claude/still-going"]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-merged"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.candidates.find((x) => x.ref === "claude/merged")?.mergedIntoDefault).toBe(true);
+  });
+
+  it("still trusts `not merged` for a branch whose tip POSTDATES the graft boundary", () => {
+    // Truncation does not condemn every answer. `claude/still-going`'s tip is
+    // dated after the merge commit the shallow fetch stopped at, so a merge of
+    // it would have to be inside the fetched range — the negative is a fact,
+    // and blinding here would cost the check its only remaining signal on a CI
+    // runner that forgot `fetch-depth: 0`.
+    const dir = local(remoteWithBranches());
+    run(dir, "git", ["fetch", "-q", "--depth=1", "origin", "main"]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-still-going"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    const c = p.value.candidates.find((x) => x.ref === "claude/still-going");
+    expect(c?.mergedIntoDefault).toBe(false);
+    expect(c?.unevaluated).toBeUndefined();
+  });
+
+  it("refuses to call a branch unmerged when the default branch's history is truncated past its tip", () => {
+    // The trap: `merge-base --is-ancestor` says "no" for a merged branch whose
+    // merge point was never fetched. "No" SPARES the preview, so nothing is
+    // wrongly accused — but a check that silently spares everything has
+    // stopped working, and that is what this guard reports instead.
+    const remote = remoteWithBranches();
+    const dir = local(remote);
+    run(dir, "git", ["fetch", "-q", "--depth=1", "origin", "main"]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-merged"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    const c = p.value.candidates.find((x) => x.ref === "claude/merged");
+    expect(c).toBeDefined();
+    expect(c?.mergedIntoDefault).toBeUndefined();
+    expect(c?.unevaluated).toContain("fetch-depth: 0");
+    expect(c?.unevaluated).toContain("graft boundary");
+  });
+});
 
 describe("probeStaging", () => {
   it("reads the previews and sums their blob sizes", () => {
