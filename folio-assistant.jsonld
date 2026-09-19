@@ -68,6 +68,11 @@
       "@type": "@id"
     },
     "maintainsFrom": "https://litlfred.github.io/folio-assistant/ns#maintainsFrom",
+    "maintainedBy": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#maintainedBy",
+      "@type": "@id"
+    },
+    "module": "https://litlfred.github.io/folio-assistant/ns#module",
     "holdsGraph": {
       "@id": "https://litlfred.github.io/folio-assistant/ns#holdsGraph",
       "@type": "@id"
@@ -119,10 +124,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T05:46:36.246Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bf31b4c8a150f19eab7378d051bf4ee125695de6",
-  "sourceCommitSha": "bf31b4c8a150f19eab7378d051bf4ee125695de6",
-  "sourceCommitAt": "2026-09-19T07:45:17+02:00",
+  "generatedAt": "2026-09-19T05:48:27.699Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6c1550e0aadb40bf43bf46ba23e4caecb6731a2c",
+  "sourceCommitSha": "6c1550e0aadb40bf43bf46ba23e4caecb6731a2c",
+  "sourceCommitAt": "2026-09-19T07:46:46+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 149,
@@ -134,6 +139,7 @@
     "SequenceFlow": 416,
     "ProcessNode": 387,
     "Tool": 27,
+    "Schema": 37,
     "GraphKind": 13,
     "Directory": 7
   },
@@ -382,6 +388,7 @@
       "occurrences": 1
     }
   ],
+  "undeclaredSchemaModules": [],
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/quality-control",
@@ -18209,6 +18216,274 @@
         "process-state",
         "bean-coordination"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/assistant-package",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "assistant-package",
+      "title": "Package Manifest — Docker and system dependency declarations.",
+      "module": "schemas/assistant-package.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/assistant-types",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "assistant-types",
+      "title": "Assistant Framework — Schema definitions for the agent skills system.",
+      "module": "schemas/assistant-types.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/assistant-workflow",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "assistant-workflow",
+      "title": "Assistant Workflow — Content lifecycle state machine.",
+      "module": "schemas/assistant-workflow.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/bean-graph",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "bean-graph",
+      "title": "The bean graph — what `beans/` is, rather than where it happens to be.",
+      "module": "schemas/bean-graph.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/bib-verification",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "bib-verification",
+      "title": "Bibliography verification schema — `content/bib-qa-verifications.json`.",
+      "module": "schemas/bib-verification.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/block-kinds",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "block-kinds",
+      "title": "The block kinds, as a runtime value — in a leaf module so anything can",
+      "module": "schemas/block-kinds.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/block-qa",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "block-qa",
+      "title": "Per-content-block QA report schema.",
+      "module": "schemas/block-qa.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/cat-harness",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "cat-harness",
+      "title": "The `CatHarness` declaration — what an instance IS, at its root.",
+      "module": "schemas/cat-harness.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/cat-harness-schema"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/constraints",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "constraints",
+      "title": "These schemas provide runtime validation and are used by the",
+      "module": "schemas/constraints.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/contributions",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "contributions",
+      "title": "Contribution registry — what a folio-assistant *dependency* may add to the",
+      "module": "schemas/contributions.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/dak-blocks",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "dak-blocks",
+      "title": "WHO SMART Guidelines content blocks — the `dak` adapter.",
+      "module": "schemas/dak-blocks.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/dak",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "dak",
+      "title": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
+      "module": "schemas/dak.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/folio-graph-kind",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "folio-graph-kind",
+      "title": "The `folio` graph kind — registered by **core**, not declared by the harness.",
+      "module": "schemas/folio-graph-kind.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/formalization-types",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "formalization-types",
+      "title": "Formalization Pipeline Types — Proof Objects, Glossary, and Test Reports.",
+      "module": "schemas/formalization-types.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/harness-config",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "harness-config",
+      "title": "Cross-folio dependency schema for folio-assistant instances.",
+      "module": "schemas/harness-config.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/jsonld",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "jsonld",
+      "title": "JSON-LD projection of the content block model.",
+      "module": "schemas/jsonld.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kg-node",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "kg-node",
+      "title": "The two labels every knowledge-graph node may carry.",
+      "module": "schemas/kg-node.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/kg-qa",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "kg-qa",
+      "title": "Knowledge-graph QA sidecars — what is dangling in the process/role/skill graph.",
+      "module": "schemas/kg-qa.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/lean-packages",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "lean-packages",
+      "title": "The `lean.ref` grammar and the package registry it resolves against.",
+      "module": "schemas/lean-packages.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/precision-scalar",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "precision-scalar",
+      "title": "§S7 — `PrecisionScalar` envelope for round-tripping high-precision",
+      "module": "schemas/precision-scalar.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/qa-review",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "qa-review",
+      "title": "QA review — findings, decisions, and the audit notes that justify them.",
+      "module": "schemas/qa-review.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/refactor-strategy",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "refactor-strategy",
+      "title": "Lean proof-refactoring strategy database.",
+      "module": "schemas/refactor-strategy.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/render-targets",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "render-targets",
+      "title": "Which render target a content profile validates against — declared as data,",
+      "module": "schemas/render-targets.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/role-graph",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "role-graph",
+      "title": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
+      "module": "schemas/role-graph.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/script-qa",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "script-qa",
+      "title": "Per-script QA report schema.",
+      "module": "schemas/script-qa.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/skill-package",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "skill-package",
+      "title": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
+      "module": "schemas/skill-package.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "staging",
+      "title": "Staging comparison schema — before/after URL pairs for content review.",
+      "module": "schemas/staging.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/todo-graph",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "todo-graph",
+      "title": "The todo graph — what `todos/` is, rather than where it happens to be.",
+      "module": "schemas/todo-graph.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/todo",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "todo",
+      "title": "A TODO — one human actor's work state, as a knowledge-graph node.",
+      "module": "schemas/todo.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tool-invocation",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "tool-invocation",
+      "title": "What happened when a Tool ran, and under whose authority.",
+      "module": "schemas/tool-invocation.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tool-types",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "tool-types",
+      "title": "The shared I/O type vocabulary Tool ports reference.",
+      "module": "schemas/tool-types.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/tool-types-schema"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tool",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "tool",
+      "title": "What a Tool is.",
+      "module": "schemas/tool.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/tool-schema"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/translation-tools",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "translation-tools",
+      "title": "Content-type-specific translation tool registry.",
+      "module": "schemas/translation-tools.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/translation",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "translation",
+      "title": "Translation status, metadata, and node schemas for localized content.",
+      "module": "schemas/translation.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/types",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "types",
+      "title": "ALL types are inferred from Zod schemas in constraints.ts, which is the",
+      "module": "schemas/types.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/voices",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "voices",
+      "title": "Voices — named editorial profiles that overlay the base house voice.",
+      "module": "schemas/voices.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/webpage",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "webpage",
+      "title": "`webpage` — a published documentation page, modelled as a graph node that",
+      "module": "schemas/webpage.ts"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/tools",
