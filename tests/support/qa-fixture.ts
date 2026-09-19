@@ -48,7 +48,7 @@ interface SidecarDoc {
     result: string;
     severity?: string;
     evidence?: string[];
-    witnesses?: Array<{ kind: string }>;
+    witnesses?: Array<{ kind: string; freshness?: string; changed?: string[] }>;
   }>;
 }
 
@@ -69,6 +69,17 @@ export interface VerdictOverride {
    * Restoring the pre-adjudication state means dropping the agent entry.
    */
   witnessKinds?: string[];
+  /**
+   * Mark this criterion's first surviving witness stale, naming what changed.
+   *
+   * By **id**, never by index — which is the second defect PR #319 found in
+   * this file and I had not. `STALE_JSON` marked `criteria[0]` and the spec
+   * asserted on the first RENDERED row; those coincide only while nothing
+   * sorts above it, so the test could pass while asserting a stale badge on a
+   * row it had never marked. Position agreeing with identity is a coincidence
+   * of the current corpus, not a contract.
+   */
+  stale?: { changed: string[] };
 }
 
 /**
@@ -98,6 +109,18 @@ export function sidecarWithVerdicts(path: string, overrides: VerdictOverride[]):
     if (o.evidence !== undefined) c.evidence = o.evidence;
     if (o.witnessKinds !== undefined && c.witnesses) {
       c.witnesses = c.witnesses.filter((w) => o.witnessKinds!.includes(w.kind));
+    }
+    if (o.stale !== undefined) {
+      const w = c.witnesses?.[0];
+      if (!w) {
+        throw new Error(
+          `fixture: \`${o.id}\` has no witness to mark stale in ${path}. ` +
+            `Marking nothing and reporting success is how a staleness assertion ` +
+            `passes over a verdict that was never stale.`,
+        );
+      }
+      w.freshness = "stale";
+      w.changed = o.stale.changed;
     }
     // Keep `counts` consistent with `criteria`. A panel header that disagrees
     // with the rows below it is a defect a spec should be able to catch, so

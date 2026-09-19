@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { sidecar, sidecarWithVerdicts } from "./support/qa-fixture.js";
+import { sidecarWithVerdicts } from "./support/qa-fixture.js";
 
 /**
  * The QA icon has to OPEN, and what it opens has to name its witnesses.
@@ -43,7 +43,6 @@ const CORPUS_PATH = join(
   ROOT,
   "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json",
 );
-const CORPUS_JSON = sidecar(CORPUS_PATH);
 
 /**
  * The same document with its one `voice-status-leak` finding put back.
@@ -73,26 +72,23 @@ const BLOCK_JSON = sidecarWithVerdicts(CORPUS_PATH, [
 ]);
 
 /**
- * The same document with its witness marked stale.
+ * The same document with one NAMED criterion's witness marked stale.
  *
  * This was served straight from the corpus, where that block's verdict WAS
- * stale — measured at 17:33 against an `.md` edited at 19:06 the same day.
- * Re-running the sweep cleared it, which is the system behaving correctly and
- * this test then failing for the right reason. Whether a hash comparison yields
- * `stale` is settled in `qa-witness.test.ts` against files it controls; what
- * belongs HERE is whether the panel renders that state — which must not depend
- * on the corpus happening to hold an out-of-date verdict on the day the suite
- * runs.
+ * stale. Re-running the sweep cleared it — the system behaving correctly and
+ * this test then failing for the right reason. Whether a hash comparison
+ * yields `stale` is settled in `qa-witness.test.ts` against files it controls;
+ * what belongs HERE is whether the panel RENDERS that state.
+ *
+ * **By id, not by index.** This marked `criteria[0]` until PR #319 pointed out
+ * that the spec then asserts on the first *rendered* row: the two coincide
+ * only while nothing sorts above it, so the test could pass while asserting a
+ * stale badge on a row it had never marked. `canonical-calibration-count` is
+ * criterion 0 in document order and the fixture now says so out loud.
  */
-const STALE_JSON = (() => {
-  const doc = JSON.parse(CORPUS_JSON) as {
-    criteria: Array<{ witnesses: Array<{ freshness: string; changed?: string[] }> }>;
-  };
-  const w = doc.criteria[0]!.witnesses[0]!;
-  w.freshness = "stale";
-  w.changed = ["md"];
-  return JSON.stringify(doc);
-})();
+const STALE_JSON = sidecarWithVerdicts(CORPUS_PATH, [
+  { id: "canonical-calibration-count", result: "pass", stale: { changed: ["md"] } },
+]);
 
 /** A KG sidecar: one auditor, no timestamp, a `sha256:`-prefixed hash. */
 const KG_JSON = readFileSync(

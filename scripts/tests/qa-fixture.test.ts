@@ -112,6 +112,41 @@ describe("applying a verdict", () => {
   });
 });
 
+describe("marking a witness stale — by id, never by index", () => {
+  test("the named criterion's first witness carries freshness and changed", () => {
+    const p = write("s1.json", DOC);
+    const d = JSON.parse(
+      sidecarWithVerdicts(p, [{ id: "a-passes", result: "pass", stale: { changed: ["md"] } }]),
+    ) as { criteria: Array<{ id: string; witnesses: Array<{ freshness?: string; changed?: string[] }> }> };
+    const c = d.criteria.find((x) => x.id === "a-passes")!;
+    expect(c.witnesses[0]!.freshness).toBe("stale");
+    expect(c.witnesses[0]!.changed).toEqual(["md"]);
+  });
+
+  test("a DIFFERENT criterion is left fresh — marking is not global", () => {
+    // PR #319's finding: the spec asserts on the first RENDERED row, so a
+    // fixture marking by index can pass while asserting a stale badge on a row
+    // it never touched. Falsified for real against the browser suite: marking
+    // criterion 19 instead of 0 turns the stale spec red.
+    const p = write("s2.json", DOC);
+    const d = JSON.parse(
+      sidecarWithVerdicts(p, [{ id: "a-passes", result: "pass", stale: { changed: ["md"] } }]),
+    ) as { criteria: Array<{ id: string; witnesses: Array<{ freshness?: string }> }> };
+    const other = d.criteria.find((x) => x.id === "voice-status-leak")!;
+    expect(other.witnesses.every((w) => w.freshness === undefined)).toBe(true);
+  });
+
+  test("a criterion with no witness throws rather than marking nothing", () => {
+    const p = write("s3.json", {
+      counts: { pass: 1 },
+      criteria: [{ id: "bare", result: "pass", witnesses: [] }],
+    });
+    expect(() =>
+      sidecarWithVerdicts(p, [{ id: "bare", result: "pass", stale: { changed: ["md"] } }]),
+    ).toThrow(/no witness to mark stale/);
+  });
+});
+
 describe("the real corpus still holds the subject the e2e spec keys to", () => {
   test("`voice-status-leak` is present, whatever its verdict", () => {
     // If this fails, the e2e fixture's throw is about to fire — and this says
