@@ -36,11 +36,61 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
-/** A block sidecar carrying the corpus's one real failure, and a stale witness. */
-const BLOCK_JSON = readFileSync(
+/** The real generator output this suite's fixtures are derived from. */
+const CORPUS_JSON = readFileSync(
   join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
   "utf8",
 );
+
+/**
+ * The same document with its one `voice-status-leak` finding put back.
+ *
+ * This was served straight from the corpus, where that criterion WAS failing.
+ * PR #302 adjudicated all 26 `voice-*` findings to zero — correctly; this block
+ * is titled "What is not built yet" and `**Not yet implemented:**` is the
+ * heading over its inventory of gaps, not a work-tracker marker that escaped
+ * into prose. So the sweep now records 48 criteria and no failure, and these
+ * two specs failed for exactly the reason the sibling `STALE_JSON` below was
+ * already synthesised: **whether the panel renders a failing row must not
+ * depend on the corpus happening to hold a failure on the day the suite runs.**
+ * A clean sweep is the system working.
+ *
+ * The shape still comes off disk, so the panel is still exercised against what
+ * the generator really writes; only the verdict is put back. The adjudicating
+ * agent witness is dropped from that one criterion, restoring the pre-#302
+ * state in which the script that found it is the first witness — which is what
+ * the witness assertions below are about.
+ */
+const BLOCK_JSON = (() => {
+  const doc = JSON.parse(CORPUS_JSON) as {
+    counts: Record<string, number>;
+    criteria: Array<{
+      id: string;
+      result: string;
+      severity?: string;
+      evidence?: string[];
+      witnesses: Array<{ kind: string }>;
+    }>;
+  };
+  const c = doc.criteria.find((x) => x.id === "voice-status-leak");
+  if (!c) {
+    // Never silently pass: a fixture that lost its subject would leave every
+    // assertion below testing the first alphabetical row instead.
+    throw new Error("fixture: `voice-status-leak` is no longer in the sidecar");
+  }
+  c.result = "fail";
+  c.severity = "critical";
+  c.witnesses = c.witnesses.filter((w) => w.kind === "script");
+  // `file:line: <quote>`, the form `qa-checkers-voice.ts` documents at its
+  // head. The line is the one the adjudicating witness itself cites, and it is
+  // still line 36 of the block — checked, not assumed.
+  c.evidence = [
+    "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
+  ];
+  doc.counts.fail = 1;
+  doc.counts.pass -= 1;
+  return JSON.stringify(doc);
+})();
 /**
  * The same document with its witness marked stale.
  *
@@ -54,7 +104,7 @@ const BLOCK_JSON = readFileSync(
  * runs.
  */
 const STALE_JSON = (() => {
-  const doc = JSON.parse(BLOCK_JSON) as {
+  const doc = JSON.parse(CORPUS_JSON) as {
     criteria: Array<{ witnesses: Array<{ freshness: string; changed?: string[] }> }>;
   };
   const w = doc.criteria[0]!.witnesses[0]!;
