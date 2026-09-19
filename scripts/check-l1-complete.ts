@@ -117,6 +117,45 @@ function derivableRequirements(dir: string): Requirement[] {
     });
   }
 
+  // Technical metadata (bean `nso8`) — moved out of NOT-DERIVABLE once both
+  // ingest rungs began writing it. `sha256` is the load-bearing field: an
+  // asset with one can be re-fetched and compared, an asset without one is an
+  // assertion.
+  //
+  // `mimetype_sniffed: null` is NOT a failure. The sniffer reads magic bytes
+  // and refuses to fall back to the extension, so an unrecognised format is
+  // honestly unrecognised — `mimetype_source: "unrecognised"` records that the
+  // file WAS looked at, which absence alone would not say. What fails is the
+  // field being absent entirely, i.e. an older ingest that never sniffed.
+  {
+    const src = (() => {
+      try {
+        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
+          | Record<string, unknown>
+          | undefined;
+      } catch {
+        return undefined;
+      }
+    })();
+    if (!src) {
+      out.push({
+        name: "technical-metadata",
+        state: "unmet",
+        detail: "no `source` block — re-run the ingest rung",
+      });
+    } else {
+      const want = ["file", "sha256", "bytes", "mtime", "mimetype_source"];
+      const missing = want.filter((k) => !(k in src));
+      out.push({
+        name: "technical-metadata",
+        state: missing.length ? "unmet" : "met",
+        detail: missing.length
+          ? `\`source\` missing ${missing.join(", ")}`
+          : `sha256 ${String(src.sha256).slice(0, 12)}…, ${src.bytes} bytes, ${src.mimetype_source}`,
+      });
+    }
+  }
+
   if (!has("manifest.jsonld")) {
     out.push({ name: "manifest", state: "unmet", detail: "no manifest.jsonld" });
   } else {
@@ -151,7 +190,6 @@ function derivableRequirements(dir: string): Requirement[] {
  */
 export const NOT_DERIVABLE: ReadonlyArray<readonly [string, string]> = [
   ["archive-contents", "twqe"],
-  ["technical-metadata", "nso8"],
   ["image-descriptions", "d5f1"],
   ["audio-transcripts", "1r0p"],
   ["tabular-records", "p67i"],

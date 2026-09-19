@@ -73,7 +73,8 @@ is never rendered as one that was.
 ```
 library/<bib-slug>/
   structure.json     "$schema": "pdf-structure/v1" — doc_id, toc_source,
-                     granularity, text_source, sections[], structure_note
+                     granularity, text_source, sections[], structure_note,
+                     source{} (see below)
   sections/          one Markdown file per section, front matter + body
   blocks/            the block projection consumers read
   manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
@@ -82,9 +83,37 @@ library/<bib-slug>/
 
 `bun run check:l1-complete` is the gate. It reports three states, never two: a
 requirement **met**, **unmet**, or **not yet derivable** — the last because the
-per-format arms (images, audio, tables, archives, technical metadata) are
-tracked separately and a check that cannot run must not read as a pass. Bean
-`pn6j`.
+per-format arms (images, audio, tables, archives) are tracked separately and a
+check that cannot run must not read as a pass. Bean `pn6j`.
+
+## `source{}` — the technical facts, written by whichever rung ran
+
+Every rung writes `source` on `structure.json`, from the single definition in
+`scripts/_tech_meta.py`: `file`, full 64-hex `sha256`, `bytes`, `mtime` (the
+SOURCE's, UTC to the second — not the ingest time, because what tells you a
+re-fetch got something new is the file changing), `mimetype_sniffed` and
+`mimetype_source`. `pdf-structure` adds `pages`, `text_source` and `extractor`.
+
+**The mimetype is sniffed from the leading bytes and never falls back to the
+extension.** An extension is a claim by whoever named the file; the magic bytes
+are what the content is, and a `.pdf` that is really an HTML error page
+extracts to nothing while every downstream verdict is about the wrong document.
+Unrecognised bytes give `mimetype_sniffed: null` with `mimetype_source:
+"unrecognised"` — the third state again, and it is load-bearing: a guess that
+agrees with the filename is indistinguishable from a real sniff, which would
+make the field worthless for the one case it exists to catch.
+
+This was a **gap in the no-outline rung**, not a new requirement.
+`pdf-structure.py` wrote `source`; `pdf-pages.py` wrote none and merged into
+whatever file already existed — so `library/milnorlink/`, the one entry
+`pdf-structure` never touched, carried no technical metadata at all, and the
+other page-granularity entries had it only because `pdf-structure` ran on them
+first. Bean `nso8`.
+
+`bun run scripts/ingest-document.ts <pdf> --refresh-meta` backfills an existing
+entry. It **reads the indent off the file** rather than choosing one: the two
+rungs write at different widths, and hardcoding either reformats every entry
+the other authored — measured at 4 349 changed lines to add three fields.
 
 ## Ingestion is a HARNESS capability, not core's
 

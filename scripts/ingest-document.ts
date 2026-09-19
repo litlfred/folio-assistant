@@ -38,6 +38,7 @@
  * Usage:
  *   bun run ingest uploads/FILE.pdf
  *   bun run ingest uploads/FILE.pdf --dry-run
+ *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
  *
  * Exit: 0 ingested (or dry-run reported), 1 ingestion failed, 2 could not probe.
  *
@@ -178,6 +179,50 @@ export function planFor(pdf: string, p: Probe = probe(pdf), lib: string = librar
   };
 }
 
+/**
+ * Recompute `source` on an entry that already exists, from the upload.
+ *
+ * Bean `nso8` says the technical facts must be "produced by the ingest path
+ * rather than backfilled", which is why this lives HERE rather than in a
+ * migration script: it is the same entry point calling the same
+ * `scripts/_tech_meta.py` the rungs call, applied to a document ingested
+ * before those fields existed. A separate backfiller would be a second
+ * implementation of the one thing `_tech_meta.py` exists to keep single.
+ *
+ * It needs no PDF backend — every field is computed from the file's bytes —
+ * so it works where a full re-ingest cannot. It **merges**, never replaces:
+ * `pages`, `text_source` and `extractor` are the rung's knowledge and this
+ * has no way to recompute them.
+ */
+export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
+  const slug = bibSlug(pdf);
+  const structure = join(resolve(libRoot), slug, "structure.json");
+  if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
+  // The indent is READ OFF the file, never chosen here. `pdf-structure.py`
+  // writes `indent=1` and `pdf-pages.py` writes `indent=2`, so a refresh that
+  // picked either would reformat every entry the other rung authored: adding
+  // three fields to `9789241548960-eng` re-wrote 4 349 lines, which buries the
+  // change it was making and fights every later diff. A metadata refresh is
+  // not a licence to reformat a file it did not write.
+  const py =
+    "import sys, json, importlib.util as u\n" +
+    "spec = u.spec_from_file_location('t', 'scripts/_tech_meta.py')\n" +
+    "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
+    "p = sys.argv[2]\n" +
+    "raw = open(p).read()\n" +
+    "lines = raw.split('\\n')\n" +
+    "ind = next((len(l) - len(l.lstrip(' ')) for l in lines[1:] if l.startswith(' ')), 2)\n" +
+    "d = json.loads(raw)\n" +
+    "d['source'] = {**d.get('source', {}), **m.tech_meta(sys.argv[1])}\n" +
+    "open(p, 'w').write(json.dumps(d, indent=ind) + ('\\n' if raw.endswith('\\n') else ''))\n" +
+    "print(d['source']['mimetype_source'])\n";
+  const r = Bun.spawnSync(["python3", "-c", py, pdf, structure]);
+  if (r.exitCode !== 0) {
+    throw new Error(`refreshing ${slug}: ${new TextDecoder().decode(r.stderr).trim()}`);
+  }
+  return `${slug}: ${new TextDecoder().decode(r.stdout).trim()}`;
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const dry = argv.includes("--dry-run");
@@ -189,6 +234,10 @@ if (import.meta.main) {
   if (!existsSync(pdf)) {
     console.error(`${pdf}: not there`);
     process.exit(1);
+  }
+  if (argv.includes("--refresh-meta")) {
+    console.log(refreshMeta(pdf));
+    process.exit(0);
   }
   const plan = planFor(pdf);
   const slug = bibSlug(pdf);
