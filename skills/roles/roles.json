@@ -707,14 +707,13 @@
     {
       "id": "log",
       "title": "Activity log",
-      "description": "The agent activity log under `fsh-guts/logs/`. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its contents never reach a published graph, because `fsh-guts` is stripped before publication.",
+      "description": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
       "actorKinds": [
         "system"
       ],
       "actedUpon": true,
       "lanes": [
-        "Activity log",
-        "Activity log (fsh-guts/logs)"
+        "Activity log"
       ],
       "skills": [
         "activity-log"

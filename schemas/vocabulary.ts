@@ -204,6 +204,13 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // some third kind of actor.
   actorKinds: { gloss: "Which kinds of actor a role admits." },
   hasSkill: { gloss: "A skill this role carries." },
+  // The two declared exemptions, and they are NOT one flag under two names.
+  // `actedUpon` says the role never acts, so `role-has-actor` is `n/a`;
+  // `judgementOnly` says it acts but no procedure yields its answer, so
+  // `activity-names-skill` is. Collapsing them would give a store an actor,
+  // or a stakeholder a skill.
+  actedUpon: { gloss: "Whether this role is written to rather than performed, so no actor takes it on." },
+  judgementOnly: { gloss: "Whether this role acts by judgement, so no skill can be named for its tasks." },
   declaresSkill: { gloss: "A skill this package declares." },
   declaresRole: { gloss: "A role this registry declares." },
   bindsLane: { gloss: "A BPMN lane this role is bound to." },

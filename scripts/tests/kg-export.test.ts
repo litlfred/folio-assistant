@@ -21,6 +21,7 @@
  * of "where skills live" narrows again, this fails.
  */
 import { describe, expect, test } from "bun:test";
+import { readRoleGraph } from "../../schemas/role-graph.ts";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -502,5 +503,67 @@ describe("every self-URL the export publishes resolves to something published", 
     // stopped being a path, and a derived check would move with the mistake.
     const doc = await buildExport({ baseUrl: BASE });
     expect(JSON.stringify(doc)).not.toContain("/kg/");
+  });
+});
+
+/**
+ * Bean `folio-assistant-7uff`. The role REGISTRY is a source of Role nodes,
+ * not just the lane names that fall out of the diagrams.
+ */
+describe("a Role comes from the registry as well as from a lane", () => {
+  const roles = typed("Role");
+  const registry = roles.filter((r) => r.sourceKind === "role-registry");
+
+  test("both views are present and neither is empty", () => {
+    // The vacuity guard first: every assertion below filters, and a filter
+    // over nothing passes. Until 2026-09-19 EVERY Role node came from a
+    // `bpmn-lane`, so `roles.json` — which is where a role's actor kinds,
+    // its skills and its `actedUpon` flag are actually written — contributed
+    // nothing to the published graph at all.
+    expect(registry.length).toBeGreaterThan(20);
+    expect(roles.filter((r) => r.sourceKind === "bpmn-lane").length).toBeGreaterThan(50);
+  });
+
+  test("every role the registry declares is a node", () => {
+    const declared = readRoleGraph(join(import.meta.dir, "../../skills"))!.roles;
+    expect(declared.length).toBeGreaterThan(20);
+    const byName = new Set(registry.map((r) => r.name));
+    expect(declared.filter((d) => !byName.has(d.id)).map((d) => d.id)).toEqual([]);
+  });
+
+  test("a role that acts on nothing still reaches the graph", () => {
+    // `corpus`, `work-plan` and `log` are `actedUpon`: written to, never
+    // performing. The lane-derived view could not see them, because a lane
+    // was minted from the lanes FLOW NODES name and an `actedUpon` lane holds
+    // no flow nodes by construction. Exactly the roles whose emptiness is the
+    // point were the ones the graph dropped.
+    for (const id of ["corpus", "work-plan", "log"]) {
+      const node = registry.find((r) => r.name === id);
+      expect(node, `${id} is missing from the graph`).toBeDefined();
+      expect(node!.actedUpon).toBe(true);
+    }
+  });
+
+  test("the registry view joins the lane view rather than replacing it", () => {
+    // Two nodes per role, joined by `bindsLane`: one carrying what the role
+    // IS, one per lane it is bound to carrying where it acts. The join is
+    // only worth having if it resolves — which is what `danglingLinks`
+    // checks, and what the `log` role failed until the lane set was read.
+    const log = registry.find((r) => r.name === "log")!;
+    expect(log.bindsLane).toHaveLength(1);
+    const ids = new Set(EXPORT["@graph"].map((n) => n["@id"]));
+    for (const lane of log.bindsLane as string[]) expect(ids.has(lane)).toBe(true);
+    expect(log.hasSkill).toContain(
+      EXPORT["@graph"].find((n) => String(n["@id"]).endsWith("#skill/activity-log"))!["@id"],
+    );
+  });
+
+  test("`actedUpon` and `judgementOnly` are two flags, not one", () => {
+    // Collapsing them would give a store an actor or a stakeholder a skill.
+    // Asserted on real rows so the distinction is observed, not just typed.
+    const stakeholder = registry.find((r) => r.name === "stakeholder")!;
+    expect(stakeholder.judgementOnly).toBe(true);
+    expect(stakeholder.actedUpon).toBeUndefined();
+    expect(registry.find((r) => r.name === "corpus")!.judgementOnly).toBeUndefined();
   });
 });
