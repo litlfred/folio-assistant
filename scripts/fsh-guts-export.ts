@@ -133,6 +133,18 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
         ...(n.movedFrom ? { movedFrom: n.movedFrom } : {}),
         ...(n.issue !== undefined ? { issue: String(n.issue) } : {}),
         ...(n.summary ? { description: n.summary } : {}),
+        // THE BODY, so the viewer has something to display.
+        //
+        // Without it a reader who selects a node gets its metadata and no
+        // content, and `fsh-guts/` is not in the render pipeline — there is
+        // no page to link to instead. Keeping something addressable while
+        // making its text unreachable would be most of the way to deleting
+        // it.
+        //
+        // Measured 2026-09-19: 59 KB of bodies against a 5 KB document. That
+        // is why the viewer fetches this lazily, when Settings is opened,
+        // rather than on every page load for a badge number.
+        body: read.body.trim(),
       });
     }
   }
@@ -154,6 +166,10 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
       movedOn: termIri("movedOn"),
       movedFrom: termIri("movedFrom"),
       issue: termIri("issue"),
+      // `schema:text` rather than a minted `fac:body`: schema.org already
+      // names "the textual content of this thing", and a second term for it
+      // is the drift `ns:check` caught twice on this branch already.
+      body: "schema:text",
       nodeCount: termIri("nodeCount"),
       scans: termIri("scans"),
     },
