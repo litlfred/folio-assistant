@@ -3,6 +3,8 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { sidecar, sidecarWithVerdicts } from "./support/qa-fixture.js";
+
 /**
  * The QA icon has to OPEN, and what it opens has to name its witnesses.
  *
@@ -37,60 +39,39 @@ const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
 /** The real generator output this suite's fixtures are derived from. */
-const CORPUS_JSON = readFileSync(
-  join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
-  "utf8",
+const CORPUS_PATH = join(
+  ROOT,
+  "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json",
 );
+const CORPUS_JSON = sidecar(CORPUS_PATH);
 
 /**
  * The same document with its one `voice-status-leak` finding put back.
  *
  * This was served straight from the corpus, where that criterion WAS failing.
- * PR #302 adjudicated all 26 `voice-*` findings to zero — correctly; this block
- * is titled "What is not built yet" and `**Not yet implemented:**` is the
- * heading over its inventory of gaps, not a work-tracker marker that escaped
- * into prose. So the sweep now records 48 criteria and no failure, and these
- * two specs failed for exactly the reason the sibling `STALE_JSON` below was
- * already synthesised: **whether the panel renders a failing row must not
- * depend on the corpus happening to hold a failure on the day the suite runs.**
- * A clean sweep is the system working.
+ * PR #302 adjudicated all 26 `voice-*` findings to zero — correctly — and the
+ * two specs keyed to that row went red on a content change that was right.
+ * See `tests/support/qa-fixture.ts` for why shape comes off disk and a verdict
+ * does not. Bean `folio-assistant-iumj`.
  *
- * The shape still comes off disk, so the panel is still exercised against what
- * the generator really writes; only the verdict is put back. The adjudicating
- * agent witness is dropped from that one criterion, restoring the pre-#302
- * state in which the script that found it is the first witness — which is what
- * the witness assertions below are about.
+ * Three details are restored rather than invented, because a fixture that
+ * guesses tests the guess: the adjudicating AGENT witness is dropped so the
+ * script that found it is first again; `evidence` is `file:line: <quote>`, the
+ * form `qa-checkers-voice.ts` documents at its head, citing the line the
+ * adjudicating witness itself names; and `counts` moves with the verdict.
  */
-const BLOCK_JSON = (() => {
-  const doc = JSON.parse(CORPUS_JSON) as {
-    counts: Record<string, number>;
-    criteria: Array<{
-      id: string;
-      result: string;
-      severity?: string;
-      evidence?: string[];
-      witnesses: Array<{ kind: string }>;
-    }>;
-  };
-  const c = doc.criteria.find((x) => x.id === "voice-status-leak");
-  if (!c) {
-    // Never silently pass: a fixture that lost its subject would leave every
-    // assertion below testing the first alphabetical row instead.
-    throw new Error("fixture: `voice-status-leak` is no longer in the sidecar");
-  }
-  c.result = "fail";
-  c.severity = "critical";
-  c.witnesses = c.witnesses.filter((w) => w.kind === "script");
-  // `file:line: <quote>`, the form `qa-checkers-voice.ts` documents at its
-  // head. The line is the one the adjudicating witness itself cites, and it is
-  // still line 36 of the block — checked, not assumed.
-  c.evidence = [
-    "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
-  ];
-  doc.counts.fail = 1;
-  doc.counts.pass -= 1;
-  return JSON.stringify(doc);
-})();
+const BLOCK_JSON = sidecarWithVerdicts(CORPUS_PATH, [
+  {
+    id: "voice-status-leak",
+    result: "fail",
+    severity: "critical",
+    witnessKinds: ["script"],
+    evidence: [
+      "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
+    ],
+  },
+]);
+
 /**
  * The same document with its witness marked stale.
  *

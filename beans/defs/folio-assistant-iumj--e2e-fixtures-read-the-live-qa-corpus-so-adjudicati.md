@@ -1,10 +1,11 @@
 ---
 # folio-assistant-iumj
 title: e2e fixtures read the live QA corpus, so adjudicating a finding turns CI red
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-19T01:17:56Z
-updated_at: 2026-09-19T01:17:56Z
+updated_at: 2026-09-19T01:34:39Z
 ---
 
 
@@ -74,3 +75,30 @@ is gone".
 
 If nothing is done, the next adjudication, re-sweep or criterion rename that
 touches a block a spec reads takes the default branch red again.
+
+## Resolved, 2026-09-19 — option 1
+
+`tests/support/qa-fixture.ts`. `sidecarWithVerdicts(path, overrides)` reads a
+real sidecar, applies the verdicts under test, and **throws** naming the
+criterion when an override's subject has left the file. `sidecar(path)` reads
+one unchanged, for a spec that really is about shape only.
+
+Option 1 of the three, as recommended: it preserves what the spec header was
+actually arguing for (shape comes off disk, so a fixture cannot agree with the
+code while the code disagrees with the generator) and converts the failure mode
+from "red CI on a correct content change" into a named error.
+
+`counts` moves with the verdict, so the fixture cannot itself introduce the
+header-contradicts-rows defect a spec ought to be able to catch. The source
+file is never modified.
+
+Unit-tested in `scripts/tests/qa-fixture.test.ts` rather than only through the
+e2e suite: the behaviour that matters is the throw, and a throw that fires only
+inside a Playwright spec is one nobody sees until CI is already red. Eight
+tests, including that the error message says WHY it throws — without that, the
+next reader "fixes" it by deleting the override.
+
+The last test asserts the real corpus still holds `voice-status-leak`. That is
+the early-warning: it runs in `bun test`, which runs everywhere, so the next
+adjudication that would break the e2e fixture reports in the fast job instead
+of the browser one.
