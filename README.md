@@ -32,25 +32,26 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
-## Bootstrapping — what to do with an empty repository
+## Bootstrapping — setting up a repository to write in
 
-**`bootstrap litlfred/cat-harness`** means: *make this repository an instance of
-that one.* You give **one** reference; the harness type, the knowledge graph to
-load and the editorial voice are all **read** from that instance's declaration,
-not asked for one at a time.
+**`bootstrap litlfred/cat-harness`** means *set this repository up the same way
+that one is set up.*
 
-An agent sent to a repository that is not yet an instance starts at
-**[`bootstrap/README.md`](bootstrap/README.md)** and nowhere else. That
-directory is a standalone knowledge graph — it does not import this one, and it
-assumes no connected tools, because an agent cold-starting has neither. It ends
-in three steps: load the graph-navigation skill, load the bootstrap graph, start
-the bootstrap process.
+A repository that has been bootstrapped carries a small file saying what kind
+of thing it holds and where to find the procedures for working on it — how to
+draft, how to check, how to publish. Those procedures are a **harness**, and
+they live in their own repository rather than being copied in.
 
-Design, open questions, and why intent is an *instance reference* rather than a
-menu of content types:
+You give one repository name. What kind of document, which procedures, and
+which editorial style are all read from **that** repository's setup file, so
+there is nothing else to ask.
+
+An agent pointed at a repository that is not set up yet starts at
+**[`bootstrap/README.md`](bootstrap/README.md)**, which is written for someone
+who knows none of the above.
+
+Why it is built this way, and the questions still open:
 [proposals/bootstrap](docs/folio-assistant/proposals/bootstrap.md).
-**The graph itself is not built yet** — the README is the specification and the
-entry point.
 
 ---
 
