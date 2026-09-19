@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/litlfred/qou/tools/block-qa-schema/schema/qa-script.schema.json",
+  "$id": "https://github.com/litlfred/folio-assistant/blob/main/schemas/block-qa-schema/schema/qa-script.schema.json",
   "title": "QaScriptSidecar",
   "description": "JSON shape of a per-criterion `<criterion-id>.script.json` sidecar recording the canonical (script_hash, script_commit_sha, deps_hash) triple captured at the most recent qa-sweep run. Block-level criterion entries snapshot the same triple inline; this sidecar is the single-source-of-truth view of 'is checker X currently stale globally?'. A checker bug fix changes script_hash, which invalidates every verdict that checker ever wrote, corpus-wide.",
   "type": "object",
