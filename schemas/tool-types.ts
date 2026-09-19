@@ -273,6 +273,24 @@ export const TranslationLevelSchema = z
 export const DpiSchema = z.number().int().min(24).max(1200).describe("Dots per inch for rendered formulae.");
 
 /**
+ * A TCP port for a locally bound server.
+ *
+ * **0 is admitted deliberately** — it asks the OS for a free port, which is
+ * what `scripts/tests/serve-rendering.test.ts` binds so that a test run does
+ * not collide with a developer's own server or with a sibling test. Excluding
+ * it would have forced the tests onto a fixed port, which is the flake.
+ *
+ * Bounded and integral, so it is injection-safe by construction like `Dpi`:
+ * a value carrying a shell metacharacter does not parse.
+ */
+export const PortSchema = z
+  .number()
+  .int()
+  .min(0)
+  .max(65535)
+  .describe("TCP port for a locally bound server; 0 asks the OS for a free one.");
+
+/**
  * The facts a DMN decision table is evaluated against.
  *
  * **Not injection-safe**, and it is the only structured type in the vocabulary.
@@ -321,6 +339,7 @@ export const TOOL_TYPES = {
   ReadmeSection: ReadmeSectionSchema,
   TranslationLevel: TranslationLevelSchema,
   Dpi: DpiSchema,
+  Port: PortSchema,
   DecisionFacts: DecisionFactsSchema,
 } as const;
 
@@ -411,6 +430,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "ReadmeSection",
   "TranslationLevel",
   "Dpi",
+  "Port",
   // Deliberately absent: `Text`, `FilesystemPath`, `DecisionFacts`. Each is
   // documented above with the reason it cannot be a command-line word.
 ]);

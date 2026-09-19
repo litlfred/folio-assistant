@@ -10,6 +10,11 @@ parent: Skill instructions
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/bean-coordination.md){: .fa-edit-source }
 
 {% raw %}
+> **This is the skill `skill_fetch` serves.** A stub of the same name
+> lives at `.claude/skills/local` and is published as
+> [bean-coordination (local stub)](local-bean-coordination.html); it only points here.
+> Edit this page's source, never the stub.
+
 # Bean Coordination
 
 The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans)
@@ -113,6 +118,52 @@ genuine comparison of two designs and found a third-state bug in the losing one.
 It is a real cost, honestly bounded. Bean `35nj` records the options for
 narrowing the window — a wording fix, a direct claim push to the default branch,
 a PR-list check at claim time, or accepting it — none implemented.
+
+## Lifecycle of a coordinated work item
+
+The problem this solves: several agent sessions run in parallel against the same
+repo, each in its own `claude/*` branch and ephemeral container. Without
+discipline they duplicate work, clobber each other's queues, or resolve items a
+sibling is mid-flight on. Beans are durable because they are committed, which is
+what makes them the shared substrate.
+
+1. **Prime** — at session start read the current work-plan (`beans prime` +
+   `beans list`, or the CLI-independent fallback that parses `beans/` directly).
+   Know what is open and what siblings are touching.
+2. **Declare intent + claim** — before starting, set the bean `in-progress` and
+   add a short note naming your branch. Read §"A claim is branch-local" above
+   first: the claim announces, it does not reserve.
+3. **Work** — keep the bean current; append status notes as you go. Do not fork
+   it into a parallel `todos/*.json` queue — link to any bulk queue from the
+   bean instead.
+4. **Hand off or finish** — on landing, close the bean and update any cross-repo
+   ownership note. **If you stop mid-flight, leave the bean `in-progress` with a
+   note saying where you got to**, so the next session resumes instead of
+   re-deriving. A bean abandoned silently is indistinguishable from one nobody
+   started.
+
+An **unclaimed** bean is fair game for any session; a claimed one is not.
+Respect sibling claims. Agents create and set `in-progress`; they do not resolve
+another session's items.
+
+Stopping because you are *blocked* is a different state with its own
+requirements — what it waits on, since when, an expiry and a handoff:
+[`bean-blocking.md`](bean-blocking.md).
+
+## Which copy is canonical — `skills/folio-core/`
+
+**This file.** A `.claude/skills/local/bean-coordination.md` existed until
+2026-09-19 and described *itself* as "the generic source of truth" from which
+downstream repos sync. That was measurably wrong: `LOCAL_PACKAGES` in
+`src/tools/skill-fetch.ts` is the table `skill_fetch` serves from, it holds
+`skills/folio-core` and no `.claude/skills/local` entry, and the local copy
+carried no front matter at all. An agent asking for this skill by name has
+always received *this* file. Bean `tdmg`.
+
+So when this skill or the installer changes, **`skills/folio-core/` is what a
+downstream repo syncs from**, and the generated mirror under the docs site
+follows it automatically. On landing a coordination change that affects a
+downstream repo, update that repo's ownership note and close the tracking beans.
 
 ## Disambiguation (do not conflate)
 

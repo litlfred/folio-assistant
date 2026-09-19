@@ -29,6 +29,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { glob } from "glob";
 import { findContentRepoRoot, findPapers } from "./repo-root";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 // Was `resolve(SCRIPT_DIR, "..", "..")` plus a hardcoded
 // `content/quantum-observable-universe` — a specific FOLIO paper named in
@@ -54,7 +55,12 @@ const PAPER_GLOBS = PAPERS.flatMap((p) => [
 // warn-only.  Positional arg #1 (compat with the original API) is
 // also treated as `--out`.
 const argv = process.argv.slice(2);
-let WITNESS_OUT = join(REPO_ROOT, "docs/audits/2026-05-08-trivial-skeleton-audit.json");
+// Resolved LAZILY, after argument parsing. `siteDirFor` throws when the root
+// carries no declaration -- correct, since a guessed site root writes the
+// witness where nothing serves it -- but at module scope that throw fires on
+// IMPORT, taking down a run that passed `--out` and never needed the default.
+// A folio under audit is not always a declared instance.
+let WITNESS_OUT: string | undefined;
 const strictGates: Record<string, number> = {};
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
@@ -175,6 +181,19 @@ async function main() {
     console.log(`  ${String(c).padStart(4)} ${name}`);
   }
 
+  // This script audits a FOLIO, which is not necessarily a declared instance
+  // -- `makeFolio` in the tests builds one with no `harness.json` at all. A
+  // declared instance publishes under its stub; an undeclared folio has no
+  // stub to publish under, and `docs/` is the pre-instance convention it has
+  // always used. That is a documented fallback for a known case, not a
+  // guessed stub, which `siteDirFor` still refuses.
+  let siteRel: string;
+  try {
+    siteRel = siteDirFor(REPO_ROOT);
+  } catch {
+    siteRel = "docs";
+  }
+  WITNESS_OUT ??= join(REPO_ROOT, siteRel, "audits/2026-05-08-trivial-skeleton-audit.json");
   await mkdir(dirname(WITNESS_OUT), { recursive: true });
   const witness = {
     audit: "trivial-skeleton-audit",

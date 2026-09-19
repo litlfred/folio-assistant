@@ -130,7 +130,11 @@ export default tseslint.config(
   // fragment would otherwise surface as a broken docs site rather than as a
   // failed check.
   {
-    files: ["docs/_includes/**/*.js"],
+    // `docs/**/_includes/` rather than `docs/_includes/`: the site moved under
+    // its instance stub (`docs/<stub>/`) to package it for the repo split, and
+    // a glob pinned to the old depth silently stops matching — which is a lint
+    // rule that quietly covers nothing rather than one that fails loudly.
+    files: ["docs/**/_includes/**/*.js"],
     rules: {
       "@typescript-eslint/no-unused-expressions": "off",
     },

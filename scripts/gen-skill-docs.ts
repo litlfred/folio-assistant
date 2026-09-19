@@ -26,6 +26,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 
 import { join, resolve, basename } from "path";
 
 import { isSkillMd } from "./known-skills.js";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
 // A pencil, as a text glyph rather than an inline SVG. 130 generated pages
@@ -33,7 +34,7 @@ const REPO_ROOT = resolve(import.meta.dir, "..");
 // every reader's download; one character is not.
 const EDIT_GLYPH = "\u270E";
 
-const OUT_DIR = join(REPO_ROOT, "docs", "reference", "skill-instructions");
+const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skill-instructions");
 
 /**
  * `--check`: verify the generated tree is current without writing to it.
@@ -72,7 +73,7 @@ function reportDrift(): void {
   process.exit(1);
 }
 
-const SCHEMA_DIR = join(REPO_ROOT, "docs", "reference", "skills");
+const SCHEMA_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skills");
 
 interface Group {
   category: string;
@@ -83,14 +84,18 @@ interface Group {
    * Prefix for the PUBLISHED filename, for a group whose basenames can collide
    * with another group's.
    *
-   * The output directory is flat. `.claude/skills/local/todo-manager.md` and
-   * `skills/folio-core/todo-manager.md` share a basename and are NOT copies of
-   * each other — measured 2026-09-19, 323 and 356 lines, 202 diff lines, and
-   * each carries sections the other does not: the local one has the
-   * cross-agent coordination material, the folio-core one has installation,
-   * status format and the STRICT check-before-you-create rule. Publishing both
-   * unprefixed would have one silently overwrite the other, and which copy is
-   * canonical is a question `AGENTS.md` deliberately leaves open (bean `rmer`).
+   * The output directory is flat, so two groups' identical basenames would have
+   * one silently overwrite the other. `.claude/skills/local/todo-manager.md`
+   * and `skills/folio-core/todo-manager.md` collide that way.
+   *
+   * **The divergence that made this urgent is RESOLVED (bean `tdmg`,
+   * 2026-09-19); the prefix is still required.** They were 369 and 396 lines
+   * with 261 diff lines, each carrying sections the other lacked, and which
+   * was canonical was open. It is now settled by measurement — `LOCAL_PACKAGES`
+   * in `src/tools/skill-fetch.ts` serves `skills/folio-core` and has no
+   * `.claude/skills/local` entry, so only the former was ever servable — and
+   * the local copies are stubs pointing at it. The collision remains because
+   * the stubs still publish, so do not drop `published`.
    *
    * So the prefix is not cosmetic: it is what lets both be published, which is
    * what makes the divergence visible instead of letting the generator pick a
@@ -113,17 +118,34 @@ interface Group {
  */
 const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
   string,
-  Array<{ published: string; label: string; repoPrefix: string }>
+  Array<{ published: string; label: string; repoPrefix: string; canonical?: true }>
 > = {
   "todo-manager": [
     {
       published: "todo-manager",
       label: "Session Task Manager (folio-core)",
       repoPrefix: "skills/folio-core",
+      canonical: true,
     },
     {
       published: "local-todo-manager",
-      label: "Todo Manager — cross-agent coordination (local)",
+      label: "todo-manager (local stub)",
+      repoPrefix: ".claude/skills/local",
+    },
+  ],
+  // Collided exactly as `todo-manager` did and carried NO banner, so a reader
+  // landing on either page could not tell the other existed. Added with the
+  // `tdmg` resolution.
+  "bean-coordination": [
+    {
+      published: "bean-coordination",
+      label: "Bean Coordination (folio-core)",
+      repoPrefix: "skills/folio-core",
+      canonical: true,
+    },
+    {
+      published: "local-bean-coordination",
+      label: "bean-coordination (local stub)",
       repoPrefix: ".claude/skills/local",
     },
   ],
@@ -222,6 +244,11 @@ const GROUPS: Group[] = [
   // inbound references of the three and had no guard at all (`AGENTS.md`, bean
   // `rmer`). Only `.md` files are read, so the 23 `.json` capability and skill
   // descriptors in that directory are not mistaken for instruction bodies.
+  //
+  // `todo-manager.md` and `bean-coordination.md` here are now STUBS pointing at
+  // `skills/folio-core/` (bean `tdmg`): those were never servable by
+  // `skill_fetch` and had drifted from the copies that were. `language-trap-
+  // agent-audit.md` is the real content this group exists to publish.
   {
     category: "Local skills (.claude/skills/local)",
     dir: join(REPO_ROOT, ".claude", "skills", "local"),
@@ -313,13 +340,14 @@ function main(): void {
       const name = basename(file, ".md");
       const published = `${group.publishPrefix ?? ""}${name}`;
       // Keyed on the PUBLISHED name, not the source basename. Two groups may
-      // legitimately hold different documents under one basename — measured
-              // 2026-09-19, `.claude/skills/local/todo-manager.md` (323 lines) and
-      // `skills/folio-core/todo-manager.md` (356) differ by 202 diff lines and
-      // each has sections the other lacks — and the old key made the generator
-      // drop the second one while the index claimed it was "(same page)". A
-      // false claim about two documents is worse than either publishing or
-      // omitting one, because a reader stops looking.
+      // legitimately hold different documents under one basename, and keying on
+      // the basename made the generator drop the second one while the index
+      // claimed it was "(same page)". A false claim about two documents is
+      // worse than either publishing or omitting one, because a reader stops
+      // looking. (The `todo-manager` pair that motivated this is now a skill
+      // plus a stub — bean `tdmg` — but the key must stay published-name-based:
+      // the stubs still publish, and `language-trap-agent-audit.md` shows the
+      // local group holds real content of its own.)
       if (written.has(published)) {
         indexRows[group.category].push(
           `| [${name}](${published}.html) | \`${name}\` | — | _also in ${written.get(published)} (same page)_ |`,
@@ -327,24 +355,34 @@ function main(): void {
         console.log(`  ↪ ${published} (dup — kept ${written.get(published)})`);
         continue;
       }
-      // Where another group holds the same basename as a DIFFERENT document, say
-      // so on both pages. A reader who lands on one of them has no way to know
-      // the other exists, and `AGENTS.md` leaves open which is canonical (bean
-      // `rmer`) — so the honest thing is to name the other page and the open
-      // question, not to pick a winner in a generator.
+      // Where another group holds the same basename, say so on both pages: a
+      // reader who lands on one has no way to know the other exists.
+      //
+      // **The text is now directional, and that is the `tdmg` correction.** It
+      // used to read "Two different skills share this name … They are not
+      // copies … Which is canonical is an open question … Read both before
+      // relying on either." Every clause of that is now false — the local
+      // copies are stubs, `skill_fetch` only ever served `skills/folio-core`,
+      // and reading both is the opposite of the advice. A generator that
+      // publishes a stale claim about which document governs is worse than one
+      // that publishes no banner, because a reader acts on it.
       const twin = SAME_BASENAME_DIFFERENT_DOCUMENT[name];
       const raw = readFileSync(join(group.dir, file), "utf-8");
       let body = withParts(group.dir, name, stripFrontMatter(raw).replace(/^\n+/, ""));
       if (twin) {
         const other = twin.find((t) => t.published !== published);
+        const self = twin.find((t) => t.published === published);
         if (other) {
           body =
-            `> **Two different skills share this name, and this is one of them.**\n` +
-            `> The other is [${other.label}](${other.published}.html), from \`${other.repoPrefix}\`.\n` +
-            `> They are **not** copies: measured 2026-09-19 they differ by 202 diff\n` +
-            `> lines and each carries sections the other does not. Which is canonical\n` +
-            `> is an open question — \`AGENTS.md\` leaves it to whoever owns the skills\n` +
-            `> layout, and bean \`rmer\` tracks it. Read both before relying on either.\n\n` +
+            (self?.canonical === true
+              ? `> **This is the skill \`skill_fetch\` serves.** A stub of the same name\n` +
+                `> lives at \`${other.repoPrefix}\` and is published as\n` +
+                `> [${other.label}](${other.published}.html); it only points here.\n` +
+                `> Edit this page's source, never the stub.\n\n`
+              : `> **This is a stub, not the skill.** The skill is\n` +
+                `> [${other.label}](${other.published}.html), from \`${other.repoPrefix}\`,\n` +
+                `> which is what \`skill_fetch\` serves. Read that one; this page exists\n` +
+                `> only so an old link still lands somewhere truthful.\n\n`) +
             body;
         }
       }

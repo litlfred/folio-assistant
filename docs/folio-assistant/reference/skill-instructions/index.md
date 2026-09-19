@@ -105,8 +105,10 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/one-voice-integration-watcher](one-voice-integration-watcher.html) | `one-voice-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
 | [One-Voice Style Guide](one-voice-style-guide.html) | `one-voice-style-guide` | — | > **See also:** `one-voice-audit` is the mechanical sweep (greps for |
 | [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
+| [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [/pending-show](pending-show.html) | `pending-show` | — | Quick status display. Read-only. Run any time to answer "where am I?" |
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
+| [Placement](placement.html) | `placement` | — | **One question, answered before the first file exists:** |
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
 | [Prepare-merge](prepare-merge.html) | `prepare-merge` | — | Canonical, repo-agnostic skill for taking a `claude/*` (or any feature) branch |
 | [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
@@ -126,6 +128,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
+| [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [Adopting an upstream version bump](upstream-version-adoption.html) | `upstream-version-adoption` | — | An unpinned dependency is an unreviewed commit from a stranger, merged on every |
@@ -206,9 +209,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [Bean Coordination](local-bean-coordination.html) | `bean-coordination` | — | Canonical, repo-agnostic coordination skill for agents sharing a `beans` |
+| [bean-coordination](local-bean-coordination.html) | `bean-coordination` | — | **This is a stub. The skill lives in the `kg` graph, not here.** |
 | [/language-trap-agent-audit](local-language-trap-agent-audit.html) | `language-trap-agent-audit` | — | The mechanical scanner (`content/pipeline/language-trap-audit.ts`) |
-| [Todo Manager](local-todo-manager.html) | `todo-manager` | — | The session work-plan and cross-agent coordination tracker for this repo is |
+| [todo-manager](local-todo-manager.html) | `todo-manager` | — | **This is a stub. The skill lives in the `kg` graph, not here.** |
 
 > The `authoring-math` and `authoring-who-smart-guidelines` packages ship
 > skill *definitions* + typed schemas today; their prose instruction bodies

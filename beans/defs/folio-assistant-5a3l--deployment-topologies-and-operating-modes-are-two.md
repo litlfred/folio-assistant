@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-19T08:52:35Z
-updated_at: 2026-09-19T09:01:40Z
+updated_at: 2026-09-19T09:56:04Z
 ---
 
 Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),
@@ -65,8 +65,9 @@ changes. Each of those is a child bean.
       in #363 is a point in the axis product, with none left over
 - [x] each scenario has a child bean (13)
 - [x] the three review issues #363 asks for are open and linked here
-- [ ] the BA has said whether the axes are the right axes — that is the sign-off
-      this epic is waiting on, and no child should be implemented before it
+- [x] the BA has said whether the axes are the right axes — **yes, 2026-09-19**.
+      The thirteen children are unblocked and may be implemented against this
+      vocabulary
 
 ## Summary of this round (2026-09-19)
 
@@ -98,3 +99,24 @@ staying silent. One row to add if the BA says assume unavailable.
 
 **Still open — the last Done-when box.** No child should be implemented until
 the BA says whether the axes are the right axes.
+
+## Sign-off, 2026-09-19
+
+Owner: **"yes on axes"**, and on `private repo` x `github-pages`:
+"ok ... dont need to go into detail, just a possible deployment scenario".
+
+So the two-axis model is accepted and the thirteen children are unblocked.
+The private-repo pair stays OUT of the incompatibility table permanently —
+it is a scenario a deployment may legitimately declare, and #363's remark
+about it was a reason to reach for the local server, not a property of the
+mechanism. `docs/proposals/deployment-topologies.md` §3 is trimmed to say
+exactly that and no more.
+
+**What is still open** is one question, not a review of the model:
+whether sovereign cloud (`4y2i`) and self-sovereign (`61tg`) are two
+topologies or one. They differ on a single axis, `outward facing`, and
+overlap on the other nine. Issues #369, #370, #371.
+
+All four Done-when boxes are now ticked. This epic stays in-progress as the
+container for its children rather than completing — an epic is a thematic
+container and is not worked on directly.

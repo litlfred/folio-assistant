@@ -668,6 +668,71 @@ export function artefactStub(d: Pick<CatHarnessDeclaration, "name" | "stub">): s
 }
 
 /**
+ * Where this instance's renderable site lives in the working tree:
+ * `docs/<stub>/`.
+ *
+ * **The stub segment is the packaging for the repo split (issue #223).** Every
+ * layer's pages sit under their own instance's stub, so splitting a layer out
+ * is a directory move rather than a sift through a shared tree — and two
+ * layers' docs can be checked out side by side without colliding, which is the
+ * same job the stub already does for `<base>/<stub>.jsonld` and
+ * `<base>/<stub>/` in `publishedAt` below.
+ *
+ * **It does not change a single published URL.** Jekyll is pointed at this
+ * directory as its source root (`docs-site.yml`, `feature-staging.yml`), so
+ * the site's internal layout is untouched and every
+ * `litlfred.github.io/folio-assistant/...` link resolves exactly as before.
+ *
+ * **This is NOT the `folio` graph-kind declaration**, and it deliberately
+ * stops short of it. `docs/` cannot be declared a directory of this instance
+ * yet: `folio` is registered by CORE, and re-measured 2026-09-19 with the
+ * entry added, `harness:dirs`, `kg:schema:check` and `docs:harness:check` all
+ * throw `unknown graph kind "folio"` and 5 tests fail. What this function does
+ * fix is the OTHER half of bean `x4a6` — the site root was spelled out
+ * separately in `translation-index.ts`, `gen-docs-pages.ts`,
+ * `gen-skill-docs.ts`, `gen-schema-docs.ts` and `translation-qa-sweep.ts`,
+ * five copies free to disagree. Now one, and when the split lands it becomes
+ * one line reading the declared directory instead of composing it.
+ */
+export function siteDir(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
+  return `docs/${artefactStub(d)}`;
+}
+
+/**
+ * `siteDir` for the instance rooted at `root`, read from its declaration.
+ *
+ * Deliberately a RAW read of `name`/`stub` rather than `readDeclaration`:
+ * those two fields are all this needs, and going through the full reader
+ * would make every consumer of the site root — four generators and the
+ * translation sweep — fail the moment some unrelated directory declares a
+ * kind the harness layer has not registered. That is exactly the `folio`
+ * situation bean `x4a6` is blocked on, and it must not take the site root
+ * down with it.
+ *
+ * It **throws** rather than defaulting when the declaration is missing or
+ * nameless. A site root guessed wrong writes 278 pages into a directory
+ * nothing serves, and "could not determine" is never rendered as an answer.
+ */
+export function siteDirFor(root: string): string {
+  const p = join(root, "harness.json");
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    throw new Error(
+      `cannot determine the site root: ${p} is unreadable or not valid JSON ` +
+        `(${e instanceof Error ? e.message : String(e)})`,
+    );
+  }
+  const d = raw as { name?: unknown; stub?: unknown };
+  const stub = typeof d.stub === "string" && d.stub ? d.stub : d.name;
+  if (typeof stub !== "string" || !stub) {
+    throw new Error(`cannot determine the site root: ${p} declares neither \`stub\` nor \`name\``);
+  }
+  return siteDir({ name: stub, stub });
+}
+
+/**
  * Where an instance's renderings are published, given the site they are
  * published to.
  *
@@ -702,6 +767,49 @@ export function renderingPath(base: string, ...segments: string[]): string {
   const b = base.replace(/\/+$/, "");
   const tail = segments.filter((s) => s.length > 0).join("/");
   return b ? `${b}/${tail}` : tail;
+}
+
+/**
+ * The media type each rendering extension declares, longest extension first.
+ *
+ * The companion to `renderingPath`: that says WHERE an artefact is, this says
+ * WHAT it is. Both were prose in `skills/folio-core/serving-renderings.md` and
+ * only one of them was code, so every consumer that served a rendering had to
+ * re-derive the type — and `grep` for `ld+json` across this repository's
+ * TypeScript returned **nothing** before this existed (measured 2026-09-19).
+ *
+ * **Order is load-bearing, and it is the whole reason a table is needed.**
+ * `.schema.json` must be tried before `.json`, because the second is a suffix
+ * of the first.
+ *
+ * That single row is the entire gap against an ordinary static server, and it
+ * is narrower than it is tempting to claim. Measured the same day, both
+ * Python's `mimetypes` and `Bun.file().type` already resolve `.jsonld` to
+ * `application/ld+json` correctly — so "a general-purpose server cannot serve
+ * a rendering" is FALSE and must not be written down as a rule. What no OS
+ * table carries is the compound extension: `.schema.json` infers as
+ * `application/json`, which parses but loses that the document is a schema.
+ */
+export const RENDERING_MEDIA_TYPES: readonly (readonly [string, string])[] = [
+  [".schema.json", "application/schema+json"],
+  [".jsonld", "application/ld+json"],
+  [".json", "application/json"],
+  [".html", "text/html"],
+] as const;
+
+/**
+ * The declared media type for a rendering path, or `undefined` when this is
+ * not a rendering whose type the declaration fixes.
+ *
+ * **`undefined` is a third state and callers must keep it one.** It means
+ * "this table says nothing", not "serve it as bytes": a server should fall
+ * back to its own inference for an ordinary asset rather than forcing a type
+ * onto a file the declaration never claimed. Same discipline as
+ * `readme-sections`' `skip` and `ci-health`'s "could not check".
+ */
+export function renderingMediaType(path: string): string | undefined {
+  const lower = path.toLowerCase();
+  return RENDERING_MEDIA_TYPES.find(([ext]) => lower.endsWith(ext))?.[1];
 }
 
 // ── Reading ─────────────────────────────────────────────────────

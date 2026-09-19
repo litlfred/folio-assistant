@@ -5,18 +5,37 @@ parent: Proposals
 nav_order: 2
 ---
 
-# Deployment topologies and operating modes — a strawperson
+# Deployment topologies and operating modes
 {: .no_toc }
 
 Asked on [#363](https://github.com/litlfred/folio-assistant/issues/363),
 "self-sovereign compute + test harness deployments", which lists roughly ten
 deployment and utilization scenarios and asks for a strawperson of each.
 
-**This is a strawperson.** It is written to be argued with. Every named profile
-below is a starting position, not a decision, and nothing in it is implemented.
-Work items are tracked under the epic
-`folio-assistant-5a3l`; the three topologies #363 asks to have reviewed have
-their own issues, linked at the foot.
+> ## ✅ Decided 2026-09-19 — the axes are the model
+>
+> The owner accepted the two-axis model: a **topology** (where things live) and
+> an **operating mode** (what the harness is doing), with the named scenarios
+> as points in their product rather than an enum of modes.
+>
+> **The thirteen work items under epic `folio-assistant-5a3l` are unblocked by
+> that decision** and may now be implemented against this vocabulary. Nothing
+> here is implemented yet; the axes are agreed, the code is not written.
+>
+> Also settled in the same breath: `private repo` × `github-pages` is **a
+> possible deployment scenario**, not an incompatibility — see §3.
+>
+> What remains genuinely open is narrower, and it is §4's last paragraph:
+> whether **sovereign cloud and self-sovereign are two topologies or one**.
+> They differ on a single axis. Threads:
+> [#369](https://github.com/litlfred/folio-assistant/issues/369),
+> [#370](https://github.com/litlfred/folio-assistant/issues/370),
+> [#371](https://github.com/litlfred/folio-assistant/issues/371).
+
+The document is kept in the form it was argued in, rather than rewritten as a
+settled specification. §6 still lists what would change its mind, because an
+accepted model that cannot say what would falsify it is worth less than one
+that can — and two of those four tests have already fired once.
 
 1. TOC
 {:toc}
@@ -194,18 +213,16 @@ split. A deployment that wants closed hosted models is, by that choice, not
 air-gapped, and whoever operates it should be told so by a check rather than
 discover it in procurement.
 
-### The one I am least sure of
+### Settled: private repo with Pages is a scenario, not an incompatibility
 
-`visibility: private` × `publication: github-pages`. #363 states it as a flat
-impossibility — "github on private repo so gh-pages not avaialbe" — and for the
-topology that prompted the issue that is the operative fact. It is **not
-universally true**: GitHub has offered Pages for private repositories on paid
-plans. I have not verified what is available to this project's account and have
-not tried to.
+`visibility: private` × `publication: github-pages` is **a possible deployment
+scenario**. Owner, 2026-09-19. It stays out of the table above.
 
-I have therefore left it **out** of the incompatibility table rather than
-encode a rule I cannot check, and flagged it here instead. If the answer is
-"assume unavailable", it is one row to add.
+#363's "github on private repo so gh-pages not avaialbe" is the operative fact
+for the deployment that prompted the issue — a *reason to reach for the local
+server*, not a property of the mechanism. Pages on a private repository exists
+on some plans, so a deployment may legitimately declare both, and the harness
+has nothing to say about it.
 
 ### The principle that decides it — do not encode a rule against a working setup
 

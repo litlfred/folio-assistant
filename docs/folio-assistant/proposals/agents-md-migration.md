@@ -69,7 +69,7 @@ owns it; a skill has to be written. Nothing here is asserted from a filename.
 | 15 | Working an issue — announce, then re-check | 31 | **DEBT** | **none found** |
 | 16 | Commit early, commit often, always PR (STRICT) | 64 | **DEBT** | `continual-progress` — *verified*, it already carries rules 1–3 and says so |
 | 17 | Context before the question (STRICT) | 39 | **DEBT** | `interaction-modality` §4.1 — *verified* |
-| 18 | Opening a bean or a topic (STRICT) | 112 | **DEBT** | `todo-manager` §"Opening brief" — *verified* |
+| 18 | Opening a bean or a topic (STRICT) | 112 | **DEBT** | `opening-brief` — *verified* |
 | 19 | More | 134 | **MIXED** | mostly pointers already; the `uses[]`/`interprets` bullet is DEBT → `uses-editorial-review` |
 
 **Four subjects have no owning skill**: README sections, CI health, subagent

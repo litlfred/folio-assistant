@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T08:55:36Z
+updated_at: 2026-09-19T09:56:19Z
 parent: folio-assistant-5a3l
 ---
 
@@ -70,3 +70,5 @@ defect in an existing diagram, that is its own bean.
 
 The topology axes (parent epic). A deployment phase cannot be drawn before the
 set of deployment targets is agreed — the lane's activities differ per topology.
+
+**Unblocked 2026-09-19** — the owner accepted the axes ("yes on axes"), so the dependency stated above is discharged. Implement against the vocabulary in `docs/proposals/deployment-topologies.md`.

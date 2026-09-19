@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-09-19T09:01:53Z
+updated_at: 2026-09-19T09:56:19Z
 parent: folio-assistant-5a3l
 ---
 
@@ -58,3 +58,18 @@ That is a far smaller artefact than a mode enum and it is checkable.
 ## Review
 
 https://github.com/litlfred/folio-assistant/issues/371, opened per #363's instruction.
+
+## Scope change, 2026-09-19 — the axes were accepted
+
+Owner: **"yes on axes"**. So this bean is no longer "test whether the model
+holds"; that test was run and passed, and it changed the design twice on the
+way (tool surface became an axis; splitting model cardinality from provenance
+exposed the air-gapped x hosted contradiction).
+
+**What is left is the constraints half**, which the body above already
+predicted would be the real deliverable: the five incompatible pairs in §3
+exist as PROSE IN A TABLE and nothing reads them. Making a declaration that
+names an incompatible pair actually get refused is the work.
+
+Also settled: `private repo` x `github-pages` is a possible deployment
+scenario and must NOT become a sixth pair. Do not re-litigate it.

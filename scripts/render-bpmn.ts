@@ -19,10 +19,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const SRC_DIR = join(ROOT, "skills/workflows");
-const OUT_DIR = join(ROOT, "docs/assets/img/workflows");
+const OUT_DIR = join(ROOT, siteDirFor(ROOT), "assets/img/workflows");
 const VIEWER = join(ROOT, "node_modules/bpmn-js/dist/bpmn-viewer.production.min.js");
 
 const check = process.argv.includes("--check");

@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 
 import { buildQaResult, sourceHashOf, QA_RESULTS_DIR } from "../qa-results.js";
 import { readDeclaration } from "../../schemas/cat-harness.js";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { exitCodeFor, verifySiteLinks, type CheckableLink } from "../site-links.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -113,7 +114,7 @@ describe("the witnesses are committed in one place and published in another", ()
     // what a checker found. It sat in `docs/` only because that is where Jekyll
     // could reach it, which is a fact about the build, not about the artefact.
     expect(existsSync(WITNESS_DIR)).toBe(true);
-    expect(existsSync(join(ROOT, "docs", "assets", "qa"))).toBe(false);
+    expect(existsSync(join(ROOT, siteDirFor(ROOT), "assets", "qa"))).toBe(false);
   });
 
   it("BOTH publishing workflows copy them into the site", () => {
@@ -138,7 +139,7 @@ describe("the witnesses are committed in one place and published in another", ()
     // Where a file LIVES and where it is SERVED FROM are different questions.
     // Moving the URL as well would have rewritten every badge in every
     // generated page and the browser code that fetches them, for no gain.
-    const page = readFileSync(join(ROOT, "docs", "agentic-harness.md"), "utf-8");
+    const page = readFileSync(join(ROOT, siteDirFor(ROOT), "agentic-harness.md"), "utf-8");
     expect(page).toContain("data-qa-src=\"{{ '/assets/qa/");
   });
 });
@@ -146,7 +147,7 @@ describe("the witnesses are committed in one place and published in another", ()
 describe("a generated page carries structure, never a verdict", () => {
   /** Every page `gen-docs-pages.ts` writes, read from disk. */
   const pages = () => {
-    const dir = join(ROOT, "docs");
+    const dir = join(ROOT, siteDirFor(ROOT));
     const out: Array<{ path: string; text: string }> = [];
     const walk = (d: string, depth: number) => {
       for (const e of readdirSync(d, { withFileTypes: true })) {
@@ -290,7 +291,7 @@ describe("the badge URLs resolve against a tree built the way the site is", () =
     // PR removes.
     const links: CheckableLink[] = [];
     const seen = new Set<string>();
-    const dir = join(ROOT, "docs");
+    const dir = join(ROOT, siteDirFor(ROOT));
     const scan = (d: string, depth: number) => {
       for (const e of readdirSync(d, { withFileTypes: true })) {
         const p = join(d, e.name);

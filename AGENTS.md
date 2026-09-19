@@ -326,8 +326,8 @@ and a sibling session avoid you. Both are required, at the start of a turn and
 at the end of it.
 
 **The discipline lives in the skill, not here.** Read
-[`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md)
-§"Say which bean you are on" before your first report. It carries the opening
+[`skills/folio-core/turn-reporting.md`](skills/folio-core/turn-reporting.md)
+before your first report. It carries the opening
 and closing formats, the seven rules, and the worked failure that motivates
 them. In short, and not as a substitute for reading it:
 
@@ -1048,7 +1048,7 @@ that *feels* defined. It is not. Full rule and worked before/after:
 for the CRDM loop,
 [`crdm-requirements-workflow.md`](skills/folio-core/crdm-requirements-workflow.md);
 for the end-of-turn report,
-[`todo-manager.md`](skills/folio-core/todo-manager.md).
+[`turn-reporting.md`](skills/folio-core/turn-reporting.md).
 
 ## Opening a bean or a topic — brief it before you touch anything (STRICT)
 
@@ -1126,8 +1126,7 @@ enough to begin, and beginning it anyway is how a session produces work that has
 to be unwound.
 
 Full protocol, with the worked example:
-[`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md)
-§"Opening brief".
+[`skills/folio-core/opening-brief.md`](skills/folio-core/opening-brief.md).
 
 > **🛑 THREE `todo-manager.md` exist, not two — and the third is what took
 > `main` red (corrected 2026-08-30).** This note said "two" on the strength of

@@ -43,6 +43,7 @@ import {
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
 import { readTodoFiles } from "./todos.js";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -57,7 +58,7 @@ const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // `content/schema/`), so documentation can live where content belongs — under
 // `content/` — without tripping the folio-emptiness gate.
 const SRC_DIR = join(REPO_ROOT, "content", "docs");
-const OUT_DIR = join(REPO_ROOT, "docs");
+const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
 const REPO_WEB = "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
 /** Matches gen-skill-docs.ts / gen-schema-docs.ts — one glyph, no inline SVG. */
