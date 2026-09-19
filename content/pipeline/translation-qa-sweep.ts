@@ -21,9 +21,10 @@
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
 import { join, relative, basename } from "node:path";
 import { availableLocales } from "./po-resolve";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
-const DOCS_DIR = join(REPO_ROOT, "docs");
+const DOCS_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
 const DATA_DIR = join(DOCS_DIR, "_data");
 const OUTPUT_FILE = join(DATA_DIR, "translation-qa.json");
 

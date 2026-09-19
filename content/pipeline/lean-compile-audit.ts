@@ -28,10 +28,11 @@ import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from "
 import { resolve, dirname, join, relative, extname, sep } from "path";
 import { fileURLToPath } from "url";
 import { hashFile } from "./qa-utils";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");
-const OUTPUT_PATH = join(REPO_ROOT, "docs/audits/lean-compile-diagnostics.json");
+const OUTPUT_PATH = join(REPO_ROOT, siteDirFor(REPO_ROOT), "audits/lean-compile-diagnostics.json");
 
 interface DiagnosticEntry {
   line: number;

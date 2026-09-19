@@ -50,6 +50,7 @@ import {
 // from this file's own location lands inside the platform tree instead.
 import { findContentRepoRoot, findPapers } from "./repo-root.ts";
 import { paperArg } from "./cli-args";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 // The one contract for where a block's verdict lives (test/results/block-qa/,
 // mirroring the block's own directory) — see content/pipeline/qa-paths.ts.
 // `blockQaPath` for writing (results tree only); `existingBlockQaPath` for
@@ -648,7 +649,7 @@ function main(): void {
   // Global witness
   const witnessPath = join(
     REPO_ROOT,
-    "docs",
+    siteDirFor(REPO_ROOT),
     "audits",
     `${NOW_ISO.slice(0, 10)}-q-usage-audit.witness.json`,
   );

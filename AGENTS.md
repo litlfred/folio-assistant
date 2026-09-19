@@ -211,10 +211,12 @@ beans <id> --status in-progress          # claim an item
 
 **The discipline is in the skill, not here.**
 [`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md) carries
-the opening brief, the turn-report formats and their seven rules, and
-§"Check before you create" — `beans create` is **not idempotent** and dedupes on
-nothing, which is how an unguarded re-run once produced **14,688** duplicates,
-92 % of every open bean in that repo.
+the store itself, including §"Check before you create" — `beans create` is
+**not idempotent** and dedupes on nothing, which is how an unguarded re-run once
+produced **14,688** duplicates, 92 % of every open bean in that repo.
+[`opening-brief.md`](skills/folio-core/opening-brief.md) and
+[`turn-reporting.md`](skills/folio-core/turn-reporting.md) carry the brief you
+open a topic with and the turn-report formats with their seven rules.
 [`skills/folio-core/bean-coordination.md`](skills/folio-core/bean-coordination.md)
 carries the cross-session half: **claim before you work**, never resolve a
 sibling's bean, and **never delete ANY bean** — unwanted work is `scrapped`,
@@ -506,8 +508,8 @@ provenance; how do I plan to do it, what will I verify against, and **what would
 falsify the approach**. Then what you are *not* doing, and why.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md)
-§"Opening brief" carries the four parts, when the rule applies (the trigger is
+[`skills/folio-core/opening-brief.md`](skills/folio-core/opening-brief.md)
+carries the four parts, when the rule applies (the trigger is
 **irreversibility and surprise**, not line count), a worked ~200-word brief, the
 thin one that fails and why, and the cheapest correct move when you do not want
 to spend the words: **do not start the topic.**

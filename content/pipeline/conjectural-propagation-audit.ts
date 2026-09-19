@@ -27,6 +27,7 @@ import { requirePaper } from "./repo-root";
 import { loadBlocksUnder, reportLoadFailures } from "./block-module";
 import type { BlockLoadFailure } from "./block-module";
 import { paperArg } from "./cli-args";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 /** Blocks that would not import. Surfaced, never silently dropped. */
 const LOAD_FAILURES: BlockLoadFailure[] = [];
@@ -57,7 +58,7 @@ const _positional = (() => {
   return undefined;
 })();
 const WITNESS_OUT = _positional ??
-  join(REPO_ROOT, "docs/audits/2026-05-01-p3-1-conjectural-propagation.witness.json");
+  join(REPO_ROOT, siteDirFor(REPO_ROOT), "audits/2026-05-01-p3-1-conjectural-propagation.witness.json");
 
 interface Block {
   label: string;

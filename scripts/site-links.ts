@@ -62,8 +62,40 @@ import { join, resolve } from "node:path";
 import { artefactStub, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
 import type { CatHarnessDeclaration } from "../schemas/cat-harness.js";
 
+/**
+ * Anything whose destination can be checked against a built tree.
+ *
+ * **Split out of `SiteLink` so the CHECKER is not tied to the three navbar
+ * tiles.** `verifySiteLinks` never reads anything tile-specific — it takes an
+ * id, a target and a site directory, and answers `ok` / `dead` / `unknown`.
+ * That is the general machinery this module exists to provide, and the
+ * argument in the header ("a link built by convention is a claim; only a link
+ * checked against the tree that ships is evidence") is not about tiles.
+ *
+ * The second caller proved the point and the type refused it: the QA
+ * badges' `data-qa-index` and `data-qa-src` URLs are composed by the page
+ * generator and were checked against nothing, and `scripts/tests/qa-results.test.ts`
+ * could not verify them without inventing tile ids. `id` is a free-form label
+ * here and stays a closed union on `SiteLink`, where it is a KEY that
+ * `docs-ui.js` looks a tile up by.
+ */
+export interface CheckableLink {
+  /** What to call this link in a verdict. */
+  id: string;
+  /** Absolute URL, for a target that is not on this site. */
+  url?: string;
+  /**
+   * The file that must exist under the built site for the link to resolve.
+   *
+   * Separate from a URL path because they differ: a directory URL resolves to
+   * that directory's `index.html`, and checking the directory alone would pass
+   * for an empty one.
+   */
+  target?: string;
+}
+
 /** A tile's destination, as the site data file records it. */
-export interface SiteLink {
+export interface SiteLink extends CheckableLink {
   /** Stable key; `docs-ui.js` looks the tile up by this. */
   id: "kg" | "jsonld" | "source";
   /**
@@ -73,21 +105,11 @@ export interface SiteLink {
    * it, which is its own 404.
    */
   path?: string;
-  /** Absolute URL, for a target that is not on this site. */
-  url?: string;
-  /**
-   * The file that must exist under the built site for `path` to resolve.
-   *
-   * Separate from `path` because they differ: a directory URL resolves to that
-   * directory's `index.html`, and checking the directory alone would pass for
-   * an empty one.
-   */
-  target?: string;
 }
 
 /** What a verification run established about one link. */
 export interface LinkVerdict {
-  id: SiteLink["id"];
+  id: CheckableLink["id"];
   /** `ok` — the target is there. `dead` — it is not. `unknown` — not checkable here. */
   verdict: "ok" | "dead" | "unknown";
   /** What was looked for, or why nothing was. */
@@ -136,7 +158,7 @@ export function siteLinks(
  * repository is checked out far more often than it is built, and a report that
  * cried dead on every fresh clone would be ignored by the time it mattered.
  */
-export function verifySiteLinks(siteDir: string, links: SiteLink[]): LinkVerdict[] {
+export function verifySiteLinks(siteDir: string, links: CheckableLink[]): LinkVerdict[] {
   const built = existsSync(siteDir) && statSync(siteDir).isDirectory();
   return links.map((l) => {
     if (l.target === undefined) {

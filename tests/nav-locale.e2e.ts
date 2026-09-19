@@ -2,6 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 /**
  * The left-hand navbar shows the SELECTED locale, and nothing else.
@@ -38,9 +39,10 @@ import { fileURLToPath } from "node:url";
  */
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
-const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
-const QR = readFileSync(join(ROOT, "docs/assets/js/vendor/qrcode.js"), "utf8");
+const SITE = siteDirFor(ROOT);
+const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
+const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
+const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
 
 /**
  * The fixture is DERIVED FROM THE CORPUS, not copied out of it.
@@ -53,7 +55,7 @@ const QR = readFileSync(join(ROOT, "docs/assets/js/vendor/qrcode.js"), "utf8");
  * says so out loud if either has gone.
  */
 const INDEX = JSON.parse(
-  readFileSync(join(ROOT, "docs/_data/translations.json"), "utf8"),
+  readFileSync(join(ROOT, SITE, "_data/translations.json"), "utf8"),
 ) as {
   sourceLocale: string;
   locales: string[];

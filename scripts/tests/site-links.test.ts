@@ -22,6 +22,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { exitCodeFor, siteLinks, verifySiteLinks } from "../site-links.js";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const DECL = { name: "folio-assistant", stub: "folio-assistant" };
 
@@ -137,7 +138,7 @@ describe("the template and the data agree", () => {
   const ROOT = join(import.meta.dir, "..", "..");
 
   test("harness.json carries links, each with exactly one destination", () => {
-    const h = JSON.parse(readFileSync(join(ROOT, "docs/_data/harness.json"), "utf8")) as {
+    const h = JSON.parse(readFileSync(join(ROOT, siteDirFor(ROOT), "_data/harness.json"), "utf8")) as {
       links?: { id: string; path?: string; url?: string }[];
     };
     expect(h.links).toBeDefined();
@@ -151,7 +152,7 @@ describe("the template and the data agree", () => {
   });
 
   test("no published link has the `/kg/` segment", () => {
-    const h = JSON.parse(readFileSync(join(ROOT, "docs/_data/harness.json"), "utf8")) as {
+    const h = JSON.parse(readFileSync(join(ROOT, siteDirFor(ROOT), "_data/harness.json"), "utf8")) as {
       links: { path?: string }[];
     };
     for (const l of h.links) expect(l.path ?? "").not.toContain("/kg/");
@@ -162,7 +163,7 @@ describe("the template and the data agree", () => {
     // by rendering it through the real Liquid engine (see the PR); what is
     // guarded here is the regression that put the defect there in the first
     // place — somebody writing a path into the template by hand.
-    const html = readFileSync(join(ROOT, "docs/_includes/head_custom.html"), "utf8");
+    const html = readFileSync(join(ROOT, siteDirFor(ROOT), "_includes/head_custom.html"), "utf8");
     const block = html.match(
       /<script type="application\/json" id="fa-site-links">[\s\S]*?<\/script>/,
     );
@@ -181,7 +182,7 @@ describe("the template and the data agree", () => {
     // renders `aux_links` as text at the top right of the MAIN panel; the
     // forge is reachable as a tile instead. A commented-out mention is fine,
     // an active key is not.
-    const cfg = readFileSync(join(ROOT, "docs/_config.yml"), "utf8");
+    const cfg = readFileSync(join(ROOT, siteDirFor(ROOT), "_config.yml"), "utf8");
     const active = cfg.split("\n").filter((l) => /^\s*aux_links/.test(l));
     expect(active).toEqual([]);
   });

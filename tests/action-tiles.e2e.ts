@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 /**
  * The header's four buttons became one launcher over a grid of action tiles.
@@ -35,9 +36,10 @@ import { fileURLToPath } from "node:url";
 // `import.meta.dir` is a Bun extension and is undefined under Node, which is
 // what Playwright runs the spec with.
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
-const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
-const QR = readFileSync(join(ROOT, "docs/assets/js/vendor/qrcode.js"), "utf8");
+const SITE = siteDirFor(ROOT);
+const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
+const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
+const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
 
 /**
  * The link block `head_custom.html` fills from `docs/_data/harness.json`.
@@ -52,7 +54,7 @@ const QR = readFileSync(join(ROOT, "docs/assets/js/vendor/qrcode.js"), "utf8");
  * `/folio-assistant/` baseurl is what the template does; `url` entries are
  * off-site and printed as-is.
  */
-const HARNESS_DATA = JSON.parse(readFileSync(join(ROOT, "docs/_data/harness.json"), "utf8")) as {
+const HARNESS_DATA = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   links: { id: string; path?: string; url?: string }[];
 };
 const BASEURL = "/folio-assistant";

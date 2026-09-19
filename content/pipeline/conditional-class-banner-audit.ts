@@ -34,6 +34,7 @@ import { requirePaper } from "./repo-root";
 import { loadBlocksUnder, reportLoadFailures } from "./block-module";
 import type { BlockLoadFailure } from "./block-module";
 import { paperArg } from "./cli-args";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 // Was rooted at this file's own location, which is the PLATFORM — but every
 // path below is folio content. `findContentRepoRoot()` walks up from cwd;
 // it must not use `import.meta.dir`, which resolves back through a folio's
@@ -67,7 +68,7 @@ const EMIT_BASELINE = process.argv.includes("--emit-baseline");
 const WITNESS_OUT = process.argv.find((a, i) =>
   a.endsWith(".json") && i !== BASELINE_IDX + 1
 ) ??
-  join(REPO_ROOT, "docs/audits/2026-05-09-conditional-class-banner.witness.json");
+  join(REPO_ROOT, siteDirFor(REPO_ROOT), "audits/2026-05-09-conditional-class-banner.witness.json");
 
 // When --baseline-allowlist is provided alongside --strict, the gate
 // fails only on **new** gaps — labels in `missing_lean_class_hypothesis`
