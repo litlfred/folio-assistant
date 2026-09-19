@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T10:34:36.702Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c61c8f4635742b151cdf360cca1c2210b4ff2b8d",
-  "sourceCommitSha": "c61c8f4635742b151cdf360cca1c2210b4ff2b8d",
-  "sourceCommitAt": "2026-09-19T10:33:03Z",
+  "generatedAt": "2026-09-19T10:47:59.190Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/08549b23d5ab2487aa034f3b727cd711b2f41629",
+  "sourceCommitSha": "08549b23d5ab2487aa034f3b727cd711b2f41629",
+  "sourceCommitAt": "2026-09-19T10:46:31Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 160,
+    "Skill": 161,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -246,9 +246,9 @@
     "SequenceFlow": 443,
     "ProcessNode": 414,
     "Tool": 28,
-    "Schema": 40,
-    "GraphKind": 15,
-    "Directory": 10
+    "Schema": 41,
+    "GraphKind": 16,
+    "Directory": 11
   },
   "@graph": [
     {
@@ -1171,7 +1171,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 491,
+      "instructionLines": 511,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1904,6 +1904,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-blocking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/deletion-requires-confirmation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "deletion-requires-confirmation",
+      "title": "Deletion requires explicit confirmation",
+      "description": "An agent never removes a durable artefact on its own initiative. Report what would go, with sizes and ages, and wait for the user to say so. Covers what counts as durable, the non-destructive move for each kind, and the rule that a workflow whose shape deletes something counts as a deletion nobody decided.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
+      "instructionLines": 197,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/placement",
@@ -3860,6 +3876,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/deployment-auth",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/detangler-integration-watcher",
@@ -18708,6 +18725,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/harness-config"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/health-report",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "health-report",
+      "title": "Repository health reports — what the daily sweep under `tests/health/` wrote.",
+      "module": "schemas/health-report.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/health-report"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/jsonld",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "jsonld",
@@ -18938,6 +18963,14 @@
       "summary": "QA witnesses — one `qa-witness/v1` document per audited subject, in three families (`block`, `kg`, `translation`), projected for the docs site from the verdicts that live beside their subjects. Generated; never hand-edited."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/health",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "health",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#HealthGraph",
+      "renderable": false,
+      "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `tests/health/run.ts`; never hand-edited."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/beans",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "beans",
@@ -19071,6 +19104,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#directory/health",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "health",
+      "path": "tests/health/results/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/health"
+      ],
+      "description": "Repository health reports — what the daily sweep under `tests/health/` wrote. One `health-report/v1` document, declaring itself with a `$schema` tag rather than being duck-typed by path: a directory is a PLACE TO LOOK and the files inside say what they are. A SEPARATE graph from `qa`, and the line between them is about the SUBJECT, not the producer: a QA verdict judges an artefact this repository produced, against criteria that artefact is supposed to meet; a health report judges the REPOSITORY ITSELF — how big it has grown, how much of the publish branch the review previews occupy, whether the work plan has duplicates in it. Folding it into `qa` would leave a consumer asking for verdicts about this instance's content holding a fact about its clone. NOTE the path: this repository has BOTH `test/` (the `qa` graph) and `tests/` (Playwright e2e specs), and the owner asked for `tests/health` on 2026-09-19. The inconsistency is real and is flagged in `skills/folio-core/directory-conventions.md` rather than resolved here — relocating a declared directory as a side effect of adding a check is the `dh4f` shape, where a consumer scans nothing and reports a clean run over it.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/health"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#directory/beans",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "beans",
@@ -19139,8 +19183,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "3cab357c8cdaeb4fe4604bbb610ee0e882046f0e",
+    "sha": "692e60a782d478c983e7c4b253f8a041e8a479fe",
     "pr": "385/merge",
-    "run": "35437720356"
+    "run": "35438315853"
   }
 }
