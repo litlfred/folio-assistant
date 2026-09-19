@@ -214,6 +214,20 @@ jobs:
       - name: AGENTS.md cross-references
         run: bun run check:agents-xref:strict
 
+      # Every artefact an instance DECLARES exists, and its links resolve.
+      # The complement of the check above, which verifies citations INTO an
+      # `AGENTS.md`: this one verifies the links OUT of it, and of every other
+      # declared asset.
+      #
+      # Gating from the first commit, unlike `agents-xref`, because there is no
+      # backlog — the declarations and the gate land together, so it starts at
+      # zero findings rather than measuring debt. Bean `v8gh` is what it would
+      # have caught: seven dead links in the root `AGENTS.md`, five broken by
+      # one directory move, including the one its own banner calls the place to
+      # start, so a cold agent following the banner hit a 404.
+      - name: declared assets exist and resolve
+        run: bun run check:declared-assets
+
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
       # diagrams and resolved to nothing, so `workflow_next` would have handed

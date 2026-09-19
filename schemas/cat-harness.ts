@@ -66,7 +66,14 @@ import {
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { z } from "zod";
 
-import { KgImageSchema, kgNodeLabelShape, type KgImage, type KgNodeLabels } from "./kg-node";
+import {
+  KgAssetSchema,
+  KgImageSchema,
+  kgNodeLabelShape,
+  type KgAsset,
+  type KgImage,
+  type KgNodeLabels,
+} from "./kg-node";
 import { NS_PREFIXES, termIri } from "./namespaces";
 
 /** Root-relative filename carrying an instance's declaration. */
@@ -526,6 +533,14 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    */
   images?: KgImage[];
   /**
+   * Non-image artefacts this instance names — `AGENTS.md` first among them.
+   *
+   * See {@link KgAsset}. Declared for the same reason {@link images} is: a
+   * file nobody declares is a file nobody checks, and `AGENTS.md` was the only
+   * root artefact in neither list.
+   */
+  assets?: KgAsset[];
+  /**
    * The id of the {@link images} entry to use as the browser icon.
    *
    * An id and not a path, so moving the file is one edit in one place. A
@@ -651,6 +666,14 @@ export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
   images: z.array(KgImageSchema).optional(),
+  /**
+   * Declared non-image artefacts — `AGENTS.md` first among them.
+   *
+   * Optional, and absent is the unmigrated case rather than "this instance
+   * has none": every instance has an `AGENTS.md`, and until one declares it
+   * nothing can check it. See {@link KgAssetSchema}.
+   */
+  assets: z.array(KgAssetSchema).optional(),
   icon: z.string().min(1).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
@@ -984,6 +1007,35 @@ export function resolveDirectories(
  * Named once because two different resolvers ask for it, and a second spelling
  * is how one of them goes missing when the layout moves.
  */
+/**
+ * The role an instance's agent-instruction file declares.
+ *
+ * One constant because the declaration writes it and every checker reads it,
+ * and a role spelled twice is a role one side stops finding.
+ */
+export const AGENT_INSTRUCTIONS_ROLE = "agent-instructions";
+
+/**
+ * This instance's declared assets, resolved to absolute paths.
+ *
+ * Existence is reported rather than filtered, unlike the directory defaults:
+ * a declared asset that is missing is a FINDING — somebody said this file is
+ * ours and it is not there — whereas a conventional directory that is absent
+ * is simply a convention this instance did not take up. Silently dropping the
+ * first would reproduce `dh4f` in the one place the declaration is an
+ * assertion rather than a guess.
+ */
+export function declaredAssets(
+  root: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Array<KgAsset & { absPath: string; exists: boolean }> {
+  const decl = readDeclaration(root, registry);
+  return (decl?.assets ?? []).map((a) => {
+    const absPath = resolve(root, a.src);
+    return { ...a, absPath, exists: existsSync(absPath) };
+  });
+}
+
 export const KG_GRAPH_KIND = "cat-harness";
 
 /**
