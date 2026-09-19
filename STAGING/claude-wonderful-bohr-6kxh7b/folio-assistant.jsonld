@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T11:50:45.949Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b39e59330d710557ebe811573edb7240dc71e882",
-  "sourceCommitSha": "b39e59330d710557ebe811573edb7240dc71e882",
-  "sourceCommitAt": "2026-09-19T11:48:56Z",
+  "generatedAt": "2026-09-19T11:56:40.925Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/09c0e128a3527abd8a2771e6524c3c1ab35e158f",
+  "sourceCommitSha": "09c0e128a3527abd8a2771e6524c3c1ab35e158f",
+  "sourceCommitAt": "2026-09-19T11:55:11Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 162,
+    "Skill": 163,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -817,12 +817,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "process-state",
       "title": "Process state — the task you are in, inside the process you are running",
-      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one.",
+      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/process-state.md",
-      "instructionLines": 112,
+      "instructionLines": 179,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -949,7 +949,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/crdm-requirements-workflow.md",
-      "instructionLines": 263,
+      "instructionLines": 266,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1410,7 +1410,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/feature-staging.md",
-      "instructionLines": 118,
+      "instructionLines": 130,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1632,7 +1632,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 145,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1699,6 +1699,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/github-state-inspection",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "github-state-inspection",
+      "title": "Reading GitHub state — resolve the ref, do not compose the URL",
+      "description": "Answer questions about GitHub-hosted state — is a page published, where does it live, did CI pass, does a branch exist — by reading the ref or the API, never by composing a URL or fetching one. The first check for any deployment or 404 question is `git ls-tree` of the publish ref.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/github-state-inspection.md",
+      "instructionLines": 118,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bib-qa",
@@ -1931,7 +1947,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 197,
+      "instructionLines": 223,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3906,6 +3922,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/idle-backlog",
@@ -19222,8 +19239,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "38bd58426f7f057ed75a90d14193ff345903d892",
+    "sha": "41941fc945e400e028d4ea6156a32120efb5a282",
     "pr": "408/merge",
-    "run": "35441141491"
+    "run": "35441416807"
   }
 }
