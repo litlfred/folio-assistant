@@ -1056,6 +1056,16 @@ the end-of-turn "next" line, a bean's `## Done when`, a PR body, an issue
 comment. The last four are where it is most often broken, because they feel like
 reporting rather than asking.
 
+**With several decisions open, ask ONE in full and give a COUNT for the rest** —
+never a compact list of option names, which is the teaser this rule forbids
+wearing the clothes of a status update. And **scan the report you actually
+wrote** before sending it, not the question you planned to ask: on 2026-09-19 an
+agent that had spent the session enforcing this closed a turn with two bean ids
+and "pinned-commit vs `ref: main`", and the author had to ask for the context
+back. Rules and the write-time pass:
+[`interaction-modality.md` §4.1](skills/folio-core/interaction-modality.md) and
+[`turn-reporting.md`](skills/folio-core/turn-reporting.md).
+
 **The failure, measured here on 2026-09-18.** A turn ended: *"next `x4mt` —
 Cross-agent skill install + `fa-` prefix (#247). Unstarted, and I'd want your
 call on prefix-at-rest vs prefix-at-install before writing anything."* Both
