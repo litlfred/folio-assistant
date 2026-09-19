@@ -118,6 +118,20 @@ const RULES: Rule[] = [
   //    modules quietly reclassified, and a partition report that still
   //    printed a total.
   {
+    repo: "harness",
+    // BEFORE the `test/` prefix below, because rules are FIRST-MATCH and an
+    // exact entry further down cannot override an earlier prefix — measured
+    // by putting these in the harness list at the bottom first and watching
+    // the two edges survive.
+    //
+    // `test/health/` is a LIBRARY that happens to live under `test/`: its own
+    // header calls it "the registry, and the pure verdict logic", and
+    // `scripts/staging-cleanup-preflight.ts` — a real workflow step, not a
+    // test — imports it. The blanket prefix is right for everything else in
+    // that tree.
+    exact: ["test/health/checks.ts", "test/health/probes.ts"],
+  },
+  {
     repo: "test",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
@@ -337,6 +351,27 @@ const RULES: Rule[] = [
     exact: [
       "src/server.ts",
       "src/index.ts",
+      // HARNESS, and the LAST wrong-direction edge lives here — left
+      // deliberately, because moving it is worse and the fix is a design
+      // decision rather than a filing one.
+      //
+      // Measured 2026-09-19, both ways. The file is 18 exports of which
+      // SIXTEEN are content model, so `core` looks obviously right; assigning
+      // it there takes the edge count from 1 to 4, because `src/core/rbac.ts`
+      // needs `UserRole`/`ROLE_LEVELS` and `server.ts`/`chat.ts` need
+      // `ContentAdapter`. Both halves have real consumers on their own side.
+      //
+      // So the file IS two things and wants splitting — except that
+      // `ContentAdapter`, the half the harness calls into, is defined
+      // ENTIRELY in content terms: every method returns `FolioItem`,
+      // `ContentOutline`, `ChapterDetail`, `ResolvedSection` or
+      // `ResolvedDocument`. Splitting it out does not remove the edge, it
+      // moves it. The harness's plug-in interface being written in the
+      // vocabulary of what it plugs into is the real question, and it is
+      // task 10's.
+      //
+      // Recorded here rather than acted on: a partition-tuning pass is the
+      // wrong place to redesign an adapter contract.
       "src/types.ts",
       // HARNESS, both re-triaged 2026-09-19 while draining the last edges.
       //
@@ -355,6 +390,50 @@ const RULES: Rule[] = [
       // `scripts/`. A module used only by tooling, doing path resolution, is
       // tooling.
       "content/pipeline/repo-root.ts",
+      // Ten scripts left unjudged, classified 2026-09-19. Every one is
+      // TOOLING under the process-versus-tooling cut — four checkers, two
+      // generators, two staging helpers, a bean-claim CLI and a front-matter
+      // parser — and none reads content. Left unassigned they produced 21
+      // edges the tool "declined to judge", which its own message says must
+      // NOT be read as clean: an unjudged edge is not a passing one.
+      //
+      // Several arrived from sibling sessions within the hour, which is the
+      // normal way this list goes stale rather than a lapse.
+      // HARNESS, exposed once the ten above stopped hiding their edges.
+      //
+      // `schemas/theme.ts` / `themes.ts` are the STICKY-NOTE themes — colour
+      // roles and layouts for the docs site, generated into CSS by
+      // `gen-themes-css.ts`. Site presentation belongs to the platform that
+      // publishes the site, not to a folio's content model, and their own
+      // headers say so: "named colour roles plus the three layouts".
+      //
+      // `test/health/checks.ts` and `probes.ts` are a LIBRARY, not test
+      // material: "the registry, and the pure verdict logic", imported by
+      // `staging-cleanup-preflight.ts`, which is a real workflow step. A
+      // module under `test/` that production code imports is shared tooling
+      // that happens to live there; the blanket `test/` rule is right for
+      // everything else in that tree and wrong for these two.
+      "schemas/theme.ts",
+      "schemas/themes.ts",
+      // Exposed by moving `test/health/` here — the same reveal-on-move
+      // pattern, third time in this pass. Both are harness by their own
+      // headers: "Repository health reports — what the daily sweep under
+      // `test/health/` wrote" is about the REPOSITORY, not a folio's content;
+      // and the todo graph is the human half of the work plan, a sibling of
+      // `beans/`, which is harness-level workflow rather than anything a
+      // folio contains.
+      "schemas/health-report.ts",
+      "schemas/todo-graph.ts",
+      "scripts/check-agents-xref.ts",
+      "scripts/check-bean-parents.ts",
+      "scripts/check-declared-paths.ts",
+      "scripts/claim-bean.ts",
+      "scripts/front-matter.ts",
+      "scripts/gen-themes-css.ts",
+      "scripts/playwright-chromium.ts",
+      "scripts/restore-staging.ts",
+      "scripts/serve-rendering.ts",
+      "scripts/staging-cleanup-preflight.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
       "src/tools/skill-fetch.ts",
@@ -819,6 +898,10 @@ function main(): void {
       else console.log(`  ${repoName(f)} → ${repoName(t)}: ${es.length}`);
     }
     if (wantEdges) {
+      const un = [...new Set(unresolvedEdges.flatMap((e) => [e.from, e.to]))]
+        .filter((m) => modules.get(m)?.repo === "unassigned")
+        .sort();
+      if (un.length) console.log(`\n${markdown ? "### " : ""}Unassigned modules\n${un.map((m) => `  ${m}`).join("\n")}`);
       console.log(`\n${markdown ? "### " : ""}Every wrong-direction edge\n`);
       for (const e of crossEdges.sort((a, b) => a.from.localeCompare(b.from))) {
         console.log(`${markdown ? "- " : "  "}\`${e.from}\` (${repoName(e.fromRepo)}) → \`${e.to}\` (${repoName(e.toRepo)})`);

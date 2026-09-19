@@ -125,7 +125,7 @@ export interface HarnessConfig {
    * Module this instance contributes from when it is loaded as a DEPENDENCY.
    *
    * Resolved relative to this folio's own root. Its default export is called
-   * with no arguments and returns a {@link FolioContribution} (or a promise of
+   * with no arguments and returns a contribution object (or a promise of
    * one). Read only for dependencies — a root folio's own `contributes` is
    * ignored, because the root already *is* everything it would contribute.
    */
@@ -213,7 +213,6 @@ export const HarnessConfigSchema = z.object({
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { ContributionRegistry, type FolioContribution } from "./contributions";
 import {
   materialiseDirectories,
   resolveDirectories,
@@ -512,10 +511,14 @@ export function resolveTranslationDirs(folioRoot: string): string[] {
  * @param folioRoot - Absolute path to the ROOT folio.
  * @param registry - Optional existing registry to accumulate into.
  */
-export async function loadContributions(
+export interface ContributionSink<C extends { name: string }> {
+  register(contribution: C): void;
+}
+
+export async function loadContributions<C extends { name: string }, S extends ContributionSink<C>>(
   folioRoot: string,
-  registry: ContributionRegistry = new ContributionRegistry(),
-): Promise<ContributionRegistry> {
+  registry: S,
+): Promise<S> {
   const flat = flattenDependencies(resolveDependencyTree(folioRoot));
 
   for (const dep of flat) {
@@ -541,12 +544,15 @@ export async function loadContributions(
       );
     }
 
-    const contribution = (await (fn as () => FolioContribution | Promise<FolioContribution>)()) ;
+    const contribution = (await (fn as () => C | Promise<C>)());
     // The dependency entry's name is authoritative over whatever the module
     // says about itself: the root declared the name, and a contributor that
     // could rename itself could impersonate another contributor's namespace
     // and turn a collision into a silent merge.
-    registry.register({ ...contribution, name: dep.dependency.name });
+    // The spread widens `C` to `C & { name: string }`, which is C's own shape
+    // with one field pinned; the cast states that rather than loosening the
+    // parameter.
+    registry.register({ ...contribution, name: dep.dependency.name } as C);
   }
 
   return registry;
