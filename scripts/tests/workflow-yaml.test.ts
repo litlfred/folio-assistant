@@ -22,7 +22,7 @@
  * being discovered as an uninformative red X afterwards.
  */
 import { describe, test, expect } from "bun:test";
-import { checkWorkflows, GH_PAGES_GROUP } from "../check-workflows.js";
+import { checkWorkflows, ghPagesWipesStaging, GH_PAGES_GROUP } from "../check-workflows.js";
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 
@@ -141,5 +141,72 @@ describe("GitHub Actions workflows", () => {
     expect(runs).toContain("bun test");
     expect(runs).toContain("bun run lint");
     expect(runs).toContain("tsc --noEmit");
+  });
+});
+
+/**
+ * A full replace of `gh-pages` carries the open PRs' previews — bean `plj1`.
+ *
+ * The real corpus is asserted clean, AND the check is shown to FIRE on a
+ * workflow in the shape `docs-site.yml` was in. Only the second half is
+ * evidence that the first means anything: a checker that returns `[]` for
+ * everything passes the corpus test too, and this defect is invisible to every
+ * other signal — the push succeeds, the check run is green, and the artefact
+ * is gone minutes later.
+ */
+describe("gh-pages full-replace vs the STAGING previews", () => {
+  /** A workflow in the shape that caused `plj1`. */
+  const wipes = [
+    "name: W",
+    "jobs:",
+    "  deploy:",
+    "    runs-on: ubuntu-latest",
+    "    steps:",
+    "      - name: Publish",
+    "        uses: peaceiris/actions-gh-pages@v4",
+    "        with:",
+    "          publish_dir: ./_site",
+    "          publish_branch: gh-pages",
+    "",
+  ].join("\n");
+
+  test("it fires on a root replace with neither keep_files nor destination_dir", () => {
+    const found = ghPagesWipesStaging(wipes, "w.yml");
+    expect(found.length).toBe(1);
+    expect(found[0].kind).toBe("gh-pages-wipes-staging");
+    expect(found[0].detail).toContain("STAGING/");
+  });
+
+  test("a restore step in front of the push clears it", () => {
+    const fixed = wipes.replace(
+      "      - name: Publish",
+      [
+        "      - name: Restore",
+        "        run: bun run scripts/restore-staging.ts --site ./_site --state ./.staging-restored.json",
+        "      - name: Publish",
+      ].join("\n"),
+    );
+    expect(ghPagesWipesStaging(fixed, "w.yml")).toEqual([]);
+  });
+
+  test("a --verify run is NOT a restore — it reports, it does not carry", () => {
+    const verifyOnly = wipes.replace(
+      "      - name: Publish",
+      [
+        "      - name: Verify",
+        "        run: bun run scripts/restore-staging.ts --verify --state ./.staging-restored.json",
+        "      - name: Publish",
+      ].join("\n"),
+    );
+    expect(ghPagesWipesStaging(verifyOnly, "w.yml").length).toBe(1);
+  });
+
+  test("keep_files and a scoped destination_dir are each exempt", () => {
+    expect(ghPagesWipesStaging(wipes.replace("          publish_branch: gh-pages", "          publish_branch: gh-pages\n          keep_files: true"), "w.yml")).toEqual([]);
+    expect(ghPagesWipesStaging(wipes.replace("          publish_branch: gh-pages", "          publish_branch: gh-pages\n          destination_dir: STAGING/x"), "w.yml")).toEqual([]);
+  });
+
+  test("no workflow in this repository wipes the previews", () => {
+    expect(checkWorkflows().filter((f) => f.kind === "gh-pages-wipes-staging")).toEqual([]);
   });
 });

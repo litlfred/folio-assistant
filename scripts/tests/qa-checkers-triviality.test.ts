@@ -7,6 +7,7 @@ import {
   resetTrivialityCache,
   TRIVIAL_STEP_THRESHOLD,
 } from "../../content/pipeline/qa-checkers-triviality";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 // The checker resolves the content repo from process.cwd(), so each test
 // builds a throwaway repo-shaped tree and runs inside it.
@@ -14,7 +15,12 @@ function makeRepo(entries?: Record<string, unknown>) {
   const root = mkdtempSync(join(tmpdir(), "triv-"));
   mkdirSync(join(root, "content", "p", "ch"), { recursive: true });
   mkdirSync(join(root, "computations"), { recursive: true });
-  mkdirSync(join(root, "docs", "audits"), { recursive: true });
+  // A temp instance needs its declaration: the probe resolves its output
+  // through `siteDirFor`, so a fixture without one is not an instance at all
+  // and throws rather than silently writing to a guessed `docs/`.
+  writeFileSync(join(root, "harness.json"), JSON.stringify({ name: "fixture", stub: "fixture" }));
+  const site = siteDirFor(root);
+  mkdirSync(join(root, site, "audits"), { recursive: true });
 
   const leanRel = "content/p/ch/b.lean";
   writeFileSync(join(root, leanRel), "theorem foo : True := by trivial\n");
@@ -26,7 +32,7 @@ function makeRepo(entries?: Record<string, unknown>) {
 
   if (entries) {
     writeFileSync(
-      join(root, "docs/audits/lean-triviality.json"),
+      join(root, site, "audits/lean-triviality.json"),
       JSON.stringify({
         $schema: "lean-triviality/v1",
         generated_at: "2026-01-01T00:00:00Z",

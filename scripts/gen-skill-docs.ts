@@ -26,6 +26,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 
 import { join, resolve, basename } from "path";
 
 import { isSkillMd } from "./known-skills.js";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
 // A pencil, as a text glyph rather than an inline SVG. 130 generated pages
@@ -33,7 +34,7 @@ const REPO_ROOT = resolve(import.meta.dir, "..");
 // every reader's download; one character is not.
 const EDIT_GLYPH = "\u270E";
 
-const OUT_DIR = join(REPO_ROOT, "docs", "reference", "skill-instructions");
+const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skill-instructions");
 
 /**
  * `--check`: verify the generated tree is current without writing to it.
@@ -72,7 +73,7 @@ function reportDrift(): void {
   process.exit(1);
 }
 
-const SCHEMA_DIR = join(REPO_ROOT, "docs", "reference", "skills");
+const SCHEMA_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skills");
 
 interface Group {
   category: string;

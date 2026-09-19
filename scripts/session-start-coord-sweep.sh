@@ -317,7 +317,8 @@ cat <<'EOF'
 2. If you'll do durable work, claim a bean
    (`beans update <id> --status in-progress`) or open one
    (`beans create "<title>"`, after the exact-title existence check in
-   AGENTS.md) — see also `.claude/skills/local/bean-coordination.md`.
+   AGENTS.md) — see also `skills/folio-core/bean-coordination.md`, whose
+   "A claim is branch-local" says what a claim does NOT buy you.
 3. If the default branch moved, dispatch a **background** subagent to triage the
    new landings + sibling activity above — don't do it in the foreground.
    Escalate only if it surfaces something actionable against the work-plan.

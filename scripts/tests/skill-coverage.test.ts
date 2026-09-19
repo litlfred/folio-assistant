@@ -41,9 +41,10 @@ import { join, resolve } from "node:path";
 
 import { isSkillMd, knownSkills, skillMdDirs } from "../known-skills.js";
 import { buildExport } from "../kg-export.js";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
-const PUBLISHED = join(ROOT, "docs/reference/skill-instructions");
+const PUBLISHED = join(ROOT, siteDirFor(ROOT), "reference/skill-instructions");
 
 /**
  * Packages under `skills/` that hold at least one SKILL `.md`, read from disk.

@@ -643,6 +643,71 @@ export function artefactStub(d: Pick<CatHarnessDeclaration, "name" | "stub">): s
 }
 
 /**
+ * Where this instance's renderable site lives in the working tree:
+ * `docs/<stub>/`.
+ *
+ * **The stub segment is the packaging for the repo split (issue #223).** Every
+ * layer's pages sit under their own instance's stub, so splitting a layer out
+ * is a directory move rather than a sift through a shared tree — and two
+ * layers' docs can be checked out side by side without colliding, which is the
+ * same job the stub already does for `<base>/<stub>.jsonld` and
+ * `<base>/<stub>/` in `publishedAt` below.
+ *
+ * **It does not change a single published URL.** Jekyll is pointed at this
+ * directory as its source root (`docs-site.yml`, `feature-staging.yml`), so
+ * the site's internal layout is untouched and every
+ * `litlfred.github.io/folio-assistant/...` link resolves exactly as before.
+ *
+ * **This is NOT the `folio` graph-kind declaration**, and it deliberately
+ * stops short of it. `docs/` cannot be declared a directory of this instance
+ * yet: `folio` is registered by CORE, and re-measured 2026-09-19 with the
+ * entry added, `harness:dirs`, `kg:schema:check` and `docs:harness:check` all
+ * throw `unknown graph kind "folio"` and 5 tests fail. What this function does
+ * fix is the OTHER half of bean `x4a6` — the site root was spelled out
+ * separately in `translation-index.ts`, `gen-docs-pages.ts`,
+ * `gen-skill-docs.ts`, `gen-schema-docs.ts` and `translation-qa-sweep.ts`,
+ * five copies free to disagree. Now one, and when the split lands it becomes
+ * one line reading the declared directory instead of composing it.
+ */
+export function siteDir(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
+  return `docs/${artefactStub(d)}`;
+}
+
+/**
+ * `siteDir` for the instance rooted at `root`, read from its declaration.
+ *
+ * Deliberately a RAW read of `name`/`stub` rather than `readDeclaration`:
+ * those two fields are all this needs, and going through the full reader
+ * would make every consumer of the site root — four generators and the
+ * translation sweep — fail the moment some unrelated directory declares a
+ * kind the harness layer has not registered. That is exactly the `folio`
+ * situation bean `x4a6` is blocked on, and it must not take the site root
+ * down with it.
+ *
+ * It **throws** rather than defaulting when the declaration is missing or
+ * nameless. A site root guessed wrong writes 278 pages into a directory
+ * nothing serves, and "could not determine" is never rendered as an answer.
+ */
+export function siteDirFor(root: string): string {
+  const p = join(root, "harness.json");
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    throw new Error(
+      `cannot determine the site root: ${p} is unreadable or not valid JSON ` +
+        `(${e instanceof Error ? e.message : String(e)})`,
+    );
+  }
+  const d = raw as { name?: unknown; stub?: unknown };
+  const stub = typeof d.stub === "string" && d.stub ? d.stub : d.name;
+  if (typeof stub !== "string" || !stub) {
+    throw new Error(`cannot determine the site root: ${p} declares neither \`stub\` nor \`name\``);
+  }
+  return siteDir({ name: stub, stub });
+}
+
+/**
  * Where an instance's renderings are published, given the site they are
  * published to.
  *

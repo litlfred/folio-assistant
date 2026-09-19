@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { applyVerdicts, sidecarWithVerdicts } from "./support/qa-fixture.js";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 /**
  * The QA icon has to OPEN, and what it opens has to name its witnesses.
@@ -35,8 +36,9 @@ import { applyVerdicts, sidecarWithVerdicts } from "./support/qa-fixture.js";
 // `import.meta.dir` is a Bun extension and undefined under Node, which is what
 // Playwright runs this spec with.
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
-const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
+const SITE = siteDirFor(ROOT);
+const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
+const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
 /** A block sidecar from the corpus, and two states derived from it. */
 const CORPUS_PATH = join(

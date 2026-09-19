@@ -38,10 +38,12 @@ import { availableLocales } from "../content/pipeline/po-resolve.ts";
 import {
   QA_FAMILY_LABEL,
   readWitnessDoc,
+  sidecarPaths,
   type QaFamily,
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
 import { readTodoFiles } from "./todos.js";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -56,7 +58,7 @@ const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // `content/schema/`), so documentation can live where content belongs — under
 // `content/` — without tripping the folio-emptiness gate.
 const SRC_DIR = join(REPO_ROOT, "content", "docs");
-const OUT_DIR = join(REPO_ROOT, "docs");
+const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
 const REPO_WEB = "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
 /** Matches gen-skill-docs.ts / gen-schema-docs.ts — one glyph, no inline SVG. */
@@ -82,28 +84,12 @@ export interface QaSummary {
   na: number;
 }
 
-/**
- * The state mark, and it has to say GOOD or BAD without a legend.
- *
- * `● ◐ ○ ·` shipped in #274 and was reported unreadable by the first person to
- * use it: filled-vs-open circles encode a scale, but nothing in them says which
- * end is the good one, and at 0.75rem `●` and `·` differ only in size.
- *
- * `✓ ! ✕` carry their meaning on their own, survive monochrome, and keep colour
- * as reinforcement rather than as the message.
- *
- * **`unswept` has no mark at all — the icon is simply dulled.** Any glyph there
- * is a claim about a check nobody ran, and the previous `·` read as a very
- * small "pass". Absence of a mark, at reduced opacity, is the one rendering
- * that cannot be mistaken for a verdict. The icon is still PRESENT, because a
- * missing icon and a clean one look identical and only one of them is true.
+/*
+ * The state mark (`✓ ! ✕`, and nothing at all for `unswept`) and the counts
+ * line that used to be composed here now live in `docs/assets/js/docs-ui.js`,
+ * beside the fetch that decides which of them applies. The reasoning behind
+ * each glyph moved with them — see `QA_GLYPH` there.
  */
-const QA_GLYPH: Record<QaState, string> = {
-  fail: "✕",
-  warn: "!",
-  pass: "✓",
-  unswept: "",
-};
 
 /**
  * Read a block's `<stem>.qa.json`, beside its `<stem>.md`.
@@ -138,6 +124,8 @@ const check = process.argv.includes("--check");
 let stale = 0;
 let written = 0;
 let qaWritten = 0;
+/** Verdict projections whose CONTENT moved. Reported under `--check`, never gated. */
+let refreshed = 0;
 
 /**
  * Repo-root-relative path of the file a node is edited through.
@@ -242,69 +230,141 @@ function pageDir(page: WebPage): string {
   return join(SRC_DIR, page.slug.replace(/\//g, "-"));
 }
 
+
 /**
- * The counts line shared by the icon's tooltip and its accessible name.
+ * The per-page verdict index being accumulated, keyed `<nodeId>.<family>`.
  *
- * `n/a` and `unknown` are reported, never folded into the others: a criterion
- * that did not apply and one the sidecar holds no verdict for are different
- * facts, and both are the reader's business.
+ * Reset by the page loop before each page. Module-level rather than threaded
+ * through `renderPage` because `qaIcons` is four frames down and the only
+ * thing it would be threading is an accumulator.
  */
-function qaTitle(label: string, doc: QaWitnessDoc | undefined, noun: string): string {
-  if (!doc) return `${label}: not swept — no sidecar for this ${noun}`;
-  const c = doc.counts;
-  const parts = [`${c.fail} fail`, `${c.warn} warn`, `${c.pass} pass`, `${c.na} n/a`];
-  if (c.unknown > 0) parts.push(`${c.unknown} no verdict`);
-  return `${label}: ${parts.join(", ")} — open for witnesses`;
-}
+let qaIndex: Record<string, { state: QaState; counts: QaWitnessDoc["counts"] }> = {};
+
+/**
+ * Where a page's verdict index lands, and the URL the badges fetch it from.
+ *
+ * **No leading underscore, deliberately.** GitHub Pages strips `_`-prefixed
+ * paths unless `.nojekyll` is present, and this file is published by a `cp`
+ * into `_site` AFTER Jekyll has run — so a Pages-side strip would 404 every
+ * index and paint every badge on the site `could not determine`. Honest, and
+ * useless. `.nojekyll` is on `gh-pages` today; a filename that does not depend
+ * on it is cheaper than a filename that does.
+ *
+ * It cannot collide with a projection: those are `<nodeId>.<family>.json`, and
+ * `qa-index` is not a QA family.
+ */
+const QA_INDEX_FILE = "qa-index.json";
 
 /**
  * Icons for every family applicable to this node's subjects.
+ *
+ * **The markup carries NO verdict.** That is the whole point of this function
+ * as it now stands, and it is worth stating plainly because the previous
+ * version's output looked more informative: it wrote `fa-qa-pass`, the `✓`
+ * glyph and `"0 fail, 0 warn, 10 pass, 0 n/a"` straight into `docs/*.md`.
+ *
+ * A generated page carrying a live verdict is stale the moment the verdict
+ * moves, and a verdict moving is the QA system WORKING. Bean `d2kp` measured
+ * the consequence twice over: twelve pages stale on `main` — one of them
+ * because the actor-kind fixes in #353 turned a failing criterion green — and,
+ * because nobody had regenerated, a published page telling readers that a
+ * knowledge-graph check FAILED on `publication-workflow.md` when it passed.
+ * That is the failure mode of embedding a measurement in a document: the
+ * document does not go stale loudly, it goes stale by lying.
+ *
+ * So the page now emits only what the CORPUS STRUCTURE says, and every one of
+ * these facts changes for a reason a human would recognise as an omission:
+ *
+ *   - which nodes exist, and which QA families apply to each (`familiesFor`);
+ *   - whether a sidecar exists at all for that (subject, family) pair — file
+ *     existence, via `sidecarPaths`, not anything inside the file;
+ *   - the URLs of the published projection and of this page's verdict index.
+ *
+ * The verdict itself is fetched at load by `paintQaBadges` in `docs-ui.js`,
+ * from the per-page index written beside the projections. The same mechanism
+ * the panel has always used for its contents, one level up.
+ *
+ * **Why an index rather than each badge fetching its own projection**, which
+ * is what bean `d2kp` proposed: `publication-workflow` carries 21 projections
+ * totalling 376 KB, and fetching all of them to paint 39 glyphs would
+ * reintroduce at page load exactly the weight this file's own comment gives
+ * for not publishing the sidecars ("14 of them are 392 KB … a reader opens one
+ * criterion, not forty-eight"). The index is a few KB and one request; the
+ * projection is still fetched per badge, on click, as before.
  *
  * A family with a sidecar is a `<button>` carrying the URL of its published
  * projection; the panel is built in the browser from that JSON. A family
  * without one is a `<span>`: there is nothing to open, and a control that does
  * nothing when pressed is worse than a plain mark — the same argument the
  * single-state icon shipped with, now that the others DO open.
+ *
+ * **"Not swept" stays server-rendered, and it is not a verdict.** Whether a
+ * sidecar exists is structure: it appears when somebody runs a sweep and
+ * disappears when a subject does, and in both cases regenerating is exactly
+ * the omission `--check` should catch. Deferring it to the browser would also
+ * have collapsed it into "the fetch found nothing", which is a different fact
+ * — `could not determine` — and this repository has paid for that collapse
+ * before (an absent simulators directory rendered as "this folio has no
+ * simulators", replacing a correct nine-row table).
  */
 function qaIcons(page: WebPage, node: WebPageNode): string {
   const subjects: string[] = [];
   if (node.block) subjects.push(join(pageDir(page), `${node.block}.md`));
   if (node.asset) subjects.push(join(REPO_ROOT, node.asset.source));
 
+  const slug = page.slug.replace(/\//g, "-");
   const out: string[] = [];
   for (const subject of subjects) {
     for (const family of familiesFor(subject)) {
       const { tag, label } = QA_FAMILY_LABEL[family];
-      const doc = readWitnessDoc(family, subject, REPO_ROOT);
-      const state: QaState = doc?.state ?? "unswept";
-      const title = qaTitle(label, doc, subjectNoun(subject));
-      const glyph = QA_GLYPH[state];
-      const mark =
-        `<span class="fa-qa-tag">${tag}</span>` +
-        (glyph === "" ? "" : `<span class="fa-qa-glyph" aria-hidden="true">${glyph}</span>`);
-      if (!doc) {
+      const noun = subjectNoun(subject);
+      // EXISTENCE, not contents. `sidecarPaths` stats the disk and returns
+      // only files that are there, so this is the structural question —
+      // "has anything ever ruled on this?" — and not a peek at the ruling.
+      const swept = sidecarPaths(family, subject, REPO_ROOT).length > 0;
+      if (!swept) {
+        const title = `${label}: not swept — no sidecar for this ${noun}`;
         out.push(
-          ` <span class="fa-qa-badge fa-qa-${state} fa-qa-fam-${family}" ` +
-            `title="${title}" aria-label="${title}">${mark}</span>`,
+          ` <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-${family}" ` +
+            `title="${title}" aria-label="${title}">` +
+            `<span class="fa-qa-tag">${tag}</span></span>`,
         );
         continue;
       }
-      const rel = join(page.slug.replace(/\//g, "-"), `${node.id}.${family}.json`);
-      const abs = join(QA_ASSET_DIR, rel);
-      mkdirSync(dirname(abs), { recursive: true });
-      // Minified: these are fetched by the browser, never read as a diff, and
-      // the corpus sweep took the set from 35 files to 134. Indentation was 32%
-      // of 2.9 MB — a third of what every reader of the site would download for
-      // whitespace nobody looks at.
-      emit(abs, JSON.stringify(doc) + "\n", "qa");
-      emittedQa.add(abs);
+
+      const key = `${node.id}.${family}`;
+      const rel = join(slug, `${key}.json`);
+      const doc = readWitnessDoc(family, subject, REPO_ROOT);
+      if (doc) {
+        const abs = join(QA_ASSET_DIR, rel);
+        mkdirSync(dirname(abs), { recursive: true });
+        // Minified: these are fetched by the browser, never read as a diff, and
+        // the corpus sweep took the set from 35 files to 134. Indentation was 32%
+        // of 2.9 MB — a third of what every reader of the site would download for
+        // whitespace nobody looks at.
+        emit(abs, JSON.stringify(doc) + "\n", "verdict");
+        emittedQa.add(abs);
+        qaIndex[key] = { state: doc.state, counts: doc.counts };
+      }
+      // A sidecar that exists but will not project — malformed JSON, or a
+      // translation family whose locales hold no criteria — writes no file and
+      // no index entry, so the badge resolves to `could not determine` in the
+      // browser. Deliberate: the subject HAS been swept, and rendering that as
+      // "not swept" would be the false pass one line up.
+
       // `relative_url` so the path survives the site's baseurl — `/folio-assistant`
       // here, something else on a staging deploy. A hardcoded absolute path
       // 404s on every deploy but one.
+      const title = `${label}: loading the verdict…`;
       out.push(
-        ` <button type="button" class="fa-qa-badge fa-qa-${state} fa-qa-fam-${family}" ` +
-          `data-qa-family="${family}" data-qa-src="{{ '/assets/qa/${rel}' | relative_url }}" ` +
-          `aria-expanded="false" title="${title}" aria-label="${title}">${mark}</button>`,
+        ` <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-${family}" ` +
+          `data-qa-family="${family}" data-qa-key="${key}" data-qa-label="${label}" ` +
+          `data-qa-noun="${noun}" ` +
+          `data-qa-src="{{ '/assets/qa/${rel}' | relative_url }}" ` +
+          `data-qa-index="{{ '/assets/qa/${slug}/${QA_INDEX_FILE}' | relative_url }}" ` +
+          `aria-expanded="false" aria-busy="true" title="${title}" aria-label="${title}">` +
+          `<span class="fa-qa-tag">${tag}</span>` +
+          `<span class="fa-qa-glyph" aria-hidden="true">…</span></button>`,
       );
     }
   }
@@ -445,17 +505,55 @@ function renderPage(page: WebPage): string {
   return lines.join("\n").replace(/\n{3,}/g, "\n\n").trimEnd() + "\n";
 }
 
-function emit(path: string, content: string, kind: "page" | "qa" = "page"): void {
+/**
+ * What `--check` gates, and what it merely reports.
+ *
+ * Three kinds, because two would put a live measurement behind a red X:
+ *
+ *   - **`page`** — a `docs/*.md`. Gated on exact content. Everything it now
+ *     carries is structure, so a difference is somebody who added a node,
+ *     renamed a block, ran a first sweep, or moved a sidecar, and did not
+ *     regenerate. That is a real omission and a reviewer reads the page in the
+ *     diff, so it must not drift.
+ *   - **`data`** — `assets/todos/index.json`, likewise a projection of files a
+ *     human authored. Gated on exact content for the same reason.
+ *   - **`verdict`** — a witness projection or a page's verdict index. Gated on
+ *     EXISTENCE only. Its contents are a function of the QA sidecars AND of
+ *     the working tree (`readWitnessDoc` recomputes `freshness` by hashing the
+ *     live subject), so it moves whenever a sweep re-runs or a block is
+ *     edited — neither of which anybody forgot to do. A missing file IS an
+ *     omission: the badge would point at a 404 forever.
+ *
+ * **Not gating the contents costs the reader nothing, and that is checkable
+ * rather than argued.** `docs-site.yml` and `feature-staging.yml` both run
+ * this generator in full before copying `test/results/witnesses/` into
+ * `_site/assets/qa/`, so the projections a reader actually fetches are
+ * regenerated at publish. The committed copies are a cache for local work and
+ * for review; gating them could only ever fire on a graph that changed, which
+ * is precisely what bean `d2kp` exists to stop the gate doing.
+ */
+function emit(path: string, content: string, kind: "page" | "data" | "verdict" = "page"): void {
   if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current !== content) {
-      console.error(`  ✗ ${path} is stale`);
-      stale++;
+    const present = existsSync(path);
+    const current = present ? readFileSync(path, "utf-8") : "";
+    if (current === content) return;
+    if (kind === "verdict") {
+      // Absent is a failure; different is news. Keeping them apart is the
+      // whole of this change at the file level.
+      if (!present) {
+        console.error(`  ✗ ${path} is missing`);
+        stale++;
+      } else {
+        refreshed++;
+      }
+      return;
     }
+    console.error(`  ✗ ${path} is stale`);
+    stale++;
     return;
   }
   writeFileSync(path, content);
-  if (kind === "qa") qaWritten++;
+  if (kind === "verdict") qaWritten++;
   else written++;
 }
 
@@ -493,7 +591,25 @@ for (const slug of slugs) {
   }
   const outPath = join(OUT_DIR, `${page.slug}.md`);
   mkdirSync(dirname(outPath), { recursive: true });
-  emit(outPath, renderPage(page));
+  // `renderPage` fills `qaIndex` as a side effect of emitting the badges, so
+  // the reset has to happen before it and the write after it.
+  qaIndex = {};
+  const body = renderPage(page);
+  emit(outPath, body);
+  // The page's verdict index: what every badge on it needs to paint itself,
+  // in ONE request. Written even when empty, because a page with badges and a
+  // missing index is indistinguishable in the browser from a network failure,
+  // and `{}` is a determined-empty answer rather than an unreadable one.
+  if (/data-qa-index=/.test(body)) {
+    const idxAbs = join(QA_ASSET_DIR, slug, QA_INDEX_FILE);
+    mkdirSync(dirname(idxAbs), { recursive: true });
+    emit(
+      idxAbs,
+      JSON.stringify({ $schema: "folio-qa-index/v1", page: page.slug, badges: qaIndex }) + "\n",
+      "verdict",
+    );
+    emittedQa.add(idxAbs);
+  }
   console.log(`  ${check ? "·" : "✓"} ${slug}.md (${page.nodes.length} nodes)`);
 }
 
@@ -565,7 +681,11 @@ function todoRelations(tags: {
 function beanFile(id: string): string | undefined {
   const dir = join(REPO_ROOT, "beans", "defs");
   if (!existsSync(dir)) return undefined;
-  const hit = readdirSync(dir).find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
+  // Sorted for the same reason `processHierarchy` sorts: raw directory order
+  // is filesystem state, and `find` over it makes the FIRST match a property of
+  // where the file landed on disk. Two beans sharing a prefix would resolve to
+  // different files on two machines.
+  const hit = readdirSync(dir).sort().find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
   return hit ? `beans/defs/${hit}` : undefined;
 }
 
@@ -589,7 +709,20 @@ function processHierarchy(): Record<string, string[]> {
   const dir = join(REPO_ROOT, "skills", "workflows");
   if (!existsSync(dir)) return {};
   const out: Record<string, string[]> = {};
-  for (const f of readdirSync(dir)) {
+  // `.sort()`, and it is load-bearing rather than tidy. `readdirSync` under
+  // Bun returns RAW DIRECTORY ORDER — on ext4 that is a hash of the filename
+  // against the directory's own seed, so two checkouts of the same commit
+  // enumerate these 32 files differently. The ids below become object keys and
+  // `JSON.stringify` preserves insertion order, so the published index came
+  // out byte-different on every machine.
+  //
+  // Nobody noticed for the reason bean `d2kp` is about: the `--check` that
+  // would have caught it was a folded YAML continuation line and had never
+  // run. It failed on its FIRST run, on the PR that un-folded it, against a
+  // committed file that reproduced perfectly on the machine that wrote it.
+  // An artefact that is only reproducible where it was generated is not a
+  // generated artefact; it is a snapshot.
+  for (const f of readdirSync(dir).sort()) {
     if (!f.endsWith(".bpmn")) continue;
     const xml = readFileSync(join(dir, f), "utf-8");
     const id = /<bpmn:process id="([^"]+)"/.exec(xml)?.[1];
@@ -631,7 +764,7 @@ function processHierarchy(): Record<string, string[]> {
   emit(
     TODO_ASSET,
     JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }) + "\n",
-    "qa",
+    "data",
   );
   console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
 }
@@ -651,8 +784,18 @@ for (const orphan of listQaAssets()) {
   }
 }
 
+if (check && refreshed > 0) {
+  // Printed, never gated. See `emit`: a verdict projection moves when the
+  // corpus is re-swept or a block is edited, and the published copy is
+  // regenerated by the site build regardless of what is committed here.
+  console.log(
+    `\n${refreshed} verdict projection(s) would be refreshed — not a staleness failure.\n` +
+      `  They carry QA counts and freshness measured against the working tree, and the\n` +
+      `  site build regenerates them. Run the generator to refresh the committed copies.`,
+  );
+}
 if (check && stale > 0) {
-  console.error(`\n${stale} page(s) stale — run: bun run scripts/gen-docs-pages.ts`);
+  console.error(`\n${stale} generated file(s) stale or missing — run: bun run scripts/gen-docs-pages.ts`);
   process.exit(1);
 }
 console.log(
