@@ -124,11 +124,11 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T05:56:01.232Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/12f7a182fec61d678a3536447ee14a19e4326258",
-  "sourceCommitSha": "12f7a182fec61d678a3536447ee14a19e4326258",
-  "sourceCommitAt": "2026-09-19T07:54:30+02:00",
-  "sourceTreeDirty": true,
+  "generatedAt": "2026-09-19T06:10:34.375Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e1c0e75c35d3da0bc38ed9e4e063fe80ab20ff21",
+  "sourceCommitSha": "e1c0e75c35d3da0bc38ed9e4e063fe80ab20ff21",
+  "sourceCommitAt": "2026-09-19T08:09:30+02:00",
+  "sourceTreeDirty": false,
   "counts": {
     "Skill": 149,
     "Actor": 25,
@@ -1344,7 +1344,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/role-model.md",
-      "lines": 328,
+      "lines": 435,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1617,7 +1617,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/translation-manager.md",
-      "lines": 442,
+      "lines": 446,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -2948,7 +2948,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/review-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
       "localId": "review-agent",
-      "actorKind": "system",
+      "actorKind": "agent",
       "title": "Review Agent",
       "description": "LLM agent performing NON-MECHANICAL validation — accuracy, voice, exposition, whether a change says what the editor meant. Judgement calls escalate to a human reviewer or SME.",
       "roles": [
@@ -3095,7 +3095,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/authoring-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
       "localId": "authoring-agent",
-      "actorKind": "system",
+      "actorKind": "agent",
       "title": "Authoring Agent",
       "description": "LLM agent that drafts and revises a PROPOSED change to a content block. It never commits: its output enters the HCI validation pipeline and the editor accepts, revises or discards it.",
       "roles": [
@@ -3144,7 +3144,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/evidence-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
       "localId": "evidence-agent",
-      "actorKind": "system",
+      "actorKind": "agent",
       "title": "Evidence agent",
       "description": "Retrieves and appraises external evidence for a guideline claim, against trusted registries it does not control.",
       "roles": [
@@ -3280,7 +3280,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/ingestion-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
       "localId": "ingestion-agent",
-      "actorKind": "system",
+      "actorKind": "agent",
       "title": "Ingestion engine",
       "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material itself.",
       "roles": [
@@ -3298,7 +3298,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/onboarding-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
       "localId": "onboarding-agent",
-      "actorKind": "system",
+      "actorKind": "agent",
       "title": "Onboarding agent",
       "description": "The authoring agent acting before there is a folio: clarifying what \"create a folio\" means here, scanning an existing repo, scaffolding, and reporting the published URL only once it answers.",
       "roles": [

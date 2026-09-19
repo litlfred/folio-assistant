@@ -475,7 +475,7 @@
   <tbody>
     <tr>
       <td><strong>Actor</strong></td>
-      <td>a concrete participant. Human or agentic. Persists across every process.</td>
+      <td>a concrete participant. Human, agentic or mechanical. Persists across every process.</td>
       <td><code class="language-plaintext highlighter-rouge">.claude/skills/actors/*.json</code></td>
     </tr>
     <tr>
@@ -580,6 +580,167 @@ re-litigates.</p>
 which is what lets that criterion gate on the undeclared ones instead of
 staying advisory for ever.</p>
 </blockquote>
+<h2 id="an-actor-is-one-of-three-kinds--human-agentic-mechanical">
+  
+  
+    <a href="#an-actor-is-one-of-three-kinds--human-agentic-mechanical" class="anchor-heading" aria-labelledby="an-actor-is-one-of-three-kinds--human-agentic-mechanical"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An actor is one of three kinds — human, agentic, mechanical
+  
+  
+</h2>
+    
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ci-pipeline"</span><span class="p">,</span><span class="w"> </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CI pipeline"</span><span class="p">,</span><span class="w"> </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"system"</span><span class="p">,</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">kind</code> takes one of four values, and three of them are the classification that
+matters. <code class="language-plaintext highlighter-rouge">external</code> is the fourth: a participant outside this instance, which is
+not ours to task at all.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">kind</code></th>
+      <th>the kind it names</th>
+      <th>what it can be handed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">person</code></td>
+      <td><strong>human</strong></td>
+      <td>a skill to read, and a judgement to make</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">agent</code></td>
+      <td><strong>agentic</strong></td>
+      <td>a skill to read, and a judgement to make</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">system</code></td>
+      <td><strong>mechanical</strong></td>
+      <td>a program to run, and nothing to decide</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">external</code></td>
+      <td>outside this instance</td>
+      <td>nothing</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>The line is judgement.</strong> An agent and a person can both be handed an
+instruction body and asked to decide something; a mechanical system executes a
+procedure and decides nothing. That is not a taxonomy for its own sake — it is
+what says whether a given step may be given to a given participant.</p>
+
+<p><strong>It was two values until 2026-09-19 and the conflation was the defect.</strong> Every
+entry carried <code class="language-plaintext highlighter-rouge">type</code>, which read <code class="language-plaintext highlighter-rouge">person</code> or <code class="language-plaintext highlighter-rouge">system</code>, and <code class="language-plaintext highlighter-rouge">system</code> covered an
+LLM agent and a CI runner alike. Measured on <code class="language-plaintext highlighter-rouge">main</code> that morning: <strong>16 <code class="language-plaintext highlighter-rouge">person</code>,
+8 <code class="language-plaintext highlighter-rouge">system</code></strong> — and those 8 held <strong>five agents and three mechanical services</strong>.
+So “which tasks can this actor perform” had no answer for a third of the
+registry, because the question turns on judgement and both sides wore one label.</p>
+
+<p><strong>The distinction was already written down, in prose nothing could read.</strong>
+<code class="language-plaintext highlighter-rouge">ci-pipeline</code>’s own description has always said <em>“It runs a fixed program and
+exercises no judgement, so anything needing a decision belongs in another
+lane.”</em> <code class="language-plaintext highlighter-rouge">review-agent</code>’s says it performs <em>“NON-MECHANICAL validation …
+judgement calls escalate to a human reviewer.”</em> Both sentences state exactly
+this rule; neither was machine-readable. That is the <code class="language-plaintext highlighter-rouge">judgementOnly</code> lesson
+again — a load-bearing rule kept only in a summary is one the next pass
+re-litigates.</p>
+
+<p><strong>It was also already in a schema — the wrong one of two.</strong> <code class="language-plaintext highlighter-rouge">ACTOR_KINDS</code> in
+<code class="language-plaintext highlighter-rouge">schemas/role-graph.ts</code> has read all four values since the role graph was
+written, while <code class="language-plaintext highlighter-rouge">ActorTypeSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/skill-package.ts</code> read
+<code class="language-plaintext highlighter-rouge">["person", "system"]</code> — and the registry validated the actor files against the
+narrower one, so the four-kind vocabulary could not be used by the files it
+existed for. There is now one declaration, in <code class="language-plaintext highlighter-rouge">skill-package.ts</code> (the zod-only
+base both the registry schema and the role graph import), re-exported from
+<code class="language-plaintext highlighter-rouge">role-graph.ts</code>.</p>
+
+<p><strong>A legacy <code class="language-plaintext highlighter-rouge">type</code> still loads, and is never read as <code class="language-plaintext highlighter-rouge">agent</code>.</strong> An unmigrated
+downstream registry has not said whether its non-person actors exercise
+judgement, so they read as <code class="language-plaintext highlighter-rouge">system</code> — the reading that refuses a judgement task
+rather than granting one on a guess. Guessing from an id ending in <code class="language-plaintext highlighter-rouge">-agent</code>
+would put an unreviewed claim into the graph wearing the appearance of data.
+An unrecognised <code class="language-plaintext highlighter-rouge">kind</code> <strong>throws</strong>: coercing a typo to <code class="language-plaintext highlighter-rouge">system</code> would silently
+disqualify an actor from every task it exists to perform.</p>
+<h2 id="a-task-declares-which-actor-kinds-may-fulfil-it--mostly-without-saying-so">
+  
+  
+    <a href="#a-task-declares-which-actor-kinds-may-fulfil-it--mostly-without-saying-so" class="anchor-heading" aria-labelledby="a-task-declares-which-actor-kinds-may-fulfil-it--mostly-without-saying-so"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A task declares which actor kinds may fulfil it — mostly without saying so
+  
+  
+</h2>
+    
+
+<blockquote>
+  <p><strong>Tasks can be fulfilled by only certain actor types.</strong></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">activity-fulfilment-kind</code> checks that against the lane’s role, and almost no
+diagram has to declare anything, because <strong>BPMN already answers it and nothing
+was reading the answer</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>task type</th>
+      <th>who may perform it</th>
+      <th>from</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bpmn:userTask</code></td>
+      <td><code class="language-plaintext highlighter-rouge">person</code></td>
+      <td>the spec: “performed by a human being with the assistance of a software application”</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bpmn:serviceTask</code></td>
+      <td><code class="language-plaintext highlighter-rouge">agent</code>, <code class="language-plaintext highlighter-rouge">system</code></td>
+      <td>the spec: “uses some sort of service … a Web service or an automated application” — no human in the loop</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bpmn:task</code></td>
+      <td><strong>nothing asserted</strong></td>
+      <td>the abstract task says nothing, so neither does the check</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bpmn:callActivity</code></td>
+      <td><strong>nothing asserted</strong></td>
+      <td>the constraint belongs to the called process’s own steps</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">fulfilmentKindsForBpmnType</code> returns <code class="language-plaintext highlighter-rouge">undefined</code> for the last two, never <code class="language-plaintext highlighter-rouge">[]</code>.
+An empty list would read as <em>“no kind may perform this”</em> and fail every
+activity drawn as a plain task — the third state, in the place it is easiest
+to lose.</p>
+
+<p><strong>Scoped like <code class="language-plaintext highlighter-rouge">activity-names-skill</code>.</strong> An <code class="language-plaintext highlighter-rouge">actedUpon</code> lane records <code class="language-plaintext highlighter-rouge">n/a</code>:
+“the corpus cannot perform a serviceTask” is a finding nobody can act on. An
+activity whose lane is unbound or absent is already reported by
+<code class="language-plaintext highlighter-rouge">lane-binds-role</code> and <code class="language-plaintext highlighter-rouge">activity-in-lane</code>, so it is not reported twice here.</p>
+
+<p><strong>Override it only when the derived answer is genuinely wrong:</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bpmn:extensionElements&gt;</span>
+  <span class="nt">&lt;folio:fulfilment</span> <span class="na">kinds=</span><span class="s">"person agent"</span>
+                    <span class="na">reason=</span><span class="s">"a person or an agent drafts this; a pipeline cannot."</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/bpmn:extensionElements&gt;</span>
+</code></pre></div></div>
+
+<p>The <strong>reason is required at load time</strong> and a reasonless declaration does not
+parse — the same rule <code class="language-plaintext highlighter-rouge">&lt;folio:no-skill reason&gt;</code> follows, and for the same
+reason. Widening <code class="language-plaintext highlighter-rouge">kinds</code> is the cheapest way to make this criterion pass, so
+silencing it has to cost a sentence somebody reads in the diff.</p>
+
+<p><strong>Read a failure as a question with three answers, not one.</strong> The task type may
+be wrong, the lane may be wrong, or the step may really admit that kind — and
+only the third is a <code class="language-plaintext highlighter-rouge">&lt;folio:fulfilment/&gt;</code>. Reaching for the exemption first is
+how it becomes a rubber stamp.</p>
 <h2 id="an-actor-has-three-lists-and-they-answer-three-different-questions">
   
   
@@ -772,12 +933,18 @@ name-matched instead.</p>
 </h2>
     
 
-<p>Fourteen criteria, one per join in the sentence at the top:</p>
+<p>One criterion per join in the sentence at the top. The list below is the
+actor→role→skill→task core; <strong><code class="language-plaintext highlighter-rouge">KG_CRITERIA</code> in <code class="language-plaintext highlighter-rouge">schemas/kg-qa.ts</code> is the
+registry</strong>, and it is longer — it also covers requirements, skill bodies and
+the graph as a whole. This said “Fourteen criteria” while the registry held
+<strong>32</strong>, which is the same defect the audit exists to catch, one level up: a
+count in prose is a claim, and the thing it counts is a file you can read.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>activity ──names────▶ skill      skill-ref-resolves             critical
 gateway  ──computes─▶ decision   decision-ref-resolves          critical
 lane     ──is───────▶ role       role-ref-resolves              critical
 activity ──sits in──▶ lane       activity-in-lane               major
+task type─can be done by▶ kind   activity-fulfilment-kind       major
 lane     ──is───────▶ role       lane-binds-role                major
 role     ──carries──▶ skill      role-carries-activity-skill    major
 decision ──is used──▶ gateway    decision-outcomes-used         major
@@ -904,7 +1071,9 @@ group of something else is a one-line addition.</p>
 <ol>
   <li>Add it to <code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code> with a <code class="language-plaintext highlighter-rouge">summary</code> that says what the
 <strong>position</strong> is, not what it is called. <code class="language-plaintext highlighter-rouge">actorKind</code> is <code class="language-plaintext highlighter-rouge">person</code>, <code class="language-plaintext highlighter-rouge">agent</code>,
-<code class="language-plaintext highlighter-rouge">system</code> or <code class="language-plaintext highlighter-rouge">external</code>.</li>
+<code class="language-plaintext highlighter-rouge">system</code> or <code class="language-plaintext highlighter-rouge">external</code> — human, agentic, mechanical, or outside this
+instance. It is what <code class="language-plaintext highlighter-rouge">activity-fulfilment-kind</code> checks the lane’s steps
+against, so it is a claim about who can actually stand there, not a label.</li>
   <li>Bind its lanes — <code class="language-plaintext highlighter-rouge">&lt;folio:role ref&gt;</code> in new diagrams, <code class="language-plaintext highlighter-rouge">lanes[]</code> for an
 existing name you are not renaming.</li>
   <li>Give it the skills its lane’s activities name. <code class="language-plaintext highlighter-rouge">role-carries-activity-skill</code>
@@ -928,7 +1097,7 @@ either a lane name has drifted, or the role is dead.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35425191798"><code>12f7a18</code></a> &middot; 2026-09-19T05:55:31Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35425849126"><code>e1c0e75</code></a> &middot; 2026-09-19T06:10:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
