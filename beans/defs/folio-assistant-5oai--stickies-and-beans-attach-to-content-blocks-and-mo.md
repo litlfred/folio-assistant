@@ -67,20 +67,27 @@ chat that is gone.
 
 ## Done when
 
-- [ ] the duplicate-vs-move reading is confirmed or corrected
-- [ ] `Todo` carries a block anchor, with **page-global as a real third state**
-      rather than a sentinel block id
-- [ ] **beans carry NO anchor** — owner's rule, 2026-09-19. A bean records that
+- [x] the duplicate-vs-move reading is confirmed — owner, 2026-09-19: a drop
+      is always a MOVE; duplication is a separate explicit action
+- [x] `Todo` carries a block anchor, with **page-global as a real third state**
+      rather than a sentinel block id — `schemas/note-anchor.ts`, reached by
+      `TodoNodeSchema` through `CarriedNoteSchema`
+- [x] **beans carry NO anchor** — owner's rule, 2026-09-19. A bean records that
       a move happened (a note, which `bean-link.ts` already writes); it is not
       itself pinned to a block. Done when the rule is written where somebody
       about to "finish the job" will read it, and guarded.
 - [x] `todo-graph.ts`'s prose claim is corrected — neither "true" nor
       "removed" but ACCURATE: the items/feedback split is a filing convention,
       not a schema distinction, and the comment now says so
-- [ ] move / transfer / duplicate exist, with a test proving a move **re-anchors
-      rather than re-creates** (the id survives)
-- [ ] a drop never implicitly duplicates, proved by a test that would fail if it
-      did
+- [x] move / transfer / duplicate exist, with a test proving a move **re-anchors
+      rather than re-creates** (the id survives). **`transfer` is not a third
+      function**: dropping a sticky onto a new page IS `moveNote` to a `page`
+      anchor, and a second name calling the first would be two spellings of one
+      concept — the drift this repo keeps paying for. If transfer later means
+      something move does not (crossing documents, say), it earns its own name
+      then.
+- [x] a drop never implicitly duplicates, proved by a test that would fail if
+      it did — `duplicateNote` cannot be called without naming the copy
 - [ ] `process-state` names the transfer/move skills in its recovery path
 - [ ] a worked example of a bean read back as an audit trail of one off-track
       recovery
