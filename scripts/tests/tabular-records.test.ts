@@ -145,15 +145,16 @@ describe("a CSV is read without guessing", () => {
 });
 
 describe("the narrative slot is declared empty, never invented", () => {
-  test("a fresh record is `not-authored` with a null narrative", () => {
+  test("a fresh record is `not-authored` with no text", () => {
     const d = tmp();
     const r = extract(csv(d, "a,b\n1,2\n3,4\n"), join(d, "lib"));
     expect(r.success).toBe(true);
     if (!r.success) return;
     // Headers are RIGHT THERE and a plausible summary could be assembled from
-    // them. It is not, because that would be a claim nobody made.
-    expect(r.data.narrative).toBeNull();
-    expect(r.data.narrative_state).toBe("not-authored");
+    // them. It is not, because shipping one as the answer is a claim nobody
+    // made. Drafting one and SAYING SO is a different act — `state: "draft"`.
+    expect(r.data.narrative.text).toBeNull();
+    expect(r.data.narrative.state).toBe("not-authored");
   });
 
   test("the schema refuses a record that says two things at once", () => {
@@ -161,10 +162,27 @@ describe("the narrative slot is declared empty, never invented", () => {
     const r = extract(csv(d, "a,b\n1,2\n3,4\n"), join(d, "lib"));
     expect(r.success).toBe(true);
     if (!r.success) return;
-    expect(TabularRecordsSchema.safeParse({ ...r.data, narrative_state: "authored" }).success).toBe(false);
-    expect(TabularRecordsSchema.safeParse({ ...r.data, narrative: "a summary" }).success).toBe(false);
+    const with_ = (n: unknown) => TabularRecordsSchema.safeParse({ ...r.data, narrative: n }).success;
+    // Text without a state that admits it, and a state that claims text there
+    // is none of, are both refused (bean `ju0u`).
+    expect(with_({ text: "a summary", state: "not-authored" })).toBe(false);
+    expect(with_({ text: null, state: "draft" })).toBe(false);
+    // And an agent cannot confirm its own draft.
     expect(
-      TabularRecordsSchema.safeParse({ ...r.data, narrative: "a summary", narrative_state: "authored" }).success,
+      with_({
+        text: "a summary",
+        state: "confirmed",
+        drafted_by: { kind: "agent", id: "claude-code", model: "claude-opus-5" },
+        confirmed_by: { kind: "agent", id: "claude-code", model: "claude-opus-5" },
+      }),
+    ).toBe(false);
+    expect(
+      with_({
+        text: "a summary",
+        state: "confirmed",
+        drafted_by: { kind: "agent", id: "claude-code", model: "claude-opus-5" },
+        confirmed_by: { kind: "human", id: "litlfred" },
+      }),
     ).toBe(true);
   });
 });

@@ -221,14 +221,53 @@ tool needing openpyxl would pass locally and fail there. Everything this arm
 needs is in `xl/workbook.xml` and each sheet's `<dimension>`. Verified by
 reading back a workbook openpyxl itself wrote, **with openpyxl uninstalled**.
 
-### The narrative is declared empty, never fabricated
+### The narrative is a state machine — drafted by an agent, confirmed by a person
 
-`narrative: null`, `narrative_state: "not-authored"`. A description of what a
-dataset is *about* is somebody's account and needs an author; the headers are
-right there and a plausible summary could be assembled from them, and that is
-exactly why it isn't. When one is written it carries an `Attribution`
-([above](#provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible)).
-The schema refuses a record that says both things at once.
+`schemas/narrative.ts`: `not-authored` → `draft` → `confirmed`, with `rejected`
+as a real fourth state. The owner chose this (2026-09-19) over plain agent
+attribution and over writing every narrative by hand.
+
+**Two attributions, because they are two acts.** `drafted_by` is who wrote the
+words; `confirmed_by` is who accepted them. The question a reader most wants
+answered is not "did a machine touch this" but "has a person agreed to it".
+
+**An agent cannot confirm its own draft** — `confirmed_by.kind` must be
+`"human"`, structurally. That one refinement is the entire difference between
+the chosen design and the one it replaced: without it, `confirmed` degrades
+into "an agent said so twice".
+
+**But a rule about who may act cannot be enforced by a rule about what is
+written.** Driving the CLI in an agent container wrote
+`"rejected_by": {"kind": "human", "id": "Claude"}` — `git config user.name` is
+the agent's, so it recorded *itself* as the reviewer, and the schema could not
+see it. `reviewer()` therefore refuses outside a terminal: a person confirming
+at a prompt has one, an agent's subprocess and CI do not. **This stops accident,
+not fraud** — an agent that set out to forge a confirmation could allocate a pty
+— but it makes it impossible to confirm a narrative *while going about other
+work*, which is the failure that would actually have happened.
+
+**`rejected` keeps its reasons.** A rejected draft silently re-offered wastes
+the reviewer's time; one that vanishes lets the next agent redraft the identical
+thing — the argument `scrapped` wins on for beans, and the one
+`qa-review.ts`'s `Decision` makes by requiring a note saying why this outcome
+and not another.
+
+### Reviewing: `bun run narratives`
+
+Numbered list, numbered reasons, because the owner has very limited hand
+function and a review step that demands a typed sentence is one that will not
+happen — at which point `confirmed` means "nobody got round to objecting",
+which is worse than not having the state.
+
+```sh
+bun run narratives                     # what is waiting on you
+bun run narratives:confirm 1
+bun run narratives:reject 1 --why 2    # or --why-text "..."
+```
+
+`check:l1-complete`'s `narrative-review` validates every narrative-bearing file.
+A `draft` is **reported, not failed**: it is work waiting on a person, and
+failing it would make an unreviewed queue indistinguishable from a broken arm.
 
 A null `rows`/`columns` is likewise not an empty sheet: `shape_source` says
 whether the shape was read, counted, or `undetermined`.

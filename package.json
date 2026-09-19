@@ -123,7 +123,10 @@
     "translation:index:check": "bun run content/pipeline/translation-index.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "ci:gates": "bun run scripts/ci-gates.ts",
-    "ci:gates:list": "bun run scripts/ci-gates.ts --list"
+    "ci:gates:list": "bun run scripts/ci-gates.ts --list",
+    "narratives": "bun run scripts/narratives.ts",
+    "narratives:confirm": "bun run scripts/narratives.ts confirm",
+    "narratives:reject": "bun run scripts/narratives.ts reject"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
