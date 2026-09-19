@@ -1,61 +1,79 @@
 ---
 layout: default
-title: Session Task Manager (`beans`)
+title: Todo Manager
 parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/todo-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/todo-manager.md) — do not edit here.
+> Generated from [`.claude/skills/local/todo-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/.claude/skills/local/todo-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/todo-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/.claude/skills/local/todo-manager.md){: .fa-edit-source }
 
 {% raw %}
 > **Two different skills share this name, and this is one of them.**
-> The other is [Todo Manager — cross-agent coordination (local)](local-todo-manager.html), from `.claude/skills/local`.
+> The other is [Session Task Manager (folio-core)](todo-manager.html), from `skills/folio-core`.
 > They are **not** copies: measured 2026-09-19 they differ by 202 diff
 > lines and each carries sections the other does not. Which is canonical
 > is an open question — `AGENTS.md` leaves it to whoever owns the skills
 > layout, and bean `rmer` tracks it. Read both before relying on either.
 
-# Session Task Manager (`beans`)
+# Todo Manager — beans work-plan & cross-agent coordination
 
-> **Disambiguation:**
-> - `beans` (`todo-manager`, this file) = the agent's **session work-plan**.
->   Managed entirely via the `beans` CLI issue tracker (data stored in `beans/`).
-> - `sidecars` (`*.qa.json` and `*.witness.json` files) = **content state tracking**.
->   Beans and sidecars are NOT synonymous! Do NOT convert bulk QA queue items into
->   beans. They are completely separate workflow systems.
-> - `todo-review` = triage of **content feedback** stored under
->   `feedback/<paper>/` and surfaced via the MCP `/todos`
->   dashboard. That is paper-content scope, not session scope.
+The session work-plan and cross-agent coordination tracker for this repo is
+[`beans`](https://github.com/hmans/beans): a small Go flat-file issue tracker
+that stores issues as markdown under `beans/`. It is installed on demand by
+[`scripts/install-beans.sh`](../../../scripts/install-beans.sh) (fresh cloud
+sandboxes do not ship it).
 
-Instead of an in-memory list or markdown checklists, we manage session work and cross-agent coordination using the `beans` CLI issue tracker.
+`beans` supersedes ad-hoc `TodoWrite` lists and `todos/*.json` sidecars as the
+**durable** work-plan: because it is committed to the repo, a plan survives
+container reclamation and is visible to sibling agent sessions.
 
-## Installing beans (fresh sandbox / cloud container)
+## What beans are (and are not)
 
-`beans` is the [`hmans/beans`](https://github.com/hmans/beans) Go binary — a
-flat-file issue tracker storing issues as markdown under `beans/`. Cloud
-sandboxes do **not** ship it, so reinstall on demand (Go ships in the sandbox):
+- **Beans are the work-plan.** Goals, probes, and the tasks an agent claims and
+  drives to completion live as beans. They are durable and cross-session.
+- **Beans are not sidecars.** Bulk machine-generated queues — QA audits, witness
+  queues, watcher drain queues — stay as bulk JSON under `todos/` / `beans/*.json`
+  and are read by their own `.ts` tooling. **Never** `beans create` a QA/witness
+  queue entry. The discipline is: `beans ≠ sidecars`.
 
-```bash
-scripts/install-beans.sh          # idempotent; installs into a PATH dir
-# equivalently, the one-liner it runs:
-GOBIN="$HOME/.local/bin" go install github.com/hmans/beans@latest
+## Core commands
+
+```sh
+scripts/install-beans.sh      # install the CLI if missing (--force to reinstall)
+beans list                    # show the current work-plan
+beans check                   # health-check the beans/ store
+beans create "<title>"        # open a new work-plan item
+beans show <id>               # read an item
+beans <id> --status in-progress   # claim an item (durable, visible to siblings)
 ```
 
-Note: the npm package named `beans` is an unrelated abandoned tool — do **not**
-`npm install beans`. Verify with `beans list && beans check`.
+## Using beans for todos (session + cross-session)
 
-## Core Directives for Sessions
+Beans **is** the todo mechanism for agent work. Do not stand up a separate todo
+store — no API route, dashboard, or `todos/*.json` work-plan. One mechanism,
+agent-generic, durable.
 
-1. **Every session is a Bean:** At the start of your session, you MUST create a parent bean (`--type milestone` or `--epic`) that represents the session and its goals.
-   `beans create "Session: <Branch/Goal>" --type milestone`
-2. **Every todo is a Child Bean:** All tasks, probes, and action items planned for the session MUST be created as child beans (`--type task`) and linked to the session bean.
-   `beans create "<Task Title>" --type task`
-   `beans update <child-id> --parent <session-id>`
-3. **No manual `.md` checklists:** Never use `session-beans.md` or raw Markdown `- [ ]` checklists to track global tasks. Always use the `beans` CLI to prevent namespace pollution and maintain the official project tracking.
-4. **Check before you create:** `beans create` is **not** idempotent. Run the existence check below before every `beans create` — no exceptions, including the session milestone.
-5. **Brief before you work:** claiming a bean records *which* item is taken; the opening brief records what it is taken **for**. Write it before the first tool call, in the chat. See §"Opening brief" below.
+**Session todos (your work-plan for this session).** Track anything you want to
+persist as beans, not in your agent's ephemeral in-memory todo tool (e.g.
+Claude's `TodoWrite`, or equivalents). The in-memory list is fine for
+throwaway intra-turn scratch, but it evaporates when the container is reclaimed.
+Open a bean per task, mark it `in-progress` as you start, close it when done —
+because `beans/` is committed, the plan survives a resume in a fresh container.
+
+**Cross-session / cross-agent coordinated todos.** The same committed `beans/`
+store is the shared work-plan across sibling sessions and across different agent
+CLIs. Claim before you work (set `in-progress` + note your branch) so two
+sessions don't pick the same item; never resolve a sibling's bean, and never delete ANY bean — scrap with reasons instead. See
+`bean-coordination.md` for the full claim/handoff lifecycle.
+
+**What beans is *not* for:**
+- Bulk machine-generated queues (QA `*.qa.json`, witness `*.witness.json`,
+  watcher drain queues) — `beans ≠ sidecars`; keep those as bulk JSON.
+- Content-review feedback on *published documents* — that is a separate domain
+  workflow (the `todo-review` skill over `feedback/<paper>/*.ts`), not the agent
+  work-plan. Don't conflate the two.
 
 ## Opening brief
 
@@ -245,7 +263,7 @@ terseness. Rule 4 replaces it.
 
 Rules 1 and 5 above say the next item needs a gloss and a reason. This is the
 stronger form for the case where **next** also hands over a *decision*:
-[`interaction-modality.md` §4.1](interaction-modality.md)
+[`interaction-modality.md` §4.1](../../../skills/folio-core/interaction-modality.md)
 governs it — context → options → recommendation → question — and the test is
 whether the author can answer **without opening anything**.
 
@@ -272,45 +290,6 @@ Barely longer, and answerable in one character.
 will not fit, say the decision exists and that you will put it properly when you
 reach it — never post a teaser whose only resolution is a document.
 
-## Check before you create — `beans create` is not idempotent (STRICT)
-
-`beans create` mints a **fresh random ID on every call** and dedupes on
-nothing. Re-running a work-plan step is therefore *not* a no-op — it creates a
-second bean. **Before every `beans create`, check whether the bean exists:**
-
-```bash
-T="Prove Foo.bar"
-beans list --json --search "title:\"$T\"" | python3 -c '
-import json, sys
-t = sys.argv[1]
-m = [b for b in json.load(sys.stdin) if b["title"] == t]
-print(f"{len(m)} exact match(es)")
-[print(" ", b["id"], b["status"]) for b in m]' "$T"
-```
-
-- **≥ 1 match** → do **not** create. Claim the existing bean instead:
-  `beans update <id> --status in-progress --body-append "Claimed by <branch>"`
-- **0 matches** → `beans create "$T" --type task`
-
-`--search` is a fuzzy Bleve query, so the exact-title comparison inside the
-pipe is load-bearing — do not drop it and trust `--search` alone.
-
-**Why this is STRICT.** In the `qou` folio on 2026-08-04, one agent context
-re-ran its 15-bean session work-plan ~980 times back-to-back (median 19 s per
-cycle, ~16 h wall). Because `create` is unconditional, that produced **14,688
-duplicate beans** — 92 % of every open bean in that repo. The damage was not
-just clutter:
-
-- the session-start sweep and the idle-backlog policy were reading mostly noise;
-- ~980 copies of an already-proved item sat at `todo`;
-- the duplicates **collided with the IDs of 15 real beans**, making
-  `beans update <id>` ambiguous for those;
-- they corrupted a later agent's own corpus-grep — 4,928 `beans` files matched
-  one search term across just 36 titles, inflating 14 real source files into an
-  apparent 54 and nearly landing a false correction in a PR body.
-
-The runaway loop is not something a doc can prevent; an unguarded `create` is.
-This rule is platform-level so every folio inherits it.
 
 ## When the `beans` CLI is not there — you are still not read-only
 
@@ -337,30 +316,28 @@ instead. The CLI's `create` does not, and that is the mechanism behind the
 14,688 duplicates in `qou`. `--force` exists for a genuinely intended duplicate
 and has to be typed.
 
-## Working with Beans
+## Coordination discipline
 
-**1. Finding Tasks**
-Use `beans list` to find beans you should work on. Look for `todo` or `in-progress` beans that match your current scope/branch.
+1. **Claim before you work.** Mark the bean `in-progress` so sibling sessions
+   working the same goal do not duplicate the effort.
+   **Brief it in the same turn you claim it** (§"Opening brief" above). The
+   claim tells a sibling the item is taken; the brief tells them, and the
+   author, what it is being taken *for*.
+2. **One source of truth per concern.** Do not fork a bean into a parallel
+   `todos/*.json` queue; link to the queue from the bean instead.
+3. **Move wiring and script together.** When relocating a hook-backed script,
+   move its hook reference in the same change — a script without its wiring (or a
+   hook reference without its script) is the migration failure mode that left
+   dangling references behind (see `docs/folio-assistant-migration.md` §2).
+4. **Close on landing.** When the work lands, close the tracking bean and update
+   any cross-repo ownership note.
 
-**2. Setting Dependencies**
-You can map out sequence blockers using:
-`beans update <id> --blocked-by <blocker-id>`
-`beans update <id> --blocking <blocked-id>`
+## Relationship to other surfaces
 
-**3. Updating Status & Adding Comments**
-- When starting work: `beans update <id> --status in-progress`
-- When completed: `beans update <id> --status completed`
-- To add notes or discussion: `beans update <id> --body-append "Your note"`
-
-## Status Display Format
-
-When the user asks "status" or "show beans", run `beans list` and display the hierarchy:
-
-```
-## Session Beans
-- [epic-123] Session: <branch-name> (in-progress)
-  - [task-124] Task A (completed)
-  - [task-125] Task B (in-progress)
-  - [task-126] Task C (todo)
-```
+- `scripts/session-start-coord-sweep.sh` — CLI-independent session-start surface:
+  fetches `origin/main`, summarizes sibling branch activity. Works even when the
+  `beans` CLI is absent.
+- `scripts/install-beans.sh` — provisions the `beans` CLI.
+- See `docs/folio-assistant-migration.md` for the full migration plan and the
+  open requirements for the qou-side / settings.json agent.
 {% endraw %}

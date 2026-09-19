@@ -77,7 +77,55 @@ interface Group {
   dir: string;
   /** GitHub path prefix for the "source" link. */
   repoPrefix: string;
+  /**
+   * Prefix for the PUBLISHED filename, for a group whose basenames can collide
+   * with another group's.
+   *
+   * The output directory is flat. `.claude/skills/local/todo-manager.md` and
+   * `skills/folio-core/todo-manager.md` share a basename and are NOT copies of
+   * each other — measured 2026-09-19, 323 and 356 lines, 202 diff lines, and
+   * each carries sections the other does not: the local one has the
+   * cross-agent coordination material, the folio-core one has installation,
+   * status format and the STRICT check-before-you-create rule. Publishing both
+   * unprefixed would have one silently overwrite the other, and which copy is
+   * canonical is a question `AGENTS.md` deliberately leaves open (bean `rmer`).
+   *
+   * So the prefix is not cosmetic: it is what lets both be published, which is
+   * what makes the divergence visible instead of letting the generator pick a
+   * winner by directory order.
+   */
+  publishPrefix?: string;
 }
+
+/**
+ * Basenames held by more than one group as GENUINELY DIFFERENT documents.
+ *
+ * Not a list of duplicates to deduplicate — the generator's `written` map
+ * already collapses a true duplicate. This is the opposite case: one name, two
+ * documents, neither a copy of the other, which the flat output directory would
+ * otherwise resolve by whichever group ran first.
+ *
+ * Kept as data rather than inferred by diffing, because "these two files differ"
+ * is not the same claim as "these two files are meant to be different". The
+ * first is measurable and the second is a judgement somebody has to make.
+ */
+const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
+  string,
+  Array<{ published: string; label: string; repoPrefix: string }>
+> = {
+  "todo-manager": [
+    {
+      published: "todo-manager",
+      label: "Session Task Manager (folio-core)",
+      repoPrefix: "skills/folio-core",
+    },
+    {
+      published: "local-todo-manager",
+      label: "Todo Manager — cross-agent coordination (local)",
+      repoPrefix: ".claude/skills/local",
+    },
+  ],
+};
 
 const GROUPS: Group[] = [
   { category: "Lifecycle skills", dir: join(REPO_ROOT, "skills", "content-lifecycle"), repoPrefix: "skills/content-lifecycle" },
@@ -85,6 +133,20 @@ const GROUPS: Group[] = [
   { category: "Platform core (folio-core)", dir: join(REPO_ROOT, "skills", "folio-core"), repoPrefix: "skills/folio-core" },
   { category: "Document adapter (folio-document-adapter)", dir: join(REPO_ROOT, "skills", "folio-document-adapter"), repoPrefix: "skills/folio-document-adapter" },
   { category: "Paper adapter (folio-paper-adapter)", dir: join(REPO_ROOT, "skills", "folio-paper-adapter"), repoPrefix: "skills/folio-paper-adapter" },
+  // Local skills — the harness-specific ones under `.claude/skills/local/`.
+  //
+  // Absent from this list until 2026-09-19, which meant the authoritative spec
+  // for the ten `trap-*` criteria was neither published nor guarded by
+  // `--check`, while the copy of `todo-manager.md` beside it carried the MOST
+  // inbound references of the three and had no guard at all (`AGENTS.md`, bean
+  // `rmer`). Only `.md` files are read, so the 23 `.json` capability and skill
+  // descriptors in that directory are not mistaken for instruction bodies.
+  {
+    category: "Local skills (.claude/skills/local)",
+    dir: join(REPO_ROOT, ".claude", "skills", "local"),
+    repoPrefix: ".claude/skills/local",
+    publishPrefix: "local-",
+  },
 ];
 
 /**
@@ -167,13 +229,43 @@ function main(): void {
 
     for (const file of files) {
       const name = basename(file, ".md");
-      if (written.has(name)) {
-        indexRows[group.category].push(`| [${name}](${name}.html) | \`${name}\` | — | _also in ${written.get(name)} (same page)_ |`);
-        console.log(`  ↪ ${name} (dup — kept ${written.get(name)})`);
+      const published = `${group.publishPrefix ?? ""}${name}`;
+      // Keyed on the PUBLISHED name, not the source basename. Two groups may
+      // legitimately hold different documents under one basename — measured
+              // 2026-09-19, `.claude/skills/local/todo-manager.md` (323 lines) and
+      // `skills/folio-core/todo-manager.md` (356) differ by 202 diff lines and
+      // each has sections the other lacks — and the old key made the generator
+      // drop the second one while the index claimed it was "(same page)". A
+      // false claim about two documents is worse than either publishing or
+      // omitting one, because a reader stops looking.
+      if (written.has(published)) {
+        indexRows[group.category].push(
+          `| [${name}](${published}.html) | \`${name}\` | — | _also in ${written.get(published)} (same page)_ |`,
+        );
+        console.log(`  ↪ ${published} (dup — kept ${written.get(published)})`);
         continue;
       }
+      // Where another group holds the same basename as a DIFFERENT document, say
+      // so on both pages. A reader who lands on one of them has no way to know
+      // the other exists, and `AGENTS.md` leaves open which is canonical (bean
+      // `rmer`) — so the honest thing is to name the other page and the open
+      // question, not to pick a winner in a generator.
+      const twin = SAME_BASENAME_DIFFERENT_DOCUMENT[name];
       const raw = readFileSync(join(group.dir, file), "utf-8");
-      const body = withParts(group.dir, name, stripFrontMatter(raw).replace(/^\n+/, ""));
+      let body = withParts(group.dir, name, stripFrontMatter(raw).replace(/^\n+/, ""));
+      if (twin) {
+        const other = twin.find((t) => t.published !== published);
+        if (other) {
+          body =
+            `> **Two different skills share this name, and this is one of them.**\n` +
+            `> The other is [${other.label}](${other.published}.html), from \`${other.repoPrefix}\`.\n` +
+            `> They are **not** copies: measured 2026-09-19 they differ by 202 diff\n` +
+            `> lines and each carries sections the other does not. Which is canonical\n` +
+            `> is an open question — \`AGENTS.md\` leaves it to whoever owns the skills\n` +
+            `> layout, and bean \`rmer\` tracks it. Read both before relying on either.\n\n` +
+            body;
+        }
+      }
       const title = deriveTitle(body, name);
 
       const hasSchema = existsSync(join(SCHEMA_DIR, `${name}.md`));
@@ -211,13 +303,13 @@ function main(): void {
       page.push(body.trimEnd());
       page.push("{% endraw %}");
       page.push("");
-      emit(join(OUT_DIR, `${name}.md`), page.join("\n"));
-      written.set(name, group.category);
+      emit(join(OUT_DIR, `${published}.md`), page.join("\n"));
+      written.set(published, group.category);
 
       const desc = escapePipes((body.match(/^#\s+.+\n+([^\n#].*)$/m)?.[1] ?? "").slice(0, 100));
       const schemaCell = hasSchema ? `[schema](../skills/${name}.html)` : "—";
-      indexRows[group.category].push(`| [${title}](${name}.html) | \`${name}\` | ${schemaCell} | ${desc} |`);
-      console.log(`  ✓ ${name}.md (${group.category})`);
+      indexRows[group.category].push(`| [${title}](${published}.html) | \`${name}\` | ${schemaCell} | ${desc} |`);
+      console.log(`  ✓ ${published}.md (${group.category})`);
     }
   }
 
