@@ -229,20 +229,20 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T08:26:55.326Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/48df3f2f737d8682113e0cbc471908f1af4a002d",
-  "sourceCommitSha": "48df3f2f737d8682113e0cbc471908f1af4a002d",
-  "sourceCommitAt": "2026-09-19T08:25:06Z",
+  "generatedAt": "2026-09-19T08:38:47.762Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5284028c673f30f7badcd34100910da4820b4b56",
+  "sourceCommitSha": "5284028c673f30f7badcd34100910da4820b4b56",
+  "sourceCommitAt": "2026-09-19T08:37:20Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 150,
+    "Skill": 151,
     "Actor": 25,
     "Capability": 23,
     "Role": 64,
     "SkillPackage": 8,
-    "Process": 30,
-    "SequenceFlow": 416,
-    "ProcessNode": 387,
+    "Process": 32,
+    "SequenceFlow": 441,
+    "ProcessNode": 412,
     "Tool": 27,
     "Schema": 39,
     "GraphKind": 14,
@@ -729,6 +729,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/scientific-accuracy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "upstream-version-adoption",
+      "title": "Adopting an upstream version bump",
+      "description": "Watch a pinned upstream dependency for a new release, and take a candidate version through impact analysis, an MVP build, review and a person's adopt/hold/decline decision. Reusable per pin — the theme is the first tenant, not the only one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/upstream-version-adoption.md",
+      "instructionLines": 198,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/upstream-version-adoption"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/watch",
@@ -3734,6 +3750,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/untrusted-input",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/uses-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/voice-overlay-review",
@@ -5089,6 +5106,425 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/End_Pipeline"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
+      "name": "Adopting an upstream version bump",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/upstream-version-adoption.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Start_Adopt"
+      ],
+      "nodeCount": 13,
+      "flowCount": 14,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_1",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Start_Adopt",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Scope",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_2",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Scope",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Impact",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_3",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Impact",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Task_Mvp",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_4",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Task_Mvp",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Task_Gates",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_5",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Task_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Evidence",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_6",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Evidence",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/R_Review",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_7",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/R_Review",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Findings",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_8",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Findings",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Impact",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_9",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Findings",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/PM_Decide",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_10",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/PM_Decide",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Adopt",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_11",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Adopt",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_ApplyPin",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_12",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Adopt",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_RecordOutcome",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_13",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_ApplyPin",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/End_Adopt",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_14",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_RecordOutcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/End_Adopt",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Role",
+      "name": "Agent",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Start_Adopt",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Candidate version identified",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Start_Adopt"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Scope",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Scope the delta pinned → candidate",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_2"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Scope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Impact",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Impact analysis what of ours binds it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Impact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Task_Mvp",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "MVP: build the candidate on a staging branch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_4"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Task_Mvp"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Task_Gates",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Run the row's gates tests · e2e · site-links",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/content-test"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Task_Gates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Evidence",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Post the MVP evidence staging URL + gate results",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/delivery-summary"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_6"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_Evidence"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Role",
+      "name": "Reviewer / SME",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20/%20SME"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/R_Review",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Review the MVP against what we bind to",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_7"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/R_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Findings",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Findings we can fix?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_9"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Findings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Publication%20manager",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Role",
+      "name": "Publication manager",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/PM_Decide",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Adopt, hold or decline",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Publication%20manager",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_10"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/PM_Decide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Adopt",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Adopt?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Publication%20manager",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_12"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/GW_Adopt"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_ApplyPin",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Move the pin and open the PR",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/prepare-merge"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_13"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_ApplyPin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_RecordOutcome",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Record the hold or the decline",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_14"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/A_RecordOutcome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/End_Adopt",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Decision recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_13",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_14"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/End_Adopt"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_CRDM_Close",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
       "name": "CRDM close-out",
@@ -5203,13 +5639,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_3"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Close/node/BA_Confirm"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Role",
-      "name": "Agent",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_CRDM_Close/node/A_Close",
@@ -5602,13 +6031,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_PaperAuthoring/flow/A10"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/node/Task_Render"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Reviewer%20/%20SME",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Role",
-      "name": "Reviewer / SME",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20/%20SME"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_PaperAuthoring/node/Task_Review",
@@ -6025,13 +6447,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_Publication/flow/G07"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Publication/node/CallActivity_Editing"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Publication%20manager",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Role",
-      "name": "Publication manager",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_Publication/node/Task_CirculateDraft",
@@ -10616,6 +11031,346 @@
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/End_Process_CRDM_Signoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
+      "name": "Watching a pinned upstream dependency",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/upstream-pin-watch.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Start_Sweep"
+      ],
+      "nodeCount": 12,
+      "flowCount": 11,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_1",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Start_Sweep",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_ReadPins",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_2",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_ReadPins",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_QueryUpstream",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_3",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_QueryUpstream",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Determined",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_4",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Determined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Unknown",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_5",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Determined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Stale",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_6",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Stale",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_CloseIssue",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_7",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_CloseIssue",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Current",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_8",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Stale",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_TrackIssue",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_9",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_TrackIssue",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/A_PickUp",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_10",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/A_PickUp",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Call_Adopt",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_11",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Call_Adopt",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Handled",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Start_Sweep",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Weekly, or on dispatch",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Start_Sweep"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_ReadPins",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Read the pin registry upstream-pins.json",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_2"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_ReadPins"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_QueryUpstream",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "List upstream releases and compare to the pin",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_QueryUpstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Determined",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Could we tell?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Determined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Unknown",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Unknown — issue untouched, job red",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_4"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Unknown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Stale",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Behind a release?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_6",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_8"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/GW_Stale"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_CloseIssue",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Close the tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_7"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_CloseIssue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Current",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Every pin current",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_7"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Current"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_TrackIssue",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Open or EDIT the one tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_9"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Task_TrackIssue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/A_PickUp",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Pick up the stale pin claim a bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_10"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/A_PickUp"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Call_Adopt",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Adopt the version bump",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_11"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/Call_Adopt"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Handled",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Decision recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_UpstreamPinWatch/flow/SF_PW_11"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch/node/End_Handled"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pin-theme-upstream-watch/folio-assistant.jsonld#process/Process_CodeReview",
@@ -18070,8 +18825,8 @@
   ],
   "staging": {
     "branch": "claude/pin-theme-upstream-watch",
-    "sha": "6b82da10564089d71dc7a2b9e9e02b6ef7d9436d",
+    "sha": "7e861e7fa25a26f034c3215ffc68c5d1820cb22a",
     "pr": "362/merge",
-    "run": "35431955616"
+    "run": "35432498378"
   }
 }
