@@ -1,0 +1,86 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_ActivityLog",
+    "path": "skills/workflows/activity-log.bpmn"
+  },
+  "source_hash": "sha256:e7c49d03fd2872e3b4fd32f8c2da9ad42a7f5222defe8e6b06cce6e91d26ee59",
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_LogStart",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_LogMessage",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_LogEnd",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_PersistLog",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_ReportCaptureState",
+          "detail": "needs skill \"activity-log\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_EmptyOne",
+          "detail": "needs skill \"activity-log\", but its lane's role \"user\" does not carry it."
+        },
+        {
+          "where": "A_EmptyAll",
+          "detail": "needs skill \"activity-log\", but its lane's role \"user\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 1,
+    "n/a": 3,
+    "unknown": 0
+  }
+}

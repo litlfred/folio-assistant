@@ -27,6 +27,7 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { codeWithoutComments } from "../repo-files.js";
 
 const ROOT = join(import.meta.dir, "../..");
 const GEN = readFileSync(join(ROOT, "scripts/generate-docs.ts"), "utf8");
@@ -85,8 +86,18 @@ describe("the reason the page has to say that is still true", () => {
   // rediscovered. `manifest-skill-exists` would also want its allowance back;
   // `manifest-remote-resolution.test.ts` records that half.
   test("neither skill_fetch nor the registry reads skills/remote-packages/", () => {
+    // CODE, not prose. This asserted on the raw file text until 2026-09-19,
+    // when a documentation comment in `skill-fetch.ts` naming the directory —
+    // as one of seven a naive scan would wrongly treat as a skill package —
+    // turned it red while the behaviour it guards was untouched.
+    //
+    // That is the failure mode this file's sibling already recorded: grepping
+    // "cannot tell an implementation from a comment". Narrowing to quoted
+    // strings alone does not fix it either, because a markdown code span in a
+    // comment is backticked and backticks quote strings in TypeScript.
     for (const f of ["src/tools/skill-fetch.ts", "scripts/generate-registry.ts"]) {
-      expect(readFileSync(join(ROOT, f), "utf8")).not.toContain("remote-packages");
+      const code = codeWithoutComments(readFileSync(join(ROOT, f), "utf8"));
+      expect(code).not.toContain("remote-packages");
     }
   });
 

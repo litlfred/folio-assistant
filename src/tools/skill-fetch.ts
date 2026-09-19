@@ -4,6 +4,8 @@ import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { resolve, join } from "node:path";
 
 import { nodeSummary } from "../../scripts/front-matter.js";
+import { isSkillMd } from "../../scripts/known-skills.js";
+import { resolveSkillDirs } from "../../schemas/harness-config.js";
 
 // Session-level cache (lives for the lifetime of the MCP server process)
 const skillCache = new Map<string, { content: string; fetchedAt: number }>();
@@ -71,26 +73,90 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // reachable when something can SERVE it. `scripts/kg-audit.ts` reads this table
 // rather than keeping its own copy, so a package added here cannot be reported
 // as unreachable, and one removed here cannot pass.
-export const LOCAL_PACKAGES: Record<string, string> = {
+/**
+ * Where this instance's own one-skill package lives, and why it is named here.
+ *
+ * `src/skills/` holds exactly one skill — `corpus-grep.md`, beside the
+ * `corpus-grep.ts` that implements it — and it is **not a declared knowledge-
+ * graph directory**, so discovery cannot see it.
+ *
+ * Declaring it was tried and measured (2026-09-19): it makes discovery exactly
+ * reproduce this table, and it also trips `declared-paths`' ratchet in three
+ * scripts, because `"skills"` as a literal then names a declared path those
+ * files should be resolving instead. That is real debt the declaration
+ * surfaces rather than creates — and raising a ratchet baseline to absorb it
+ * would be recording new debt as though it were progress. So it stays a named
+ * exception with its reason, and the declaration is follow-up work.
+ */
+const CO_LOCATED_PACKAGES: Record<string, string> = {
   "folio-assistant": resolve(__dirname, "..", "skills"),
-  "content-lifecycle": resolve(__dirname, "..", "..", "skills", "content-lifecycle"),
-  // The two domain packages whose instruction bodies were written in 2026-09
-  // (bean `x180`). Their metadata and JSON Schemas had existed since the
-  // packages were created, and six BPMN diagrams named eleven of their skills,
-  // but no package held a body — so `workflow_next` handed an agent
-  // `l3-fhir-authoring` and `skill_fetch` had nothing to return. `kg:audit`'s
-  // `skill-servable` criterion is what surfaced it and is what keeps it shut.
-  "authoring-who-smart-guidelines": resolve(__dirname, "..", "..", "skills", "authoring-who-smart-guidelines"),
-  "authoring-math": resolve(__dirname, "..", "..", "skills", "authoring-math"),
-  // `authoring-document` was registered here as a "bundle over
-  // folio-document-adapter's bodies". It pointed at a directory holding a
-  // manifest and no instruction body, so `skill_fetch` on it returned nothing
-  // while `folio-document-adapter` — registered below, and holding all four —
-  // served them. Bean `nup0` consolidated the manifest into the live package
-  // and removed the empty one; nothing is lost here because nothing was served.
-  "folio-core": resolve(__dirname, "..", "..", "skills", "folio-core"),
-  "folio-document-adapter": resolve(__dirname, "..", "..", "skills", "folio-document-adapter"),
-  "folio-paper-adapter": resolve(__dirname, "..", "..", "skills", "folio-paper-adapter"),
+};
+
+/** A directory is a skill PACKAGE when it directly holds at least one skill `.md`. */
+function holdsSkill(dir: string): boolean {
+  try {
+    return readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)));
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Every servable skill package, discovered from the DECLARED knowledge-graph
+ * directories rather than listed by hand.
+ *
+ * ## Why discovered, and why it took until now
+ *
+ * This was a hardcoded table, and the cost of that is on the record: a package
+ * missing from it is a package `skill_fetch` answers "not found" for, which is
+ * how `content-lifecycle` — named by **52** `<folio:skill ref>` activities —
+ * was unservable until 2026-09-18.
+ *
+ * It is discovered through {@link resolveSkillDirs}, which reads each
+ * instance's declaration, so a DEPENDENCY's packages are served too. That is
+ * the overlay `AGENTS.md` describes as outstanding Phase 0.1 work.
+ *
+ * ## The filter is the whole design
+ *
+ * A naive scan of the declared directory is measurably wrong. Taken plainly it
+ * adds seven non-package directories — `roles`, `workflows`, `permissions`,
+ * `requirements`, `framework`, `remote-packages` and `memory` — and `memory`
+ * is the one already on the record for making `kg-audit` write **25 bogus
+ * sidecars** against agent-memory nodes that are not instruction bodies.
+ *
+ * {@link isSkillMd} is what excludes them, and it is **declaration over
+ * location**: a markdown file carrying `$schema:` is stating that it is
+ * something else. With that filter, discovery reproduces the hand-written
+ * table exactly — measured 2026-09-19, no gain and no loss — which is the
+ * evidence that this is a refactor and not a behaviour change.
+ *
+ * ## Later entries win, and that is the overlay order
+ *
+ * `resolveSkillDirs` returns deepest-dependency-first with the root last, so
+ * assigning in order means a root package of the same name overrides a
+ * dependency's. Same rule the directory declaration uses, one level down.
+ */
+export function discoverLocalPackages(root: string): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const kgDir of resolveSkillDirs(root)) {
+    // A kg directory that holds skills DIRECTLY is the instance's own package;
+    // here `skills/` holds none directly and every package is a subdirectory.
+    for (const e of readdirSync(kgDir, { withFileTypes: true })) {
+      if (!e.isDirectory()) continue;
+      const dir = join(kgDir, e.name);
+      if (holdsSkill(dir)) out[e.name] = dir;
+    }
+  }
+  return out;
+}
+
+// EXPORTED because reachability is not a property of a manifest: a skill is
+// reachable when something can SERVE it. `scripts/kg-audit.ts` reads this table
+// rather than keeping its own copy, so a package added here cannot be reported
+// as unreachable, and one removed here cannot pass.
+export const LOCAL_PACKAGES: Record<string, string> = {
+  ...CO_LOCATED_PACKAGES,
+  ...discoverLocalPackages(resolve(__dirname, "..", "..")),
 };
 
 /** A servable skill: its id, and what it says it is — when it says anything. */

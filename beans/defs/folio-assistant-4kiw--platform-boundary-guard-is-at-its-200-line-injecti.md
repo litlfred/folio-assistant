@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4kiw
 title: platform-boundary-guard is at its 200-line injection budget, so a 14th entry evicts three TRAPs
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T09:29:50Z
-updated_at: 2026-09-19T10:57:05Z
+updated_at: 2026-09-19T12:43:13Z
 parent: folio-assistant-8jt6
 ---
 
@@ -57,9 +57,9 @@ you have not verified". But it *should* reach both, and today it does not.
 
 - [x] `agent-memory:check` fails when a real memory ENTRY falls past the
       budget, and still only warns when the overflow is the hand-written tail
-- [ ] `platform-boundary-guard` is back under budget — by splitting, trimming
+- [x] `platform-boundary-guard` is back under budget — by splitting, trimming
       or archiving, decided per entry and not by truncating whatever is last
-- [ ] `do-not-encode-a-rule-against-a-working-setup` is tagged to
+- [x] `do-not-encode-a-rule-against-a-working-setup` is tagged to
       `platform-boundary-guard` as well, and that reference in its body is
       replaced by the tag
 
@@ -103,3 +103,14 @@ _2026-09-19T10:46:38Z_ — Claimed on branch claude/4kiw-memory-pointer (worktre
 _2026-09-19T10:52:57Z_ — Second 'Done when' box done on claude/4kiw-memory-pointer, PR #402. Measured `bun run agent-memory` 2026-09-19: before 13 entries / 201 lines (at the cap); after 10 entries / 157 lines, 43 under budget, no entry past the cut. Four entries archived (never deleted) because skills/folio-core/placement.md now carries them as procedure: the-shape-of-every-defect-here (Step 1, verbatim question), adapter-vs-profile (Step 3), compose-nothing-resolve-everything (Step 4), the-readme-generator-that-replaced-the-whole-file (worked failure). Each node records the quote that supersedes it. NOT archived: could-not-determine-is-a-third-state-everywhere (the skill has the three states but neither the qou nine-row simulator case nor the shallow-clone gh-pages case) and three-literals-worth-recognising-in-new-code (the skill covers 2 of the 3 literals; the map of twelve qou workflow filenames is absent). One short pointer entry replaces the four. Also pinned the archived-before-untagged ordering through the READER path, which was tested only at memoryForAgent: the flag is a string compare on front matter, so an unrecognised spelling returns the node live AND untagged and the untagged clause hands it to every agent. Third box (tag do-not-encode-a-rule-against-a-working-setup to platform-boundary-guard) still open, and there is now headroom for it.
 
 _2026-09-19T10:57:05Z_ — RE-MEASURED after merging origin/main (14 commits) into claude/4kiw-memory-pointer. main had landed skills/folio-core/readme-sections.md and content-profiles.md, which carry, VERBATIM, the two entries I had recorded as 'not superseded' — including the nine-row simulator table, the shallow-clone publish ref, and all three literals. My PR body's reasoning was correct against placement.md at base ef2988728 and stale two hours later, which is this repo's own 're-measure, do not quote' rule turned on my own PR. The DECISION still stands, for a better reason: grepped, readme-sections.md and content-profiles.md carry ZERO of the concrete literals (QOU., folio-assistant/simulators, lakefile.toml, raw.githubusercontent.com, qou) — they are deliberately written folio-generically, which is the platform-boundary discipline applied to the skills themselves. placement.md carries 5 of them, which is why archiving against IT was right. So could-not-determine-is-a-third-state-everywhere, three-literals-worth-recognising-in-new-code and link-style-raw-is-not-the-private-repo-answer are COMPLEMENTARY to the new skills, not restatements: the skill has the rule, the memory entry has the string a reviewer greps for. A later agent archiving them against readme-sections.md would remove the only place those literals are written down for this agent. Recorded here rather than in the entries themselves, because it is meta and would cost injected budget.
+
+_2026-09-19T12:41:43Z_ — Box 3 done, and with it the bean. 'do-not-encode-a-rule-against-a-working-setup' now carries platform-boundary-guard in its agents list, and the three-line prose note that said it BELONGS there but was not tagged — because the file was full — is gone, replaced by the tag itself. A rule pointed at by prose is a rule the generator does not enforce.
+
+Measured with 'bun run agent-memory' on this branch, 2026-09-19T12:45Z:
+  before  ci-health-watcher 187 lines, platform-boundary-guard 157 (10 entries)
+  after   ci-health-watcher 187 lines, platform-boundary-guard 186 (11 entries)
+MEMORY.md is 189 lines with the generated region closing at 182, and no entry heading falls beyond line 200. agent-memory:check exits 0.
+
+ONE THING I GOT WRONG AND CORRECTED MID-EDIT, because it is the trap this bean is about. My first replacement note was seven lines where the old one was three, explaining WHY the entry had been untagged and how 4kiw cleared the budget. That pushed ci-health-watcher from 187 to 191 — the node is tagged to both agents, so every line I added was spent twice. Nine lines of headroom on an agent whose budget nothing else was consuming, purchased with the administrative history of a tag. Trimmed to three lines stating the rule in both lanes and nothing else; ci-health-watcher is back to exactly 187, unchanged by this work. The history belongs on this bean, which is where it now is. An injected memory entry should carry the rule, not the story of its own tagging.
+
+Box 2 was already met and simply unticked — PR #402 archived what placement.md superseded and took the file to 157 lines, 43 under the cut. Ticked here with the measurement rather than on recollection.

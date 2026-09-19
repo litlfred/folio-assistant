@@ -193,6 +193,26 @@ jobs:
           bun run scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
+          # THE TRASHCAN, reachable BY NAME and by nothing else.
+          #
+          # The export above STRIPS `fsh-guts` from every graph it publishes,
+          # so nothing in `<stub>.jsonld` links here. That is the owner's
+          # rule and the reason this is a second document rather than a
+          # subgraph: a consumer may fetch it deliberately, and a crawler
+          # walking the knowledge graph never arrives.
+          #
+          # `fsh-guts/logs/` sits inside the tree it walks and is NOT in it.
+          # The exporter admits a file only if it declares
+          # `folio-fsh-guts/v1`, so a log entry is excluded by what it says
+          # it is — not by the gitignore, which is a property of the checkout
+          # rather than of the export.
+          #
+          # `.json` alongside for the same reason every other rendering has
+          # one: Pages has no media type for `.jsonld` and serves it as
+          # octet-stream.
+          bun run scripts/fsh-guts-export.ts --out "./_site/fsh-guts.jsonld"
+          cp "./_site/fsh-guts.jsonld" "./_site/fsh-guts.json"
+
           # THE VOCABULARY — one document per namespace, plus the union.
           #
           # Every term now hangs off its declaring layer's namespace: bs: for

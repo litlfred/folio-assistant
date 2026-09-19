@@ -36,6 +36,9 @@
     </bpmn:documentation>
     <bpmn:extensionElements>
       <folio:policy enforcement="strict" />
+      <!-- Capture ON: this is the process that ends in a write to the corpus, so
+           what ran before that write is the audit question. -->
+      <folio:log capture="on" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Lifecycle_LaneSet">
       <bpmn:lane id="Lane_ProgMgr" name="Programme manager">

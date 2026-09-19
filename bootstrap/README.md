@@ -5,10 +5,11 @@ directory is what you read first. It is a
 [knowledge graph](../schemas/kg-node.ts) that stands alone: it does not import
 the harness, and it assumes no connected tools.
 
-> ⚠️ **Status: the graph is not built.** This README is the specification and
-> the entry point; `bootstrap.jsonld`, the two skills and the process diagram
-> are still to come. Design and open questions:
-> [`proposals/bootstrap`](../docs/folio-assistant/proposals/bootstrap.md).
+> ⚠️ **Status: partly built.** `harness.json` declares this as an instance and
+> [`AGENTS.md`](AGENTS.md) is a declared asset of it — both checked by
+> `bun run check:declared-assets`. Still to come: `bootstrap.jsonld`, the two
+> skills and the process diagram. Design and open questions:
+> [`proposals/bootstrap`](../fsh-guts/proposals/bootstrap.md).
 
 ## What `bootstrap <instance>` means
 

@@ -34,6 +34,10 @@
     </bpmn:documentation>
     <bpmn:extensionElements>
       <folio:policy enforcement="strict" />
+      <!-- Capture ON: the HCI validation gate is the step whose outcome a reviewer
+           is most often asked to justify after the fact, and the editor's decision
+           is the thing a log can evidence and prose cannot. -->
+      <folio:log capture="on" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Editing_LaneSet">
       <bpmn:lane id="Lane_Editor" name="Editor / author (person)">
