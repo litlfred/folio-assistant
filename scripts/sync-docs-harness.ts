@@ -143,6 +143,20 @@ const payload = {
     ? { src: siteRelative(smallIcon.src), title: smallIcon.title ?? "", description: smallIcon.description ?? "" }
     : null,
   landing,
+  // THE KINDS THIS INSTANCE DECLARES — for the avatar fan (bean `4kj4`).
+  //
+  // Owner: *"shows the DECLared kinds for that instance, not inheritance."*
+  // That is a real distinction and not a shade of one: `resolveDirectories`
+  // overlays a dependency's directories onto an instance's, so the EFFECTIVE
+  // set is strictly larger than the declared set. Reading the resolved set
+  // here would show a reader kinds this repository never claimed, which is
+  // the opposite of what the panel is for.
+  //
+  // So: `decl.directories` as authored, before any resolution. Sorted and
+  // de-duplicated, because a directory may hold several graphs and two
+  // directories may hold the same one — `schemas/` declares both `schemas`
+  // and `cat-harness`.
+  declaredKinds: [...new Set((decl.directories ?? []).flatMap((d) => d.graphs ?? []))].sort(),
   links: siteLinks(decl, repoUrl),
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;
