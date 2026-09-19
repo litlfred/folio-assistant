@@ -522,12 +522,14 @@ const RULES: Rule[] = [
     ],
   },
 
-  // ── folio-asst-sci: Lean, LaTeX, simulators, proofs
+  // ── folio-asst-sci: Lean, LaTeX, proofs
   {
     repo: "sci",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["adapters/paper/", "skills/authoring-math/", "skills/folio-paper-adapter/", "simulators/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
+    // `simulators/` was here until they moved to the folio that owns them: a
+    // simulator is subject matter, so no platform package is its target.
+    prefixes: ["adapters/paper/", "skills/authoring-math/", "skills/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
     exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {

@@ -384,7 +384,7 @@ Two licences, split by what the file is:
 
 - **Code — [Apache License 2.0](./LICENSE).** Everything that is source:
   `src/`, `scripts/`, `schemas/`, `content/`, `adapters/`, `tools/`, `ui/`,
-  `viewer/`, `simulators/`, and every `.ts`, `.py`, `.sh`, `.json`, `.yml` and
+  `viewer/`, and every `.ts`, `.py`, `.sh`, `.json`, `.yml` and
   `.bpmn` file wherever it sits. Attribution notice in [`NOTICE`](./NOTICE).
 - **Prose — [CC BY 3.0](./LICENSE-CONTENT.md).** `docs/`, the skill
   instruction bodies under `skills/` and `.claude/skills/`, and the Markdown
