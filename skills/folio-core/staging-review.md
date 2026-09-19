@@ -124,20 +124,52 @@ When an author has made content changes on a feature branch:
 ## Staging retention
 
 Staging previews are **retained by default** when a PR is closed or merged.
-Removal requires the `staging:cleanup` label on the PR. This ensures
-reviewers can continue comparing before/after even after the code is merged.
+Removal requires explicit human confirmation, so reviewers can continue
+comparing before/after even after the code is merged.
 
-To clean up a staging preview:
-1. Add the `staging:cleanup` label to the PR
-2. Re-run the cleanup workflow, OR
-3. Manually delete `STAGING/<slug>/` from the `gh-pages` branch
+**Which mechanism depends on whether the PR is still open, and that is not a
+detail.** There are two, and the first cannot reach a closed PR:
+
+1. **While the PR is open** — add the `staging:cleanup` label. `cleanup` in
+   `feature-staging.yml` fires on `pull_request_target: closed` and reads the
+   labels off that event, so the label has to be there *before* the PR closes.
+2. **Once the PR is closed** — run `feature-staging.yml` from the Actions tab
+   with `cleanup_slug: <slug>` and `cleanup_confirm: <slug>`. The confirmation
+   repeats the slug so that it names the artefact it confirms, and the job
+   re-checks that nothing is still using the preview before it removes
+   anything.
+
+**Labelling a closed PR does nothing, and re-running its old workflow run does
+nothing either** — a re-run replays the stored event payload, which still
+carries no label. That was the state of things until bean `w2g5`: the health
+sweep's `staging-preview-orphans` finding can only ever name a preview whose PR
+is already closed, so the remedy it documented was unreachable for every orphan
+it could report. If you find yourself reaching for a hand-pushed `gh-pages`
+commit instead, stop: that is the unilateral removal
+[`deletion-requires-confirmation`](deletion-requires-confirmation.md) exists to
+stop, and option 2 exists so you do not have to.
+
+### A closed PR is not an abandoned preview
+
+`staging-preview-orphans` does **not** ask "is there an open PR?" any more, and
+neither should you. A session that reuses one branch across successive pull
+requests has no open PR for the whole gap between one merging and the next
+opening — measured at 5m42s on `claude/brave-hypatia-r820sf`, 2026-09-19, and
+the sweep landed inside it and called a live branch an orphan. Liveness is
+three signals, any one of which means leave it alone: an open PR, a branch on
+the remote carrying work not in the default branch, or a tip commit in the last
+30 minutes. `scripts/staging-cleanup-preflight.ts --slug <slug>` answers the
+same question on demand, and the dispatch above runs it before removing.
 
 ## Do not
 
 - **Do not provide before/after URLs without checking the staging workflow
   has run.** A URL that 404s is worse than no URL.
-- **Do not auto-remove staging previews.** The `staging:cleanup` label is
-  required.
+- **Do not auto-remove staging previews.** A person confirms every removal —
+  the label while the PR is open, or the dispatch with its repeated-slug
+  confirmation once it is closed.
+- **Do not read "no open pull request" as "abandoned".** It is true of a live
+  branch for the whole gap between one PR merging and the next opening.
 - **Do not assume all pages are at the root.** Guides are under `guides/`,
   reference under `reference/`, French under `fr/` etc.
 - **Do not omit the comparison table.** Even for a single page change, show
