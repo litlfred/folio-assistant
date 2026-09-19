@@ -47,6 +47,7 @@ import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
 import { directoryForGraph } from "../schemas/cat-harness.js";
 
 export const ROOT = resolve(import.meta.dir, "..");
+// declared-path-literal: the convention fallback, at the call site so the choice is visible.
 export const TODO_ROOT = directoryForGraph(ROOT, "todos") ?? join(ROOT, "todos");
 
 interface Block {

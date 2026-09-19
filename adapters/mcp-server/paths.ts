@@ -49,6 +49,7 @@ export const CONTENT_DIR = resolve(REPO_ROOT, "content");
 // Write-target fallback, as above.
 export const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? resolve(REPO_ROOT, "uploads");
 
+// declared-path-literal: the convention fallback, at the call site so the choice is visible — ingestion CREATES library/ on its first run.
 export const LIBRARY_DIR = directoryForGraph(REPO_ROOT, "library") ?? resolve(REPO_ROOT, "library");
 
 /** LaTeX chapters output directory. */

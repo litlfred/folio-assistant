@@ -28,6 +28,7 @@ const ROOT = resolve(import.meta.dir, "..");
 // The declared `library` graph. No fallback: this module only READS L1
 // sources, and a checker that resolves a directory the instance does not have
 // would report a clean run over nothing — the `dh4f` defect.
+// declared-path-literal: the convention fallback, at the call site so the choice is visible.
 const LIBRARY = directoryForGraph(ROOT, "library") ?? join(ROOT, "library");
 const MIN_QUOTE = 24;
 

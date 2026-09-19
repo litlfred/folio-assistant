@@ -86,6 +86,30 @@ function kgDirectories(root: string): Array<{ path: string; absPath: string }> {
 }
 
 /**
+ * Every directory the instance declares as holding ONLY its knowledge graph.
+ *
+ * Absolute paths. This is the answer to `join(root, "skills")` — the literal
+ * `check:declared-paths` found in a dozen consumers, each of which a topical
+ * layout (`bootstrap/`, `crdm/`) breaks silently.
+ *
+ * ## It is a LIST, and callers must not quietly take the first
+ *
+ * One root is today's shape, not the contract. A consumer that scans for
+ * role graphs, memory nodes or requirements has to look in every declared
+ * root or it reports a clean run over the ones it did not visit — the `dh4f`
+ * defect, arriving through a helper that was supposed to prevent it. Where a
+ * call site genuinely needs one directory (a WRITE target, a fallback), it
+ * says so and carries its reason.
+ *
+ * `schemas/` is excluded because it declares TWO graphs: it is a
+ * knowledge-graph node AND the schema definitions, and its `.md` files are
+ * READMEs. See {@link kgDirectories} for the measurement that established it.
+ */
+export function kgRoots(root: string): string[] {
+  return kgDirectories(root).map((d) => d.absPath);
+}
+
+/**
  * Is this `.md` a skill, or another node kind that happens to live here?
  *
  * **Declaration over location.** A markdown file whose front matter carries

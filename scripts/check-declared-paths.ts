@@ -234,7 +234,20 @@ function pathContextRanges(code: string): Array<[number, number]> {
   return out;
 }
 
-export interface Site { file: string; line: number; literal: string; prefix: string }
+export /**
+ * Offset of the first string literal inside a path-building call, or -1.
+ *
+ * "First" is what makes a bare segment a DECLARED directory rather than a
+ * word: only the segment directly under the root can be one.
+ */
+function firstLiteralIn(code: string, [a, b]: [number, number]): number {
+  const re = /(["'`])(?:[^\\\n]|\\.)*?\1/g;
+  re.lastIndex = a;
+  const m = re.exec(code);
+  return m !== null && m.index < b ? m.index : -1;
+}
+
+interface Site { file: string; line: number; literal: string; prefix: string }
 export interface Scan {
   prefixes: string[];
   /** Names a file that exists — authored prose, checked to dereference. */
@@ -284,9 +297,20 @@ export function scanDeclaredPaths(root: string): Scan {
       if (prefix === undefined) continue;
       // A bare declared segment is a path only where the code builds one
       // with it; a literal carrying a separator is a path on its face.
+      //
+      // And only as the FIRST segment of that path. `join(root, "skills")` is
+      // the declared knowledge graph; `join(root, ".claude", "skills",
+      // "roles")` is a Claude-harness directory that merely spells the same
+      // word, and no declaration answers it. Measured 2026-09-19: of the
+      // ~55 bare `"skills"` findings, most were the second kind — so without
+      // this the check says "a declaration already answers this" about
+      // directories where that is simply false, which is worse than a miss.
+      // A checker that over-claims teaches people to disbelieve it.
       if (!value.includes("/")) {
         const at = lineStart[n]! + m.index;
-        if (!ranges.some(([a, b]) => at >= a && at < b)) continue;
+        const range = ranges.find(([a, b]) => at >= a && at < b);
+        if (range === undefined) continue;
+        if (firstLiteralIn(code, range) !== at) continue;
       }
       const site: Site = { file: relative(root, file), line: n + 1, literal: value, prefix };
 

@@ -47,6 +47,7 @@ import { directoryForGraph } from "../../schemas/cat-harness.js";
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
 const LEDGER_PATH = join(REPO_ROOT, "content", "bib-qa-verifications.json");
 const REFERENCES_PATH = join(REPO_ROOT, "content", "schema", "references.ts");
+// declared-path-literal: the convention fallback, at the call site so the choice is visible.
 const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
 
 const SCHEMA_ID = "source-ledger/v1";

@@ -42,6 +42,7 @@ import { instanceId, listInstances, loadInstance, saveInstance } from "../workfl
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
 import { readRoleGraph, type RoleGraph } from "../../schemas/role-graph.js";
+import { kgRoots } from "../../scripts/known-skills.js";
 
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
 
@@ -85,7 +86,9 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
   const roles = (): RoleGraph | undefined => {
     if (!rolesCache) {
       try {
-        rolesCache = { graph: readRoleGraph(join(root, "skills")) };
+        // declared-path-literal: the convention fallback, at the call site.
+        // A role graph lives in a declared knowledge-graph root.
+        rolesCache = { graph: readRoleGraph(kgRoots(root)[0] ?? join(root, "skills")) };
       } catch {
         rolesCache = { graph: undefined };
       }
