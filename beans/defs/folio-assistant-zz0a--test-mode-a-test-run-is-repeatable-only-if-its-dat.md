@@ -1,11 +1,11 @@
 ---
 # folio-assistant-zz0a
 title: 'TEST MODE: a test run is repeatable only if its data and process are hashable and signable'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T08:55:36Z
+updated_at: 2026-09-19T16:09:13Z
 parent: folio-assistant-5a3l
 ---
 
