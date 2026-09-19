@@ -59,8 +59,8 @@ const REPO_A11Y = join(dirname(fileURLToPath(import.meta.url)), "..");
 // fixture and wrongly in the deployed tree is exactly the failure a stand-in
 // hides.
 for (const [file, script] of [
-  ["_kg/folio-assistant.jsonld", "scripts/kg-export.ts"],
-  ["_kg/folio-assistant/index.html", "scripts/kg-viewer.ts"],
+  ["_kg/folio-assistant.jsonld", "cat-harness/scripts/kg-export.ts"],
+  ["_kg/folio-assistant/index.html", "cat-harness/scripts/kg-viewer.ts"],
 ] as const) {
   if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
 }
@@ -120,7 +120,7 @@ test.describe("accessibility — automated", () => {
  * Arabic will arrive in.
  */
 const I18N_PAGE = "/_kg/folio-assistant-i18n-fixture/index.html";
-execFileSync("bun", ["run", "scripts/tests/kg-viewer-fixture.ts"], { stdio: "inherit" });
+execFileSync("bun", ["run", "cat-harness/scripts/tests/kg-viewer-fixture.ts"], { stdio: "inherit" });
 
 test.describe("accessibility — a translated, right-to-left interface", () => {
   for (const colorScheme of ["light", "dark"] as const) {

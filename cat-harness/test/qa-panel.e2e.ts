@@ -251,7 +251,7 @@ test("a criterion expands to the witness that ruled on it, with the checker's ha
   await expect(witness).toHaveClass(/fa-qa-kind-script/);
   await expect(witness.locator(".fa-qa-chip-kind")).toHaveText("script");
   await expect(witness.locator(".fa-qa-witness-id")).toHaveText(
-    "content/pipeline/qa-checkers-voice.ts",
+    "cat-harness/content/pipeline/qa-checkers-voice.ts",
   );
   // The hash of the checker's own source at audit time — the thing that says
   // whether the verdict came from the logic now in the tree.

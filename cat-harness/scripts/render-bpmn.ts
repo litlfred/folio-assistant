@@ -20,7 +20,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
-import { siteDirFor } from "../schemas/cat-harness.ts";
+import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 /**
@@ -41,7 +41,19 @@ function bpmnSources(): string[] {
   return workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn")).sort();
 }
 const OUT_DIR = join(ROOT, siteDirFor(ROOT), "assets/img/workflows");
-const VIEWER = join(ROOT, "node_modules/bpmn-js/dist/bpmn-viewer.production.min.js");
+// `node_modules/` is a REPOSITORY artefact — it sits beside `package.json` and
+// `bun.lock`, which is where `bun install` writes it, and there is one per
+// repository however many instances it holds. `ROOT` is this instance's root
+// since the move (bean `wggr`), so joining here looked for
+// `cat-harness/node_modules/` and reported bpmn-js as not installed.
+//
+// The message was the honest kind and still misleading: it named the exact
+// missing file and told you to run `bun install`, which would not have helped
+// because the package was already there, one level up.
+const VIEWER = join(
+  repoRootFor(ROOT),
+  "node_modules/bpmn-js/dist/bpmn-viewer.production.min.js",
+);
 
 const check = process.argv.includes("--check");
 

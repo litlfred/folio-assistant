@@ -29,8 +29,8 @@ import { execFileSync } from "node:child_process";
 // the point: a viewer that resolved its document correctly in a flat fixture
 // and wrongly in the deployed tree is exactly the failure a stand-in hides.
 for (const [file, script] of [
-  ["_kg/folio-assistant.jsonld", "scripts/kg-export.ts"],
-  ["_kg/folio-assistant/index.html", "scripts/kg-viewer.ts"],
+  ["_kg/folio-assistant.jsonld", "cat-harness/scripts/kg-export.ts"],
+  ["_kg/folio-assistant/index.html", "cat-harness/scripts/kg-viewer.ts"],
 ] as const) {
   if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
 }
@@ -262,7 +262,7 @@ test.describe("kg viewer", () => {
  * exists rather than a shipped translation.
  */
 test.describe("kg viewer — with a catalogue", () => {
-  execFileSync("bun", ["run", "scripts/tests/kg-viewer-fixture.ts"], { stdio: "inherit" });
+  execFileSync("bun", ["run", "cat-harness/scripts/tests/kg-viewer-fixture.ts"], { stdio: "inherit" });
   const FIXTURE = "/_kg/folio-assistant-i18n-fixture/index.html";
 
   test("the switcher appears once there is something to switch to", async ({ page }) => {
