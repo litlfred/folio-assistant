@@ -243,10 +243,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T16:08:33.358Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3f1c9ae679df48d4115953f5b1d0851f8ca10afb",
-  "sourceCommitSha": "3f1c9ae679df48d4115953f5b1d0851f8ca10afb",
-  "sourceCommitAt": "2026-09-19T18:07:07+02:00",
+  "generatedAt": "2026-09-19T16:23:08.147Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d8f04c4e02172b1097b7d3bdd73e87f153ecd0fe",
+  "sourceCommitSha": "d8f04c4e02172b1097b7d3bdd73e87f153ecd0fe",
+  "sourceCommitAt": "2026-09-19T18:21:15+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 168,
@@ -258,7 +258,7 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 50,
+    "Schema": 51,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -18209,6 +18209,13 @@
       "module": "schemas/tabular-records.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/test-run",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "test-run",
+      "title": "A TEST RUN — what was measured, with what, and whether it can be redone.",
+      "module": "schemas/test-run.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "theme",
@@ -19208,8 +19215,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "3f1c9ae679df48d4115953f5b1d0851f8ca10afb",
+    "sha": "d8f04c4e02172b1097b7d3bdd73e87f153ecd0fe",
     "pr": "main",
-    "run": "35453925645"
+    "run": "35454682193"
   }
 }
