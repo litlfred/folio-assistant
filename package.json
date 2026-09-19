@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "Content-agnostic assistant platform — MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
+  "description": "Content-agnostic assistant platform \u2014 MCP server, auth, UI, deploy. Pluggable content adapters for papers, guidelines, documentation.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -117,7 +117,9 @@
     "translation:block-qa:check": "bun run content/pipeline/translation-block-qa.ts --check",
     "translation:index": "bun run content/pipeline/translation-index.ts",
     "translation:index:check": "bun run content/pipeline/translation-index.ts --check",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "ci:gates": "bun run scripts/ci-gates.ts",
+    "ci:gates:list": "bun run scripts/ci-gates.ts --list"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
