@@ -30,10 +30,11 @@ validation gate, the skills, and the shared work plan all named.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/publication-workflow/every-workflow-in-the-repo.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-Nineteen BPMN 2.0 files, all under
+Thirty BPMN 2.0 files, all under
 [`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
-(counted on `main`, 2026-09-18 — this line said "six" for long enough that it is
-worth saying where the number came from).
+(`ls skills/workflows/*.bpmn | wc -l` on 2026-09-19 — this line said "six", then
+"nineteen", each for long enough to be wrong, which is why it now carries the
+command as well as the date).
 Each is a real BPMN 2.0 document with diagram interchange — open it in
 [bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN tool. The SVGs
 throughout the docs are generated from these files by `bun run render:bpmn`;
@@ -97,6 +98,7 @@ call path only, where `inherits` would carry both specialisms everywhere.
 | `review-task.bpmn` | What kind of thing changed, and which review does it descend into? |
 | `review-narrative.bpmn` | Prose: register and voice, the editorial dependencies a reader needs, translation |
 | `review-code.bpmn` | The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs? |
+| `voice-review.bpmn` | Which named editorial voices has this folio ACTIVATED, and does each rule's own citation support the finding it raised? Called from `review-narrative.bpmn`, and it leaves immediately when no voice is active — the default, and this instance's case. |
 
 **Ingestion** — turning an uploaded source document into corpus. The first is
 the outer process; the rest are its call activities:

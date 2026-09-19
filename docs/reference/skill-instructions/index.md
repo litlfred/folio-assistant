@@ -108,7 +108,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
+| [Voice authoring guidance](voice-authoring-guidance.html) | `voice-authoring-guidance` | — |  |
 | [Voice editorial review](voice-editorial-review.html) | `voice-editorial-review` | — |  |
+| [Voice overlay review](voice-overlay-review.html) | `voice-overlay-review` | — |  |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 
 ## Document adapter (folio-document-adapter)
