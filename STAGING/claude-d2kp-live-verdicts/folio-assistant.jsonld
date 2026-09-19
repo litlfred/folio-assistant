@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T09:54:58.159Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/582d281cff83cf6e13c1f5e1fbf69609464a60d5",
-  "sourceCommitSha": "582d281cff83cf6e13c1f5e1fbf69609464a60d5",
-  "sourceCommitAt": "2026-09-19T09:53:26Z",
+  "generatedAt": "2026-09-19T10:00:35.503Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/af18eee38b36e4dcf52794716c2fc80291c74c68",
+  "sourceCommitSha": "af18eee38b36e4dcf52794716c2fc80291c74c68",
+  "sourceCommitAt": "2026-09-19T09:58:56Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 151,
+    "Skill": 152,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -1146,6 +1146,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/directory-conventions"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "kg-navigation",
+      "title": "Reading the knowledge graph — how to find the skill you need",
+      "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/kg-navigation.md",
+      "instructionLines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/role-model",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "role-model",
@@ -1251,7 +1267,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 64,
+      "instructionLines": 121,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true,
@@ -1504,7 +1520,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 392,
+      "instructionLines": 397,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true,
@@ -3734,6 +3750,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/interaction-modality",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/markdown-render-check",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-d2kp-live-verdicts/folio-assistant.jsonld#skill/mcp-assembly",
@@ -18826,7 +18843,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/tools"
       ],
-      "description": "Tool definitions — one concrete way to exercise a skill, each naming the skills it satisfies. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
+      "description": "Tool definitions, one subdirectory per contributing instance (tools/<stub>/) so a composed instance adds its own without colliding on a filename. tools/index.ts merges them and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/tools"
     },
     {
@@ -18932,8 +18949,8 @@
   ],
   "staging": {
     "branch": "claude/d2kp-live-verdicts",
-    "sha": "d7f38a85e03b04c2ef2210bc04b2ce4ba170f02f",
+    "sha": "16d522ae293bf91a623f3efff72e0405aacd2993",
     "pr": "378/merge",
-    "run": "35435924692"
+    "run": "35436159422"
   }
 }
