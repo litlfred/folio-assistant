@@ -82,6 +82,23 @@ describe("landing backdrops — layout variants", () => {
 });
 
 describe("this instance's own declaration", () => {
+  test("all three layouts are declared, each with its own region", async () => {
+    // One region per layout is the point: the same cloud sits differently in a
+    // portrait crop, and the square crop is pushed right by the cat. Sharing
+    // one set of numbers puts the words on the cat at two of the three.
+    const { readDeclaration } = await import("./cat-harness");
+    const decl = readDeclaration(new URL("..", import.meta.url).pathname);
+    const variants = imagesForRole(decl?.images, "landing");
+    expect([...variants.keys()].sort()).toEqual(["card", "laptop", "mobile"]);
+    const regions = [...variants.values()].map((v) => JSON.stringify(v.textRegion));
+    expect(new Set(regions).size).toBe(3);
+    for (const v of variants.values()) {
+      expect(v.width).toBeGreaterThan(0);
+      expect(v.height).toBeGreaterThan(0);
+      expect(v.textRegion).toBeDefined();
+    }
+  });
+
   test("the laptop backdrop is declared, with a region inside the cloud", async () => {
     // Guards the numbers that were found by rendering candidates and looking
     // at them — a later re-crop of the image must not silently keep a region
@@ -90,6 +107,54 @@ describe("this instance's own declaration", () => {
     const decl = readDeclaration(new URL("..", import.meta.url).pathname);
     const p = pickLayout(decl?.images, "landing", "laptop");
     expect(p.image?.src).toContain("landing-laptop");
-    expect(p.image?.textRegion).toEqual({ x: 0.205, y: 0.285, w: 0.625, h: 0.235 });
+    // Moved right and up when the lead line grew to two wrapped lines: the
+    // taller block no longer cleared the cat's ear at x = 0.205, and the cloud
+    // is deeper further right. Pinned so a later re-crop cannot silently keep
+    // a region measured against the old image.
+    expect(p.image?.textRegion).toEqual({ x: 0.33, y: 0.25, w: 0.53, h: 0.28 });
+  });
+});
+
+describe("the description survives Jekyll's markdown renderer", () => {
+  // Verified against kramdown 2.5.2 directly, not reasoned about: Jekyll
+  // renders `description` through `markdownify`, and its default is
+  // `hard_wrap: false`. What that means for this string was measured.
+  //
+  //   blank-line separated  -> 5 <p> elements          (what is committed)
+  //   single-newline        -> 1 <p> with soft breaks  (renders as one line)
+  //
+  // The second is what this description WAS, so the derivation ladder would
+  // have shipped as a single run-on line. These two assertions are the input
+  // invariants that keep the first outcome; kramdown itself cannot run here.
+
+  const description = async (): Promise<string> => {
+    const { readDeclaration } = await import("./cat-harness");
+    return readDeclaration(new URL("..", import.meta.url).pathname)?.description ?? "";
+  };
+
+  test("blocks are separated by BLANK lines, not single newlines", async () => {
+    const d = await description();
+    expect(d).toContain("\n\n");
+    // No single newline may survive outside a blank-line pair, or the blocks
+    // either side of it silently merge into one paragraph.
+    expect(/[^\n]\n[^\n]/.test(d)).toBe(false);
+  });
+
+  test("the last rung's leading character is U+00A0, not a space", async () => {
+    // Measured: kramdown STRIPS a leading plain space (`<p>c@t-harness</p>`)
+    // and preserves U+00A0 (`<p>\u00a0c@t-harness</p>`). That character is
+    // load-bearing — it lines `c@t` up under `c&at` so the ladder reads as a
+    // derivation — so a plain space here is a silent misalignment.
+    const d = await description();
+    const rung = d.split(/\n{2,}/).find((l) => l.includes("c@t-harness"));
+    expect(rung).toBeDefined();
+    expect(rung!.startsWith("\u00a0")).toBe(true);
+  });
+
+  test("the lead block comes first, since typography is by position", async () => {
+    const d = await description();
+    const blocks = d.split(/\n{2,}/);
+    expect(blocks[0]).toContain("computable adjudication");
+    expect(blocks).toHaveLength(5);
   });
 });

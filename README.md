@@ -10,7 +10,8 @@ per-content-type skill system.
 [![Docs site](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml?query=branch%3Amain)
 [![CI health](https://github.com/litlfred/folio-assistant/actions/workflows/ci-health.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/ci-health.yml?query=branch%3Amain)
 [![Docs](https://img.shields.io/badge/docs-github.io-blue)](https://litlfred.github.io/folio-assistant/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+[![License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-green)](./LICENSE)
+[![Docs licence: CC BY 3.0](https://img.shields.io/badge/docs-CC%20BY%203.0-green)](./LICENSE-CONTENT.md)
 
 <!--
 The three live badges are the workflows that actually run on `main` — the only
@@ -351,4 +352,17 @@ and [`AGENTS.md`](./AGENTS.md). Run `bun test` and `eslint .` before pushing.
 
 ## License
 
-[MIT](./LICENSE)
+Two licences, split by what the file is:
+
+- **Code — [Apache License 2.0](./LICENSE).** Everything that is source:
+  `src/`, `scripts/`, `schemas/`, `content/`, `adapters/`, `tools/`, `ui/`,
+  `viewer/`, `simulators/`, and every `.ts`, `.py`, `.sh`, `.json`, `.yml` and
+  `.bpmn` file wherever it sits. Attribution notice in [`NOTICE`](./NOTICE).
+- **Prose — [CC BY 3.0](./LICENSE-CONTENT.md).** `docs/`, the skill
+  instruction bodies under `skills/` and `.claude/skills/`, and the Markdown
+  at the repository root.
+
+[`LICENSE-CONTENT.md`](./LICENSE-CONTENT.md) states the boundary, including
+what happens to a Markdown file that embeds a code sample. Content authored in
+a *folio* repository is covered by neither: folio-assistant is the platform,
+and a folio carries its own licence.

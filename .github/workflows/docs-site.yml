@@ -45,6 +45,24 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
+    #
+    # `docs-site` pushes to the same `gh-pages` ref that
+    # `feature-staging` does, and a concurrency group serialises only the jobs
+    # that NAME it. `eoix` gave the group to `feature-staging`'s two jobs and
+    # stopped there, so this workflow was still free to race them — which is
+    # what PR #297 hit on 2026-09-18: `! [remote rejected] gh-pages -> gh-pages
+    # (cannot lock ref ... is at 0779d88f but expected f885578d)`, after a full
+    # site build.
+    #
+    # `cancel-in-progress: false` is load-bearing and is the same reasoning as
+    # `eoix`: a pending run that a later arrival cancels is a DEPLOY SILENTLY
+    # DROPPED, which is worse than the queueing it would save. The
+    # workflow-level group above still applies — it scopes the run, this scopes
+    # the job — so per-ref cancellation of superseded builds is unaffected.
+    concurrency:
+      group: gh-pages-push
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
 
@@ -134,12 +152,16 @@ jobs:
       # must not be published as a whole one.
       # Both artefacts are named after the repository (the `stub` in
       # cat-harness.json) and land at the URLs their own `@id`/`$id` claim.
+      # `index.html` beside them is the viewer — bean `1dfh`. It carries no
+      # data of its own and fetches its SIBLING document at load, so it is
+      # correct at whatever base it is served from.
       # No --base-url: the declaration's canonicalUrl is correct for main.
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
           bun run scripts/kg-export.ts           --out "./_site/kg/${STUB}.jsonld"
           bun run scripts/harness-schema-export.ts --out-dir ./_site/kg
+          bun run scripts/kg-viewer.ts             --out ./_site/kg/index.html
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll

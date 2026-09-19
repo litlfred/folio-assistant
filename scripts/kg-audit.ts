@@ -43,7 +43,7 @@
 
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 import {
   KG_QA_SCHEMA,
@@ -74,6 +74,23 @@ import { knownSkills } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
+
+/**
+ * Does anybody in this role read prose?
+ *
+ * Only a reader needs a persona, a voice and use cases. Three kinds do not:
+ * an `actedUpon` lane is a store that tasks act ON (the corpus, the work
+ * plan); a `system` is a pipeline that consumes files, not pages; an
+ * `external` participant is outside this instance entirely.
+ *
+ * Scoping this way rather than asking every role is what keeps the finding
+ * actionable. "The IG publisher service has no persona" is a finding nobody
+ * can act on, and a check that produces those is a check somebody switches
+ * off — the same argument `role-has-actor` already makes for `actedUpon`.
+ */
+function readsProse(r: { actedUpon?: boolean; actorKind: string }): boolean {
+  return !r.actedUpon && (r.actorKind === "person" || r.actorKind === "agent");
+}
 
 const root = resolve(import.meta.dir, "..");
 const WORKFLOW_DIR = join(root, "skills", "workflows");
@@ -385,6 +402,115 @@ async function auditDecisions(
 
 // ── Per-role criteria ───────────────────────────────────────────
 
+/**
+ * Every skill file, across every package.
+ *
+ * Walks `skills/` rather than reading a manifest: a skill a manifest forgot is
+ * still a file an agent can be pointed at, and the audit should see it.
+ * `kg-qa/` is excluded — those are this audit's own sidecars.
+ *
+ * **A file that declares itself part of a skill is not a skill.** A long skill
+ * split into an entry point plus siblings — the pattern `AGENTS.md` prescribes
+ * for `MEMORY.md`, "keep it under 200 lines, split detail into sibling files
+ * the agent reads on demand" — would otherwise be audited as several skills,
+ * and each fragment measured against thresholds meant for a whole one. Found
+ * exactly that way: splitting five over-length skills turned 5 findings into
+ * 4 new ones on their own fragments.
+ *
+ * The test is the file's own `part-of:` declaration, not its path, because
+ * this repo has paid for "told apart by where it happens to sit" before —
+ * a declaration inside the file is the contract, a location is a coincidence.
+ *
+ * It cannot be used to hide a skill: the declaration only counts when the
+ * named parent exists AND the file sits inside that parent's own directory,
+ * so `part-of: something-else` in an arbitrary file excludes nothing.
+ */
+function isPartOfASkill(path: string): boolean {
+  const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(path, "utf-8"));
+  const parent = fm && /^part-of:\s*(\S+)\s*$/m.exec(fm[1]!)?.[1];
+  if (!parent) return false;
+  const dir = dirname(path);
+  return basename(dir) === parent && existsSync(join(dirname(dir), `${parent}.md`));
+}
+
+function skillFiles(): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, e.name);
+      if (e.isDirectory()) {
+        if (e.name !== KG_QA_DIRNAME) walk(p);
+      } else if (e.name.endsWith(".md") && !isPartOfASkill(p)) {
+        out.push(p);
+      }
+    }
+  };
+  walk(KG_ROOT);
+  return out.sort();
+}
+
+/**
+ * Brevity, measured per skill and recorded in a sidecar.
+ *
+ * Brevity is a property of an artefact, so it belongs here rather than as
+ * advice inside the skill files. "Aim for shortness" in twenty skills is
+ * twenty sentences nothing measures, nothing enforces, and every future edit
+ * quietly ignores. A number in a sidecar is checkable and its trend is
+ * visible in the diff.
+ *
+ * Thresholds measured across 123 skill files on 2026-09-18: median 178,
+ * p75 279, p90 391, max 1280 lines. 280 and 400 are those two percentiles
+ * rounded — "longer than three quarters of its peers" rather than an opinion.
+ */
+function auditSkills(auditorHash: string): KgQaReport[] {
+  const out: KgQaReport[] = [];
+  for (const file of skillFiles()) {
+    const rel = relative(root, file);
+    const lines = readFileSync(file, "utf-8").split("\n");
+    const n = lines.length;
+
+    // Headings only, and only at the same depth — two `### Why` under
+    // different `##` sections are not a repeat. Comparing across depths would
+    // flag every skill with a conventional structure.
+    const seen = new Map<string, number>();
+    const repeats: KgFinding[] = [];
+    let inFence = false;
+    for (const l of lines) {
+      if (/^```/.test(l.trim())) { inFence = !inFence; continue; }
+      if (inFence) continue;
+      const m = /^(#{2,6})\s+(.+?)\s*$/.exec(l);
+      if (!m) continue;
+      const key = `${m[1]!.length}:${m[2]!.toLowerCase()}`;
+      const prior = seen.get(key);
+      if (prior !== undefined) {
+        repeats.push({ where: rel, detail: `heading "${m[2]}" repeated (also at line ${prior})` });
+      } else {
+        seen.set(key, lines.indexOf(l) + 1);
+      }
+    }
+
+    out.push(
+      report(
+        "skill",
+        basename(file, ".md"),
+        rel,
+        createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 12),
+        {
+          "skill-is-brief": entry(
+            n > 280 ? [{ where: rel, detail: `${n} lines; p75 of the skill corpus is 279.` }] : [],
+          ),
+          "skill-not-a-document": entry(
+            n > 400 ? [{ where: rel, detail: `${n} lines; p90 is 391. At this length it is a document.` }] : [],
+          ),
+          "skill-no-repeated-heading": entry(repeats),
+        },
+        auditorHash,
+      ),
+    );
+  }
+  return out;
+}
+
 function auditRoles(
   graph: RoleGraph,
   graphPath: string,
@@ -424,6 +550,28 @@ function auditRoles(
       "role-skills-resolve": entry(badSkills),
       "role-inherits-resolves": entry(badParents, (r.inherits ?? []).length > 0),
       "role-binds-a-lane": entry(laneFindings),
+      // The lane is the audience, so a role that READS has to be writable-for.
+      "role-has-persona": !readsProse(r)
+        ? entry([], false)
+        : entry(
+            r.persona && r.persona.trim().length > 0
+              ? []
+              : [{ where: r.id, detail: `role "${r.id}" has no persona — an author has nobody to write for.` }],
+          ),
+      "role-declares-voice": !readsProse(r)
+        ? entry([], false)
+        : entry(
+            r.voice && r.voice.trim().length > 0
+              ? []
+              : [{ where: r.id, detail: `role "${r.id}" declares no voice — authoring and QA would each pick their own.` }],
+          ),
+      "role-has-use-cases": !readsProse(r)
+        ? entry([], false)
+        : entry(
+            (r.useCases ?? []).length > 0
+              ? []
+              : [{ where: r.id, detail: `role "${r.id}" declares no use cases — nothing says what this reader came to do.` }],
+          ),
       // `actedUpon` lanes are stores, not participants — the work plan, the
       // corpus, the publish target. Asking which actor fills the corpus is not
       // a question, so it is `n/a` rather than a failure nobody can act on.
@@ -680,6 +828,24 @@ function auditGraph(
     .sort()
     .map((s) => ({ where: s, detail: `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` }));
 
+  // The OTHER question, asked separately because the answers differ by two
+  // orders of magnitude: what does the actor → role → task model actually
+  // reach? `reachable` above is dominated by the servable clause, so it passes
+  // over almost everything; this counts only the two clauses that are part of
+  // the process model. Coverage, never a gate — see the criterion's note.
+  const modelled = new Set<string>();
+  for (const r of graph?.roles ?? []) for (const s of r.skills) modelled.add(s);
+  for (const p of processes) {
+    for (const n of p.model?.nodes.values() ?? []) for (const s of n.skills) modelled.add(s);
+  }
+  const unmodelled = [...skills]
+    .filter((s) => !modelled.has(s))
+    .sort()
+    .map((s) => ({
+      where: s,
+      detail: `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.`,
+    }));
+
   const declaredRoles = new Set((graph?.roles ?? []).map((r) => r.id));
   const badActorRoles = actors.flatMap((a) =>
     (a.roles ?? [])
@@ -729,7 +895,14 @@ function auditGraph(
     null,
     null,
     {
-      "skill-reachable": entry(orphans),
+      "skill-has-entry-point": entry(orphans),
+      // `unknown` when there is no role graph: with no roles declared, every
+      // skill looks unmodelled and the count would be the whole corpus — a
+      // number that says nothing about the corpus and everything about the
+      // missing file. Reporting it as a finding would be a wall of noise.
+      "skill-in-role-or-process": graph
+        ? entry(unmodelled)
+        : { result: "unknown" as KgResult, findings: [{ where: "—", detail: "no role graph declared." }] },
       "manifest-skill-exists": (() => {
         const remote = remotePackageSkills();
         return entry(
@@ -759,11 +932,22 @@ function auditGraph(
 // ── Sidecar IO ──────────────────────────────────────────────────
 
 function sidecarPath(r: KgQaReport): string {
+  // A skill's sidecar sits beside the skill, because skills live under
+  // several packages and a single directory would collide two packages'
+  // same-named skills into one file.
+  if (r.subject.kind === "skill" && r.subject.path) {
+    const abs = join(root, r.subject.path);
+    return join(dirname(abs), KG_QA_DIRNAME, `${basename(abs, ".md")}.kg-qa.json`);
+  }
   const dirFor: Record<KgSubjectKind, string> = {
     process: join(WORKFLOW_DIR, KG_QA_DIRNAME),
     decision: join(DECISION_DIR, KG_QA_DIRNAME),
     role: join(KG_ROOT, "roles", KG_QA_DIRNAME),
     requirement: join(KG_ROOT, "requirements", KG_QA_DIRNAME),
+    // Fallback only: a skill's sidecar sits beside the skill itself, resolved
+    // above, because one shared directory would collide two packages' skills
+    // of the same name.
+    skill: join(KG_ROOT, KG_QA_DIRNAME),
     graph: join(KG_ROOT, "roles", KG_QA_DIRNAME),
   };
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json)$/, "") : r.subject.id;
@@ -808,6 +992,7 @@ if (graph) {
   reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills, auditorHash));
 }
 reports.push(...auditRequirements(readRequirements(), skills, actors, auditorHash));
+reports.push(...auditSkills(auditorHash));
 reports.push(auditGraph(graph, processes, actors, skills, auditorHash));
 
 // Write or compare.

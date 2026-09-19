@@ -249,7 +249,8 @@ role     ──is-a─────▶ role       role-inherits-resolves         
 activity ──names────▶ skill      activity-names-skill           minor
 role     ──is used──▶ lane       role-binds-a-lane              minor
 actor    ──takes on─▶ role       role-has-actor                 minor
-skill    ──reachable▶ anything   skill-reachable                minor
+skill    ──any way in▶ anything  skill-has-entry-point          minor
+skill    ──modelled?▶ role/task  skill-in-role-or-process       minor
 actor    ──is not a─▶ role       actor-is-not-a-role            minor
 ```
 

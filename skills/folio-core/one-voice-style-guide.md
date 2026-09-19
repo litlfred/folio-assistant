@@ -10,6 +10,37 @@ triggers:
   - "before committing narrative"
 ---
 
+
+## The voice comes from the ROLE, not from this file
+
+Before writing or auditing a block, resolve its audience and read that role's
+`persona`, `voice` and `useCases` in `skills/roles/roles.json`.
+
+**A block sits in a lane; the lane is a role; the role is who the prose is
+for.** The audience is not restated per block — copying it onto every block
+invites the two to disagree, and a per-block audience contradicting its lane
+is worse than none because it looks authoritative.
+
+```ts
+import { readRoleGraph, roleForLane } from "./schemas/role-graph";
+const role = roleForLane(readRoleGraph("skills")!, laneName, explicitRef);
+role?.persona   // who this reader is
+role?.voice     // the register to address them in
+role?.useCases  // what they came to do
+```
+
+**This file is the default, not the answer.** Where a role declares a `voice`,
+that wins. The guidance here applies when no role has been resolved.
+
+**Why the role carries the voice rather than this file inferring it.** Voice
+does not follow from persona: the same reader is addressed differently in a
+normative standard and in a tutorial. Naming it on the role is what lets the
+authoring agent and the QA agent judge against the *same* string — otherwise a
+voice finding is one agent's taste against another's, which is unreviewable.
+
+`bun run kg:audit` reports a reader role missing any of the three
+(`role-has-persona`, `role-declares-voice`, `role-has-use-cases`). System,
+external and acted-upon roles are `n/a`: nothing in them reads prose.
 # One-Voice Style Guide — Author Voice Profile
 
 > **See also:** `one-voice-audit` is the mechanical sweep (greps for

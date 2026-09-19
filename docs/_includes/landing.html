@@ -5,8 +5,8 @@
   Everything here comes from `cat-harness.json` via `_data/harness.json`
   (written by `scripts/sync-docs-harness.ts`). NOTHING about this repo is
   written in — an instance overrides the picture and the words by editing its
-  own declaration, which is the point: a downstream folio should not inherit
-  a grumpy cat it did not choose.
+  own declaration, which is the point: a downstream folio should not inherit a
+  grumpy cat it did not choose.
 
   Three states, and the third is why this is a template rather than a div:
 
@@ -16,11 +16,22 @@
     3. No backdrop at all → the words alone. An instance with no art is
        ordinary, not broken.
 
-  The variants are chosen in CSS, not here: a `<picture>` with media queries
-  swaps the file at the breakpoint, so a phone never downloads the wide crop.
-  Each variant carries its OWN region, because the same cloud sits in a
-  different place in a portrait crop — so the regions are emitted as custom
-  properties per breakpoint rather than assumed to be shared.
+  ## The region travels WITH the variant
+
+  `<picture>` swaps the file at a breakpoint, so the region has to change at
+  the same breakpoint or the words stay where the WIDE crop was quiet. That
+  bug shipped in the first version of this file: the mobile image loaded and
+  the laptop's box stayed, which on a portrait crop is the middle of the cat.
+
+  So the custom properties are re-declared per breakpoint, from each variant's
+  own numbers. They are emitted here rather than in the stylesheet because they
+  are per-INSTANCE data; the stylesheet knows only that the properties exist.
+
+  `<source>` order is narrowest-first, because a `<picture>` takes the FIRST
+  matching source and `max-width: 48rem` matches a 20rem phone too. The CSS
+  below is the opposite order — widest first — because there the LAST matching
+  rule wins. Two orders, one outcome; getting either backwards silently serves
+  the wrong crop.
 {%- endcomment -%}
 
 {%- assign h = site.data.harness -%}
@@ -32,14 +43,14 @@
 {%- if backdrop -%}
 <div class="folio-landing{% unless backdrop.region %} folio-landing--no-region{% endunless %}">
   <picture class="folio-landing__art">
-    {%- if mobile %}<source media="(max-width: 48rem)" srcset="{{ mobile.src }}">{% endif -%}
-    {%- if card %}<source media="(max-width: 30rem)" srcset="{{ card.src }}">{% endif -%}
+    {%- if card %}<source media="(max-width: 30rem)" srcset="{{ card.src }}" width="{{ card.width }}" height="{{ card.height }}">{% endif -%}
+    {%- if mobile %}<source media="(max-width: 48rem)" srcset="{{ mobile.src }}" width="{{ mobile.width }}" height="{{ mobile.height }}">{% endif -%}
     {%- comment -%}
       `alt=""` deliberately. The backdrop is decorative: every word it carries
       is in the overlay below, as real text. Announcing the image's
       `description` here would read a paragraph about composition to somebody
-      who has already been given the content — the mistake `title.html` shipped
-      once and this file must not repeat.
+      who has already been given the content — the mistake `title.html`
+      shipped once and this file must not repeat.
     {%- endcomment -%}
     <img src="{{ backdrop.src }}" alt="" aria-hidden="true"
          {% if backdrop.width %}width="{{ backdrop.width }}"{% endif %}
@@ -47,11 +58,35 @@
          decoding="async">
   </picture>
 
-  <div class="folio-landing__text"
-       {%- if backdrop.region %} style="--fl-x:{{ backdrop.region.x }}%;--fl-y:{{ backdrop.region.y }}%;--fl-w:{{ backdrop.region.w }}%;--fl-h:{{ backdrop.region.h }}%"{% endif %}>
+  <div class="folio-landing__text">
     {{ h.description | markdownify }}
   </div>
 </div>
+
+<style>
+  {%- if backdrop.region %}
+  .folio-landing {
+    --fl-x: {{ backdrop.region.x }}%; --fl-y: {{ backdrop.region.y }}%;
+    --fl-w: {{ backdrop.region.w }}%; --fl-h: {{ backdrop.region.h }}%;
+  }
+  {%- endif %}
+  {%- if mobile and mobile.region %}
+  @media (max-width: 48rem) {
+    .folio-landing {
+      --fl-x: {{ mobile.region.x }}%; --fl-y: {{ mobile.region.y }}%;
+      --fl-w: {{ mobile.region.w }}%; --fl-h: {{ mobile.region.h }}%;
+    }
+  }
+  {%- endif %}
+  {%- if card and card.region %}
+  @media (max-width: 30rem) {
+    .folio-landing {
+      --fl-x: {{ card.region.x }}%; --fl-y: {{ card.region.y }}%;
+      --fl-w: {{ card.region.w }}%; --fl-h: {{ card.region.h }}%;
+    }
+  }
+  {%- endif %}
+</style>
 {%- else -%}
 <div class="folio-landing folio-landing--plain">
   {{ h.description | markdownify }}
