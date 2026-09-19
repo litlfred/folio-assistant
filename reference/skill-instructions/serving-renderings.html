@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(1)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(105)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(19) > ul > li:nth-child(1) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(105) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(19) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(19) > ul > li:nth-child(1) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(105) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(19) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(19) > ul.nav-list > li.nav-list-item:nth-child(1) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(105) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Agent onboarding | folio-assistant</title>
+<title>Serving a rendering | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Agent onboarding" />
-<meta property="og:locale" content="en" />
+<meta property="og:title" content="Serving a rendering" />
+<meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/serving-renderings.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/serving-renderings.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Agent onboarding" />
+<meta property="twitter:title" content="Serving a rendering" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Agent onboarding","url":"https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Serving a rendering","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/serving-renderings.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -132,7 +132,7 @@
   "translationStatus": "",
   "translationSource": "",
   "supportedLocales": ["ar","zh","en","fr","ru","es"],
-  "availableLocales": ["ar","zh","fr","ru","es"],
+  "availableLocales": null,
   "sweep": {
     "run": true,
     "sweptAt": "2026-09-18T13:35:56.610Z",
@@ -415,8 +415,8 @@
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/guides/">Authoring guides</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Agent onboarding</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Serving a rendering</span></li>
   </ol>
 </nav>
 
@@ -424,348 +424,154 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="agent-onboarding">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/serving-renderings.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/serving-renderings.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/serving-renderings.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="serving-a-rendering--endpoints-mime-types-and-what-each-host-can-enforce">
   
   
-    <a href="#agent-onboarding" class="anchor-heading" aria-labelledby="agent-onboarding"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent onboarding
+    <a href="#serving-a-rendering--endpoints-mime-types-and-what-each-host-can-enforce" class="anchor-heading" aria-labelledby="serving-a-rendering--endpoints-mime-types-and-what-each-host-can-enforce"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Serving a rendering — endpoints, MIME types, and what each host can enforce
   
   
 </h1>
     
 
-<p>You are an LLM agent that has just been dropped into a repository using
-folio-assistant. This page is your orientation: what you are looking at,
-what to do first, and where to look things up.</p>
+<p>A <strong>rendering</strong> is what an instance publishes about itself. Running it produces
+<strong>one or more endpoints under that instance’s stub</strong>, and every endpoint has a
+media type that says what it is.</p>
 
-<p>For the <em>architecture</em> of skills, roles, and capabilities, read
-<a href="../skills.html">Skills &amp; roles</a>. This page is the practical version.</p>
-
-<ol id="markdown-toc">
-  <li><a href="#1-work-out-which-repo-you-are-in" id="markdown-toc-1-work-out-which-repo-you-are-in">1. Work out which repo you are in</a></li>
-  <li><a href="#2-your-first-five-minutes" id="markdown-toc-2-your-first-five-minutes">2. Your first five minutes</a></li>
-  <li><a href="#3-find-the-right-skill--dont-improvise" id="markdown-toc-3-find-the-right-skill--dont-improvise">3. Find the right skill — don’t improvise</a></li>
-  <li><a href="#4-the-content-object-model-briefly" id="markdown-toc-4-the-content-object-model-briefly">4. The content object model, briefly</a></li>
-  <li><a href="#5-two-dependency-relations--do-not-conflate-them" id="markdown-toc-5-two-dependency-relations--do-not-conflate-them">5. Two dependency relations — do not conflate them</a></li>
-  <li><a href="#6-track-work-in-beans-not-in-your-head" id="markdown-toc-6-track-work-in-beans-not-in-your-head">6. Track work in beans, not in your head</a></li>
-  <li><a href="#7-qa-sidecars-and-axes" id="markdown-toc-7-qa-sidecars-and-axes">7. QA sidecars and axes</a></li>
-  <li><a href="#8-shipping-work" id="markdown-toc-8-shipping-work">8. Shipping work</a></li>
-  <li><a href="#9-where-to-look-things-up" id="markdown-toc-9-where-to-look-things-up">9. Where to look things up</a></li>
-  <li><a href="#10-habits-that-keep-you-out-of-trouble" id="markdown-toc-10-habits-that-keep-you-out-of-trouble">10. Habits that keep you out of trouble</a></li>
-</ol><hr />
-<h2 id="1-work-out-which-repo-you-are-in">
+<p>This skill is about the second half. The rendering already knows what it
+produced; what keeps going wrong is that the <em>serving</em> forgets to say so, and a
+<code class="language-plaintext highlighter-rouge">.jsonld</code> arrives at a client as <code class="language-plaintext highlighter-rouge">text/plain</code>.</p>
+<h2 id="one-stub-several-endpoints-per-instance-in-the-tree">
   
   
-    <a href="#1-work-out-which-repo-you-are-in" class="anchor-heading" aria-labelledby="1-work-out-which-repo-you-are-in"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Work out which repo you are in
+    <a href="#one-stub-several-endpoints-per-instance-in-the-tree" class="anchor-heading" aria-labelledby="one-stub-several-endpoints-per-instance-in-the-tree"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One stub, several endpoints, per instance in the tree
   
   
 </h2>
     
 
-<p>There are two kinds, and confusing them is the most common early mistake.</p>
+<p><code class="language-plaintext highlighter-rouge">artefactStub()</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> is the stem: <code class="language-plaintext highlighter-rouge">stub</code> when declared,
+otherwise <code class="language-plaintext highlighter-rouge">name</code>. Every artefact an instance publishes is named with it, so a
+reader who knows the repository knows the filename.</p>
+
+<p>The dependency tree is <strong>a set of overlaying instances</strong>, and each renders under
+its own stub. That is the point of the stub being per-instance rather than
+per-repository: after the split, <code class="language-plaintext highlighter-rouge">folio-assist-core</code> depending on
+<code class="language-plaintext highlighter-rouge">cat-harness</code> means both are present, and both publish.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;base&gt;/kg/&lt;stub&gt;.jsonld          the knowledge graph        application/ld+json
+&lt;base&gt;/&lt;stub&gt;.schema.json        its declaration's schema   application/schema+json
+</code></pre></div></div>
+
+<p>So <code class="language-plaintext highlighter-rouge">…/folio-assistant/kg/cat-harness.jsonld</code> is the <em>cat-harness</em> instance’s
+rendering, served from a tree whose root happens to be <code class="language-plaintext highlighter-rouge">folio-assistant</code>. A
+consumer asking for one instance’s graph must not be handed another’s because
+the paths collided.</p>
+<h2 id="every-endpoint-declares-its-media-type">
+  
+  
+    <a href="#every-endpoint-declares-its-media-type" class="anchor-heading" aria-labelledby="every-endpoint-declares-its-media-type"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Every endpoint declares its media type
+  
+  
+</h2>
+    
+
+<p>The declaration is part of the rendering, not of the server. A server is one
+consumer of it; an MCP server is another; a <code class="language-plaintext highlighter-rouge">Link:</code> header generator is a third.
+Writing the type at each of them is three places to disagree.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th> </th>
-      <th><strong>folio-assistant</strong> (the platform)</th>
-      <th><strong>A folio</strong> (the content repo)</th>
+      <th>extension</th>
+      <th>media type</th>
+      <th>why not the obvious one</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Contains</td>
-      <td>skills, schemas, pipeline, MCP server</td>
-      <td>the actual paper / guideline / IG</td>
+      <td><code class="language-plaintext highlighter-rouge">.jsonld</code></td>
+      <td><code class="language-plaintext highlighter-rouge">application/ld+json</code></td>
+      <td><strong>not</strong> <code class="language-plaintext highlighter-rouge">application/json</code>. A JSON-LD processor keys off this type to know the document carries a <code class="language-plaintext highlighter-rouge">@context</code></td>
     </tr>
     <tr>
-      <td>Has <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/</code></td>
-      <td>no — only <code class="language-plaintext highlighter-rouge">content/pipeline/</code></td>
-      <td>yes</td>
+      <td><code class="language-plaintext highlighter-rouge">.schema.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">application/schema+json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">application/json</code> parses, but loses that it is a schema</td>
     </tr>
     <tr>
-      <td>You edit here to</td>
-      <td>change how authoring works</td>
-      <td>change what is being authored</td>
+      <td><code class="language-plaintext highlighter-rouge">.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">application/json</code></td>
+      <td> </td>
     </tr>
   </tbody>
 </table></div>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls </span>content/          <span class="c"># pipeline/ only  ⇒ platform;  paper dirs ⇒ folio</span>
-</code></pre></div></div>
-
-<p><strong>folio-assistant contains no content.</strong> If you find yourself about to
-write subject matter into it — a chapter, a constant, a chapter-keyword
-list — you are in the wrong repo, or the thing you are writing should be
-folio-supplied data. See §7.</p>
-<h2 id="2-your-first-five-minutes">
+<h2 id="what-each-host-can-enforce--three-states-and-they-are-not-degrees">
   
   
-    <a href="#2-your-first-five-minutes" class="anchor-heading" aria-labelledby="2-your-first-five-minutes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Your first five minutes
+    <a href="#what-each-host-can-enforce--three-states-and-they-are-not-degrees" class="anchor-heading" aria-labelledby="what-each-host-can-enforce--three-states-and-they-are-not-degrees"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What each host can enforce — three states, and they are not degrees
   
   
 </h2>
     
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans prime <span class="o">&amp;&amp;</span> beans list      <span class="c"># the work-plan — see §6</span>
-scripts/session-start-coord-sweep.sh   <span class="c"># CLI-independent equivalent</span>
-bun run src/index.ts <span class="nt">--check-deps</span>      <span class="c"># what this environment can do</span>
-</code></pre></div></div>
+<p><strong>A local HTTP deployment enforces it.</strong> It reads the declared type and sets
+<code class="language-plaintext highlighter-rouge">Content-Type</code>. This is where the declaration is honoured exactly.</p>
 
-<p><code class="language-plaintext highlighter-rouge">--check-deps</code> matters more than it looks. Many checks degrade to <code class="language-plaintext highlighter-rouge">n/a</code>
-rather than failing when a tool is missing (no Lean toolchain, no Atlas,
-no LaTeX). <strong>An <code class="language-plaintext highlighter-rouge">n/a</code> is not a pass.</strong> If you report “all clean” without
-knowing what was skipped, you are reporting the absence of data as a
-result.</p>
-<h2 id="3-find-the-right-skill--dont-improvise">
-  
-  
-    <a href="#3-find-the-right-skill--dont-improvise" class="anchor-heading" aria-labelledby="3-find-the-right-skill--dont-improvise"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Find the right skill — don’t improvise
-  
-  
-</h2>
-    
+<p><strong>An MCP server enforces it.</strong> When it serves a rendered artefact it uses the
+declared default media type rather than guessing from the extension — the
+declaration is right there, and guessing is how <code class="language-plaintext highlighter-rouge">.jsonld</code> becomes
+<code class="language-plaintext highlighter-rouge">application/octet-stream</code>.</p>
 
-<p>Skills are the unit of work here. Before hand-rolling a procedure, check
-whether one exists.</p>
+<p><strong>GitHub Pages does not, and cannot be made to.</strong> Pages serves by its own
+extension table with no per-file configuration: no <code class="language-plaintext highlighter-rouge">.htaccess</code>, no headers
+file, no way to say <code class="language-plaintext highlighter-rouge">application/ld+json</code>. An unknown extension is served as
+<code class="language-plaintext highlighter-rouge">application/octet-stream</code> or <code class="language-plaintext highlighter-rouge">text/plain</code> depending on the extension.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Where</th>
-      <th>What it gives you</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></td>
-      <td>content-agnostic: coordination, watchers, QA, render, bibliography</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/</code></td>
-      <td>papers: Lean, LaTeX, proofs, simulators</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/authoring-who-smart-guidelines/</code></td>
-      <td>WHO SMART DAK / IG</td>
-    </tr>
-    <tr>
-      <td><a href="../reference/skills/">Skill schema reference</a></td>
-      <td>generated input/output contract per skill</td>
-    </tr>
-    <tr>
-      <td><a href="../reference/skill-instructions/">Skill instructions</a></td>
-      <td>generated full instruction bodies</td>
-    </tr>
-    <tr>
-      <td><a href="../skills.html">Skills &amp; roles</a></td>
-      <td>how skills, roles, and capabilities compose</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>Both <code class="language-plaintext highlighter-rouge">reference/</code> directories are <strong>generated</strong> — never hand-edit them.
-Regenerate with <code class="language-plaintext highlighter-rouge">bun run scripts/gen-schema-docs.ts</code> and
-<code class="language-plaintext highlighter-rouge">bun run scripts/gen-skill-docs.ts</code>.</p>
-<h2 id="4-the-content-object-model-briefly">
-  
-  
-    <a href="#4-the-content-object-model-briefly" class="anchor-heading" aria-labelledby="4-the-content-object-model-briefly"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. The content object model, briefly
-  
-  
-</h2>
-    
-
-<p>A content block is a <strong>triple</strong> sharing a root name:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;block&gt;.ts     manifest — label, kind, uses[], lean.ref, cites[]
-&lt;block&gt;.md     the narrative a reader actually reads
-&lt;block&gt;.lean   the formalisation (when the kind requires one)
-&lt;block&gt;.qa.json  QA sidecar — audit results, per criterion
-</code></pre></div></div>
-
-<p>The <code class="language-plaintext highlighter-rouge">.ts</code> manifest is the source of truth for structure. Formalisation
-<em>status</em> is derived at build time, never stored in the manifest.</p>
-<h2 id="5-two-dependency-relations--do-not-conflate-them">
-  
-  
-    <a href="#5-two-dependency-relations--do-not-conflate-them" class="anchor-heading" aria-labelledby="5-two-dependency-relations--do-not-conflate-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Two dependency relations — do not conflate them
-  
-  
-</h2>
-    
-
-<p>This trips up agents constantly.</p>
+<p>That third row is <strong>not a failure to fix</strong>. It is a property of the host, and
+the honest handling is the one this repository applies everywhere else:</p>
 
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">uses[]</code> is editorial.</strong> “What must a reader have read to follow
-this block?” Authored — agent/human maintained.</li>
-  <li><strong>The formal graph is machine-derived</strong> from <code class="language-plaintext highlighter-rouge">lean.ref</code>, never
-hand-written.</li>
+  <li><strong>Do not pretend.</strong> A tool reporting “served with the declared type” must not
+say so for a Pages URL it did not check.</li>
+  <li><strong>Do not fall back to a guess that looks authoritative.</strong> “Probably
+<code class="language-plaintext highlighter-rouge">application/json</code>” is worse than “this host does not declare one”, because
+the first is quoted and the second is investigated.</li>
+  <li><strong>Report “could not enforce” as its own state</strong>, distinct from “enforced” and
+from “enforced wrongly”. Same rule as <code class="language-plaintext highlighter-rouge">readme-sections</code>’ third state,
+<code class="language-plaintext highlighter-rouge">ci-health</code>’s “could not check” and <code class="language-plaintext highlighter-rouge">resolveTodoTags</code>’ <code class="language-plaintext highlighter-rouge">not-checked</code>.</li>
 </ul>
-
-<p>They diverge legitimately in both directions: a proof invokes <code class="language-plaintext highlighter-rouge">simp</code>
-lemmas nobody needs to read about; a theorem is motivated by an example
-it never formally cites.</p>
-
-<p><strong>Never populate <code class="language-plaintext highlighter-rouge">uses[]</code> from Lean.</strong> It destroys the signal every
-ordering metric is computed from. For impact questions (“what breaks if
-this changes?”) take the union:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/content-graph.ts content/&lt;paper&gt;
-</code></pre></div></div>
-
-<p>Auditing whether <code class="language-plaintext highlighter-rouge">uses[]</code> is well used is its own skill:
-<code class="language-plaintext highlighter-rouge">uses-editorial-review</code>, plus the mechanical <code class="language-plaintext highlighter-rouge">uses</code> QA axis.</p>
-<h2 id="6-track-work-in-beans-not-in-your-head">
+<h2 id="consequences-a-consumer-must-expect">
   
   
-    <a href="#6-track-work-in-beans-not-in-your-head" class="anchor-heading" aria-labelledby="6-track-work-in-beans-not-in-your-head"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Track work in beans, not in your head
+    <a href="#consequences-a-consumer-must-expect" class="anchor-heading" aria-labelledby="consequences-a-consumer-must-expect"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Consequences a consumer must expect
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">beans</code> is the <strong>single</strong> todo mechanism — session-local <em>and</em>
-cross-agent. <code class="language-plaintext highlighter-rouge">beans/</code> is committed, so a plan survives a resume in a
-fresh container.</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans list
-beans create <span class="s2">"&lt;title&gt;"</span>
-beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>    <span class="c"># CLAIM before you work</span>
-</code></pre></div></div>
-
-<p>Claim before working so two sessions don’t pick the same item, and never
-resolve a sibling’s bean, and never delete ANY bean — scrap it with reasons instead. Do not stand up a parallel todo
-store. Do not <code class="language-plaintext highlighter-rouge">beans create</code> bulk machine-generated queues (<code class="language-plaintext highlighter-rouge">*.qa.json</code>,
-witness files) — those stay as bulk JSON.</p>
-
-<p>Full discipline: <code class="language-plaintext highlighter-rouge">.claude/skills/local/todo-manager.md</code>,
-<code class="language-plaintext highlighter-rouge">.claude/skills/local/bean-coordination.md</code>.</p>
-<h2 id="7-qa-sidecars-and-axes">
+<p>A client fetching <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code> from Pages <strong>will</strong> receive the wrong
+<code class="language-plaintext highlighter-rouge">Content-Type</code>. A strict JSON-LD processor may refuse it. That is a known and
+accepted cost of publishing there, and the remedy is the local deployment, not
+a different extension: renaming the artefact to <code class="language-plaintext highlighter-rouge">.json</code> to make Pages serve it
+as JSON would trade a wrong type for a wrong <em>name</em>, and the name is the part
+a reader uses.</p>
+<h2 id="what-this-skill-does-not-cover">
   
   
-    <a href="#7-qa-sidecars-and-axes" class="anchor-heading" aria-labelledby="7-qa-sidecars-and-axes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. QA sidecars and axes
+    <a href="#what-this-skill-does-not-cover" class="anchor-heading" aria-labelledby="what-this-skill-does-not-cover"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this skill does not cover
   
   
 </h2>
     
 
-<p>Every block can carry <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> recording, per criterion, what
-each reviewer found — <code class="language-plaintext highlighter-rouge">script</code>, <code class="language-plaintext highlighter-rouge">agent</code>, or <code class="language-plaintext highlighter-rouge">human</code>. Entries carry the
-source-file hashes at audit time, so an entry goes <strong>stale</strong> when the
-block is edited and must be re-adjudicated.</p>
-
-<p>Criteria are grouped into <strong>axes</strong> (<code class="language-plaintext highlighter-rouge">proof</code>, <code class="language-plaintext highlighter-rouge">voice</code>, <code class="language-plaintext highlighter-rouge">detangler</code>,
-<code class="language-plaintext highlighter-rouge">uses</code>, <code class="language-plaintext highlighter-rouge">canonical</code>, <code class="language-plaintext highlighter-rouge">compute</code>, <code class="language-plaintext highlighter-rouge">bibliography</code>, …). Run one:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/qa-sweep.ts <span class="nt">--axis</span> uses content/&lt;paper&gt;
-bun run content/pipeline/qa-staleness.ts content/&lt;paper&gt;
-</code></pre></div></div>
-
-<p>Some criteria are <code class="language-plaintext highlighter-rouge">automated: true</code> (a script decides) and some are
-<code class="language-plaintext highlighter-rouge">automated: false</code> (an agent or human must adjudicate). The second kind
-costs real turns — see <code class="language-plaintext highlighter-rouge">semantic-cone.ts</code> for scoping them by what they
-can actually affect.</p>
-
-<p><strong>Folio-optional axes.</strong> An axis encoding one folio’s subject matter is
-registered only when the folio opts in:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">harness.config.json</span><span class="w">
-</span><span class="p">{</span><span class="w"> </span><span class="nl">"qaAxes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"q-usage"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Likewise, folio-specific <em>data</em> belongs in the folio, not the platform —
-e.g. <code class="language-plaintext highlighter-rouge">content/&lt;paper&gt;/topic-keywords.json</code> drives
-<code class="language-plaintext highlighter-rouge">detangler-topic-coherence</code>, and absent it the checker reports <code class="language-plaintext highlighter-rouge">n/a</code>.</p>
-<h2 id="8-shipping-work">
-  
-  
-    <a href="#8-shipping-work" class="anchor-heading" aria-labelledby="8-shipping-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Shipping work
-  
-  
-</h2>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/prepare-merge <span class="o">[</span>base]
-</code></pre></div></div>
-
-<p>Runs the generic recipe plus content-type-specific gates (paper →
-content_validate / qa_sweep / proof_status / latex_preflight /
-lean_build), then pushes. <strong>It does not merge.</strong></p>
-
-<p>Watching a sibling PR: <code class="language-plaintext highlighter-rouge">/watch &lt;pr|branch&gt;</code>.</p>
-<h2 id="9-where-to-look-things-up">
-  
-  
-    <a href="#9-where-to-look-things-up" class="anchor-heading" aria-labelledby="9-where-to-look-things-up"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Where to look things up
-  
-  
-</h2>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Question</th>
-      <th>Answer</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Project commands, conventions</td>
-      <td><code class="language-plaintext highlighter-rouge">AGENTS.md</code> (the agent-generic source of truth)</td>
-    </tr>
-    <tr>
-      <td>What a skill does</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/**/</code>, or the generated <a href="../reference/skill-instructions/">instruction bodies</a></td>
-    </tr>
-    <tr>
-      <td>A skill’s typed contract</td>
-      <td><a href="../reference/skills/">Skill schema reference</a></td>
-    </tr>
-    <tr>
-      <td>What a QA criterion means</td>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code> — descriptions are the spec</td>
-    </tr>
-    <tr>
-      <td>The block schema</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/types.ts</code></td>
-    </tr>
-    <tr>
-      <td>The QA sidecar schema</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/block-qa.ts</code></td>
-    </tr>
-    <tr>
-      <td>What this environment can do</td>
-      <td><code class="language-plaintext highlighter-rouge">.claude/skills/capabilities/*.json</code>, <code class="language-plaintext highlighter-rouge">--check-deps</code></td>
-    </tr>
-    <tr>
-      <td>Lean tooling roadmap</td>
-      <td><a href="../proposals/llm-authoring-tool-integration.html">Lean tooling proposal</a></td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="10-habits-that-keep-you-out-of-trouble">
-  
-  
-    <a href="#10-habits-that-keep-you-out-of-trouble" class="anchor-heading" aria-labelledby="10-habits-that-keep-you-out-of-trouble"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. Habits that keep you out of trouble
-  
-  
-</h2>
-    
-
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">n/a</code> is not a pass.</strong> Say what was skipped and why.</li>
-  <li><strong>Claim a bean before durable work.</strong> Others may be running.</li>
-  <li><strong>Don’t hardcode a paper name.</strong> A folio may hold several; resolve
-with <code class="language-plaintext highlighter-rouge">findPapers()</code> / <code class="language-plaintext highlighter-rouge">soleFolioPaper()</code> from
-<code class="language-plaintext highlighter-rouge">content/pipeline/repo-root.ts</code>.</li>
-  <li><strong>Don’t write content into the platform.</strong> If it names a chapter, a
-constant, or a vocabulary, it is folio data.</li>
-  <li><strong>Regenerate, never hand-edit,</strong> anything under <code class="language-plaintext highlighter-rouge">docs/reference/</code>.</li>
-  <li><strong>Read the criterion description before acting on a finding.</strong> They
-state severity, intent, and what explicitly does <em>not</em> count.</li>
-</ul>
+<p><strong>How to run a server.</strong> No tool is specified here — the media types and the
+per-host enforcement story are the durable part, and a server that reads them
+is an implementation of this, not a prerequisite for it.</p>
 
           
 

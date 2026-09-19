@@ -114,13 +114,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T00:24:47.746Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9601ccdf0abd4bd31cd48a2810cf42092154e351",
-  "sourceCommitSha": "9601ccdf0abd4bd31cd48a2810cf42092154e351",
-  "sourceCommitAt": "2026-09-19T02:23:23+02:00",
+  "generatedAt": "2026-09-19T00:44:38.535Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d26a96fddb50a2d4482061be19b189c1134ffdae",
+  "sourceCommitSha": "d26a96fddb50a2d4482061be19b189c1134ffdae",
+  "sourceCommitAt": "2026-09-19T02:43:14+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 144,
+    "Skill": 145,
     "Actor": 24,
     "Capability": 23,
     "Role": 64,
@@ -181,35 +181,35 @@
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 145
     },
     {
       "term": "hasIOContract",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 145
     },
     {
       "term": "instructions",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 145
     },
     {
       "term": "lines",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 145
     },
     {
       "term": "packagePaths",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 145
     },
     {
       "term": "source",
@@ -1687,6 +1687,22 @@
       ],
       "instructions": "skills/folio-core/test-engineer.md",
       "lines": 150,
+      "hasInstructions": true,
+      "hasIOContract": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/serving-renderings",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "serving-renderings",
+      "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/serving-renderings.md",
+      "lines": 85,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -3880,6 +3896,7 @@
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/scientific-accuracy",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/staging-review",
