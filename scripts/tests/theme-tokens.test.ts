@@ -17,10 +17,13 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { siteDirFor } from "../../schemas/cat-harness.js";
 import { renderThemesCss } from "../gen-themes-css.js";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const UI = readFileSync(join(ROOT, "docs/folio-assistant/assets/css/docs-ui.css"), "utf8");
+// The site root is `siteDirFor`'s answer, not a literal — see
+// `site-dir-single-answer.test.ts`, which failed on this line first.
+const UI = readFileSync(join(ROOT, siteDirFor(ROOT), "assets", "css", "docs-ui.css"), "utf8");
 
 /** Role names the generated stylesheet defines. */
 function emittedTokens(): string[] {
