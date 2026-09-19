@@ -118,23 +118,23 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T01:11:16.925Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c511946a05609d27152adc010d79fc6e83214540",
-  "sourceCommitSha": "c511946a05609d27152adc010d79fc6e83214540",
-  "sourceCommitAt": "2026-09-19T01:09:48Z",
+  "generatedAt": "2026-09-19T01:20:01.531Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b2b9934ae577a6647365a99ef5e0a1f5b73735d6",
+  "sourceCommitSha": "b2b9934ae577a6647365a99ef5e0a1f5b73735d6",
+  "sourceCommitAt": "2026-09-19T01:18:22Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 144,
+    "Skill": 149,
     "Actor": 24,
     "Capability": 23,
     "Role": 64,
     "SkillPackage": 14,
-    "Process": 29,
-    "SequenceFlow": 402,
-    "ProcessNode": 374,
+    "Process": 30,
+    "SequenceFlow": 416,
+    "ProcessNode": 387,
     "Tool": 24,
-    "GraphKind": 10,
-    "Directory": 4
+    "GraphKind": 13,
+    "Directory": 7
   },
   "problems": [],
   "undeclaredTerms": [
@@ -143,77 +143,77 @@
       "onTypes": [
         "ProcessNode"
       ],
-      "occurrences": 374
+      "occurrences": 387
     },
     {
       "term": "implementsSkillNames",
       "onTypes": [
         "ProcessNode"
       ],
-      "occurrences": 374
+      "occurrences": 387
     },
     {
       "term": "kind",
       "onTypes": [
         "ProcessNode"
       ],
-      "occurrences": 374
+      "occurrences": 387
     },
     {
       "term": "laneName",
       "onTypes": [
         "ProcessNode"
       ],
-      "occurrences": 374
+      "occurrences": 387
     },
     {
       "term": "relaxable",
       "onTypes": [
         "ProcessNode"
       ],
-      "occurrences": 374
+      "occurrences": 387
     },
     {
       "term": "touchesWorkPlan",
       "onTypes": [
         "ProcessNode"
       ],
-      "occurrences": 374
+      "occurrences": 387
     },
     {
       "term": "hasInstructions",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 149
     },
     {
       "term": "hasIOContract",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 149
     },
     {
       "term": "instructions",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 149
     },
     {
       "term": "lines",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 149
     },
     {
       "term": "packagePaths",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 144
+      "occurrences": 149
     },
     {
       "term": "source",
@@ -221,7 +221,7 @@
         "Process",
         "Role"
       ],
-      "occurrences": 92
+      "occurrences": 93
     },
     {
       "term": "requires",
@@ -236,28 +236,28 @@
       "onTypes": [
         "Process"
       ],
-      "occurrences": 29
+      "occurrences": 30
     },
     {
       "term": "flowCount",
       "onTypes": [
         "Process"
       ],
-      "occurrences": 29
+      "occurrences": 30
     },
     {
       "term": "nodeCount",
       "onTypes": [
         "Process"
       ],
-      "occurrences": 29
+      "occurrences": 30
     },
     {
       "term": "workPlanOp",
       "onTypes": [
         "ProcessNode"
       ],
-      "occurrences": 27
+      "occurrences": 28
     },
     {
       "term": "install",
@@ -315,7 +315,7 @@
         "Directory",
         "SkillPackage"
       ],
-      "occurrences": 18
+      "occurrences": 21
     },
     {
       "term": "meta",
@@ -343,7 +343,14 @@
       "onTypes": [
         "GraphKind"
       ],
-      "occurrences": 10
+      "occurrences": 13
+    },
+    {
+      "term": "graphKinds",
+      "onTypes": [
+        "Directory"
+      ],
+      "occurrences": 7
     },
     {
       "term": "version",
@@ -356,13 +363,6 @@
       "term": "decisionRef",
       "onTypes": [
         "ProcessNode"
-      ],
-      "occurrences": 4
-    },
-    {
-      "term": "graphKinds",
-      "onTypes": [
-        "Directory"
       ],
       "occurrences": 4
     },
@@ -994,6 +994,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/process-state"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/ui-accessibility",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "ui-accessibility",
+      "title": "All UI must follow accessibility guidelines",
+      "description": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/ui-accessibility.md",
+      "lines": 121,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/ui-accessibility"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/detangler-integration-watcher",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
       "name": "detangler-integration-watcher",
@@ -1042,7 +1060,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/one-voice-style-guide.md",
-      "lines": 204,
+      "lines": 223,
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/one-voice-style-guide"
@@ -1298,6 +1316,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/code-node-review"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-authoring-guidance",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "voice-authoring-guidance",
+      "title": "Voice authoring guidance",
+      "description": "Load the active voices' rules BEFORE writing, so a block is drafted in the register it will be reviewed against. The authoring half of the voice overlay; `voice-overlay-review` is the half that runs after.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/voice-authoring-guidance.md",
+      "lines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/voice-authoring-guidance"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/docs-generation",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
       "name": "docs-generation",
@@ -1327,7 +1363,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/directory-conventions.md",
-      "lines": 366,
+      "lines": 387,
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/directory-conventions"
@@ -1402,6 +1438,24 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/interaction-modality"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/milnor-exposition-standard",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "milnor-exposition-standard",
+      "title": "The Milnor exposition standard",
+      "description": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/milnor-exposition-standard.md",
+      "lines": 119,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/milnor-exposition-standard"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/delivery-summary",
@@ -1584,6 +1638,24 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/production-vs-exploratory-discipline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "voice-overlay-review",
+      "title": "Voice overlay review",
+      "description": "Review a block against the active voices' rules and record the verdict on its QA sidecar. The human/agent half of the voice overlay; the mechanical half is whatever `patterns` and `terminology` a rule carries.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/voice-overlay-review.md",
+      "lines": 93,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/voice-overlay-review"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/translation-manager",
@@ -1769,6 +1841,23 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/test-engineer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/serving-renderings",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "serving-renderings",
+      "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/serving-renderings.md",
+      "lines": 85,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/serving-renderings"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
@@ -4077,6 +4166,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/one-voice-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/one-voice-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/one-voice-style-guide",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/milnor-exposition-standard",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/ontologist",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/pickup",
@@ -4088,6 +4178,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/scientific-accuracy",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/staging-review",
@@ -4097,9 +4188,12 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/uses-editorial-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-editorial-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-authoring-guidance",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/watch"
       ],
       "providesCapability": [
@@ -6908,8 +7002,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Start_ProseChanged"
       ],
-      "nodeCount": 9,
-      "flowCount": 9,
+      "nodeCount": 10,
+      "flowCount": 10,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview"
     },
     {
@@ -6933,8 +7027,16 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_AdjudicateVoice",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewUses",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Call_VoiceOverlay",
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3b",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Call_VoiceOverlay",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewUses",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N4",
@@ -7063,6 +7165,31 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_AdjudicateVoice"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Call_VoiceOverlay",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Voice overlay review",
+      "kind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "implementsSkillNames": [
+        "voice-overlay-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3b"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Call_VoiceOverlay"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/node/Task_ReviewUses",
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Review the editorial dependencies",
@@ -7080,7 +7207,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N3b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_NarrativeReview/flow/F_N4"
@@ -11094,6 +11221,405 @@
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_Translation/node/End_Stale"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Process",
+      "name": "Voice overlay review",
+      "enforcement": "strict",
+      "source": "skills/workflows/voice-review.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Start_BaseVoiceDone"
+      ],
+      "nodeCount": 12,
+      "flowCount": 13,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V1",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Start_BaseVoiceDone",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_AnyActive",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V2",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "none",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_AnyActive",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/End_NoVoice",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V3",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "one or more",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_AnyActive",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_LoadActive",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V4",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_LoadActive",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_MechanicalHalf",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V5",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_MechanicalHalf",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_OpenCitation",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V6",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_OpenCitation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_QuoteSupports",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V7",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_QuoteSupports",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_RuleIsWrong",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V8",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_QuoteSupports",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_Adjudicate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V9",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_RuleIsWrong",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_MoreVoices",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V10",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_Adjudicate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_MoreVoices",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V11",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_MoreVoices",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_MechanicalHalf",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V12",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_MoreVoices",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_RecordOnSidecar",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V13",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_RecordOnSidecar",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/End_VoiceReviewed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Start_BaseVoiceDone",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Base voice adjudicated",
+      "kind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Start_BaseVoiceDone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_AnyActive",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Any voice activated?",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_AnyActive"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/End_NoVoice",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "No voice — nothing to review",
+      "kind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V2"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/End_NoVoice"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_LoadActive",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Load the active voices",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "implementsSkillNames": [
+        "voice-overlay-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V4"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_LoadActive"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_MechanicalHalf",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Run the rule's mechanical half",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "implementsSkillNames": [
+        "voice-overlay-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_MechanicalHalf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_OpenCitation",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Open the rule's citation",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "implementsSkillNames": [
+        "voice-overlay-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V6"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_OpenCitation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_QuoteSupports",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Does the quote support the rule?",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V8"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_QuoteSupports"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_RuleIsWrong",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "The RULE is the defect — bean it",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "implementsSkillNames": [
+        "voice-overlay-review"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V9"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_RuleIsWrong"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_Adjudicate",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Adjudicate: prose, scope, or exception",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "implementsSkillNames": [
+        "voice-overlay-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V10"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_Adjudicate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_MoreVoices",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Another active voice?",
+      "kind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V9",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V12"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/GW_MoreVoices"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_RecordOnSidecar",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Record on the block's QA sidecar",
+      "kind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "implementsSkillNames": [
+        "voice-overlay-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V13"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/Task_RecordOnSidecar"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/End_VoiceReviewed",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
+      "name": "Voices adjudicated",
+      "kind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#role/Narrative%20reviewer",
+      "laneName": "Narrative reviewer",
+      "implementedBy": [],
+      "implementsSkillNames": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V13"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#process/Process_VoiceReview/node/End_VoiceReviewed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#process/Process_CRDM_Signoff",
@@ -18790,6 +19316,30 @@
       "summary": "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. Authored by people and by agents on their behalf."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/uploads",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
+      "name": "uploads",
+      "typeIri": "https://litlfred.github.io/folio-assistant/ns#UploadsGraph",
+      "renderable": false,
+      "summary": "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus: a document here reads as absent to every consumer."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/library",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
+      "name": "library",
+      "typeIri": "https://litlfred.github.io/folio-assistant/ns#LibraryGraph",
+      "renderable": false,
+      "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/voices",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
+      "name": "voices",
+      "typeIri": "https://litlfred.github.io/folio-assistant/ns#VoiceGraph",
+      "renderable": false,
+      "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/todo-feedback",
       "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
       "name": "todo-feedback",
@@ -18862,12 +19412,54 @@
       ],
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state).",
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#directory/beans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#directory/uploads",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
+      "name": "uploads",
+      "path": "uploads/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/uploads"
+      ],
+      "graphKinds": [
+        "uploads"
+      ],
+      "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#directory/uploads"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#directory/library",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
+      "name": "library",
+      "path": "library/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/library"
+      ],
+      "graphKinds": [
+        "library"
+      ],
+      "description": "L1 source content — one <bib-slug>/ per ingested document, holding sections/*.md, structure.json and, where the source was scanned, ocr/page-NNN.txt. Every knowledge-graph reference to a source resolves THROUGH here, never to a loose path or a bare URL.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#directory/library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#directory/voices",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
+      "name": "voices",
+      "path": "voices/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/voices"
+      ],
+      "graphKinds": [
+        "voices"
+      ],
+      "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#directory/voices"
     }
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "6edb7ebb6183ea27609bb9aa03cdef9a0037d573",
+    "sha": "83e0400500e1b3e1cd57ec64affe9e4e553d5318",
     "pr": "314/merge",
-    "run": "35411774469"
+    "run": "35412245222"
   }
 }
