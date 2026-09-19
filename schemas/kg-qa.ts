@@ -55,6 +55,30 @@ import { z } from "zod";
 /** Marker value carried by every sidecar written by `scripts/kg-audit.ts`. */
 export const KG_QA_SCHEMA = "kg-qa/v1";
 
+/**
+ * The auditor's identity, recorded ONCE for the whole corpus.
+ *
+ * It used to live in every sidecar. That was not 214 facts — `kg-audit.ts`
+ * hashes itself once per run and threads the SAME value into every report, and
+ * it has no subset mode, so the per-file copies could not differ from each
+ * other in any run that has ever happened. What they could do is change
+ * together: measured 2026-09-19, adding a single comment line to the auditor
+ * rewrote **218 files**, none of whose verdicts had changed.
+ *
+ * That is what made two concurrent branches conflict by construction — both
+ * regenerate the same 218 files, and git has no way to know the diff carries
+ * no information. Recording the fact once costs one file per auditor change
+ * and loses nothing, because there was never per-file precision to lose.
+ *
+ * Freshness is unaffected and still has two independent halves: this hash says
+ * whether the AUDITOR is the one in the tree, and each sidecar's own
+ * `source_hash` says whether its SUBJECT has moved since it was judged.
+ */
+export const KG_QA_MANIFEST_SCHEMA = "kg-qa-manifest/v1";
+
+/** Repo-relative location of that manifest, so every reader agrees on it. */
+export const KG_QA_MANIFEST_PATH = "skills/kg-qa.manifest.json";
+
 /** Where sidecars go, relative to the audited artefact's own directory. */
 export const KG_QA_DIRNAME = "kg-qa";
 
@@ -442,12 +466,20 @@ export interface KgAuditor {
   engine_version: string;
 }
 
+/**
+ * The corpus-wide auditor record. See {@link KG_QA_MANIFEST_SCHEMA} for why
+ * this is one file rather than a block in each sidecar.
+ */
+export interface KgQaManifest {
+  $schema: typeof KG_QA_MANIFEST_SCHEMA;
+  auditor: KgAuditor;
+}
+
 export interface KgQaReport {
   $schema: typeof KG_QA_SCHEMA;
   subject: KgSubject;
   /** sha256 of the audited file, or `null` for the roll-up. */
   source_hash: string | null;
-  auditor: KgAuditor;
   /** Criterion id → entry. Criteria not applying to this kind are omitted. */
   criteria: Record<string, KgCriterionEntry>;
   totals: Record<KgResult, number>;
@@ -471,13 +503,17 @@ export const KgQaReportSchema = z.object({
     path: z.string().nullable(),
   }),
   source_hash: z.string().nullable(),
+  criteria: z.record(z.string(), KgCriterionEntrySchema),
+  totals: z.record(z.enum(KG_RESULTS), z.number()),
+});
+
+export const KgQaManifestSchema = z.object({
+  $schema: z.literal(KG_QA_MANIFEST_SCHEMA),
   auditor: z.object({
     script: z.string(),
     script_hash: z.string(),
     engine_version: z.string(),
   }),
-  criteria: z.record(z.string(), KgCriterionEntrySchema),
-  totals: z.record(z.enum(KG_RESULTS), z.number()),
 });
 
 /** Criteria applying to a subject kind, in registry order. */

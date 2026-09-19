@@ -103,3 +103,49 @@ being assumed here.
 
 No code. This is the inventory; the schema-export stamp is a small change and
 the manifest question is the owner's.
+
+---
+
+## Done, 2026-09-19 — the stamp, and a second defect in the one that existed
+
+**The schema exports are stamped.** `harness-schema-export.ts` wrote
+`<stub>.schema.json`, `tool.schema.json`, `tool-types.schema.json` and 44 skill
+I/O contracts into `_site` with no build identity, beside a `.jsonld` that
+carried one. Both exporters now stamp their own output from a single
+`stagingStamp()` (`scripts/staging-stamp.ts`), and the inline `bun -e` rewrite
+is gone from `feature-staging.yml`. Two stamps would have given the two
+documents independent notions of one build — the failure the workflow's own
+comment guards against when it copies the `.json` alias *after* the stamp.
+
+Stamped at **write** time, not in the builders: `buildDeclarationSchema` and
+friends say what a declaration IS, which is the same answer in every run, and a
+run id folded in there would make two calls in one process return documents
+that differ.
+
+### The second defect: the stamp that existed was being dropped
+
+The workflow appended a top-level `staging` key to the JSON-LD, and `staging`
+was **not in the `@context`**. A JSON-LD processor discards a property that is
+neither declared nor an absolute IRI — so the one artefact this build stamped
+carried its stamp in the one form the consumer the export exists to serve
+cannot read. It is written, published, and not there.
+
+That is precisely the `ovkk` defect `kg-export.ts` records on
+`inputSchema`/`outputSchema`, one level up on the **document root**, which is
+where `undeclaredTerms` does not look: it walks `@graph`. The term is now
+declared, with `branch`/`sha`/`pr`/`run` in a **scoped** context (JSON-LD 1.1
+§4.1.8) rather than four global terms — they are words a graph node could
+plausibly use for something else.
+
+### Open, and deliberately not taken here
+
+**The same root-level blind spot covers `counts`, `problems`,
+`undeclaredTerms`, `danglingLinks` and `undeclaredSchemaModules`** — all
+undeclared, all dropped by a processor. Whether those are graph DATA that
+should survive expansion or a build REPORT that has no business being RDF is a
+design call, not a bug fix. Recorded rather than decided.
+
+**CSS, JS, images and PDFs are still unstamped**, for the reason stated above:
+only a site-root manifest reaches them, and its costs (a second answer to
+"which build", staleness if anything writes to `_site` afterwards, and a PDF
+fetched on its own still carrying nothing) make it the owner's decision.

@@ -59,7 +59,8 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 
 import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts";
-import type { KgQaReport } from "../../schemas/kg-qa.ts";
+import { KG_QA_MANIFEST_PATH } from "../../schemas/kg-qa.ts";
+import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
 
 /** The QA sidecar families a subject can carry. */
@@ -497,6 +498,11 @@ export function readWitnessDoc(
     // file records — not padded out to look like a multi-reviewer history.
     const doc = readJson<KgQaReport>(paths[0]!);
     if (!doc) return undefined;
+    // The auditor is recorded ONCE for the corpus, not per sidecar — see
+    // `KG_QA_MANIFEST_SCHEMA`. Absent manifest reports "unrecorded" rather
+    // than inventing a hash, the same rule this file already applies to the
+    // timestamp `kg-audit` does not keep.
+    const auditor = readJson<KgQaManifest>(join(repoRoot, KG_QA_MANIFEST_PATH))?.auditor;
     const live = { source: hash12(subjectPath) };
     const { freshness, changed } = freshnessOf({ source: doc.source_hash ?? undefined }, live);
     subject = doc.subject?.id ? `${doc.subject.kind} ${doc.subject.id}` : rel(subjectPath);
@@ -511,9 +517,9 @@ export function readWitnessDoc(
         witnesses: [
           {
             kind: "script",
-            id: doc.auditor?.script ?? "unrecorded",
-            version: doc.auditor?.engine_version,
-            scriptHash: doc.auditor?.script_hash,
+            id: auditor?.script ?? "unrecorded",
+            version: auditor?.engine_version,
+            scriptHash: auditor?.script_hash,
             // `kg-audit` records no timestamp and no repo SHA. Absent rather
             // than invented: a witness with a made-up date is worse than one
             // that admits it has none, and the panel says "not recorded".

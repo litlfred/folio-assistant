@@ -5,25 +5,25 @@
     "id": "directory-conventions",
     "path": "skills/folio-core/directory-conventions.md"
   },
-  "source_hash": "2fabd0970f93",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:1a5400e124a00fff426438955a162661875f37a4d04324b95f418e7e0146866e",
-    "engine_version": "1"
-  },
+  "source_hash": "f315315cedd4",
   "criteria": {
     "skill-is-brief": {
       "result": "fail",
       "findings": [
         {
           "where": "skills/folio-core/directory-conventions.md",
-          "detail": "388 lines; p75 of the skill corpus is 279."
+          "detail": "423 lines; p75 of the skill corpus is 279."
         }
       ]
     },
     "skill-not-a-document": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/directory-conventions.md",
+          "detail": "423 lines; p90 is 391. At this length it is a document."
+        }
+      ]
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -31,8 +31,8 @@
     }
   },
   "totals": {
-    "pass": 2,
-    "fail": 1,
+    "pass": 1,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }

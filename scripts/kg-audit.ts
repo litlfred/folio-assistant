@@ -48,12 +48,15 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
+  KG_QA_MANIFEST_SCHEMA,
+  KG_QA_MANIFEST_PATH,
   KG_CRITERIA_BY_ID,
   criteriaFor,
   tally,
   worstSeverity,
   type KgCriterionEntry,
   type KgFinding,
+  type KgQaManifest,
   type KgQaReport,
   type KgResult,
   type KgSeverity,
@@ -132,13 +135,11 @@ function report(
   path: string | null,
   sourceHash: string | null,
   criteria: Record<string, KgCriterionEntry>,
-  auditorHash: string,
 ): KgQaReport {
   return {
     $schema: KG_QA_SCHEMA,
     subject: { kind, id, path },
     source_hash: sourceHash,
-    auditor: { script: "scripts/kg-audit.ts", script_hash: auditorHash, engine_version: ENGINE_VERSION },
     criteria,
     totals: tally(criteria),
   };
@@ -172,13 +173,12 @@ async function auditProcess(
   graph: RoleGraph | undefined,
   skills: Set<string>,
   processIds: Set<string>,
-  auditorHash: string,
 ): Promise<KgQaReport> {
   const rel = relative(root, join(WORKFLOW_DIR, p.file));
   const hash = sha256(readFileSync(join(WORKFLOW_DIR, p.file), "utf-8"));
 
   if (!p.model) {
-    return report("process", p.file.replace(/\.bpmn$/, ""), rel, hash, allUnknown("process", `the diagram would not load: ${p.error}`), auditorHash);
+    return report("process", p.file.replace(/\.bpmn$/, ""), rel, hash, allUnknown("process", `the diagram would not load: ${p.error}`));
   }
   const m = p.model;
   const activities = [...m.nodes.values()].filter(isActivity);
@@ -389,14 +389,13 @@ async function auditProcess(
       criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at skills/roles/roles.json." }] };
     }
   }
-  return report("process", m.id, rel, hash, criteria, auditorHash);
+  return report("process", m.id, rel, hash, criteria);
 }
 
 // ── Per-decision criteria ───────────────────────────────────────
 
 async function auditDecisions(
   processes: LoadedProcess[],
-  auditorHash: string,
 ): Promise<KgQaReport[]> {
   if (!existsSync(DECISION_DIR)) return [];
   const referenced = new Set<string>();
@@ -415,7 +414,7 @@ async function auditDecisions(
     // through the loader, because the loader needs a decision id to be given.
     const ids = [...readFileSync(abs, "utf-8").matchAll(/<(?:dmn:)?decision\s[^>]*id="([^"]+)"/g)].map((m) => m[1]!);
     if (ids.length === 0) {
-      out.push(report("decision", f.replace(/\.dmn$/, ""), rel, hash, allUnknown("decision", "no <decision id=…> found in the file."), auditorHash));
+      out.push(report("decision", f.replace(/\.dmn$/, ""), rel, hash, allUnknown("decision", "no <decision id=…> found in the file.")));
       continue;
     }
     const findings: KgFinding[] = [];
@@ -434,7 +433,7 @@ async function auditDecisions(
         findings.push({ where: id, detail: `table "${id}" will not load: ${e instanceof Error ? e.message : e}` });
       }
     }
-    out.push(report("decision", f.replace(/\.dmn$/, ""), rel, hash, { "decision-outcomes-used": entry(findings) }, auditorHash));
+    out.push(report("decision", f.replace(/\.dmn$/, ""), rel, hash, { "decision-outcomes-used": entry(findings) }));
   }
   return out;
 }
@@ -501,7 +500,7 @@ function skillFiles(): string[] {
  * p75 279, p90 391, max 1280 lines. 280 and 400 are those two percentiles
  * rounded — "longer than three quarters of its peers" rather than an opinion.
  */
-function auditSkills(auditorHash: string): KgQaReport[] {
+function auditSkills(): KgQaReport[] {
   const out: KgQaReport[] = [];
   for (const file of skillFiles()) {
     const rel = relative(root, file);
@@ -543,7 +542,6 @@ function auditSkills(auditorHash: string): KgQaReport[] {
           ),
           "skill-no-repeated-heading": entry(repeats),
         },
-        auditorHash,
       ),
     );
   }
@@ -556,7 +554,6 @@ function auditRoles(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
-  auditorHash: string,
 ): KgQaReport[] {
   const hash = sha256(readFileSync(graphPath, "utf-8"));
   const rel = relative(root, graphPath);
@@ -634,7 +631,7 @@ function auditRoles(
             ],
           },
     };
-    return report("role", r.id, rel, hash, criteria, auditorHash);
+    return report("role", r.id, rel, hash, criteria);
   });
 }
 
@@ -687,7 +684,6 @@ function auditRequirements(
   reqs: LoadedRequirement[],
   skills: Set<string>,
   actors: LoadedActor[],
-  auditorHash: string,
 ): KgQaReport[] {
   const capabilities = new Set<string>();
   if (existsSync(CAPABILITY_DIR)) {
@@ -736,7 +732,7 @@ function auditRequirements(
       "requirement-derived-from-resolves": entry(badParents, (r.raw.derivedFrom ?? []).length > 0),
       "requirement-statements-graded": entry(ungraded, (r.raw.statements ?? []).length > 0),
     };
-    return report("requirement", r.id, relative(root, r.path), hash, criteria, auditorHash);
+    return report("requirement", r.id, relative(root, r.path), hash, criteria);
   });
 }
 
@@ -821,7 +817,6 @@ function auditGraph(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
-  auditorHash: string,
 ): KgQaReport {
   const reachable = manifestSkills();
   for (const s of servableSkills()) reachable.add(s);
@@ -962,7 +957,6 @@ function auditGraph(
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
     },
-    auditorHash,
   );
 }
 
@@ -1023,17 +1017,43 @@ if (graphError) {
 const processes = await loadProcesses();
 const reports: KgQaReport[] = [];
 const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, auditorHash));
-reports.push(...(await auditDecisions(processes, auditorHash)));
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds));
+reports.push(...(await auditDecisions(processes)));
 if (graph) {
-  reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills, auditorHash));
+  reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills));
 }
-reports.push(...auditRequirements(readRequirements(), skills, actors, auditorHash));
-reports.push(...auditSkills(auditorHash));
-reports.push(auditGraph(graph, processes, actors, skills, auditorHash));
+reports.push(...auditRequirements(readRequirements(), skills, actors));
+reports.push(...auditSkills());
+reports.push(auditGraph(graph, processes, actors, skills));
 
 // Write or compare.
+//
+// THE MANIFEST IS ONE FILE, AND THAT IS THE POINT. The auditor's hash used to
+// be copied into every sidecar, where it could not differ between files —
+// `auditorHash` is computed once above and there is no subset mode — so the
+// copies were 218 restatements of one fact. Measured 2026-09-19: one added
+// comment line in this script rewrote 218 sidecars with no verdict changed,
+// which is what made two concurrent branches conflict by construction.
 const stale: string[] = [];
+
+const manifest: KgQaManifest = {
+  $schema: KG_QA_MANIFEST_SCHEMA,
+  auditor: {
+    script: "scripts/kg-audit.ts",
+    script_hash: auditorHash,
+    engine_version: ENGINE_VERSION,
+  },
+};
+const manifestPath = join(root, KG_QA_MANIFEST_PATH);
+const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;
+if (check) {
+  const current = existsSync(manifestPath) ? readFileSync(manifestPath, "utf-8") : undefined;
+  if (current !== manifestText) stale.push(KG_QA_MANIFEST_PATH);
+} else {
+  mkdirSync(join(manifestPath, ".."), { recursive: true });
+  writeFileSync(manifestPath, manifestText);
+}
+
 for (const r of reports) {
   const p = sidecarPath(r);
   const text = serialise(r);
