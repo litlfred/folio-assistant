@@ -8,7 +8,7 @@ roles:
   - build-pipeline
   - validation-pipeline
 agents:
-  - content-pipeline-navigator
+  - ci-health-watcher
 ---
 `test/results/witnesses/**` is live state. A test that reads a VERDICT out of it breaks
 when somebody fixes or adjudicates the finding — which is the system working.

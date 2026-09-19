@@ -5,7 +5,6 @@ label: stable
 summary: "adapter vs profile: a different axis, and conflating them is costly"
 createdAt: 2026-09-19
 agents:
-  - content-pipeline-navigator
   - platform-boundary-guard
 ---
 - **Adapters** (`paper`, `dak`) partition block kinds into **disjoint**

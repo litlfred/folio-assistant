@@ -5,7 +5,6 @@ label: trap
 summary: "the schema cannot catch a profile violation"
 createdAt: 2026-09-19
 agents:
-  - content-pipeline-navigator
   - platform-boundary-guard
 ---
 `content/pipeline/profile-check.ts` runs on every `content_validate` and

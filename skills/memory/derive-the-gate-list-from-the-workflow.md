@@ -8,7 +8,7 @@ roles:
   - build-pipeline
   - validation-pipeline
 agents:
-  - content-pipeline-navigator
+  - ci-health-watcher
 ---
 Three CI checks are invoked **by path**, not by npm-script name, so a sweep over
 `bun run <script-name>` structurally cannot see them:
