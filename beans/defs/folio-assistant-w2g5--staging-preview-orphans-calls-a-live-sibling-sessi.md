@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w2g5
 title: staging-preview-orphans calls a live sibling session's branch an orphan, and there is no way to act on a true one
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T10:48:19Z
-updated_at: 2026-09-19T11:42:18Z
+updated_at: 2026-09-19T11:53:10Z
 ---
 
 Found 2026-09-19 while acting on `staging-preview-orphans`' own findings, the
@@ -166,3 +166,25 @@ Live run, 2026-09-19T12:5xZ: 12 previews, **6 orphans, all merged into `main`**;
 - The workflow was never dispatched, so the removal path is verified by parsing only. The four authorised slugs are the owner's to run.
 - `unmerged-branch` assumes merge-commit or rebase merges. Under squash-merge a branch tip is never an ancestor of the default branch, so every preview would be spared forever — safe direction, useless check. Stated in the code; this repo merge-commits.
 - `bun run health` exits 1, as it did before this change, on the pre-existing 100 MB `staging-preview-size` finding.
+
+_2026-09-19T11:53:10Z_ — Closing: fixed in PR #407, merge commit 98144b5a8 on main, and then exercised against live data with a result better than any fixture could give.
+
+BOTH DEFECTS FIXED. (1) staging-preview-orphans is now a disjunction of independent liveness signals — an open PR, OR a branch carrying unmerged work, OR a recent head commit — and a preview is an orphan only when every signal says so; a signal that cannot be evaluated sends that preview to unknown, never to orphan. (2) feature-staging.yml gains a cleanup-dispatch job, so a true orphan is removable by a mechanism a person can actually invoke; the staging:cleanup label could never reach one, because being findable as an orphan requires the PR to be closed already and that event has long since fired.
+
+WHERE THE PLAN CHANGED, and the implementing agent was right to change it. This bean proposed the three signals as an UNGATED disjunction. Measured against the real branches, that does not work: every genuinely dead preview's branch had been touched within 80 minutes, so any recency horizon above ~40 minutes spares all of them and the check goes silent — the opposite failure to the one this bean is about, and no better. Recency could not be dropped either, being the only signal that covers the inter-PR gap. So the horizon is 30 MINUTES, calibrated on the measured 5m42s between PR #396 merging and the next commit on that branch, and its basis says NO EXTERNAL STANDARD in those words rather than implying a rigour it does not have.
+
+VERIFIED BY ME, not taken on report, before anything was removed: the preflight run bare against the live repo gave claude-brave-hypatia-r820sf exit 1 (LIVE, refuses), the four authorised slugs exit 0, and '../../etc' exit 2 (refuses). bun test test/health/checks.test.ts: 44 pass, 0 fail.
+
+THE FINDING WORTH KEEPING, and it is better than the bean it came from. Of the four slugs the owner authorised, three were removed and ONE REFUSED ITSELF AT DISPATCH TIME. Run 35441195403, 11:50:44Z:
+
+  REFUSING to remove STAGING/claude-ecstatic-goldberg-eroyaz: it is still in use.
+    open-pr + unmerged-branch + recent-commit — an open pull request has it as its head;
+    `claude/ecstatic-goldberg-eroyaz` is NOT in `main`, tip 1 min old
+
+ALL THREE SIGNALS FIRED. When I measured that branch at ~11:19 it was merged into main and 59 minutes idle — dead by every test available. By 11:50 the session owning it had reused the branch and opened a new pull request on it. That is this bean's own pattern, happening live, on a DIFFERENT branch, inside the half hour it took to build the fix.
+
+Two consequences. The old check would have deleted it, and so would a hand-pushed gh-pages commit — a live collaborator's review artefact, removed minutes after they opened a PR against it, on a slug authorised in good faith from a measurement that was true when taken. And this is precisely why the dispatch re-checks liveness rather than trusting the sweep: a daily sweep PROPOSES and a dispatch ACTS, and the gap between them is where a branch comes back. That design choice earned its place within minutes of shipping.
+
+STATE AFTER: 12 previews to 9. Removed: claude-d2kp-live-verdicts, claude-health-checks, claude-placement-skill. Refused and left alone: claude-ecstatic-goldberg-eroyaz. The sweep now reports 2 orphans — claude-4kiw-memory-pointer and claude-consolidate-test-dir — each carrying its evidence ('already in main, tip 56 min old'), and neither is authorised for removal. claude-brave-hypatia-r820sf no longer appears at all.
+
+NOT VERIFIED, carried forward from the PR: unmerged-branch assumes merge-commit or rebase merges — under squash-merge a branch tip is never an ancestor of the default branch, so every preview would be spared forever, which is the safe direction but a useless check. This repo merge-commits. Stated in the code.
