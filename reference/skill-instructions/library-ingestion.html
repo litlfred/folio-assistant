@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(14)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(83)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(14) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(83) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(14) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(83) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(14) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(83) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>/interaction-modality | folio-assistant</title>
+<title>Library ingestion | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="/interaction-modality" />
+<meta property="og:title" content="Library ingestion" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/interaction-modality.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/interaction-modality.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/library-ingestion.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/library-ingestion.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="/interaction-modality" />
+<meta property="twitter:title" content="Library ingestion" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"/interaction-modality","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/interaction-modality.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Library ingestion","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/library-ingestion.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -564,7 +564,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>/interaction-modality</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Library ingestion</span></li>
   </ol>
 </nav>
 
@@ -573,454 +573,177 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/interaction-modality.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/interaction-modality.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/library-ingestion.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/library-ingestion.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/interaction-modality.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/library-ingestion.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="interaction-modality--ask-in-a-form-the-person-can-answer">
+<h1 id="library-ingestion">
   
   
-    <a href="#interaction-modality--ask-in-a-form-the-person-can-answer" class="anchor-heading" aria-labelledby="interaction-modality--ask-in-a-form-the-person-can-answer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /interaction-modality — ask in a form the person can answer
+    <a href="#library-ingestion" class="anchor-heading" aria-labelledby="library-ingestion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Library ingestion
   
   
 </h1>
     
 
-<p>Process: <a href="../../skills/workflows/getting-started.bpmn"><code class="language-plaintext highlighter-rouge">skills/workflows/getting-started.bpmn</code></a>,
-<code class="language-plaintext highlighter-rouge">Task_DetectModality</code> and <code class="language-plaintext highlighter-rouge">Task_AskIntent</code>.
-Preferences: <code class="language-plaintext highlighter-rouge">.harness/interaction.json</code> (committed, read at session start).</p>
-<h2 id="0-the-failure-this-prevents">
+<p><code class="language-plaintext highlighter-rouge">uploads/</code> and <code class="language-plaintext highlighter-rouge">library/</code> are two stages of <strong>one</strong> pipeline. <code class="language-plaintext highlighter-rouge">uploads/</code> is the
+incoming queue — raw files as dropped, <strong>not L1 and not greppable as corpus</strong>.
+<code class="language-plaintext highlighter-rouge">library/&lt;bib-slug&gt;/</code> is L1 source content, and every knowledge-graph reference
+to a source resolves <em>through</em> it.</p>
+
+<p><strong>Why that distinction bites.</strong> The corpus-grep checklist searches <code class="language-plaintext highlighter-rouge">library/</code>
+only. A file still sitting in <code class="language-plaintext highlighter-rouge">uploads/</code> does not merely go unread — it makes a
+<em>clean grep</em> mean “nobody has done this” when the source is right there. That is
+how a held result gets re-derived.</p>
+<h2 id="one-entry-point">
   
   
-    <a href="#0-the-failure-this-prevents" class="anchor-heading" aria-labelledby="0-the-failure-this-prevents"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. The failure this prevents
+    <a href="#one-entry-point" class="anchor-heading" aria-labelledby="one-entry-point"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One entry point
   
   
 </h2>
     
 
-<p>An agent that asks a good question in an unusable form has asked nothing. The
-usual shape of it: a long open prompt — <em>“Tell me about the folio you have in
-mind, what content types you expect, and how you’d like it organised”</em> — sent to
-somebody for whom typing is slow and painful. The reply comes back short, the
-agent reads shortness as low engagement, and asks another open question.</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run ingest uploads/FILE.pdf          <span class="c"># choose the rung, run it, write the manifest</span>
+bun run ingest uploads/FILE.pdf <span class="nt">--dry-run</span> <span class="c"># say which rung it would pick, and why</span>
+</code></pre></div></div>
 
-<p>This is not hypothetical here. <strong>@litlfred, this repository’s owner, has very
-limited hand function.</strong> Every question put to that user is to be answerable by
-<em>selecting</em>, not by typing: numbered or lettered options, a recommended default
-stated first, and the work proceeding on that default when no answer comes. Free
-text is always <em>available</em> and never <em>required</em>.</p>
-
-<p>Generalise the rule rather than special-casing the person:</p>
-
-<blockquote>
-  <p><strong>A question’s cost is paid by the person answering it.</strong> Design the question
-so the cheapest possible answer is still a complete one.</p>
-</blockquote>
-<h2 id="1-the-modality-profiles">
+<p>It picks the rung, runs it, and writes the manifest. Everything below is what it
+decides <strong>on your behalf</strong> — read it when the answer surprises you, not before.</p>
+<h2 id="which-rung-and-why-there-is-more-than-one">
   
   
-    <a href="#1-the-modality-profiles" class="anchor-heading" aria-labelledby="1-the-modality-profiles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The modality profiles
+    <a href="#which-rung-and-why-there-is-more-than-one" class="anchor-heading" aria-labelledby="which-rung-and-why-there-is-more-than-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which rung, and why there is more than one
   
   
 </h2>
     
-
-<p>Four axes, independent — a user can be on more than one.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>profile</th>
-      <th>what changes</th>
-      <th>detection signal</th>
+      <th>rung</th>
+      <th>when</th>
+      <th>what it produces</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">low-dexterity</code></td>
-      <td>Every question is a selection. Options numbered. One recommended default, first, marked. Never more than ~4 options. Batch decisions so one answer covers several. Long-running work is announced, not confirmed.</td>
-      <td>user says so; very short replies to open questions; typos of a kind that cost effort to fix; voice input artefacts</td>
+      <td><code class="language-plaintext highlighter-rouge">pdf-structure.py</code></td>
+      <td>the PDF carries an <strong>embedded outline</strong></td>
+      <td>real sections, the document’s own chapters</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">low-vision</code></td>
-      <td>Large type in anything rendered. No information carried by colour alone. Short lines. Tables kept narrow or replaced by lists. ASCII diagrams avoided — they do not survive a screen reader or a 200 % zoom.</td>
-      <td>user says so; requests to enlarge; screen-reader artefacts</td>
+      <td><code class="language-plaintext highlighter-rouge">pdf-pages.py</code></td>
+      <td>no outline</td>
+      <td>one section per <strong>page</strong></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">audio</code></td>
-      <td>Answers read aloud cleanly: no code fences in prose, no tables, no “see the diagram”, spell out identifiers on first use, one idea per sentence. Questions asked one at a time.</td>
-      <td>the channel is voice; the user is dictating</td>
+      <td><code class="language-plaintext highlighter-rouge">pdf-ocr.py</code></td>
+      <td>text extraction yields almost nothing</td>
+      <td>a text layer to then page-split</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">plain-language</code></td>
-      <td>Shorter sentences, domain jargon expanded on first use, no nested clauses. Independent of disability — it is also the right default for a second-language reader.</td>
-      <td>user asks for simpler wording; the folio’s audience</td>
+      <td><code class="language-plaintext highlighter-rouge">pdf-tables.py</code></td>
+      <td>tables or figures matter</td>
+      <td>what <code class="language-plaintext highlighter-rouge">pdf-structure/v1</code>’s Section does not carry</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>The default profile — nobody has said anything — is <strong>ordinary chat with
-selectable options wherever there is a genuine choice</strong>. That is not a
-concession; it is a better question than an open one for almost everybody, and
-it costs nothing to the user who would rather type.</p>
-<h2 id="2-detecting-it-without-an-interrogation">
-  
-  
-    <a href="#2-detecting-it-without-an-interrogation" class="anchor-heading" aria-labelledby="2-detecting-it-without-an-interrogation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Detecting it without an interrogation
-  
-  
-</h2>
-    
-
-<p>The detection must not itself be an unusable question. So:</p>
-
-<ol>
-  <li><strong>Read <code class="language-plaintext highlighter-rouge">.harness/interaction.json</code> first.</strong> If it says, you are done. Never
-re-ask what is recorded.</li>
-  <li><strong>Read the channel.</strong> A voice session is <code class="language-plaintext highlighter-rouge">audio</code> without asking. A terminal
-session is not.</li>
-  <li>
-    <p><strong>Offer once, as options.</strong> At first contact and not again:</p>
-
-    <blockquote>
-      <p>How would you like me to ask you things?</p>
-      <ol>
-        <li><strong>Options I can pick from</strong> (recommended — fewest keystrokes)</li>
-        <li>Ordinary chat</li>
-        <li>Read aloud / voice</li>
-        <li>Large type</li>
-      </ol>
-
-      <p>(No answer is fine — I’ll use 1.)</p>
-    </blockquote>
-  </li>
-  <li><strong>Watch for the signal you were not given.</strong> Consistently one-word answers
-to open questions, or an explicit “hard to type”, moves the user to
-<code class="language-plaintext highlighter-rouge">low-dexterity</code> <strong>and is recorded</strong>, so no future session re-learns it.</li>
-</ol>
-
-<p>Never ask a user to name a disability. Ask what form they want the conversation
-to take. The profile is about the interface, not about them.</p>
-<h2 id="3-where-the-preference-lives">
-  
-  
-    <a href="#3-where-the-preference-lives" class="anchor-heading" aria-labelledby="3-where-the-preference-lives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Where the preference lives
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">.harness/interaction.json</code>, committed, beside <code class="language-plaintext highlighter-rouge">beans/workflows/</code> and for the same
-reason: a preference that lives in one agent’s context is re-learned by every
-sibling session, and re-learning it means asking again.</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://litlfred.github.io/folio-assistant/schemas/interaction.json"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"litlfred@ibiblio.org"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"profiles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"low-dexterity"</span><span class="p">],</span><span class="w">
-      </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Very limited hand function. Every question selectable; never require typing."</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stated by the user"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"default"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"profiles"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">source</code> is required and is one of <code class="language-plaintext highlighter-rouge">stated by the user</code>, <code class="language-plaintext highlighter-rouge">inferred from
-behaviour</code>, or <code class="language-plaintext highlighter-rouge">set in the site settings</code>. An inferred profile is honoured and
-is <strong>labelled as inferred</strong>, so it can be corrected without an argument about
-who decided it.</p>
-<h2 id="4-asking-a-question-well">
-  
-  
-    <a href="#4-asking-a-question-well" class="anchor-heading" aria-labelledby="4-asking-a-question-well"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Asking a question well
-  
-  
-</h2>
-    
-
-<p>Two halves, and the first is the one that gets skipped. §4.1 is what the
-question has to <em>contain</em>; §4.2 is what shape it has to <em>take</em>. A question can
-pass every item in §4.2 — selectable, four options, recommended default marked —
-and still be unanswerable, because none of those say what the options mean.</p>
-<h3 id="41-context-before-the-question-strict">
-  
-  
-    <a href="#41-context-before-the-question-strict" class="anchor-heading" aria-labelledby="41-context-before-the-question-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.1 Context before the question (STRICT)
-  
-  
-</h3>
-    
-
-<p><strong>Order matters, and it is: context → options → recommendation → question.</strong>
-Never the question first with the explanation available on request.</p>
-
-<p>The test is one sentence, and it is checkable in a single pass:</p>
-
-<blockquote>
-  <p><strong>Can the reader answer without opening anything?</strong></p>
-</blockquote>
-
-<p>If answering needs them to open an issue, a file, a diff or a scrollback, the
-question is not ready. A link is where somebody goes for <em>more</em>; it is never
-where the terms are defined.</p>
-
-<p>Six parts, in order:</p>
-
-<ol>
-  <li><strong>What is being decided</strong>, in plain words — stated as what will <em>differ</em>
-depending on the answer, not as the name of the decision.</li>
-  <li><strong>Every identifier expanded on first use.</strong> A bean id, an option name you
-coined, a field, a Lean declaration, a file path: all opaque without their
-gloss. An option name you invented three paragraphs ago in another document
-is the worst case, because it <em>feels</em> defined to you.</li>
-  <li><strong>The options, each with what it costs</strong> — not each with its name.</li>
-  <li><strong>Your recommendation, and why</strong>, stated first and marked. See §4.2.</li>
-  <li><strong>What happens if they say nothing.</strong> Then do that.</li>
-  <li><strong>The question itself</strong>, last.</li>
-</ol>
-
-<p><strong>This binds every place a decision is handed to the person</strong>, not only an
-explicit question tool: the end-of-turn “next” line, a bean’s <code class="language-plaintext highlighter-rouge">## Done when</code>, a
-PR body asking the author to choose, a comment on an issue. Those are where it
-is most often broken, because they feel like reporting rather than asking.</p>
-
-<p><strong>Feature work breaks this more than content work, and for a specific reason:
-the agent has just finished an impact analysis, and the vocabulary it built
-doing that <em>feels</em> defined.</strong> It is not. The names you coined an hour ago inside
-an issue are the ones most likely to reach the reader undefined, precisely
-because you can no longer see them as new.</p>
-<h4 id="worked-example--a-real-failure-2026-09-18">
-  
-  
-    <a href="#worked-example--a-real-failure-2026-09-18" class="anchor-heading" aria-labelledby="worked-example--a-real-failure-2026-09-18"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked example — a real failure, 2026-09-18
-  
-  
-</h4>
-    
-
-<p>Ending a turn, this agent wrote:</p>
-
-<blockquote>
-  <p><strong>next</strong> <code class="language-plaintext highlighter-rouge">x4mt</code> — Cross-agent skill install + <code class="language-plaintext highlighter-rouge">fa-</code> prefix (#247). Unstarted,
-and I’d want your call on prefix-at-rest vs prefix-at-install before writing
-anything.</p>
-</blockquote>
-
-<p>Every content word in the actual question is undefined. “prefix-at-rest” and
-“prefix-at-install” are terms the agent had coined <em>in the issue</em>, so answering
-meant opening #247 and reading it — which the author had to do, and which is a
-real cost for somebody who types with difficulty. It also states no cost for
-either option and gives no recommendation, so even after reading the issue there
-is nothing to choose between except two phrases.</p>
-
-<p>The same decision, askable:</p>
-
-<blockquote>
-  <p><strong>Next up is #247</strong> — installing this platform’s skills into whichever agent
-is running (Claude Code, Gemini CLI, Cursor), so each one can actually load
-them. Skills would get an <code class="language-plaintext highlighter-rouge">fa-</code> prefix so their names cannot collide with the
-host agent’s own commands: <code class="language-plaintext highlighter-rouge">/fa-beans-tui</code> rather than <code class="language-plaintext highlighter-rouge">/beans-tui</code>.</p>
-
-  <p>One decision shapes everything else — <strong>where the prefix gets applied:</strong></p>
-
-  <ol>
-    <li><strong>When a skill is installed into an agent</strong> <em>(recommended)</em> — files in this
-repo keep their plain names, and the prefix is added as they are emitted.
-Nothing here has to change, and the collision is solved where collisions
-actually happen.</li>
-    <li><strong>In this repository itself</strong> — rename every skill file. That touches the
-package manifests, every <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code> in the BPMN diagrams, two doc
-generators and every cross-reference between skill bodies. It is the kind
-of change that is painful to reverse.</li>
-  </ol>
-
-  <p>Say nothing and I will take (1) when I start.</p>
-</blockquote>
-
-<p>Same information, same length, and the second can be answered by typing one
-character.</p>
-<h4 id="more-than-one-decision-pending--ask-one-count-the-rest">
-  
-  
-    <a href="#more-than-one-decision-pending--ask-one-count-the-rest" class="anchor-heading" aria-labelledby="more-than-one-decision-pending--ask-one-count-the-rest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> More than one decision pending — ask ONE, count the rest
-  
-  
-</h4>
-    
-
-<p>The six parts above are per decision, and nothing said what to do when three are
-open at once. Stating all three in full is a wall; naming all three compactly is
-the teaser the rule forbids. Neither is the answer.</p>
-
-<p><strong>Ask the one that is actually next, in full. For the others, give a COUNT and
-no option names.</strong></p>
-
-<blockquote>
-  <p>Two other decisions are waiting; I will put each properly when it is next.</p>
-</blockquote>
-
-<p>A count is honest and costs the reader nothing: it says work is queued without
-inviting them to answer a question they cannot see the terms of. An option name
-without its cost invites exactly that, which is why the compact list is worse
-than silence.</p>
-
-<p><strong>There is no “just listing what’s open” exemption.</strong> A wrap-up that names a
-decision has handed it over, whatever the framing sentence says. Either the
-options and their costs are there, or the name comes out and a count goes in.</p>
-<h3 id="42-form--the-checklist">
-  
-  
-    <a href="#42-form--the-checklist" class="anchor-heading" aria-labelledby="42-form--the-checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.2 Form — the checklist
-  
-  
-</h3>
-    
-
-<p>Before any question, all five:</p>
-
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Could this be a selection?</strong> If the answer set is finite, make it one.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Is there a recommended option, and is it first and marked?</strong> A user who
-    does not want to decide should be able to pick the first thing and be
-    right.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Is it four options or fewer?</strong> Beyond that, split the question.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Does no answer have a safe meaning?</strong> Say what you will do if they say
-    nothing, then do that. Silence must never block the work.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Is it blocking at all?</strong> Do everything that does not depend on the
-    answer first, and ask at the point where the answer is actually needed.</li>
-</ul>
-
-<p>And the negative rule: <strong>do not ask a question whose answer you could look up.</strong>
-Every fact <code class="language-plaintext highlighter-rouge">getting-started</code> reads from the filesystem is a question not asked.
-This is the largest accessibility win available, and it is invisible.</p>
-<h2 id="5-driving-the-questions-from-dmn--one-logic-four-surfaces">
-  
-  
-    <a href="#5-driving-the-questions-from-dmn--one-logic-four-surfaces" class="anchor-heading" aria-labelledby="5-driving-the-questions-from-dmn--one-logic-four-surfaces"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Driving the questions from DMN — one logic, four surfaces
-  
-  
-</h2>
-    
-
-<p>The ask in issue #232 — <em>force agentic Q&amp;A into guided questions following DMN
-logic, supporting multiple modalities</em> — decomposes into two separable things,
-and keeping them separate is the whole design:</p>
-
-<p><strong>What to ask next</strong> is a decision. It belongs in a DMN table alongside
-<code class="language-plaintext highlighter-rouge">folio-intent.dmn</code>: inputs are the facts known so far, output is the next
-question’s id (or <code class="language-plaintext highlighter-rouge">none</code>, when enough is known). It is authored by whoever owns
-the process, is reviewable as a table, and is the same for every user.</p>
-
-<p><strong>How to render the question</strong> is the modality. Options as a numbered list in
-chat, as spoken alternatives one at a time over audio, as large-type radio
-buttons on the site. The DMN table never learns about any of this.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> facts ──▶ [ next-question.dmn ] ──▶ question id ──▶ renderer(profile) ──▶ user
-   ▲                                                                        │
-   └──────────────────── answer recorded as a new fact ─────────────────────┘
-</code></pre></div></div>
-
-<p>Four properties this buys, each of which is the reason to prefer it over an
-agent improvising the interview:</p>
-
-<ol>
-  <li><strong>The question set is finite and reviewable.</strong> You can read the table and
-know every question the agent can ask.</li>
-  <li><strong>It terminates.</strong> A table whose output can be <code class="language-plaintext highlighter-rouge">none</code> has a stopping
-condition; an improvising agent does not.</li>
-  <li><strong>Asking becomes obligatory rather than optional.</strong> This is the trick
-<code class="language-plaintext highlighter-rouge">folio-intent.dmn</code> already uses: <code class="language-plaintext highlighter-rouge">ask</code> is an <em>outcome of the table</em>, so the
-agent cannot route past it. An agent that decides for itself whether to ask
-will, under pressure to be helpful, decide not to.</li>
-  <li><strong>A question skipped is auditable.</strong> The facts are recorded; you can replay
-the table and see which rule fired.</li>
-</ol>
-
-<p>The limits, stated so nobody is surprised: the FEEL subset this repo implements
-covers equality, comparison and one-of — no ranges, no <code class="language-plaintext highlighter-rouge">not()</code>, no function
-calls (<code class="language-plaintext highlighter-rouge">src/workflow/decision-table.ts</code>). A genuinely open question — “what is
-this paper about?” — is not a decision and does not belong in a table. And
-conversation is not a wizard: a user must always be able to say something the
-table did not anticipate, which is what option 5 of the intent question is for.</p>
-<h2 id="6-grounding--what-this-follows">
-  
-  
-    <a href="#6-grounding--what-this-follows" class="anchor-heading" aria-labelledby="6-grounding--what-this-follows"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Grounding — what this follows
-  
-  
-</h2>
-    
-
-<p>The rules above are the subset of published accessibility guidance that a
-<em>conversational agent</em> can actually keep. Named so they can be checked rather
-than taken on trust:</p>
+<p><strong>The decision is mechanical, and the corpus shows all three paths.</strong> Measured
+2026-09-19 over the four entries in <code class="language-plaintext highlighter-rouge">library/</code>:</p>
 
 <ul>
-  <li><strong>WCAG 2.2 AA</strong> is the baseline for anything rendered — the docs site, the
-viewer, a generated PDF. The success criteria that bite hardest here:
-1.4.4 Resize text (200 % without loss), 1.4.3 Contrast, 1.4.1 Use of Colour
-(never colour alone), 2.4.7 Focus Visible, 3.3.2 Labels or Instructions.</li>
-  <li><strong>WCAG 2.2’s newer criteria are the dexterity ones</strong> and are the reason this
-skill exists in the form it does: 2.5.7 Dragging Movements, 2.5.8 Target Size
-(Minimum) — 24 × 24 CSS px — and 3.3.7 Redundant Entry, which says do not make
-someone enter the same information twice. §3’s committed preferences file is
-3.3.7 applied to a conversation.</li>
-  <li><strong>Cognitive accessibility (WCAG 3.1, and W3C’s COGA guidance)</strong> is what §4’s
-“four options or fewer” and plain-language profile come from.</li>
-  <li><strong>EN 301 549</strong> is the procurement standard that makes WCAG AA a legal
-requirement in EU public-sector contexts; Section 508 does the same in the US.
-A WHO SMART Guideline published from a folio lands in exactly those contexts.</li>
-  <li><strong>Authoring Tool Accessibility Guidelines (ATAG 2.0)</strong> is the one most often
-missed: it covers tools that <em>produce</em> content, which is what folio-assistant
-is. Part A is the tool being usable; Part B is the tool helping the author
-produce accessible output. The alt-text and heading-order checks a folio’s QA
-sweep should carry are Part B.</li>
+  <li><code class="language-plaintext highlighter-rouge">toc_source: outline</code> → <code class="language-plaintext highlighter-rouge">pdf-structure</code> (<code class="language-plaintext highlighter-rouge">9789241548960-eng</code>, 250 sections)</li>
+  <li><code class="language-plaintext highlighter-rouge">toc_source: none</code>, <code class="language-plaintext highlighter-rouge">text_source: text-layer</code> → <code class="language-plaintext highlighter-rouge">pdf-pages</code> (<code class="language-plaintext highlighter-rouge">milnorlink</code>,
+<code class="language-plaintext highlighter-rouge">wpr-rdo-2020-003-eng</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">toc_source: none</code>, <code class="language-plaintext highlighter-rouge">text_source: ocr</code> → <code class="language-plaintext highlighter-rouge">pdf-ocr</code> then <code class="language-plaintext highlighter-rouge">pdf-pages --from-ocr</code>
+(<code class="language-plaintext highlighter-rouge">who-pub-tps-931</code>)</li>
 </ul>
-<h2 id="7-the-settings-surface">
+<h2 id="an-inferred-chapter-tree-is-refused-not-guessed">
   
   
-    <a href="#7-the-settings-surface" class="anchor-heading" aria-labelledby="7-the-settings-surface"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. The settings surface
-  
-  
-</h2>
-    
-
-<p>The published site carries a settings control (gear, top right) writing the same
-four profiles to <code class="language-plaintext highlighter-rouge">localStorage</code>, so a reader who is not the author still gets
-large type or reduced motion. It is per-viewer and per-browser by construction —
-it never reaches an agent. <code class="language-plaintext highlighter-rouge">.harness/interaction.json</code> is the agent-facing record
-and the site control is the reader-facing one; conflating them would mean a
-reader’s font choice silently reconfiguring how an agent talks to the author.</p>
-<h2 id="8-anti-patterns">
-  
-  
-    <a href="#8-anti-patterns" class="anchor-heading" aria-labelledby="8-anti-patterns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Anti-patterns
+    <a href="#an-inferred-chapter-tree-is-refused-not-guessed" class="anchor-heading" aria-labelledby="an-inferred-chapter-tree-is-refused-not-guessed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An inferred chapter tree is refused, not guessed
   
   
 </h2>
     
 
-<ol>
-  <li><strong>The question first, the context on request.</strong> The single most common
-shape, and the one §4.1 exists to kill: an agent that has spent an hour
-inside a problem asks in the private vocabulary it built along the way, and
-the reader has to reconstruct that vocabulary before they can answer at all.
-“Happy to explain if useful” does not repair it — it moves the work back onto
-the person the question is for.</li>
-  <li><strong>Asking someone to describe their disability.</strong> Ask about the interface.</li>
-  <li><strong>Re-asking what <code class="language-plaintext highlighter-rouge">.harness/interaction.json</code> records.</strong> That is WCAG 3.3.7
-violated in the least excusable way, since the file is right there.</li>
-  <li><strong>A “quick open question” because the option list felt like overkill.</strong> The
-list is cheaper for the person answering, which is the only budget that
-counts.</li>
-  <li><strong>Blocking on an answer with no default.</strong> State the default, act on it.</li>
-  <li><strong>Treating an inferred profile as a diagnosis.</strong> It is a rendering choice,
-labelled <code class="language-plaintext highlighter-rouge">inferred from behaviour</code>, and the user overrules it.</li>
-  <li><strong>Accessibility as a rendering concern only.</strong> The largest win is §4’s last
-rule — not asking at all — and no stylesheet delivers it.</li>
-</ol>
+<p>This is the rule most worth understanding, because the failure it prevents is
+<strong>silent</strong>.</p>
+
+<p>Without an outline, a heading-detector <em>can</em> infer a table of contents — and an
+inferred TOC is confidently wrong in a way the output does not show. Two
+measured cases, both recorded in bean <code class="language-plaintext highlighter-rouge">6xaz</code>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">WPR-RDO-2020-003-eng.pdf</code> — 11 of 13 inferred sections were named after a
+<strong>different publication</strong>, because page 22 reproduces a sample table from one
+as a design example.</li>
+  <li><code class="language-plaintext highlighter-rouge">WHO_PUB_TPS_93.1.pdf</code> — inferred entries took page numbers from the
+<em>contents</em> pages, so 26 of 42 sections came out under 500 characters while
+37,923 characters landed in one section misnamed <code class="language-plaintext highlighter-rouge">18-usetul-reference-books</code>.</li>
+</ul>
+
+<p>So <code class="language-plaintext highlighter-rouge">pdf-pages</code> claims <strong>no</strong> chapter tree and says so in <code class="language-plaintext highlighter-rouge">structure_note</code>. <strong>A
+page is a determined division; an inferred chapter was not.</strong> Same third-state
+rule the rest of this repository keeps: a structure that could not be determined
+is never rendered as one that was.</p>
+<h2 id="what-a-complete-l1-entry-holds">
+  
+  
+    <a href="#what-a-complete-l1-entry-holds" class="anchor-heading" aria-labelledby="what-a-complete-l1-entry-holds"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a complete L1 entry holds
+  
+  
+</h2>
+    
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library/&lt;bib-slug&gt;/
+  structure.json     "$schema": "pdf-structure/v1" — doc_id, toc_source,
+                     granularity, text_source, sections[], structure_note
+  sections/          one Markdown file per section, front matter + body
+  blocks/            the block projection consumers read
+  manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
+  ocr/               page-NNN.txt, only where the source was scanned
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">bun run check:l1-complete</code> is the gate. It reports three states, never two: a
+requirement <strong>met</strong>, <strong>unmet</strong>, or <strong>not yet derivable</strong> — the last because the
+per-format arms (images, audio, tables, archives, technical metadata) are
+tracked separately and a check that cannot run must not read as a pass. Bean
+<code class="language-plaintext highlighter-rouge">pn6j</code>.</p>
+<h2 id="ingestion-is-a-harness-capability-not-cores">
+  
+  
+    <a href="#ingestion-is-a-harness-capability-not-cores" class="anchor-heading" aria-labelledby="ingestion-is-a-harness-capability-not-cores"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Ingestion is a HARNESS capability, not core’s
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">uploads</code> and <code class="language-plaintext highlighter-rouge">library</code> are both graph kinds declared by the <strong>harness</strong> layer;
+<code class="language-plaintext highlighter-rouge">folio</code> — authored content — is <code class="language-plaintext highlighter-rouge">folio-assist-core</code>’s. So this skill and its
+tooling belong with the harness.</p>
+
+<p>Putting ingestion in core would make the harness’s own <code class="language-plaintext highlighter-rouge">library</code> graph writable
+only from a layer above it: a wrong-direction dependency, and after the split
+(issue #223) a circular one between repositories. That is exactly what bean
+<code class="language-plaintext highlighter-rouge">zlmp</code> exists to drain.</p>
+<h2 id="related">
+  
+  
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="/folio-assistant/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — the graph kinds and who declares them</li>
+  <li><a href="/folio-assistant/reference/skill-instructions/bib-qa.html"><code class="language-plaintext highlighter-rouge">bib-qa</code></a> — auditing what is already in <code class="language-plaintext highlighter-rouge">library/</code></li>
+  <li><code class="language-plaintext highlighter-rouge">skills/workflows/document-ingestion.bpmn</code> — the process this sits inside</li>
+</ul>
 
           
 

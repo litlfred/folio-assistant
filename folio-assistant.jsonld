@@ -227,13 +227,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T12:00:16.460Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/150e4b2d5cd9fb9741a4886f330d6f72edc73398",
-  "sourceCommitSha": "150e4b2d5cd9fb9741a4886f330d6f72edc73398",
-  "sourceCommitAt": "2026-09-19T13:58:51+02:00",
+  "generatedAt": "2026-09-19T12:37:41.668Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c6c9f1d86e60722f0ad0dfca112c09d7db9756ca",
+  "sourceCommitSha": "c6c9f1d86e60722f0ad0dfca112c09d7db9756ca",
+  "sourceCommitAt": "2026-09-19T14:36:12+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 163,
+    "Skill": 164,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -1929,6 +1929,21 @@
       ],
       "instructionsPath": "skills/folio-core/one-voice-integration-watcher.md",
       "instructionLines": 291,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "library-ingestion",
+      "title": "Library ingestion",
+      "description": "Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach for and why, what a complete L1 entry holds, and why an inferred structure is refused rather than guessed. One entry point: `bun run ingest`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/library-ingestion.md",
+      "instructionLines": 105,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3712,6 +3727,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-viewer",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/markdown-render-check",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/mcp-assembly",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/mcp-contract",
@@ -17972,8 +17988,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "150e4b2d5cd9fb9741a4886f330d6f72edc73398",
+    "sha": "c6c9f1d86e60722f0ad0dfca112c09d7db9756ca",
     "pr": "main",
-    "run": "35441565321"
+    "run": "35443331219"
   }
 }
