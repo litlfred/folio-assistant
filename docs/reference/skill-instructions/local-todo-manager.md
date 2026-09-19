@@ -288,7 +288,8 @@ changed. You already know which pages those are — you wrote them — so the
 lookup is yours to do, not theirs. Say what each link *is*, too: a bare URL
 does not tell a reader whether it is new, changed, or just context.
 
-`AGENTS.md` records the underlying rule (PR #178, 2026-09-16): a human cannot
+[`continual-progress`](continual-progress.md) records the underlying rule
+(PR #178, 2026-09-16): a human cannot
 assess a rendered artefact from a description, and withholding it makes
 assessment harder rather than safer. **A root-only link is a partial
 withholding** — the artefact is technically reachable and practically hidden.

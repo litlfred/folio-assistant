@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T07:11:55Z
-updated_at: 2026-09-19T09:39:38Z
+updated_at: 2026-09-19T10:05:34Z
 ---
 
 THE ASK, owner 2026-09-19: 'migrate Agents.md work to skills and point agent to how to read KG use skills.'
@@ -33,3 +33,5 @@ A background survey was commissioned 2026-09-19 to classify every section as POI
 _2026-09-19T09:30:05Z_ — Claimed on branch claude/wonderful-bohr-6kxh7b (2026-09-19). Half 2 (cold-agent KG route) first, then half 1 classification + unambiguous slices.
 
 _2026-09-19T09:39:38Z_ — PR #381 opened: half 2 delivered (kg-navigation skill, skill_list summaries 150/150, onboarding s3 rewritten) plus check:agents-xref, the gate half 1 needs. Measured: only 2 of 20 AGENTS.md section citations resolve here; 2 name the folio's file; 16 unresolved. Half 1 text migration not started.
+
+_2026-09-19T10:05:34Z_ — Both halves delivered. Half 2 in PR #381 (merged). Half 1 in PR #385: four orphan skills written (readme-sections, ci-health, agent-memory, issue-working) plus all seven verified-destination moves (sections 5,6,9,14,16,17,18). AGENTS.md 1289 -> 649 lines. All four Done-when items met: every section classified with its destination (docs/proposals/agents-md-migration.md), AGENTS.md-only rules identified and moved, kg-navigation gives a cold agent one route, and the three-copy divergence measured at 205 lines and not widened - additions went to both hand-authored todo-manager copies.

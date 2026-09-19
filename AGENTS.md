@@ -154,191 +154,78 @@ bun run readme:audit                # verify the README's links still resolve
 
 ## Where the harness keeps its state — `beans/` is a graph
 
-`beans/` is a **graph** with named nodes, not a directory that incidentally
+`beans/` is a **graph with named nodes**, not a directory that incidentally
 holds markdown. `beans/beans.json` declares it; the schema is
 `schemas/bean-graph.ts`, which reuses `ContentDirectorySchema` from
 `schemas/cat-harness.ts` rather than restating it.
 
 | directory | path | graphs | committed |
 |---|---|---|---|
-| `defs` | `beans/defs/` | `bean-defs` — the work plan, WHAT is being worked on | yes |
+| `defs` | `beans/defs/` | `bean-defs` — WHAT is being worked on | yes |
 | `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |
 
-**It is the same schema as `harness.json`, not a parallel one.** A
-bean-graph entry IS a `ContentDirectory`: an id, a path, and `graphs` — the
-kinds found there. Same shape, same open registry, same JSON-LD projection.
-`bean-defs` and `workflow-state` are registered in `BASE_GRAPH_KINDS`
-alongside `kg`, `schemas`, `tools` and `beans`, so there is one vocabulary.
+**It is the same schema as `harness.json`, not a parallel one.** A bean-graph
+entry IS a `ContentDirectory` — an id, a path, and the graph kinds found there.
+`harness.json` says which directories exist and what kind of graph each holds;
+`beans/beans.json` says what its own nodes are. One fact, one place, at each
+level.
 
-This file briefly declared `nodes` with `kinds: BeanNodeKind[]`, a closed
-enum, which said exactly what `directories` with `graphs: GraphKind[]` already
-said in different words. Two spellings of one concept is the drift this repo
-keeps paying for. What stays specific to the bean graph is only what is not
-true of declarations generally: paths resolve against `beans.json`'s own
-directory rather than the instance root, and at most one directory may hold
-`workflow-state`.
+**The files declare what they are.** A directory is a PLACE TO LOOK and may hold
+more than one part of a graph, so `graphs` does not say how to tell the contents
+apart — a bean carries its id, `title`, `status` and `type` in front matter; a
+workflow instance carries `"$schema": "folio-workflow-instance/v1"`. Before that
+tag, instance state was identifiable only by SHAPE. **Extension is a
+coincidence; a declaration inside the file is the contract.**
 
-Node paths are relative to `beans.json`'s own directory, so the whole graph
-relocates by moving one folder. A path that is absolute or escapes its root is
-**rejected**: a store outside the graph is not a node of it.
+**The discipline is in the skill, not here** —
+[`skills/folio-core/directory-conventions.md`](skills/folio-core/directory-conventions.md)
+carries the declaration schema and every graph kind, path resolution and the
+dot-prefix guard that tests **every** segment, and the rule that an unavoidable
+duplicate is fine while an unchecked one is not. In this instance
+`bun run check:harness-dirs` is what checks the two that cannot be removed:
+`.beans.yml`, because the `beans` binary is third-party, and `WORKFLOW_DIR` in
+`workflow/store.ts`, because it is on the hot path of every workflow call.
 
-**`graphs` is an array, and it does not say how to tell the contents apart —
-the files declare what they are.** A directory is a PLACE TO LOOK and may hold
-more than one part of the graph. A bean carries its id, `title`, `status`
-and `type` in front matter; a workflow instance carries
-`"$schema": "folio-workflow-instance/v1"`, following the `qa-script/v1`
-convention the QA sidecars use. A consumer reads a file and the file answers,
-so a node states what to EXPECT rather than how to discriminate.
-
-That is what makes a multi-kind directory safe here. Before the `$schema`
-tag, instance state was identifiable only by SHAPE — duck-typed on
-`processId` and `tokens` — which is exactly the "distinguishable by extension
-… a coincidence of the current layout, not a contract" problem #263 named.
-Extension is a coincidence; a declaration inside the file is the contract.
-
-They were `.beans/` and `.harness/workflow/`. A dot-prefixed directory is absent
-from a plain `ls`, from most file browsers and from GitHub's web tree, so the two
-artefacts a person looks for first were the two hardest to find. Moved 2026-09-18
-(bean `8xzw`), restructured into the graph the same day (bean `x89g`).
-
-**The graph is the single declaration — `harness.config.json` deliberately does
-not restate it.** `harness.workPlan` and `harness.workflowState` existed and were
-removed: the layout was written in three places that could disagree, and moving
-it to the graph left one fewer, not one more.
-
-Two copies remain and both are checked by `bun run check:harness-dirs`, because
-neither can be removed: `.beans.yml` because the `beans` binary is third-party
-and will never read our schema, and `WORKFLOW_DIR` in `workflow/store.ts`
-because it is on the hot path of every workflow call and re-reading a JSON file
-to learn its own directory would be worse than a checked duplicate. The
-duplication is unavoidable; an unchecked one is not.
-
-The dot-prefix guard tests **every** segment of a resolved path, not just the
-first. A node declared `.defs` resolves to `beans/.defs` and is exactly as
-invisible as the stores this move existed to fix; checking only the head would
-have made the guard unfireable.
-
-`harness.json` declares `beans/` **once**, as a `beans` graph, alongside
-`schemas/` and `kg/`; `beans/beans.json` declares what is inside it — the
-`defs` node (work items) and the `workflows` node (running BPMN instance
-state). The harness says which directories exist and what kind of graph each
-holds; the graph says what its own nodes are. One fact, one place, at each
-level, so neither file has to infer the other's business.
-
-#263 declared those two as **separate directories** — `workplan` at `beans/`
-and `process-state` at `beans/workflow/` — and its own comment named the defect
-that creates: the second sits *inside* the first, so a consumer scanning a
-declared directory cannot assume it owns what lies beneath it, and the two were
-told apart only by file extension, "a coincidence of the current layout, not a
-contract". Named nodes are that contract. The graph kinds `workplan` and
-`process-state` are replaced by the single `beans` kind for the same reason.
-See [`directory-conventions`](skills/folio-core/directory-conventions.md).
-
-**`schemas/` declares TWO graphs — the first real use of the array.**
-`graphs: ["schemas", "kg"]`: the schema definitions themselves, and `kg`
-because a schema **is** a knowledge-graph node rather than a separate island
-beside one. A directory is a place to look, and may hold more than one part
-of the graph.
-
-**Not every declared graph's files declare themselves yet.** `kg`
-(skill front matter), `bean-defs` (bean front matter) and `workflow-state`
-(`$schema`) do. `schemas/*.ts` does not: `@module` names the path rather than
-the node type, four files carry none at all, and three `.test.ts` files sit in
-the declared directory without being schema nodes — told apart only by
-filename, which is the coincidence-not-contract problem again. Bean `xxxb`.
-
-
-**Not every declared graph's files declare themselves yet.** `kg`,
-`bean-defs` and `workflow-state` do; `schemas/*.ts` does not — `@module`
-names the path rather than the node type, four files carry none, and three
-`.test.ts` files sit in the declared directory without being schema nodes.
-Bean `xxxb`.
-
-
-`.harness/` still exists and still holds `interaction.json` and `issue-comments/`;
-only the workflow state moved.
-
-This is **Option A** from
-[`docs/proposals/workflow-state-in-beans.md`](docs/proposals/workflow-state-in-beans.md),
-chosen 2026-09-18 — two stores with one link, now co-located. The criticism A
-carried there ("two places to look") was never about two stores; it was about two
-*hidden* ones.
+These were `.beans/` and `.harness/workflow/` until 2026-09-18 (beans `8xzw`,
+`x89g`) — the two artefacts a person looks for first were the two hardest to
+find. `.harness/` still holds `interaction.json` and `issue-comments/`; only the
+workflow state moved. Option A of
+[`docs/proposals/workflow-state-in-beans.md`](docs/proposals/workflow-state-in-beans.md):
+the criticism it carried there ("two places to look") was never about two
+stores, but about two *hidden* ones.
 
 ## Work-plan & todos — use `beans`
 
 `beans` ([hmans/beans](https://github.com/hmans/beans)) is the **single todo
-mechanism** for agent work — both session-local and cross-session/cross-agent
-coordinated work. Do **not** stand up a separate todo store (no API route,
-dashboard, or `todos/*.json` work-plan); beans is it.
+mechanism** for agent work, session-local and cross-session alike. Do **not**
+stand up a separate todo store; `beans/` is committed, so the plan survives a
+resume in a fresh container.
 
 ```sh
 scripts/install-beans.sh                 # install the CLI if missing
 beans prime                              # emit work-plan priming for agents
 beans list                               # current open items
 beans create "<title>"                   # open a work-plan item
-beans <id> --status in-progress          # claim an item (durable, visible to siblings)
+beans <id> --status in-progress          # claim an item
 ```
 
-> **Check before you create (STRICT).** `beans create` is **not** idempotent —
-> it mints a fresh ID on every call and dedupes on nothing, so re-entering a
-> work-plan step duplicates the plan instead of no-op'ing. Before **every**
-> `beans create`, including the session milestone, run the exact-title
-> existence check in [`skills/folio-core/todo-manager.md` §Check before you
-> create](skills/folio-core/todo-manager.md); on a match, claim the existing
-> bean with `beans update <id> --status in-progress` instead. History: in the
-> `qou` folio an unguarded re-run of that step ~980 times on 2026-08-04
-> produced **14,688** duplicate beans — 92 % of every open bean in the repo —
-> which starved the idle-backlog policy of signal, collided with the IDs of 15
-> real beans, and corrupted a later agent's own corpus-grep.
+**The discipline is in the skill, not here.**
+[`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md) carries
+the opening brief, the turn-report formats and their seven rules, and
+§"Check before you create" — `beans create` is **not idempotent** and dedupes on
+nothing, which is how an unguarded re-run once produced **14,688** duplicates,
+92 % of every open bean in that repo.
+[`skills/folio-core/bean-coordination.md`](skills/folio-core/bean-coordination.md)
+carries the cross-session half: **claim before you work**, never resolve a
+sibling's bean, and **never delete ANY bean** — unwanted work is `scrapped`,
+with its reasons, because a scrapped bean stops the next agent re-entering a
+dead end while a deleted one leaves a sibling unable to tell abandonment from
+accident.
 
-- **Session todos:** track anything you want to persist as beans, not in your
-  agent's ephemeral in-memory todo list — `beans/` is committed, so the plan
-  survives a resume in a fresh container.
-- **Cross-session / cross-agent todos:** the same committed `beans/` store is the
-  shared work-plan. **Claim before you work** (set `in-progress` + note your
-  branch) so two sessions don't pick the same item — a claim is **branch-local
-  until your PR exists**, so it announces rather than reserves, and
-  [`bean-coordination.md` §"A claim is branch-local"](skills/folio-core/bean-coordination.md)
-  has the two checks to run before you start; never resolve a sibling's
-  bean, and **never delete ANY bean, including your own**. Work that turns out
-  not to be wanted is `scrapped`, with its reasons — a scrapped bean records
-  that something was considered and rejected, which is what stops the next
-  agent re-entering the same dead end; a deleted one leaves a sibling unable
-  to tell abandonment from accident. `beans delete` exists in the CLI, which
-  is why this is written down rather than assumed. Full cycle:
-  [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
-- **`beans ≠ sidecars`:** never `beans create` bulk machine-generated queues (QA
-  `*.qa.json`, witness `*.witness.json`, watcher queues) — keep those as bulk JSON.
-- **Move wiring and script together:** when relocating a hook-backed script or a
-  queue, repoint every reference (docs, hooks, readers) in the same change.
-
-### Say which bean you are on — every turn
-
-Claiming a bean records the work; **reporting** it is what lets a human steer
-and a sibling session avoid you. Both are required, at the start of a turn and
-at the end of it.
-
-**The discipline lives in the skill, not here.** Read
-[`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md)
-§"Say which bean you are on" before your first report. It carries the opening
-and closing formats, the seven rules, and the worked failure that motivates
-them. In short, and not as a substitute for reading it:
-
-- every bean reference gets **two sentences and a link** — what it is, then
-  **what you would do** about it, in the first person as a proposal. A gloss
-  alone is a menu with no prices: it tells the reader what the bean is and not
-  whether your answer is a one-line fix or a question back to them. **This binds
-  every mention of an id, not just a report's Beans list** — a status line, an
-  aside, a commit message, an issue comment. If it is not worth two sentences,
-  do not name the bean;
-- asking for review means **linking the artefact** — staging URL, PR, and the
-  changed page;
-- say **what to review**, not that CI is green;
-- there is **no word budget** — err long.
-
-> Not to be confused with the content-review **feedback** workflow (the
-> `todo-review` skill over `feedback/<paper>/*.ts`) — that is a separate domain
-> feature, not the agent work-plan.
+Two boundaries worth keeping in view. **`beans` are not sidecars**: never
+`beans create` bulk machine-generated queues (`*.qa.json`, witness files,
+watcher queues). And this is not the content-review **feedback** workflow (the
+`todo-review` skill) — that is a domain feature, not the agent work-plan.
 
 ## README sections — the folio owns the file, the platform owns the markers
 
@@ -385,149 +272,33 @@ One sentence, and every word in it is a distinct declared object:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant — **human, agentic or mechanical**. Persists across processes. | `.claude/skills/actors/*.json` |
-| **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
-| **Skill** | the instruction body the actor needs to perform the task. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
+| **Actor** | a concrete participant — human, agentic or mechanical. Persists across processes. | `.claude/skills/actors/*.json` |
+| **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries skills. | `skills/roles/roles.json` |
+| **Skill** | the instruction body the actor needs to perform the task. | the `cat-harness` graph — here, `skills/` |
 | **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |
 | **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `skills/workflows/` |
 
-All four live in the **`kg` graph** the instance declares in `harness.json`
-— in this repo that id maps to `skills/`. BPMN and DMN are **not standalone
-artefacts**: a diagram is reached through the skill that describes the process,
-and a task is performed with the skills its lane's role carries.
-
 **Nothing *is* a reviewer.** Somebody **acts as** reviewer inside a process for
 the duration of a lane, and the same actor is a different role in another
-diagram — the session agent is `Lane_Agent` in `crdm-requirements.bpmn` and the
-*sibling session* in `bean-lifecycle.bpmn`, whose whole point is marking what is
-not yours to close.
-
-**An actor is human, agentic or mechanical**, and the line between the last two
-is judgement: an agent can be handed a skill and asked to decide something, a
-mechanical system runs a fixed program and decides nothing. `kind` on
-`.claude/skills/actors/*.json` says which. It was a two-valued `type` until
-2026-09-19 — 16 `person`, 8 `system`, with five agents and three mechanical
-services sharing that second label — so "which tasks can this actor perform"
-had no answer for a third of the registry. **The discipline is in the skill**:
-[`role-model.md`](skills/folio-core/role-model.md) §"An actor is one of three
-kinds" and §"A task declares which actor kinds may fulfil it".
-
-**An actor has three lists and they answer three questions:** `roles` — what may
-it act AS (per lane); `permissions` — what may it DO (every lane);
-`capabilities` — what does its machine have (the environment). They were one
-field until 2026-09, and the conflation meant nothing resolved any of them.
-Moving permissions onto Role looks right and is wrong: a permission cross-cuts,
-so that placement produced 36 conflicts where a permission was held by some but
-not all actors sharing a role. **A skill is what the performer needs to KNOW and
-belongs to the lane; a permission is what the participant may DO and travels
-with them.**
-
-**Roles compose two ways and they are not the same thing.** `inherits` is IS-A
-and static (`qc-reviewer` has `reviewer`'s skills everywhere, always). The
-**subprocess stack** is scoped: descending into a subprocess, the actor keeps the
-outer role *and* takes on the inner lane's, and the skills are the union along
-that call path only. Merging them would give every role every caller's skills,
-and a closure that broad cannot fail an audit.
+diagram.
 
 **The discipline is in the skill, not here** —
 [`skills/folio-core/role-model.md`](skills/folio-core/role-model.md) carries the
-resolution rules, how to bind a lane, the severity scale, and how to add a role.
+three actor kinds and why the line between agentic and mechanical is judgement;
+the actor's three lists (`roles`, `permissions`, `capabilities`) and why moving
+permissions onto Role produced 36 conflicts; the two compositions (`inherits` is
+IS-A and static, the subprocess stack is scoped) and why merging them gives a
+closure too broad to fail an audit; the severity scale; and how to add a role.
 
-### The audit — `bun run kg:audit`
-
-One criterion per join above — `KG_CRITERIA` in `schemas/kg-qa.ts` is the
-registry and the only current answer to how many; this line said "Fourteen"
-while it held 32. They are written as **committed QA sidecars** under
-`test/results/kg-qa/`, in a tree that MIRRORS each subject's path — flat would
-collide, and not hypothetically: four sidecar basenames already occur twice
-across packages. They sat beside their subjects until 2026-09-19 (bean `2634`);
-`kgQaSidecarPath` is the one answer for writer and reader. Schema:
-`schemas/kg-qa.ts`. This is the **third** QA subject kind, after the block sweep's
-`*.qa.json` and the script sweep's `*.script-qa.json`, and it shares their shape.
-
-```sh
-bun run kg:audit          # write the sidecars, print the summary
-bun run kg:audit:check    # fail on a `critical` finding, or on a stale sidecar
-bun run kg:audit:strict   # ...and on `major` too
-```
-
-**A sidecar rather than a console report, for one reason:** `check-workflow-refs`
-prints and exits, so its previous answer is gone — which makes "this lane has been
-unbound since it was drawn" and "this lane broke in the commit under review"
-indistinguishable. A reviewer who cannot separate a new defect from inherited debt
-will not act on either.
-
-`critical` is a broken reference; `major` is a missing join; `minor` is coverage,
-which has legitimate instances (a human sign-off step has no skill to name) and so
-must not gate — forcing a fake ref onto a real step is worse than the gap.
-**`unknown` is never written as a pass**, and it is not promoted either: it counts
-at its own criterion's severity, so a diagram that will not load still fails on its
-`critical` rows while an unevaluable `minor` does not gate the build.
-
-**What it found, and none of it was noise.** First run: 60 distinct lane names
-for roughly two dozen positions, bound to nothing; 42 activities naming no skill;
-6 skills nothing reaches; 13 actor entries carrying `inherits` — a role lattice
-wearing an actor's name; and `role-has-actor` `unknown` for all 28 roles, because
-no actor entry said which roles it could take on.
-
-**After fixing what it found:** every lane bound, the registry rewritten to carry
-`roles[]`, six missing participants added (the end user, a stakeholder, the
-onboarding / ingestion / evidence agents, the CI pipeline), and the four lanes
-that are *acted upon* rather than performed — the work plan, the corpus, the
-publish target, the external registries — marked `actedUpon` so their
-`role-has-actor` is `n/a` rather than a failure nobody can act on. **Zero
-`unknown` rows.** The 42 activities naming no skill are now **zero**, and the
-criterion is `major` rather than `minor` — see below.
-
-**Do not quote "6 unreachable skills" from here — that line was stale and is
-the reason this paragraph now says so.** It sat in this file after the finding
-had been resolved, and was repeated back to the author as live. Measured
-2026-09-18: `skill-has-entry-point` reports **zero**. Run the audit against the
-corpus in front of you; a count in prose is a claim, not evidence.
-
-**Two different reachability questions, and conflating them is how the stale
-number survived.** `skill-has-entry-point` (renamed from `skill-reachable`)
-asks whether there is ANY way in — servable, in the harness, carried by a role,
-or named by an activity. The servable clause alone covers nearly the whole
-corpus, so it passes near-trivially, and its green was read as an answer to the
-question its old name implied. `skill-in-role-or-process` asks the other one:
-what does the actor → role → task model actually reach? **96 of 143** skills
-are carried by no role and named by no activity.
-
-That 96 is **coverage, not a defect list, and must never gate**. A skill
-invoked directly by name — `corpus-grep`, `diff`, `kg-export`, `mcp-contract`,
-the watcher family — is doing its job without appearing in any diagram, and
-`skill_fetch` by name is a first-class entry point. Driving it to zero would
-mean inventing roles and activities to absorb tools that do not want them.
-Watch it move; do not read it as debt.
-
-**`activity-names-skill` could not gate until its exemptions became
-declarations.** A stakeholder's sign-off, a corpus being written into, and a
-skill nobody has written all read as "names no skill", so failing on the count
-would have forced a fake `<folio:skill ref>` onto a real step — worse than the
-gap. Three declarations separate them, and each is READ rather than inferred:
-a lane whose role is **`actedUpon`** (written to, never acts), a lane whose role
-is **`judgementOnly`** (acts, but no procedure yields the answer — the
-stakeholder), and **`<folio:no-skill reason="…"/>`** on the activity itself.
-The reason is required at LOAD time, so a reasonless exemption makes the diagram
-record `unknown` instead of quietly passing: silencing the criterion must cost
-more than satisfying it.
-
-`judgementOnly` exists because prose was not enough. `stakeholder`'s summary had
-said "carries no skills deliberately: sign-off is a judgement, not a procedure"
-since the graph was written, and a later pass still came within one commit of
-"fixing" its four findings by giving the role a skill. The flag is that sentence
-made machine-readable.
-
-Enforced by `scripts/tests/activity-skill-coverage.test.ts` rather than by
-switching CI to `kg:audit:strict`, which would promote every `major` criterion
-at once — a far larger commitment than the change that earned it.
-
-**What counts as a skill is one answer, in `scripts/known-skills.ts`,** shared by
-`kg-audit` and `check-workflow-refs` so they cannot disagree. `.claude/skills/` is
-**not uniformly skills** — `actors/`, `capabilities/` (`docker`, `pandoc`,
-`python3`), `roles/` and `hooks/` are other node kinds, and reading them as skills
-put 46 non-skills in the set, so `<folio:skill ref="viewer"/>` would have resolved.
+**The audit is `bun run kg:audit`** — one criterion per join, written as
+committed QA sidecars under `test/results/kg-qa/` in a tree that MIRRORS each
+subject's path, because flat would collide (four basenames already occur twice).
+`kg:audit:check` fails on a `critical` finding or a stale sidecar;
+`kg:audit:strict` adds `major`. A sidecar rather than a console report for one
+reason: a printed verdict is gone, which makes "unbound since it was drawn" and
+"broken in the commit under review" indistinguishable. Schema and criteria:
+`schemas/kg-qa.ts`; the reading rules, including **never quote a count from
+prose**, are in the skill.
 
 ## Subagents with persistent memory (`.claude/agents/`)
 
@@ -660,25 +431,16 @@ Key rules:
 
 ## Say which process you are in — every turn
 
-The bean rule above says *what* you are working on. This says *where in the
-process* you are working, which is the question a reader cannot answer from a
-bean id.
+The bean rule says *what* you are working on. This says **where in the process**
+— the question a reader cannot answer from a bean id. Name the process, the lane
+and the task, and **say when you switch**, because switching changes who is
+accountable for the next step and which gates apply.
 
-**Name the process, the lane and the task**, and say when you switch:
-
-> **Process:** `crdm-requirements`, Agent lane · **Phase 6 — implement**.
-> Completed `A_Implement`; next is `A_Summary`.
-
-The machinery already answers this and was going unused in chat: `workflow_next`
-reports the enabled step, the lane that owns it and the skill that implements
-it, and every activity in the CRDM agent lane now carries `<folio:skill ref>`,
-so the answer is something to act on rather than a bare step name. What was
-missing was only the habit of saying it.
-
-**Switching processes is the case that matters.** Moving from
-`editing-hci-validation` to `crdm-requirements` changes who is accountable for
-the next step and which gates apply; a reader who does not know you switched
-will assume the old lane's rules still hold.
+**The discipline is in the skill, not here** —
+[`skills/folio-core/process-state.md`](skills/folio-core/process-state.md)
+§"Say which process you are in" carries the format, and the rest of that skill
+carries the five detectors for being out of process and the recovery that
+confirms with the user before re-entering.
 
 ## Working an issue — announce, then re-check
 
@@ -697,67 +459,23 @@ into Phase 6.
 
 ## Commit early, commit often, always PR (STRICT)
 
-Three rules, and the third is the one agents get wrong.
+**Commit early, commit often** — every meaningful unit of work gets its own
+commit and gets pushed; the chat is ephemeral and the history is durable.
+**Open the PR at the first commit, not at the end**, even on a stub; never ask
+permission to open one. **And do not hold a green PR back waiting for someone to
+look at it** — that is the rule agents invert in the name of care, and inverting
+it is not caution, it is a blocked reviewer.
 
-**Commit early, commit often.** Every meaningful unit of work — a fix, a
-diagram, a bean update, a measurement — gets its own commit and gets pushed.
-Do not accumulate. The chat is ephemeral and the history is durable: if the
-session is reclaimed mid-task, what survives is what you pushed.
+**The discipline is in the skill, not here** —
+[`skills/folio-core/continual-progress.md`](skills/folio-core/continual-progress.md)
+carries the five invariants, why a human cannot assess a rendered artefact from
+a description of it (measured on PR #178, 2026-09-16), what to do with the thing
+you could not verify, and the three narrow exceptions — none of which is "I am
+unsure".
 
-**Open the PR at the first commit, not at the end.** The PR is the visibility
-artefact, not the code. Open it as soon as there is one commit to hang it on,
-even a stub, and let the body grow as the work does. Never ask permission to
-open one — branch, commit, push and PR are all pre-authorised.
-
-**Do not hold a green PR back waiting for someone to look at it.** This is the
-rule that gets inverted in the name of care, and inverting it is not caution —
-it is a blocked reviewer.
-
-### Why the third rule needs saying
-
-An agent that has just built something it cannot fully verify — a rendered
-page, a diagram, a UI — reaches for the responsible-sounding move: leave the PR
-open, attach a preview, ask the human to confirm before merging. That feels
-safer. It is worse, for a reason worth internalising:
-
-**A human cannot assess a rendered artefact from a description of it, and a
-preview in chat is a strictly worse proxy than the deployed thing.** Holding
-the merge does not transfer the verification to them — it *withholds the only
-form in which they could do it*, and asks them to adjudicate from a screenshot
-instead.
-
-Measured here, 2026-09-16. PR #178 — the ingestion documentation, five
-generated BPMN diagrams — was CI-green, unreviewed and un-merged, held back
-with the three SVGs attached in chat and a note that the layout was
-machine-accepted but not confirmed legible. The owner's reply was
-*"jsut merge so i can help assess"*. The hold made assessment harder, not
-safer, and cost a round-trip to an author who types with difficulty.
-
-### What to do with the thing you could not verify
-
-Say it in the PR body, and merge anyway. `## Not verified` is a real section
-and an honest one; an unmerged PR is not a substitute for it. Reversibility is
-what makes this safe — a docs or content change is one revert away, and the
-cost of reverting is far below the cost of a human blocked on a decision they
-have no artefact for.
-
-The exceptions are narrow and none of them is "I am unsure":
-
-- **Never merge red.** A failing or unrun required check is a real blocker.
-- **Never merge over an unresolved review thread** you have not answered.
-- **Where the repository requires explicit merge permission, that wins.** In
-  particular `litlfred/qou` requires `/prepare-merge` plus an explicit "merge
-  it" from the author for *every* merge to `main`, and this section does not
-  relax that by a word. There, the rule reads: get it green, get it
-  mergeable, **say once that it is ready**, and then stop — do not re-ask on a
-  timer, and do not let "not merged yet" become a reason to stop pushing.
-
-### Cross-references, so these do not drift
-
-`litlfred/qou`'s `AGENTS.md` carries the same first two rules for that folio —
-§"Branch + PR workflow" rule 0 (commit early / often / push) and rule 2
-(ALWAYS-PR, and never ask whether to open one). It also carries the stricter
-merge gate above. If you change one, check the other.
+**A folio may be stricter, and it wins.** `litlfred/qou` requires
+`/prepare-merge` plus an explicit "merge it" from the author for *every* merge
+to `main`. If you change the rule in either repository, check the other.
 
 ## Context before the question — every time you hand over a decision (STRICT)
 
@@ -771,32 +489,12 @@ If answering needs them to open an issue, a file, a diff or the scrollback, the
 question is not ready. A link is where somebody goes for *more*; it is never
 where the terms are defined.
 
-Six parts: what is being decided (as what will *differ*, not the name of the
-decision); every identifier expanded on first use; the options **with what each
-costs**, not with their names; your recommendation, first and marked; what
-happens if they say nothing; then the question.
-
-**This binds every surface a decision is handed over on** — an explicit question,
-the end-of-turn "next" line, a bean's `## Done when`, a PR body, an issue
-comment. The last four are where it is most often broken, because they feel like
-reporting rather than asking.
-
-**The failure, measured here on 2026-09-18.** A turn ended: *"next `x4mt` —
-Cross-agent skill install + `fa-` prefix (#247). Unstarted, and I'd want your
-call on prefix-at-rest vs prefix-at-install before writing anything."* Both
-option names had been coined by that agent inside issue #247, so answering meant
-opening and reading the issue — and neither option carried its cost, so even
-then there was nothing to choose between but two phrases. The author types with
-difficulty; the question cost them minutes and should have cost one keystroke.
-
-Feature work breaks this more than content work, for a specific reason: the
-agent has just finished the impact analysis, and the vocabulary it built doing
-that *feels* defined. It is not. Full rule and worked before/after:
-[`interaction-modality.md` §4.1](skills/folio-core/interaction-modality.md);
-for the CRDM loop,
-[`crdm-requirements-workflow.md`](skills/folio-core/crdm-requirements-workflow.md);
-for the end-of-turn report,
-[`todo-manager.md`](skills/folio-core/todo-manager.md).
+**The discipline is in the skill, not here** —
+[`skills/folio-core/interaction-modality.md`](skills/folio-core/interaction-modality.md)
+§4.1 carries the six parts, the surfaces this binds that do not feel like asking
+(the end-of-turn "next" line, a bean's `## Done when`, a PR body, an issue
+comment), why feature work breaks it more than content work, and a worked
+before/after from a real failure here.
 
 ## Opening a bean or a topic — brief it before you touch anything (STRICT)
 
@@ -813,6 +511,7 @@ falsify the approach**. Then what you are *not* doing, and why.
 **irreversibility and surprise**, not line count), a worked ~200-word brief, the
 thin one that fails and why, and the cheapest correct move when you do not want
 to spend the words: **do not start the topic.**
+
 ## More
 
 - **`uses[]` and `interprets` are the EDITORIAL relation** — what a *reader*
