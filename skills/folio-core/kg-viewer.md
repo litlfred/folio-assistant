@@ -77,9 +77,13 @@ Two things the export reports and the viewer must not swallow:
 
 - **`undeclaredTerms`** — property names absent from the `@context`. Every one
   is *dropped* when the document is processed as the JSON-LD it claims to be.
-  Measured on this instance at the time of writing: 34 names, 3461 occurrences.
-  Mark them in the detail panel; do not silently show them as ordinary
-  properties.
+  It was 34 names and 3583 occurrences on this instance when the viewer was
+  written, which is how the gap was found; bean `ovkk` took it to **zero** and
+  `kg-export` now exits non-zero rather than publishing a new one. Mark them in
+  the detail panel; do not silently show them as ordinary properties. **Keep
+  the marking even while the list is empty** — it is the guard that makes the
+  next one visible, and a viewer for this instance is a viewer for any
+  instance, including one whose export is older or whose context is thinner.
 - **`danglingLinks`** and **`problems`** — a link with no target node, and a
   source that could not be read.
 
