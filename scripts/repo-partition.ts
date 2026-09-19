@@ -266,6 +266,19 @@ const RULES: Rule[] = [
     repo: "core",
     triaged: true,
     exact: [
+      // CORE despite matching the smart-base keyword rule, and the core's own
+      // declaration is the evidence: `schemas/block-kinds.ts` (core) declares
+      // `CONTENT_ADAPTERS = ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so a DAK
+      // block kind is part of the core content model. The module defining
+      // their schemas cannot be in a different repository from the union that
+      // names them — and calling it smart-base made the CORE barrel
+      // `schemas/index.ts` re-export a smart-base module, which was the single
+      // `folio-assist-core → smart-base` wrong-direction edge. The
+      // classification was wrong, not the import.
+      //
+      // What stays smart-base is the L2/L3 AUTHORING skills: the procedures
+      // for producing a DAK, as against the block kinds a folio may contain.
+      "schemas/dak-blocks.ts",
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
       "scripts/gen-jsonld-context.ts",       // from schemas/jsonld.ts
@@ -325,6 +338,23 @@ const RULES: Rule[] = [
       "src/server.ts",
       "src/index.ts",
       "src/types.ts",
+      // HARNESS, both re-triaged 2026-09-19 while draining the last edges.
+      //
+      // `schemas/contributions.ts` is what a DEPENDENCY may add to the root
+      // instance — its own header calls it Phase 0.1 of the separation. It is
+      // the composition mechanism of the harness, not a thing a folio
+      // contains, so `harness-config.ts` importing it was never the wrong
+      // direction; the target was on the wrong side. Its other importer,
+      // `content/pipeline/render-discovery.ts`, is core, and core may import
+      // harness.
+      //
+      // `content/pipeline/repo-root.ts` resolves WHERE the content repo is by
+      // walking up for `computations/` and `content/`. Those directory names
+      // are markers it matches on, not a model it defines — and the cut is
+      // processes versus tooling. Measured: twelve importers, every one under
+      // `scripts/`. A module used only by tooling, doing path resolution, is
+      // tooling.
+      "content/pipeline/repo-root.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
       "src/tools/skill-fetch.ts",
@@ -541,7 +571,17 @@ const RULES: Rule[] = [
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["skills/authoring-who-smart-guidelines/"],
-    exact: ["schemas/dak-blocks.ts"],
+    // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
+    // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
+    // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
+    // part of the core content model by the core's own declaration. Calling
+    // the module that defines their schemas `smart-base` made the core barrel
+    // re-export a smart-base module — the one `folio-assist-core → smart-base`
+    // wrong-direction edge, and it was the classification that was wrong
+    // rather than the import.
+    //
+    // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
+    // for producing a DAK, as against the block kinds a folio may contain.
   },
   {
     repo: "base",
