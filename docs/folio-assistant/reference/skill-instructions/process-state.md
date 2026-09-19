@@ -87,7 +87,7 @@ When one of the five fires, **stop making changes** and recover in this order:
 
 ## Relationship to the opening brief
 
-The brief you open a turn with (`todo-manager.md` §"Say which bean you are on")
+The brief you open a turn with ([`turn-reporting.md`](turn-reporting.md))
 is what makes detector 5 usable: without a stated plan there is nothing for the
 current work to have diverged *from*. The two skills are one loop — brief the
 route, notice the divergence, confirm the recovery.

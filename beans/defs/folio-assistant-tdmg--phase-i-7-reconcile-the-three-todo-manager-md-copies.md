@@ -128,3 +128,71 @@ criterion. This is the same wall that made me move the branch-local rule to
    two-way delta with this bean id so it is intentional rather than accidental,
    and fix only the pointers. Cost: two hand-authored copies stay, and the next
    rule still has to be written twice.
+
+## Split done 2026-09-19 — option 2, chosen by the owner
+
+`skills/folio-core/todo-manager.md` was **396 lines against a hardcoded
+`n > 400`** in `scripts/kg-audit.ts`, and had been failing `skill-is-brief`
+(`n > 280`) on `main` for as long as the criterion existed. It carried three
+separable disciplines. Measured per section before cutting:
+
+| section | lines | went to |
+|---|---|---|
+| frontmatter, title, disambiguation, lead | 49 | stayed |
+| `## Opening brief` | 84 | **`opening-brief.md`** |
+| `## Say which bean you are on — every turn` | 164 | **`turn-reporting.md`** |
+| STRICT create-check, CLI-absent fallback, status vocabulary | 96 | stayed |
+
+Result — and all three pass **every** `kg-qa` criterion, which none of them did
+before:
+
+| skill | lines | `skill-is-brief` | `skill-not-a-document` |
+|---|---|---|---|
+| `todo-manager` | 197 | **pass** (was fail at 392) | pass |
+| `opening-brief` | 104 | pass | pass |
+| `turn-reporting` | 184 | pass | pass |
+
+**A two-way split was measured and rejected.** `Opening brief` +
+`Say which bean` + new frontmatter lands at ~273 against the 280 threshold —
+7 lines of margin, so the next paragraph anybody adds trips the criterion. Three
+files each sit inside the corpus norm with room. They are also genuinely two
+disciplines: what you say BEFORE the work, and what you say DURING and AFTER it,
+which `AGENTS.md` already carries as two separate top-level sections.
+
+**Nothing in the moved text was edited.** The split is a cut, so a reviewer can
+diff the segments against the original rather than re-read prose.
+
+### The four orphaned rules are now in the servable copy
+
+Ported into `todo-manager.md`'s new `## Coordination discipline`, with a note
+saying where they came from and why they were unreachable: "One source of truth
+per concern", "Move wiring and script together", "Close on landing", and a
+`## Relationship to other surfaces` carrying the
+`session-start-coord-sweep.sh` pointer. `beans ≠ sidecars` was already covered
+by the file's existing disambiguation block, so it is not duplicated.
+
+### References
+
+The reference surface is large — ~90 mentions of `todo-manager` — but almost all
+name the **skill**, which still exists and still governs bean mechanics, so they
+stay correct. Only the six naming a **moved section** were repointed:
+`AGENTS.md` ×3 (the end-of-turn report, §"Opening brief", §"Say which bean you
+are on"), `process-state.md`, `docs/proposals/agents-md-migration.md`, and
+`docs/architecture/cat-harness-minimum.md`'s skill table, which now lists three
+rows. References to §"Check before you create" were deliberately left alone —
+that section did not move.
+
+`opening-brief` and `turn-reporting` are registered in
+`skills/folio-core/package-manifest.json` (80 skills) and are **automatically**
+served by `skill_fetch` and published by `gen-skill-docs`, because both
+discover the directory rather than holding a list — the property bean `wwbl`
+established.
+
+### Still open — the local copies are NOT stubbed yet
+
+Deliberately not in the same change: a 500-line move plus two deletions in one
+diff is unreviewable, and the stub should land against the split it points at.
+`.claude/skills/local/todo-manager.md` (369 lines) and
+`.claude/skills/local/bean-coordination.md` (62) remain unservable duplicates.
+Their four unique rules are now safely in the servable copy, so stubbing them
+no longer loses anything — which was the blocker.
