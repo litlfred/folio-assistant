@@ -153,6 +153,23 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "(acts, but no procedure yields the answer), and an activity carrying `<folio:no-skill reason=\"…\"/>`.",
   },
   {
+    id: "activity-fulfilment-kind",
+    applies: ["process"],
+    // `major`. Nothing dangles — both ends of this join resolve — so it is not
+    // `critical`; and it is not coverage, so it is not `minor`. It is TWO
+    // DECLARATIONS THAT CONTRADICT EACH OTHER: the diagram says this step runs
+    // without a person, and the role graph says a person is who stands in that
+    // lane. One of the two is wrong and the diagram cannot say which.
+    severity: "major",
+    summary:
+      "An activity's lane is filled by an actor kind that cannot perform it. A `userTask` is performed by a " +
+      "human (BPMN: \"by a human being with the assistance of a software application\"); a `serviceTask` runs " +
+      "without one, so an agentic or mechanical actor performs it. `bpmn:Task` and a call activity assert " +
+      "nothing and are `n/a`, as is a lane whose role is `actedUpon` — a store is written to, never asked to " +
+      "perform. Override the derived answer with `<folio:fulfilment kinds=\"…\" reason=\"…\"/>`; the reason is " +
+      "required at load time, because widening `kinds` is the cheapest way to make this criterion pass.",
+  },
+  {
     id: "call-activity-resolves",
     applies: ["process"],
     severity: "major",

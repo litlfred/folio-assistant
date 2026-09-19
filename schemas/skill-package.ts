@@ -36,7 +36,26 @@ import { z } from "zod";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
 
-export const ActorTypeSchema = z.enum(["person", "system"]);
+/**
+ * What kind of thing an actor is — **human, agentic or mechanical**, plus
+ * `external` for a participant outside this instance entirely.
+ *
+ * `person` names the human, `agent` the agentic and `system` the mechanical.
+ * The prose reading, the table and the argument for the split live on the
+ * re-export in `schemas/role-graph.ts`; the values live HERE, because this
+ * module is the dependency-free base (zod only) that both the registry schema
+ * and the role graph can import.
+ *
+ * **It is one vocabulary because it was two, and that is what broke.** This
+ * enum read `["person", "system"]` until 2026-09-19 while `ACTOR_KINDS` in the
+ * role graph read all four — two spellings of one concept, in the one place
+ * where the difference decides what a task may be handed to. The narrower of
+ * the two was what `.claude/skills/actors/*.json` validated against, so an LLM
+ * agent and a CI runner were both recorded `system` and no consumer could tell
+ * a participant that exercises judgement from one that runs a program.
+ */
+export const ACTOR_KINDS = ["person", "agent", "system", "external"] as const;
+export const ActorKindSchema = z.enum(ACTOR_KINDS);
 export const ConformanceSchema = z.enum(["SHALL", "SHOULD", "MAY", "SHALL NOT"]);
 export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallback"]);
 export const ScriptRuntimeSchema = z.enum(["bash", "python", "typescript", "bun"]);
@@ -69,7 +88,7 @@ export const CapabilityDetectionSchema = z.discriminatedUnion("method", [
 export const ActorDefinitionSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
-  type: ActorTypeSchema,
+  kind: ActorKindSchema,
   description: z.string(),
   // DEPRECATED. An actor does not inherit — a ROLE does, and the lattice that
   // used to live here now lives in `skills/roles/roles.json`. Kept optional so
@@ -285,7 +304,7 @@ export const RemotePackageRefSchema = z.object({
 // schema that four harness modules were importing.
 
 /** Actor classification: human user or automated system. */
-export type ActorType = z.infer<typeof ActorTypeSchema>;
+export type ActorKind = z.infer<typeof ActorKindSchema>;
 
 /** FHIR R5 conformance verbs for requirement statements. */
 export type Conformance = z.infer<typeof ConformanceSchema>;

@@ -65,6 +65,8 @@ import {
   readPermissions,
   resolveRoleSkills,
   roleForLane,
+  findRole,
+  fulfilmentKindsForBpmnType,
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
@@ -294,6 +296,42 @@ async function auditProcess(
     }
   }
 
+  // Can the lane's role actually be filled by something that can perform this
+  // step? The diagram's task TYPE already answers which kinds may — BPMN says a
+  // userTask is done by a person and a serviceTask without one — and until now
+  // nothing joined that answer to the role graph's `actorKind`.
+  //
+  // Scoped the same way `activity-names-skill` is, and for the same reason. An
+  // `actedUpon` lane is a store, and "the corpus cannot perform a serviceTask"
+  // is a finding nobody can act on. An activity whose lane is unbound or absent
+  // is already reported by `lane-binds-role` / `activity-in-lane`; repeating it
+  // here would make one defect look like two.
+  const wrongKind: KgFinding[] = [];
+  let kindApplicable = 0;
+  if (graph) {
+    for (const n of activities) {
+      if (actedUponNode(n)) continue;
+      const roleId = n.laneId ? laneRole.get(n.laneId) : undefined;
+      if (!roleId) continue;
+      const role = findRole(graph, roleId);
+      if (!role) continue;
+      const allowed = n.fulfilment?.kinds ?? fulfilmentKindsForBpmnType(n.type);
+      if (!allowed) continue; // a bpmn:Task or call activity asserts nothing
+      kindApplicable += 1;
+      if (allowed.includes(role.actorKind)) continue;
+      const how = n.fulfilment
+        ? `<folio:fulfilment/> on the step allows ${allowed.join(", ")} (${n.fulfilment.reason})`
+        : `a ${n.type.replace("bpmn:", "")} is performed by ${allowed.join(" or ")}`;
+      wrongKind.push({
+        where: n.id,
+        detail:
+          `"${n.name}" — ${how}, but its lane's role "${roleId}" is filled by a ${role.actorKind}. ` +
+          `Either the task type is wrong, the lane is wrong, or the step really does admit that kind — ` +
+          `in which case say so with <folio:fulfilment kinds="…" reason="…"/>.`,
+      });
+    }
+  }
+
   // Gateways computing their branch from a DMN table.
   const decisionRefs = [...m.nodes.values()].filter((n) => n.decisionRef);
   const danglingDecision: KgFinding[] = [];
@@ -334,6 +372,7 @@ async function auditProcess(
     "lane-binds-role": entry(unboundLane, Boolean(graph) && m.lanes.length > 0),
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
+    "activity-fulfilment-kind": entry(wrongKind, Boolean(graph) && kindApplicable > 0),
     // Three states, not two. A resolved target passes; a process with no call
     // activity is `n/a`; a target this instance cannot load is `unknown`,
     // because it may be hosted elsewhere — see the note on the criterion.
@@ -346,7 +385,7 @@ async function auditProcess(
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
-    for (const id of ["role-ref-resolves", "lane-binds-role", "role-carries-activity-skill"]) {
+    for (const id of ["role-ref-resolves", "lane-binds-role", "role-carries-activity-skill", "activity-fulfilment-kind"]) {
       criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at skills/roles/roles.json." }] };
     }
   }

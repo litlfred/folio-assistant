@@ -19,7 +19,7 @@ Four objects, each with a home:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant. Human or agentic. Persists across every process. | `.claude/skills/actors/*.json` |
+| **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `.claude/skills/actors/*.json` |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `skills/workflows/*.bpmn`, `skills/workflows/decisions/*.dmn` |
@@ -88,6 +88,105 @@ for the duration of a lane.
 > Effect: `activity-names-skill` records **n/a** for activities in the lane,
 > which is what lets that criterion gate on the undeclared ones instead of
 > staying advisory for ever.
+
+## An actor is one of three kinds — human, agentic, mechanical
+
+```jsonc
+{ "id": "ci-pipeline", "title": "CI pipeline", "kind": "system", … }
+```
+
+`kind` takes one of four values, and three of them are the classification that
+matters. `external` is the fourth: a participant outside this instance, which is
+not ours to task at all.
+
+| `kind` | the kind it names | what it can be handed |
+|---|---|---|
+| `person` | **human** | a skill to read, and a judgement to make |
+| `agent` | **agentic** | a skill to read, and a judgement to make |
+| `system` | **mechanical** | a program to run, and nothing to decide |
+| `external` | outside this instance | nothing |
+
+**The line is judgement.** An agent and a person can both be handed an
+instruction body and asked to decide something; a mechanical system executes a
+procedure and decides nothing. That is not a taxonomy for its own sake — it is
+what says whether a given step may be given to a given participant.
+
+**It was two values until 2026-09-19 and the conflation was the defect.** Every
+entry carried `type`, which read `person` or `system`, and `system` covered an
+LLM agent and a CI runner alike. Measured on `main` that morning: **16 `person`,
+8 `system`** — and those 8 held **five agents and three mechanical services**.
+So "which tasks can this actor perform" had no answer for a third of the
+registry, because the question turns on judgement and both sides wore one label.
+
+**The distinction was already written down, in prose nothing could read.**
+`ci-pipeline`'s own description has always said *"It runs a fixed program and
+exercises no judgement, so anything needing a decision belongs in another
+lane."* `review-agent`'s says it performs *"NON-MECHANICAL validation …
+judgement calls escalate to a human reviewer."* Both sentences state exactly
+this rule; neither was machine-readable. That is the `judgementOnly` lesson
+again — a load-bearing rule kept only in a summary is one the next pass
+re-litigates.
+
+**It was also already in a schema — the wrong one of two.** `ACTOR_KINDS` in
+`schemas/role-graph.ts` has read all four values since the role graph was
+written, while `ActorTypeSchema` in `schemas/skill-package.ts` read
+`["person", "system"]` — and the registry validated the actor files against the
+narrower one, so the four-kind vocabulary could not be used by the files it
+existed for. There is now one declaration, in `skill-package.ts` (the zod-only
+base both the registry schema and the role graph import), re-exported from
+`role-graph.ts`.
+
+**A legacy `type` still loads, and is never read as `agent`.** An unmigrated
+downstream registry has not said whether its non-person actors exercise
+judgement, so they read as `system` — the reading that refuses a judgement task
+rather than granting one on a guess. Guessing from an id ending in `-agent`
+would put an unreviewed claim into the graph wearing the appearance of data.
+An unrecognised `kind` **throws**: coercing a typo to `system` would silently
+disqualify an actor from every task it exists to perform.
+
+## A task declares which actor kinds may fulfil it — mostly without saying so
+
+> **Tasks can be fulfilled by only certain actor types.**
+
+`activity-fulfilment-kind` checks that against the lane's role, and almost no
+diagram has to declare anything, because **BPMN already answers it and nothing
+was reading the answer**:
+
+| task type | who may perform it | from |
+|---|---|---|
+| `bpmn:userTask` | `person` | the spec: "performed by a human being with the assistance of a software application" |
+| `bpmn:serviceTask` | `agent`, `system` | the spec: "uses some sort of service … a Web service or an automated application" — no human in the loop |
+| `bpmn:task` | **nothing asserted** | the abstract task says nothing, so neither does the check |
+| `bpmn:callActivity` | **nothing asserted** | the constraint belongs to the called process's own steps |
+
+`fulfilmentKindsForBpmnType` returns `undefined` for the last two, never `[]`.
+An empty list would read as *"no kind may perform this"* and fail every
+activity drawn as a plain task — the third state, in the place it is easiest
+to lose.
+
+**Scoped like `activity-names-skill`.** An `actedUpon` lane records `n/a`:
+"the corpus cannot perform a serviceTask" is a finding nobody can act on. An
+activity whose lane is unbound or absent is already reported by
+`lane-binds-role` and `activity-in-lane`, so it is not reported twice here.
+
+**Override it only when the derived answer is genuinely wrong:**
+
+```xml
+<bpmn:extensionElements>
+  <folio:fulfilment kinds="person agent"
+                    reason="a person or an agent drafts this; a pipeline cannot." />
+</bpmn:extensionElements>
+```
+
+The **reason is required at load time** and a reasonless declaration does not
+parse — the same rule `<folio:no-skill reason>` follows, and for the same
+reason. Widening `kinds` is the cheapest way to make this criterion pass, so
+silencing it has to cost a sentence somebody reads in the diff.
+
+**Read a failure as a question with three answers, not one.** The task type may
+be wrong, the lane may be wrong, or the step may really admit that kind — and
+only the third is a `<folio:fulfilment/>`. Reaching for the exemption first is
+how it becomes a rubber stamp.
 
 ## An actor has three lists, and they answer three different questions
 
@@ -234,13 +333,19 @@ name-matched instead.
 
 ## The audit — `bun run kg:audit`
 
-Fourteen criteria, one per join in the sentence at the top:
+One criterion per join in the sentence at the top. The list below is the
+actor→role→skill→task core; **`KG_CRITERIA` in `schemas/kg-qa.ts` is the
+registry**, and it is longer — it also covers requirements, skill bodies and
+the graph as a whole. This said "Fourteen criteria" while the registry held
+**32**, which is the same defect the audit exists to catch, one level up: a
+count in prose is a claim, and the thing it counts is a file you can read.
 
 ```
 activity ──names────▶ skill      skill-ref-resolves             critical
 gateway  ──computes─▶ decision   decision-ref-resolves          critical
 lane     ──is───────▶ role       role-ref-resolves              critical
 activity ──sits in──▶ lane       activity-in-lane               major
+task type─can be done by▶ kind   activity-fulfilment-kind       major
 lane     ──is───────▶ role       lane-binds-role                major
 role     ──carries──▶ skill      role-carries-activity-skill    major
 decision ──is used──▶ gateway    decision-outcomes-used         major
@@ -316,7 +421,9 @@ group of something else is a one-line addition.
 
 1. Add it to `skills/roles/roles.json` with a `summary` that says what the
    **position** is, not what it is called. `actorKind` is `person`, `agent`,
-   `system` or `external`.
+   `system` or `external` — human, agentic, mechanical, or outside this
+   instance. It is what `activity-fulfilment-kind` checks the lane's steps
+   against, so it is a claim about who can actually stand there, not a label.
 2. Bind its lanes — `<folio:role ref>` in new diagrams, `lanes[]` for an
    existing name you are not renaming.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`

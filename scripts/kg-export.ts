@@ -520,11 +520,17 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
         // JSON, which is why it survived — the document is only wrong when
         // something processes it as the JSON-LD it claims to be.
         //
-        // Renamed rather than dropped. The local name and the person/system
-        // distinction are both real data a consumer wants, and recovering
-        // `localId` by splitting the `@id` fragment is exactly the string
-        // manipulation a consumer should never have to do.
-        const { id: localId, type: actorKind, ...rest } = d;
+        // Renamed rather than dropped. The local name and the human / agentic
+        // / mechanical distinction are both real data a consumer wants, and
+        // recovering `localId` by splitting the `@id` fragment is exactly the
+        // string manipulation a consumer should never have to do.
+        //
+        // `kind` is the field since 2026-09-19; `type` is the legacy two-valued
+        // one, still read so an unmigrated registry exports. Both are stripped
+        // from `rest` whichever supplied the value, because leaving either in
+        // reinstates the keyword collision this rename exists to fix.
+        const { id: localId, kind, type: legacyType, ...rest } = d;
+        const actorKind = kind ?? legacyType;
         nodes.push({
           "@id": makeIri(doc, type.toLowerCase(), id),
           "@type": `${FOLIO_NS}${type}`,

@@ -8,7 +8,7 @@
   "source_hash": "sha256:3aab9923a7332ebdbd9b2848c795d7c45b2f020349209fa16d0b8ab3e79d2b1d",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:499a677aa1ea4e9db1895a08a38d222cbe155e2e7a882661c96fc5ba3fe44ebd",
+    "script_hash": "sha256:1a5400e124a00fff426438955a162661875f37a4d04324b95f418e7e0146866e",
     "engine_version": "1"
   },
   "criteria": {
@@ -44,6 +44,19 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_AuthorFsh",
+          "detail": "\"Author FSH profiles\" — a ServiceTask is performed by agent or system, but its lane's role \"fhir-modeller\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_PublishIg",
+          "detail": "\"Publish the IG site\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
@@ -51,7 +64,7 @@
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
+    "fail": 1,
     "n/a": 2,
     "unknown": 0
   }
