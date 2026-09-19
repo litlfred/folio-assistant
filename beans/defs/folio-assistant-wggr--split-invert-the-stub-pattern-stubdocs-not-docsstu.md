@@ -1,10 +1,11 @@
 ---
 # folio-assistant-wggr
 title: 'SPLIT: invert the stub pattern — <stub>/docs not docs/<stub>, so a repo is one directory'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-19T11:51:29Z
-updated_at: 2026-09-19T11:51:29Z
+updated_at: 2026-09-19T15:44:31Z
 parent: folio-assistant-vke6
 ---
 
