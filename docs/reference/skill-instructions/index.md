@@ -15,6 +15,28 @@ For each skill's *typed input/output contract*, see the
 [Skill schema reference](../skills/); for the conceptual overview of skills,
 roles, and how they compose with the LLM, see [Skills & roles](../../skills.html).
 
+## Mathematical authoring (authoring-math)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [latex-authoring](latex-authoring.html) | `latex-authoring` | [schema](../skills/latex-authoring.html) | > Skill id: `latex-authoring` · Package: `authoring-math` · |
+| [lean-formalization](lean-formalization.html) | `lean-formalization` | [schema](../skills/lean-formalization.html) | > Skill id: `lean-formalization` · Package: `authoring-math` · |
+| [proof-verification](proof-verification.html) | `proof-verification` | [schema](../skills/proof-verification.html) | > Skill id: `proof-verification` · Package: `authoring-math` · |
+
+## WHO SMART Guidelines (authoring-who-smart-guidelines)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [bpmn-authoring](bpmn-authoring.html) | `bpmn-authoring` | [schema](../skills/bpmn-authoring.html) | > Skill id: `bpmn-authoring` · Package: `authoring-who-smart-guidelines` · |
+| [dmn-authoring](dmn-authoring.html) | `dmn-authoring` | [schema](../skills/dmn-authoring.html) | > Skill id: `dmn-authoring` · Package: `authoring-who-smart-guidelines` · |
+| [fhir-validation](fhir-validation.html) | `fhir-validation` | [schema](../skills/fhir-validation.html) | > Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` · |
+| [ig-publication](ig-publication.html) | `ig-publication` | [schema](../skills/ig-publication.html) | > Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` · |
+| [l2-dak-authoring](l2-dak-authoring.html) | `l2-dak-authoring` | [schema](../skills/l2-dak-authoring.html) | > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` · |
+| [l3-fhir-authoring](l3-fhir-authoring.html) | `l3-fhir-authoring` | [schema](../skills/l3-fhir-authoring.html) | > Skill id: `l3-fhir-authoring` · Package: `authoring-who-smart-guidelines` · |
+| [quality-control](quality-control.html) | `quality-control` | [schema](../skills/quality-control.html) | > Skill id: `quality-control` · Package: `authoring-who-smart-guidelines` · |
+| [smart-base Toolchain](smart-base-tools.html) | `smart-base-tools` | — | > Skill id: `smart-base-tools` · Capability: `smart-base` · Package: |
+| [terminology-management](terminology-management.html) | `terminology-management` | [schema](../skills/terminology-management.html) | > Skill id: `terminology-management` · Package: `authoring-who-smart-guidelines` · |
+
 ## Lifecycle skills
 
 | Skill | Id | Schema | Summary |
@@ -28,12 +50,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Content Testing](content-test.html) | `content-test` | [schema](../skills/content-test.html) | End-to-end testing of content artifacts in realistic scenarios. |
 | [Content Validation](content-validate.html) | `content-validate` | [schema](../skills/content-validate.html) | Validate authored content against schemas, standards, and clinical accuracy. |
 | [Evidence Appraisal](evidence-appraisal.html) | `evidence-appraisal` | — | Appraise and grade a **body of evidence** against the grading system the folio |
-
-## Agent skills
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Corpus-Grep](corpus-grep.html) | `corpus-grep` | — | > **Disambiguation.** This skill formalizes the **backward** check |
 
 ## Platform core (folio-core)
 
@@ -175,6 +191,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Simulator](simulator.html) | `simulator` | — |  |
 | [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
 | [Witnessed Values](witnessed-values.html) | `witnessed-values` | — |  |
+
+## Agent skills
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Corpus-Grep](corpus-grep.html) | `corpus-grep` | — | > **Disambiguation.** This skill formalizes the **backward** check |
 
 ## Local skills (.claude/skills/local)
 

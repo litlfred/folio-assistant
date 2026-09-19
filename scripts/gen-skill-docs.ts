@@ -127,12 +127,85 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
   ],
 };
 
+/**
+ * A human-readable category per skill package, for the packages under
+ * `skills/`.
+ *
+ * **The DIRECTORIES are discovered; only the LABEL is declared**, because a
+ * label is prose nobody can derive. A package found on disk with no entry here
+ * is a hard error naming it — see {@link discoverGroups}.
+ */
+const SKILLS_CATEGORIES: Record<string, string> = {
+  "content-lifecycle": "Lifecycle skills",
+  "folio-core": "Platform core (folio-core)",
+  "folio-document-adapter": "Document adapter (folio-document-adapter)",
+  "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
+  "authoring-math": "Mathematical authoring (authoring-math)",
+  "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
+};
+
+/**
+ * Every skill package under `skills/`, found on disk.
+ *
+ * ## The defect this replaces
+ *
+ * `GROUPS` listed four `skills/` packages. **Six hold `.md`.** Measured
+ * 2026-09-19: `authoring-math` (3 skills) and
+ * `authoring-who-smart-guidelines` (9) were absent, so all twelve of their
+ * instruction bodies were NEVER PUBLISHED — and four of them
+ * (`fhir-validation`, `l2-dak-authoring`, `bpmn-authoring`,
+ * `latex-authoring`) are named by `<folio:skill ref>` in the BPMN diagrams.
+ * An agent following `workflow_next` to one of those steps is handed a skill
+ * whose published reference page 404s.
+ *
+ * The comment on the `.claude/skills/local` entry below records the SAME bug
+ * being fixed for one directory earlier the same day. Fixing one member of a
+ * family and leaving two is what a hardcoded list guarantees, so the list is
+ * gone.
+ *
+ * ## Forgetting is loud, not silent
+ *
+ * A discovered package with no {@link SKILLS_CATEGORIES} label **throws**,
+ * naming the directory. That is deliberate: the alternative — deriving a label
+ * from the directory name — would publish the package under a plausible
+ * heading nobody chose, and the whole failure being fixed here is content
+ * going missing without anything saying so. Adding a package is one line;
+ * forgetting it stops the build.
+ */
+function discoverGroups(): Group[] {
+  const out: Group[] = [];
+  const skillsRoot = join(REPO_ROOT, "skills");
+  const undeclared: string[] = [];
+  if (existsSync(skillsRoot)) {
+    for (const d of readdirSync(skillsRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      if (!d.isDirectory()) continue;
+      const dir = join(skillsRoot, d.name);
+      // No `.md` means it is not a skill package: `workflows/`, `roles/`,
+      // `permissions/`, `requirements/`, `framework/` and `remote-packages/`
+      // are other node kinds. Same test `scripts/known-skills.ts` uses.
+      if (!readdirSync(dir).some((f) => f.endsWith(".md"))) continue;
+      const category = SKILLS_CATEGORIES[d.name];
+      if (category === undefined) {
+        undeclared.push(d.name);
+        continue;
+      }
+      out.push({ category, dir, repoPrefix: `skills/${d.name}` });
+    }
+  }
+  if (undeclared.length > 0) {
+    throw new Error(
+      `skill package(s) with no category in SKILLS_CATEGORIES: ${undeclared.join(", ")}.
+` +
+        `Add a heading for each in scripts/gen-skill-docs.ts. A package is not published ` +
+        `under a guessed heading — that is how twelve skills went unpublished unnoticed.`,
+    );
+  }
+  return out;
+}
+
 const GROUPS: Group[] = [
-  { category: "Lifecycle skills", dir: join(REPO_ROOT, "skills", "content-lifecycle"), repoPrefix: "skills/content-lifecycle" },
+  ...discoverGroups(),
   { category: "Agent skills", dir: join(REPO_ROOT, "src", "skills"), repoPrefix: "src/skills" },
-  { category: "Platform core (folio-core)", dir: join(REPO_ROOT, "skills", "folio-core"), repoPrefix: "skills/folio-core" },
-  { category: "Document adapter (folio-document-adapter)", dir: join(REPO_ROOT, "skills", "folio-document-adapter"), repoPrefix: "skills/folio-document-adapter" },
-  { category: "Paper adapter (folio-paper-adapter)", dir: join(REPO_ROOT, "skills", "folio-paper-adapter"), repoPrefix: "skills/folio-paper-adapter" },
   // Local skills — the harness-specific ones under `.claude/skills/local/`.
   //
   // Absent from this list until 2026-09-19, which meant the authoritative spec
