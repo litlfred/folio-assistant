@@ -4,7 +4,7 @@ title: A force-push followed immediately by opening a PR produces a PR with zero
 status: todo
 type: bug
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-09-19T11:48:27Z
+updated_at: 2026-09-19T11:58:33Z
 parent: folio-assistant-1xhc
 ---
 
@@ -65,3 +65,21 @@ It did not fire. No `code-quality-gates` run exists for `d87c66031` on any event
 That strengthens the hypothesis in the note above from "consistent with" to "the only property not yet contradicted". It is still untested — the test remains: open a PR on a **freshly created** branch name and push to it twice, comparing both against the run list.
 
 One incidental result worth keeping, because it is the only thing here that is good news: the hand-dispatched run (#980, `workflow_dispatch`, `678065a99`) completed **success**, including the `readme:audit` step wired in that same commit. So `workflow_dispatch` remains a reliable workaround, and the gate it exercised is sound in CI rather than only locally.
+
+_2026-09-19T11:58:33Z_ — SEVENTH observation, and it is the test the two notes above asked for: **a freshly created branch name**. It falsifies the reused-branch hypothesis.
+
+PR #411, branch `claude/close-w2g5`. The branch was created new from `HEAD` (reflog: `branch: Created from HEAD` at `98144b5a8`) and **#411 is the only pull request that has ever had it as head** — `list_pull_requests` with `state=all` and `head=litlfred:claude/close-w2g5` returns exactly one row. There is no previous PR on this branch name, recently merged or otherwise. So "every one of them is on a branch whose previous PR had recently merged" does not hold: this one is not.
+
+What happened, in the same shape as the observations above:
+
+- push `1e05815db`, PR opened 11:53:43Z → **ZERO runs**, across ALL workflows, not just `code-quality-gates`: `list_workflow_runs` filtered to the branch returned `total_count: 0`. No staging preview either.
+- Fixed by `workflow_dispatch` on `code-quality-gates.yml` with `ref=claude/close-w2g5` — run `35441434015`, against the real head `1e05815db`, conclusion success.
+- Then pushed a second commit `13cf37c76` to the **already-open** PR → the `pull_request` run **DID** fire (run `35441561712`, event `pull_request`, success).
+
+That last point cuts against the sixth observation above, which recorded a push to an already-open PR NOT firing on #409. Mine fired. So neither "a normal push to an open PR always fires" nor "it never does" survives; the behaviour is intermittent across both cases.
+
+Where that leaves the narrowing, stated as what is left rather than as a new hypothesis: the remaining shared property across all seven is only that a PR was opened or pushed to during a window in which GitHub dropped the event. Elapsed time predicts nothing (already established above), push kind predicts nothing (fifth observation), branch reuse predicts nothing (this one), and push-to-open-PR predicts nothing (this one against the sixth). I have no better hypothesis to offer and would rather say so than invent one.
+
+Corroborating, from the same window: another session hand-dispatched `code-quality-gates` for its own #409 at 11:52:34Z (run `35441299274`, event `workflow_dispatch`) — so two sessions hit this within ninety seconds of each other.
+
+Unchanged and still the part worth acting on, agreeing with the notes above: **a PR with zero checks renders identically to one whose checks are green.** No red X, no failure, no pending row — just an empty list. An agent following "never merge red" merges it happily, because it is not red. The check wants to be POSITIVE — did the expected set of checks report at all on this head, with absent as a third state — rather than a search for failures.
