@@ -76,7 +76,7 @@ describe("GitHub Actions workflows", () => {
    * A dispatch-only gate is indistinguishable from a working one until you
    * look at the Actions tab and find no runs. This is the check that looks.
    */
-  test("every job that pushes gh-pages shares one concurrency group", () => {
+  test("every job that pushes gh-pages is protected — by the queue or a retry", () => {
     // A concurrency group serialises only the jobs that NAME it, and this one
     // has been incomplete twice. First `eoix` gave it to feature-staging's two
     // jobs alone, so six other push sites still raced — PR #297 lost a staging
@@ -85,6 +85,26 @@ describe("GitHub Actions workflows", () => {
     // (`gh-pages-deploy`), which queues against nothing while reading like a
     // solved problem.
     expect(checkWorkflows().filter((f) => f.kind === "gh-pages-ungrouped")).toEqual([]);
+  });
+
+  test("jobs that contend SIMULTANEOUSLY take the retry, not the queue", () => {
+    // discoverability-docs runs three jobs in parallel with no `needs:`.
+    // GitHub cancels a PENDING job when a newer one queues for the same group,
+    // so putting all three in one group loses a publish every run — which is
+    // what #300 did, and worse than the race it replaced. They get a retry,
+    // safe here because the three write to different directories under one
+    // root with `keep_files: true`.
+    const text = readFileSync(".github/workflows/discoverability-docs.yml", "utf-8");
+    expect(text).not.toContain("group: gh-pages-push");
+    // Two push sites per job — the attempt and the retry — for three jobs.
+    // Counted the way the checker counts: a COMMENT naming the action is not a
+    // use of it, and this file's header mentions it in prose. Counting raw
+    // occurrences said 7 and the assertion failed, which is the check working.
+    const uses = text
+      .split("\n")
+      .filter((l) => !l.trimStart().startsWith("#") && /uses:\s*peaceiris\/actions-gh-pages@/.test(l));
+    expect(uses).toHaveLength(6);
+    expect(text.split("continue-on-error: true").length - 1).toBe(3);
   });
 
   test("the group is one literal string, because a group matches on the literal", () => {

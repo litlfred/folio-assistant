@@ -29,24 +29,19 @@ jobs:
   rust-api:
     name: cargo doc → /rust-api/
     runs-on: ubuntu-latest
-    # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
+    # NO shared `gh-pages-push` group here, deliberately — see the retry below.
     #
-    # `discoverability-docs` pushes to the same `gh-pages` ref that
-    # `feature-staging` does, and a concurrency group serialises only the jobs
-    # that NAME it. `eoix` gave the group to `feature-staging`'s two jobs and
-    # stopped there, so this workflow was still free to race them — which is
-    # what PR #297 hit on 2026-09-18: `! [remote rejected] gh-pages -> gh-pages
-    # (cannot lock ref ... is at 0779d88f but expected f885578d)`, after a full
-    # site build.
+    # #300 put all three of this workflow's jobs in that group and that was
+    # WRONG, for a reason its own commit message had already stated about a
+    # different case: GitHub cancels a PENDING job when a newer one queues for
+    # the same group. These three run in parallel with no `needs:`, so all
+    # three enter at once — one runs, one pends, and the third cancels the
+    # pending one. A lost publish EVERY RUN, and a cancelled job reads as
+    # intentional while a rejected push is at least red.
     #
-    # `cancel-in-progress: false` is load-bearing and is the same reasoning as
-    # `eoix`: a pending run that a later arrival cancels is a DEPLOY SILENTLY
-    # DROPPED, which is worse than the queueing it would save. The
-    # workflow-level group above still applies — it scopes the run, this scopes
-    # the job — so per-ref cancellation of superseded builds is unaffected.
-    concurrency:
-      group: gh-pages-push
-      cancel-in-progress: false
+    # Raised by a sibling session on PR #300 before it landed (bean `pdxk`,
+    # scrapped in favour of #300 but keeping this disagreement on the record)
+    # and merged without it being seen.
     steps:
       - uses: actions/checkout@v4
 
@@ -78,35 +73,48 @@ jobs:
           <a href="hecke_engine/index.html">redirecting to hecke_engine/</a>
           EOF
 
+      # A retry instead of a queue. Safe HERE specifically because the three
+      # jobs write to DIFFERENT directories under one `gh-pages` root with
+      # `keep_files: true`, so the action's re-clone and re-push loses nothing
+      # — it picks up whichever sibling won and adds its own tile beside it.
+      # That is not true in general and must not be copied without checking it.
       - uses: peaceiris/actions-gh-pages@v4
+        id: publish
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           keep_files: true
           commit_message: 'docs(rust-api): cargo doc from ${{ github.sha }}'
 
+      # `continue-on-error` on the first attempt only: if the retry fails too
+      # it fails the job, because a lost publish must stay visible.
+      - name: Retry publish (a sibling job pushed to gh-pages first)
+        if: steps.publish.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(rust-api): cargo doc from ${{ github.sha }} (retry)'
+
   # ── 1f: Python API docs ─────────────────────────────────────────
   python-api:
     name: pdoc → /python-api/
     runs-on: ubuntu-latest
-    # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
+    # NO shared `gh-pages-push` group here, deliberately — see the retry below.
     #
-    # `discoverability-docs` pushes to the same `gh-pages` ref that
-    # `feature-staging` does, and a concurrency group serialises only the jobs
-    # that NAME it. `eoix` gave the group to `feature-staging`'s two jobs and
-    # stopped there, so this workflow was still free to race them — which is
-    # what PR #297 hit on 2026-09-18: `! [remote rejected] gh-pages -> gh-pages
-    # (cannot lock ref ... is at 0779d88f but expected f885578d)`, after a full
-    # site build.
+    # #300 put all three of this workflow's jobs in that group and that was
+    # WRONG, for a reason its own commit message had already stated about a
+    # different case: GitHub cancels a PENDING job when a newer one queues for
+    # the same group. These three run in parallel with no `needs:`, so all
+    # three enter at once — one runs, one pends, and the third cancels the
+    # pending one. A lost publish EVERY RUN, and a cancelled job reads as
+    # intentional while a rejected push is at least red.
     #
-    # `cancel-in-progress: false` is load-bearing and is the same reasoning as
-    # `eoix`: a pending run that a later arrival cancels is a DEPLOY SILENTLY
-    # DROPPED, which is worse than the queueing it would save. The
-    # workflow-level group above still applies — it scopes the run, this scopes
-    # the job — so per-ref cancellation of superseded builds is unaffected.
-    concurrency:
-      group: gh-pages-push
-      cancel-in-progress: false
+    # Raised by a sibling session on PR #300 before it landed (bean `pdxk`,
+    # scrapped in favour of #300 but keeping this disagreement on the record)
+    # and merged without it being seen.
     steps:
       - uses: actions/checkout@v4
 
@@ -147,35 +155,48 @@ jobs:
           </ul>
           EOF
 
+      # A retry instead of a queue. Safe HERE specifically because the three
+      # jobs write to DIFFERENT directories under one `gh-pages` root with
+      # `keep_files: true`, so the action's re-clone and re-push loses nothing
+      # — it picks up whichever sibling won and adds its own tile beside it.
+      # That is not true in general and must not be copied without checking it.
       - uses: peaceiris/actions-gh-pages@v4
+        id: publish
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           keep_files: true
           commit_message: 'docs(python-api): pdoc from ${{ github.sha }}'
 
+      # `continue-on-error` on the first attempt only: if the retry fails too
+      # it fails the job, because a lost publish must stay visible.
+      - name: Retry publish (a sibling job pushed to gh-pages first)
+        if: steps.publish.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(python-api): pdoc from ${{ github.sha }} (retry)'
+
   # ── 1g: TypeScript schema docs ──────────────────────────────────
   schema-docs:
     name: TypeDoc → /schema-docs/
     runs-on: ubuntu-latest
-    # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
+    # NO shared `gh-pages-push` group here, deliberately — see the retry below.
     #
-    # `discoverability-docs` pushes to the same `gh-pages` ref that
-    # `feature-staging` does, and a concurrency group serialises only the jobs
-    # that NAME it. `eoix` gave the group to `feature-staging`'s two jobs and
-    # stopped there, so this workflow was still free to race them — which is
-    # what PR #297 hit on 2026-09-18: `! [remote rejected] gh-pages -> gh-pages
-    # (cannot lock ref ... is at 0779d88f but expected f885578d)`, after a full
-    # site build.
+    # #300 put all three of this workflow's jobs in that group and that was
+    # WRONG, for a reason its own commit message had already stated about a
+    # different case: GitHub cancels a PENDING job when a newer one queues for
+    # the same group. These three run in parallel with no `needs:`, so all
+    # three enter at once — one runs, one pends, and the third cancels the
+    # pending one. A lost publish EVERY RUN, and a cancelled job reads as
+    # intentional while a rejected push is at least red.
     #
-    # `cancel-in-progress: false` is load-bearing and is the same reasoning as
-    # `eoix`: a pending run that a later arrival cancels is a DEPLOY SILENTLY
-    # DROPPED, which is worse than the queueing it would save. The
-    # workflow-level group above still applies — it scopes the run, this scopes
-    # the job — so per-ref cancellation of superseded builds is unaffected.
-    concurrency:
-      group: gh-pages-push
-      cancel-in-progress: false
+    # Raised by a sibling session on PR #300 before it landed (bean `pdxk`,
+    # scrapped in favour of #300 but keeping this disagreement on the record)
+    # and merged without it being seen.
     steps:
       - uses: actions/checkout@v4
 
@@ -195,9 +216,27 @@ jobs:
             --hideGenerator \
             schemas/ adapters/paper/schemas/ 2>&1 | tail -20
 
+      # A retry instead of a queue. Safe HERE specifically because the three
+      # jobs write to DIFFERENT directories under one `gh-pages` root with
+      # `keep_files: true`, so the action's re-clone and re-push loses nothing
+      # — it picks up whichever sibling won and adds its own tile beside it.
+      # That is not true in general and must not be copied without checking it.
       - uses: peaceiris/actions-gh-pages@v4
+        id: publish
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           keep_files: true
           commit_message: 'docs(schema-docs): TypeDoc from ${{ github.sha }}'
+
+      # `continue-on-error` on the first attempt only: if the retry fails too
+      # it fails the job, because a lost publish must stay visible.
+      - name: Retry publish (a sibling job pushed to gh-pages first)
+        if: steps.publish.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(schema-docs): TypeDoc from ${{ github.sha }} (retry)'
