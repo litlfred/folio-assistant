@@ -5,6 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-19T11:51:29Z
 updated_at: 2026-09-19T11:51:29Z
+parent: folio-assistant-vke6
 ---
 
 Owner direction, 2026-09-19: "dont do docs/<stub> tools/<stub> etc, rather do <stub>/docs and <stub>/tools. update the references/graph/dirs and then move is much cleaer.... this dir is this repo. and we can do more QA here before separation. so there would be in top-level only bootstrap/ cat-harness/ f-a-core/ etc. all content migrated to respective expexted dirs. also keeps URI/IRIs not so redundant."
