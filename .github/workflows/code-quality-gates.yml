@@ -228,6 +228,18 @@ jobs:
       - name: declared assets exist and resolve
         run: bun run check:declared-assets
 
+      # `bootstrap/bootstrap.jsonld` is COMMITTED, unlike `_kg/`, because its
+      # reader has nothing installed and cannot run a build — so a graph that
+      # only appears after one is a graph that reader never sees. Committed
+      # means it can drift, and this is what stops it.
+      #
+      # The generator is deliberately a PURE function of its inputs: no
+      # timestamp (which would make every run a diff and get the check
+      # switched off) and no commit SHA (which a committed generated file
+      # cannot carry without naming the commit BEFORE the one containing it).
+      - name: bootstrap graph is current
+        run: bun run bootstrap:graph:check
+
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
       # diagrams and resolved to nothing, so `workflow_next` would have handed
