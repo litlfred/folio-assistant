@@ -266,8 +266,48 @@ export function formatAge(minutes: number): string {
  * documents a hard limit of **1 GB for a published Pages site**, and the
  * previews share that budget with the main site, so 100 MB is a tenth of the
  * ceiling — an early-warning point that leaves room to act. Measured against
- * this repository on 2026-09-19, a single preview is 36.7–37.6 MB, so the
+ * this repository on 2026-09-19, a single preview is 37.5–39.0 MB, so the
  * third concurrent review breaches it.
+ *
+ * ## The floor, stated — because the threshold sits below it
+ *
+ * **This limit cannot be met by pruning, and that is not a defect in the
+ * limit.** A preview whose branch is live must not be removed (see
+ * {@link LIVENESS_SIGNALS}), so N concurrent reviews put a floor of
+ * `N x ~38 MB` under the total. Nine open previews on 2026-09-19 totalled
+ * 346 MB, of which exactly **two** were prunable orphans — 76.7 MB, leaving
+ * 269 MB. Two previews alone exceed 100 MB, so from the third concurrent
+ * review onward the only honest readings are "over" and "over".
+ *
+ * A check whose finding names an action must therefore name the RIGHT one, and
+ * for this threshold the action is never "prune more". Measured the same day:
+ * 27.5 MB of each 37.5 MB preview is HTML, and **zero HTML blobs are shared
+ * between any two previews** — every page carries the slug and the build
+ * timestamp, so git's content-hash deduplication has nothing to grip and nine
+ * previews store nine copies of a site identical apart from its own address.
+ * The 9x is in the addressing, not the content.
+ *
+ * Four independent sources put per-preview text on every page, and any ONE of
+ * them defeats deduplication on its own:
+ *
+ *  1. the **build timestamp** and commit SHA in the staging banner — the most
+ *     fundamental, because it makes every page unique even across two builds
+ *     of ONE branch, so each re-push adds ~27.5 MB of new blobs permanently;
+ *  2. `baseurl`-prefixed hrefs, ~235 per page (Jekyll's `relative_url`
+ *     prepends `baseurl`; it is not document-relative);
+ *  3. the `fa-translation-index` JSON island, which publishes `site.baseurl`
+ *     to `docs-ui.js` because the language switcher rebuilds nav hrefs from it;
+ *  4. the three SEO identity claims — **removed** as of
+ *     `scripts/strip-preview-seo.ts`, on correctness grounds rather than size.
+ *
+ * So the number to act on is preview SIZE, and the tractable shape is the one
+ * this repository already uses for the sidebar QR: derive the per-preview facts
+ * in the browser instead of baking them into 390 pages, which turns 390
+ * differing files into one small differing file. Bean `xxku`.
+ *
+ * **The threshold stays at 100 MB regardless**, because it is doing its job:
+ * it is not a target the previews are failing to hit, it is a statement that
+ * the current arrangement is not sustainable, and it is correct.
  */
 export const STAGING_WARN_BYTES = 100 * MB;
 
@@ -320,8 +360,14 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
       "The owner's explicit instruction, 2026-09-19 (\"issue warning to user when exceeds > 100mb\"). " +
       "It is also a tenth of GitHub's documented 1 GB limit for a published Pages site, which the " +
       "previews share with the main site — an early-warning point that leaves room to act rather " +
-      "than a limit in itself. One preview measured 36.7–37.6 MB on 2026-09-19, so the third " +
-      "concurrent review breaches it.",
+      "than a limit in itself. One preview measured 37.5–39.0 MB on 2026-09-19, so the third " +
+      "concurrent review breaches it. THE FLOOR IS ABOVE THE THRESHOLD AND THAT IS DELIBERATE: a " +
+      "live branch's preview must not be pruned, so N concurrent reviews floor the total at " +
+      "N x ~38 MB, and on 2026-09-19 only 2 of 9 previews were prunable orphans (76.7 MB, leaving " +
+      "269 MB). The action this finding names is therefore never \"prune more\" but preview SIZE: " +
+      "27.5 MB of each preview is HTML that shares ZERO blobs with any other preview, because the " +
+      "build timestamp and the slug appear on every page. See STAGING_WARN_BYTES for the four " +
+      "sources and bean `xxku` for the arithmetic.",
   },
   {
     metric: "staging-total-bytes",
