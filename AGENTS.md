@@ -342,148 +342,40 @@ them. In short, and not as a substitute for reading it:
 
 ## README sections — the folio owns the file, the platform owns the markers
 
-`content/pipeline/readme-sections.ts` holds a registry of generated sections —
-`folio:toc`, `folio:lean-coverage`, `folio:lean-modules`, `folio:simulators`,
-`folio:workflows` — and writes each one **only where the README already carries
-its `<!-- marker:begin -->` / `<!-- marker:end -->` pair**. A folio opts in per
-section; nothing outside a marked region is ever touched. `bun run readme:sync`,
-`readme:sync:check` for CI, `readme:sections` to list them, or the `readme_sync`
-MCP tool, registered among the **generic** tools: a document folio has chapters,
-simulators and workflows for the same reason a paper folio does, and simply
-never carries the Lean markers.
+`content/pipeline/readme-sections.ts` writes each generated section **only where
+the README already carries its `<!-- marker:begin -->` / `<!-- marker:end -->`
+pair**; `content/pipeline/readme-links.ts` audits every other link and writes
+nothing. Between them no link in a folio README is unaccounted for.
+`bun run readme:sync`, `readme:sync:check` for CI, `readme:sections` to list
+them, `readme:audit` for the authored half — or the `readme_sync` / `readme_audit`
+MCP tools, registered among the **generic** tools.
 
-**The predecessor could not have that property.** `scripts/generate-readme.sh`
-ended in `cp "$OUT" README.md` — it replaced the whole file, with one folio's
-content held in the platform: the title `# Quantum Observable Universe`, three
-`litlfred/qou` badges, a Knot Registry of Alexander-Briggs indices, a Project
-Structure table naming `content/quantum-observable-universe/lean/`, and a CC BY
-4.0 licence block. Run it in any other folio and the author loses their README.
-Only five of its sections were derived from the tree at all; the rest was prose,
-and prose about a folio belongs to that folio. It is deleted, along with
-`scripts/readme-metadata.ts`, whose only consumer it was.
-
-Three literals went with it, each worth recognising in new code: modules were
-prefixed `QOU.` regardless of the folio's Lake library (now read from
-`lakefile.toml`, and left **unprefixed** when no lakefile names one — a wrong
-namespace is worse than none, because it is what a reader pastes into an
-`import`); workflow descriptions came from a hardcoded map of twelve `qou`
-filenames consulted *before* the workflow's own `name:` (now always the
-`name:`); and the simulator directory was the literal
-`folio-assistant/simulators` (now `harness.config.json`).
-
-**"Could not determine" is a third state, everywhere.** A section returns
-`skip` and the region is left exactly as it was. That is not decoration: qou
-configures its simulators under `folio-assistant/simulators`, which exists only
-once the platform submodule is checked out, and the first version rendered
-"directory absent" as "this folio has no simulators" — replacing a correct
-nine-row table with a sentence. Same rule as the TOC's unreadable publish ref.
-An empty directory is still a determined empty.
-
-The contents table itself replaced a part of that script with two defects
-worth remembering, because both are easy to write again.
-
-**It described one folio from inside the platform.** The paper directory, the
-title, the badges and a `PAGES` constant were literals in a platform script,
-so it emitted a chapter table for `quantum-observable-universe` and for
-nothing else — in a repo whose `folio.ts` lists five papers. It also resolved
-its own helpers against the folio root (`bun run scripts/readme-metadata.ts`),
-where the platform's scripts are not, so it could only run from a platform
-checkout — which has no papers.
-
-**It composed links instead of resolving them.** Every PDF cell was
-`${PAGES}/papers/<paper>/chapters/<dir>.pdf`, built by convention and checked
-against nothing. The folio's `gh-pages` branch has no `chapters/` directory,
-so all twenty-three chapter links were 404 and had always been; three of six
-appendix links happened to resolve. Every PDF cell is now looked up in a real
-`git ls-tree` of the publish ref, and a chapter with no published PDF renders
-`—`. "Could not read the publish ref" is a **third** state, reported as such:
-a shallow clone with no `gh-pages` must not silently blank a table that was
-right yesterday.
-
-**On link style — `raw` is not the private-repo answer.** A private folio
-whose README links to `https://<owner>.github.io/...` is unreachable for
-exactly the people who have repository access, and
-`raw.githubusercontent.com` does not fix it: it 404s on a private repo
-without a token, and a browser session cookie does not authenticate it. The
-default is `blob` — `github.com/<owner>/<repo>/blob/<ref>/<path>` — which
-follows the viewer's GitHub session, works whether the repo is public or
-private, and renders PDFs inline. `pages` and `raw` remain available in
-`harness.config.json` under `readme.linkStyle`, and each prints a note under
-the table saying who can follow its links.
-
-**Adding a section** is one entry in `SECTIONS`: a marker, a one-line summary
-for `--list`, and a renderer returning Markdown plus operator notes. The CLI,
-the MCP tool and the staleness check all read the registry, so nothing else
-needs touching.
-
-**The authored half is audited, not generated.** `readme_audit` /
-`bun run readme:audit` (`content/pipeline/readme-links.ts`) verifies every
-Markdown link in the file and writes nothing: relative paths against the
-working tree, links naming one of the repo's own refs against a real
-`git ls-tree` of that ref, and Pages URLs under the folio's `pagesBaseUrl`
-against the publish ref the site is served from. Between the two tools no link
-in a folio README is unaccounted for — sync owns the marked regions, audit
-checks everything else.
-
-It exists because generating the rest was the wrong instinct. qou's Published
-Artefacts table listed `blueprint/` and `docs/`, neither of which has ever
-existed on `gh-pages`; both rows were dead in both columns. But its labels —
-"Folio landing page", "Blueprint (interactive graph)", the Project Structure
-descriptions — are prose worth keeping, and a generator would have had to
-invent them. The defect was never a stale layout; it was targets that do not
-resolve. **Third state again:** an external host, an in-page anchor, and a ref
-this checkout cannot read are all reported as NOT CHECKED, never as dead, so a
-shallow clone does not produce a wall of false findings.
+**The discipline is in the skill, not here** —
+[`skills/folio-core/readme-sections.md`](skills/folio-core/readme-sections.md)
+carries the opt-in contract, the third state ("could not determine" leaves the
+region untouched, and an empty directory is still a determined empty), why every
+link is resolved rather than composed, why `raw` is not the private-repo answer,
+and the two defects in the whole-file generator it replaced.
 
 ## CI health — a red workflow looks exactly like a green one from in here
 
-`docs-site.yml` fired on every push to `main` and **failed all 30 times** over
-two months. The trigger was fine; the *outcome* was invisible, so the published
-site sat stale and nothing in the repo said so. Bean `xom7`.
+A workflow's outcome is invisible from a checkout, so one here fired on every
+push to `main` and **failed all 30 times over two months** with nothing in the
+repository saying so. Bean `xom7`.
 
-`bun run check:ci-health` reports each workflow's state on the default branch —
-consecutive failures, days since the last green, and whether it has run at all
-recently. The session-start sweep prints it, so it lands where you already look.
-Three rules it follows, and you should too when reading it: **"could not check"
-is never rendered as green**; a red that has not re-run in a week is flagged as
-possibly stale rather than as an active fire; and a red whose **workflow file
-changed after the failing run** is reported as `superseded` — the version that
-failed is gone, so the verdict is stale. `superseded` is never rendered as green
-and never counted as a live failure, because a later edit is evidence the
-failing version is gone, not evidence the new one works.
+`bun run check:ci-health` reports each workflow's state on the default branch,
+and the session-start sweep prints it.
+[`skills/folio-core/ci-health.md`](skills/folio-core/ci-health.md) carries the
+three rules for reading it — "could not check" is never green, a red that has
+not re-run in a week is *possibly stale*, and a red whose workflow file changed
+after the failing run is `superseded` — plus why a report alone cannot cover the
+quiet stretch it exists to guard, which is what the weekly run and its single
+tracking issue are for (beans `ynu8`, `lq7e`).
 
-That third rule exists because two of this repo's workflows would otherwise be
-red forever. `witness-refresh.yml` and `qa-sweep.yml` failed to *parse* on
-2026-08-07 — which is why GitHub ran them on `push` despite both being
-`workflow_dispatch`-only, and why their runs are named by path rather than by
-`name:`. They were fixed the next day. They only run on dispatch and the report
-only reads the default branch, so nothing will ever run them here again. Bean
-`lq7e`. **Do not "fix" them by dispatching**: both fail by design in this repo —
-`qa-sweep` preflights on `content/package.json` and `witness-refresh` needs
-`folio-assistant/computations/`, and the platform carries no folio.
-
-**A report is only read by someone in the room.** The session-start sweep covers
-every day somebody is working; the failure being guarded against is a quiet
-stretch with nobody looking, which is exactly the stretch in which no session
-starts either. So `.github/workflows/ci-health.yml` runs the same check weekly
-and maintains **one** tracking issue labelled `ci-health` — opened when the
-default branch has a live failure, edited in place while it persists (an edit
-does not notify, so a long outage stays one unread item), and closed
-automatically when `main` is clean. It deliberately does not send another
-email: GitHub sent 30 and the premise of `xom7` is that nobody reads them. The
-three live badges at the top of `README.md` are the same state at the front
-door. Bean `ynu8`.
-
-Two things about that workflow are load-bearing rather than incidental. It
-checks out with `fetch-depth: 0`, because the `superseded` rule asks `git log`
-when a workflow file last changed and a shallow clone cannot answer — which
-would resurrect the false fires it exists to retire. And on "could not check"
-(exit 2) it leaves the tracking issue **untouched** and fails the job, rather
-than closing it: the watchdog going blind must not read as good news, and a red
-`ci-health.yml` is itself reported by next week's run.
-
-Complements `5rfy`, which fixed workflows that never *fire*. This is the
-opposite defect — one that fires constantly and fails every time.
+**Do not "fix" a dispatch-only workflow by dispatching it.** `qa-sweep` and
+`witness-refresh` fail by design in this repo: the first preflights on
+`content/package.json`, the second needs `folio-assistant/computations/`, and
+the platform carries no folio.
 
 ## Actors, roles and skills — a role is a swimlane
 
@@ -639,143 +531,22 @@ put 46 non-skills in the set, so `<folio:skill ref="viewer"/>` would have resolv
 
 ## Subagents with persistent memory (`.claude/agents/`)
 
-Two subagents are defined under [`.claude/agents/`](.claude/agents/), each
-carrying `memory: project` in its frontmatter. That gives the agent its own
-directory under `.claude/agent-memory/<agent-name>/`; the first 200 lines (or
-25 KB) of that directory's `MEMORY.md` are injected into the subagent's system
-prompt when it starts, and it reads and writes the directory as it works.
+Subagents declared under [`.claude/agents/`](.claude/agents/) carry
+`memory: project`, which gives each its own directory under
+`.claude/agent-memory/<agent-name>/` whose `MEMORY.md` is injected — **first 200
+lines only**, with the overflow dropped silently.
 
-| agent | owns |
-|---|---|
-| `platform-boundary-guard` | keeping folio specifics out of platform code; adapter-vs-profile; the qou↔platform split |
-| `ci-health-watcher` | whether a workflow is actually working on the default branch |
+**The discipline is in the skill, not here** —
+[`skills/folio-core/agent-memory.md`](skills/folio-core/agent-memory.md) carries
+the three entry labels and what each promises, why entries are authored as nodes
+under `skills/memory/` rather than in the generated file, the two ways the
+injection budget has to be checked, archiving as the third state between
+"reaches everybody" and "deleted", and why an entry is never re-homed into an
+agent that does not own its subject.
 
-Each `MEMORY.md` labels every entry as exactly one of:
-
-- **STABLE** — a path, a command, a rule. Trustworthy.
-- **TRAP** — a specific way the task goes wrong, with the evidence that
-  established it. The reason to have memory at all: every genericity failure
-  in this document was paid for once, and a TRAP is what stops it being paid
-  for twice.
-- **BASELINE** — a measured number, stored **with the command that produced it
-  and the date, and never quoted as a current answer.** `ci-health-watcher`'s
-  memory takes this furthest and holds no workflow state at all, because every
-  such number is a live signal that goes stale by design.
-
-**Maintaining them is part of the work.** A session that establishes a durable
-fact in one of these areas adds it as a TRAP in the same PR; a session that
-re-measures a BASELINE updates the entry with the fresh number and date. A
-memory file that only accretes becomes the thing it exists to prevent.
-
-### Entries are authored in `skills/memory/`, not in `MEMORY.md`
-
-**Edit the node, then run `bun run agent-memory`.** One entry per file under
-`skills/memory/`, carrying `$schema: folio-memory/v1`, a `label`, a `summary`
-and the agents it reaches. `bun run agent-memory:check` gates it in CI, so an
-entry edited and never assembled fails the build rather than quietly never
-reaching the agent.
-
-**`MEMORY.md` is generated — but only between its markers.** The tool writes
-between `<!-- folio:memory:begin -->` and `<!-- folio:memory:end -->` and
-touches nothing else, exactly as `readme-sections.ts` does. That is what keeps
-each file's `## Session log` intact: those are the agent's own running notes,
-and a whole-file regenerator would delete them. A file with no markers is
-reported as not opted in and left alone; it is never rewritten and never
-counted as up to date.
-
-**One entry can reach several agents, and that is the point.** Before this,
-a fact two agents needed had to be written into two files — measured
-2026-09-19, **3 subject areas** were (the document render path taking no TeX,
-adapter-vs-profile, and what the schema structurally cannot catch). 28 entries
-became 25 nodes.
-
-**A `baseline` without `measured` is refused by the schema.** The rule above
-was prose; it is now structural. It bit immediately and correctly: all three
-entries labelled BASELINE stored no number — they are tables of commands to
-RUN — so they were relabelled `stable`. A table of how to measure is a stable
-fact, not a measurement.
-
-**Retiring a subagent archives its memory; it does not delete it.** An entry
-carrying `archived: "true"` is a node of the graph that reaches no agent's
-prompt — the third state between "untagged, so reaches everybody" and "gone".
-`content-pipeline-navigator` was retired 2026-09-19 and **seven** of its twelve
-entries had no other reader, two of them TRAPs written by other sessions. The
-only remaining agent with a related subject was already at 189 of its 200
-lines, so there was nowhere to inject them; deleting them would have thrown
-away work somebody else paid for. Same discipline as a `scrapped` bean.
-
-**Archived is checked BEFORE the untagged rule**, and the ordering is
-load-bearing: an archived entry has no agent tag once its agent is gone, so
-checking it second hands it to every agent — the opposite of archiving.
-Measured while doing exactly that: two entries went untagged and pushed
-`platform-boundary-guard` 39 lines over budget, dropping one of its own TRAPs
-past the line the harness truncates at.
-
-**Both remaining subagents are now declared actors, and the role axis carries
-their memory.** `ci-health-watcher` takes `build-pipeline` and
-`validation-pipeline`; `platform-boundary-guard` takes **`code-reviewer`**,
-whose own description is close to a definition of it — *"the question is
-whether the NODE is sound — does it declare what it is, do its references
-resolve, is the mechanism it advertises the one that runs — which a passing
-test suite does not answer."* That is the failure this repo keeps paying for:
-`part-of:`, `$schema` under `skills/`, and `@graphNode` each landed as a
-requirement, and the files predating each one silently failed it while their
-tests passed.
-
-Measured after tagging: **every live entry carries a lane** — a `code-reviewer`
-lane sees 12, a `build-pipeline` lane sees 8, an unrelated lane sees 0. So the
-"untagged reaches everybody" escape hatch currently has **no instances**, which
-is worth knowing before adding one: an untagged entry now goes to every agent
-in a corpus where nothing else does.
-
-Generation still goes through the AGENT axis, so tagging a lane is additive and
-changes no `MEMORY.md` byte. Wiring the two together is the composition mistake
-the role model already paid for once.
-
-**Scoping is by agent today and that is transitional.** Memory is knowledge,
-and `AGENTS.md` puts knowledge in the lane, so it should scope by **role** —
-`memoryForRoles` exists for it. It is unused because the three memory-carrying
-subagents are **not declared actors**: `.claude/skills/actors/` holds 24
-participants and none of them is one.
-
-**That is a fact about the registry, not a reason to leave it alone — and an
-earlier version of this paragraph drew the wrong conclusion from it.** It said
-choosing their roles was "not something to guess, since inventing a role to
-absorb a tool is the failure `skill-in-role-or-process` is written not to
-force." For `ci-health-watcher` that is simply false, and checkable in one
-command: `roles.json` already carries **`build-pipeline`** (*"runs a fixed
-program and exercises no judgement"*) and **`validation-pipeline`** (*"the
-mechanical half of the HCI validation gate. Its findings are inputs to the
-editor's decision, never the decision"*), both `actorKind: "system"`, and
-`.claude/skills/actors/ci-pipeline.json` already takes both. A CI watcher is a
-mechanical role in the CI process; the lane was declared before the watcher
-was written.
-
-The judgement-free property is what makes those the *correct* home rather than
-a convenient one — and it is also why the other two are **not** settled by the
-same argument. A platform-boundary guard exercises judgement, which is the one
-thing a `system` lane excludes.
-
-**A watcher also has dispatch points, and they are process events.** It fires
-when a feature branch changes, and again when a change is approved for
-publication / merge to `main` — so they belong in a BPMN diagram under
-`skills/workflows/`, not in prose here. Bean `29ij`.
-
-**A `.md` under `skills/` that declares its own `$schema` is not a skill.** The
-`kg` directory's path is `skills/` and the audit walks it recursively, so
-without that rule all 25 memory nodes were audited as skills — measured, with
-25 bogus `kg-qa/` sidecars written beside them. Declaration over location, the
-same contract `part-of:` carries.
-
-`MEMORY.md` is the injected entry point, so keep it under 200 lines — the
-generator warns when a file passes it, because the harness silently drops the
-overflow. `memory: project` writes under `.claude/agent-memory/`, which is
-**committed**; `memory: local` writes under `.claude/agent-memory-local/`,
-gitignored, for anything per-machine.
-
-The agents defer to this file and to `skills/` as the source of truth. Memory
-summarises; the skill governs. Where the two disagree, the skill wins and the
-memory entry is wrong — fix it.
+**Maintaining them is part of the work**: a session that establishes a durable
+fact in an agent's area adds it in the same change. Memory summarises; the skill
+governs — where the two disagree, the skill wins and the memory entry is wrong.
 
 ## At session start
 
@@ -911,34 +682,18 @@ will assume the old lane's rules still hold.
 
 ## Working an issue — announce, then re-check
 
-Two rules, both about the gap between an agent's view of an issue and everyone
-else's.
+Two rules, both about the gap between your view of an issue and everyone
+else's: **announce the branch when you create it**, not when you finish, and
+**re-check the issue for new *and edited* comments while you work** — an edited
+comment keeps its id, and an edited requirement is a changed requirement.
+The discipline, the two marks to track, and the session that missed five
+owner comments in eighty-four minutes are in
+[`skills/folio-core/issue-working.md`](skills/folio-core/issue-working.md).
+It also carries what an issue is *for* against a PR and a bean, and the rule
+that an agent never closes one on its own say-so.
 
-**Announce the branch when you create it, not when you finish.** Comment on the
-issue with the branch name, the process and phase, and the beans claimed. Round
-summaries after the work lands are not a substitute: until the first one
-appears, a sibling session and a human both see an issue with nobody visibly on
-it. In the CRDM process this is `A_AnnounceBranch`, deliberately placed on the
-single edge from `BA_Signoff` into Phase 6 — the three loops back into
-`A_Implement` re-enter on the same branch, and re-announcing each time is noise.
-
-**Re-check the issue for new and edited comments while you work.** Checking once
-at session start is not checking. Track what you have already read in
-`.harness/issue-comments/<owner>-<repo>-<number>.json`
-(`src/issue-watch/seen-comments.ts`): a comment-id high-water mark plus the
-newest edit timestamp, because an edited comment keeps its id and an edited
-requirement is a changed requirement. With no stored mark everything counts as
-unseen — a fresh container has read nothing, and defaulting the other way is
-precisely how the comments that change direction get skipped.
-
-**When the new material is a large chunk of work, stop.** Do not fold it into
-the current run: say that this is a good stopping point for STAGING review, and
-confirm priorities before continuing.
-
-Measured, 2026-09-18: a session on #203 missed **five** owner comments between
-14:31 and 15:55 — including the one asking for this rule — while working, and
-found them only when the author typed "new comments". Every one of the five
-changed direction or added scope.
+In the CRDM process the announcement is `A_AnnounceBranch`, on the single edge
+into Phase 6.
 
 ## Commit early, commit often, always PR (STRICT)
 

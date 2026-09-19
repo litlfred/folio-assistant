@@ -55,6 +55,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Subagent memory](agent-memory.html) | `agent-memory` | — | A subagent declaring project memory gets its own directory; the first **200 |
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [bib-human-review](bib-human-review.html) | `bib-human-review` | — | Status sidecar: `content/schema/references.review.json`. |
@@ -63,6 +64,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Block Density](block-density.html) | `block-density` | — |  |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
+| [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [Code node review](code-node-review.html) | `code-node-review` | — |  |
 | [Compute Integration Watcher](compute-integration-watcher.html) | `compute-integration-watcher` | — |  |
 | [Content Graph](content-graph.html) | `content-graph` | — | cd content && python3 pipeline/content-graph-analysis.py |
@@ -91,6 +93,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
 | [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn), |
+| [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
 | [KG export](kg-export.html) | `kg-export` | — | **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph |
 | [Reading the knowledge graph](kg-navigation.html) | `kg-navigation` | — | You are in a fresh container. You have a task, a filesystem, and no memory of |
 | [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
@@ -112,6 +115,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Production vs exploratory vs numerology](production-vs-exploratory-discipline.html) | `production-vs-exploratory-discipline` | — | N_TRUNCATION = 5 |
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
 | [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
+| [A folio's README](readme-sections.html) | `readme-sections` | — | Two tools divide the file between them, and **between them no link in a folio |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn), |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
