@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T16:20:18.986Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/09c927d5f854b735289bc077c28023657b0620d2",
-  "sourceCommitSha": "09c927d5f854b735289bc077c28023657b0620d2",
-  "sourceCommitAt": "2026-09-19T16:17:27Z",
+  "generatedAt": "2026-09-19T16:27:13.260Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/54d005b108d8e0e161d53466bd75b6acbccf33e5",
+  "sourceCommitSha": "54d005b108d8e0e161d53466bd75b6acbccf33e5",
+  "sourceCommitAt": "2026-09-19T16:24:06Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 168,
@@ -262,7 +262,7 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 51,
+    "Schema": 52,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -19499,6 +19499,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tabular-records"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/test-run",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "test-run",
+      "title": "A TEST RUN — what was measured, with what, and whether it can be redone.",
+      "module": "schemas/test-run.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/test-run"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "theme",
@@ -20555,8 +20563,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "d35dd87830aaaf94f69286864e38cd81553337f7",
+    "sha": "c4a621ce3f204d3873c422b415d10b30f3639c18",
     "pr": "436/merge",
-    "run": "35454553154"
+    "run": "35454920991"
   }
 }
