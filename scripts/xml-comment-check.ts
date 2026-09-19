@@ -48,6 +48,8 @@
  * Exits 1 and names every offending file, line and text.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
+
+import { workflowDirs } from "./known-skills.js";
 import { join, relative, resolve } from "node:path";
 
 export interface CommentFinding {
@@ -112,14 +114,17 @@ export function xmlSourcesUnder(dir: string): string[] {
 
 if (import.meta.main) {
   const root = resolve(import.meta.dir, "..");
-  const dir = join(root, "skills", "workflows");
-  const files = xmlSourcesUnder(dir);
+  // Every directory the instance DECLARES as holding processes, not the
+  // literal `skills/workflows`. A topical layout puts them in several.
+  const dirs = workflowDirs(root);
+  const files = dirs.flatMap((d) => xmlSourcesUnder(d));
 
   // An empty corpus is not a pass. Renaming `skills/workflows/` would
   // otherwise turn this gate into a silent success over nothing, which is the
   // same "reported clean over what it never read" defect it exists to catch.
   if (files.length === 0) {
-    console.error(`No .bpmn or .dmn sources found under ${dir} — refusing to report a clean run.`);
+    const where = dirs.length > 0 ? dirs.join(", ") : "(no declared workflow directory)";
+    console.error(`No .bpmn or .dmn sources found under ${where} — refusing to report a clean run.`);
     process.exit(2);
   }
 
