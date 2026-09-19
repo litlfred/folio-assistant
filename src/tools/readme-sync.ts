@@ -64,7 +64,7 @@ export function registerReadmeSyncTools(server: McpServer): void {
     },
     async ({ check, only, link_style, fetch, dir }) => {
       try {
-        const result = runReadmeSync({
+        const result = await runReadmeSync({
           root: dir,
           check,
           only,
