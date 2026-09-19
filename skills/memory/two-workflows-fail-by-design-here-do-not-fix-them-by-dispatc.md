@@ -4,6 +4,9 @@ id: two-workflows-fail-by-design-here-do-not-fix-them-by-dispatc
 label: trap
 summary: "two workflows fail BY DESIGN here; do not \"fix\" them by dispatching"
 createdAt: 2026-09-19
+roles:
+  - build-pipeline
+  - validation-pipeline
 agents:
   - ci-health-watcher
 ---

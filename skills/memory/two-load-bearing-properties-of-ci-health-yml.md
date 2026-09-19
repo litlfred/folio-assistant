@@ -4,6 +4,9 @@ id: two-load-bearing-properties-of-ci-health-yml
 label: stable
 summary: "two load-bearing properties of `ci-health.yml`"
 createdAt: 2026-09-19
+roles:
+  - build-pipeline
+  - validation-pipeline
 agents:
   - ci-health-watcher
 ---

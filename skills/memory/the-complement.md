@@ -4,6 +4,9 @@ id: the-complement
 label: stable
 summary: "the complement"
 createdAt: 2026-09-19
+roles:
+  - build-pipeline
+  - validation-pipeline
 agents:
   - ci-health-watcher
 ---

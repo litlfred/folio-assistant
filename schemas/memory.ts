@@ -24,6 +24,19 @@
  * may DO and travels with them."* Memory is knowledge, so it belongs to the
  * lane.
  *
+ * **{@link memoryForRoles} is not dead code, and this comment briefly implied
+ * it was.** The lane for at least one of the three memory-carrying subagents
+ * is already declared: `ci-health-watcher` is a mechanical participant in the
+ * CI process, and `roles.json` carries `build-pipeline` and
+ * `validation-pipeline` — both `actorKind: "system"`, both described as
+ * running a fixed program and exercising no judgement — with the `ci-pipeline`
+ * actor already taking both. Owner, 2026-09-19: *"ci watchers are
+ * agents/mechanical roles that are part of the CI process."* Bean `29ij`.
+ *
+ * The judgement-free property is doing the work there, which is why it does
+ * NOT settle the other two: a platform-boundary guard exercises judgement, and
+ * a `system` lane excludes exactly that.
+ *
  * That is not a tidiness argument. Measured 2026-09-19 across
  * `.claude/agent-memory/`, by parsing all three files rather than reading
  * them: **28 entries over 3 agents, with 3 subject areas duplicated** between

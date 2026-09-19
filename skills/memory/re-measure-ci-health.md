@@ -4,6 +4,9 @@ id: re-measure-ci-health
 label: stable
 summary: "re-measure, always"
 createdAt: 2026-09-19
+roles:
+  - build-pipeline
+  - validation-pipeline
 agents:
   - ci-health-watcher
 ---

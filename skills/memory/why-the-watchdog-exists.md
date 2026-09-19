@@ -4,6 +4,9 @@ id: why-the-watchdog-exists
 label: stable
 summary: "why the watchdog exists"
 createdAt: 2026-09-19
+roles:
+  - build-pipeline
+  - validation-pipeline
 agents:
   - ci-health-watcher
 ---

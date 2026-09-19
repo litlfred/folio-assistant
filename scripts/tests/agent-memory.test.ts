@@ -11,7 +11,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { MemoryNodeSchema } from "../../schemas/memory.js";
+import { MemoryNodeSchema, memoryForRoles } from "../../schemas/memory.js";
 import {
   AGENT_MEMORY_DIR,
   BEGIN,
@@ -64,6 +64,36 @@ describe("the corpus", () => {
     // is memory that exists on disk and reaches nobody.
     for (const r of syncAll(false)) {
       expect({ agent: r.agent, over: r.lines > 200 }).toEqual({ agent: r.agent, over: false });
+    }
+  });
+});
+
+describe("the role axis discriminates — memoryForRoles is not dead code", () => {
+  test("a CI lane sees the CI entries; another lane does not", () => {
+    // The owner, 2026-09-19: "ci watchers are agents/mechanical roles that are
+    // part of the CI process." `roles.json` already carried `build-pipeline`
+    // and `validation-pipeline`, both `actorKind: "system"`, and the
+    // `ci-pipeline` actor already took both — so the lane was declared before
+    // the watcher was written, and an earlier comment of mine claiming no role
+    // fit was simply wrong. Bean `29ij`.
+    const nodes = readMemoryNodes();
+    const ci = memoryForRoles(nodes, ["build-pipeline"]);
+    const other = memoryForRoles(nodes, ["reviewer"]);
+    expect(ci.length).toBeGreaterThan(other.length);
+    // An untagged entry reaches everybody, so the difference is exactly the
+    // tagged ones -- not an assertion that other lanes see nothing.
+    expect(ci.length - other.length).toBe(
+      nodes.filter((n) => n.tags.roles.includes("build-pipeline")).length,
+    );
+  });
+
+  test("role tags do not change what an AGENT is handed", () => {
+    // Generation goes through `memoryForAgent`, so tagging a lane is additive
+    // and must not churn the generated files. If this breaks, the two axes
+    // have been wired together -- which is the composition mistake the role
+    // model already paid for once.
+    for (const r of syncAll(false)) {
+      expect({ agent: r.agent, state: r.state }).toEqual({ agent: r.agent, state: "unchanged" });
     }
   });
 });

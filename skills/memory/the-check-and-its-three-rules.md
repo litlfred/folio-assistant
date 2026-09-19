@@ -4,6 +4,9 @@ id: the-check-and-its-three-rules
 label: stable
 summary: "the check and its three rules"
 createdAt: 2026-09-19
+roles:
+  - build-pipeline
+  - validation-pipeline
 agents:
   - ci-health-watcher
 ---

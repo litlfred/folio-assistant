@@ -672,10 +672,31 @@ fact, not a measurement.
 **Scoping is by agent today and that is transitional.** Memory is knowledge,
 and `AGENTS.md` puts knowledge in the lane, so it should scope by **role** —
 `memoryForRoles` exists for it. It is unused because the three memory-carrying
-subagents are **not declared actors at all**: `.claude/skills/actors/` holds 24
-participants and none of them. Declaring them, and choosing their roles, is
-open work — not something to guess, since inventing a role to absorb a tool is
-the failure `skill-in-role-or-process` is written not to force.
+subagents are **not declared actors**: `.claude/skills/actors/` holds 24
+participants and none of them is one.
+
+**That is a fact about the registry, not a reason to leave it alone — and an
+earlier version of this paragraph drew the wrong conclusion from it.** It said
+choosing their roles was "not something to guess, since inventing a role to
+absorb a tool is the failure `skill-in-role-or-process` is written not to
+force." For `ci-health-watcher` that is simply false, and checkable in one
+command: `roles.json` already carries **`build-pipeline`** (*"runs a fixed
+program and exercises no judgement"*) and **`validation-pipeline`** (*"the
+mechanical half of the HCI validation gate. Its findings are inputs to the
+editor's decision, never the decision"*), both `actorKind: "system"`, and
+`.claude/skills/actors/ci-pipeline.json` already takes both. A CI watcher is a
+mechanical role in the CI process; the lane was declared before the watcher
+was written.
+
+The judgement-free property is what makes those the *correct* home rather than
+a convenient one — and it is also why the other two are **not** settled by the
+same argument. A platform-boundary guard exercises judgement, which is the one
+thing a `system` lane excludes.
+
+**A watcher also has dispatch points, and they are process events.** It fires
+when a feature branch changes, and again when a change is approved for
+publication / merge to `main` — so they belong in a BPMN diagram under
+`skills/workflows/`, not in prose here. Bean `29ij`.
 
 **A `.md` under `skills/` that declares its own `$schema` is not a skill.** The
 `kg` directory's path is `skills/` and the audit walks it recursively, so
