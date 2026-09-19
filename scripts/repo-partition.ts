@@ -196,6 +196,9 @@ const RULES: Rule[] = [
       // server actually serves, the other refuses a `.bpmn`/`.dmn` whose
       // comments are not well-formed XML.
       "scripts/capture-mcp-tools.ts",
+      // The knowledge-graph viewer's generator — KG tooling, arrived from
+      // `main` and fell through every prefix.
+      "scripts/kg-viewer.ts",
       "scripts/xml-comment-check.ts",
 
       // `adapters/mcp-server/` was claimed wholesale by the harness prefix
