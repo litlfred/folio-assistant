@@ -353,7 +353,14 @@ function main(): void {
   for (const group of GROUPS) {
     indexRows[group.category] = [];
     if (!existsSync(group.dir)) continue;
-    const files = readdirSync(group.dir).filter((f) => f.endsWith(".md")).sort();
+    // `isSkillMd`, not a bare `.md` test — the FOURTH place in this repository
+    // that predicate was spelled out by hand, and the second in this file.
+    // Without it `bootstrap/README.md` was published as a skill instruction
+    // page titled "bootstrap", complete with an "edit this page's source"
+    // link, for a file that is not a skill.
+    const files = readdirSync(group.dir)
+      .filter((f) => f.endsWith(".md") && isSkillMd(join(group.dir, f)))
+      .sort();
 
     for (const file of files) {
       const name = basename(file, ".md");

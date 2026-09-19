@@ -210,7 +210,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [bootstrap](README.html) | `README` | — | **You have just been pointed at a repository and know nothing about it.** This |
 | [Determining intent](determine-intent.html) | `determine-intent` | — | > Skill id: `determine-intent` · Package: `bootstrap` |
 | [kg-navigation](kg-navigation.html) | `kg-navigation` | — | _also in Platform core (folio-core) (same page)_ |
 
