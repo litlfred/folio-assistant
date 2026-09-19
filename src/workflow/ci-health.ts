@@ -72,6 +72,36 @@ export interface WorkflowHealth {
   supersededBy?: string;
   /** `.github/workflows/x.yml`, carried through for the reader. */
   path?: string;
+  /**
+   * The newest run is **not** the one this verdict came from — it is still in
+   * flight, or it ended in a non-verdict (`cancelled`, `skipped`, `neutral`).
+   *
+   * Set whenever `runs[0]` is not `settled[0]`, and it is the difference
+   * between a trend and an answer. `health` describes the newest *settled*
+   * run, which can be older than the commit in front of the reader; when this
+   * is set, that verdict says nothing about the head.
+   *
+   * Measured 2026-09-19, bean `gpuu`. `main` took a merge at 02:39 that broke
+   * `kg:audit:check`; a run of this check a minute later printed three green
+   * rows, because the run for the breaking commit had not settled and the
+   * previous green was reported as current. An agent then wrote "`main` is not
+   * red" into a pull request body on that basis, and flagged the PR that was
+   * fixing it as mistaken. Both claims merged.
+   *
+   * This is the same class as the three rules this module already carries —
+   * "could not check" is never green, a week-old red is flagged stale, a
+   * superseded red is named as superseded. All exist so uncertainty never
+   * renders as green. An unsettled newest run was the one uncertainty left
+   * uncovered, in a module written for bean `xom7`: a red workflow that looked
+   * green from inside the repo.
+   *
+   * It is deliberately **not** folded into `health`. The existing `running`
+   * state means "nothing has settled at all", and overloading it would erase
+   * the trend — a workflow red for six runs with a seventh in flight is still
+   * red, and a reader needs both facts. So the verdict stays a verdict and
+   * this says what it does not cover.
+   */
+  newestUnsettled?: boolean;
 }
 
 /** Conclusions that are not a pass but are also not the workflow's fault. */
@@ -108,6 +138,12 @@ export function classifyRuns(runs: RunSummary[], now = new Date()): Omit<Workflo
     ? Math.floor((now.getTime() - new Date(runs[0].created_at).getTime()) / 86_400_000)
     : undefined;
 
+  // The verdict above is computed from `settled`. When the newest run is not
+  // the newest settled one, the verdict is about an older commit and must say
+  // so — see `newestUnsettled`. `health === "running"` already covers the case
+  // where nothing has settled at all, so exclude it rather than report both.
+  const newestUnsettled = runs.length > 0 && settled[0] !== runs[0] && health !== "running";
+
   return {
     health,
     consecutiveFailures,
@@ -116,6 +152,7 @@ export function classifyRuns(runs: RunSummary[], now = new Date()): Omit<Workflo
     daysSinceLastRun,
     lastRun: runs[0]?.created_at,
     latestUrl: runs[0]?.html_url,
+    ...(newestUnsettled ? { newestUnsettled: true } : {}),
   };
 }
 
@@ -253,9 +290,27 @@ export function render(
     );
   }
 
+  // A workflow whose newest run has not settled is reported by name, above the
+  // summary, because the summary is the line a reader takes away. Saying
+  // "every workflow is green" while a run is in flight over the commit they
+  // are looking at is the exact sentence bean `gpuu` was opened for.
+  const pending = health.filter((h) => h.newestUnsettled);
+  for (const h of pending) {
+    lines.push(
+      `- ⏳ **${h.workflow}** — newest run has not reported; the ${h.health} below ` +
+        `is the last settled verdict and may predate the current head.` +
+        (h.latestUrl ? `\n      ${h.latestUrl}` : ""),
+    );
+  }
+
   const ok = health.filter((h) => h.health !== "red" && h.health !== "superseded");
-  if (red.length === 0 && superseded.length === 0) {
+  if (red.length === 0 && superseded.length === 0 && pending.length === 0) {
     lines.push(`✓ every workflow with a recent run on \`${opts.branch}\` is green (${ok.length}).`);
+  } else if (red.length === 0 && superseded.length === 0) {
+    lines.push(
+      `_(no settled failures; ${pending.length} workflow(s) still reporting. ` +
+        `Not "all green" — the head has not been judged.)_`,
+    );
   } else if (red.length === 0) {
     // Not "all green" — that would be the lie this module exists to prevent.
     lines.push("", `_(no live failures; ${ok.length} workflow(s) green.)_`);
