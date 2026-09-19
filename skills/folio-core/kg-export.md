@@ -60,61 +60,42 @@ ordinary records for someone who does not know JSON-LD.
 
 **5. Every property name in `@graph` is declared in `@context`, and the export
 FAILS if one is not.** A name that is neither declared nor an absolute IRI is
-not a property: a processor drops it. Measured before bean `ovkk`: 19 declared
-terms against 53 used, so **34 names and 3583 occurrences** disappeared the
-moment anything treated the document as the JSON-LD it says it is — and reading
-it as plain JSON showed every one of them, which is why it went unnoticed for
+not a property: a processor drops it. Measured before bean `ovkk`, 19 declared
+terms against 53 used — **34 names, 3583 occurrences**, every one of them
+visible when the file is read as plain JSON, which is why it went unnoticed for
 as long as the document had no consumer.
 
-## Declaring a term is a decision, and there are three of them
+## Declaring a term is a decision, not a line of context
 
-Not thirty-four lines of context. For each property, in this order:
+Four questions, in this order. The worked call for each term is in
+`buildContext()`, beside the term it justifies.
 
-**Does the fact belong in the graph at all?** Five of the thirty-four were
-DENORMALISED copies of links already present — `implementsSkillNames` beside
-`implementedBy`, `satisfiesSkillNames` beside `satisfies`, `graphKinds` beside
-`holdsGraph`, `packagePaths` beside `inPackage`, `laneName` beside
-`performedBy`. Each was removed rather than declared, once its link form was
-shown to resolve for every node. **A name carried beside the link that reaches
-it is a second answer that can go stale**; following a link and reading the
-target's label is traversal, which is what a graph is for. What a consumer must
-never have to do is recover a fact by splitting an IRI.
-
-**Is it a LINK or a literal?** Getting this wrong is worse than leaving the term
-undeclared, because it produces confidently wrong data rather than absent data.
-Under `{"@type": "@id"}` the value must already BE an IRI: a bare name like
-`git-push` resolves against the document base and silently becomes
-`<base>/git-push`, which nobody minted and nothing serves. So an actor's
-`capabilities` became `hasCapability` **and** the collector mints each value
-with `makeIri`, because all 20 land on a Capability node in this document.
-A repo-relative path (`instructionsPath`, `sourcePath`, `maintainsFrom`) stays a
-literal for the same reason in reverse — it is not dereferenceable.
-
-**Does the referent exist in this graph?** An actor's `roles` and `permissions`
-stayed literals — `roleName`, `permissionName` — because `skills/roles/roles.json`
-and `skills/permissions/permissions.json` are **not collected** and the Role
-nodes that do exist are BPMN lanes under different names, so coercing would have
-minted 65 IRIs resolving to nothing. Same call for `decisionRef`: no Decision
-nodes, so it names a table rather than linking to one. Each becomes a link on
-the day its referent becomes a node — which is the useful residue to record, and
-not a reason to assert the edge early.
-
-**One name over two relations is two terms.** `source` carried a `.bpmn` path on
-a Process and the string `bpmn-lane` on a lane-derived Role; one declaration
-would have asserted that `bpmn-lane` is a file, so it is `sourcePath` and
-`sourceKind`. `requires` carried capability ids on a Capability and
-`{ runtime, network }` on a Tool: `requiresCapability` (link) and `requirements`
-(`@json`). Contrast `install`, which is heterogeneous — a command string from a
-Capability, a dispatch object from a Tool — but is the SAME relation, so it
-stays one term.
-
-**A structured value whose vocabulary this graph does not model is `@json`.**
-`io`, `invoke`, `install`, `detection`, `meta`, `assignments`, `requirements`
-are kept verbatim as JSON-LD 1.1 `rdf:JSON` literals. Declaring the container
-term alone would be **worse than leaving it undeclared**: the outer key
-survives, every inner key is dropped, and the consumer gets a well-formed empty
-node where a Tool's I/O contract used to be, with nothing saying anything was
-lost.
+1. **Does the fact belong in the graph at all?** Five of the thirty-four were
+   DENORMALISED copies of links already present — `implementsSkillNames`,
+   `satisfiesSkillNames`, `graphKinds`, `packagePaths`, `laneName`. Removed
+   rather than declared, once every one of those links was shown to resolve for
+   every node. A name beside the link that reaches it is a second answer that
+   can go stale; what a consumer must never have to do is recover a fact by
+   splitting an IRI.
+2. **Is it a LINK or a literal?** Wrong here is worse than undeclared —
+   confidently wrong rather than absent. Under `{"@type": "@id"}` the value
+   must already BE an IRI: a bare `git-push` resolves against the document base
+   to `<base>/git-push`, which nobody minted and nothing serves. So
+   `hasCapability` mints its values with `makeIri`, and a repo-relative path
+   (`instructionsPath`, `sourcePath`, `maintainsFrom`) stays a literal for the
+   reverse reason.
+3. **Does the referent exist in this graph?** `roleName`, `permissionName` and
+   `decisionRef` stayed names: the role registry, the permission vocabulary and
+   the DMN tables are not collected, so 69 coerced IRIs would have resolved to
+   nothing. Each becomes a link the day its referent becomes a node — residue
+   worth recording, not a reason to assert the edge early.
+4. **Is one name carrying two relations?** Then it is two terms: `source` was a
+   `.bpmn` path on a Process and `bpmn-lane` on a lane-derived Role, so it is
+   `sourcePath` and `sourceKind`. Heterogeneous SHAPE under one relation is a
+   different case — `install` is a command string from a Capability and a
+   dispatch object from a Tool, and stays one term typed `@json`, because
+   declaring a container term alone keeps the outer key and drops every inner
+   one.
 
 **No `canonicalUrl` and no `--base-url` → no absolute IRIs**, reported in
 `problems[]` rather than papered over. A fabricated absolute base is the same
