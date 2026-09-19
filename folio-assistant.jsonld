@@ -225,10 +225,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T08:26:41.727Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a410001f4459e2dbdeabc535a14ae894155f7ad9",
-  "sourceCommitSha": "a410001f4459e2dbdeabc535a14ae894155f7ad9",
-  "sourceCommitAt": "2026-09-19T10:25:17+02:00",
+  "generatedAt": "2026-09-19T08:42:37.626Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/15f7f70fbbbb094cf0b517d356a51b73184c7a76",
+  "sourceCommitSha": "15f7f70fbbbb094cf0b517d356a51b73184c7a76",
+  "sourceCommitAt": "2026-09-19T10:41:12+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 150,
@@ -241,8 +241,8 @@
     "ProcessNode": 387,
     "Tool": 27,
     "Schema": 39,
-    "GraphKind": 14,
-    "Directory": 9
+    "GraphKind": 15,
+    "Directory": 10
   },
   "@graph": [
     {
@@ -1064,7 +1064,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 423,
+      "instructionLines": 448,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1330,7 +1330,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/translation-manager.md",
-      "instructionLines": 446,
+      "instructionLines": 583,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1406,7 +1406,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 375,
+      "instructionLines": 392,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true
@@ -1596,7 +1596,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 145,
+      "instructionLines": 164,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1626,7 +1626,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge-auto.md",
-      "instructionLines": 172,
+      "instructionLines": 175,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -16787,6 +16787,14 @@
       "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/translation-sources",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
+      "name": "translation-sources",
+      "typeIri": "https://litlfred.github.io/folio-assistant/ns#TranslationSourceGraph",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/folio",
       "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
       "name": "folio",
@@ -16884,12 +16892,22 @@
         "https://litlfred.github.io/folio-assistant/ns#graphKind/voices"
       ],
       "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208)."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/translation-sources",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
+      "name": "translation-sources",
+      "path": "translations/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/translation-sources"
+      ],
+      "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned."
     }
   ],
   "staging": {
     "branch": "main",
-    "sha": "a410001f4459e2dbdeabc535a14ae894155f7ad9",
+    "sha": "15f7f70fbbbb094cf0b517d356a51b73184c7a76",
     "pr": "main",
-    "run": "35431952195"
+    "run": "35432665545"
   }
 }
