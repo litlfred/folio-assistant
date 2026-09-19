@@ -705,7 +705,11 @@ bun run beans:claim &lt;bean-id&gt; <span class="nt">--dry-run</span>    <span c
 </code></pre></div></div>
 
 <p>It is a <strong>claim only</strong> — never your work, which is the point: a claim bundled
-with work cannot be pushed until the work is ready. It builds the commit in a
+with work cannot be pushed until the work is ready. It does write the same
+status into <strong>your</strong> copy of the bean, and that is correctness rather than
+convenience: the claim lands on the default branch, so a branch still carrying
+<code class="language-plaintext highlighter-rouge">todo</code> would <strong>revert it at merge time</strong> as an ordinary content change. It does
+not commit that — what to commit and when is yours. It builds the commit in a
 detached <code class="language-plaintext highlighter-rouge">git worktree</code>, so a session mid-edit is not asked to accept a checkout,
 and removes it on every path including failure.</p>
 
@@ -881,7 +885,7 @@ beans (see todo-manager.md disambiguation block).</li>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35441128709"><code>98144b5</code></a> &middot; 2026-09-19T11:49:34Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35441565321"><code>150e4b2</code></a> &middot; 2026-09-19T11:59:44Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
