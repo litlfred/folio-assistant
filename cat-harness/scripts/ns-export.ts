@@ -40,7 +40,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
+import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
 import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer } from "../schemas/namespaces.js";
 import { CLASS_GLOSSES, PROPERTY_GLOSSES, type TermGloss, type TermLayer } from "../schemas/vocabulary.js";
 
@@ -260,7 +260,14 @@ if (import.meta.main) {
     process.exit(2);
   }
   const outIdx = argv.indexOf("--out");
-  const out = outIdx >= 0 ? argv[outIdx + 1] : join(ROOT, layer ? `_kg/ns-${layer}.jsonld` : "_kg/ns.jsonld");
+  // `repoRootFor`: `_kg/` is a repository build output, not an instance one.
+  // Spelled `_kg/ns.jsonld` as ONE segment rather than `"_kg", "ns.jsonld"`,
+  // which is why the grep that found the other four defaults missed this one —
+  // a reminder that a scan for a path is a scan for a spelling.
+  const out =
+    outIdx >= 0
+      ? argv[outIdx + 1]
+      : join(repoRootFor(ROOT), layer ? `_kg/ns-${layer}.jsonld` : "_kg/ns.jsonld");
 
   const { doc, report } = buildVocabulary(ROOT, layer, argv.includes("--exact"));
 

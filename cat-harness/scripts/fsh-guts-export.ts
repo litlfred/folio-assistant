@@ -43,8 +43,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import {
   artefactStub,
   readDeclaration,
-  resolveDirectories,
-} from "../schemas/cat-harness.js";
+  resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
 import { readFshGutsNode } from "../schemas/fsh-guts.js";
 
@@ -198,7 +197,14 @@ if (import.meta.main) {
     return i >= 0 ? argv[i + 1] : undefined;
   };
   const doc = buildFshGutsExport(ROOT, arg("--base-url"));
-  const out = arg("--out") ?? join(ROOT, "_kg", "fsh-guts.jsonld");
+  // `_kg/` is a REPOSITORY build output — gitignored at the repository root,
+  // beside `node_modules/`, `_site/` and `test-results/`, and read from there
+  // by the e2e specs and `test-server.mjs`, both of which run at that root.
+  // `ROOT` became the INSTANCE root with the move (bean `wggr`), so this
+  // default started writing `cat-harness/_kg/` while every reader still looked
+  // one level up — and the stale pre-move copy at the old path made it look
+  // fine locally.
+const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", "fsh-guts.jsonld");
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, `${JSON.stringify(doc, null, 2)}\n`, "utf-8");
 

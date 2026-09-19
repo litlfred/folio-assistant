@@ -1714,7 +1714,14 @@ if (import.meta.main) {
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
   // is what tells a fetcher to treat it as one.
-  const out = arg("--out") ?? join(ROOT, "_kg", `${stub}.jsonld`);
+  // `_kg/` is a REPOSITORY build output — gitignored at the repository root,
+  // beside `node_modules/`, `_site/` and `test-results/`, and read from there
+  // by the e2e specs and `test-server.mjs`, both of which run at that root.
+  // `ROOT` became the INSTANCE root with the move (bean `wggr`), so this
+  // default started writing `cat-harness/_kg/` while every reader still looked
+  // one level up — and the stale pre-move copy at the old path made it look
+  // fine locally.
+const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   const data = await buildExport({ baseUrl });
 
   mkdirSync(dirname(out), { recursive: true });

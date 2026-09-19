@@ -78,6 +78,7 @@ import { fileURLToPath } from "node:url";
 
 import { exportIdentity } from "./kg-export.js";
 import { UI_STRINGS, loadCatalogues, type LocaleCatalogue } from "./kg-viewer-strings.js";
+import { repoRootFor } from "../schemas/cat-harness.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -947,7 +948,14 @@ if (import.meta.main) {
     return i !== -1 ? process.argv[i + 1] : undefined;
   };
   const { stub } = exportIdentity({ baseUrl: arg("--base-url") ?? process.env.KG_BASE_URL });
-  const out = arg("--out") ?? join(ROOT, "_kg", stub, "index.html");
+  // `_kg/` is a REPOSITORY build output — gitignored at the repository root,
+  // beside `node_modules/`, `_site/` and `test-results/`, and read from there
+  // by the e2e specs and `test-server.mjs`, both of which run at that root.
+  // `ROOT` became the INSTANCE root with the move (bean `wggr`), so this
+  // default started writing `cat-harness/_kg/` while every reader still looked
+  // one level up — and the stale pre-move copy at the old path made it look
+  // fine locally.
+const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", stub, "index.html");
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, viewerHtml(stub));
   console.log(`KG viewer → ${relative(ROOT, out)}\n  reads  ../${stub}.jsonld  (parent, resolved at load)`);

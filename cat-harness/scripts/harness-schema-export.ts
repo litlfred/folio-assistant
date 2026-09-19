@@ -407,7 +407,14 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  const outDir = arg("--out-dir") ?? join(ROOT, "_kg");
+  // `_kg/` is a REPOSITORY build output — gitignored at the repository root,
+  // beside `node_modules/`, `_site/` and `test-results/`, and read from there
+  // by the e2e specs and `test-server.mjs`, both of which run at that root.
+  // `ROOT` became the INSTANCE root with the move (bean `wggr`), so this
+  // default started writing `cat-harness/_kg/` while every reader still looked
+  // one level up — and the stale pre-move copy at the old path made it look
+  // fine locally.
+const outDir = arg("--out-dir") ?? join(repoRootFor(ROOT), "_kg");
   mkdirSync(outDir, { recursive: true });
 
   // Which build wrote these. Stamped at WRITE time, not in the builders: the
