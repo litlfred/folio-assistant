@@ -64,41 +64,76 @@ const CORPUS_JSON = readFileSync(
  * so the hash and witness the assertions name are the generator's own output
  * rather than invented values.
  */
+/** The criterion this spec drives, named once so both fixtures agree. */
+const LOUD_ID = "voice-status-leak";
+
+interface Witness {
+  kind: string;
+  freshness: string;
+  changed?: string[];
+}
+interface Criterion {
+  id: string;
+  result: string;
+  severity?: string;
+  evidence?: string[];
+  witnesses: Witness[];
+}
+interface Sidecar {
+  state: string;
+  counts: Record<string, number>;
+  criteria: Criterion[];
+}
+
+/**
+ * The one criterion under test, located BY ID rather than by position.
+ *
+ * Two things follow from that and neither is cosmetic.
+ *
+ * **Its witness stays the corpus's own.** The alternative is writing the
+ * criterion out as a literal — id, evidence, and a witness carrying
+ * `scriptHash: "5af6856733f3"`. That hash is the thing test 2 asserts, so a
+ * frozen copy keeps passing after the voice checker changes, asserting a value
+ * the corpus no longer holds. A fixture drifting from the corpus is the exact
+ * defect this whole section exists to fix; it must not be reintroduced one
+ * field down.
+ *
+ * **A criterion that has LEFT the corpus is a different change from one that
+ * was adjudicated**, so it throws by name instead of reading as a pass.
+ */
+function loudCriterion(doc: Sidecar): Criterion {
+  const c = doc.criteria.find((x) => x.id === LOUD_ID);
+  if (!c) throw new Error(`${LOUD_ID} is no longer in the block sidecar`);
+  return c;
+}
+
 const BLOCK_JSON = (() => {
-  const doc = JSON.parse(CORPUS_JSON) as {
-    state: string;
-    counts: Record<string, number>;
-    criteria: Array<Record<string, unknown>>;
-  };
-  // Replace the first criterion rather than appending: the panel sorts
-  // worst-first itself, so a row appended at the end still has to be hoisted,
-  // which is the behaviour under test.
-  doc.criteria[0] = {
-    id: "voice-status-leak",
-    result: "fail",
-    severity: "critical",
-    evidence: [
-      "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
-    ],
-    witnesses: [
-      {
-        kind: "script",
-        id: "content/pipeline/qa-checkers-voice.ts",
-        version: "v1",
-        at: "2026-09-18T20:37:32.525Z",
-        sha: "49978409e8e51e42ce6400a99f424c9f99095326",
-        scriptHash: "5af6856733f3",
-        scriptCommitSha: "e3beb66d17f43a20564671e34ffb167ca016b11c",
-        freshness: "fresh",
-      },
-    ],
-  };
+  const doc = JSON.parse(CORPUS_JSON) as Sidecar;
+  const c = loudCriterion(doc);
+
+  // FLIPPED WHERE IT SITS — criterion 19 of 48 — rather than hoisted to 0.
+  //
+  // This is what makes "worst criterion first" an assertion about the panel.
+  // Put the failure at index 0 and the row the spec reads is the first row in
+  // DOCUMENT order, so a panel that sorted nothing at all would pass; that is
+  // precisely how the original verbatim fixture managed to assert nothing here.
+  // Left in place, the row has to be lifted past nineteen quiet ones.
+  c.result = "fail";
+  c.severity = "critical";
+  c.evidence = [
+    "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
+  ];
+  // The script verdict alone. The agent witness that overturned it IS the
+  // adjudication, and a criterion shown as failing has not been adjudicated
+  // yet — keeping both would render a panel no sweep ever produced.
+  c.witnesses = c.witnesses.filter((w) => w.kind === "script");
+
   doc.state = "fail";
   doc.counts = {
     fail: 1,
     warn: 0,
-    pass: doc.criteria.filter((c) => c.result === "pass").length,
-    na: doc.criteria.filter((c) => c.result === "n/a").length,
+    pass: doc.criteria.filter((x) => x.result === "pass").length,
+    na: doc.criteria.filter((x) => x.result === "n/a").length,
     unknown: 0,
   };
   return JSON.stringify(doc);
@@ -126,10 +161,13 @@ const FOLDED_COUNT = (JSON.parse(BLOCK_JSON) as { criteria: unknown[] }).criteri
  * runs.
  */
 const STALE_JSON = (() => {
-  const doc = JSON.parse(BLOCK_JSON) as {
-    criteria: Array<{ witnesses: Array<{ freshness: string; changed?: string[] }> }>;
-  };
-  const w = doc.criteria[0]!.witnesses[0]!;
+  const doc = JSON.parse(BLOCK_JSON) as Sidecar;
+  // BY ID, like the fixture above. Marking `criteria[0]` worked only while the
+  // failure was forced to sit there; the spec clicks the first RENDERED row,
+  // which is the loud one wherever it lives in the document. Index and render
+  // order coinciding is what let this test pass earlier while asserting a
+  // stale badge on a row it had never marked.
+  const w = loudCriterion(doc).witnesses[0]!;
   w.freshness = "stale";
   w.changed = ["md"];
   return JSON.stringify(doc);
@@ -164,7 +202,7 @@ const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   <h1>Harness</h1>
   <h2 id="node-a">A block node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
-     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/block.json", "Content QA: 1 fail, 0 warn, 22 pass, 25 n/a — open for witnesses")}</span></p>
+     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/block.json", "Content QA: 1 fail, 0 warn, 21 pass, 26 n/a — open for witnesses")}</span></p>
   <p>Narrative of the block.</p>
   <h2 id="node-b">A diagram node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
