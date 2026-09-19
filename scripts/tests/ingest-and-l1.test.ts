@@ -73,7 +73,17 @@ function entry(over: Partial<Record<"structure" | "manifest", unknown>> = {}, op
   mkdirSync(join(dir, "sections"), { recursive: true });
   mkdirSync(join(dir, "blocks"), { recursive: true });
   for (let i = 0; i < (opts.sections ?? 2); i++) writeFileSync(join(dir, "sections", `s${i}.md`), "x");
-  for (let i = 0; i < (opts.blocks ?? 1); i++) writeFileSync(join(dir, "blocks", `b${i}.json`), "{}");
+  // `.jsonld` with a real `kind` and `provenance`, because that is what
+  // `gen-library-jsonld.ts` writes and what `narrative-provenance` reads. The
+  // fixture used to write `b0.json` containing `{}`, which satisfied a
+  // file-COUNT requirement and nothing else — fine until a requirement looked
+  // inside, which is an argument for fixtures that resemble the artefact.
+  for (let i = 0; i < (opts.blocks ?? 1); i++) {
+    writeFileSync(
+      join(dir, "blocks", `b${i}.jsonld`),
+      JSON.stringify({ "@id": `b${i}`, kind: "prose", provenance: "ingested" }),
+    );
+  }
   writeFileSync(
     join(dir, "structure.json"),
     JSON.stringify(

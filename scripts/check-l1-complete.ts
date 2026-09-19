@@ -45,6 +45,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { LIBRARY_BLOCK_ORIGIN, ProvenanceSchema, isIngested } from "../schemas/attribution.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
@@ -115,6 +116,79 @@ function derivableRequirements(dir: string): Requirement[] {
       state: n > 0 ? "met" : "unmet",
       detail: n < 0 ? `no ${rel}/ directory` : `${n} files`,
     });
+  }
+
+  // Narrative provenance (bean `iqim`).
+  //
+  // Every block declares how its text came to be: the literal `"ingested"` for
+  // verbatim source text, which has no author, or an `Attribution` naming the
+  // human, agent (with its model) or script that wrote it.
+  //
+  // TWO failures are checked, and the second is the one that matters.
+  //
+  //   1. A `provenance` that is neither — an open string, a malformed
+  //      attribution, an `agent` with no `model`. `ProvenanceSchema` decides,
+  //      so the gate and the type cannot drift apart.
+  //   2. A block of an AUTHORED kind carrying `"ingested"`. That is a false
+  //      statement about verbatim extraction, and it is what stops a narrative
+  //      arm landing descriptions with no attribution: closing the union means
+  //      a new arm has to choose rather than omit.
+  //
+  // The narrative COUNT is reported either way, including a determined zero.
+  // "No narrative blocks here" and "the classifier never ran" are different
+  // facts, and a gate that renders them the same way is the failure this
+  // repository keeps paying for. Today every one of the 424 blocks is
+  // extracted prose, so the count is a real zero — and the authored branch is
+  // proved to fire by a fixture in `scripts/tests/attribution.test.ts`, not by
+  // the corpus.
+  {
+    const bdir = join(dir, "blocks");
+    const files = has("blocks") && statSync(bdir).isDirectory()
+      ? readdirSync(bdir).filter((f) => f.endsWith(".jsonld"))
+      : [];
+    if (files.length === 0) {
+      out.push({
+        name: "narrative-provenance",
+        state: "unmet",
+        detail: "no blocks to attribute — see the `blocks` requirement",
+      });
+    } else {
+      const bad: string[] = [];
+      let narrative = 0;
+      let unclassified = 0;
+      for (const f of files) {
+        let b: Record<string, unknown>;
+        try {
+          b = JSON.parse(readFileSync(join(bdir, f), "utf-8")) as Record<string, unknown>;
+        } catch {
+          bad.push(`${f}: unparseable`);
+          continue;
+        }
+        const kind = typeof b.kind === "string" ? b.kind : "";
+        const origin = LIBRARY_BLOCK_ORIGIN[kind];
+        if (origin === undefined) {
+          unclassified++;
+          bad.push(`${f}: kind \`${kind || "(absent)"}\` is not classified in LIBRARY_BLOCK_ORIGIN`);
+          continue;
+        }
+        if (!ProvenanceSchema.safeParse(b.provenance).success) {
+          bad.push(`${f}: \`provenance\` is neither "ingested" nor a well-formed attribution`);
+          continue;
+        }
+        if (origin === "authored") {
+          narrative++;
+          if (isIngested(b.provenance)) {
+            bad.push(`${f}: kind \`${kind}\` is authored, but claims "ingested" — nobody is credited`);
+          }
+        }
+      }
+      const tally = `${files.length} block(s), ${narrative} narrative, ${unclassified} unclassified kind(s)`;
+      out.push({
+        name: "narrative-provenance",
+        state: bad.length ? "unmet" : "met",
+        detail: bad.length ? `${bad.length} of ${files.length}: ${bad.slice(0, 3).join("; ")}` : tally,
+      });
+    }
   }
 
   // Technical metadata (bean `nso8`) — moved out of NOT-DERIVABLE once both
@@ -193,7 +267,6 @@ export const NOT_DERIVABLE: ReadonlyArray<readonly [string, string]> = [
   ["image-descriptions", "d5f1"],
   ["audio-transcripts", "1r0p"],
   ["tabular-records", "p67i"],
-  ["narrative-provenance", "iqim"],
 ];
 
 export function checkEntry(dir: string): EntryReport {

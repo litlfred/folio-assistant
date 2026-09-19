@@ -22,6 +22,7 @@
 
 import { CONTENT_PROFILES } from "./block-kinds";
 
+import type { AttributionKind } from "./attribution";
 import type { ContentAdapter, ContentProfile } from "./block-kinds";
 
 /**
@@ -34,9 +35,13 @@ import type { ContentAdapter, ContentProfile } from "./block-kinds";
  *   model + skill that called it.
  * - `human`: the repo owner (or a human collaborator) adjudicated.
  *   Final authority. `id` is the GitHub login.
+ *
+ * Re-exported from {@link module:schemas/attribution}, which owns the
+ * vocabulary: the same three participants author narrative content (bean
+ * `iqim`), and two spellings of one set is what `rlp5` records the cost of.
  */
-export const QA_REVIEWER_KINDS = ["script", "agent", "human"] as const;
-export type QaReviewerKind = (typeof QA_REVIEWER_KINDS)[number];
+export { ATTRIBUTION_KINDS as QA_REVIEWER_KINDS } from "./attribution";
+export type QaReviewerKind = AttributionKind;
 
 /**
  * Identity + provenance of a single QA reviewer entry.

@@ -115,6 +115,52 @@ entry. It **reads the indent off the file** rather than choosing one: the two
 rungs write at different widths, and hardcoding either reformats every entry
 the other authored — measured at 4 349 changed lines to add three fields.
 
+## `provenance` — who wrote it, and the closed union that makes omission impossible
+
+Every block declares how its text came to be. The vocabulary is
+`schemas/attribution.ts`, and it is **closed**:
+
+- the literal `"ingested"` — verbatim source text. There is no author to name;
+  the document it came out of is recorded by `source{}` above.
+- an `Attribution` — `kind` (`script | agent | human`), `id`, and optionally
+  `version`, `model`, `session`, `date`, `skill`.
+
+**An `agent` must name its `model`, structurally.** A narrative is a claim by
+somebody, and the difference between "a curator described this figure" and "a
+model described it, version X" is exactly what a reader needs in order to weigh
+it — and what makes the set re-generatable when that model is superseded. An
+agent attribution with no model records that a machine wrote it while losing
+the only part anyone can act on, so `AttributionSchema` refuses it.
+
+**The vocabulary is the QA reviewer's, not a second one.** `block-qa.ts`
+re-exports `ATTRIBUTION_KINDS` as `QA_REVIEWER_KINDS`; the same three
+participants review and author. What is *not* shared is `QaReviewer` itself,
+most of which is about whether a criterion's cached verdict is stale.
+
+### What the gate can and cannot enforce
+
+`check:l1-complete` checks two things per block, and the second is the point:
+
+1. `provenance` parses as a `Provenance`. An open string, a malformed
+   attribution, an `agent` with no `model` — all `unmet`.
+2. A block of an **authored** kind must not claim `"ingested"`.
+
+`LIBRARY_BLOCK_ORIGIN` classifies each library block kind as `extracted` or
+`authored`, and a test asserts it is **total over what actually occurs in
+`library/`** — so a narrative arm cannot land a new kind without classifying
+it, and classifying one `authored` arms requirement 2 immediately.
+
+Closing the union does not stop an arm asserting something false. It makes the
+**omission** impossible: a new arm has to choose, and choosing `"ingested"` for
+a generated description is a false statement rather than a missing field.
+
+**Today every one of the 424 blocks is extracted prose**, so the narrative count
+is a real, reported zero — never silence. The authored branch is proved to fire
+by fixtures in `scripts/tests/attribution.test.ts`, not by the corpus: a checker
+that returned "fine" unconditionally would pass the corpus just as well. Each of
+the three branches is mutation-checked — removing it fails a named test. Bean
+`iqim`.
+
 ## Ingestion is a HARNESS capability, not core's
 
 `uploads` and `library` are both graph kinds declared by the **harness** layer;
