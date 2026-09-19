@@ -23,6 +23,7 @@ import {
   materialiseDirectories,
   renderableDirectories,
   resolveDirectories,
+  resolveGraphKind,
   toJsonLd,
   type ResolvedDirectory,
 } from "./cat-harness";
@@ -116,8 +117,22 @@ describe("reading a declaration", () => {
     mkdirSync(ld, { recursive: true });
     writeFileSync(join(ld, DECLARATION_FILENAME), JSON.stringify(toJsonLd(readDeclaration(HARNESS)!)), "utf-8");
     const back = readDeclaration(ld)!;
+    // The fixture declares `id: "kg"` with `graphs: ["kg"]`, the pre-rename
+    // spelling.
+    //
+    // **The id survives and the kind CANONICALISES**, and the asymmetry is
+    // right. An id is the instance's own handle — `AGENTS.md` requires it to
+    // be stable across a relocation — so a projection must hand it back
+    // unchanged. A graph KIND is projected as its type IRI, and the IRI is
+    // the identity: `kg` and `cat-harness` are two spellings of
+    // `fa:KnowledgeGraph`, of which only one is current. Reading the
+    // projection back resolves the IRI to the current name.
+    //
+    // That makes project-and-read-back a MIGRATION PATH for a downstream
+    // declaration written against the old vocabulary, rather than a way to
+    // lose information.
     expect(back.directories.map((d) => d.id).sort()).toEqual(["kg", "schemas", "tools"]);
-    expect(back.directories.find((d) => d.id === "kg")!.graphs).toEqual(["kg"]);
+    expect(back.directories.find((d) => d.id === "kg")!.graphs).toEqual(["cat-harness"]);
   });
 });
 
@@ -195,7 +210,10 @@ describe("graph kinds — the harness declares twelve, core adds folio", () => {
     expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
       "bean-defs",
       "beans",
-      "kg",
+      // Renamed from `kg` on 2026-09-19: named for the LAYER that defines it,
+      // like every other harness concept. `kg` still READS, as a deprecated
+      // alias — see the alias test below.
+      "cat-harness",
       // The two stages of the ingestion pipeline, declared separately because
       // they are not interchangeable: the corpus checklist greps `library/`
       // and not `uploads/`.
@@ -223,7 +241,7 @@ describe("graph kinds — the harness declares twelve, core adds folio", () => {
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
     expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "kg", "library", "schemas",
+      "bean-defs", "beans", "cat-harness", "library", "schemas",
       "todo-feedback", "todo-items", "todos",
       "tools", "uploads", "voices", "workflow-state",
     ]);
@@ -234,7 +252,7 @@ describe("graph kinds — the harness declares twelve, core adds folio", () => {
     registerFolioGraphKind(reg);
     expect(reg.has("folio")).toBe(true);
     expect(isRenderable("folio", reg)).toBe(true);
-    for (const k of ["tools", "kg", "schemas", "beans", "bean-defs", "workflow-state"]) {
+    for (const k of ["tools", "cat-harness", "schemas", "beans", "bean-defs", "workflow-state"]) {
       expect(isRenderable(k, reg)).toBe(false);
     }
   });
@@ -377,5 +395,52 @@ describe("materialiseDirectories", () => {
     ]).map((d) => d.id);
     expect(ids).toContain("uploads");
     expect(ids).toContain("library");
+  });
+});
+
+describe("the `kg` → `cat-harness` rename keeps old declarations working", () => {
+  /**
+   * The rename is a CROSS-INSTANCE breaking change, and the alias is what
+   * makes it survivable.
+   *
+   * `AGENTS.md`: overrides match on the entry's `id`, not its `path`, because
+   * "matching on path makes two knowledge graphs out of one relocation, and
+   * every consumer then scans a directory that is not there". The same
+   * property makes renaming an id dangerous in the other direction — a
+   * downstream instance overriding `kg` overrides nothing once the kind is
+   * called something else, and the failure is SILENT: it scans, finds
+   * nothing, reports a clean run. That is the `dh4f` shape, delivered to
+   * somebody else's repository.
+   */
+  it("a registry resolves the deprecated spelling to the new kind", () => {
+    const reg = new GraphKindRegistry();
+    expect(reg.has("kg")).toBe(true);
+    expect(reg.get("kg")).toBe(reg.get("cat-harness"));
+    // And it is an alias, not a second entry: `names()` lists what EXISTS.
+    expect(reg.names()).toContain("cat-harness");
+    expect(reg.names()).not.toContain("kg");
+  });
+
+  it("resolveGraphKind says WHICH spelling was used, so a caller can warn", () => {
+    // The deprecation has to be reportable. An alias that resolves silently
+    // is an alias nobody ever removes.
+    expect(resolveGraphKind("kg")).toEqual({ kind: "cat-harness", deprecated: "kg" });
+    expect(resolveGraphKind("cat-harness")).toEqual({ kind: "cat-harness" });
+    expect(resolveGraphKind("tools")).toEqual({ kind: "tools" });
+  });
+
+  it("a declaration written against the OLD vocabulary still loads", () => {
+    // The migration guarantee, end to end: this is verbatim what a downstream
+    // instance's `cat-harness.json` looked like before the rename.
+    const old = join(TMP, "old-vocabulary");
+    mkdirSync(join(old, "skills"), { recursive: true });
+    writeFileSync(
+      join(old, DECLARATION_FILENAME),
+      JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", graphs: ["kg"] }] }),
+      "utf-8",
+    );
+    const d = readDeclaration(old);
+    expect(d).toBeDefined();
+    expect(d!.directories[0]!.graphs).toEqual(["kg"]);
   });
 });

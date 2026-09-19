@@ -148,10 +148,20 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
-  kg: {
+  // Named for the LAYER that defines it, like every other harness concept.
+  //
+  // It was `kg`, which named what the graph HOLDS rather than who owns it —
+  // the odd one out in a vocabulary where `cat-harness.json`, `CatHarness`
+  // and the `cat-harness` instance are all named for the harness. The owner,
+  // 2026-09-19: "kg -> cat-harness for naming conventions, no? skills/
+  // schemas beans all in cat-harness, voices, uploads library in
+  // folio-asst-core."
+  //
+  // `kg` remains readable as a deprecated alias — see GRAPH_KIND_ALIASES.
+  "cat-harness": {
     type: `${FOLIO_NS}KnowledgeGraph`,
     renderable: false,
-    summary: "Skills, workflows, roles — the instance's own knowledge graph.",
+    summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
   },
   schemas: {
     type: `${FOLIO_NS}SchemaGraph`,
@@ -281,6 +291,39 @@ export class GraphKindConflictError extends Error {
  * dependency graph reaches core twice and must not fail for it, while two
  * different layers claiming one name is a real collision.
  */
+/**
+ * Graph kinds that were renamed, mapped to what they are now.
+ *
+ * ## Why an alias and not a sweep
+ *
+ * `AGENTS.md` is explicit that **overrides match on the entry's `id`, not its
+ * `path`** — "matching on path makes two knowledge graphs out of one
+ * relocation, and every consumer then scans a directory that is not there".
+ * The same property that makes ids worth having makes renaming one a
+ * CROSS-INSTANCE BREAKING CHANGE: a downstream instance overriding `kg` is
+ * overriding nothing the moment the kind is called something else, and the
+ * failure is silent — it scans, finds nothing, and reports a clean run over
+ * it. That is the `dh4f` shape, delivered to somebody else's repository.
+ *
+ * So the old name keeps working, and says so. Reading a declaration that uses
+ * it succeeds and records a deprecation; writing one is never done by this
+ * repository's own tooling. The alias is removed only after a release in
+ * which it warned.
+ *
+ * Aliases are resolved ONCE, at the registry boundary, rather than at each
+ * call site — a second place that knows the old name is a second place that
+ * can forget it.
+ */
+export const GRAPH_KIND_ALIASES: Readonly<Record<string, string>> = {
+  kg: "cat-harness",
+};
+
+/** What a declared kind name means now, and whether it was a deprecated spelling. */
+export function resolveGraphKind(name: string): { kind: string; deprecated?: string } {
+  const to = GRAPH_KIND_ALIASES[name];
+  return to ? { kind: to, deprecated: name } : { kind: name };
+}
+
 export class GraphKindRegistry {
   private kinds = new Map<string, GraphKindDef>();
 
@@ -297,12 +340,16 @@ export class GraphKindRegistry {
     this.kinds.set(name, def);
   }
 
+  // `has` and `get` resolve a deprecated spelling, so a declaration written
+  // against the old vocabulary still finds its kind. Resolution happens HERE
+  // and nowhere else: a second place that knows the old name is a second place
+  // that can forget it.
   has(name: string): boolean {
-    return this.kinds.has(name);
+    return this.kinds.has(resolveGraphKind(name).kind);
   }
 
   get(name: string): GraphKindDef | undefined {
-    return this.kinds.get(name);
+    return this.kinds.get(resolveGraphKind(name).kind);
   }
 
   names(): string[] {
