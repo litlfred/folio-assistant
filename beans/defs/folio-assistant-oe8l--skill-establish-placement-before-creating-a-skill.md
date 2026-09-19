@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:10:54Z
-updated_at: 2026-09-19T10:10:57Z
+updated_at: 2026-09-19T10:19:34Z
 ---
 
 
@@ -33,3 +33,5 @@ pointer stub and the `artefactStub()` artefact stub), and the
 could-not-determine third state routed into `interaction-modality` §4.1.
 Bound to a role so the process model reaches it, and
 `platform-boundary-guard`'s memory pointing at it rather than restating it.
+
+_2026-09-19T10:19:34Z_ — Skill written: skills/folio-core/placement.md, 277 lines, PR #392. Four-step procedure (instance / declared graph / node kind / stub) plus a stop. Both senses of stub covered. Bound to authoring-agent and code-reviewer. Owner also decided in-flight to widen code-reviewer to [person, agent], carried in the same PR because both edits regenerate the same 30 role sidecars. Gates green: bun test 2344/0, eslint, tsc, playwright 140, kg:audit:check exit 0 with actor-kind-fits-role at zero. Outstanding: platform-boundary-guard's memory nodes still restate rather than point at the skill - blocked on its 200-line injection budget, bean 4kiw.
