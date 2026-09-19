@@ -186,3 +186,19 @@ describe("the template and the data agree", () => {
     expect(active).toEqual([]);
   });
 });
+
+describe("both publishing workflows check their own tiles", () => {
+  const ROOT = join(import.meta.dir, "..", "..");
+
+  test("`docs-site.yml` and `feature-staging.yml` each verify the links", () => {
+    // Missing it in ONE workflow is the worse failure. Both publish the same
+    // tiles, so a gate on only the production site leaves the STAGING
+    // preview — the place a reviewer actually checks — free to ship a dead
+    // knowledge-graph tile while main stays green. Same argument the QA
+    // witness copy already carries, and the same shape of test.
+    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
+      const text = readFileSync(join(ROOT, ".github", "workflows", wf), "utf-8");
+      expect(text).toContain("scripts/site-links.ts --site ./_site");
+    }
+  });
+});

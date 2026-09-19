@@ -4,6 +4,8 @@ id: schema-cannot-catch-a-profile-violation
 label: trap
 summary: "the schema cannot catch a profile violation"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

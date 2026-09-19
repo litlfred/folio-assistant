@@ -92,6 +92,17 @@ describe("the corpus", () => {
 });
 
 describe("the role axis discriminates — memoryForRoles is not dead code", () => {
+  test("every live entry carries a lane, so untagged has no instances", () => {
+    // Both subagents are declared actors now, and every non-archived entry is
+    // tagged with the lane that reads it. That makes the "untagged reaches
+    // everybody" clause a rule with nothing under it — worth pinning, because
+    // an untagged entry added later would silently go to EVERY agent in a
+    // corpus where nothing else does.
+    const live = readMemoryNodes().filter((n) => !n.archived);
+    const untagged = live.filter((n) => n.tags.roles.length === 0);
+    expect(untagged.map((n) => n.id)).toEqual([]);
+  });
+
   test("a CI lane sees the CI entries; another lane does not", () => {
     // The owner, 2026-09-19: "ci watchers are agents/mechanical roles that are
     // part of the CI process." `roles.json` already carried `build-pipeline`

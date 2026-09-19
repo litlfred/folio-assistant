@@ -4,6 +4,8 @@ id: the-readme-generator-that-replaced-the-whole-file
 label: trap
 summary: "the README generator that replaced the whole file"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

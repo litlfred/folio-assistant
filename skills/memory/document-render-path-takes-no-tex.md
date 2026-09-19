@@ -4,6 +4,8 @@ id: document-render-path-takes-no-tex
 label: stable
 summary: "the document render path takes no TeX"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

@@ -535,8 +535,10 @@ resolution rules, how to bind a lane, the severity scale, and how to add a role.
 One criterion per join above — `KG_CRITERIA` in `schemas/kg-qa.ts` is the
 registry and the only current answer to how many; this line said "Fourteen"
 while it held 32. They are written as **committed QA sidecars** under
-`kg-qa/` beside whatever they audit: `skills/workflows/kg-qa/`,
-`skills/workflows/decisions/kg-qa/`, `skills/roles/kg-qa/`. Schema:
+`test/results/kg-qa/`, in a tree that MIRRORS each subject's path — flat would
+collide, and not hypothetically: four sidecar basenames already occur twice
+across packages. They sat beside their subjects until 2026-09-19 (bean `2634`);
+`kgQaSidecarPath` is the one answer for writer and reader. Schema:
 `schemas/kg-qa.ts`. This is the **third** QA subject kind, after the block sweep's
 `*.qa.json` and the script sweep's `*.script-qa.json`, and it shares their shape.
 
@@ -697,6 +699,27 @@ checking it second hands it to every agent — the opposite of archiving.
 Measured while doing exactly that: two entries went untagged and pushed
 `platform-boundary-guard` 39 lines over budget, dropping one of its own TRAPs
 past the line the harness truncates at.
+
+**Both remaining subagents are now declared actors, and the role axis carries
+their memory.** `ci-health-watcher` takes `build-pipeline` and
+`validation-pipeline`; `platform-boundary-guard` takes **`code-reviewer`**,
+whose own description is close to a definition of it — *"the question is
+whether the NODE is sound — does it declare what it is, do its references
+resolve, is the mechanism it advertises the one that runs — which a passing
+test suite does not answer."* That is the failure this repo keeps paying for:
+`part-of:`, `$schema` under `skills/`, and `@graphNode` each landed as a
+requirement, and the files predating each one silently failed it while their
+tests passed.
+
+Measured after tagging: **every live entry carries a lane** — a `code-reviewer`
+lane sees 12, a `build-pipeline` lane sees 8, an unrelated lane sees 0. So the
+"untagged reaches everybody" escape hatch currently has **no instances**, which
+is worth knowing before adding one: an untagged entry now goes to every agent
+in a corpus where nothing else does.
+
+Generation still goes through the AGENT axis, so tagging a lane is additive and
+changes no `MEMORY.md` byte. Wiring the two together is the composition mistake
+the role model already paid for once.
 
 **Scoping is by agent today and that is transitional.** Memory is knowledge,
 and `AGENTS.md` puts knowledge in the lane, so it should scope by **role** —

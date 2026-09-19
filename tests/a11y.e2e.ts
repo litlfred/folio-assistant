@@ -255,10 +255,10 @@ const tilesPage = (scheme: "light" | "dark") => `<!doctype html><html lang="en" 
     <!-- just-the-docs' own search, which docs-ui.js MOVES into the launcher.
          It is here so axe measures the field WHERE IT ENDS UP -- on the
          opaque sidebar panel, not on the main column it was written for. -->
-    <div class="search"><div class="search-input-wrap">
+    <div class="search" role="search"><div class="search-input-wrap">
       <input type="text" id="search-input" class="search-input" tabindex="0"
-             placeholder="Search folio-assistant" aria-label="Search folio-assistant" autocomplete="off">
-      <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor"/></svg></label>
+             placeholder="Search folio-assistant" autocomplete="off">
+      <label for="search-input" class="search-label"><span class="sr-only">Search folio-assistant</span><svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor"/></svg></label>
     </div><div id="search-results" class="search-results"></div></div>
   </div><div class="main-content"><h1>Harness</h1></div></div>
   <script>window.jtd = { theme: "${scheme}", getTheme: function () { return this.theme; },
