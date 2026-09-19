@@ -204,11 +204,11 @@ already be partially formalized in one of the existing proofs;
 identify which proof has the most complete version as the
 extraction starting point.
 
-### K. Pre-declaration corpus check (STRICT — see AGENTS.md §"Before declaring 'open'")
+### K. Pre-declaration corpus check (STRICT — see `litlfred/qou` `AGENTS.md` §"Before declaring 'open'")
 
 Before flagging any item as a **gap, open math, open question,
 TODO, pending derivation,** or equivalent in the audit output, run
-the corpus-grep checklist (AGENTS.md §"Before declaring 'open'
+the corpus-grep checklist (`litlfred/qou` `AGENTS.md` §"Before declaring 'open'
 math / questions / gaps"):
 
 1. `grep -rln <topic> docs/audits/` — owner-authorised resolutions

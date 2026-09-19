@@ -19,7 +19,7 @@ idle branch — a watcher processing events never reaches it.
 
 ## 0b. Idle-time backlog policy (5-minute trigger)
 
-Per AGENTS.md §"Agent work-plan policy" item 4 (5-minute idle
+Per [`idle-backlog`](../idle-backlog.md) (the 5-minute idle
 trigger): when this watcher has been idle for > 5 minutes (no
 substantive output beyond TICK heartbeats or empty acks),
 automatically start processing backlog without waiting for the user

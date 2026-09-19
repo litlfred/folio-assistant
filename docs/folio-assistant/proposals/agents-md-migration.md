@@ -149,9 +149,24 @@ a sibling's edit moved it to 261 before this branch's additions brought it back.
 ## Sequence
 
 1. ✅ `check:agents-xref` — so a break this migration causes is distinguishable
-   from the 16 already there. **Done**; not yet wired into CI, deliberately.
-2. Triage the 16 unresolved citations: qualify, repoint at a skill, or record as
-   the folio's.
+   from the 16 already there.
+2. ✅ **Backlog cleared, and the check is in CI.** The 16 unresolved citations
+   are zero; `check:agents-xref:strict` gates `code-quality-gates.yml`.
+
+   How, because the method is the point. Nine repointed at a platform skill that
+   verifiably owns the rule. The rest could not be settled by reading this
+   repository, so **`litlfred/qou` was cloned and checked** rather than guessed
+   at: five named real sections of its 6,036-line `AGENTS.md` — four headings
+   and one bullet — and are now **qualified** rather than repointed, because the
+   rule genuinely is the folio's. **Two, `be frugal` and `Executing actions with
+   care`, were in neither repository** and became plain rules with no citation.
+   Those two are the only genuinely dead references of the original twenty.
+
+   That required one change to the checker: a citation can now **declare** which
+   `AGENTS.md` it means. Before it, `folio` was reachable only when the
+   platform's own prose attributed a section — so clearing the backlog would
+   have meant restating a folio's table of contents here, which is the boundary
+   violation this whole plan exists to avoid.
 3. Move the **verified-destination** sections (5, 6, 9, 14, 16, 17, 18), one PR
    each, leaving a pointer of roughly section 12's length.
 4. Write the four missing skills (7, 8, 10, 15), then move.
