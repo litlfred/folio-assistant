@@ -459,6 +459,13 @@ where the terms are defined.
 comment), why feature work breaks it more than content work, and a worked
 before/after from a real failure here.
 
+It also carries two rules added 2026-09-19 after this one was broken by the
+agent enforcing it: **with several decisions open, ask ONE in full and give a
+COUNT for the rest** — never a compact list of option names — and a
+**write-time pass** over the report you actually wrote, since the failure
+happens while composing a status update rather than a question
+([`turn-reporting.md`](skills/folio-core/turn-reporting.md)).
+
 ## Opening a bean or a topic — brief it before you touch anything (STRICT)
 
 **When you begin work on a bean, or on any topic large enough to be one, open

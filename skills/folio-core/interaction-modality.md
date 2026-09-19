@@ -178,6 +178,26 @@ The same decision, askable:
 Same information, same length, and the second can be answered by typing one
 character.
 
+#### More than one decision pending — ask ONE, count the rest
+
+The six parts above are per decision, and nothing said what to do when three are
+open at once. Stating all three in full is a wall; naming all three compactly is
+the teaser the rule forbids. Neither is the answer.
+
+**Ask the one that is actually next, in full. For the others, give a COUNT and
+no option names.**
+
+> Two other decisions are waiting; I will put each properly when it is next.
+
+A count is honest and costs the reader nothing: it says work is queued without
+inviting them to answer a question they cannot see the terms of. An option name
+without its cost invites exactly that, which is why the compact list is worse
+than silence.
+
+**There is no "just listing what's open" exemption.** A wrap-up that names a
+decision has handed it over, whatever the framing sentence says. Either the
+options and their costs are there, or the name comes out and a count goes in.
+
 ### 4.2 Form — the checklist
 
 Before any question, all five:
