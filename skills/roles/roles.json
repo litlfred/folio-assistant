@@ -6,7 +6,7 @@
       "id": "user",
       "title": "User",
       "description": "The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "User (person)",
         "Contributor (human or agent)"
@@ -29,7 +29,7 @@
       "id": "author",
       "title": "Author",
       "description": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Author (person)",
         "Author (source content)",
@@ -57,7 +57,7 @@
       "id": "editor",
       "title": "Editor",
       "description": "Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Editors + authoring agents"
       ],
@@ -79,7 +79,7 @@
       "id": "reviewer",
       "title": "Reviewer / SME",
       "description": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
-      "actorKind": "person",
+      "actorKinds": ["person", "agent"],
       "lanes": [
         "Reviewer / SME",
         "Reviewer / subject-matter expert",
@@ -111,7 +111,7 @@
       "id": "narrative-reviewer",
       "title": "Narrative reviewer",
       "description": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Narrative reviewer"
       ],
@@ -130,7 +130,7 @@
       "id": "code-reviewer",
       "title": "Code reviewer",
       "description": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Code reviewer"
       ],
@@ -147,7 +147,7 @@
       "id": "qc-reviewer",
       "title": "QC reviewer",
       "description": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "QC reviewer",
         "PR reviewer / QC reviewer"
@@ -171,7 +171,7 @@
       "id": "clinical-sme",
       "title": "Clinical / scientific SME",
       "description": "Reviewer whose judgement is about the subject matter rather than the artefact.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Clinical SME",
         "Clinical / scientific SMEs"
@@ -192,7 +192,7 @@
       "id": "programme-manager",
       "title": "Programme manager",
       "description": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Programme manager",
         "Programme manager (release authority)",
@@ -216,7 +216,7 @@
       "id": "publication-manager",
       "title": "Publication manager",
       "description": "Takes an authorised release to its published form and is accountable for what is live.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Publication manager",
         "Publication manager — deploy and seed"
@@ -239,7 +239,7 @@
       "id": "business-analyst",
       "title": "Business analyst",
       "description": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Business analyst",
         "BA / Feature Requestor"
@@ -264,7 +264,7 @@
       "id": "terminologist",
       "title": "Terminologist",
       "description": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Terminologist"
       ],
@@ -283,7 +283,7 @@
       "id": "fhir-modeller",
       "title": "FHIR modeller",
       "description": "Authors the L3 profiles, extensions and examples an IG is built from.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "FHIR modeller",
         "FHIR modeller / PR author (person + authoring agent)"
@@ -303,7 +303,7 @@
       "id": "translation-coordinator",
       "title": "Translation coordinator",
       "description": "Decides what is translated, into which languages, and when a translation is accepted.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Translation Coordinator"
       ],
@@ -322,7 +322,7 @@
       "id": "translator",
       "title": "Human translator",
       "description": "Produces the target-language text. Distinct from the coordinator because accepting one's own translation is the gate this separation removes.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Human Translator"
       ],
@@ -341,7 +341,7 @@
       "id": "translation-adjudicator",
       "title": "Translation adjudicator",
       "description": "Reviewer who settles a disagreement between machine and human translation.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Human reviewer / adjudicator"
       ],
@@ -363,7 +363,7 @@
       "id": "stakeholder",
       "title": "Stakeholder",
       "description": "Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.",
-      "actorKind": "person",
+      "actorKinds": ["person"],
       "lanes": [
         "Stakeholders"
       ],
@@ -381,7 +381,7 @@
       "id": "authoring-agent",
       "title": "Authoring agent",
       "description": "The session agent doing the work. The broadest skill set here, and the one whose membership most needs auditing.",
-      "actorKind": "agent",
+      "actorKinds": ["agent"],
       "lanes": [
         "Authoring agent (system)",
         "Folio-Assistant Agent",
@@ -421,7 +421,7 @@
       "id": "onboarding-agent",
       "title": "Onboarding agent",
       "description": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
-      "actorKind": "agent",
+      "actorKinds": ["agent"],
       "lanes": [
         "Onboarding agent (system)"
       ],
@@ -446,7 +446,7 @@
       "id": "ingestion-agent",
       "title": "Ingestion engine",
       "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.",
-      "actorKind": "agent",
+      "actorKinds": ["agent"],
       "lanes": [
         "Ingestion Engine (agent, runs unattended)"
       ],
@@ -465,7 +465,7 @@
       "id": "evidence-agent",
       "title": "Evidence agent",
       "description": "Retrieves and appraises external evidence for a guideline claim.",
-      "actorKind": "agent",
+      "actorKinds": ["agent"],
       "lanes": [
         "Evidence agent (system)"
       ],
@@ -484,7 +484,7 @@
       "id": "sibling-session",
       "title": "Sibling session",
       "description": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
-      "actorKind": "agent",
+      "actorKinds": ["agent"],
       "lanes": [
         "Sibling session or human (not yours to close)"
       ],
@@ -503,7 +503,7 @@
       "id": "build-pipeline",
       "title": "Build pipeline",
       "description": "Validates, renders and publishes. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane.",
-      "actorKind": "system",
+      "actorKinds": ["system"],
       "lanes": [
         "Build pipeline — validate · render · publish",
         "Build pipeline — SUSHI · validator · IG Publisher",
@@ -530,7 +530,7 @@
       "id": "validation-pipeline",
       "title": "Validation pipeline",
       "description": "The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.",
-      "actorKind": "system",
+      "actorKinds": ["system"],
       "lanes": [
         "HCI validation pipeline (system)",
         "Mechanical validation (system)",
@@ -545,7 +545,7 @@
       "id": "publish-target",
       "title": "Publish target",
       "description": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
-      "actorKind": "system",
+      "actorKinds": ["system"],
       "actedUpon": true,
       "lanes": [
         "Publish — GitHub Pages"
@@ -558,7 +558,7 @@
       "id": "lean-toolchain",
       "title": "Lean toolchain",
       "description": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
-      "actorKind": "system",
+      "actorKinds": ["system"],
       "lanes": [
         "Lean toolchain (lean-mcp)"
       ],
@@ -571,7 +571,7 @@
       "id": "ig-publisher-service",
       "title": "IG publisher + validator",
       "description": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
-      "actorKind": "system",
+      "actorKinds": ["system"],
       "lanes": [
         "Publisher + validator services (JVM)"
       ],
@@ -584,7 +584,7 @@
       "id": "work-plan",
       "title": "Work plan (beans)",
       "description": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
-      "actorKind": "system",
+      "actorKinds": ["system"],
       "actedUpon": true,
       "lanes": [
         "Work plan — beans (shared by humans and agents)",
@@ -600,7 +600,7 @@
       "id": "corpus",
       "title": "Corpus",
       "description": "The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.",
-      "actorKind": "system",
+      "actorKinds": ["system"],
       "actedUpon": true,
       "lanes": [
         "Corpus — L1 source knowledge graph",
@@ -614,7 +614,7 @@
       "id": "external-registry",
       "title": "External registry",
       "description": "Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.",
-      "actorKind": "external",
+      "actorKinds": ["external"],
       "actedUpon": true,
       "lanes": [
         "Trusted registries and observatories (external)"

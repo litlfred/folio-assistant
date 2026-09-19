@@ -44,11 +44,11 @@
       "findings": [
         {
           "where": "Task_AuthorFsh",
-          "detail": "\"Author FSH profiles\" — a ServiceTask is performed by agent or system, but its lane's role \"fhir-modeller\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Author FSH profiles\" — a ServiceTask is performed by agent or system, but its lane's role \"fhir-modeller\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
         },
         {
           "where": "Task_PublishIg",
-          "detail": "\"Publish the IG site\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Publish the IG site\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },

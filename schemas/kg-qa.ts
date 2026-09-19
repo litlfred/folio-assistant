@@ -236,6 +236,24 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary: "No declared actor is eligible for this role. Advisory: the actor registry is not a permission system.",
   },
   {
+    // Unwritable until a role could admit a SET of kinds, because with one
+    // kind per role every finding had two readings and the criterion could not
+    // say which: is the role too narrow, or is the actor claiming a role it
+    // cannot take on? `ce65` measured the mismatches and deliberately left
+    // them rather than pick. Now that widening a role is sayable, a surviving
+    // mismatch means the actor's `roles` list is wrong — one reading, so a
+    // finding somebody can act on.
+    //
+    // `major`, not `critical`: nothing dangles. Both sides exist and are
+    // readable; they contradict each other about what may fill a lane.
+    id: "actor-kind-fits-role",
+    applies: ["role"],
+    severity: "major",
+    summary:
+      "An actor declares this role, but its kind is not among the kinds the role admits — so either the " +
+      "role is too narrow or the actor cannot take it on.",
+  },
+  {
     id: "requirement-satisfied-by-resolves",
     applies: ["requirement"],
     severity: "critical",

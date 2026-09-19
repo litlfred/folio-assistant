@@ -5,7 +5,7 @@
     "id": "editor",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:54880b2f83717c659427fbb94e541b6fda178ac5829ed9f5bdb3259c6dc5772f",
+  "source_hash": "sha256:452b01df1e3b03d589914df46eee3c0d1d4054286bb9175614393f237918c045",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -34,11 +34,20 @@
     "role-has-actor": {
       "result": "pass",
       "findings": []
+    },
+    "actor-kind-fits-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "authoring-agent",
+          "detail": "actor \"authoring-agent\" is a agent and declares role \"editor\", which admits person. Either the role is too narrow — widen its `actorKinds` — or the actor cannot take this role on and its `roles` list is wrong. The descriptions of both are where to settle it."
+        }
+      ]
     }
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }

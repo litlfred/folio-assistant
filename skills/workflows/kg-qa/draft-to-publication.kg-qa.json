@@ -44,7 +44,7 @@
       "findings": [
         {
           "where": "Task_PublishRelease",
-          "detail": "\"Version, tag and publish\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Version, tag and publish\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },

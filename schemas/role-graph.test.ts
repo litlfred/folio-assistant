@@ -37,12 +37,12 @@ function withKg(graph: unknown): string {
 const base = {
   name: "t",
   roles: [
-    { id: "viewer", title: "Viewer", description: "reads", actorKind: "person", lanes: ["Viewer"], skills: ["read"] },
+    { id: "viewer", title: "Viewer", description: "reads", actorKinds: ["person"], lanes: ["Viewer"], skills: ["read"] },
     {
       id: "reviewer",
       title: "Reviewer",
       description: "judges",
-      actorKind: "person",
+      actorKinds: ["person"],
       lanes: ["Reviewer / SME", "Review Committee"],
       skills: ["review"],
       inherits: ["viewer"],
@@ -51,7 +51,7 @@ const base = {
       id: "editor",
       title: "Editor",
       description: "decides",
-      actorKind: "person",
+      actorKinds: ["person"],
       lanes: ["Editor"],
       skills: ["commit"],
       inherits: ["reviewer"],
@@ -77,7 +77,7 @@ describe("readRoleGraph", () => {
   test("a dangling `inherits` is refused at read, so no closure is silently short", () => {
     const root = withKg({
       name: "t",
-      roles: [{ id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["ghost"] }],
+      roles: [{ id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["ghost"] }],
     });
     expect(() => readRoleGraph(root)).toThrow(/inherits "ghost"/);
     rmSync(root, { recursive: true, force: true });
@@ -87,8 +87,8 @@ describe("readRoleGraph", () => {
     const root = withKg({
       name: "t",
       roles: [
-        { id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [] },
-        { id: "a", title: "A2", description: "s", actorKind: "person", lanes: [], skills: [] },
+        { id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [] },
+        { id: "a", title: "A2", description: "s", actorKinds: ["person"], lanes: [], skills: [] },
       ],
     });
     expect(() => readRoleGraph(root)).toThrow(/declared twice/);
@@ -99,8 +99,8 @@ describe("readRoleGraph", () => {
     const root = withKg({
       name: "t",
       roles: [
-        { id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["b"] },
-        { id: "b", title: "B", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["a"] },
+        { id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["b"] },
+        { id: "b", title: "B", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["a"] },
       ],
     });
     expect(() => readRoleGraph(root)).toThrow(/cycle/);
@@ -110,7 +110,7 @@ describe("readRoleGraph", () => {
   test("an unknown actorKind is rejected, not accepted and ignored", () => {
     const root = withKg({
       name: "t",
-      roles: [{ id: "a", title: "A", description: "s", actorKind: "wizard", lanes: [], skills: [] }],
+      roles: [{ id: "a", title: "A", description: "s", actorKinds: ["wizard"], lanes: [], skills: [] }],
     });
     expect(() => readRoleGraph(root)).toThrow();
     rmSync(root, { recursive: true, force: true });
