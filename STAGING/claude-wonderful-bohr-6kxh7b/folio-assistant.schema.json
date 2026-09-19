@@ -164,6 +164,24 @@
           "type": "string",
           "format": "uri"
         },
+        "publication": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "enum": [
+                "github-pages",
+                "local-server",
+                "jurisdiction-endpoint",
+                "none"
+              ]
+            }
+          },
+          "required": [
+            "host"
+          ],
+          "additionalProperties": false
+        },
         "directories": {
           "type": "array",
           "items": {
@@ -217,8 +235,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "f6206a062cbe68c90479e5053219e65fcea41934",
+    "sha": "92aef7ec6985b635aeb87e4aea3906a193bb1597",
     "pr": "408/merge",
-    "run": "35443839143"
+    "run": "35444419452"
   }
 }
