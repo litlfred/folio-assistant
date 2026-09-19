@@ -283,6 +283,51 @@ jobs:
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
 
+      # Bean `plj1`. This publish REPLACES the branch's contents — no
+      # `keep_files` — and `STAGING/<slug>/` lives on the same branch, so every
+      # merge to main silently deleted every open PR's preview. Measured
+      # 2026-09-19: `feature-staging.yml` deployed a preview and commented the
+      # URL on a PR; this workflow's next run landed ~5 minutes later and
+      # `git ls-tree --name-only <that gh-pages commit> | grep -i staging`
+      # returned nothing, for every open PR rather than only that one.
+      #
+      # It is the quiet version of the failure: the staging push SUCCEEDS, the
+      # bot comments the URL, the check run is green, and a reviewer clicking
+      # the link minutes later gets a 404 with nothing anywhere saying why.
+      # AGENTS.md argues at length that a human cannot assess a rendered
+      # artefact from a description and that staging is where assessment
+      # happens — a URL with a half-life of one main merge undercuts exactly
+      # that.
+      #
+      # `keep_files: true` is the one-line alternative and is NOT taken: it
+      # would also stop the main site's own removed pages from ever
+      # disappearing, so a renamed doc would linger on the branch
+      # indefinitely. Carrying `STAGING/` forward keeps BOTH properties — a
+      # deleted main page still goes, a live preview still stands — rather than
+      # buying one with the other.
+      #
+      # This step only ever ADDS to `_site`. It cannot make the publish delete
+      # the main site, which is the failure mode that would matter.
+      #
+      # It narrows the window rather than closing it: a staging deploy landing
+      # between this fetch and the publish below is still lost. That residue is
+      # the gh-pages push queue, bean `xd1s`, not this.
+      - name: Carry the open PRs' STAGING previews across this publish
+        run: |
+          set -euo pipefail
+          if ! git fetch --no-tags --depth=1 origin gh-pages 2>/dev/null; then
+            echo "note: no gh-pages branch yet — nothing to carry."
+            exit 0
+          fi
+          if ! git cat-file -e FETCH_HEAD:STAGING 2>/dev/null; then
+            echo "note: gh-pages carries no STAGING/ — nothing to carry."
+            exit 0
+          fi
+          mkdir -p ./_site
+          git archive FETCH_HEAD STAGING | tar -x -C ./_site
+          echo "carried across:"
+          find ./_site/STAGING -maxdepth 1 -mindepth 1 -type d -printf '  %f\n' | sort
+
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:

@@ -107,6 +107,65 @@ describe("GitHub Actions workflows", () => {
     expect(text.split("continue-on-error: true").length - 1).toBe(3);
   });
 
+  /**
+   * A publish that REPLACES the branch must carry the other PRs' previews.
+   *
+   * Bean `plj1`. `STAGING/<slug>/` lives on `gh-pages` beside the site, and
+   * `peaceiris/actions-gh-pages` replaces the branch's contents unless
+   * `keep_files: true`. Measured 2026-09-19: of ELEVEN publish sites across six
+   * workflows, `docs-site.yml` was the only one with `keep_files` absent — and
+   * it is the one that fires on every push to `main` touching `docs/`,
+   * `skills/workflows/`, `schemas/` or three scripts. So the most
+   * frequently-run publisher was the only one that wiped, and
+   * `git ls-tree --name-only origin/gh-pages | grep -ci staging` returned 0
+   * while three open PRs had preview URLs commented on them.
+   *
+   * The failure is quiet, which is why a test rather than a convention: the
+   * staging push SUCCEEDS, the bot comments the URL, the check run is green,
+   * and the artefact is deleted minutes later by an unrelated merge. A reviewer
+   * gets a 404 with nothing saying why.
+   *
+   * Two ways to satisfy it, because they are genuinely different designs and
+   * both are sound. `keep_files: true` never deletes — right for a publisher
+   * that owns a subtree. Carrying `STAGING/` forward lets the main site still
+   * delete its own removed pages while leaving live previews standing, which is
+   * why `docs-site.yml` takes that one rather than the one-liner.
+   *
+   * **Parsed, never grepped.** The sibling test above records why: "a COMMENT
+   * naming the action is not a use of it." `docs-site.yml`'s new comment block
+   * contains the literal `keep_files: true` while the step deliberately does
+   * not set it, so a text search would read this fixed file as fixed the other
+   * way. Reading the parsed step's own `with:` cannot be fooled by prose.
+   */
+  test("a gh-pages publish either keeps files or carries STAGING/ forward", () => {
+    const offenders: string[] = [];
+    let sites = 0;
+    for (const file of files) {
+      const doc = Bun.YAML.parse(readFileSync(join(WORKFLOW_DIR, file), "utf-8")) as {
+        jobs?: Record<string, { steps?: Array<Record<string, unknown>> }>;
+      };
+      for (const [job, j] of Object.entries(doc?.jobs ?? {})) {
+        const steps = j?.steps ?? [];
+        // The mechanism, read off the step that performs it rather than the
+        // file that mentions it.
+        const carries = steps.some(
+          (s) => typeof s.run === "string" && s.run.includes("FETCH_HEAD:STAGING"),
+        );
+        for (const s of steps) {
+          const uses = s.uses;
+          if (typeof uses !== "string" || !uses.startsWith("peaceiris/actions-gh-pages@")) continue;
+          sites += 1;
+          const keeps = (s.with as Record<string, unknown> | undefined)?.keep_files === true;
+          if (!keeps && !carries) offenders.push(`${file}:${job}`);
+        }
+      }
+    }
+    // Without this the assertion passes over an empty list if the parse shape
+    // ever changes — the vacuous green this whole file exists to prevent.
+    expect(sites).toBeGreaterThan(8);
+    expect(offenders).toEqual([]);
+  });
+
   test("the group is one literal string, because a group matches on the literal", () => {
     expect(GH_PAGES_GROUP).toBe("gh-pages-push");
   });
