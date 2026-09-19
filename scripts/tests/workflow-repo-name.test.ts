@@ -38,15 +38,20 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { repoFilesWithExt } from "../repo-files.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
+/**
+ * Workflow files, **including one added in this working tree**.
+ *
+ * Tracked-only enumeration would let a brand-new workflow hardcode the
+ * repository name and pass every local run — see bean `bgle` and
+ * {@link repoFilesWithExt}. A new workflow is exactly when this guard is
+ * worth having.
+ */
 function workflowFiles(): string[] {
-  const proc = Bun.spawnSync(["git", "ls-files", ".github/workflows"], { cwd: ROOT });
-  return new TextDecoder()
-    .decode(proc.stdout)
-    .split("\n")
-    .filter((f) => f.endsWith(".yml") || f.endsWith(".yaml"));
+  return repoFilesWithExt(ROOT, [".github/workflows"], [".yml", ".yaml"]);
 }
 
 /** A line that sets Jekyll's `baseurl` to something. */
