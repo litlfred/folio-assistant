@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T00:58:13Z
-updated_at: 2026-09-19T01:30:52Z
+updated_at: 2026-09-19T11:08:23Z
 parent: folio-assistant-8jt6
 ---
 
@@ -178,3 +178,20 @@ declared roles it takes on. Three ways to go, with what each costs:
 
 No recommendation yet — this is the author's call, and none of the three is
 obviously right. The work is not blocked on it: agent-scoping works today.
+
+## AMENDED 2026-09-19 by owner direction — see folio-assistant-d1r6 and folio-assistant-4kj4
+
+Two items captured above are superseded, and this note is the only change I
+am making to a bean that is not mine:
+
+- "Closing a floating sticky returns it to the display panel"
+- "[x] icon closes an open sticky"
+
+The close control now **discards the sticky to `fsh-guts/`** with a
+crumpled-sticky icon. Returning to the panel survives via the greyed board
+entry, which this bean already records in the author's own words.
+
+Avatars per kind, in and out of trash, in both schemes, are folio-assistant-4kj4.
+
+Requirements capture here remains yours; I have not resolved or rewritten
+it.

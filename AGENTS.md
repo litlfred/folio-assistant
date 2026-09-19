@@ -163,7 +163,7 @@ These were `.beans/` and `.harness/workflow/` until 2026-09-18 (beans `8xzw`,
 `x89g`) — the two artefacts a person looks for first were the two hardest to
 find. `.harness/` still holds `interaction.json` and `issue-comments/`; only the
 workflow state moved. Option A of
-[`folio-assistant/docs/proposals/workflow-state-in-beans.md`](folio-assistant/docs/proposals/workflow-state-in-beans.md):
+[`fsh-guts/proposals/workflow-state-in-beans.md`](fsh-guts/proposals/workflow-state-in-beans.md):
 the criticism it carried there ("two places to look") was never about two
 stores, but about two *hidden* ones.
 

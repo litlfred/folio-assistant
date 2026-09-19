@@ -66,7 +66,14 @@ import {
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { z } from "zod";
 
-import { KgImageSchema, kgNodeLabelShape, type KgImage, type KgNodeLabels } from "./kg-node";
+import {
+  KgAssetSchema,
+  KgImageSchema,
+  kgNodeLabelShape,
+  type KgAsset,
+  type KgImage,
+  type KgNodeLabels,
+} from "./kg-node";
 import { NS_PREFIXES, termIri } from "./namespaces";
 
 /** Root-relative filename carrying an instance's declaration. */
@@ -338,6 +345,40 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
   },
+  // ── The one kind that is not-rendered ON PURPOSE ──────────────────────
+  //
+  // Every other kind above is `renderable: false` because it is a graph a
+  // TOOL reads and there was never a page to make of it. `fsh-guts` is
+  // different in kind: its contents COULD be rendered and deliberately are
+  // not. It exists so that something can be KEPT without being PUBLISHED.
+  //
+  // Owner, 2026-09-19: "do not pollute the KG with SDLC churn … it is the
+  // trashcan that does not get rendered but … where deprecated, throwaway
+  // stuff goes … do not delete unless explicit confirm."
+  //
+  // **This is what makes the never-delete rule enforceable beyond beans.**
+  // `AGENTS.md` already forbids deleting a bean, and gives a reason that was
+  // always general: a scrapped item records that something was considered
+  // and rejected, which stops the next agent re-entering the dead end, while
+  // a deleted one leaves a sibling unable to tell abandonment from accident.
+  // An agent removing a page, a diagram or a script had only `rm` and so the
+  // rule could not apply to them. Now delete means relocate, and relocate is
+  // reversible.
+  //
+  // On the name: `.fsh` is FHIR Shorthand in this codebase (`schemas/dak.ts`,
+  // `jsonld.ts`, `translation-tools.ts`, `block-qa.ts`) and throughout the
+  // WHO SMART folios this platform targets. The collision was raised and the
+  // owner confirmed the spelling; it is recorded here so the overlap is met
+  // as a known fact rather than rediscovered as a defect.
+  "fsh-guts": {
+    type: termIri("FshGutsGraph"),
+    renderable: false,
+    summary:
+      "Deprecated and throwaway structured content — kept, addressable and exported, and " +
+      "deliberately absent from the rendered site. The destination for anything that would " +
+      "otherwise be deleted, and for SDLC churn that must not reach the folio's readers.",
+    skill: "fsh-guts",
+  },
   // The gettext side of translation: `.pot` templates, `.po` catalogues and
   // the `TranslationNode` manifests that make each pair addressable.
   //
@@ -526,6 +567,14 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    */
   images?: KgImage[];
   /**
+   * Non-image artefacts this instance names — `AGENTS.md` first among them.
+   *
+   * See {@link KgAsset}. Declared for the same reason {@link images} is: a
+   * file nobody declares is a file nobody checks, and `AGENTS.md` was the only
+   * root artefact in neither list.
+   */
+  assets?: KgAsset[];
+  /**
    * The id of the {@link images} entry to use as the browser icon.
    *
    * An id and not a path, so moving the file is one edit in one place. A
@@ -564,6 +613,34 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   canonicalUrl?: string;
   /** Where CI previews are served, when that differs from `canonicalUrl`. */
   previewUrl?: string;
+  /**
+   * WHAT KIND of host serves this instance's renderings.
+   *
+   * The `publication host` axis of
+   * `docs/proposals/deployment-topologies.md`, accepted 2026-09-19. Four
+   * topologies in issue #363 — local git only, private repo, developer and
+   * self-sovereign — do not publish to GitHub Pages, and before this nothing
+   * could say so.
+   *
+   * **Distinct from `canonicalUrl`, and from `readme.linkStyle`.** Three
+   * different questions that are easy to run together:
+   *
+   * | field | question | lives in |
+   * |---|---|---|
+   * | `canonicalUrl` | what base are `@id`s minted against? | `harness.json` |
+   * | `publication.host` | what kind of thing serves the rendering? | `harness.json` |
+   * | `readme.linkStyle` | how is a link to a published artefact written? | `harness.config.json` |
+   *
+   * **Absent is a third state and must stay one.** It means the deployment
+   * has not said, NOT that it is `github-pages`. Defaulting to Pages is
+   * exactly how a local-server deployment gets told it publishes somewhere it
+   * does not — the failure this field exists to end.
+   *
+   * **No `url` here, deliberately.** `canonicalUrl` already holds that fact,
+   * and a second URL field is two places to disagree. A local server's
+   * address is a `--port` at run time, not a property of the instance.
+   */
+  publication?: Publication;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
 }
@@ -647,14 +724,52 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   { id: "voices", path: "voices/", graphs: ["voices"] },
 ];
 
+/**
+ * The kinds of host that can serve an instance's renderings.
+ *
+ * The values are the `publication host` axis of
+ * `docs/proposals/deployment-topologies.md` verbatim. Keep them in step: the
+ * proposal is what a reader reasons with, this is what a machine reads, and a
+ * fifth value invented here without a row there is a vocabulary nobody agreed.
+ *
+ * `none` is a real answer, not a missing one — a developer checkout that
+ * renders nothing publishes nowhere, and saying so is different from not
+ * saying.
+ */
+export const PUBLICATION_HOSTS = [
+  "github-pages",
+  "local-server",
+  "jurisdiction-endpoint",
+  "none",
+] as const;
+
+export type PublicationHost = (typeof PUBLICATION_HOSTS)[number];
+
+export interface Publication {
+  host: PublicationHost;
+}
+
+export const PublicationSchema = z.object({
+  host: z.enum(PUBLICATION_HOSTS),
+});
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
   images: z.array(KgImageSchema).optional(),
+  /**
+   * Declared non-image artefacts — `AGENTS.md` first among them.
+   *
+   * Optional, and absent is the unmigrated case rather than "this instance
+   * has none": every instance has an `AGENTS.md`, and until one declares it
+   * nothing can check it. See {@link KgAssetSchema}.
+   */
+  assets: z.array(KgAssetSchema).optional(),
   icon: z.string().min(1).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   previewUrl: z.string().url().optional(),
+  publication: PublicationSchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
 });
 
@@ -778,6 +893,159 @@ export function renderingPath(base: string, ...segments: string[]): string {
   const b = base.replace(/\/+$/, "");
   const tail = segments.filter((s) => s.length > 0).join("/");
   return b ? `${b}/${tail}` : tail;
+}
+
+/**
+ * Graph kinds that must NEVER reach a published knowledge graph.
+ *
+ * Owner, 2026-09-19: *"NEVER include fsh-guts, references to fsh-guts
+ * stripped out of KG before sending to publication."*
+ *
+ * **Keeping the CONTENT out of the render pipeline is not the same as keeping
+ * the REFERENCE out of the graph, and the first was shipped believing it
+ * covered the second.** An instance's declared directories become nodes in
+ * `<stub>.jsonld`, so declaring `fsh-guts/` locally — which is required, or
+ * no tool can find it and the never-delete rule has no destination — put its
+ * id, path and description into the published graph.
+ *
+ * **This is not a contradiction of `<base>/fsh-guts.jsonld`.** They are
+ * different documents: that one IS the trashcan's graph and is asked for by
+ * name; every other published artefact must contain no path to it. A consumer
+ * may go there deliberately and must never arrive by following an edge.
+ *
+ * One list, read by every emitter, so two filters cannot disagree about what
+ * is excluded.
+ */
+export const UNPUBLISHED_GRAPH_KINDS: readonly string[] = ["fsh-guts"] as const;
+
+/** Is this graph kind allowed into a published graph? */
+export function isPublishedGraphKind(name: string): boolean {
+  return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+}
+
+/**
+ * Is this SKILL allowed into a published graph?
+ *
+ * The skill that documents an unpublished kind is itself unpublished, and it
+ * carries the kind's name. Leaving it in was the second leak found while
+ * building this: the graph-kind and directory nodes were filtered, and
+ * `skill/fsh-guts` plus the `declaresSkill` edge from `package/folio-core`
+ * still named the trashcan, its purpose and its path.
+ *
+ * That is the right outcome on the merits as well as the letter. The skill's
+ * subject IS where to put SDLC churn, so publishing it advertises the
+ * trashcan to every consumer of the folio's graph — the precise thing the
+ * owner's instruction forbids.
+ *
+ * Same list, because the skill and the kind share a name by construction.
+ * If that ever stops being true this needs its own list, not a cleverer
+ * derivation.
+ */
+export function isPublishedSkill(name: string): boolean {
+  return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+}
+
+/**
+ * Is this schema module allowed into a published graph?
+ *
+ * The FOURTH emitter, and it was not exercised until a `schemas/fsh-guts.ts`
+ * existed — which is to say the gap was latent from the day the strip was
+ * written and only became visible when somebody added the module. The
+ * blanket test in `fsh-guts-unpublished.test.ts` caught it on the first run,
+ * which is the whole reason that test asserts a string rather than a list of
+ * emitters: a new emitter cannot be added to a list nobody remembers to
+ * update.
+ *
+ * Matched on the module's BASENAME, since that is the node's `name` and what
+ * a consumer reads. `schemas/log-entry.ts` stays published: it is named
+ * after the log, not after the trashcan, and the rule is about naming the
+ * trashcan rather than about anything that mentions it. By the same token a
+ * schema whose subject is fsh-guts advertises it to every consumer of the
+ * folio's graph, which is the precise thing the owner's instruction forbids
+ * — the identical argument `isPublishedSkill` records.
+ */
+export function isPublishedSchemaModule(modulePath: string): boolean {
+  const basename = modulePath.split("/").pop()?.replace(/\.[^.]+$/, "") ?? modulePath;
+  return isPublishedGraphKind(basename);
+}
+
+/**
+ * Is this declared directory allowed into a published graph?
+ *
+ * A directory is excluded when ANY graph it holds is excluded — not when all
+ * of them are. `graphs` is an array and a directory may hold more than one
+ * part of the graph, so an "all" test would publish a directory that holds
+ * both `kg` and `fsh-guts`, naming the trashcan's path in the process.
+ */
+export function isPublishedDirectory(d: { graphs?: readonly string[] }): boolean {
+  return (d.graphs ?? []).every(isPublishedGraphKind);
+}
+
+/**
+ * The declared publication host for the instance rooted at `root`, or
+ * `undefined` when it has not said.
+ *
+ * **`undefined` is never to be read as `github-pages`.** A caller that wants
+ * to tell somebody where a thing rendered must report "not declared" as its
+ * own answer — that is the whole defect this field closes, and defaulting
+ * here would reintroduce it one layer down where nobody would see it.
+ *
+ * A RAW read of the one field, like `siteDirFor` and for the same reason: a
+ * consumer asking where the site publishes must not fail because some
+ * unrelated directory declares a graph kind this layer has not registered.
+ */
+export function publicationHost(root: string): PublicationHost | undefined {
+  const p = join(root, DECLARATION_FILENAME);
+  if (!existsSync(p)) return undefined;
+  try {
+    const raw = JSON.parse(readFileSync(p, "utf-8")) as { publication?: { host?: unknown } };
+    const host = raw.publication?.host;
+    return PUBLICATION_HOSTS.includes(host as PublicationHost)
+      ? (host as PublicationHost)
+      : undefined;
+  } catch {
+    // Unreadable is "has not said", not an error to throw at a caller whose
+    // question was only "where does this publish". `readDeclaration` throws
+    // for the callers that need a valid declaration.
+    return undefined;
+  }
+}
+
+/**
+ * The one conflict decidable from `publication.host` and `readme.linkStyle`
+ * together, or `undefined` when there is none.
+ *
+ * Two facts in two files — the host in `harness.json`, the link style in
+ * `harness.config.json` — can now disagree, and that is the cost of making
+ * the host its own axis rather than overloading `linkStyle`. This is the
+ * check that pays it.
+ *
+ * **Exactly one rule, and it is an entailment.** `linkStyle: "pages"` writes
+ * every published-artefact link under `pagesBaseUrl`, i.e. against a GitHub
+ * Pages site. A deployment that declares any other host is saying that site
+ * is not where it publishes, so those links point at nothing.
+ *
+ * **`raw` is deliberately NOT ruled on.** It resolves through
+ * `raw.githubusercontent.com` and therefore depends on the FORGE and on
+ * repository VISIBILITY — and measured 2026-09-19, this schema declares
+ * neither. A rule needing a fact the harness does not have would be a guess
+ * wearing a gate's authority, which is the trap
+ * `do-not-encode-a-rule-against-a-working-setup` records. When visibility
+ * becomes declarable, revisit; until then this returns nothing for `raw`,
+ * which is "could not determine", not "fine".
+ */
+export function publicationLinkStyleConflict(
+  host: PublicationHost | undefined,
+  linkStyle: string | undefined,
+): string | undefined {
+  if (host === undefined || linkStyle !== "pages") return undefined;
+  if (host === "github-pages") return undefined;
+  return (
+    `harness.json declares \`publication.host: "${host}"\`, but ` +
+    `harness.config.json sets \`readme.linkStyle: "pages"\`, which writes every ` +
+    `published-artefact link against a GitHub Pages site this deployment says ` +
+    `it does not publish to. Set \`linkStyle\` to \`blob\`, or correct the host.`
+  );
 }
 
 /**
@@ -984,6 +1252,124 @@ export function resolveDirectories(
     }
 
   return [...byId.values()];
+}
+
+/**
+ * The graph kind that holds skills, workflows and roles.
+ *
+ * Named once because two different resolvers ask for it, and a second spelling
+ * is how one of them goes missing when the layout moves.
+ */
+/**
+ * The role an instance's agent-instruction file declares.
+ *
+ * One constant because the declaration writes it and every checker reads it,
+ * and a role spelled twice is a role one side stops finding.
+ */
+export const AGENT_INSTRUCTIONS_ROLE = "agent-instructions";
+
+/**
+ * This instance's declared assets, resolved to absolute paths.
+ *
+ * Existence is reported rather than filtered, unlike the directory defaults:
+ * a declared asset that is missing is a FINDING — somebody said this file is
+ * ours and it is not there — whereas a conventional directory that is absent
+ * is simply a convention this instance did not take up. Silently dropping the
+ * first would reproduce `dh4f` in the one place the declaration is an
+ * assertion rather than a guess.
+ */
+export function declaredAssets(
+  root: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Array<KgAsset & { absPath: string; exists: boolean }> {
+  const decl = readDeclaration(root, registry);
+  return (decl?.assets ?? []).map((a) => {
+    const absPath = resolve(root, a.src);
+    return { ...a, absPath, exists: existsSync(absPath) };
+  });
+}
+
+export const KG_GRAPH_KIND = "cat-harness";
+
+/**
+ * Does this directory hold ONLY the knowledge graph?
+ *
+ * **Exactly `cat-harness`, not merely including it.** `schemas/` declares
+ * `["schemas", "cat-harness"]` — a schema IS a knowledge-graph node, which is
+ * why it carries the kind at all — but its `.md` files are READMEs and its
+ * nodes are `.ts`. Measured 2026-09-19: including it added `schemas/README.md`
+ * and `schemas/block-qa-schema/README.md` to the skill set, giving 150 where
+ * the corpus has 149.
+ *
+ * Requiring YAML front matter instead would have been the principled rule and
+ * is measurably wrong here — only 117 of 147 skill bodies carry any, so it
+ * would have dropped 30 real skills. A directory holding one kind can be
+ * scanned for it; one holding several has to say which file is which.
+ */
+export function isKgOnlyDirectory(d: ContentDirectory): boolean {
+  return d.graphs.length === 1 && d.graphs[0] === KG_GRAPH_KIND;
+}
+
+/**
+ * One instance's OWN declared directories — no inheritance, no override.
+ *
+ * ## Why this is not {@link resolveDirectories}
+ *
+ * `resolveDirectories` answers *"which directory does id X mean for this
+ * instance"*, and it answers it **once**: entries override by id, so when a
+ * dependency and the root both declare `cat-harness`, the root replaces the
+ * dependency's entry and one path comes back. That is correct for its question
+ * and is the documented rule — overrides match on `id`, never on `path`.
+ *
+ * **Overlay is the opposite question.** Loading skills needs EVERY instance's
+ * contribution, in order, because a dependency's skills and the root's are both
+ * real and the root's merely win *per skill name*. Collapsing them by id
+ * discards the dependency entirely.
+ *
+ * That mismatch is why {@link resolveDirectories} could not be the primitive
+ * here, and why the overlay resolver that predates this hardcoded
+ * `join(root, "skills")` instead — it needed per-instance paths and reached for
+ * a literal to get them. A literal is how a skill goes missing the moment the
+ * layout moves; this reads the instance's own declaration instead.
+ *
+ * ## An undeclared instance still gets the conventions
+ *
+ * `AGENTS.md`: *"Absent declaration is fine — an unmigrated instance falls
+ * back to today's conventions."* So a dependency with a `skills/` directory
+ * and no `harness.json` resolves through {@link DEFAULT_DIRECTORIES}, which is
+ * where that convention is written down once.
+ *
+ * **This was a regression before it was a feature.** The first version of this
+ * function returned `[]` for an undeclared instance, which silently dropped
+ * every unmigrated dependency's skills — caught by
+ * `harness-config.test.ts`'s existing overlay test, whose fixture declares
+ * nothing. Reading a declaration is the improvement; requiring one would have
+ * been a breaking change wearing its clothes.
+ *
+ * Defaults are existence-filtered, for the same reason `resolveDirectories`
+ * filters them: a default that is not there is the `dh4f` defect, where a
+ * consumer scans nothing and reports a clean run over it. `declaredBy` says
+ * `(default)` so a caller can tell a convention from a choice.
+ */
+export function ownDirectories(
+  link: { name: string; root: string; own?: boolean },
+  registry: GraphKindRegistry = defaultGraphKinds,
+): ResolvedDirectory[] {
+  const decl = readDeclaration(link.root, registry);
+  if (!decl) {
+    return DEFAULT_DIRECTORIES.map((dir) => ({
+      ...dir,
+      declaredBy: "(default)",
+      absPath: resolve(link.root, dir.path),
+      own: false,
+    })).filter((d) => existsSync(d.absPath));
+  }
+  return decl.directories.map((dir) => ({
+    ...dir,
+    declaredBy: decl.name,
+    absPath: resolve(link.root, dir.path),
+    own: link.own === true,
+  }));
 }
 
 // ── Materialisation ─────────────────────────────────────────────

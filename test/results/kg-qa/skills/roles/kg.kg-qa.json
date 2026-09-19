@@ -8,12 +8,21 @@
   "source_hash": null,
   "criteria": {
     "skill-has-entry-point": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "AGENTS",
+          "detail": "skill \"AGENTS\" is listed by no package manifest, carried by no role and named by no activity."
+        }
+      ]
     },
     "skill-in-role-or-process": {
       "result": "fail",
       "findings": [
+        {
+          "where": "AGENTS",
+          "detail": "no role carries \"AGENTS\" and no activity names it — reached, if at all, by direct invocation."
+        },
         {
           "where": "agent-memory",
           "detail": "no role carries \"agent-memory\" and no activity names it — reached, if at all, by direct invocation."
@@ -159,6 +168,10 @@
           "detail": "no role carries \"formalizer\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
+          "where": "fsh-guts",
+          "detail": "no role carries \"fsh-guts\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "github-state-inspection",
           "detail": "no role carries \"github-state-inspection\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -261,6 +274,10 @@
         {
           "where": "lean-witness-audit",
           "detail": "no role carries \"lean-witness-audit\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
+          "where": "library-ingestion",
+          "detail": "no role carries \"library-ingestion\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
           "where": "markdown-render-check",
@@ -451,6 +468,10 @@
           "detail": "no role carries \"verify-local-substrate\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
+          "where": "where-a-proposal-goes",
+          "detail": "no role carries \"where-a-proposal-goes\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "witnessed-values",
           "detail": "no role carries \"witnessed-values\" and no activity names it — reached, if at all, by direct invocation."
         }
@@ -503,8 +524,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 2,
+    "pass": 5,
+    "fail": 3,
     "n/a": 0,
     "unknown": 0
   }

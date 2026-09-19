@@ -17,6 +17,18 @@ may do them inconsistently or unsafely (force-push over a sibling, push straight
 to `main`, declare green while sitting on pre-existing failures). This skill is
 the one recipe.
 
+## `fsh-guts` must not reach publication
+
+Before a branch that touches the knowledge graph ships, the published export
+must contain no reference to `fsh-guts` — not the graph kind, not the
+declared directory, not the skill that documents it, and not an edge naming
+any of them. Owner's rule, 2026-09-19.
+
+`scripts/tests/fsh-guts-unpublished.test.ts` asserts it against the built
+artefact and runs in `bun test`, so this is checked rather than remembered.
+The mechanism, and the three separate emitters that had to be filtered, are
+in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
+
 ## Recipe
 
 1. **Clean + committed.** `git status --short` must be empty. Commit outstanding

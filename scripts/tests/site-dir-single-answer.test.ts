@@ -19,6 +19,7 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { siteDir, siteDirFor } from "../../schemas/cat-harness.ts";
+import { repoFilesWithExt } from "../repo-files.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -74,15 +75,17 @@ const LITERAL =
   // tighter pattern walked straight past exactly that line in `a11y.e2e.ts`.
   /(?:\b(?:join|resolve|readFileSync|existsSync|readdirSync|statSync|scanSync|glob|Glob)\s*\([^\n]*|\b(?:cwd|dir|root|base)\s*:\s*)(["'`])\.?\/?docs(\/[^"'`\n]*)?\1/;
 
+/**
+ * Source under the scanned trees — **including files not yet committed**.
+ *
+ * This used to call `git ls-files` directly, which lists tracked files only.
+ * That made the guard blind to exactly the files most likely to violate it:
+ * `gen-themes-css.ts` and `theme-tokens.test.ts` both hardcoded the site root,
+ * a full local `bun test` reported 0 fail, and CI after the commit was the
+ * earliest possible detection. Bean `bgle`.
+ */
 function sourceFiles(): string[] {
-  const out: string[] = [];
-  for (const t of TREES) {
-    const proc = Bun.spawnSync(["git", "ls-files", t], { cwd: ROOT });
-    for (const line of new TextDecoder().decode(proc.stdout).split("\n")) {
-      if (line.endsWith(".ts") || line.endsWith(".mjs")) out.push(line);
-    }
-  }
-  return out;
+  return repoFilesWithExt(ROOT, TREES, [".ts", ".mjs"]);
 }
 
 describe("the site root is one answer, not a literal", () => {

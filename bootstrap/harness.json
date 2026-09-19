@@ -1,0 +1,21 @@
+{
+  "_comment": "The bootstrap instance — the SMALLEST possible CatHarness declaration, and deliberately minimal. It declares no DIRECTORIES, which is not the same as holding no graph: `bootstrap.jsonld`, `kg-navigation.md`, `determine-intent.md` and `workflows/bootstrap.bpmn` are nodes, and an agent reaches them BY NAME from the README rather than by scanning — scanning needs a reader it has not loaded yet. The enclosing instance is where the scan is declared: `../harness.json` carries a `bootstrap` directory entry, and that is what puts these nodes in this repository's export. A directory declared here as well would be the same fact in two files, free to drift. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it. See fsh-guts/proposals/bootstrap.md §1 and §7.",
+  "name": "bootstrap",
+  "description": "The graph an agent reads before it knows what this repository is.",
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — bootstrap",
+      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no beans. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached."
+    },
+    {
+      "id": "readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "bootstrap",
+      "description": "The flow, with every term linked to the schema that defines it. Self-documenting on GitHub: a person landing on the directory reads the thing itself rather than a pointer to a site."
+    }
+  ]
+}

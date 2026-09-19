@@ -68,8 +68,32 @@
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     }
   ],
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — folio-assistant",
+      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
+      "source": {
+        "instance": "litlfred/folio-assistant",
+        "path": "bootstrap/AGENTS.md"
+      }
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "folio-assistant",
+      "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
+    }
+  ],
   "stub": "folio-assistant",
   "canonicalUrl": "https://litlfred.github.io/folio-assistant",
+  "_publication_comment": "The `publication host` axis of docs/proposals/deployment-topologies.md, accepted 2026-09-19 (issue #363). WHAT KIND of host serves the renderings \u2014 distinct from `canonicalUrl` (the base @ids are minted against) and from `readme.linkStyle` in harness.config.json (how a link to a published artefact is written). This instance really does publish to GitHub Pages, so it declares so; an instance that has not said is `undefined`, which is a third state and must never be read as `github-pages`.",
+  "publication": {
+    "host": "github-pages"
+  },
   "directories": [
     {
       "id": "tools",
@@ -91,7 +115,7 @@
     {
       "id": "bootstrap",
       "path": "bootstrap/",
-      "description": "The bootstrap graph — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` now returns two, and every consumer that reads it rather than the literal `skills/` finds both without a code change. It does not import the harness graph and names no node outside itself, because an agent cold-starting has established that neither exists. `bootstrap/README.md` is the entry point and is NOT a skill — `isSkillMd` excludes a README by name, since a README is documentation ABOUT a directory and never a node in it.",
+      "description": "The bootstrap graph — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` now returns two, and every consumer that reads it rather than the literal `skills/` finds both without a code change. It names no node outside itself, because an agent cold-starting has established that nothing outside it exists yet. `bootstrap/README.md` is the entry point and is NOT a skill — `isSkillMd` excludes a README by name, since a README is documentation ABOUT a directory and never a node in it. NOTE the double declaration, which is deliberate: `bootstrap/harness.json` declares bootstrap as an INSTANCE in its own right (#408), because a cold agent reads it standing alone and a copy of it is the origin every other instance descends from. That says what bootstrap IS; this entry says that THIS repository scans it. Dropping this entry because the nested declaration exists is what a merge did on 2026-09-19, and it took `skill/determine-intent` out of the export while the process node still named it — three tests caught it as a dangling `implementedBy`, which is the `dh4f` shape read from the other end: not a directory declared and absent, but one present and undeclared.",
       "graphs": [
         "cat-harness"
       ]
@@ -110,6 +134,14 @@
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Three kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) and `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote). The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "graphs": [
         "qa"
+      ]
+    },
+    {
+      "id": "fsh-guts",
+      "path": "fsh-guts/",
+      "description": "The trashcan that is kept. Deprecated and throwaway structured content \u2014 addressable, exported as <base>/fsh-guts.jsonld, and DELIBERATELY absent from the rendered site. Every other declared kind here is non-renderable because it is a graph a tool reads and there was never a page to make of it; this one's contents could be rendered and are not, so that something can be kept without being published. It is also the destination that makes the never-delete rule enforceable beyond beans: AGENTS.md forbids deleting a bean because a scrapped item stops the next agent re-entering a dead end while a deleted one cannot be told from an accident, and that reasoning was always general \u2014 an agent removing a page or a script had only `rm`. Delete now means relocate here, and relocate is reversible. Files declare themselves with `$schema: folio-fsh-guts/v1`, per the same contract the bean and workflow stores use. NOTE on the name: `.fsh` is FHIR Shorthand in this codebase and across the WHO SMART folios; the collision was raised and the owner confirmed this spelling.",
+      "graphs": [
+        "fsh-guts"
       ]
     },
     {

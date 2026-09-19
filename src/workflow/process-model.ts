@@ -184,6 +184,20 @@ export interface ProcessModel {
    * judgement about its domain applies.
    */
   enforcement: "strict" | "advisory";
+  /**
+   * `<folio:log capture="on|off"/>` on the process — whether running THIS
+   * workflow writes activity-log entries to the data store.
+   *
+   * Three-valued, and the third value is the point: `undefined` means the
+   * process did not say, which `resolveCapture` reads as `unknown` rather
+   * than as `off`. `off` is somebody's decision; `unknown` is nobody having
+   * made one, and an agent that cannot tell whether its audit trail is being
+   * kept must say so. The owner's ask was explicit opt-in — *"need explicit
+   * like (capture log when agent runs this workflow)"* — so an unmarked
+   * process does not reach the store either way; what differs is whether the
+   * agent can report a decision or only a default.
+   */
+  logCapture?: "on" | "off";
   /** The process's lanes, in document order. A lane IS a role — see below. */
   lanes: LaneDef[];
   /** Every start event, in document order. */
@@ -324,6 +338,7 @@ interface ModdleElement {
       ref?: string;
       op?: string;
       enforcement?: string;
+      capture?: string;
       relaxable?: string;
       reason?: string;
       kinds?: string;
@@ -486,6 +501,25 @@ export async function loadProcessModel(
   // turns the gate off.
   const enforcement: "strict" | "advisory" = declared === "advisory" ? "advisory" : "strict";
 
+  // `<folio:log capture="…"/>`, THROWING on a value that is not implemented,
+  // exactly as `folio:bean op` does. A diagram that asks for a capture mode
+  // the engine does not have must not load and quietly log nothing — that is
+  // the two-records divergence in a different costume, and it is worse here
+  // because the missing artefact is the record of what happened.
+  //
+  // `unknown` is deliberately NOT accepted as a declared value. It is what
+  // the absence of a declaration resolves to; writing it down would be
+  // asserting that nobody could tell, which is not something a diagram is in
+  // a position to assert about itself.
+  const captureDeclared = procExt.find((v) => v.$type === "folio:log")?.capture;
+  if (captureDeclared !== undefined && captureDeclared !== "on" && captureDeclared !== "off") {
+    throw new UnsupportedBpmn(
+      `${basename(bpmnPath)}: folio:log capture="${captureDeclared}" is not implemented. ` +
+        `Use "on" or "off"; omit the element to leave it undetermined.`,
+    );
+  }
+  const logCapture = captureDeclared as "on" | "off" | undefined;
+
   const startNodes = [...nodes.values()].filter((n) => n.kind === "start").map((n) => n.id);
   if (startNodes.length === 0) {
     throw new UnsupportedBpmn(`${basename(bpmnPath)}: no start event, so nothing can begin`);
@@ -520,6 +554,7 @@ export async function loadProcessModel(
     source: bpmnPath,
     dir: dirname(bpmnPath),
     enforcement,
+    logCapture,
     nodes,
     flows,
     lanes,

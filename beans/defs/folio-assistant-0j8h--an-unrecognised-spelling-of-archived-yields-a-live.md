@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0j8h
 title: 'An unrecognised spelling of archived: yields a LIVE, UNTAGGED memory node that reaches every agent'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T11:01:24Z
-updated_at: 2026-09-19T11:01:24Z
+updated_at: 2026-09-19T12:54:46Z
 parent: folio-assistant-8jt6
 ---
 
@@ -107,3 +107,17 @@ An unrecognised `archived:` value cannot produce a live, untagged node, and a
 test asserts the leak case directly: a node whose `archived` spelling the
 reader does not understand must not appear in `memoryForAgent(nodes, <an agent
 it was never tagged for>)`. The four-spelling probe above is the fixture.
+
+_2026-09-19T12:54:46Z_ — Fixed. The reader now refuses an `archived:` value it does not understand, and accepts every YAML boolean spelling in any case.
+
+A CORRECTION TO THIS BEAN'S OWN RECOMMENDATION, found before writing the fix and worth more than the fix. I recommended option 3 — validate the front matter against MemoryNodeSchema — on the grounds that the schema already declares `archived: z.boolean().optional()` and was simply never consulted. That is wrong on the second half: scripts/agent-memory.ts:236 ALREADY calls MemoryNodeSchema.safeParse on every node and throws on failure. Option 3 was in place the whole time and structurally cannot catch this defect, because the coercion at line 218 dropped an unrecognised value BEFORE safeParse ever saw the node. The schema was handed absence, not a bad value, and absence is valid for an optional field. So the answer was option 2 — refuse what the reader does not understand — and I would have written the wrong fix had I not read the surrounding twenty lines first.
+
+WHAT CHANGED. `readArchivedFlag(raw, where)` maps the scalar to boolean | undefined or throws: true/yes/on and false/no/off, case-insensitive, plus the quoted forms the front-matter reader already strips. An unrecognised value throws naming the file, the value and the accepted spellings. An empty scalar (`archived:` with nothing after it, which the reader represents as []) also throws, because that is an author who meant something and typed nothing rather than an author who meant false.
+
+VERIFIED BY REPRODUCING THE LEAK, not by the tests alone. The same four-spelling probe this bean was opened on, re-run through the fixed reader: probe-TRUE, probe-True and probe-yes all now read archived=true, and 'reaching an UNRELATED agent' is 0 of 3, against 3 of 4 before. The real corpus is unaffected — 'bun run agent-memory' reports ci-health-watcher 187 and platform-boundary-guard 186, both unchanged, so no existing node used a spelling that now throws.
+
+TWO TESTS, both confirmed failing against the old reader before the fix went in, which is what makes them regression tests rather than tautologies: one asserts an unrecognised spelling throws with the file and the value in the message; one asserts all seven truthy and six falsy spellings are understood, and that a FALSE spelling yields a live node that reaches an untagged reader deliberately.
+
+Gates: bun test 2612 tests / 0 fail, eslint 0, tsc --noEmit 0, agent-memory:check 0, kg:audit:check 0, gen-skill-docs --check 0, gen-docs-pages --check 0, check:harness-dirs 0 — exit codes checked bare rather than through a pipe.
+
+NOT DONE, deliberately: the same silent-coercion shape exists for other front-matter fields in this reader — label, createdAt and the measured* trio are all String(...) with a fallback, so a typo in a key name yields an empty string rather than an error. I did not widen into that; it is a different defect with a different blast radius and deserves its own bean if anybody wants it.

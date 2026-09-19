@@ -279,6 +279,68 @@ describe("archived entries are retained but injected nowhere", () => {
       rmSync(dir, { recursive: true, force: true });
     }
   });
+
+  test("a spelling the reader does not understand is REFUSED, not silently dropped", () => {
+    // The test above pins the two spellings that work. This pins what happens
+    // to the ones that do not, and the answer has to be an error rather than
+    // absence.
+    //
+    // `archived` is `z.boolean().optional()`, so the schema cannot catch this:
+    // an unrecognised value was COERCED AWAY before `safeParse` ever saw the
+    // node, leaving the field absent -- which is valid. The node then came
+    // back live, and because an archived entry has typically lost its `agents`
+    // tag, the untagged clause handed it to EVERY agent. Measured on `main` at
+    // `e94288562`: of `true`, `TRUE`, `True` and `yes`, three leaked to an
+    // agent they were never tagged for.
+    //
+    // The two directions are not symmetric, which is why this refuses rather
+    // than guessing. Too loose and an entry an author meant to keep goes
+    // missing -- visible, and the agent's own work shows it. Too strict, as it
+    // was, and the entry goes to everybody: a widened blast radius that
+    // nothing reports on and no budget check counts.
+    const dir = mkdtempSync(join(tmpdir(), "memory-archived-bad-"));
+    try {
+      writeFileSync(
+        join(dir, "typo.md"),
+        `---\n$schema: ${MEMORY_SCHEMA_TAG}\nid: typo\nlabel: stable\n` +
+          `summary: "typo"\ncreatedAt: 2026-09-19\narchived: probably\nagents:\n---\nbody\n`,
+      );
+      expect(() => readMemoryNodes(dir)).toThrow(/archived/);
+      // The message has to name the value and the file, or the author cannot
+      // act on it.
+      expect(() => readMemoryNodes(dir)).toThrow(/probably/);
+      expect(() => readMemoryNodes(dir)).toThrow(/typo\.md/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("every YAML boolean spelling of archived is understood, in both cases", () => {
+    // Accepting only `true` would fix the spellings somebody thought of. An
+    // author writing YAML may reasonably write any of these, and each is
+    // unambiguously the same boolean.
+    const dir = mkdtempSync(join(tmpdir(), "memory-archived-yaml-"));
+    try {
+      const node = (id: string, archived: string): string =>
+        `---\n$schema: ${MEMORY_SCHEMA_TAG}\nid: ${id}\nlabel: stable\n` +
+        `summary: "${id}"\ncreatedAt: 2026-09-19\narchived: ${archived}\nagents:\n---\nbody\n`;
+      const truthy = ["true", "True", "TRUE", "yes", "Yes", "on", '"true"'];
+      const falsy = ["false", "False", "FALSE", "no", "No", "off"];
+      truthy.forEach((v, i) => writeFileSync(join(dir, `t${i}.md`), node(`t${i}`, v)));
+      falsy.forEach((v, i) => writeFileSync(join(dir, `f${i}.md`), node(`f${i}`, v)));
+
+      const nodes = readMemoryNodes(dir);
+      expect(nodes.filter((n) => n.archived).map((n) => n.id).sort()).toEqual(
+        truthy.map((_, i) => `t${i}`),
+      );
+      // A FALSE spelling is not archived, and must not leak either way: it is
+      // a live node, so it reaches an untagged reader deliberately.
+      const live = memoryForAgent(nodes, "anyone").map((n) => n.id).sort();
+      expect(live).toEqual(falsy.map((_, i) => `f${i}`));
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
 });
 
 describe("the budget check sees a TRUNCATED entry, not just a late heading", () => {
