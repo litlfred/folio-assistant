@@ -119,6 +119,7 @@
     },
     "localId": "https://litlfred.github.io/folio-assistant/ns#localId",
     "actorKind": "https://litlfred.github.io/folio-assistant/ns#actorKind",
+    "actorKinds": "https://litlfred.github.io/folio-assistant/ns#actorKinds",
     "bpmnType": "https://litlfred.github.io/folio-assistant/ns#bpmnType",
     "nodeKind": "https://litlfred.github.io/folio-assistant/ns#nodeKind",
     "enforcement": "https://litlfred.github.io/folio-assistant/ns#enforcement",
@@ -211,16 +212,37 @@
         "pr": "https://litlfred.github.io/folio-assistant/ns#stagingRef",
         "run": "https://litlfred.github.io/folio-assistant/ns#stagingRun"
       }
+    },
+    "repository": {
+      "@id": "https://schema.org/codeRepository",
+      "@type": "@id"
+    },
+    "counts": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#counts",
+      "@type": "@json"
+    },
+    "problems": "https://litlfred.github.io/folio-assistant/ns#problems",
+    "undeclaredTerms": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#undeclaredTerms",
+      "@type": "@json"
+    },
+    "undeclaredSchemaModules": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#undeclaredSchemaModules",
+      "@type": "@json"
+    },
+    "danglingLinks": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#danglingLinks",
+      "@type": "@json"
     }
   },
   "danglingLinks": [],
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T06:59:15.896Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/91bdc16f50e37592677f30cdeb7c36a9e3ac4b13",
-  "sourceCommitSha": "91bdc16f50e37592677f30cdeb7c36a9e3ac4b13",
-  "sourceCommitAt": "2026-09-19T08:58:04+02:00",
+  "generatedAt": "2026-09-19T07:23:10.766Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/14fc9228367d43d30a54ea26ff747bfaab41e9fe",
+  "sourceCommitSha": "14fc9228367d43d30a54ea26ff747bfaab41e9fe",
+  "sourceCommitAt": "2026-09-19T09:21:51+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 150,
@@ -234,7 +256,7 @@
     "Tool": 27,
     "Schema": 37,
     "GraphKind": 14,
-    "Directory": 9
+    "Directory": 10
   },
   "problems": [],
   "undeclaredTerms": [],
@@ -16827,6 +16849,16 @@
       "description": "QA witnesses — the PUBLISHED PROJECTION of every verdict, one `qa-witness/v1` document per audited subject, in three families: `block` (a content block, from the QA sweep), `kg` (a process, decision, role or skill, from `kg-audit`) and `translation` (a page's locale coverage). Measured 2026-09-19: 134 documents, 113 / 20 / 1. NOT the verdicts: those live beside their subjects as `*.qa.json` and `kg-qa/*.kg-qa.json`, and are what a checker wrote. A witness is that verdict flattened into the shape the docs panel draws and placed where the site can fetch it, so a wrong verdict is fixed in the checker and a verdict that READS wrongly is fixed in the projector — editing a file here fixes neither, because `gen-docs-pages` discards it. Undeclared until 2026-09-19, which is the `dh4f` defect in reverse: 134 committed files that no declaration mentioned, so a consumer scanning the declared directories saw none of them and reported a clean run over the lot."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/qa-results",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
+      "name": "qa-results",
+      "path": "test/results/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/qa"
+      ],
+      "description": "QA RESULTS — what a QA process produced about a whole produced artefact, as opposed to a verdict about one authored subject. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs here, as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. First tenant: `kg-export.qa-results.json`, the four diagnostics `scripts/kg-export.ts` computes about the graph it just built. A run-scoped RESULT, not a per-subject verdict, which is why it is not a `*.qa.json` or a `kg-qa/` sidecar: its subject is one produced document and its findings are whole-corpus. Declared the same day it was created, deliberately — the `qa` witnesses above spent their whole existence undeclared, which is the `dh4f` defect in reverse, and the remedy for that is to declare a directory when you make it rather than when somebody notices."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/beans",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
       "name": "beans",
@@ -16879,8 +16911,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "91bdc16f50e37592677f30cdeb7c36a9e3ac4b13",
+    "sha": "14fc9228367d43d30a54ea26ff747bfaab41e9fe",
     "pr": "main",
-    "run": "35428038720"
+    "run": "35429119488"
   }
 }
