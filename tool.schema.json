@@ -218,6 +218,31 @@
             }
           },
           "additionalProperties": false
+        },
+        "maintains": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "artefact": {
+                "type": "string",
+                "minLength": 1
+              },
+              "format": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "source",
+              "artefact"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [

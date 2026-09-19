@@ -63,6 +63,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/ns#satisfies",
       "@type": "@id"
     },
+    "maintains": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#maintains",
+      "@type": "@id"
+    },
+    "maintainsFrom": "https://litlfred.github.io/folio-assistant/ns#maintainsFrom",
     "holdsGraph": {
       "@id": "https://litlfred.github.io/folio-assistant/ns#holdsGraph",
       "@type": "@id"
@@ -114,10 +119,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T05:28:39.320Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/222476f77e8c8f4cdf7e8742aa5bef9c12c1ce0c",
-  "sourceCommitSha": "222476f77e8c8f4cdf7e8742aa5bef9c12c1ce0c",
-  "sourceCommitAt": "2026-09-19T07:27:17+02:00",
+  "generatedAt": "2026-09-19T05:31:52.347Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/814b693ed40a951a7b36dbdc798e174a4442911f",
+  "sourceCommitSha": "814b693ed40a951a7b36dbdc798e174a4442911f",
+  "sourceCommitAt": "2026-09-19T07:30:31+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 149,
@@ -128,7 +133,7 @@
     "Process": 30,
     "SequenceFlow": 416,
     "ProcessNode": 387,
-    "Tool": 24,
+    "Tool": 27,
     "GraphKind": 13,
     "Directory": 7
   },
@@ -249,6 +254,14 @@
       "occurrences": 30
     },
     {
+      "term": "install",
+      "onTypes": [
+        "Capability",
+        "Tool"
+      ],
+      "occurrences": 28
+    },
+    {
       "term": "workPlanOp",
       "onTypes": [
         "ProcessNode"
@@ -256,12 +269,25 @@
       "occurrences": 28
     },
     {
-      "term": "install",
+      "term": "invoke",
       "onTypes": [
-        "Capability",
         "Tool"
       ],
-      "occurrences": 25
+      "occurrences": 27
+    },
+    {
+      "term": "io",
+      "onTypes": [
+        "Tool"
+      ],
+      "occurrences": 27
+    },
+    {
+      "term": "satisfiesSkillNames",
+      "onTypes": [
+        "Tool"
+      ],
+      "occurrences": 27
     },
     {
       "term": "capabilities",
@@ -271,30 +297,9 @@
       "occurrences": 24
     },
     {
-      "term": "invoke",
-      "onTypes": [
-        "Tool"
-      ],
-      "occurrences": 24
-    },
-    {
-      "term": "io",
-      "onTypes": [
-        "Tool"
-      ],
-      "occurrences": 24
-    },
-    {
       "term": "roles",
       "onTypes": [
         "Actor"
-      ],
-      "occurrences": 24
-    },
-    {
-      "term": "satisfiesSkillNames",
-      "onTypes": [
-        "Tool"
       ],
       "occurrences": 24
     },
@@ -16817,6 +16822,137 @@
       ],
       "satisfiesSkillNames": [
         "kg-export"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/cat-harness-schema",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "cat-harness-schema",
+      "title": "Instance declaration schema",
+      "description": "The zod definition of `cat-harness.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:schema"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "baseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "description": "Publication base; a preview passes its own.",
+            "required": false,
+            "arg": {
+              "flag": "--base-url"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "schema",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The written JSON Schema."
+          }
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "satisfiesSkillNames": [
+        "kg-export"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.schema.json"
+      ],
+      "maintainsFrom": [
+        "schemas/cat-harness.ts"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/tool-schema",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "tool-schema",
+      "title": "Tool node schema",
+      "description": "The zod definition of a Tool node — what `defineTool` accepts — and the published JSON Schema generated from it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:schema"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "baseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "required": false,
+            "arg": {
+              "flag": "--base-url"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "schema",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "satisfiesSkillNames": [
+        "kg-export"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/tool.schema.json"
+      ],
+      "maintainsFrom": [
+        "schemas/tool.ts"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/tool-types-schema",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Tool",
+      "name": "tool-types-schema",
+      "title": "Tool I/O type vocabulary",
+      "description": "The zod definitions of the shared types a Tool's inputs and outputs reference by IRI, and the published JSON Schema whose `$defs` those IRIs point into.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run kg:schema"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "baseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "required": false,
+            "arg": {
+              "flag": "--base-url"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "schema",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-export"
+      ],
+      "satisfiesSkillNames": [
+        "kg-export"
+      ],
+      "maintains": [
+        "https://litlfred.github.io/folio-assistant/tool-types.schema.json"
+      ],
+      "maintainsFrom": [
+        "schemas/tool-types.ts"
       ]
     },
     {
