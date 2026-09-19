@@ -232,6 +232,18 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "knowledge-graph reference to a source resolves through here, never to a loose path " +
       "or a bare URL.",
   },
+  // Named editorial voice profiles, overlaid on the base house voice. A
+  // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
+  // simply available: the activation list in `harness.config.json` is what makes
+  // a voice apply, and a graph kind that conflated the two would have no place
+  // to record that this instance ships four voices and activates none.
+  voices: {
+    type: `${FOLIO_NS}VoiceGraph`,
+    renderable: false,
+    summary:
+      "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
+      "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
+  },
   "todo-feedback": {
     type: `${FOLIO_NS}TodoFeedbackGraph`,
     renderable: false,

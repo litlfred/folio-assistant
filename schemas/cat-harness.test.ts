@@ -188,7 +188,7 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds — the harness declares eleven, core adds folio", () => {
+describe("graph kinds — the harness declares twelve, core adds folio", () => {
   it("the harness's own vocabulary contains no renderable kind", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
@@ -209,6 +209,7 @@ describe("graph kinds — the harness declares eleven, core adds folio", () => {
       "todos",
       "tools",
       "uploads",
+      "voices",
       "workflow-state",
     ]);
     for (const def of Object.values(BASE_GRAPH_KINDS)) {
@@ -224,7 +225,7 @@ describe("graph kinds — the harness declares eleven, core adds folio", () => {
     expect(bare.names().sort()).toEqual([
       "bean-defs", "beans", "kg", "library", "schemas",
       "todo-feedback", "todo-items", "todos",
-      "tools", "uploads", "workflow-state",
+      "tools", "uploads", "voices", "workflow-state",
     ]);
   });
 

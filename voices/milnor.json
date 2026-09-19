@@ -1,0 +1,123 @@
+{
+  "$schema": "folio-voice/v1",
+  "id": "milnor",
+  "title": "Milnor exposition standard",
+  "description": "The eight hallmarks of the house exposition standard, scored 0-2 each with sixteen the only passing total. A HOUSE STANDARD named after the qualities of John Milnor's mathematical exposition — not an extract from his writing, and nothing in it is attributed to him. It is the one voice in this instance with no ingested source, and it says so: every rule cites the skill section that states it rather than a document in library/.",
+  "sources": [
+    {
+      "title": "One-Voice Style Guide — The Milnor exposition standard",
+      "kgRef": "skills/folio-core/one-voice-style-guide.md"
+    }
+  ],
+  "appliesTo": ["prose", "remark", "example", "algorithm"],
+  "rules": [
+    {
+      "id": "milnor-h1-economy",
+      "title": "H1 — Economy: every sentence carries weight",
+      "description": "0 if a paragraph could be deleted with no loss. 1 if sentences restate their neighbours, or a closing line summarises what was just said. 2 when nothing can be removed without losing content. The closing-summary failure is the common one and it has a mechanical counterpart in `trap-thesis-restatement`.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "kgRef": "skills/folio-core/one-voice-style-guide.md#the-milnor-exposition-standard",
+        "quote": "H1 Economy — every sentence carries weight. 0: Paragraphs that could be deleted with no loss. 1: Sentences that restate their neighbours, or a closing line that summarises what was just said. 2: Nothing can be removed without losing content."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h2-concrete-first",
+      "title": "H2 — Concrete before abstract",
+      "description": "0 if the block opens on the general definition and never lands on an instance. 1 if an example arrives but after the abstraction it was meant to motivate. 2 when the reader meets a specific object first and the generalisation then reads as inevitable.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "kgRef": "skills/folio-core/one-voice-style-guide.md#the-milnor-exposition-standard",
+        "quote": "H2 Concrete before abstract — the instance precedes the generalisation. 0: Opens on the general definition and never lands. 1: An example arrives, but after the abstraction it was meant to motivate. 2: The reader meets a specific object first and the generalisation reads as inevitable."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h3-why-before-what",
+      "title": "H3 — Why before what",
+      "description": "0 if the construction appears with no indication of what it is for. 1 if the motivation is present but buried after the construction. 2 when the reader knows what problem is being solved before seeing the tool.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "kgRef": "skills/folio-core/one-voice-style-guide.md#the-milnor-exposition-standard",
+        "quote": "H3 Why before what — the reason precedes the machinery. 0: The construction appears with no indication of what it is for. 1: The motivation is present but buried after the construction. 2: The reader knows what problem is being solved before seeing the tool."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h4-uncluttered-notation",
+      "title": "H4 — Uncluttered notation: symbols earn their place",
+      "description": "0 for notation introduced and used once, for collisions, or for a decorated symbol where a word would do. 1 for more indices or subscripts than the argument needs. 2 when every symbol is used enough to be worth naming and none is overloaded. Fixing this one is not local: notation is shared across a chapter, so check what else binds a symbol before renaming it.",
+      "category": "formatting",
+      "severity": "major",
+      "source": {
+        "kgRef": "skills/folio-core/one-voice-style-guide.md#the-milnor-exposition-standard",
+        "quote": "H4 Uncluttered notation — symbols earn their place. 0: Notation introduced and used once; collisions; decorated symbols where a word would do. 1: More indices or subscripts than the argument needs. 2: Every symbol is used enough to be worth naming, and none is overloaded."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h5-linear-argument",
+      "title": "H5 — Linear argument: the reader never holds two threads",
+      "description": "0 for a forward reference to a result not yet stated. 1 for one aside the reader must park and return to. 2 when it can be read once, top to bottom, and follows. Score this on the FIRST reading — a second pass already knows the argument and cannot recover the property.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "kgRef": "skills/folio-core/one-voice-style-guide.md#the-milnor-exposition-standard",
+        "quote": "H5 Linear argument — the reader never has to hold two threads. 0: Forward references to results not yet stated. 1: One aside the reader must park and return to. 2: Read once, top to bottom, and it follows."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h6-prose-carries-argument",
+      "title": "H6 — Prose carries the argument; the display is evidence",
+      "description": "0 when the argument exists only in the equations and the prose says \"we compute\". 1 when the prose narrates the steps without saying why they follow. 2 when a reader who skipped every display would still follow the argument.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "kgRef": "skills/folio-core/one-voice-style-guide.md#the-milnor-exposition-standard",
+        "quote": "H6 Prose carries the argument — the display is evidence, not the reasoning. 0: The argument exists only in the equations; the prose says \"we compute\". 1: Prose narrates the steps without saying why they follow. 2: A reader who skipped every display would still follow the argument."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h7-right-tool-framing",
+      "title": "H7 — Right-tool framing: the choice of method is visible",
+      "description": "0 for a heavy method deployed with no indication why. 1 for the right tool used without saying what the alternative would have cost. 2 when the reader can see why this tool and not the obvious other one.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "kgRef": "skills/folio-core/one-voice-style-guide.md#the-milnor-exposition-standard",
+        "quote": "H7 Right-tool framing — the method is chosen, and the choice is visible. 0: A heavy method deployed with no indication why. 1: The right tool, used without saying what the alternative would have cost. 2: The reader can see why this tool and not the obvious other one."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h8-respect-for-the-reader",
+      "title": "H8 — Respect for the reader: no flattery, no hedging, no performance",
+      "description": "0 when the text tells the reader what is beautiful, surprising or important. 1 when it hedges a claim it can actually support. 2 when it states what is true and lets the reader judge. This is the hallmark with a mechanical counterpart, and the two disagree in both directions: `voice-editorializing` matches phrase lists, so a block can score 2 here and still trip the checker on a comparative, or pass the checker while performing at the reader in words no list contains.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "kgRef": "skills/folio-core/one-voice-style-guide.md#the-milnor-exposition-standard",
+        "quote": "H8 Respect for the reader — no flattery, no hedging, no performance. 0: Tells the reader what is beautiful, surprising or important. 1: Hedges a claim the text can actually support. 2: States what is true and lets the reader judge."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-brevity-no-repeats",
+      "title": "No content repeated within the block — and the resolve discipline is stricter",
+      "description": "The companion to the eight hallmarks. A repeat may be deleted ONLY where the two occurrences are semantically identical. Where the content differs you may not delete, and you never delete maths — a diagram, an equation or a derivation. Where de-duplication would lose distinct content, keep it, or split the block into several if that aids explication.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "kgRef": "content/pipeline/qa-criteria-registry.ts",
+        "quote": "Companion to expo-milnor-clarity: no content is repeated / duplicated within the block. Resolve discipline is STRICTER than clarity — a repeat may be deleted ONLY when the two occurrences are semantically identical (content unchanged); if the content DIFFERS you may NOT delete, and never delete math content (diagram / equation / derivation)."
+      },
+      "judgementOnly": true
+    }
+  ]
+}
