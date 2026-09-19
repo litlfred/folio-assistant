@@ -338,40 +338,51 @@ Reported by the owner, 2026-09-19:
 Three rules, and each is enforced somewhere different because each can break
 somewhere different.
 
-### 1. A locale directory is translated content because the DECLARATION says so
+### 1. A page is a translation because the PAGE says so
 
-`cat-harness.json` carries one entry per directory of translated pages:
+Three fields in its own front matter, and nothing else anywhere:
 
-```json
-{
-  "id": "docs-fr",
-  "path": "docs/fr/",
-  "locale": "fr",
-  "graphs": ["translated-content"]
-}
+```yaml
+lang: fr                              # this page is French
+nav_exclude: true                     # keep it OUT of the static nav
+translation_source: index.md          # which page it expresses
 ```
 
-`locale` is **required** on a `translated-content` directory and **refused**
-anywhere else — `ContentDirectorySchema` enforces both directions.
+`content/pipeline/translation-index.ts` walks the site and reads those. A page
+with no `lang` is the instance's **source language** — absent means the
+default, not unknown.
 
 **Never match a directory name against a list of language subtags.** That is
 the *"distinguishable by extension … a coincidence of the current layout, not a
-contract"* defect #263 named, moved to directory names, and it is wrong in
-both directions: a folio with a `no/` chapter (Norwegian, or the English word)
-is silently hidden from its own navbar, and a `pt-BR/` or `translated-fr/`
+contract"* defect #263 named, moved to directory names, and it is wrong in both
+directions: a folio with a `no/` chapter (Norwegian, or the English word) is
+silently hidden from its own navbar, and a `pt-BR/` or `translated-fr/`
 directory is silently shown as source. Neither announces itself — the navbar
-simply has the wrong entries in it.
+simply has the wrong entries in it. Put the French page at `accueil-fr.md`
+beside its source and it is indexed correctly; put an English page in a folder
+called `fr/` and it is left alone.
 
-The directory says what to **expect**; the FILE says what it **is**:
+**There is deliberately no `translated-content` graph kind.** A first draft of
+PR #351 added one, with a `locale` field on `ContentDirectory` and one
+`cat-harness.json` entry per locale subtree — ten entries for five locales
+across two subtrees. It worked and it was the wrong axis: it restated what all
+ten files already said, and it grew as O(locales × subtrees). The owner's
+framing is what settles it:
 
-```yaml
-lang: fr                              # must equal the directory's `locale`
-nav_exclude: true                     # keeps it OUT of the static nav
-translation_source: index.md          # which page this expresses
-```
+> narrative/audio/visual content with text should be translatable. its not so
+> much the node schema itself but its content (e.g. markdown, bpmn) should be
+> translatable.
 
-Neither restates the other, so neither can drift from the other, and
-`bun run translation:index:check` fails when they disagree.
+Translatability is a property of a **format within a content type**, and that
+model already exists: `schemas/translation-tools.ts` declares, per content
+type, which formats have an extract/inject pair — Markdown, LaTeX, PlantUML,
+SVG, ArchiMate, Excel, BPMN, FSH, FHIR JSON — and `isTranslatable(contentType,
+extension)` is the predicate. The index asks it rather than inventing a second
+answer, so a `.json` beside a page is data and never a language.
+
+`translations/` **is** declared, as `translation-sources`. That one earns a
+kind: a `.po` catalogue is not content in any language, so no file inside it
+can declare one.
 
 **There is no `nav_order` on a translated page.** It stands where its *source*
 stands, because it replaces that item rather than joining the list. A
@@ -392,8 +403,7 @@ rather than an arbitrary one.
 
 ### 3. The swap, and the fallback that is not a code path
 
-`content/pipeline/translation-index.ts` walks the declared directories and
-writes `docs/_data/translations.json`; `_includes/head_custom.html` publishes it
+`content/pipeline/translation-index.ts` writes `docs/_data/translations.json`; `_includes/head_custom.html` publishes it
 into every page as `#fa-translation-index`; `mountNavLocale` in
 `docs/assets/js/docs-ui.js` reads it.
 
@@ -430,14 +440,15 @@ publishing it.
 
 ### Adding a locale
 
-1. Create the directory and the translated pages, each with `lang`,
-   `nav_exclude: true` and `translation_source`.
-2. Add the `cat-harness.json` entry — one per **directory**, so a locale with
-   pages under both `docs/` and `docs/guides/` gets two.
-3. `bun run translation:index` and commit `docs/_data/translations.json`.
+1. Write the pages, each carrying `lang`, `nav_exclude: true` and
+   `translation_source`. Where they sit is up to you — the convention here is
+   `<dir>/<locale>/<page>.md`, and nothing depends on it.
+2. `bun run translation:index` and commit `docs/_data/translations.json`.
 
-Step 2 is not optional and not inferred. Skip it and the pages stay in the
-navbar under every locale, which is the bug this section exists to record.
+There is no third step and no declaration to remember. The thing that IS easy
+to forget is `nav_exclude`, which is why `translation:index:check` fails
+without it: a translated page left in the static nav is in it for every
+reader, whatever locale they chose, which is the bug this section records.
 
 ## Official vs unofficial
 
@@ -513,10 +524,14 @@ pipeline (IG Publisher) are complementary and independent.
   back-translation at all scores 0 and reads as drift. If no independent
   back-translator has run, the criterion has no verdict, and saying so is the
   honest output.
-- **Do not infer a locale from a directory name.** `docs/fr/` is French
-  because `cat-harness.json` declares it, with a `locale`. A subtag match is
-  wrong in both directions and neither failure announces itself — see
+- **Do not infer a locale from a directory name.** `docs/fr/index.md` is
+  French because it says `lang: fr`. A subtag match is wrong in both
+  directions and neither failure announces itself — see
   [The navbar filters by locale](#the-navbar-filters-by-locale).
+- **Do not add a graph kind for translated content.** It is the same kind of
+  thing as the page it translates, differing by a field the file declares.
+  Translatability is a property of a FORMAT within a content type —
+  `schemas/translation-tools.ts` and `isTranslatable` — not of a directory.
 - **Do not leave a translated page in the static nav.** `nav_exclude: true` is
   what keeps it out, and no amount of client-side work substitutes for it: the
   nav is built once, for every reader, before anybody has chosen a locale.

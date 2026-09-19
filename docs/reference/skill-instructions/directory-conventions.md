@@ -92,24 +92,32 @@ The vocabulary is **open**, and split across two layers.
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
 | `voices` | **harness** | editorial voice profiles — one JSON each, `"$schema": "folio-voice/v1"`. Every rule cites its source. **Opt-in**: shipping a voice does not apply it. | no |
-| `translation-sources` | **harness** | the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection. Read with the [`translation-manager`](translation-manager.md) skill; shape in `schemas/translation.ts`. | no |
-| `translated-content` | **harness** | rendered content in ONE target locale — the OUTPUT of injection. A directory declaring this kind **must** also declare `locale`. Indexed by `content/pipeline/translation-index.ts`, which is what the navbar's locale filter reads. | no |
+| `translation-sources` | **harness** | the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; there is deliberately **no kind for the rendered output**. Read with the [`translation-manager`](translation-manager.md) skill; shape in `schemas/translation.ts`. | no |
 | `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
 
-> **A locale directory is `translated-content` because the declaration says
-> so — never because of its name.** `docs/fr/` is French because
-> `cat-harness.json` carries an entry for it with `locale: "fr"`. Matching a
-> directory name against a list of language subtags is the *"distinguishable
-> by extension … a coincidence of the current layout, not a contract"* defect
-> #263 named, moved to directory names, and it is wrong in **both**
-> directions: a folio with a `no/` chapter (Norwegian, or the English word) is
-> silently hidden from its own navbar, and a `pt-BR/` or `translated-fr/`
-> directory is silently shown as source. Neither failure announces itself.
+> **A rendered translation is not its own graph kind — the FILE declares its
+> language.** `docs/fr/index.md` carries `lang: fr` and
+> `translation_source: index.md` in its own front matter, so it is the same
+> kind of thing as the page it translates: renderable content, differing by a
+> field. `content/pipeline/translation-index.ts` discovers the locale subtrees
+> by reading those fields and **never** matches a directory name against a
+> list of language subtags — that inference is wrong in both directions,
+> silently hiding a `no/` chapter (Norwegian, or the English word) and
+> silently showing a `pt-BR/` or `translated-fr/` one.
 >
-> The directory says what to **expect** (`locale`); the FILE says what it is
-> (`lang`, and `translation_source` naming the page it expresses). Neither
-> restates the other, and `bun run translation:index:check` fails when they
-> disagree — so the split is checked, not merely intended.
+> A first draft of PR #351 did give it a kind, with a `locale` field and one
+> declaration per locale subtree: ten entries for five locales across two
+> subtrees, restating what all ten files already said, growing as
+> O(locales x subtrees). The owner's framing is what settles it —
+> *"narrative/audio/visual content with text should be translatable. its not
+> so much the node schema itself but its content (e.g. markdown, bpmn) should
+> be translatable"*: translatability is a property of a **format within a
+> content type**, which `schemas/translation-tools.ts` already declares and
+> `isTranslatable` already answers, not a property of a directory.
+>
+> `.po` catalogues are the genuine exception, and that is what
+> `translation-sources` is for: they are not content in any language, so no
+> file inside them can declare one.
 
 > **`uploads` and `library` are two kinds, not one, and the split is
 > load-bearing.** They are the two stages of the document-ingestion pipeline,

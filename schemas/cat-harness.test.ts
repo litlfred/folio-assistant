@@ -234,12 +234,12 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       "todo-items",
       "todos",
       "tools",
-      // The two halves of translation, declared separately for the same
-      // reason as `uploads` / `library` above: they are not interchangeable.
-      // A `.po` is fixed by a translator, a rendered page by re-running
-      // injection. Neither is renderable — `translated-content` holds pages
-      // the SITE renders, which is not the same as being a website graph.
-      "translated-content",
+      // The gettext INPUT to injection — `.pot`, `.po`, and the manifests
+      // that make each pair addressable. There is deliberately no matching
+      // kind for the OUTPUT: a rendered translation is the same kind of thing
+      // as the page it translates, differing by a `lang` the file declares
+      // for itself. See this kind's comment in cat-harness.ts for the version
+      // of PR #351 that got this wrong and why.
       "translation-sources",
       "uploads",
       "voices",
@@ -258,8 +258,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     expect(bare.names().sort()).toEqual([
       "bean-defs", "beans", "cat-harness", "library", "qa", "schemas",
       "todo-feedback", "todo-items", "todos",
-      "tools", "translated-content", "translation-sources",
-      "uploads", "voices", "workflow-state",
+      "tools", "translation-sources", "uploads", "voices", "workflow-state",
     ]);
   });
 

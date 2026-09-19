@@ -24,9 +24,10 @@ import { fileURLToPath } from "node:url";
  * What is NOT reproduced is the half of the fix that is not JavaScript:
  * `nav_exclude: true` keeps the translated pages out of the static nav in the
  * first place. That is Jekyll's to honour and is checked in the unit tests
- * instead (`scripts/tests/translation-index.test.ts`), which fail if any
- * declared translated page stops carrying it. A harness that hand-wrote the
- * nav could "verify" it by simply not putting the French item in.
+ * instead (`content/pipeline/translation-index.test.ts`), which walk for pages
+ * declaring a non-source `lang` and fail if any has stopped carrying it. A
+ * harness that hand-writes the nav, as this one does, could "verify" that rule
+ * by simply not putting the French item in — so it does not try.
  *
  * ## Geometry, not textContent
  *

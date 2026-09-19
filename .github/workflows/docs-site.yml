@@ -32,13 +32,10 @@ on:
       - 'scripts/gen-docs-pages.ts'
       - 'content/docs/**'
       - 'scripts/render-bpmn.ts'
-      # The navbar's locale filter reads `docs/_data/translations.json`, which
-      # is derived from the `translated-content` directories the root
-      # declaration names. A locale added to `cat-harness.json` changes the
-      # published navbar and touches nothing under `docs/`, so without these
-      # two paths the site would not rebuild and the new locale would exist
-      # everywhere except on the site.
-      - 'cat-harness.json'
+      # The navbar's locale filter reads `docs/_data/translations.json`, built
+      # by this module from the pages' own front matter. A change to how that
+      # is derived changes the published navbar while touching nothing under
+      # `docs/`, so without this path the site would not rebuild.
       - 'content/pipeline/translation-index.ts'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:

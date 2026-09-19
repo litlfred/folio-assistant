@@ -61,10 +61,10 @@
   code path of its own.
 
   Generated into `docs/_data/translations.json` by
-  `content/pipeline/translation-index.ts`, from the `translated-content`
-  directories `cat-harness.json` declares. NOT from a scan for directories
-  whose names look like language subtags: see that module's header for why
-  that inference is wrong in both directions.
+  `content/pipeline/translation-index.ts`, from what each page DECLARES about
+  itself: `lang`, and `translation_source` naming the page it expresses. NOT
+  from a scan for directories whose names look like language subtags — see
+  that module's header for why that inference is wrong in both directions.
 
   THREE STATES, and the third is the reason this is a JSON island rather than
   an `{% if %}`:

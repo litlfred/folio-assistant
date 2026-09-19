@@ -297,13 +297,18 @@ jobs:
         run: bun run agent-memory:check
           bun run scripts/gen-docs-pages.ts --check
 
-      # The translation index is what the navbar's locale filter reads, and it
-      # is derived from the `translated-content` directories `cat-harness.json`
-      # declares. Three outcomes, and the third is why this is not a plain
-      # diff: exit 2 means the translation set could NOT BE DETERMINED (a
-      # declared directory missing, a page whose front matter will not parse
-      # and that something translates), which must never be published as "this
-      # folio has no translations".
+      # The translation index is what the navbar's locale filter reads. It is
+      # derived from what each page DECLARES — `lang`, and `translation_source`
+      # naming what it expresses — never from a directory whose name looks like
+      # a language subtag. Three outcomes, and the third is why this is not a
+      # plain diff: exit 2 means the translation set could NOT BE DETERMINED
+      # (no Jekyll site where one was expected, or a page whose front matter
+      # will not parse and that something translates), which must never be
+      # published as "this folio has no translations".
+      #
+      # It also catches the one thing that is easy to forget and invisible
+      # locally: a translated page with no `nav_exclude: true` goes into the
+      # statically built navbar for EVERY reader, whatever locale they chose.
       - name: translation index is current
         run: bun run translation:index:check
 

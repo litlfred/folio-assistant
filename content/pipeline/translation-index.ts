@@ -7,28 +7,41 @@
  * `_includes/head_custom.html`, and consumed by `mountNavLocale` in
  * `docs/assets/js/docs-ui.js`.
  *
- * ## Where the directories come from, and where they emphatically do not
+ * ## Where a translation comes from, and where it emphatically does not
  *
- * **From the declaration.** `cat-harness.json` names each directory whose
- * graph kind is `translated-content` and states its `locale`. Nothing here
- * globs for directories, matches a name against a list of language subtags, or
- * reads `fr` out of a path.
+ * **From the file's own front matter.** A page is a translation because it
+ * says `lang: fr`, and it names what it translates with
+ * `translation_source: index.md`. Nothing here globs for directories, matches
+ * a name against a list of language subtags, or reads `fr` out of a path.
  *
  * That is not fastidiousness. A name match is the "distinguishable by
  * extension … a coincidence of the current layout, not a contract" defect #263
  * named, moved to directory names, and it is wrong in BOTH directions: a folio
- * with a `no/` chapter (Norwegian, or the English word) is silently hidden from
- * its own navbar, and a `pt-BR/` or `translated-fr/` directory is silently
- * shown as source. Neither failure announces itself — the navbar simply has
- * the wrong entries in it, which is exactly the bug this file exists to fix.
+ * with a `no/` chapter (Norwegian, or the English word) is silently hidden
+ * from its own navbar, and a `pt-BR/` or `translated-fr/` directory is
+ * silently shown as source. Neither failure announces itself — the navbar
+ * simply has the wrong entries in it, which is exactly the bug this file
+ * exists to fix.
  *
- * ## Two levels, each stating the fact it owns
+ * ## Why the locale directories are NOT declared one by one
  *
- * The DIRECTORY declares what to expect: `docs/fr/` holds French. The FILE
- * declares what it is: `lang: fr`, and `translation_source: index.md` naming
- * the page it expresses. Neither restates the other, so neither can drift from
- * the other — and {@link checkTranslationIndex} fails when they disagree,
- * which is what makes the split checked rather than merely intended.
+ * A first draft of PR #351 added a `translated-content` graph kind and a
+ * `locale` field to `ContentDirectory`, then declared ten directories —
+ * `docs/{ar,es,fr,ru,zh}/` and the same five under `docs/guides/`. It worked.
+ * It was the wrong axis, for three reasons that only look small one at a time:
+ *
+ *   1. **It restated what the files already say.** All ten pages carried
+ *      `lang` and `translation_source` before that change and still do. One
+ *      fact in two places is the drift this repository keeps paying for.
+ *   2. **It grew as O(locales × subtrees).** A sixth locale is two more
+ *      entries; declaring `docs/reference/` translatable is five more.
+ *   3. **Translatability is a property of a FORMAT, not of a directory.** The
+ *      owner, 2026-09-19: *"narrative/audio/visual content with text should be
+ *      translatable. its not so much the node schema itself but its content
+ *      (e.g. markdown, bpmn) should be translatable."* That model already
+ *      exists — `schemas/translation-tools.ts` declares per content type which
+ *      formats have an extract/inject pair, and {@link isTranslatable} is the
+ *      predicate. This module asks IT rather than inventing a second answer.
  *
  * ## Three states, not two
  *
@@ -38,13 +51,13 @@
  * |---|---|---|
  * | ok | the written index matches what the corpus says | 0 |
  * | stale / invalid | it does not, and here is which page | 1 |
- * | unreadable | a declared directory could not be read at all | 2 |
+ * | unreadable | the site root or a translated page could not be read | 2 |
  *
- * The third is the one that matters. A declared directory that cannot be read
- * must NEVER be written into the index as "this locale has no pages" — the
- * navbar would then correctly render a complete absence of translations from
- * an incomplete read. Same rule as the README sections and the CI-health
- * report: could-not-determine is its own answer.
+ * The third is the one that matters. A tree that cannot be read must NEVER be
+ * written into the index as "this folio has no translations" — the navbar
+ * would then render a complete absence of translations from an incomplete
+ * read. Same rule as the README sections and the CI-health report:
+ * could-not-determine is its own answer.
  *
  * Usage:
  *   bun run translation:index          # write docs/_data/translations.json
@@ -54,19 +67,34 @@
  */
 
 import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
-import { dirname, join, relative, resolve, sep } from "node:path";
+import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
 
-import {
-  TRANSLATED_CONTENT_KIND,
-  readDeclaration,
-  type ContentDirectory,
-} from "../../schemas/cat-harness.ts";
 import { LOCALE_RTL } from "../../schemas/translation.ts";
+import { isTranslatable } from "../../schemas/translation-tools.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..", "..");
+
+/**
+ * The Jekyll site directory, relative to the instance root.
+ *
+ * A literal, and a CHECKED one: {@link siteRoot} confirms it by finding
+ * `_config.yml` there and reports "could not determine" rather than scanning
+ * an empty tree if it is not. Every other consumer in this repo uses the same
+ * path — `scripts/gen-docs-pages.ts`'s `OUT_DIR`, `docs-site.yml`'s
+ * `source: ./docs`, `docs/_data/` — so inventing a configurable one here
+ * would add a fifth spelling of a fact that has four already.
+ *
+ * It is not in `cat-harness.json` because `docs/` would have to be declared
+ * with the `folio` kind, which is registered by CORE rather than the harness.
+ * Measured 2026-09-19: adding that entry broke `harness:dirs`,
+ * `kg:schema:check` and `docs:harness:check` plus 9 tests, because those
+ * readers do not import core's registration. That is issue #223's split to
+ * land, not translation's. Bean `folio-assistant-x4a6`.
+ */
+export const SITE_DIR = "docs";
 
 /** Where the generated index lands, relative to the instance root. */
 export const INDEX_PATH = join("docs", "_data", "translations.json");
@@ -110,8 +138,8 @@ export interface TranslationIndex {
 /**
  * A finding about the corpus.
  *
- * Three severities, and the split between the last two is the whole
- * three-states rule made operational:
+ * Three severities, and the split between the last two is the three-states
+ * rule made operational:
  *
  * - `error` — the corpus says something wrong, and the fix is in the corpus.
  * - `unreadable` — the translation set for some page **cannot be determined**.
@@ -122,10 +150,10 @@ export interface TranslationIndex {
  * `note` exists because "unreadable" has to mean something. Three generated
  * pages under `docs/reference/skill-instructions/` carry front matter that
  * strict YAML rejects (an unquoted `:` in a title, a leading backtick). None
- * of them has a translation, so the index is exactly as complete without them
- * — escalating those to `unreadable` would fail the build over a fact the
- * index does not depend on, and a gate that fires on irrelevancies is a gate
- * people start passing with `--no-verify`.
+ * of them is translated and none is a translation, so the index is exactly as
+ * complete without them — escalating those would fail the build over a fact
+ * the index does not depend on, and a gate that fires on irrelevancies is a
+ * gate people start passing with `--no-verify`.
  */
 export interface IndexFinding {
   /** Repo-relative path of the file or directory the finding is about. */
@@ -172,10 +200,10 @@ export function pageKey(url: string): string {
  * something the nav never links to. Otherwise it is the default page
  * permalink style, `/:path/:basename.html`.
  */
-export function pageUrl(relPathFromDocs: string, frontMatter: Record<string, unknown>): string {
+export function pageUrl(relPathFromSite: string, frontMatter: Record<string, unknown>): string {
   const pm = frontMatter.permalink;
   if (typeof pm === "string" && pm.length > 0) return pm.startsWith("/") ? pm : `/${pm}`;
-  return "/" + relPathFromDocs.split(sep).join("/").replace(/\.md$/i, ".html");
+  return "/" + relPathFromSite.split(sep).join("/").replace(/\.md$/i, ".html");
 }
 
 // ── Front matter ────────────────────────────────────────────────
@@ -185,8 +213,8 @@ export function pageUrl(relPathFromDocs: string, frontMatter: Record<string, unk
  *
  * Throws on malformed YAML rather than returning `{}`: a page whose front
  * matter will not parse is a page whose `lang` cannot be read, and treating
- * that as "declares nothing" is how an untranslated-looking French page ends
- * up back in the navbar.
+ * that as "declares nothing" is how a French page ends up back in the navbar
+ * under English — which is the whole bug.
  */
 export function frontMatter(text: string): Record<string, unknown> | undefined {
   if (!text.startsWith("---")) return undefined;
@@ -201,43 +229,74 @@ export function frontMatter(text: string): Record<string, unknown> | undefined {
   return parsed as Record<string, unknown>;
 }
 
-/** Every `.md` under `dir`, recursively, repo-relative and sorted. */
-function markdownFiles(root: string, dir: string): string[] {
+// ── The instance ────────────────────────────────────────────────
+
+/** `harness.config.json`, or `{}` when there is none. */
+function harnessConfig(instanceRoot: string): Record<string, unknown> {
+  const p = join(instanceRoot, "harness.config.json");
+  if (!existsSync(p)) return {};
+  try {
+    return JSON.parse(readFileSync(p, "utf-8")) as Record<string, unknown>;
+  } catch {
+    return {};
+  }
+}
+
+/** The instance's source language. `harness.config.json`, defaulting to `en`. */
+export function sourceLocale(instanceRoot: string): string {
+  const t = harnessConfig(instanceRoot).translation as { defaultLocale?: string } | undefined;
+  return t?.defaultLocale ?? "en";
+}
+
+/** The instance's content type, which decides which formats are translatable. */
+export function contentType(instanceRoot: string): string {
+  const c = harnessConfig(instanceRoot).contentType;
+  // `src/index.ts` defaults a bare repo to `paper`; both declare Markdown
+  // translatable, so the navbar is unaffected either way and the default is
+  // the same one the rest of the platform uses.
+  return typeof c === "string" && c.length > 0 ? c : "paper";
+}
+
+/**
+ * The Jekyll site directory, CONFIRMED rather than assumed.
+ *
+ * Returns `undefined` when `<root>/docs/_config.yml` is not there, and the
+ * caller reports that as unreadable. Scanning a directory that turns out not
+ * to be a Jekyll site would produce an empty index and publish it as "no
+ * translations" — the `dh4f` shape, where a consumer scans nothing and reports
+ * a clean run over it.
+ */
+export function siteRoot(instanceRoot: string): string | undefined {
+  const abs = join(instanceRoot, SITE_DIR);
+  return existsSync(join(abs, "_config.yml")) ? abs : undefined;
+}
+
+/** Every file under `dir` whose extension is translatable for `type`, sorted. */
+function translatablePages(root: string, type: string): string[] {
   const out: string[] = [];
   const walk = (abs: string): void => {
-    for (const e of readdirSync(abs, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+    for (const e of readdirSync(abs, { withFileTypes: true }).sort((a, b) =>
+      a.name.localeCompare(b.name),
+    )) {
       const p = join(abs, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (e.isFile() && /\.md$/i.test(e.name)) out.push(relative(root, p));
+      // Jekyll's own machinery is not content: `_data`, `_includes`,
+      // `_site`. A leading underscore is Jekyll's convention, not a guess
+      // about language.
+      if (e.isDirectory()) {
+        if (!e.name.startsWith("_")) walk(p);
+      } else if (e.isFile() && isTranslatable(type, extname(e.name).toLowerCase())) {
+        out.push(relative(root, p));
+      }
     }
   };
-  walk(dir);
+  walk(root);
   return out;
 }
 
 // ── Building ────────────────────────────────────────────────────
 
-/** The declared directories holding translated content, in declaration order. */
-export function translatedDirectories(instanceRoot: string): ContentDirectory[] {
-  const decl = readDeclaration(instanceRoot);
-  if (!decl) return [];
-  return decl.directories.filter((d) => d.graphs.includes(TRANSLATED_CONTENT_KIND));
-}
-
-/** The instance's source language. `harness.config.json`, defaulting to `en`. */
-export function sourceLocale(instanceRoot: string): string {
-  const p = join(instanceRoot, "harness.config.json");
-  if (!existsSync(p)) return "en";
-  try {
-    const cfg = JSON.parse(readFileSync(p, "utf-8")) as { translation?: { defaultLocale?: string } };
-    return cfg.translation?.defaultLocale ?? "en";
-  } catch {
-    return "en";
-  }
-}
-
 /**
- * Build the index from the declaration and the pages' own front matter.
+ * Build the index from the pages' own front matter.
  *
  * Never throws for content reasons: a corpus problem comes back as a finding
  * so the caller can report every one of them, rather than the first.
@@ -245,235 +304,195 @@ export function sourceLocale(instanceRoot: string): string {
 export function buildTranslationIndex(instanceRoot: string): BuildResult {
   const findings: IndexFinding[] = [];
   const src = sourceLocale(instanceRoot);
-  const docsRoot = join(instanceRoot, "docs");
+  const type = contentType(instanceRoot);
+  const empty: TranslationIndex = { $schema: INDEX_SCHEMA, sourceLocale: src, locales: [], pages: {} };
+
+  const site = siteRoot(instanceRoot);
+  if (!site) {
+    findings.push({
+      where: `${SITE_DIR}/_config.yml`,
+      severity: "unreadable",
+      message:
+        `no Jekyll site here, so the set of translated pages cannot be determined. ` +
+        `Reported rather than indexed as "this folio has no translations": an absent site ` +
+        `and a site with no translations are different answers, and only one of them is ` +
+        `about the corpus.`,
+    });
+    return { index: empty, findings };
+  }
+
+  // One pass over every translatable page, sorting them into sources and
+  // translations by what each one DECLARES. A page with no `lang` is source
+  // language by default — `AGENTS.md`'s rule that absent means the instance's
+  // default rather than unknown.
+  interface Page {
+    rel: string;
+    fm: Record<string, unknown>;
+    lang: string;
+    url: string;
+    title: string;
+  }
+  const sources = new Map<string, Page>();
+  const translations: Page[] = [];
+  const unreadable = new Map<string, string>();
+
+  let files: string[];
+  try {
+    files = translatablePages(site, type);
+  } catch (e) {
+    findings.push({
+      where: SITE_DIR,
+      severity: "unreadable",
+      message: `could not be read: ${e instanceof Error ? e.message : String(e)}`,
+    });
+    return { index: empty, findings };
+  }
+
+  for (const rel of files) {
+    let fm: Record<string, unknown> | undefined;
+    try {
+      fm = frontMatter(readFileSync(join(site, rel), "utf-8"));
+    } catch (e) {
+      unreadable.set(rel.split(sep).join("/"), e instanceof Error ? e.message.split("\n")[0] : String(e));
+      continue;
+    }
+    if (!fm) continue; // no front matter: not a Jekyll page at all.
+    const lang = typeof fm.lang === "string" && fm.lang.length > 0 ? fm.lang : src;
+    const page: Page = {
+      rel,
+      fm,
+      lang,
+      url: pageUrl(rel, fm),
+      title: typeof fm.title === "string" ? fm.title : rel,
+    };
+    if (lang === src) sources.set(pageKey(page.url), page);
+    else translations.push(page);
+  }
+
   const pages: Record<string, IndexedPage> = {};
   const locales = new Set<string>();
-  const declaredDirs = translatedDirectories(instanceRoot);
 
-  // Source pages, so a translation can be matched to one and a fallback item
-  // can carry the source title. Read once, keyed the same way.
-  const declaredAbs = declaredDirs.map((d) => resolve(instanceRoot, d.path));
-  const insideDeclared = (abs: string): boolean =>
-    declaredAbs.some((d) => abs === d || abs.startsWith(d.endsWith(sep) ? d : d + sep));
-
-  const sourceByKey = new Map<string, { relPath: string; url: string; title: string }>();
-  const translatedElsewhere: string[] = [];
-  // Source pages whose front matter would not parse, keyed by their
-  // docs-relative path — the spelling `translation_source` uses. Held rather
-  // than reported: it only becomes a real gap if a translation names one.
-  const unreadableSources = new Map<string, string>();
-  if (existsSync(docsRoot)) {
-    for (const rel of markdownFiles(docsRoot, docsRoot)) {
-      const abs = join(docsRoot, rel);
-      if (insideDeclared(abs)) continue;
-      let fm: Record<string, unknown> | undefined;
-      try {
-        fm = frontMatter(readFileSync(abs, "utf-8"));
-      } catch (e) {
-        unreadableSources.set(
-          rel.split(sep).join("/"),
-          e instanceof Error ? e.message.split("\n")[0] : String(e),
-        );
-        continue;
-      }
-      if (!fm) continue;
-      const lang = typeof fm.lang === "string" ? fm.lang : undefined;
-      // A page declaring a non-source language OUTSIDE every declared
-      // translated-content directory. This is the failure the declaration
-      // exists to make impossible to ship quietly: with no entry in
-      // `cat-harness.json` it is invisible to this index, so it stays in the
-      // static nav and shows up under English — the reported bug, exactly.
-      if (lang && lang !== src) {
-        translatedElsewhere.push(join("docs", rel));
-        continue;
-      }
-      const url = pageUrl(rel, fm);
-      sourceByKey.set(pageKey(url), {
-        relPath: join("docs", rel),
-        url,
-        title: typeof fm.title === "string" ? fm.title : rel,
-      });
-    }
-  }
-
-  for (const p of translatedElsewhere) {
-    findings.push({
-      where: p,
-      severity: "error",
-      message:
-        `declares a non-source \`lang\` but sits outside every declared ` +
-        `\`${TRANSLATED_CONTENT_KIND}\` directory, so nothing knows it is a translation ` +
-        `and it stays in the navbar under the source language. Declare its directory in ` +
-        `cat-harness.json with a \`locale\`.`,
-    });
-  }
-
-  for (const dir of declaredDirs) {
-    const abs = resolve(instanceRoot, dir.path);
-    const locale = dir.locale as string; // the schema guarantees it on this kind
-    if (!existsSync(abs)) {
+  for (const t of translations) {
+    const where = `${SITE_DIR}/${t.rel.split(sep).join("/")}`;
+    // `nav_exclude` is what keeps the page out of the STATIC nav. Without it
+    // just-the-docs lists the translation beside its source and the locale
+    // filter has nothing to remove — the entries are already rendered, for
+    // every reader, whatever locale they chose. That IS the reported bug.
+    if (t.fm.nav_exclude !== true) {
       findings.push({
-        where: dir.path,
+        where,
+        severity: "error",
+        message:
+          `declares \`lang: ${t.lang}\` but not \`nav_exclude: true\`, so just-the-docs ` +
+          `renders it into the navbar for every reader whatever locale they selected. The ` +
+          `locale filter swaps nav items; it cannot un-render one.`,
+      });
+      continue;
+    }
+    // A translated page has no nav position of its own: it stands where its
+    // SOURCE stands, because it replaces that item rather than joining the
+    // list. `nav_order` beside `nav_exclude` is two facts that contradict
+    // each other, and a reader cannot tell which was meant.
+    if (t.fm.nav_order !== undefined) {
+      findings.push({
+        where,
+        severity: "error",
+        message:
+          `declares \`nav_order: ${String(t.fm.nav_order)}\` as well as \`nav_exclude\`. A ` +
+          `translated page takes its source page's position, because it replaces that item ` +
+          `rather than joining the list. Remove the \`nav_order\`.`,
+      });
+      continue;
+    }
+    const source = typeof t.fm.translation_source === "string" ? t.fm.translation_source : "";
+    if (!source) {
+      findings.push({
+        where,
+        severity: "error",
+        message:
+          `declares \`lang: ${t.lang}\` but no \`translation_source\`, so nothing says which ` +
+          `page it translates — and the navbar has no item to put it in place of.`,
+      });
+      continue;
+    }
+    const sourceRel = source.split("/").join(sep);
+    const sourceAbs = join(site, sourceRel);
+    const why = unreadable.get(source);
+    if (why !== undefined) {
+      findings.push({
+        where,
         severity: "unreadable",
         message:
-          `declared as \`${TRANSLATED_CONTENT_KIND}\` (${locale}) but the directory is not ` +
-          `there. An absent directory and an empty one are indistinguishable to a consumer ` +
-          `— which is the \`dh4f\` defect — so this is reported rather than indexed as ` +
-          `"this locale has no pages".`,
+          `translates ${SITE_DIR}/${source}, whose own front matter will not parse (${why}), ` +
+          `so the URL this translation should replace cannot be determined. Reported rather ` +
+          `than guessed: a wrong nav target is worse than a missing one.`,
       });
       continue;
     }
-    let files: string[];
-    try {
-      files = markdownFiles(abs, abs);
-    } catch (e) {
+    if (!existsSync(sourceAbs)) {
       findings.push({
-        where: dir.path,
-        severity: "unreadable",
-        message: `could not be read: ${e instanceof Error ? e.message : String(e)}`,
+        where,
+        severity: "error",
+        message: `\`translation_source: ${source}\` names ${SITE_DIR}/${source}, which is not there.`,
       });
       continue;
     }
-    locales.add(locale);
-    for (const rel of files) {
-      const fileRel = join(dir.path, rel).split(sep).join("/");
-      let fm: Record<string, unknown> | undefined;
-      try {
-        fm = frontMatter(readFileSync(join(abs, rel), "utf-8"));
-      } catch (e) {
-        findings.push({
-          where: fileRel,
-          severity: "unreadable",
-          message: `front matter will not parse: ${e instanceof Error ? e.message : String(e)}`,
-        });
-        continue;
-      }
-      if (!fm) {
-        findings.push({
-          where: fileRel,
-          severity: "error",
-          message: `no front matter, so it declares neither \`lang\` nor \`translation_source\`.`,
-        });
-        continue;
-      }
-      if (fm.lang !== locale) {
-        findings.push({
-          where: fileRel,
-          severity: "error",
-          message:
-            `declares \`lang: ${String(fm.lang ?? "(none)")}\` but sits in a directory ` +
-            `declared \`locale: ${locale}\`. The directory says what to expect and the file ` +
-            `says what it is; when they disagree one of them is wrong and neither can be ` +
-            `preferred silently.`,
-        });
-        continue;
-      }
-      // `nav_exclude` is what keeps the page out of the STATIC nav. Without it
-      // just-the-docs lists the translation beside its source and the locale
-      // filter has nothing to remove — the entries are already rendered.
-      if (fm.nav_exclude !== true) {
-        findings.push({
-          where: fileRel,
-          severity: "error",
-          message:
-            `is translated content but does not declare \`nav_exclude: true\`, so ` +
-            `just-the-docs renders it into the navbar for every reader whatever locale ` +
-            `they selected. The locale filter swaps nav items; it cannot un-render one.`,
-        });
-        continue;
-      }
-      // A translated page has no nav position of its own: it stands where its
-      // SOURCE stands, because that is what "in place of" means. Leaving a
-      // `nav_order` behind is two facts that disagree — one saying "put me at
-      // 1.1", the other saying "do not list me" — and the next reader cannot
-      // tell which is the intent.
-      if (fm.nav_order !== undefined) {
-        findings.push({
-          where: fileRel,
-          severity: "error",
-          message:
-            `declares \`nav_order: ${String(fm.nav_order)}\` as well as \`nav_exclude\`. A ` +
-            `translated page takes its source page's position, because it replaces that item ` +
-            `rather than joining the list. Remove the \`nav_order\`.`,
-        });
-        continue;
-      }
-      const source = typeof fm.translation_source === "string" ? fm.translation_source : "";
-      if (!source) {
-        findings.push({
-          where: fileRel,
-          severity: "error",
-          message: `declares no \`translation_source\`, so nothing says which page it translates.`,
-        });
-        continue;
-      }
-      const sourceAbs = join(docsRoot, source);
-      // The one case where an unparseable SOURCE page matters: a translation
-      // names it, so its URL is load-bearing and cannot be determined.
-      const why = unreadableSources.get(source.split(sep).join("/"));
-      if (why !== undefined) {
-        findings.push({
-          where: fileRel,
-          severity: "unreadable",
-          message:
-            `translates docs/${source}, whose own front matter will not parse (${why}), so ` +
-            `the URL this translation should replace cannot be determined. Reported rather ` +
-            `than guessed: a wrong nav target is worse than a missing one.`,
-        });
-        continue;
-      }
-      if (!existsSync(sourceAbs)) {
-        findings.push({
-          where: fileRel,
-          severity: "error",
-          message: `\`translation_source: ${source}\` names docs/${source}, which is not there.`,
-        });
-        continue;
-      }
-      let sfm: Record<string, unknown> | undefined;
-      try {
-        sfm = frontMatter(readFileSync(sourceAbs, "utf-8")) ?? {};
-      } catch {
-        sfm = {};
-      }
-      const key = pageKey(pageUrl(source, sfm));
-      const known = sourceByKey.get(key);
-      const entry = (pages[key] ??= {
-        sourceUrl: known?.url ?? pageUrl(source, sfm),
-        sourceTitle: known?.title ?? (typeof sfm.title === "string" ? sfm.title : source),
-        translations: {},
-      });
-      if (entry.translations[locale]) {
-        findings.push({
-          where: fileRel,
-          severity: "error",
-          message:
-            `is a second ${locale} translation of docs/${source}; the first was ` +
-            `${entry.translations[locale].url}. One page cannot have two translations in ` +
-            `one locale without something choosing between them.`,
-        });
-        continue;
-      }
-      entry.translations[locale] = {
-        url: pageUrl(join(dir.path.replace(/^docs[/\\]?/, ""), rel), fm),
-        title: typeof fm.title === "string" ? fm.title : rel,
-        status: typeof fm.translation_status === "string" ? fm.translation_status : "",
-        dir: LOCALE_RTL[locale] ? "rtl" : "ltr",
-      };
+    let sfm: Record<string, unknown>;
+    try {
+      sfm = frontMatter(readFileSync(sourceAbs, "utf-8")) ?? {};
+    } catch {
+      sfm = {};
     }
+    const key = pageKey(pageUrl(sourceRel, sfm));
+    const known = sources.get(key);
+    if (!known) {
+      findings.push({
+        where,
+        severity: "error",
+        message:
+          `\`translation_source: ${source}\` resolves to a page that is not in the source ` +
+          `language (${src}). A translation of a translation has no item in the navbar to ` +
+          `replace.`,
+      });
+      continue;
+    }
+    const entry = (pages[key] ??= {
+      sourceUrl: known.url,
+      sourceTitle: known.title,
+      translations: {},
+    });
+    if (entry.translations[t.lang]) {
+      findings.push({
+        where,
+        severity: "error",
+        message:
+          `is a second ${t.lang} translation of ${SITE_DIR}/${source}; the first was ` +
+          `${entry.translations[t.lang].url}. One page cannot have two translations in one ` +
+          `locale without something choosing between them.`,
+      });
+      continue;
+    }
+    locales.add(t.lang);
+    entry.translations[t.lang] = {
+      url: t.url,
+      title: t.title,
+      status: typeof t.fm.translation_status === "string" ? t.fm.translation_status : "",
+      dir: LOCALE_RTL[t.lang] ? "rtl" : "ltr",
+    };
   }
 
   // Reported, at a severity that does not gate. Silence here would be the
   // wrong kind of tidy: a page nobody can parse today is a page nobody can
   // translate tomorrow, and the reader of this output is the person who would
   // otherwise find that out the hard way.
-  for (const [rel, why] of [...unreadableSources].sort(([a], [b]) => a.localeCompare(b))) {
+  for (const [rel, why] of [...unreadable].sort(([a], [b]) => a.localeCompare(b))) {
     findings.push({
-      where: `docs/${rel}`,
+      where: `${SITE_DIR}/${rel}`,
       severity: "note",
       message:
-        `front matter will not parse (${why}). No translation names this page, so the index ` +
-        `is complete without it — but it could not be translated as things stand.`,
+        `front matter will not parse (${why}). Nothing translates this page and it is not ` +
+        `itself a translation, so the index is complete without it — but it could not be ` +
+        `translated as things stand.`,
     });
   }
 
@@ -546,7 +565,7 @@ if (import.meta.main) {
     if (r.state === "unreadable") {
       console.error(
         "\nCould not determine the translation set. NOT written, and NOT reported as " +
-          '"no translations" — an unreadable directory must never render as an empty one.',
+          '"no translations" — an unreadable tree must never render as an empty one.',
       );
       process.exit(2);
     }

@@ -305,52 +305,41 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "identity. Read by the `todo-review` skill.",
   },
   // The gettext side of translation: `.pot` templates, `.po` catalogues and
-  // the `TranslationNode` manifests that make each pair addressable. NOT the
-  // rendered result — that is `translated-content` below, and the two are
-  // different artefacts with different owners, exactly as `qa` verdicts differ
-  // from `qa` witnesses. Undeclared until 2026-09-19, which is the `dh4f`
-  // defect in reverse: five committed locale directories that no declaration
-  // mentioned.
+  // the `TranslationNode` manifests that make each pair addressable.
+  //
+  // THE INPUT TO INJECTION, NEVER THE OUTPUT — and there is deliberately no
+  // matching kind for the output. A rendered translation is the SAME KIND OF
+  // THING as the page it translates: renderable content, differing by a
+  // field. `docs/fr/index.md` declares `lang: fr` and `translation_source:
+  // index.md` in its own front matter, exactly as a bean declares its status
+  // and a workflow instance declares its `$schema`, so the file answers what
+  // it is and the directory does not have to be enumerated.
+  //
+  // An earlier cut of this (PR #351, first draft) added a `translated-content`
+  // kind and a `locale` field, with one declaration per locale subtree — ten
+  // entries for five locales across two subtrees, growing as
+  // O(locales x subtrees). It restated in `cat-harness.json` what all ten
+  // files already said in their own front matter, which is one fact in two
+  // places and free to drift. The owner's framing is what settles it:
+  // "narrative/audio/visual content with text should be translatable. its not
+  // so much the node schema itself but its content (e.g. markdown, bpmn)
+  // should be translatable" — translatability is a property of a FORMAT
+  // within a content type, which `schemas/translation-tools.ts` already
+  // declares, not a property of a directory.
+  //
+  // `.po` catalogues are different: they are not content in any language, and
+  // `translations/` was undeclared entirely until 2026-09-19 — the `dh4f`
+  // defect in reverse, five committed directories that no declaration
+  // mentioned. That is what this kind is for.
   "translation-sources": {
     type: `${FOLIO_NS}TranslationSourceGraph`,
     renderable: false,
     summary:
       "POT templates, PO catalogues and their `TranslationNode` manifests, one directory " +
-      "per target locale. The INPUT to injection, never the output.",
+      "per target locale. The INPUT to injection; the rendered output is ordinary content " +
+      "that declares its own `lang`.",
     skill: "translation-manager",
     schema: "schemas/translation.ts",
-  },
-  // A directory holding the SAME graph as some other directory, expressed in
-  // another language.
-  //
-  // ## Why this is a kind and not a naming convention
-  //
-  // `docs/fr/` is French because THIS SAYS SO. It is not French because its
-  // name is two letters that happen to be a language subtag — that reading is
-  // the "distinguishable by extension … a coincidence of the current layout,
-  // not a contract" defect #263 named, applied to directory names, and it is
-  // wrong in both directions: a folio with a `no/` chapter (Norwegian, or the
-  // English word) gets silently hidden, and a locale directory named
-  // `pt-BR/` or `translated-fr/` gets silently shown.
-  //
-  // A directory declaring this kind MUST also declare `locale` — see
-  // `ContentDirectorySchema`. A translated directory that does not say which
-  // language it is in tells a consumer nothing it could act on.
-  //
-  // What the directory does NOT say is which page each file translates. That
-  // is the FILE's to declare (`translation_source` in its front matter), and
-  // the split is deliberate: the directory states what to EXPECT, the file
-  // answers what it is. Stating the per-page mapping here as well would be
-  // one fact in two places, free to drift.
-  "translated-content": {
-    type: `${FOLIO_NS}TranslatedContentGraph`,
-    renderable: false,
-    summary:
-      "Rendered content in one target locale — the OUTPUT of injection. Every file declares " +
-      "its `lang` and the `translation_source` page it expresses; the directory declares the " +
-      "`locale` to expect.",
-    skill: "translation-manager",
-    schema: "content/pipeline/translation-index.ts",
   },
 };
 
@@ -490,21 +479,6 @@ export interface ContentDirectory extends KgNodeLabels {
    * concept.
    */
   graphs: GraphKind[];
-  /**
-   * BCP 47 language tag of the content in this directory.
-   *
-   * REQUIRED on a `translated-content` directory and meaningless without one,
-   * which the schema enforces both ways. This is the field that makes "this is
-   * the French copy" a **declaration** rather than a guess at a directory
-   * name: nothing anywhere reads `fr` out of the path.
-   *
-   * It is deliberately NOT declared on source-language directories. The source
-   * language is one fact about the instance (`translation.defaultLocale` in
-   * `harness.config.json`), and restating it on every untranslated directory
-   * would be that one fact copied N times — the drift this repo keeps paying
-   * for. Absent means "the instance's source language", not "unknown".
-   */
-  locale?: string;
 }
 
 /** An instance's root declaration. */
@@ -560,56 +534,31 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   directories: ContentDirectory[];
 }
 
-/** The kind whose presence makes {@link ContentDirectory.locale} mandatory. */
-export const TRANSLATED_CONTENT_KIND = "translated-content";
+export const ContentDirectorySchema = z.object({
+  id: z.string().min(1),
+  path: z.string().min(1),
+  // Open string here, checked against the registry in `readDeclaration`.
+  // A closed enum would have to be built at module load, which is before core
+  // has registered `folio` — so the enum would reject the one kind the whole
+  // rendering pipeline depends on.
+  graphs: z.array(z.string().min(1)).min(1),
+  ...kgNodeLabelShape,
+});
 
-export const ContentDirectorySchema = z
-  .object({
-    id: z.string().min(1),
-    path: z.string().min(1),
-    // Open string here, checked against the registry in `readDeclaration`.
-    // A closed enum would have to be built at module load, which is before core
-    // has registered `folio` — so the enum would reject the one kind the whole
-    // rendering pipeline depends on.
-    graphs: z.array(z.string().min(1)).min(1),
-    locale: z.string().min(2).optional(),
-    ...kgNodeLabelShape,
-  })
-  // Both directions, and the second is the one that earns its place.
-  //
-  // Missing `locale` on a translated directory is the obvious failure: a
-  // consumer knows the directory is a translation and cannot say of what.
-  //
-  // `locale` on a directory that is NOT translated content is the subtle one.
-  // It reads as a harmless annotation and is not: `translationIndex` selects
-  // its directories by KIND, so a `locale` on anything else is a fact nothing
-  // reads — and the next person to add locale handling will reasonably select
-  // on `locale` instead, at which point the two selections disagree and the
-  // build is silently wrong for whichever directory carries only one of them.
-  // Refusing it keeps there being exactly one way to say this.
-  .superRefine((d, ctx) => {
-    const translated = d.graphs.includes(TRANSLATED_CONTENT_KIND);
-    if (translated && !d.locale) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["locale"],
-        message:
-          `directory "${d.id}" declares graph "${TRANSLATED_CONTENT_KIND}" but no "locale". ` +
-          `A translated directory that does not say which language it is in tells a ` +
-          `consumer nothing it could act on — and the language is NOT read from the path.`,
-      });
-    }
-    if (!translated && d.locale) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["locale"],
-        message:
-          `directory "${d.id}" declares "locale" but is not a "${TRANSLATED_CONTENT_KIND}" ` +
-          `graph, so nothing reads it. Source-language directories take the instance's ` +
-          `\`translation.defaultLocale\`; absent means the source language, not unknown.`,
-      });
-    }
-  });
+// THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
+// omission. A first draft of PR #351 added one, required on a
+// `translated-content` directory and refused elsewhere. It worked and it was
+// the wrong axis: a translated page already declares `lang` and
+// `translation_source` in its own front matter, so the directory entry
+// restated what every file inside it already said — one fact in two places,
+// free to drift, and growing as O(locales x subtrees).
+//
+// The rule this repository keeps returning to: a declaration states what to
+// EXPECT in a directory, and THE FILES DECLARE WHAT THEY ARE. `beans/` is one
+// entry whose contents are told apart by a bean's front matter and a workflow
+// instance's `$schema`; `docs/assets/qa/` is one entry holding three witness
+// families, told apart by the documents. Translated pages are the same shape:
+// one declaration for the content, and `lang` on the file.
 
 /**
  * The conventional directories every instance gets without declaring them.
@@ -1046,9 +995,6 @@ export function toJsonLd(
       fa: FOLIO_NS,
       path: `${FOLIO_NS}path`,
       directories: `${FOLIO_NS}scans`,
-      // `@language` is the JSON-LD keyword for exactly this, so the projection
-      // uses it rather than minting a `fa:locale` that means the same thing.
-      locale: "@language",
     },
     "@type": `${FOLIO_NS}CatHarness`,
     name: decl.name,
@@ -1076,7 +1022,6 @@ export function toJsonLd(
         // make every existing published form look changed.
         "@type": types.length === 1 ? types[0] : types,
         path: d.path,
-        ...(d.locale ? { locale: d.locale } : {}),
         ...(d.title ? { title: d.title } : {}),
         ...(d.description ? { description: d.description } : {}),
       };

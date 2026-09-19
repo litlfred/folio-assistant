@@ -3,9 +3,11 @@ layout: default
 title: "Incorporación del agente (ES)"
 parent: Authoring guides
 lang: es
-# Out of the static nav; `mountNavLocale` (docs/assets/js/docs-ui.js) puts it
-# back in place of its source when this locale is selected. See
-# skills/folio-core/translation-manager.md #the-navbar-filters-by-locale
+# `lang` above is what makes this a translation -- nothing reads `fr` out of
+# the path. `nav_exclude` keeps it out of the statically built nav, and
+# `mountNavLocale` (docs/assets/js/docs-ui.js) puts it back in place of its
+# source when this locale is selected. There is no `nav_order`: it stands
+# where its source stands. skills/folio-core/translation-manager.md
 nav_exclude: true
 translation_status: unverified
 translation_source: guides/agent-onboarding.md
