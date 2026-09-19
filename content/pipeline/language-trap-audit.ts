@@ -72,12 +72,15 @@ import { createHash } from "node:crypto";
 import {
   existsSync,
   readFileSync,
+  mkdirSync,
   readdirSync,
   statSync,
   writeFileSync,
 } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join, relative, resolve, dirname, basename } from "node:path";
+import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { findContentRepoRoot } from "./repo-root";
 
 // ---------------------------------------------------------------------------
 // block-qa/v1 sidecar types, inlined (same pattern as the sibling audits).
@@ -335,7 +338,11 @@ function mkFinding(b: Block, criterion: Criterion): Finding {
     evidence: "",
     metrics: {},
     mdPath: b.mdPath,
-    qaPath: join(b.dir, `${b.root}.qa.json`),
+    // A REPORTED field, not an I/O path — this is where the finding WILL be
+    // recorded, so it names the canonical write location rather than wherever
+    // a legacy copy happens to sit. Reporting the legacy path would tell a
+    // reader to go and edit a file this tool is about to stop writing.
+    qaPath: blockQaPath(findContentRepoRoot(), join(b.dir, b.root)),
   };
 }
 
@@ -541,11 +548,18 @@ function writeSidecar(
   scriptSha: string,
   reviewedSha: string,
 ) {
-  const qaPath = join(b.dir, `${b.root}.qa.json`);
+  // LOAD-THEN-WRITE. The read falls back to the legacy sibling so a folio whose
+  // verdicts have not migrated keeps its history instead of being overwritten
+  // by a fresh empty document; the write lands in the results tree only, so
+  // afterwards the block has one verdict and it is in the new place.
+  const repoRoot = findContentRepoRoot();
+  const blockRoot = join(b.dir, b.root);
+  const qaReadPath = existingBlockQaPath(repoRoot, blockRoot);
+  const qaPath = blockQaPath(repoRoot, blockRoot);
   let doc: QaSidecarDoc = {};
-  if (existsSync(qaPath)) {
+  if (qaReadPath) {
     try {
-      doc = JSON.parse(readFileSync(qaPath, "utf8")) as QaSidecarDoc;
+      doc = JSON.parse(readFileSync(qaReadPath, "utf8")) as QaSidecarDoc;
     } catch {
       doc = {};
     }
@@ -575,6 +589,10 @@ function writeSidecar(
     doc.criteria[f.criterion] = [entry];
   }
   doc.updated_at = now;
+  // The mirrored results directory is not guaranteed to exist for a block
+  // that has never had a verdict written under the new convention; the
+  // legacy sibling location always did, because it was the block's own.
+  mkdirSync(dirname(qaPath), { recursive: true });
   writeFileSync(qaPath, JSON.stringify(doc, null, 2) + "\n");
 }
 

@@ -1,24 +1,5 @@
----
-$schema: folio-memory/v1
-id: derive-the-gate-list-from-the-workflow
-label: trap
-summary: "derive the gate list from the WORKFLOW, not from package.json"
-createdAt: 2026-09-19
-roles:
-  - build-pipeline
-  - validation-pipeline
-agents:
-  - ci-health-watcher
----
-Three CI checks are invoked **by path**, not by npm-script name, so a sweep
-over `bun run <script-name>` structurally cannot see them: `gen-docs-pages.ts`,
-`gen-schema-docs.ts`, `gen-skill-docs.ts`, each `--check`. Get the list from the
-workflow itself, not from `package.json`.
-
-**Editing a script that WRITES a witness restales every published projection of
-it** — regenerate both sides and verify by parsing, not by grep.
-
-<!-- detail -->
+<!-- Generated from skills/memory/derive-the-gate-list-from-the-workflow.md by `bun run agent-memory`. -->
+<!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
 The command:
 

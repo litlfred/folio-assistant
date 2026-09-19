@@ -38,6 +38,8 @@ import {
   QA_CRITERIA_REGISTRY,
   WATCHER_CRITERIA_BY_AXIS,
 } from "./qa-criteria-registry";
+import { findContentRepoRoot } from "./repo-root";
+import { blockQaPath, existingBlockQaPath } from "./qa-paths";
 
 interface Args {
   root: string;
@@ -104,8 +106,22 @@ function run(): void {
   let totalStale = 0;
   let totalFresh = 0;
 
+  // The instance root a verdict path is resolved against — see qa-paths.ts.
+  // Computed once: it walks up from cwd and every block in this scan shares it.
+  const repoRoot = findContentRepoRoot();
+
   for (const block of walkBlocks(rootAbs)) {
-    const qaPath = block.root + ".qa.json";
+    // Prefer the results-tree verdict, falling back to the legacy sibling
+    // (a downstream folio that has not migrated yet) — see qa-paths.ts's
+    // `existingBlockQaPath`. When neither exists, fall back to the canonical
+    // (results-tree) path purely so `qa_path` below reports where a fresh
+    // audit would land; `loadQaReport` on a path that does not exist returns
+    // `undefined` exactly as it did for the old hand-composed path, so a
+    // genuinely unaudited block still counts as `missing-sidecar` /
+    // `totalMissing` below rather than silently passing as fresh — this must
+    // never collapse into "looked in the wrong place" reading as audited.
+    const qaPath =
+      existingBlockQaPath(repoRoot, block.root) ?? blockQaPath(repoRoot, block.root);
     const qaRel = relative(process.cwd(), qaPath);
     const paths = { md: block.md, ts: block.ts, lean: block.lean };
     const current = hashBlockFiles(paths);

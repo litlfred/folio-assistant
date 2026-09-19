@@ -50,6 +50,13 @@ import {
 // from this file's own location lands inside the platform tree instead.
 import { findContentRepoRoot, findPapers } from "./repo-root.ts";
 import { paperArg } from "./cli-args";
+// The one contract for where a block's verdict lives (test/results/block-qa/,
+// mirroring the block's own directory) — see content/pipeline/qa-paths.ts.
+// `blockQaPath` for writing (results tree only); `existingBlockQaPath` for
+// reading (results tree first, legacy `<block>.qa.json` sibling as fallback,
+// so a downstream folio that has not moved its own sidecars yet is not read
+// as having none).
+import { blockQaPath, existingBlockQaPath } from "./qa-paths.ts";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 
@@ -269,11 +276,19 @@ function captureHeadSha(): string {
 const HEAD_SHA = captureHeadSha();
 
 function updateSidecar(b: BlockTriple, results: Map<string, QUsageResult>): void {
-  const sidecarPath = b.ts.replace(/\.ts$/, ".qa.json");
+  // Load-then-write, so the two halves get different qa-paths.ts helpers:
+  // read wherever the verdict already lives (results tree, falling back to
+  // the legacy `<block>.qa.json` sibling, so a downstream folio that has not
+  // migrated its own sidecars still has its prior adjudications honoured),
+  // but write only to the results tree — writing the legacy path too would
+  // recreate the two-verdicts-that-can-disagree problem the move eliminated.
+  const blockRoot = b.ts.replace(/\.ts$/, "");
+  const writePath = blockQaPath(REPO_ROOT, blockRoot);
+  const readPath = existingBlockQaPath(REPO_ROOT, blockRoot);
   let sidecar: QaSidecar;
-  if (existsSync(sidecarPath)) {
+  if (readPath) {
     try {
-      sidecar = JSON.parse(readFileSync(sidecarPath, "utf-8")) as QaSidecar;
+      sidecar = JSON.parse(readFileSync(readPath, "utf-8")) as QaSidecar;
     } catch {
       sidecar = makeFreshSidecar(b);
     }
@@ -345,7 +360,12 @@ function updateSidecar(b: BlockTriple, results: Map<string, QUsageResult>): void
   }
 
   if (!noWrite) {
-    writeFileSync(sidecarPath, JSON.stringify(sidecar, null, 2) + "\n", "utf-8");
+    // Unlike the legacy sibling location (which always existed, since it
+    // shared the .ts manifest's own directory), the mirrored results-tree
+    // directory is not guaranteed to exist yet for a block that has never
+    // had a verdict written under the new convention.
+    mkdirSync(dirname(writePath), { recursive: true });
+    writeFileSync(writePath, JSON.stringify(sidecar, null, 2) + "\n", "utf-8");
   }
 }
 
@@ -420,8 +440,12 @@ export function hasHumanDispensation(
   criterionId: string,
   currentHashes: { ts?: string; md?: string; lean?: string },
 ): boolean {
-  const sidecarPath = b.ts.replace(/\.ts$/, ".qa.json");
-  if (!existsSync(sidecarPath)) return false;
+  // Read-only — this never writes a verdict, so it takes the read-side
+  // helper alone: results tree first, legacy `<block>.qa.json` sibling as
+  // fallback, so a dispensation recorded before a folio migrated its own
+  // sidecars is still honoured rather than read as absent.
+  const sidecarPath = existingBlockQaPath(REPO_ROOT, b.ts.replace(/\.ts$/, ""));
+  if (!sidecarPath) return false;
   let sidecar: { criteria?: Record<string, Array<{
     field_hash?: { ts?: string; md?: string; lean?: string };
     result?: string;

@@ -24,9 +24,11 @@
  * @module content/pipeline/qa-agent-entry
  */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { basename, dirname, join } from "node:path";
+import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { findContentRepoRoot } from "./repo-root";
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -61,7 +63,20 @@ if (!existsSync(blockMd)) {
 const dir = dirname(blockMd);
 const root = basename(blockMd, ".md");
 const tsPath = join(dir, `${root}.ts`);
-const qaPath = join(dir, `${root}.qa.json`);
+// LOAD-THEN-WRITE, so the two halves use different helpers deliberately.
+//
+// The read falls back to the legacy sibling: this entry point appends one
+// agent adjudication to an existing verdict, and a folio whose verdicts have
+// not migrated would otherwise have its history silently discarded — the tool
+// would read nothing, start an empty document, and overwrite.
+//
+// The write never falls back. It lands in the results tree, which is what
+// makes running this once a MIGRATION rather than a fork: after it, the block
+// has exactly one verdict and it is in the new place.
+const repoRoot = findContentRepoRoot();
+const blockRoot = join(dir, root);
+const qaReadPath = existingBlockQaPath(repoRoot, blockRoot);
+const qaPath = blockQaPath(repoRoot, blockRoot);
 
 const sha12 = (s: string) =>
   createHash("sha256").update(s).digest("hex").slice(0, 12);
@@ -91,11 +106,11 @@ interface QaSidecarDoc {
 }
 
 let doc: QaSidecarDoc = {};
-if (existsSync(qaPath)) {
+if (qaReadPath) {
   try {
-    doc = JSON.parse(readFileSync(qaPath, "utf8")) as QaSidecarDoc;
+    doc = JSON.parse(readFileSync(qaReadPath, "utf8")) as QaSidecarDoc;
   } catch {
-    console.error(`unparseable sidecar (fix by hand first): ${qaPath}`);
+    console.error(`unparseable sidecar (fix by hand first): ${qaReadPath}`);
     process.exit(1);
   }
 }
@@ -119,5 +134,9 @@ if (notes) entry.notes = notes;
 
 doc.criteria![criterion].push(entry);
 doc.updated_at = entry.reviewed_at;
+// The mirrored results directory is not guaranteed to exist for a block
+// that has never had a verdict written under the new convention; the
+// legacy sibling location always did, because it was the block's own.
+mkdirSync(dirname(qaPath), { recursive: true });
 writeFileSync(qaPath, JSON.stringify(doc, null, 2) + "\n");
 console.log(`${qaPath}: ${criterion} <- agent ${result}`);

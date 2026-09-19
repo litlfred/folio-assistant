@@ -3,8 +3,9 @@
 title: QA outputs live under test/results/ — verdicts and witnesses both, by provenance
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-19T07:11:55Z
-updated_at: 2026-09-19T07:11:55Z
+updated_at: 2026-09-19T08:12:02Z
 ---
 
 THE RULE, from the owner 2026-09-19: 'if the witnesses were generated as a QA reviewer primarily then it should be under test/results/ as part of a QA process.'
@@ -273,3 +274,97 @@ Verified: `bun test` 2175 pass / 0 fail, typecheck, `eslint .`,
 ## Remaining
 
 - the 122 block verdicts `*.qa.json`, which still sit beside their blocks
+
+---
+
+## The case I made for stopping here — OVERRULED, see below
+
+**I recommended the 122 block verdicts `*.qa.json` stay beside their blocks. The owner said move them.** Investigated
+before writing anything, on the owner's instruction; the evidence says moving
+them costs more than it buys, and most of the cost lands in other people's
+repositories.
+
+### 1. Nine path sites, and they are an IDIOM rather than a lookup
+
+The KG case had exactly two — one writer, one reader — which is why unifying
+them on `kgQaSidecarPath` was clean and strictly reduced drift. The block
+sidecar path is composed independently in at least nine places:
+
+| site | how |
+|---|---|
+| `content/pipeline/qa-sweep.ts:379` | `block.root + ".qa.json"` |
+| `content/pipeline/qa-merge-findings.ts:174` | `rootAbs + ".qa.json"` |
+| `content/pipeline/qa-staleness.ts:108` | `block.root + ".qa.json"` |
+| `content/pipeline/qa-utils.ts:1051` | `root + ".qa.json"` |
+| `content/pipeline/q-usage-audit.ts:272` | `b.ts.replace(/\.ts$/, ".qa.json")` |
+| `content/pipeline/q-usage-audit.ts:423` | same |
+| `content/pipeline/proof-narrative-lean-equiv-sweep.ts:501` | `block.root + ".qa.json"` |
+| `content/pipeline/qa-witness.ts:276` | `join(dir, stem + ".qa.json")` |
+| `content/pipeline/validate.ts:137` | suffix scan + `<base>.ts` adjacency |
+
+They are not nine arbitrary duplications; they are nine expressions of one
+rule — **the sidecar IS the manifest's path with the extension swapped**.
+Centralising that is possible, but it replaces a convention every reader
+already understands with an indirection, in folio-side code.
+
+### 2. Adjacency is LOAD-BEARING, not incidental
+
+`validate.ts`'s `no-orphan-sidecar` asks one question: does `<base>.ts` exist
+in this same directory? That catches a specific real failure — a block moving
+between chapters picks up a fresh sidecar at its new path while the old one
+stays behind, holding verdicts computed against content that has since
+changed. The comment records it measured in `qou`: **18 orphans, 5 of them
+from moves.**
+
+Move the verdicts into a mirrored tree and that check does not merely need
+rewriting — the failure it detects becomes HARDER to see, because the results
+tree would hold two entries with no local signal that one is dead. This is the
+one place in the whole migration where relocation reduces a safety property
+instead of a drift hazard.
+
+### 3. It is folio-side code, and 122 is not the population
+
+All 122 here sit under `content/docs/` — this platform's own documentation
+blocks. But `qa-sweep` and `sidecarPaths` are generic: a downstream folio's
+committed `*.qa.json` sit beside ITS blocks. Flipping the path in the platform
+makes every existing folio's verdicts invisible at once, and every block then
+reads "unaudited" — a false pass at corpus scale, in exactly the direction
+this repository keeps guarding against.
+
+### The distinction worth keeping
+
+For the KG verdicts, moving REMOVED a drift hazard: two path computations that
+agreed only because neither had changed, and were about to. For the block
+verdicts, moving would CREATE several and break a check that has already
+caught real bugs. "Placement follows provenance" still holds as a rule — this
+is where applying it literally costs more than the rule is worth, and the
+reasons are measurable rather than aesthetic.
+
+**If this is ever revisited**, the cheapest safe route is a compatibility read
+(results tree first, beside-the-block as fallback) rather than a flip — and
+that is a dual-path contract the platform then owns indefinitely, which is its
+own cost to weigh.
+
+---
+
+## OWNER'S DECISION, 2026-09-19 — move them, and resolve each site properly
+
+> *"move the 122 manually ... dispatch agent swarm ... to resolve each properly"*
+
+The analysis above is kept as the RISK REGISTER, not as a verdict. Every item
+in it is still true and is now a thing to get right rather than a reason not to
+proceed:
+
+- **nine path sites** — each resolved deliberately, not sed-replaced;
+- **`no-orphan-sidecar` depends on `<base>.ts` adjacency** — the check must keep
+  catching the block-moved-and-left-a-stale-verdict case it was written for
+  (18 found in `qou`, 5 from moves), or the move has removed a safety property;
+- **folio-side contract** — a downstream folio's verdicts sit beside its blocks,
+  so the platform must not blind them the day this lands.
+
+"Resolve each properly" is the instruction that makes this different from the
+227: those moved under one shared path function because there were two sites.
+Here each of the nine is read on its own terms and fixed on its own terms.
+
+Status reopened; the bean is not done until the risk register above is
+discharged item by item.

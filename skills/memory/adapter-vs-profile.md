@@ -20,6 +20,8 @@ on all **eight** shared kinds. When adding a content type, ask whether it
 needs different **code** (adapter) or only different **rules** (profile plus
 a subclass).
 
+<!-- detail -->
+
 `PaperContentAdapter` extends `DocumentContentAdapter`; `MATH_BLOCK_KINDS` is
 written out in `schemas/block-kinds.ts` and `DOCUMENT_BLOCK_KINDS` is its
 **derived** complement, so a kind added to `BLOCK_KINDS` cannot go
