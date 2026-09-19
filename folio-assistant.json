@@ -227,10 +227,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T08:50:05.051Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/efd9eacefb876b1fcd3acde48e11fb4ee4b590ad",
-  "sourceCommitSha": "efd9eacefb876b1fcd3acde48e11fb4ee4b590ad",
-  "sourceCommitAt": "2026-09-19T10:48:27+02:00",
+  "generatedAt": "2026-09-19T08:59:53.572Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/42c360ea42634f6cc5f2455de003ba5f153390bd",
+  "sourceCommitSha": "42c360ea42634f6cc5f2455de003ba5f153390bd",
+  "sourceCommitAt": "2026-09-19T10:58:35+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 150,
@@ -239,8 +239,8 @@
     "Role": 64,
     "SkillPackage": 8,
     "Process": 30,
-    "SequenceFlow": 416,
-    "ProcessNode": 387,
+    "SequenceFlow": 418,
+    "ProcessNode": 389,
     "Tool": 27,
     "Schema": 40,
     "GraphKind": 15,
@@ -3939,8 +3939,8 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Reviewer",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Pipeline"
       ],
-      "nodeCount": 31,
-      "flowCount": 33
+      "nodeCount": 33,
+      "flowCount": 35
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/f1",
@@ -4031,6 +4031,13 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_CommentPR",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_WatchBranchCI"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p4b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_WatchBranchCI",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_ReviewStaging"
     },
     {
@@ -4169,6 +4176,13 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_RebuildMain",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_WatchMainCI"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p7b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_WatchMainCI",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/End_Pipeline"
     },
     {
@@ -4233,7 +4247,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p4"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p4b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/f3"
@@ -4725,6 +4739,28 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_WatchBranchCI",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Open the branch-watch bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p4b"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/GW_Merged",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "PR merged?",
@@ -4784,6 +4820,28 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_WatchMainCI",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Note the main-branch watch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p7b"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/End_Pipeline",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Deployment complete",
@@ -4795,7 +4853,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p7",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p7b",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/p8"
       ],
       "outgoing": []
@@ -16930,8 +16988,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "efd9eacefb876b1fcd3acde48e11fb4ee4b590ad",
+    "sha": "42c360ea42634f6cc5f2455de003ba5f153390bd",
     "pr": "main",
-    "run": "35432997048"
+    "run": "35433431736"
   }
 }
