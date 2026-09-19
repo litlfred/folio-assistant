@@ -151,8 +151,8 @@ resolve a sibling's bean, and never delete ANY bean — scrap it with reasons in
 store. Do not `beans create` bulk machine-generated queues (`*.qa.json`,
 witness files) — those stay as bulk JSON.
 
-Full discipline: `.claude/skills/local/todo-manager.md`,
-`.claude/skills/local/bean-coordination.md`.
+Full discipline: `skills/folio-core/todo-manager.md`,
+`skills/folio-core/bean-coordination.md`.
 
 ## 7. QA sidecars and axes
 

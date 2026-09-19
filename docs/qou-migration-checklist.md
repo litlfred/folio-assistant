@@ -28,8 +28,8 @@ instructions for A/B/C; §8 has the cross-agent session-start design).
 ## Sync canonical infra from folio-assistant (it now owns these)
 
 - [ ] **`bean-coordination.md`** — replace qou's thin pointer with a sync from
-  folio's canonical `.claude/skills/local/bean-coordination.md`.
-- [ ] **`todo-manager.md`** — sync from folio's `.claude/skills/local/todo-manager.md`
+  folio's canonical `skills/folio-core/bean-coordination.md`.
+- [ ] **`todo-manager.md`** — sync from folio's `skills/folio-core/todo-manager.md`
   (includes the "Using beans for todos" guidance).
 - [ ] **`install-beans.sh`** — vendor/mirror folio's `scripts/install-beans.sh` as
   the single source of truth.
