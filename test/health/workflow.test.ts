@@ -147,6 +147,10 @@ describe("the issue body", () => {
         },
       },
       openPrHeads: { state: "ok", value: ["claude/one"] },
+      // Listed, and nothing on the remote slugifies to either preview — a
+      // determined empty, so `claude-two` is a decided orphan rather than an
+      // undetermined one.
+      branches: { state: "ok", value: { candidates: [], defaultBranch: "main", command: "fixture" } },
       repoSize: { state: "unknown", reason: "git count-objects -v exited 128: not a git repository" },
       beans: { state: "ok", value: [{ id: "b1", title: "one", status: "todo" }] },
       todos: { state: "ok", value: [] },
