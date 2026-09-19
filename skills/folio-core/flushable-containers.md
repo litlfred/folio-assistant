@@ -60,8 +60,13 @@ the third, and wrong in the direction that destroys the evidence.
 
 ## The badge has three states, and the third is not "fine"
 
-Over-full is a **declared** state and gets a badge. So does under. And so does
-**could not determine** — a container whose size could not be read is not under
+Over-full is a **declared** state and gets a badge — **including the trash.** A
+container you can recover from is the one whose size a reader stops thinking
+about, so `fsh-guts` is the one that most needs the badge rather than the one
+that needs it least: nothing else in the interface says it has grown, and the
+whole premise of keeping deleted things is that nobody is watching them.
+
+So does under. And so does **could not determine** — a container whose size could not be read is not under
 its limit, it is unmeasured, and rendering that as under is the defect this
 repository has paid for repeatedly (`check-ci-health`, `readme-sections`, the
 staging size check: *"'Could not read gh-pages' is never '0 MB of previews'"*).

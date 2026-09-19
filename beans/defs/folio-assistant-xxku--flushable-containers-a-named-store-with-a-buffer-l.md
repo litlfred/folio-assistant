@@ -3,6 +3,7 @@
 title: 'Flushable containers: a named store with a buffer limit, an over-full badge, and three flush actions'
 status: todo
 type: feature
+parent: folio-assistant-1xhc
 created_at: 2026-09-19T12:07:49Z
 updated_at: 2026-09-19T12:15:59Z
 ---
@@ -173,6 +174,90 @@ point the honest move is a limit whose **basis** states it —
 is the skill's own rule applied twice: the first "prune more" answer was hiding a
 9x duplication, and the second would be hiding a genuine floor.
 
+## Implementing the narrowed fix: four sources, not one
+
+Authorised 2026-09-19 ("build it + record basis"). Implementation found the
+duplication has **four independent causes, and any one of them defeats
+deduplication on its own** — so "relativize the refs" was necessary but nowhere
+near sufficient.
+
+| # | source | per page | status |
+|---|---|---|---|
+| 1 | **build timestamp** + commit SHA in the staging banner | 1 line | open |
+| 2 | `baseurl`-prefixed hrefs | ~235 refs | open, blocked — see below |
+| 3 | `fa-translation-index` JSON island publishing `site.baseurl` | 1 island | open, coupled to (2) |
+| 4 | the three SEO identity claims | 3 tags | **done** — `scripts/strip-preview-seo.ts` |
+
+**(1) is the most fundamental and I had missed it.** `feature-staging.yml`
+injects a banner into every page carrying `${BRANCH}`, `${SHA}` and `${BUILT}`.
+A build timestamp means every page is unique **even across two builds of one
+branch** — so each re-push adds ~27.5 MB of permanently new blobs to
+`gh-pages`, and the history grows even when the preview count does not. No
+amount of href work touches this.
+
+**(2) is blocked on a real API fact, not on effort.** Jekyll's `relative_url`
+**prepends `baseurl`**; it is not document-relative. `head_custom.html` already
+uses it everywhere and its comments already anticipate the STAGING baseurl — and
+that is exactly why every page carries the slug. Getting byte-identical pages
+needs a post-build rewrite to document-relative paths, which is a new transform
+over `_site`, not a config change.
+
+**(3) is why (2) cannot be done alone.** `docs-ui.js` is *told* the baseurl
+through the `fa-translation-index` island — deliberately, per its own comment:
+*"under a `baseurl` this script is told rather than guesses"*. `navKey()`
+strips it from each nav href, and line ~1984 **rebuilds** hrefs as
+`baseurl + t.url`. So document-relative hrefs break the language switcher
+unless it derives the baseurl at runtime instead, and the island itself keeps
+every page distinct until it does.
+
+### The tractable shape, and the precedent is already here
+
+**Derive the per-preview facts in the browser rather than baking them into 390
+pages.** That turns 390 differing files into **one** small differing file — say
+`STAGING/<slug>/staging.json` holding branch, sha, built, PR and run URL, read
+at load time by the script that renders the banner and supplies the baseurl.
+
+This is not a new idea in this repository: `head_custom.html` records the
+sidebar QR as *"generated in the browser from window.location.href rather than
+baked per page at build time"*, for the neighbouring reason (so it is right for
+anchors and both URL spellings). The banner and the baseurl want the same
+treatment for the same kind of reason.
+
+**Not done here, and the reason is a rule rather than a budget.** It changes the
+docs build and the language switcher, and
+[`continual-progress`](../../skills/folio-core/continual-progress.md) is explicit
+that a rendered artefact cannot be assessed from a description of it — I cannot
+render this site from here, and ~20 branches are currently live in `docs/`. It
+wants its own bean, its own PR and a preview somebody looks at.
+
+## What landed in this change
+
+- **`scripts/strip-preview-seo.ts`** + 10 tests. Removes `canonical`, `og:url`
+  and the `jekyll-seo-tag` schema.org `WebPage` block from a built preview, wired
+  into `feature-staging.yml` after the Jekyll build. **Correctness, not size**: a
+  branch build asserting a canonical URL invites a crawler to index the preview
+  in place of the published page, and then the directory is pruned and the
+  indexed URL dies. Three audiences (crawler, unfurler, structured-data
+  consumer), one wrong assertion.
+  The JSON-LD match is deliberately narrow — schema.org `@context` **and** a
+  `url` key — because a folio's own JSON-LD is *content*, and a loose pattern
+  would delete the graph export rather than a claim. Tested in both directions.
+  A post-build pass rather than Jekyll config, because the plugin has no global
+  off switch and `{% seo %}` lives in the **remote** theme's `head.html`:
+  suppressing it at source means vendoring that file, which is the exact
+  upstream-coupling hazard the theme pin exists to avoid.
+- **The floor recorded in `STAGING_WARN_BYTES`'s basis** (`test/health/checks.ts`),
+  structurally, per `HealthThreshold`. It now states that the threshold sits
+  **below** its own floor and that this is deliberate: the action the finding
+  names is preview size, never "prune more". The number stays at 100 MB —
+  it is not a target the previews are failing to hit, it is a statement that
+  the arrangement is not sustainable, and it is correct.
+
+One incidental lesson, paid for in this change: `docs/*/_config.yml` cannot be
+written inside a TypeScript block comment, because the glob segment spells the
+closing delimiter and there is no escape for it. Same asymmetry
+`head_custom.html` records after two red deploys — describe it, never spell it.
+
 ## Done when
 
 - [x] `skills/folio-core/flushable-containers.md` written and registered in
@@ -188,14 +273,19 @@ is the skill's own rule applied twice: the first "prune more" answer was hiding 
       JSON-LD resolution. Proposal narrowed to presentational references only;
       the graph exports stay byte-for-byte absolute. See §"The owner's
       correction".
-- [ ] Presentational refs relativized and the three SEO claims dropped from
-      preview builds (~77 MB projected, under the limit). Until then the badge
-      is permanently red, which trains a reader to ignore it.
-- [ ] A basis recorded for whatever limit is chosen, stating the floor
-      explicitly: one HTML copy + N x ~5 MB graph/search exports + assets.
-- [ ] Either the buffer limit is raised to something above the live floor, with
-      its basis recorded, **or** preview size comes down. Both is fine; neither
-      leaves a check that cannot pass.
+- [x] The three SEO claims dropped from preview builds —
+      `scripts/strip-preview-seo.ts`, 10 tests, wired into `feature-staging.yml`.
+- [x] The floor recorded in `STAGING_WARN_BYTES`'s basis, structurally.
+- [ ] Sources 1–3 above: move the per-preview facts into one small data file and
+      derive them in the browser, as the sidebar QR already does. Needs its own
+      bean, its own PR and a preview a person looks at — it changes the docs
+      build and the language switcher. Until then the badge is permanently red,
+      which trains a reader to ignore it.
+- [ ] Revisit the limit's VALUE once sources 1–3 land. The projection is
+      ~77 MB, whose own floor is the graph/search exports (one HTML copy +
+      N x ~5 MB + assets) — so at ~18 concurrent previews 100 MB is breached by
+      a real floor rather than by duplication, and that is the point to decide
+      the number rather than now.
 - [ ] `fsh-guts` (PR #403) and the console log adopt the three actions and the
       badge. Not mine to implement — noting the dependency.
 
