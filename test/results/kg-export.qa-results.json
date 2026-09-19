@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/kg-export.ts",
-    "script_hash": "8c89cf028c95"
+    "script_hash": "d5962070deb9"
   },
   "subject": {
     "kind": "graph",
     "id": "folio-assistant.jsonld"
   },
-  "updated_at": "2026-09-19T07:14:05.222Z",
+  "updated_at": "2026-09-19T07:45:01.253Z",
   "families": {
     "danglingLinks": {
       "summary": "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
@@ -22,17 +22,8 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 2,
-      "entries": [
-        {
-          "module": "schemas/carried-note.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "schemas/memory.ts",
-          "why": "no-tag"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "undeclaredTerms": {
       "summary": "Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.",
@@ -40,5 +31,5 @@
       "entries": []
     }
   },
-  "total": 2
+  "total": 0
 }
