@@ -44,13 +44,23 @@ export const WORKFLOW = ".github/workflows/code-quality-gates.yml";
 /**
  * The gate commands the workflow runs, in file order, de-duplicated.
  *
- * Matches `bun run <script>` and `bun run scripts/<file>.ts`, keeping a
+ * Matches `bun run <script>` and `bun run <path>/<file>.ts`, keeping a
  * trailing `--check` or `-- --check` because a checker and its writer are
  * different commands and only one of them is a gate.
+ *
+ * The path branch was `scripts\/[\w.-]+\.ts`, with the directory written in.
+ * The move (bean `wggr`) made it `cat-harness/scripts/…` and the extractor
+ * silently stopped seeing three gates — silently because a gate it cannot see
+ * is a gate it does not report as missing. The neighbouring test caught it
+ * only because that test matches `bun run ` loosely and cross-checks the two,
+ * which is the pattern worth keeping: one strict reader, one loose one, and an
+ * assertion that they agree.
+ *
+ * Now any path, because the directory is not what makes a line a gate.
  */
 export function gatesIn(yaml: string): string[] {
   const out: string[] = [];
-  const re = /bun run (scripts\/[\w.-]+\.ts(?: --check)?|[\w:.-]+(?: -- --check)?)/g;
+  const re = /bun run ([\w.-]+(?:\/[\w.-]+)+\.ts(?: --check)?|[\w:.-]+(?: -- --check)?)/g;
   for (const m of yaml.matchAll(re)) out.push(m[1]);
   return [...new Set(out)];
 }

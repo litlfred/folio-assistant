@@ -47,10 +47,13 @@ describe("commands inside a folded `run: |` block are found", () => {
 describe("against the real workflow", () => {
   test("the three gates the hand-written list missed are present", () => {
     const g = gates(ROOT);
+    // Prefixed `cat-harness/` by the move (bean `wggr`). These are the three
+    // generator checks the hand-written list missed; what is asserted is that
+    // they are WIRED, and the path they are wired at follows the tree.
     for (const missed of [
-      "scripts/gen-skill-docs.ts --check",
-      "scripts/gen-schema-docs.ts --check",
-      "scripts/gen-docs-pages.ts --check",
+      "cat-harness/scripts/gen-skill-docs.ts --check",
+      "cat-harness/scripts/gen-schema-docs.ts --check",
+      "cat-harness/scripts/gen-docs-pages.ts --check",
     ]) {
       expect(g).toContain(missed);
     }

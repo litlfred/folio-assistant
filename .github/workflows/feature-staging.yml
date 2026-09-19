@@ -30,11 +30,11 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - 'cat-harness/docs/**'
-      - 'schemas/**'
-      - 'content/**'
-      - 'skills/**'
-      - 'scripts/gen-schema-docs.ts'
-      - 'scripts/gen-docs-pages.ts'
+      - 'cat-harness/schemas/**'
+      - 'cat-harness/content/**'
+      - 'cat-harness/skills/**'
+      - 'cat-harness/scripts/gen-schema-docs.ts'
+      - 'cat-harness/scripts/gen-docs-pages.ts'
       - '.github/workflows/feature-staging.yml'
   pull_request_target:
     types: [closed]
@@ -150,9 +150,9 @@ jobs:
 
       - name: Regenerate generated docs
         run: |
-          bun run scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
-          bun run scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
-          bun run scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
+          bun run cat-harness/scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
+          bun run cat-harness/scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
+          bun run cat-harness/scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
 
       - name: Render BPMN workflow diagrams
         run: |
@@ -251,7 +251,7 @@ jobs:
       # couples to nothing, is a no-op on a second run, and FAILS rather than
       # reporting a clean pass when it cannot read the tree.
       - name: Strip SEO identity claims from the preview
-        run: bun run scripts/strip-preview-seo.ts --site ./_site
+        run: bun run cat-harness/scripts/strip-preview-seo.ts --site ./_site
 
       - name: Generate TypeDoc API reference
         run: |
@@ -297,7 +297,7 @@ jobs:
       - name: Emit the knowledge-graph viewer
         run: |
           STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
-          bun run scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
+          bun run cat-harness/scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
 
       - name: Inject staging banner
         # PR title and body come through `env`, NOT `${{ }}` interpolation.
@@ -443,8 +443,8 @@ jobs:
           # command writes went out with no build identity at all (bean `lx2s`).
           # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
           # sets for every step.
-          bun run scripts/kg-export.ts             --base-url "$BASE" --out "./_site/${STUB}.jsonld"
-          bun run scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
+          bun run cat-harness/scripts/kg-export.ts             --base-url "$BASE" --out "./_site/${STUB}.jsonld"
+          bun run cat-harness/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json" 
@@ -486,7 +486,7 @@ jobs:
       #
       # A test asserts both workflows carry this step.
       - name: Check the navbar tiles resolve against the built site
-        run: bun run scripts/site-links.ts --site ./_site
+        run: bun run cat-harness/scripts/site-links.ts --site ./_site
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
@@ -769,7 +769,7 @@ jobs:
         env:
           CLEANUP_SLUG: ${{ steps.guard.outputs.slug }}
           GITHUB_TOKEN: ${{ github.token }}
-        run: bun run scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
+        run: bun run cat-harness/scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
 
       - name: Check out the publish branch
         uses: actions/checkout@v4
