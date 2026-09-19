@@ -340,7 +340,7 @@ jobs:
       - name: agent memory is assembled
         run: bun run agent-memory:check
 
-      # Fourteen gates that were REGISTERED IN package.json AND RUN BY NOBODY.
+      # Fifteen gates that were REGISTERED IN package.json AND RUN BY NOBODY.
       #
       # Measured 2026-09-19: of 33 `check:`/`:check` scripts, 21 appeared in no
       # workflow at all. That is bean `5rfy`'s defect -- a gate that never
@@ -378,6 +378,7 @@ jobs:
           set -e
           bun run check:bean-parents
           bun run check:l1-complete
+          bun run check:l1-complete -- --check
           bun run check:declared-paths
           bun run check:harness-dirs
           bun run harness:dirs:check
