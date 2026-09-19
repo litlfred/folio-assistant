@@ -34,9 +34,9 @@ them to pick one.
 
 ## Do this
 
-1. **Read [`kg-navigation.md`](kg-navigation.md).** It explains how to open
-   the files in step 2 and 3. It needs nothing but the ability to read a file
-   — no tools, no server.
+1. **Read [`skills/kg-navigation.md`](skills/kg-navigation.md).** It explains
+   how to open the files in step 2 and 3. It needs nothing but the ability to
+   read a file — no tools, no server.
 
 2. **Open [`bootstrap.jsonld`](bootstrap.jsonld)** and find the entry whose
    `@type` is `Process`. It names a file.

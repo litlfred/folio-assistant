@@ -1,15 +1,11 @@
 ---
-layout: default
-title: What is this repository supposed to be?
-parent: Skill instructions
+name: determine-intent
+description: >
+  Turn what a person wants this repository to become into ONE instance
+  reference. The only step of bootstrap that requires user input, and it asks
+  a single question rather than three.
 ---
 
-{: .note }
-> Generated from [`bootstrap/skills/determine-intent.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/determine-intent.md) — do not edit here.
->
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/bootstrap/skills/determine-intent.md){: .fa-edit-source }
-
-{% raw %}
 # What is this repository supposed to be?
 
 **The output of this skill is an instance reference** — `litlfred/f-a-sci`,
@@ -72,4 +68,3 @@ being the wrong thing, and every artefact written afterwards inherits the
 mistake. Say that bootstrap needs one reference and stop; an unbootstrapped
 repository is a recoverable state, and a repository declaring the wrong
 upstream is not.
-{% endraw %}

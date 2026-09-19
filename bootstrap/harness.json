@@ -17,5 +17,15 @@
       "title": "bootstrap",
       "description": "The flow, with every term linked to the schema that defines it. Self-documenting on GitHub: a person landing on the directory reads the thing itself rather than a pointer to a site."
     }
+  ],
+  "_directories_comment": "ONE entry, and it is a subdirectory rather than `bootstrap/` itself. `isSkillMd` is declaration-over-location: a markdown file that does NOT declare `$schema:` is a skill. README.md and AGENTS.md declare neither, so a graph rooted at `bootstrap/` would count this instance's two DECLARED ASSETS as skill nodes — the instance has already said what those files are, and a scan would contradict its own declaration. Keeping the graph one level down means the two mechanisms cannot collide. Declared explicitly rather than relying on DEFAULT_DIRECTORIES: a declaration that exists is honoured as written, so defaults do not apply to an instance that declares anything at all.",
+  "directories": [
+    {
+      "id": "cat-harness",
+      "path": "skills/",
+      "graphs": [
+        "cat-harness"
+      ]
+    }
   ]
 }

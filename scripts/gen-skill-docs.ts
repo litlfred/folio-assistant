@@ -25,7 +25,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { join, resolve, basename, relative } from "path";
 
-import { isSkillMd, kgRoots } from "./known-skills.js";
+import { isSkillMd, kgDirectories } from "./known-skills.js";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
@@ -209,20 +209,36 @@ function discoverGroups(): Group[] {
   // twelve-skills-unpublished failure this function's own error message was
   // written about, arriving again one directory along.
   //
-  // A root may hold skills DIRECTLY (bootstrap/kg-navigation.md) or in
+  // A root may hold skills DIRECTLY (bootstrap/skills/kg-navigation.md) or in
   // package subdirectories (skills/folio-core/…), so both shapes are scanned.
-  // The category key is the directory's own name either way.
+  //
+  // THE CATEGORY KEY IS NOT ALWAYS THE BASENAME. For a package inside a root
+  // it is — `folio-core` names itself. For the ROOT ITSELF the basename is an
+  // artefact of where the declaration happens to point, and this comment used
+  // to say "the directory's own name either way", which held only while that
+  // root was `bootstrap/`. #422 moved bootstrap's skills down one level to
+  // `bootstrap/skills/` (so that `README.md` and `AGENTS.md`, its two declared
+  // assets, are not scanned as skills), the basename became `skills`, and the
+  // generator demanded a category heading for a package called "skills".
+  //
+  // So a root is keyed on its DECLARED ID, which `harness.json` already says
+  // is the stable half: "ids are stable across a relocation, paths are not".
+  // The id is `bootstrap` whether the skills sit at `bootstrap/` or
+  // `bootstrap/skills/`, which is the property a category heading needs.
   const holdsSkills = (dir: string): boolean =>
     existsSync(dir) && readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)));
 
-  for (const root of kgRoots(REPO_ROOT)) {
+  for (const decl of kgDirectories(REPO_ROOT)) {
+    const root = decl.absPath;
+    /** Declared id for the root itself; own basename for a package within it. */
+    const keyFor = (dir: string): string => (dir === root ? decl.id : basename(dir));
     const candidates: string[] = [];
     if (holdsSkills(root)) candidates.push(root);
     for (const d of readdirSync(root, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       if (d.isDirectory()) candidates.push(join(root, d.name));
     }
     for (const dir of candidates) {
-      const name = basename(dir);
+      const name = keyFor(dir);
       // No SKILL `.md` means it is not a skill package: `workflows/`,
       // `roles/`, `permissions/`, `requirements/`, `framework/`,
       // `remote-packages/` and `memory/` are other node kinds.

@@ -60,8 +60,18 @@ function holdsMarkdown(abs: string): boolean {
  * function's to guess around — but skill discovery must not crash a tool that
  * had nothing to do with the declaration, so an unreadable one yields an empty
  * list and the explicit extras below still resolve.
+ *
+ * **Exported, and it carries `id`, because the path is the unstable half.**
+ * {@link kgRoots} drops everything but `absPath`, which is all a scanner
+ * needs; a consumer that must NAME a root needs the declared id. `harness.json`
+ * states the rule on its own `cat-harness` entry — *"ids are stable across a
+ * relocation, paths are not"* — and `gen-skill-docs` is where it was paid for:
+ * it keyed a category heading on the basename, that basename was `bootstrap`
+ * only while the root was `bootstrap/`, and when #422 moved the skills to
+ * `bootstrap/skills/` the generator demanded a heading for a package called
+ * "skills".
  */
-function kgDirectories(root: string): Array<{ path: string; absPath: string }> {
+export function kgDirectories(root: string): Array<{ id: string; path: string; absPath: string }> {
   try {
     return resolveDirectories([{ name: "(local)", root, own: true }])
       // EXACTLY `cat-harness`, not merely including it.
