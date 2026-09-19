@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-19T11:23:31Z
-updated_at: 2026-09-19T11:49:29Z
+updated_at: 2026-09-19T12:18:23Z
 ---
 
 Owner, 2026-09-19:
@@ -181,3 +181,45 @@ filters — every assertion here filters, and a filter over nothing passes.
   asked to "connect it to existing agentic processes" — that means call
   activities in `crdm-requirements`, `editing-hci-validation` and
   `content-lifecycle`, which is not done.
+
+
+## The producer and the rich schema (commit `20e57de2`)
+
+Both remaining pieces are done.
+
+**`src/logging/log-writer.ts`** — writes to every directory `logDirs()`
+resolves, never throws (a log is instrumentation; an agent whose task dies
+because logging died has been made worse off by the thing meant to help it),
+and never silent (`written: false` always carries the reason).
+
+**`references[]` and `execution`**, from the owner's *"rich schema including
+references to discussion/chats, cmn execution logs, etc."* The `etc.` is the
+spec: `kind` is an **open** string over a known set, and an unrecognised kind
+is accepted and flagged rather than refused. A list rather than
+`issue`/`pr`/`commitSha` fields, because one entry routinely touches several
+of one kind. `execution` has **no field to inline output into** — `outputRef`
+points at where it went, because output is the likeliest place for a token and
+`capture: "on"` puts an entry in git.
+
+`cmn` read as **command**: no CMMN exists in this codebase and "execution
+logs" pairs with a command. If CMMN was meant it arrives as `kind: "case"`
+with no schema change.
+
+**`<folio:log capture="on"/>` on the process, NOT a call activity.** That is
+the one judgement worth recording. A call activity is a node in the control
+flow, so the log would become a step completed in sequence — and two of the
+three processes are `enforcement="strict"`, where `workflow_gate` refuses a
+step that is not enabled. It would have changed what those diagrams say and
+needed policy relaxations for a concern that is not a phase of anything. There
+is a test asserting both strict processes still enforce exactly what they did.
+
+Marked: `crdm-requirements`, `editing-hci-validation`, `content-lifecycle`.
+
+### Not done, and deliberately
+
+- **No agent calls the producer outside the workflow tools.** `workflow_start`
+  and `workflow_complete` write entries; an agent working outside a process
+  still writes nothing. Whether that wants a hook or an MCP tool is a separate
+  question.
+- **Emptying is specified and not implemented.** The skill defines one entry,
+  all of them, and a periodic sweep; no code does any of the three.
