@@ -102,3 +102,37 @@ describe("provenance is never fabricated", () => {
     expect(sourceHashOf(join(ROOT, "scripts", "kg-export.ts"))).toMatch(/^[0-9a-f]{12}$/);
   });
 });
+
+describe("the witnesses are committed in one place and published in another", () => {
+  const WITNESS_DIR = join(ROOT, QA_RESULTS_DIR, "witnesses");
+
+  it("they live under the declared results tree, not under docs/", () => {
+    // Provenance, not consumption: a witness is `qa-witness.ts`'s projection of
+    // what a checker found. It sat in `docs/` only because that is where Jekyll
+    // could reach it, which is a fact about the build, not about the artefact.
+    expect(existsSync(WITNESS_DIR)).toBe(true);
+    expect(existsSync(join(ROOT, "docs", "assets", "qa"))).toBe(false);
+  });
+
+  it("BOTH publishing workflows copy them into the site", () => {
+    // The failure this exists to prevent is silent and asymmetric. Jekyll
+    // builds only `docs/`, so a workflow missing this copy publishes a site
+    // where every `data-qa-src` 404s — and an empty QA panel looks exactly
+    // like "nothing has been audited", which is the false pass the badges
+    // were built to remove. Missing it in ONE workflow is worse still: the
+    // docs site and the staging preview would disagree, and the preview is
+    // where a reviewer checks.
+    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
+      const text = readFileSync(join(ROOT, ".github", "workflows", wf), "utf-8");
+      expect(text).toContain("cp -rT test/results/witnesses ./_site/assets/qa");
+    }
+  });
+
+  it("the badges still point at `/assets/qa/`, unchanged by the move", () => {
+    // Where a file LIVES and where it is SERVED FROM are different questions.
+    // Moving the URL as well would have rewritten every badge in every
+    // generated page and the browser code that fetches them, for no gain.
+    const page = readFileSync(join(ROOT, "docs", "agentic-harness.md"), "utf-8");
+    expect(page).toContain("data-qa-src=\"{{ '/assets/qa/");
+  });
+});

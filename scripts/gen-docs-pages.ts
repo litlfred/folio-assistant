@@ -172,7 +172,23 @@ function readBlock(page: WebPage, nodeId: string, block: string): string {
  * `qa-witness.ts`, one file per (subject, family), fetched only when somebody
  * clicks the icon.
  */
-const QA_ASSET_DIR = join(OUT_DIR, "assets", "qa");
+//
+// **Committed under `test/results/`, published at `/assets/qa/`.** Those are
+// two different questions and the answers differ.
+//
+// WHERE IT LIVES follows provenance — the owner's rule, 2026-09-19: an
+// artefact generated primarily as a QA reviewer belongs under `test/results/`
+// as part of a QA process. A witness is exactly that: `qa-witness.ts`'s
+// projection of what a checker found. It is not authored, and it was sitting
+// in `docs/` only because that is where Jekyll could reach it.
+//
+// WHERE IT IS SERVED FROM is unchanged, deliberately. The `data-qa-src`
+// emitted below still says `/assets/qa/…`, and the publishing workflows copy
+// this directory into `_site/assets/qa/` after Jekyll runs. Moving the URL as
+// well would have changed every badge in every generated page and the
+// browser code that fetches them, for no gain — the reader's path to the
+// evidence is not what was in the wrong place.
+const QA_ASSET_DIR = join(REPO_ROOT, "test", "results", "witnesses");
 
 /**
  * The todo board's data, published as ONE file rather than one per node.

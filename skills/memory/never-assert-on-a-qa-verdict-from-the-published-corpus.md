@@ -10,7 +10,7 @@ roles:
 agents:
   - content-pipeline-navigator
 ---
-`docs/assets/qa/**` is live state. A test that reads a VERDICT out of it breaks
+`test/results/witnesses/**` is live state. A test that reads a VERDICT out of it breaks
 when somebody fixes or adjudicates the finding — which is the system working.
 
 > Measured on 2026-09-19 (bean `tywj`): `tests/qa-panel.e2e.ts` pinned the first

@@ -41,7 +41,7 @@ const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 /** A block sidecar from the corpus, and two states derived from it. */
 const CORPUS_PATH = join(
   ROOT,
-  "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json",
+  "test/results/witnesses/crdm-methodology/what-is-not-built-yet.block.json",
 );
 
 /**
@@ -141,7 +141,7 @@ const STALE_JSON = applyVerdicts(BLOCK_JSON, [{ id: LOUD_ID, stale: { changed: [
 
 /** A KG sidecar: one auditor, no timestamp, a `sha256:`-prefixed hash. */
 const KG_JSON = readFileSync(
-  join(ROOT, "docs/assets/qa/publication-workflow/editing-and-the-hci-validation-gate.kg.json"),
+  join(ROOT, "test/results/witnesses/publication-workflow/editing-and-the-hci-validation-gate.kg.json"),
   "utf8",
 );
 
