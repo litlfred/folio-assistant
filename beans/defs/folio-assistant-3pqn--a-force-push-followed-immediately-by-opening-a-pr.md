@@ -98,8 +98,24 @@ inside 35 minutes, all plain `git push` with no force:
 | `684b78ad1` | run 1017 | fired |
 | `fd4828efb` | run 1032 | fired |
 | `412c00cd2` | **none** | dropped |
+| `b55b700d1` | **none** | dropped |
+| `08dfba029` | run 1045 | fired |
 
-**3 of 4, so ~25 % dropped on one branch in one sitting.** Established from
+**4 of 6 fired, so ~33 % dropped on one branch in one sitting** — and **the two
+drops are CONSECUTIVE.** (I first recorded this table as 3 of 4 / ~25 %, before
+`b55b700d1`'s absence was established: its `workflow_dispatch` run 1041 existed
+and I mistook that for coverage. Correcting rather than appending, since a stale
+rate in a shared bean is worse than none. The lesson is the bean's own rule
+applied to me: a `workflow_dispatch` run on a sha is not evidence that the
+`pull_request` event fired for it, and only the latter is what a PR's checks
+show.)
+
+The adjacency is the part worth having. The seventh observation above wondered
+whether the drops "cluster in windows" after two sessions hit this ninety seconds
+apart; two consecutive drops inside one branch's push sequence, with three
+successes before and one after, is a second independent sign of that. It also
+means **~33 % is not a per-push probability** — if drops cluster, the per-push
+figure is not the useful number and the window is. Established from
 `list_workflow_runs` on `code-quality-gates.yml` filtered to the branch AND
 `event=pull_request`, comparing `head_sha` against the PR's head — not from the
 PR page, per this bean's own rule. Fixed the same way: `workflow_dispatch` with
@@ -112,12 +128,13 @@ independent reason the reused-branch hypothesis does not hold: the seventh
 observation showed a fresh branch name dropping an event, and this one shows a
 reused branch name firing three times in a row. The property is not the branch.
 
-Caveat on the number, because a rate invites over-reading: n=4 on one branch in
-one session gives a very wide interval, and it says nothing about whether the
-drops are independent or cluster in windows — the seventh observation's note
-about two sessions hitting this within ninety seconds suggests windows. So treat
-~25 % as "this is common, not rare", which is the load-bearing part, and not as a
-calibrated probability.
+Caveat on the number, because a rate invites over-reading: n=6 on one branch in
+one session gives a very wide interval, and the adjacency above means the drops
+are probably NOT independent, so a single percentage is the wrong summary
+statistic for them. Treat this as **"common, and clustered"** — which is the
+load-bearing part, and is also what makes the workaround discipline matter:
+after one dropped push, expect the next one to drop too rather than assuming it
+was a one-off.
 
 Unchanged, and agreeing with every note above: **zero checks renders identically
 to green.** An agent following "never merge red" merges it happily. The check
