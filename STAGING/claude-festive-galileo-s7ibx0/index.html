@@ -335,7 +335,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e443c96</span> · built 2026-09-19T07:26:11Z · <a href="https://github.com/litlfred/folio-assistant/pull/345" style="color:#fff;text-decoration:underline">PR #345</a> · <a href="https://litlfred.github.io/folio-assistant/index.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35429249133" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">5756e16</span> · built 2026-09-19T07:29:53Z · <a href="https://github.com/litlfred/folio-assistant/pull/345" style="color:#fff;text-decoration:underline">PR #345</a> · <a href="https://litlfred.github.io/folio-assistant/index.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35429420905" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -532,9 +532,51 @@ large language model — scientific papers and books, WHO SMART Guidelines, and
 FHIR Implementation Guides — backed by an MCP server, role-based access control,
 and a typed content-object model.</p>
 
-<p><a href="getting-started.html" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2">Get started</a>
+<p><a href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/getting-started.html" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2">Get started</a>
 <a href="installation.html" class="btn fs-5 mb-4 mb-md-0 mr-2">Install</a>
 <a href="https://github.com/litlfred/folio-assistant" class="btn fs-5 mb-4 mb-md-0">View on GitHub</a></p><hr />
+<h2 id="four-things-in-order">
+  
+  
+    <a href="#four-things-in-order" class="anchor-heading" aria-labelledby="four-things-in-order"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Four things, in order
+  
+  
+</h2>
+    
+
+<p><strong>1. The work plan is where you say what you are doing.</strong>
+Not a chat message, not a comment — <a href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/beans-and-todos.html">beans</a>, a committed
+store any session or agent can read. Claim before you work so a sibling session
+does not pick up the same item; a bean that turns out not to be wanted is
+<code class="language-plaintext highlighter-rouge">scrapped</code>, with its reasons, never deleted.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/install-beans.sh <span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.local/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+beans list                          <span class="c"># what is open</span>
+beans create <span class="s2">"&lt;title&gt;"</span>              <span class="c"># ...after checking the title does not exist</span>
+beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>     <span class="c"># claim it, visibly</span>
+</code></pre></div></div>
+
+<p><strong>2. Make your first folio.</strong> This repository is the <em>platform</em>; your content
+lives in its own. One command scaffolds it — the manifests, the declaration, the
+agent files and the link back here:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run init-folio <span class="nt">--help</span>
+</code></pre></div></div>
+
+<p>Then <a href="getting-started.html">Get started</a> walks the first block through validate,
+render and review.</p>
+
+<p><strong>3. Know which kind of thing you are writing.</strong> A <em>document</em> is structured
+prose; a <em>paper</em> is that plus the block kinds whose assertion is a formal claim,
+backed by Lean and typeset through LaTeX. The choice decides which blocks are
+legal and which gates run: <a href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/content-types.html">Content types</a>.</p>
+
+<p><strong>4. The documentation you will never read.</strong>
+<a href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/guides/index.html">All of it</a> — the authoring guides, the architecture, the
+publication workflow, the generated schema and skill reference. It is here, it
+is thorough, and the honest expectation is that you will arrive at it from a
+search engine at the exact moment something breaks. That is a fine way to use
+it. The three steps above are the ones worth reading now.</p><hr />
 <h2 id="what-is-folio-assistant">
   
   
@@ -695,7 +737,7 @@ swimlanes, with the roles, the HCI validation gate, and the shared work plan.</p
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35429249133"><code>e443c96</code></a> &middot; 2026-09-19T07:25:39Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35429420905"><code>5756e16</code></a> &middot; 2026-09-19T07:29:23Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
