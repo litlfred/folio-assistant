@@ -264,8 +264,21 @@ closing delimiter and there is no escape for it. Same asymmetry
       `package-manifest.json`; `kg:audit:check` clean.
 - [x] Staging measured, liveness re-verified immediately before the act, the two
       genuine orphans identified with sizes and ages.
-- [ ] The prune commit landed on `gh-pages` (built and verified locally; the
-      push needs owner assent — it rewrites the publish branch).
+- [x] The prune was **put to the owner and DECLINED**, 2026-09-19: *"Leave both
+      in place."* So the two orphans stay, and this is a decision rather than an
+      omission — the next agent should not re-propose it without new grounds.
+      The commit was built and verified (1572 deletions, every path under
+      exactly those two prefixes, nothing added or modified) and was never
+      pushed.
+
+      **The reasoning holds up, which is why it is recorded rather than just
+      obeyed.** Pruning both frees 76.7 MB of 346 MB against a 100 MB threshold
+      — and the threshold is unreachable by pruning at all, because 7 live
+      previews are a 266 MB floor and two previews alone exceed 100 MB. So the
+      prune buys no green check and no changed conclusion; it only destroys two
+      recoverable artefacts. The size problem is `g196`'s, and pruning would
+      have made the numbers look marginally better while leaving the 9x
+      duplication exactly as it was.
 - [x] **The 38 MB question answered** — the preview slug in every page's
       `baseurl`, canonical and `og:url` defeats git deduplication; 0 HTML blobs
       shared between two previews. See §"The 38 MB is the slug".
