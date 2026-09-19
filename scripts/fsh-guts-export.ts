@@ -132,6 +132,7 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
         ...(n.movedOn ? { movedOn: n.movedOn } : {}),
         ...(n.movedFrom ? { movedFrom: n.movedFrom } : {}),
         ...(n.issue !== undefined ? { issue: String(n.issue) } : {}),
+        ...(n.bean ? { bean: n.bean } : {}),
         ...(n.summary ? { description: n.summary } : {}),
         // THE BODY, so the viewer has something to display.
         //
@@ -166,6 +167,7 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
       movedOn: termIri("movedOn"),
       movedFrom: termIri("movedFrom"),
       issue: termIri("issue"),
+      bean: termIri("bean"),
       // `schema:text` rather than a minted `fac:body`: schema.org already
       // names "the textual content of this thing", and a second term for it
       // is the drift `ns:check` caught twice on this branch already.
