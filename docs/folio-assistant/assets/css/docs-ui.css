@@ -2197,3 +2197,62 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   margin-top: 0.6rem;
   font-size: 0.72rem;
 }
+
+/* Discarding a sticky (bean `d1r6`). The crumpled glyph replaces the `×`,
+ * which used to dock a floating sticky — a job the greyed board slot still
+ * does. Sized to the old glyph so the tool row does not reflow. */
+.fa-sticky-discard { line-height: 0; }
+
+.fa-crumpled-glyph {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+}
+
+/* Stickies discarded in THIS BROWSER. A separate block from the repository's
+ * own discarded nodes, visibly so: they are different facts with different
+ * reach, and one of them is invisible to everybody else. */
+.fa-discarded-local {
+  margin-top: 0.75rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.35);
+}
+
+.fa-discarded-local:empty { border-top: 0; padding-top: 0; margin-top: 0; }
+
+.fa-discarded-local-title {
+  margin: 0 0 0.2rem;
+  font-size: 0.75rem;
+}
+
+/* The limitation is TEXT, not a colour or an icon. A reader who believes
+ * they cleared a todo for the team has been misled by the control. */
+.fa-discarded-local-note {
+  margin: 0 0 0.4rem;
+  font-size: 0.68rem;
+  opacity: 0.75;
+}
+
+.fa-discarded-local-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.2rem 0;
+  font-size: 0.72rem;
+}
+
+.fa-discarded-restore {
+  flex: none;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.68rem;
+  padding: 0.1rem 0.45rem;
+  cursor: pointer;
+}
+
+.fa-discarded-restore:hover,
+.fa-discarded-restore:focus-visible { background: rgba(128, 128, 128, 0.15); }
