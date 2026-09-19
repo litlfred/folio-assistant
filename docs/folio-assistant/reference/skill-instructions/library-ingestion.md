@@ -164,6 +164,52 @@ that returned "fine" unconditionally would pass the corpus just as well. Each of
 the three branches is mutation-checked — removing it fails a named test. Bean
 `iqim`.
 
+## Archives — the entry list is data, and the rung is chosen by CONTENT
+
+A tar or zip in `uploads/` is opaque to every grep in the corpus: a search for
+a filename inside one finds nothing, and that absence is indistinguishable from
+the file not being there. `scripts/archive-contents.py` writes
+`library/<slug>/contents.jsonld` — **one schema whatever the container**
+(`schemas/archive-contents.ts`), so a consumer reads archives without knowing
+whether it was tar or zip.
+
+Per entry: `path`, `bytes`, `sha256`, `mtime`, `mimetype_sniffed`,
+`mimetype_source` — the `source{}` vocabulary above, reused verbatim, because
+**an archive entry is not a different kind of thing from a loose file**. The
+mimetype is sniffed from the entry's own leading bytes, never from its name,
+for the same reason it is outside an archive.
+
+Four entry states, not two: a `directory` carries no size and no digest (a zero
+would be a measurement nobody made); an unreadable member is
+`mimetype_source: "unreadable"`, which is not an empty file; a `symlink` or
+`special` is listed with its kind rather than dropped. Dropping directories
+would make an archive of empty ones indistinguishable from an empty archive.
+A file the sniffer does not recognise as an archive is **refused** — an empty
+`entries[]` would read as an empty archive, a different fact.
+
+### The rung is chosen before anything opens the file as a PDF
+
+`planFor` sniffs first. Handing it a zip used to answer `undetermined` with
+`why: "no PDF backend: No module named 'fitz'"` — the **refusal was right and
+the diagnosis was wrong**: it reported a missing tool when the fact was that
+the file is not a PDF, and a reader would go install PyMuPDF and fail again.
+A file *named* `.pdf` that is really a zip now takes the archive rung, which is
+the case only a sniff can decide.
+
+### What the gate checks, and the determined zero
+
+Which entries the requirement applies to is **derived, not guessed**: `source.
+mimetype_sniffed` is already on every entry, so "this came from a zip" is a
+recorded fact. An archive entry must carry a `contents.jsonld` that validates
+against the declared schema.
+
+`uploads/` holds four PDFs and **no archives**, so every entry reports
+`not an archive (application/pdf)` — said out loud rather than passed in
+silence, because "nothing to check here" and "the check never ran" are
+different facts. The requirement is proved to fire by fixture archives built in
+`scripts/tests/archive-contents.test.ts`, and each of its four branches is
+mutation-checked. Bean `twqe`.
+
 ## Ingestion is a HARNESS capability, not core's
 
 `uploads` and `library` are both graph kinds declared by the **harness** layer;

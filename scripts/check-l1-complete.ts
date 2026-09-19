@@ -45,6 +45,11 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import {
+  ARCHIVE_CONTENTS_SCHEMA_ID,
+  ArchiveContentsSchema,
+  isArchiveMimetype,
+} from "../schemas/archive-contents.ts";
 import { LIBRARY_BLOCK_ORIGIN, ProvenanceSchema, isIngested } from "../schemas/attribution.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
@@ -116,6 +121,67 @@ function derivableRequirements(dir: string): Requirement[] {
       state: n > 0 ? "met" : "unmet",
       detail: n < 0 ? `no ${rel}/ directory` : `${n} files`,
     });
+  }
+
+  // Archive contents (bean `twqe`).
+  //
+  // WHICH entries this applies to is DERIVED, not guessed: `nso8` already
+  // records `source.mimetype_sniffed`, so "this entry came from a zip" is a
+  // fact on the entry rather than a judgement about its name. An entry whose
+  // source sniffed as an archive must carry `contents.jsonld`, validated
+  // against `ArchiveContentsSchema` so the gate and the writer cannot drift.
+  //
+  // The corpus holds FOUR PDFs and no archives, so this reports a determined
+  // zero — `not an archive (application/pdf)`. That is the point of saying it
+  // rather than staying silent: "nothing to check here" and "the check never
+  // ran" are different facts, and only one of them is a pass. The requirement
+  // is proved to fire by fixtures in `scripts/tests/archive-contents.test.ts`.
+  {
+    const src = (() => {
+      try {
+        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
+          | Record<string, unknown>
+          | undefined;
+      } catch {
+        return undefined;
+      }
+    })();
+    const mime = src?.mimetype_sniffed;
+    if (!isArchiveMimetype(mime)) {
+      out.push({
+        name: "archive-contents",
+        state: "met",
+        // An EMPTY string is an absence, not a mimetype: rendering it gave
+        // `not an archive ()`, which tells a reader nothing about whether
+        // anything looked. `_tech_meta.py` writes `null` for unrecognised
+        // bytes, and both spellings of "there isn't one" say so here.
+        detail: `not an archive (${typeof mime === "string" && mime ? mime : "no sniffed mimetype"})`,
+      });
+    } else if (!has("contents.jsonld")) {
+      out.push({
+        name: "archive-contents",
+        state: "unmet",
+        detail: `sniffed ${mime} but no contents.jsonld — run scripts/archive-contents.py`,
+      });
+    } else {
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(readFileSync(join(dir, "contents.jsonld"), "utf-8"));
+      } catch (e) {
+        parsed = undefined;
+        out.push({ name: "archive-contents", state: "unmet", detail: `contents.jsonld unparseable: ${String(e)}` });
+      }
+      if (parsed !== undefined) {
+        const r = ArchiveContentsSchema.safeParse(parsed);
+        out.push({
+          name: "archive-contents",
+          state: r.success ? "met" : "unmet",
+          detail: r.success
+            ? `${r.data.n_files} file(s), ${r.data.n_directories} dir(s), ${r.data.format}`
+            : `contents.jsonld is not ${ARCHIVE_CONTENTS_SCHEMA_ID}: ${r.error.issues[0]?.message ?? "invalid"}`,
+        });
+      }
+    }
   }
 
   // Narrative provenance (bean `iqim`).
@@ -263,7 +329,6 @@ function derivableRequirements(dir: string): Requirement[] {
  * work rather than by editing.
  */
 export const NOT_DERIVABLE: ReadonlyArray<readonly [string, string]> = [
-  ["archive-contents", "twqe"],
   ["image-descriptions", "d5f1"],
   ["audio-transcripts", "1r0p"],
   ["tabular-records", "p67i"],

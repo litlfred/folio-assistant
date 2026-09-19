@@ -2,22 +2,18 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/check-l1-complete.ts",
-    "script_hash": "37bd2f6b43a7"
+    "script_hash": "8e1afe934952"
   },
   "subject": {
     "kind": "library-document",
     "id": "library/wpr-rdo-2020-003-eng"
   },
-  "updated_at": "2026-09-19T15:24:21.872Z",
+  "updated_at": "2026-09-19T15:39:08.316Z",
   "families": {
     "notDerivable": {
       "summary": "L1 requirements NO ingest arm can produce yet. Not a defect in this entry and not a pass either — nothing has checked them, so this entry is not fully verified. Each names the bean that would make it checkable.",
-      "count": 4,
+      "count": 3,
       "entries": [
-        {
-          "requirement": "archive-contents",
-          "detail": "no arm builds this yet — bean twqe"
-        },
         {
           "requirement": "image-descriptions",
           "detail": "no arm builds this yet — bean d5f1"
@@ -38,5 +34,5 @@
       "entries": []
     }
   },
-  "total": 4
+  "total": 3
 }

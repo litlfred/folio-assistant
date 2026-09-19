@@ -47,6 +47,7 @@
 import { existsSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
+import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 
 /**
@@ -68,7 +69,7 @@ export function libraryRoot(root = resolve(".")): string {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
@@ -143,7 +144,58 @@ except Exception as e:
  */
 export const OCR_THRESHOLD_CHARS = 200;
 
-export function planFor(pdf: string, p: Probe = probe(pdf), lib: string = libraryRoot()): Plan {
+/**
+ * What the file's leading bytes say it is, or `null` when unrecognised.
+ *
+ * `_tech_meta.py`'s sniffer, asked rather than reimplemented — the same one
+ * that fills `source.mimetype_sniffed` (bean `nso8`), so the routing decision
+ * and the recorded fact cannot disagree.
+ */
+export function sniffMimetype(file: string): string | null {
+  const py =
+    "import sys, json, importlib.util as u\n" +
+    "spec = u.spec_from_file_location('t', 'scripts/_tech_meta.py')\n" +
+    "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
+    "print(json.dumps(m.sniff_mimetype(sys.argv[1])))\n";
+  const r = Bun.spawnSync(["python3", "-c", py, file]);
+  if (r.exitCode !== 0) return null;
+  try {
+    return JSON.parse(new TextDecoder().decode(r.stdout)) as string | null;
+  } catch {
+    return null;
+  }
+}
+
+
+export function planFor(
+  pdf: string,
+  p: Probe | undefined = undefined,
+  lib: string = libraryRoot(),
+  mimetype: string | null | undefined = undefined,
+): Plan {
+  // CONTENT decides the rung, before anything opens the file as a PDF.
+  //
+  // Bean `twqe`. Handing this a zip used to answer `undetermined` with
+  // `why: "no PDF backend: No module named 'fitz'"` — the refusal was right
+  // and the DIAGNOSIS was wrong: it reported a missing tool when the fact was
+  // that the file is not a PDF, and a reader would go install PyMuPDF and fail
+  // again. The probe opens everything as a PDF, so it could not say otherwise.
+  //
+  // Sniffed, not by extension, for the reason `nso8` gives: the name is a
+  // claim by whoever made the file. A `.pdf` that is really a zip belongs on
+  // the archive rung, and this is the only thing that can tell.
+  const mime = mimetype === undefined ? sniffMimetype(pdf) : mimetype;
+  if (mime !== null && (ARCHIVE_MIMETYPES as readonly string[]).includes(mime)) {
+    return {
+      rung: "archive",
+      why: `sniffed ${mime} — an archive. Its entries are listed as data, not extracted`,
+      steps: [["python3", "scripts/archive-contents.py", "-o", lib, pdf]],
+    };
+  }
+  return planForPdf(pdf, p ?? probe(pdf), lib);
+}
+
+function planForPdf(pdf: string, p: Probe, lib: string): Plan {
   if (p.error || p.outline === null || p.chars === null) {
     return {
       rung: "undetermined",
