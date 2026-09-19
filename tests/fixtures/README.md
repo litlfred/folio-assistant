@@ -39,3 +39,33 @@ reads the criterion id, its result, its severity, the folded count, the witness
 id, the checker hash and the evidence line out of this document, so it asserts
 that the panel shows what the sidecar records. Pinning the checker hash as a
 literal is what made an edit to a checker red an unrelated UI test.
+
+## Four sessions found this independently, and two found more than I did
+
+Worth recording, because the overlap is itself evidence about the defect rather
+than noise:
+
+- **PR #320** diagnosed it and deliberately did not apply a fix — *"it is #317's
+  gate and #302's data, and loosening someone else's assertion is their call"* —
+  and recommended pinning a criterion **by id rather than by position**.
+- **PR #319** applied a fix and found **two latent bugs** in the process. The
+  second is the one that mattered here: `voice-status-leak` sits at position 19
+  of 48 in the live sidecar, so *"worst criterion first"* had been passing on
+  **document order** — the generator sorts worst-first, so a panel that did no
+  sorting at all would have passed. Its first finding is the same defect in
+  `STALE_JSON`, which marked `criteria[0]`, asserted a stale badge on a row it
+  had not marked, and passed.
+- **PR #314** applied a fix too, and measured that **no criterion anywhere in
+  the corpus carries `evidence` any more** — that assertion had outlived every
+  input that could satisfy it, for every block. It filed the general pattern as
+  bean `iumj`.
+
+Both findings are taken up here. The document served to the page is sorted **by
+criterion id**, which puts the failure at position 42 of 48 — a deliberate
+deviation from generator output, and the only way the sort assertion is about
+the panel rather than about its input. `STALE_JSON` marks by id. `FAIL_CRIT_ID`
+throws at module load if the criterion leaves the fixture, rather than letting
+every assertion retarget the first row of whatever remains.
+
+The frozen fixture is also the only place `evidence` still exists, which is why
+the verbatim-quoting assertion is still meaningful.

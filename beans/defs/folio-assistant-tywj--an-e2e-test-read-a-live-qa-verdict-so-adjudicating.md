@@ -63,3 +63,29 @@ reconstructed from the corpus. A frozen copy is the only option.
 - [x] dead duplicate `timeout` key in `playwright.config.ts` removed (120000 was
       silently overridden by 180000 further down the same object literal)
 - [x] `bunx playwright test` 42/42, `bun test` 2012/0, and all 20 static gates
+
+## Four sessions, independently — and indexing is the other half
+
+Noted 2026-09-19, reading the open PRs. #320 diagnosed and stood down
+(recommending pin-by-id); #319 and #314 each fixed it by synthesising the
+failure back into the live sidecar. `iumj` is the sibling bean for the general
+pattern. This bean is the fourth instance, not a fifth defect — the overlap is
+evidence about how easy the mistake is.
+
+Two findings of theirs that my first pass did not have:
+
+- **Indexing stands in for a verdict as silently as a literal does.** The
+  generator sorts worst-first, so `criteria[0]` WAS the failing row — and
+  `STALE_JSON` marked `criteria[0]` while the panel showed whatever it sorted
+  first. #319 measured that after the adjudication those were different
+  criteria, so the stale test asserted a badge on a row it had not marked and
+  **passed**.
+- **A generator-faithful fixture cannot test the panel's sort at all**, for the
+  same reason: the failure is already first. #319 found it at 19 of 48 live.
+
+Taken up: the served document is sorted **by criterion id** (failure at 42 of
+48, so the sort assertion is about the panel), `STALE_JSON` marks by id, and
+`FAIL_CRIT_ID` throws at load if the criterion leaves the fixture.
+
+- [x] no index stands in for a verdict; every lookup is by id
+- [x] the sort assertion exercises the panel, not the generator's ordering

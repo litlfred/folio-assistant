@@ -69,7 +69,7 @@ const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
  * this document, so the test says "the panel shows what the sidecar records"
  * rather than "the panel shows 47".
  */
-const BLOCK_JSON = readFileSync(
+const FIXTURE = readFileSync(
   join(ROOT, "tests/fixtures/block-with-one-failure.block.json"),
   "utf8",
 );
@@ -92,9 +92,53 @@ interface QaDoc {
   criteria: QaCriterion[];
 }
 
-const BLOCK_DOC = JSON.parse(BLOCK_JSON) as QaDoc;
+/**
+ * The criterion whose rendering every assertion below is about — named, never
+ * indexed.
+ *
+ * Indexing is the other half of the same defect. `criteria[0]` was the failing
+ * row only because the GENERATOR sorts worst-first, so an index stood in for a
+ * verdict just as silently as a literal did. Two sibling sessions found what
+ * that costs: PR #319 measured a `STALE_JSON` that marked `criteria[0]`,
+ * asserted a stale badge on a row it had not marked, and PASSED; PR #320
+ * recommended pinning by id for the same reason. If this id ever leaves the
+ * fixture, every assertion here would quietly retarget the first row of
+ * whatever remained — so its absence THROWS at module load.
+ */
+const FAIL_CRIT_ID = "voice-status-leak";
+
+const BLOCK_DOC = JSON.parse(FIXTURE) as QaDoc;
+
+/**
+ * The document served to the page, with its criteria in a deterministic order
+ * that is NOT the generator's.
+ *
+ * "Worst criterion first" is the panel's job, and a fixture straight from the
+ * generator cannot test it: the generator has already sorted, so the failure is
+ * `criteria[0]` and a panel that did nothing at all would pass. Sorting by id
+ * puts `voice-status-leak` near the END of the document, so the assertion is
+ * about the panel rather than about its input. Measured by PR #319, which found
+ * the failure sitting at position 19 of 48 in the live sidecar and the
+ * `worst-first` assertion passing on document order alone.
+ */
+const BLOCK_JSON = (() => {
+  const doc = JSON.parse(FIXTURE) as QaDoc;
+  doc.criteria.sort((a, b) => a.id.localeCompare(b.id));
+  if (doc.criteria[0]!.id === FAIL_CRIT_ID) {
+    throw new Error(`fixture puts ${FAIL_CRIT_ID} first even sorted; the panel's own sort is untested`);
+  }
+  return JSON.stringify(doc);
+})();
+
 /** The one criterion the panel must surface first, and its script witness. */
-const FAIL_CRIT = BLOCK_DOC.criteria[0]!;
+const FAIL_CRIT = (() => {
+  const c = BLOCK_DOC.criteria.find((x) => x.id === FAIL_CRIT_ID);
+  if (!c) throw new Error(`fixture no longer carries ${FAIL_CRIT_ID}`);
+  if (c.result !== "fail" || !c.severity || !c.evidence?.length) {
+    throw new Error(`${FAIL_CRIT_ID} must be a severity-bearing failure with evidence`);
+  }
+  return c;
+})();
 const FAIL_WITNESS = FAIL_CRIT.witnesses[0]!;
 /** What the "show the rest" control has to count: everything not surfaced. */
 const FOLDED = BLOCK_DOC.counts.pass! + BLOCK_DOC.counts.na!;
@@ -109,10 +153,18 @@ const FOLDED = BLOCK_DOC.counts.pass! + BLOCK_DOC.counts.na!;
  * belongs HERE is whether the panel renders that state — which must not depend
  * on the corpus happening to hold an out-of-date verdict on the day the suite
  * runs.
+ *
+ * It marked `criteria[0]`, and PR #319 measured what that was worth: after the
+ * adjudication that was a different criterion from the one the panel showed
+ * first, so the test asserted a stale badge on a row it had not marked — and
+ * passed. It marks by id now.
  */
 const STALE_JSON = (() => {
   const doc = JSON.parse(BLOCK_JSON) as QaDoc;
-  const w = doc.criteria[0]!.witnesses[0]!;
+  // By id, not by index: the row the panel shows first is the one it SORTS
+  // first, which is not the one the document happens to list first.
+  const c = doc.criteria.find((x) => x.id === FAIL_CRIT_ID)!;
+  const w = c.witnesses[0]!;
   w.freshness = "stale";
   w.changed = ["md"];
   return JSON.stringify(doc);
