@@ -1,4 +1,16 @@
 import { defineConfig, devices } from '@playwright/test';
+import { resolveChromium } from './scripts/playwright-chromium';
+
+// Which Chromium to launch, decided once and REPORTED. A prebuilt image pins
+// a browser build that the installed @playwright/test may not be the one that
+// asks for it, and the resulting "Executable doesn't exist … run npx
+// playwright install" names a remedy the image forbids. Falling back silently
+// would be worse than the error: the suite would measure a different browser
+// than it claims to, so the fallback prints which build it chose.
+const chromium = resolveChromium(process.env as Record<string, string | undefined>);
+if (chromium.kind === 'fallback' || chromium.kind === 'unknown') {
+  console.warn(`[playwright] chromium: ${chromium.kind} — ${chromium.note}`);
+}
 
 export default defineConfig({
   testDir: './tests',
@@ -18,12 +30,10 @@ export default defineConfig({
     trace: 'on-first-retry',
     launchOptions: {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      // Some images ship Chromium at a pinned path under
-      // PLAYWRIGHT_BROWSERS_PATH with PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD set,
-      // and the installed @playwright/test asks for a `chrome-headless-shell`
-      // build they do not carry. Point it at the Chromium that IS present
-      // rather than downloading one. Unset elsewhere, so the default applies.
-      executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || undefined,
+      // Resolved above. `undefined` means "Playwright's own default", which
+      // is what a developer machine with a matching install wants; a path
+      // means this image pins a build and we are launching it deliberately.
+      executablePath: chromium.path,
     }
   },
   projects: [
