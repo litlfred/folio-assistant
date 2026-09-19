@@ -25,6 +25,52 @@
  * @module folio-assistant/workflow/ci-health
  */
 
+import { parse as parseYaml } from "yaml";
+
+/**
+ * Does a workflow's YAML fire on every push to its branches?
+ *
+ * `true` every push, `false` never, **`undefined` cannot tell** — and the third
+ * is the one that carries the design. GitHub spells the trigger three ways
+ * (`on: push`, `on: [push, …]`, a mapping with a `push:` key); `on` is also the
+ * YAML 1.1 boolean `true` under some parsers, so that key is checked rather
+ * than assumed absent.
+ *
+ * A `push:` block carrying `paths`, `paths-ignore`, `branches`,
+ * `branches-ignore`, `tags` or `tags-ignore` fires on SOME pushes, and which
+ * ones is not answerable from this file — deciding it would mean evaluating the
+ * filter against the commit's changed files, which a health report has no
+ * business fetching. So it answers `undefined`, and every caller treats that as
+ * "claim nothing".
+ *
+ * That clause was not foreseen; it was measured. `jsonld-gen-check.yml`
+ * declares `on.push` under fifteen `paths:` entries, and the first version of
+ * this returned `true` for it — putting a false "no run has judged the current
+ * head" on a workflow that owed no run, which is the exact false fire the
+ * trigger check exists to prevent.
+ */
+export function pushTriggerOf(text: string): boolean | undefined {
+  let doc: unknown;
+  try {
+    doc = parseYaml(text);
+  } catch {
+    return undefined;
+  }
+  if (!doc || typeof doc !== "object") return undefined;
+  const d = doc as Record<string, unknown>;
+  const on = "on" in d ? d.on : d[true as unknown as string];
+  if (on === undefined || on === null) return undefined;
+  if (typeof on === "string") return on === "push";
+  if (Array.isArray(on)) return on.includes("push");
+  if (typeof on !== "object") return undefined;
+  if (!Object.hasOwn(on as object, "push")) return false;
+  const push = (on as Record<string, unknown>).push;
+  if (push === null || push === undefined) return true;
+  if (typeof push !== "object") return true;
+  const FILTERS = ["paths", "paths-ignore", "branches", "branches-ignore", "tags", "tags-ignore"];
+  return FILTERS.some((k) => Object.hasOwn(push as object, k)) ? undefined : true;
+}
+
 /** The fields of a GitHub Actions run this module reads. */
 export interface RunSummary {
   name: string;
@@ -34,6 +80,8 @@ export interface RunSummary {
   html_url?: string;
   /** `.github/workflows/x.yml` — the file the run came from, if any. */
   path?: string;
+  /** The commit this run judged. Absent when the caller did not supply it. */
+  head_sha?: string;
 }
 
 export type Health = "green" | "red" | "running" | "no-runs" | "superseded";
@@ -102,6 +150,30 @@ export interface WorkflowHealth {
    * this says what it does not cover.
    */
   newestUnsettled?: boolean;
+  /**
+   * No run in the window judged the branch head at all.
+   *
+   * The sibling of {@link newestUnsettled}, and the case that one does not
+   * reach. `newestUnsettled` answers "a run for the head exists but has not
+   * finished". This answers "no run for the head was ever created" — the
+   * workflow did not fire, or has not yet. Either way the verdict below is
+   * about some earlier commit, and `docs-site.yml` sat in exactly this state
+   * for two months under bean `xom7`.
+   *
+   * **Three facts must all be known before this is set, and any unknown means
+   * silence rather than a finding.** The caller must supply the head sha
+   * ({@link AssessOptions.headSha}); no run in the window may carry it; and
+   * {@link AssessOptions.triggersOnPush} must return exactly `true` for this
+   * workflow.
+   *
+   * That last one is not caution for its own sake. `witness-refresh.yml` and
+   * `qa-sweep.yml` are `workflow_dispatch`-only and will never have a run for
+   * any head, so without the trigger check this would report two permanent
+   * false fires — which is precisely the defect the `superseded` rule was
+   * added to retire. A health report earns its inattention one false fire at
+   * a time.
+   */
+  headUnjudged?: boolean;
 }
 
 /** Conclusions that are not a pass but are also not the workflow's fault. */
@@ -114,7 +186,11 @@ const NOT_A_VERDICT = new Set(["cancelled", "skipped", "neutral"]);
  * queued run is not evidence of health, and calling it a failure would cry wolf
  * on every push.
  */
-export function classifyRuns(runs: RunSummary[], now = new Date()): Omit<WorkflowHealth, "workflow"> {
+export function classifyRuns(
+  runs: RunSummary[],
+  now = new Date(),
+  headSha?: string,
+): Omit<WorkflowHealth, "workflow"> {
   const settled = runs.filter((r) => r.status === "completed" && !NOT_A_VERDICT.has(r.conclusion ?? ""));
 
   const lastSuccessRun = settled.find((r) => r.conclusion === "success");
@@ -144,6 +220,10 @@ export function classifyRuns(runs: RunSummary[], now = new Date()): Omit<Workflo
   // where nothing has settled at all, so exclude it rather than report both.
   const newestUnsettled = runs.length > 0 && settled[0] !== runs[0] && health !== "running";
 
+  // Only whether a run for the head EXISTS. Whether this workflow was supposed
+  // to produce one is the caller's to answer, in `assess` — see `headUnjudged`.
+  const headSeen = headSha !== undefined && runs.some((r) => r.head_sha === headSha);
+
   return {
     health,
     consecutiveFailures,
@@ -153,6 +233,7 @@ export function classifyRuns(runs: RunSummary[], now = new Date()): Omit<Workflo
     lastRun: runs[0]?.created_at,
     latestUrl: runs[0]?.html_url,
     ...(newestUnsettled ? { newestUnsettled: true } : {}),
+    ...(headSha !== undefined && !headSeen ? { headUnjudged: true } : {}),
   };
 }
 
@@ -200,6 +281,29 @@ export interface AssessOptions {
    * leave a failure reported, never explain it away.
    */
   workflowChangedAt?: (path: string) => string | undefined;
+  /**
+   * The commit at the tip of the branch being reported on.
+   *
+   * Omit it and {@link WorkflowHealth.headUnjudged} is never set: not knowing
+   * which commit is current must not be rendered as "nothing judged it".
+   * Whoever supplies this must be sure of it — a stale local ref is a wrong
+   * answer, not a missing one, so a caller that cannot ask the forge directly
+   * should pass nothing.
+   */
+  headSha?: string;
+  /**
+   * Does this workflow run on a push to the branch at all?
+   *
+   * `true` means a missing run for the head is a real gap. `false` or
+   * `undefined` means nothing is claimed — a `workflow_dispatch`-only file has
+   * no business having a run for every commit, and reporting one as unjudged
+   * is a false fire that costs the whole report its credibility.
+   *
+   * Omit it and `headUnjudged` is never set, for the same reason
+   * `workflowExists` omitted filters nothing: not knowing must not manufacture
+   * a finding.
+   */
+  triggersOnPush?: (path: string) => boolean | undefined;
 }
 
 export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHealth[] {
@@ -209,7 +313,18 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
     : runs;
   return [...byWorkflow(live).entries()]
     .map(([workflow, rs]) => {
-      const h: WorkflowHealth = { workflow, path: rs[0]?.path, ...classifyRuns(rs, now) };
+      const h: WorkflowHealth = {
+        workflow,
+        path: rs[0]?.path,
+        ...classifyRuns(rs, now, opts.headSha),
+      };
+      // `classifyRuns` only saw that no run carries the head sha. Whether this
+      // workflow OWES one is a fact about its triggers, which only the caller
+      // can read — and every unknown here clears the flag rather than keeping
+      // it, so the report stays silent on anything it cannot establish.
+      if (h.headUnjudged && opts.triggersOnPush?.(h.path ?? "") !== true) {
+        delete h.headUnjudged;
+      }
       // A failure against a version of the file that is gone is history. Note
       // that this only ever DEMOTES a red — it can never turn a failure into a
       // pass, because a later edit is evidence the failing version is gone, not
@@ -294,10 +409,16 @@ export function render(
   // summary, because the summary is the line a reader takes away. Saying
   // "every workflow is green" while a run is in flight over the commit they
   // are looking at is the exact sentence bean `gpuu` was opened for.
-  const pending = health.filter((h) => h.newestUnsettled);
+  const pending = health.filter((h) => h.newestUnsettled || h.headUnjudged);
   for (const h of pending) {
+    // Two different silences, and the difference is what a reader acts on: a
+    // run exists and has not finished (wait), or no run was ever created for
+    // this commit (go and look at why).
+    const why = h.headUnjudged
+      ? "no run has judged the current head"
+      : "newest run has not reported";
     lines.push(
-      `- ⏳ **${h.workflow}** — newest run has not reported; the ${h.health} below ` +
+      `- ⏳ **${h.workflow}** — ${why}; the ${h.health} below ` +
         `is the last settled verdict and may predate the current head.` +
         (h.latestUrl ? `\n      ${h.latestUrl}` : ""),
     );

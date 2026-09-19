@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { pushTriggerOf } from "../../src/workflow/ci-health";
 
 /**
  * Exit-code contract for `check-ci-health.ts`.
@@ -86,4 +87,32 @@ describe("--out: the report AND the verdict, from one API call", () => {
     expect(code).toBe(2);
     expect(stderr).toContain("--out needs a file path");
   });
+});
+
+/**
+ * A push trigger carrying a path filter cannot say whether THIS commit owed a
+ * run, so it must answer "cannot tell" rather than "yes".
+ *
+ * Found by running the report against this repository, not by reasoning about
+ * it: `jsonld-gen-check.yml` declares `on.push` under fifteen `paths:` entries,
+ * and the first version of the trigger check returned `true` for it — which
+ * put a false "no run has judged the current head" on a workflow that owed no
+ * run. The guard the trigger check exists to provide had a hole the same shape
+ * as the thing it guards.
+ */
+describe("triggersOnPush distinguishes an unfiltered push from a filtered one", () => {
+  const cases: Array<[string, string, boolean | undefined]> = [
+    ["a bare string", "on: push\njobs: {}\n", true],
+    ["a list", "on: [push, pull_request]\njobs: {}\n", true],
+    ["a mapping with an empty push", "on:\n  push:\njobs: {}\n", true],
+    ["a mapping with branches only", "on:\n  push:\n    branches: [main]\njobs: {}\n", undefined],
+    ["a mapping with paths", "on:\n  push:\n    paths:\n      - 'a/**'\njobs: {}\n", undefined],
+    ["dispatch only", "on:\n  workflow_dispatch:\njobs: {}\n", false],
+    ["pull_request only", "on:\n  pull_request:\njobs: {}\n", false],
+  ];
+  for (const [label, yaml, expected] of cases) {
+    test(label, () => {
+      expect(pushTriggerOf(yaml)).toBe(expected as never);
+    });
+  }
 });

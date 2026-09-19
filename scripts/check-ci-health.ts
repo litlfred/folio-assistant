@@ -20,9 +20,9 @@
  * and nothing surfaced it. See bean `xom7`.
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { assess, render, type RunSummary } from "../src/workflow/ci-health.js";
+import { assess, pushTriggerOf, render, type RunSummary } from "../src/workflow/ci-health.js";
 
 const argv = process.argv.slice(2);
 const markdown = argv.includes("--markdown");
@@ -116,7 +116,39 @@ async function fetchRuns(): Promise<{ runs?: RunSummary[]; unreachable?: string 
   }
 }
 
+/**
+ * The branch tip, asked of the forge rather than of this checkout.
+ *
+ * `git rev-parse origin/main` would be cheaper and is the obvious reading, but
+ * a local remote-tracking ref is only as fresh as the last fetch — and a stale
+ * one gives a WRONG head, which this module would then report as "no run
+ * judged it". A wrong answer is worse than no answer here, so a failure
+ * returns `undefined` and `headUnjudged` is simply never set.
+ */
+async function fetchHeadSha(): Promise<string | undefined> {
+  if (!slug) return undefined;
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${slug}/commits/${encodeURIComponent(branch)}`,
+      {
+        headers: {
+          accept: "application/vnd.github+json",
+          ...(token ? { authorization: `Bearer ${token}` } : {}),
+        },
+        signal: AbortSignal.timeout(20_000),
+      },
+    );
+    if (!res.ok) return undefined;
+    const body = (await res.json()) as { sha?: string };
+    return body.sha;
+  } catch {
+    return undefined;
+  }
+}
+
 const { runs, unreachable } = await fetchRuns();
+const headSha = unreachable ? undefined : await fetchHeadSha();
 const repoRoot = (() => {
   try {
     return git(["rev-parse", "--show-toplevel"]);
@@ -161,10 +193,26 @@ function workflowChangedAt(path: string): string | undefined {
   return out;
 }
 
+/**
+ * Read the workflow file and ask {@link pushTriggerOf}. Unreadable is
+ * `undefined`, which `assess` treats as "claim nothing" — a file this cannot
+ * open must not manufacture a finding about it.
+ */
+function triggersOnPush(p: string): boolean | undefined {
+  if (!p) return undefined;
+  try {
+    return pushTriggerOf(readFileSync(resolve(repoRoot, p), "utf8"));
+  } catch {
+    return undefined;
+  }
+}
+
 const health = runs
   ? assess(runs, {
       workflowExists: (p) => existsSync(resolve(repoRoot, p)),
       workflowChangedAt,
+      headSha,
+      triggersOnPush,
     })
   : [];
 
@@ -192,8 +240,12 @@ if (markdown) {
     // The mark, not just the detail: a reader scans the column of ticks. A ✓
     // beside a workflow whose newest run has not settled is the misread bean
     // `gpuu` records — it says the head passed, when the head has not reported.
-    const pendingMark = h.newestUnsettled ? "⏳" : mark;
-    const pendingNote = h.newestUnsettled ? " (newest run has not reported — verdict may predate HEAD)" : "";
+    const pendingMark = h.newestUnsettled || h.headUnjudged ? "⏳" : mark;
+    const pendingNote = h.headUnjudged
+      ? " (no run has judged the current head — verdict predates HEAD)"
+      : h.newestUnsettled
+        ? " (newest run has not reported — verdict may predate HEAD)"
+        : "";
     console.log(`  ${pendingMark} ${h.workflow.padEnd(40)} ${detail}${pendingNote}`);
   }
 }
