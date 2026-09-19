@@ -40,6 +40,8 @@ import {
   QA_CRITERIA_REGISTRY,
   WATCHER_CRITERIA_BY_AXIS,
 } from "./qa-criteria-registry";
+import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { findContentRepoRoot } from "./repo-root";
 import type { BlockQaReport } from "../../schemas/block-qa";
 
 interface Args {
@@ -198,11 +200,26 @@ function run(): void {
   let totalBlocks = 0;
   let blocksAffected = 0;
 
+  const repoRoot = findContentRepoRoot();
+
   for (const block of walkBlocks(rootAbs)) {
     totalBlocks++;
-    const qaPath = block.root + ".qa.json";
-    const report = loadQaReport(qaPath);
+    // LOAD-THEN-WRITE — it invalidates criteria in place and saves below, so
+    // the two halves take different helpers.
+    //
+    // The read falls back to the legacy sibling, or a folio whose verdicts have
+    // not migrated would have every block skipped here and silently keep stale
+    // criteria that this tool exists to invalidate.
+    //
+    // `undefined` means no verdict anywhere — the same `continue` the missing
+    // file always took, and never "I looked in the wrong place".
+    const qaReadPath = existingBlockQaPath(repoRoot, block.root);
+    const report = qaReadPath ? loadQaReport(qaReadPath) : undefined;
     if (!report) continue;
+    // The write lands in the results tree whichever location it was read from,
+    // so invalidating a legacy folio's verdict also migrates it — one verdict
+    // per block afterwards, in the new place, rather than two that can differ.
+    const qaPath = blockQaPath(repoRoot, block.root);
 
     const details = invalidateBlock(
       report,

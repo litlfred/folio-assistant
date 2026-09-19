@@ -67,6 +67,7 @@
  */
 
 import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
+import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
@@ -234,7 +235,7 @@ export function frontMatter(text: string): Record<string, unknown> | undefined {
 
 /** `harness.config.json`, or `{}` when there is none. */
 function harnessConfig(instanceRoot: string): Record<string, unknown> {
-  const p = join(instanceRoot, "harness.config.json");
+  const p = join(instanceRoot, HARNESS_CONFIG);
   if (!existsSync(p)) return {};
   try {
     return JSON.parse(readFileSync(p, "utf-8")) as Record<string, unknown>;

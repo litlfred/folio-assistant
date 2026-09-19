@@ -44,36 +44,20 @@ import sys
 from pathlib import Path
 
 
-def _load_slugify():
-    """`slugify` from `pdf-structure.py`, loaded from the file rather than copied.
-
-    Two spellings of one doc-id is bean `rlp5` — it is exactly why `pdf-ocr.py`
-    wrote to `library/ocr/` while `pdf-structure.py` looked in
-    `library/<doc-id>/ocr/`, and a third copy here would have made it worse.
-    The first draft of this file DID reimplement it and produced
-    `who-pub-tps-93-1` against `pdf-structure.py`'s `who-pub-tps-931` on the
-    very first run, which is the whole argument in one line of output.
-
-    The filename has a hyphen, so it is not importable as a module name; loaded
-    by path instead.
-    """
-    import importlib.util
-
-    src = Path(__file__).resolve().parent / "pdf-structure.py"
-    spec = importlib.util.spec_from_file_location("_pdf_structure", src)
-    if spec is None or spec.loader is None:  # pragma: no cover
-        sys.exit(f"cannot load {src} — the doc-id spelling lives there")
-    mod = importlib.util.module_from_spec(spec)
-    # Registered BEFORE exec: `pdf-structure.py` defines dataclasses, and
-    # `dataclasses` resolves a class's `__module__` through `sys.modules` while
-    # the body runs. Without this the import dies on
-    # `'NoneType' object has no attribute '__dict__'`.
-    sys.modules[spec.name] = mod
-    spec.loader.exec_module(mod)
-    return mod.slugify
-
-
-_slugify = _load_slugify()
+# `slugify` and the OCR cache location, from the module that owns both.
+#
+# This used to load `slugify` out of `pdf-structure.py` BY FILE PATH — 26 lines
+# of `importlib` with a comment explaining that the filename's hyphen made it
+# unimportable, and another explaining that the module had to be registered in
+# `sys.modules` before exec or `dataclasses` died resolving `__module__`. The
+# instinct was right and the mechanism was not: bean `rlp5` gave the three
+# spellings a single importable home, so this is now an import.
+#
+# The reason it was never a copy, kept because it is the argument in one line of
+# output: the first draft of this file DID reimplement `slugify` and produced
+# `who-pub-tps-93-1` against `pdf-structure.py`'s `who-pub-tps-931`.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _pdf_doc_id import ocr_cache_dir, slugify as _slugify  # noqa: E402
 
 
 def slug(text: str) -> str:
@@ -84,7 +68,9 @@ def slug(text: str) -> str:
 def page_texts(pdf: Path, from_ocr: bool, outroot: Path) -> tuple[list[str], str]:
     """Page text, and where it came from. Never silently empty — see pdf-extract.py."""
     if from_ocr:
-        ocr_dir = outroot / slug(pdf.stem) / "ocr"
+        # The shared helper, not `outroot / slug(stem) / "ocr"` spelled again —
+        # it takes the PDF because the cache is keyed on the DOCUMENT.
+        ocr_dir = Path(ocr_cache_dir(str(outroot), str(pdf)))
         files = sorted(ocr_dir.glob("page-*.txt"))
         if not files:
             sys.exit(

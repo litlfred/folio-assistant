@@ -143,6 +143,36 @@ export const MemoryNodeSchema = CarriedNoteSchema.extend({
    */
   archived: z.boolean().optional(),
   /**
+   * The part of this entry that is NOT injected — written beside `MEMORY.md`
+   * and pointed at, for the agent to read on demand.
+   *
+   * ## Why the schema needs this rather than "write shorter entries"
+   *
+   * The harness injects the FIRST 200 lines of `MEMORY.md`, and `AGENTS.md`
+   * prescribes the remedy — *"split detail into sibling files the agent reads
+   * on demand"* — but there was no mechanism, so the only lever was brevity.
+   * Brevity runs out: measured 2026-09-19, `content-pipeline-navigator` held
+   * twelve entries ending at line 199, one line under the cut. It FIT, and it
+   * could not accept a thirteenth. Adding four pushed two existing entries
+   * past the cut, where the harness drops them silently.
+   *
+   * That is the trap worth naming: a file at capacity punishes the NEXT
+   * writer, not the one who filled it, and the failure is invisible — the
+   * agent simply behaves as though the entry was never recorded, which is the
+   * whole premise of having memory.
+   *
+   * ## What belongs here rather than in `comment`
+   *
+   * `comment` is the TRIGGER: what goes wrong, in the fewest words that let an
+   * agent recognise the situation. `detail` is the evidence — the measurement,
+   * the worked example, the enumeration of paths. An agent that recognises the
+   * trigger can go and read it; one that does not was never going to be helped
+   * by having it inlined.
+   *
+   * Omitted means the entry is short enough to carry its own evidence.
+   */
+  detail: z.string().optional(),
+  /**
    * What this file IS, declared inside it.
    *
    * The same convention the workflow instances and todos use, and for the

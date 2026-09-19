@@ -43,7 +43,7 @@
  * "a coincidence of the current layout, not a contract".
  */
 
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 
 import { EMPTY_NOTE_TAGS, type KgRef, type NoteTags } from "../schemas/carried-note.js";
@@ -165,6 +165,28 @@ function stripQuotes(v: string): string {
 }
 
 /** Read every memory node under `dir`, newest-id-last. */
+/** The marker separating an entry's trigger from its evidence. */
+export const DETAIL_MARKER = "<!-- detail -->";
+
+/**
+ * Split a node body at {@link DETAIL_MARKER}.
+ *
+ * In the BODY rather than the front matter deliberately. The front-matter
+ * parser here is a small hand-rolled one with no block-scalar support, and
+ * detail is prose — indenting paragraphs into YAML to carry prose is how a
+ * code fence or a colon later breaks a parse for no gain. An HTML comment is
+ * invisible in rendered Markdown, so the source file still reads as one
+ * document to a human editing it.
+ *
+ * No marker means the whole body is the trigger, which is the common case.
+ */
+export function splitDetail(body: string): { comment: string; detail?: string } {
+  const i = body.indexOf(DETAIL_MARKER);
+  if (i === -1) return { comment: body.trim() };
+  const detail = body.slice(i + DETAIL_MARKER.length).trim();
+  return { comment: body.slice(0, i).trim(), ...(detail ? { detail } : {}) };
+}
+
 export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
   if (!existsSync(dir)) return [];
   const out: MemoryNode[] = [];
@@ -188,12 +210,14 @@ export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
       ...(fm["archived"] === "true" ? { archived: true } : {}),
       id: String(fm["id"] ?? basename(f, ".md")),
       summary: String(fm["summary"] ?? ""),
-      comment: body.trim(),
+      comment: splitDetail(body).comment,
       createdAt: String(fm["createdAt"] ?? ""),
       label: String(fm["label"] ?? ""),
       tags,
       $schema: MEMORY_SCHEMA_TAG,
     };
+    const detail = splitDetail(body).detail;
+    if (detail) node["detail"] = detail;
     if (fm["measuredCommand"] !== undefined) {
       node["measured"] = {
         command: String(fm["measuredCommand"]),
@@ -236,16 +260,100 @@ export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
 
 // ── Rendering ───────────────────────────────────────────────────
 
-/** Entry headings that begin after `budget` lines of `file`. */
+/**
+ * Entries the harness will not deliver whole — by heading OR by body.
+ *
+ * **Heading position is the wrong question on its own, and that let a real
+ * truncation through.** Measured 2026-09-19: after splitting evidence into
+ * detail files the generated region ended at line 209, so the last entry's
+ * body ran nine lines past the cut — and this function returned nothing,
+ * because its HEADING was comfortably inside. The check was green over an
+ * entry the agent receives with its conclusion missing, which is worse than a
+ * dropped entry: a truncated one still looks complete.
+ *
+ * So a heading past the budget is reported as before, and the region ENDING
+ * past the budget is reported too, naming the last entry — the one actually
+ * being cut.
+ */
+/**
+ * The build-failing half of the budget warning, separated so it can be tested.
+ *
+ * **A dropped ENTRY is a different failure from a long file, and only one of
+ * them is worth a red build.** Overflowing into the hand-written session log
+ * costs nothing — that tail was never injected. Overflowing into an entry
+ * costs the agent that entry, SILENTLY: the file still reads perfectly well,
+ * the harness simply truncates, and nothing says which TRAP stopped arriving.
+ *
+ * Measured 2026-09-19 (bean `4kiw`): adding one 70-line node took
+ * `platform-boundary-guard` from 204 to 259 lines and pushed THREE TRAPs past
+ * the cut, while `--check` exited 0. `entriesPastBudget` had already computed
+ * the exact list; it was printed as a warning nobody had to act on.
+ *
+ * **This is ergonomics, not a hole — do not read it as the only guard.**
+ * `scripts/tests/agent-memory.test.ts` already asserts `overflowEntries` is
+ * empty for every agent, and `bun test` runs in the same CI job, so a dropped
+ * TRAP was never going to reach `main`. Verified by re-creating the probe:
+ * the suite fails 3 tests. What this adds is that the command named `:check`
+ * fails its own check, with a message saying what to do instead of an
+ * assertion diff. The first version of this comment claimed the entry could
+ * drop silently, which was inferred from one command exiting 0 without
+ * running the suite against the failing state.
+ *
+ * Deliberately NOT keyed on total line count. `platform-boundary-guard` is
+ * over 200 on `main` today by a one-line session-log tail, and a gate that is
+ * red for a reason nobody should act on is a gate people learn to route
+ * around.
+ *
+ * @returns the message to print before failing, or `null` when nothing is dropped.
+ */
+export function droppedEntryReport(
+  dropped: readonly { agent: string; entries: readonly string[] }[],
+): string | null {
+  // Filter rather than trust the caller's shape: an agent that is over budget
+  // on its session log alone belongs in the WARNING, and a row with no dropped
+  // entries reaching here would fail the build for it.
+  const real = dropped.filter((d) => d.entries.length > 0);
+  if (real.length === 0) return null;
+  const rows = real
+    .map((d) => `  ${d.agent}: ${d.entries.length} dropped — ${d.entries.join("; ")}`)
+    .join("\n");
+  return (
+    `\nMemory entries fall past the harness's 200-line injection budget and will be\n` +
+    `silently dropped before the agent ever sees them:\n\n${rows}\n\n` +
+    `Shorten or split an entry, or archive one that has outlived its subject\n` +
+    `(\`archived: true\` keeps the node in the graph and out of the prompt).\n` +
+    `Do not fix this by letting the last entry fall off the end.`
+  );
+}
+
 export function entriesPastBudget(file: string, budget = 200): string[] {
-  return file
-    .split("\n")
-    .slice(budget)
-    .filter((l) => /^##\s+(STABLE|TRAP|BASELINE)\s/.test(l))
-    .map((l) => l.replace(/^##\s*/, ""));
+  const lines = file.split("\n");
+  const isHead = (l: string): boolean => /^##\s+(STABLE|TRAP|BASELINE)\s/.test(l);
+  const strip = (l: string): string => l.replace(/^##\s*/, "");
+
+  const headingsPast = lines.slice(budget).filter(isHead).map(strip);
+  if (headingsPast.length > 0) return headingsPast;
+
+  // No heading past the cut, but the region may still end past it — in which
+  // case the LAST entry is the one losing lines.
+  const end = lines.findIndex((l) => l.includes(END));
+  if (end === -1 || end < budget) return [];
+  const lastHead = lines.slice(0, end).filter(isHead).pop();
+  return lastHead ? [`${strip(lastHead)} (truncated: region ends at line ${end + 1})`] : [];
 }
 
 /** The markdown for one agent's entries — what goes between the markers. */
+/**
+ * Where an entry's non-injected detail is written, relative to `MEMORY.md`.
+ *
+ * Beside the file rather than inside it, because `MEMORY.md`'s marked region is
+ * generated and its tail is the agent's own running notes — a detail file
+ * written into either would be destroyed or would destroy something.
+ */
+export function detailRelPath(id: string): string {
+  return join("detail", `${id}.md`);
+}
+
 export function renderEntries(entries: readonly MemoryNode[]): string {
   // Order is STABLE, TRAP, BASELINE: what is true, then what goes wrong, then
   // what was measured. A BASELINE last is deliberate -- it is the section most
@@ -259,7 +367,11 @@ export function renderEntries(entries: readonly MemoryNode[]): string {
       const meas = m.measured
         ? `\n\n> Measured \`${m.measured.command}\` on ${m.measured.date}: ${m.measured.result}`
         : "";
-      return `${head}\n\n${m.comment}${meas}`;
+      // A pointer, not the detail itself — that is the whole point. One line
+      // costs one line of budget and buys the agent a way to the evidence;
+      // inlining it is what put this file at capacity.
+      const more = m.detail ? `\n\nMore: \`${detailRelPath(m.id)}\`` : "";
+      return `${head}\n\n${m.comment}${meas}${more}`;
     })
     .join("\n\n");
 }
@@ -311,6 +423,33 @@ export interface SyncResult {
 }
 
 /** Assemble every agent's file. `write: false` reports without touching disk. */
+/**
+ * Write each entry's `detail` beside `MEMORY.md`, and remove the stragglers.
+ *
+ * Pruning matters as much as writing: an entry whose `detail` was folded back
+ * into its `comment` would otherwise leave a file behind that `MEMORY.md` no
+ * longer points at, saying something the entry has stopped saying. That is the
+ * orphan-sidecar shape one directory along, and it is cheap to prevent here.
+ */
+function writeDetail(dir: string, entries: readonly MemoryNode[]): void {
+  const detailDir = join(dir, "detail");
+  const wanted = new Map(entries.filter((m) => m.detail).map((m) => [`${m.id}.md`, m.detail!]));
+  if (wanted.size === 0 && !existsSync(detailDir)) return;
+  mkdirSync(detailDir, { recursive: true });
+  for (const [name, body] of wanted) {
+    writeFileSync(
+      join(detailDir, name),
+      `<!-- Generated from skills/memory/${name} by \`bun run agent-memory\`. -->\n` +
+        `<!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->\n\n` +
+        body.trimEnd() +
+        "\n",
+    );
+  }
+  for (const f of readdirSync(detailDir)) {
+    if (f.endsWith(".md") && !wanted.has(f)) rmSync(join(detailDir, f));
+  }
+}
+
 export function syncAll(write: boolean): SyncResult[] {
   const nodes = readMemoryNodes();
   return agentNames().map((agent) => {
@@ -332,6 +471,7 @@ export function syncAll(write: boolean): SyncResult[] {
     if (write) {
       mkdirSync(dirname(path), { recursive: true });
       writeFileSync(path, next);
+      writeDetail(dirname(path), entries);
     }
     return { agent, state: "written", entries: entries.length, lines, overflowEntries };
   });
@@ -355,6 +495,7 @@ if (import.meta.main) {
   const check = process.argv.includes("--check");
   const results = syncAll(!check);
   let stale = 0;
+  const dropped: { agent: string; entries: string[] }[] = [];
   for (const r of results) {
     const note =
       r.state === "no-markers"
@@ -375,12 +516,18 @@ if (import.meta.main) {
       console.log(
         `  ${"".padEnd(11)} ${"".padEnd(28)} ⚠ ${r.lines - 200} line(s) over the harness's 200-line budget, ${detail}`,
       );
+      if (r.overflowEntries.length) dropped.push({ agent: r.agent, entries: r.overflowEntries });
     }
   }
   if (stale > 0) {
     console.error(
       `\n${stale} memory file(s) are stale. Run \`bun run agent-memory\` and commit the result.`,
     );
+    process.exit(1);
+  }
+  const report = droppedEntryReport(dropped);
+  if (check && report) {
+    console.error(report);
     process.exit(1);
   }
 }

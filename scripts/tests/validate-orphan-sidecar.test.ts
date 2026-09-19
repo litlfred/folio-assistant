@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, writeFileSync, rmSync } from "fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "fs";
 import { tmpdir } from "os";
 import { join, basename } from "path";
 import { validateObjects } from "../../content/pipeline/validate";
@@ -167,5 +167,242 @@ describe("no-orphan-sidecar in chapter mode", () => {
     const { issues } = await validateObjects(dir);
     expect(orphanIssues(issues).length).toBe(0);
     rmSync(dir, { recursive: true, force: true });
+  });
+});
+
+/**
+ * The verdicts moved to `test/results/block-qa/<mirror of the block dir>/`
+ * (bean `2634`), and the check that found them was PURE ADJACENCY — scan the
+ * block directory, flag a `<base>.qa.json` with no `<base>.ts` beside it.
+ * Adjacency is exactly what the move removed. Measured on this repo's own
+ * corpus with a verdict planted in the results tree for a block that does not
+ * exist, the unmodified check reported ZERO orphans: a silent no-op wearing a
+ * clean bill of health.
+ *
+ * Every fixture above is a `mkdtemp` directory, which is OUTSIDE any instance
+ * root — so none of them can reach a results tree at all, and none of them
+ * would have noticed. That is not a flaw in those tests; it is why the ones
+ * below build a whole miniature folio and run with the cwd inside it. The
+ * check locates the results tree from `findContentRepoRoot()`, which walks up
+ * from `process.cwd()`, so a fixture that does not look like an instance root
+ * cannot exercise the half of the check that matters now.
+ */
+describe("no-orphan-sidecar in the results tree", () => {
+  /**
+   * A folio root holding `content/demo/<chapter>/` block directories and a
+   * mirrored `test/results/block-qa/content/demo/<chapter>/` verdict tree.
+   *
+   * @param chapters block stems per chapter — each gets a `.ts` and a `.md`
+   * @param verdicts verdict stems per chapter, written to the MIRROR path
+   */
+  function folio(
+    chapters: Record<string, string[]>,
+    verdicts: Record<string, string[]>,
+  ): string {
+    const root = mkdtempSync(join(tmpdir(), "orphan-folio-"));
+    for (const [ch, blocks] of Object.entries(chapters)) {
+      const dir = join(root, "content", "demo", ch);
+      mkdirSync(dir, { recursive: true });
+      for (const b of blocks) {
+        writeFileSync(
+          join(dir, `${b}.ts`),
+          `export default { kind: "prose", label: "rem:${b}", title: "T", chapter: "${ch}" };\n`,
+        );
+        writeFileSync(join(dir, `${b}.md`), `Body of ${b}.\n`);
+      }
+      writeFileSync(
+        join(dir, `${ch}.ts`),
+        `export default { title: "T", sections: [{ title: "S", blocks: ${JSON.stringify(blocks)} }] };\n`,
+      );
+    }
+    for (const [ch, stems] of Object.entries(verdicts)) {
+      const mirror = join(root, "test", "results", "block-qa", "content", "demo", ch);
+      mkdirSync(mirror, { recursive: true });
+      for (const s of stems) {
+        writeFileSync(
+          join(mirror, `${s}.qa.json`),
+          JSON.stringify({ $schema: "block-qa/v1", label: `rem:${s}`, criteria: {} }),
+        );
+      }
+    }
+    return root;
+  }
+
+  /** The mirror directory for a chapter of the fixture folio. */
+  const mirrorOf = (root: string, ch: string) =>
+    join(root, "test", "results", "block-qa", "content", "demo", ch);
+
+  /**
+   * Run with the cwd inside the fixture folio, because that is the only input
+   * `findContentRepoRoot()` has. Restored in `finally` — a leaked cwd would
+   * silently repoint every later test in this process.
+   */
+  async function validateInFolio(root: string, dir: string) {
+    const cwd = process.cwd();
+    try {
+      process.chdir(root);
+      return await validateObjects(dir);
+    } finally {
+      process.chdir(cwd);
+    }
+  }
+
+  test("the BLOCK-MOVED case: the verdict left behind at the old path is flagged", async () => {
+    // `moved` used to live in ch-a and now lives in ch-b. The sweep wrote a
+    // fresh verdict at the ch-b mirror path; the ch-a one stayed behind,
+    // holding a judgement computed against content that has since changed.
+    // This is the scenario the check exists for — 5 of the 18 orphans
+    // measured in qou — and the one the move put most at risk, because
+    // neither verdict file is anywhere near a block any more.
+    const root = folio(
+      { "ch-a": ["stays"], "ch-b": ["moved"] },
+      { "ch-a": ["stays", "moved"], "ch-b": ["moved"] },
+    );
+    const found = orphanIssues(
+      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+    );
+    expect(found.length).toBe(1);
+    expect(found[0].message).toContain("moved.qa.json");
+    // Names the results-tree path, not a sibling that was never there — with
+    // two possible homes a reader cannot infer which file to delete from the
+    // stem alone.
+    expect(found[0].message).toContain(mirrorOf(root, "ch-a"));
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("...and the verdict at the block's NEW path is not flagged", async () => {
+    // The other half of the same scenario. A check that fired on both would
+    // be telling the author to delete the verdict that is actually current.
+    const root = folio(
+      { "ch-a": ["stays"], "ch-b": ["moved"] },
+      { "ch-a": ["stays", "moved"], "ch-b": ["moved"] },
+    );
+    const found = orphanIssues(
+      (await validateInFolio(root, join(root, "content", "demo", "ch-b"))).issues,
+    );
+    expect(found.length).toBe(0);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a verdict in the results tree whose block exists is not an orphan", async () => {
+    const root = folio({ "ch-a": ["alpha"] }, { "ch-a": ["alpha"] });
+    const found = orphanIssues(
+      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+    );
+    expect(found.length).toBe(0);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("no mirror directory at all is a determined ZERO, not a finding", async () => {
+    // The normal state of a folio that has not run its sweep since upgrading.
+    // "Could not determine" is a third state everywhere in this repo, but an
+    // absent results directory is not one of its instances: nothing has been
+    // written there, so nothing is orphaned there.
+    const root = folio({ "ch-a": ["alpha"] }, {});
+    const { issues } = await validateInFolio(root, join(root, "content", "demo", "ch-a"));
+    expect(orphanIssues(issues).length).toBe(0);
+    expect(issues.some((i) => i.message.includes("could not read the results tree"))).toBe(false);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a LEGACY verdict beside its block is not flagged for being legacy", async () => {
+    // A downstream folio has its verdicts committed beside its blocks. If
+    // location alone were the finding, every unmigrated folio would get a wall
+    // of them on the day it upgraded, which is worse than the gap.
+    const root = folio({ "ch-a": ["alpha"] }, {});
+    writeFileSync(
+      join(root, "content", "demo", "ch-a", "alpha.qa.json"),
+      JSON.stringify({ $schema: "block-qa/v1", label: "rem:alpha", criteria: {} }),
+    );
+    const found = orphanIssues(
+      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+    );
+    expect(found.length).toBe(0);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a genuinely orphaned LEGACY verdict is still caught inside a folio root", async () => {
+    // The compatibility carve-out is about LOCATION, never about the rule.
+    // An unmigrated folio must keep exactly the protection it had.
+    const root = folio({ "ch-a": ["alpha"] }, {});
+    writeFileSync(
+      join(root, "content", "demo", "ch-a", "ghost.qa.json"),
+      JSON.stringify({ $schema: "block-qa/v1", label: "rem:ghost", criteria: {} }),
+    );
+    const found = orphanIssues(
+      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+    );
+    expect(found.length).toBe(1);
+    expect(found[0].message).toContain("ghost.qa.json");
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a non-block artefact in the results tree keeps the carve-out", async () => {
+    // `qa-section-title-audit.ts` still writes to the paper root, so this is
+    // pre-emptive rather than live — but the discriminator is "does the file
+    // say it is a block verdict", and answering that differently in two
+    // directories is how the next non-block artefact under test/results/
+    // becomes a false orphan.
+    const root = folio({ "ch-a": ["alpha"] }, { "ch-a": ["alpha"] });
+    writeFileSync(
+      join(mirrorOf(root, "ch-a"), "section-title-audit.qa.json"),
+      JSON.stringify({ criterion: "voice-section-title-coherence", paper: "p", chapters: {} }),
+    );
+    const found = orphanIssues(
+      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+    );
+    expect(found.length).toBe(0);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("an unparseable verdict in the results tree is reported, not excused", async () => {
+    const root = folio({ "ch-a": ["alpha"] }, { "ch-a": ["alpha"] });
+    writeFileSync(join(mirrorOf(root, "ch-a"), "corrupt.qa.json"), "{ this is not json");
+    const found = orphanIssues(
+      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+    );
+    expect(found.length).toBe(1);
+    expect(found[0].message).toContain("corrupt.qa.json");
+    rmSync(root, { recursive: true, force: true });
+  });
+});
+
+describe("no-orphan-sidecar third state", () => {
+  test("a directory outside the resolved root reports that it could not look", async () => {
+    // `findContentRepoRoot()` always returns a path — it falls back to an
+    // import-relative guess — so "no root" is not something it can report.
+    // What IS detectable is that the root it returned does not contain the
+    // directory, and `repo-root.ts` documents that exact failure: the walk-up
+    // landing in the PLATFORM tree instead of the folio. Rendering that as a
+    // clean results tree would turn a misresolved root into "nothing is
+    // orphaned", which is the false-pass direction this repo refuses.
+    const dir = chapter(["alpha"]);
+    const { issues } = await validateObjects(dir);
+    expect(issues.some((i) => i.message.includes("could not read the results tree"))).toBe(true);
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("...and that notice is NOT counted as an orphan finding", async () => {
+    // Every consumer counts orphans by grepping "orphan QA sidecar". A status
+    // line wearing that string would inflate the census the check exists to
+    // keep honest — the first draft of this change did exactly that, and the
+    // suite above caught it.
+    const dir = chapter(["alpha"]);
+    const { issues } = await validateObjects(dir);
+    expect(orphanIssues(issues).length).toBe(0);
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("an EMPTY directory still reports the empty-corpus error, not the notice", async () => {
+    // `validateObjects` decides "this run validated nothing, refuse to report
+    // success" on `issues.length === 0`, so ANY issue raised by the orphan
+    // check disarms it and `valid: false` becomes `valid: true`. The first
+    // version of the third-state notice did that to every empty directory.
+    // This pins the interaction, which no test of either check alone covers.
+    const empty = mkdtempSync(join(tmpdir(), "orphan-empty-"));
+    const { valid, issues } = await validateObjects(empty);
+    expect(valid).toBe(false);
+    expect(issues.some((i) => i.message.includes("refusing to report success"))).toBe(true);
+    rmSync(empty, { recursive: true, force: true });
   });
 });

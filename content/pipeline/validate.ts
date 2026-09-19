@@ -17,7 +17,7 @@
  */
 
 import { readdirSync, readFileSync, existsSync } from "fs";
-import { resolve, join, basename } from "path";
+import { resolve, join, basename, dirname, relative, isAbsolute } from "path";
 import {
   BlockSchema,
   PaperSchema,
@@ -31,6 +31,7 @@ import { readDeclaredFolioProfile } from "./profile-check";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";
 import { findContentRepoRoot, findPapers } from "./repo-root";
+import { blockQaPath, blockOfQaPath, BLOCK_QA_SUFFIX } from "./qa-paths";
 import { referenceRegistryConfigured, getReferenceRegistry } from "./references-registry-di";
 
 // ── File discovery ───────────────────────────────────────────────
@@ -118,26 +119,71 @@ async function loadBlocksFromDir(
   //
   // Same principle as `no-orphan-lean`: a `.lean` file is never standalone,
   // and neither is a QA report. These accumulate when a block MOVES between
-  // chapters — the block picks up a fresh sidecar at its new path while the
+  // chapters — the block picks up a fresh verdict at its new path while the
   // old file stays behind, holding verdicts computed against content that has
   // since changed. Found live in qou: 18 orphans, 5 of them from moves.
   //
+  // ## The move from adjacency to correspondence (2026-09-19)
+  //
+  // This check USED to be pure adjacency: scan `dir`, and flag any
+  // `<base>.qa.json` with no `<base>.ts` beside it. Verdicts now live under
+  // `test/results/block-qa/`, so adjacency finds nothing — measured on this
+  // repo's own corpus, with a verdict planted in the results tree for a block
+  // that does not exist, the unmodified check reported ZERO orphans. It had
+  // become a silent no-op: the exact false-clean this file refuses everywhere
+  // else.
+  //
+  // What rescues it is that the results tree MIRRORS the block's directory
+  // (`qa-paths.ts`). One block directory therefore still corresponds to
+  // exactly one verdict directory, so the check stays per-directory,
+  // non-recursive, and O(entries) — adjacency becomes correspondence, and
+  // nothing about its shape or its cost changes. A whole-tree walk was the
+  // obvious alternative and is wrong twice over: it would report the entire
+  // repo's orphans when you asked to validate one chapter, and it would
+  // report each of them once per chapter loaded.
+  //
+  // BOTH locations are scanned, because a folio that has not migrated still
+  // has its verdicts beside its blocks. Scanning only the results tree would
+  // pass every such folio clean; flagging a legacy verdict merely for BEING
+  // legacy would bury it in false findings. The rule is the same in both
+  // places and it is about the `.ts`, not about the location: a verdict whose
+  // block manifest is absent is an orphan, wherever the verdict sits.
+  //
   // Runs on every directory load, including chapter mode where `blockNames`
   // restricts which manifests are validated. That restriction is irrelevant
-  // here: orphanhood asks whether `<base>.ts` exists ON DISK, not whether the
-  // caller asked for it — a sidecar whose manifest exists but was not
+  // here: orphanhood asks whether the `.ts` exists ON DISK, not whether the
+  // caller asked for it — a verdict whose manifest exists but was not
   // requested still finds its `.ts` and is not flagged. Gating on
   // `blockNames === null` made this a silent no-op for every real paper,
   // since only legacy flat mode passes null.
   //
-  // Non-recursive, matching `discoverManifests`: sidecars in nested dirs are
-  // caught when those dirs are themselves scanned.
+  // Non-recursive on both sides, matching `discoverManifests`: verdicts for
+  // nested dirs are caught when those dirs are themselves scanned.
+  //
+  // KNOWN GAP, introduced by the move and not closed here: if a block
+  // directory is deleted OUTRIGHT, its mirror directory survives in the
+  // results tree and nothing ever visits it, because the only thing that
+  // reaches a mirror directory is a load of the block directory it mirrors.
+  // Under adjacency that case could not arise — the verdicts were inside the
+  // directory and went with it. Closing it needs a sweep over the results
+  // tree that knows the whole corpus, which is not something a per-directory
+  // load can answer; it is a separate check, not a widening of this one.
   if (existsSync(dir)) {
-    for (const f of readdirSync(dir)) {
-      if (!f.endsWith(".qa.json")) continue;
-      const base = f.slice(0, -".qa.json".length);
-      if (existsSync(join(dir, `${base}.ts`))) continue;
-      // Not every `*.qa.json` is a BLOCK sidecar, and the ones that are not
+    /**
+     * Report the verdict at `qaPath` as an orphan when `tsPath` is absent.
+     *
+     * One body for both locations so the two cannot drift apart — the
+     * `$schema` carve-out and the fail-toward-reporting behaviour are
+     * properties of the CHECK, not of where the file happens to live.
+     *
+     * @param where human-readable location, for a message that now has to say
+     *              which of the two homes the offending file is in
+     */
+    const reportIfOrphan = (qaPath: string, tsPath: string, where: string) => {
+      const f = basename(qaPath);
+      const base = f.slice(0, -BLOCK_QA_SUFFIX.length);
+      if (existsSync(tsPath)) return;
+      // Not every `*.qa.json` is a BLOCK verdict, and the ones that are not
       // have no `.ts` by design. `qa-section-title-audit.ts` writes
       // `content/<paper>/section-title-audit.qa.json` — keyed by paper and
       // chapter, never by block — and four of those sit in the qou corpus
@@ -146,25 +192,126 @@ async function loadBlocksFromDir(
       // Deleting them would destroy live audit state that the producing tool
       // would simply rewrite.
       //
-      // They escape today only because this scan is non-recursive and they
-      // live at the paper root rather than in a chapter dir — but they still
-      // inflate every census taken over `**/*.qa.json`, which is the very
-      // thing the comment above says this check exists to prevent.
+      // That producer still writes to the paper root, which the legacy scan
+      // below reaches, so the carve-out is load-bearing today. It is applied
+      // to the results tree as well rather than only where it currently
+      // fires: the discriminator is "does this file say it is a block
+      // verdict", and answering that differently in two directories is how a
+      // future non-block artefact under `test/results/` becomes a false
+      // orphan.
       //
-      // Discriminate on the block sidecar's own `$schema`. A file that fails
-      // to parse is deliberately NOT skipped: a corrupt sidecar is worth
-      // reporting, and treating unreadable as "not a block sidecar" would let
+      // Discriminate on the block verdict's own `$schema`. A file that fails
+      // to parse is deliberately NOT skipped: a corrupt verdict is worth
+      // reporting, and treating unreadable as "not a block verdict" would let
       // a real orphan hide behind a truncated write.
-      if (!isBlockSidecar(join(dir, f))) continue;
+      if (!isBlockSidecar(qaPath)) return;
       issues.push({
         level: "error",
         block: base,
+        // BOTH full paths, which the adjacency version did not need: it said
+        // "has no sibling <base>.ts" and the one directory in play made that
+        // unambiguous. With two possible homes for a verdict, a bare stem no
+        // longer tells the reader WHICH file to delete — and deleting the
+        // wrong one destroys the verdict that is current. The `.qa.json`
+        // basename is still in the string, because that is what consumers
+        // grep for.
         message:
-          `orphan QA sidecar: ${f} has no sibling ${base}.ts. ` +
-          `The block was deleted or moved; delete the sidecar (git history ` +
-          `keeps it) or restore the manifest.`,
+          `orphan QA sidecar: ${qaPath} (${where}) has no block manifest at ` +
+          `${tsPath}. The block was deleted or moved; delete the verdict ` +
+          `(git history keeps it) or restore the manifest.`,
         file: f,
       });
+    };
+
+    const entries = readdirSync(dir);
+
+    // ── legacy location: the verdict as a companion of the block ──
+    // Unchanged from the adjacency era, deliberately. This IS the
+    // compatibility half; rewriting it would be rewriting the thing that
+    // still works.
+    for (const f of entries) {
+      if (!f.endsWith(BLOCK_QA_SUFFIX)) continue;
+      const base = f.slice(0, -BLOCK_QA_SUFFIX.length);
+      reportIfOrphan(join(dir, f), join(dir, `${base}.ts`), "beside the block");
+    }
+
+    // ── results tree: test/results/block-qa/<mirror of dir>/ ──
+    const repoRoot = findContentRepoRoot();
+    const relToRoot = relative(repoRoot, dir);
+    const dirUnderRoot = relToRoot === "" || (!relToRoot.startsWith("..") && !isAbsolute(relToRoot));
+    if (!dirUnderRoot) {
+      // THIRD STATE. `findContentRepoRoot` always returns a path — it falls
+      // back to an import-relative guess — so "no root" is not something it
+      // can report. What IS detectable is that the root it returned does not
+      // contain `dir`, and in that case the mirror path is not merely unknown
+      // but unrepresentable: `blockOfQaPath` refuses to invert it (the
+      // relative path escapes the results base), which is the contract itself
+      // saying it cannot answer.
+      //
+      // This is not a hypothetical. `repo-root.ts` documents the failure it
+      // guards against — the walk-up landing in the PLATFORM tree instead of
+      // the folio — and that failure presents exactly as a chapter directory
+      // outside the resolved root. Reporting it as a clean results tree would
+      // turn a misresolved root into "every block is audited and nothing is
+      // orphaned".
+      //
+      // A warning, not an error: the legacy half above DID run and is
+      // authoritative for what it covers, so this says which half is missing
+      // rather than failing a build over a resolver's reach.
+      //
+      // Suppressed on an EMPTY directory, and that guard is load-bearing
+      // rather than tidiness. `validateObjects` decides "this run validated
+      // nothing, refuse to report success" on `issues.length === 0`, so ANY
+      // issue raised here — including a warning about a check that could not
+      // run — disarms it and turns `valid: false` into `valid: true`. Caught
+      // by `validate-roots.test.ts` on the first run of this change. An empty
+      // directory also has nothing to be uncertain ABOUT: no manifests and no
+      // verdicts, and the empty-corpus error says so far more loudly than
+      // this would.
+      if (entries.length > 0) {
+        issues.push({
+          level: "warning",
+          block: "(none)",
+          // Deliberately NOT phrased as "orphan QA sidecar …". That string
+          // is what every consumer greps to count findings — the existing
+          // tests do — so a status line wearing it would inflate the orphan
+          // census, which is the exact defect this check exists to prevent.
+          // A check that cannot run says so under its own id.
+          message:
+            `check "no-orphan-sidecar" could not read the results tree for ` +
+            `${dir}: it is outside the resolved instance root ${repoRoot}, ` +
+            `so the mirrored verdict directory cannot be located. Verdicts ` +
+            `sitting beside the blocks were still checked; verdicts under ` +
+            `test/results/block-qa/ were NOT.`,
+        });
+      }
+    } else {
+      // Ask the WRITER's own function where a block in this directory would
+      // be recorded, then take the parent. Composing
+      // `join(repoRoot, BLOCK_QA_RESULTS_DIR, relToRoot)` by hand here would
+      // be a tenth hand-composed verdict path — precisely what `qa-paths.ts`
+      // exists to end — and it would go silently wrong the day the mirroring
+      // scheme changes. The probe name never touches the filesystem.
+      const mirrorDir = dirname(blockQaPath(repoRoot, join(dir, "__probe__")));
+      // An ABSENT mirror directory is a determined zero, not an unknown: no
+      // verdict has been written for this directory under the current
+      // convention. That is the normal state of a folio that has not migrated
+      // and must not produce a finding.
+      if (existsSync(mirrorDir)) {
+        for (const f of readdirSync(mirrorDir)) {
+          if (!f.endsWith(BLOCK_QA_SUFFIX)) continue;
+          // `blockOfQaPath` rather than re-deriving `join(dir, base + ".ts")`:
+          // it is the declared inverse of the path the sweep wrote, so writer
+          // and reader cannot disagree about which manifest a verdict claims.
+          // `undefined` means the path is not a results-tree verdict at all —
+          // skip rather than guess, which is what keeps a symlink or an odd
+          // nesting from being mapped onto an arbitrary `.ts`.
+          const qaPath = join(mirrorDir, f);
+          const tsPath = blockOfQaPath(repoRoot, qaPath);
+          if (!tsPath) continue;
+          reportIfOrphan(qaPath, tsPath, "in the results tree");
+        }
+      }
     }
   }
 

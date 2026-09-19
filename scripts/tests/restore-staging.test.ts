@@ -1,0 +1,274 @@
+/**
+ * A preview survives a main deploy; a deleted page still disappears.
+ *
+ * Bean `plj1`. The failure being fixed is INVISIBLE to every existing check —
+ * the staging push succeeds, the check run is green, and the artefact is
+ * removed minutes later by an unrelated merge — so a green CI run is not
+ * evidence here and these tests do not ask for one. They construct the
+ * sequence deliberately: a real git remote with a real `gh-pages` branch, and
+ * a step-for-step replay of what `peaceiris/actions-gh-pages@v4` does at push
+ * time (`src/git-utils.ts`, `setRepo`):
+ *
+ * ```
+ * git clone --depth=1 --single-branch --branch gh-pages <remote> workDir
+ * git rm -r --ignore-unmatch '*'      # only when keep_files is false
+ * cp -R publish_dir/* workDir/
+ * ```
+ *
+ * Both halves are asserted, because they pull in opposite directions and the
+ * one-line fix (`keep_files: true`) buys the first by giving up the second:
+ *
+ * 1. **previews survive** a full-replace deploy once they are restored;
+ * 2. **a page removed from `docs/` still leaves the published site** — which
+ *    the `keepFiles: true` control below shows it does NOT under the one-line
+ *    fix. That control is the evidence for the trade-off, not an assertion
+ *    about our own behaviour.
+ *
+ * @module scripts/tests/restore-staging
+ */
+import { describe, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join } from "node:path";
+
+import { exitCodeFor, restoreStaging, verifyStaging } from "../restore-staging.js";
+
+const ID = ["-c", "user.name=t", "-c", "user.email=t@t"];
+
+function git(cwd: string, ...args: string[]): string {
+  const r = spawnSync("git", [...ID, ...args], { cwd, encoding: "utf-8" });
+  if (r.status !== 0) throw new Error(`git ${args.join(" ")} → ${r.status}\n${r.stderr}`);
+  return r.stdout;
+}
+
+function put(root: string, path: string, body: string): void {
+  mkdirSync(dirname(join(root, path)), { recursive: true });
+  writeFileSync(join(root, path), body);
+}
+
+/** A bare remote whose `gh-pages` branch holds `files`. */
+function remoteWith(files: Record<string, string>): string {
+  const base = mkdtempSync(join(tmpdir(), "restore-staging-t-"));
+  const bare = join(base, "remote.git");
+  git(base, "init", "--bare", "-b", "main", bare);
+  const seed = join(base, "seed");
+  mkdirSync(seed);
+  git(seed, "init", "-b", "gh-pages");
+  for (const [p, b] of Object.entries(files)) put(seed, p, b);
+  git(seed, "add", "-A");
+  git(seed, "commit", "-m", "seed");
+  git(seed, "remote", "add", "origin", bare);
+  git(seed, "push", "origin", "gh-pages");
+  return bare;
+}
+
+/** A scratch checkout the restore runs from — what `actions/checkout` gives the job. */
+function checkout(): string {
+  const dir = mkdtempSync(join(tmpdir(), "restore-staging-co-"));
+  git(dir, "init", "-b", "main");
+  return dir;
+}
+
+/** A built `_site`, with whatever pages this run produced. */
+function site(files: Record<string, string>): string {
+  const dir = mkdtempSync(join(tmpdir(), "restore-staging-site-"));
+  for (const [p, b] of Object.entries(files)) put(dir, p, b);
+  return dir;
+}
+
+/**
+ * `peaceiris/actions-gh-pages@v4`, replayed. Returns the paths now on the branch.
+ *
+ * `keepFiles` is the ONLY difference between the two candidate fixes, so it is
+ * a parameter rather than a second function: the same replay answers both
+ * questions, and neither answer can come from a different code path.
+ */
+function publish(bare: string, siteDir: string, opts: { keepFiles: boolean }): string[] {
+  const work = mkdtempSync(join(tmpdir(), "restore-staging-pub-"));
+  git(dirname(work), "clone", "--depth=1", "--single-branch", "--branch", "gh-pages", bare, work);
+  if (!opts.keepFiles) git(work, "rm", "-r", "--ignore-unmatch", "*");
+  for (const entry of readdirSync(siteDir)) {
+    cpSync(join(siteDir, entry), join(work, entry), { recursive: true, force: true, dereference: true });
+  }
+  git(work, "add", "-A");
+  git(work, "commit", "--allow-empty", "-m", "docs(gh-pages): site from deadbeef");
+  git(work, "push", "origin", "gh-pages");
+  return git(work, "ls-tree", "-r", "--name-only", "HEAD").split("\n").filter((s) => s !== "");
+}
+
+const BRANCH = { branch: "gh-pages", prefix: "STAGING" };
+
+describe("a full-replace deploy with the restore in front of it", () => {
+  /** The state of the branch before any of this: one live page, one about to be deleted, two previews. */
+  const before = {
+    "index.html": "<p>old home</p>",
+    "renamed-away.html": "<p>this page is removed from docs/ in the change under test</p>",
+    "STAGING/claude-pr-361/index.html": "<p>preview 361</p>",
+    "STAGING/claude-pr-362/api/index.html": "<p>preview 362 typedoc</p>",
+  };
+
+  test("the previews survive, and a page deleted from docs/ still disappears", () => {
+    const bare = remoteWith(before);
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>", "about.html": "<p>new page</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(restored.state).toBe("restored");
+    expect(restored.previews).toEqual(["claude-pr-361", "claude-pr-362"]);
+    expect(exitCodeFor(restored)).toBe(0);
+
+    const after = publish(bare, built, { keepFiles: false });
+
+    // Half one — the previews, byte-for-byte, including the nested TypeDoc path.
+    expect(after).toContain("STAGING/claude-pr-361/index.html");
+    expect(after).toContain("STAGING/claude-pr-362/api/index.html");
+
+    // Half two — delete-on-remove is intact. This is what `keep_files: true`
+    // would have cost, and the control below measures that cost.
+    expect(after).not.toContain("renamed-away.html");
+    expect(after).toContain("about.html");
+
+    // And the verifier agrees, from the branch rather than from this process.
+    const v = verifyStaging({ repo, remote: bare, site: built, ...BRANCH }, restored.previews);
+    expect(v.state).toBe("ok");
+    expect(exitCodeFor(v)).toBe(0);
+  });
+
+  test("CONTROL — `keep_files: true` keeps the previews but strands the deleted page", () => {
+    const bare = remoteWith(before);
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const after = publish(bare, built, { keepFiles: true });
+
+    expect(after).toContain("STAGING/claude-pr-361/index.html");
+    // The regression the one-line fix would have introduced: the page is gone
+    // from `docs/` and serves forever from `gh-pages`.
+    expect(after).toContain("renamed-away.html");
+  });
+
+  test("CONTROL — with no restore, a full replace deletes every preview", () => {
+    const bare = remoteWith(before);
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const after = publish(bare, built, { keepFiles: false });
+
+    expect(after.filter((p) => p.startsWith("STAGING/"))).toEqual([]);
+    expect(after).not.toContain("renamed-away.html");
+  });
+});
+
+describe("the three states", () => {
+  test("determined-empty: the branch is readable and carries no previews", () => {
+    const bare = remoteWith({ "index.html": "<p>home</p>" });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new</p>" });
+
+    const r = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(r.state).toBe("empty");
+    expect(exitCodeFor(r)).toBe(0);
+    expect(existsSync(join(built, "STAGING"))).toBe(false);
+  });
+
+  test("determined: the publish branch does not exist at all — a first deploy", () => {
+    const base = mkdtempSync(join(tmpdir(), "restore-staging-nb-"));
+    const bare = join(base, "remote.git");
+    git(base, "init", "--bare", "-b", "main", bare);
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new</p>" });
+
+    const r = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(r.state).toBe("no-branch");
+    expect(exitCodeFor(r)).toBe(0);
+  });
+
+  test("COULD NOT DETERMINE is exit 2, never 'there are no previews to keep'", () => {
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new</p>" });
+
+    const r = restoreStaging({ repo, remote: join(tmpdir(), "no-such-remote-at-all.git"), site: built, ...BRANCH });
+    expect(r.state).toBe("unknown");
+    expect(exitCodeFor(r)).toBe(2);
+    // Nothing written, so a caller that ignores the code still does not publish
+    // a half-restored site.
+    expect(existsSync(join(built, "STAGING"))).toBe(false);
+  });
+
+  test("a blind verifier is exit 2, not a pass", () => {
+    const repo = checkout();
+    const built = site({});
+    const v = verifyStaging(
+      { repo, remote: join(tmpdir(), "no-such-remote-at-all.git"), site: built, ...BRANCH },
+      ["claude-pr-361"],
+    );
+    expect(v.state).toBe("unknown");
+    expect(exitCodeFor(v)).toBe(2);
+  });
+
+  test("a preview lost in the window is exit 1, and is named", () => {
+    const bare = remoteWith({ "index.html": "<p>home</p>", "STAGING/kept/index.html": "<p>k</p>" });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new</p>" });
+    restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    publish(bare, built, { keepFiles: false });
+
+    // `raced` is a preview that landed after the restore read the branch — the
+    // residual window the action's own re-clone leaves open.
+    const v = verifyStaging({ repo, remote: bare, site: built, ...BRANCH }, ["kept", "raced"]);
+    expect(v.state).toBe("lost");
+    if (v.state === "lost") expect(v.lost).toEqual(["raced"]);
+    expect(exitCodeFor(v)).toBe(1);
+  });
+
+  test("a preview pushed after ours is added, never reported lost", () => {
+    const bare = remoteWith({ "index.html": "<p>home</p>", "STAGING/mine/index.html": "<p>m</p>" });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new</p>" });
+    const r = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    publish(bare, built, { keepFiles: false });
+    // A later staging deploy, which is additive (`keep_files: true` + destination_dir).
+    const extra = site({ "STAGING/theirs/index.html": "<p>t</p>" });
+    publish(bare, extra, { keepFiles: true });
+
+    const v = verifyStaging({ repo, remote: bare, site: built, ...BRANCH }, r.previews);
+    expect(v.state).toBe("ok");
+  });
+});
+
+/**
+ * The wiring, checked against the workflow rather than described in a comment.
+ *
+ * Ordering is load-bearing and is the part a later edit is most likely to
+ * break: the action re-clones `gh-pages` itself at push time, so every step
+ * between the restore and the push widens the window in which a
+ * `feature-staging` deploy can land a preview this push then removes.
+ */
+describe(".github/workflows/docs-site.yml", () => {
+  const wf = readFileSync(join(import.meta.dir, "..", "..", ".github", "workflows", "docs-site.yml"), "utf-8");
+  const steps = wf.split("\n").filter((l) => /^\s{6}- name: |^\s{8}(run|uses):/.test(l));
+
+  test("the restore is the step immediately before the publish", () => {
+    const restore = steps.findIndex((l) => l.includes("scripts/restore-staging.ts") && !l.includes("--verify"));
+    const publish = steps.findIndex((l) => l.includes("peaceiris/actions-gh-pages@"));
+    expect(restore).toBeGreaterThan(-1);
+    expect(publish).toBeGreaterThan(restore);
+    // The restore matches on its own `run:` line, so the only two lines
+    // between it and the `uses:` are the publish step's own `- name:` and
+    // that `uses:`. Anything else in between is a step that widened the
+    // window, which is the thing this asserts against.
+    expect(publish - restore).toBe(2);
+  });
+
+  test("the verify runs after the publish", () => {
+    const publish = steps.findIndex((l) => l.includes("peaceiris/actions-gh-pages@"));
+    const verify = steps.findIndex((l) => l.includes("restore-staging.ts --verify"));
+    expect(verify).toBeGreaterThan(publish);
+  });
+
+  test("the publish is still a FULL REPLACE — delete-on-remove is the point", () => {
+    // `keep_files: true` here would be the regression the control test above
+    // measures: the main site's own deleted pages would serve forever.
+    const publishBlock = wf.slice(wf.indexOf("peaceiris/actions-gh-pages@"));
+    expect(publishBlock.slice(0, publishBlock.indexOf("- name:"))).not.toContain("keep_files");
+  });
+});

@@ -283,6 +283,49 @@ jobs:
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
 
+      # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
+      #
+      # The publish step below is a FULL REPLACE: `peaceiris/actions-gh-pages`
+      # with `keep_files` unset clones `gh-pages`, runs
+      # `git rm -r --ignore-unmatch '*'` over the whole branch and copies
+      # `publish_dir` in (its `src/git-utils.ts`, `setRepo`). This is the only
+      # one of the repository's six `gh-pages` publishers without
+      # `keep_files: true`, and it is the one that fires on every push to
+      # `main` — so it deleted every `STAGING/<slug>/` preview, for every open
+      # PR, on every deploy. Measured on the real branch 2026-09-19: three
+      # `docs(gh-pages)` commits, 1/3/1 previews on their parents, zero after.
+      #
+      # It is SILENT — the staging push succeeds, the bot comments the URL, the
+      # check run is green, and an unrelated merge removes the artefact minutes
+      # later. `AGENTS.md`'s merge discipline turns on staging being where a
+      # human assesses a rendered artefact, so a preview with a half-life of one
+      # main merge undercuts exactly that argument.
+      #
+      # `keep_files: true` is NOT the fix. It is not path-scoped, and the action
+      # offers nothing that is (`keep_files`, `force_orphan`, `exclude_assets` —
+      # and `exclude_assets` filters the SOURCE, not the branch). So it would
+      # also stop the main site's own DELETED pages from ever disappearing:
+      # rename a doc and both URLs serve forever. Restoring the previews into
+      # `_site` keeps both halves — the main site stays a full replace, the
+      # previews are part of what is published.
+      #
+      # LAST STEP BEFORE THE PUSH, deliberately: the action re-clones `gh-pages`
+      # itself, so everything between this read and that clone is a window in
+      # which a `feature-staging` deploy could land a preview this push then
+      # removes. Seconds, against the whole of every deploy before this change —
+      # and the verify step below is what stops a loss inside it being silent.
+      #
+      # Exit 2 means the branch COULD NOT BE READ, and it fails the job on
+      # purpose. "Could not read `gh-pages`" must never be published as "there
+      # are no previews to keep" — the same rule the translation index follows
+      # two steps up.
+      #
+      # `--state` lands at the workspace root, NOT under `_site`: it is job
+      # state that the verify step reads back, not a page, and writing it into
+      # the publish directory would serve it at the site root.
+      - name: Restore the open PRs' staging previews into the publish directory
+        run: bun run scripts/restore-staging.ts --site ./_site --state ./.staging-restored.json
+
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -290,3 +333,20 @@ jobs:
           publish_dir: ./_site
           publish_branch: gh-pages
           commit_message: 'docs(gh-pages): site from ${{ github.sha }}'
+
+      # A GREEN DEPLOY IS NOT EVIDENCE HERE — that is the whole shape of `plj1`,
+      # where every push succeeded and the artefact was gone anyway. So the
+      # previews are checked against the branch AFTER the push, from what the
+      # restore recorded rather than from anything in this process's memory.
+      #
+      # A preview pushed after ours only ADDS to the branch, so this cannot
+      # report a false loss. Exit 1 names what did not survive; exit 2 is a
+      # verifier that has gone blind, which must not read as a pass.
+      #
+      # It fails the job, and the failure message says so: the SITE deployed
+      # correctly and what was lost is a review preview, recovered by re-running
+      # Feature Staging on the affected PR. A red run for a correct deploy is
+      # the accepted cost — the alternative is the silence this bean exists to
+      # retire.
+      - name: Verify the staging previews survived the deploy
+        run: bun run scripts/restore-staging.ts --verify --state ./.staging-restored.json

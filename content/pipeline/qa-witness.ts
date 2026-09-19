@@ -62,6 +62,7 @@ import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts"
 import { KG_QA_MANIFEST_PATH, kgQaSidecarPath } from "../../schemas/kg-qa.ts";
 import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
+import { existingBlockQaPath } from "./qa-paths.ts";
 
 /** The QA sidecar families a subject can carry. */
 export const QA_FAMILIES = ["block", "translation", "script", "kg"] as const;
@@ -272,8 +273,27 @@ export function sidecarPaths(family: QaFamily, subjectPath: string, repoRoot: st
   const dir = dirname(subjectPath);
   const stem = basename(subjectPath).replace(/\.[^.]+$/, "");
   switch (family) {
-    case "block":
-      return [join(dir, `${stem}.qa.json`)].filter((p) => existsSync(p));
+    case "block": {
+      // The shared contract (`qa-paths.ts`, bean `2634`) is the ONE answer for
+      // where a block's verdict lives: it prefers `test/results/block-qa/…`
+      // and falls back to the legacy `<stem>.qa.json` sibling only when the
+      // results tree has nothing. `dir`/`stem` above come from `subjectPath`,
+      // which may be the block's `.md` rather than its `.ts` — that is fine,
+      // because `blockRoot` is the shared path PREFIX every companion file
+      // (`.ts`, `.md`, `.lean`) sits under, not a property of one extension.
+      //
+      // Single entry, not the read-path list: unlike `translation`, where
+      // several sidecars are genuinely different data (one verdict per
+      // locale), two *block* locations both existing means the SAME block
+      // audited twice — a migration-in-progress duplicate, not two verdicts
+      // to publish. `readWitnessDoc` already only ever read `paths[0]!` for
+      // this family, so returning the read-path pair unfiltered would have
+      // let a stale legacy copy silently ride along in `sidecars` even when
+      // the results-tree entry is the one actually projected.
+      const blockRoot = join(dir, stem);
+      const path = existingBlockQaPath(repoRoot, blockRoot);
+      return path ? [path] : [];
+    }
     case "translation": {
       if (!existsSync(dir)) return [];
       const re = new RegExp(`^${escapeRe(stem)}\\.([a-z]{2,3}(?:-[A-Za-z0-9]+)*)\\.translation-qa\\.json$`);

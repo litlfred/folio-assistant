@@ -46,7 +46,13 @@ because `beans/` is committed, the plan survives a resume in a fresh container.
 **Cross-session / cross-agent coordinated todos.** The same committed `beans/`
 store is the shared work-plan across sibling sessions and across different agent
 CLIs. Claim before you work (set `in-progress` + note your branch) so two
-sessions don't pick the same item; never resolve a sibling's bean, and never delete ANY bean — scrap with reasons instead. See
+sessions don't pick the same item — but **a claim is branch-local until your PR
+exists**, so it is not a lock: a sibling reading `origin/main` still sees
+`todo`. Before claiming, `git fetch origin main` and check the open PR list for
+the bean id. Two sessions claimed `plj1` 61 seconds apart on 2026-09-19 and
+opened two PRs for it; see `folio-core/bean-coordination.md`
+§"A claim is branch-local".
+Never resolve a sibling's bean, and never delete ANY bean; never resolve a sibling's bean, and never delete ANY bean — scrap with reasons instead. See
 `bean-coordination.md` for the full claim/handoff lifecycle.
 
 **What beans is *not* for:**
@@ -335,7 +341,12 @@ and has to be typed.
 ## Coordination discipline
 
 1. **Claim before you work.** Mark the bean `in-progress` so sibling sessions
-   working the same goal do not duplicate the effort.
+   working the same goal do not duplicate the effort — and know what that buys
+   you. The claim lives on YOUR branch, so it is invisible on `origin/main`
+   until your PR exists; it announces the item is taken, it does not reserve
+   it. So also `git fetch origin main` and check the open PR list for the bean
+   id before you start. Measured: two sessions claimed `plj1` 61 seconds apart
+   and shipped two PRs for it.
    **Brief it in the same turn you claim it** (§"Opening brief" above). The
    claim tells a sibling the item is taken; the brief tells them, and the
    author, what it is being taken *for*.

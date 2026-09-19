@@ -11,6 +11,7 @@
  * cannot parse must not silently lose every voice check while reporting clean.
  */
 import { describe, test, expect } from "bun:test";
+import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -79,14 +80,14 @@ describe("readActiveVoices", () => {
 
   test("a config with no voices key activates none", () => {
     const d = tmp();
-    writeFileSync(join(d, "harness.config.json"), '{"contentType":"document"}');
+    writeFileSync(join(d, HARNESS_CONFIG), '{"contentType":"document"}');
     expect(readActiveVoices(d)).toEqual([]);
   });
 
   test("a config listing voices returns them in order", () => {
     const d = tmp();
     writeFileSync(
-      join(d, "harness.config.json"),
+      join(d, HARNESS_CONFIG),
       '{"voices":{"active":["who-editorial","milnor"]}}',
     );
     expect(readActiveVoices(d)).toEqual(["who-editorial", "milnor"]);
@@ -94,7 +95,7 @@ describe("readActiveVoices", () => {
 
   test("UNPARSEABLE config is undefined, not []", () => {
     const d = tmp();
-    writeFileSync(join(d, "harness.config.json"), "{ not json");
+    writeFileSync(join(d, HARNESS_CONFIG), "{ not json");
     expect(readActiveVoices(d)).toBeUndefined();
   });
 
@@ -102,7 +103,7 @@ describe("readActiveVoices", () => {
     // The author meant something; guessing which voices they meant is worse
     // than running every check.
     const d = tmp();
-    writeFileSync(join(d, "harness.config.json"), '{"voices":{"active":"who-editorial"}}');
+    writeFileSync(join(d, HARNESS_CONFIG), '{"voices":{"active":"who-editorial"}}');
     expect(readActiveVoices(d)).toBeUndefined();
   });
 

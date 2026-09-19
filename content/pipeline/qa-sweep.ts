@@ -128,6 +128,7 @@ import {
 } from "./qa-criteria-registry";
 import { discoverBlockCheckers } from "./qa-checker-discovery";
 import { usesGraphHash } from "./uses-graph-hash";
+import { blockQaPath, existingBlockQaPath } from "./qa-paths";
 
 
 import type { BlockQaReport, CheckerResult, CompanionRole, QaCriterionEntry, QaScriptSidecar} from "../../schemas/block-qa";
@@ -375,9 +376,14 @@ async function run(): Promise<void> {
     const paths = block.companions;
     const currentHashes = hashBlockFiles(paths);
 
-    // Load or initialise report.
-    const qaPath = block.root + ".qa.json";
-    const existingReport = loadQaReport(qaPath);
+    // Load or initialise report. `qaPath` is the WRITE target — the sweep is
+    // a writer per the qa-paths.ts contract and never puts a verdict beside
+    // its block. Loading falls back to the legacy sibling location when the
+    // results-tree copy does not exist yet, so a folio whose verdicts are
+    // still beside their blocks keeps its history instead of this sweep
+    // bootstrapping an empty report over it on first run.
+    const qaPath = blockQaPath(contentRepoRoot, block.root);
+    const existingReport = loadQaReport(existingBlockQaPath(contentRepoRoot, block.root) ?? qaPath);
     const newPaths = {
       ts: relative(contentRepoRoot, block.ts),
       md: block.md ? relative(contentRepoRoot, block.md) : undefined,

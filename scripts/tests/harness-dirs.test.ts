@@ -19,6 +19,7 @@
  */
 
 import { describe, expect, test } from "bun:test";
+import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -225,8 +226,8 @@ describe("the config name — harness.config.json, and only that", () => {
   test("the config is found by its name", () => {
     const root = scratchStore();
     try {
-      writeFileSync(join(root, "harness.config.json"), JSON.stringify({ contentType: "document" }));
-      expect(resolveHarnessConfigPath(root)!.path.endsWith("harness.config.json")).toBe(true);
+      writeFileSync(join(root, HARNESS_CONFIG), JSON.stringify({ contentType: "document" }));
+      expect(resolveHarnessConfigPath(root)!.path.endsWith(HARNESS_CONFIG)).toBe(true);
       expect(readHarnessConfig(root)?.contentType).toBe("document");
     } finally {
       rmSync(root, { recursive: true, force: true });
@@ -267,7 +268,7 @@ describe("the config name — harness.config.json, and only that", () => {
         { id: "workflows", path: "workflows", graphs: ["workflow-state"] },
       ]);
       writeFileSync(
-        join(root, "harness.config.json"),
+        join(root, HARNESS_CONFIG),
         JSON.stringify({ harness: { workPlan: "ignored", workflowState: "also-ignored" } }),
       );
       const r = checkHarnessDirs(root);

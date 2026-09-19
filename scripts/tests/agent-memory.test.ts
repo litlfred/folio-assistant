@@ -23,6 +23,7 @@ import {
   BEGIN,
   END,
   agentNames,
+  droppedEntryReport,
   entriesPastBudget,
   parseMemoryFile,
   readMemoryNodes,
@@ -244,5 +245,78 @@ describe("archived entries are retained but injected nowhere", () => {
     const untagged = MemoryNodeSchema.parse(base);
     const archived = MemoryNodeSchema.parse({ ...base, id: "b", archived: true });
     expect(memoryForAgent([untagged, archived], "anyone").map((n) => n.id)).toEqual(["a"]);
+  });
+});
+
+describe("the budget check sees a TRUNCATED entry, not just a late heading", () => {
+  // Bean `g1ph`. Heading position alone let a real truncation through:
+  // after evidence moved into detail files the region ended at line 209, so
+  // the last entry's body ran nine lines past the cut while its heading sat
+  // comfortably inside — and the check returned nothing. A truncated entry is
+  // worse than a dropped one, because it still looks complete to the agent.
+  const filler = (n: number): string => "x\n".repeat(n);
+
+  test("a region ending past the budget names the last entry", () => {
+    const f = `## TRAP — a thing\n${filler(250)}${END}\n`;
+    const past = entriesPastBudget(f);
+    expect(past).toHaveLength(1);
+    expect(past[0]).toContain("a thing");
+    expect(past[0]).toContain("truncated");
+  });
+
+  test("a region ending inside the budget is silent", () => {
+    expect(entriesPastBudget(`## TRAP — a thing\n${filler(10)}${END}\n`)).toEqual([]);
+  });
+
+  test("a heading past the budget still wins — it is the more specific report", () => {
+    const f = `${filler(210)}## TRAP — late one\n${END}\n`;
+    expect(entriesPastBudget(f)[0]).toContain("late one");
+    expect(entriesPastBudget(f)[0]).not.toContain("truncated");
+  });
+
+  test("this repo's own generated files are whole", () => {
+    // The live assertion, not a fixture: every agent's region must END inside
+    // the budget, which is what the entries-past-heading check never asked.
+    for (const r of syncAll(false)) {
+      if (r.state === "missing" || r.state === "no-markers") continue;
+      expect(r.overflowEntries).toEqual([]);
+    }
+  });
+});
+
+describe("the dropped-entry gate", () => {
+  // `entriesPastBudget` measures; this decides whether the build stops. They
+  // were one thing inside `import.meta.main` and so the DECISION was never
+  // reachable from a test — only its input was.
+  test("nothing dropped is not a failure", () => {
+    expect(droppedEntryReport([])).toBeNull();
+  });
+
+  test("a long file whose overflow is only the session log is not a failure", () => {
+    // The state of `platform-boundary-guard` on `main`: over 200 lines, but
+    // every entry lands inside the cut. Gating on line count instead of on
+    // dropped entries would make this red for a reason nobody should act on.
+    expect(droppedEntryReport([{ agent: "platform-boundary-guard", entries: [] }])).toBeNull();
+  });
+
+  test("a dropped entry is named, counted, and given a way out", () => {
+    const report = droppedEntryReport([
+      { agent: "platform-boundary-guard", entries: ["TRAP — a", "TRAP — b"] },
+    ]);
+    expect(report).toContain("platform-boundary-guard: 2 dropped");
+    expect(report).toContain("TRAP — a; TRAP — b");
+    // The remedy matters as much as the finding: the tempting "fix" is to let
+    // the last entry fall off the end, which is the defect, not the cure.
+    expect(report).toContain("archived: true");
+    expect(report).toContain("Do not fix this by letting the last entry fall off the end");
+  });
+
+  test("every affected agent gets its own row", () => {
+    const report = droppedEntryReport([
+      { agent: "one", entries: ["TRAP — x"] },
+      { agent: "two", entries: ["TRAP — y"] },
+    ]);
+    expect(report).toContain("one: 1 dropped");
+    expect(report).toContain("two: 1 dropped");
   });
 });
