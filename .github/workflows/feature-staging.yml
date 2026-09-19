@@ -218,6 +218,41 @@ jobs:
       - name: Take ownership of Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
 
+      # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
+      #
+      # `jekyll-seo-tag` ships in the `github-pages` gem set that
+      # `actions/jekyll-build-pages` runs, so every page gets three assertions
+      # about its own identity, composed from `site.url + baseurl + page.url` —
+      # and under this job's appended `baseurl` that address is the STAGING one:
+      #
+      #   <link rel="canonical" href="https://…/STAGING/<slug>/x.html">
+      #   <meta property="og:url" content="…">
+      #   <script type="application/ld+json">{… "@type":"WebPage","url":"…"}
+      #
+      # `canonical` tells a crawler which URL is authoritative for this content,
+      # so a branch build asserting one invites the preview into a search index
+      # IN PLACE OF the published page — and then the directory is pruned and
+      # the indexed URL dies. `og:url` is the same claim to a link unfurler, the
+      # JSON-LD block the same claim to a structured-data consumer. Three
+      # audiences, one wrong assertion, and the published site makes all three
+      # correctly already.
+      #
+      # This is a CORRECTNESS fix, not a size fix — it removes 3 of the ~238
+      # slug-bearing references on a page, so git still cannot deduplicate this
+      # preview's copy against another's. Bean `xxku` has the other three
+      # sources and the arithmetic; the build timestamp in the banner below is
+      # the one that makes every page unique even across two builds of ONE
+      # branch.
+      #
+      # A post-build pass and not Jekyll config: the plugin has no global off
+      # switch and `{% seo %}` lives in the REMOTE theme's `head.html`, so
+      # suppressing it at source means vendoring that file — the exact
+      # upstream-coupling hazard the theme pin exists to avoid. The script
+      # couples to nothing, is a no-op on a second run, and FAILS rather than
+      # reporting a clean pass when it cannot read the tree.
+      - name: Strip SEO identity claims from the preview
+        run: bun run scripts/strip-preview-seo.ts --site ./_site
+
       - name: Generate TypeDoc API reference
         run: |
           npx --yes typedoc \

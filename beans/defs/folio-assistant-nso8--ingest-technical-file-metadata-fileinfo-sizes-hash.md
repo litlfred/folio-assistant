@@ -28,6 +28,8 @@ the ingest path rather than backfilled.
 
 Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_TechMeta`.
 
+_2026-09-19T15:02:07Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## 2026-09-19 — technical metadata, one definition
 
 Done. `scripts/_tech_meta.py` is the one definition, shared by both rungs.

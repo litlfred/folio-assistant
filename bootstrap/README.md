@@ -5,11 +5,19 @@ directory is what you read first. It is a
 [knowledge graph](../schemas/kg-node.ts) that stands alone: it does not import
 the harness, and it assumes no connected tools.
 
-> ⚠️ **Status: partly built.** `harness.json` declares this as an instance and
-> [`AGENTS.md`](AGENTS.md) is a declared asset of it — both checked by
-> `bun run check:declared-assets`. Still to come: `bootstrap.jsonld`, the two
-> skills and the process diagram. Design and open questions:
+> ⚠️ **Status: partly built.** `harness.json` declares this as an instance,
+> [`AGENTS.md`](AGENTS.md) is a declared asset of it, and the **two skills**
+> exist under [`skills/`](skills) — a declared `cat-harness` graph, so ordinary
+> resolution finds them with no special case. Checked by
+> `bun run check:declared-assets`. Still to come: `bootstrap.jsonld` and the
+> process diagram. Design and open questions:
 > [`proposals/bootstrap`](../fsh-guts/proposals/bootstrap.md).
+>
+> The skills sit in `skills/` rather than beside this file because
+> `isSkillMd` is declaration-over-location — a markdown file that does not
+> declare `$schema:` is a skill — so a graph rooted at `bootstrap/` would
+> count this README and `AGENTS.md`, the instance's two **declared assets**,
+> as skill nodes.
 
 ## What `bootstrap <instance>` means
 
@@ -54,8 +62,9 @@ declaration would believe it.
 
 ## <a id="three-steps"></a>Do these three things
 
-1. **Load the skill for reading a knowledge graph** — `bootstrap/kg-navigation.md`.
-   You cannot follow step 2 without it.
+1. **Load the skill for reading a knowledge graph** —
+   [`skills/kg-navigation.md`](skills/kg-navigation.md). You cannot follow
+   step 2 without it.
 2. **Load `bootstrap/bootstrap.jsonld`** and read the bootstrap process node.
 3. **Start the bootstrap process** and follow it.
 

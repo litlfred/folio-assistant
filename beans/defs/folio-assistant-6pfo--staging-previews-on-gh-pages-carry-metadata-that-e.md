@@ -159,3 +159,37 @@ else read it.
 
 I am leaving questions 1 and 4 rewritten rather than deleted, so the next reader
 can see the framing that was corrected and does not re-derive it.
+
+_2026-09-19T15:05Z_ — **CORRECTION to my own note above, and it is the kind
+that sends the next agent the wrong way.**
+
+I wrote that in `<base-url>/fsh-guts/staging.jsonld` the `fsh-guts` position is
+**the stub**, not a literal, and that writing it literally would be the
+genericity defect `placement.md` Step 1 exists to catch. That is wrong.
+
+**`fsh-guts` is a declared graph in this repository**, not a stub. Bean `t0i3`,
+*"FSH-GUTS: a declared non-renderable graph for deprecated and throwaway
+content"*, `in-progress`, and — tellingly — parented to `zzmr`, the same epic
+as this bean. It comes from the owner's own instruction: *"do not pollute the
+KG with SDLC churn…. if you need to keep it, make a…"*. Three commits landed
+against it while this bean sat queued: the fsh-guts viewer as a dead-fish
+control under Settings (`7vhe`), the sticky discard that feeds it (`d1r6`),
+and carrying node bodies in the export so the viewer has content.
+
+**So the URL was telling me where the data belongs, and I read it as telling
+me how to spell a path.** A staging preview is SDLC churn by definition — it
+exists for one review and is meant to die — so staging metadata is exactly
+what `fsh-guts` was declared for. Not a first-class KG node that happens to
+need a home; a throwaway one that has a declared home already.
+
+That also changes the open questions above. "Is it a new graph kind or nodes
+in an existing one" is answered: **an existing one**, and not the one I was
+circling. And `uv09` — *"PUBLISH: strip every fsh-guts reference from the KG"*
+— means the publish path already has to know the difference, so the removal
+half of the lifecycle may already be somebody's problem.
+
+I am leaving the wrong note above rather than deleting it, so the correction
+is visible and the next reader does not re-derive the same mistake. What
+misled me: I checked `artefactStub()` and `renderingPath()` and found they fit,
+and stopped — a path convention that FITS is not evidence that the thing in
+the path is a stub. I never grepped for `fsh-guts` itself.
