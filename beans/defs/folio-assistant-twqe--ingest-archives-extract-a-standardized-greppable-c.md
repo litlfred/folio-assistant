@@ -1,11 +1,11 @@
 ---
 # folio-assistant-twqe
 title: 'INGEST: archives — extract a standardized greppable contents manifest'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-16T06:44:43Z
+updated_at: 2026-09-19T15:34:30Z
 parent: folio-assistant-slw1
 ---
 
@@ -30,3 +30,5 @@ archive entry is not a different kind of thing.
 `manifest.jsonld`, and a grep for a filename inside an archive finds it.
 
 Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Archive`.
+
+_2026-09-19T15:34:30Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
