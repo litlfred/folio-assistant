@@ -305,7 +305,14 @@ beans <id> --status in-progress          # claim an item (durable, visible to si
   that something was considered and rejected, which is what stops the next
   agent re-entering the same dead end; a deleted one leaves a sibling unable
   to tell abandonment from accident. `beans delete` exists in the CLI, which
-  is why this is written down rather than assumed. Full cycle:
+  is why this is written down rather than assumed. **This is one instance of a
+  general rule and the general rule is the source of truth:**
+  [`deletion-requires-confirmation`](skills/folio-core/deletion-requires-confirmation.md)
+  — an agent never removes a durable artefact on its own initiative, it reports
+  what would go with sizes and ages and waits to be told. The bean case is the
+  strictest because a bean id is referenced from commits, issues and other
+  beans; the reasoning above is not about beans and the skill says where else
+  it lands. Full cycle:
   [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
 - **`beans ≠ sidecars`:** never `beans create` bulk machine-generated queues (QA
   `*.qa.json`, witness `*.witness.json`, watcher queues) — keep those as bulk JSON.
@@ -484,6 +491,29 @@ than closing it: the watchdog going blind must not read as good news, and a red
 
 Complements `5rfy`, which fixed workflows that never *fire*. This is the
 opposite defect — one that fires constantly and fails every time.
+
+## Repository health — the same shape, one level out
+
+`check:ci-health` asks whether the **workflows** pass. `bun run health`
+(`tests/health/`, daily via `.github/workflows/health-check.yml`) asks about
+the **repository**: how much of `gh-pages` the review previews occupy, how big
+a clone costs, whether the work plan has duplicates or unhonoured claims.
+Results are committed under `tests/health/results/`, declared in
+`harness.json` as the `health` graph, and carry every threshold's **basis** —
+structurally, so a check cannot ship a bare number.
+
+Same three rules as above, and for the same reasons: **could-not-determine is
+never rendered as clean** (and outranks a finding — a sweep blind on one check
+has not cleared the others), the tracking issue is **edited in place** rather
+than commented on, and on `unknown` it is left **untouched** while the job
+fails. `bun run health:list` says what the checks are.
+
+**It reports and never acts.** Four of the five checks are about artefacts
+accumulating, and every finding's action names something a *person* does. That
+is [`deletion-requires-confirmation`](skills/folio-core/deletion-requires-confirmation.md)
+applied to the tool that most wants to break it — the skill's own worked
+example is `plj1`, a workflow whose shape deleted every open PR's preview
+without anybody deciding it.
 
 ## Actors, roles and skills — a role is a swimlane
 
