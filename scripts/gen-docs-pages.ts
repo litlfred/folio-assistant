@@ -31,6 +31,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
+import { workflowFiles } from "./known-skills.js";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
@@ -586,12 +587,10 @@ function beanFile(id: string): string | undefined {
  * stops working fails the build rather than quietly flattening the board.
  */
 function processHierarchy(): Record<string, string[]> {
-  const dir = join(REPO_ROOT, "skills", "workflows");
-  if (!existsSync(dir)) return {};
   const out: Record<string, string[]> = {};
-  for (const f of readdirSync(dir)) {
+  for (const f of workflowFiles(REPO_ROOT)) {
     if (!f.endsWith(".bpmn")) continue;
-    const xml = readFileSync(join(dir, f), "utf-8");
+    const xml = readFileSync(f, "utf-8");
     const id = /<bpmn:process id="([^"]+)"/.exec(xml)?.[1];
     if (!id) continue;
     const calls = new Set<string>();

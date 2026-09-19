@@ -30,7 +30,8 @@
  * Exit:   0 clean · 1 dangling ref (or, with --strict, any uncovered activity)
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { workflowFiles } from "./known-skills.js";
+import { join, relative, resolve } from "node:path";
 import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
 import { knownSkills } from "./known-skills.js";
 
@@ -38,15 +39,17 @@ const root = resolve(import.meta.dir, "..");
 const strict = process.argv.includes("--strict");
 
 const skills = knownSkills(root);
-const dir = join(root, "skills", "workflows");
-const files = readdirSync(dir).filter((f) => f.endsWith(".bpmn")).sort();
+// Absolute paths from every declared directory. A dangling `<folio:skill
+// ref>` in a diagram this checker never opens is a broken reference reported
+// as clean, which is the exact failure this script exists to prevent.
+const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
 
 interface Dangling { file: string; node: string; ref: string }
 const dangling: Dangling[] = [];
 const coverage: { file: string; covered: number; total: number; uncovered: string[] }[] = [];
 
 for (const file of files) {
-  const model = await loadProcessModel(join(dir, file));
+  const model = await loadProcessModel(file);
   const activities = [...model.nodes.values()].filter(isActivity);
   const uncovered: string[] = [];
 
@@ -54,11 +57,11 @@ for (const file of files) {
     const refs = node.skills ?? [];
     if (refs.length === 0) uncovered.push(node.id);
     for (const ref of refs) {
-      if (!skills.has(ref)) dangling.push({ file, node: node.id, ref });
+      if (!skills.has(ref)) dangling.push({ file: relative(root, file), node: node.id, ref });
     }
   }
   coverage.push({
-    file,
+    file: relative(root, file),
     covered: activities.length - uncovered.length,
     total: activities.length,
     uncovered,
