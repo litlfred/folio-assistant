@@ -1185,3 +1185,170 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-site-title {
   vertical-align: baseline;
 }
+
+/* ── Action tiles ─────────────────────────────────────────────────────── */
+
+/* ONE PANEL, THE SIZE OF THE QR CODE, HOLDING EVERY HEADER ACTION.
+
+   The header had four buttons — theme, reading preferences, language, QR — in
+   a row just-the-docs caps at 3.75rem and shares with the site title, and two
+   more were wanted (the knowledge-graph viewer, the source). "that navbar is
+   getting crowded" was the owner's words. One launcher takes the row from four
+   icons to one.
+
+   The panel reuses `.fa-panel-in-sidebar` for its placement, so the reason it
+   is not clipped is the same reason the QR code is not: it is a SIBLING of
+   `.site-header` inside `.side-bar`'s flex column, in normal flow, pushing the
+   nav down rather than covering it. `position: static` is load-bearing there —
+   anything positioned escapes the column and the clipping returns. */
+.fa-tiles {
+  display: none;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 6px;
+  /* Opaque for the same reason the QR panel is: when a full-width figure
+     pins it, it sits over body text. */
+  background: var(--sidebar-color, #27262b);
+}
+
+.fa-tiles[data-open="true"] { display: block; }
+
+/* Two columns inside the sidebar's 16.5rem, which puts a tile at roughly
+   7.2rem across — comfortably past the 24px SC 2.5.8 floor in both axes, and
+   past it by enough to still be comfortable for a reader with limited hand
+   function, which is this instance's declared interaction profile.
+   `auto-fit` rather than a fixed `repeat(2, …)` so the phone card and the
+   no-sidebar fallback, which are wider, use the room instead of leaving a
+   column of dead space. */
+.fa-tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+  gap: 0.4rem;
+}
+
+/* A `display` of anything but `none` BEATS the user agent's `[hidden]` rule,
+   so an author stylesheet that sets `display: grid` un-hides the element the
+   script just hid. Caught by the e2e spec, which found the grid still visible
+   behind an open view; without these two lines the panel renders both at once.
+   Stated for each, rather than as `[hidden] { display: none }` globally, so it
+   cannot reach markup this file does not own. */
+.fa-tiles-grid[hidden],
+.fa-tiles-view[hidden] { display: none; }
+
+.fa-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 4rem;
+  padding: 0.4rem 0.25rem;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.fa-tile svg { width: 1.25rem; height: 1.25rem; fill: currentColor; flex: 0 0 auto; }
+
+/* Hover and focus are given the SAME treatment deliberately: a reader driving
+   this from the keyboard should see exactly what a reader with a mouse sees,
+   and the border alone is not enough of a change to notice. */
+.fa-tile:hover,
+.fa-tile:focus-visible {
+  border-color: var(--link-color, #7253ed);
+  background: rgba(128, 128, 128, 0.16);
+}
+
+/* Never left to the user agent: the tiles sit on an opaque sidebar background
+   whose colour differs per scheme, and the default ring is invisible on one of
+   them. 2px is the minimum the a11y spec holds. */
+.fa-tile:focus-visible,
+.fa-tiles-back:focus-visible,
+.fa-tiles-title:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
+.fa-tile-caption { display: block; }
+
+/* ── A tile's view ────────────────────────────────────────────────────── */
+
+.fa-tiles-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 24px is the floor and this is a row control, so it gets the row height the
+   a11y skill asks for rather than the minimum that would pass. */
+.fa-tiles-back {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 0.4rem;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.fa-tiles-back:hover { border-color: var(--link-color, #7253ed); }
+
+.fa-tiles-title {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  /* The heading takes focus when a view opens, so the panel announces what it
+     became. It must not look like something to click. */
+  outline-offset: 2px;
+}
+
+/* The theme control is a tile inside the settings view rather than a row in
+   the grid — the owner put it "under settings" because it is the one control
+   here a reader sets once and never touches again. Full width there, since it
+   has the view to itself. */
+.fa-tiles-view .fa-theme-toggle { width: 100%; margin-bottom: 0.5rem; }
+
+/* Views are already inside the panel's padding; they must not add a card of
+   their own, which is what the QR and language panels carried when each was
+   its own disclosure. */
+.fa-tiles-view .fa-tile-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fa-tiles-view .fa-qr-panel {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.fa-tiles-view .fa-lang-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  position: static;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.fa-tiles-view .fa-a11y-panel {
+  position: static;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
