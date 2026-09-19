@@ -13,7 +13,7 @@
  * @module scripts/known-skills
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, join as joinPath } from "node:path";
+import { basename, join, join as joinPath } from "node:path";
 
 import { resolveDirectories } from "../schemas/cat-harness.js";
 
@@ -139,6 +139,25 @@ export function kgRoots(root: string): string[] {
  * the skill set. Undercounting here is what produces a clean run over nothing.
  */
 export function isSkillMd(path: string): boolean {
+  // A README is documentation ABOUT a directory, never a node IN it.
+  //
+  // This is the one name-based exclusion in a module whose whole doctrine is
+  // declaration over location, and it earns the exception by being a
+  // filesystem-wide convention rather than this repository's layout: no
+  // directory anywhere has a skill called `README`.
+  //
+  // It has already cost something once. `schemas/` is excluded from the KG
+  // scan partly because "its `.md` files are READMEs" — without that, the
+  // corpus read 150 skills where it holds 149. Now `bootstrap/README.md` is
+  // the entry point an agent with no context reads first, and declaring
+  // `bootstrap/` as a knowledge graph would have admitted it as a skill named
+  // `README`, making `<folio:skill ref="README"/>` resolve and handing
+  // `kg-audit` a sidecar asserting heading and brevity rules against a
+  // README. Requiring every README to carry a `$schema` disclaimer instead
+  // would mean inventing a schema so that a file can say it is not something
+  // it was never going to be.
+  if (basename(path).toLowerCase() === "readme.md") return false;
+
   let text: string;
   try {
     text = readFileSync(path, "utf-8");

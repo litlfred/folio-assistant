@@ -50,7 +50,7 @@ import { termLayer } from "../schemas/vocabulary.js";
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
 import { artefactStub, defaultGraphKinds, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
-import { skillMdDirs as knownSkillDirs } from "./known-skills.js";
+import { isSkillMd, skillMdDirs as knownSkillDirs } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
@@ -698,7 +698,14 @@ function collectSkills(doc: string, base: string, problems: string[]): Node[] {
     const abs = join(ROOT, dir);
     if (!existsSync(abs)) continue; // A package this instance does not carry.
     for (const f of readdirSync(abs)) {
-      if (!f.endsWith(".md")) continue;
+      // `isSkillMd`, not a bare `.md` test. This carried its OWN copy of the
+      // predicate — a third definition of "is this a skill" in a module whose
+      // own header is about two definitions disagreeing — and it admitted
+      // `bootstrap/README.md` as a skill named `README` the moment a second
+      // knowledge-graph root existed. `skill-coverage.test.ts` caught it,
+      // which is the only reason this is a comment rather than a published
+      // graph node nobody could explain.
+      if (!f.endsWith(".md") || !isSkillMd(join(abs, f))) continue;
       let text: string;
       try {
         text = readFileSync(join(abs, f), "utf-8");

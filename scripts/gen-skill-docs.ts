@@ -23,9 +23,9 @@
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
-import { join, resolve, basename } from "path";
+import { join, resolve, basename, relative } from "path";
 
-import { isSkillMd } from "./known-skills.js";
+import { isSkillMd, kgRoots } from "./known-skills.js";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
@@ -166,6 +166,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
   "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
+  bootstrap: "Bootstrap (read before anything else is known)",
 };
 
 /**
@@ -198,12 +199,30 @@ const SKILLS_CATEGORIES: Record<string, string> = {
  */
 function discoverGroups(): Group[] {
   const out: Group[] = [];
-  const skillsRoot = join(REPO_ROOT, "skills");
   const undeclared: string[] = [];
-  if (existsSync(skillsRoot)) {
-    for (const d of readdirSync(skillsRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-      if (!d.isDirectory()) continue;
-      const dir = join(skillsRoot, d.name);
+  // EVERY declared knowledge-graph root, not the literal `skills/`.
+  //
+  // This was `join(REPO_ROOT, "skills")` and it was a live defect the moment
+  // a second root existed: `bootstrap/` holds two skills, and the generator
+  // could not see them — so `skill-coverage.test.ts` failed with three
+  // resolvable skills absent from the published reference, which is the
+  // twelve-skills-unpublished failure this function's own error message was
+  // written about, arriving again one directory along.
+  //
+  // A root may hold skills DIRECTLY (bootstrap/kg-navigation.md) or in
+  // package subdirectories (skills/folio-core/…), so both shapes are scanned.
+  // The category key is the directory's own name either way.
+  const holdsSkills = (dir: string): boolean =>
+    existsSync(dir) && readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)));
+
+  for (const root of kgRoots(REPO_ROOT)) {
+    const candidates: string[] = [];
+    if (holdsSkills(root)) candidates.push(root);
+    for (const d of readdirSync(root, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      if (d.isDirectory()) candidates.push(join(root, d.name));
+    }
+    for (const dir of candidates) {
+      const name = basename(dir);
       // No SKILL `.md` means it is not a skill package: `workflows/`,
       // `roles/`, `permissions/`, `requirements/`, `framework/`,
       // `remote-packages/` and `memory/` are other node kinds.
@@ -214,12 +233,12 @@ function discoverGroups(): Group[] {
       // one a `.md`, none a skill. The generator then demanded a category
       // heading for a package that publishes nothing.
       if (!readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)))) continue;
-      const category = SKILLS_CATEGORIES[d.name];
+      const category = SKILLS_CATEGORIES[name];
       if (category === undefined) {
-        undeclared.push(d.name);
+        undeclared.push(name);
         continue;
       }
-      out.push({ category, dir, repoPrefix: `skills/${d.name}` });
+      out.push({ category, dir, repoPrefix: relative(REPO_ROOT, dir) });
     }
   }
   if (undeclared.length > 0) {

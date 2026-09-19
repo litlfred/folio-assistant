@@ -1,0 +1,52 @@
+{
+  "_comment": "The bootstrap graph. STANDALONE: every @id here resolves inside this document, and nothing in it names a node of the harness or core graphs — an agent loading this has not established that either exists. Hand-written rather than generated, which the design permits and does not prefer; the generator that would emit it is harness-level and so cannot run yet. Every property used in @graph is defined in @context, because JSON-LD silently DROPS an undefined term and a node then looks complete while having lost half its meaning (bean ovkk).",
+  "@context": {
+    "bs": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "label": "rdfs:label",
+    "comment": "rdfs:comment",
+    "path": { "@id": "bs:path" },
+    "entryPoint": { "@id": "bs:entryPoint", "@type": "@id" },
+    "implements": { "@id": "bs:implements", "@type": "@id" },
+    "step": { "@id": "bs:step", "@type": "@id" },
+    "produces": { "@id": "bs:produces" },
+    "Graph": "bs:Graph",
+    "Skill": "bs:Skill",
+    "Process": "bs:Process"
+  },
+  "@graph": [
+    {
+      "@id": "bs:graph",
+      "@type": "Graph",
+      "label": "bootstrap",
+      "comment": "The graph an agent reads before it knows whether this repository is an instance, what kind, or what for. It does not import the harness and assumes no connected tools, because an agent cold-starting has neither.",
+      "entryPoint": "bs:process",
+      "path": "bootstrap/README.md"
+    },
+    {
+      "@id": "bs:process",
+      "@type": "Process",
+      "label": "Bootstrap an instance",
+      "comment": "A decision tree with two branches: this repository already IS an instance, or it is not. The order reference -> read theirs -> write ours -> cache is load-bearing; writing a declaration before reading the upstream one leaves a window in which this repository claims to be something it is not.",
+      "path": "bootstrap/workflows/bootstrap.bpmn",
+      "step": ["bs:kg-navigation", "bs:determine-intent"]
+    },
+    {
+      "@id": "bs:kg-navigation",
+      "@type": "Skill",
+      "label": "Reading and navigating a knowledge graph",
+      "comment": "Load a graph from its JSON-LD declaration and read a node, using nothing but a file reader. Load this FIRST: without it the second step of the README is not followable.",
+      "path": "bootstrap/kg-navigation.md",
+      "implements": "bs:process"
+    },
+    {
+      "@id": "bs:determine-intent",
+      "@type": "Skill",
+      "label": "Determining intent",
+      "comment": "Turn what the human wants into an INSTANCE REFERENCE. Not a content type from a closed set: the named instance's own declaration answers the type, the knowledge graph and the voice, so one reference replaces three questions and cannot disagree with the declaration it came from.",
+      "path": "bootstrap/determine-intent.md",
+      "implements": "bs:process",
+      "produces": "an instance reference, e.g. litlfred/cat-harness"
+    }
+  ]
+}
