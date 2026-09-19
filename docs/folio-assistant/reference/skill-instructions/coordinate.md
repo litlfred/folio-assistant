@@ -270,7 +270,7 @@ goal. Apply when you hold the flag.
 5. **Billing-CI is noise — do not let it derail coordination.** If CI
    fails setup-phase (≤5 s, simultaneous, no logs) on every push while
    local validation stays green, recognise the billing signature
-   (AGENTS.md "CI billing failures"), note `[skip-ci: billing]`, and keep
+   (`litlfred/qou` `AGENTS.md` "CI billing failures"), note `[skip-ci: billing]`, and keep
    working; never re-diagnose it as a code problem or pause the cluster
    for it.
 

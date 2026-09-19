@@ -155,7 +155,7 @@ Commit body ends with the session URL line (AGENTS.md).
 ### Step 5 — Reply frugally + report
 
 - Reply to a review **only** if it resolves the thread or raises a
-  question (AGENTS.md "be frugal"). For "already fixed in a later
+  question — be frugal. For "already fixed in a later
   commit" nits, one short note is enough; don't reply per-nit.
 - If Copilot's review errored ("unable to review"),
   `request_copilot_review` to re-trigger.

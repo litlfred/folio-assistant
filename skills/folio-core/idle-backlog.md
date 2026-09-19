@@ -11,8 +11,8 @@ roles: [reader]
 
 # idle-backlog
 
-Generalises the AGENTS.md §"5-minute idle trigger" / "Work the queue while idle"
-policy: an agent waiting on an async result should **not** sleep or poll — it
+Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that
+used to live in `AGENTS.md` and now lives here: an agent waiting on an async result should **not** sleep or poll — it
 should pull the next applicable backlog item and advance it.
 
 ## When to fire

@@ -235,4 +235,4 @@ lands, this scanner is **standalone**: it produces the report and, with
 `--write-sidecars`, writes `reviewer.kind="script"` candidate entries that the
 agent later upgrades. Do **not** rely on the reactive post-commit `qa-sweep` to
 run these — run the scanner by hand (it is the agent-owned QA path per
-`AGENTS.md §"QA is agent-owned; CI is a backup"`).
+`litlfred/qou` `AGENTS.md` §"QA is agent-owned; CI is a backup").

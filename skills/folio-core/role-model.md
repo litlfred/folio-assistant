@@ -400,6 +400,27 @@ something off is not implemented by a markdown file, so failing on
 `activity-names-skill` would force a fake ref onto a real step, which is worse
 than the gap.
 
+### Never quote a count from prose — run the audit
+
+**A number written in a document is a claim; only a run is evidence.** This has
+already gone wrong here in the way that is hardest to catch: a finding was
+resolved, the count describing it stayed in `AGENTS.md`, and a later session
+repeated it back to the author as live.
+
+Two criteria make the trap easy to fall into, because they ask **different
+reachability questions** and only one of them is about the role model:
+
+- **`skill-has-entry-point`** — is there ANY way in: servable, in the harness,
+  carried by a role, or named by an activity? The servable clause alone covers
+  nearly the whole corpus, so this passes near-trivially. Its green was once
+  read as an answer to the question its old name (`skill-reachable`) implied.
+- **`skill-in-role-or-process`** — what does the actor → role → task model
+  actually reach? This is the real coverage question, and **it must never
+  gate.** A skill invoked directly by name is doing its job without appearing
+  in any diagram, and driving the number to zero would mean inventing roles and
+  activities to absorb tools that do not want them. Watch it move; do not read
+  it as a defect list.
+
 ## What counts as a skill
 
 `scripts/known-skills.ts` is the single answer, shared by `kg-audit` and
