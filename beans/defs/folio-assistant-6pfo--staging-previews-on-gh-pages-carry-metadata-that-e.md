@@ -120,3 +120,41 @@ cleanup, and the dispatch cleanup added in #407). Each would have to rewrite
 it, or it describes previews that are gone. That is the same class as a link
 resolving to nothing, and it is why "the record cannot outlive the preview" is
 in `## Done when` rather than being an implementation detail.
+
+_2026-09-19T12:35Z_ — Owner, on where the write/remove logic belongs:
+
+> *"thats part of the behaviour of that node type"*
+
+**That answers open question 3, and it reframes 1 and 4 as well.** I had written
+them as workflow-plumbing questions — which YAML job rewrites the document, and
+whether it lives on the publish branch. That framing was wrong, and it is the
+same mistake this repository keeps paying for: putting a fact about a node into
+the thing that happens to touch it.
+
+The node type owns its own lifecycle. A `staging-preview` node knows how it
+comes into existence, what it carries, and what makes it cease to exist — the
+same way a bean knows `scrapped` is its retirement and not a deletion, a
+`workflow-state` instance declares itself with `$schema` rather than being
+duck-typed, and a memory node carries `archived` rather than the generator
+deciding externally which entries to drop.
+
+So the questions are not "which of the three `gh-pages` writers rewrites the
+document" but **what the node type's behaviour is**, with the writers merely
+invoking it:
+
+- **Creation** is part of the deploy's meaning, not a step bolted onto it.
+- **Removal** is the node's own retirement, so the cleanup dispatch added in
+  #407 calls it rather than reimplementing it — and the three-writer problem I
+  raised dissolves, because none of them owns the rule.
+- **Liveness** is a property the node can answer about itself. `previewLiveness`
+  already exists as a single function called from both the sweep and the removal
+  preflight, precisely so the two cannot disagree; that is this shape already,
+  arrived at from the other direction.
+
+Worth stating because it is the cheap-today part: `previewLiveness` being
+shared is evidence the node type is already latent in the code. What is missing
+is the declaration that says so, and the published document that lets anything
+else read it.
+
+I am leaving questions 1 and 4 rewritten rather than deleted, so the next reader
+can see the framing that was corrected and does not re-derive it.
