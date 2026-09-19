@@ -103,4 +103,4 @@ Both schemas set `additionalProperties: true` — the format is intentionally ex
 
 ## License
 
-MIT. See [LICENSE](https://github.com/litlfred/qou/blob/main/LICENSE) in the parent repository.
+Apache-2.0. See [LICENSE](https://github.com/litlfred/folio-assistant/blob/main/LICENSE) in the parent repository.

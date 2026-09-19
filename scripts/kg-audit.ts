@@ -408,7 +408,31 @@ async function auditDecisions(
  * Walks `skills/` rather than reading a manifest: a skill a manifest forgot is
  * still a file an agent can be pointed at, and the audit should see it.
  * `kg-qa/` is excluded — those are this audit's own sidecars.
+ *
+ * **A file that declares itself part of a skill is not a skill.** A long skill
+ * split into an entry point plus siblings — the pattern `AGENTS.md` prescribes
+ * for `MEMORY.md`, "keep it under 200 lines, split detail into sibling files
+ * the agent reads on demand" — would otherwise be audited as several skills,
+ * and each fragment measured against thresholds meant for a whole one. Found
+ * exactly that way: splitting five over-length skills turned 5 findings into
+ * 4 new ones on their own fragments.
+ *
+ * The test is the file's own `part-of:` declaration, not its path, because
+ * this repo has paid for "told apart by where it happens to sit" before —
+ * a declaration inside the file is the contract, a location is a coincidence.
+ *
+ * It cannot be used to hide a skill: the declaration only counts when the
+ * named parent exists AND the file sits inside that parent's own directory,
+ * so `part-of: something-else` in an arbitrary file excludes nothing.
  */
+function isPartOfASkill(path: string): boolean {
+  const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(path, "utf-8"));
+  const parent = fm && /^part-of:\s*(\S+)\s*$/m.exec(fm[1]!)?.[1];
+  if (!parent) return false;
+  const dir = dirname(path);
+  return basename(dir) === parent && existsSync(join(dirname(dir), `${parent}.md`));
+}
+
 function skillFiles(): string[] {
   const out: string[] = [];
   const walk = (dir: string): void => {
@@ -416,7 +440,7 @@ function skillFiles(): string[] {
       const p = join(dir, e.name);
       if (e.isDirectory()) {
         if (e.name !== KG_QA_DIRNAME) walk(p);
-      } else if (e.name.endsWith(".md")) {
+      } else if (e.name.endsWith(".md") && !isPartOfASkill(p)) {
         out.push(p);
       }
     }
