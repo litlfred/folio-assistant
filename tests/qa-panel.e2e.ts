@@ -36,13 +36,100 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
-/** A block sidecar carrying the corpus's one real failure, and a stale witness. */
-const BLOCK_JSON = readFileSync(
+/**
+ * The real block sidecar off disk, with ONE criterion put back into the state
+ * this spec is about.
+ *
+ * ## Why it is derived rather than served straight
+ *
+ * It used to be served verbatim, on the strength of the corpus carrying
+ * exactly one real failure — `voice-status-leak` on this block, over a
+ * `**Not yet implemented:**` heading at line 36 of the `.md`.
+ *
+ * **A verdict is not a fixture.** PR #302 adjudicated that finding to `pass`
+ * (the heading is the label over a deliberate inventory of gaps, not a
+ * work-tracker marker that escaped into prose — which is correct), the
+ * document went to `state: pass` with zero `fail`, and these two tests broke
+ * having asserted nothing about the panel that had changed. The corpus is
+ * *supposed* to reach zero failures; a spec that needs one is a spec that gets
+ * worse as the content gets better.
+ *
+ * This is the same treatment `STALE_JSON` already had, and for the same reason
+ * that comment gives: what belongs HERE is whether the panel RENDERS a state,
+ * not whether the corpus happens to be in it today. The document's shape still
+ * comes from the generator — every field, every witness, the criterion count —
+ * so it cannot agree with the code while the code disagrees with the corpus.
+ * Only the verdict on one named criterion is set, out of the exact values the
+ * sweep itself wrote before the adjudication.
+ *
+ * ## It also makes the sort assertion mean something
+ *
+ * `voice-status-leak` is criterion **19** of 48, not 0. Under the verbatim
+ * fixture the one failure happened to be first in document order, so "worst
+ * criterion first" was satisfied by a panel that did no sorting at all. Now
+ * the loud row has to be lifted past nineteen quiet ones to pass.
+ */
+const CORPUS_BLOCK = readFileSync(
   join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
   "utf8",
 );
+
+/** The criterion this spec drives, named once so both fixtures agree. */
+const LOUD_ID = "voice-status-leak";
+
+interface Witness {
+  kind: string;
+  id: string;
+  freshness: string;
+  changed?: string[];
+}
+interface Criterion {
+  id: string;
+  result: string;
+  severity?: string;
+  evidence?: string[];
+  witnesses: Witness[];
+}
+interface Sidecar {
+  state?: string;
+  counts?: Record<string, number>;
+  criteria: Criterion[];
+}
+
+/** The corpus document, freshly parsed. Each fixture gets its own copy. */
+function corpus(): Sidecar {
+  return JSON.parse(CORPUS_BLOCK) as Sidecar;
+}
+
+/** The one criterion under test, located by id — never by index. */
+function loudCriterion(doc: Sidecar): Criterion {
+  const c = doc.criteria.find((x) => x.id === LOUD_ID);
+  // A corpus that no longer carries the criterion at all is a different
+  // change from one that adjudicated it, and must not read as a passing test.
+  if (!c) throw new Error(`${LOUD_ID} is not in the block sidecar any more`);
+  return c;
+}
+
+/** A block sidecar with its one failure restored, exactly as the sweep wrote it. */
+const BLOCK_JSON = (() => {
+  const doc = corpus();
+  const c = loudCriterion(doc);
+  c.result = "fail";
+  c.severity = "critical";
+  c.evidence = [
+    "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
+  ];
+  // The script verdict alone. The agent witness that overturned it is the
+  // adjudication, and a criterion shown as failing has not been adjudicated
+  // yet — keeping both would render a panel no sweep ever produced.
+  c.witnesses = c.witnesses.filter((w) => w.kind === "script");
+  doc.state = "fail";
+  doc.counts = { fail: 1, warn: 0, pass: 21, na: 26, unknown: 0 };
+  return JSON.stringify(doc);
+})();
+
 /**
- * The same document with its witness marked stale.
+ * The same document with that criterion's witness marked stale.
  *
  * This was served straight from the corpus, where that block's verdict WAS
  * stale — measured at 17:33 against an `.md` edited at 19:06 the same day.
@@ -52,12 +139,15 @@ const BLOCK_JSON = readFileSync(
  * belongs HERE is whether the panel renders that state — which must not depend
  * on the corpus happening to hold an out-of-date verdict on the day the suite
  * runs.
+ *
+ * It marked `criteria[0]` and relied on that being the row the panel shows
+ * first. It no longer is: the loud row is lifted out of document order, which
+ * is the point of the panel. Marking the criterion this spec actually clicks
+ * keeps the two in step whatever the corpus does next.
  */
 const STALE_JSON = (() => {
-  const doc = JSON.parse(BLOCK_JSON) as {
-    criteria: Array<{ witnesses: Array<{ freshness: string; changed?: string[] }> }>;
-  };
-  const w = doc.criteria[0]!.witnesses[0]!;
+  const doc = JSON.parse(BLOCK_JSON) as Sidecar;
+  const w = loudCriterion(doc).witnesses[0]!;
   w.freshness = "stale";
   w.changed = ["md"];
   return JSON.stringify(doc);
@@ -92,7 +182,7 @@ const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   <h1>Harness</h1>
   <h2 id="node-a">A block node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
-     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/block.json", "Content QA: 1 fail, 0 warn, 22 pass, 25 n/a — open for witnesses")}</span></p>
+     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/block.json", "Content QA: 1 fail, 0 warn, 21 pass, 26 n/a — open for witnesses")}</span></p>
   <p>Narrative of the block.</p>
   <h2 id="node-b">A diagram node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
