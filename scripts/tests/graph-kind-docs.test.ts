@@ -1,77 +1,120 @@
 /**
- * The documented graph kinds are exactly the registered ones.
+ * The graph-kind table and the graph-kind registry must name the same kinds —
+ * bean `5o3a`.
  *
- * Bean `5o3a`. `AGENTS.md` designates `skills/folio-core/directory-conventions.md`
- * the source of truth for graph kinds, and nothing checked it against the
- * registry it describes. The drift is not hypothetical and not rare: it
- * happened once across #266/#267/#268 — every merge textually clean, every
- * check green — and then **again within hours** of being fixed, when a sibling
- * session added `bean-defs` and `workflow-state` and the table stayed at five.
+ * **No check crossed from prose to code, and three clean merges went through the
+ * gap.** #266 collapsed the kinds `workplan` and `process-state` into a single
+ * `beans`, changed the registry, and left every *description* of it untouched:
+ * the table in `directory-conventions.md` still listed both retired kinds at a
+ * path that no longer existed, the registry's own doc comment opened "Five, and
+ * deliberately none of them renderable" over a map of four, and `AGENTS.md`
+ * described an intermediate state of #266's own branch. `AGENTS.md` designates
+ * that skill the source of truth, so an agent following it would have written
+ * `graph: "workplan"` and been refused by the registry it was told to trust.
  *
- * ## Both directions are hard, and that is a decision worth stating
+ * #269 fixed the instance. This is the guard, and nothing existing could have
+ * been it: `gen-skill-docs --check` verifies the generated mirror matches its
+ * hand-authored source, so it cannot notice that BOTH describe a registry they
+ * no longer match.
  *
- * **Docs naming a kind the registry lacks** is unambiguous: an agent following
- * the skill writes `graph: "workplan"` and the registry refuses it with a list
- * that does not include it. The skill actively misleads.
+ * **The defect is live, not historical.** `kg` was renamed to `cat-harness` on
+ * 2026-09-19 — the same class of change as #266, in a file this test now guards.
  *
- * **The registry naming a kind the docs omit** was the arguable one — it makes
- * every new kind ship with its prose, which is a cost. Taken anyway, because it
- * is the direction that actually drifted twice, and because the omission is
- * *silent*: a reader consults the table, finds five kinds, and has no way to
- * learn there are seven. A rule that only catches the loud direction would have
- * caught neither incident.
+ * ## Two decisions, and why they went this way
  *
- * ## Why the first column of the table, not a grep
+ * **Both directions are hard.** A kind in the table that the registry lacks is
+ * the measured defect. A kind in the registry the table omits is the same class
+ * reversed, and it means every new kind must land with its prose in the same PR.
+ * That is a policy choice rather than a bug fix, and it is priced at zero right
+ * now: measured 2026-09-19, both directions were already clean, so this locks in
+ * a property the corpus has rather than demanding work to reach it. Softening it
+ * is one assertion.
  *
- * `directory-conventions.md` deliberately NAMES the retired kinds in prose —
- * `workplan` and `process-state` are discussed so nobody re-proposes the split
- * they came from. A grep would read those as live claims. The table is the
- * machine-readable part, so the check parses its first column and the prose is
- * free to say what it needs to.
+ * **Scoped to the table's first column, never a grep of the file.** #269's
+ * rewrites deliberately name `workplan` and `process-state` in prose, to preserve
+ * the superseded design and stop somebody re-proposing it; the same file also
+ * explains at length that `kg:audit`, `kg-export` and the `kg` QA family keep
+ * their names. A text search would read every one of those as a live claim. The
+ * table is the machine-readable part, which is the argument for scoping there.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { defaultGraphKinds } from "../../schemas/cat-harness.js";
-import "../../schemas/folio-graph-kind.js"; // registers `folio`
+import { BASE_GRAPH_KINDS, GRAPH_KIND_ALIASES, defaultGraphKinds } from "../../schemas/cat-harness.js";
+// Side effect: registers `folio`, which the layer ABOVE the harness declares.
+// Without this the registry omits it and the table would read as over-documented
+// — a false finding that would have made this test's first run a puzzle.
+import "../../schemas/folio-graph-kind.js";
 
-const SKILL = join(import.meta.dir, "../../skills/folio-core/directory-conventions.md");
+const ROOT = join(import.meta.dir, "../..");
+const DOC = "skills/folio-core/directory-conventions.md";
+/** The table's header row, verbatim. Renaming a column is a deliberate edit. */
+const HEADER = "| kind | declared by | holds | renderable |";
 
-/** Kind names from the first column of the graph-kinds table. */
+/**
+ * The kinds the table names, read from its FIRST COLUMN only.
+ *
+ * Located by the header row rather than by position or by a pattern over the
+ * prose: the file holds two pipe-tables and this is the one whose columns say
+ * what they are. Absent, or present more than once, THROWS — a table this test
+ * cannot find is not an empty table, and a silent pass over nothing is the
+ * failure mode the whole bean is about.
+ */
 function documentedKinds(): string[] {
-  const text = readFileSync(SKILL, "utf-8");
-  const start = text.indexOf("| kind | declared by |");
-  if (start === -1) throw new Error("graph-kinds table not found — the check cannot be vacuously true");
-  const rows = text.slice(start).split("\n");
+  const lines = readFileSync(join(ROOT, DOC), "utf8").split("\n");
+  const at = lines.reduce<number[]>((acc, l, i) => (l.trim() === HEADER ? [...acc, i] : acc), []);
+  if (at.length !== 1) {
+    throw new Error(
+      `${DOC}: expected exactly one graph-kind table header, found ${at.length}. ` +
+        `Looked for the line: ${HEADER}`,
+    );
+  }
   const out: string[] = [];
-  for (const row of rows.slice(2)) {
-    if (!row.startsWith("|")) break; // End of table.
-    const first = row.split("|")[1]?.trim() ?? "";
-    const m = /^`([^`]+)`$/.exec(first);
-    if (m !== null) out.push(m[1]);
+  // Skip the header and the |---|---| delimiter beneath it.
+  for (let i = at[0]! + 2; i < lines.length; i++) {
+    const line = lines[i]!;
+    if (!line.trimStart().startsWith("|")) break;
+    const first = line.split("|")[1] ?? "";
+    // A cell reads `` `tools` `` or `` **`folio-assist-core`** ``; the kind is the
+    // backticked token, and bold marks WHO DECLARES it in the next column.
+    const kind = first.replace(/[`*]/g, "").trim();
+    if (kind) out.push(kind);
   }
   return out;
 }
 
-describe("graph kinds: docs and registry agree", () => {
-  test("the table is found and non-trivial", () => {
-    // Without this the two assertions below pass happily over an empty list,
-    // which is the shape of failure this whole bean is about.
-    expect(documentedKinds().length).toBeGreaterThanOrEqual(5);
+/** Every name a table row may legitimately carry. */
+function validKinds(): Set<string> {
+  return new Set([
+    ...defaultGraphKinds.names(),
+    ...Object.keys(BASE_GRAPH_KINDS),
+    // A deprecated alias still reads, so documenting one is not an error.
+    ...Object.keys(GRAPH_KIND_ALIASES),
+  ]);
+}
+
+describe("the graph-kind table and the registry name the same kinds", () => {
+  test("the table is found, and is not empty", () => {
+    // Without this the two assertions below pass vacuously over `[]` — which is
+    // exactly how #266's drift survived three green merges.
+    expect(documentedKinds().length).toBeGreaterThan(5);
   });
 
-  test("every documented kind is registered", () => {
-    const registered = new Set(defaultGraphKinds.names());
-    const undefined_ = documentedKinds().filter((k) => !registered.has(k));
-    expect(undefined_).toEqual([]);
+  test("every kind in the table exists in the registry", () => {
+    // The measured defect: the table named `workplan` and `process-state` after
+    // the registry stopped knowing them, and the file is designated the source
+    // of truth, so an agent would have written a declaration the loader refuses.
+    const valid = validKinds();
+    const unknown = documentedKinds().filter((k) => !valid.has(k));
+    expect(unknown).toEqual([]);
   });
 
-  test("every registered kind is documented", () => {
-    // The direction that drifted twice. Silent when it breaks: a reader
-    // consults the table and cannot learn that it is short.
+  test("every registered kind appears in the table", () => {
+    // The reverse direction, hard by choice — see the header. Clean when written,
+    // so this costs nothing today and stops a kind shipping undescribed.
     const documented = new Set(documentedKinds());
-    const missing = defaultGraphKinds.names().filter((k: string) => !documented.has(k));
-    expect(missing).toEqual([]);
+    const undocumented = defaultGraphKinds.names().filter((k) => !documented.has(k));
+    expect(undocumented).toEqual([]);
   });
 });
