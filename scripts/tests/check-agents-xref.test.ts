@@ -113,12 +113,71 @@ describe("unresolved", () => {
 });
 
 describe("the live corpus", () => {
-  test("this repo's own citations are audited, and the middle state is non-empty", () => {
-    // The regression guard for the wrapping bug, against the real file rather
-    // than a fixture: if `folio` ever returns to 0 here, the detector broke.
+  test("every one of this repo's citations gets a verdict, and none is unresolved", () => {
+    // No floor on the COUNT — that was asserted as `> 10` and broke the moment
+    // the backlog was cleared and the corpus fell to 8. Second instance of the
+    // same mistake in one session; the note below is why there will not be a
+    // third. What is asserted is the property CI actually gates on.
     const found = auditXrefs(join(import.meta.dir, "..", ".."), SKILL_ROOTS);
-    expect(found.length).toBeGreaterThan(10);
-    expect(found.filter((c) => c.verdict === "folio").length).toBeGreaterThan(0);
-    expect(found.filter((c) => c.verdict === "resolves").length).toBeGreaterThan(0);
+    expect(found.filter((c) => !c.verdict)).toEqual([]);
+    expect(found.filter((c) => c.verdict === "unresolved")).toEqual([]);
+  });
+
+  // WHAT THIS DELIBERATELY DOES NOT ASSERT, and why the first version was wrong.
+  //
+  // It required the live corpus to hold at least one `folio` and one `resolves`
+  // citation, as a regression guard for the line-vs-paragraph scanning bug. It
+  // failed within the hour — not because the detector broke, but because the
+  // `1hsf` migration removed both: `todo-manager` stopped citing AGENTS.md for
+  // its own rule, and `continual-progress` stopped naming a folio section.
+  //
+  // Both were improvements, and the test called them regressions. Pinning a
+  // COVERAGE COUNT of the live corpus as a guard makes the corpus getting
+  // better indistinguishable from the tool getting worse — the same mistake as
+  // gating on `skill-in-role-or-process`, which this repo already declines to
+  // make. The wrapping guard belongs on a fixture that pins the SHAPE, and it
+  // is above: "an attribution that WRAPS across lines is still found".
+
+});
+
+describe("a citation may declare which AGENTS.md it means", () => {
+  test("naming another repo makes it `folio` without this file attributing it", () => {
+    // Declaration over inference. Before this, a correct citation of a folio's
+    // section stayed `unresolved` unless the PLATFORM's prose happened to
+    // mention it — so clearing the backlog would have meant restating a
+    // folio's table of contents here.
+    const found = auditXrefs(
+      repo("## Real heading\n", {
+        "s.md": 'Per `litlfred/qou` `AGENTS.md` §"CI billing failures", recognise it.\n',
+      }),
+      SKILL_ROOTS,
+    );
+    expect(found.map((c) => c.verdict)).toEqual(["folio"]);
+  });
+
+  test("naming THIS repo is still audited against this file's headings", () => {
+    // Otherwise the escape hatch swallows the check: writing your own repo's
+    // name would wave any citation through.
+    const md = "# AGENTS.md — litlfred/folio-assistant\n\n## Real heading\n";
+    const found = auditXrefs(
+      repo(md, { "s.md": 'Per `litlfred/folio-assistant` `AGENTS.md` §"Nope".\n' }),
+      SKILL_ROOTS,
+    );
+    expect(found.map((c) => c.verdict)).toEqual(["unresolved"]);
+  });
+
+  test("qualifying a citation moves it between states — it never leaves the census", () => {
+    // The census bug, pinned. `AGENTS.md` followed by a closing backtick did
+    // not match at all, so adding a qualifier made the citation VANISH and the
+    // count fell from 8 to 1, reading as success.
+    const md = "## Real heading\n";
+    const bare = auditXrefs(repo(md, { "s.md": 'AGENTS.md §"Whatever".\n' }), SKILL_ROOTS);
+    const qualified = auditXrefs(
+      repo(md, { "s.md": 'Per `litlfred/qou` `AGENTS.md` §"Whatever".\n' }),
+      SKILL_ROOTS,
+    );
+    expect(qualified.length).toBe(bare.length);
+    expect(bare[0]!.verdict).toBe("unresolved");
+    expect(qualified[0]!.verdict).toBe("folio");
   });
 });

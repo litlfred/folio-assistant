@@ -23,7 +23,8 @@ references `${NAME}`. Files at `beans/devils-advocate-watcher-queue.json`
 and `beans/devils-advocate-watcher-ledger.md`.
 
 **Standing authority.** This watcher is the operational arm of the
-**Critical-distance license** (AGENTS.md §"Critical-distance license"):
+**Critical-distance license** (the folio's own `AGENTS.md` — `litlfred/qou` `AGENTS.md`
+§"Critical-distance license"):
 agents have standing permission — and an affirmative duty when asked for
 assessment — to challenge the project's claims on the merits, flag
 suspected numerology / overfitting / hidden degrees of freedom /

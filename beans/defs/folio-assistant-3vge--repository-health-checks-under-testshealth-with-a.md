@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3vge
 title: Repository health checks under tests/health, with a deletion-confirmation skill and a 24h trigger
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-19T10:10:02Z
-updated_at: 2026-09-19T10:33:21Z
+updated_at: 2026-09-19T10:42:33Z
 ---
 
 
@@ -72,3 +72,5 @@ Harness: new 'health' graph kind at tests/health/results/, touching BASE_GRAPH_K
 Trigger: .github/workflows/health-check.yml, daily 06:41 UTC plus workflow_dispatch plus 'bun run health'.
 
 Open question for the owner, stated in the PR: this repo has both test/ and tests/. My recommendation is consolidating on test/ in a separate PR, because it is the side with a harness declaration pointing at it. Not done here.
+
+_2026-09-19T10:42:33Z_ — Closing: merged as PR #395, merge commit b96bc1244 on main, after the owner said 'merge' on 2026-09-19. All four deliverables landed and verified on main, not taken on report: skills/folio-core/deletion-requires-confirmation.md exists and is registered; tests/health/ carries checks.ts, probes.ts, run.ts and three test files with results at tests/health/results/repository.health-report.json; harness.json declares the health graph kind at tests/health/results/; and .github/workflows/health-check.yml runs daily at 41 6 * * * plus workflow_dispatch. Smoke-tested on main after the merge: 'bun run health:list' lists all five checks. Also checked independently rather than relayed — the green was on the real head e6775e956 (run 35437880188, not a stale run on an older commit), and a grep of the whole sweep and its workflow for rm / unlinkSync / rmSync / git rm / beans delete / DELETE / branch deletion found nothing destructive, only a test cleaning up its own mkdtempSync fixtures and two finding STRINGS saying 'Never beans delete'. That mattered because the PR's own subject is a rule against agents deleting things. Left open deliberately and NOT folded in here: the test/ vs tests/ inconsistency, which the agent flagged in directory-conventions.md with its recommendation (keep test/, since it is the side harness.json declares and the health entry has no downstream consumers yet, so the move is cheap today and gets dearer); and the four findings the sweep now reports on this repo — 9 staging previews at 311.4 MB, 4 of them orphaned, .git at 10.9x the tracked tree, 184 resolved beans still inline — every one of which is a person's decision by this PR's own rule.

@@ -51,6 +51,39 @@ GOBIN="$HOME/.local/bin" go install github.com/hmans/beans@latest
 Note: the npm package named `beans` is an unrelated abandoned tool — do **not**
 `npm install beans`. Verify with `beans list && beans check`.
 
+## What the session-start sweep emits, and why in that order
+
+A session-start hook runs the sweep where a hook runs at all. **It installs the
+CLI when it is genuinely missing** — bounded and quiet, falling through to the
+degraded reader rather than failing the hook — and prepends the install
+directory when the binary is already there, so a second session does not
+reinstall. If the sweep still reports the CLI missing, it could not be installed
+there.
+
+**That the installer runs, rather than being recommended, is the lesson of the
+2026-09-18 incident above.** An imperative somebody has to act on is weaker than
+the act itself; a parenthetical "run the installer for full priming" was read
+and not acted on.
+
+The order is not arbitrary:
+
+1. **Interaction preferences — first**, because they change the *form* of every
+   question that follows. A question asked before them may have to be asked
+   again.
+2. Work-plan priming and the open list.
+3. **The roadmap.** A flat list of a hundred ids in creation order is **data,
+   not a plan**; the milestone/epic structure is what lets an end-of-turn report
+   say what is *next* and why.
+4. **The commands the person can run themselves**, the interactive browser
+   first. An agent cannot drive a TUI on somebody's behalf, so the only useful
+   thing to do with one is print it where they will see it — with a
+   copy-pasteable line whose path and branch are **computed, never written in**.
+5. Default-branch delta, sibling branch activity, CI health.
+
+**Heavy triage of new commits belongs in a background subagent, not the
+foreground.** The sweep's job is to tell you what changed, not to spend your
+first minutes reading it.
+
 ## Core Directives for Sessions
 
 1. **Every session is a Bean:** At the start of your session, you MUST create a parent bean (`--type milestone` or `--epic`) that represents the session and its goals.
