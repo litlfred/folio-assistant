@@ -65,6 +65,23 @@ def slug(text: str) -> str:
     return _slugify(text)
 
 
+def _load_tech_meta():
+    """`scripts/_tech_meta.py`'s `tech_meta`, loaded by path.
+
+    Same mechanism this file already uses for its siblings: a module whose name
+    carries a hyphen cannot be imported, and the underscore-prefixed helpers sit
+    beside it rather than on `sys.path`.
+    """
+    import importlib.util as _u
+    spec = _u.spec_from_file_location("_tech_meta", str(Path(__file__).with_name("_tech_meta.py")))
+    mod = _u.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.tech_meta
+
+
+tech_meta = _load_tech_meta()
+
+
 def page_texts(pdf: Path, from_ocr: bool, outroot: Path) -> tuple[list[str], str]:
     """Page text, and where it came from. Never silently empty — see pdf-extract.py."""
     if from_ocr:
@@ -159,6 +176,20 @@ def main() -> int:
             written += 1
         manifest = a.outdir / doc_id / "structure.json"
         existing = json.loads(manifest.read_text()) if manifest.exists() else {}
+        # Technical metadata, if nothing has written it yet (bean `nso8`).
+        #
+        # This rung used to write NONE, and it merges into whatever
+        # `pdf-structure.py` left behind — so a document that rung never
+        # touched ended up with no `source` at all. Measured 2026-09-19:
+        # `library/milnorlink/` was exactly that, while the other two
+        # page-granularity entries had `source` only because `pdf-structure`
+        # ran on them first. The no-outline path was second-class by accident.
+        #
+        # `setdefault`, not `update`: where `pdf-structure` has already written
+        # `source` it knows strictly more than this rung does — `pages` and the
+        # `extractor` it used — and overwriting that with a subset would lose
+        # provenance to fix an absence.
+        existing.setdefault("source", tech_meta(str(pdf)))
         existing.update({
             "_schema": existing.get("_schema", "pdf-structure/v1"),
             "doc_id": doc_id,
