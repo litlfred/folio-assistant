@@ -422,7 +422,8 @@ question.** Two-part pattern:
 1. **Context preamble (chat text).** Before the `AskUserQuestion` call,
    write a short chat message: the finding (one sentence, with
    severity); the affected file (GitHub blob URL, `.md` preferred per
-   AGENTS.md "Always provide GitHub links"); evidence (verbatim quote
+   [`turn-reporting`](../turn-reporting.md) §"Asking for review means
+   linking the artefact"); evidence (verbatim quote
    with line numbers); what was attempted and what failed.
 2. **Structured question.** Then call `AskUserQuestion` with a tight
    numbered-choice set (2-4 options), each option mapping directly to a

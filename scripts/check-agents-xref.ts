@@ -33,11 +33,24 @@
  * | `folio` | names a section this file itself attributes to a folio's `AGENTS.md` |
  * | `unresolved` | names neither — either deleted here, or a folio section nothing records |
  *
- * `unresolved` is **not** "dead". This checkout cannot read a folio's
- * `AGENTS.md`, so it cannot prove absence — it can only report that nothing
- * here accounts for the reference. Rendering that as a dead link would produce
- * a wall of false findings in exactly the checkout (platform-only, no folio)
- * where this runs.
+ * `unresolved` is **not** "dead". A platform-only checkout cannot read a
+ * folio's `AGENTS.md`, so it cannot prove absence — it can only report that
+ * nothing here accounts for the reference. Rendering that as a dead link would
+ * produce a wall of false findings in exactly the checkout this usually runs in.
+ *
+ * ## How the backlog reached zero, and what it cost to find out
+ *
+ * 16 of the 20 original citations sat `unresolved`. Guessing which were the
+ * folio's would have been a claim about a repository this checkout cannot see,
+ * so `litlfred/qou` was cloned and **checked**. Of the seven that survived
+ * repointing, five named real sections of its 6,036-line `AGENTS.md` — four
+ * headings and one bullet — and **two, `be frugal` and `Executing actions with
+ * care`, were in neither repository** and became plain rules with no citation.
+ *
+ * The lesson is in `OWNED_CITATION`: a citing file must be able to declare
+ * which `AGENTS.md` it means. Before that, a correct citation could only leave
+ * `unresolved` if the PLATFORM's prose happened to mention it, which would have
+ * meant restating a folio's contents here to clear a backlog.
  *
  * Exit codes: 0 clean · 1 unresolved citations found · 2 could not check.
  */
@@ -116,8 +129,42 @@ function markdownUnder(root: string): string[] {
   return out;
 }
 
-/** A citation names a section: `AGENTS.md §"X"`, `AGENTS.md "X"`, `AGENTS.md's §X`. */
-const CITATION = /AGENTS\.md(?:'s)?\s*(?:§\s*)?["“]([^"”\n]{4,90})["”]/g;
+/**
+ * A citation names a section: `AGENTS.md §"X"`, `AGENTS.md "X"`, `AGENTS.md's §X`.
+ *
+ * **The optional closing backtick is load-bearing.** Without it, writing the
+ * qualified form `` `litlfred/qou` `AGENTS.md` §"X" `` made the citation
+ * DISAPPEAR from the audit rather than be classified — the census fell from 8
+ * to 1 and read as success. A checker that stops seeing a reference because
+ * somebody improved its wording is not measuring what it claims to: qualifying
+ * a citation must move it between states, never out of the count.
+ */
+const CITATION = /AGENTS\.md`?(?:'s)?\s*(?:§\s*)?["“]([^"”\n]{4,90})["”]/g;
+
+/**
+ * A citation that names its own repository — `` `litlfred/qou`'s `AGENTS.md`
+ * §"X" ``.
+ *
+ * **Declaration over inference, which is this repository's own rule.** The
+ * first version could only reach `folio` when THIS file attributed a section to
+ * a folio — so a correct citation stayed `unresolved` until the platform's own
+ * prose happened to mention it, and clearing the backlog would have meant
+ * restating a folio's table of contents inside the platform. **A citing file
+ * saying which file it means is the contract; the platform guessing on its
+ * behalf is not.**
+ *
+ * Qualifying a citation is a claim about another repository, so it is checked
+ * there rather than assumed here. Verified against a real checkout of
+ * `litlfred/qou` (6,036-line `AGENTS.md`, 2026-09-19): `Critical-distance
+ * license`, `CI billing failures`, `QA is agent-owned; CI is a backup` and
+ * `Before declaring "open"` are headings in it, and `Combine related work into
+ * one branch / one PR` is a bullet in its branch-and-PR section. Two other
+ * long-standing citations — `be frugal` and `Executing actions with care` —
+ * are in **neither** repository, and were rewritten as plain rules rather than
+ * qualified.
+ */
+const OWNED_CITATION =
+  /([\w.-]+\/[\w.-]+)`?(?:'s)?\s*`?AGENTS\.md`?(?:'s)?\s*(?:§\s*)?["“]([^"”\n]{4,90})["”]/g;
 
 export function auditXrefs(repoRoot: string, skillRoots: string[]): Citation[] {
   const agentsPath = join(repoRoot, "AGENTS.md");
@@ -125,16 +172,27 @@ export function auditXrefs(repoRoot: string, skillRoots: string[]): Citation[] {
   const agentsMd = readFileSync(agentsPath, "utf8");
   const headings = headingsOf(agentsMd);
   const folio = folioAttributedSections(agentsMd);
+  // `owner/name` of this instance, so a citation naming THIS repo is still
+  // audited against its own headings rather than waved through as somebody
+  // else's.
+  const instanceName = agentsMd.match(/^#\s+AGENTS\.md\s+[—-]\s+(\S+)/m)?.[1] ?? "";
 
   const out: Citation[] = [];
   for (const root of skillRoots) {
     for (const f of markdownUnder(join(repoRoot, root))) {
       const text = readFileSync(f, "utf8");
+      // A citation naming another repository declares its own destination, so
+      // it is never reported against this file's headings.
+      const owned = new Set(
+        [...text.matchAll(OWNED_CITATION)]
+          .filter((m) => m[1] !== instanceName)
+          .map((m) => normalise(m[2])),
+      );
       for (const m of text.matchAll(CITATION)) {
         const section = m[1];
         const verdict: Verdict = matches(section, headings)
           ? "resolves"
-          : folio.has(normalise(section))
+          : owned.has(normalise(section)) || folio.has(normalise(section))
             ? "folio"
             : "unresolved";
         out.push({ file: relative(repoRoot, f), section, verdict });

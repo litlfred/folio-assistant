@@ -139,6 +139,12 @@ explicit question tool: the end-of-turn "next" line, a bean's `## Done when`, a
 PR body asking the author to choose, a comment on an issue. Those are where it
 is most often broken, because they feel like reporting rather than asking.
 
+**Feature work breaks this more than content work, and for a specific reason:
+the agent has just finished an impact analysis, and the vocabulary it built
+doing that *feels* defined.** It is not. The names you coined an hour ago inside
+an issue are the ones most likely to reach the reader undefined, precisely
+because you can no longer see them as new.
+
 #### Worked example — a real failure, 2026-09-18
 
 Ending a turn, this agent wrote:

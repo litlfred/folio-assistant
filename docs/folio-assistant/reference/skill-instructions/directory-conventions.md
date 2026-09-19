@@ -240,6 +240,34 @@ a file extension.
 > or in a graph's own node list. The `beans` collapse removed one instance of
 > the trap, not the trap.
 
+## An unavoidable duplicate is fine; an unchecked one is not
+
+The declaration is meant to be the single statement of the layout, and mostly it
+is — fields that restated it elsewhere were removed rather than kept in sync.
+
+Two copies survive because neither can be removed, and **both are checked**:
+
+- a **third-party tool's own config**, which will never read this schema;
+- a **constant on a hot path**, where re-reading a JSON file to learn one's own
+  directory would cost more than the duplication saves.
+
+The rule is not "never duplicate". It is: **an unavoidable duplicate is fine; an
+unchecked one is not.** In this instance `bun run check:harness-dirs` is what
+makes the difference.
+
+### The dot-prefix guard tests every segment, not just the first
+
+A node path resolving under a dot-prefixed directory is **rejected**, and the
+guard checks **every segment** of the resolved path. A node declared `.defs`
+under a visible root resolves to a hidden directory and is exactly as invisible
+as the stores this convention exists to surface — so checking only the head
+would have made the guard unfireable.
+
+**Why invisibility is worth a guard at all:** a dot-prefixed directory is absent
+from a plain `ls`, from most file browsers, and from a forge's web tree. When
+the work plan and the running-process state lived behind dots, the two artefacts
+a person looks for first were the two hardest to find.
+
 ## The conventional layout
 
 ```
