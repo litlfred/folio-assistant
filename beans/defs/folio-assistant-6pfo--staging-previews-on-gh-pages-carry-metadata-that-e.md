@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
 updated_at: 2026-09-19T12:28:52Z
+parent: folio-assistant-zzmr
 ---
 
 Owner, 2026-09-19: *"metadata on ghpages staging should be avalabale in KG"*.
