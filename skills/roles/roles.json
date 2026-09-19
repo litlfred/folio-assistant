@@ -11,7 +11,8 @@
       ],
       "lanes": [
         "User (person)",
-        "Contributor (human or agent)"
+        "Contributor (human or agent)",
+        "Log operator (human)"
       ],
       "skills": [
         "dispatch-agent",
@@ -574,7 +575,8 @@
         "Corpus + build pipeline (system)",
         "Incremental build (system)",
         "CI/CD Pipeline",
-        "Automated Pipeline"
+        "Automated Pipeline",
+        "Scheduled log sweep"
       ],
       "skills": [
         "content-publish",
@@ -701,6 +703,22 @@
         "Trusted registries and observatories (external)"
       ],
       "skills": []
+    },
+    {
+      "id": "log",
+      "title": "Activity log",
+      "description": "The agent activity log under `fsh-guts/logs/`. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its contents never reach a published graph, because `fsh-guts` is stripped before publication.",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "lanes": [
+        "Activity log",
+        "Activity log (fsh-guts/logs)"
+      ],
+      "skills": [
+        "activity-log"
+      ]
     }
   ]
 }
