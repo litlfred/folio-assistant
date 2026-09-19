@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rptk
-title: 'The per-page language bar fails contrast in both schemes'
-status: todo
+title: The per-page language bar fails contrast in both schemes
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T01:28:38Z
-updated_at: 2026-09-19T01:28:54Z
+updated_at: 2026-09-19T05:31:56Z
 ---
 
 
