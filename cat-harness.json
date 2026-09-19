@@ -105,6 +105,14 @@
       ]
     },
     {
+      "id": "todos",
+      "path": "todos/",
+      "description": "A PERSON's outstanding items \u2014 the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes \u2014 `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) \u2014 the same shape as `beans/beans.json`.",
+      "graphs": [
+        "todos"
+      ]
+    },
+    {
       "id": "uploads",
       "path": "uploads/",
       "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",

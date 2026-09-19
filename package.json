@@ -40,6 +40,9 @@
   ],
   "scripts": {
     "beans:fallback": "bun run scripts/beans-fallback.ts",
+    "agent-memory": "bun run scripts/agent-memory.ts",
+    "agent-memory:check": "bun run scripts/agent-memory.ts --check",
+    "todos": "bun run scripts/todos.ts",
     "check-deps": "bun run src/index.ts --check-deps",
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",

@@ -39,18 +39,37 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { knownSkills, skillMdDirs } from "../known-skills.js";
+import { isSkillMd, knownSkills, skillMdDirs } from "../known-skills.js";
 import { buildExport } from "../kg-export.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const PUBLISHED = join(ROOT, "docs/reference/skill-instructions");
 
-/** Packages under `skills/` that hold at least one `.md`, read from disk. */
+/**
+ * Packages under `skills/` that hold at least one SKILL `.md`, read from disk.
+ *
+ * The `.md` test alone was not enough and was falsified the day it was
+ * written: `skills/memory/` holds 25 agent-memory nodes, every one a `.md` and
+ * none a skill, so this reported `memory` as a package and the test below
+ * demanded 25 published reference pages for it.
+ *
+ * It shares {@link isSkillMd} with `known-skills.ts` — the per-FILE contract —
+ * while keeping its own directory walk, which is what this test is actually
+ * for: catching a package list that stopped tracking the filesystem. Copying
+ * the file-level rule instead would recreate the two-definitions-that-agree-
+ * by-coincidence defect `known-skills.ts` exists to prevent.
+ */
 function packagesOnDisk(): string[] {
   const root = join(ROOT, "skills");
   if (!existsSync(root)) return [];
   return readdirSync(root, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && readdirSync(join(root, d.name)).some((f) => f.endsWith(".md")))
+    .filter(
+      (d) =>
+        d.isDirectory() &&
+        readdirSync(join(root, d.name)).some(
+          (f) => f.endsWith(".md") && isSkillMd(join(root, d.name, f)),
+        ),
+    )
     .map((d) => d.name)
     .sort();
 }
@@ -93,7 +112,11 @@ describe("skill coverage", () => {
     const missing: string[] = [];
     for (const pkg of packagesOnDisk()) {
       for (const f of readdirSync(join(ROOT, "skills", pkg))) {
-        if (!f.endsWith(".md")) continue;
+        // Per FILE, not per package: admitting a package says the directory
+        // holds skills, never that everything in it is one. A non-skill node
+        // has no instruction body, so demanding a published page for it is
+        // demanding documentation of something that is not documentation.
+        if (!f.endsWith(".md") || !isSkillMd(join(ROOT, "skills", pkg, f))) continue;
         if (!existsSync(join(PUBLISHED, f))) missing.push(`skills/${pkg}/${f}`);
       }
     }

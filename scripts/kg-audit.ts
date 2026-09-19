@@ -70,7 +70,7 @@ import {
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
-import { knownSkills } from "./known-skills.js";
+import { isSkillMd, knownSkills } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
@@ -440,7 +440,7 @@ function skillFiles(): string[] {
       const p = join(dir, e.name);
       if (e.isDirectory()) {
         if (e.name !== KG_QA_DIRNAME) walk(p);
-      } else if (e.name.endsWith(".md") && !isPartOfASkill(p)) {
+      } else if (e.name.endsWith(".md") && !isPartOfASkill(p) && isSkillMd(p)) {
         out.push(p);
       }
     }
