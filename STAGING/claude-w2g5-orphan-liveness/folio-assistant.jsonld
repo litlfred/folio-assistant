@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T11:38:21.871Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/30c16aa89ea1089e300a36b6fd94a1d72ddd6ada",
-  "sourceCommitSha": "30c16aa89ea1089e300a36b6fd94a1d72ddd6ada",
-  "sourceCommitAt": "2026-09-19T11:36:44Z",
+  "generatedAt": "2026-09-19T11:44:08.538Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/20a672c051b15b6905d6c79b7d6017567b364920",
+  "sourceCommitSha": "20a672c051b15b6905d6c79b7d6017567b364920",
+  "sourceCommitAt": "2026-09-19T11:42:24Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 162,
+    "Skill": 163,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -246,7 +246,7 @@
     "SequenceFlow": 443,
     "ProcessNode": 414,
     "Tool": 28,
-    "Schema": 41,
+    "Schema": 43,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -949,7 +949,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/crdm-requirements-workflow.md",
-      "instructionLines": 263,
+      "instructionLines": 266,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1266,7 +1266,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 295,
+      "instructionLines": 315,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1315,7 +1315,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 167,
+      "instructionLines": 207,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true,
@@ -1410,7 +1410,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/feature-staging.md",
-      "instructionLines": 118,
+      "instructionLines": 130,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1632,7 +1632,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 145,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1699,6 +1699,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/github-state-inspection",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "github-state-inspection",
+      "title": "Reading GitHub state — resolve the ref, do not compose the URL",
+      "description": "Answer questions about GitHub-hosted state — is a page published, where does it live, did CI pass, does a branch exist — by reading the ref or the API, never by composing a URL or fetching one. The first check for any deployment or 404 question is `git ls-tree` of the publish ref.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/github-state-inspection.md",
+      "instructionLines": 118,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/bib-qa",
@@ -1805,7 +1821,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/turn-reporting.md",
-      "instructionLines": 185,
+      "instructionLines": 218,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1931,7 +1947,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 197,
+      "instructionLines": 223,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3906,6 +3922,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#skill/idle-backlog",
@@ -18852,6 +18869,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#schema/theme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "theme",
+      "title": "A sticky theme — named colour roles plus the three layouts, as a graph node.",
+      "module": "schemas/theme.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#schema/themes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "themes",
+      "title": "The themes this instance ships, and the default.",
+      "module": "schemas/themes.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/themes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-w2g5-orphan-liveness/folio-assistant.jsonld#schema/todo-graph",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "todo-graph",
@@ -19198,8 +19231,8 @@
   ],
   "staging": {
     "branch": "claude/w2g5-orphan-liveness",
-    "sha": "8742aa56c7dd455b33ec9447ea1d882e7ce54cfd",
+    "sha": "b3c3e3be2a903076bb951ea80eabeed650d6a8e6",
     "pr": "407/merge",
-    "run": "35440589820"
+    "run": "35440846026"
   }
 }
