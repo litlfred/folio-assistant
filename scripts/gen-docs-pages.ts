@@ -239,8 +239,20 @@ function pageDir(page: WebPage): string {
  */
 let qaIndex: Record<string, { state: QaState; counts: QaWitnessDoc["counts"] }> = {};
 
-/** Where a page's verdict index lands, and the URL the badges fetch it from. */
-const QA_INDEX_FILE = "_qa-index.json";
+/**
+ * Where a page's verdict index lands, and the URL the badges fetch it from.
+ *
+ * **No leading underscore, deliberately.** GitHub Pages strips `_`-prefixed
+ * paths unless `.nojekyll` is present, and this file is published by a `cp`
+ * into `_site` AFTER Jekyll has run — so a Pages-side strip would 404 every
+ * index and paint every badge on the site `could not determine`. Honest, and
+ * useless. `.nojekyll` is on `gh-pages` today; a filename that does not depend
+ * on it is cheaper than a filename that does.
+ *
+ * It cannot collide with a projection: those are `<nodeId>.<family>.json`, and
+ * `qa-index` is not a QA family.
+ */
+const QA_INDEX_FILE = "qa-index.json";
 
 /**
  * Icons for every family applicable to this node's subjects.

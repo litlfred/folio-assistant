@@ -7,12 +7,14 @@
  * — not its file family and not who fetches it afterwards.
  */
 import { describe, expect, it } from "bun:test";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { buildQaResult, sourceHashOf, QA_RESULTS_DIR } from "../qa-results.js";
 import { readDeclaration } from "../../schemas/cat-harness.js";
+import { exitCodeFor, verifySiteLinks, type SiteLink } from "../site-links.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -232,9 +234,9 @@ describe("a generated page carries structure, never a verdict", () => {
     // nobody meant to make. `--check` gates the index on existence; this gates
     // its COVERAGE, which existence cannot.
     for (const { path, text } of pages()) {
-      const slug = /assets\/qa\/([^/]+)\/_qa-index\.json/.exec(text)?.[1];
+      const slug = /assets\/qa\/([^/]+)\/qa-index\.json/.exec(text)?.[1];
       if (!slug) continue;
-      const idx = join(ROOT, "test", "results", "witnesses", slug, "_qa-index.json");
+      const idx = join(ROOT, "test", "results", "witnesses", slug, "qa-index.json");
       expect({ page: path, index: idx, there: existsSync(idx) }).toEqual({
         page: path,
         index: idx,
@@ -249,5 +251,87 @@ describe("a generated page carries structure, never a verdict", () => {
         });
       }
     }
+  });
+});
+
+describe("the badge URLs resolve against a tree built the way the site is", () => {
+  /**
+   * `_site` as the publishing workflows assemble it, for the `assets/qa/` part.
+   *
+   * Both workflows run `cp -rT test/results/witnesses ./_site/assets/qa` AFTER
+   * Jekyll, because Jekyll builds only `docs/`. Reproduced here rather than
+   * asserted about, because "the workflow contains this string" (which the
+   * test above already checks) says nothing about whether the paths the badges
+   * ask for land where they ask for them.
+   */
+  const build = (): string | undefined => {
+    const src = join(ROOT, "test", "results", "witnesses");
+    if (!existsSync(src)) return undefined;
+    const site = mkdtempSync(join(tmpdir(), "qa-site-"));
+    cpSync(src, join(site, "assets", "qa"), { recursive: true });
+    return site;
+  };
+
+  it("every URL a badge fetches is present in the built tree", () => {
+    const site = build();
+    // Three states. An absent witness tree is `unknown` — `exitCodeFor` maps
+    // that to 2, distinct from the 1 it gives a link positively established as
+    // dead, and a checkout with no build in it must not read as a wall of dead
+    // links. Here it is a hard failure because the tree IS committed; the
+    // distinction is kept so the reason a run failed is legible.
+    expect({ builtTree: site !== undefined }).toEqual({ builtTree: true });
+
+    const links: SiteLink[] = [];
+    const seen = new Set<string>();
+    const dir = join(ROOT, "docs");
+    const scan = (d: string, depth: number) => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        const p = join(d, e.name);
+        if (e.isDirectory() && e.name === "guides" && depth === 0) scan(p, depth + 1);
+        else if (e.isFile() && e.name.endsWith(".md")) {
+          const text = readFileSync(p, "utf-8");
+          // The Liquid the generator emits, resolved the way Jekyll resolves
+          // it: `relative_url` prepends the baseurl, and `_site` IS the
+          // baseurl's root, so the path under `_site` is what is inside the
+          // quotes with its leading slash dropped.
+          for (const m of text.matchAll(/data-qa-(?:index|src)="\{\{ '\/([^']+)' \| relative_url \}\}"/g)) {
+            if (seen.has(m[1]!)) continue;
+            seen.add(m[1]!);
+            links.push({ id: `${e.name}:${m[1]}`, label: m[1]!, target: m[1]! });
+          }
+        }
+      }
+    };
+    scan(dir, 0);
+
+    // Named, not counted: `toHaveLength(279)` breaks on the next page added
+    // and says nothing about what is missing.
+    expect(seen.has("assets/qa/publication-workflow/qa-index.json")).toBe(true);
+    expect(seen.has("assets/qa/publication-workflow/overview.block.json")).toBe(true);
+    expect(links.length).toBeGreaterThan(100);
+
+    const verdicts = verifySiteLinks(site!, links);
+    const bad = verdicts.filter((v) => v.verdict !== "ok").map((v) => v.detail);
+    expect(bad).toEqual([]);
+    expect(exitCodeFor(verdicts)).toBe(0);
+
+    rmSync(site!, { recursive: true, force: true });
+  });
+
+  it("no published path is `_`-prefixed, which Pages strips without `.nojekyll`", () => {
+    // The index was `_qa-index.json` for exactly one commit. GitHub Pages
+    // removes `_`-prefixed paths unless `.nojekyll` is present, and this tree
+    // is copied into `_site` after Jekyll has run — so a strip would 404 every
+    // index and paint every badge on the site `could not determine`. Honest,
+    // and useless. `.nojekyll` is on `gh-pages` today; not depending on it is
+    // cheaper than depending on it.
+    const walk = (d: string): string[] =>
+      readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory() ? walk(join(d, e.name)) : [e.name],
+      );
+    const underscored = walk(join(ROOT, "test", "results", "witnesses")).filter((n) =>
+      n.startsWith("_"),
+    );
+    expect(underscored).toEqual([]);
   });
 });

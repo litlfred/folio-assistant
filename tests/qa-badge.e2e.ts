@@ -18,7 +18,7 @@ import { badgeRunFor, indexWithRows } from "./support/qa-badge-fixture.js";
  * it goes stale by lying.
  *
  * So the page now says only what the corpus STRUCTURE says, and `docs-ui.js`
- * paints the verdict from the page's `_qa-index.json`. This spec is about the
+ * paints the verdict from the page's `qa-index.json`. This spec is about the
  * painting, and specifically about the three states it must keep apart:
  *
  *   - **determined** — a row with a verdict: `fail` / `warn` / `pass`;
@@ -44,7 +44,7 @@ const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
 const PAGE_MD = join(ROOT, "docs/publication-workflow.md");
-const INDEX_JSON = join(ROOT, "test/results/witnesses/publication-workflow/_qa-index.json");
+const INDEX_JSON = join(ROOT, "test/results/witnesses/publication-workflow/qa-index.json");
 
 /**
  * The nodes this spec drives, named once. Each is asserted to still exist —
@@ -57,7 +57,7 @@ const NO_ROW = "see-also.block";
 const KG = "editing-and-the-hci-validation-gate.kg";
 
 const PAGE_URL = "http://qa.test/page.html";
-const INDEX_URL = "/assets/qa/publication-workflow/_qa-index.json";
+const INDEX_URL = "/assets/qa/publication-workflow/qa-index.json";
 
 /** The verdicts this spec asserts on, set here rather than read off disk. */
 const INDEX_BODY = indexWithRows(INDEX_JSON, {
