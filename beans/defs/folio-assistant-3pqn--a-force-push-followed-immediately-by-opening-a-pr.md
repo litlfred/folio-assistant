@@ -5,6 +5,7 @@ status: todo
 type: bug
 created_at: 2026-09-19T08:11:21Z
 updated_at: 2026-09-19T11:48:27Z
+parent: folio-assistant-1xhc
 ---
 
 OBSERVED TWICE, 2026-09-19, on `litlfred/folio-assistant`.

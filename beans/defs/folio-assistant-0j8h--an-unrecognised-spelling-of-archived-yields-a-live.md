@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-19T11:01:24Z
 updated_at: 2026-09-19T11:01:24Z
+parent: folio-assistant-8jt6
 ---
 
 Found 2026-09-19 while verifying PR #402 (bean `4kiw`), which archived four

@@ -5,6 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-18T21:36:56Z
 updated_at: 2026-09-19T06:55:21Z
+parent: folio-assistant-0lmb
 ---
 
 

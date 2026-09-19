@@ -5,6 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-18T19:24:30Z
 updated_at: 2026-09-18T19:24:30Z
+parent: folio-assistant-vke6
 ---
 
 ## The ask
