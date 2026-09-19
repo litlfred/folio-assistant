@@ -97,6 +97,14 @@
       ]
     },
     {
+      "id": "qa",
+      "path": "docs/assets/qa/",
+      "description": "QA witnesses \u2014 the PUBLISHED PROJECTION of every verdict, one `qa-witness/v1` document per audited subject, in three families: `block` (a content block, from the QA sweep), `kg` (a process, decision, role or skill, from `kg-audit`) and `translation` (a page's locale coverage). Measured 2026-09-19: 134 documents, 113 / 20 / 1. NOT the verdicts: those live beside their subjects as `*.qa.json` and `kg-qa/*.kg-qa.json`, and are what a checker wrote. A witness is that verdict flattened into the shape the docs panel draws and placed where the site can fetch it, so a wrong verdict is fixed in the checker and a verdict that READS wrongly is fixed in the projector \u2014 editing a file here fixes neither, because `gen-docs-pages` discards it. Undeclared until 2026-09-19, which is the `dh4f` defect in reverse: 134 committed files that no declaration mentioned, so a consumer scanning the declared directories saw none of them and reported a clean run over the lot.",
+      "graphs": [
+        "qa"
+      ]
+    },
+    {
       "id": "beans",
       "path": "beans/",
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state).",
