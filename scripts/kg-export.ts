@@ -392,7 +392,89 @@ function buildContext(): Record<string, unknown> {
         run: `${FOLIO_NS}stagingRun`,
       },
     },
+
+    // ---- The DOCUMENT ROOT's own fields ------------------------------------
+    //
+    // `ovkk` drove `@graph`'s undeclared count to zero. These six were the
+    // same defect one level up, and they survived it for a structural reason:
+    // `undeclaredTerms` walks `@graph`, so the root is the one place it cannot
+    // look. Half the root WAS declared — `generatedAt`, `sourceCommit` and the
+    // three `sourceCommit*` fields — which is what made the other half
+    // invisible.
+    //
+    // `undeclaredRootTerms` now checks it, and is fatal for `undeclaredTerms`'
+    // reason: with the count at zero, a new entry can only mean somebody added
+    // a root field and did not decide what it means.
+    //
+    // A LINK, and `schema:codeRepository` rather than a minted `folio:` term —
+    // the wider web already agrees on this one, exactly as `version` uses
+    // `schema:softwareVersion`. It sits beside `sourceCommit`, which has been
+    // declared all along; this was a gap, not a judgement.
+    repository: { "@id": `${SCHEMA}codeRepository`, "@type": "@id" },
+    // `{"@type": "@json"}`, for the reason `io` and `install` carry it: the
+    // value is `{"Actor": 25, "Skill": 149, …}`, keyed by TYPE NAME, so there
+    // is no fixed set of terms to declare. Declaring the container alone would
+    // keep `counts` and drop all twelve numbers — a well-formed empty object
+    // where the truncation check used to be, which is worse than leaving it
+    // undeclared, because undeclared at least loses the whole thing visibly.
+    counts: { "@id": `${FOLIO_NS}counts`, "@type": "@json" },
+    // A LITERAL and deliberately NOT `@json`, unlike its three neighbours
+    // below. `problems` is an array of plain strings, and a bare term expands
+    // an array of literals to one value each — which is what they are. `@json`
+    // would collapse three independent problems into a single opaque blob.
+    problems: `${FOLIO_NS}problems`,
+    // `@json` for the three that hold OBJECTS. Their inner keys — `term`,
+    // `onTypes`, `occurrences`, `module`, `why`, `from`, `edge`, `to` — are a
+    // vocabulary this graph does not model, and modelling a build report as
+    // RDF is not what this change is for. Verbatim is honest; a declared
+    // container over undeclared members is not.
+    undeclaredTerms: { "@id": `${FOLIO_NS}undeclaredTerms`, "@type": "@json" },
+    undeclaredSchemaModules: { "@id": `${FOLIO_NS}undeclaredSchemaModules`, "@type": "@json" },
+    danglingLinks: { "@id": `${FOLIO_NS}danglingLinks`, "@type": "@json" },
   };
+}
+
+/**
+ * Root-level property names the `@context` does not declare.
+ *
+ * ## The blind spot this closes
+ *
+ * {@link undeclaredTerms} walks `@graph`, so the DOCUMENT ROOT is the one
+ * place it structurally cannot look — and the root carries real data:
+ * provenance, node counts, and every diagnostic this export produces. Half of
+ * it was declared (`generatedAt`, the four `sourceCommit*` fields) and half
+ * was not, which is precisely what kept the gap invisible: a spot check on any
+ * declared field said the root was covered.
+ *
+ * It is not hypothetical. `staging` shipped through this gap in #340 — written
+ * into the root by the staging workflow, declared nowhere, and therefore
+ * dropped by the only consumer the export exists to serve — while this file's
+ * own comments stated the rule it was breaking. Six more were found the moment
+ * anyone looked: `repository`, `counts`, `problems`, `undeclaredTerms`,
+ * `undeclaredSchemaModules`, `danglingLinks`.
+ *
+ * ## Why this is not a field on the document
+ *
+ * Same call {@link keywordCollisions} makes, for the same reason. A field
+ * reporting undeclared root terms would itself be a root term needing
+ * declaration, and would have to be computed before it existed. It is a
+ * DOCUMENT-VALIDITY check, run against the assembled document at the point of
+ * writing, and fatal there.
+ *
+ * Fatal for `undeclaredTerms`' reason, now that the count is zero: the only
+ * thing a new entry can mean is that somebody added a root field and did not
+ * decide what it means. Deciding costs one line in {@link buildContext}.
+ */
+export function undeclaredRootTerms(
+  doc: Record<string, unknown>,
+  context: Record<string, unknown>,
+): string[] {
+  const declared = new Set(Object.keys(context).filter((k) => !k.startsWith("@")));
+  return Object.keys(doc)
+    // `@`-prefixed keys are JSON-LD keywords, which need no declaration — and
+    // an ALIAS of one is handled by `keywordCollisions`, not here.
+    .filter((k) => !k.startsWith("@") && !declared.has(k))
+    .sort();
 }
 
 /**
@@ -1407,6 +1489,17 @@ if (import.meta.main) {
   // a graph whose nodes offer two answers for their own identity must not be
   // published as a whole one. Checked here against the assembled graph rather
   // than trusted from the collectors.
+  // The DOCUMENT ROOT, which `undeclaredTerms` below cannot see — see
+  // `undeclaredRootTerms`. Checked before the graph-level report because a
+  // root field that vanishes takes the provenance and the counts with it.
+  const rootUndeclared = undeclaredRootTerms(data as unknown as Record<string, unknown>, data["@context"]);
+  if (rootUndeclared.length > 0) {
+    console.error(`\n${rootUndeclared.length} root-level field(s) are NOT in the @context, so a JSON-LD processor drops them:`);
+    for (const t of rootUndeclared) console.error(`  \u2717 ${t}`);
+    console.error("  Declare each in `buildContext` — see the DOCUMENT ROOT section there.");
+    process.exit(1);
+  }
+
   const collisions = keywordCollisions(data["@graph"]);
   if (collisions.length > 0) {
     console.error(`\n${collisions.length} node(s) carry a JSON-LD keyword AND its alias:`);
