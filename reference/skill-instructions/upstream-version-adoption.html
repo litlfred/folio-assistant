@@ -14,9 +14,10 @@
   <style id="jtd-nav-activation">
   
 
+    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(12)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(27)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
@@ -25,12 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(12) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(27) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(12) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(27) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(12) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(27) > ul.nav-list {
       display: block;
     }
   </style>
@@ -50,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Skill schema reference | folio-assistant</title>
+<title>Adopting an upstream version bump | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Skill schema reference" />
+<meta property="og:title" content="Adopting an upstream version bump" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skills/" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skills/" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/upstream-version-adoption.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/upstream-version-adoption.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Skill schema reference" />
+<meta property="twitter:title" content="Adopting an upstream version bump" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Skill schema reference","url":"https://litlfred.github.io/folio-assistant/reference/skills/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Adopting an upstream version bump","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/upstream-version-adoption.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -534,246 +537,307 @@
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Adopting an upstream version bump</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 id="skill-schema-reference">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/upstream-version-adoption.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/upstream-version-adoption.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/upstream-version-adoption.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="adopting-an-upstream-version-bump">
   
   
-    <a href="#skill-schema-reference" class="anchor-heading" aria-labelledby="skill-schema-reference"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skill schema reference
+    <a href="#adopting-an-upstream-version-bump" class="anchor-heading" aria-labelledby="adopting-an-upstream-version-bump"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adopting an upstream version bump
   
   
 </h1>
     
 
-<p>Every folio-assistant skill declares a typed <strong>input</strong> and <strong>output</strong> contract as
-JSON Schema (draft-07). These pages are generated from those schemas so the
-published reference can never drift from what the framework actually validates.</p>
+<p>An unpinned dependency is an unreviewed commit from a stranger, merged on every
+build. A pinned one is a commitment that somebody has to revisit. This skill is
+the second half: what happens between <em>upstream cut a release</em> and <em>we are
+running it</em>.</p>
+
+<p>It implements two diagrams, and the diagram is the source of truth for
+ordering:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Skill</th>
-      <th>Id</th>
-      <th>Description</th>
+      <th>Diagram</th>
+      <th>What it is</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><a href="bpmn-authoring.html">BPMN Authoring</a></td>
-      <td><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></td>
-      <td>Input schema for BPMN 2.0 business process authoring.</td>
+      <td><a href="../workflows/upstream-pin-watch.bpmn"><code class="language-plaintext highlighter-rouge">upstream-pin-watch.bpmn</code></a></td>
+      <td>The <strong>watcher</strong>. Scheduled, mechanical, ends at either “every pin is current” or “one tracking issue says which is not”.</td>
     </tr>
     <tr>
-      <td><a href="content-author.html">Content Author</a></td>
-      <td><code class="language-plaintext highlighter-rouge">content-author</code></td>
-      <td>Input schema for general content authoring.</td>
-    </tr>
-    <tr>
-      <td><a href="content-feedback.html">Content Feedback</a></td>
-      <td><code class="language-plaintext highlighter-rouge">content-feedback</code></td>
-      <td>Input schema for feedback collection and triage.</td>
-    </tr>
-    <tr>
-      <td><a href="content-plan.html">Content Plan</a></td>
-      <td><code class="language-plaintext highlighter-rouge">content-plan</code></td>
-      <td>Input schema for content planning — scope, team, timeline, governance.</td>
-    </tr>
-    <tr>
-      <td><a href="content-publish.html">Content Publish</a></td>
-      <td><code class="language-plaintext highlighter-rouge">content-publish</code></td>
-      <td>Input schema for content publication.</td>
-    </tr>
-    <tr>
-      <td><a href="content-review.html">Content Review</a></td>
-      <td><code class="language-plaintext highlighter-rouge">content-review</code></td>
-      <td>Input schema for formal content review and approval workflow.</td>
-    </tr>
-    <tr>
-      <td><a href="content-test.html">Content Test</a></td>
-      <td><code class="language-plaintext highlighter-rouge">content-test</code></td>
-      <td>Input schema for end-to-end content testing.</td>
-    </tr>
-    <tr>
-      <td><a href="content-validate.html">Content Validate</a></td>
-      <td><code class="language-plaintext highlighter-rouge">content-validate</code></td>
-      <td>Input schema for content validation.</td>
-    </tr>
-    <tr>
-      <td><a href="dmn-authoring.html">DMN Authoring</a></td>
-      <td><code class="language-plaintext highlighter-rouge">dmn-authoring</code></td>
-      <td>Input schema for DMN (Decision Model and Notation) decision table authoring.</td>
-    </tr>
-    <tr>
-      <td><a href="document-authoring.html">Document Authoring</a></td>
-      <td><code class="language-plaintext highlighter-rouge">document-authoring</code></td>
-      <td>Input schema for the document-authoring skill: create or revise one content block in a document folio.</td>
-    </tr>
-    <tr>
-      <td><a href="document-publishing.html">Document Publishing</a></td>
-      <td><code class="language-plaintext highlighter-rouge">document-publishing</code></td>
-      <td>Input schema for the document-publishing skill: render a document folio without a TeX installation.</td>
-    </tr>
-    <tr>
-      <td><a href="document-structure.html">Document Structure</a></td>
-      <td><code class="language-plaintext highlighter-rouge">document-structure</code></td>
-      <td>Input schema for the document-structure skill: add, remove or reorder chapters and sections.</td>
-    </tr>
-    <tr>
-      <td><a href="fhir-validation.html">FHIR Validation</a></td>
-      <td><code class="language-plaintext highlighter-rouge">fhir-validation</code></td>
-      <td>Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.</td>
-    </tr>
-    <tr>
-      <td><a href="ig-publication.html">IG Publication</a></td>
-      <td><code class="language-plaintext highlighter-rouge">ig-publication</code></td>
-      <td>Input schema for FHIR Implementation Guide publication.</td>
-    </tr>
-    <tr>
-      <td><a href="l2-dak-authoring.html">L2 DAK Authoring</a></td>
-      <td><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></td>
-      <td>Input schema for L2 Digital Adaptation Kit authoring. Translates WHO clinical guidelines into structured digital artifacts.</td>
-    </tr>
-    <tr>
-      <td><a href="l3-fhir-authoring.html">L3 FHIR Authoring</a></td>
-      <td><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></td>
-      <td>Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts from L2 DAK specifications.</td>
-    </tr>
-    <tr>
-      <td><a href="latex-authoring.html">LaTeX Authoring</a></td>
-      <td><code class="language-plaintext highlighter-rouge">latex-authoring</code></td>
-      <td>Input schema for the latex-authoring skill.</td>
-    </tr>
-    <tr>
-      <td><a href="lean-formalization.html">Lean Formalization</a></td>
-      <td><code class="language-plaintext highlighter-rouge">lean-formalization</code></td>
-      <td>Input schema for the lean-formalization skill. Describes source material to be formalized in Lean 4.</td>
-    </tr>
-    <tr>
-      <td><a href="normative-statements.html">Normative Statement</a></td>
-      <td><code class="language-plaintext highlighter-rouge">normative-statements</code></td>
-      <td>Input schema for the normative-statements skill: carry one recommendation, requirement or rule as a labelled block.</td>
-    </tr>
-    <tr>
-      <td><a href="proof-verification.html">Proof Verification</a></td>
-      <td><code class="language-plaintext highlighter-rouge">proof-verification</code></td>
-      <td>Input schema for the proof-verification skill. Verifies Lean proofs and tracks sorry obligations.</td>
-    </tr>
-    <tr>
-      <td><a href="quality-control.html">Quality Control</a></td>
-      <td><code class="language-plaintext highlighter-rouge">quality-control</code></td>
-      <td>Input schema for quality control checks across content lifecycle.</td>
-    </tr>
-    <tr>
-      <td><a href="terminology-management.html">Terminology Management</a></td>
-      <td><code class="language-plaintext highlighter-rouge">terminology-management</code></td>
-      <td>Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps.</td>
+      <td><a href="../workflows/upstream-version-adoption.bpmn"><code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></a></td>
+      <td>The <strong>reusable subprocess</strong>, entered once per stale pin. Scope → impact → MVP → review → decide.</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>See also the <a href="../skill-instructions/">Skill instructions</a> (the prose how-to
-bodies the LLM loads) and the <a href="../../api/">TypeScript API reference</a> for the
-content-object model (<code class="language-plaintext highlighter-rouge">Block</code>, <code class="language-plaintext highlighter-rouge">Chapter</code>, <code class="language-plaintext highlighter-rouge">Paper</code>, builders, and Zod constraints).</p>
+<p>The second is called, not copied: <code class="language-plaintext highlighter-rouge">calledElement="Process_UpstreamAdoption"</code>.
+Any pinned upstream dependency enters it the same way, and a new tenant is a
+registry row plus a call activity — never a second diagram that says the same
+thing in different words.</p>
+<h2 id="the-registry-is-the-tenant-list-and-it-does-not-hold-the-version">
+  
+  
+    <a href="#the-registry-is-the-tenant-list-and-it-does-not-hold-the-version" class="anchor-heading" aria-labelledby="the-registry-is-the-tenant-list-and-it-does-not-hold-the-version"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The registry is the tenant list, and it does not hold the version
+  
+  
+</h2>
+    
 
-          
+<p><code class="language-plaintext highlighter-rouge">upstream-pins.json</code> at the repository root declares each pinned dependency:
+the upstream repo, <strong>the file the pin literal actually lives in</strong>, the pattern
+that reads it, what of ours binds to it, and the commands that constitute its
+MVP.</p>
 
-          
-            <hr>
-<h2 class="text-delta">Table of contents</h2>
+<p><strong>It deliberately does not store the pinned version.</strong> The version lives in
+exactly one place — <code class="language-plaintext highlighter-rouge">docs/_config.yml</code> for the theme — and the registry says
+how to read it from there. A registry that carried its own copy would be a
+second answer to “what are we running”, free to disagree with the build, and
+this repository has paid for that shape before. <code class="language-plaintext highlighter-rouge">bun run check:upstream-pins</code>
+reads the literal out of the declared file; a pattern that matches nothing is
+reported as an error, not as “no pin”.</p>
+
+<p><code class="language-plaintext highlighter-rouge">binds</code> and <code class="language-plaintext highlighter-rouge">mvp</code> are the reason the registry exists at all rather than the
+check simply grepping for version strings. They are what turn <em>impact analysis</em>
+and <em>MVP</em> from words in a box into a list somebody can work through.</p>
+<h2 id="1--watch">
+  
+  
+    <a href="#1--watch" class="anchor-heading" aria-labelledby="1--watch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1 — Watch
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">bun run check:upstream-pins</code>, weekly from <code class="language-plaintext highlighter-rouge">.github/workflows/upstream-pins.yml</code>
+and on demand. For each row: read the pinned ref out of its declared file, list
+the upstream tags that match <code class="language-plaintext highlighter-rouge">tagPattern</code>, and compare.</p>
+
+<p>Exit codes, and the middle one is the point:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Exit</th>
+      <th>Meaning</th>
+      <th>What the workflow does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>every pin is at the newest matching release</td>
+      <td>closes the tracking issue if one is open</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>at least one pin is behind</td>
+      <td>opens <strong>one</strong> issue labelled <code class="language-plaintext highlighter-rouge">upstream-pin</code>, or <strong>edits</strong> the existing one</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>could not determine — upstream unreachable, pattern did not match</td>
+      <td>leaves the issue untouched and <strong>fails the job</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Three rules it inherits from <code class="language-plaintext highlighter-rouge">check-ci-health.ts</code>, and they are not optional:</p>
 
 <ul>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/bpmn-authoring.html">BPMN Authoring</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/content-author.html">Content Author</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/content-feedback.html">Content Feedback</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/content-plan.html">Content Plan</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/content-publish.html">Content Publish</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/content-review.html">Content Review</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/content-test.html">Content Test</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/content-validate.html">Content Validate</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/dmn-authoring.html">DMN Authoring</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/document-authoring.html">Document Authoring</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/document-publishing.html">Document Publishing</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/document-structure.html">Document Structure</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/fhir-validation.html">FHIR Validation</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/ig-publication.html">IG Publication</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/l2-dak-authoring.html">L2 DAK Authoring</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/l3-fhir-authoring.html">L3 FHIR Authoring</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/latex-authoring.html">LaTeX Authoring</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/lean-formalization.html">Lean Formalization</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/normative-statements.html">Normative Statement</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/proof-verification.html">Proof Verification</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/quality-control.html">Quality Control</a>
-  </li>
-  
-  <li>
-    <a href="/folio-assistant/reference/skills/terminology-management.html">Terminology Management</a>
-  </li>
-  
+  <li><strong>“Could not check” is never rendered as current.</strong> An unreachable upstream
+is exit 2, not exit 0. A watchdog that goes blind must not read as good news.</li>
+  <li><strong>One issue, edited in place.</strong> GitHub’s own notifications are the channel
+that was already ignored thirty times; an edit does not notify, so a pin that
+stays stale for two months stays one unread item rather than nine.</li>
+  <li><strong>The job fails on exit 2</strong>, which makes this workflow itself red on the
+default branch, which <code class="language-plaintext highlighter-rouge">check:ci-health</code> reports. The watchdog is watched.</li>
 </ul>
+<h2 id="2--impact-analysis">
+  
+  
+    <a href="#2--impact-analysis" class="anchor-heading" aria-labelledby="2--impact-analysis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2 — Impact analysis
+  
+  
+</h2>
+    
+
+<p><strong>Scope the delta first, and scope it to what reaches our output.</strong> The upstream
+changelog is the claim; the diff is the evidence. For a Jekyll theme that means
+<code class="language-plaintext highlighter-rouge">_sass</code>, <code class="language-plaintext highlighter-rouge">_includes</code>, <code class="language-plaintext highlighter-rouge">_layouts</code> and <code class="language-plaintext highlighter-rouge">assets</code> — a change to upstream’s own docs,
+CI or tests cannot reach us:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git <span class="nt">-C</span> &lt;upstream-clone&gt; diff <span class="nt">--stat</span> &lt;pinned&gt;..&lt;candidate&gt; <span class="nt">--</span> _sass _includes _layouts assets
+</code></pre></div></div>
+
+<p><strong>Then ask what of ours binds to it</strong>, from the row’s <code class="language-plaintext highlighter-rouge">binds</code> list. This is the
+half that a changelog cannot tell you, because upstream does not know what you
+reached into. For the theme it is concrete and small: <code class="language-plaintext highlighter-rouge">docs/assets/js/docs-ui.js</code>
+<em>moves</em> the theme’s own search markup into the action launcher, binding <code class="language-plaintext highlighter-rouge">.search</code>,
+<code class="language-plaintext highlighter-rouge">#search-input</code> and <code class="language-plaintext highlighter-rouge">.search-label</code>; <code class="language-plaintext highlighter-rouge">docs/assets/css/docs-ui.css</code> overrides
+<code class="language-plaintext highlighter-rouge">.side-bar</code>, <code class="language-plaintext highlighter-rouge">.site-header</code> and <code class="language-plaintext highlighter-rouge">.main-header</code>; and three e2e specs assert the
+structure the theme emits. An upstream rename of any of those is not a build
+failure — it is a shipped feature that quietly stops working, which is the
+failure mode a pin exists to convert into a decision.</p>
+
+<p>Write the analysis down as the bean’s note before building anything. A candidate
+that touches nothing we bind to is a different conversation from one that
+renames a selector we depend on, and the reviewer needs to know which they are
+looking at before they look.</p>
+<h2 id="3--mvp">
+  
+  
+    <a href="#3--mvp" class="anchor-heading" aria-labelledby="3--mvp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3 — MVP
+  
+  
+</h2>
+    
+
+<p><strong>An MVP is a deployed build, not a description of one.</strong> Move the pin on a
+branch, let <code class="language-plaintext highlighter-rouge">feature-staging.yml</code> publish it under <code class="language-plaintext highlighter-rouge">STAGING/&lt;branch-slug&gt;/</code>, and
+run the row’s <code class="language-plaintext highlighter-rouge">mvp</code> commands. For the theme:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> <span class="nt">-rf</span> _kg _site
+bun <span class="nb">test</span>                              <span class="c"># unit tests</span>
+<span class="nv">CI</span><span class="o">=</span>1 bunx playwright <span class="nb">test</span>             <span class="c"># a11y, action tiles, sidebar panels, qa panel</span>
+bun run scripts/site-links.ts <span class="nt">--site</span> ./_site   <span class="c"># every navbar tile resolves in the BUILT site</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">site-links.ts</code> is the one that earns its place here: it checks the tiles
+against the real <code class="language-plaintext highlighter-rouge">_site</code> rather than against the attribute, which is the
+distinction that let a 404 ship unnoticed once already.</p>
+
+<p><strong>A red gate is evidence, not an exit.</strong> It does not end the process and it
+does not loop on its own — it goes to the reviewer with everything else,
+because “this version breaks us” is a finding the decider needs, not a reason
+to stop before they see it.</p>
+<h2 id="4--review">
+  
+  
+    <a href="#4--review" class="anchor-heading" aria-labelledby="4--review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4 — Review
+  
+  
+</h2>
+    
+
+<p>Post the staging URL, the gate results and the impact analysis on the PR, then
+hand it over. The reviewer’s question is narrower than “is the new version
+good”: it is <strong>does anything in <code class="language-plaintext highlighter-rouge">binds</code> still hold</strong>, checked against the
+deployed page rather than against a screenshot.</p>
+
+<p>Findings the agent can fix — our overlay adapting to a renamed class, a test
+fixture updated to the markup the theme now emits — loop back into impact
+analysis on the same branch. Findings that are upstream’s behaviour rather than
+ours go to the decision as they are.</p>
+<h2 id="5--decide">
+  
+  
+    <a href="#5--decide" class="anchor-heading" aria-labelledby="5--decide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5 — Decide
+  
+  
+</h2>
+    
+
+<p><strong>A person decides, and the diagram says so.</strong> <code class="language-plaintext highlighter-rouge">PM_Decide</code> is a <code class="language-plaintext highlighter-rouge">bpmn:userTask</code>
+in the publication manager’s lane, and that role admits <code class="language-plaintext highlighter-rouge">person</code> only, so
+<code class="language-plaintext highlighter-rouge">activity-fulfilment-kind</code> fails the moment somebody tries to make an agent the
+accepting party. It also carries <code class="language-plaintext highlighter-rouge">&lt;folio:policy relaxable="false"/&gt;</code>: no
+package may relax it.</p>
+
+<p>The lane is the publication manager’s rather than the editor’s because the pin
+is not a change to the corpus — it is a change to what the published artefact
+is built from, and that role is the one “accountable for what is live”.</p>
+
+<p>The gateway is <strong>not</strong> DMN-backed, and that is deliberate. Every other computed
+gateway in this repository reduces to arithmetic over tool output; this one
+weighs a rendering nobody can score against the cost of staying behind. A table
+here would look authoritative and would not be.</p>
+
+<p>Three outcomes:</p>
+
+<ul>
+  <li><strong>Adopt</strong> — move the pin, open the PR, and say in the body what the version
+range changed in rendered output. Record the evidence you used, not just the
+verdict.</li>
+  <li><strong>Hold</strong> — record it as a <strong>block with an expiry and a revisit trigger</strong>
+(<a href="/folio-assistant/reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking.md</code></a>). A hold with no expiry cannot be told
+from abandoned work, and the next watcher run will re-raise the same pin with
+no memory of why it was left.</li>
+  <li><strong>Decline</strong> — record the reasons on the bean and scrap it. A scrapped bean is
+what stops the next agent re-entering the same dead end; a deleted one leaves
+them unable to tell a decision from an accident.</li>
+</ul>
+
+<p>In every case the decision is written down before the process ends. The bean is
+<code class="language-plaintext highlighter-rouge">resolve</code>d from the terminal step, so a run that stops at “we looked and said
+no” is as finished as one that moved the pin.</p>
+<h2 id="adding-a-tenant">
+  
+  
+    <a href="#adding-a-tenant" class="anchor-heading" aria-labelledby="adding-a-tenant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a tenant
+  
+  
+</h2>
+    
+
+<ol>
+  <li>Pin the literal wherever the tool reads it, with a comment saying which
+process governs moving it.</li>
+  <li>Add a row to <code class="language-plaintext highlighter-rouge">upstream-pins.json</code>: <code class="language-plaintext highlighter-rouge">repo</code>, <code class="language-plaintext highlighter-rouge">pinnedIn</code>, <code class="language-plaintext highlighter-rouge">pattern</code>,
+<code class="language-plaintext highlighter-rouge">tagPattern</code>, <code class="language-plaintext highlighter-rouge">binds</code>, <code class="language-plaintext highlighter-rouge">mvp</code>.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bun run check:upstream-pins</code> and confirm it reads your pin back. A
+pattern that does not match is exit 2 — “could not determine” — and the row
+is not watched until it does.</li>
+</ol>
+
+<p>No diagram changes. That is what reusable means here.</p>
+<h2 id="how-to-pick-the-pinned-version-when-you-first-pin-something">
+  
+  
+    <a href="#how-to-pick-the-pinned-version-when-you-first-pin-something" class="anchor-heading" aria-labelledby="how-to-pick-the-pinned-version-when-you-first-pin-something"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to pick the pinned version when you first pin something
+  
+  
+</h2>
+    
+
+<p><strong>Pin what is running, not what is newest.</strong> Those are different changes, and
+doing both at once means neither is reviewable — a regression cannot be
+attributed to the pin or to the bump.</p>
+
+<p>Establish what is running by <strong>fingerprint, not by assumption</strong>. For the theme
+that meant finding a declaration in the deployed CSS on <code class="language-plaintext highlighter-rouge">gh-pages</code>
+(<code class="language-plaintext highlighter-rouge">text-wrap: balance</code>, in <code class="language-plaintext highlighter-rouge">_sass/navigation.scss</code>) that entered upstream after
+the newest release, which proved the live site was tracking the default branch
+rather than any tag. The newest release at or below that point is the pin, and
+the PR states the residual delta — one CSS declaration — rather than claiming
+there is none.</p>
+
+<p>If no fingerprint discriminates, say so and pin the newest release anyway; an
+unverified pin is still strictly better than an unpinned dependency, and
+“could not determine” written down is worth more than a confident guess.</p>
+
+          
+
+          
+            
           
         </main>
         
