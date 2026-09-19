@@ -251,7 +251,12 @@ test("a criterion expands to the witness that ruled on it, with the checker's ha
   await expect(witness).toHaveClass(/fa-qa-kind-script/);
   await expect(witness.locator(".fa-qa-chip-kind")).toHaveText("script");
   await expect(witness.locator(".fa-qa-witness-id")).toHaveText(
-    "cat-harness/content/pipeline/qa-checkers-voice.ts",
+    // NOT prefixed. This is the id a WITNESS RECORDED, not a path to run: QA
+    // sidecars name the checker relative to the instance that audited them, so
+    // the recorded string does not move when the instance's directory does.
+    // Prefixed by mistake on 2026-09-19 in the same pass that correctly
+    // prefixed `bun run` invocations two lines away.
+    "content/pipeline/qa-checkers-voice.ts",
   );
   // The hash of the checker's own source at audit time — the thing that says
   // whether the verdict came from the logic now in the tree.

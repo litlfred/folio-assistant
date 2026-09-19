@@ -16,12 +16,17 @@ test.describe("test-server", () => {
   test("serves the repository root, so any subtree is reachable", async ({ page }) => {
     // Rooting at the repo rather than one subtree is what lets a spec reach
     // ui/, viewer/ or a built _site/ without the server having to guess.
-    const res = await page.goto("/ui/index.html");
+    //
+    // `/cat-harness/ui/…` since the move (bean `wggr`): the server still serves
+    // the REPOSITORY root — that is the property under test — and `ui/` is now
+    // one level in. Prefixing the URL rather than re-rooting the server keeps
+    // the assertion about what it claims to be about.
+    const res = await page.goto("/cat-harness/ui/index.html");
     expect(res?.status()).toBe(200);
   });
 
   test("serves a directory's index.html", async ({ page }) => {
-    const res = await page.goto("/viewer/");
+    const res = await page.goto("/cat-harness/viewer/");
     expect(res?.status()).toBe(200);
   });
 
@@ -42,7 +47,7 @@ test.describe("test-server", () => {
   });
 
   test("sets a usable content type rather than octet-stream for known kinds", async ({ request }) => {
-    const res = await request.get("/ui/styles.css");
+    const res = await request.get("/cat-harness/ui/styles.css");
     expect(res.status()).toBe(200);
     expect(res.headers()["content-type"]).toContain("text/css");
   });

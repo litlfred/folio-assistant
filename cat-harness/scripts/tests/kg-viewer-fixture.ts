@@ -50,6 +50,7 @@ import { dirname, join } from "node:path";
 
 import { viewerHtml } from "../kg-viewer.ts";
 import { UI_STRINGS, type LocaleCatalogue } from "../kg-viewer-strings.ts";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 
 /** Wrap in guillemets: a translation a reader of English can still check. */
 const pseudo = (s: string): string => "«" + s + "»";
@@ -128,6 +129,11 @@ export function writeFixture(root: string): string {
 }
 
 if (import.meta.main) {
-  const root = join(import.meta.dir, "../..");
+  // The REPOSITORY root. The fixture lands under `_kg/`, which is a repository
+  // build output, and the e2e specs fetch it from `test-server.mjs` — which
+  // serves the repository root. Writing it to the INSTANCE root put it one
+  // level below where every reader looks, and sixteen specs timed out waiting
+  // for a page that had been written to a path nothing serves.
+  const root = repoRootFor(join(import.meta.dir, "../.."));
   console.log("kg viewer fixture → " + writeFixture(root));
 }
