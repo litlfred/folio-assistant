@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/litlfred/qou/tools/block-qa-schema/schema/block-qa.schema.json",
+  "$id": "https://github.com/litlfred/folio-assistant/blob/main/schemas/block-qa-schema/schema/block-qa.schema.json",
   "title": "BlockQaReport",
-  "description": "JSON shape of a per-content-block `<block>.qa.json` QA sidecar. Each content block (a .ts + .md + optional .lean triple) may carry one sidecar recording, per QA criterion, an append-only array of reviewer verdicts pinned to the content hashes they judged. Canonical interchange reference for the QOU block-QA format — readable from any language.",
+  "description": "JSON shape of a per-content-block `<block>.qa.json` QA sidecar. Each content block (a .ts + .md + optional .lean triple) may carry one sidecar recording, per QA criterion, an append-only array of reviewer verdicts pinned to the content hashes they judged. Canonical interchange reference for the folio block-QA format — readable from any language.",
   "type": "object",
   "required": ["$schema", "label", "kind", "paths", "source_hashes", "criteria", "updated_at"],
   "additionalProperties": true,
