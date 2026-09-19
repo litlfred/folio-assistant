@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-09-19T06:48:18Z
+updated_at: 2026-09-19T06:49:45Z
 ---
 
 
@@ -60,3 +60,15 @@ THREE THINGS THIS MAKES CONCRETE THAT WERE VAGUE BEFORE.
 (3) STEP 3 HAS TWO READERS AND ONLY ONE OF THEM HAS MCP. 'Start the bootstrap bpmn process' is workflow_start for an MCP-connected agent and is 'read the .bpmn the graph pointed you at, and do its first step' for anybody else — a cold agent, a human, a different toolchain. The README must state it in a way that is true for both, which argues for naming the PROCESS and its first step rather than naming a tool call. This is the same reason the diagram is a decision tree with one gateway: a first step you can perform by reading is a first step that does not require the thing you have not loaded yet.
 
 NOTHING HERE CHANGES THE BREVITY CONSTRAINT. Three steps, three links, three lines. The temptation this creates is to explain each step, and the link-density rule already forbids it: the skill body explains itself, the graph describes itself, and the BPMN is the process.
+
+_2026-09-19T06:49:45Z_ — BOOTSTRAP HAS TWO SKILLS, NOT ONE — owner 2026-09-19: 'need one skill, determine user intent in bootstrap propces'. Added to the one already specified ('only skill is to read markdwon from KG ... and what it means in terms of the graph'). So the pair is: READ THE GRAPH, and KNOW WHAT YOU ARE BEING ASKED TO DO WITH IT. Those are the two halves of a first step and neither works alone — a reader who can navigate the graph and does not know which branch to take is stuck at the gateway, and a reader who knows the intent and cannot read the graph cannot act on it.
+
+IT IS THE GATEWAY'S SKILL. The BPMN the owner specified is one decision — am I in an instance? load its dependency tree, or initialise one — 'w/ request user intput'. This skill is what that gateway runs. Note what is NOT intent: whether a cat-harness.json exists is a FILESYSTEM FACT, mechanical, and needs no skill. What needs one is the part a file cannot answer: what does this person want done. The two are easy to conflate and conflating them would make the skill pointless, because the mechanical half would answer first and always.
+
+AND THE THIRD STATE IS STRUCTURAL HERE FOR ONCE. This repository says everywhere that 'could not determine' is never rendered as a pass — readme-sections returns skip, ci-health never renders unreadable as green, the TOC reports an unreadable publish ref rather than blanking. In every one of those it is a discipline somebody has to keep. HERE IT IS A BRANCH OF THE DIAGRAM: intent not determined IS the request-user-input path, so failing to determine cannot silently become 'assume initialise'. That is the strongest form of the rule this repo has managed to state, and it is worth saying so in the skill body, because it is the reason the skill exists rather than a default.
+
+THREE EXISTING SKILLS LOOK LIKE THIS ONE AND NONE OF THEM IS IT. Measured 2026-09-19, by reading them. (1) session-intent.md, 205 lines, is a durable-handoff coordination protocol over STATUS.md, docs/coordination/<goal>.md master ledgers, flip-flop history and the beans queue. It presupposes an instance with the whole coordination apparatus already loaded — precisely what bootstrap has NOT loaded yet. Reusing it would invert the dependency. (2) crdm-detect.md, 123 lines, classifies a request as feature work versus content work and routes it into the CRDM process; closer in spirit, still instance-dependent, and it answers a question that only arises AFTER you are in an instance. (3) interaction-modality.md, 288 lines, governs HOW to ask (context before the question, selectable options, the modality read from .harness/interaction.json) — it is the etiquette of the request-user-input branch, not the determination. So the bootstrap skill is NEW, and it is small: it decides between two branches and knows when to ask. That it has three near-neighbours is a reason to name it carefully and to say in its body what it is NOT, or a later session will 'consolidate' it into session-intent and take the dependency inversion with it.
+
+SIZE CHECK, since the whole point is leanness. Two skills, one BPMN with one gateway, one README. The three near-neighbours total 616 lines and none is loadable at bootstrap time; the two bootstrap skills should be a small fraction of that, and if the intent skill starts approaching crdm-detect's 123 lines it has probably absorbed instance knowledge it should be deferring to the graph for.
+
+PR STATE, unrelated but recorded so the next session does not re-derive it: #334's merge conflict is resolved (main merged, isSkillMd and declaration-driven discovery composed), 8c88b88f8 is fully green on all six hard checks, and mergeable_state is now 'unstable' — CI in progress on a later beans-only commit, NOT a conflict.
