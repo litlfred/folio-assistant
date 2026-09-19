@@ -13,7 +13,7 @@
  * @module scripts/known-skills
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, join as joinPath } from "node:path";
+import { basename, join, join as joinPath } from "node:path";
 
 import { resolveDirectories } from "../schemas/cat-harness.js";
 
@@ -60,8 +60,18 @@ function holdsMarkdown(abs: string): boolean {
  * function's to guess around — but skill discovery must not crash a tool that
  * had nothing to do with the declaration, so an unreadable one yields an empty
  * list and the explicit extras below still resolve.
+ *
+ * **Exported, and it carries `id`, because the path is the unstable half.**
+ * {@link kgRoots} drops everything but `absPath`, which is all a scanner
+ * needs; a consumer that must NAME a root needs the declared id. `harness.json`
+ * states the rule on its own `cat-harness` entry — *"ids are stable across a
+ * relocation, paths are not"* — and `gen-skill-docs` is where it was paid for:
+ * it keyed a category heading on the basename, that basename was `bootstrap`
+ * only while the root was `bootstrap/`, and when #422 moved the skills to
+ * `bootstrap/skills/` the generator demanded a heading for a package called
+ * "skills".
  */
-function kgDirectories(root: string): Array<{ path: string; absPath: string }> {
+export function kgDirectories(root: string): Array<{ id: string; path: string; absPath: string }> {
   try {
     return resolveDirectories([{ name: "(local)", root, own: true }])
       // EXACTLY `cat-harness`, not merely including it.
@@ -139,6 +149,25 @@ export function kgRoots(root: string): string[] {
  * the skill set. Undercounting here is what produces a clean run over nothing.
  */
 export function isSkillMd(path: string): boolean {
+  // A README is documentation ABOUT a directory, never a node IN it.
+  //
+  // This is the one name-based exclusion in a module whose whole doctrine is
+  // declaration over location, and it earns the exception by being a
+  // filesystem-wide convention rather than this repository's layout: no
+  // directory anywhere has a skill called `README`.
+  //
+  // It has already cost something once. `schemas/` is excluded from the KG
+  // scan partly because "its `.md` files are READMEs" — without that, the
+  // corpus read 150 skills where it holds 149. Now `bootstrap/README.md` is
+  // the entry point an agent with no context reads first, and declaring
+  // `bootstrap/` as a knowledge graph would have admitted it as a skill named
+  // `README`, making `<folio:skill ref="README"/>` resolve and handing
+  // `kg-audit` a sidecar asserting heading and brevity rules against a
+  // README. Requiring every README to carry a `$schema` disclaimer instead
+  // would mean inventing a schema so that a file can say it is not something
+  // it was never going to be.
+  if (basename(path).toLowerCase() === "readme.md") return false;
+
   let text: string;
   try {
     text = readFileSync(path, "utf-8");
@@ -303,7 +332,7 @@ export interface RemoteDeclaration {
  */
 export function remotePackageDeclarations(root: string): RemoteDeclaration[] {
   const out: RemoteDeclaration[] = [];
-  const dir = join(root, "skills", "remote-packages");
+  const dir = join(kgRoots(root)[0] ?? join(root, "skills"), "remote-packages");
   if (!existsSync(dir)) return out;
   for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
     try {

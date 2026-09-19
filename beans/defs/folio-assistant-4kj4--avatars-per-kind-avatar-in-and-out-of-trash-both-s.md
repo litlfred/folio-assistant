@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4kj4
 title: 'AVATARS: per-kind avatar, in and out of trash, both schemes, with a QA axis for coverage'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T11:08:23Z
-updated_at: 2026-09-19T12:24:54Z
+updated_at: 2026-09-19T15:29:04Z
 parent: folio-assistant-o3xy
 ---
 
@@ -143,3 +143,73 @@ work — and which `check-bean-parents` correctly refuses: a feature cannot
 parent a feature, and the roadmap needs an epic. The relationship is recorded
 here because the hierarchy can no longer carry it: **this depends on `t0i3`,
 which is where the store and its JSON-LD endpoint live.**
+
+
+## Owner's answer, 2026-09-19: **all three** — and they layer
+
+Asked to choose between a fan, an autoplaying fade, and a fade on hover, the
+owner answered **"1 2 3"**. That is not three conflicting choices; it is the
+stack this bean's own analysis said was needed:
+
+| layer | what it does |
+|---|---|
+| the fan | every kind visible AT ONCE — the base presentation |
+| the cycle | an emphasis moving through them, with a pause control |
+| hover / focus | drives the same emphasis, user-initiated |
+
+**Nothing is conveyed by the motion.** The fan is complete when still and
+the accessible name lists every kind in one string; the cycle only moves a
+highlight over a display a reader can already read.
+
+That is what makes an autoplaying loop defensible here, and it retires this
+bean's own objection #3 — "slower to read than a static badge, and mute to a
+screen reader" was an objection to a **cycling badge** (one slot, swapping),
+not to a cycling highlight over a complete fan. Objections #1 (2.2.2) and #2
+(reduced motion) stand and are both honoured: a pause control exists whenever
+the loop can run, and the static form is the reduced-motion presentation.
+
+**`prefers-reduced-motion` is checked in BOTH places** — the script never
+starts the timer, the stylesheet never transitions. Either alone is a bug:
+CSS-only leaves a timer mutating the DOM invisibly, script-only leaves the
+transition live on whatever else changes. The query is also watched LIVE, so
+a reader who turns the setting on mid-session has the loop stop rather than
+having to reload.
+
+**No pause control when there is nothing to pause** — one kind, or reduced
+motion. A button saying "pause" beside something already still tells a reader
+there is motion they cannot see.
+
+
+## Built — and two bugs the specs caught that the diff did not show
+
+**A `<button>` inside a `<button>`.** The pause control was appended to the
+fan, and the fan is the face of the open button. The parser closes the outer
+one, so the whole control never survived to the DOM — a spec clicked pause
+and found `.fa-kind-fan` did not exist. They are siblings in a row now. It is
+an accessibility fault in its own right: nested interactive controls have no
+sane keyboard order and no agreed name computation.
+
+**`var built` shadowed `buildViews`'s memoisation flag.** My local
+`var built = buildKindFan(...)` hoists over the outer `var built = false`, so
+`if (built) return` would have read `undefined` and rebuilt every view on
+every launcher open. eslint found it by reporting the OUTER variable as
+unused — a subtler symptom than the cause.
+
+## And one where the SPEC was wrong, not the code
+
+The reduced-motion block used `test.use({ reducedMotion: "reduce" })` and all
+three tests failed. Probing `matchMedia` in the page returned **false**: the
+fixture never reached it, so the spec was reporting a defect in correct code.
+Switched to `page.emulateMedia`, which is also the honest shape — the script
+reads the query at mount, so the emulation has to precede `setContent`, and a
+fixture hides that ordering.
+
+A fourth test came out of it: turning reduced-motion on MID-SESSION stops the
+loop, which the fixture could not have exercised at all.
+
+Separately, `toHaveCSS("transition-duration", "0s")` failed against `1e-06s`
+— Chromium's reporting under this emulation. Asserting the literal was wrong;
+it now asserts the property (under 0.05s), which is what "no transition"
+means and what distinguishes it from the 0.4s animated path.
+
+20 e2e specs.

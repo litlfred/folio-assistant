@@ -1,6 +1,6 @@
 node_modules/
 dist/
-# Jekyll build output — the docs site is built from docs/, never committed.
+# Jekyll build output — the docs site is built from `<stub>/docs`, never committed.
 _site/
 *.js
 *.js.map
@@ -72,24 +72,24 @@ content/schema/
 # `project` scope lives at .claude/agent-memory/ and is tracked.
 .claude/agent-memory-local/
 
-# docs/assets/js is SOURCE, not build output. The rule above exists because
-# compiled JS is generated next to its .ts; these files are hand-written and
-# vendored assets that Jekyll serves verbatim to the browser, so there is no
-# build step that could regenerate them.
-!docs/assets/js/
-!docs/assets/js/**/*.js
+# `<stub>/docs/assets/js` is SOURCE, not build output. The rule above exists
+# because compiled JS is generated next to its .ts; these files are
+# hand-written and vendored assets that Jekyll serves verbatim to the browser,
+# so there is no build step that could regenerate them.
+!folio-assistant/docs/assets/js/
+!folio-assistant/docs/assets/js/**/*.js
 
-# Same reason, different directory. `docs/_includes/mermaid_config.js` is the
-# hook just-the-docs interpolates into its `mermaid.initialize()` call (see
-# that theme's `_includes/components/mermaid.html`). It is a .js file that is
-# hand-written source and lives OUTSIDE docs/assets, so the exception above
-# does not reach it — `git add` reported nothing and the file would simply
-# never have deployed.
-!docs/_includes/*.js
+# Same reason, different directory. `mermaid_config.js` is the hook
+# just-the-docs interpolates into its `mermaid.initialize()` call (see that
+# theme's `_includes/components/mermaid.html`). It is a .js file that is
+# hand-written source and lives OUTSIDE the assets tree, so the exception
+# above does not reach it — `git add` reported nothing and the file would
+# simply never have deployed.
+!folio-assistant/docs/_includes/*.js
 
 # Build stamp written by .github/workflows/docs-site.yml at deploy time.
 # Never committed: a sha in the repo names the commit BEFORE the deploy.
-docs/_data/build.yml
+folio-assistant/docs/_data/build.yml
 
 # Build artifacts: regenerated from the tree, stale the moment they are
 # committed. `_kg/` is the published KG export; `registry.json` is the runtime
@@ -121,11 +121,25 @@ playwright-report/
 # under `docs/vendor/` has ever been tracked (`git ls-tree` reports zero), so
 # this ignores a directory that is purely local build state.
 #
-# Not to be confused with the `!docs/assets/js/` exception above: THAT vendor
-# is hand-written source Jekyll serves verbatim and is deliberately tracked.
-# Same word, opposite intent.
-docs/.bundle/
-docs/vendor/
+# Not to be confused with the `!…/docs/assets/js/` exception above: THAT
+# vendor is hand-written source Jekyll serves verbatim and is deliberately
+# tracked. Same word, opposite intent.
+folio-assistant/docs/.bundle/
+folio-assistant/docs/vendor/
+
+# The pre-inversion site root. Zero tracked files (`git ls-tree -r HEAD docs/`
+# returns nothing) — what is left in a working tree that predates the move is
+# purely local build state: `.bundle/`, `.jekyll-cache/`, maybe `vendor/`.
+#
+# It is ignored WHOLESALE rather than deleted because an agent does not remove
+# a durable artefact on its own initiative, and ignored rather than left alone
+# because it is what made this whole block stale without anybody noticing: the
+# old entries above still MATCHED this leftover tree, so the ignores looked
+# alive while the directory they were written for had moved. A rule that
+# matches the wrong thing reads exactly like one that matches the right thing.
+#
+# Leading slash: the repo root's `docs/` only, never `<stub>/docs/`.
+/docs/
 
 # Agent activity log — OFF BY DEFAULT (bean `folio-assistant-7uff`).
 #

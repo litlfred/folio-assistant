@@ -20,8 +20,13 @@
  * @module scripts/tests/html-comment-delimiters.test
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { Glob } from "bun";
+
+import { siteDirFor } from "../../schemas/cat-harness.js";
+
+const ROOT = resolve(import.meta.dir, "../..");
 
 const OPEN = "<!" + "--";
 const CLOSE = "--" + ">";
@@ -59,10 +64,28 @@ function findNestedOpeners(source: string, file: string): Finding[] {
 
 describe("HTML comments in the docs site", () => {
   it("never open a comment inside an open comment", () => {
+    // The DECLARED site root, not the literal `docs`.
+    //
+    // This hardcoded `"docs"` and it broke the moment the stub pattern
+    // inverted (`docs/<stub>/` -> `<stub>/docs/`, bean `wggr`) — in the worst
+    // way available, which is why it is worth the comment. The move left an
+    // empty `docs/` behind holding only the gitignored bundler tree, so
+    // LOCALLY the glob matched nothing and the test passed over zero files.
+    // In CI, `bundle install` populates that tree with third-party gem HTML,
+    // and the test reported findings in vendored documentation it was never
+    // meant to read. Green locally, red in CI, and neither run was looking at
+    // the site.
+    //
+    // A scan that silently matches nothing is the `dh4f` defect, so the site
+    // root is asserted to exist rather than assumed: a rename that outruns
+    // this test must fail it, not quietly empty it.
+    const site = siteDirFor(ROOT);
+    expect(existsSync(resolve(ROOT, site)), `site root ${site} is not there`).toBe(true);
+
     const findings: Finding[] = [];
-    for (const rel of new Glob("**/*.html").scanSync({ cwd: "docs" })) {
-      const path = `docs/${rel}`;
-      findings.push(...findNestedOpeners(readFileSync(path, "utf8"), path));
+    for (const rel of new Glob("**/*.html").scanSync({ cwd: resolve(ROOT, site) })) {
+      const path = `${site}/${rel}`;
+      findings.push(...findNestedOpeners(readFileSync(resolve(ROOT, site, rel), "utf8"), path));
     }
 
     const report = findings

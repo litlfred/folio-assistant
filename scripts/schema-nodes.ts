@@ -41,6 +41,20 @@
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join } from "node:path";
+import { directoryForGraph } from "../schemas/cat-harness.js";
+
+/**
+ * The declared `schemas` graph, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
+ * the schema definitions — which is why `directoryForGraph` is asked for the
+ * `schemas` one by name rather than being handed a single-home guess.
+ */
+function schemasRoot(root: string): string {
+  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+}
+
 
 /** What a `schemas/*.ts` module declares itself to be. */
 export type SchemaNodeKind = "schema" | "none" | "undeclared";
@@ -69,7 +83,7 @@ const TAG = /@graphNode\s+(\S+)(?:\s*[—-]\s*(.*))?/;
  * thereby declare itself.
  */
 export function schemaModules(root: string): SchemaModule[] {
-  const dir = join(root, "schemas");
+  const dir = schemasRoot(root);
   if (!existsSync(dir)) return [];
   const out: SchemaModule[] = [];
   for (const f of readdirSync(dir).sort()) {

@@ -211,6 +211,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
 | [Witnessed Values](witnessed-values.html) | `witnessed-values` | — |  |
 
+## Bootstrap (read before anything else is known)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [What is this repository supposed to be?](determine-intent.html) | `determine-intent` | — | **The output of this skill is an instance reference** — `litlfred/f-a-sci`, |
+| [kg-navigation](kg-navigation.html) | `kg-navigation` | — | _also in Platform core (folio-core) (same page)_ |
+
 ## Agent skills
 
 | Skill | Id | Schema | Summary |

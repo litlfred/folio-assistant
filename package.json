@@ -55,6 +55,8 @@
     "check:l1-complete": "bun run scripts/check-l1-complete.ts",
     "check:harness-dirs": "bun run scripts/check-harness-dirs.ts",
     "check:agents-xref": "bun run scripts/check-agents-xref.ts",
+    "avatars:css": "bun run scripts/gen-avatars-css.ts",
+    "avatars:css:check": "bun run scripts/gen-avatars-css.ts --check",
     "themes:css": "bun run scripts/gen-themes-css.ts",
     "themes:css:check": "bun run scripts/gen-themes-css.ts --check",
     "check:agents-xref:strict": "bun run scripts/check-agents-xref.ts --strict",

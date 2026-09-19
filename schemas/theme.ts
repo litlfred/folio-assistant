@@ -8,7 +8,7 @@
  *
  * The owner's ask, 2026-09-19: *"try to use named css assets in KG rather than
  * hardcoded colors so themeing is easier."* The reason that matters here is
- * measurable rather than aesthetic — `docs/folio-assistant/assets/css/docs-ui.css`
+ * measurable rather than aesthetic — `folio-assistant/docs/assets/css/docs-ui.css`
  * carried **106 hardcoded hex colours against 22 custom properties** when this
  * was written, so changing a theme meant a find-and-replace across the file.
  * That is how one state keeps the wrong shade: the hover, the dark-scheme

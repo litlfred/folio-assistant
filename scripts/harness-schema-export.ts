@@ -42,6 +42,20 @@ import { tools } from "../tools/index.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 import { stagingFields } from "./staging-stamp.js";
+import { directoryForGraph } from "../schemas/cat-harness.js";
+
+/**
+ * The declared `schemas` graph, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
+ * the schema definitions — which is why `directoryForGraph` is asked for the
+ * `schemas` one by name rather than being handed a single-home guess.
+ */
+function schemasRoot(root: string): string {
+  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+}
+
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -169,7 +183,7 @@ export interface SkillIoContract {
 export function buildSkillIoContracts(opts: SchemaExportOptions = {}): SkillIoContract[] {
   const decl = readDeclaration(ROOT);
   const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
-  const dir = join(ROOT, "schemas", "skills");
+  const dir = join(schemasRoot(ROOT), "skills");
   if (!existsSync(dir)) return [];
 
   const out: SkillIoContract[] = [];

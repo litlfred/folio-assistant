@@ -21,13 +21,27 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve } from "path";
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { directoryForGraph } from "../schemas/cat-harness.js";
+
+/**
+ * The declared `schemas` graph, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
+ * the schema definitions — which is why `directoryForGraph` is asked for the
+ * `schemas` one by name rather than being handed a single-home guess.
+ */
+function schemasRoot(root: string): string {
+  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+}
+
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
 // Same pencil as gen-skill-docs.ts, and for the same reason: a text glyph
 // rather than an inline SVG repeated once per generated page.
 const EDIT_GLYPH = "\u270E";
 
-const SKILLS_DIR = join(REPO_ROOT, "schemas", "skills");
+const SKILLS_DIR = join(schemasRoot(REPO_ROOT), "skills");
 const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skills");
 
 /**
