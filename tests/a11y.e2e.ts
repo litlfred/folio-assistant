@@ -44,14 +44,21 @@ import { AxeBuilder } from "@axe-core/playwright";
 import { existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 
+// The viewer lives one level DOWN from the graph — `_kg/<stub>/index.html`
+// reading `../<stub>.jsonld` — mirroring the published layout, where
+// `<base>/<stub>/` is the directory that makes the extensionless
+// `<base>/<stub>` a page GitHub Pages can serve. Driving the real relative
+// path is the point: a viewer that resolved its document correctly in a flat
+// fixture and wrongly in the deployed tree is exactly the failure a stand-in
+// hides.
 for (const [file, script] of [
   ["_kg/folio-assistant.jsonld", "scripts/kg-export.ts"],
-  ["_kg/index.html", "scripts/kg-viewer.ts"],
+  ["_kg/folio-assistant/index.html", "scripts/kg-viewer.ts"],
 ] as const) {
   if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
 }
 
-const PAGE = "/_kg/index.html";
+const PAGE = "/_kg/folio-assistant/index.html";
 
 /** WCAG 2.0/2.1/2.2 A and AA. Level AAA is not the bar being claimed. */
 const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];

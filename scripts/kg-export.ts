@@ -46,7 +46,7 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { FOLIO_NS } from "../schemas/namespaces.js";
-import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/cat-harness.js";
+import { artefactStub, defaultGraphKinds, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { skillIoIri } from "./harness-schema-export.js";
@@ -232,7 +232,7 @@ function buildContext(): Record<string, unknown> {
     //
     // Both halves had to be fixed together: a term here with a relative value
     // would resolve against the document IRI and give
-    // `<base>/kg/schemas/skills/…`, which nothing serves. The values are now
+    // `<base>/schemas/skills/…`, which nothing serves. The values are now
     // the published `$id` of each contract — see `skillIoIri`.
     inputSchema: { "@id": `${FOLIO_NS}inputSchema`, ...link },
     outputSchema: { "@id": `${FOLIO_NS}outputSchema`, ...link },
@@ -946,8 +946,12 @@ export function exportIdentity(opts: ExportOptions = {}): {
   const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
   // No base declared → a document-relative IRI. Deliberately NOT a fabricated
   // absolute one: see makeIri's note on links that look dereferenceable.
-  const docIri = base ? `${base}/kg/${stub}.jsonld` : `${stub}.jsonld`;
-  const canonicalIri = canonicalBase ? `${canonicalBase}/kg/${stub}.jsonld` : undefined;
+  // `renderingPath` rather than a template literal: the `kg/` segment that used
+  // to be here was written out in seven places, five of them minting an `$id`.
+  // An empty base still yields a document-RELATIVE IRI, deliberately — see
+  // `makeIri`'s note on links that look dereferenceable.
+  const docIri = renderingPath(base, `${stub}.jsonld`);
+  const canonicalIri = canonicalBase ? renderingPath(canonicalBase, `${stub}.jsonld`) : undefined;
   return { stub, docIri, base, canonicalIri, isPreview: canonicalIri !== undefined && docIri !== canonicalIri };
 }
 

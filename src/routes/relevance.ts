@@ -34,6 +34,7 @@ import { join } from "path";
 
 import { hasRole, forbidden, getUserRole } from "../core/rbac.js";
 import { log } from "../core/logging.js";
+import type { MountedRoute, RouteDeps } from "../route-groups.js";
 import type {
   LedgerEntry,
   RelevanceVerdict,
@@ -269,4 +270,21 @@ export async function handleRelevancePost(
   log("relevance", `adjudicated ${payload.key} by ${getUserRole(req)}`);
 
   return Response.json({ ok: true, entry }, { headers: CORS });
+}
+
+// ── Mount ────────────────────────────────────────────────────────
+
+/**
+ * Mount factory read by the route declaration in `src/server.ts`.
+ *
+ * Note the argument order: `handleRelevancePost` takes `(req, url, config)`
+ * while every other POST handler here takes `(url, req, ...)`. The factory is
+ * where that inconsistency stops — the loader sees one shape.
+ */
+export function mountRelevanceRoutes(deps: RouteDeps): MountedRoute {
+  const config = { repoRoot: deps.repoRoot };
+  return {
+    get: (url) => handleRelevanceGet(url, config),
+    post: (url, req) => handleRelevancePost(req, url, config),
+  };
 }

@@ -93,3 +93,32 @@ Across every e2e spec that runs in this container (`qa-panel`, `kg-viewer`,
 `tests/a11y.e2e.ts` could not be run here: it needs network this container's
 egress policy denies (`www.google.com`, `redirector.gvt1.com` — 43 rejected
 CONNECTs). It is untouched by this change and CI runs it.
+
+## Superseded — dropped in favour of a sibling's fix, 2026-09-19
+
+**Another session fixed this first and its fix is on `main`** (`9eaeb23`,
+"Two e2e suites: one my change broke, one main is red on"). Merging `main` into
+this branch conflicted on `tests/qa-panel.e2e.ts`; resolved by taking `main`'s
+version wholesale and discarding mine. Nothing of this bean's patch survives.
+
+Worth recording, because two sessions reached it independently: **the diagnosis
+and the design were the same on both sides.** Both identified that #302
+legitimately adjudicated the failing criterion away, both quoted the file's own
+`STALE_JSON` comment as the rule that already covered this shape of mistake,
+and both injected the real criterion — recovered from the sweep before the
+adjudication — rather than updating the four literals. Their phrasing of the
+principle is the better one: *"a test of the PANEL failed because the CONTENT
+got better"*.
+
+One substantive difference, left as an observation rather than a change, since
+it is merged code and not mine: **theirs replaces `criteria[0]`; mine appended
+last.** Its comment argues the opposite of what it does — "a row appended at
+the end still has to be hoisted, which is the behaviour under test" is an
+argument FOR appending — and replacing at index 0 means the failing row is
+already first in source order, so the test named "worst criterion first" no
+longer demonstrates that the panel hoists anything. It would pass against a
+panel that did no sorting at all. Minor, and not worth a second PR over a file
+someone else just fixed, but it is the assertion's whole subject.
+
+This bean stays `completed` rather than `scrapped`: the work was done and
+correct, it simply lost a race.

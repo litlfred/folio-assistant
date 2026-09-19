@@ -441,6 +441,43 @@ export function artefactStub(d: Pick<CatHarnessDeclaration, "name" | "stub">): s
   return d.stub ?? d.name;
 }
 
+/**
+ * Where an instance's renderings are published, given the site they are
+ * published to.
+ *
+ * **They sit at the base, not in a subdirectory.** A cat-harness instance's
+ * repository IS its declaration that it is a graph — `cat-harness.json` at the
+ * root says which graphs are here — so there is nothing for a `kg/` segment to
+ * distinguish it from. The stub is what separates one instance's renderings
+ * from another's in a tree that overlays several, which is the job a directory
+ * would otherwise have been doing.
+ *
+ * ```
+ * <base>/<stub>.jsonld          the knowledge graph
+ * <base>/<stub>.json            the same bytes, servable as application/json
+ * <base>/<stub>.schema.json     the declaration's schema
+ * <base>/<stub>/                the viewer
+ * ```
+ *
+ * **One function so nothing hand-writes a path again.** It was written out in
+ * seven template literals across two exporters and two workflows — five of them
+ * minting an `$id`, which is an identity, not a link. Relocating the renderings
+ * from `kg/` to the base meant editing all seven, and a missed one publishes a
+ * document whose own `$id` names a URL that 404s. `skillSchemaId` in
+ * `harness-schema-export.ts` already carried this argument for its own corner;
+ * this generalises it.
+ *
+ * A trailing slash on `base` is dropped, and an EMPTY base yields a
+ * document-relative path rather than one rooted at `/` — a leading slash would
+ * silently retarget every reference at the domain root, which is a different
+ * site.
+ */
+export function renderingPath(base: string, ...segments: string[]): string {
+  const b = base.replace(/\/+$/, "");
+  const tail = segments.filter((s) => s.length > 0).join("/");
+  return b ? `${b}/${tail}` : tail;
+}
+
 // ── Reading ─────────────────────────────────────────────────────
 
 /**

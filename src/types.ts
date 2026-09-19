@@ -283,6 +283,17 @@ export interface ContentAdapter {
   /** Handle content-specific POST requests. Returns Response or null. */
   handlePost(url: URL, req: Request): Promise<Response | null>;
 
+  /**
+   * The adapter's feedback store, handed to the feedback route as a service.
+   *
+   * **`unknown` deliberately.** `FeedbackStore` is the content layer's, and
+   * the harness may not import it — the slot is declared here, the type is
+   * named where it is owned. An adapter with no feedback surface returns
+   * `undefined`, and the route declaration's `needs` turns that into a named
+   * skip at boot rather than a `TypeError` inside a handler later.
+   */
+  getFeedbackStore?(): unknown;
+
   // ── Optional extensions ──────────────────────────────────────
 
   /** Register content-specific MCP tools on the server. */

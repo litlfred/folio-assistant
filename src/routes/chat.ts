@@ -10,8 +10,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { ContentAdapter } from "../types.js";
 import { getUserRole, getUserName } from "../core/rbac.js";
-import type { FeedbackStore } from "../core/feedback.js";
 import { log, logDebug } from "../core/logging.js";
+import type { MountedRoute, RouteDeps } from "../route-groups.js";
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
 
@@ -31,7 +31,6 @@ export async function handleChatPost(
   url: URL,
   req: Request,
   adapter: ContentAdapter,
-  _feedbackStore: FeedbackStore,
 ): Promise<Response | null> {
   if (url.pathname !== "/api/chat") return null;
 
@@ -165,4 +164,23 @@ export async function handleChatPost(
   } catch (e) {
     return Response.json({ error: String(e) }, { status: 500, headers: CORS });
   }
+}
+
+// ── Mount ────────────────────────────────────────────────────────
+
+/**
+ * Mount factory read by the route declaration in `src/server.ts`.
+ *
+ * POST only: chat has no GET surface, and {@link MountedRoute} leaves `get`
+ * optional rather than making every route supply a handler that returns
+ * `null`. An absent handler and one that never matches look the same to the
+ * dispatcher, and only one of them is honest about what this route serves.
+ *
+ * It needs no `feedbackStore`. `handleChatPost` took one as `_feedbackStore`
+ * and never read it — a dead parameter that, once `src/core/feedback.ts`
+ * became core, was a wrong-direction import bought with nothing.
+ */
+export function mountChatRoutes(deps: RouteDeps): MountedRoute {
+  const adapter = deps.adapter as ContentAdapter;
+  return { post: (url, req) => handleChatPost(url, req, adapter) };
 }
