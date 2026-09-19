@@ -1,0 +1,28 @@
+{
+  "$schema": "folio-test-run/v1",
+  "subject": "crdm-detect phrase signals against the issue corpus",
+  "data": {
+    "hash": "9981e6db44dc",
+    "inputs": [
+      "scripts/eval/crdm-detect-corpus.json"
+    ]
+  },
+  "process": {
+    "hash": "19afb2b23e80",
+    "inputs": [
+      "scripts/eval-crdm-detect.ts",
+      "skills/folio-core/crdm-detect.md"
+    ]
+  },
+  "outcome": {
+    "population": 27,
+    "truePositives": 12,
+    "falsePositives": 5,
+    "trueNegatives": 3,
+    "falseNegatives": 7,
+    "precision": 0.7059,
+    "recall": 0.6316,
+    "f1": 0.6667
+  },
+  "updated_at": "2026-09-19T16:11:54.936Z"
+}
