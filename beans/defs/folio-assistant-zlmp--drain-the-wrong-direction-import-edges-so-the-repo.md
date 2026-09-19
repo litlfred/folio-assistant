@@ -165,3 +165,68 @@ across 138 there. Merge main before trusting a local green.
 _2026-09-19T00:41:16Z_ — Re-measured 2026-09-19 on main at 17dc1e6 — GENUINELY LIVE, do not treat as stale. 'bun run check:partition' reports 16 wrong-direction edges (agentic-harness -> folio-assist-core 11, folio-assist-core -> folio-asst-sci 4, folio-assist-core -> smart-base 1), down from the 49 this bean last recorded, against a target of 0. Also 3 modules unassigned, where the bean's table records 0 — the tool declines to judge 4 edges touching them and says so rather than counting them clean. PR #304 ('Drain the wrong-direction imports to 10') is open on this.
 
 _2026-09-19T00:54:54Z_ — The feedback cluster: 10 -> 6, and the reason the obvious fix failed twice. Measured at d26a96fd — reclassifying src/core/feedback.ts, src/routes/feedback.ts and src/routes/relevance.ts to core ALONE gives 11 edges, not 6, because src/server.ts, src/index.ts and src/routes/chat.ts then cross the line to MOUNT them: five new edges replace four. Content handlers mounted by a harness composition root cross whichever side holds them. That is why moving them was recommended and measured worse twice before the mechanism was understood. The fix is two steps and only works in this order. (1) src/route-groups.ts — routes resolved by VARIABLE specifier from a declaration, like tool-groups, qa-checker-discovery and render-discovery; each route module exports a mount* factory that casts what it needs out of an opaque services bag, so the cast lives in the layer that owns the type. Edge-neutral by itself, still 10, which is the expected result since all five route modules were harness. Order is behaviour here unlike the tool groups, because dispatch is first-match-wins, so the declaration order is asserted by test. (2) The reclassification, now a net win: four modules to core (the store plus the feedback, relevance and glossary routes), 10 -> 6. Three imports had to go first or the move would have traded four edges for three: the adapter now takes feedbackDir and builds its OWN FeedbackStore rather than being handed one by src/index.ts (a directory is a path, a store is content; ContentAdapter declares getFeedbackStore?(): unknown, so the harness declares the slot and the content layer fills it); the server's getFeedbackStore() was deleted rather than retyped because nothing called it; and handleChatPost's _feedbackStore parameter was deleted because it was never read — harmless while the store was the harness's, a wrong-direction import bought with nothing once it became core's, now pinned by a test. Six remain, unrelated to each other: harness-config -> contributions, schemas/index.ts -> dak-blocks, check-workflow-refs -> translation-tools, src/types.ts -> FeedbackItem/PaperMacro, corpus-gate -> qa-utils and -> block-module. PR #316.
+
+## Re-measured and mapped, 2026-09-19 (main at `87e4c63`)
+
+**6 wrong-direction edges, 0 unassigned** — down from the 49 recorded above,
+and from 16 when I measured earlier the same day. `check:partition:edges` names
+every one:
+
+| # | from (lower layer) | to (higher layer) | kind |
+|---|---|---|---|
+| 1 | `schemas/harness-config.ts` | `schemas/contributions.ts` | value import |
+| 2 | `schemas/index.ts` | `schemas/dak-blocks.ts` | barrel `export *` |
+| 3 | `scripts/check-workflow-refs.ts` | `schemas/translation-tools.ts` | **already dynamic** `await import()` |
+| 4 | `src/types.ts` | `schemas/types.ts` | **`import type` only**, re-exported |
+| 5 | `src/workflow/corpus-gate.ts` | `content/pipeline/qa-utils.ts` | value import |
+| 6 | `src/workflow/corpus-gate.ts` | `content/pipeline/block-module.ts` | value import |
+
+**None of the six is a misplaced file.** Each is either a layer-classification
+decision or a dependency inversion. That is worth stating plainly, because the
+count has fallen steadily so far by moving things, and the remainder will not
+yield to that.
+
+### A hypothesis, tested and disproved — do not retry it
+
+`schemas/contributions.ts` looked misfiled. Its own doc comment says it exists
+*for* the five-repo split — it is the mechanism by which a dependency
+contributes block kinds, adapters and tools, written because `folio-asst-sci`
+must own the math kinds. Registering contributions reads as harness work; only
+what gets registered is core's. So I hand-triaged it to `harness` and re-ran.
+
+**The count went UP, 6 -> 7.** Edge 1 disappeared and two replaced it:
+
+    schemas/contributions.ts (agentic-harness) -> schemas/block-qa.ts (folio-assist-core)
+    schemas/contributions.ts (agentic-harness) -> schemas/block-kinds.ts (folio-assist-core)
+
+Because `contributions.ts:57-58` imports `CheckerPaths`/`CheckerResult` and
+`ADAPTER_BLOCK_KINDS`/`CONTENT_ADAPTERS`. **The contribution mechanism is
+expressed in core's own vocabulary, so it cannot sit above core.** Edge 1 is
+therefore genuine, not misfiling: the harness config loader really does depend
+on a core-typed registry. Reverted.
+
+### What each remaining edge would actually take
+
+- **1** — dependency inversion. `harness-config` should not know about
+  contributions; the registry is passed in, or the loader splits in two.
+- **2** — a barrel aggregating across a layer boundary. Either `schemas/index.ts`
+  stops re-exporting `dak-blocks`, which changes a public import path, or
+  `dak-blocks` is not smart-base. A classification call.
+- **3** — already lazy, so it costs nothing at runtime. Invert by passing the
+  translation config in, or reclassify the script as folio-layer.
+- **4** — `import type` only, and the comment above it records that this edge is
+  the FIX for a previously drifted hand-written copy. Undoing it reintroduces
+  that drift. The real answer is that `FeedbackItem` belongs in the lower layer
+  and core should import it — an inversion, not a deletion.
+- **5, 6** — the largest. `checkCorpusGate` reads block manifests, so a
+  harness-layer gate depends on core's content handling. Inversion means the
+  readers become parameters, changing the signature of a shipped gate that
+  `scripts/check-corpus-gate.ts` and `scripts/tests/corpus-gate.test.ts` call.
+
+### Why this stops here
+
+Every remaining edge is an architecture decision about where the five-repo
+split cuts, and that is #223's owner's call. The counter exists to surface these
+decisions; driving it to zero by reclassifying modules until the number looks
+right would defeat it — as the disproved hypothesis above shows, a plausible
+reclassification can make things worse while looking like progress.
