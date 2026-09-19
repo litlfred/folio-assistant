@@ -1,8 +1,12 @@
 ---
-layout: default
-title: Workflow state in beans
-parent: Proposals
-nav_order: 1
+$schema: folio-fsh-guts/v1
+title: "Workflow state in beans"
+kind: proposal
+movedOn: 2026-09-19
+movedFrom: "docs/folio-assistant/proposals/workflow-state-in-beans.md"
+issue: 232
+summary: >-
+  Decided 2026-09-18: Option A, two stores with one link, both moved out from behind dotfiles.
 ---
 
 # Options for executing DMN/BPMN with beans as state

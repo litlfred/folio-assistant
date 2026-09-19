@@ -313,6 +313,40 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
   },
+  // ── The one kind that is not-rendered ON PURPOSE ──────────────────────
+  //
+  // Every other kind above is `renderable: false` because it is a graph a
+  // TOOL reads and there was never a page to make of it. `fsh-guts` is
+  // different in kind: its contents COULD be rendered and deliberately are
+  // not. It exists so that something can be KEPT without being PUBLISHED.
+  //
+  // Owner, 2026-09-19: "do not pollute the KG with SDLC churn … it is the
+  // trashcan that does not get rendered but … where deprecated, throwaway
+  // stuff goes … do not delete unless explicit confirm."
+  //
+  // **This is what makes the never-delete rule enforceable beyond beans.**
+  // `AGENTS.md` already forbids deleting a bean, and gives a reason that was
+  // always general: a scrapped item records that something was considered
+  // and rejected, which stops the next agent re-entering the dead end, while
+  // a deleted one leaves a sibling unable to tell abandonment from accident.
+  // An agent removing a page, a diagram or a script had only `rm` and so the
+  // rule could not apply to them. Now delete means relocate, and relocate is
+  // reversible.
+  //
+  // On the name: `.fsh` is FHIR Shorthand in this codebase (`schemas/dak.ts`,
+  // `jsonld.ts`, `translation-tools.ts`, `block-qa.ts`) and throughout the
+  // WHO SMART folios this platform targets. The collision was raised and the
+  // owner confirmed the spelling; it is recorded here so the overlap is met
+  // as a known fact rather than rediscovered as a defect.
+  "fsh-guts": {
+    type: termIri("FshGutsGraph"),
+    renderable: false,
+    summary:
+      "Deprecated and throwaway structured content — kept, addressable and exported, and " +
+      "deliberately absent from the rendered site. The destination for anything that would " +
+      "otherwise be deleted, and for SDLC churn that must not reach the folio's readers.",
+    skill: "fsh-guts",
+  },
   // The gettext side of translation: `.pot` templates, `.po` catalogues and
   // the `TranslationNode` manifests that make each pair addressable.
   //

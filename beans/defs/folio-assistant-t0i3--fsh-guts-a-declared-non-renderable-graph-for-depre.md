@@ -1,0 +1,64 @@
+---
+# folio-assistant-t0i3
+title: 'FSH-GUTS: a declared non-renderable graph for deprecated and throwaway content'
+status: in-progress
+type: feature
+priority: high
+created_at: 2026-09-19T10:48:00Z
+updated_at: 2026-09-19T10:48:00Z
+---
+
+Owner, 2026-09-19:
+
+> do not pollute the KG with SDLC churn.... if you need to keep it, make a
+> folder called fsh-guts/ that you can put structured content in but that does
+> not enter into main render pipeline. [...] it is the trashcan that does not
+> get rendered but can where deprecated, throwaway stuff goes. [...] do not
+> delete unless explicit confirm. goes to fsh-guts. jsonld accessible via
+> <base-url>/fsh-guts.jsonld
+
+## What it is
+
+A declared graph kind whose defining property is **`renderable: false` and
+meant**. Every other non-renderable kind here is a graph a tool reads;
+`fsh-guts` is the one that exists so content can be KEPT WITHOUT BEING
+PUBLISHED. It is addressable, exported and greppable, and it is not on the
+site.
+
+Three things it holds: deprecated content, throwaway structured content, and
+**anything that would otherwise be deleted**.
+
+## Why the delete rule needs a destination
+
+`AGENTS.md` already says never delete a bean — scrap it, with reasons,
+because "a scrapped bean records that something was considered and rejected,
+which is what stops the next agent re-entering the same dead end; a deleted
+one leaves a sibling unable to tell abandonment from accident."
+
+That argument was only ever written down for beans. It is general, and until
+now there was nowhere for the general case to go: an agent deleting a page, a
+diagram or a script had only `rm`. **`fsh-guts` is the destination that makes
+the rule enforceable for everything else.** Delete becomes relocate, and
+relocate is reversible.
+
+## The name
+
+`fsh-guts`, exactly as the owner typed it, confirmed after I raised the
+collision. **`.fsh` is FHIR Shorthand in this codebase** — `schemas/dak.ts`,
+`jsonld.ts`, `translation-tools.ts`, `block-qa.ts` and one schema JSON all
+carry it, and the WHO SMART folios this platform targets are full of `.fsh`
+files. Recorded here so the next agent meets the overlap as a known fact
+rather than rediscovering it and proposing a rename.
+
+## Done when
+
+- [ ] `fsh-guts` is a registered graph kind, `renderable: false`, and the
+      site build demonstrably skips it — a test, not an assumption
+- [ ] `<base>/fsh-guts.jsonld` is exported alongside the other renderings
+- [ ] the four existing proposals are moved into it
+- [ ] `docs/` carries no design proposal
+
+## Not in this bean
+
+The viewer (dead fish icon, counter, dialog) is its own bean — it is UI work
+with a different shape and should not hold up the store.

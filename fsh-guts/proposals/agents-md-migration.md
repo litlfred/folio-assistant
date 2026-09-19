@@ -1,8 +1,12 @@
 ---
-layout: default
-title: Migrating AGENTS.md into skills
-parent: Proposals
-nav_order: 3
+$schema: folio-fsh-guts/v1
+title: "Migrating AGENTS.md into skills"
+kind: proposal
+movedOn: 2026-09-19
+movedFrom: "docs/folio-assistant/proposals/agents-md-migration.md"
+issue: 223
+summary: >-
+  Survey of which AGENTS.md sections are bootstrap, pointers, or migration debt.
 ---
 
 # Migrating `AGENTS.md` into skills — the classification

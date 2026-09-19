@@ -1,8 +1,11 @@
 ---
-layout: default
-title: Proposals
-nav_order: 12
-has_children: true
+$schema: folio-fsh-guts/v1
+title: "Proposals"
+kind: proposal
+movedOn: 2026-09-19
+movedFrom: "docs/folio-assistant/proposals/index.md"
+summary: >-
+  Index of design proposals. Retained for its prose about what a proposal is for; the proposals themselves belong on their issues.
 ---
 
 # Proposals

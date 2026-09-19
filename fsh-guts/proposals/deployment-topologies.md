@@ -1,8 +1,12 @@
 ---
-layout: default
-title: Deployment topologies
-parent: Proposals
-nav_order: 2
+$schema: folio-fsh-guts/v1
+title: "Deployment topologies and operating modes"
+kind: proposal
+movedOn: 2026-09-19
+movedFrom: "docs/folio-assistant/proposals/deployment-topologies.md"
+issue: 363
+summary: >-
+  Accepted 2026-09-19: ten topology axes x six operating modes. Moved out of the rendered site because a design proposal is not what a folio's readers need; the decision it records lives on issue #363.
 ---
 
 # Deployment topologies and operating modes

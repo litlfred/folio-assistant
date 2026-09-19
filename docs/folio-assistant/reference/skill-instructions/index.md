@@ -82,6 +82,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Editor](editor.html) | `editor` | — |  |
 | [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |
 | [Feature-branch staging](feature-staging.html) | `feature-staging` | — |  |
+| [`fsh-guts/`](fsh-guts.html) | `fsh-guts` | — | **Delete means relocate.** Nothing in this repository is removed with `rm` |
 | [/getting-started](getting-started.html) | `getting-started` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn). |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
@@ -136,6 +137,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Voice editorial review](voice-editorial-review.html) | `voice-editorial-review` | — |  |
 | [Voice overlay review](voice-overlay-review.html) | `voice-overlay-review` | — |  |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
+| [Where a proposal goes](where-a-proposal-goes.html) | `where-a-proposal-goes` | — | **A design proposal is a comment on the issue it is for.** Not a page in |
 
 ## Document adapter (folio-document-adapter)
 
