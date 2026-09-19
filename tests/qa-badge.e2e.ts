@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -89,6 +89,32 @@ function harness(badgeKeys: string[]): string {
 
 const ALL = [LOUD, EMPTY, NO_ROW, KG];
 
+/**
+ * The name Chromium itself computes, read out of the CDP accessibility tree.
+ *
+ * `Accessibility.getFullAXTree` is what a screen reader sees. Matched on a
+ * SUBSTRING of the expected name rather than on a node index, because index
+ * agreeing with identity is a coincidence of the current page — the same
+ * lesson `tests/support/qa-fixture.ts` records about marking `criteria[0]`.
+ *
+ * Returns `undefined` when no node carries it, which the caller asserts
+ * against a real string. A helper that returned `""` for "not found" would
+ * make an absent name and an empty one indistinguishable, which is the exact
+ * failure this check exists to catch.
+ */
+async function axNameFor(page: Page, contains: string): Promise<string | undefined> {
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Accessibility.enable");
+  const { nodes } = (await cdp.send("Accessibility.getFullAXTree")) as {
+    nodes: Array<{ name?: { value?: string }; ignored?: boolean }>;
+  };
+  await cdp.detach();
+  return nodes
+    .filter((n) => !n.ignored)
+    .map((n) => n.name?.value)
+    .find((v): v is string => typeof v === "string" && v.includes(contains));
+}
+
 /** The badge for a node key, addressed by the attribute the painter reads. */
 const badge = (key: string) => `.fa-qa-badge[data-qa-key="${key}"]`;
 
@@ -131,6 +157,17 @@ test.describe("the index loads", () => {
     await expect(b).toHaveAccessibleName(
       "Content QA: 2 fail, 1 warn, 21 pass, 26 n/a — open for witnesses",
     );
+
+    // And again from CHROMIUM'S OWN accessibility tree, over CDP, because the
+    // assertion above is Playwright computing the name itself. The two agreeing
+    // is the evidence; either alone is a library's opinion.
+    //
+    // This is not belt-and-braces. axe's `label` rule accepts a non-empty
+    // `placeholder` ATTRIBUTE and checks the attribute rather than the computed
+    // name — it passed a search field with an empty accessible name on this
+    // very site. A markup assertion cannot tell you what a screen reader says.
+    const ax = await axNameFor(page, "2 fail, 1 warn");
+    expect(ax).toBe("Content QA: 2 fail, 1 warn, 21 pass, 26 n/a — open for witnesses");
   });
 
   test("swept-and-nothing-applied is its own state, and it still opens", async ({ page }) => {
