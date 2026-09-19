@@ -121,7 +121,10 @@
         "content-review",
         "content-feedback",
         "translation-manager"
-      ]
+      ],
+      "persona": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks \u2014 so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding.",
+      "voice": "Quote the prose, then name what is wrong with it. A voice finding that does not show the sentence it is about is an opinion, and the author is entitled to disagree with it on those terms.",
+      "useCases": ["Judge whether a block's register matches the folio's declared voice", "Tell an editorial dependency a reader needs from one the author merely had in mind", "Decide whether a translation says what the source says, not merely what it means"]
     },
     {
       "id": "code-reviewer",
@@ -135,7 +138,10 @@
         "code-node-review",
         "skills-and-tools",
         "test-engineer"
-      ]
+      ],
+      "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing \u2014 which no test catches, because nothing ran.",
+      "voice": "Name the reference that does not resolve, and where it points. 'This looks wrong' is not reviewable; 'this declares X, and X is declared nowhere' is.",
+      "useCases": ["Check that a Tool's declared inputs match what it is actually served as", "Find a schema node that carries no declaration of its own kind", "Tell a node that is unreachable from one that is reached by direct invocation"]
     },
     {
       "id": "qc-reviewer",

@@ -43,7 +43,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [bib-human-review](bib-human-review.html) | `bib-human-review` | — | Status sidecar: `content/schema/references.review.json`. |
 | [bib-photo-ingestion-watcher](bib-photo-ingestion-watcher.html) | `bib-photo-ingestion-watcher` | — | The automation half of the [`bib-human-review`](bib-human-review.md) workflow. |
-| [Bibliography QA](bib-qa.html) | `bib-qa` | — | pip install paper-search-mcp pyalex |
+| [Bibliography QA](bib-qa.html) | `bib-qa` | — | cd content && bun run pipeline/bib-qa.ts --check-urls |
 | [Block Density](block-density.html) | `block-density` | — |  |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
@@ -141,7 +141,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
 | [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | scripts/lake-cache.sh contribute   # give the build back |
 | [Lean Completeness Audit](lean-completeness-audit.html) | `lean-completeness-audit` | — | find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' \| sort |
-| [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — | cd .. && git clone https://github.com/leanprover-community/mathlib4.git |
+| [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — |  |
 | [Lean formal dependency graph](lean-formal-graph.html) | `lean-formal-graph` | — | bun run content/pipeline/content-graph.ts content/<paper> |
 | [Lean File Generation](lean-generation.html) | `lean-generation` | — | Description here. |
 | [`MathlibExt` Curator](lean-mathlibext-curator.html) | `lean-mathlibext-curator` | — |  |
