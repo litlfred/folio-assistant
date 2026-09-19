@@ -36,18 +36,13 @@
       "findings": []
     },
     "actor-kind-fits-role": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "authoring-agent",
-          "detail": "actor \"authoring-agent\" is a agent and declares role \"editor\", which admits person. Either the role is too narrow — widen its `actorKinds` — or the actor cannot take this role on and its `roles` list is wrong. The descriptions of both are where to settle it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "n/a": 0,
     "unknown": 0
   }
