@@ -4,7 +4,7 @@ title: A force-push followed immediately by opening a PR produces a PR with zero
 status: todo
 type: bug
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-09-19T10:15:56Z
+updated_at: 2026-09-19T11:46:36Z
 ---
 
 OBSERVED TWICE, 2026-09-19, on `litlfred/folio-assistant`.
@@ -40,3 +40,15 @@ So the shorter gap worked and the longer one did not, which is the opposite of w
 I had independently guessed 'GitHub suppresses events authored by the app token' after seeing #383, and #390 falsified that within fifteen minutes. Recording both the wrong guess and its falsification so the next agent does not re-derive it.
 
 What is NOT in doubt, and is the part worth acting on: a PR with zero checks renders identically to one whose checks have not started, so 'nothing red' is not evidence of anything. Verify against the workflow-run list (actions_list on the workflow, filtered by branch) and compare head_sha, rather than reading the PR page.
+
+_2026-09-19T11:48Z_ — FIFTH observation, and the first that was **not a force-push**, which narrows this.
+
+- **#409**, head `678065a99`. Only the push-triggered `.jsonld` check fired; no `pull_request` run for that sha at all. The newest `code-quality-gates` run on the branch was for `ca62e8892` — the commit the PREVIOUS PR (#399) had merged, exactly the #340/#349/#383 pattern. Fixed by `workflow_dispatch` against the branch, as before.
+
+**The new evidence: this was a plain fast-forward push.** `git push -u` with no `--force`, and `git merge-base --is-ancestor ca62e8892 678065a99` returns true, so the old remote tip is an ancestor of the new head — no history was rewritten. Every prior observation in this bean was a `--force-with-lease` push, so the title ("A force-push followed immediately by…") is **too narrow** and a reader filtering for force-pushes will not recognise their own case. Not renaming it here, since it is not my bean; flagging it because the title is what the next agent greps.
+
+Timing, added to the four already recorded: push 11:44:03Z, PR opened ~11:44:30Z, so **~30 s**. The series is now 52 s fail, ~45 s pass, 30 s fail, 13 s pass, seconds fail — which continues to show no monotonic relationship and is further counter-evidence to a ref-update/opened race.
+
+One hypothesis this observation is consistent with and the bean has not recorded: the branch had just been **reset to `origin/main` and force-updated locally** (`branch: Reset to origin/main` in the reflog at 11:33:42Z) after its previous PR merged, so the PUSH was a fast-forward but the branch had very recently pointed at a merged commit. #340, #349 and #383 all also opened a PR on a branch whose predecessor had just merged. That is a property of the BRANCH's recent history rather than of the push, and it would explain why elapsed time predicts nothing. Stated as a hypothesis, not a finding — I have not tested it, and the correct test is to open a PR on a freshly-created branch name and compare.
+
+What is unchanged and is the part worth acting on: a PR with zero checks renders identically to one whose checks have not started, so "nothing red" is evidence of nothing. Verify with `actions_list` on the workflow and compare `head_sha` against the PR's head.
