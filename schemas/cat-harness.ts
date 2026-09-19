@@ -1097,6 +1097,49 @@ export function renderableDirectories(
   return dirs.filter((d) => d.graphs.some((g) => isRenderable(g, registry)));
 }
 
+/**
+ * The absolute path of the directory holding a given graph, read from the
+ * instance's declaration.
+ *
+ * ## The literal this exists to replace
+ *
+ * `check:declared-paths` found **114** places where a directory
+ * `harness.json` already declares is written out in code instead —
+ * `join(root, "skills")`, `join(root, "translations", loc)`,
+ * `join(root, "uploads")`. Every one of them is a place a topical or
+ * relocated layout breaks silently, which is the whole defect the
+ * declaration exists to remove.
+ *
+ * `resolveDirectories` already answered this; what was missing was a call
+ * short enough that nobody reaches for the literal instead. One line, one
+ * argument, and the caller does not have to build a chain.
+ *
+ * ## Three states, and the third is why this returns `undefined`
+ *
+ * A graph the instance does not declare is NOT the same as one declared at
+ * the conventional path. `DEFAULT_DIRECTORIES` is existence-filtered, so an
+ * instance with no `uploads/` genuinely has no `uploads` graph — and
+ * defaulting here would hand a caller a path to a directory that is not
+ * there, which is precisely the `dh4f` defect (a consumer scans nothing and
+ * reports a clean run over it). Callers that legitimately want the
+ * convention as a fallback say so at their own call site, where the choice
+ * is visible.
+ *
+ * Returns the FIRST declaration carrying the graph. A graph declared by two
+ * directories is legal — `cat-harness` is, by `schemas/` and `skills/` — so a
+ * caller wanting all of them resolves the list itself; this is the accessor
+ * for the single-home case, which is every other graph kind here.
+ */
+export function directoryForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string | undefined {
+  return resolveDirectories([{ name: "(local)", root, own: true }], registry).find((d) =>
+    d.graphs.includes(graph as GraphKind),
+  )?.absPath;
+}
+
 // ── Graph projection ────────────────────────────────────────────
 
 /**

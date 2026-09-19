@@ -21,12 +21,18 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { loadVoices, unionRules, voicesPresent } from "../schemas/voices";
+import { directoryForGraph } from "../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..");
+
+// The declared `library` graph. No fallback: this module only READS L1
+// sources, and a checker that resolves a directory the instance does not have
+// would report a clean run over nothing — the `dh4f` defect.
+const LIBRARY = directoryForGraph(ROOT, "library") ?? join(ROOT, "library");
 const MIN_QUOTE = 24;
 
 function sectionPath(libraryId: string, sectionId: string): string {
-  return join(ROOT, "library", libraryId, "sections", `${sectionId}.md`);
+  return join(LIBRARY, libraryId, "sections", `${sectionId}.md`);
 }
 
 function main(): number {
@@ -68,7 +74,7 @@ function main(): number {
   // library id nobody ingested is the `source: null` defect wearing an id.
   for (const v of voices) {
     for (const s of v.sources) {
-      if (s.libraryId && !existsSync(join(ROOT, "library", s.libraryId, "structure.json"))) {
+      if (s.libraryId && !existsSync(join(LIBRARY, s.libraryId, "structure.json"))) {
         problems.push(`${v.id}: names source library/${s.libraryId}, which is not ingested`);
       }
       if (s.kgRef && !existsSync(join(ROOT, s.kgRef.split("#")[0]!))) {

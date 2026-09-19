@@ -295,6 +295,17 @@ export function scanDeclaredPaths(root: string): Scan {
       // answers the placeholder either.
       if (/[$<]/.test(value)) continue;
 
+      // Neither is a SENTENCE that opens with one. Three literals in this
+      // corpus do — `"library/ — source material somebody else wrote"`,
+      // `"voices/milnor.json, 12 rules. Complements…"` and a QA message
+      // naming `test/results/block-qa/` — and each is a description a human
+      // reads, which no declaration would supply. A space is the
+      // discriminator because no path in this corpus contains one; a real
+      // path that did would be missed, and that is a bounded cost against
+      // three standing false findings in a check whose whole value is that
+      // its findings are worth acting on.
+      if (/\s/.test(value)) continue;
+
       // Read from the RAW text: the marker lives in a comment, which the
       // scan above has blanked out by design.
       const reason = cover.get(n);

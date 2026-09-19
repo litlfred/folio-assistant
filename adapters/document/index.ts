@@ -65,6 +65,23 @@ import { log } from "../../src/core/logging.js";
 import { hasRole, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
+
+/**
+ * The declared `uploads` graph for a folio, or the convention.
+ *
+ * declared-path-literal: the convention fallback for a WRITE target. This
+ * adapter creates the queue on a first ingest, so resolving to nothing
+ * before one has happened would make the first ingest impossible.
+ *
+ * The fallback is deliberate and belongs at the call site rather than in
+ * `directoryForGraph`: this adapter CREATES the queue on a first ingest, so
+ * resolving to nothing before one has happened would make the first ingest
+ * impossible rather than merely empty.
+ */
+function uploadsRoot(repoRoot: string): string {
+  return directoryForGraph(repoRoot, "uploads") ?? join(repoRoot, "uploads");
+}
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
 
@@ -697,7 +714,7 @@ End every response with suggested follow-ups:
     // Uploads listing
     if (path === "/api/uploads") {
       try {
-        const uploadsDir = join(this.repoRoot, "uploads");
+        const uploadsDir = uploadsRoot(this.repoRoot);
         if (!existsSync(uploadsDir)) return Response.json({ uploads: [] }, { headers: CORS });
         const dirs = readdirSync(uploadsDir, { withFileTypes: true })
           .filter((d) => d.isDirectory())
@@ -727,7 +744,7 @@ End every response with suggested follow-ups:
     // Single upload detail
     if (path.startsWith("/api/uploads/")) {
       const docId = path.slice("/api/uploads/".length).replace(/\/$/, "");
-      const docDir = join(this.repoRoot, "uploads", docId);
+      const docDir = join(uploadsRoot(this.repoRoot), docId);
       if (!existsSync(docDir)) return Response.json({ error: "Not found" }, { status: 404, headers: CORS });
       try {
         const files = readdirSync(docDir);
@@ -929,7 +946,7 @@ End every response with suggested follow-ups:
           const domain = (formData.get("domain") as string) || "";
           const normativeLevel = (formData.get("normativeLevel") as string) || "";
 
-          const uploadsDir = join(this.repoRoot, "uploads", docId);
+          const uploadsDir = join(uploadsRoot(this.repoRoot), docId);
           if (!existsSync(uploadsDir)) mkdirSync(uploadsDir, { recursive: true });
 
           // Save uploaded files
@@ -994,7 +1011,7 @@ End every response with suggested follow-ups:
           type?: string; domain?: string; normativeLevel?: string;
         };
         const docId = body.id || `upload-${Date.now()}`;
-        const uploadsDir = join(this.repoRoot, "uploads", docId);
+        const uploadsDir = join(uploadsRoot(this.repoRoot), docId);
         if (!existsSync(uploadsDir)) mkdirSync(uploadsDir, { recursive: true });
 
         const intake = {
