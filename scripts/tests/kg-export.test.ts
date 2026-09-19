@@ -25,7 +25,7 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
-import { buildExport, exportIdentity, undeclaredRootTerms } from "../kg-export.js";
+import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
 import { readDeclaration, artefactStub } from "../../schemas/cat-harness.js";
 import { FOLIO_NS } from "../../schemas/namespaces.js";
@@ -109,6 +109,22 @@ describe("kg export", () => {
     expect(EXPORT.undeclaredTerms.map((t) => t.term)).toEqual([]);
   });
 
+  test("the published document carries no QA finding — those live in test/results/", () => {
+    // Bean `2634`. The four families are a QA reviewer's findings about the
+    // graph this run produced, so they belong under `test/results/`, not in
+    // the artefact under review. `buildExport` still computes them; the
+    // projection is what ships.
+    const pub = publishedDocument(EXPORT) as unknown as Record<string, unknown>;
+    for (const k of ["undeclaredTerms", "undeclaredSchemaModules", "danglingLinks", "problems"]) {
+      expect(pub[k]).toBeUndefined();
+    }
+    // ...and what stays, stays. `counts` is what the graph CONTAINS — the
+    // truncation check — and `repository` is provenance beside `sourceCommit`.
+    // Neither is a verdict, so neither moves.
+    expect(pub.counts).toBeDefined();
+    expect(pub.repository).toBeDefined();
+  });
+
   test("no ROOT-level field is undeclared either — the level `undeclaredTerms` cannot see", () => {
     // Bean `m5sk`. The same defect one level up, and it survived `ovkk` for a
     // structural reason: `undeclaredTerms` walks `@graph`, so the document
@@ -122,7 +138,17 @@ describe("kg export", () => {
     // `danglingLinks` — carrying the provenance, the truncation check and
     // every diagnostic the export produces. `staging` had already shipped
     // through this same gap in #340.
-    expect(undeclaredRootTerms(EXPORT as unknown as Record<string, unknown>, EXPORT["@context"])).toEqual([]);
+    // Against the PUBLISHED projection, which is what a consumer receives.
+    // `buildExport` still returns the QA findings — they are the computation
+    // the `qa-results/v1` document is written from — and they are deliberately
+    // no longer declared, so checking the raw computation would report four
+    // fields that are never published.
+    expect(
+      undeclaredRootTerms(
+        publishedDocument(EXPORT) as unknown as Record<string, unknown>,
+        EXPORT["@context"],
+      ),
+    ).toEqual([]);
   });
 
   test("...and the root check FIRES, rather than passing because it looks at nothing", () => {
@@ -131,7 +157,9 @@ describe("kg export", () => {
     // name for that shape: a clean run over what was never read.
     const ctx = { ...EXPORT["@context"] } as Record<string, unknown>;
     delete ctx.counts;
-    expect(undeclaredRootTerms(EXPORT as unknown as Record<string, unknown>, ctx)).toEqual(["counts"]);
+    expect(
+      undeclaredRootTerms(publishedDocument(EXPORT) as unknown as Record<string, unknown>, ctx),
+    ).toEqual(["counts"]);
 
     // A `@`-prefixed key is a JSON-LD keyword and needs no declaration, so it
     // must NOT be reported — an alias of one is `keywordCollisions`' business.
