@@ -270,10 +270,29 @@
   those are opposite facts.
 
   `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
-  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/brave-hypatia-r820sf" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/brave-hypatia-r820sf</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e930d64</span> · built 2026-09-19T12:50:42Z · <a href="https://github.com/litlfred/folio-assistant/pull/403" style="color:#fff;text-decoration:underline">PR #403</a> · <a href="https://github.com/litlfred/folio-assistant/issues/363" style="color:#fff;text-decoration:underline">issue #363</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/process-state.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35443958918" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
+  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/brave-hypatia-r820sf" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/brave-hypatia-r820sf</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">54d1492</span> · built 2026-09-19T13:14:32Z · <a href="https://github.com/litlfred/folio-assistant/pull/421" style="color:#fff;text-decoration:underline">PR #421</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/process-state.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35445106597" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/todos/index.json">
+
+<!--
+  The discarded-items document — `fsh-guts.jsonld`, published at the base by
+  `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
+  then some: it carries every node's BODY, which is 64 KB against a 5 KB
+  document without them. Inlining that into every page's <head> would be
+  absurd for content reached through one control inside Settings.
+
+  `.json` rather than `.jsonld`. Both are published and they are the same
+  bytes; Pages has no media type for `.jsonld` and serves it as
+  octet-stream. `fetch().json()` would parse it anyway, but every other
+  rendering here uses the alias and one that did not would be the odd case a
+  later reader has to work out.
+
+  The viewer fetches this WHEN SETTINGS OPENS, never on page load, and a
+  fetch that fails is reported rather than shown as an empty trashcan —
+  "nothing discarded" and "could not read the document" are opposite facts.
+-->
+<meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/fsh-guts.json">
 <link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
@@ -435,7 +454,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/brave-hypatia-r820sf" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/brave-hypatia-r820sf</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e930d64</span> · built 2026-09-19T12:50:42Z · <a href="https://github.com/litlfred/folio-assistant/pull/403" style="color:#fff;text-decoration:underline">PR #403</a> · <a href="https://github.com/litlfred/folio-assistant/issues/363" style="color:#fff;text-decoration:underline">issue #363</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/process-state.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35443958918" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/brave-hypatia-r820sf" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/brave-hypatia-r820sf</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">54d1492</span> · built 2026-09-19T13:14:32Z · <a href="https://github.com/litlfred/folio-assistant/pull/421" style="color:#fff;text-decoration:underline">PR #421</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/process-state.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35445106597" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -720,6 +739,87 @@ that the actor is <em>assigned</em>, not self-declared.</p>
 than none: completing a step in the wrong run records an authorisation that
 did not happen.</li>
 </ol>
+<h2 id="what-you-moved-while-you-were-out-of-process">
+  
+  
+    <a href="#what-you-moved-while-you-were-out-of-process" class="anchor-heading" aria-labelledby="what-you-moved-while-you-were-out-of-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What you MOVED while you were out of process
+  
+  
+</h2>
+    
+
+<p>Steps 1–3 reconstruct <strong>where you were</strong>. They do not reconstruct <strong>what you
+changed position of</strong>, and for notes and stickies that is a separate problem
+with a sharper edge:</p>
+
+<blockquote>
+  <p><strong>A move is not self-documenting.</strong> <code class="language-plaintext highlighter-rouge">moveNote</code> (<code class="language-plaintext highlighter-rouge">schemas/note-anchor.ts</code>)
+returns the note with its new anchor and <em>nothing about the old one</em>. A note
+that has been moved cannot say where it was.</p>
+</blockquote>
+
+<p>So a sticky re-anchored during an off-process detour leaves <strong>no trace in the
+artefact</strong>. There is no field to read back, no diff that distinguishes “moved
+deliberately” from “moved by an agent that had lost the thread”, and — because
+a move keeps the id — nothing that even looks unusual.</p>
+
+<p><strong>The only possible record is what was written to a bean at the time.</strong> That is
+not a convention this skill is adding; it is the consequence of two decisions
+taken elsewhere. Beans carry <strong>no anchor</strong> (owner’s rule, 2026-09-19): a bean
+is not a thing pinned to a block, it is the record that a pinning <em>changed</em>.
+And <code class="language-plaintext highlighter-rouge">workflow/bean-link.ts</code> already has the <code class="language-plaintext highlighter-rouge">note</code> op that writes it.</p>
+
+<p>So, as part of recovery, before step 3’s confirmation:</p>
+
+<ul>
+  <li><strong>Name every note or sticky you re-anchored during the detour</strong>, with its
+anchor before and after. Read them off the bean’s note trail — not off the
+notes, which no longer know.</li>
+  <li><strong>If the trail is silent and you moved things, say that.</strong> A gap is a
+finding. “I moved stickies and did not record where from” is recoverable by
+a person who remembers; “everything is fine” is not.</li>
+  <li><strong>Do not move anything back on your own judgement.</strong> Re-anchoring to undo is
+another unlogged move, and it is a durable change made to cover one — see
+<a href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation.md</code></a>,
+which is the same rule about a different verb.</li>
+</ul>
+
+<p><strong>Considered and rejected: giving the note its own history.</strong> A <code class="language-plaintext highlighter-rouge">movedFrom</code>
+field would make a move self-documenting and remove the need for any of this.
+It was not taken, because the history then lives in the artefact being moved —
+so a note deleted, or moved by a tool that does not maintain the field, takes
+its own audit trail with it. The bean is a <em>separate</em> record, which is what an
+audit trail has to be.</p>
+<h3 id="worked-example--reading-a-bean-back-as-the-trail">
+  
+  
+    <a href="#worked-example--reading-a-bean-back-as-the-trail" class="anchor-heading" aria-labelledby="worked-example--reading-a-bean-back-as-the-trail"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked example — reading a bean back as the trail
+  
+  
+</h3>
+    
+
+<p>Bean <code class="language-plaintext highlighter-rouge">5oai</code>, 2026-09-19, is one, and the episode is an agent’s rather than a
+sticky’s — which is the point: the mechanism does not care what moved.</p>
+
+<p>The bean opened by asserting <em>“<code class="language-plaintext highlighter-rouge">schemas/todo.ts</code> carries no block field at
+all”</em>. That was wrong: <code class="language-plaintext highlighter-rouge">TodoNodeSchema</code> extends <code class="language-plaintext highlighter-rouge">CarriedNoteSchema</code>, which
+declares <code class="language-plaintext highlighter-rouge">targetLabel</code>, and <code class="language-plaintext highlighter-rouge">test/sticky-todos.e2e.ts</code> exercises it across two
+pages and an orphan label. The agent had grepped the file and not the base it
+extends — the second time in that session it asserted an absence without
+checking composition.</p>
+
+<p>What makes it a usable trail is that <strong>the wrong claim was left in place</strong>, with
+the correction appended beside it rather than replacing it. Read back, the bean
+shows the premise, the disproof, and the re-scoped work in order. An agent
+resuming can see that the original framing was abandoned <em>and why</em>, which is
+exactly what it needs to avoid re-deriving the same mistake.</p>
+
+<p>A bean that had been tidied to show only the correct conclusion would read as
+though the work had always been aimed there. That is the failure mode
+<a href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination.md</code></a> names when it says unwanted work
+is <code class="language-plaintext highlighter-rouge">scrapped</code> <strong>with its reasons</strong> rather than deleted: a record that shows only
+outcomes cannot distinguish a dead end somebody ruled out from one nobody tried.</p>
 <h2 id="what-not-to-do">
   
   
@@ -767,7 +867,7 @@ route, notice the divergence, confirm the recovery.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35443958918"><code>e930d64</code></a> &middot; 2026-09-19T12:50:08Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35445106597"><code>54d1492</code></a> &middot; 2026-09-19T13:13:59Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

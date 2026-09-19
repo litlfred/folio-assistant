@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T12:50:49.971Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f3284259abf7ce157798bc8ac27016ae6dbab629",
-  "sourceCommitSha": "f3284259abf7ce157798bc8ac27016ae6dbab629",
-  "sourceCommitAt": "2026-09-19T12:49:14Z",
+  "generatedAt": "2026-09-19T13:14:39.761Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3f55b48c1a8ba083a3521adba0f8e725329b709a",
+  "sourceCommitSha": "3f55b48c1a8ba083a3521adba0f8e725329b709a",
+  "sourceCommitAt": "2026-09-19T13:13:07Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 166,
@@ -262,7 +262,7 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 45,
+    "Schema": 46,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -833,12 +833,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "process-state",
       "title": "Process state — the task you are in, inside the process you are running",
-      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one.",
+      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/process-state.md",
-      "instructionLines": 112,
+      "instructionLines": 179,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -19352,6 +19352,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/memory"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/note-anchor",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "note-anchor",
+      "title": "Where a note is attached, as a three-state answer.",
+      "module": "schemas/note-anchor.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/note-anchor"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/precision-scalar",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "precision-scalar",
@@ -20450,8 +20458,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "e930d64c8daf170b2a781bfde83a28be513281d6",
-    "pr": "403/merge",
-    "run": "35443958918"
+    "sha": "54d14925fce89055faf86c5d3ef635de6c4f25fd",
+    "pr": "421/merge",
+    "run": "35445106597"
   }
 }

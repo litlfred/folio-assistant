@@ -2065,3 +2065,135 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   font-size: 0.7rem;
   opacity: 0.8;
 }
+
+/* ── Discarded items — the fsh-guts viewer (bean `7vhe`) ───────────────────
+ *
+ * Deliberately built from `currentColor` and opacity rather than its own
+ * colour tokens. Every named colour here is a pair that has to be checked in
+ * both schemes, and this repo has live contrast failures (`y8cm`, `rptk`)
+ * from exactly that. Inheriting the panel's foreground means it is correct in
+ * whichever scheme the panel is, by construction rather than by a second
+ * measurement.
+ *
+ * The one exception is the count badge, which reuses `.fa-tile-count` — the
+ * existing translucent grey, already in use beside it. */
+
+.fa-discarded-slot {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
+
+.fa-discarded-open {
+  /* It is a `.fa-tile`, so it already has the grid tile's shape. Inside the
+   * settings column it is on its own, so it stretches rather than sitting in
+   * a one-cell grid. */
+  width: 100%;
+}
+
+.fa-discarded-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fa-discarded-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  /* The border at full `currentColor` would be louder than the text it
+   * surrounds. Dimming the BORDER and not the text keeps the label at the
+   * panel's own contrast, which is the part a reader has to read. */
+  border-color: rgba(128, 128, 128, 0.45);
+}
+
+.fa-discarded-item:hover,
+.fa-discarded-item:focus-visible {
+  background: rgba(128, 128, 128, 0.15);
+}
+
+.fa-discarded-item-name { font-size: 0.78rem; }
+
+.fa-discarded-item-kind {
+  flex: none;
+  font-size: 0.68rem;
+  opacity: 0.7;
+  font-variant: small-caps;
+}
+
+.fa-discarded-back {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.72rem;
+  padding: 0.2rem 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.fa-discarded-title {
+  margin: 0.3rem 0 0.4rem;
+  font-size: 0.85rem;
+}
+
+/* `tabindex="-1"` makes this focusable so the reader is told which item
+ * opened. Without an outline that focus is invisible — the WCAG 2.4.7 case
+ * that programmatic focus quietly creates. */
+.fa-discarded-title:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.fa-discarded-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.1rem 0.5rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+}
+
+.fa-discarded-meta dt { opacity: 0.7; }
+.fa-discarded-meta dd { margin: 0; overflow-wrap: anywhere; }
+
+.fa-discarded-summary {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* "Could not read" and "nothing here" are different messages and must not
+ * look the same. The error is at full contrast because it is a fault the
+ * reader may need to report; the empty note is quiet because it is ordinary.
+ * Neither is colour-only: both say in words which state they are. */
+.fa-discarded-error {
+  margin: 0.4rem 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.fa-discarded-none {
+  margin: 0.4rem 0;
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
+
+.fa-discarded-source {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.72rem;
+}
