@@ -67,7 +67,13 @@
   that module's header for why that inference is wrong in both directions.
 
   THREE STATES, and the third is the reason this is a JSON island rather than
-  an `{% if %}`:
+  a conditional. (The tag name is written inside {% raw %}{% raw %}{% endraw %}
+  below because LIQUID PARSES TAGS INSIDE HTML COMMENTS -- `<!-- -->` means
+  nothing to it -- so naming one in prose is a syntax error at build time, and
+  the message points at the THEME's head.html because Liquid attributes an
+  include's line to the includer. This comment cost one red deploy.)
+  A {% raw %}{% if %}{% endraw %} would have to choose between the second and
+  third rows below, and there is no expression that can:
 
     1. the data file is there      -> `index` is an object; filter the nav.
     2. it is there and EMPTY       -> `pages` is `{}`; there is nothing to
