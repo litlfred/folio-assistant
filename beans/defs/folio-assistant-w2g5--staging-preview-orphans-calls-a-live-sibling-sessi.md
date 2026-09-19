@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w2g5
-title: 'staging-preview-orphans calls a live sibling session''s branch an orphan, and there is no way to act on a true one'
-status: todo
+title: staging-preview-orphans calls a live sibling session's branch an orphan, and there is no way to act on a true one
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:48:19Z
-updated_at: 2026-09-19T10:48:19Z
+updated_at: 2026-09-19T11:20:55Z
 ---
 
 Found 2026-09-19 while acting on `staging-preview-orphans`' own findings, the
@@ -100,3 +100,27 @@ Recommendation: **1**.
 recent commits, there is a test that fires on exactly the
 `claude-brave-hypatia-r820sf` shape, and a true orphan can be removed by a
 mechanism a person can actually invoke.
+
+_2026-09-19T11:20:55Z_ — Claimed on branch `claude/w2g5-orphan-liveness` (session_01SFCwxF2nePwDpnQrX66fZE).
+
+## Opening brief
+
+**What and why.** Both defects in this bean: the orphan check names live branches, and its documented remedy cannot be invoked. Worth doing because the two compound — a false positive whose only advertised remedy is unreachable trains a reader to ignore the check, and acting on it by hand is the unilateral removal `deletion-requires-confirmation` exists to stop.
+
+**What I already know, measured myself in this worktree at 2026-09-19T11:19Z** (`git fetch` + `merge-base --is-ancestor` per branch, against `origin/main`):
+
+| branch | merged into main | tip (committer date) | age at measurement |
+|---|---|---|---|
+| `claude/d2kp-live-verdicts` | yes | 09:58:56Z | 80 min |
+| `claude/ecstatic-goldberg-eroyaz` | yes | 10:19:49Z | 59 min |
+| `claude/placement-skill` | yes | 10:23:07Z | 56 min |
+| `claude/health-checks` | yes | 10:36:41Z | 42 min |
+| `claude/brave-hypatia-r820sf` | **no** | 11:16:31Z | 2.6 min |
+
+That measurement changes the design. **The bean's three signals as an ungated disjunction do not work on this data**: all four genuinely dead previews have tips from the last 80 minutes, so any recency horizon above ~40 minutes spares them too and the check reports nothing. Recency is still needed — it is the only signal covering the inter-PR gap, where a merge commit makes the branch an ancestor of `main` again and signal 2 goes quiet (brave-hypatia: PR #396 merged 10:37:21Z, next commit 10:43:03Z, gap 5m42s). So the horizon has to be SHORT, and its basis has to say so.
+
+**How.** Liveness becomes a pure, exported function over per-preview evidence, with a new `branches` probe (remote refs whose slug matches a preview, plus ancestry and tip date). Any live signal spares; a signal that cannot be evaluated makes the check `unknown`, following `probes.ts`' own precedent that one unreadable preview makes the total unknown rather than smaller. The same function backs a `workflow_dispatch` cleanup preflight, so deletion re-checks liveness at deletion time rather than trusting a report that may be a day old.
+
+**What would falsify it.** If the dead previews' branches were deleted from the remote after merge, the branch signals would be unevaluable for exactly the previews the check must still report. They are not: `git ls-remote --heads` lists 226 branches including all four. If this repo squash-merged, "ancestor of main" would never be true and every preview would be spared forever — it merge-commits (`Merge pull request #400 ...`), so it holds here, and I will say it is an assumption.
+
+**Not doing.** Not deleting any preview. Not dispatching the workflow. Not changing the size check.
