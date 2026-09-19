@@ -20,6 +20,10 @@ import {
   toJsonLd,
   ROLE_GRAPH_DIR,
   ROLE_GRAPH_FILENAME,
+  ACTOR_KINDS,
+  JUDGEMENT_KINDS,
+  MECHANICAL_KINDS,
+  fulfilmentKindsForBpmnType,
   type RoleGraph,
 } from "./role-graph";
 
@@ -287,5 +291,75 @@ describe("permissions are an actor property, not a role property", () => {
     writeFileSync(join(root, "permissions", "permissions.json"), "{ not json");
     expect(() => readPermissions(root)).toThrow(/not valid JSON/);
     rmSync(root, { recursive: true, force: true });
+  });
+});
+
+describe("the actor kind is three-way: human, agentic, mechanical", () => {
+  const actorsDir = join(import.meta.dir, "..", ".claude", "skills", "actors");
+
+  function withActor(entry: unknown): string {
+    const dir = mkdtempSync(join(tmpdir(), "actors-"));
+    writeFileSync(join(dir, "a.json"), JSON.stringify(entry));
+    return dir;
+  }
+
+  test("agentic and mechanical are distinguishable in this repository's registry", () => {
+    // The measurement the split exists for. Before it every non-person actor
+    // read `system`, so the agentic set was EMPTY and "can this actor be
+    // handed a judgement" had no answer for eight of twenty-four entries.
+    const actors = readActors(actorsDir);
+    const by = (k: string) => actors.filter((a) => a.kind === k).map((a) => a.id).sort();
+    expect(by("agent").length).toBeGreaterThan(0);
+    // Named rather than counted: a bare count in a test is a claim that goes
+    // stale silently. These three are mechanical for reasons stated in their
+    // own descriptions — a fixed program with nothing to decide.
+    expect(by("system")).toEqual(["ci-pipeline", "ig-publisher-service", "lean-mcp"]);
+  });
+
+  test("an unrecognised `kind` throws rather than being coerced", () => {
+    // Coercing it would quietly disqualify the actor from every judgement task
+    // it exists to perform, and nothing downstream would report it.
+    const dir = withActor({ id: "x", title: "X", kind: "robot" });
+    expect(() => readActors(dir)).toThrow(/not an actor kind/);
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a legacy `type` still loads, and is never read as agentic", () => {
+    // An unmigrated downstream registry must keep working. It has not said
+    // whether its non-person actors exercise judgement, so they are read as
+    // mechanical — the reading that REFUSES a judgement task rather than
+    // granting one on a guess. The id below ends in `-agent` on purpose.
+    const dir = withActor({ id: "some-agent", title: "S", type: "system" });
+    expect(readActors(dir)[0]!.kind).toBe("system");
+    rmSync(dir, { recursive: true, force: true });
+    const p = withActor({ id: "p", title: "P", type: "person" });
+    expect(readActors(p)[0]!.kind).toBe("person");
+    rmSync(p, { recursive: true, force: true });
+  });
+});
+
+describe("which actor kinds may fulfil an activity", () => {
+  test("BPMN's own semantics are read, not restated", () => {
+    // A userTask is "performed by a human being"; a serviceTask runs without
+    // one. Both answers come from the spec, which is why no diagram has to
+    // declare them and why the criterion covers the corpus on day one.
+    expect(fulfilmentKindsForBpmnType("bpmn:UserTask")).toEqual(["person"]);
+    expect(fulfilmentKindsForBpmnType("bpmn:ServiceTask")).toEqual(["agent", "system"]);
+  });
+
+  test("an abstract task and a call activity assert NOTHING, which is not allowing nothing", () => {
+    // `undefined`, never `[]`. An empty list would read as "no kind may
+    // perform this" and fail every activity drawn as a plain task — the third
+    // state this repository insists on, in the place it is easiest to lose.
+    expect(fulfilmentKindsForBpmnType("bpmn:Task")).toBeUndefined();
+    expect(fulfilmentKindsForBpmnType("bpmn:CallActivity")).toBeUndefined();
+  });
+
+  test("the judgement kinds are derived from the vocabulary, not written out again", () => {
+    // So a kind added to ACTOR_KINDS cannot go unclassified — the rule
+    // DOCUMENT_BLOCK_KINDS follows against BLOCK_KINDS.
+    expect([...JUDGEMENT_KINDS, ...MECHANICAL_KINDS].every((k) => ACTOR_KINDS.includes(k))).toBe(true);
+    expect(JUDGEMENT_KINDS).toEqual(["person", "agent"]);
+    expect(MECHANICAL_KINDS).toEqual(["system"]);
   });
 });

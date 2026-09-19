@@ -5,7 +5,7 @@
     "id": "role-model",
     "path": "skills/folio-core/role-model.md"
   },
-  "source_hash": "97f5da436dc8",
+  "source_hash": "7ef3bcf0d9cb",
   "auditor": {
     "script": "scripts/kg-audit.ts",
     "script_hash": "sha256:c8f19278ba849fb9b849b86655126e5fbb626ba7b8a4be1f3279b15f86c4a623",
@@ -17,13 +17,18 @@
       "findings": [
         {
           "where": "skills/folio-core/role-model.md",
-          "detail": "328 lines; p75 of the skill corpus is 279."
+          "detail": "435 lines; p75 of the skill corpus is 279."
         }
       ]
     },
     "skill-not-a-document": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/role-model.md",
+          "detail": "435 lines; p90 is 391. At this length it is a document."
+        }
+      ]
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -31,8 +36,8 @@
     }
   },
   "totals": {
-    "pass": 2,
-    "fail": 1,
+    "pass": 1,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }
