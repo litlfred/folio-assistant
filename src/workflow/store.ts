@@ -32,6 +32,9 @@ import { INSTANCE_SCHEMA, type InstanceState } from "./instance.js";
  * is on the hot path of every workflow call and re-reading a JSON file per call
  * to learn its own directory would be worse than a checked duplicate.
  */
+// declared-path-literal: the checked duplicate. `bun run check:harness-dirs`
+// fails when this and `beans/beans.json` disagree; it stays compiled in
+// because the store is on the hot path of every workflow call.
 export const WORKFLOW_DIR = join("beans", "workflows");
 
 const pathFor = (repoRoot: string, id: string): string =>

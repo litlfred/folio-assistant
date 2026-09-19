@@ -608,6 +608,9 @@ export const ContentDirectorySchema = z.object({
  * platform cannot guess names it has never met, and guessing would re-create
  * the `dh4f` shape for every name it guessed wrong.
  */
+// declared-path-literal: THE BASE CASE. These ARE the defaults every other
+// site reads through `resolveDirectories`; reading a declaration to learn the
+// fallback for an instance that has none is not a thing that can be done.
 export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   { id: "tools", path: "tools/", graphs: ["tools"] },
   { id: "schemas", path: "schemas/", graphs: ["schemas", "cat-harness"] },

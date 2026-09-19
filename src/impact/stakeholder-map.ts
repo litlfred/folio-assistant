@@ -28,18 +28,9 @@
  * this exists so the BA is asked a sharper question than "who cares?".
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { workflowFiles } from "../../scripts/known-skills.js";
+import { isSkillMd, skillMdDirs, workflowFiles } from "../../scripts/known-skills.js";
 import { join, relative } from "node:path";
 import { loadProcessModel, isActivity } from "../workflow/process-model.js";
-
-/** Directories whose `.md` files are skills. */
-const SKILL_DIRS = [
-  "skills/content-lifecycle",
-  "skills/folio-core",
-  "skills/folio-document-adapter",
-  "skills/folio-paper-adapter",
-  "src/skills",
-];
 
 export interface SkillImpact { name: string; path: string; roles: string[] }
 export interface LaneImpact {
@@ -69,13 +60,49 @@ function rolesOf(file: string): string[] {
   return m ? m[1].split(",").map((r) => r.trim()).filter(Boolean) : [];
 }
 
+/**
+ * Every skill `.md`, by name, from the directories the instance DECLARES.
+ *
+ * ## The list this replaces was already wrong
+ *
+ * It was five literals — four under `skills/`, plus `src/skills` — and
+ * `skillMdDirs()` finds **six** `skills/` packages, so `authoring-math` (3
+ * skills) and `authoring-who-smart-guidelines` (9) were invisible to the
+ * stakeholder map. Changing one of those twelve files reported no impact:
+ * no roles, no lanes, no processes. Exactly the failure `known-skills.ts`'s
+ * own header describes for the copy it was extracted to remove — *"a list
+ * somebody has to remember to extend is not a single answer; it is a copy
+ * that happens to match today"* — and here the copy had already stopped
+ * matching.
+ *
+ * Found by `check:declared-paths` on its first run, which is the argument
+ * for that gate: nobody was looking at this file.
+ *
+ * ## Keyed by PATH, because the name is not unique
+ *
+ * It was `name → path`, which was safe only while the list omitted
+ * `.claude/skills/local/`. Reading the declaration admits it, and
+ * `todo-manager.md` exists **three** times — `skills/folio-core/`,
+ * `.claude/skills/local/` and the generated mirror, a divergence `AGENTS.md`
+ * documents at length. Under `name → path` the last one scanned wins and a
+ * change to either of the others reports NO impact: no roles, no lanes,
+ * nobody accountable. Indistinguishable from a change that affects nobody,
+ * which is the one wrong answer this analysis must not give.
+ *
+ * `path → name` collides on nothing. Several paths mapping to one skill name
+ * is the corpus stating a fact about itself, not a conflict to resolve.
+ */
 function skillIndex(root: string): Map<string, string> {
   const index = new Map<string, string>();
-  for (const dir of SKILL_DIRS) {
+  for (const parts of skillMdDirs(root)) {
+    const dir = parts.join("/");
     const abs = join(root, dir);
     if (!existsSync(abs)) continue;
     for (const f of readdirSync(abs)) {
-      if (f.endsWith(".md")) index.set(f.slice(0, -3), `${dir}/${f}`);
+      // Per FILE, not per directory: a declared directory holds skills, never
+      // only skills — `skills/memory/`'s 25 agent-memory nodes are `.md` in
+      // one, and a role's `roles:` front matter is not theirs to carry.
+      if (f.endsWith(".md") && isSkillMd(join(abs, f))) index.set(`${dir}/${f}`, f.slice(0, -3));
     }
   }
   return index;
@@ -83,8 +110,7 @@ function skillIndex(root: string): Map<string, string> {
 
 /** Map changed repo-relative paths to the roles, processes and lanes they reach. */
 export async function stakeholderMap(root: string, changed: string[]): Promise<StakeholderMap> {
-  const byPath = new Map<string, string>();
-  for (const [name, path] of skillIndex(root)) byPath.set(path, name);
+  const byPath = skillIndex(root);
 
   const skills: SkillImpact[] = [];
   const untraced: string[] = [];

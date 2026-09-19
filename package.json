@@ -45,6 +45,7 @@
     "check-deps": "bun run src/index.ts --check-deps",
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
+    "check:declared-paths": "bun run scripts/check-declared-paths.ts",
     "check:harness-dirs": "bun run scripts/check-harness-dirs.ts",
     "check:orphan-verdicts": "bun run content/pipeline/orphan-verdict-sweep.ts",
     "check:partition": "bun run scripts/repo-partition.ts",
