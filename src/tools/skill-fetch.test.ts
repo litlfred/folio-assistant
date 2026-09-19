@@ -44,13 +44,25 @@ describe("the live table", () => {
     }
   });
 
-  test("the co-located package is present although discovery cannot see it", () => {
-    // `src/skills/` holds one skill beside the .ts that implements it and is
-    // NOT a declared kg directory. Declaring it was measured: it makes
-    // discovery exactly reproduce the old table AND trips `declared-paths`'
-    // ratchet in three scripts, so it stays a named exception for now.
+  test("the co-located package is DISCOVERED, not hand-written", () => {
+    // This test asserted the opposite until 2026-09-19, and the assertion was
+    // correct then: `src/skills/` was an undeclared kg directory, so discovery
+    // could not see the one skill it holds and `LOCAL_PACKAGES` carried a
+    // hand-written exception for it.
+    //
+    // Bean `osbo` declared it. The exception is gone, and the package now
+    // falls out of the declaration like every other — so the old assertion is
+    // kept here inverted rather than deleted, because "discovery cannot see
+    // it" was a real limitation and this is the record of it ending.
     expect(LOCAL_PACKAGES["folio-assistant"]).toBeDefined();
-    expect(discoverLocalPackages(ROOT)["folio-assistant"]).toBeUndefined();
+    expect(discoverLocalPackages(ROOT)["folio-assistant"]).toBeDefined();
+  });
+
+  test("a directly-held kg directory is named after its INSTANCE", () => {
+    // There is no subdirectory name to take: `src/skills/` holds
+    // `corpus-grep.md` at its root. The declaration's `name` is what the
+    // package is, because that is whose skills they are.
+    expect(discoverLocalPackages(ROOT)["folio-assistant"]).toContain("src/skills");
   });
 });
 

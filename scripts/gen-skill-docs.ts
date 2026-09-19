@@ -166,7 +166,20 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
   "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
+  // The two entries below are declared kg directories that hold their skills
+  // DIRECTLY rather than in package subdirectories, so they are keyed by the
+  // directory's DECLARED ID — `bootstrap` and `cat-harness-src`, not
+  // `bootstrap/skills` and `src/skills`.
+  //
+  // #428 keyed them by repo-relative path, which works and has a short
+  // half-life: `harness.json` says on its own entry that "ids are stable
+  // across a relocation, paths are not", and this file had already paid for
+  // that twice in one day — the basename was `bootstrap` only until #422 moved
+  // those skills to `bootstrap/skills/`. A path key breaks again at the
+  // `cat-harness/` move, which is the next step on bean `wggr` and would turn
+  // `src/skills` into `cat-harness/src/skills`.
   bootstrap: "Bootstrap (read before anything else is known)",
+  "cat-harness-src": "Agent skills",
 };
 
 /**
@@ -197,48 +210,44 @@ const SKILLS_CATEGORIES: Record<string, string> = {
  * going missing without anything saying so. Adding a package is one line;
  * forgetting it stops the build.
  */
+/** Does this directory hold at least one skill `.md` directly? */
+function holdsSkill(dir: string): boolean {
+  try {
+    return readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)));
+  } catch {
+    return false;
+  }
+}
+
 function discoverGroups(): Group[] {
   const out: Group[] = [];
   const undeclared: string[] = [];
-  // EVERY declared knowledge-graph root, not the literal `skills/`.
+  // Every DECLARED knowledge-graph directory, not `skills/` alone: an instance
+  // may put its graph anywhere, and this repository declares three —
+  // `skills/`, `bootstrap/skills/` and `src/skills/` (beans `x3bd`, `osbo`).
   //
-  // This was `join(REPO_ROOT, "skills")` and it was a live defect the moment
-  // a second root existed: `bootstrap/` holds two skills, and the generator
-  // could not see them — so `skill-coverage.test.ts` failed with three
-  // resolvable skills absent from the published reference, which is the
-  // twelve-skills-unpublished failure this function's own error message was
-  // written about, arriving again one directory along.
+  // A directory may hold skills DIRECTLY as well as in packages: `src/skills/`
+  // holds `corpus-grep.md` beside the `.ts` implementing it, and
+  // `bootstrap/skills/` holds both of bootstrap's.
   //
-  // A root may hold skills DIRECTLY (bootstrap/skills/kg-navigation.md) or in
-  // package subdirectories (skills/folio-core/…), so both shapes are scanned.
-  //
-  // THE CATEGORY KEY IS NOT ALWAYS THE BASENAME. For a package inside a root
-  // it is — `folio-core` names itself. For the ROOT ITSELF the basename is an
-  // artefact of where the declaration happens to point, and this comment used
-  // to say "the directory's own name either way", which held only while that
-  // root was `bootstrap/`. #422 moved bootstrap's skills down one level to
-  // `bootstrap/skills/` (so that `README.md` and `AGENTS.md`, its two declared
-  // assets, are not scanned as skills), the basename became `skills`, and the
-  // generator demanded a category heading for a package called "skills".
-  //
-  // So a root is keyed on its DECLARED ID, which `harness.json` already says
-  // is the stable half: "ids are stable across a relocation, paths are not".
-  // The id is `bootstrap` whether the skills sit at `bootstrap/` or
-  // `bootstrap/skills/`, which is the property a category heading needs.
-  const holdsSkills = (dir: string): boolean =>
-    existsSync(dir) && readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)));
-
+  // THE TWO CASES ARE KEYED DIFFERENTLY, and that is the point. A package
+  // NAMES ITSELF, so its basename is the key. A root does not — its basename
+  // is an artefact of where the declaration happens to point — so the key is
+  // its DECLARED ID. This file keyed a root by basename until #422 moved
+  // bootstrap's skills one level down and the generator demanded a heading for
+  // a package called "skills"; #428 then keyed by repo-relative path, which
+  // has the same shape of failure one move later.
   for (const decl of kgDirectories(REPO_ROOT)) {
-    const root = decl.absPath;
-    /** Declared id for the root itself; own basename for a package within it. */
-    const keyFor = (dir: string): string => (dir === root ? decl.id : basename(dir));
-    const candidates: string[] = [];
-    if (holdsSkills(root)) candidates.push(root);
-    for (const d of readdirSync(root, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-      if (d.isDirectory()) candidates.push(join(root, d.name));
+    const skillsRoot = decl.absPath;
+    const rel = relative(REPO_ROOT, skillsRoot);
+    if (holdsSkill(skillsRoot)) {
+      const direct = SKILLS_CATEGORIES[decl.id];
+      if (direct === undefined) undeclared.push(decl.id);
+      else out.push({ category: direct, dir: skillsRoot, repoPrefix: rel });
     }
-    for (const dir of candidates) {
-      const name = keyFor(dir);
+    for (const d of readdirSync(skillsRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      if (!d.isDirectory()) continue;
+      const dir = join(skillsRoot, d.name);
       // No SKILL `.md` means it is not a skill package: `workflows/`,
       // `roles/`, `permissions/`, `requirements/`, `framework/`,
       // `remote-packages/` and `memory/` are other node kinds.
@@ -248,13 +257,13 @@ function discoverGroups(): Group[] {
       // copy was falsified by `skills/memory/` — 25 agent-memory nodes, every
       // one a `.md`, none a skill. The generator then demanded a category
       // heading for a package that publishes nothing.
-      if (!readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)))) continue;
-      const category = SKILLS_CATEGORIES[name];
+      if (!holdsSkill(dir)) continue;
+      const category = SKILLS_CATEGORIES[d.name];
       if (category === undefined) {
-        undeclared.push(name);
+        undeclared.push(d.name);
         continue;
       }
-      out.push({ category, dir, repoPrefix: relative(REPO_ROOT, dir) });
+      out.push({ category, dir, repoPrefix: `${rel}/${d.name}` });
     }
   }
   if (undeclared.length > 0) {
@@ -270,7 +279,6 @@ function discoverGroups(): Group[] {
 
 const GROUPS: Group[] = [
   ...discoverGroups(),
-  { category: "Agent skills", dir: join(REPO_ROOT, "src", "skills"), repoPrefix: "src/skills" },
   // Local skills — the harness-specific ones under `.claude/skills/local/`.
   //
   // Absent from this list until 2026-09-19, which meant the authoritative spec

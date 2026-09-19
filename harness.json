@@ -90,7 +90,7 @@
   ],
   "stub": "folio-assistant",
   "canonicalUrl": "https://litlfred.github.io/folio-assistant",
-  "_publication_comment": "The `publication host` axis of docs/proposals/deployment-topologies.md, accepted 2026-09-19 (issue #363). WHAT KIND of host serves the renderings \u2014 distinct from `canonicalUrl` (the base @ids are minted against) and from `readme.linkStyle` in harness.config.json (how a link to a published artefact is written). This instance really does publish to GitHub Pages, so it declares so; an instance that has not said is `undefined`, which is a third state and must never be read as `github-pages`.",
+  "_publication_comment": "The `publication host` axis of docs/proposals/deployment-topologies.md, accepted 2026-09-19 (issue #363). WHAT KIND of host serves the renderings — distinct from `canonicalUrl` (the base @ids are minted against) and from `readme.linkStyle` in harness.config.json (how a link to a published artefact is written). This instance really does publish to GitHub Pages, so it declares so; an instance that has not said is `undefined`, which is a third state and must never be read as `github-pages`.",
   "publication": {
     "host": "github-pages"
   },
@@ -139,7 +139,7 @@
     {
       "id": "fsh-guts",
       "path": "fsh-guts/",
-      "description": "The trashcan that is kept. Deprecated and throwaway structured content \u2014 addressable, exported as <base>/fsh-guts.jsonld, and DELIBERATELY absent from the rendered site. Every other declared kind here is non-renderable because it is a graph a tool reads and there was never a page to make of it; this one's contents could be rendered and are not, so that something can be kept without being published. It is also the destination that makes the never-delete rule enforceable beyond beans: AGENTS.md forbids deleting a bean because a scrapped item stops the next agent re-entering a dead end while a deleted one cannot be told from an accident, and that reasoning was always general \u2014 an agent removing a page or a script had only `rm`. Delete now means relocate here, and relocate is reversible. Files declare themselves with `$schema: folio-fsh-guts/v1`, per the same contract the bean and workflow stores use. NOTE on the name: `.fsh` is FHIR Shorthand in this codebase and across the WHO SMART folios; the collision was raised and the owner confirmed this spelling.",
+      "description": "The trashcan that is kept. Deprecated and throwaway structured content — addressable, exported as <base>/fsh-guts.jsonld, and DELIBERATELY absent from the rendered site. Every other declared kind here is non-renderable because it is a graph a tool reads and there was never a page to make of it; this one's contents could be rendered and are not, so that something can be kept without being published. It is also the destination that makes the never-delete rule enforceable beyond beans: AGENTS.md forbids deleting a bean because a scrapped item stops the next agent re-entering a dead end while a deleted one cannot be told from an accident, and that reasoning was always general — an agent removing a page or a script had only `rm`. Delete now means relocate here, and relocate is reversible. Files declare themselves with `$schema: folio-fsh-guts/v1`, per the same contract the bean and workflow stores use. NOTE on the name: `.fsh` is FHIR Shorthand in this codebase and across the WHO SMART folios; the collision was raised and the owner confirmed this spelling.",
       "graphs": [
         "fsh-guts"
       ]
@@ -198,6 +198,14 @@
       "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
       "graphs": [
         "translation-sources"
+      ]
+    },
+    {
+      "id": "cat-harness-src",
+      "path": "src/skills/",
+      "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse — committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
+      "graphs": [
+        "cat-harness"
       ]
     }
   ]
