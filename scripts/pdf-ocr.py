@@ -60,6 +60,15 @@ import subprocess
 import sys
 import tempfile
 
+# `-o` is the ROOT that `<doc-id>/` hangs off, the same meaning
+# `pdf-structure.py -o` carries — and the doc-id is spelled by the SHARED
+# helper so the two steps of one pipeline compose. Bean `rlp5`: this script
+# used to write `<outdir>/ocr/` with no doc-id level, so a second scanned
+# document overwrote the first page for page, silently, and
+# `pdf-structure.py --ocr` looked somewhere this never wrote.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _pdf_doc_id import OCR_DIRNAME, derive_doc_id, ocr_cache_dir  # noqa: E402
+
 # A page below this many characters is treated as having no usable text.
 MIN_CHARS_PER_PAGE = 120
 # Below this fraction of letters, the "text" is mojibake rather than prose.
@@ -131,10 +140,16 @@ def detect_lang(png: str) -> str:
     return kept or "eng"
 
 
-def ocr_pdf(pdf: str, outdir: str, lang: str | None, dpi: int,
+def ocr_pdf(pdf: str, root: str, lang: str | None, dpi: int,
             force: bool) -> tuple[int, str]:
-    """Rasterise and OCR, caching one text file per page. Returns (pages, lang)."""
-    cache = os.path.join(outdir, "ocr")
+    """Rasterise and OCR, caching one text file per page. Returns (pages, lang).
+
+    `root` is the ROOT, not the cache directory: pages land in
+    `root/<doc-id>/ocr/`. Two documents therefore cannot collide however many
+    are OCR'd into one root — by construction rather than by the caller
+    remembering to pass a different `-o` each time.
+    """
+    cache = ocr_cache_dir(root, pdf)
     os.makedirs(cache, exist_ok=True)
     done = sorted(glob.glob(os.path.join(cache, "page-*.txt")))
     if done and not force:
@@ -160,16 +175,23 @@ def ocr_pdf(pdf: str, outdir: str, lang: str | None, dpi: int,
         return len(pngs), use
 
 
-def read_cache(outdir: str) -> list[str]:
-    """The cached OCR text, one entry per page, or [] if there is none."""
-    files = sorted(glob.glob(os.path.join(outdir, "ocr", "page-*.txt")))
+def read_cache(root: str, pdf: str) -> list[str]:
+    """The cached OCR text for one PDF, one entry per page, or [] if none.
+
+    Takes the PDF as well as the root, because the cache is keyed on the
+    DOCUMENT. It previously took only a directory and read `<dir>/ocr/`, which
+    is what made the cache un-addressable once two documents shared a root.
+    """
+    files = sorted(glob.glob(os.path.join(ocr_cache_dir(root, pdf), "page-*.txt")))
     return [open(f, encoding="utf-8", errors="replace").read() for f in files]
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="OCR a PDF that has no usable text layer")
     ap.add_argument("pdfs", nargs="*")
-    ap.add_argument("-o", "--outdir", help="where to write ocr/ (default: beside the PDF)")
+    ap.add_argument("-o", "--outdir", metavar="ROOT",
+                    help="root that <doc-id>/ocr/ hangs off, the same ROOT "
+                         "pdf-structure.py -o takes (default: beside the PDF)")
     ap.add_argument("--lang", help="tesseract language, e.g. jpn+eng (default: detect)")
     ap.add_argument("--dpi", type=int, default=200)
     ap.add_argument("--force", action="store_true", help="re-OCR even if cached")
@@ -191,10 +213,13 @@ def main() -> int:
                  "tesseract-ocr tesseract-ocr-eng poppler-utils poppler-data")
 
     for pdf in args.pdfs:
-        out = args.outdir or os.path.dirname(os.path.abspath(pdf))
+        root = args.outdir or os.path.dirname(os.path.abspath(pdf))
         try:
-            n, lang = ocr_pdf(pdf, out, args.lang, args.dpi, args.force)
-            print(f"  {os.path.basename(pdf)}: {n} pages ({lang})")
+            n, lang = ocr_pdf(pdf, root, args.lang, args.dpi, args.force)
+            # Name the directory, because it is no longer the one the caller
+            # passed and a reader should not have to derive it.
+            rel = os.path.join(derive_doc_id(pdf), OCR_DIRNAME)
+            print(f"  {os.path.basename(pdf)}: {n} pages ({lang}) -> {rel}/")
         except Exception as e:
             print(f"  {os.path.basename(pdf)}: FAILED — {e}")
     return 0

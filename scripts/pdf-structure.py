@@ -76,6 +76,16 @@ warnings.filterwarnings("ignore")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _pypdf_compat import import_pypdf  # noqa: E402
 
+# `slugify`, the doc-id and where a document's OCR cache lives. Shared rather
+# than defined here because `pdf-ocr.py` must spell all three identically —
+# bean `rlp5`, where `-o` meant two different things and the OCR step did not
+# compose with this one.
+from _pdf_doc_id import (  # noqa: E402
+    derive_doc_id,
+    find_ocr_cache,
+    slugify,
+)
+
 SCHEMA = "pdf-structure/v1"
 
 # ---------------------------------------------------------------- patterns
@@ -383,10 +393,6 @@ def sha256_of(path: str) -> str:
     return h.hexdigest()
 
 
-def slugify(s: str, maxlen: int = 48) -> str:
-    s = re.sub(r"[^\w\s-]", "", s.lower()).strip()
-    s = re.sub(r"[\s_]+", "-", s)
-    return (s[:maxlen].rstrip("-")) or "section"
 
 
 # ---------------------------------------------------------------- extraction
@@ -866,14 +872,10 @@ def split_sections(pages: list[str], toc: list[TocEntry]) -> list[Section]:
     return sections
 
 
-# ---------------------------------------------------------------- doc id
-
-def derive_doc_id(path: str, meta: dict[str, Any]) -> str:
-    ax = meta.get("arxiv")
-    if ax and ax.get("id"):
-        base = "arxiv-" + ax["id"].replace("/", "-")
-        return base + (f"v{ax['version']}" if ax.get("version") else "")
-    return slugify(os.path.splitext(os.path.basename(path))[0], 60)
+# ------------------------------------------------- doc id, and the OCR cache
+#
+# `derive_doc_id` and `find_ocr_cache` are imported from `_pdf_doc_id` — see the
+# block near the top for why they are not defined here.
 
 
 def ocr_pages(path: str, outdir: str | None) -> list[str]:
@@ -883,13 +885,21 @@ def ocr_pages(path: str, outdir: str | None) -> list[str]:
     binaries this script deliberately does not depend on, so producing it
     is a separate, explicit step.
     """
-    base = outdir or os.path.dirname(os.path.abspath(path))
-    for d in (os.path.join(base, "ocr"),
-              os.path.join(base, slugify(os.path.splitext(os.path.basename(path))[0], 60), "ocr")):
-        files = sorted(glob.glob(os.path.join(d, "page-*.txt")))
-        if files:
-            return [open(f, encoding="utf-8", errors="replace").read() for f in files]
-    return []
+    root = outdir or os.path.dirname(os.path.abspath(path))
+    # By the SHARED helper, not a second spelling of the doc-id. This function
+    # used to look in `root/<slugify(basename)>/ocr` — the FALLBACK spelling —
+    # while the writer used `derive_doc_id`, so for an arXiv document the two
+    # disagreed and the cache was never found. Bean `rlp5`.
+    d, legacy = find_ocr_cache(root, path)
+    if d is None:
+        return []
+    if legacy:
+        print(f"note  OCR cache found at the old flat location {d} — "
+              f"re-run pdf-ocr.py -o {root} to move it under the document's "
+              f"own directory, where a second document cannot overwrite it.",
+              file=sys.stderr)
+    files = sorted(glob.glob(os.path.join(d, "page-*.txt")))
+    return [open(f, encoding="utf-8", errors="replace").read() for f in files]
 
 
 def text_is_unusable(pages: list[str]) -> bool:
@@ -1227,6 +1237,10 @@ def main() -> int:
             print(json.dumps(artefact, indent=2))
         else:
             root = args.outdir or os.path.dirname(os.path.abspath(path))
+            # `-o` is the ROOT that `<doc-id>/` hangs off — the same meaning
+            # `pdf-ocr.py -o` now carries. The id is the one already computed by
+            # the shared `derive_doc_id` above; recomputing it here would be a
+            # second chance to disagree, which is the whole defect of `rlp5`.
             outdir = os.path.join(root, artefact["doc_id"])
             os.makedirs(outdir, exist_ok=True)
             with open(os.path.join(outdir, "structure.json"), "w") as fh:
