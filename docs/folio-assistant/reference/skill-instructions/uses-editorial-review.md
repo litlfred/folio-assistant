@@ -31,6 +31,35 @@ questions and they diverge in both directions, correctly:
 | Definition the statement is phrased in terms of | yes | yes | yes |
 | Library lemma pasted into `uses[]` from Lean | yes | yes | **no** — pollution, see below |
 
+## `interprets` is the same relation under a second field name
+
+`uses[]` is the curated list. **`interprets` states the same reader-facing fact**
+for a remark or example *about one specific block*, and the content graph counts
+**both** — since 2026-08-15, bean `i8ad`.
+
+Each editorial edge carries `editorialField` so a tool proposing an **edit** can
+still tell which field an author wrote. **They are interchangeable to a reader
+and not to a writer**, and collapsing that distinction would make an automated
+edit rewrite the wrong field.
+
+**Two caveats, both of which change what a number means:**
+
+- **`detangler-no-forward-ref` builds its own `uses`-only adjacency** and does
+  not consume the shared graph, so it is unaffected by `interprets` — and the
+  forward-pointing `interprets` edges are outside what it counts. Ten were, when
+  this was measured.
+- **The editorial graph is no longer acyclic.** Genuine editorial cycles are
+  *revealed* by counting both fields, not introduced by it. Do not "fix" one
+  without reading whether it is real.
+
+**Do not quote a count from prose — run the check against the corpus in front of
+you.** The forward-reference count was 1 when `i8ad` was measured and 4 a few
+hours later on merged content, none of it caused by the change. A number in a
+document is a claim; only a run is evidence.
+
+For impact questions — *what breaks if this changes?* — use the union, via the
+content graph's accessors, which default to it.
+
 ## The prime directive
 
 **Never populate `uses[]` from the Lean dependency graph.** Copying

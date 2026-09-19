@@ -77,48 +77,21 @@ conventions to come back to, not a path through the project.
 
 ## Content types — `document` is the base, `paper` extends it
 
-A **document** folio is structured prose: policy guidance, a standard, a report.
-A **paper** is that plus the seven block kinds whose assertion is a formal
-mathematical claim, backed by `.lean` siblings and typeset through LaTeX.
+A **document** folio is structured prose; a **paper** is that plus the block
+kinds whose assertion is a formal mathematical claim, backed by `.lean` siblings
+and typeset through LaTeX. `PaperContentAdapter` extends
+`DocumentContentAdapter`, and `DOCUMENT_BLOCK_KINDS` in
+`schemas/block-kinds.ts` is the **derived** complement of `MATH_BLOCK_KINDS`, so
+a kind added to `BLOCK_KINDS` cannot go unclassified.
 
-That relation is encoded, not just described. `PaperContentAdapter` extends
-`DocumentContentAdapter`; `MATH_BLOCK_KINDS` is written out in
-`schemas/block-kinds.ts` and `DOCUMENT_BLOCK_KINDS` is its **derived**
-complement, so a kind added to `BLOCK_KINDS` cannot go unclassified.
-
-**Profiles are a different axis from adapters, and conflating them is costly.**
-Adapters (`paper`, `dak`) partition kinds into disjoint namespaces;
-`adapterForKind` is what QA criterion scoping reads, and it must stay total and
-unambiguous. Profiles (`document`, `paper`) *nest*: every document kind is also
-a paper kind. Making `document` a third adapter would have made
-`adapterForKind` ambiguous on all eight shared kinds. When you add a content
-type, ask whether it needs different **code** or only different **rules** — if
-only rules, it is a profile plus a subclass, not an adapter.
-
-Enforcement is `content/pipeline/profile-check.ts`, run on every
-`content_validate`. It catches what schema validation structurally cannot: a
-`theorem` is a valid `theorem` whatever folio it sits in, and `constraints.ts`
-cannot read `harness.config.json`. Two rules — kind within profile, and (document
-only) no `lean` field and no `.lean` sibling, because `remark`, `example`,
-`algorithm` and `simulator` all *declare* an optional `lean` that the type
-permits and the profile forbids.
-
-**The document render path takes no TeX.** `content/pipeline/render-markdown.ts`
-assembles the folio to one Markdown file; `document_render_{md,html,pdf}` take
-it through pandoc, the PDF via weasyprint/prince/wkhtmltopdf. It never falls
-back to `latexmk`, deliberately — a PDF that silently came out of LaTeX would
-misreport what the folio needs to build, and the next person on a clean machine
-pays for that. It is registered for **both** content types, because it is the
-render that works while drafting on a machine with no TeX.
-
-**There is no `recommendation` block kind.** A normative statement is carried
-by a labelled, titled `prose` block; `skills/folio-document-adapter/normative-statements.md`
-states the convention and its limits. Adding a real kind means a builder, a Zod
-schema, a label prefix, viewer registration, constraint rows and QA criteria —
-about thirty files — and it is tracked separately rather than half-done. Note
-that `document-intake.md` still maps guideline recommendations onto
-`definition`; that predates the document profile and is wrong for a document
-folio, where `definition`'s `lean` field is required.
+**The discipline is in the skill, not here** —
+[`skills/folio-core/content-profiles.md`](skills/folio-core/content-profiles.md)
+carries why adapters and profiles are different axes (adapters partition
+disjointly and `adapterForKind` must stay total; profiles *nest*), the question
+to ask when adding a content type — different **code**, or only different
+**rules**? — what `content/pipeline/profile-check.ts` catches that schema
+validation structurally cannot, why the document render path takes no TeX, and
+why there is no `recommendation` block kind.
 
 ## Starting a new folio
 
@@ -323,9 +296,9 @@ governs — where the two disagree, the skill wins and the memory entry is wrong
 
 ## At session start
 
-**Get `beans` in hand first, before any durable work.** A fresh container has no
-`beans` on `PATH`, and the fallback that parses `beans/` directly gives you
-titles and statuses only — no bodies, no priorities, no blocking relations — so
+**Get `beans` in hand before any durable work** — the cold-start line at the top
+of this file is the whole command. A fresh container has no `beans` on `PATH`,
+and the fallback that parses `beans/` by hand gives titles and statuses only, so
 it cannot tell you what an item is or what it waits on, and you cannot claim or
 create anything with it.
 
@@ -333,60 +306,17 @@ create anything with it.
 scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
 ```
 
-**If it will not install, you are still not read-only.**
-`scripts/beans-fallback.ts` writes the same store in the same layout — same
-files, same front matter, same ids — so the CLI reads everything it writes once
-it is available again. There is no import step and no second store.
+**If it will not install you are still not read-only** — `scripts/beans-fallback.ts`
+writes the same store in the same layout, so the CLI reads everything it wrote
+once it is available. Run the pieces by hand with `beans prime`, `beans list`,
+`beans roadmap`.
 
-```sh
-bun run beans:fallback list --status todo
-bun run beans:fallback claim <id>
-bun run beans:fallback create "<title>" --status in-progress
-bun run beans:fallback note <id> "<what you found>"
-```
-
-That exists because a read-only fallback is not a fallback for an agent: it
-lets you *see* the plan and touch nothing, which is how the 2026-09-18 session
-below did its work unclaimed. `create` there refuses an exact duplicate title
-and names the bean to claim instead — the CLI's own `create` does not, and that
-is the mechanism behind the 14,688 duplicates.
-
-The sweep now does both halves of that for you: it prepends `~/.local/bin` when
-the binary is already there (so a second session does not re-install), and when
-it genuinely is missing it **runs the installer** — bounded and quiet, one
-`go install` over the module proxy, 180 s, falling through to the degraded
-reader rather than failing the hook. If the sweep still says the CLI is missing
-after that, it could not be installed here.
-
-This is a rule because skipping it is cheap and invisible. On 2026-09-18 a
-session read the sweep's then-parenthetical "run `scripts/install-beans.sh` for
-full priming", carried on reading `beans/` by hand, and completed two merged
-PRs' worth of durable work **unclaimed** — the exact failure the work plan
-exists to prevent, and one no sibling session could have seen coming. The
-installer call above is the same lesson applied one step earlier: an imperative
-somebody has to act on is weaker than the act itself.
-
-The sweep emits, in order:
-
-1. **Interaction preferences** (`.harness/interaction.json`) — first, because it
-   changes the form of every question that follows. See
-   `skills/folio-core/interaction-modality.md`.
-2. `beans prime` and `beans list`.
-3. **`beans roadmap`** — the milestone/epic structure. `beans list` is flat (100+
-   ids in creation order on this repo), which is data, not a plan; the roadmap is
-   what lets an end-of-turn report say what is *next* and why.
-4. **The commands the human can run themselves**, `beans tui` first. An agent
-   cannot drive an interactive TUI on somebody's behalf, so the only useful thing
-   to do with it is print it where they will see it — together with a
-   copy-pasteable `cd … && git switch … && beans tui` line whose path and branch
-   are **computed**, never written in. Set `BEANS_CHECKOUT_ROOT` if your clones
-   live under one predictable directory.
-5. Default-branch delta, sibling `claude/*` branch activity, CI health.
-
-Heavy triage of new commits belongs in a background subagent, not the foreground.
-
-Running the pieces by hand instead: `scripts/install-beans.sh`, then
-`beans prime`, `beans list`, `beans roadmap`.
+**The discipline is in the skill, not here** —
+[`skills/folio-core/todo-manager.md`](skills/folio-core/todo-manager.md) carries
+the fallback's commands and why a read-only one is no fallback for an agent, the
+2026-09-18 session that did two merged PRs' worth of work **unclaimed**, and
+what the session-start sweep emits and in what order. Set `BEANS_CHECKOUT_ROOT`
+if your clones live under one predictable directory.
 
 ## Agentic harness — interaction model
 
@@ -517,30 +447,15 @@ to spend the words: **do not start the topic.**
 ## More
 
 - **`uses[]` and `interprets` are the EDITORIAL relation** — what a *reader*
-  must have read to follow a block. Agent/human maintained, part of the authored
-  content. `uses[]` is the curated list; `interprets` states the same
-  reader-facing fact for a remark or example about one specific block, and since
-  2026-08-15 (bean `i8ad`) `content-graph.ts` counts both. Each editorial edge
-  carries `editorialField` so a tool proposing an *edit* can still tell which
-  field an author wrote — they are interchangeable to a reader, not to a writer.
-  **Two caveats worth knowing before you quote a number:**
-  `detangler-no-forward-ref` builds its own `uses`-only adjacency in
-  `loadChapterGraph` and does **not** consume `content-graph`, so it is
-  unaffected and ten forward-pointing `interprets` edges are outside what it
-  counts; and the graph is no longer acyclic — genuine editorial cycles are
-  revealed rather than introduced (see `i8ad`). **Do not quote a count from
-  here**: it was 1 when `i8ad` was measured and 4 a few hours later on merged
-  content, none of it caused by the change. Run the check against the corpus
-  in front of you.
-  It is **not** the formal dependency graph; that is machine-derived from
-  `lean.ref`. The two diverge legitimately in both directions (a proof invokes
-  `simp` lemmas nobody reads about; a theorem is motivated by an example it
-  never cites). **Never populate `uses[]` from Lean** — it destroys the signal
-  every ordering metric is computed from. For impact questions ("what breaks if
-  this changes?") use the union via `content/pipeline/content-graph.ts`, whose
-  accessors default to it. Auditing: the `uses` QA axis (mechanical) plus the
-  `uses-editorial-review` skill (human/agent). Contract: `BlockBase.uses` and
-  `RemarkBlock.interprets` in `schemas/types.ts`.
+  must have read to follow a block. Agent/human maintained, authored content;
+  **not** the formal dependency graph, which is machine-derived from `lean.ref`.
+  **Never populate `uses[]` from Lean** — it destroys the signal every ordering
+  metric is computed from. Contract: `BlockBase.uses` and
+  `RemarkBlock.interprets` in `schemas/types.ts`; union accessors in
+  `content/pipeline/content-graph.ts`. The discipline, the two caveats that
+  change what a count means, and why a count in prose is a claim rather than
+  evidence: [`uses-editorial-review`](skills/folio-core/uses-editorial-review.md)
+  (agent/human) plus the mechanical `uses` QA axis.
 - Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
   LeanDojo) — where each earns a place and how it wires into existing skills:
   `docs/proposals/llm-authoring-tool-integration.md`.

@@ -167,10 +167,18 @@ a sibling's edit moved it to 261 before this branch's additions brought it back.
    platform's own prose attributed a section — so clearing the backlog would
    have meant restating a folio's table of contents here, which is the boundary
    violation this whole plan exists to avoid.
-3. Move the **verified-destination** sections (5, 6, 9, 14, 16, 17, 18), one PR
-   each, leaving a pointer of roughly section 12's length.
-4. Write the four missing skills (7, 8, 10, 15), then move.
-5. Wire `check:agents-xref --strict` into CI once the backlog is zero.
+3. ✅ Moved the verified-destination sections (5, 6, 9, 14, 16, 17, 18).
+4. ✅ Wrote the four missing skills (7, 8, 10, 15) and moved them.
+5. ✅ `check:agents-xref:strict` is in CI.
+6. ✅ Sections 2, 11 and 19 — the three the first pass left partly debt.
+   **§2** got the skill it had none for, `content-profiles`. **§11** kept the
+   bootstrap half (getting `beans` in hand is what an agent needs before it can
+   ask for anything) and moved the sweep's contents to `todo-manager`. **§19**
+   was mostly pointers already; its one substantive bullet, the `uses[]` /
+   `interprets` editorial relation, went to `uses-editorial-review`.
+
+**Done: 1,289 lines → 566.** Every one of the 19 sections is still present, as
+a pointer or as genuine bootstrap; none was deleted.
 
 **Step 1 comes first and already has.** Every later step is a move, and a move
 without the check is a move whose damage cannot be told from the 16 findings
