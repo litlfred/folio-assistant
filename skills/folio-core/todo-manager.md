@@ -316,6 +316,11 @@ print(f"{len(m)} exact match(es)")
 
 - **≥ 1 match** → do **not** create. Claim the existing bean instead:
   `beans update <id> --status in-progress --body-append "Claimed by <branch>"`
+  — and note that the claim is **branch-local**: a sibling reading
+  `origin/main` sees `todo` until your PR exists, so it announces rather than
+  reserves. Also `git fetch origin main` and check the open PR list for the
+  bean id. Two sessions claimed one bean 61 s apart on 2026-09-19 and shipped
+  two PRs. [`bean-coordination.md` §"A claim is branch-local"](bean-coordination.md).
 - **0 matches** → `beans create "$T" --type task`
 
 `--search` is a fuzzy Bleve query, so the exact-title comparison inside the
