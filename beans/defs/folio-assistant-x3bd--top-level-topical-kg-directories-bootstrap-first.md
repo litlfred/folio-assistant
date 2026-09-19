@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-09-19T06:54:32Z
+updated_at: 2026-09-19T06:55:21Z
 ---
 
 
@@ -92,3 +92,5 @@ AND THAT MAKES THE GATEWAY SYMMETRIC, WHICH IS A GOOD SIGN RATHER THAN A CONSOLA
 OPEN QUESTION THIS RAISES, NOT DECIDED HERE: whether bootstrap declares a `tools` graph at all. The earlier sketch had { id: bootstrap, path: bootstrap/, graphs: [cat-harness, tools, schemas] }. If bootstrap calls no tool, `tools` may be wrong there — or it may still be right, because a Tool node is a DESCRIPTION of a tool and describing what exists is exactly what the README's 'tool overview' section does. The distinction is between declaring tools bootstrap CAN CALL and declaring tools it can TELL YOU ABOUT, and the graph kind does not currently separate those. Worth resolving before the directory is created rather than after, since it is one line in cat-harness.json and a wrong one is the dh4f defect shape (a consumer scanning for something that is not there).
 
 NOTE FOR THE README'S 'TOOL OVERVIEW' SECTION: it stays, and it is now unambiguously a POINTER — these are the tools cat-harness gives you once you load it, not tools available here. Written the other way it would promise a capability bootstrap has just been forbidden.
+
+_2026-09-19T06:55:21Z_ — USER STORY DECISION: DEFERRED, NOT TAKEN. Owner 2026-09-19: 'do not adopt SGUserStory now. bean for later as part of bean to get datamodel for DAK. we can relate them later.' So the three options I put up here — adopt smart-base's IRI, mint our own under FOLIO_NS, or mint-with-equivalence — are all OFF the table for now, and NOTHING in bootstrap/ should reference a user story term. The full finding has been moved to its home, bean cz17 ('Migrate dak.json in: the DAK type is ours, and its Logical Model is pending upstream'), which is the DAK data-model bean; it is recorded there in full so that bean does not re-derive it. WHY THAT IS THE RIGHT HOME AND THIS ONE IS NOT: the finding arrived here because the README spec asks for one user story, but the QUESTION it raises — whose vocabulary owns the term, and how our Requirement relates to SGRequirements — is a DAK data-model question. Leaving it here would have made bootstrap's directory design wait on a WHO alignment decision it does not depend on. CONSEQUENCE FOR THE README, and it is small: the 'one user story' section is prose in the README, not a typed node, so it needs no schema and no term. It can be written before any of this is settled. If a later draft finds itself wanting a userStory: { capability, benefit } field to write that section, that is the signal the deferral has been reached, not a reason to reopen it early.

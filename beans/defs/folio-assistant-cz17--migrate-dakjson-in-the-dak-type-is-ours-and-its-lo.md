@@ -4,7 +4,7 @@ title: 'Migrate dak.json in: the DAK type is ours, and its Logical Model is pend
 status: todo
 type: task
 created_at: 2026-09-18T21:36:56Z
-updated_at: 2026-09-18T21:36:56Z
+updated_at: 2026-09-19T06:55:21Z
 ---
 
 
@@ -75,3 +75,13 @@ A repository carrying `dak.json` is recognised as a DAK instance by the same
 machinery that recognises a harness instance; the nine components resolve to
 real typed content rather than `unknown`; and no consumer reading and
 rewriting a real `dak.json` loses a field.
+
+_2026-09-19T06:55:21Z_ — USER STORIES BELONG TO THIS BEAN, DEFERRED HERE DELIBERATELY BY THE OWNER, 2026-09-19: 'do not adopt SGUserStory now. bean for later as part of bean to get datamodel for DAK. we can relate them later.' The finding arrived while designing bootstrap/ (bean x3bd) and is recorded in full there; this is its home, because it is a DAK data-model question and not a bootstrap one.
+
+WHAT WAS FOUND, so this bean does not have to re-derive it. Measured 2026-09-19 against a fresh shallow clone of WorldHealthOrganization/smart-base. (1) input/fsh/extensions/SGUserStory.fsh EXISTS and is two fields: `extension contains SGString named capability 1..1` and `SGString named benefit 1..1`, described as 'As a Actor I want to capability so that benefit'. It names no actor because it is an EXTENSION attached to something that already has one — attaching rather than declaring is what makes two fields sufficient. (2) It attaches to SGRequirements (input/resources/StructureDefinition-SGRequirements.json), which profiles FHIR Requirements and adds exactly three extensions: SGTask, Satisfies, SGUserStory. Base FHIR Requirements supplies `actor` (0..* canonical to ActorDefinition) and `statement` (key, label, conformance, requirement, satisfiedBy). So role, task, satisfies and story are one resource, and none of it needed a new type. (3) smart-base MODELS A SKILL AS A REQUIREMENTS INSTANCE — input/fsh/actors/SGAuthoring.Skills.*.fsh (ReviewAndApproveContent, L2Authoring, L3Authoring, ContentReview, Translation, Publication, ProjectManagement), each with actor pointing at an SGAuthoring.Persona.*, extension[task] codings, one extension[userstory], and numbered statements. OUR Skill is the instruction body and our Role carries skills[]; these are compatible but NOT the same node, and that mismatch is the thing most likely to bite an import.
+
+AND WE HAVE ALREADY REBUILT MOST OF SGRequirements WITHOUT THE LABEL. skills/requirements/*.json here — seven files, agent-workflow.json at the root of the lattice — carry { id, title, description, actors[], statements[{ key, label, conformance, requirement, satisfiedBy[{kind, ref}] }] }. That is FHIR Requirements field for field, conformance codes included, arrived at independently. WHAT IS MISSING IS EXACTLY THE TWO EXTENSIONS: no task, no user story. So adopting later is two optional fields on a schema that already exists, not a new node kind, directory, builder, viewer or QA family.
+
+THE DECISION DEFERRED, in the owner's words 'we can relate them later': whether to adopt SGUserStory's IRI (http://smart.who.int/base/StructureDefinition/SGUserStory) or mint a folio term and assert an equivalence. Adopting makes a DAK folio's stories literally the same objects as ours; minting keeps the harness free of a WHO dependency, which is the direction rule enforced everywhere else in this repo. Note that this bean has already taken the ADOPT side once, for a different object and with a stated reason — DAK_TYPE points at http://smart.who.int/base/StructureDefinition/DAK via SMART_BASE_NS, because the DAK logical model is WHO's. Whether the same argument carries to a user story is the open question: a DAK is WHO's concept, a user story is not.
+
+WORTH LIFTING WHENEVER THIS IS PICKED UP, independent of the IRI decision: input/fsh/models/UserScenario.fsh writes `description[x] 1..1 string or uri` — the markdown inline OR a URI to a markdown file relative to the repository root. That is 'brief in the schema, rich in the docs' made STRUCTURAL rather than editorial, and it is the same problem the folio README split (generated markers vs authored prose) solves a different way.
