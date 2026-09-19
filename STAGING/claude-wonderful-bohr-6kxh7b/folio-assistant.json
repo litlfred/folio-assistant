@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T10:47:59.190Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/08549b23d5ab2487aa034f3b727cd711b2f41629",
-  "sourceCommitSha": "08549b23d5ab2487aa034f3b727cd711b2f41629",
-  "sourceCommitAt": "2026-09-19T10:46:31Z",
+  "generatedAt": "2026-09-19T10:53:06.829Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ad6282137e6ff36ce792381e829920ee95861e68",
+  "sourceCommitSha": "ad6282137e6ff36ce792381e829920ee95861e68",
+  "sourceCommitAt": "2026-09-19T10:51:35Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 161,
+    "Skill": 162,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -1176,6 +1176,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/directory-conventions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bpmn-processes",
+      "title": "Processes are BPMN, and the diagrams are executable",
+      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/bpmn-processes.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/kg-navigation",
@@ -3864,6 +3880,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bib-qa",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/block-density",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/canonical-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/chapter-complexity-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/ci-health",
@@ -3932,9 +3949,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/test-engineer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/todo-manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/turn-reporting",
@@ -19183,8 +19198,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "692e60a782d478c983e7c4b253f8a041e8a479fe",
+    "sha": "f0809fdae98bab1ee670f38e54d2d05377e2cd77",
     "pr": "385/merge",
-    "run": "35438315853"
+    "run": "35438542584"
   }
 }
