@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-19T10:48:00Z
-updated_at: 2026-09-19T10:48:00Z
+updated_at: 2026-09-19T10:59:37Z
 ---
 
 Owner, 2026-09-19:
@@ -52,13 +52,37 @@ rather than rediscovering it and proposing a rename.
 
 ## Done when
 
-- [ ] `fsh-guts` is a registered graph kind, `renderable: false`, and the
+- [x] `fsh-guts` is a registered graph kind, `renderable: false`, and the
       site build demonstrably skips it — a test, not an assumption
 - [ ] `<base>/fsh-guts.jsonld` is exported alongside the other renderings
-- [ ] the four existing proposals are moved into it
-- [ ] `docs/` carries no design proposal
+- [x] the four existing proposals are moved into it
+- [x] `docs/` carries no design proposal — the directory no longer exists
 
 ## Not in this bean
 
 The viewer (dead fish icon, counter, dialog) is its own bean — it is UI work
 with a different shape and should not hold up the store.
+
+## Render exclusion is now checked, not reasoned
+
+`scripts/tests/fsh-guts-not-rendered.test.ts`. The earlier claim was an
+argument — root directory, Jekyll source is `docs/<stub>`, therefore safe —
+and that is the kind of reasoning that stops being true silently. **The site
+root already moved once this month** (`x4a6`, `docs/` to `docs/<stub>`);
+a future move putting the two in one tree would have republished the
+trashcan with nothing complaining.
+
+Six assertions, and two of them exist so the suite cannot pass vacuously:
+that the directory exists at all, and that at least one workflow still
+declares a Jekyll `source:` for the regex to find. Without those, a
+renamed workflow key would make every other assertion pass over an empty
+list — the `pzdv` shape.
+
+**Proven to fail:** copied `fsh-guts/` into `docs/folio-assistant/` and
+both containment assertions fired; removed it and all six pass.
+
+Two further assertions cover the store's own contract: every node declares
+`$schema: folio-fsh-guts/v1`, and every moved node records `movedFrom`.
+The second is what stops a node here being an orphan.
+
+Remaining: `<base>/fsh-guts.jsonld`. Not done in this pass.
