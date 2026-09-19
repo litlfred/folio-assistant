@@ -72,7 +72,7 @@
       <bpmn:incoming>C01</bpmn:incoming>
       <bpmn:outgoing>C02</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Task_AuthorFsh" name="Author FSH profiles&#10;[l3-fhir-authoring]">
+    <bpmn:userTask id="Task_AuthorFsh" name="Author FSH profiles&#10;[l3-fhir-authoring]">
       <bpmn:extensionElements>
         <folio:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
@@ -80,7 +80,7 @@
       <bpmn:incoming>C06</bpmn:incoming>
       <bpmn:incoming>C10</bpmn:incoming>
       <bpmn:outgoing>C03</bpmn:outgoing>
-    </bpmn:serviceTask>
+    </bpmn:userTask>
     <bpmn:serviceTask id="Task_Sushi" name="SUSHI compile → FHIR JSON&#10;[l3-fhir-authoring]">
       <bpmn:extensionElements>
         <folio:skill ref="l3-fhir-authoring" />
@@ -131,6 +131,7 @@
     <bpmn:serviceTask id="Task_PublishIg" name="Publish the IG site&#10;[content-publish]">
       <bpmn:documentation>Release authorisation and review follow draft-to-publication.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:fulfilment kinds="person system" reason="publishing the built IG site is mechanical; the lane records who is accountable for what is live, and a publication manager may also publish by hand." />
         <folio:skill ref="content-publish" />
         <folio:skill ref="ig-publication" />
       </bpmn:extensionElements>
