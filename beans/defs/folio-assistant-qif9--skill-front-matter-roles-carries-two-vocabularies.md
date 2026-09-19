@@ -144,3 +144,26 @@ than to a skill.
 until this field either carries the swimlane vocabulary or is replaced by
 something that does. That is a smaller, answerable question than "triage
 110 skills".
+
+## Default taken 2026-09-19 21:0x — option 4, documented rather than fixed
+
+No answer after ~40 minutes, so the stated default applied: leave the
+field and write down that it is inert, so the next agent does not spend an
+afternoon rediscovering it. Deliberately the CHEAPEST option rather than
+the best — option 1 remains the one that pays for itself, and it is still
+open.
+
+Recorded in **`skills/folio-core/role-model.md`**, immediately under the
+four-object table. That placement is the point: `role-model.md` is the
+authority on what a Role is, and **its own front matter declares
+`roles: [reader, collaborator, owner]`** — the document defining the
+vocabulary uses the field with a vocabulary it does not define. A reader
+meeting the field meets the correction in the same breath.
+
+The note says three things and no more: the two vocabularies with counts,
+that nothing reads the field, and — the operative instruction — **do not
+read a skill's `roles:` as saying who performs it, and do not add a
+binding on its authority.**
+
+This bean stays OPEN. Documenting is not fixing; 306 annotations still
+resolve to nothing, and `y1w9` is still blocked.
