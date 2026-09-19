@@ -59,6 +59,8 @@
 
 import { z } from "zod";
 
+import { NoteAnchorSchema } from "./note-anchor.js";
+
 /**
  * A task, addressed as the pair it actually is.
  *
@@ -230,8 +232,31 @@ export const CarriedNoteSchema = z.object({
   /** ISO 8601. */
   createdAt: z.string().min(1),
   updatedAt: z.string().optional(),
-  /** Block label this is attached to, when it is attached to one. */
+  /**
+   * Block label this is attached to, when it is attached to one.
+   *
+   * **Kept, not deprecated.** Every note in the corpus carries this and the
+   * e2e fixtures address it directly. {@link NoteAnchorSchema} does not
+   * replace it — an anchor of kind `block` IS this field with its state made
+   * explicit, and `anchorOf` derives one from a note that has only this.
+   */
   targetLabel: z.string().optional(),
+  /**
+   * Where this note is attached, as a three-state answer.
+   *
+   * **The state `targetLabel` cannot express is page-global.** With an
+   * optional string, a note somebody deliberately floated to the top of a page
+   * and one that fell off a block are both `undefined` — and the second is a
+   * defect while the first is a choice, so a tool that cannot tell them apart
+   * can only guess which to report.
+   *
+   * Optional because absent is its own answer: a note with no `anchor` has not
+   * been re-anchored since the field existed, and {@link anchorOf} reads its
+   * position off `targetLabel` exactly rather than guessing. Defaulting it to
+   * `none` at rest would erase that distinction and re-label every legacy
+   * block-attached note as unattached.
+   */
+  anchor: NoteAnchorSchema.optional(),
   /** The knowledge-graph edges — see {@link NoteTagsSchema}. */
   tags: NoteTagsSchema.default(EMPTY_NOTE_TAGS),
 });

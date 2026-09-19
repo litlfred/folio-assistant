@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5oai
-title: 'Stickies and beans attach to content blocks, and move between them — the relation is declared in prose and absent from the schema'
-status: todo
+title: Stickies and beans attach to content blocks, and move between them — the relation is declared in prose and absent from the schema
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:57:53Z
-updated_at: 2026-09-19T11:33:03Z
+updated_at: 2026-09-19T11:41:20Z
 ---
 
 ## The ask, owner 2026-09-19 (verbatim)
@@ -68,8 +68,12 @@ chat that is gone.
 ## Done when
 
 - [ ] the duplicate-vs-move reading is confirmed or corrected
-- [ ] `Todo` and the bean schema carry a block anchor, with **page-global as a
-      real third state** rather than a sentinel block id
+- [ ] `Todo` carries a block anchor, with **page-global as a real third state**
+      rather than a sentinel block id
+- [ ] **beans carry NO anchor** — owner's rule, 2026-09-19. A bean records that
+      a move happened (a note, which `bean-link.ts` already writes); it is not
+      itself pinned to a block. Done when the rule is written where somebody
+      about to "finish the job" will read it, and guarded.
 - [ ] `todo-graph.ts`'s prose claim is either true or removed — it has been
       asserting an unimplemented relation
 - [ ] move / transfer / duplicate exist, with a test proving a move **re-anchors
@@ -99,3 +103,8 @@ _2026-09-19T11:29:23Z_ — CORRECTION to my note above, measured rather than ass
 _2026-09-19T11:33:03Z_ — CORRECTION TO THIS BEAN'S OPENING PREMISE — it is wrong, and materially. I wrote that 'schemas/todo.ts carries no block field at all'. It does, by inheritance: TodoNodeSchema extends CarriedNoteSchema, and carried-note.ts:234 declares 'targetLabel: z.string().optional()' with the comment 'Block label this is attached to, when it is attached to one.' I grepped the file and not the base it extends. Worse, the field is LIVE, not merely declared: test/sticky-todos.e2e.ts exercises it with sec:page-one, sec:page-two and an ORPHAN case sec:nowhere, so block attachment already works end to end. Second time this session I have asserted an absence without checking composition — the first was claiming the landing page bakes text into an image when it renders markdown over it. The pattern is mine to watch: grep the file, miss the base. WHAT IS ACTUALLY MISSING, re-measured 2026-09-19: (1) targetLabel is a LABEL, not a node id, and its absence conflates 'unattached' with 'page-global', so page-global still needs a real third state rather than undefined; (2) BEANS have no anchor at all — bean-graph.ts declares the graph, not the node, and beans do not extend CarriedNote, so 'same behaviour applies to beans' is genuine new work; (3) there are no move / transfer / duplicate operations. The bean is smaller on (1) and unchanged on (2) and (3).
 
 _2026-09-19T11:33:03Z_ — OWNER ANSWER 2026-09-19 to the open image question: 'a note can hold the image as part of its theme. and can be associate to other content nodes whch jave their own avatars (see sibling?).' So the image belongs to the THEME, not the note body — which fits iurf cleanly, since a Theme is already the thing that carries presentation and a note already references a theme by id. Theme gains an avatar/image; the note gains nothing. And notes associate to other content nodes that have THEIR OWN avatars, so an avatar is a property of a node generally rather than of stickies. Measured: NO avatar concept exists anywhere — no hit for 'avatar' in schemas/, src/, skills/ or harness.json. harness.json's images[] carries a free 'role' (mark, browser-icon, landing), which is the nearest existing shape and a plausible home. Open: '(see sibling?)' is unresolved — I could not find a sibling PR or bean introducing avatars. If it names one, point me at it rather than letting me invent a second vocabulary for the same thing.
+
+_2026-09-19T11:35:35Z_ — '(see sibling?)' RESOLVED as far as this checkout can. No open PR in folio-assistant introduces avatars — checked all 7 open PRs (#407, #403, #391, #386, #231, #229, #210), none mentions them. So it is not a sibling PR. The reading that does hold up: harness.json ALREADY gives this instance an avatar — 'icon: "mark"' resolving to an images[] entry with role 'mark' (the c@t mark), alongside role 'browser-icon' and three 'landing'. A SIBLING INSTANCE — another folio built on this platform — declares its own the same way. So 'other content nodes which have their own avatars (see sibling?)' reads as: a node's avatar works like an instance's mark, see how a sibling has one. CONSEQUENCE FOR THE BUILD, and it is the useful part: reuse images[].role rather than invent an avatar vocabulary. The shape exists at INSTANCE level and the ask extends it to CONTENT NODE level; a new parallel field would be two spellings of one concept, which is the drift this repo keeps paying for. Flagging rather than asserting: if 'sibling' meant something else, say so before the avatar work starts.
+
+
+_2026-09-19_ — OWNER RULE, verbatim: "beans no anchor. no change bean schema. RULE." This OVERRIDES my own re-measurement two notes up, which listed "BEANS have no anchor at all ... so 'same behaviour applies to beans' is genuine new work" as item (2) of what is missing. It is not work; it is a boundary. The reading that holds: a bean says WHAT IS BEING WORKED ON, a sticky says WHERE A NOTE SITS ON A PAGE. The original ask's "same behaviour applies to beans" is answered by its own next sentence — "beans can be used as an audit log of what happened with agent as they moved through". A bean RECORDS that a move happened; it is not itself a thing pinned to a block. So a move is written to a bean as a NOTE, which workflow/bean-link.ts already does with its `note` op and which needs no new field. Two practical reinforcements for the next agent tempted to "finish the job": giving a bean an anchor would put a rendering position into the work plan, the same conflation schemas/theme.ts already refuses for themed todos; and a bean's front matter is written by a THIRD-PARTY CLI this repo does not own, so a field added here is one nothing guarantees survives a round-trip. Recorded in schemas/note-anchor.ts module docs under "Beans get NO anchor" and guarded by a test, because a rule that lives only in a bean note is a rule the next agent does not find. No bean schema was touched — the rule arrived before I had built that half, so there is nothing to undo.
