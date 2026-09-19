@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g7vb
 title: 'TOPOLOGY: mixed modalities are the normal case, so the axes must vary independently'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-09-19T15:59:30Z
+updated_at: 2026-09-19T16:08:59Z
 parent: folio-assistant-5a3l
 ---
 
@@ -73,3 +73,39 @@ names an incompatible pair actually get refused is the work.
 
 Also settled: `private repo` x `github-pages` is a possible deployment
 scenario and must NOT become a sixth pair. Do not re-litigate it.
+
+## Closed 2026-09-19 — all three criteria met
+
+Criteria 1 and 2 were already satisfied by `deployment-topologies.md`
+§3–§4 when that merged; verified rather than redone. Criterion 3 shipped in
+[PR #433](https://github.com/litlfred/folio-assistant/pull/433).
+
+- **[x] every scenario in #363 expressed as axis values** — §4's table, and
+  it found axis 6 and the `ingest` mode in the process. Nothing was left
+  over.
+- **[x] the incompatible pairs are listed, each with its reason** — §3, five
+  rows, each an entailment of the mechanism rather than a report.
+- **[x] a declaration naming an incompatible pair is refused** —
+  `topologyConflicts()` in `schemas/cat-harness.ts`, thrown from
+  `readDeclaration` as `TopologyConflictError`. 17 tests; the refusal was
+  proved load-bearing by disabling it.
+
+Four axes declared, not ten: `forge`, `network`, `modelProvenance`,
+`outwardFacing` — exactly the ones the rules read, joined with the existing
+`publication.host`. The other six would be vocabulary nothing consumes.
+
+**Every axis is optional and absent is a third state**, so nothing in
+existence is refused. The first test written is that this repository's own
+`harness.json` still reads — the owner's "dont encode rules against a
+working setup", as a test rather than an intention.
+
+## One open question, defaulted rather than left hanging
+
+`air-gapped` × `modelProvenance: mixed` is NOT refused, although `hosted`
+is. The entailment holds only if `mixed` necessarily means a LIVE hosted
+component, and a deployment could mean "local models, hosted path
+configured and disabled". A counter-example is conceivable, which is the
+bar §3 sets, so it stayed out — recorded in a test so it reads as a
+decision. Put to the owner on
+[#371](https://github.com/litlfred/folio-assistant/issues/371#issuecomment-5743325632)
+with the shipped behaviour as the default.
