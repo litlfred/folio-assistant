@@ -618,7 +618,25 @@ function renderMeta() {
   // A timestamp is data rather than a sentence, and is shown as the document
   // wrote it.
   if (loaded.generatedAt) bits.push(String(loaded.generatedAt).slice(0, 19).replace("T", " ") + "Z");
-  m.textContent = bits.join(" · ");
+
+  // Each bit is ISOLATED, and this line is where it stopped being optional.
+  //
+  // Rendered right to left, the line was "source commit · JSON-LD · nodes ·
+  // commit dac179a6 · 2026-09-19 … 1148": the digits of "1148 nodes" are a
+  // weak run, the middots between the bits are neutral, and the bidi
+  // algorithm merged them into one sequence and moved the number to the far
+  // end of the line. The count was no longer next to the word it counted.
+  //
+  // Found by LOOKING at the page, in the language, which is the half of the
+  // accessibility rule no checker performs: every assertion still passed,
+  // because textContent is in DOM order whatever the display does.
+  m.textContent = "";
+  bits.forEach((b, i) => {
+    if (i > 0) m.appendChild(document.createTextNode(" · "));
+    const bdi = document.createElement("bdi");
+    bdi.textContent = b;
+    m.appendChild(bdi);
+  });
 
   // A way back to the document this page renders.
   //
@@ -636,7 +654,7 @@ function renderMeta() {
   m.appendChild(document.createTextNode(" · "));
   const src = document.createElement("a");
   src.href = DOC;
-  src.textContent = T("JSON-LD");
+  src.appendChild(document.createElement("bdi")).textContent = T("JSON-LD");
   // The visible text is the format; the accessible name says what it gets you
   // and from where, because "JSON-LD" out of context names a syntax rather
   // than a destination.
@@ -648,7 +666,7 @@ function renderMeta() {
     const c = document.createElement("a");
     c.href = String(loaded.sourceCommit);
     c.rel = "noreferrer";
-    c.textContent = T("source commit");
+    c.appendChild(document.createElement("bdi")).textContent = T("source commit");
     m.appendChild(c);
   }
 }

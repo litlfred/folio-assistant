@@ -262,6 +262,27 @@ test.describe("kg viewer — with a catalogue", () => {
     await expect(note).toContainText("has not been reviewed by a person");
   });
 
+  test("the provenance line's parts are isolated, so a count stays beside its noun", async ({ page }) => {
+    // Found by LOOKING at the right-to-left render, not by a checker. The line
+    // was "source commit · JSON-LD · nodes · commit dac179a6 · … 1148": the
+    // digits are a weak run, the middots between parts are neutral, and the
+    // bidi algorithm merged them and moved the number to the far end of the
+    // line, away from the word it counted.
+    //
+    // Every assertion still passed while it was wrong, because textContent is
+    // in DOM order whatever the display does — which is why this one measures
+    // geometry.
+    await page.goto(`${FIXTURE}?lang=qaa`);
+    const parts = page.locator("#meta bdi");
+    expect(await parts.count()).toBeGreaterThan(1);
+    await expect(parts.first()).toHaveText(/^\d+ nodes$/);
+
+    // In RTL the first part sits at the RIGHT, and the last to its left.
+    const first = await parts.first().boundingBox();
+    const last = await parts.last().boundingBox();
+    expect(first!.x).toBeGreaterThan(last!.x);
+  });
+
   test("the graph's own words stay in the graph's language", async ({ page }) => {
     // The other half of the boundary, asserted rather than described. If this
     // ever fails, the note above has become a lie.
