@@ -385,6 +385,18 @@ jobs:
           cp -rT test/results/witnesses ./_site/assets/qa
           echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA witness document(s)"
 
+      # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
+      # same reason the witness copy above is: staging publishes the SAME
+      # tiles, so a target that is missing here is a 404 a reviewer will hit
+      # on the staging site while the gate stayed green on main. The bean
+      # `udx8` defect -- a knowledge-graph tile pointing at `<base>/kg/`,
+      # where nothing has ever been published -- shipped for exactly as long
+      # as nothing checked the target rather than the attribute.
+      #
+      # A test asserts both workflows carry this step.
+      - name: Check the navbar tiles resolve against the built site
+        run: bun run scripts/site-links.ts --site ./_site
+
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 
