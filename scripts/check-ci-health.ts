@@ -189,7 +189,12 @@ if (markdown) {
         : h.health === "superseded"
           ? `last failed ${h.daysSinceLastRun}d ago; file changed since — stale, not green`
           : h.health;
-    console.log(`  ${mark} ${h.workflow.padEnd(40)} ${detail}`);
+    // The mark, not just the detail: a reader scans the column of ticks. A ✓
+    // beside a workflow whose newest run has not settled is the misread bean
+    // `gpuu` records — it says the head passed, when the head has not reported.
+    const pendingMark = h.newestUnsettled ? "⏳" : mark;
+    const pendingNote = h.newestUnsettled ? " (newest run has not reported — verdict may predate HEAD)" : "";
+    console.log(`  ${pendingMark} ${h.workflow.padEnd(40)} ${detail}${pendingNote}`);
   }
 }
 
