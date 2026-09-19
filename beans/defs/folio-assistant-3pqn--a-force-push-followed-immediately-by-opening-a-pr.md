@@ -83,3 +83,60 @@ Where that leaves the narrowing, stated as what is left rather than as a new hyp
 Corroborating, from the same window: another session hand-dispatched `code-quality-gates` for its own #409 at 11:52:34Z (run `35441299274`, event `workflow_dispatch`) — so two sessions hit this within ninety seconds of each other.
 
 Unchanged and still the part worth acting on, agreeing with the notes above: **a PR with zero checks renders identically to one whose checks are green.** No red X, no failure, no pending row — just an empty list. An agent following "never merge red" merges it happily, because it is not red. The check wants to be POSITIVE — did the expected set of checks report at all on this head, with absent as a third state — rather than a search for failures.
+
+_2026-09-19T13:00Z_ — EIGHTH observation, contributed for its **denominator** rather than as another failure.
+
+The notes above conclude "intermittent" and offer no better hypothesis, which I
+agree with. But this bean records only the cases that FAILED, so it cannot say
+how often — and a rate is what turns "intermittent" from a description into
+something measurable. One branch, one session, four pushes to the same open PR
+inside 35 minutes, all plain `git push` with no force:
+
+| head | `pull_request` run | verdict |
+|---|---|---|
+| `b095cfdf8` | run 1010 | fired |
+| `684b78ad1` | run 1017 | fired |
+| `fd4828efb` | run 1032 | fired |
+| `412c00cd2` | **none** | dropped |
+| `b55b700d1` | **none** | dropped |
+| `08dfba029` | run 1045 | fired |
+
+**4 of 6 fired, so ~33 % dropped on one branch in one sitting** — and **the two
+drops are CONSECUTIVE.** (I first recorded this table as 3 of 4 / ~25 %, before
+`b55b700d1`'s absence was established: its `workflow_dispatch` run 1041 existed
+and I mistook that for coverage. Correcting rather than appending, since a stale
+rate in a shared bean is worse than none. The lesson is the bean's own rule
+applied to me: a `workflow_dispatch` run on a sha is not evidence that the
+`pull_request` event fired for it, and only the latter is what a PR's checks
+show.)
+
+The adjacency is the part worth having. The seventh observation above wondered
+whether the drops "cluster in windows" after two sessions hit this ninety seconds
+apart; two consecutive drops inside one branch's push sequence, with three
+successes before and one after, is a second independent sign of that. It also
+means **~33 % is not a per-push probability** — if drops cluster, the per-push
+figure is not the useful number and the window is. Established from
+`list_workflow_runs` on `code-quality-gates.yml` filtered to the branch AND
+`event=pull_request`, comparing `head_sha` against the PR's head — not from the
+PR page, per this bean's own rule. Fixed the same way: `workflow_dispatch` with
+`ref=claude/fervent-mccarthy-nw4olk`.
+
+This is #414, on `claude/fervent-mccarthy-nw4olk` — a REUSED branch name whose
+previous PR (#409) had just merged. So it is the same branch class as the first
+six observations, and three of its four pushes fired anyway. That is a second,
+independent reason the reused-branch hypothesis does not hold: the seventh
+observation showed a fresh branch name dropping an event, and this one shows a
+reused branch name firing three times in a row. The property is not the branch.
+
+Caveat on the number, because a rate invites over-reading: n=6 on one branch in
+one session gives a very wide interval, and the adjacency above means the drops
+are probably NOT independent, so a single percentage is the wrong summary
+statistic for them. Treat this as **"common, and clustered"** — which is the
+load-bearing part, and is also what makes the workaround discipline matter:
+after one dropped push, expect the next one to drop too rather than assuming it
+was a one-off.
+
+Unchanged, and agreeing with every note above: **zero checks renders identically
+to green.** An agent following "never merge red" merges it happily. The check
+wants to be positive — did the expected set report on THIS head, with absent as
+a third state.
