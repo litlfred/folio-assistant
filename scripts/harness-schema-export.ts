@@ -38,6 +38,7 @@ import { fileURLToPath } from "node:url";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { CatHarnessDeclarationSchema, artefactStub, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
+import { tools } from "../tools/index.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 
@@ -232,6 +233,66 @@ export function staleSkillIoIds(opts: SchemaExportOptions = {}): Array<{ source:
  * Separate from `--check` on the repo's own rule: a check that writes can pass
  * by fixing what it was asked to report.
  */
+/**
+ * Artefacts a Tool node declares itself authoritative for, by published path.
+ *
+ * Reads `maintains` off the `tools` graph — see {@link ToolMaintainsSchema} in
+ * `schemas/tool.ts`. The base is irrelevant here: the comparison is on the
+ * path relative to the instance base, which is what the declaration carries.
+ */
+export function declaredArtefacts(): Map<string, { tool: string; source: string }> {
+  const out = new Map<string, { tool: string; source: string }>();
+  // `tools()` with no argument, so the I/O type IRIs are minted against the
+  // DECLARED base. Passing `""` makes them relative and `defineTool` refuses
+  // the node — correctly: a Tool whose schema refs do not dereference is not a
+  // Tool anyone can use. The base is irrelevant to the comparison below, which
+  // is on the artefact path relative to it, but the node still has to be valid
+  // to be read at all.
+  for (const t of tools()) {
+    for (const m of t.maintains ?? []) out.set(m.artefact, { tool: t.id, source: m.source });
+  }
+  return out;
+}
+
+/**
+ * Where the declared relation and the produced files disagree.
+ *
+ * **Both directions, because one is half a guarantee.** `undeclared` catches a
+ * new artefact nobody added a Tool node for — which is how the relation drifts
+ * back into this script's local array, where it lived until 2026-09-19.
+ * `unproduced` catches a declaration that rotted: a Tool still claiming an
+ * artefact this instance no longer writes, which a consumer of the published
+ * graph would follow to a 404.
+ *
+ * `missingSource` is the third finding and a different failure again: the
+ * declaration names a module that is not in the tree. That is not "the artefact
+ * is wrong" — the artefact may be perfectly correct — it is the PROVENANCE
+ * being unfollowable, and the remedy is the opposite (fix the path, not the
+ * build).
+ */
+export function artefactDeclarationDrift(produced: readonly string[]): {
+  undeclared: string[];
+  unproduced: Array<{ artefact: string; tool: string }>;
+  missingSource: Array<{ artefact: string; tool: string; source: string }>;
+} {
+  const declared = declaredArtefacts();
+  const producedSet = new Set(produced);
+  const undeclared = produced.filter((a) => !declared.has(a)).sort();
+  const unproduced: Array<{ artefact: string; tool: string }> = [];
+  const missingSource: Array<{ artefact: string; tool: string; source: string }> = [];
+  for (const [artefact, d] of declared) {
+    if (!producedSet.has(artefact)) unproduced.push({ artefact, tool: d.tool });
+    if (!existsSync(join(ROOT, d.source))) {
+      missingSource.push({ artefact, tool: d.tool, source: d.source });
+    }
+  }
+  return {
+    undeclared,
+    unproduced: unproduced.sort((a, b) => a.artefact.localeCompare(b.artefact)),
+    missingSource: missingSource.sort((a, b) => a.artefact.localeCompare(b.artefact)),
+  };
+}
+
 export function writeSkillIoIds(opts: SchemaExportOptions = {}): string[] {
   const written: string[] = [];
   for (const { source, stored, expected } of staleSkillIoIds(opts)) {
@@ -248,6 +309,26 @@ export function writeSkillIoIds(opts: SchemaExportOptions = {}): string[] {
     written.push(source);
   }
   return written;
+}
+
+/**
+ * The schema documents this instance publishes, and their published names.
+ *
+ * Extracted so `--check` and the write path read the SAME list. It was a local
+ * array inside the write branch, which meant the drift check below could only
+ * have compared the declaration against a second copy of it — two answers to
+ * "what does this instance produce", which is the defect the declaration
+ * exists to remove.
+ *
+ * Instance artefact takes the instance's name; vocabulary documents take the
+ * vocabulary's. See `buildToolTypes`.
+ */
+export function schemaFiles(stub: string, baseUrl?: string): Array<[string, Record<string, unknown>]> {
+  return [
+    [`${stub}.schema.json`, buildDeclarationSchema({ baseUrl })],
+    ["tool.schema.json", buildToolSchema({ baseUrl })],
+    ["tool-types.schema.json", buildToolTypes({ baseUrl })],
+  ];
 }
 
 if (import.meta.main) {
@@ -282,6 +363,22 @@ if (import.meta.main) {
     // `feature-staging.yml` passes its own — and checking a staging build's
     // base against the committed files would report all 44 as stale on every
     // branch build.
+    // The DECLARED relation, checked both ways. See `artefactDeclarationDrift`.
+    const drift = artefactDeclarationDrift(schemaFiles(stub).map(([n]) => n));
+    if (drift.undeclared.length + drift.unproduced.length + drift.missingSource.length > 0) {
+      console.error("the `maintains` declaration and the produced schemas disagree:");
+      for (const a of drift.undeclared) {
+        console.error(`  ✗ ${a}\n      produced, but no Tool node declares it. Add a \`maintains\` entry in tools/index.ts.`);
+      }
+      for (const u of drift.unproduced) {
+        console.error(`  ✗ ${u.artefact}\n      declared by Tool "${u.tool}", but this instance does not produce it.`);
+      }
+      for (const m of drift.missingSource) {
+        console.error(`  ✗ ${m.artefact}\n      Tool "${m.tool}" names source ${m.source}, which is not in the tree.`);
+      }
+      process.exit(1);
+    }
+
     const stale = staleSkillIoIds();
     if (stale.length > 0) {
       console.error(`${stale.length} skill I/O schema(s) carry an $id that is not where they publish:`);
@@ -291,19 +388,14 @@ if (import.meta.main) {
     }
     const n = buildSkillIoContracts().length;
     console.log(`✓ every skill I/O $id matches its published location (${n} contract(s))`);
+    console.log(`✓ every published schema is declared by a Tool node (${declaredArtefacts().size} maintained)`);
     process.exit(0);
   }
 
   const outDir = arg("--out-dir") ?? join(ROOT, "_kg");
   mkdirSync(outDir, { recursive: true });
 
-  // Instance artefact takes the instance's name; vocabulary documents take
-  // the vocabulary's. See buildToolTypes.
-  const files: Array<[string, Record<string, unknown>]> = [
-    [`${stub}.schema.json`, buildDeclarationSchema({ baseUrl })],
-    ["tool.schema.json", buildToolSchema({ baseUrl })],
-    ["tool-types.schema.json", buildToolTypes({ baseUrl })],
-  ];
+  const files = schemaFiles(stub, baseUrl);
   for (const [name, schema] of files) {
     const out = join(outDir, name);
     writeFileSync(out, JSON.stringify(schema, null, 2) + "\n");

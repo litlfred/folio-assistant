@@ -210,6 +210,16 @@ function buildContext(): Record<string, unknown> {
     providesCapability: { "@id": `${FOLIO_NS}providesCapability`, ...link },
     requiresCapability: { "@id": `${FOLIO_NS}requiresCapability`, ...link },
     satisfies: { "@id": `${FOLIO_NS}satisfies`, ...link },
+    // A LINK: the artefact's published URL, which dereferences. Undeclared it
+    // would be dropped by any JSON-LD processor — the `ovkk` defect, where 34
+    // property names were used in `@graph` and absent from `@context`, so the
+    // document lost nearly all its property data the moment anything treated
+    // it as JSON-LD rather than as plain JSON.
+    maintains: { "@id": `${FOLIO_NS}maintains`, ...link },
+    // A LITERAL, deliberately: a repo-relative module path is not
+    // dereferenceable, and coercing it to `@id` would resolve it against the
+    // document IRI and mint a URL that nothing serves.
+    maintainsFrom: `${FOLIO_NS}maintainsFrom`,
     holdsGraph: { "@id": `${FOLIO_NS}holdsGraph`, ...link },
     startNode: { "@id": `${FOLIO_NS}startNode`, ...link },
     incoming: { "@id": `${FOLIO_NS}incoming`, ...link },
@@ -684,6 +694,18 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
     requires: t.requires,
     satisfies: t.satisfies.map((k) => makeIri(doc, "skill", k)),
     satisfiesSkillNames: t.satisfies,
+    // The artefacts this Tool is authoritative for, as the URLs they are
+    // actually served at — `renderingPath`, not a composed string, so the
+    // edge dereferences from the published document rather than looking as
+    // though it might. A Tool that maintains nothing has the field absent,
+    // not an empty array: `compact` drops undefined, and "maintains nothing"
+    // is the normal case rather than a degenerate one worth recording.
+    maintains: t.maintains?.map((m) => renderingPath(base, m.artefact)),
+    // The SOURCE side of the same relation, repo-relative. Carried next to the
+    // artefact because the owner's split is directional — internally the zod
+    // module is definitional and the JSON-LD is downstream — and a consumer
+    // that only has the graph cannot get back to the module otherwise.
+    maintainsFrom: t.maintains?.map((m) => m.source),
   }));
 }
 
