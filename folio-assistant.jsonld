@@ -202,16 +202,25 @@
     "requirements": {
       "@id": "https://litlfred.github.io/folio-assistant/ns#requirements",
       "@type": "@json"
+    },
+    "staging": {
+      "@id": "https://litlfred.github.io/folio-assistant/ns#staging",
+      "@context": {
+        "branch": "https://litlfred.github.io/folio-assistant/ns#stagingBranch",
+        "sha": "https://litlfred.github.io/folio-assistant/ns#stagingSha",
+        "pr": "https://litlfred.github.io/folio-assistant/ns#stagingRef",
+        "run": "https://litlfred.github.io/folio-assistant/ns#stagingRun"
+      }
     }
   },
   "danglingLinks": [],
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T06:54:24.302Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/381d9484acee628b39e83c5cc936609e9cd886be",
-  "sourceCommitSha": "381d9484acee628b39e83c5cc936609e9cd886be",
-  "sourceCommitAt": "2026-09-19T08:53:03+02:00",
+  "generatedAt": "2026-09-19T06:57:08.754Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/739610c22a3f99c687c0876319e2fee7fb3171be",
+  "sourceCommitSha": "739610c22a3f99c687c0876319e2fee7fb3171be",
+  "sourceCommitAt": "2026-09-19T08:55:47+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 149,
@@ -16833,5 +16842,11 @@
       ],
       "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208)."
     }
-  ]
+  ],
+  "staging": {
+    "branch": "main",
+    "sha": "739610c22a3f99c687c0876319e2fee7fb3171be",
+    "pr": "main",
+    "run": "35427940485"
+  }
 }
