@@ -96,18 +96,41 @@ test.describe("accessibility — automated", () => {
   }
 });
 
-/* ── The docs site's action tiles ───────────────────────────────────────── */
+/* ── The docs site's own UI ─────────────────────────────────────────────── */
 
 /**
  * The second surface under the rule, and it is a different KIND of surface:
- * the viewer above is a generated page this repo writes end to end, while the
- * tiles are mounted by script into an unpinned remote theme's markup. Contrast
- * is the pair to watch — the tiles sit on the theme's sidebar background,
- * which differs per scheme, and a token checked in one scheme and not the
- * other is the trap this project has already paid for once.
+ * the viewer above is a generated page this repo writes end to end, while
+ * everything here is mounted by script into an unpinned remote theme's markup
+ * — the action tiles and their views in the sidebar, and the per-page language
+ * bar in `.main-content`. Contrast is the pair to watch: these sit on
+ * backgrounds that differ per scheme, and a token checked in one scheme and
+ * not the other is the trap this project has already paid for once.
  */
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
-const TILES_PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Action tiles harness</title><style>
+
+/**
+ * The harness page, as a function of THE SITE'S scheme rather than the OS's.
+ *
+ * The loop below has always said `light` and `dark`, and until 2026-09-19 it
+ * only ever rendered the dark palette: `colorScheme` on the context sets
+ * `prefers-color-scheme`, which this stylesheet consults twice and for
+ * something else entirely. What the site's own colours key off is
+ * `data-fa-scheme`, which `docs-ui.js` derives from `jtd.getTheme()` — and the
+ * stub below was pinned to `"dark"`. A per-scheme token checked twice in the
+ * same scheme is not checked in both.
+ *
+ * It is stamped on `<html>` as well as returned by the stub so the first paint
+ * already has it. Otherwise the attribute lands after the bar has mounted, and
+ * a `transition: background` means a reader of `getComputedStyle` — or an axe
+ * run that is quick off the mark — can sample a colour that is on its way out.
+ *
+ * `fa-translation-meta` is here so the language bar renders all three of its
+ * states: with no meta every locale but English is "not yet translated", and
+ * the available-locale colour — one of the three text tokens — is never put on
+ * screen for anything to measure.
+ */
+const tilesPage = (scheme: "light" | "dark") => `<!doctype html><html lang="en" data-fa-scheme="${scheme}"><head><meta charset="utf-8"><title>Action tiles harness</title><style>
   body { margin: 0; }
   .side-bar { position: fixed; top: 0; left: 0; width: 16.5rem; height: 100%;
               display: flex; flex-flow: column nowrap; align-items: flex-end;
@@ -121,19 +144,20 @@ const TILES_PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><
   .site-nav a { color: inherit; }
   ${readFileSync(join(REPO, "docs/assets/css/docs-ui.css"), "utf8")}
 </style></head><body>
+  <script type="application/json" id="fa-translation-meta">{"lang":"en","availableLocales":["fr","es"]}<\/script>
   <script type="application/json" id="fa-site-links">{"kg":"/kg/","source":"https://example.invalid/r"}<\/script>
   <div class="side-bar">
     <div class="site-header"><a class="site-title">folio-assistant</a></div>
     <nav class="site-nav"><a href="#">Home</a></nav>
   </div>
   <div class="main"><div class="main-content"><h1>Harness</h1></div></div>
-  <script>window.jtd = { theme: "dark", getTheme: function () { return this.theme; },
+  <script>window.jtd = { theme: "${scheme}", getTheme: function () { return this.theme; },
     setTheme: function (t) { this.theme = t; } };<\/script>
   <script>${readFileSync(join(REPO, "docs/assets/js/vendor/qrcode.js"), "utf8")}<\/script>
   <script>${readFileSync(join(REPO, "docs/assets/js/docs-ui.js"), "utf8")}<\/script>
 </body></html>`;
 
-test.describe("accessibility — the action tiles", () => {
+test.describe("accessibility — the docs-site UI", () => {
   for (const colorScheme of ["light", "dark"] as const) {
     for (const [state, open] of [
       ["the grid", [] as string[]],
@@ -142,23 +166,25 @@ test.describe("accessibility — the action tiles", () => {
       test(`no WCAG A/AA violations — ${state}, ${colorScheme}`, async ({ browser }) => {
         const ctx = await browser.newContext({ colorScheme });
         const page = await ctx.newPage();
-        await page.setContent(TILES_PAGE);
+        await page.setContent(tilesPage(colorScheme));
         await page.locator(".fa-tiles-toggle").click();
         for (const tile of open) await page.locator(".fa-tile", { hasText: tile }).click();
-        // SCOPED TO THE SIDEBAR, and the boundary is deliberate.
+        // THE WHOLE PAGE, not just `.side-bar`.
         //
-        // A page-wide run here fails on the per-page language bar in
-        // `.main-content`, which this change does not touch: measured in this
-        // harness, #cbd1d9 on #f0f0f0 is 1.34:1 across five locale tabs and
-        // #ffffff on #3b82f6 is 3.67:1 on the current one, against a 4.5:1
-        // floor. Those are real and recorded as a bean; asserting them from a
-        // spec about the action tiles would make this gate red for a reason
-        // that is not its own, which is how a gate gets weakened later.
+        // This run was scoped to the sidebar because a page-wide one failed on
+        // the per-page language bar that `mountPageLanguageBar()` puts in
+        // `.main-content` — #cbd1d9 on #f0f0f0 at 1.34:1 across five locale
+        // tabs, and #ffffff on #3b82f6 at 3.67:1 on the current one, against a
+        // 4.5:1 floor. Failing the tiles' gate for a defect that was not the
+        // tiles' is how a gate gets weakened later, so it was recorded as bean
+        // `rptk` and the scope stayed until the bar was fixed.
         //
-        // What is claimed here is claimed honestly: every control this change
-        // mounts lives in `.side-bar`, so that is what is checked.
+        // It is fixed (per-scheme tokens in `docs-ui.css`, measured beside
+        // each), so the scope comes off. What is checked here now is every
+        // control `docs-ui.js` mounts into this page: the action tiles and
+        // their views in `.side-bar`, AND the language bar in `.main-content`
+        // — in both site schemes, since `tilesPage` drives `data-fa-scheme`.
         const { violations } = await new AxeBuilder({ page })
-          .include(".side-bar")
           .withTags([...TAGS])
           .analyze();
         // Named with the offending markup, because "color-contrast (7)" on its

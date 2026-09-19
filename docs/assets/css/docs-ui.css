@@ -852,6 +852,119 @@
   white-space: nowrap;
 }
 
+/* ── Per-page language bar (bean `rptk`) ─────────────────────────────────
+ *
+ * The row of six locale tabs `mountPageLanguageBar()` puts under the first
+ * `<h1>` of `.main-content`. It is ALWAYS VISIBLE — no disclosure in front of
+ * it — so every pair below is on screen for every reader on every page.
+ *
+ * Its colours were inline style literals in `docs-ui.js` until 2026-09-19, and
+ * two pairs were under the WCAG 1.4.3 floor of 4.5:1. Measured by axe-core in
+ * `tests/a11y.e2e.ts`:
+ *
+ *   - a not-yet-translated tab: #cbd1d9 on #f0f0f0 = **1.34:1**, five tabs.
+ *   - the current tab: #ffffff on #3b82f6 = **3.67:1**, bold at 12.8px. Bold
+ *     does not make this large text — SC 1.4.3's exception starts at 18.66px
+ *     bold — so 4.5:1 applies.
+ *
+ * TWO THINGS ABOUT THAT FIRST PAIR ARE WORTH KEEPING, because neither colour
+ * in it was written anywhere.
+ *
+ * `#cbd1d9` is not a literal in the source: the tab was `color:#94a3b8` with
+ * `opacity:0.4`, and 0.4 of #94a3b8 over the bar's background is #cbd1d9. That
+ * is the trap `skills/folio-core/ui-accessibility.md` names by name — opacity
+ * blends text toward its background and quietly drops the ratio — and it is
+ * why the bean's own note misattributed the failure to the available-locale
+ * colour. There is no `opacity` on text here any more; a dimmer tab is its own
+ * token with its own measured number.
+ *
+ * `#f0f0f0` was not written either: the bar's background was
+ * `rgba(128,128,128,0.12)`, which is #f0f0f0 only because the page behind it
+ * happened to be white. A translucent background makes the ratio a property of
+ * whatever the theme paints underneath, so the number below would be a claim
+ * about one page rather than about this bar. `--fa-langbar-bg` is OPAQUE, and
+ * every ratio in this block is therefore a fact about these tokens alone.
+ *
+ * Dark is the default here, as everywhere else in this file, and light is the
+ * `:root[data-fa-scheme="light"]` override that `docs-ui.js` sets. Ratios
+ * computed per WCAG relative luminance and confirmed by axe.
+ */
+.fa-page-lang-bar {
+  /* DARK scheme. Each ratio is against --fa-langbar-bg unless stated. */
+  --fa-langbar-bg: #232a33;
+  --fa-langbar-fg: #e6e9ee;            /* 11.90:1 — the globe and any bar text */
+  --fa-langbar-link: #9ec5fe;          /*  8.18:1 — a locale you can switch to */
+  --fa-langbar-muted: #9aa4b2;         /*  5.74:1 — not yet translated          */
+  --fa-langbar-current-bg: #60a5fa;    /*  5.69:1 as a surface on the bar       */
+  --fa-langbar-on-current: #0f172a;    /*  7.02:1 on --fa-langbar-current-bg    */
+  --fa-langbar-hover-bg: #333c48;      /*  6.31:1 for --fa-langbar-link on it   */
+
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0.3em 0 0.8em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  background: var(--fa-langbar-bg);
+  color: var(--fa-langbar-fg);
+}
+
+:root[data-fa-scheme="light"] .fa-page-lang-bar {
+  /* LIGHT scheme. Same six tokens, re-measured — a colour written for one
+     scheme and never rechecked in the other is how this bar failed. */
+  --fa-langbar-bg: #e8eaed;
+  --fa-langbar-fg: #1f2933;            /* 12.24:1 */
+  --fa-langbar-link: #1d4ed8;          /*  5.56:1 */
+  --fa-langbar-muted: #5a6472;         /*  4.98:1 */
+  --fa-langbar-current-bg: #1d4ed8;    /*  5.56:1 as a surface on the bar */
+  --fa-langbar-on-current: #ffffff;    /*  6.70:1 on --fa-langbar-current-bg */
+  --fa-langbar-hover-bg: #d6dae0;      /*  4.78:1 for --fa-langbar-link on it */
+}
+
+.fa-page-lang-globe {
+  font-size: 1.1em;
+  margin-right: 2px;
+}
+
+.fa-page-lang-tab {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: background 0.15s;
+  color: var(--fa-langbar-link);
+  cursor: pointer;
+}
+
+/* Not yet translated: a span, not a link, and dimmer — but dimmer by its own
+   measured token rather than by `opacity`, which would blend it into the bar
+   and take the ratio with it. */
+.fa-page-lang-tab.is-unavailable {
+  color: var(--fa-langbar-muted);
+  cursor: default;
+}
+
+.fa-page-lang-tab.is-current {
+  background: var(--fa-langbar-current-bg);
+  color: var(--fa-langbar-on-current);
+  font-weight: bold;
+}
+
+/* The locale this reader saved. A ring rather than a colour swap: it must not
+   move any of the text pairs above off their measured numbers. */
+.fa-page-lang-tab.is-remembered {
+  box-shadow: inset 0 0 0 1px var(--fa-langbar-link);
+}
+
+/* Hover was a JS `style.background` write, which is the same inline-literal
+   problem one step removed. Only a real link hovers, so the muted tabs keep
+   their background and their ratio. */
+a.fa-page-lang-tab:hover:not(.is-current) {
+  background: var(--fa-langbar-hover-bg);
+}
+
 /* ── Per-block QA badge (bean g6yr) ─────────────────────────────────
  *
  * Rides beside the edit pencil, inside the same floated row, because both are
