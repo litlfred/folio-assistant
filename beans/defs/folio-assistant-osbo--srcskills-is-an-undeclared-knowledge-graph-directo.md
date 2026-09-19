@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-19T12:40:01Z
 updated_at: 2026-09-19T12:40:28Z
+parent: folio-assistant-vke6
 ---
 
 ## The measurement

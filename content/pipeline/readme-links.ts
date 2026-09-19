@@ -86,11 +86,29 @@ function stripFences(src: string): string[] {
 }
 
 /**
- * Every Markdown link in the file: inline `[text](target)` and reference
+ * Every link in the file — Markdown **and HTML**.
+ *
+ * Markdown: inline `[text](target)`, images `![alt](src)` (a broken image is a
+ * broken link, and the one thing a reader cannot miss), and reference
  * definitions `[id]: target`.
  *
- * Images (`![alt](src)`) count too — a broken image is a broken link, and the
- * one thing a reader cannot miss.
+ * HTML: `<img src>` and `<a href>`. **These were invisible until 2026-09-19 and
+ * that is bean `t373`.** After the site root moved to `docs/<stub>/`, eight
+ * README paths were dead; this function saw five of them. The three it missed
+ * were the `<img src>` BPMN diagrams at the TOP of the README — so a reader met
+ * three broken images on the front page while the tool that exists to prevent
+ * exactly that reported the file as having five problems, none of them those.
+ *
+ * Silent omission is worse than the unwired gate the same bean records, because
+ * it survives wiring the gate up: the check goes green and the images stay
+ * broken. A whole syntax the checker cannot see is not a `not checked` third
+ * state — it is not a state at all, which is the one outcome this repository's
+ * conventions never allow.
+ *
+ * Markdown permits raw HTML, so this is not an exotic case; it is how anybody
+ * sets an image width. README carries three such links today (measured
+ * 2026-09-19) and zero `<a href>`, but both are parsed — an `<a>` added later
+ * must not reintroduce the hole.
  */
 export function parseLinks(src: string): LinkRef[] {
   const out: LinkRef[] = [];
@@ -105,6 +123,19 @@ export function parseLinks(src: string): LinkRef[] {
     // Reference definition: [id]: target
     const def = line.match(/^\s{0,3}\[([^\]]+)\]:\s*(\S+)/);
     if (def) out.push({ line: i + 1, text: def[1], target: def[2] });
+
+    // HTML `<img src>` and `<a href>`, single- or double-quoted. Attribute
+    // order varies (`<img width="700" src="…">` is the README's own form), so
+    // the attribute is matched wherever it sits in the tag rather than
+    // positionally.
+    for (const m of line.matchAll(/<img\b[^>]*?\bsrc\s*=\s*("([^"]*)"|'([^']*)')/gi)) {
+      const target = m[2] ?? m[3] ?? "";
+      if (target !== "") out.push({ line: i + 1, text: "<img>", target });
+    }
+    for (const m of line.matchAll(/<a\b[^>]*?\bhref\s*=\s*("([^"]*)"|'([^']*)')/gi)) {
+      const target = m[2] ?? m[3] ?? "";
+      if (target !== "") out.push({ line: i + 1, text: "<a>", target });
+    }
   });
   return out;
 }
