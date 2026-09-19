@@ -31,3 +31,28 @@ Deliberately NOT wired, each with a stated reason in the workflow: check:ci-heal
 Also added check:bean-parents + 8 tests: every OPEN bean must carry a parent naming a real epic. That guards the invariant PR #410 established, which nothing enforced -- a sibling's Created folio-assistant-iqzy folio-assistant-iqzy--untitled.md would silently rebuild the Miscellaneous tail.
 
 A correction worth recording: I first reported check:declared-paths as pre-existing RED at 39-vs-37. It was not. My own new script hardcoded join(root,'beans','defs') and those were the 2 literals. The ratchet was right; I rewired the script to read the bean graph's declaration via parseBeanGraph/nodeOfKind, and declared-paths went green and is now wired too.
+
+_2026-09-19T12:05Z_ — The new `check:bean-parents` gate FAILED on its own first
+CI run, and the failure was real. `folio-assistant-iqzy` — `title: Untitled`,
+empty body, created 11:58:51 — was swept into commit `bd56215b7` by `git add
+-A`. **It was mine, not a sibling's**: I said "a sibling added an unparented
+bean" before checking `git log`, which is the third time in this session I
+reached for "pre-existing / not mine" and was wrong.
+
+What created it is UNEXPLAINED and worth knowing, because a script that mints
+a stray bean on every run will keep doing it. Ruled out by reading the code:
+`beans-fallback create` refuses an empty title, and `noteBean` only appends.
+Not ruled out: the third-party `beans` CLI itself, invoked during the gate
+sweep. I did not reproduce it, and I am not guessing at a cause I cannot show.
+
+Removed from the branch rather than scrapped: it was added by an unmerged
+commit and has never existed on `main`, so `git rm` is equivalent to never
+having committed it. `AGENTS.md`'s "never delete ANY bean" protects a record
+of work considered and rejected; an empty file that recorded nothing and was
+never in the shared plan is not that. Scrapping it would have added a
+permanent `Untitled` row to a store this session just spent a PR organising.
+
+The gate caught a defect in the commit that was adding gates, for the second
+time in one PR — first `check:declared-paths` on the hardcoded bean path, now
+this.
+
