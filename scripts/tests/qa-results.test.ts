@@ -7,7 +7,7 @@
  * — not its file family and not who fetches it afterwards.
  */
 import { describe, expect, it } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -138,5 +138,116 @@ describe("the witnesses are committed in one place and published in another", ()
     // generated page and the browser code that fetches them, for no gain.
     const page = readFileSync(join(ROOT, "docs", "agentic-harness.md"), "utf-8");
     expect(page).toContain("data-qa-src=\"{{ '/assets/qa/");
+  });
+});
+
+describe("a generated page carries structure, never a verdict", () => {
+  /** Every page `gen-docs-pages.ts` writes, read from disk. */
+  const pages = () => {
+    const dir = join(ROOT, "docs");
+    const out: Array<{ path: string; text: string }> = [];
+    const walk = (d: string, depth: number) => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        const p = join(d, e.name);
+        // `docs/` and `docs/guides/` only — the generator writes nowhere else,
+        // and `docs/reference/` holds 153 hand-generated instruction bodies
+        // this rule has nothing to say about.
+        if (e.isDirectory() && e.name === "guides" && depth === 0) walk(p, depth + 1);
+        else if (e.isFile() && e.name.endsWith(".md")) {
+          const text = readFileSync(p, "utf-8");
+          if (text.includes("fa-qa-badge")) out.push({ path: p, text });
+        }
+      }
+    };
+    walk(dir, 0);
+    return out;
+  };
+
+  it("finds the generated pages at all", () => {
+    // The guard on the guard. Every assertion below is a `for` over this list,
+    // so an empty one would report a clean run over nothing — the `dh4f`
+    // defect this file opens by describing.
+    expect(pages().length).toBeGreaterThan(5);
+  });
+
+  it("no page names a verdict state", () => {
+    // `fa-qa-pass` and friends were written into the markup until bean `d2kp`.
+    // A page carrying a verdict goes stale whenever a sweep changes its mind,
+    // which made `gen-docs-pages.ts --check` a gate on the CORPUS rather than
+    // on whether anybody regenerated — and, because nobody had, published a
+    // page saying a knowledge-graph check FAILED on `publication-workflow.md`
+    // when it passed.
+    //
+    // `fa-qa-unswept` is deliberately NOT in this list: whether a sidecar
+    // exists is file existence, which is structure, and deferring it to the
+    // browser would collapse "nobody checked" into "the fetch found nothing".
+    for (const { path, text } of pages()) {
+      for (const verdict of ["fa-qa-pass", "fa-qa-fail", "fa-qa-warn", "fa-qa-empty"]) {
+        expect({ page: path, carries: verdict, found: text.includes(verdict) }).toEqual({
+          page: path,
+          carries: verdict,
+          found: false,
+        });
+      }
+    }
+  });
+
+  it("no page names a count, and every openable badge says it is still loading", () => {
+    // The counts line — "0 fail, 0 warn, 10 pass, 0 n/a" — was the other half
+    // of the baked-in verdict, and it lived in `title` and `aria-label` where
+    // a class-name check would not see it.
+    for (const { path, text } of pages()) {
+      expect({ page: path, counts: / \d+ fail, \d+ warn,/.test(text) }).toEqual({
+        page: path,
+        counts: false,
+      });
+      // Every button starts `pending`, so the state a reader sees before the
+      // fetch lands is "not yet known" rather than a guess.
+      const buttons = text.match(/<button type="button" class="fa-qa-badge [^"]*"/g) ?? [];
+      for (const b of buttons) expect({ page: path, b, pending: b.includes("fa-qa-pending") })
+        .toEqual({ page: path, b, pending: true });
+    }
+  });
+
+  it("every badge that opens names the index it is painted from", () => {
+    // The badge and its page's verdict index are emitted together; a button
+    // with no `data-qa-index` would sit at `pending` forever, which reads as
+    // "loading" and never resolves.
+    for (const { path, text } of pages()) {
+      for (const m of text.matchAll(/<button type="button" class="fa-qa-badge[\s\S]*?>/g)) {
+        for (const attr of ["data-qa-key=", "data-qa-index=", "data-qa-label=", "data-qa-src="]) {
+          expect({ page: path, attr, present: m[0].includes(attr) }).toEqual({
+            page: path,
+            attr,
+            present: true,
+          });
+        }
+      }
+    }
+  });
+
+  it("each page's verdict index exists, and holds a row for every badge on it", () => {
+    // The three-state rule, checked where it is cheapest: a badge whose row is
+    // missing paints `unknown` — honest, but it is honest about an omission
+    // nobody meant to make. `--check` gates the index on existence; this gates
+    // its COVERAGE, which existence cannot.
+    for (const { path, text } of pages()) {
+      const slug = /assets\/qa\/([^/]+)\/_qa-index\.json/.exec(text)?.[1];
+      if (!slug) continue;
+      const idx = join(ROOT, "test", "results", "witnesses", slug, "_qa-index.json");
+      expect({ page: path, index: idx, there: existsSync(idx) }).toEqual({
+        page: path,
+        index: idx,
+        there: true,
+      });
+      const badges = JSON.parse(readFileSync(idx, "utf-8")).badges as Record<string, unknown>;
+      for (const m of text.matchAll(/data-qa-key="([^"]+)"/g)) {
+        expect({ page: path, key: m[1], inIndex: m[1]! in badges }).toEqual({
+          page: path,
+          key: m[1],
+          inIndex: true,
+        });
+      }
+    }
   });
 });

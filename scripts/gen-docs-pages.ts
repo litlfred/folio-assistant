@@ -668,7 +668,11 @@ function todoRelations(tags: {
 function beanFile(id: string): string | undefined {
   const dir = join(REPO_ROOT, "beans", "defs");
   if (!existsSync(dir)) return undefined;
-  const hit = readdirSync(dir).find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
+  // Sorted for the same reason `processHierarchy` sorts: raw directory order
+  // is filesystem state, and `find` over it makes the FIRST match a property of
+  // where the file landed on disk. Two beans sharing a prefix would resolve to
+  // different files on two machines.
+  const hit = readdirSync(dir).sort().find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
   return hit ? `beans/defs/${hit}` : undefined;
 }
 
@@ -692,7 +696,20 @@ function processHierarchy(): Record<string, string[]> {
   const dir = join(REPO_ROOT, "skills", "workflows");
   if (!existsSync(dir)) return {};
   const out: Record<string, string[]> = {};
-  for (const f of readdirSync(dir)) {
+  // `.sort()`, and it is load-bearing rather than tidy. `readdirSync` under
+  // Bun returns RAW DIRECTORY ORDER — on ext4 that is a hash of the filename
+  // against the directory's own seed, so two checkouts of the same commit
+  // enumerate these 32 files differently. The ids below become object keys and
+  // `JSON.stringify` preserves insertion order, so the published index came
+  // out byte-different on every machine.
+  //
+  // Nobody noticed for the reason bean `d2kp` is about: the `--check` that
+  // would have caught it was a folded YAML continuation line and had never
+  // run. It failed on its FIRST run, on the PR that un-folded it, against a
+  // committed file that reproduced perfectly on the machine that wrote it.
+  // An artefact that is only reproducible where it was generated is not a
+  // generated artefact; it is a snapshot.
+  for (const f of readdirSync(dir).sort()) {
     if (!f.endsWith(".bpmn")) continue;
     const xml = readFileSync(join(dir, f), "utf-8");
     const id = /<bpmn:process id="([^"]+)"/.exec(xml)?.[1];
