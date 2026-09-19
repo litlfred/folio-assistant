@@ -322,7 +322,7 @@ export interface RemoteDeclaration {
  */
 export function remotePackageDeclarations(root: string): RemoteDeclaration[] {
   const out: RemoteDeclaration[] = [];
-  const dir = join(root, "skills", "remote-packages");
+  const dir = join(kgRoots(root)[0] ?? join(root, "skills"), "remote-packages");
   if (!existsSync(dir)) return out;
   for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
     try {

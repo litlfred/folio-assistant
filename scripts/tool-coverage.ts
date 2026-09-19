@@ -53,6 +53,20 @@ import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
+import { kgRoots } from "./known-skills.js";
+
+/**
+ * The declared knowledge-graph root, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `kgRoots()` returns a LIST because a topical layout has several;
+ * this site wants one directory, and takes the first, which is the instance's
+ * own root in every layout shipped so far.
+ */
+function kgRoot(root: string): string {
+  return kgRoots(root)[0] ?? join(root, "skills");
+}
+
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -66,7 +80,7 @@ export interface SkillTriage {
 
 function skillDirs(): string[] {
   const d: string[] = [];
-  const root = join(ROOT, "skills");
+  const root = kgRoot(ROOT);
   if (existsSync(root)) for (const e of readdirSync(root, { withFileTypes: true })) if (e.isDirectory()) d.push(`skills/${e.name}`);
   for (const x of ["src/skills", ".claude/skills/local"]) if (existsSync(join(ROOT, x))) d.push(x);
   return d;
