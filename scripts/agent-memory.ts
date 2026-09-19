@@ -195,6 +195,57 @@ export function splitDetail(body: string): { comment: string; detail?: string } 
   return { comment: body.slice(0, i).trim(), ...(detail ? { detail } : {}) };
 }
 
+/**
+ * `archived` as the author wrote it, or an error naming what was not understood.
+ *
+ * **This refuses rather than guessing, and the asymmetry is the whole reason.**
+ * The field was a string compare against `"true"`, so every other YAML spelling
+ * of the same boolean was COERCED AWAY: the node came back with `archived`
+ * absent, which `MemoryNodeSchema` accepts because the field is
+ * `z.boolean().optional()`. `safeParse` therefore could not catch it — it never
+ * saw a bad value, it saw a missing one.
+ *
+ * What followed is the inversion archiving exists to prevent. An archived entry
+ * has typically lost its `agents` tag, so a node that fails to read as archived
+ * falls through to the untagged clause and reaches EVERY agent. Measured on
+ * `main` at `e94288562` with four probe nodes through this reader: of `true`,
+ * `TRUE`, `True` and `yes`, three reached an agent they were never tagged for.
+ *
+ * The two ways to be wrong are not symmetric. Too loose and an entry the author
+ * meant to keep goes missing — visible, and the agent's own work shows it. Too
+ * strict, as it was, and it goes to everybody: a widened blast radius that
+ * nothing reports on and no budget check counts. So an unrecognised value is an
+ * error, and silencing an entry costs more than not silencing it — the same
+ * reasoning `<folio:no-skill reason="…"/>` already applies.
+ *
+ * Bean `folio-assistant-0j8h`.
+ */
+const YAML_TRUE = new Set(["true", "yes", "on"]);
+const YAML_FALSE = new Set(["false", "no", "off"]);
+
+export function readArchivedFlag(raw: unknown, where: string): boolean | undefined {
+  if (raw === undefined) return undefined;
+  // An empty scalar parses as `[]` — the front-matter reader's marker for "key
+  // with no value" — and that is an author who meant something and typed
+  // nothing, not an author who meant `false`.
+  if (typeof raw !== "string") {
+    throw new Error(
+      `${where}: \`archived\` has no value. Write \`archived: true\` to keep the node ` +
+        `in the graph and out of every agent's prompt, or remove the key entirely.`,
+    );
+  }
+  const v = raw.trim().toLowerCase();
+  if (YAML_TRUE.has(v)) return true;
+  if (YAML_FALSE.has(v)) return false;
+  throw new Error(
+    `${where}: \`archived: ${raw}\` is not a boolean this reader understands. ` +
+      `Use one of ${[...YAML_TRUE].join(", ")} / ${[...YAML_FALSE].join(", ")} ` +
+      `(any case). Refusing rather than guessing: a value read as "not archived" ` +
+      `returns the node LIVE, and an archived entry carries no agent tag, so the ` +
+      `untagged rule would hand it to every agent — the opposite of archiving.`,
+  );
+}
+
 export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
   if (!existsSync(dir)) return [];
   const out: MemoryNode[] = [];
@@ -215,7 +266,7 @@ export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
       references: agents,
     };
     const node: Record<string, unknown> = {
-      ...(fm["archived"] === "true" ? { archived: true } : {}),
+      ...(readArchivedFlag(fm["archived"], path) ? { archived: true } : {}),
       id: String(fm["id"] ?? basename(f, ".md")),
       summary: String(fm["summary"] ?? ""),
       comment: splitDetail(body).comment,
