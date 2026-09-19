@@ -48,11 +48,12 @@
  * @module scripts/tool-coverage
  */
 import { readdirSync, readFileSync, existsSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
+import { isSkillMd, kgRoots } from "./known-skills.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -64,12 +65,40 @@ export interface SkillTriage {
   evidence: string[];
 }
 
+/**
+ * Every directory holding skills — the declared graph, plus the one place a
+ * declaration cannot reach.
+ *
+ * The declared part comes from {@link kgRoots} rather than from `"skills"`,
+ * because an instance may put its knowledge graph anywhere and this repository
+ * declares TWO such directories since `src/skills/` was declared (bean `osbo`).
+ * A package is a subdirectory holding skills; a kg directory may also hold them
+ * DIRECTLY, which is what `src/skills/` does.
+ */
 function skillDirs(): string[] {
   const d: string[] = [];
-  const root = join(ROOT, "skills");
-  if (existsSync(root)) for (const e of readdirSync(root, { withFileTypes: true })) if (e.isDirectory()) d.push(`skills/${e.name}`);
-  for (const x of ["src/skills", ".claude/skills/local"]) if (existsSync(join(ROOT, x))) d.push(x);
+  for (const abs of kgRoots(ROOT)) {
+    const rel = relative(ROOT, abs);
+    if (holdsSkillMd(abs)) d.push(rel);
+    for (const e of readdirSync(abs, { withFileTypes: true })) {
+      if (e.isDirectory() && holdsSkillMd(join(abs, e.name))) d.push(`${rel}/${e.name}`);
+    }
+  }
+  // declared-path-literal: `.claude/skills/local/` is the agent harness's own
+  // directory and is NOT a `cat-harness` graph in any instance's declaration,
+  // so no declaration answers it. It is named here rather than discovered.
+  const local = ".claude/skills/local";
+  if (existsSync(join(ROOT, local))) d.push(local);
   return d;
+}
+
+/** Does this directory hold at least one skill `.md` directly? */
+function holdsSkillMd(dir: string): boolean {
+  try {
+    return readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)));
+  } catch {
+    return false;
+  }
 }
 
 function bpmnDirs(rel = ".", depth = 0): string[] {
