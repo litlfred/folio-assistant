@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T15:17:58.511Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/91f625dad3b53608b50acb739870927596e06a32",
-  "sourceCommitSha": "91f625dad3b53608b50acb739870927596e06a32",
-  "sourceCommitAt": "2026-09-19T15:14:34Z",
+  "generatedAt": "2026-09-19T15:34:10.916Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b33cca77205aea9a61db5cc25674c90df2e182b3",
+  "sourceCommitSha": "b33cca77205aea9a61db5cc25674c90df2e182b3",
+  "sourceCommitAt": "2026-09-19T15:31:19Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 167,
@@ -262,9 +262,9 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 46,
+    "Schema": 47,
     "GraphKind": 16,
-    "Directory": 11
+    "Directory": 12
   },
   "@graph": [
     {
@@ -2121,7 +2121,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 134,
+      "instructionLines": 180,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2914,13 +2914,14 @@
       "title": "Corpus-Grep Skill",
       "description": "Pre-declaration corpus check. Before declaring any item \"open\", \"gap\", \"TODO\", \"open problem\", \"pending derivation\" — or asserting in chat that something is unresolved in the corpus — run the four-path grep checklist. A source file's `## Status` note lags the corpus by weeks; the corpus is the source of truth. An item is open only after all four paths come back empty (modulo the originating file itself).",
       "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/skills",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/skills"
       ],
       "instructionsPath": "src/skills/corpus-grep.md",
       "instructionLines": 153,
       "hasInstructions": true,
       "hasIOContract": false,
-      "ambiguous": false,
+      "ambiguous": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/corpus-grep"
     },
     {
@@ -19198,6 +19199,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/assistant-workflow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/attribution",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "attribution",
+      "title": "Who wrote a piece of derived content — bean `iqim`.",
+      "module": "schemas/attribution.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/attribution"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/bean-graph",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "bean-graph",
@@ -20471,12 +20480,23 @@
       ],
       "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/translation-sources"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#directory/cat-harness-src",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-src",
+      "path": "src/skills/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+      ],
+      "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse — committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness-src"
     }
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "e5ef9eff69fbb3acd62ffd89babbece9299bac1e",
+    "sha": "8378a3c608e46a6730038d5c8128bc25a942c866",
     "pr": "427/merge",
-    "run": "35451300035"
+    "run": "35452151574"
   }
 }
