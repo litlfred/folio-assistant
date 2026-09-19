@@ -4,7 +4,7 @@ title: 'QA-review schemas: Finding, Decision and AuditNote are three entities, n
 status: in-progress
 type: task
 created_at: 2026-09-18T20:09:07Z
-updated_at: 2026-09-18T20:09:07Z
+updated_at: 2026-09-19T00:41:16Z
 ---
 
 
@@ -49,3 +49,5 @@ migrating the 118 QA criteria from skills to tests; binding a criterion to a
 skill's I/O; `translations/qa/` as referenceable nodes; `<folio:qa ref>` in the
 BPMNs; and the same audit-note step in `crdm-requirements.bpmn`,
 `content-change-review.bpmn` and `draft-to-publication.bpmn`.
+
+_2026-09-19T00:41:16Z_ — Checked 2026-09-19 on main at 17dc1e6 — PARTIAL. Step 1 is landed: schemas/qa-review.ts and schemas/qa-review.test.ts are both on main. The bean records this as 'Step 1' but does not enumerate the later steps, so whether anything remains cannot be determined from here. The bean's owner should say what step 2 is, or close it.

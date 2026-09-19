@@ -19,7 +19,21 @@
  * — is the instance's own identifier, the thing `cat-harness.json` calls
  * `folio-assistant` and publishes artefacts under. `title` is neither: it is
  * display text, it may contain punctuation an identifier could not, and it is
- * **translatable**. `c@t-harness` is a title; `folio-assistant` is a name.
+ * **translatable**. `WHO SMART Base` is a title; `smart-base` is a name.
+ *
+ * **Having one is a decision, and the default is not to.** {@link displayTitle}
+ * falls back to `name`, and `cat-harness.ts` requires `name` to be the
+ * identifier every artefact is stub-named after — so an instance whose display
+ * text should match its repository wants no `title` at all, rather than a
+ * `title` repeating the `name` and free to drift from it.
+ *
+ * This example used to be `c@t-harness` / `folio-assistant`, drawn from this
+ * repository's own declaration, and that was the wrong illustration twice
+ * over: the title it cited labelled THIS repository with the brand of the
+ * harness layer still to be split out of it, and the sidebar showed a name
+ * that matched neither the repository nor the URL people arrive at. Removed
+ * 2026-09-19; the derivation it named survives in the `description`, which is
+ * where a tagline belongs.
  *
  * ## Translatable means extractable
  *

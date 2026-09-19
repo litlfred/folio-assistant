@@ -18,8 +18,6 @@ import {
   discoverScriptCheckers,
 } from "../../content/pipeline/qa-checker-discovery.ts";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry.ts";
-import { AUTOMATED_CHECKERS } from "../../content/pipeline/qa-checkers-voice.ts";
-import { DAK_AUTOMATED_CHECKERS } from "../../content/pipeline/qa-checkers-dak.ts";
 
 const block = await discoverBlockCheckers();
 const script = await discoverScriptCheckers();
@@ -64,11 +62,14 @@ describe("subject partition", () => {
   });
 });
 
-describe("equivalence with the dispatch tables it replaced", () => {
-  const table = new Map<string, unknown>([
-    ...Object.entries(AUTOMATED_CHECKERS),
-    ...Object.entries(DAK_AUTOMATED_CHECKERS),
-  ]);
+describe("every automated criterion resolves, from the module the registry names", () => {
+  // This replaced an equivalence check against the merged `AUTOMATED_CHECKERS`
+  // table. That assertion was TRANSITIONAL — it proved the migration faithful
+  // at the commit that made it — and keeping it meant keeping a six-way
+  // aggregation alive with no production caller, purely as a fixture. The
+  // durable invariant is the one below: each criterion resolves, and it
+  // resolves from the file the registry declares, which is also the file whose
+  // hash invalidates its verdicts.
 
   test("every automated block criterion resolves", () => {
     const automated = QA_CRITERIA_REGISTRY.filter(
@@ -78,30 +79,23 @@ describe("equivalence with the dispatch tables it replaced", () => {
     expect(automated.filter((id) => !block.checkers.has(id))).toEqual([]);
   });
 
-  test("it finds the SAME function object, not merely one by that name", () => {
-    const differs = [...block.checkers.keys()].filter(
-      (id) => table.has(id) && table.get(id) !== block.checkers.get(id),
+  test("each checker comes from the module the registry DECLARES", async () => {
+    // Not merely "a function by that name exists somewhere". `source_file` is
+    // what `script_hash` is computed over, so a checker resolved from any
+    // other module would have its verdicts invalidated by the wrong file's
+    // changes — the defect that motivated discovery in the first place.
+    const { getCriterionSourceFile } = await import(
+      "../../content/pipeline/qa-criteria-registry.ts"
     );
-    expect(differs).toEqual([]);
-  });
-
-  test("it resolves nothing the tables did not", () => {
-    expect([...block.checkers.keys()].filter((id) => !table.has(id))).toEqual([]);
-  });
-
-  test("what the tables hold beyond it is registered-elsewhere, not lost", () => {
-    // The tables carry checkers for criteria this folio's registry does not
-    // register: the `q-usage` axis is folio-optional (`folioOptionalAxes()`),
-    // so those criteria are absent here and present in a folio that opts in.
-    // Discovery follows the registry, which is the point.
-    const extra = [...table.keys()].filter((id) => !block.checkers.has(id));
-    const registered = new Set(QA_CRITERIA_REGISTRY.map((c) => c.id));
-    for (const id of extra) {
-      const inRegistry = registered.has(id);
-      // Either the criterion is not registered in this folio at all, or it is
-      // registered as needing an agent — in which case it is an orphan, and
-      // the next describe asserts it is reported as one.
-      expect(inRegistry ? block.orphaned.some((o) => o.criterion === id) : true).toBe(true);
+    const root = new URL("../..", import.meta.url).pathname;
+    for (const [id, fn] of block.checkers) {
+      const mod = (await import(`${root}/${getCriterionSourceFile(id)}`)) as Record<string, unknown>;
+      const found = Object.values(mod).some(
+        (v) =>
+          v === fn ||
+          (v !== null && typeof v === "object" && (v as Record<string, unknown>)[id] === fn),
+      );
+      expect(found).toBe(true);
     }
   });
 });

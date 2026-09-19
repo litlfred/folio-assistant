@@ -55,7 +55,7 @@ function markers(name: string): string {
 }
 
 describe("nothing outside a marked region is ever written", () => {
-  test("prose above and below a marker survives verbatim", () => {
+  test("prose above and below a marker survives verbatim", async () => {
     const root = folio();
     const readme = `# My Folio\n\nAuthored prose.\n\n${markers("folio:workflows")}\n\nMore prose.\n`;
     const out = syncSections(readme, ctx(root));
@@ -65,7 +65,7 @@ describe("nothing outside a marked region is ever written", () => {
     expect(out.content).toContain("More prose.");
   });
 
-  test("a README with no markers is left byte-identical", () => {
+  test("a README with no markers is left byte-identical", async () => {
     const root = folio();
     const readme = "# Untouched\n\nAll of this is mine.\n";
     const out = syncSections(readme, ctx(root));
@@ -75,7 +75,7 @@ describe("nothing outside a marked region is ever written", () => {
     expect(out.changed).toBe(false);
   });
 
-  test("registered sections the README omits are absent, not errors", () => {
+  test("registered sections the README omits are absent, not errors", async () => {
     const root = folio();
     const out = syncSections(`# F\n\n${markers("folio:toc")}\n`, ctx(root));
 
@@ -84,10 +84,10 @@ describe("nothing outside a marked region is ever written", () => {
     expect(out.absent).toContain("folio:lean-modules");
   });
 
-  test("runReadmeSync writes nothing and explains itself when no marker exists", () => {
+  test("runReadmeSync writes nothing and explains itself when no marker exists", async () => {
     const root = folio({ "README.md": "# Mine\n\nNothing generated here.\n" });
     const before = readFileSync(join(root, "README.md"), "utf-8");
-    const result = runReadmeSync({ root });
+    const result = await runReadmeSync({ root });
 
     expect(result.exitCode).toBe(0);
     expect(result.text).toContain("carries no generated-section markers");
@@ -96,7 +96,7 @@ describe("nothing outside a marked region is ever written", () => {
 });
 
 describe("workflows section", () => {
-  test("descriptions come from each workflow's own name:", () => {
+  test("descriptions come from each workflow's own name:", async () => {
     const root = folio({
       ".github/workflows/build.yml": "name: Build and Publish\non: push\n",
       ".github/workflows/lint.yaml": 'name: "Lint"\non: push\n',
@@ -108,7 +108,7 @@ describe("workflows section", () => {
     expect(md).toContain("| `lint.yaml` | Lint |");
   });
 
-  test("a workflow with no name: is listed with a blank cell and a note", () => {
+  test("a workflow with no name: is listed with a blank cell and a note", async () => {
     const root = folio({ ".github/workflows/nameless.yml": "on: push\njobs: {}\n" });
     const out = SECTIONS.find((s) => s.marker === "folio:workflows")!.render(ctx(root));
 
@@ -116,7 +116,7 @@ describe("workflows section", () => {
     expect(out.notes.join(" ")).toContain("no `name:` field");
   });
 
-  test("no workflows directory renders a sentence, not an empty table", () => {
+  test("no workflows directory renders a sentence, not an empty table", async () => {
     const root = folio();
     const md = SECTIONS.find((s) => s.marker === "folio:workflows")!.render(ctx(root)).markdown;
 
@@ -126,7 +126,7 @@ describe("workflows section", () => {
 });
 
 describe("lean modules section", () => {
-  test("the namespace is the folio's own Lake library, not a hardcoded one", () => {
+  test("the namespace is the folio's own Lake library, not a hardcoded one", async () => {
     const root = folio({
       "content/solo/lean/lakefile.toml": '[[lean_lib]]\nname = "Solo"\n',
       "content/solo/lean/Solo/Basic.lean": "-- basic\n",
@@ -138,7 +138,7 @@ describe("lean modules section", () => {
     expect(md).not.toContain("QOU.");
   });
 
-  test("no lean_lib means unprefixed modules and a note — never an invented namespace", () => {
+  test("no lean_lib means unprefixed modules and a note — never an invented namespace", async () => {
     const root = folio({ "content/solo/lean/Basic.lean": "-- basic\n" });
     const out = SECTIONS.find((s) => s.marker === "folio:lean-modules")!.render(ctx(root));
 
@@ -146,7 +146,7 @@ describe("lean modules section", () => {
     expect(out.notes.join(" ")).toContain("no [[lean_lib]]");
   });
 
-  test("a folio with no Lean at all renders a sentence", () => {
+  test("a folio with no Lean at all renders a sentence", async () => {
     const root = folio();
     const md = SECTIONS.find((s) => s.marker === "folio:lean-modules")!.render(ctx(root)).markdown;
     expect(md).toContain("_No papers with Lean sources");
@@ -154,7 +154,7 @@ describe("lean modules section", () => {
 });
 
 describe("simulators section", () => {
-  test("a configured directory that is absent here is left unchanged, not blanked", () => {
+  test("a configured directory that is absent here is left unchanged, not blanked", async () => {
     // The regression this guards: qou configures `folio-assistant/simulators`,
     // which exists only once the platform submodule is checked out. A clone
     // without it replaced a correct nine-row table with "no simulators".
@@ -165,14 +165,14 @@ describe("simulators section", () => {
     const out = SECTIONS.find((s) => s.marker === "folio:simulators")!.render(ctx(root));
     expect(out.skip).toBe(true);
 
-    const result = runReadmeSync({ root });
+    const result = await runReadmeSync({ root });
     expect(result.exitCode).toBe(0);
     expect(result.text).toContain("left unchanged");
     // The table that was there is still there.
     expect(readFileSync(join(root, "README.md"), "utf-8")).toContain("| Kept | `x.html` |");
   });
 
-  test("a directory that exists but holds nothing is a determined empty", () => {
+  test("a directory that exists but holds nothing is a determined empty", async () => {
     const root = folio({ "harness.config.json": JSON.stringify({ simulators: { dir: "sims" } }) });
     mkdirSync(join(root, "sims"), { recursive: true });
     const out = SECTIONS.find((s) => s.marker === "folio:simulators")!.render(ctx(root));
@@ -181,7 +181,7 @@ describe("simulators section", () => {
     expect(out.markdown).toContain("_No simulators");
   });
 
-  test("the directory comes from harness.config.json, not a fixed path", () => {
+  test("the directory comes from harness.config.json, not a fixed path", async () => {
     const root = folio({
       "harness.config.json": JSON.stringify({ simulators: { dir: "sims" } }),
       "sims/bring_surface.html": "<html></html>",
@@ -194,38 +194,38 @@ describe("simulators section", () => {
 });
 
 describe("runReadmeSync", () => {
-  test("--check reports staleness without writing, then a run fixes it", () => {
+  test("--check reports staleness without writing, then a run fixes it", async () => {
     const root = folio({
       ".github/workflows/ci.yml": "name: CI\non: push\n",
       "README.md": `# F\n\n${markers("folio:workflows")}\n`,
     });
 
-    const stale = runReadmeSync({ root, check: true });
+    const stale = await runReadmeSync({ root, check: true });
     expect(stale.exitCode).toBe(1);
     expect(readFileSync(join(root, "README.md"), "utf-8")).not.toContain("| `ci.yml` |");
 
-    expect(runReadmeSync({ root }).exitCode).toBe(0);
+    expect((await runReadmeSync({ root })).exitCode).toBe(0);
     expect(readFileSync(join(root, "README.md"), "utf-8")).toContain("| `ci.yml` | CI |");
 
     // Now current: --check passes and a second run is a no-op.
-    expect(runReadmeSync({ root, check: true }).exitCode).toBe(0);
-    expect(runReadmeSync({ root }).text).toContain("already current");
+    expect((await runReadmeSync({ root, check: true })).exitCode).toBe(0);
+    expect((await runReadmeSync({ root })).text).toContain("already current");
   });
 
-  test("an unknown --only section is refused by name", () => {
+  test("an unknown --only section is refused by name", async () => {
     const root = folio({ "README.md": `# F\n\n${markers("folio:toc")}\n` });
-    const result = runReadmeSync({ root, only: ["folio:nope"] });
+    const result = await runReadmeSync({ root, only: ["folio:nope"] });
 
     expect(result.exitCode).toBe(2);
     expect(result.text).toContain("Unknown section(s): folio:nope");
   });
 
-  test("--only leaves the other marked sections alone", () => {
+  test("--only leaves the other marked sections alone", async () => {
     const root = folio({
       ".github/workflows/ci.yml": "name: CI\non: push\n",
       "README.md": `# F\n\n${markers("folio:toc")}\n\n${markers("folio:workflows")}\n`,
     });
-    runReadmeSync({ root, only: ["folio:workflows"] });
+    await runReadmeSync({ root, only: ["folio:workflows"] });
     const written = readFileSync(join(root, "README.md"), "utf-8");
 
     expect(written).toContain("| `ci.yml` | CI |");
@@ -233,8 +233,8 @@ describe("runReadmeSync", () => {
     expect(written).toContain("<!-- folio:toc:begin -->\n<!-- folio:toc:end -->");
   });
 
-  test("a missing README is an error, not a silently created file", () => {
+  test("a missing README is an error, not a silently created file", async () => {
     const root = folio();
-    expect(runReadmeSync({ root }).exitCode).toBe(2);
+    expect((await runReadmeSync({ root })).exitCode).toBe(2);
   });
 });

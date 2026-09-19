@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-18T17:59:38Z
-updated_at: 2026-09-18T18:16:30Z
+updated_at: 2026-09-19T00:35:16Z
 ---
 
 AGENTS.md lists `bunx playwright test` under Commands. It cannot work:
@@ -30,3 +30,5 @@ chrome-headless-shell build this image does not carry; it ships Chromium under
 PLAYWRIGHT_BROWSERS_PATH. playwright.ui.config.ts sets executablePath
 accordingly, overridable via PLAYWRIGHT_CHROMIUM_PATH. The main config does
 not, so it would fail on browser launch even once the server exists.
+
+_2026-09-19T00:35:16Z_ — Verified resolved, 2026-09-19 on main at 1a94703. Commit 05f18cc landed test-server.mjs, repointed playwright.config.ts at it, folded the executablePath guard into the main config, and retired playwright.ui.config.ts. Ran 'bunx playwright test' with PLAYWRIGHT_CHROMIUM_PATH=/opt/pw-browsers/chromium: 29 passed in 7.8s across kg-viewer, qa-panel, sidebar-panels and a new test-server spec. Both faults this bean named are closed. NOT closing it — not my bean to resolve.

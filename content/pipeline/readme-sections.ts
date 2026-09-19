@@ -40,7 +40,10 @@
  */
 
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
-import { basename, join } from "path";
+import { basename, join, resolve } from "path";
+
+/** The PLATFORM root — where the science layer would be installed. */
+const ROOT = resolve(import.meta.dir, "../..");
 
 import {
   discoverPapers,
@@ -50,7 +53,6 @@ import {
   type ReadmeTocConfig,
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
-import { computeStats } from "../../scripts/lean-coverage";
 import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 // ── Section contract ────────────────────────────────────────────────────────
@@ -60,7 +62,41 @@ export interface SectionContext {
   cfg: ReadmeTocConfig;
   /** Fetch the publish ref when it is missing locally. Only the TOC uses it. */
   fetch: boolean;
+  /**
+   * Lean coverage statistics, when the science layer is installed.
+   *
+   * Resolved ONCE by {@link runReadmeSync} and passed in, rather than imported
+   * at the top of this file. The registry is deliberately one list — see the
+   * module header — but `computeStats` lives in the science layer, so
+   * importing it here made the GENERIC section registry depend on it, and a
+   * folio without that layer must still be able to sync its TOC.
+   *
+   * `undefined` means NOT INSTALLED, which the coverage section reports
+   * through {@link undetermined} — leaving whatever the README already has,
+   * rather than replacing a correct table with "no Lean found".
+   */
+  leanCoverage?: LeanCoverageStats;
 }
+
+/**
+ * What {@link SectionContext.leanCoverage} provides, if anything does.
+ *
+ * The shape is written out here rather than imported from the science layer,
+ * because `import type` is still an import as far as the repository partition
+ * is concerned — it is what a consumer must be able to read WITHOUT that layer
+ * installed. It is the subset this section renders, not the whole `Stats`
+ * record: `computeStats` also returns `paper`, `generated_at`, `total_blocks`
+ * and `by_kind`, which the table does not show and this contract therefore
+ * does not demand.
+ */
+export type LeanCoverageStats = (
+  paperDir: string,
+  contentRoot: string,
+) => {
+  provable: { total: number; with_lean_file: number; sorry_free: number; percent_sorry_free: number };
+  conjectures: { total: number; with_lean_file: number; class_axiomatized: number; percent_class_axiomatized: number };
+  definitions: { total: number; with_lean_file: number };
+};
 
 export interface SectionOutput {
   markdown: string;
@@ -168,7 +204,12 @@ const tocSection: ReadmeSection = {
 const leanCoverageSection: ReadmeSection = {
   marker: "folio:lean-coverage",
   summary: "Formalisation coverage per paper: provable claims, conjectures, definitions.",
-  render({ root }) {
+  render({ root, leanCoverage }) {
+    // No science layer, no coverage — and NOT an empty table. An absent
+    // toolchain is "could not determine", so a README already carrying a
+    // correct table keeps it. Exactly the distinction this file was written
+    // around: an empty directory is a determined empty; a missing one is not.
+    if (!leanCoverage) return undetermined("the science layer is not installed here");
     const papers = papersWithLean(root);
     if (papers.length === 0) return empty("papers with Lean sources");
 
@@ -178,7 +219,7 @@ const leanCoverageSection: ReadmeSection = {
     for (const paper of papers) {
       let stats;
       try {
-        stats = computeStats(paper.dir, contentRoot);
+        stats = leanCoverage(paper.dir, contentRoot);
       } catch (e) {
         // A paper whose stats will not compute is named, not skipped: a table
         // silently missing a row reads as a paper with no Lean at all.
@@ -402,15 +443,38 @@ export function syncSections(
 }
 
 /** Shared by the CLI and the `readme_sync` MCP tool. */
-export function runReadmeSync(opts: {
+/**
+ * Load the science layer's coverage computation, if it is installed.
+ *
+ * A VARIABLE specifier, so this module names no science-layer file and the
+ * repository partition records no edge — the same mechanism
+ * `qa-checker-discovery` and `render-discovery` use. `undefined` on any
+ * failure, which the coverage section renders as "could not determine" rather
+ * than as an empty table.
+ */
+async function loadLeanCoverage(): Promise<LeanCoverageStats | undefined> {
+  const rel = "scripts/lean-coverage.ts";
+  const abs = join(ROOT, rel);
+  if (!existsSync(abs)) return undefined;
+  try {
+    const mod = (await import(abs)) as Record<string, unknown>;
+    const fn = mod.computeStats;
+    return typeof fn === "function" ? (fn as LeanCoverageStats) : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+export async function runReadmeSync(opts: {
   root?: string;
   check?: boolean;
   fetch?: boolean;
   only?: string[];
   readmePath?: string;
   linkStyle?: ReadmeTocConfig["linkStyle"];
-}): { text: string; exitCode: number } {
+}): Promise<{ text: string; exitCode: number }> {
   const root = opts.root ?? findContentRepoRoot();
+  const leanCoverage = await loadLeanCoverage();
   const cfg = loadReadmeConfig(root);
   if (opts.linkStyle) cfg.linkStyle = opts.linkStyle;
 
@@ -433,7 +497,7 @@ export function runReadmeSync(opts: {
   const current = readFileSync(readmePath, "utf-8");
   const result = syncSections(
     current,
-    { root, cfg, fetch: opts.fetch ?? false },
+    { root, cfg, fetch: opts.fetch ?? false, leanCoverage },
     opts.only,
   );
 
@@ -492,7 +556,7 @@ if (import.meta.main) {
   const only = flag("only")?.split(",").map((s) => s.trim()).filter(Boolean);
 
   try {
-    const result = runReadmeSync({
+    const result = await runReadmeSync({
       check: argv.includes("--check"),
       fetch: argv.includes("--fetch"),
       only,

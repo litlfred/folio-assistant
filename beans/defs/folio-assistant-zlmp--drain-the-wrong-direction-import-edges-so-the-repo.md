@@ -4,7 +4,7 @@ title: Drain the wrong-direction import edges so the repo split can cut
 status: in-progress
 type: task
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-18T21:55:40Z
+updated_at: 2026-09-19T00:41:16Z
 ---
 
 
@@ -161,3 +161,5 @@ projector read `ToolDefinition.summary` while this branch renamed it to
 `schemas/agent-harness.js` after this branch renamed it to `cat-harness.ts`.
 CI builds the PR MERGED WITH MAIN — 1829 tests across 134 files locally, 1883
 across 138 there. Merge main before trusting a local green.
+
+_2026-09-19T00:41:16Z_ — Re-measured 2026-09-19 on main at 17dc1e6 — GENUINELY LIVE, do not treat as stale. 'bun run check:partition' reports 16 wrong-direction edges (agentic-harness -> folio-assist-core 11, folio-assist-core -> folio-asst-sci 4, folio-assist-core -> smart-base 1), down from the 49 this bean last recorded, against a target of 0. Also 3 modules unassigned, where the bean's table records 0 — the tool declines to judge 4 edges touching them and says so rather than counting them clean. PR #304 ('Drain the wrong-direction imports to 10') is open on this.

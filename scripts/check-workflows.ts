@@ -21,9 +21,9 @@
  *   the script TEXT before the shell parses it. Trusted contexts are allowed;
  *   anything attacker-controlled is an error. See
  *   `skills/folio-core/untrusted-input.md`.
- * - **A job that pushes `gh-pages` without the shared concurrency group.**
- *   Every such job must declare `concurrency.group: gh-pages-push`, because
- *   they all contend for one ref.
+ * - **A job that pushes `gh-pages` with no protection against the race.**
+ *   Either the shared `gh-pages-push` concurrency group, or a retry. One or
+ *   the other, because they all contend for a single ref.
  *
  * @module scripts/check-workflows
  */
@@ -146,41 +146,68 @@ function interpolatedUntrusted(text: string, file: string): WorkflowFinding[] {
 export const GH_PAGES_GROUP = "gh-pages-push";
 
 /**
- * A job that writes `gh-pages` must name the shared concurrency group.
+ * A job that writes `gh-pages` must be protected against the race — **somehow**.
  *
- * ## Why this needs a check and not just a convention
+ * ## The rule is "queue OR retry", and the first version got that wrong
  *
- * The group has now been incomplete twice, in two different ways, and both
- * looked like a fix from inside the file that had it.
+ * This check originally demanded the shared group, full stop. That is too
+ * narrow, and #300 shipped a regression because of it: it put
+ * `discoverability-docs`' three jobs into the group, and those three run **in
+ * parallel with no `needs:`**.
  *
- * **First: partial coverage.** Bean `eoix` gave the group to
- * `feature-staging`'s two jobs. A concurrency group serialises only the jobs
- * that NAME it, so the other six push sites were still free to race — and on
- * 2026-09-18 PR #297's staging deploy lost its push to a run from another
- * workflow after building the whole site.
+ * GitHub cancels a PENDING job when a newer one queues for the same group. All
+ * three enter at once, so one runs, one pends, and the third cancels the
+ * pending one — **a lost publish every run**, which is worse than the race it
+ * replaces, because a cancelled job reads as intentional while a rejected push
+ * is at least red. #300's own commit message stated that cancellation rule
+ * about a different case and then did not apply it here; a sibling session
+ * raised it on the PR before it landed (bean `pdxk`) and it was merged unseen.
  *
- * **Second, and harder to see: two names.** `blueprint` and `lean_ci` already
- * declared a job-level group for exactly this reason, called
- * `gh-pages-deploy`. A group matches on the literal string, so those two
- * queued against each other and against nobody else. A second name for one
- * contended resource is indistinguishable, in effect, from having no group —
- * while reading, in the file, like a solved problem.
+ * So the invariant is protection, not membership:
  *
- * ## What counts as pushing
+ * - **queue** — `concurrency.group: gh-pages-push`. Correct when the contending
+ *   jobs arrive at different times, which is the cross-workflow case.
+ * - **retry** — push with `continue-on-error`, then push again on failure.
+ *   Correct when they arrive together, AND only when a re-clone loses nothing:
+ *   `discoverability-docs`' three write to different directories under one
+ *   root with `keep_files: true`, so whichever loses simply adds its tile
+ *   beside the winner's. That is **not** true in general.
  *
- * Both mechanisms in this repo: the `peaceiris/actions-gh-pages` action, and a
- * bare `git push ... gh-pages` in a `run:` body (which is how
- * `feature-staging`'s `cleanup` removes a staging directory). Checking only
- * the action would have missed `cleanup`, which contends for the same ref.
+ * A job may have both. `feature-staging`'s `stage` does.
  *
- * Scanned line-wise rather than through the parsed document because job keys,
- * `concurrency` blocks and `run:` bodies are all easy to locate by indent here,
- * and the parse is already validated above. A finding names the job, so a
- * false positive would be obvious rather than mysterious.
+ * ## What counts as pushing, and as retrying
+ *
+ * Pushing: the `peaceiris/actions-gh-pages` action, or a bare
+ * `git push … gh-pages` in a `run:` body — `feature-staging`'s `cleanup` uses
+ * the latter and contends for the same ref.
+ *
+ * Retrying comes in two shapes here, and both are detected STRUCTURALLY
+ * rather than by a marker comment, so a retry cannot be claimed without being
+ * implemented:
+ *
+ * - **Two `uses:` push steps plus `continue-on-error: true`** — the action
+ *   form, used by `feature-staging`'s `stage` and by `discoverability-docs`.
+ * - **A shell loop around `git push`, with a rebase inside it** —
+ *   `feature-staging`'s `cleanup` does three attempts with
+ *   `git pull --rebase` between them. Missing this shape is not hypothetical:
+ *   the first version of this check flagged `cleanup` as unprotected while it
+ *   was sitting next to a working retry loop, which is how a correct check
+ *   teaches somebody to delete a correct fix.
  */
 function ghPagesUngrouped(text: string, file: string): WorkflowFinding[] {
   const lines = text.split("\n");
-  type Job = { name: string; line: number; group?: string; pushes: number };
+  type Job = {
+    name: string;
+    line: number;
+    group?: string;
+    pushes: number;
+    /** `continue-on-error` on a push, so a later step can try again. */
+    tolerant: boolean;
+    /** A shell retry loop — `for attempt in …`. */
+    loops: boolean;
+    /** A rebase or fetch, so the retry pushes onto what landed. */
+    rebases: boolean;
+  };
   const jobs: Job[] = [];
   let cur: Job | undefined;
 
@@ -188,29 +215,39 @@ function ghPagesUngrouped(text: string, file: string): WorkflowFinding[] {
     const l = lines[i];
     const job = /^ {2}([A-Za-z0-9_-]+):\s*$/.exec(l);
     if (job !== null) {
-      cur = { name: job[1], line: i + 1, pushes: 0 };
+      cur = { name: job[1], line: i + 1, pushes: 0, tolerant: false, loops: false, rebases: false };
       jobs.push(cur);
       continue;
     }
     if (cur === undefined) continue;
     const g = /^ {6}group:\s*(\S+)/.exec(l);
     if (g !== null && !g[1].startsWith("${{")) cur.group = g[1];
-    // A comment mentioning the action is not a use of it.
     const bare = l.trimStart().startsWith("#");
-    if (!bare && /peaceiris\/actions-gh-pages@/.test(l)) cur.pushes++;
-    if (!bare && /git push\b[^\n]*\bgh-pages\b/.test(l)) cur.pushes++;
+    if (bare) continue;
+    if (/peaceiris\/actions-gh-pages@/.test(l)) cur.pushes++;
+    if (/git push\b[^\n]*\bgh-pages\b/.test(l)) cur.pushes++;
+    if (/continue-on-error:\s*true/.test(l)) cur.tolerant = true;
+    if (/\b(for|until|while)\b[^\n]*\battempt\b/.test(l)) cur.loops = true;
+    if (/git\s+(pull\s+--rebase|rebase|fetch)\b/.test(l)) cur.rebases = true;
   }
 
   return jobs
-    .filter((j) => j.pushes > 0 && j.group !== GH_PAGES_GROUP)
+    .filter((j) => {
+      if (j.pushes === 0) return false;
+      if (j.group === GH_PAGES_GROUP) return false;
+      const actionRetry = j.pushes >= 2 && j.tolerant;
+      const shellRetry = j.loops && j.rebases;
+      return !actionRetry && !shellRetry;
+    })
     .map((j) => ({
       file,
       line: j.line,
       kind: "gh-pages-ungrouped" as const,
       detail:
-        `job \`${j.name}\` pushes gh-pages but its concurrency group is ` +
-        `${j.group === undefined ? "absent" : `\`${j.group}\``}, not \`${GH_PAGES_GROUP}\`. ` +
-        "Every job contending for that ref must share one group, or it serialises against nothing.",
+        `job \`${j.name}\` pushes gh-pages with no protection against the race: its concurrency group is ` +
+        `${j.group === undefined ? "absent" : `\`${j.group}\``}, not \`${GH_PAGES_GROUP}\`, and it has no retry. ` +
+        "Give it the shared group, or a retry (a second push guarded by the first's failure) where the jobs " +
+        "contend simultaneously and a re-clone loses nothing.",
     }));
 }
 
@@ -236,7 +273,7 @@ if (import.meta.main) {
   if (findings.length === 0) {
     console.log(
       "✓ all parse; no duplicate keys; no attacker-controlled expression in a run body; " +
-        `every gh-pages push is in the \`${GH_PAGES_GROUP}\` group`,
+        `every gh-pages push is protected by the \`${GH_PAGES_GROUP}\` queue or a retry`,
     );
   } else {
     for (const f of findings) console.error(`  ✗ ${f.file}:${f.line}  [${f.kind}] ${f.detail}`);

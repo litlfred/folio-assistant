@@ -19,7 +19,7 @@
  * @module scripts/lean-witness
  */
 
-import { createHash } from "crypto";
+
 import { readFileSync, writeFileSync, unlinkSync, existsSync } from "fs";
 import { resolve, basename } from "path";
 import { globSync } from "glob";
@@ -31,28 +31,19 @@ import { findContentRepoRoot } from "../content/pipeline/repo-root";
 // for those globs. `findContentRepoRoot()` walks up from the real cwd;
 // `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
 const REPO_ROOT = findContentRepoRoot();
-const HASH_LENGTH = 12;
-
-// ── Core functions (exported for use by other scripts) ───────────
-
-/** Compute 12-char SHA-256 hex prefix of a file's content. */
-export function leanFileHash(filePath: string): string {
-  const content = readFileSync(filePath, "utf-8");
-  return createHash("sha256").update(content).digest("hex").slice(0, HASH_LENGTH);
-}
-
-/** Build the witness file path for a given .lean file and hash. */
-export function witnessPath(leanFile: string, hash: string): string {
-  return `${leanFile}.${hash}.witness`;
-}
-
-/** Check if a valid witness exists for the current content of a .lean file. */
-export function isWitnessed(leanFile: string): { witnessed: boolean; hash: string } {
-  if (!existsSync(leanFile)) return { witnessed: false, hash: "" };
-  const hash = leanFileHash(leanFile);
-  const wp = witnessPath(leanFile, hash);
-  return { witnessed: existsSync(wp), hash };
-}
+// ── Addressing ──────────────────────────────────────────────────
+//
+// Moved to `content/pipeline/witness-address.ts`: naming a witness and asking
+// whether one exists is grammar that travels with `BlockBase.lean`, which is
+// core's; producing and invalidating one is this file's, which is the science
+// layer's. Re-exported so every existing caller is unaffected.
+export {
+  leanFileHash,
+  witnessPath,
+  isWitnessed,
+  WITNESS_HASH_LENGTH,
+} from "../content/pipeline/witness-address.js";
+import { leanFileHash, witnessPath, isWitnessed } from "../content/pipeline/witness-address.js";
 
 /** Get the current git HEAD commit SHA. */
 function getCurrentCommitSha(): string {

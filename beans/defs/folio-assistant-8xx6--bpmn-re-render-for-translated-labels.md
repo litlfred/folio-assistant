@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-18T16:54:02Z
+updated_at: 2026-09-19T00:41:33Z
 ---
 
 The "next" recorded on bean `t8g3`. Re-render BPMN diagrams so translated
@@ -72,3 +72,5 @@ End-to-end test proves the property that matters for a shipped diagram: a
 fully-translated .bpmn still LOADS, with identical node ids, identical skill
 refs and identical bean ops. A pass producing good French and a disconnected
 graph would satisfy every string-level test.
+
+_2026-09-19T00:41:33Z_ — Checked 2026-09-19 on main at 17dc1e6 — LIVE per the bean's own last note, which records the orchestration as built (scripts/translate-bpmn.ts, 706 strings across 20 diagrams, fr committed) and page wiring as the remaining blocker. Nothing in this pass contradicts that; not re-measured.
