@@ -30,7 +30,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { readDeclaration } from "../schemas/cat-harness.js";
-import { imagesForRole } from "../schemas/kg-node.js";
+import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const OUT = join(ROOT, "docs/_data/harness.json");
@@ -48,6 +48,20 @@ if (!decl) {
 }
 
 const icon = decl.images?.find((i) => i.id === decl.icon);
+
+// The SMALL mark, resolved by ROLE rather than by the declared `icon` id,
+// because the two answer different questions and the site needs both.
+//
+// `icon` is what the instance calls its mark — one id, the instance's choice.
+// But a mark is rendered at two sizes that want different DRAWINGS: the
+// sidebar at 24 px and a browser tab at 16 px cannot carry the detail a mark
+// shown large can. `role: "browser-icon"` is the declaration already saying
+// which image is drawn for that, and until 2026-09-19 nothing read it.
+//
+// Absent is FINE and is not guessed around: an instance declaring no
+// `browser-icon` gets `null` here, and the templates fall back to `icon`.
+// Substituting the large mark silently is how a 24 px blob ships.
+const smallIcon = imageForRole(decl.images, "browser-icon");
 
 // The landing backdrop's variants, keyed by layout, so the template can pick
 // by viewport rather than parse a filename. An instance with none gets `{}`,
@@ -81,6 +95,9 @@ const payload = {
   title: decl.title ?? decl.name,
   description: decl.description ?? "",
   icon: icon ? { src: siteRelative(icon.src), title: icon.title ?? "", description: icon.description ?? "" } : null,
+  smallIcon: smallIcon
+    ? { src: siteRelative(smallIcon.src), title: smallIcon.title ?? "", description: smallIcon.description ?? "" }
+    : null,
   landing,
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;

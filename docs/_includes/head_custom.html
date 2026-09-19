@@ -24,8 +24,24 @@
   for.
 -->
 {%- assign h = site.data.harness -%}
+{%- comment -%}
+  TWO links, so the browser picks by size rather than us picking for it.
+
+  The unsized link is the full mark, whiskers and all, used wherever there is
+  room — a pinned tab, a bookmark tile, a home-screen icon. The `16x16` link is
+  the mark drawn for small sizes, which is what a tab strip actually shows.
+
+  The split exists because the whiskers are `stroke-width="2.4"` against a
+  120-unit viewBox: 0.32 px at 16 px and 0.48 px at 24 px. Sub-pixel at 1x, and
+  still under a whole device pixel at 2x, so at tab size they render as haze on
+  the face rather than as whiskers. One link would have meant choosing between
+  losing them everywhere and showing them where they cannot be drawn.
+{%- endcomment -%}
 {%- if h.icon.src -%}
 <link rel="icon" type="image/svg+xml" href="{{ h.icon.src | relative_url }}">
+{%- endif -%}
+{%- if h.smallIcon.src -%}
+<link rel="icon" type="image/svg+xml" sizes="16x16" href="{{ h.smallIcon.src | relative_url }}">
 {%- endif -%}
 
 <!--
