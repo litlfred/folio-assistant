@@ -227,13 +227,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T11:33:31.560Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0018435f14c2db6ad1a264bd0412379518428023",
-  "sourceCommitSha": "0018435f14c2db6ad1a264bd0412379518428023",
-  "sourceCommitAt": "2026-09-19T13:31:54+02:00",
+  "generatedAt": "2026-09-19T11:50:07.166Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/98144b5a8c5edd36a6d005e7de4773e98f7f7daf",
+  "sourceCommitSha": "98144b5a8c5edd36a6d005e7de4773e98f7f7daf",
+  "sourceCommitAt": "2026-09-19T13:48:43+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 162,
+    "Skill": 163,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -903,7 +903,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/crdm-requirements-workflow.md",
-      "instructionLines": 263,
+      "instructionLines": 266,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1335,7 +1335,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/feature-staging.md",
-      "instructionLines": 118,
+      "instructionLines": 130,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1543,7 +1543,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 145,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1602,6 +1602,21 @@
       ],
       "instructionsPath": "skills/folio-core/bib-photo-ingestion-watcher.md",
       "instructionLines": 54,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "github-state-inspection",
+      "title": "Reading GitHub state — resolve the ref, do not compose the URL",
+      "description": "Answer questions about GitHub-hosted state — is a page published, where does it live, did CI pass, does a branch exist — by reading the ref or the API, never by composing a URL or fetching one. The first check for any deployment or 404 question is `git ls-tree` of the publish ref.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/github-state-inspection.md",
+      "instructionLines": 118,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1823,7 +1838,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 197,
+      "instructionLines": 223,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3684,6 +3699,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/idle-backlog",
@@ -17956,8 +17972,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "0018435f14c2db6ad1a264bd0412379518428023",
+    "sha": "98144b5a8c5edd36a6d005e7de4773e98f7f7daf",
     "pr": "main",
-    "run": "35440362541"
+    "run": "35441128709"
   }
 }
