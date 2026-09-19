@@ -679,6 +679,49 @@ export function renderingPath(base: string, ...segments: string[]): string {
   return b ? `${b}/${tail}` : tail;
 }
 
+/**
+ * The media type each rendering extension declares, longest extension first.
+ *
+ * The companion to `renderingPath`: that says WHERE an artefact is, this says
+ * WHAT it is. Both were prose in `skills/folio-core/serving-renderings.md` and
+ * only one of them was code, so every consumer that served a rendering had to
+ * re-derive the type — and `grep` for `ld+json` across this repository's
+ * TypeScript returned **nothing** before this existed (measured 2026-09-19).
+ *
+ * **Order is load-bearing, and it is the whole reason a table is needed.**
+ * `.schema.json` must be tried before `.json`, because the second is a suffix
+ * of the first.
+ *
+ * That single row is the entire gap against an ordinary static server, and it
+ * is narrower than it is tempting to claim. Measured the same day, both
+ * Python's `mimetypes` and `Bun.file().type` already resolve `.jsonld` to
+ * `application/ld+json` correctly — so "a general-purpose server cannot serve
+ * a rendering" is FALSE and must not be written down as a rule. What no OS
+ * table carries is the compound extension: `.schema.json` infers as
+ * `application/json`, which parses but loses that the document is a schema.
+ */
+export const RENDERING_MEDIA_TYPES: readonly (readonly [string, string])[] = [
+  [".schema.json", "application/schema+json"],
+  [".jsonld", "application/ld+json"],
+  [".json", "application/json"],
+  [".html", "text/html"],
+] as const;
+
+/**
+ * The declared media type for a rendering path, or `undefined` when this is
+ * not a rendering whose type the declaration fixes.
+ *
+ * **`undefined` is a third state and callers must keep it one.** It means
+ * "this table says nothing", not "serve it as bytes": a server should fall
+ * back to its own inference for an ordinary asset rather than forcing a type
+ * onto a file the declaration never claimed. Same discipline as
+ * `readme-sections`' `skip` and `ci-health`'s "could not check".
+ */
+export function renderingMediaType(path: string): string | undefined {
+  const lower = path.toLowerCase();
+  return RENDERING_MEDIA_TYPES.find(([ext]) => lower.endsWith(ext))?.[1];
+}
+
 // ── Reading ─────────────────────────────────────────────────────
 
 /**
