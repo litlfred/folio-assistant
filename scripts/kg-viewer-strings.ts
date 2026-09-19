@@ -183,6 +183,16 @@ export const UI_STRINGS: readonly UiString[] = [
     comment: "Second half of that warning, following a comma. {n} is a number — the count across the whole graph, not this node.",
   },
   {
+    en: "so a JSON-LD processor drops them. They are shown below, marked.",
+    comment:
+      "The same second half, for a document that does not report a graph-wide count. " +
+      "Since bean `2634` the export publishes its QA findings to `test/results/` " +
+      "rather than into the graph, so most documents no longer carry one — and an " +
+      "absent count must not be rendered as zero, which would claim a clean bill of " +
+      "health the document never gave. Keep the two variants consistent: this is the " +
+      "other one minus its final sentence.",
+  },
+  {
     en: "type",
     comment: "Row label for the node's type. The other row labels are property names from the graph's own vocabulary and are not translated — see the note about the graph's language.",
   },

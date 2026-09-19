@@ -151,3 +151,63 @@ Verified: `bun test` 2174 pass / 0 fail, typecheck, `eslint .`,
 — it has `chromium_headless_shell-1194` and Playwright wants `-1228`, so
 `a11y.e2e.ts`, which this change never touches, fails 24 times with the same
 missing-binary error. CI runs them properly.
+
+---
+
+## PR 4 done, 2026-09-19 — the findings left the published graph
+
+`undeclaredTerms`, `undeclaredSchemaModules`, `danglingLinks` and `problems`
+are no longer published in `<stub>.jsonld`. They are a QA reviewer's findings
+about the graph this run produced, and they now live only in
+`test/results/kg-export.qa-results.json`.
+
+**`publishedDocument(data)` is the projection.** `buildExport` still computes
+everything — it has to, the result is written from it — and the CLI publishes
+the projection. A test asserts the four are absent from the projection and
+present in the result, so nothing can leave the document without arriving in
+the result.
+
+**What STAYS, and the line is not "everything diagnostic".** `counts` and
+`repository` remain: neither is a finding. `counts` is what the graph CONTAINS,
+which is how a consumer spots a truncated document; `repository` is provenance
+sitting beside `sourceCommit`. `sourceCommitUnavailable` is the sharpest case —
+it reads like a problem and is not one, because a tarball exports a complete
+graph and simply cannot say which commit it came from. A reviewer's verdict
+moves; a fact about the artefact does not.
+
+**The `@context` terms went WITH the fields.** A context describes what its
+document carries, so a term for a field nothing emits is a promise to answer a
+question the document has stopped answering — worse than an undeclared term,
+which at least fails loudly against `undeclaredRootTerms`.
+
+### The viewer, and the state that had to stay distinct
+
+`scripts/kg-viewer.ts` read `doc.undeclaredTerms ?? []` and rendered "Across
+the graph: {n} such property names." Defaulting to `[]` would now print
+**"Across the graph: 0"** over a document that never said so — a clean bill of
+health nobody issued. `undeclared` defaults to `null`, and the cross-graph
+sentence is omitted when the document reported no count. Absent and empty are
+different answers.
+
+A document from before this change, or from another instance, still carries the
+field and still renders the count.
+
+### Caught by the repo's own gates, not by me
+
+- **The viewer's browser JS lives inside a template literal.** My comments used
+  backticks and silently terminated it. `tsc` and `eslint` both caught it; I
+  also now parse every `<script>` in the generated page with `new Function` as
+  a check that the emitted JS is syntactically valid, which neither gate does.
+- **A new translatable string must be in the table and in every locale stub.**
+  `kg-viewer-strings.test.ts` caught the missing entry, then caught that the
+  five `.po` stubs were one msgid short of the `.pot`.
+
+**Tooling gap found:** `scripts/translate-kg-viewer.ts --extract` refreshes
+every `.pot` and the manifests but does **not** sync the `.po` stubs, so a new
+string leaves all five catalogues short and the failure surfaces only in a
+test. Synced by hand here, preserving each header and every existing `msgstr`.
+Worth its own bean.
+
+Verified: `bun test` 2175 pass / 0 fail, typecheck, `eslint .`,
+`kg:audit:check`, `check:workflows`, `check:harness-dirs`, `check:partition`,
+`agent-memory:check`, `gen-skill-docs --check`, `translate-kg-viewer:check`.

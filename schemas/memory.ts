@@ -70,6 +70,8 @@
  * So {@link MemoryNodeSchema} **refuses a `baseline` entry without `measured`**.
  * A number whose command and date are missing is a claim, not evidence, and
  * the schema is where that stops being a thing somebody has to remember.
+ *
+ * @graphNode schema
  */
 
 import { z } from "zod";
