@@ -127,14 +127,32 @@ adjudication in `c8fbad385` turned that criterion `pass`, and four assertions
 went red for reasons unrelated to the panel. The literal hash also meant any
 edit to a checker reddened a UI test.
 
-**Read the SHAPE off real generator output; freeze the VERDICT.**
-`tests/fixtures/block-with-one-failure.block.json` is a captured copy with
-provenance in `tests/fixtures/README.md`, and every expected value in the spec
-is read out of the document rather than written as a literal.
+**Read the document live; flip the ONE criterion you are testing, by id, where
+it sits.** The settled answer (#319, on `main`) reads the real sidecar, finds the
+criterion by id, throws if it has left the corpus, sets `result`/`severity`/
+`evidence`, and keeps only the script witness — so the checker hash the spec
+asserts is still the corpus's own.
 
-**Adjudication is lossy** — a criterion the agent overturned keeps no
-`severity` and no `evidence`, only the script witness. You cannot reconstruct
-the pre-adjudication document from the corpus, so capture beats derive.
+**Do NOT freeze a captured copy.** I tried that and withdrew it: freezing the
+criterion freezes its witness, so the `scriptHash` literal outlives the checker
+and the spec keeps passing while asserting a hash the corpus no longer holds.
+Same defect one field down. Reading the value out of the frozen document instead
+of pinning it makes the assertion self-consistent, not correct.
+
+**Flip it IN PLACE, never hoist it to `criteria[0]`.** The generator already
+sorts worst-first, so a failure at index 0 means the panel's own sort is
+untested — a panel that sorted nothing would pass. At 19 of 48 the row has to be
+lifted past nineteen quiet ones.
+
+**Adjudication is lossy** — a criterion the agent overturned keeps no `severity`
+and no `evidence`, only the script witness. So `evidence` has to be written as a
+literal; that one string is the accepted cost.
+
+**Three fields exist only in a state the corpus is not in**, so no live sidecar
+can vouch for them: `severity` and `evidence` (a failing criterion — #314
+measured that NO criterion in the corpus carries `evidence` any more) and
+`changed` (a stale witness; nothing is stale today). That third one was found by
+a drift test on its first run, not from memory.
 
 ## STABLE — `uses[]` is EDITORIAL, and immediate-neighbours only
 
