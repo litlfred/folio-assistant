@@ -132,7 +132,6 @@ const RULES: Rule[] = [
     triaged: true,
     exact: [
       "scripts/check-ci-health.ts",          // workflow state on the default branch
-      "scripts/check-corpus-gate.ts",        // editing-process authorisation gate
       "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
       "scripts/bpmn-render.ts",              // BPMN → SVG
       "scripts/render-bpmn.ts",              // BPMN → SVG (the skills/workflows one)
@@ -208,6 +207,13 @@ const RULES: Rule[] = [
       // have anything to do — arrived from `main` and fell through every
       // prefix, which the tool reported as `unassigned` rather than guessing.
       "scripts/harness-dirs.ts",
+      // The `@graphNode` declarations under `schemas/` and the gate over them.
+      // Harness because the `schemas` GRAPH KIND is the harness's vocabulary —
+      // `cat-harness.json` declares it — even though the directory holds
+      // content-model schemas too. These read the declarations; they define no
+      // part of the content model.
+      "scripts/schema-nodes.ts",
+      "scripts/check-schema-nodes.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -244,6 +250,16 @@ const RULES: Rule[] = [
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
       "scripts/gen-jsonld-context.ts",       // from schemas/jsonld.ts
+      // Re-triaged 2026-09-19, bean `zlmp`. Listed as harness until then, on
+      // "editing-process authorisation gate". But AGENTS.md says it runs IN a
+      // FOLIO repo, from that repo's pre-commit hook or CI, and the triage
+      // question is whether a script reads PLATFORM or CONTENT: this one reads
+      // changed content blocks. Enforcing a harness-defined process does not
+      // make the enforcer harness, any more than a linter belongs to the
+      // language it checks. With `labelFor` inverted out of corpus-gate.ts,
+      // this classification is what actually removes the two edges — the
+      // inversion alone just relocated them here, measured.
+      "scripts/check-corpus-gate.ts",        // runs in the folio repo, over its content
       "scripts/gen-schema-docs.ts",          // content-object model → reference
       "scripts/generate-docs.ts",            // schema documentation
       "scripts/generate-schemas.ts",         // Zod → JSON Schema

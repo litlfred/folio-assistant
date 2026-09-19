@@ -1,10 +1,30 @@
 # ci-health-watcher — memory
 
-Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote —
-and here *everything* measured is a live signal that goes stale by design).
-Seeded 2026-08-29 from `AGENTS.md`. Confirm entries as you use them.
+**Edit `skills/memory/*.md`, not this file.** The region below is assembled by
+`bun run agent-memory` and anything written into it by hand is overwritten;
+everything outside it — the session log — is yours and is never touched.
+Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote).
 
 ---
+
+<!-- folio:memory:begin -->
+
+## STABLE — re-measure, always
+
+Nothing about workflow state should ever be quoted from this file. Run
+`bun run check:ci-health` and report what it returns today.
+
+| what | command |
+|---|---|
+| per-workflow state on default branch | `bun run check:ci-health` |
+| workflow trigger policy | `bun run check:workflow-policy` |
+| the tracking issue | issues labelled `ci-health` |
+
+> Relabelled from BASELINE to STABLE, 2026-09-19. `AGENTS.md` defines a
+> BASELINE as *"a measured number, stored with the command that produced it
+> and the date"* — and this entry stores no number. It is a table of commands
+> to RUN, which is the opposite thing: a stable fact about how to measure,
+> not a measurement. `MemoryNodeSchema` refused it as a baseline, correctly.
 
 ## STABLE — the check and its three rules
 
@@ -19,6 +39,25 @@ already look.
 3. A red whose **workflow file changed after the failing run** is reported
    `superseded` — a later edit is evidence the failing version is gone, not
    evidence the new one works. Never green, never a live failure.
+
+## STABLE — the complement
+
+`ynu8` complements bean `5rfy`, which fixed workflows that never *fire*. This
+is the opposite defect: one that fires constantly and fails every time. When
+triaging, decide which of the two you are looking at first — the remedies are
+unrelated.
+
+## STABLE — two load-bearing properties of `ci-health.yml`
+
+Not incidental; do not simplify either away.
+
+- **`fetch-depth: 0`.** The `superseded` rule asks `git log` when a workflow
+  file last changed, and a shallow clone cannot answer — which would
+  resurrect the false fires the rule exists to retire.
+- **On "could not check" (exit 2) it leaves the tracking issue UNTOUCHED and
+  fails the job**, rather than closing it. A watchdog going blind must not
+  read as good news. A red `ci-health.yml` is itself reported by next week's
+  run.
 
 ## STABLE — why the watchdog exists
 
@@ -54,35 +93,7 @@ needs `folio-assistant/computations/`.
 
 Without rule 3 these two would be red forever. That is what rule 3 is for.
 
-## STABLE — two load-bearing properties of `ci-health.yml`
-
-Not incidental; do not simplify either away.
-
-- **`fetch-depth: 0`.** The `superseded` rule asks `git log` when a workflow
-  file last changed, and a shallow clone cannot answer — which would
-  resurrect the false fires the rule exists to retire.
-- **On "could not check" (exit 2) it leaves the tracking issue UNTOUCHED and
-  fails the job**, rather than closing it. A watchdog going blind must not
-  read as good news. A red `ci-health.yml` is itself reported by next week's
-  run.
-
-## STABLE — the complement
-
-`ynu8` complements bean `5rfy`, which fixed workflows that never *fire*. This
-is the opposite defect: one that fires constantly and fails every time. When
-triaging, decide which of the two you are looking at first — the remedies are
-unrelated.
-
-## BASELINE — re-measure, always
-
-Nothing about workflow state should ever be quoted from this file. Run
-`bun run check:ci-health` and report what it returns today.
-
-| what | command |
-|---|---|
-| per-workflow state on default branch | `bun run check:ci-health` |
-| workflow trigger policy | `bun run check:workflow-policy` |
-| the tracking issue | issues labelled `ci-health` |
+<!-- folio:memory:end -->
 
 ---
 

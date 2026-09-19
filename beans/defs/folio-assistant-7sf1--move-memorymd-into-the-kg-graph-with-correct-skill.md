@@ -1,10 +1,11 @@
 ---
 # folio-assistant-7sf1
 title: Move MEMORY.md into the kg graph, with correct skill/task pairings
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-19T00:04:29Z
-updated_at: 2026-09-19T00:04:29Z
+updated_at: 2026-09-19T00:37:53Z
 ---
 
 
@@ -57,3 +58,59 @@ Whether memory becomes a new graph kind (like `bean-defs`, `workflow-state`) or
 is folded into existing skill bodies. The first keeps the STABLE/TRAP/BASELINE
 distinction, which is load-bearing: a BASELINE is a measurement that goes stale
 by design and must never read as a current answer.
+
+---
+
+## CORRECTION — the pairing above is wrong (2026-09-19)
+
+The framing this bean was opened with, and which I then restated to the author
+as a 2×2, paired **beans against MEMORY.md** as one mechanism serving two actor
+kinds: beans for the human, memory for the agent. The author corrected it:
+
+> todos = human memory, the agents MEMORY.md is agent memory. beans are agent
+> workflow management. no human workflow management
+
+**Beans is not the human's side of memory. It is the agent's WORKFLOW
+MANAGEMENT**, which is a different axis entirely:
+
+| | memory | workflow management |
+|---|---|---|
+| **human actor** | todos | *— nothing —* |
+| **agent actor** | `MEMORY.md` | beans |
+
+Two consequences worth recording, because both were invisible under the wrong
+frame:
+
+**`AGENTS.md` calls beans "the single todo mechanism", and that word is what
+misled me.** If todos are human memory and beans is agent workflow management,
+then "todo" names beans after a quadrant it does not occupy. Same
+coincidence-not-contract drift this repo keeps paying for, in vocabulary rather
+than in layout.
+
+**The bottom-left quadrant is EMPTY** — not undeclared, absent. There is no
+human workflow management here, and nothing in the repo says so.
+
+## What survives the correction
+
+The role-scoping argument is unaffected: an agent is an ACTOR, memory is
+knowledge, and `AGENTS.md` already says knowledge belongs to the lane —
+*"A skill is what the performer needs to KNOW and belongs to the lane."* So
+binding memory to the agent rather than the role is still the defect.
+
+**Measured 2026-09-19**, `.claude/agent-memory/`: 28 entries across 3 agents,
+with **5 subject areas duplicated** between `content-pipeline-navigator` and
+`platform-boundary-guard` — two near-verbatim ("the document render path takes
+no TeX", and the BASELINE "re-measure, do not quote"). That duplication is
+*caused by* agent-scoping: one fact, two files, free to drift.
+
+**A hard constraint on any fix:** `memory: project` is a Claude Code harness
+feature that injects `.claude/agent-memory/<agent>/MEMORY.md` into the
+subagent's system prompt. The harness decides where it looks, so that file must
+stay where it is. Any kg-node model therefore makes it a GENERATED artifact
+assembled from scoped entries — the relation `docs/reference/skill-instructions/`
+already has to `skills/` — rather than moving it.
+
+## Blocked on
+
+Whether this bean covers the agent-memory quadrant alone, or whether the empty
+human-workflow-management quadrant is in scope too. Not started pending that.

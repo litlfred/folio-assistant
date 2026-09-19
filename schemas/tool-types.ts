@@ -20,6 +20,7 @@
  * decidable if both sides name the same type.
  *
  * @module schemas/tool-types
+ * @graphNode schema
  */
 import { z } from "zod";
 

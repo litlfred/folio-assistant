@@ -46,104 +46,42 @@
  * the feedback that arrives from outside. `actor: undefined` means **not
  * linked**, which is a third state — never "anonymous", and never silently
  * resolved to a default actor.
+ * @graphNode schema
  */
 
 import { z } from "zod";
 
-/**
- * A task, addressed as the pair it actually is.
- *
- * See the module header: an activity id alone is not an address.
- */
-export const TaskRefSchema = z.object({
-  /** BPMN process id, e.g. `Process_CRDM`. */
-  process: z.string().min(1),
-  /** Activity id within that process, e.g. `A_Implement`. */
-  task: z.string().min(1),
-});
-export type TaskRef = z.infer<typeof TaskRefSchema>;
+import {
+  CarriedNoteSchema,
+  NoteTagsSchema,
+  type NoteTags,
+} from "./carried-note.js";
 
 /**
- * Who, named in a system that can name them.
- *
- * `provider` is open rather than an enum: the set of systems a folio's people
- * arrive from is the folio's business, and a closed list would reject a real
- * person for being on the wrong forge.
+ * The reference vocabulary now lives in `schemas/carried-note.ts`, shared with
+ * agent memory — see that module for why a todo and a memory entry are the
+ * same thing with different storage. Re-exported here so every existing
+ * importer of `schemas/todo` keeps working: the types did not change, only
+ * where they are defined.
  */
-export const ExternalIdentitySchema = z.object({
-  /** The naming system — `github`, `google`, `git`, an institutional IdP. */
-  provider: z.string().min(1),
-  /** The handle or address **within that provider**. */
-  id: z.string().min(1),
-  /** Display name, when the provider gave one. Never used for matching. */
-  displayName: z.string().optional(),
-  /**
-   * The declared actor this identity belongs to, when it is known to be one.
-   *
-   * Absent means NOT LINKED, which is a real and common state — see the module
-   * header. It must not be read as anonymous, and must never be defaulted.
-   */
-  actor: z.string().optional(),
-});
-export type ExternalIdentity = z.infer<typeof ExternalIdentitySchema>;
-
-/**
- * A reference to any other node of the knowledge graph.
- *
- * The four tag axes — role, process, task, identity — are the ones with
- * MEANING: they say who this is outstanding for and where in the work it sits.
- * This is the open one, for everything a todo merely needs to POINT AT: the
- * skill it is about, the requirement it blocks, the block it was raised
- * against, a workflow decision it disagrees with.
- *
- * `kind` is an open string rather than an enum on purpose. The node kinds are
- * an open registry (`BASE_GRAPH_KINDS`), and a closed list here would refuse a
- * reference to a kind a downstream instance added — which is the one thing a
- * general-purpose reference must not do.
- *
- * It is deliberately NOT a place to re-express a tag. A `references` entry
- * naming a role says "see also"; the `roles` tag says "this is outstanding in
- * that lane". Collapsing them would lose the distinction every consumer of the
- * tags depends on.
- */
-export const KgRefSchema = z.object({
-  /** The node kind — `skill`, `requirement`, `block`, `process`, … */
-  kind: z.string().min(1),
-  /** The node's id within that kind. */
-  id: z.string().min(1),
-  /** Why it is referenced, when that is not obvious from the pair. */
-  note: z.string().optional(),
-});
-export type KgRef = z.infer<typeof KgRefSchema>;
+export {
+  TaskRefSchema,
+  ExternalIdentitySchema,
+  KgRefSchema,
+  ArtefactRefSchema,
+  ARTEFACT_KINDS,
+} from "./carried-note.js";
+export type { TaskRef, ExternalIdentity, KgRef, ArtefactRef } from "./carried-note.js";
 
 /**
  * The knowledge-graph edges a todo carries.
  *
- * Every array defaults to empty, and an empty array is a **determined empty**:
- * this todo is tagged with no role, as against a todo whose tags were never
- * filled in. The two are indistinguishable in this shape, deliberately — the
- * distinction that matters at read time is whether a tag RESOLVES, which
- * {@link resolveTodoTags} answers with its own third state.
+ * Now {@link NoteTagsSchema}, shared with memory and widened with `artefacts`
+ * — issues, pull requests and commits, which are neither graph nodes nor
+ * people and so had nowhere to go before.
  */
-export const TodoTagsSchema = z.object({
-  /** Role ids — the swimlane this is outstanding in. `skills/roles/roles.json`. */
-  roles: z.array(z.string()).default([]),
-  /** BPMN process ids this todo belongs to. */
-  processes: z.array(z.string()).default([]),
-  /** Specific activities, each with its process. */
-  tasks: z.array(TaskRefSchema).default([]),
-  /**
-   * Who it is outstanding FOR, or who raised it.
-   *
-   * An array because **several people can be tagged on one todo** — a question
-   * for two reviewers is one item, not two, and splitting it would lose that
-   * they are being asked the same thing.
-   */
-  identities: z.array(ExternalIdentitySchema).default([]),
-  /** Anything else in the graph this points at. See {@link KgRefSchema}. */
-  references: z.array(KgRefSchema).default([]),
-});
-export type TodoTags = z.infer<typeof TodoTagsSchema>;
+export const TodoTagsSchema = NoteTagsSchema;
+export type TodoTags = NoteTags;
 
 /** How a tag came out when checked against the knowledge graph. */
 export type TagResolution = "resolved" | "dangling" | "not-checked";
@@ -235,41 +173,30 @@ export function danglingTags(resolved: ResolvedTag[]): ResolvedTag[] {
  * one enum is the drift this repository keeps paying for; this module adds the
  * KG tagging that was missing and takes nothing over.
  */
-export const TodoNodeSchema = z.object({
-  /** Stable id within its store. */
-  id: z.string().min(1),
-  /** One line. */
-  summary: z.string().min(1),
-  /**
-   * The markdown narrative — context, rationale, the question being asked.
-   *
-   * Read AFTER the tags, and that ordering is the point rather than a style
-   * choice: the tags say who this is for and where it sits, which is what a
-   * reader needs before prose means anything. A renderer that leads with the
-   * narrative makes every todo look like an undifferentiated note.
-   */
-  comment: z.string().default(""),
+/**
+ * A todo — one person's outstanding work.
+ *
+ * Extends {@link CarriedNoteSchema} with the three fields that are the HUMAN
+ * half specifically: a lifecycle (`status`), how urgent (`priority`) and where
+ * it came from (`origin`). Agent memory has none of those — a TRAP is not
+ * "open", and marking one "done" would say the failure it records has stopped
+ * being possible.
+ */
+export const TodoNodeSchema = CarriedNoteSchema.extend({
   /** `TodoStatus` from `types.ts`, not re-enumerated here. */
   status: z.string().min(1),
   /** `TodoPriority` from `types.ts`. */
   priority: z.string().min(1),
   /** `TodoOrigin` from `types.ts`. */
   origin: z.string().min(1),
-  /** ISO 8601. */
-  createdAt: z.string().min(1),
-  updatedAt: z.string().optional(),
-  /** Block label this is attached to, when it is attached to one. */
-  targetLabel: z.string().optional(),
-  /** The knowledge-graph edges — see {@link TodoTagsSchema}. */
-  tags: TodoTagsSchema.default({ roles: [], processes: [], tasks: [], identities: [], references: [] }),
   /**
    * What this file IS, declared inside it.
    *
    * The same convention the workflow instances use (`folio-workflow-instance/v1`)
-   * and for the same reason `#263` gave: a directory may hold more than one
-   * part of a graph, and telling the parts apart by file extension is "a
-   * coincidence of the current layout, not a contract". A declaration inside
-   * the file is the contract.
+   * and for the reason `#263` gave: a directory may hold more than one part of
+   * a graph, and telling the parts apart by file extension is "a coincidence of
+   * the current layout, not a contract". A declaration inside the file is the
+   * contract.
    */
   $schema: z.literal("folio-todo/v1"),
 });

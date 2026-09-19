@@ -49,7 +49,77 @@ import { parse as parseYaml } from "yaml";
  * head" on a workflow that owed no run, which is the exact false fire the
  * trigger check exists to prevent.
  */
-export function pushTriggerOf(text: string): boolean | undefined {
+export interface PushContext {
+  /** The branch being pushed to, for a `branches` / `branches-ignore` filter. */
+  branch?: string;
+  /**
+   * Paths the commit changed, for a `paths` / `paths-ignore` filter.
+   *
+   * Pass it only when the list is COMPLETE. GitHub's commit endpoint caps
+   * `files` at 300, and a truncated list makes a matching file look absent —
+   * which turns "this workflow ran" into "no run judged the head", a false
+   * fire. A caller that cannot guarantee completeness passes nothing.
+   */
+  changedFiles?: string[];
+}
+
+/**
+ * Translate one GitHub filter pattern to a regex, or `undefined` if it uses
+ * syntax this does not confidently support.
+ *
+ * Supported: literal characters, `*` (any run not crossing `/`), and `**` (any
+ * run, crossing `/`). `/**​/` also matches zero directories, which is what
+ * `content/**​/*.ts` means to GitHub and what a naive `.*` would get wrong for
+ * `content/a.ts`.
+ *
+ * **Refused, deliberately:** `!` negation, `?`, `[`, `+`, `{`. Each has real
+ * semantics and each is a chance to be subtly wrong in the direction that
+ * invents a finding. Returning `undefined` costs a workflow's coverage;
+ * guessing costs the report's credibility, which is the asset this module is
+ * entirely made of.
+ */
+function patternToRegExp(pattern: string): RegExp | undefined {
+  if (/[!?[\]+{}]/.test(pattern)) return undefined;
+  let out = "";
+  for (let i = 0; i < pattern.length; i++) {
+    const c = pattern[i]!;
+    if (c === "*") {
+      const doubled = pattern[i + 1] === "*";
+      if (doubled) {
+        // `a/**/b` must also match `a/b`, so the separator is consumed here.
+        if (out.endsWith("/") && pattern[i + 2] === "/") {
+          out = out.slice(0, -1) + "(?:/.*)?/";
+          i += 2;
+        } else {
+          out += ".*";
+          i += 1;
+        }
+      } else {
+        out += "[^/]*";
+      }
+      continue;
+    }
+    out += c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+  try {
+    return new RegExp(`^${out}$`);
+  } catch {
+    return undefined;
+  }
+}
+
+/** Does any changed file match any pattern? `undefined` if a pattern is unsupported. */
+function anyFileMatches(patterns: string[], files: string[]): boolean | undefined {
+  const res: RegExp[] = [];
+  for (const p of patterns) {
+    const r = patternToRegExp(p);
+    if (!r) return undefined;
+    res.push(r);
+  }
+  return files.some((f) => res.some((r) => r.test(f)));
+}
+
+export function pushTriggerOf(text: string, ctx: PushContext = {}): boolean | undefined {
   let doc: unknown;
   try {
     doc = parseYaml(text);
@@ -67,8 +137,45 @@ export function pushTriggerOf(text: string): boolean | undefined {
   const push = (on as Record<string, unknown>).push;
   if (push === null || push === undefined) return true;
   if (typeof push !== "object") return true;
-  const FILTERS = ["paths", "paths-ignore", "branches", "branches-ignore", "tags", "tags-ignore"];
-  return FILTERS.some((k) => Object.hasOwn(push as object, k)) ? undefined : true;
+  const p = push as Record<string, unknown>;
+  const has = (k: string) => Object.hasOwn(p, k);
+
+  // A tag filter means this push block is about tags, not branch commits.
+  if (has("tags") || has("tags-ignore")) return undefined;
+
+  // ── branch filters ─────────────────────────────────────────────────
+  // Fully decidable whenever the caller says which branch, and no globbing is
+  // involved for a plain name. `code-quality-gates.yml` is exactly this shape:
+  // `branches: [main]` and nothing else.
+  if (has("branches") || has("branches-ignore")) {
+    if (ctx.branch === undefined) return undefined;
+    const list = (has("branches") ? p.branches : p["branches-ignore"]) as unknown;
+    if (!Array.isArray(list)) return undefined;
+    const match = anyFileMatches(list as string[], [ctx.branch]);
+    if (match === undefined) return undefined;
+    if (has("branches") ? !match : match) return false;
+  }
+
+  // ── path filters ───────────────────────────────────────────────────
+  // GitHub refuses `paths` and `paths-ignore` together for one event, so a
+  // file carrying both is not something to reason about.
+  if (has("paths") && has("paths-ignore")) return undefined;
+  if (has("paths") || has("paths-ignore")) {
+    if (ctx.changedFiles === undefined) return undefined;
+    const list = (has("paths") ? p.paths : p["paths-ignore"]) as unknown;
+    if (!Array.isArray(list)) return undefined;
+    const match = anyFileMatches(list as string[], ctx.changedFiles);
+    if (match === undefined) return undefined;
+    // `paths`: run when ANY changed file matches.
+    // `paths-ignore`: skip only when EVERY changed file matches, so run when
+    // any file falls outside the list.
+    if (has("paths")) return match;
+    const allIgnored = anyFileMatches(list as string[], ctx.changedFiles) === true &&
+      ctx.changedFiles.every((f) => anyFileMatches(list as string[], [f]) === true);
+    return !allIgnored;
+  }
+
+  return true;
 }
 
 /** The fields of a GitHub Actions run this module reads. */

@@ -22,6 +22,7 @@
  * Dockerfile layer.
  *
  * @module assistant-package
+ * @graphNode schema
  */
 
 /**

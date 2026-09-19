@@ -38,6 +38,7 @@
  * against the real skill locations.
  *
  * @module schemas/tool
+ * @graphNode schema
  */
 import { z } from "zod";
 

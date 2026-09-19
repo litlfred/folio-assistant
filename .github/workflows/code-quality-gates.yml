@@ -268,6 +268,14 @@ jobs:
         run: |
           bun run scripts/gen-schema-docs.ts --check
           bun run scripts/gen-skill-docs.ts --check
+
+      # Agent memory is authored under `skills/memory/` and ASSEMBLED into
+      # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
+      # harness injects. An entry edited and never assembled is a fact the
+      # author believes an agent has and the agent has never seen -- invisible,
+      # because the generated file still reads perfectly well without it.
+      - name: agent memory is assembled
+        run: bun run agent-memory:check
           bun run scripts/gen-docs-pages.ts --check
 
   # ── End-to-end, including the accessibility gate ────────────────────

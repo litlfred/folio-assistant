@@ -20,6 +20,7 @@
  * union, which necessarily lives with the types.
  *
  * @module schemas/block-kinds
+ * @graphNode schema
  */
 
 /**

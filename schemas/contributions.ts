@@ -52,6 +52,7 @@
  * not leak into the content model.
  *
  * @module schemas/contributions
+ * @graphNode schema
  */
 
 import type { CheckerPaths, CheckerResult } from "./block-qa";
