@@ -15,6 +15,7 @@ import {
   tally,
   worstSeverity,
   type KgQaReport,
+  KG_QA_RESULTS_DIR,
 } from "./kg-qa";
 
 describe("the criteria registry", () => {
@@ -100,13 +101,22 @@ describe("tally and worstSeverity", () => {
 });
 
 describe("the sidecars committed in this repository", () => {
-  const roots = [
-    join(import.meta.dir, "..", "skills", "workflows", "kg-qa"),
-    join(import.meta.dir, "..", "skills", "workflows", "decisions", "kg-qa"),
-    join(import.meta.dir, "..", "skills", "roles", "kg-qa"),
-  ].filter(existsSync);
-
-  const files = roots.flatMap((d) => readdirSync(d).filter((f) => f.endsWith(".kg-qa.json")).map((f) => join(d, f)));
+  // The results tree, walked recursively and derived from the SAME constant
+  // the auditor writes with — three hardcoded roots is how this test came to
+  // read an empty set when the corpus moved, which its own "there are some"
+  // guard then caught. The tree mirrors each subject's path, so it nests.
+  const root = join(import.meta.dir, "..", KG_QA_RESULTS_DIR);
+  const walk = (d: string): string[] =>
+    !existsSync(d)
+      ? []
+      : readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+          e.isDirectory()
+            ? walk(join(d, e.name))
+            : e.name.endsWith(".kg-qa.json")
+              ? [join(d, e.name)]
+              : [],
+        );
+  const files = walk(root);
 
   test("there are some", () => {
     expect(files.length).toBeGreaterThan(0);

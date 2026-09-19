@@ -535,8 +535,10 @@ resolution rules, how to bind a lane, the severity scale, and how to add a role.
 One criterion per join above — `KG_CRITERIA` in `schemas/kg-qa.ts` is the
 registry and the only current answer to how many; this line said "Fourteen"
 while it held 32. They are written as **committed QA sidecars** under
-`kg-qa/` beside whatever they audit: `skills/workflows/kg-qa/`,
-`skills/workflows/decisions/kg-qa/`, `skills/roles/kg-qa/`. Schema:
+`test/results/kg-qa/`, in a tree that MIRRORS each subject's path — flat would
+collide, and not hypothetically: four sidecar basenames already occur twice
+across packages. They sat beside their subjects until 2026-09-19 (bean `2634`);
+`kgQaSidecarPath` is the one answer for writer and reader. Schema:
 `schemas/kg-qa.ts`. This is the **third** QA subject kind, after the block sweep's
 `*.qa.json` and the script sweep's `*.script-qa.json`, and it shares their shape.
 

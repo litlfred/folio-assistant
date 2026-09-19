@@ -11,7 +11,7 @@
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import {
   digestsAgree,
@@ -20,6 +20,7 @@ import {
   sidecarPaths,
   stateOf,
 } from "./qa-witness.ts";
+import { kgQaSidecarPath } from "../../schemas/kg-qa.ts";
 
 function inTmp(run: (dir: string) => void): void {
   const dir = mkdtempSync(join(tmpdir(), "qa-witness-"));
@@ -234,9 +235,14 @@ describe("readWitnessDoc — block family", () => {
 describe("readWitnessDoc — kg family keeps one auditor, and says what it does not know", () => {
   function kg(dir: string, sourceHash: string) {
     writeFileSync(join(dir, "p.bpmn"), "<definitions/>\n");
-    mkdirSync(join(dir, "kg-qa"), { recursive: true });
+    // The results tree, not a `kg-qa/` sibling: verdicts moved there on
+    // 2026-09-19 (bean `2634`). The path is taken from the shared function
+    // rather than composed here, so this fixture cannot drift from what the
+    // auditor writes and the projector reads.
+    const sidecar = kgQaSidecarPath(dir, dir, "p");
+    mkdirSync(dirname(sidecar), { recursive: true });
     writeFileSync(
-      join(dir, "kg-qa", "p.kg-qa.json"),
+      sidecar,
       JSON.stringify({
         $schema: "kg-qa/v1",
         subject: { kind: "process", id: "Process_X", path: "p.bpmn" },
@@ -360,7 +366,7 @@ describe("sidecarPaths — translation is per locale, collected per block", () =
       }
       // A neighbouring block's sidecar must not be swept up with this one's.
       writeFileSync(join(dir, "other.fr.translation-qa.json"), "{}");
-      const found = sidecarPaths("translation", join(dir, "b.md")).map((p) => p.split("/").pop());
+      const found = sidecarPaths("translation", join(dir, "b.md"), dir).map((p) => p.split("/").pop());
       expect(found).toEqual([
         "b.ar.translation-qa.json",
         "b.es.translation-qa.json",
@@ -373,7 +379,7 @@ describe("sidecarPaths — translation is per locale, collected per block", () =
     inTmp((dir) => {
       writeFileSync(join(dir, "b.md"), "body\n");
       writeFileSync(join(dir, "b-extra.fr.translation-qa.json"), "{}");
-      expect(sidecarPaths("translation", join(dir, "b.md"))).toHaveLength(0);
+      expect(sidecarPaths("translation", join(dir, "b.md"), dir)).toHaveLength(0);
     });
   });
 });
