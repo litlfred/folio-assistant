@@ -31,6 +31,8 @@ archive entry is not a different kind of thing.
 
 Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Archive`.
 
+_2026-09-19T15:34:30Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## 2026-09-19 — the listing, and the rung that stopped diagnosing archives as broken PDFs
 
 Done. `scripts/archive-contents.py` + `schemas/archive-contents.ts`;

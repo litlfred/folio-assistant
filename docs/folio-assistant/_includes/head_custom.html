@@ -256,6 +256,25 @@
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
 <link rel="stylesheet" href="{{ '/assets/css/themes.css' | relative_url }}">
+<!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
+     `avatars:css:check` fails the build when it is stale. One stylesheet
+     rather than 68 assets: the glyph is a mask and the colour is a property,
+     so a scheme swap is a custom property and the trash state is a selector. -->
+<link rel="stylesheet" href="{{ '/assets/css/avatars.css' | relative_url }}">
+
+<!--
+  The kinds THIS INSTANCE DECLARES, for the avatar fan.
+
+  Owner: "shows the DECLared kinds for that instance, not inheritance." Written
+  by `sync-docs-harness.ts` from the instance's own `harness.json`, BEFORE
+  `resolveDirectories` overlays a dependency's. The effective set is strictly
+  larger, and showing it would name kinds this repository never claimed.
+
+  Inline rather than a fetched URL, unlike the todo index and the discarded
+  document: this is a dozen short strings, it is needed to render the fan at
+  all, and a fetch for that would put a spinner in front of a badge.
+-->
+<script type="application/json" id="fa-declared-kinds">{{ site.data.harness.declaredKinds | jsonify }}</script>
 <script src="{{ '/assets/js/vendor/qrcode.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/vendor/qrcode_UTF8.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/docs-ui.js' | relative_url }}" defer></script>
