@@ -41,8 +41,10 @@
  */
 import { test, expect } from "@playwright/test";
 import { AxeBuilder } from "@axe-core/playwright";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 for (const [file, script] of [
   ["_kg/folio-assistant.jsonld", "scripts/kg-export.ts"],
@@ -81,6 +83,81 @@ test.describe("accessibility — automated", () => {
         const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
         // Named in the failure, so a red run says WHAT rather than how many.
         expect(violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);
+        await ctx.close();
+      });
+    }
+  }
+});
+
+/* ── The docs site's action tiles ───────────────────────────────────────── */
+
+/**
+ * The second surface under the rule, and it is a different KIND of surface:
+ * the viewer above is a generated page this repo writes end to end, while the
+ * tiles are mounted by script into an unpinned remote theme's markup. Contrast
+ * is the pair to watch — the tiles sit on the theme's sidebar background,
+ * which differs per scheme, and a token checked in one scheme and not the
+ * other is the trap this project has already paid for once.
+ */
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
+const TILES_PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Action tiles harness</title><style>
+  body { margin: 0; }
+  .side-bar { position: fixed; top: 0; left: 0; width: 16.5rem; height: 100%;
+              display: flex; flex-flow: column nowrap; align-items: flex-end;
+              background: #27262b; color: #fff; }
+  .site-header { width: 100%; max-height: 3.75rem; overflow: hidden; display: flex; align-items: center; }
+  .site-title { flex: 1; }
+  .site-nav { width: 100%; overflow-y: auto; }
+  /* The theme colours its own nav links; a bare UA #0000ee on the dark
+     sidebar is a harness artefact, and leaving it in would have this gate
+     failing on markup the site does not ship. */
+  .site-nav a { color: inherit; }
+  ${readFileSync(join(REPO, "docs/assets/css/docs-ui.css"), "utf8")}
+</style></head><body>
+  <script type="application/json" id="fa-site-links">{"kg":"/kg/","source":"https://example.invalid/r"}<\/script>
+  <div class="side-bar">
+    <div class="site-header"><a class="site-title">folio-assistant</a></div>
+    <nav class="site-nav"><a href="#">Home</a></nav>
+  </div>
+  <div class="main"><div class="main-content"><h1>Harness</h1></div></div>
+  <script>window.jtd = { theme: "dark", getTheme: function () { return this.theme; },
+    setTheme: function (t) { this.theme = t; } };<\/script>
+  <script>${readFileSync(join(REPO, "docs/assets/js/vendor/qrcode.js"), "utf8")}<\/script>
+  <script>${readFileSync(join(REPO, "docs/assets/js/docs-ui.js"), "utf8")}<\/script>
+</body></html>`;
+
+test.describe("accessibility — the action tiles", () => {
+  for (const colorScheme of ["light", "dark"] as const) {
+    for (const [state, open] of [
+      ["the grid", [] as string[]],
+      ["a view", ["Settings"]],
+    ] as const) {
+      test(`no WCAG A/AA violations — ${state}, ${colorScheme}`, async ({ browser }) => {
+        const ctx = await browser.newContext({ colorScheme });
+        const page = await ctx.newPage();
+        await page.setContent(TILES_PAGE);
+        await page.locator(".fa-tiles-toggle").click();
+        for (const tile of open) await page.locator(".fa-tile", { hasText: tile }).click();
+        // SCOPED TO THE SIDEBAR, and the boundary is deliberate.
+        //
+        // A page-wide run here fails on the per-page language bar in
+        // `.main-content`, which this change does not touch: measured in this
+        // harness, #cbd1d9 on #f0f0f0 is 1.34:1 across five locale tabs and
+        // #ffffff on #3b82f6 is 3.67:1 on the current one, against a 4.5:1
+        // floor. Those are real and recorded as a bean; asserting them from a
+        // spec about the action tiles would make this gate red for a reason
+        // that is not its own, which is how a gate gets weakened later.
+        //
+        // What is claimed here is claimed honestly: every control this change
+        // mounts lives in `.side-bar`, so that is what is checked.
+        const { violations } = await new AxeBuilder({ page })
+          .include(".side-bar")
+          .withTags([...TAGS])
+          .analyze();
+        // Named with the offending markup, because "color-contrast (7)" on its
+        // own does not say WHICH pair, and a contrast failure is always a pair.
+        expect(violations.map((v) => `${v.id}: ` +
+          v.nodes.map((n) => n.failureSummary ?? n.html).join(" | "))).toEqual([]);
         await ctx.close();
       });
     }

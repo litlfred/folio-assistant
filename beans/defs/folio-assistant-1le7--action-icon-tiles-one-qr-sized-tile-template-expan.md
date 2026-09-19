@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1le7
 title: 'Action-icon tiles: one QR-sized tile template, expandable, for settings / languages / KG viewer / src'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T00:23:01Z
-updated_at: 2026-09-19T00:23:32Z
+updated_at: 2026-09-19T01:29:12Z
 ---
 
 
