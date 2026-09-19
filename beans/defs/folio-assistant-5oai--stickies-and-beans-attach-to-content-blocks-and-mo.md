@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:57:53Z
-updated_at: 2026-09-19T11:41:20Z
+updated_at: 2026-09-19T11:48:27Z
 ---
 
 ## The ask, owner 2026-09-19 (verbatim)
@@ -74,8 +74,9 @@ chat that is gone.
       a move happened (a note, which `bean-link.ts` already writes); it is not
       itself pinned to a block. Done when the rule is written where somebody
       about to "finish the job" will read it, and guarded.
-- [ ] `todo-graph.ts`'s prose claim is either true or removed — it has been
-      asserting an unimplemented relation
+- [x] `todo-graph.ts`'s prose claim is corrected — neither "true" nor
+      "removed" but ACCURATE: the items/feedback split is a filing convention,
+      not a schema distinction, and the comment now says so
 - [ ] move / transfer / duplicate exist, with a test proving a move **re-anchors
       rather than re-creates** (the id survives)
 - [ ] a drop never implicitly duplicates, proved by a test that would fail if it
@@ -108,3 +109,6 @@ _2026-09-19T11:35:35Z_ — '(see sibling?)' RESOLVED as far as this checkout can
 
 
 _2026-09-19_ — OWNER RULE, verbatim: "beans no anchor. no change bean schema. RULE." This OVERRIDES my own re-measurement two notes up, which listed "BEANS have no anchor at all ... so 'same behaviour applies to beans' is genuine new work" as item (2) of what is missing. It is not work; it is a boundary. The reading that holds: a bean says WHAT IS BEING WORKED ON, a sticky says WHERE A NOTE SITS ON A PAGE. The original ask's "same behaviour applies to beans" is answered by its own next sentence — "beans can be used as an audit log of what happened with agent as they moved through". A bean RECORDS that a move happened; it is not itself a thing pinned to a block. So a move is written to a bean as a NOTE, which workflow/bean-link.ts already does with its `note` op and which needs no new field. Two practical reinforcements for the next agent tempted to "finish the job": giving a bean an anchor would put a rendering position into the work plan, the same conflation schemas/theme.ts already refuses for themed todos; and a bean's front matter is written by a THIRD-PARTY CLI this repo does not own, so a field added here is one nothing guarantees survives a round-trip. Recorded in schemas/note-anchor.ts module docs under "Beans get NO anchor" and guarded by a test, because a rule that lives only in a bean note is a rule the next agent does not find. No bean schema was touched — the rule arrived before I had built that half, so there is nothing to undo.
+
+
+_2026-09-19_ — "todo-graph.ts's prose claim" RESOLVED, and the answer is a third option this bean did not offer. The Done-when said "either true or removed". It is now ACCURATE instead, which is better than both. What I found: BOTH halves of the claim are available — the block anchor (targetLabel, plus the new NoteAnchorSchema) and identities[] are declared on CarriedNoteSchema, which TodoNodeSchema extends. So the claim is not describing something unimplemented. But there is exactly ONE TodoNodeSchema, and the kind is a property of the DIRECTORY a note lives in, not of the note. Nothing requires a `feedback` todo to name a block or a submitter, and nothing stops an `items` todo from doing both. So the sentence described a FILING CONVENTION in the voice of a CONSTRAINT. That is why it misled twice in opposite directions: first as evidence the relation was enforced, then as evidence it did not exist at all (this bean's opening premise, already corrected above — I grepped schemas/todo.ts and not the base it extends). The comment now states the convention as a convention, names where the two fields actually live, and says that keying a refinement on kind is what enforcement WOULD look like and does not exist today. Verified: eslint clean, tsc clean, schemas/todo-graph.test.ts 11 pass 0 fail. No behaviour changed — this is a comment that stops lying.
