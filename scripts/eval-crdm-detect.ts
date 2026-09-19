@@ -30,8 +30,10 @@
  *
  * Usage: bun run eval:crdm-detect [--verbose]
  */
-import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+
+import { buildTestRun, hashesReproduce, TestRunSchema } from "../schemas/test-run.ts";
 
 const root = resolve(import.meta.dir, "..");
 const verbose = process.argv.includes("--verbose");
@@ -150,3 +152,63 @@ console.log(
     `is ONE annotator's, unblinded — fix that before quoting these as a\n` +
     `property of the skill rather than of this corpus.`,
 );
+
+// ─── The run is RECORDED, not only printed ──────────────────────────────────
+//
+// Bean `folio-assistant-zz0a`. Everything above this line went to stdout and
+// nowhere else, so nobody could tell "recall was always 65%" from "this commit
+// dropped it" — the same argument that put QA verdicts in committed sidecars
+// rather than a console report.
+//
+// Two hashes, because "what was tested" and "what tested it" are different
+// questions. `buildTestRun` refuses if the two bases overlap, so the
+// independence is a property of this call rather than a claim in a comment:
+// the corpus is the DATA, the runner and the skill it implements are the
+// PROCESS. The skill is in the process basis deliberately — it is what the
+// phrase list is derived FROM, so editing it can change the result without
+// touching a line of this script, which is exactly the `cv10` failure.
+const OUT = join(root, "test/results/crdm-detect-eval.test-run.json");
+const run = buildTestRun({
+  root,
+  subject: "crdm-detect phrase signals against the issue corpus",
+  dataInputs: ["scripts/eval/crdm-detect-corpus.json"],
+  processInputs: ["scripts/eval-crdm-detect.ts", "skills/folio-core/crdm-detect.md"],
+  outcome: {
+    population: corpus.length,
+    truePositives: tp,
+    falsePositives: fp,
+    trueNegatives: tn,
+    falseNegatives: fn,
+    precision: Number(precision.toFixed(4)),
+    recall: Number(recall.toFixed(4)),
+    f1: Number(f1.toFixed(4)),
+  },
+});
+
+// Same churn guard as `writeQaResult`: an unchanged run keeps its file and its
+// timestamp, so `updated_at` says when these numbers were ESTABLISHED rather
+// than when somebody last ran the script.
+let priorSaysSame = false;
+try {
+  const prior = TestRunSchema.parse(JSON.parse(readFileSync(OUT, "utf-8")));
+  const { updated_at: _a, ...restPrior } = prior;
+  const { updated_at: _b, ...restNow } = run;
+  priorSaysSame = JSON.stringify(restPrior) === JSON.stringify(restNow);
+  const repro = hashesReproduce(prior, run);
+  if (!repro.both) {
+    console.log(
+      `\nCHANGED since the recorded run:` +
+        `${repro.data ? "" : "\n  · the DATA — the corpus is not the one that produced it"}` +
+        `${repro.process ? "" : "\n  · the PROCESS — the runner or the skill it implements"}`,
+    );
+  }
+} catch {
+  // No prior run, or an unreadable one. Either way: write.
+}
+if (!priorSaysSame) {
+  mkdirSync(dirname(OUT), { recursive: true });
+  writeFileSync(OUT, JSON.stringify(run, null, 2) + "\n");
+}
+console.log(`\nTest run → test/results/crdm-detect-eval.test-run.json`);
+console.log(`  data    ${run.data.hash}  over ${run.data.inputs.length} input(s)`);
+console.log(`  process ${run.process.hash}  over ${run.process.inputs.length} input(s)`);
