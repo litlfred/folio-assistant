@@ -978,6 +978,95 @@ export function resolveDirectories(
   return [...byId.values()];
 }
 
+/**
+ * The graph kind that holds skills, workflows and roles.
+ *
+ * Named once because two different resolvers ask for it, and a second spelling
+ * is how one of them goes missing when the layout moves.
+ */
+export const KG_GRAPH_KIND = "cat-harness";
+
+/**
+ * Does this directory hold ONLY the knowledge graph?
+ *
+ * **Exactly `cat-harness`, not merely including it.** `schemas/` declares
+ * `["schemas", "cat-harness"]` — a schema IS a knowledge-graph node, which is
+ * why it carries the kind at all — but its `.md` files are READMEs and its
+ * nodes are `.ts`. Measured 2026-09-19: including it added `schemas/README.md`
+ * and `schemas/block-qa-schema/README.md` to the skill set, giving 150 where
+ * the corpus has 149.
+ *
+ * Requiring YAML front matter instead would have been the principled rule and
+ * is measurably wrong here — only 117 of 147 skill bodies carry any, so it
+ * would have dropped 30 real skills. A directory holding one kind can be
+ * scanned for it; one holding several has to say which file is which.
+ */
+export function isKgOnlyDirectory(d: ContentDirectory): boolean {
+  return d.graphs.length === 1 && d.graphs[0] === KG_GRAPH_KIND;
+}
+
+/**
+ * One instance's OWN declared directories — no inheritance, no override.
+ *
+ * ## Why this is not {@link resolveDirectories}
+ *
+ * `resolveDirectories` answers *"which directory does id X mean for this
+ * instance"*, and it answers it **once**: entries override by id, so when a
+ * dependency and the root both declare `cat-harness`, the root replaces the
+ * dependency's entry and one path comes back. That is correct for its question
+ * and is the documented rule — overrides match on `id`, never on `path`.
+ *
+ * **Overlay is the opposite question.** Loading skills needs EVERY instance's
+ * contribution, in order, because a dependency's skills and the root's are both
+ * real and the root's merely win *per skill name*. Collapsing them by id
+ * discards the dependency entirely.
+ *
+ * That mismatch is why {@link resolveDirectories} could not be the primitive
+ * here, and why the overlay resolver that predates this hardcoded
+ * `join(root, "skills")` instead — it needed per-instance paths and reached for
+ * a literal to get them. A literal is how a skill goes missing the moment the
+ * layout moves; this reads the instance's own declaration instead.
+ *
+ * ## An undeclared instance still gets the conventions
+ *
+ * `AGENTS.md`: *"Absent declaration is fine — an unmigrated instance falls
+ * back to today's conventions."* So a dependency with a `skills/` directory
+ * and no `harness.json` resolves through {@link DEFAULT_DIRECTORIES}, which is
+ * where that convention is written down once.
+ *
+ * **This was a regression before it was a feature.** The first version of this
+ * function returned `[]` for an undeclared instance, which silently dropped
+ * every unmigrated dependency's skills — caught by
+ * `harness-config.test.ts`'s existing overlay test, whose fixture declares
+ * nothing. Reading a declaration is the improvement; requiring one would have
+ * been a breaking change wearing its clothes.
+ *
+ * Defaults are existence-filtered, for the same reason `resolveDirectories`
+ * filters them: a default that is not there is the `dh4f` defect, where a
+ * consumer scans nothing and reports a clean run over it. `declaredBy` says
+ * `(default)` so a caller can tell a convention from a choice.
+ */
+export function ownDirectories(
+  link: { name: string; root: string; own?: boolean },
+  registry: GraphKindRegistry = defaultGraphKinds,
+): ResolvedDirectory[] {
+  const decl = readDeclaration(link.root, registry);
+  if (!decl) {
+    return DEFAULT_DIRECTORIES.map((dir) => ({
+      ...dir,
+      declaredBy: "(default)",
+      absPath: resolve(link.root, dir.path),
+      own: false,
+    })).filter((d) => existsSync(d.absPath));
+  }
+  return decl.directories.map((dir) => ({
+    ...dir,
+    declaredBy: decl.name,
+    absPath: resolve(link.root, dir.path),
+    own: link.own === true,
+  }));
+}
+
 // ── Materialisation ─────────────────────────────────────────────
 
 /**
