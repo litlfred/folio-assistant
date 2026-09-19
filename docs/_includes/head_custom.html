@@ -1,4 +1,34 @@
 <!--
+  The browser-tab icon, from the same declared mark the sidebar title
+  (`title.html`) renders — reused rather than looked up by its own
+  `browser-icon` role. There WAS a second role for exactly that, on
+  `mark-small` in `cat-harness.json`, and it went unread: nothing in this
+  repo ever emitted a favicon at all, `rel="icon"` included. It also could
+  not have driven this lookup as declared — `imagesForRole()`
+  (`schemas/kg-node.ts`) requires an image's `layout` field, which neither
+  mark entry carries, so a `browser-icon`-role lookup returns nothing. Reusing
+  the already-resolved `icon` (the same field `title.html` reads) sidesteps
+  that and, more importantly, is what was asked for: the sidebar mark and the
+  tab icon are meant to be the SAME glyph, so one declaration driving both is
+  correct, not just convenient — flip `icon` in `cat-harness.json` and both
+  follow in one edit, no template change needed.
+
+  SVG-only. No PNG/ICO fallback exists in the repo and none is generated
+  here — every browser this matters for (evergreen Chrome/Firefox/Edge, and
+  Safari since 16) reads `type="image/svg+xml"` directly; a raster fallback
+  would need generating actual image files, which is out of scope for this
+  change.
+
+  `relative_url`, same as `title.html` and `landing.html` — a bare
+  `/assets/...` 404s on the same baseurl this file's landing-panel fix exists
+  for.
+-->
+{%- assign h = site.data.harness -%}
+{%- if h.icon.src -%}
+<link rel="icon" type="image/svg+xml" href="{{ h.icon.src | relative_url }}">
+{%- endif -%}
+
+<!--
   Site-wide styling for the BPMN workflow figures.
 
   just-the-docs pulls this file into <head> on every page. The diagrams are wide
