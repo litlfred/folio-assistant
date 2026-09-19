@@ -111,3 +111,18 @@ _kg/
 # against — but it is what made this branch untrack it in the first place.
 test-results/*/
 playwright-report/
+
+# Bundler's local gem tree and config, written by `bundle install --path vendor`
+# when somebody builds the docs site to CHECK a change rather than to ship one.
+#
+# Measured 2026-09-19 while verifying the landing-image fix: 3,080 files and
+# 53 MB, untracked and — until this rule — not ignored, so any `git add -A` in
+# the repo root would have swept the whole gem tree into a commit. Nothing
+# under `docs/vendor/` has ever been tracked (`git ls-tree` reports zero), so
+# this ignores a directory that is purely local build state.
+#
+# Not to be confused with the `!docs/assets/js/` exception above: THAT vendor
+# is hand-written source Jekyll serves verbatim and is deliberately tracked.
+# Same word, opposite intent.
+docs/.bundle/
+docs/vendor/
