@@ -181,13 +181,33 @@ export const GH_PAGES_GROUP = "gh-pages-push";
  * `git push … gh-pages` in a `run:` body — `feature-staging`'s `cleanup` uses
  * the latter and contends for the same ref.
  *
- * Retrying: two or more push sites in the job, plus `continue-on-error: true`.
- * Structural rather than a marker comment, so it cannot be claimed without
- * being implemented.
+ * Retrying comes in two shapes here, and both are detected STRUCTURALLY
+ * rather than by a marker comment, so a retry cannot be claimed without being
+ * implemented:
+ *
+ * - **Two `uses:` push steps plus `continue-on-error: true`** — the action
+ *   form, used by `feature-staging`'s `stage` and by `discoverability-docs`.
+ * - **A shell loop around `git push`, with a rebase inside it** —
+ *   `feature-staging`'s `cleanup` does three attempts with
+ *   `git pull --rebase` between them. Missing this shape is not hypothetical:
+ *   the first version of this check flagged `cleanup` as unprotected while it
+ *   was sitting next to a working retry loop, which is how a correct check
+ *   teaches somebody to delete a correct fix.
  */
 function ghPagesUngrouped(text: string, file: string): WorkflowFinding[] {
   const lines = text.split("\n");
-  type Job = { name: string; line: number; group?: string; pushes: number; tolerant: boolean };
+  type Job = {
+    name: string;
+    line: number;
+    group?: string;
+    pushes: number;
+    /** `continue-on-error` on a push, so a later step can try again. */
+    tolerant: boolean;
+    /** A shell retry loop — `for attempt in …`. */
+    loops: boolean;
+    /** A rebase or fetch, so the retry pushes onto what landed. */
+    rebases: boolean;
+  };
   const jobs: Job[] = [];
   let cur: Job | undefined;
 
@@ -195,7 +215,7 @@ function ghPagesUngrouped(text: string, file: string): WorkflowFinding[] {
     const l = lines[i];
     const job = /^ {2}([A-Za-z0-9_-]+):\s*$/.exec(l);
     if (job !== null) {
-      cur = { name: job[1], line: i + 1, pushes: 0, tolerant: false };
+      cur = { name: job[1], line: i + 1, pushes: 0, tolerant: false, loops: false, rebases: false };
       jobs.push(cur);
       continue;
     }
@@ -207,10 +227,18 @@ function ghPagesUngrouped(text: string, file: string): WorkflowFinding[] {
     if (/peaceiris\/actions-gh-pages@/.test(l)) cur.pushes++;
     if (/git push\b[^\n]*\bgh-pages\b/.test(l)) cur.pushes++;
     if (/continue-on-error:\s*true/.test(l)) cur.tolerant = true;
+    if (/\b(for|until|while)\b[^\n]*\battempt\b/.test(l)) cur.loops = true;
+    if (/git\s+(pull\s+--rebase|rebase|fetch)\b/.test(l)) cur.rebases = true;
   }
 
   return jobs
-    .filter((j) => j.pushes > 0 && j.group !== GH_PAGES_GROUP && !(j.pushes >= 2 && j.tolerant))
+    .filter((j) => {
+      if (j.pushes === 0) return false;
+      if (j.group === GH_PAGES_GROUP) return false;
+      const actionRetry = j.pushes >= 2 && j.tolerant;
+      const shellRetry = j.loops && j.rebases;
+      return !actionRetry && !shellRetry;
+    })
     .map((j) => ({
       file,
       line: j.line,
