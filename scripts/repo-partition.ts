@@ -156,6 +156,7 @@ const RULES: Rule[] = [
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
+      "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
 
