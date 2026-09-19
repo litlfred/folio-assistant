@@ -161,3 +161,62 @@ The lesson to carry, not just the list: **pass 1's "it was one function" was a
 measurement over `.ts` only.** Every config format in the repo spells the site
 root a second time, none is covered by the guard that made pass 1 look cheap,
 and one of them looks like it needs updating when it must be left alone.
+
+## Claimed, first slice landed — and the scope list contradicts the owner's quote
+
+_2026-09-19, PR #434, branch `claude/fervent-mccarthy-nw4olk`._ #413 landed
+`docs/` and `tools/`. `voices/` -> `folio-assistant/voices/` is in.
+
+**One declaration edit, nothing else.** `harness.json`'s `voices` path, and no
+consumer needed touching — `check-voices.ts` resolves through
+`directoryForGraph`, so 36 voice rules kept resolving. That is this bean's
+"declaration and readers first" paying off as a measurement: the readers were
+already done, so the move was the cheap half exactly as predicted.
+
+**`DEFAULT_DIRECTORIES` was deliberately NOT changed**, and the reasoning
+generalises to every remaining slice. The defaults are the fallback for an
+instance that declares nothing; moving this instance's directory is a fact about
+THIS declaration. Editing the default would relocate the voices directory of
+every unmigrated downstream folio — and the breakage would appear in their
+repository, not in the commit that caused it. So: `harness.json` changes, the
+defaults do not, and **a consumer that needs an edit is telling you it hardcodes
+a path.**
+
+### The hazard for the next slice is a YAML trigger, not code
+
+`.github/workflows/docs-site.yml` fires on `folio-assistant/docs/**` (correct
+after #413) and ALSO on `skills/workflows/**`, `schemas/**` and
+`content/docs/**`. Move any of those three without moving the trigger and the
+site silently stops rebuilding on a skill or schema edit — green CI, stale
+site, nothing saying so. The `xom7` shape, and no code guard covers it. This is
+the same class as the `.gitignore` finding above: pass 1's "it was one function"
+was a measurement over `.ts` only, and every config format spells the root a
+second time. `voices/` is in no trigger, which is part of why it went first.
+
+### The scope list and the owner's quote disagree — NOT resolved here
+
+§"What this settles for the migration" names the movers as the per-instance
+parts of `docs/`, `tools/`, `skills/`, `schemas/`, `library/`, `voices/`,
+`translations/`. It omits `src/`, `scripts/`, `content/` and `adapters/`.
+
+The owner's direction quoted at the top of this bean is *"so there would be in
+top-level only bootstrap/ cat-harness/ f-a-core/ etc. all content migrated to
+respective expexted dirs"* — and those four are neither instance stubs nor
+category-2 stores (`beans/`, `todos/`, `fsh-guts/`) nor `bootstrap/`. Under the
+rule as restated above they have no category to sit in, so either the list is
+incomplete or the rule needs a fourth category for shared platform code.
+
+~1000 tracked files of difference. Put to the owner rather than picked.
+
+Blast radius, measured, so the answer can be priced:
+
+| directory | tracked | ts literals | in the list? |
+|---|---|---|---|
+| `skills/` | 290 | 64 | yes |
+| `schemas/` | 122 | 65 | yes |
+| `library/` | 1402 | 26 | yes |
+| `translations/` | 199 | 24 | yes |
+| `scripts/` | 375 | 153 | **no** |
+| `content/` | 593 | 156 | **no** |
+| `src/` | 54 | 96 | **no** |
+| `adapters/` | 30 | 25 | **no** |
