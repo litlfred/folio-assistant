@@ -26,7 +26,7 @@
  * |---|---|---|
  * | PO translations | ✅ | `translations/<locale>/`, fallback chain step 4 — the only path with a live consumer (`content/pipeline/po-resolve.ts`) |
  * | Kind headings | ✅ | `schemas/translation.ts` KIND_HEADINGS |
- * | Skills | ⚠️ | {@link resolveSkillDirs} exists and returns the overlay order; **no caller yet** |
+ * | Skills | ✅ | {@link resolveSkillDirs} reads each instance's DECLARATION, and `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` is built from it, so a dependency's packages are served. Two nearby call sites stay root-only on purpose — see its docs |
  * | Declared directories | ✅ | {@link declarationChain} + `resolveDirectories`, materialised by {@link materialiseDeclaredDirectories} |
  * | Block kinds | ✅ | {@link loadContributions} → `schemas/contributions.ts` |
  * | Adapters | ✅ | {@link loadContributions}, as a module specifier |
@@ -215,7 +215,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { ContributionRegistry, type FolioContribution } from "./contributions";
 import {
+  isKgOnlyDirectory,
   materialiseDirectories,
+  ownDirectories,
   resolveDirectories,
   type MaterialisedDirectory,
 } from "./cat-harness";
@@ -428,30 +430,74 @@ export function materialiseDeclaredDirectories(
 }
 
 /**
- * Get the combined skill directories in overlay order.
+ * Every instance's knowledge-graph directories, in overlay order.
  *
- * Returns absolute paths to skills/ directories, deepest dependency
- * first, root last. The agent should load skills from each in order,
- * with later entries overriding earlier for the same skill name.
+ * Deepest dependency first, root last — so an agent loads them in order and a
+ * later entry overrides an earlier one **for the same skill name**. The
+ * directories themselves all stay: a dependency's skills and the root's are
+ * both real.
+ *
+ * ## Read from the declaration, not from a literal
+ *
+ * This used to be `join(dep.rootPath, "skills")`. `AGENTS.md` is explicit that
+ * *"hardcoding a path is how a skill goes missing the moment the layout
+ * moves"*, and an instance may put its knowledge graph anywhere — in THIS
+ * repository the declared id is `cat-harness` while the path is `skills/`,
+ * which is exactly the id/path split the declaration exists to absorb.
+ *
+ * ## Why not `resolveDirectories`
+ *
+ * Because it answers a different question, and asking it this one silently
+ * loses dependencies — it overrides **by id**, so a dependency and a root that
+ * both declare `cat-harness` collapse to the root's entry alone. {@link
+ * ownDirectories} resolves per instance instead, which is what an overlay
+ * needs. That mismatch is the likeliest reason this function reached for a
+ * literal in the first place, and why it sat with no caller.
+ *
+ * ## `provides` still opts a dependency out
+ *
+ * A dependency declaring `provides` without `"skills"` contributes none, and
+ * that is kept deliberately: it is the only way an instance can depend on
+ * another for content or translations without inheriting its skills.
+ *
+ * ## Its consumer, and the two call sites that are still wrong for the job
+ *
+ * `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` is built from this — so a
+ * DEPENDENCY's skill packages are served, which is the overlay `AGENTS.md`
+ * records as outstanding Phase 0.1 work.
+ *
+ * Two nearby call sites deliberately still do NOT use it, because each would
+ * break in a specific way:
+ *
+ * 1. **`kgDirectories` in `scripts/known-skills.ts` composes IDS.** Its
+ *    `path` field becomes a repo-relative skill id (`skillMdDirs`). Feeding a
+ *    dependency's directory in would mint ids that look repo-relative but
+ *    resolve into another checkout — wrong in a way that reads as correct.
+ * 2. **`kgRoots(root)[0]` is taken as "the root's graph"** by
+ *    `src/tools/workflow.ts` and `src/workflow/gate.ts`. Overlay order is
+ *    deepest-dependency-FIRST, so making that function overlay-aware would
+ *    hand those callers a dependency's role graph instead of the root's.
  */
 export function resolveSkillDirs(folioRoot: string): string[] {
-  const tree = resolveDependencyTree(folioRoot);
-  const flat = flattenDependencies(tree);
   const dirs: string[] = [];
 
-  for (const dep of flat) {
+  for (const dep of flattenDependencies(resolveDependencyTree(folioRoot))) {
     if (dep.dependency.provides && !dep.dependency.provides.includes("skills")) {
       continue;
     }
-    const skillsDir = join(dep.rootPath, "skills");
-    if (existsSync(skillsDir)) dirs.push(skillsDir);
+    for (const d of ownDirectories({ name: dep.dependency.name, root: dep.rootPath })) {
+      if (isKgOnlyDirectory(d) && existsSync(d.absPath)) dirs.push(d.absPath);
+    }
   }
 
-  // Root's skills last (highest priority)
-  const rootSkills = join(folioRoot, "skills");
-  if (existsSync(rootSkills)) dirs.push(rootSkills);
+  // The root last, so its skills win on a name collision.
+  for (const d of ownDirectories({ name: "(root)", root: resolve(folioRoot), own: true })) {
+    if (isKgOnlyDirectory(d) && existsSync(d.absPath)) dirs.push(d.absPath);
+  }
 
-  return dirs;
+  // De-duplicated: a diamond dependency reaches the same instance twice, and a
+  // directory scanned twice reports every skill in it twice.
+  return [...new Set(dirs)];
 }
 
 /**

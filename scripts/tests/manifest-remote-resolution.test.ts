@@ -47,6 +47,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { knownSkills, manifestResolvableSkills, remotePackageSkills } from "../known-skills.js";
+import { codeWithoutComments } from "../repo-files.js";
 
 const ROOT = join(import.meta.dir, "../..");
 
@@ -146,11 +147,21 @@ describe("the reason the allowance was closed is still true", () => {
     // this very change added to `kg-audit.ts`.
     const readers = tsFiles(ROOT).filter((f) => {
       if (f.startsWith("schemas/") || f.includes(".test.")) return false;
-      // The path as a path, not the words in prose.
-      return /["'`][^"'`]*remote-packages[^"'`]*["'`]/.test(readFileSync(join(ROOT, f), "utf8"));
+      // The path as a path, not the words in prose — and CODE, not comments.
+      // Quoting alone is not enough: a markdown code span in a comment is
+      // backticked, and backticks quote strings in TypeScript, so a doc
+      // comment naming the directory reads as a string literal. That is what
+      // added `src/tools/skill-fetch.ts` to this list on 2026-09-19 while it
+      // read nothing.
+      const code = codeWithoutComments(readFileSync(join(ROOT, f), "utf8"));
+      return /["'`][^"'`]*remote-packages[^"'`]*["'`]/.test(code);
     });
+    // FOUR, not five. `scripts/gen-skill-docs.ts` was on this list until
+    // 2026-09-19 and never read the directory: its only mention is the comment
+    // at line ~209, "`remote-packages/` and `memory/` are other node kinds" —
+    // counted as a reader because the pattern ran over prose. Removing it
+    // makes the list say what it claims to say.
     expect(readers.sort()).toEqual([
-      "scripts/gen-skill-docs.ts",
       "scripts/generate-docs.ts",
       "scripts/kg-audit.ts",
       "scripts/known-skills.ts",
@@ -159,8 +170,18 @@ describe("the reason the allowance was closed is still true", () => {
   });
 
   test("neither skill_fetch nor the registry reads skills/remote-packages/", () => {
+    // CODE, not prose. This asserted on the raw file text until 2026-09-19,
+    // when a documentation comment in `skill-fetch.ts` naming the directory —
+    // as one of seven a naive scan would wrongly treat as a skill package —
+    // turned it red while the behaviour it guards was untouched.
+    //
+    // That is the failure mode this file's sibling already recorded: grepping
+    // "cannot tell an implementation from a comment". Narrowing to quoted
+    // strings alone does not fix it either, because a markdown code span in a
+    // comment is backticked and backticks quote strings in TypeScript.
     for (const f of ["src/tools/skill-fetch.ts", "scripts/generate-registry.ts"]) {
-      expect(readFileSync(join(ROOT, f), "utf8")).not.toContain("remote-packages");
+      const code = codeWithoutComments(readFileSync(join(ROOT, f), "utf8"));
+      expect(code).not.toContain("remote-packages");
     }
   });
 

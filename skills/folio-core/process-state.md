@@ -4,7 +4,9 @@ description: >
   Track where you are inside a running process — which task, in which
   swimlane, under which role — and recover deliberately when you find
   yourself outside it. Read before completing a workflow step, and whenever
-  something unexpected interrupts one.
+  something unexpected interrupts one. Covers what to do about notes and
+  stickies you re-anchored while off-process, which leave no trace in the
+  artefact.
 ---
 
 # Process state — the task you are in, inside the process you are running
@@ -90,6 +92,71 @@ When one of the five fires, **stop making changes** and recover in this order:
 4. **If you cannot reconstruct it, say so and stop.** A wrong instance is worse
    than none: completing a step in the wrong run records an authorisation that
    did not happen.
+
+## What you MOVED while you were out of process
+
+Steps 1–3 reconstruct **where you were**. They do not reconstruct **what you
+changed position of**, and for notes and stickies that is a separate problem
+with a sharper edge:
+
+> **A move is not self-documenting.** `moveNote` (`schemas/note-anchor.ts`)
+> returns the note with its new anchor and *nothing about the old one*. A note
+> that has been moved cannot say where it was.
+
+So a sticky re-anchored during an off-process detour leaves **no trace in the
+artefact**. There is no field to read back, no diff that distinguishes "moved
+deliberately" from "moved by an agent that had lost the thread", and — because
+a move keeps the id — nothing that even looks unusual.
+
+**The only possible record is what was written to a bean at the time.** That is
+not a convention this skill is adding; it is the consequence of two decisions
+taken elsewhere. Beans carry **no anchor** (owner's rule, 2026-09-19): a bean
+is not a thing pinned to a block, it is the record that a pinning *changed*.
+And `workflow/bean-link.ts` already has the `note` op that writes it.
+
+So, as part of recovery, before step 3's confirmation:
+
+- **Name every note or sticky you re-anchored during the detour**, with its
+  anchor before and after. Read them off the bean's note trail — not off the
+  notes, which no longer know.
+- **If the trail is silent and you moved things, say that.** A gap is a
+  finding. "I moved stickies and did not record where from" is recoverable by
+  a person who remembers; "everything is fine" is not.
+- **Do not move anything back on your own judgement.** Re-anchoring to undo is
+  another unlogged move, and it is a durable change made to cover one — see
+  [`deletion-requires-confirmation.md`](deletion-requires-confirmation.md),
+  which is the same rule about a different verb.
+
+**Considered and rejected: giving the note its own history.** A `movedFrom`
+field would make a move self-documenting and remove the need for any of this.
+It was not taken, because the history then lives in the artefact being moved —
+so a note deleted, or moved by a tool that does not maintain the field, takes
+its own audit trail with it. The bean is a *separate* record, which is what an
+audit trail has to be.
+
+### Worked example — reading a bean back as the trail
+
+Bean `5oai`, 2026-09-19, is one, and the episode is an agent's rather than a
+sticky's — which is the point: the mechanism does not care what moved.
+
+The bean opened by asserting *"`schemas/todo.ts` carries no block field at
+all"*. That was wrong: `TodoNodeSchema` extends `CarriedNoteSchema`, which
+declares `targetLabel`, and `test/sticky-todos.e2e.ts` exercises it across two
+pages and an orphan label. The agent had grepped the file and not the base it
+extends — the second time in that session it asserted an absence without
+checking composition.
+
+What makes it a usable trail is that **the wrong claim was left in place**, with
+the correction appended beside it rather than replacing it. Read back, the bean
+shows the premise, the disproof, and the re-scoped work in order. An agent
+resuming can see that the original framing was abandoned *and why*, which is
+exactly what it needs to avoid re-deriving the same mistake.
+
+A bean that had been tidied to show only the correct conclusion would read as
+though the work had always been aimed there. That is the failure mode
+[`bean-coordination.md`](bean-coordination.md) names when it says unwanted work
+is `scrapped` **with its reasons** rather than deleted: a record that shows only
+outcomes cannot distinguish a dead end somebody ruled out from one nobody tried.
 
 ## What not to do
 

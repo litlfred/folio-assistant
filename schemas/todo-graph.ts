@@ -87,9 +87,26 @@ export const DEFAULT_TODO_GRAPH_ROOT = "todos";
  *
  * Two nodes rather than one, because the two already exist separately and the
  * difference is real: an `items` todo is raised about anything, while a
- * `feedback` todo is raised against a specific block and carries the
+ * `feedback` todo is typically raised against a specific block and carries the
  * submitter's identity. Same split, and the same reasoning, as `bean-defs`
  * against `workflow-state`.
+ *
+ * **That difference is a filing convention, not a schema distinction, and the
+ * wording above used to claim otherwise.** There is one `TodoNodeSchema`, and
+ * the kind is a property of the DIRECTORY a note lives in rather than of the
+ * note itself. Both halves of the description are merely *available* to both
+ * kinds — the block anchor (`targetLabel`, and {@link NoteAnchorSchema} since
+ * 2026-09-19) and `identities[]` are declared on `CarriedNoteSchema`, which
+ * `TodoNodeSchema` extends. So nothing requires a `feedback` todo to name a
+ * block or a submitter, and nothing stops an `items` todo from doing both.
+ *
+ * Saying so matters because the old wording was read as evidence that the
+ * relation was *enforced*, and then, separately, as evidence that it did not
+ * exist at all — bean `5oai` opened by asserting `schemas/todo.ts` "carries no
+ * block field", having grepped that file and not the base it extends. A
+ * comment that describes a convention in the voice of a constraint invites
+ * both mistakes. If the distinction should be enforced, that is a refinement
+ * on the node schema keyed by kind, and it does not exist today.
  */
 export const DEFAULT_TODO_GRAPH: TodoGraph = {
   name: "default",
