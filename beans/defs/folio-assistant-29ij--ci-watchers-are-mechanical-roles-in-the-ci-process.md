@@ -1,11 +1,11 @@
 ---
 # folio-assistant-29ij
 title: CI watchers are mechanical roles in the CI process, with two dispatch points
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T05:24:55Z
-updated_at: 2026-09-19T08:52:50Z
+updated_at: 2026-09-19T08:54:16Z
 ---
 
 
