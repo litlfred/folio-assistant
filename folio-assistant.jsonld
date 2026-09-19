@@ -243,10 +243,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T12:54:20.368Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/112192f27e1f81cb6980e875e19e221d04212d73",
-  "sourceCommitSha": "112192f27e1f81cb6980e875e19e221d04212d73",
-  "sourceCommitAt": "2026-09-19T14:53:01+02:00",
+  "generatedAt": "2026-09-19T13:02:17.376Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0d18db3a028ea696cd9e6a2279855aed63b4918f",
+  "sourceCommitSha": "0d18db3a028ea696cd9e6a2279855aed63b4918f",
+  "sourceCommitAt": "2026-09-19T15:00:56+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 166,
@@ -258,7 +258,7 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 45,
+    "Schema": 46,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -795,12 +795,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "process-state",
       "title": "Process state — the task you are in, inside the process you are running",
-      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one.",
+      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/process-state.md",
-      "instructionLines": 112,
+      "instructionLines": 179,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -18085,6 +18085,13 @@
       "module": "schemas/memory.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/note-anchor",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "note-anchor",
+      "title": "Where a note is attached, as a three-state answer.",
+      "module": "schemas/note-anchor.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/precision-scalar",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "precision-scalar",
@@ -19120,8 +19127,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "112192f27e1f81cb6980e875e19e221d04212d73",
+    "sha": "0d18db3a028ea696cd9e6a2279855aed63b4918f",
     "pr": "main",
-    "run": "35444140818"
+    "run": "35444520113"
   }
 }
