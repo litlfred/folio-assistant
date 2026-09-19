@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T07:30:04Z
-updated_at: 2026-09-19T07:48:18Z
+updated_at: 2026-09-19T08:00:31Z
 ---
 
 
@@ -20,3 +20,11 @@ _2026-09-19T07:48:18Z_ — PR #352 (branch claude/kg-viewer-chrome). All four fi
 (4) The theme's .search container is MOVED into the existing launcher as a Search tile (first cell). Moved, not rebuilt — just-the-docs binds to the element it rendered — and it never leaves the document, because getElementById does not find a detached node and view.innerHTML='' would have killed search outright.
 
 Old e2e fixture asserted kg == '/folio-assistant/kg/' and passed: it was agreeing with the defect. It now reads harness.json.
+
+_2026-09-19T08:00:31Z_ — FINDING worth keeping — a real build caught what the fixture hid.
+
+The e2e fixture for just-the-docs' search was written from memory with aria-label on #search-input. The theme does NOT emit one: the field's name comes from <label for=search-input> containing <span class=sr-only>. My CSS had `display: none` on .search-label to drop the redundant magnifier — which removes the label from the accessibility tree and leaves the input with NO computed accessible name at all (measured over CDP Accessibility.getPartialAXTree: name == "").
+
+axe passed it in BOTH schemes. Its `label` rule accepts a non-empty placeholder attribute as a last-resort pass, and it checks the attribute rather than the computed name. So this is another instance of the thesis tests/a11y.e2e.ts already argues: axe is necessary and not sufficient.
+
+Found only by fetching the real Jekyll output of the staging build from gh-pages (STAGING/claude-kg-viewer-chrome/index.html) and reading the markup the site actually ships. Both fixtures are now copied from that build; the label is clipped rather than display:none; and the guard is an accessible-name assertion read out of Chromium over CDP, verified to FAIL when display:none is reinstated — getByLabel and a for= lookup both pass under the defect, so either would have been a guard that cannot fire.
