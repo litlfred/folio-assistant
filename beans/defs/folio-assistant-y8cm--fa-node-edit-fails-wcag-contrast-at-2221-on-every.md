@@ -46,14 +46,26 @@ tool row. That instance is fixed there by overriding the presentation; the
 class itself is untouched, because changing it alters the appearance of every
 page on the site and that is the owner's call, not a side effect of a sticky PR.
 
-## What is NOT established
+## Both schemes, now measured — and it is LIGHT ONLY
 
-**The dark scheme is unmeasured.** Both probe runs reported
-`background: #ffffff` — the harness loads the CSS but not `docs-ui.js`, and the
-page's scheme is set by JS via `data-fa-scheme`, so setting Playwright's
-`colorScheme` changed nothing. Two light-scheme measurements, not one of each.
-Do not quote this as "fails in both schemes"; it is unknown in dark, and the
-link colour there may composite differently.
+The first probe could not answer this: it loaded the CSS but not `docs-ui.js`,
+and the page's scheme is set by JS via `data-fa-scheme`, so setting
+Playwright's `colorScheme` changed nothing and both runs measured light.
+
+Re-measured 2026-09-19 with `data-fa-scheme` set on `<html>` directly, which is
+what the JS does:
+
+| scheme | result |
+|---|---|
+| light | **fails, 2.22:1** (`#a6a6f9` on `#ffffff`) |
+| dark | **passes** — no contrast violation |
+
+That is not a detail. `opacity: 0.35` composites the link toward whatever is
+behind it, and on a dark background the same operation moves the colour AWAY
+from the backdrop rather than toward it. The defect is one scheme's, not the
+declaration's in general — which makes the fix roughly half the size, and rules
+out the reflex of "set an explicit colour per scheme" for the scheme that is
+already correct.
 
 ## Done when
 
@@ -63,18 +75,22 @@ An edit link is legible without being loud. Options, cheapest first:
    hover/focus. One value to change; the smallest possible diff. Cost: it is
    still tuning a number against a threshold, and the next link-colour change
    silently re-breaks it.
-2. **Stop using opacity for quietness.** Set an explicit resting colour that
-   passes at 4.5:1 and let hover/focus brighten it. Cost: two colours to
-   maintain per scheme rather than one opacity, and the dark values need the
-   measurement above first.
+2. **Stop using opacity for quietness, in LIGHT only.** Set an explicit
+   resting colour that passes at 4.5:1 under
+   `:root[data-fa-scheme="light"]`, and leave the base declaration — which
+   dark uses and which already passes — alone. Cost: one more scheme-keyed
+   rule in a stylesheet that already has several (`.fa-qr-panel`,
+   `.fa-sticky-floating`), and the light and dark links then differ in
+   mechanism, which somebody must not later "tidy" back into one.
 3. **Leave it, and record the exemption.** Defensible only if the link is
    judged decorative — and it is not: it is the site's entire authoring
    affordance, and `#314` established that a control a reader cannot see is a
    control that does not exist.
 
-Recommend 2, after measuring dark. It is the one that cannot silently re-break,
-and `.fa-qr-panel` already establishes the per-scheme-colour pattern in this
-same stylesheet.
+Recommend 2. Dark is measured and passing, so this touches one scheme and
+cannot silently re-break the way a tuned opacity would; `.fa-qr-panel` and
+`.fa-sticky-floating` both already establish the per-scheme-colour pattern in
+this same stylesheet.
 
 **Do not fix this without looking at a rendered page.** The whole reason the
 opacity is there is visual noise beside a heading, and a value that passes axe
