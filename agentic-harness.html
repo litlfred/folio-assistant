@@ -165,6 +165,28 @@
   resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -483,7 +505,7 @@ rather than reconstructing it from scattered rules.</p>
 <strong>observable contract</strong> between the agent and the user: what states the
 interaction can be in, how requests are classified, which workflow the agent
 enters for each class, and what the user should expect at each stage.</p><hr />
-<h2 id="interaction-states">
+<h2 id="interaction-states" data-fa-label="sec:harness-interaction_states">
   
   
     <a href="#interaction-states" class="anchor-heading" aria-labelledby="interaction-states"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Interaction states
@@ -576,7 +598,7 @@ form a stack — the most recent is resumed first.</p>
 
 <p>The key rule: <strong>the agent always knows which workflow it is in</strong>. If it does
 not, it is in the idle state, and the next request starts a new workflow.</p>
-<h2 id="session-lifecycle">
+<h2 id="session-lifecycle" data-fa-label="sec:harness-session_lifecycle">
   
   
     <a href="#session-lifecycle" class="anchor-heading" aria-labelledby="session-lifecycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Session lifecycle
@@ -620,7 +642,7 @@ exhaustion), the agent’s durable state is:</p>
     </ul>
   </li>
 </ol>
-<h2 id="request-classification">
+<h2 id="request-classification" data-fa-label="sec:harness-request_classification">
   
   
     <a href="#request-classification" class="anchor-heading" aria-labelledby="request-classification"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Request classification
@@ -708,7 +730,7 @@ is a feature, and the agent should enter the CRDM workflow.</p>
 <p>When uncertain, the agent asks: “This sounds like it might need a platform
 change — is that right, or is this something I can do within the current
 content model?”</p>
-<h2 id="content-workflows">
+<h2 id="content-workflows" data-fa-label="sec:harness-content_workflows">
   
   
     <a href="#content-workflows" class="anchor-heading" aria-labelledby="content-workflows"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content workflows
@@ -750,7 +772,7 @@ build the L1 knowledge graph, completeness gate.</p>
 classifying the request and routing to the right one — and the <strong>exit point</strong> —
 returning to idle state when the workflow completes, or suspending if the user
 switches context.</p>
-<h2 id="feature-request-workflow">
+<h2 id="feature-request-workflow" data-fa-label="sec:harness-feature_request_workflow">
   
   
     <a href="#feature-request-workflow" class="anchor-heading" aria-labelledby="feature-request-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Feature-request workflow (CRDM)
@@ -826,7 +848,7 @@ the issue so others can weigh in.”</p>
 </ul>
 
 <p>On exit, if a content workflow was suspended, the agent resumes it.</p>
-<h2 id="user-provided-content">
+<h2 id="user-provided-content" data-fa-label="sec:harness-user_provided_content">
   
   
     <a href="#user-provided-content" class="anchor-heading" aria-labelledby="user-provided-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> User-provided content and sources
@@ -903,7 +925,7 @@ requirements</strong>, not content to author. The agent should:</p>
 <p>Example: a user uploads a public consultation feedback Excel spreadsheet. The
 agent does not try to ingest it as folio content; it reads the feedback items
 and synthesises them into requirements for the review triage tool.</p>
-<h2 id="issue-and-bean-discipline">
+<h2 id="issue-and-bean-discipline" data-fa-label="sec:harness-issue_and_bean_discipline">
   
   
     <a href="#issue-and-bean-discipline" class="anchor-heading" aria-labelledby="issue-and-bean-discipline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Issue and bean discipline
@@ -1004,7 +1026,7 @@ relevant issues and note the relationships.</p>
   <li><strong>Beans are not issues.</strong> <code class="language-plaintext highlighter-rouge">beans create</code> is for work-plan items. Issues are
 for stakeholder-facing requirements. Do not conflate them.</li>
 </ol>
-<h2 id="consolidated-skill-references">
+<h2 id="consolidated-skill-references" data-fa-label="sec:harness-consolidated_skill_references">
   
   
     <a href="#consolidated-skill-references" class="anchor-heading" aria-labelledby="consolidated-skill-references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Consolidated skill references
@@ -1093,7 +1115,7 @@ back to its authoritative sources.</p>
 
 <p><strong>When a skill and this page disagree, the skill wins.</strong> This page is a
 consolidation, not a new authority. If you find a discrepancy, fix this page.</p>
-<h2 id="what-is-not-built-yet">
+<h2 id="what-is-not-built-yet" data-fa-label="sec:harness-what_is_not_built_yet">
   
   
     <a href="#what-is-not-built-yet" class="anchor-heading" aria-labelledby="what-is-not-built-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not built yet
@@ -1148,7 +1170,7 @@ new session can read to resume exactly where the previous one left off.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

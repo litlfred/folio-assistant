@@ -168,6 +168,28 @@
   resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -474,7 +496,7 @@
 
 <p>Policy guidance, a standard, a report, a handbook — structured prose, authored
 with an LLM, published without a TeX installation.</p><hr />
-<h2 id="what-a-document-folio-is">
+<h2 id="what-a-document-folio-is" data-fa-label="sec:guides-writing-a-document-what-a-document-folio-is">
   
   
     <a href="#what-a-document-folio-is" class="anchor-heading" aria-labelledby="what-a-document-folio-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a document folio is
@@ -505,7 +527,7 @@ feature “the paper adapter has”, check first — you probably already have i
 </div>
 
 <p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn">BPMN 2.0 source</a></p><hr />
-<h2 id="1--scaffold-the-folio">
+<h2 data-fa-label="sec:guides-writing-a-document-1-scaffold-the-folio" id="1--scaffold-the-folio">
   
   
     <a href="#1--scaffold-the-folio" class="anchor-heading" aria-labelledby="1--scaffold-the-folio"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1 · Scaffold the folio
@@ -543,7 +565,7 @@ work plan. See the
 for the full file list.</p>
 
 <p>The starter block is a placeholder that says so. Replace it.</p><hr />
-<h2 id="2--the-content-model">
+<h2 data-fa-label="sec:guides-writing-a-document-2-the-content-model" id="2--the-content-model">
   
   
     <a href="#2--the-content-model" class="anchor-heading" aria-labelledby="2--the-content-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2 · The content model
@@ -567,7 +589,7 @@ for the full file list.</p>
 only if some section’s <code class="language-plaintext highlighter-rouge">blocks[]</code> names it</strong>. This is the single most common way
 authored work disappears: the <code class="language-plaintext highlighter-rouge">.ts</code> and <code class="language-plaintext highlighter-rouge">.md</code> are written, committed and
 reviewed, and the block renders nowhere because nothing lists it.</p>
-<h3 id="the-kinds-you-may-use">
+<h3 id="the-kinds-you-may-use" data-fa-label="sec:guides-writing-a-document-the-kinds-you-may-use">
   
   
     <a href="#the-kinds-you-may-use" class="anchor-heading" aria-labelledby="the-kinds-you-may-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The kinds you may use
@@ -585,7 +607,7 @@ reviewed, and the block renders nowhere because nothing lists it.</p>
 or <code class="language-plaintext highlighter-rouge">proof</code>. <code class="language-plaintext highlighter-rouge">content_profile_check</code> rejects them, and runs on every
 <code class="language-plaintext highlighter-rouge">content_validate</code> — so the failure arrives while you are writing rather than
 when you try to publish.</p>
-<h3 id="uses-matters-more-here-than-in-a-paper">
+<h3 id="uses-matters-more-here-than-in-a-paper" data-fa-label="sec:guides-writing-a-document-uses-matters-more-here-than-in-a-paper">
   
   
     <a href="#uses-matters-more-here-than-in-a-paper" class="anchor-heading" aria-labelledby="uses-matters-more-here-than-in-a-paper"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">uses[]</code> matters more here than in a paper
@@ -604,7 +626,7 @@ one. It is an editorial judgement — nothing derives it, and nothing should.</p
 dependency signal the corpus carries, and every ordering metric, every “what
 else changes if this changes?” question, and the reading-order review all read
 it. List direct neighbours only.</p><hr />
-<h2 id="3--author-with-the-agent">
+<h2 data-fa-label="sec:guides-writing-a-document-3-author-with-the-agent" id="3--author-with-the-agent">
   
   
     <a href="#3--author-with-the-agent" class="anchor-heading" aria-labelledby="3--author-with-the-agent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3 · Author with the agent
@@ -637,7 +659,7 @@ the recommendation.</p>
 </blockquote>
 
 <p>Reads <code class="language-plaintext highlighter-rouge">uses[]</code> and the content graph.</p>
-<h3 id="carrying-a-recommendation">
+<h3 id="carrying-a-recommendation" data-fa-label="sec:guides-writing-a-document-carrying-a-recommendation">
   
   
     <a href="#carrying-a-recommendation" class="anchor-heading" aria-labelledby="carrying-a-recommendation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Carrying a recommendation
@@ -678,7 +700,7 @@ mapping — it predates this content type.</li>
 <p>The full convention, and what it is missing, is in the
 <a href="../reference/skill-instructions/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a>
 skill.</p><hr />
-<h2 id="4--validate">
+<h2 data-fa-label="sec:guides-writing-a-document-4-validate" id="4--validate">
   
   
     <a href="#4--validate" class="anchor-heading" aria-labelledby="4--validate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4 · Validate
@@ -707,7 +729,7 @@ things schema validation structurally cannot, because a <code class="language-pl
 
 <p>Both name the file and the remedy, including “declare <code class="language-plaintext highlighter-rouge">contentType: "paper"</code>”
 when that is what you actually meant.</p><hr />
-<h2 id="5--render">
+<h2 data-fa-label="sec:guides-writing-a-document-5-render" id="5--render">
   
   
     <a href="#5--render" class="anchor-heading" aria-labelledby="5--render"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5 · Render
@@ -744,7 +766,7 @@ the next person on a clean machine pays for that.</p>
 in the folio — a house style is content — and put the print rules (<code class="language-plaintext highlighter-rouge">@page</code>,
 page breaks, running heads) in the same file as the screen rules, so the two
 outputs cannot drift.</p>
-<h3 id="not-implemented">
+<h3 id="not-implemented" data-fa-label="sec:guides-writing-a-document-not-implemented">
   
   
     <a href="#not-implemented" class="anchor-heading" aria-labelledby="not-implemented"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Not implemented
@@ -765,7 +787,7 @@ as Markdown links or footnotes.</p>
 block’s <code class="language-plaintext highlighter-rouge">label</code>, never a heading-derived anchor — the heading anchor changes
 whenever the title is edited, which is exactly when the link most needs to keep
 working.</p><hr />
-<h2 id="moving-between-content-types">
+<h2 id="moving-between-content-types" data-fa-label="sec:guides-writing-a-document-moving-between-content-types">
   
   
     <a href="#moving-between-content-types" class="anchor-heading" aria-labelledby="moving-between-content-types"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Moving between content types
@@ -784,7 +806,7 @@ removing content.</p>
 <p><strong>paper → document</strong> additionally means removing every math block and every
 <code class="language-plaintext highlighter-rouge">lean</code> field. Run <code class="language-plaintext highlighter-rouge">content_profile_check</code> after flipping the switch and it
 lists exactly what is in the way.</p><hr />
-<h2 id="where-things-are">
+<h2 id="where-things-are" data-fa-label="sec:guides-writing-a-document-where-things-are">
   
   
     <a href="#where-things-are" class="anchor-heading" aria-labelledby="where-things-are"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where things are
@@ -843,7 +865,7 @@ lists exactly what is in the way.</p><hr />
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

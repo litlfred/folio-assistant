@@ -165,6 +165,28 @@
   resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -460,7 +482,7 @@ workflow policy gate. What is deliberately <strong>not</strong> settled here: wh
 registries count as trusted, which grading system a folio declares, and how the
 observatory APIs are bound. A separate process refines requirements; this exists
 so there is something concrete to refine.</p><hr />
-<h2 id="why-this-is-a-subprocess">
+<h2 id="why-this-is-a-subprocess" data-fa-label="sec:evidence-why-this-is-a-subprocess">
   
   
     <a href="#why-this-is-a-subprocess" class="anchor-heading" aria-labelledby="why-this-is-a-subprocess"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this is a subprocess of editing
@@ -484,7 +506,7 @@ confirmation. The step order is what makes it not that.</p>
 diagram, and the editing diagram stays readable. It also has nothing to do for
 content that carries no recommendations — a mathematics folio has none — and is
 skipped there rather than satisfied vacuously.</p>
-<h2 id="the-subprocess">
+<h2 id="the-subprocess" data-fa-label="sec:evidence-the-subprocess">
   
   
     <a href="#the-subprocess" class="anchor-heading" aria-labelledby="the-subprocess"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The subprocess
@@ -539,7 +561,7 @@ lane inside the system boundary would make “authoritative” a self-assessment
 </div>
 
 <p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/evidence-retrieval.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/assets/img/workflows/evidence-retrieval.svg">full-size SVG</a></p>
-<h2 id="review-first">
+<h2 id="review-first" data-fa-label="sec:evidence-review-first">
   
   
     <a href="#review-first" class="anchor-heading" aria-labelledby="review-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step one looks inward
@@ -558,7 +580,7 @@ in the same artefact is a defect that no amount of external evidence will
 reveal — the sources can all be impeccable and the guideline still incoherent.</p>
 
 <p>This is also the cheapest step by far, and it is the one most often skipped.</p>
-<h2 id="pico">
+<h2 id="pico" data-fa-label="sec:evidence-pico">
   
   
     <a href="#pico" class="anchor-heading" aria-labelledby="pico"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Framing the question as PICO
@@ -580,7 +602,7 @@ evidence comes back.</p>
 <p>The PICO is carried on the recommendation, not discarded after the search. It is
 what a later reader needs in order to tell whether new evidence bears on this
 recommendation or a different one.</p>
-<h2 id="three-classes">
+<h2 id="three-classes" data-fa-label="sec:evidence-three-classes">
   
   
     <a href="#three-classes" class="anchor-heading" aria-labelledby="three-classes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three classes of evidence, not one
@@ -615,7 +637,7 @@ mode this separation exists to prevent.</p>
 <p><strong>Data repositories and statistical datasets.</strong> Indicator series and microdata.
 Distinct again because the unit of evidence is a <strong>measurement</strong> with a
 population, a period and a method attached — not a claim in prose.</p>
-<h2 id="authority">
+<h2 id="authority" data-fa-label="sec:evidence-authority">
   
   
     <a href="#authority" class="anchor-heading" aria-labelledby="authority"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verifying authority, not asserting it
@@ -651,7 +673,7 @@ network, so no endpoint below the level of “the publisher’s own API” has b
 verified, and naming specific ones would be writing down a guess. That is a
 requirements question, and there is a separate process for it.</p>
 </blockquote>
-<h2 id="grading-and-gaps">
+<h2 id="grading-and-gaps" data-fa-label="sec:evidence-grading-and-gaps">
   
   
     <a href="#grading-and-gaps" class="anchor-heading" aria-labelledby="grading-and-gaps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Grading the body, and recording a gap
@@ -677,7 +699,7 @@ wrong, which is why the “no” branch has somewhere to go.</p>
 <p>On the “yes” branch the PICO, the graded body of evidence, and every verified
 citation with its resolved authority record are written onto the recommendation
 block. A reader can then retrace the chain from the sentence back to the source.</p>
-<h2 id="what-is-not-built">
+<h2 id="what-is-not-built" data-fa-label="sec:evidence-what-is-not-built">
   
   
     <a href="#what-is-not-built" class="anchor-heading" aria-labelledby="what-is-not-built"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not built
@@ -743,7 +765,7 @@ step, and the gap between the model and the code is visible rather than hidden.<
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

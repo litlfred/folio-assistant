@@ -165,6 +165,28 @@
   resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -459,7 +481,7 @@
 <p>How a dropped file becomes an <strong>L1 source</strong> the corpus can cite — expressed as
 <strong>BPMN 2.0 swimlane diagrams</strong>, with the Ingestion Engine as a named actor and
 every not-yet-built step linked to the bean that tracks it.</p><hr />
-<h2 id="uploads-and-library-are-two-stages-of-one-pipeline">
+<h2 id="uploads-and-library-are-two-stages-of-one-pipeline" data-fa-label="sec:document-ingestion-uploads-and-library-are-two-stages-of-one-pipeline">
   
   
     <a href="#uploads-and-library-are-two-stages-of-one-pipeline" class="anchor-heading" aria-labelledby="uploads-and-library-are-two-stages-of-one-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">uploads/</code> and <code class="language-plaintext highlighter-rouge">library/</code> are two stages of one pipeline
@@ -505,7 +527,7 @@ searches <code class="language-plaintext highlighter-rouge">library/</code> only
 merely go unread, it makes a <strong>clean grep</strong> read as <em>“nobody has done this”</em>
 while the source is sitting on disk. An un-ingested source is worse than an
 absent one, because it produces false confidence rather than a gap.</p>
-<h2 id="library-is-l1">
+<h2 id="library-is-l1" data-fa-label="sec:document-ingestion-library-is-l1">
   
   
     <a href="#library-is-l1" class="anchor-heading" aria-labelledby="library-is-l1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">library/</code> is L1
@@ -526,7 +548,7 @@ binary. That lives in a sibling <code class="language-plaintext highlighter-roug
 url-or-path / checksum / retrieved — <strong>not</strong> inside <code class="language-plaintext highlighter-rouge">library:</code>, because
 <code class="language-plaintext highlighter-rouge">LibraryRef</code> is regenerated from the tree on every sync and an authored URL
 placed there is silently dropped.</p>
-<h2 id="the-pipeline">
+<h2 id="the-pipeline" data-fa-label="sec:document-ingestion-the-pipeline">
   
   
     <a href="#the-pipeline" class="anchor-heading" aria-labelledby="the-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The pipeline
@@ -561,7 +583,7 @@ stays readable because it does not inline them.</p>
 <p><strong>The end is where authoring begins.</strong> “Available to cite as an L1 source” is
 the hand-off into <a href="publication-workflow.html">the publication workflow</a> — the
 same corpus an author edits and a reviewer reviews.</p>
-<h3 id="extract-structure">
+<h3 id="extract-structure" data-fa-label="sec:document-ingestion-extract-structure">
   
   
     <a href="#extract-structure" class="anchor-heading" aria-labelledby="extract-structure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Extract structure
@@ -587,7 +609,7 @@ evidence that the library lacks a topic.</p>
 <p>Each section file carries the document brief in its front-matter. That is
 contextual retrieval: a chunk in isolation loses what makes it mean anything, so
 a hit is interpretable without opening anything else.</p>
-<h3 id="derive-content">
+<h3 id="derive-content" data-fa-label="sec:document-ingestion-derive-content">
   
   
     <a href="#derive-content" class="anchor-heading" aria-labelledby="derive-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Derive content
@@ -614,7 +636,7 @@ generated description is <strong>a claim by someone</strong>, not a property of 
 Recording whether a human or an agent wrote it — and for an agent, which model
 version — is what lets a reader weigh it, and what makes a superseded model’s
 descriptions findable as a set later. It is unrecoverable once lost.</p>
-<h3 id="build-the-l1-knowledge-graph">
+<h3 id="build-the-l1-knowledge-graph" data-fa-label="sec:document-ingestion-build-the-l1-knowledge-graph">
   
   
     <a href="#build-the-l1-knowledge-graph" class="anchor-heading" aria-labelledby="build-the-l1-knowledge-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Build the L1 knowledge graph
@@ -637,7 +659,7 @@ vocabulary, so this extends a live context rather than introducing one.</p>
 
 <p>The folder name <strong>is</strong> the bibliography citation key, so a citation and a
 directory are the same string.</p>
-<h3 id="the-l1-completeness-gate">
+<h3 id="the-l1-completeness-gate" data-fa-label="sec:document-ingestion-the-l1-completeness-gate">
   
   
     <a href="#the-l1-completeness-gate" class="anchor-heading" aria-labelledby="the-l1-completeness-gate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The L1 completeness gate
@@ -664,7 +686,7 @@ confident mistranslation passes. Back-translating and comparing asks whether the
 <em>meaning</em> survived, which is the property actually wanted, and needs no
 reference translation. What it cannot do is decide which reading is right —
 that edge goes to a reviewer.</p><hr />
-<h2 id="what-is-not-built-yet">
+<h2 id="what-is-not-built-yet" data-fa-label="sec:document-ingestion-what-is-not-built-yet">
   
   
     <a href="#what-is-not-built-yet" class="anchor-heading" aria-labelledby="what-is-not-built-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not built yet
@@ -734,7 +756,7 @@ implemented.</p>
     </tr>
   </tbody>
 </table></div>
-<h2 id="how-much-of-this-does-dublin-core-carry">
+<h2 id="how-much-of-this-does-dublin-core-carry" data-fa-label="sec:document-ingestion-how-much-of-this-does-dublin-core-carry">
   
   
     <a href="#how-much-of-this-does-dublin-core-carry" class="anchor-heading" aria-labelledby="how-much-of-this-does-dublin-core-carry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How much of this does Dublin Core carry?
@@ -764,7 +786,7 @@ being bent into an approximate <code class="language-plaintext highlighter-rouge
 first — PROV-O for provenance is the obvious candidate — is <strong>not yet decided</strong>
 and must be settled against the published specifications rather than from
 memory.</p>
-<h2 id="editing-an-ingested-source">
+<h2 id="editing-an-ingested-source" data-fa-label="sec:document-ingestion-editing-an-ingested-source">
   
   
     <a href="#editing-an-ingested-source" class="anchor-heading" aria-labelledby="editing-an-ingested-source"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editing an ingested source
@@ -797,7 +819,7 @@ new source becomes citeable when the gate passes — not before.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

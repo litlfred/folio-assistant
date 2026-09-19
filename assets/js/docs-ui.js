@@ -882,6 +882,29 @@
                    "first); the other action tiles were mounted without it.");
     }
 
+    // A tile that DOES something rather than opening a sidebar view. The board
+    // lives in the main display, so `showView` is the wrong machinery for it.
+    function tileAction(glyph, label, onClick) {
+      var b = el("button", { type: "button", class: "fa-tile", "aria-label": label });
+      b.innerHTML = glyph;
+      b.appendChild(el("span", { class: "fa-tile-caption" }, label));
+      b.addEventListener("click", function () { open(false); onClick(); });
+      return b;
+    }
+
+    // The todo tile is added when the board reports itself ready, because the
+    // index is fetched and the tile carries its COUNT. A tile that appeared
+    // immediately would show no count, then change under the reader's cursor.
+    function addTodoTile(board) {
+      if (board.count === 0) return;   // nothing outstanding is not a tile
+      var tile = tileAction(STICKY_GLYPH, "Todos", function () { board.toggle(); });
+      tile.appendChild(el("span", { class: "fa-tile-count" }, String(board.count)));
+      tile.setAttribute("aria-label", "Todos — " + board.count + " outstanding");
+      grid.appendChild(tile);
+    }
+    if (window.__faTodoBoard) addTodoTile(window.__faTodoBoard);
+    else document.addEventListener("fa:todos-ready", function (e) { addTodoTile(e.detail); });
+
     var links = getSiteLinks();
     if (links.kg) {
       grid.appendChild(tileLink(NET_GLYPH, "Knowledge graph", links.kg,
@@ -1017,6 +1040,494 @@
       "fa-has-fullwidth",
       !!document.querySelector(".fa-figure-scope.is-fullwidth"),
     );
+  }
+
+
+  /* ═══ Sticky todos ════════════════════════════════════════════════════
+   *
+   * A TODO is a person's outstanding item, published by `gen-docs-pages.ts`
+   * to `/assets/todos/index.json`. This mounts three surfaces over it:
+   *
+   *   - a tile in the action launcher, carrying a COUNT;
+   *   - a board in the MAIN display, with every sticky lined up;
+   *   - a sticky that can be lifted off the board and pinned to the page.
+   *
+   * ## Why the board is not a tile view
+   *
+   * Every other tile renders into `.fa-tiles-view`, which is the QR panel's
+   * footprint -- 16.5rem in the sidebar column. The owner asked for the board
+   * "in the main display", and a wall of stickies at 16.5rem would be a
+   * single column of slivers. So the tile is a LAUNCHER for a surface that
+   * lives in `.main-content`, and the panel machinery is left alone rather
+   * than widened for one caller.
+   *
+   * ## Content reaches the DOM through textContent, never innerHTML
+   *
+   * A todo's `summary` and `comment` are authored -- by a person, or by an
+   * agent on their behalf -- and travel through a JSON file to this page. The
+   * only glyphs built with `innerHTML` here are the static SVG constants
+   * above, which no input touches. That is the same rule the QA panel's
+   * evidence follows, and for the same reason: the string that closes a tag
+   * is exactly the string somebody eventually writes.
+   *
+   * ## The pencil is `.fa-node-edit`, not an editor
+   *
+   * "default pattern for any content object in just-the-docs -- it should be
+   * at that class level". `gen-docs-pages.ts` already emits that affordance
+   * per node, and `editHref` is composed there at build time, so this file
+   * carries no repo URL. A published page cannot write back to the repo, and
+   * the honest control is the one that takes you where writing happens.
+   */
+
+  var STICKY_GLYPH =
+    '<svg class="fa-tile-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linejoin="round"/></svg>';
+
+  var todoState = { items: [], floating: {}, processes: {} };
+
+  /** The published index, or `null` when it could not be read. */
+  function fetchTodoIndex(done) {
+    var src = document.querySelector('meta[name="fa-todo-src"]');
+    var url = src && src.getAttribute("content");
+    if (!url) return done(null);
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (doc) {
+        if (!doc || !Array.isArray(doc.items)) return done(null);
+        todoState.processes = doc.processes || {};
+        done(doc.items);
+      })
+      .catch(function (e) {
+        // Third state, reported rather than rendered as "no todos". A board
+        // that opens empty is indistinguishable from a person with nothing
+        // outstanding, and those are opposite facts.
+        console.warn("docs-ui: could not read " + url + " (" + e.message + "); " +
+                     "the todo board was not mounted.");
+        done(null);
+      });
+  }
+
+  /** Paragraphs, split on blank lines. Text only -- see the header. */
+  function renderBody(text) {
+    var wrap = el("div", { class: "fa-sticky-body" });
+    var paras = String(text || "").split(/\n{2,}/);
+    for (var i = 0; i < paras.length; i++) {
+      var p = paras[i].trim();
+      if (p !== "") wrap.appendChild(el("p", null, p));
+    }
+    if (wrap.childNodes.length === 0) {
+      wrap.appendChild(el("p", { class: "fa-sticky-empty" }, "No detail recorded."));
+    }
+    return wrap;
+  }
+
+
+  /**
+   * Board order: todos stacked by the BPMN subprocess hierarchy.
+   *
+   * "stacking should follow hiearchy od busines subprocesses". The diagrams
+   * already carry that hierarchy as `calledElement` refs — `Process_Lifecycle`
+   * calls `Process_Publication`, which calls `Process_Editing` — and the
+   * generator publishes it beside the todos.
+   *
+   * ## Depth is the process's own, not the todo's
+   *
+   * A todo tagged `Process_Publication` sits at the depth `Process_Publication`
+   * sits at, so two todos on the same process always land together and a todo
+   * on a caller always sorts above one on its callee. Computing depth from the
+   * todo would make the same process appear at different levels depending on
+   * which todo reached it first.
+   *
+   * ## A todo on SEVERAL processes takes the shallowest
+   *
+   * `what-kick-off-means-for-a-ci-watcher` is tagged `Process_CodeReview` AND
+   * `Process_Publication`, because its two dispatch points are in different
+   * diagrams. It belongs where a reader would look first, which is the outer
+   * one; listing it twice would double a single outstanding item.
+   *
+   * ## Untagged todos are not orphans
+   *
+   * They sort FIRST, not last. Most todos carry no process — both of the
+   * others here do not — and sinking them below a process hierarchy they are
+   * not part of would bury the common case under the rare one.
+   */
+  function processDepth(id, hierarchy) {
+    // A process's depth is how many callers stand above it. Cycles are
+    // possible in principle (two diagrams calling each other), so the walk is
+    // bounded by the number of processes rather than trusting acyclicity.
+    var parents = {};
+    for (var p in hierarchy) {
+      var kids = hierarchy[p] || [];
+      for (var k = 0; k < kids.length; k++) if (!parents[kids[k]]) parents[kids[k]] = p;
+    }
+    var depth = 0;
+    var at = id;
+    var guard = 0;
+    var limit = Object.keys(hierarchy).length + 1;
+    while (parents[at] && guard++ < limit) { at = parents[at]; depth++; }
+    return depth;
+  }
+
+  function stackTodos(items, hierarchy) {
+    var rows = [];
+    for (var i = 0; i < items.length; i++) {
+      var t = items[i];
+      var procs = (t.tags && t.tags.processes) || [];
+      if (procs.length === 0) { rows.push({ todo: t, process: null, depth: -1 }); continue; }
+      var best = procs[0];
+      var bestD = processDepth(best, hierarchy);
+      for (var j = 1; j < procs.length; j++) {
+        var d = processDepth(procs[j], hierarchy);
+        if (d < bestD) { best = procs[j]; bestD = d; }
+      }
+      rows.push({ todo: t, process: best, depth: bestD });
+    }
+    rows.sort(function (a, b) {
+      if (a.depth !== b.depth) return a.depth - b.depth;
+      if (a.process !== b.process) return String(a.process).localeCompare(String(b.process));
+      return a.todo.id.localeCompare(b.todo.id);
+    });
+    return rows;
+  }
+
+  function buildSticky(todo, onFloat, onDock, opts) {
+    var compact = opts && opts.compact;
+    var card = el("article", {
+      class: "fa-sticky fa-sticky-p-" + (todo.priority || "medium"),
+      "data-todo-id": todo.id,
+    });
+
+    var head = el("div", { class: "fa-sticky-head" });
+    var toggle = el("button", {
+      type: "button",
+      class: "fa-sticky-toggle",
+      "aria-expanded": "false",
+    });
+    toggle.appendChild(el("span", { class: "fa-sticky-summary" }, todo.summary));
+    head.appendChild(toggle);
+
+    var chips = el("div", { class: "fa-sticky-chips" });
+    chips.appendChild(el("span", { class: "fa-sticky-chip fa-sticky-status" }, todo.status));
+    chips.appendChild(el("span", { class: "fa-sticky-chip fa-sticky-prio" }, todo.priority));
+    head.appendChild(chips);
+
+    // The EDGES. A todo carries six relationship axes -- who it is for, which
+    // lane and process and task it sits in, what it points at in the knowledge
+    // graph, and which issues, PRs and commits it concerns -- and a sticky that
+    // showed only `status` and `priority` would waste all of it on two enums.
+    //
+    // Each edge is resolved to an href at BUILD time where one exists. An edge
+    // that could not be resolved is still shown, as a chip with no link: a
+    // dangling reference and no reference at all are different facts, and
+    // dropping the first makes it look like the second.
+    var rels = todo.relations || [];
+    if (rels.length) {
+      var relBox = el("ul", { class: "fa-sticky-rels", "aria-label": "Related" });
+      for (var r = 0; r < rels.length; r++) {
+        var rel = rels[r];
+        var li = el("li", { class: "fa-sticky-rel" });
+        li.appendChild(el("span", { class: "fa-sticky-rel-axis" }, rel.axis));
+        if (rel.href) {
+          li.appendChild(el("a", { class: "fa-sticky-rel-link", href: rel.href }, rel.label));
+        } else {
+          // Title says WHY there is no link, so a reader is not left guessing
+          // whether the chip is broken or the target simply is not reachable.
+          li.appendChild(el("span", {
+            class: "fa-sticky-rel-dangling",
+            title: "No link: nothing on this site resolves " + rel.label,
+          }, rel.label));
+        }
+        relBox.appendChild(li);
+      }
+      head.appendChild(relBox);
+    }
+
+    var tools = el("div", { class: "fa-sticky-tools" });
+    // The SAME affordance every node on this site already has, pointed at this
+    // todo's own file. `editHref` is composed at build time.
+    if (todo.editHref) {
+      var pencil = el("a", {
+        class: "fa-node-edit fa-sticky-edit",
+        href: todo.editHref,
+        title: "Edit this todo's markdown",
+        "aria-label": "Edit " + todo.summary,
+      }, "✎ Edit");
+      tools.appendChild(pencil);
+    }
+    // An INLINE sticky is already beside the content it is about, so Pin and
+    // Close have nothing to do: pinning it would move it AWAY from the thing
+    // it annotates, and closing it would hide a block-level annotation with no
+    // way back. The board is where those two controls mean something.
+    if (!compact) {
+      var pin = el("button", {
+        type: "button",
+        class: "fa-sticky-pin",
+        "aria-label": "Pin " + todo.summary + " to the page",
+      }, "⇱ Pin");
+      pin.addEventListener("click", function () { onFloat(todo); });
+      tools.appendChild(pin);
+
+      var close = el("button", {
+        type: "button",
+        class: "fa-sticky-close",
+        "aria-label": "Close " + todo.summary,
+      }, "×");
+      close.addEventListener("click", function () { onDock(todo); });
+      tools.appendChild(close);
+    }
+
+    head.appendChild(tools);
+
+    card.appendChild(head);
+    var body = renderBody(todo.comment);
+    body.setAttribute("hidden", "hidden");
+    card.appendChild(body);
+
+    toggle.addEventListener("click", function () {
+      var open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", open ? "false" : "true");
+      if (open) body.setAttribute("hidden", "hidden");
+      else body.removeAttribute("hidden");
+    });
+    return card;
+  }
+
+  /**
+   * The board, and the float layer.
+   *
+   * ## "Pick up and move" is a MOVE, not a drag
+   *
+   * The spec says the reader picks a sticky up off the panel and fixes it to
+   * the page. A pointer drag cannot be operated from a keyboard without
+   * reimplementing the whole interaction -- arrow-key nudging, a grab mode, an
+   * escape hatch -- and this instance's declared interaction profile is
+   * low-dexterity, where a drag is the single worst control to depend on.
+   *
+   * So the gesture is a BUTTON: Pin lifts the sticky onto the page, Close
+   * returns it. It is one keystroke either way, it needs no pointer at all,
+   * and nothing about it is harder with a mouse than a drag would have been.
+   * Drag can be added ON TOP later as an accelerator; it must not be the only
+   * way in.
+   *
+   * ## A floating sticky is greyed on the board, not removed from it
+   *
+   * The owner's words: "when floating, they are greyed out on sticky panel but
+   * can also return the sticky note by clicking disabled." So the board keeps
+   * every sticky in a stable position -- a list that reflows when you pin one
+   * makes the next one you want move under your cursor -- and the greyed entry
+   * is a real button that docks it again.
+   */
+  function mountTodoBoard(items) {
+    var main = firstMatch(["#main-content", ".main-content", "main"]);
+    if (!main) {
+      console.warn("docs-ui: no main content region found; the todo board was not mounted.");
+      return null;
+    }
+
+    var layer = el("div", { class: "fa-sticky-layer", "aria-live": "polite" });
+    document.body.appendChild(layer);
+
+    var board = el("section", {
+      class: "fa-sticky-board",
+      hidden: "hidden",
+      tabindex: "-1",
+      role: "region",
+      "aria-label": "Todos",
+    });
+    var head = el("div", { class: "fa-sticky-board-head" });
+    var heading = el("h2", { class: "fa-sticky-board-title", tabindex: "-1" }, "Todos");
+    head.appendChild(heading);
+    var boardClose = el("button", {
+      type: "button",
+      class: "fa-sticky-board-close",
+      "aria-label": "Close the todo board",
+    }, "×");
+    head.appendChild(boardClose);
+    board.appendChild(head);
+
+    var grid = el("div", { class: "fa-sticky-grid" });
+    board.appendChild(grid);
+    main.insertBefore(board, main.firstChild);
+
+    var slots = {};
+
+    function dock(todo) {
+      var f = todoState.floating[todo.id];
+      if (f) {
+        layer.removeChild(f);
+        delete todoState.floating[todo.id];
+      }
+      var slot = slots[todo.id];
+      if (slot) {
+        slot.classList.remove("fa-sticky-slot-floating");
+        var b = slot.querySelector(".fa-sticky-recall");
+        if (b) slot.removeChild(b);
+        var card = slot.querySelector(".fa-sticky");
+        if (card) card.removeAttribute("hidden");
+      }
+    }
+
+    function float(todo) {
+      if (todoState.floating[todo.id]) return;
+      var card = buildSticky(todo, float, dock);
+      card.classList.add("fa-sticky-floating");
+      layer.appendChild(card);
+      todoState.floating[todo.id] = card;
+
+      var slot = slots[todo.id];
+      if (slot) {
+        slot.classList.add("fa-sticky-slot-floating");
+        var inner = slot.querySelector(".fa-sticky");
+        if (inner) inner.setAttribute("hidden", "hidden");
+        // The greyed entry is a REAL button, not a disabled one. `disabled`
+        // removes it from the tab order, and the owner asked that clicking it
+        // bring the sticky back -- a control you cannot reach is not a control.
+        var recall = el("button", {
+          type: "button",
+          class: "fa-sticky-recall",
+          "aria-label": "Return " + todo.summary + " to the board",
+        }, todo.summary);
+        recall.addEventListener("click", function () { dock(todo); });
+        slot.appendChild(recall);
+      }
+      // Focus follows the sticky, or a reader who cannot see the page has no
+      // idea anything happened.
+      var t = card.querySelector(".fa-sticky-toggle");
+      if (t) t.focus();
+    }
+
+    var rows = stackTodos(items, todoState.processes);
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      var slot = el("div", {
+        class: "fa-sticky-slot" + (row.process ? " fa-sticky-slot-in-process" : ""),
+      });
+      if (row.process) {
+        // The process is named ON the sticky rather than as a run-in heading,
+        // so the grid stays a grid: a full-width heading between cards would
+        // break the `auto-fill` columns into one per group.
+        slot.setAttribute("data-fa-depth", String(row.depth));
+        slot.appendChild(el("span", { class: "fa-sticky-process" }, row.process));
+      }
+      slot.appendChild(buildSticky(row.todo, float, dock));
+      slots[row.todo.id] = slot;
+      grid.appendChild(slot);
+    }
+    if (items.length === 0) {
+      grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
+    }
+
+    function setOpen(isOpen) {
+      if (isOpen) {
+        board.removeAttribute("hidden");
+        heading.focus();
+      } else {
+        board.setAttribute("hidden", "hidden");
+      }
+      return isOpen;
+    }
+    boardClose.addEventListener("click", function () { setOpen(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
+    });
+
+    return {
+      toggle: function () { return setOpen(board.hasAttribute("hidden")); },
+      count: items.length,
+    };
+  }
+
+  /**
+   * Todos attached to a block ON THIS PAGE, rendered beside the block.
+   *
+   * Matched on `targetLabel` against the heading's `data-fa-label`, which is
+   * PAGE-QUALIFIED (`sec:<page>-<node>`). The bare heading id cannot serve:
+   * `what-is-not-built-yet` is a node on two different pages, so matching on
+   * it would attach a todo to whichever page the reader opened.
+   *
+   * The count sits on a toggle beside the heading rather than at the top of
+   * the page. The owner asked for "a sticky icon with a count" at the top and
+   * for the stickies to appear "relative to content they are assigned to" —
+   * and those pull apart once a page has blocks with different counts. One
+   * badge per block says which block, which is the half that carries
+   * information; a single page-level number cannot say where to look.
+   */
+  function mountPageStickies(items, board) {
+    var byLabel = {};
+    for (var i = 0; i < items.length; i++) {
+      var t = items[i];
+      if (!t.targetLabel) continue;
+      (byLabel[t.targetLabel] = byLabel[t.targetLabel] || []).push(t);
+    }
+
+    var heads = document.querySelectorAll("[data-fa-label]");
+    var placed = 0;
+    for (var h = 0; h < heads.length; h++) {
+      var head = heads[h];
+      var mine = byLabel[head.getAttribute("data-fa-label")];
+      if (!mine || mine.length === 0) continue;
+
+      var host = el("div", { class: "fa-sticky-inline" });
+      var badge = el("button", {
+        type: "button",
+        class: "fa-sticky-badge",
+        "aria-expanded": "false",
+        "aria-label": mine.length + " todo(s) on this section",
+      });
+      badge.innerHTML = STICKY_GLYPH;
+      badge.appendChild(el("span", { class: "fa-sticky-badge-count" }, String(mine.length)));
+
+      var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
+      (function (list, mine) {
+        for (var k = 0; k < mine.length; k++) {
+          list.appendChild(buildSticky(mine[k], function () {}, function () {}, { compact: true }));
+        }
+      })(list, mine);
+
+      (function (badge, list) {
+        badge.addEventListener("click", function () {
+          var open = badge.getAttribute("aria-expanded") === "true";
+          badge.setAttribute("aria-expanded", open ? "false" : "true");
+          if (open) list.setAttribute("hidden", "hidden");
+          else list.removeAttribute("hidden");
+        });
+      })(badge, list);
+
+      host.appendChild(badge);
+      // A SIBLING of the heading, not a child: a <div> inside an <h2> is not
+      // valid HTML and the browser would reparent it -- the same rule the QA
+      // panel already follows for the same reason.
+      head.parentNode.insertBefore(host, head.nextSibling);
+      host.parentNode.insertBefore(list, host.nextSibling);
+      placed += mine.length;
+    }
+
+    // Reported, not silent. A todo carrying a `targetLabel` that matches no
+    // block on any page is a dangling edge, and the reader would otherwise
+    // only ever see it on the board -- where nothing says it was SUPPOSED to
+    // appear somewhere and did not.
+    var tagged = 0;
+    for (var j = 0; j < items.length; j++) if (items[j].targetLabel) tagged++;
+    if (board) board.placed = placed;
+    return { placed: placed, tagged: tagged };
+  }
+
+  /** Fetch, then mount the board and hand the launcher a way to open it. */
+  function mountTodoStickies() {
+    fetchTodoIndex(function (items) {
+      if (items === null) return;
+      todoState.items = items;
+      var board = mountTodoBoard(items);
+      if (!board) return;
+      mountPageStickies(items, board);
+      window.__faTodoBoard = board;
+      document.dispatchEvent(new CustomEvent("fa:todos-ready", { detail: board }));
+    });
   }
 
   function mountFigure(scope, isPlain) {
@@ -1840,6 +2351,7 @@
     mountActionTiles();
     mountTranslationBadges();
     mountQaPanels();
+    mountTodoStickies();
     mountPageLanguageBar();
     // Figures are mounted only after the inlining settles, so the scan sees the
     // real <svg> rather than the <img> it replaces and does not wrap both.

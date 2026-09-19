@@ -165,6 +165,28 @@
   resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -473,7 +495,7 @@
 <p>How a change gets from <em>an editor had an idea</em> to <em>the folio is officially
 published</em> — expressed as <strong>BPMN 2.0 swimlane diagrams</strong>, with the roles, the
 validation gate, the skills, and the shared work plan all named.</p><hr />
-<h2 id="every-workflow-in-the-repo">
+<h2 id="every-workflow-in-the-repo" data-fa-label="sec:publication-workflow-every-workflow-in-the-repo">
   
   
     <a href="#every-workflow-in-the-repo" class="anchor-heading" aria-labelledby="every-workflow-in-the-repo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Every workflow in the repo
@@ -736,7 +758,7 @@ added because the page opened by counting nineteen files and then listed
 eight — the eleven above were present in the repository and invisible here,
 which is the same defect as a table of contents that stops halfway.</p>
 </blockquote>
-<h3 id="they-also-run">
+<h3 id="they-also-run" data-fa-label="sec:publication-workflow-they-also-run">
   
   
     <a href="#they-also-run" class="anchor-heading" aria-labelledby="they-also-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> They also run
@@ -758,7 +780,7 @@ decision is recorded, because there is no token on it until then.</p>
 capability tool directly. The case for making it binding — and the argument
 that the commit boundary is the right place — is in
 <a href="proposals/workflow-orchestration.html">Proposal: workflow orchestration</a>.</p>
-<h3 id="some-decisions-are-computed-not-judged">
+<h3 id="some-decisions-are-computed-not-judged" data-fa-label="sec:publication-workflow-some-decisions-are-computed-not-judged">
   
   
     <a href="#some-decisions-are-computed-not-judged" class="anchor-heading" aria-labelledby="some-decisions-are-computed-not-judged"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Some decisions are computed, not judged
@@ -805,7 +827,7 @@ and records which rule fired.</p>
 <p><code class="language-plaintext highlighter-rouge">QC clean?</code> and <code class="language-plaintext highlighter-rouge">FHIR valid?</code> are equally mechanical and equally deserve
 tables — they wait on a WHO/FHIR adapter, because a table keyed to facts no
 tool emits looks authoritative and is not.</p>
-<h3 id="the-base-processes-are-strict">
+<h3 id="the-base-processes-are-strict" data-fa-label="sec:publication-workflow-the-base-processes-are-strict">
   
   
     <a href="#the-base-processes-are-strict" class="anchor-heading" aria-labelledby="the-base-processes-are-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The base processes are strict
@@ -844,7 +866,7 @@ on anyone asking.</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged</span> <span class="nt">--platform</span> &lt;platform&gt;
 bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged</span> <span class="nt">--warn</span>   <span class="c"># adopt gradually</span>
 </code></pre></div></div>
-<h3 id="how-to-read-them">
+<h3 id="how-to-read-them" data-fa-label="sec:publication-workflow-how-to-read-them">
   
   
     <a href="#how-to-read-them" class="anchor-heading" aria-labelledby="how-to-read-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to read them
@@ -887,7 +909,7 @@ content block</strong>.</p>
 </div>
 
 <p><a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/editing-hci-validation.bpmn" class="btn btn-outline">Open the BPMN source</a></p>
-<h3 id="the-one-rule-this-diagram-exists-to-state">
+<h3 id="the-one-rule-this-diagram-exists-to-state" data-fa-label="sec:publication-workflow-the-one-rule-this-diagram-exists-to-state">
   
   
     <a href="#the-one-rule-this-diagram-exists-to-state" class="anchor-heading" aria-labelledby="the-one-rule-this-diagram-exists-to-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The one rule this diagram exists to state
@@ -904,7 +926,7 @@ out through the HCI validation pipeline, the results are collated into one
 report, and the editor decides — accept, revise, or discard. The <code class="language-plaintext highlighter-rouge">Commit into
 the corpus</code> activity sits <em>after</em> that decision, in its own lane, and is the
 only step that writes content.</p>
-<h3 id="mechanical-vs-non-mechanical-validation">
+<h3 id="mechanical-vs-non-mechanical-validation" data-fa-label="sec:publication-workflow-mechanical-vs-non-mechanical-validation">
   
   
     <a href="#mechanical-vs-non-mechanical-validation" class="anchor-heading" aria-labelledby="mechanical-vs-non-mechanical-validation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mechanical vs non-mechanical validation
@@ -933,7 +955,7 @@ a person or an agent changes who answers, not where the answer goes.</li>
 
 <p>Both branches must report before the join. A green mechanical run does not
 excuse a missing review, and a clean review does not excuse a red build.</p>
-<h3 id="activities-and-the-skills-that-implement-them">
+<h3 id="activities-and-the-skills-that-implement-them" data-fa-label="sec:publication-workflow-activities-and-the-skills-that-implement-them">
   
   
     <a href="#activities-and-the-skills-that-implement-them" class="anchor-heading" aria-labelledby="activities-and-the-skills-that-implement-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Activities and the skills that implement them
@@ -1033,7 +1055,7 @@ content type:
 <a href="reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a> and
 <a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a> for IGs,
 <a href="reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a> for rendering.</p><hr />
-<h2 id="from-corpus-to-published-folio">
+<h2 id="from-corpus-to-published-folio" data-fa-label="sec:publication-workflow-from-corpus-to-published-folio">
   
   
     <a href="#from-corpus-to-published-folio" class="anchor-heading" aria-labelledby="from-corpus-to-published-folio"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> From corpus to published folio
@@ -1141,7 +1163,7 @@ asked for.</li>
 <code class="language-plaintext highlighter-rouge">validate-before-review</code>, <code class="language-plaintext highlighter-rouge">review-before-test</code>, <code class="language-plaintext highlighter-rouge">test-before-publish</code>,
 <code class="language-plaintext highlighter-rouge">publish-authorized</code> — see
 <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/requirements/content-lifecycle.json"><code class="language-plaintext highlighter-rouge">skills/requirements/content-lifecycle.json</code></a>.</p><hr />
-<h2 id="content-lifecycle-overview">
+<h2 id="content-lifecycle-overview" data-fa-label="sec:publication-workflow-content-lifecycle-overview">
   
   
     <a href="#content-lifecycle-overview" class="anchor-heading" aria-labelledby="content-lifecycle-overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content lifecycle overview
@@ -1166,7 +1188,7 @@ activities.</p>
 strip, with the actors and the loops made explicit. Note that
 <code class="language-plaintext highlighter-rouge">Editing and HCI validation</code> runs <strong>once per proposed change</strong>, not once per
 cycle — the linear strip flattens that.</p><hr />
-<h2 id="the-work-plan-tasks-as-beans">
+<h2 id="the-work-plan-tasks-as-beans" data-fa-label="sec:publication-workflow-the-work-plan-tasks-as-beans">
   
   
     <a href="#the-work-plan-tasks-as-beans" class="anchor-heading" aria-labelledby="the-work-plan-tasks-as-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The work plan — tasks as beans
@@ -1232,7 +1254,7 @@ are in
   <li><strong>Beans are not sidecars.</strong> Machine-generated queues (QA <code class="language-plaintext highlighter-rouge">*.qa.json</code>, witness
 files, watcher queues) stay bulk JSON; they never become beans.</li>
 </ul><hr />
-<h2 id="who-is-who">
+<h2 id="who-is-who" data-fa-label="sec:publication-workflow-who-is-who">
   
   
     <a href="#who-is-who" class="anchor-heading" aria-labelledby="who-is-who"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who is who
@@ -1247,7 +1269,7 @@ files, watcher queues) stay bulk JSON; they never become beans.</li>
 <strong>inherit</strong> (<code class="language-plaintext highlighter-rouge">viewer</code> → <code class="language-plaintext highlighter-rouge">reviewer</code> → <code class="language-plaintext highlighter-rouge">author</code> → <code class="language-plaintext highlighter-rouge">admin</code>) and a role’s
 capabilities bound what the agent may do on its behalf (RBAC,
 <code class="language-plaintext highlighter-rouge">src/core/rbac.ts</code>).</p>
-<h3 id="people">
+<h3 id="people" data-fa-label="sec:publication-workflow-people">
   
   
     <a href="#people" class="anchor-heading" aria-labelledby="people"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> People
@@ -1318,7 +1340,7 @@ capabilities bound what the agent may do on its behalf (RBAC,
 <p>Domain-authoring roles that appear inside <code class="language-plaintext highlighter-rouge">content-author</code> rather than as their
 own lane: <code class="language-plaintext highlighter-rouge">business-analyst</code> (L2 DAK), <code class="language-plaintext highlighter-rouge">fhir-modeller</code> (L3 FHIR),
 <code class="language-plaintext highlighter-rouge">terminologist</code> (code systems and value sets), <code class="language-plaintext highlighter-rouge">translator</code> (localisation).</p>
-<h3 id="agents-and-system-actors">
+<h3 id="agents-and-system-actors" data-fa-label="sec:publication-workflow-agents-and-system-actors">
   
   
     <a href="#agents-and-system-actors" class="anchor-heading" aria-labelledby="agents-and-system-actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agents and system actors
@@ -1368,7 +1390,7 @@ the editor does, and the release is authorised by the programme manager.</p>
 
 <p>For the full role list, their capabilities, and how a user is mapped to a role,
 see <a href="skills.html#roles-actors">Skills &amp; roles</a>.</p><hr />
-<h2 id="changing-these-diagrams">
+<h2 id="changing-these-diagrams" data-fa-label="sec:publication-workflow-changing-these-diagrams">
   
   
     <a href="#changing-these-diagrams" class="anchor-heading" aria-labelledby="changing-these-diagrams"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Changing these diagrams
@@ -1397,7 +1419,7 @@ point at it with <code class="language-plaintext highlighter-rouge">CHROMIUM_PAT
 <code class="language-plaintext highlighter-rouge">&lt;folio:bean store="beans/"/&gt;</code> if it touches the work plan) and the matching
 row in the tables above — the diagram and the skill list drifting apart is the
 failure this page exists to prevent.</p>
-<h3 id="which-diagrams-are-bpmn-and-which-are-not">
+<h3 id="which-diagrams-are-bpmn-and-which-are-not" data-fa-label="sec:publication-workflow-which-diagrams-are-bpmn-and-which-are-not">
   
   
     <a href="#which-diagrams-are-bpmn-and-which-are-not" class="anchor-heading" aria-labelledby="which-diagrams-are-bpmn-and-which-are-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which diagrams are BPMN, and which are not
@@ -1461,7 +1483,7 @@ implies actors performing activities over time, which none of these have:</p>
 
 <p>If you add a diagram that <em>does</em> have actors, activities and a control flow,
 it belongs in <code class="language-plaintext highlighter-rouge">skills/workflows/</code> as BPMN, not in a Mermaid fence.</p><hr />
-<h2 id="see-also">
+<h2 id="see-also" data-fa-label="sec:publication-workflow-see-also">
   
   
     <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
@@ -1492,7 +1514,7 @@ it belongs in <code class="language-plaintext highlighter-rouge">skills/workflow
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

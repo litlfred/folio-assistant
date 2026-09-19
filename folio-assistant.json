@@ -225,10 +225,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T07:56:39.736Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d128cc48949c3bd5f13cd862d000684fbb2fb1ce",
-  "sourceCommitSha": "d128cc48949c3bd5f13cd862d000684fbb2fb1ce",
-  "sourceCommitAt": "2026-09-19T09:55:11+02:00",
+  "generatedAt": "2026-09-19T08:03:44.276Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/def60578af933c040ea34db95e9245e25a16b304",
+  "sourceCommitSha": "def60578af933c040ea34db95e9245e25a16b304",
+  "sourceCommitAt": "2026-09-19T10:02:15+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 150,
@@ -240,7 +240,7 @@
     "SequenceFlow": 416,
     "ProcessNode": 387,
     "Tool": 27,
-    "Schema": 37,
+    "Schema": 39,
     "GraphKind": 14,
     "Directory": 9
   },
@@ -16450,6 +16450,13 @@
       "module": "schemas/block-qa.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/carried-note",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "carried-note",
+      "title": "What an actor carries forward, attached to a node of the knowledge graph.",
+      "module": "schemas/carried-note.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/cat-harness",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
       "name": "cat-harness",
@@ -16535,6 +16542,13 @@
       "name": "lean-packages",
       "title": "The `lean.ref` grammar and the package registry it resolves against.",
       "module": "schemas/lean-packages.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/memory",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Schema",
+      "name": "memory",
+      "title": "An agent's memory — what it carries into the next task, as a graph node.",
+      "module": "schemas/memory.ts"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/precision-scalar",
@@ -16874,8 +16888,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "d128cc48949c3bd5f13cd862d000684fbb2fb1ce",
+    "sha": "def60578af933c040ea34db95e9245e25a16b304",
     "pr": "main",
-    "run": "35430613025"
+    "run": "35430922402"
   }
 }

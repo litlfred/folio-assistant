@@ -165,6 +165,28 @@
   resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -464,7 +486,7 @@ nothing about an agent’s process should be deciding when it is done.</p>
 
 <p>This page describes the first in full. The second is <strong>not built yet</strong> and
 says so.</p>
-<h2 id="two-things-one-word">
+<h2 id="two-things-one-word" data-fa-label="sec:beans-and-todos-two-things-one-word">
   
   
     <a href="#two-things-one-word" class="anchor-heading" aria-labelledby="two-things-one-word"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two things that share a word
@@ -531,7 +553,7 @@ starves the work plan of signal — in one folio an unguarded re-run produced
 inconveniences one person. Machinery sized for the first is ceremony on the
 second, and machinery sized for the second is nowhere near enough for the
 first.</p>
-<h2 id="the-agent-bean-lifecycle">
+<h2 id="the-agent-bean-lifecycle" data-fa-label="sec:beans-and-todos-the-agent-bean-lifecycle">
   
   
     <a href="#the-agent-bean-lifecycle" class="anchor-heading" aria-labelledby="the-agent-bean-lifecycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agent bean lifecycle
@@ -566,7 +588,7 @@ it had not finished reporting.</p>
 blocker recorded and something said about what would clear it. Leaving it
 <code class="language-plaintext highlighter-rouge">in-progress</code> is worse than either: an item nobody is progressing reads, to
 every other session, as active work.</p>
-<h2 id="never-delete">
+<h2 id="never-delete" data-fa-label="sec:beans-and-todos-never-delete">
   
   
     <a href="#never-delete" class="anchor-heading" aria-labelledby="never-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A bean is never deleted
@@ -594,7 +616,7 @@ over on the thing you already ruled out.</p>
 <p>The prohibition is written here, and in the diagram’s own documentation,
 precisely because the tool offers the operation. A rule that depends on nobody
 noticing a command is not a rule.</p>
-<h2 id="two-layers">
+<h2 id="two-layers" data-fa-label="sec:beans-and-todos-two-layers">
   
   
     <a href="#two-layers" class="anchor-heading" aria-labelledby="two-layers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Engine operations are not CLI calls
@@ -629,7 +651,7 @@ engine implements, and say in the step’s documentation which parts are the
 agent’s own CLI calls. <code class="language-plaintext highlighter-rouge">bun run check:workflow-refs</code> will catch a skill
 reference that does not resolve; it cannot catch a plausible attribute the
 engine never reads.</p>
-<h2 id="human-todos">
+<h2 id="human-todos" data-fa-label="sec:beans-and-todos-human-todos">
   
   
     <a href="#human-todos" class="anchor-heading" aria-labelledby="human-todos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Human todos — not built yet
@@ -674,7 +696,7 @@ agent should be acting on.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

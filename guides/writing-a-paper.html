@@ -168,6 +168,28 @@
   resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -476,7 +498,7 @@ theorems in Lean 4, renders LaTeX, and publishes — while you steer.</p>
 <p>It uses a small running example — <em>“A note on the harmonic series”</em> — purely to
 illustrate the workflow. The content is not the point; the <strong>formalism and the
 LLM workflow</strong> are.</p><hr />
-<h2 id="the-end-to-end-workflow">
+<h2 id="the-end-to-end-workflow" data-fa-label="sec:guides-writing-a-paper-the-end-to-end-workflow">
   
   
     <a href="#the-end-to-end-workflow" class="anchor-heading" aria-labelledby="the-end-to-end-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The end-to-end workflow
@@ -499,7 +521,7 @@ literal: steps 3–5 are a loop, and the assistant’s edit is a <strong>proposa
 you have seen the validation findings and accepted it. The
 <a href="../publication-workflow.html">publication workflow</a> models that gate, and the
 review and release that follow, as BPMN swimlane diagrams.</p><hr />
-<h2 id="before-you-start">
+<h2 id="before-you-start" data-fa-label="sec:guides-writing-a-paper-before-you-start">
   
   
     <a href="#before-you-start" class="anchor-heading" aria-labelledby="before-you-start"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you start
@@ -518,7 +540,7 @@ For papers you want <code class="language-plaintext highlighter-rouge">bun</code
   <li>Create an (empty) content repository for your paper and add a
 <code class="language-plaintext highlighter-rouge">harness.config.json</code> with <code class="language-plaintext highlighter-rouge">"contentType": "paper"</code>.</li>
 </ol><hr />
-<h2 id="step-1-plan-the-paper">
+<h2 id="step-1-plan-the-paper" data-fa-label="sec:guides-writing-a-paper-step-1-plan-the-paper">
   
   
     <a href="#step-1-plan-the-paper" class="anchor-heading" aria-labelledby="step-1-plan-the-paper"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1 — Plan the paper
@@ -559,7 +581,7 @@ sessions:</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans create <span class="s2">"Draft harmonic-series paper: blocks + Lean"</span>
 beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>
 </code></pre></div></div>
-<h2 id="step-2-scaffold-the-repository">
+<h2 id="step-2-scaffold-the-repository" data-fa-label="sec:guides-writing-a-paper-step-2-scaffold-the-repository">
   
   
     <a href="#step-2-scaffold-the-repository" class="anchor-heading" aria-labelledby="step-2-scaffold-the-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 2 — Scaffold the repository
@@ -572,7 +594,7 @@ beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt"
 
 <p>The agent creates the block files and a <code class="language-plaintext highlighter-rouge">main.tex</code>, then confirms with
 <code class="language-plaintext highlighter-rouge">content_list</code>.</p>
-<h3 id="required-gitignore-baseline">
+<h3 id="required-gitignore-baseline" data-fa-label="sec:guides-writing-a-paper-required-gitignore-baseline">
   
   
     <a href="#required-gitignore-baseline" class="anchor-heading" aria-labelledby="required-gitignore-baseline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Required <code class="language-plaintext highlighter-rouge">.gitignore</code> baseline
@@ -654,7 +676,7 @@ under <code class="language-plaintext highlighter-rouge">content/harmonic-series
 For $n <span class="se">\g</span>e 1$, the <span class="ge">*$n$-th harmonic partial sum*</span> is
 $$ H_n = <span class="se">\s</span>um_{k=1}^{n} <span class="se">\f</span>rac{1}{k}. $$
 </code></pre></div></div>
-<h2 id="step-3-author-the-content">
+<h2 id="step-3-author-the-content" data-fa-label="sec:guides-writing-a-paper-step-3-author-the-content">
   
   
     <a href="#step-3-author-the-content" class="anchor-heading" aria-labelledby="step-3-author-the-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3 — Author the content
@@ -678,7 +700,7 @@ I kept the statement Lean-friendly so it maps cleanly to <code class="language-p
 <p>A mock of the chat-driven authoring session:</p>
 
 <p><img src="/folio-assistant/assets/img/mock-chat.svg" alt="Mock chat: the author and the assistant drafting blocks" /></p>
-<h2 id="step-4-formalize-in-lean">
+<h2 id="step-4-formalize-in-lean" data-fa-label="sec:guides-writing-a-paper-step-4-formalize-in-lean">
   
   
     <a href="#step-4-formalize-in-lean" class="anchor-heading" aria-labelledby="step-4-formalize-in-lean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 4 — Formalize in Lean
@@ -729,7 +751,7 @@ ready (Lean 4.16.0). I added:</p>
     LLM-&gt;&gt;MCP: lean_build
     MCP--&gt;&gt;LLM: green, 0 sorries
 </code></pre>
-<h2 id="step-5-validate">
+<h2 id="step-5-validate" data-fa-label="sec:guides-writing-a-paper-step-5-validate">
   
   
     <a href="#step-5-validate" class="anchor-heading" aria-labelledby="step-5-validate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 5 — Validate
@@ -750,7 +772,7 @@ rules (label prefixes, required Lean links, citation resolution, …).</p>
 <code class="language-plaintext highlighter-rouge">def:</code> block has its required Lean link ✓, theorem has a proof block ✓, example
 references a defined symbol ✓.</p>
 </blockquote>
-<h2 id="step-6-render">
+<h2 id="step-6-render" data-fa-label="sec:guides-writing-a-paper-step-6-render">
   
   
     <a href="#step-6-render" class="anchor-heading" aria-labelledby="step-6-render"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 6 — Render
@@ -780,7 +802,7 @@ references a defined symbol ✓.</p>
 
   <p><strong>Assistant:</strong> <em>(calls <code class="language-plaintext highlighter-rouge">paper_preferences action=set latex_engine=lualatex render_scope=section</code>)</em> Saved.</p>
 </blockquote>
-<h2 id="step-7-review-feedback">
+<h2 id="step-7-review-feedback" data-fa-label="sec:guides-writing-a-paper-step-7-review-feedback">
   
   
     <a href="#step-7-review-feedback" class="anchor-heading" aria-labelledby="step-7-review-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 7 — Review &amp; feedback
@@ -800,7 +822,7 @@ authoring loop (<code class="language-plaintext highlighter-rouge">content-revie
   <p><strong>Assistant:</strong> <em>(records feedback, edits <code class="language-plaintext highlighter-rouge">ex:H4</code> → adds $H_8$, re-validates,
 re-renders)</em> Done; feedback item resolved.</p>
 </blockquote>
-<h2 id="step-8-publish">
+<h2 id="step-8-publish" data-fa-label="sec:guides-writing-a-paper-step-8-publish">
   
   
     <a href="#step-8-publish" class="anchor-heading" aria-labelledby="step-8-publish"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 8 — Publish
@@ -824,7 +846,7 @@ marked resolved.</p>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> resolved
 </code></pre></div></div><hr />
-<h2 id="what-you-end-up-with">
+<h2 id="what-you-end-up-with" data-fa-label="sec:guides-writing-a-paper-what-you-end-up-with">
   
   
     <a href="#what-you-end-up-with" class="anchor-heading" aria-labelledby="what-you-end-up-with"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What you end up with
@@ -841,7 +863,7 @@ marked resolved.</p>
   <li><strong>PDF + HTML</strong> renders and an interactive blueprint</li>
   <li>A reproducible <strong>CI pipeline</strong> (validate → build → render → publish)</li>
 </ul>
-<h2 id="where-to-go-deeper">
+<h2 id="where-to-go-deeper" data-fa-label="sec:guides-writing-a-paper-where-to-go-deeper">
   
   
     <a href="#where-to-go-deeper" class="anchor-heading" aria-labelledby="where-to-go-deeper"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where to go deeper
@@ -881,7 +903,7 @@ your own session under <code class="language-plaintext highlighter-rouge">docs/a
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

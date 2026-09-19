@@ -165,6 +165,28 @@
   resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
@@ -482,7 +504,7 @@ requests, platform changes, and content-pipeline evolution. When a user,
 reviewer, or editor asks for something that is not content but
 <strong>capability</strong> — a new block kind, a rendering change, a QA criterion — the
 agent enters a CRDM-guided workflow rather than improvising a solution.</p><hr />
-<h2 id="what-is-crdm">
+<h2 id="what-is-crdm" data-fa-label="sec:crdm-what_is_crdm">
   
   
     <a href="#what-is-crdm" class="anchor-heading" aria-labelledby="what-is-crdm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is CRDM?
@@ -532,7 +554,7 @@ a feature request at the surface level.</p>
     <li>Issue <a href="https://github.com/litlfred/folio-assistant/issues/203">#203</a> — the request that initiated this integration</li>
   </ul>
 </blockquote>
-<h2 id="roles">
+<h2 id="roles" data-fa-label="sec:crdm-roles">
   
   
     <a href="#roles" class="anchor-heading" aria-labelledby="roles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Roles — who does what
@@ -660,7 +682,7 @@ into actionable direction for the agent.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Stakeholders ──review/approve──▶ BA ──directs──▶ Agent
                                   ◀──delivers────┘
 </code></pre></div></div>
-<h2 id="why-crdm-for-folio-assistant">
+<h2 id="why-crdm-for-folio-assistant" data-fa-label="sec:crdm-why_crdm_for_folio_assistant">
   
   
     <a href="#why-crdm-for-folio-assistant" class="anchor-heading" aria-labelledby="why-crdm-for-folio-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why CRDM for folio-assistant
@@ -726,7 +748,7 @@ folio-assistant already has the primitives it needs:</p>
 <p>The goal is not to add ceremony. It is to make the agent <strong>recognise</strong> when a
 request is a feature rather than content, and shift into a requirements-gathering
 mode rather than jumping straight to implementation.</p>
-<h2 id="when-crdm-activates">
+<h2 id="when-crdm-activates" data-fa-label="sec:crdm-when_crdm_activates">
   
   
     <a href="#when-crdm-activates" class="anchor-heading" aria-labelledby="when-crdm-activates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the CRDM workflow activates
@@ -782,7 +804,7 @@ requirements gathering before implementation)</li>
   <li><strong>Get consent</strong> — the user may prefer to skip the methodology for small
 changes; the agent respects that but notes the risk</li>
 </ol>
-<h2 id="the-process">
+<h2 id="the-process" data-fa-label="sec:crdm-the-process">
   
   
     <a href="#the-process" class="anchor-heading" aria-labelledby="the-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The process
@@ -850,7 +872,7 @@ while waiting for stakeholder availability in the outer loop.</p>
 
 <p>See the <a href="../agentic-harness.html">agentic harness</a> page for how this
 workflow fits into the broader agent–user interaction model.</p>
-<h2 id="phase-1-needs-assessment">
+<h2 id="phase-1-needs-assessment" data-fa-label="sec:crdm-phase_1_needs_assessment">
   
   
     <a href="#phase-1-needs-assessment" class="anchor-heading" aria-labelledby="phase-1-needs-assessment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 1 — Needs assessment
@@ -901,7 +923,7 @@ changes through a formal process.”</p>
   <li>Rationale linking the need to a concrete workflow</li>
   <li>References to the conversation or discussion that surfaced the need</li>
 </ul>
-<h2 id="phase-2-business-process-analysis">
+<h2 id="phase-2-business-process-analysis" data-fa-label="sec:crdm-phase_2_business_process_analysis">
   
   
     <a href="#phase-2-business-process-analysis" class="anchor-heading" aria-labelledby="phase-2-business-process-analysis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 2 — Business process analysis
@@ -948,7 +970,7 @@ which the redesign is measured.</p>
 
 <p><strong>Deliverable:</strong> a current-state workflow description attached to the issue,
 identifying exactly where the capability gap sits.</p>
-<h2 id="phase-3-requirements-definition">
+<h2 id="phase-3-requirements-definition" data-fa-label="sec:crdm-phase_3_requirements_definition">
   
   
     <a href="#phase-3-requirements-definition" class="anchor-heading" aria-labelledby="phase-3-requirements-definition"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 3 — Requirements definition
@@ -1001,7 +1023,7 @@ should be mechanically testable where possible.</li>
 <p><strong>Deliverable:</strong> a requirements document in the GitHub issue, structured as a
 checklist of capabilities with their proposed implementations. Each requirement
 links back to the need (Phase 1) and the workflow gap (Phase 2) it addresses.</p>
-<h2 id="phase-4-impact-analysis">
+<h2 id="phase-4-impact-analysis" data-fa-label="sec:crdm-phase_4_impact_analysis">
   
   
     <a href="#phase-4-impact-analysis" class="anchor-heading" aria-labelledby="phase-4-impact-analysis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 4 — Impact analysis and migration planning
@@ -1054,7 +1076,7 @@ might break?</li>
 
 <p><strong>Deliverable:</strong> an impact assessment section in the GitHub issue listing every
 affected file, folio, and workflow, with a migration plan if applicable.</p>
-<h2 id="phase-5-sign-off-and-beans">
+<h2 id="phase-5-sign-off-and-beans" data-fa-label="sec:crdm-phase_5_sign_off_and_beans">
   
   
     <a href="#phase-5-sign-off-and-beans" class="anchor-heading" aria-labelledby="phase-5-sign-off-and-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 5 — Sign-off and bean creation
@@ -1109,7 +1131,7 @@ the beans that will implement it.</li>
 </ol>
 
 <p><strong>Deliverable:</strong> a sign-off comment on the issue, plus beans for each work item.</p>
-<h2 id="phase-6-iterative-development">
+<h2 id="phase-6-iterative-development" data-fa-label="sec:crdm-phase_6_iterative_development">
   
   
     <a href="#phase-6-iterative-development" class="anchor-heading" aria-labelledby="phase-6-iterative-development"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 6 — Iterative MVP development and stakeholder review
@@ -1250,7 +1272,7 @@ need time to test, and may only be available weekly.</p>
 the inner loop while waiting for stakeholder availability in the outer
 loop. Between outer-loop checkpoints, the agent works on other beans or
 other features.</p>
-<h2 id="agent-skills-and-tooling">
+<h2 id="agent-skills-and-tooling" data-fa-label="sec:crdm-agent_skills_and_tooling">
   
   
     <a href="#agent-skills-and-tooling" class="anchor-heading" aria-labelledby="agent-skills-and-tooling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent skills and tooling
@@ -1534,7 +1556,7 @@ absent impact), and any skill whose <code class="language-plaintext highlighter-
 
 <p><code class="language-plaintext highlighter-rouge">bun run stakeholder-map &lt;path&gt;...</code> or <code class="language-plaintext highlighter-rouge">--since &lt;ref&gt;</code>; <code class="language-plaintext highlighter-rouge">stakeholder_map</code> as
 an MCP tool.</p>
-<h2 id="what-is-not-built-yet">
+<h2 id="what-is-not-built-yet" data-fa-label="sec:crdm-what_is_not_built_yet">
   
   
     <a href="#what-is-not-built-yet" class="anchor-heading" aria-labelledby="what-is-not-built-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not built yet
@@ -1659,7 +1681,7 @@ Those two exclusions are the cheapest available improvement.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430613025"><code>d128cc4</code></a> &middot; 2026-09-19T07:56:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35430922402"><code>def6057</code></a> &middot; 2026-09-19T08:03:13Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
