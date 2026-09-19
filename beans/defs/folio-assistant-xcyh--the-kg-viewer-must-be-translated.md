@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T00:23:01Z
-updated_at: 2026-09-19T05:37:41Z
+updated_at: 2026-09-19T06:03:09Z
 ---
 
 
@@ -53,3 +53,61 @@ locale, the approach is wrong rather than unfinished.
 **Not doing.** Corpus-data translation — recorded, not attempted. No CI wiring
 for the new check. No per-locale page directories: one artefact, one relative
 path to `../<stub>.jsonld`.
+
+
+*FINDINGS — 2026-09-19, PR [#332](https://github.com/litlfred/folio-assistant/pull/332), branch `claude/xcyh-viewer-i18n`. NOT completed: the mechanism is in, the translations are not, and closing this is not mine to do.*
+
+**Done.** 38 chrome strings lifted from the generated page into
+`scripts/kg-viewer-strings.ts`; `scripts/translate-kg-viewer.ts --extract`
+writes `translations/<locale>/kg-viewer.pot` through the shared `formatPot`
+and `--check` reports drift; the generator reads each `.po` through the shared
+`parsePo` and embeds what exists. Language switcher (`?lang=` → the docs
+site's own `fa-locale` key → browser → English), `lang`/`dir` on the document,
+live-region announcement, and an on-page statement of the boundary in the
+reader's language. Skill `kg-viewer` and `docs/translation-support.md` carry
+the discipline; `bun run translate-kg-viewer[:check]` are registered.
+
+**Owner's call, mid-flight: "english only, let translators fill them".** Five
+agent-produced catalogues had been written and are removed. Each
+`translations/<locale>/kg-viewer.po` now ships as a STUB — every msgid, every
+msgstr empty — with a header saying not to machine-fill it. The reasoning is
+worth keeping: a UI translation into a language nobody on this side reads
+cannot be checked here, and an "unofficial" header does not change what a
+reader sees.
+
+**Consequence a later session must not misread.** With every catalogue empty,
+the switcher is NOT DRAWN and the page is English. That is correct behaviour,
+not a regression: an empty catalogue is not a language the page can show.
+Filling any `.po` and running `bun run kg:viewer` makes it appear.
+
+**What the drift test caught immediately** (`scripts/tests/kg-viewer-strings.test.ts`,
+which ties every `T()` call to the table in both directions): a msgid built
+from a conditional, which no reader of the source could resolve and no
+extractor would find, and a translator comment that did not explain its own
+placeholders. Both fixed. Keep the test — the join between page and table is a
+string literal in two files and a typo in either fails silently, rendering in
+English forever and looking exactly like a string nobody has translated.
+
+**Two things deliberately NOT done, and why.**
+
+1. **The corpus is still English** — node titles, descriptions and property
+   names come from the graph document and no catalogue in the viewer can reach
+   them. This wants per-node `.po` resolution against the content model
+   (`BlockBase.poSources`, `po-resolve.ts`), not a bigger table in the viewer,
+   and it is a different piece of work. The page now SAYS this rather than
+   leaving a reader to infer it from a half-English screen.
+2. **`--check` is not wired into CI.** It is a real gate and switching a
+   workflow on is a separate commitment from the change that earned it.
+
+**Known limit a translator will hit first: plurals.** `parsePo` has no
+`msgid_plural`, so "1 node matches" and "{n} nodes match" are two msgids. Fine
+for English, French and Spanish; wrong for Russian and Arabic, which need more
+forms. The fix belongs in the shared PO layer, not in the viewer.
+
+**Gates, measured on `dac179a69`:** `bunx playwright test` after `rm -rf _kg`
+78 passed (was 60; 18 new, 11 viewer + 7 accessibility, including axe over a
+right-to-left render in both colour schemes); `tsc`, `eslint`,
+`kg:audit:check`, `kg:schema:check`, `check:workflows`,
+`translate-kg-viewer --check`, `gen-skill-docs --check` all 0. `bun test` has
+one unrelated failure: `folio-root.test.ts` asserts the checkout path ends in
+`folio-assistant`, and this ran in a worktree under `.claude/worktrees/`.
