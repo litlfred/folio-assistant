@@ -73,3 +73,56 @@ is most of what the issue asks for — is not visible here.
 
 ## Done when
 Issue #206 can be closed by its author — which no agent may do on its own say-so.
+
+## Verified against the tree, 2026-09-19 — and the body above is WRONG
+
+I wrote the body above earlier today (PR #318) and said the adjudication model
+"is not visible on disk". **That is false.** Every requirement in issue #206 has
+an implementation. I reached the wrong conclusion by grepping for a `.ts`
+implementation of an "adjudication model" and never opening
+`schemas/translation.ts`, the two BPMN processes, or `docs-ui.js`.
+
+Measured on `main` at `965fa6e`:
+
+| #206 requirement | where it lives |
+|---|---|
+| gettext `.pot` fully integrated | `scripts/translation/` — extract, inject, and pulls for Crowdin, Weblate, Launchpad |
+| official = human sign-off; unofficial = agentic | `schemas/translation.ts:43-48`, and the distinction is explicitly "not quality" |
+| official goes **stale** when the source changes | `schemas/translation.ts:55-58` — `sourceHash` is SHA-256 of the source `.md`, mismatch sets `stale: true`; stale stays VISIBLE with a warning rather than hidden |
+| translated node persisted **within** the source node | `schemas/translation.ts:361` — `Subdirectory name within content nodes`, default `translations` |
+| sign-off at **any level** of the hierarchy | `schemas/translation.ts:61-65` — "## Sign-off levels", block / section / chapter / folio, a lower-level sign-off overriding a higher one |
+| navbar language icon beside the QR code | `docs/assets/js/docs-ui.js:765` — `tileButton(GLOBE_GLYPH, "Language", "language")` |
+| six UN languages | `translations/{ar,es,fr,ru,zh}` plus English |
+| BPMN representation | **two**: `translation-workflow.bpmn` and `human-translation-workflow.bpmn` |
+| consolidated skill | `skills/folio-core/translation-manager.md` |
+| roles | `translation-adjudicator`, `translation-coordinator` |
+
+`translation-workflow.bpmn` models the whole adjudication loop end to end:
+Extract POT -> Produce PO -> Inject -> round-trip QA -> `Write status.json
+(unofficial)` -> human sign-off gateway -> `Write status.json (official)` ->
+`Check staleness (source hash)` -> `Translation marked stale (re-enter at
+Extract)`. `src/tools/translation.ts` reads and writes that `status.json` and
+exposes the sign-off.
+
+**The staleness mechanism is the QA sidecar's, not a second one** — a
+content-hash comparison that auto-stales on edit. So the concern I raised when
+scoping this (that a new freshness mechanism would repeat bean `nytj`) does not
+apply.
+
+### Two real findings, both small
+
+`docs/_includes/language-selector.html` and
+`docs/_includes/translation-warning.html` are **orphaned**: the only `{% include %}`
+anywhere in `docs/` is `landing.html`. `docs-ui.js` does both jobs itself — it
+mounts the globe tile, and `translation-manager.md` says in terms "**Do not**
+manually add `{% include translation-warning.html %}` — `docs-ui.js` handles it
+automatically", in the same breath as recording that `qa-translation-badge.html`
+was **deleted, not deprecated**. These two look like the same cleanup, left
+undone.
+
+### What this bean now needs
+
+Not implementation. Someone should walk #206's requirement list against the
+table above and decide whether anything the owner meant is still missing —
+**the issue is still open, and only its author can close it.** This is a
+verification, not a verdict.

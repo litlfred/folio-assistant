@@ -311,9 +311,19 @@ describe("the actor kind is three-way: human, agentic, mechanical", () => {
     const by = (k: string) => actors.filter((a) => a.kind === k).map((a) => a.id).sort();
     expect(by("agent").length).toBeGreaterThan(0);
     // Named rather than counted: a bare count in a test is a claim that goes
-    // stale silently. These three are mechanical for reasons stated in their
-    // own descriptions — a fixed program with nothing to decide.
-    expect(by("system")).toEqual(["ci-pipeline", "ig-publisher-service", "lean-mcp"]);
+    // stale silently. These are mechanical for reasons stated in their own
+    // descriptions — a fixed program with nothing to decide.
+    //
+    // `ci-health-watcher` arrived from a sibling branch while this split was
+    // being written, carrying the legacy `type` field, and this assertion is
+    // what caught it: the naming is the point. A count would have absorbed a
+    // new actor silently, and the legacy field would have reached the
+    // registry schema, which — unlike `readActors` — has no fallback. Its own
+    // description settles the classification: "a mechanical participant … it
+    // runs a fixed program and exercises no judgement".
+    expect(by("system")).toEqual([
+      "ci-health-watcher", "ci-pipeline", "ig-publisher-service", "lean-mcp",
+    ]);
   });
 
   test("an unrecognised `kind` throws rather than being coerced", () => {
