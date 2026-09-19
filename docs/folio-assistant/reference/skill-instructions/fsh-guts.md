@@ -93,7 +93,13 @@ thrown into it.
 ## It is exported, and it is not rendered — and it is not in the KG either
 
 - served as `<base>/fsh-guts.jsonld`, alongside the instance's other
-  renderings, so a consumer can walk it **by name**
+  renderings, so a consumer can walk it **by name** — built by
+  `scripts/fsh-guts-export.ts`, published by `docs-site.yml`, with a
+  `.json` alias because Pages has no media type for `.jsonld` and serves it
+  as octet-stream. **Logs are excluded by DECLARATION**: a file is included
+  only if it says `$schema: folio-fsh-guts/v1`, so a log entry is left out
+  because of what it says it is, not because `.gitignore` kept it off the
+  build machine — which is a property of the checkout and not of the export
 - **absent from the site build** — this is the property, not a side effect.
   A change that causes `fsh-guts/` to render has broken it
 - **stripped from every other published graph.** Owner, 2026-09-19: *"NEVER

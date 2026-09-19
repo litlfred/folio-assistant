@@ -915,6 +915,30 @@ export function isPublishedSkill(name: string): boolean {
 }
 
 /**
+ * Is this schema module allowed into a published graph?
+ *
+ * The FOURTH emitter, and it was not exercised until a `schemas/fsh-guts.ts`
+ * existed — which is to say the gap was latent from the day the strip was
+ * written and only became visible when somebody added the module. The
+ * blanket test in `fsh-guts-unpublished.test.ts` caught it on the first run,
+ * which is the whole reason that test asserts a string rather than a list of
+ * emitters: a new emitter cannot be added to a list nobody remembers to
+ * update.
+ *
+ * Matched on the module's BASENAME, since that is the node's `name` and what
+ * a consumer reads. `schemas/log-entry.ts` stays published: it is named
+ * after the log, not after the trashcan, and the rule is about naming the
+ * trashcan rather than about anything that mentions it. By the same token a
+ * schema whose subject is fsh-guts advertises it to every consumer of the
+ * folio's graph, which is the precise thing the owner's instruction forbids
+ * — the identical argument `isPublishedSkill` records.
+ */
+export function isPublishedSchemaModule(modulePath: string): boolean {
+  const basename = modulePath.split("/").pop()?.replace(/\.[^.]+$/, "") ?? modulePath;
+  return isPublishedGraphKind(basename);
+}
+
+/**
  * Is this declared directory allowed into a published graph?
  *
  * A directory is excluded when ANY graph it holds is excluded — not when all

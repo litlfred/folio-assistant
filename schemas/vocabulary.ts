@@ -81,6 +81,11 @@ export interface TermGloss {
  * vocabulary.
  */
 export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
+  FshGutsNode: {
+    layer: "harness",
+    gloss:
+      "One item in the trashcan: something deprecated or thrown away, kept and addressable rather than deleted, and deliberately absent from the rendered site. Carries where it used to live, so it is not an orphan.",
+  },
   Actor: {
     layer: "bootstrap",
     gloss:
@@ -193,6 +198,15 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   holdsGraph: { gloss: "A graph kind found in this directory." },
   renderable: { gloss: "Whether a directory's contents are published as a website." },
   scans: { gloss: "A directory an instance will look in." },
+
+  // ── The trashcan ─────────────────────────────────────────────────────
+  // `movedFrom` is the one that earns its keep: without it a node in
+  // `fsh-guts/` is an orphan — a reader sees what it says and not where it
+  // came from, which is the "abandonment or accident" ambiguity the
+  // never-delete rule exists to prevent.
+  movedOn: { gloss: "When a node was moved into the trashcan." },
+  movedFrom: { gloss: "Where a node in the trashcan used to live." },
+  issue: { gloss: "The issue that superseded this node, where there is one." },
   nodeCount: { gloss: "How many nodes a graph or directory yielded." },
   flowCount: { gloss: "How many sequence flows a process carries." },
 

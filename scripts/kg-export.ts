@@ -54,6 +54,7 @@ import {
   defaultGraphKinds,
   isPublishedDirectory,
   isPublishedGraphKind,
+  isPublishedSchemaModule,
   isPublishedSkill,
   readDeclaration,
   renderingPath,
@@ -1164,7 +1165,9 @@ function collectSchemas(doc: string, base: string): Node[] {
     // identical problem entry would read as two failures.
   }
 
-  return audit.nodes.map((m) => ({
+  return audit.nodes
+    .filter((m) => isPublishedSchemaModule(m.name))
+    .map((m) => ({
     "@id": makeIri(doc, "schema", m.name),
     "@type": termIri("Schema"),
     name: m.name,
