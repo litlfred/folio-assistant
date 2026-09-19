@@ -10,40 +10,25 @@ roles:
 agents:
   - content-pipeline-navigator
 ---
-`docs/assets/qa/**` is live state. A test that reads a verdict out of it breaks
+`docs/assets/qa/**` is live state. A test that reads a VERDICT out of it breaks
 when somebody fixes or adjudicates the finding — which is the system working.
 
-Measured 2026-09-19 (bean `tywj`): `tests/qa-panel.e2e.ts` read
-`what-is-not-built-yet.block.json` and asserted the first row was
-`voice-status-leak` / `fail` / `critical`, the folded count was the literal
-`47`, and the checker hash was the literal `5af6856733f3`. An agent
-adjudication in `c8fbad385` turned that criterion `pass`, and four assertions
-went red for reasons unrelated to the panel. The literal hash also meant any
-edit to a checker reddened a UI test.
+> Measured on 2026-09-19 (bean `tywj`): `tests/qa-panel.e2e.ts` pinned the first
+> row to `voice-status-leak`/`fail`/`critical`, the fold count to `47` and the
+> checker hash to `5af6856733f3`. An adjudication in `c8fbad385` turned that
+> criterion `pass`; four assertions went red for reasons unrelated to the panel.
 
-**Read the document live; flip the ONE criterion you are testing, by id, where
-it sits.** The settled answer (#319, on `main`) reads the real sidecar, finds the
-criterion by id, throws if it has left the corpus, sets `result`/`severity`/
-`evidence`, and keeps only the script witness — so the checker hash the spec
-asserts is still the corpus's own.
+**Read the document live; flip the ONE criterion you test, BY ID, where it
+sits.** The settled answer (#319) keeps only the script witness, so the hash the
+spec asserts is still the corpus's own.
 
-**Do NOT freeze a captured copy.** I tried that and withdrew it: freezing the
-criterion freezes its witness, so the `scriptHash` literal outlives the checker
-and the spec keeps passing while asserting a hash the corpus no longer holds.
-Same defect one field down. Reading the value out of the frozen document instead
-of pinning it makes the assertion self-consistent, not correct.
+**Do not freeze a captured copy.** I tried it and withdrew it: freezing the
+criterion freezes its witness, so the hash literal outlives the checker — the
+same defect one field down. Reading the value out of a frozen document makes the
+assertion self-consistent, not correct.
 
-**Flip it IN PLACE, never hoist it to `criteria[0]`.** The generator already
-sorts worst-first, so a failure at index 0 means the panel's own sort is
-untested — a panel that sorted nothing would pass. At 19 of 48 the row has to be
-lifted past nineteen quiet ones.
+**Never hoist the failure to `criteria[0]`.** The generator already sorts
+worst-first, so a panel that sorted nothing would pass.
 
-**Adjudication is lossy** — a criterion the agent overturned keeps no `severity`
-and no `evidence`, only the script witness. So `evidence` has to be written as a
-literal; that one string is the accepted cost.
-
-**Three fields exist only in a state the corpus is not in**, so no live sidecar
-can vouch for them: `severity` and `evidence` (a failing criterion — #314
-measured that NO criterion in the corpus carries `evidence` any more) and
-`changed` (a stale witness; nothing is stale today). That third one was found by
-a drift test on its first run, not from memory.
+`severity`, `evidence` and `changed` exist only in states the corpus is not in,
+so no live sidecar vouches for them. Beans `tywj`, `qjyi`, `iumj`.

@@ -65,12 +65,14 @@ import {
   readPermissions,
   resolveRoleSkills,
   roleForLane,
+  findRole,
+  fulfilmentKindsForBpmnType,
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
-import { isSkillMd, knownSkills } from "./known-skills.js";
+import { isSkillMd, knownSkills, remotePackageSkills } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
@@ -294,6 +296,42 @@ async function auditProcess(
     }
   }
 
+  // Can the lane's role actually be filled by something that can perform this
+  // step? The diagram's task TYPE already answers which kinds may — BPMN says a
+  // userTask is done by a person and a serviceTask without one — and until now
+  // nothing joined that answer to the role graph's `actorKind`.
+  //
+  // Scoped the same way `activity-names-skill` is, and for the same reason. An
+  // `actedUpon` lane is a store, and "the corpus cannot perform a serviceTask"
+  // is a finding nobody can act on. An activity whose lane is unbound or absent
+  // is already reported by `lane-binds-role` / `activity-in-lane`; repeating it
+  // here would make one defect look like two.
+  const wrongKind: KgFinding[] = [];
+  let kindApplicable = 0;
+  if (graph) {
+    for (const n of activities) {
+      if (actedUponNode(n)) continue;
+      const roleId = n.laneId ? laneRole.get(n.laneId) : undefined;
+      if (!roleId) continue;
+      const role = findRole(graph, roleId);
+      if (!role) continue;
+      const allowed = n.fulfilment?.kinds ?? fulfilmentKindsForBpmnType(n.type);
+      if (!allowed) continue; // a bpmn:Task or call activity asserts nothing
+      kindApplicable += 1;
+      if (allowed.includes(role.actorKind)) continue;
+      const how = n.fulfilment
+        ? `<folio:fulfilment/> on the step allows ${allowed.join(", ")} (${n.fulfilment.reason})`
+        : `a ${n.type.replace("bpmn:", "")} is performed by ${allowed.join(" or ")}`;
+      wrongKind.push({
+        where: n.id,
+        detail:
+          `"${n.name}" — ${how}, but its lane's role "${roleId}" is filled by a ${role.actorKind}. ` +
+          `Either the task type is wrong, the lane is wrong, or the step really does admit that kind — ` +
+          `in which case say so with <folio:fulfilment kinds="…" reason="…"/>.`,
+      });
+    }
+  }
+
   // Gateways computing their branch from a DMN table.
   const decisionRefs = [...m.nodes.values()].filter((n) => n.decisionRef);
   const danglingDecision: KgFinding[] = [];
@@ -334,6 +372,7 @@ async function auditProcess(
     "lane-binds-role": entry(unboundLane, Boolean(graph) && m.lanes.length > 0),
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
+    "activity-fulfilment-kind": entry(wrongKind, Boolean(graph) && kindApplicable > 0),
     // Three states, not two. A resolved target passes; a process with no call
     // activity is `n/a`; a target this instance cannot load is `unknown`,
     // because it may be hosted elsewhere — see the note on the criterion.
@@ -346,7 +385,7 @@ async function auditProcess(
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
-    for (const id of ["role-ref-resolves", "lane-binds-role", "role-carries-activity-skill"]) {
+    for (const id of ["role-ref-resolves", "lane-binds-role", "role-carries-activity-skill", "activity-fulfilment-kind"]) {
       criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at skills/roles/roles.json." }] };
     }
   }
@@ -758,38 +797,6 @@ function localHarnessSkills(): Set<string> {
   return out;
 }
 
-/**
- * Skills a REMOTE package declares it provides.
- *
- * `skills/remote-packages/*.json` name an external repo and, under
- * `wrapper.skills`, the skills it supplies — `claude-scientific-skills`
- * provides `scientific-visualization`, `hypothesis-generation` and
- * `scientific-critical-thinking`. Their bodies are not in this checkout until
- * the package is synced, so they are correctly ABSENT from `knownSkills()`:
- * nothing here can serve one.
- *
- * But a local manifest naming one is not lying — it is naming a skill that
- * comes from a dependency. Counting them only for `manifest-skill-exists` is
- * the distinction: *can this instance serve it* and *is this entry a real
- * skill somewhere* are different questions, and collapsing them would have had
- * this criterion demand the deletion of three correct manifest entries the
- * first time it ran. That very nearly happened.
- */
-function remotePackageSkills(): Set<string> {
-  const out = new Set<string>();
-  const dir = join(root, "skills", "remote-packages");
-  if (!existsSync(dir)) return out;
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
-    try {
-      const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { wrapper?: { skills?: string[] } };
-      for (const s of p.wrapper?.skills ?? []) out.add(s);
-    } catch {
-      // A remote-package file that will not parse is validate-skills.ts's finding.
-    }
-  }
-  return out;
-}
-
 /** Manifest entries, with the package each came from, for the reverse check. */
 function manifestEntries(): { pkg: string; skill: string }[] {
   const out: { pkg: string; skill: string }[] = [];
@@ -903,16 +910,46 @@ function auditGraph(
       "skill-in-role-or-process": graph
         ? entry(unmodelled)
         : { result: "unknown" as KgResult, findings: [{ where: "—", detail: "no role graph declared." }] },
+      // A REMOTE DECLARATION IS NOT RESOLUTION — measured 2026-09-19, bean `nup0`.
+      //
+      // This criterion used to accept an entry that any file under
+      // `skills/remote-packages/` named, on the reading that "is this a real skill
+      // somewhere" is the manifest's question, distinct from "can this instance
+      // serve it". The distinction is right. What is missing is that nothing here
+      // implements the "somewhere": `shallow-clone` exists only as a Zod enum
+      // value, `src/tools/skill-fetch.ts` and `scripts/generate-registry.ts`
+      // contain no mention of `remote-packages/` at all, and the single consumer —
+      // `scripts/generate-docs.ts` — reads those files solely for Docker
+      // requirements, which is what `schemas/skill-package.ts` documents them as.
+      //
+      // So an entry resolvable only that way publishes a registry name that
+      // `skill_fetch` answers "not found" for, which is exactly the defect this
+      // criterion is `critical` about.
+      //
+      // The allowance existed to stop this criterion demanding the deletion of
+      // three `authoring-math` entries. Those three were deleted two hours later
+      // by a session that had not seen it, and — measured above — deleting them
+      // was RIGHT. The allowance was protecting the wrong answer.
+      //
+      // `remotePackageSkills` stays, to CLASSIFY the finding rather than excuse
+      // it. "Declared by a remote package nothing syncs" and "named nowhere at
+      // all" have different remedies, and a finding that does not say which is one
+      // somebody has to measure again.
       "manifest-skill-exists": (() => {
-        const remote = remotePackageSkills();
+        const remote = remotePackageSkills(root);
         return entry(
           manifestEntries()
-            .filter((e) => !skills.has(e.skill) && !remote.has(e.skill))
+            .filter((e) => !skills.has(e.skill))
             .map((e) => ({
               where: `${e.pkg}/${e.skill}`,
-              detail:
-                `skills/${e.pkg}/package-manifest.json names "${e.skill}", which resolves to no skill here ` +
-                `and is declared by no remote package.`,
+              detail: remote.has(e.skill)
+                ? `skills/${e.pkg}/package-manifest.json names "${e.skill}", which this instance holds no ` +
+                  `body for. A file under skills/remote-packages/ declares it, but nothing in this ` +
+                  `repository syncs or serves a remote package — neither skill_fetch nor the registry ` +
+                  `reads that directory — so the entry publishes a name that cannot be fetched. Implement ` +
+                  `the sync or drop the entry; the declaration alone is not enough.`
+                : `skills/${e.pkg}/package-manifest.json names "${e.skill}", which resolves to no skill here ` +
+                  `and is declared by no remote package.`,
             })),
         );
       })(),

@@ -1195,8 +1195,11 @@
     var availLangs = available.length;
 
     // Auto-detect available locales from the page's own language links if
-    // the pipeline hasn't stamped availableLocales yet. Scan the
-    // language-selector include (if present) for which links resolve.
+    // the pipeline hasn't stamped availableLocales yet. Scans whatever carries
+    // `data-locale`, which is what `buildLanguageBar` above emits — it used to
+    // read a `_includes/language-selector.html`, deleted once this file did the
+    // same job better (it greys out untranslated locales, which that include
+    // only promised in a comment).
     if (availLangs === 0) {
       var langLinks = document.querySelectorAll(".fa-lang-tab, [data-locale]");
       var found = [];
