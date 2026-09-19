@@ -23,6 +23,8 @@
  */
 import { z } from "zod";
 
+import { renderingPath } from "./cat-harness.js";
+
 /** A bean's identifier, e.g. `folio-assistant-1dfh`. */
 export const BeanIdSchema = z.string().regex(/^[a-z0-9-]+$/).describe("A bean identifier, e.g. folio-assistant-1dfh");
 
@@ -330,9 +332,19 @@ export type ToolTypeName = keyof typeof TOOL_TYPES;
  * a string that looks like a reference and is checked by nothing — and the
  * owner's standing rule is that a consumer must never have to assume a rule to
  * follow a link, which applies to the author of the link first.
+ *
+ * **It still hand-wrote half of one, and that is the lesson.** The fragment was
+ * computed here while the document's own path — `kg/tool-types.schema.json` —
+ * was a literal, duplicating `harness-schema-export.ts`'s `$id` for the very
+ * same file. Two functions minting URLs for one document is the same defect as
+ * none, one level up. When the renderings moved from `kg/` to the base this was
+ * the SIXTH site, and the only one not reached by searching the two exporters:
+ * 95 `schema` refs across the published graph would have pointed at a URL that
+ * 404s while the document they name sat one directory away.
+ * {@link renderingPath} is now the single answer to "where is it published".
  */
 export function toolTypeIri(base: string, name: ToolTypeName): string {
-  return `${base.replace(/\/+$/, "")}/kg/tool-types.schema.json#/$defs/${name}`;
+  return `${renderingPath(base, "tool-types.schema.json")}#/$defs/${name}`;
 }
 
 

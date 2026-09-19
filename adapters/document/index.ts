@@ -60,7 +60,7 @@ import type {
   FeedbackItem,
   UserRole } from "../../src/types.js";
 import type { GitHelper } from "../../src/core/git.js";
-import type { FeedbackStore } from "../../src/core/feedback.js";
+import { FeedbackStore } from "../../src/core/feedback.js";
 import { log } from "../../src/core/logging.js";
 import { hasRole, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
@@ -101,15 +101,38 @@ export class DocumentContentAdapter implements ContentAdapter {
   protected buildDir: string;
   protected mainTex: string;
 
-  constructor(repoRoot: string, gitHelper: GitHelper, feedbackStore: FeedbackStore) {
+  /**
+   * `feedbackDir` rather than a built `FeedbackStore`, because the store is
+   * per-folio CONTENT state and the adapter is the thing that knows about a
+   * folio.
+   *
+   * It used to be handed in by `src/index.ts`, which meant the harness's
+   * process entry point constructed a content object — a wrong-direction
+   * dependency the moment `src/core/feedback.ts` was classified core. A
+   * directory is a path; a store is content.
+   */
+  constructor(repoRoot: string, gitHelper: GitHelper, feedbackDir: string) {
     this.repoRoot = repoRoot;
     this.gitHelper = gitHelper;
-    this.feedbackStore = feedbackStore;
-    this.resolver = new PaperResolver(repoRoot, gitHelper, feedbackStore);
+    this.feedbackStore = new FeedbackStore(feedbackDir);
+    this.resolver = new PaperResolver(repoRoot, gitHelper, this.feedbackStore);
     this.contentDir = resolve(repoRoot, "content");
     this.leanDir = resolve(repoRoot, "lean");
     this.buildDir = resolve(repoRoot, "build");
     this.mainTex = resolve(repoRoot, "main.tex");
+  }
+
+  /**
+   * The adapter's feedback store, for the server to pass to the feedback
+   * route as a service.
+   *
+   * Typed `unknown` on the `ContentAdapter` side and concretely here: the
+   * harness declares the SLOT, the content layer fills it with a type it
+   * owns. Naming `FeedbackStore` in `src/types.ts` would put the content model
+   * back into the harness, which is the import this whole change removes.
+   */
+  getFeedbackStore(): unknown {
+    return this.feedbackStore;
   }
 
   // ── Discovery ──────────────────────────────────────────────────
