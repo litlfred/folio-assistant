@@ -30,13 +30,13 @@
  * renderer drives headless Chromium, and an extract/inject run should not.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { workflowFiles } from "./known-skills.js";
+import { basename, join, relative, resolve } from "node:path";
 import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
 import { formatPot } from "../content/pipeline/pot-extract.js";
 import { parsePo } from "../content/pipeline/po-inject.js";
 
 const root = resolve(import.meta.dir, "..");
-const WF = join(root, "skills", "workflows");
 const argv = process.argv.slice(2);
 
 function flag(name: string): string | undefined {
@@ -56,9 +56,12 @@ if (wantInject && !locale) {
   process.exit(2);
 }
 
-const diagrams = readdirSync(WF).filter((f) => f.endsWith(".bpmn")).sort();
+// ABSOLUTE paths from every declared knowledge-graph directory. A diagram in
+// a topical directory is as translatable as one under `skills/`, and a
+// translator who is never shown it has no way to know it was skipped.
+const diagrams = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
 if (diagrams.length === 0) {
-  console.error(`No .bpmn files under ${WF}.`);
+  console.error("No .bpmn files in any declared knowledge-graph directory.");
   process.exit(2);
 }
 
@@ -81,8 +84,8 @@ if (wantExtract) {
   console.log(`Extracting ${diagrams.length} diagram(s) for: ${targets.join(", ")}\n`);
   let total = 0;
   for (const file of diagrams) {
-    const xml = readFileSync(join(WF, file), "utf-8");
-    const rel = `skills/workflows/${file}`;
+    const xml = readFileSync(file, "utf-8");
+    const rel = relative(root, file);
     const entries = extractBpmn(xml, rel);
     total += entries.length;
     for (const loc of targets) {
@@ -91,7 +94,7 @@ if (wantExtract) {
       const out = join(outDir, `${basename(file, ".bpmn")}.pot`);
       writeFileSync(out, formatPot(entries, { projectName: basename(file, ".bpmn"), locale: loc }));
     }
-    console.log(`  ${file.padEnd(38)} ${String(entries.length).padStart(3)} msgid(s)`);
+    console.log(`  ${relative(root, file).padEnd(48)} ${String(entries.length).padStart(3)} msgid(s)`);
   }
   console.log(`\n${total} translatable string(s) across ${diagrams.length} diagram(s).`);
   console.log("A .pot is a translator's input; nothing is translated until a .po sits beside it.");
@@ -115,9 +118,9 @@ if (wantInject) {
       continue;
     }
     const translations = parsePo(readFileSync(po, "utf-8"));
-    const xml = readFileSync(join(WF, file), "utf-8");
+    const xml = readFileSync(file, "utf-8");
     mkdirSync(outDir, { recursive: true });
-    writeFileSync(join(outDir, file), injectBpmn(xml, translations));
+    writeFileSync(join(outDir, basename(file)), injectBpmn(xml, translations));
     injected++;
     console.log(`  ✓ ${stem.padEnd(38)} ${translations.size} translation(s)`);
   }
