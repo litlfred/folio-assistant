@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 import { buildQaResult, sourceHashOf, QA_RESULTS_DIR } from "../qa-results.js";
 import { readDeclaration } from "../../schemas/cat-harness.js";
-import { exitCodeFor, verifySiteLinks, type SiteLink } from "../site-links.js";
+import { exitCodeFor, verifySiteLinks, type CheckableLink } from "../site-links.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -281,7 +281,14 @@ describe("the badge URLs resolve against a tree built the way the site is", () =
     // distinction is kept so the reason a run failed is legible.
     expect({ builtTree: site !== undefined }).toEqual({ builtTree: true });
 
-    const links: SiteLink[] = [];
+    // `CheckableLink`, not `SiteLink`. `SiteLink.id` is a closed union of the
+    // three navbar tile keys `docs-ui.js` looks a tile up by, and a QA badge
+    // URL is not a tile — tsc said so, correctly, and the fix was to split the
+    // checker's input type out rather than to cast past it. A cast would have
+    // made this file compile while asserting against a value the production
+    // type says cannot occur, which is the same shape as the defect this whole
+    // PR removes.
+    const links: CheckableLink[] = [];
     const seen = new Set<string>();
     const dir = join(ROOT, "docs");
     const scan = (d: string, depth: number) => {
@@ -297,7 +304,7 @@ describe("the badge URLs resolve against a tree built the way the site is", () =
           for (const m of text.matchAll(/data-qa-(?:index|src)="\{\{ '\/([^']+)' \| relative_url \}\}"/g)) {
             if (seen.has(m[1]!)) continue;
             seen.add(m[1]!);
-            links.push({ id: `${e.name}:${m[1]}`, label: m[1]!, target: m[1]! });
+            links.push({ id: `${e.name}:${m[1]}`, target: m[1]! });
           }
         }
       }
