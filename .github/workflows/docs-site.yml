@@ -152,12 +152,16 @@ jobs:
       # must not be published as a whole one.
       # Both artefacts are named after the repository (the `stub` in
       # cat-harness.json) and land at the URLs their own `@id`/`$id` claim.
+      # `index.html` beside them is the viewer — bean `1dfh`. It carries no
+      # data of its own and fetches its SIBLING document at load, so it is
+      # correct at whatever base it is served from.
       # No --base-url: the declaration's canonicalUrl is correct for main.
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
           bun run scripts/kg-export.ts           --out "./_site/kg/${STUB}.jsonld"
           bun run scripts/harness-schema-export.ts --out-dir ./_site/kg
+          bun run scripts/kg-viewer.ts             --out ./_site/kg/index.html
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
