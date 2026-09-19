@@ -13,7 +13,7 @@
  * Run via `bun test`.
  */
 import { describe, test, expect } from "bun:test";
-import { writeFileSync, mkdtempSync } from "fs";
+import { writeFileSync, mkdtempSync, readdirSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import {
@@ -426,5 +426,110 @@ describe("checkStatusLeak — a definition table's label cell names a term", () 
   test("the same text outside a table still FAILS", () => {
     // The exemption is about table structure, not about the phrase.
     expect(leak("**Needs review** before we ship.")).toBe("fail");
+  });
+});
+
+describe("checkEditorializing — proof economy is not an opinion (bean 2t41)", () => {
+  // `voice-editorializing` failed the paper the `expo-milnor-clarity` strict gate
+  // is NAMED after: 26 hits across 11 of the 20 pages of Milnor's "Link Groups"
+  // (Annals of Mathematics 59(2), 1954), ingested as `library/milnorlink/`.
+  //
+  // The bean recorded 14, having counted only `clearly`. Measured in full the 26
+  // split three ways, and only the third is a defect:
+  //   ~20  proof economy — routing the reader away from a routine verification
+  //     4  terms of art — `naturally isomorphic`, where the adverb is the name
+  //     1  genuine — "Unfortunately these invariants are not strong enough" (p194)
+  //
+  // Editorializing spends the reader's attention on the author's opinion. Proof
+  // economy spends none and saves some. They are opposite moves that share a
+  // vocabulary.
+
+  test("sentence-initial: the exemplar's own opening case passes", () => {
+    expect(
+      ed("Clearly the relation of homotopy is reflexive, symmetric and transitive."),
+    ).toBe("pass");
+  });
+
+  test("predicative `is clearly` and bare `is clear` pass", () => {
+    expect(ed("The inclusion map is clearly a homotopy equivalence.")).toBe("pass");
+    expect(ed("This is clear for the case n = 0.")).toBe("pass");
+  });
+
+  test("the `it is easy to see` frame passes", () => {
+    expect(ed("it is easy to see that ai is unique and well-defined")).toBe("pass");
+  });
+
+  test("adverb and verb pass in EITHER order, with auxiliaries between", () => {
+    // Both directions occur in the exemplar; neither is the author's opinion.
+    expect(ed("The parallel can clearly be represented by a loop.")).toBe("pass");
+    expect(ed("it follows easily that L is trivial.")).toBe("pass");
+    expect(ed("It clearly maps JG onto S.")).toBe("pass");
+    expect(ed("It is easily verified that the kernel is [A].")).toBe("pass");
+  });
+
+  test("`naturally isomorphic` passes — the adverb IS the name", () => {
+    // A *natural* isomorphism is a specific thing in category theory, not an
+    // isomorphism the author happens to admire. `MATH_IDIOM_EXEMPT` covers
+    // adverb + article + noun; this is adverb + adjective, which it does not.
+    expect(ed("The group is naturally isomorphic to G(Lt).")).toBe("pass");
+    expect(ed("The action is properly discontinuous.")).toBe("pass");
+  });
+
+  test("THE EXEMPTION IS THE CONSTRUCTION, NOT THE WORD", () => {
+    // The bean's own stated test case, and the reason this is a strip rather
+    // than a whole-line skip: the `Clearly` is removed and the value judgement
+    // in the same clause still fails. `clearly` before a claim the reader cannot
+    // check in their head is the real defect, and no phrase list separates the
+    // two — this invariant is what stands in for that.
+    expect(ed("Clearly this is the most important result in the field.")).toBe(
+      "fail",
+    );
+  });
+
+  test("the genuine set still fails", () => {
+    expect(ed("Unfortunately these invariants are not strong enough.")).toBe("fail");
+    expect(ed("Surprisingly, the two constructions agree.")).toBe("fail");
+    expect(ed("This is a beautiful result.")).toBe("fail");
+    expect(ed("It is worth noting that the map is injective.")).toBe("fail");
+  });
+
+  test("a bare superlative now fails — it did not before", () => {
+    // Found while fixing this: the criterion's description says "Results speak
+    // for themselves", but the regex only matched `perhaps the most …`, so a
+    // plain superlative passed. Adding it is what lets the proof-economy strip
+    // be safe, because the surviving hit is what fails the bean's test case.
+    expect(ed("This is the most important result in the field.")).toBe("fail");
+    expect(ed("The single most striking consequence follows.")).toBe("fail");
+  });
+
+  test("a hard wrap cuts the idiom BOTH ways", () => {
+    // Measured: p178 "…is just the" / "commutator subgroup [A]…" and p193
+    // "…Wi,ri clearly" / "represents the ith parallel…". In both, the line holds
+    // only the head and the rest is on the next — the mirror of the comparative
+    // lookback, which handles the head being on the line before.
+    expect(
+      checkEditorializing(
+        tmp("wrap-head.md", "the subgroup E of G is just the\ncommutator subgroup [A] of the kernel\n"),
+      ).result,
+    ).toBe("pass");
+    expect(
+      checkEditorializing(
+        tmp("wrap-adv.md", "as = a' and Wi = WiJ ... Wi,ri clearly\nrepresents the ith parallel\n"),
+      ).result,
+    ).toBe("pass");
+  });
+
+  test("the exemplar scores exactly ONE finding — not zero", () => {
+    // The gate this change was verified against, and the direction that would
+    // have meant over-correcting. A criterion that never fires on its own
+    // exemplar has stopped measuring anything; the survivor is p194's
+    // "Unfortunately", which is a real finding.
+    const dir = join(import.meta.dir, "../../library/milnorlink/sections");
+    let hits = 0;
+    for (const f of readdirSync(dir).sort()) {
+      if (!f.endsWith(".md")) continue;
+      hits += checkEditorializing(join(dir, f)).hits.length;
+    }
+    expect(hits).toBe(1);
   });
 });

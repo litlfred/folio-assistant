@@ -11,6 +11,7 @@ export { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "./constraints.js";
  *
  * @see {@link https://hl7.org/fhir/R5/actordefinition.html} FHIR R5 ActorDefinition
  * @see {@link https://hl7.org/fhir/R5/requirements.html} FHIR R5 Requirements
+ * @graphNode schema
  */
 
 import type { BlockKind } from "./block-kinds.js";

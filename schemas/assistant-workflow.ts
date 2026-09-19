@@ -28,6 +28,7 @@
  * ```
  *
  * @module assistant-workflow
+ * @graphNode schema
  */
 
 import type { Conformance } from "./assistant-types";

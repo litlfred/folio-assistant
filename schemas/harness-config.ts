@@ -35,6 +35,7 @@
  * | QA criteria | ❌ | criterion definitions are still root-only |
  *
  * @module schemas/folio-config
+ * @graphNode schema
  */
 
 import { z } from "zod";

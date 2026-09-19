@@ -30,6 +30,31 @@
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 import { checkCorpusGate } from "../src/workflow/corpus-gate.js";
+import { readBlockManifest } from "../content/pipeline/qa-utils.js";
+import { loadBlockModuleSync } from "../content/pipeline/block-module.js";
+
+/**
+ * Resolve a changed `.ts` path to the block label it declares.
+ *
+ * This lives here rather than in the gate because reading a block manifest is
+ * the content pipeline's job and the gate is harness-layer — see
+ * `LabelForPath` in `corpus-gate.ts`, and bean `zlmp`. This script runs IN a
+ * folio repo, so knowing what a block manifest is belongs to it.
+ *
+ * The cheap textual check comes first, exactly as in `walkBlocks`: it decides
+ * what may be executed, and a script with a builder call inside a template
+ * literal is not a block and must not be imported.
+ */
+function labelFor(tsPath: string): string | undefined {
+  if (!readBlockManifest(tsPath)) return undefined;
+  const loaded = loadBlockModuleSync(tsPath);
+  if (!loaded) {
+    throw new Error(
+      `${tsPath} looks like a block manifest but its default export is not a labelled block`,
+    );
+  }
+  return loaded.label;
+}
 
 const argv = process.argv.slice(2);
 const flag = (name: string): string | undefined => {
@@ -61,7 +86,7 @@ const files = staged
   ? git(["diff", "--cached", "--name-only", "--diff-filter=d"])
   : git(["diff", "--name-only", "--diff-filter=d", `${since}...HEAD`]);
 
-const findings = await checkCorpusGate(repoRoot, { files, platformRoot });
+const findings = await checkCorpusGate(repoRoot, { files, platformRoot, labelFor });
 const refused = findings.filter((f) => !f.allowed);
 
 if (findings.length === 0) {

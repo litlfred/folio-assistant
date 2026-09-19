@@ -4,6 +4,7 @@
  *
  * These schemas provide runtime validation and are used by the
  * schema generation scripts to produce JSON Schema files.
+ * @graphNode schema
  */
 
 import { z } from "zod";

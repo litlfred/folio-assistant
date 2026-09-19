@@ -65,6 +65,7 @@
  * sign-off overrides a higher-level one for that specific node.
  *
  * @module schemas/translation
+ * @graphNode schema
  */
 
 import { z } from "zod";

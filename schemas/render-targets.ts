@@ -42,6 +42,7 @@
  * never rendered as green.
  *
  * @module schemas/render-targets
+ * @graphNode schema
  */
 
 import type { ContentProfile } from "./block-kinds";

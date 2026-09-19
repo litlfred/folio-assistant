@@ -31,6 +31,7 @@
  * "concise-but-broken" is not progress.
  *
  * @module schemas/refactor-strategy
+ * @graphNode schema
  */
 
 /**

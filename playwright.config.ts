@@ -7,7 +7,6 @@ export default defineConfig({
   // runners on separate conventions is what stops an e2e spec reddening the
   // unit-test gate.
   testMatch: ['**/*.e2e.ts'],
-  timeout: 120000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,

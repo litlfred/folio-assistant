@@ -47,6 +47,7 @@
  * adds `major`.
  *
  * @module schemas/kg-qa
+ * @graphNode schema
  */
 
 import { z } from "zod";

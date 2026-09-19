@@ -64,6 +64,24 @@
  * corpus uniform: after `nup0`, **no package claims a skill it does not hold**.
  * If bundling is wanted as a real concept, it needs a field that says so rather
  * than an empty directory that looks like one.
+ *
+ * ## The other half of that reading, added 2026-09-19
+ *
+ * The three entries this file's `knownSkills()` switch surfaced —
+ * `scientific-visualization`, `hypothesis-generation`,
+ * `scientific-critical-thinking` — ARE declared, by
+ * `skills/remote-packages/claude-scientific-skills.json`, and `kg-audit.ts`
+ * accepted that as resolution. So for two hours the two checkers disagreed:
+ * this one said delete, the audit said keep, and the corpus followed whichever
+ * ran last.
+ *
+ * Measured, and this file was right: nothing in the repository syncs or serves a
+ * remote package — `shallow-clone` is a Zod enum value, neither
+ * `src/tools/skill-fetch.ts` nor `scripts/generate-registry.ts` reads that
+ * directory, and the one real consumer reads it for Docker requirements. The
+ * audit's allowance has been closed, so the two now agree by construction.
+ * `scripts/tests/manifest-remote-resolution.test.ts` holds that argument and the
+ * evidence it rests on.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";

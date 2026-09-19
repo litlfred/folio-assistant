@@ -214,17 +214,15 @@
     var h1 = mainContent.querySelector("h1");
     var insertTarget = h1 ? h1.nextSibling : mainContent.firstChild;
 
-    var container = el("div", {
-      class: "fa-page-lang-bar",
-      style: "display:inline-flex;align-items:center;gap:4px;" +
-             "margin:0.3em 0 0.8em;padding:5px 10px;" +
-             "background:rgba(128,128,128,0.12);border-radius:6px;" +
-             "font-size:0.82rem;"
-    });
+    // No inline colours, here or below. Every one of this bar's pairs is a
+    // per-scheme token in `docs-ui.css` with its measured ratio written beside
+    // it -- bean `rptk`, where a literal written against the sidebar's dark
+    // card came out at 1.34:1 on the page's light one.
+    var container = el("div", { class: "fa-page-lang-bar" });
 
     // Globe emoji
     var globe = el("span", {
-      style: "font-size:1.1em;margin-right:2px;",
+      class: "fa-page-lang-globe",
       title: "Available translations for this page"
     }, "\uD83C\uDF10");
     container.appendChild(globe);
@@ -242,22 +240,18 @@
         title: isAvailable
           ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
           : LOCALE_NAMES[loc] + " \u2014 not yet translated",
-        style: "display:inline-block;padding:2px 7px;border-radius:3px;" +
-               "text-decoration:none;font-size:0.8rem;" +
-               "transition:background 0.15s;" +
-               (isCurrent
-                 ? "background:#3b82f6;color:#fff;font-weight:bold;"
-                 : isAvailable
-                   ? "color:#3b82f6;cursor:pointer;"
-                   : "color:#94a3b8;cursor:default;opacity:0.4;") +
-               (isRemembered ? "box-shadow:inset 0 0 0 1px #3b82f6;" : "")
+        class: "fa-page-lang-tab" +
+               (isCurrent ? " is-current" : isAvailable ? "" : " is-unavailable") +
+               (isRemembered ? " is-remembered" : "")
       }, loc.toUpperCase());
 
+      // Hover is a CSS `:hover` rule now. It was a pair of listeners writing
+      // `style.background`, which is an inline colour literal with extra steps
+      // -- and one nothing could measure, since it exists only while a pointer
+      // is over the tab.
       if (isAvailable && !isCurrent) {
         (function (locale, link) {
           link.addEventListener("click", function () { setGlobalLocale(locale); });
-          link.addEventListener("mouseenter", function () { link.style.background = "rgba(59,130,246,0.1)"; });
-          link.addEventListener("mouseleave", function () { link.style.background = ""; });
         })(loc, tab);
       }
       container.appendChild(tab);
@@ -1201,8 +1195,11 @@
     var availLangs = available.length;
 
     // Auto-detect available locales from the page's own language links if
-    // the pipeline hasn't stamped availableLocales yet. Scan the
-    // language-selector include (if present) for which links resolve.
+    // the pipeline hasn't stamped availableLocales yet. Scans whatever carries
+    // `data-locale`, which is what `buildLanguageBar` above emits — it used to
+    // read a `_includes/language-selector.html`, deleted once this file did the
+    // same job better (it greys out untranslated locales, which that include
+    // only promised in a comment).
     if (availLangs === 0) {
       var langLinks = document.querySelectorAll(".fa-lang-tab, [data-locale]");
       var found = [];

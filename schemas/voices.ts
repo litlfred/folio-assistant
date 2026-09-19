@@ -53,6 +53,7 @@
  * command and date.
  *
  * @module schemas/voices
+ * @graphNode schema
  */
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";

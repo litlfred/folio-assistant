@@ -17,6 +17,7 @@
  * `.claude/skills/local/one-voice-integration-watcher.md`.
  *
  * @module schemas/block-qa
+ * @graphNode schema
  */
 
 import { CONTENT_PROFILES } from "./block-kinds";

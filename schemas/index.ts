@@ -3,6 +3,7 @@
  * @description Core schema package for the agent skills framework.
  *
  * Re-exports all types, Zod validation schemas, and builder functions.
+ * @graphNode none — a re-export barrel: it defines nothing of its own
  */
 
 export * from "./types.js";
