@@ -1,14 +1,14 @@
 /**
- * @litlfred/block-qa-schema — Zod schemas for the QOU block-QA sidecar format.
+ * @litlfred/block-qa-schema — Zod schemas for the folio block-QA sidecar format.
  *
- * The canonical schemas are `tools/block-qa-schema/schema/block-qa.schema.json`
+ * The canonical schemas are `schemas/block-qa-schema/schema/block-qa.schema.json`
  * (the per-block `<block>.qa.json` report) and
- * `tools/block-qa-schema/schema/qa-script.schema.json` (the per-criterion
+ * `schemas/block-qa-schema/schema/qa-script.schema.json` (the per-criterion
  * `<criterion-id>.script.json` checker-staleness sidecar). This file ships Zod
  * schemas that validate against the same shapes, so any TypeScript / JavaScript
- * consumer can parse + type-check the QA sidecars emitted by the QOU
+ * consumer can parse + type-check the QA sidecars emitted by the folio
  * qa-sweep pipeline (`content/pipeline/qa-sweep.ts`; producing types in
- * `folio-assistant/schemas/block-qa.ts`).
+ * `schemas/block-qa.ts`).
  *
  * @example
  * ```ts

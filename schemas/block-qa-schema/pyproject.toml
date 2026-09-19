@@ -5,12 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "block-qa-schema"
 version = "0.1.0"
-description = "Pydantic models for the QOU block-QA sidecar format. Cross-language interchange schema for <block>.qa.json multi-reviewer audit reports and <criterion-id>.script.json checker-staleness sidecars."
+description = "Pydantic models for the folio block-QA sidecar format. Cross-language interchange schema for <block>.qa.json multi-reviewer audit reports and <criterion-id>.script.json checker-staleness sidecars."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
-authors = [{ name = "Quantum Observable Universe contributors" }]
-keywords = ["qa", "audit", "json-schema", "pydantic", "qou", "provenance", "staleness"]
+authors = [{ name = "folio-assistant contributors" }]
+keywords = ["qa", "audit", "json-schema", "pydantic", "folio", "provenance", "staleness"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Science/Research",
@@ -31,10 +31,10 @@ dependencies = [
 test = ["pytest>=7", "jsonschema>=4"]
 
 [project.urls]
-Homepage = "https://github.com/litlfred/qou"
-Source = "https://github.com/litlfred/qou/tree/main/tools/block-qa-schema"
-Issues = "https://github.com/litlfred/qou/issues"
-"JSON Schema" = "https://github.com/litlfred/qou/blob/main/tools/block-qa-schema/schema/block-qa.schema.json"
+Homepage = "https://github.com/litlfred/folio-assistant"
+Source = "https://github.com/litlfred/folio-assistant/tree/main/schemas/block-qa-schema"
+Issues = "https://github.com/litlfred/folio-assistant/issues"
+"JSON Schema" = "https://github.com/litlfred/folio-assistant/blob/main/schemas/block-qa-schema/schema/block-qa.schema.json"
 
 [tool.hatch.build.targets.wheel]
 packages = ["python/block_qa_schema"]
