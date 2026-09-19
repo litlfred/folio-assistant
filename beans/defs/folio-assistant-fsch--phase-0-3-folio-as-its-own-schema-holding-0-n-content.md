@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fsch
 title: Phase 0.3 — `folio` as its own schema holding 0..n Content instances (#223)
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-09-18T16:34:01Z
+updated_at: 2026-09-19T01:01:46Z
 ---
 
 From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913).
@@ -21,3 +21,15 @@ corpus mid-rename.
 
 Gate: `content_validate` passes on a zero-instance folio **and** on a
 two-instance folio.
+
+_2026-09-19T00:41:16Z_ — Checked 2026-09-19 on main at 17dc1e6 — GENUINELY LIVE, not started. harness.config.example.json still carries a single 'contentType' key (line 3, value 'document') and describes it as selecting one adapter and one profile, so a folio is still one content instance. This bean's own gate — content_validate passing on a zero-instance and on a two-instance folio — cannot be met by the current model.
+
+_2026-09-19T01:01:46Z_ — STOPPED WITHOUT IMPLEMENTING, 2026-09-19. Claimed this, investigated, and un-claimed it: Phase 0.3 is already built, and what shipped explicitly rejects this bean's framing.
+
+Evidence on main at ecc6dab: cat-harness.json exists at the repository root; schemas/cat-harness.ts opens 'Issue #223, Phase 0.3'; schemas/cat-harness.test.ts carries a describe block named 'inheritance — the Phase 0.3 gate', 18 tests, all passing; skills/folio-core/directory-conventions.md documents it.
+
+The rejection is explicit, in that module's own doc comment: 'The obvious reading of "a folio holds zero or more Content instances" is a list of instances under one contentType. That is the wrong shape, for a reason that only shows up once the five-repo split is real: the instances an agentic-harness holds are not folios at all.' The shipped model is an INSTANCE WITH DIRECTORIES, each holding a graph, with 'folio' one graph kind among several, distinguished only by being renderable.
+
+So this bean's gate — content_validate passing on a zero-instance and a two-instance folio — is not reachable as written, because a folio-with-instances is not the object the codebase settled on. Building it would reintroduce the shape cat-harness.ts was written to avoid, and would make adapterForKind ambiguous across instances of different content types, which AGENTS.md names as the thing that makes QA criterion scoping unsound.
+
+Set back to todo rather than left in-progress, since no work was done. NOT scrapped and NOT closed: whether this is fully superseded or has residual scope (the render path and the viewer are named in the body and were not checked) is the owner's call, and a scrapped bean needs its reasons from whoever owns it.

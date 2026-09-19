@@ -34,7 +34,8 @@
  */
 
 import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { dirname, join, resolve } from "path";
+import { materialiseDeclaredDirectories } from "../schemas/harness-config";
+import { relative, dirname, join, resolve } from "path";
 import { spawnSync } from "child_process";
 
 /** The upstream this folio pins its platform to. */
@@ -536,6 +537,12 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write(`content/${o.slug}/introduction/overview.md`, starterBlockBody(o));
 
   // 4. The two source-material directories.
+  //
+  // Written as READMEs rather than left to `materialiseDeclaredDirectories`
+  // below because a new folio's author needs to be told what each stage is
+  // FOR — the keep-marker exists to stop an empty directory vanishing, not to
+  // explain a pipeline. The materialiser then covers whatever else this folio
+  // inherits from the platform and does not have.
   write("uploads/README.md", uploadsReadme());
   write("library/README.md", libraryReadme());
 
@@ -566,6 +573,25 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
       `The builder shim in content/schema/ points at '${assistant}', which does not exist yet. ` +
       `Nothing will import until the platform is there.`,
     );
+  }
+
+  // 7. Every directory this folio DECLARES or INHERITS, created if absent.
+  //
+  // Last, and after the platform link, because the inherited half of the answer
+  // comes from walking the dependency tree — a folio whose platform is not
+  // checked out yet inherits nothing, and this then correctly creates only what
+  // the folio itself declares. Re-running `init-folio --force` re-runs this,
+  // which is safe: it is idempotent and never overwrites a keep-marker.
+  //
+  // Placed here rather than left to the session-start sweep because the two
+  // answer different moments and `AGENTS.md` is explicit that a resolver with
+  // no caller is the defect to avoid — `resolveSkillDirs` has had none since it
+  // was written, and `resolveDirectories` had none before this change.
+  if (!o.dryRun) {
+    for (const d of materialiseDeclaredDirectories(root)) {
+      if (d.created) result.created.push(`${relative(root, d.absPath)}/`);
+      if (d.markerWritten) result.created.push(relative(root, join(d.absPath, ".gitignore")));
+    }
   }
 
   return result;

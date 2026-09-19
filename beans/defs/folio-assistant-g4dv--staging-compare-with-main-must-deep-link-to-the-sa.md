@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T17:04:31Z
-updated_at: 2026-09-18T18:29:31Z
+updated_at: 2026-09-19T00:41:01Z
 ---
 
 ## The ask
@@ -105,3 +105,5 @@ target against the publish ref, fall back to differently-worded text when
 the page is new — is implementable rather than speculative.
 
 Still unclaimed, still not started.
+
+_2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. feature-staging.yml:314 renders the compare link as ${MAIN_SITE}/${REL} — the same page on main, not the site root. The third state this bean said 'needs deciding, not just coding' is handled and was resolved as its own option 1: when the page has no counterpart on main, line 316 renders 'main ↗ (new page)' against the root instead of a link to a 404, and counts it into NEW_PAGES. NOT closing it — not my bean to resolve.

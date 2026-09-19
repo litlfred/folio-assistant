@@ -176,11 +176,30 @@ const RULES: Rule[] = [
       // core `schemas/` prefix and made four harness modules read as depending
       // on the content layer. None of it describes a folio's content.
       "schemas/skill-package.ts",
+      // What happened when a Tool ran, and under whose authority. Tools are
+      // the HARNESS's vocabulary — the `tools` graph is declared by
+      // `agentic-harness`, not by any folio — and this file imports only
+      // `zod`, so it carries nothing of the content model with it. Its one
+      // production consumer, `src/mcp/project.ts`, is the harness's too.
+      "schemas/tool-invocation.ts",
       // The composition root's own inventory of which content adapters this
       // instance ships. `src/` is claimed by subdirectory, so a new file at
       // its top level falls through — reported `unassigned`, which is the
       // tool working: it declined to guess rather than defaulting.
       "src/builtin-adapters.ts",
+      // The generic tool-group loader, shared by both servers. `src/` is
+      // claimed by subdirectory, so a file at its top level falls through.
+      "src/tool-groups.ts",
+      // Two scripts that arrived from `main` and fell through every prefix.
+      // Both are harness tooling about the KG's own artefacts, not about any
+      // folio's content: one introspects which Tools this instance's MCP
+      // server actually serves, the other refuses a `.bpmn`/`.dmn` whose
+      // comments are not well-formed XML.
+      "scripts/capture-mcp-tools.ts",
+      // The knowledge-graph viewer's generator — KG tooling, arrived from
+      // `main` and fell through every prefix.
+      "scripts/kg-viewer.ts",
+      "scripts/xml-comment-check.ts",
 
       // `adapters/mcp-server/` was claimed wholesale by the harness prefix
       // rule, but `server.ts` opens "QOU Paper Writing Assistant — MCP
@@ -305,6 +324,22 @@ const RULES: Rule[] = [
       // declaration in a file is grammar; what you then DO with it (Atlas
       // ingestion, triviality probing, coverage tables) is the science layer.
       "content/pipeline/lean-lexer.ts",
+      // Where a witness lives and whether one is there. Same test a third
+      // time: `export-json.ts` is the GENERIC exporter and emits `witnessed`
+      // for every block carrying a `lean` field, so hashing the file and
+      // looking for the sibling travels with the field. Producing and
+      // invalidating witnesses stays in `scripts/lean-witness.ts`, which is
+      // sci. Named for `witness`, which the sci keyword rule would otherwise
+      // claim — hence the explicit entry.
+      "content/pipeline/witness-address.ts",
+      // The QA sidecar PROJECTION — the families (`block`, `translation`,
+      // `script`, `kg`), their states and freshness, read by `gen-docs-pages`
+      // to publish one file per (subject, family). Nothing in it is science:
+      // it imports only `block-qa`, `kg-qa` and `script-qa`, all core. It is
+      // here because the sci keyword rule matches `witness` in its NAME, which
+      // is the second file that has caught — a reminder that the keyword rule
+      // is a heuristic and the triage list is where its misses are corrected.
+      "content/pipeline/qa-witness.ts",
     ],
   },
 
@@ -325,6 +360,14 @@ const RULES: Rule[] = [
       // across the boundary by directory alone. Nothing in the pipeline
       // imports it; its only other consumer is its own test.
       "content/pipeline/refactor-strategy.ts",
+      // Elaboration-cost checkers: "QA checkers for proof elaboration cost",
+      // reading `docs/audits/lean-profile.json`. Entirely Lean, and blocked
+      // from moving until now only because `qa-checkers-voice.ts` spread its
+      // dispatch table into the merged `AUTOMATED_CHECKERS` — an aggregation
+      // that lost its last production caller when the sweep began resolving
+      // checkers from the registry. With the spread gone, this moves without
+      // trading one wrong-direction edge for another.
+      "content/pipeline/qa-checkers-cost.ts",
     ],
   },
 

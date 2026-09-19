@@ -5,9 +5,10 @@
  * graph kind each holds, and a downstream instance INHERITS its dependencies'
  * directories without restating them.
  */
-import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import { mkdirSync, writeFileSync, rmSync } from "node:fs";
-import { join } from "node:path";
+import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
+import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
 import { registerFolioGraphKind } from "./folio-graph-kind";
 import {
@@ -18,12 +19,16 @@ import {
   DECLARATION_FILENAME,
   isRenderable,
   readDeclaration,
+  keepMarker,
+  materialiseDirectories,
   renderableDirectories,
   resolveDirectories,
   toJsonLd,
+  type ResolvedDirectory,
 } from "./cat-harness";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
+const REPO_ROOT = resolve(import.meta.dir, "..");
 const HARNESS = join(TMP, "agentic-harness");
 const CORE = join(TMP, "folio-assist-core");
 const RELOCATED = join(TMP, "relocated");
@@ -183,7 +188,7 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds — the harness declares nine, core adds folio", () => {
+describe("graph kinds — the harness declares twelve, core adds folio", () => {
   it("the harness's own vocabulary contains no renderable kind", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
@@ -191,6 +196,10 @@ describe("graph kinds — the harness declares nine, core adds folio", () => {
       "bean-defs",
       "beans",
       "kg",
+      // The two stages of the ingestion pipeline, declared separately because
+      // they are not interchangeable: the corpus checklist greps `library/`
+      // and not `uploads/`.
+      "library",
       "schemas",
       // The todo graph: human actors' outstanding work. NOT a second work
       // plan — `beans` is the agent work plan — but the harness owns the KIND
@@ -199,6 +208,8 @@ describe("graph kinds — the harness declares nine, core adds folio", () => {
       "todo-items",
       "todos",
       "tools",
+      "uploads",
+      "voices",
       "workflow-state",
     ]);
     for (const def of Object.values(BASE_GRAPH_KINDS)) {
@@ -212,9 +223,9 @@ describe("graph kinds — the harness declares nine, core adds folio", () => {
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
     expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "kg", "schemas",
+      "bean-defs", "beans", "kg", "library", "schemas",
       "todo-feedback", "todo-items", "todos",
-      "tools", "workflow-state",
+      "tools", "uploads", "voices", "workflow-state",
     ]);
   });
 
@@ -250,5 +261,121 @@ describe("graph kinds — the harness declares nine, core adds folio", () => {
     const names = defaultGraphKinds.names();
     const types = names.map((n) => defaultGraphKinds.get(n)!.type);
     expect(new Set(types).size).toBe(names.length);
+  });
+});
+
+// ── Materialisation (bean `4q5x`) ────────────────────────────────
+
+describe("materialiseDirectories", () => {
+  function tmpRoot(): string {
+    return mkdtempSync(join(tmpdir(), "materialise-"));
+  }
+  const resolved = (
+    id: string,
+    path: string,
+    extra: Partial<ResolvedDirectory> = {},
+  ): ResolvedDirectory => ({
+    id,
+    path,
+    graphs: ["kg"],
+    declaredBy: "test",
+    absPath: path,
+    own: true,
+    ...extra,
+  });
+
+  test("creates a declared directory that does not exist", () => {
+    const root = tmpRoot();
+    const out = materialiseDirectories([resolved("library", "library/")], root);
+    expect(existsSync(join(root, "library"))).toBe(true);
+    expect(out[0]!.created).toBe(true);
+  });
+
+  test("is a no-op on the second run", () => {
+    const root = tmpRoot();
+    const dirs = [resolved("library", "library/")];
+    materialiseDirectories(dirs, root);
+    const again = materialiseDirectories(dirs, root);
+    expect(again[0]!.created).toBe(false);
+    expect(again[0]!.markerWritten).toBe(false);
+  });
+
+  test("never overwrites an existing keep-marker — a folio may have added rules", () => {
+    const root = tmpRoot();
+    const dirs = [resolved("uploads", "uploads/")];
+    materialiseDirectories(dirs, root);
+    const marker = join(root, "uploads", ".gitignore");
+    writeFileSync(marker, "*.tmp\n");
+    materialiseDirectories(dirs, root);
+    expect(readFileSync(marker, "utf-8")).toBe("*.tmp\n");
+  });
+
+  test("writes no marker into a directory that already holds files", () => {
+    const root = tmpRoot();
+    mkdirSync(join(root, "skills"), { recursive: true });
+    writeFileSync(join(root, "skills", "a-skill.md"), "# skill\n");
+    const out = materialiseDirectories([resolved("kg", "skills/")], root);
+    expect(out[0]!.markerWritten).toBe(false);
+    expect(existsSync(join(root, "skills", ".gitignore"))).toBe(false);
+  });
+
+  test("the keep-marker ignores nothing — only comments", () => {
+    // Ignoring uploads/ would reproduce the defect the two-stage pipeline
+    // exists to prevent, and library/ is corpus that must stay greppable.
+    const body = keepMarker({ id: "uploads", description: "the incoming queue" });
+    const rules = body
+      .split("\n")
+      .filter((l) => l.trim() !== "" && !l.startsWith("#"));
+    expect(rules).toEqual([]);
+    expect(body).toContain("do not delete me");
+    expect(body).toContain("the incoming queue");
+  });
+
+  test("RESOLVES AGAINST THE INSTANCE, not the declaring dependency", () => {
+    // The inherited case: a dependency declares `library/` and its `absPath`
+    // points into the dependency's own checkout. Writing there would be the
+    // equivalent of creating folders inside node_modules.
+    const root = tmpRoot();
+    const depCheckout = tmpRoot();
+    const out = materialiseDirectories(
+      [
+        resolved("library", "library/", {
+          declaredBy: "folio-assist-core",
+          own: false,
+          absPath: join(depCheckout, "library"),
+        }),
+      ],
+      root,
+    );
+    expect(out[0]!.absPath).toBe(join(root, "library"));
+    expect(existsSync(join(root, "library"))).toBe(true);
+    expect(existsSync(join(depCheckout, "library"))).toBe(false);
+  });
+
+  test("refuses a path that escapes the instance root", () => {
+    const root = tmpRoot();
+    expect(() =>
+      materialiseDirectories([resolved("escape", "../elsewhere/")], root),
+    ).toThrow(/outside the instance/);
+  });
+
+  test("--dry-run reports without creating", () => {
+    const root = tmpRoot();
+    const out = materialiseDirectories([resolved("library", "library/")], root, {
+      dryRun: true,
+    });
+    expect(out[0]!.created).toBe(true);
+    expect(existsSync(join(root, "library"))).toBe(false);
+  });
+
+  test("this instance declares uploads and library", () => {
+    // The declaration half of the bean: without these two entries the
+    // materialiser has nothing to create, and the ingestion pipeline's two
+    // stages stay described in prose and declared nowhere.
+    const ids = resolveDirectories([
+      { name: "folio-assistant", root: REPO_ROOT, own: true },
+    ]).map((d) => d.id);
+    expect(ids).toContain("uploads");
+    expect(ids).toContain("library");
   });
 });

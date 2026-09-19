@@ -32,6 +32,60 @@ function tmp(name: string, contents: string): string {
 const ed = (line: string) =>
   checkEditorializing(tmp("t.md", line)).result;
 
+describe("checkEditorializing — `merely` in a contrast is a degree marker", () => {
+  // Bean `nwus`. All four `voice-editorializing` findings in this repo's own
+  // content/docs/ were the bare word `merely` inside an explicit contrast, and
+  // all four were false. The criterion is after the author commenting on
+  // quality; a comparative marks the WEAKER alternative, which is the opposite
+  // move. Same shape as bean `fl5m` mechanism #2.
+  test("'rather than merely cited' passes — the contrast IS the claim", () => {
+    expect(
+      ed("what makes a source authoritative rather than merely cited."),
+    ).toBe("pass");
+  });
+  test("'rather than merely compile' passes", () => {
+    expect(ed("Rules that make this work rather than merely compile:")).toBe(
+      "pass",
+    );
+  });
+  test("'not merely a relabelling' passes", () => {
+    expect(ed("This is not merely a relabelling.")).toBe("pass");
+  });
+  test("bare 'merely a formality' still FAILS — the exemption is the contrast, not the word", () => {
+    expect(ed("The proof is merely a formality.")).toBe("fail");
+  });
+  test("bare 'merely the shadow' still FAILS", () => {
+    expect(ed("This is merely the shadow of the real result.")).toBe("fail");
+  });
+  test("a comparative line carrying a SECOND hit still FAILS (strip, not mask)", () => {
+    // Same invariant the domain-phrase exemption has: removing the exempt
+    // construction must not hide editorializing elsewhere on the line.
+    expect(
+      ed("authoritative rather than merely cited, and surprisingly so."),
+    ).toBe("fail");
+  });
+
+  // Bean `fl5m` mechanism #5, in the editorializing rule: the negator lands on
+  // the previous line when prose is hard-wrapped, and a line-based scan cannot
+  // see it. One of the four findings was exactly this.
+  test("hard-wrapped 'does not' / 'merely go unread' passes", () => {
+    const p = tmp(
+      "wrap.md",
+      "so a paper still sitting in `uploads/` does not\nmerely go unread, it makes a clean grep lie\n",
+    );
+    expect(checkEditorializing(p).result).toBe("pass");
+  });
+  test("a line OPENING with 'merely' after a non-negated line still FAILS", () => {
+    // The lookback must require the comparative or the negator, or it would
+    // exempt every wrapped `merely` in the corpus.
+    const p = tmp(
+      "wrap-no-negator.md",
+      "The argument is short.\nmerely a formality, in the end\n",
+    );
+    expect(checkEditorializing(p).result).toBe("fail");
+  });
+});
+
 describe("checkEditorializing — domain-phrase exemption is a strip, not a mask", () => {
   test("'naturally occurring' alone passes (domain term, not opinion)", () => {
     expect(ed("These are naturally occurring elements.")).toBe("pass");

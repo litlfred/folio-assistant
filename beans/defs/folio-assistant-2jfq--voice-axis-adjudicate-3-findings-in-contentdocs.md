@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2jfq
 title: 'Voice axis: adjudicate 3 voice-author-notes-pollution findings in content/docs'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T22:23:37Z
-updated_at: 2026-09-18T22:23:57Z
+updated_at: 2026-09-18T23:55:14Z
 ---
 
 The QA sweep over `content/docs/` flags 3 blocks on `voice-author-notes-pollution`
@@ -44,3 +44,7 @@ human/agent half of this axis; the mechanical half is `qa-checkers-voice.ts`.
 Every box above is either fixed in prose, covered by a criterion-scoping
 change, or carries a reviewer entry on its sidecar explaining the exception —
 and `bun run content/pipeline/qa-sweep.ts --root content/docs` reflects it.
+
+_2026-09-18T23:55:14Z_ — ## Summary of Changes
+
+All 3 resolved as agent `pass`. P3 on `before-you-start.md` — the harnesses ARE the content of a prerequisites step. P1 on `where-to-go-deeper.md` — suppressing 'the images above are mockups' would misrepresent them, and AGENTS.md makes the same call with '`## Not verified` is a real section and an honest one'. P4 on `every-workflow-in-the-repo.md` — the BASELINE rule REQUIRES a measured count to carry its date, so the criterion was flagging compliance with another rule; that one wins.

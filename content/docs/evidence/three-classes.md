@@ -4,7 +4,7 @@ keeping them apart is the point of the parallel gateway:
 **Trusted sources — L1.** Ingested primary literature under `library/`: the
 `sections/*.md` tree and, where a document was scanned, `ocr/page-NNN.txt`.
 
-> ⚠ **Known blind spot.** A document that was OCR'd but never re-run through
+> **Known blind spot.** A document that was OCR'd but never re-run through
 > `pdf-structure.py` has only a stub in `sections/`, so a sections-only search
 > misses it entirely. Measured: **26** `library/*/ocr/` trees against **11**
 > `structure.json` recording `"text_source": "ocr"`. See [Document

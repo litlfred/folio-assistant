@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hbsh
 title: 'Voice axis: adjudicate 10 voice-scholarly-default findings in content/docs'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T22:23:37Z
-updated_at: 2026-09-18T22:23:57Z
+updated_at: 2026-09-18T23:55:14Z
 ---
 
 The QA sweep over `content/docs/` flags 10 blocks on `voice-scholarly-default`
@@ -58,3 +58,7 @@ human/agent half of this axis; the mechanical half is `qa-checkers-voice.ts`.
 Every box above is either fixed in prose, covered by a criterion-scoping
 change, or carries a reviewer entry on its sidecar explaining the exception —
 and `bun run content/pipeline/qa-sweep.ts --root content/docs` reflects it.
+
+_2026-09-18T23:55:14Z_ — ## Summary of Changes
+
+Scoped `voice-scholarly-default` to `profiles: ["paper"]`. Ten findings, ten guide/reference pages, zero writing defects — the skill's own worked example (`prerequisites.md:3` "locally you need:") among them. Registry comment records that `profiles` is the wrong AXIS for a rule that varies by genre within a profile, and that a document folio wanting scholarly register should re-enable it via a voice once #208/#210 lands. The edit was inert until `cv10`.

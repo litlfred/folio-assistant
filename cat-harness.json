@@ -1,7 +1,7 @@
 {
   "_comment": "The CatHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/folio-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `schemas/` declares TWO graphs — the first real use of the array. A directory is a place to look and may hold more than one part of the graph; it does not say how to tell them apart, because the files declare what they are (see bean xxxb: schemas/*.ts does not yet do this well). `beans/` is declared ONCE, as a single `beans` graph. Its internal split — `defs` for work items, `workflows` for running BPMN state — is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
+  "_title": "No `title`, deliberately: `displayTitle` is title || name || id, so the sidebar and the landing page fall back to `name` — which the schema already requires to be the instance's identifier, the one artefacts are stub-named after. A title here said `c@t-harness` and overrode that, labelling THIS repository with the brand of the harness layer that is still to be split out of it. Setting the title to `folio-assistant` instead would be the same fact in two fields, free to drift. The c@t-harness derivation stays in the description, where it is a tagline rather than an identity.",
   "name": "folio-assistant",
-  "title": "c@t-harness",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
   "icon": "mark-small",
   "images": [
@@ -102,6 +102,30 @@
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state).",
       "graphs": [
         "beans"
+      ]
+    },
+    {
+      "id": "uploads",
+      "path": "uploads/",
+      "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
+      "graphs": [
+        "uploads"
+      ]
+    },
+    {
+      "id": "library",
+      "path": "library/",
+      "description": "L1 source content — one <bib-slug>/ per ingested document, holding sections/*.md, structure.json and, where the source was scanned, ocr/page-NNN.txt. Every knowledge-graph reference to a source resolves THROUGH here, never to a loose path or a bare URL.",
+      "graphs": [
+        "library"
+      ]
+    },
+    {
+      "id": "voices",
+      "path": "voices/",
+      "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
+      "graphs": [
+        "voices"
       ]
     }
   ]

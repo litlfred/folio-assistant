@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sl1h
 title: 'Voice axis: adjudicate 4 voice-status-leak findings in content/docs'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T22:23:37Z
-updated_at: 2026-09-18T22:23:57Z
+updated_at: 2026-09-18T23:55:14Z
 ---
 
 The QA sweep over `content/docs/` flags 4 blocks on `voice-status-leak`
@@ -46,3 +46,7 @@ human/agent half of this axis; the mechanical half is `qa-checkers-voice.ts`.
 Every box above is either fixed in prose, covered by a criterion-scoping
 change, or carries a reviewer entry on its sidecar explaining the exception —
 and `bun run content/pipeline/qa-sweep.ts --root content/docs` reflects it.
+
+_2026-09-18T23:55:14Z_ — ## Summary of Changes
+
+All 4 resolved as agent `pass` with reasoning, not prose edits: each block's SUBJECT is a status inventory or a to-do store, so the criterion read a subject as an assertion. `what-is-not-built-yet.md` is titled for its gaps; `1-scaffold-the-folio.md` documents the placeholder `folio_init` writes; the two `publication-workflow` blocks describe the BPMN lane literally named 'Work plan — beans'.
