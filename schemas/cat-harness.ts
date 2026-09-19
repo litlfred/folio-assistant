@@ -10,7 +10,7 @@
  * not: a Tool repo or a Test repo carries the same declaration.
  *
  * Issue #223, Phase 0.3. Every folio-assistant instance carries one of these
- * at its repository root (`cat-harness.json`). It declares the directories
+ * at its repository root (`harness.json`). It declares the directories
  * the instance scans for content, and what **kind of graph** each one holds.
  *
  * ## Why a directory declaration rather than a content-type field
@@ -67,10 +67,10 @@ import { isAbsolute, join, relative, resolve } from "node:path";
 import { z } from "zod";
 
 import { KgImageSchema, kgNodeLabelShape, type KgImage, type KgNodeLabels } from "./kg-node";
-import { FOLIO_NS } from "./namespaces";
+import { NS_PREFIXES, termIri } from "./namespaces";
 
 /** Root-relative filename carrying an instance's declaration. */
-export const DECLARATION_FILENAME = "cat-harness.json";
+export const DECLARATION_FILENAME = "harness.json";
 
 // ── Graph kinds ─────────────────────────────────────────────────
 
@@ -116,9 +116,9 @@ export interface GraphKindDef {
    * Where the shape of a node in this graph is defined — a repo-relative
    * module path, or a `$schema` tag the files themselves carry.
    *
-   * Optional because not every kind has one answer: `kg` holds five node kinds
-   * typed in different places, and a single pointer there would be a lie of
-   * precision rather than a fact.
+   * Optional because not every kind has one answer: `cat-harness` holds node
+   * kinds typed in different places — skills, workflows, roles, actors — and a
+   * single pointer there would be a lie of precision rather than a fact.
    */
   schema?: string;
 }
@@ -126,10 +126,19 @@ export interface GraphKindDef {
 /**
  * The graph kinds the **harness itself** defines.
  *
- * Four, and deliberately none of them renderable. Everything here is a graph a
- * tool reads: how work is done (`tools`), what an actor knows and which process
- * governs it (`kg`), the shapes both are typed against (`schemas`), and the
- * work plan with its running-process state (`beans`).
+ * **The map below is the only answer to how many, and this sentence deliberately
+ * does not give one.** It read "Four, and deliberately none of them renderable"
+ * over a map of fourteen — and the version before that read "Five" over a map of
+ * four, which bean `5o3a` records #269 correcting. A count in prose is a claim
+ * that has to be maintained, it was maintained wrongly twice, and nothing checks
+ * it. `Object.keys(BASE_GRAPH_KINDS).length` is checkable and free.
+ *
+ * What IS stable and worth saying: **none of them is renderable.** Everything
+ * here is a graph a tool reads — how work is done (`tools`), what an actor knows
+ * and which process governs it (`cat-harness`), the shapes both are typed against
+ * (`schemas`), the work plan with its running-process state (`beans`), and the
+ * ingestion, voice and translation inputs. Rendering belongs to `folio`, which
+ * the layer above registers.
  *
  * ## Why the work plan is the harness's and not core's
  *
@@ -165,14 +174,14 @@ export interface GraphKindDef {
  */
 export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   tools: {
-    type: `${FOLIO_NS}ToolGraph`,
+    type: termIri("ToolGraph"),
     renderable: false,
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
   // Named for the LAYER that defines it, like every other harness concept.
   //
   // It was `kg`, which named what the graph HOLDS rather than who owns it —
-  // the odd one out in a vocabulary where `cat-harness.json`, `CatHarness`
+  // the odd one out in a vocabulary where `harness.json`, `CatHarness`
   // and the `cat-harness` instance are all named for the harness. The owner,
   // 2026-09-19: "kg -> cat-harness for naming conventions, no? skills/
   // schemas beans all in cat-harness, voices, uploads library in
@@ -180,12 +189,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   //
   // `kg` remains readable as a deprecated alias — see GRAPH_KIND_ALIASES.
   "cat-harness": {
-    type: `${FOLIO_NS}KnowledgeGraph`,
+    type: termIri("KnowledgeGraph"),
     renderable: false,
     summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
   },
   schemas: {
-    type: `${FOLIO_NS}SchemaGraph`,
+    type: termIri("SchemaGraph"),
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
@@ -201,7 +210,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // declaration mentioned, so a consumer scanning the declared directories saw
   // none of them and reported a clean run over the lot.
   qa: {
-    type: `${FOLIO_NS}QaGraph`,
+    type: termIri("QaGraph"),
     renderable: false,
     summary:
       "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
@@ -215,7 +224,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // and the #263 version it supersedes is preserved there too. PR #266 changed
   // the map and left that comment describing the old five-kind design.
   beans: {
-    type: `${FOLIO_NS}BeanGraph`,
+    type: termIri("BeanGraph"),
     renderable: false,
     summary:
       "The work plan — what is being worked on, and where each running BPMN instance got to. " +
@@ -227,14 +236,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // had grown a parallel closed vocabulary (`BEAN_NODE_KINDS`) saying the same
   // thing in different words.
   "bean-defs": {
-    type: `${FOLIO_NS}BeanDefsGraph`,
+    type: termIri("BeanDefsGraph"),
     renderable: false,
     summary:
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
   },
   "workflow-state": {
-    type: `${FOLIO_NS}WorkflowStateGraph`,
+    type: termIri("WorkflowStateGraph"),
     renderable: false,
     summary:
       "Running BPMN instances — one JSON file each, carrying " +
@@ -248,14 +257,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // the four coordinates of the role model: who, as which role, in which
   // process, on which task.
   todos: {
-    type: `${FOLIO_NS}TodoGraph`,
+    type: termIri("TodoGraph"),
     renderable: false,
     summary:
       "Human actors' outstanding work — content, owned by the folio, tagged by role, " +
       "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
   },
   "todo-items": {
-    type: `${FOLIO_NS}TodoItemsGraph`,
+    type: termIri("TodoItemsGraph"),
     renderable: false,
     summary:
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
@@ -270,14 +279,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`
   // exists to state.
   uploads: {
-    type: `${FOLIO_NS}UploadsGraph`,
+    type: termIri("UploadsGraph"),
     renderable: false,
     summary:
       "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
       "greppable as corpus: a document here reads as absent to every consumer.",
   },
   library: {
-    type: `${FOLIO_NS}LibraryGraph`,
+    type: termIri("LibraryGraph"),
     renderable: false,
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
@@ -291,14 +300,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // a voice apply, and a graph kind that conflated the two would have no place
   // to record that this instance ships four voices and activates none.
   voices: {
-    type: `${FOLIO_NS}VoiceGraph`,
+    type: termIri("VoiceGraph"),
     renderable: false,
     summary:
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
   },
   "todo-feedback": {
-    type: `${FOLIO_NS}TodoFeedbackGraph`,
+    type: termIri("TodoFeedbackGraph"),
     renderable: false,
     summary:
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
@@ -332,7 +341,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // defect in reverse, five committed directories that no declaration
   // mentioned. That is what this kind is for.
   "translation-sources": {
-    type: `${FOLIO_NS}TranslationSourceGraph`,
+    type: termIri("TranslationSourceGraph"),
     renderable: false,
     summary:
       "POT templates, PO catalogues and their `TranslationNode` manifests, one directory " +
@@ -513,7 +522,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * the repository, so a reader who knows the repo knows the filename.
    *
    * Note the declaration file itself is **not** stub-named — it stays
-   * `cat-harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
+   * `harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
    * consumer must be able to find the config without already knowing the
    * repository's name; the artefacts it *describes* are free to be named.
    */
@@ -638,7 +647,7 @@ export function artefactStub(d: Pick<CatHarnessDeclaration, "name" | "stub">): s
  * published to.
  *
  * **They sit at the base, not in a subdirectory.** A cat-harness instance's
- * repository IS its declaration that it is a graph — `cat-harness.json` at the
+ * repository IS its declaration that it is a graph — `harness.json` at the
  * root says which graphs are here — so there is nothing for a `kg/` segment to
  * distinguish it from. The stub is what separates one instance's renderings
  * from another's in a tree that overlays several, which is the job a directory
@@ -991,12 +1000,8 @@ export function toJsonLd(
   registry: GraphKindRegistry = defaultGraphKinds,
 ): Record<string, unknown> {
   return {
-    "@context": {
-      fa: FOLIO_NS,
-      path: `${FOLIO_NS}path`,
-      directories: `${FOLIO_NS}scans`,
-    },
-    "@type": `${FOLIO_NS}CatHarness`,
+    "@context": { ...NS_PREFIXES, path: termIri("path"), directories: termIri("scans") },
+    "@type": termIri("Harness"),
     name: decl.name,
     ...(decl.title ? { title: decl.title } : {}),
     ...(decl.description ? { description: decl.description } : {}),
@@ -1005,7 +1010,7 @@ export function toJsonLd(
       ? {
           images: decl.images.map((i) => ({
             "@id": `#${i.id}`,
-            "@type": `${FOLIO_NS}Image`,
+            "@type": termIri("Image"),
             src: i.src,
             ...(i.role ? { role: i.role } : {}),
             ...(i.title ? { title: i.title } : {}),
@@ -1014,7 +1019,7 @@ export function toJsonLd(
         }
       : {}),
     directories: decl.directories.map((d) => {
-      const types = d.graphs.map((g) => registry.get(g)?.type ?? `${FOLIO_NS}UnknownGraph`);
+      const types = d.graphs.map((g) => registry.get(g)?.type ?? termIri("UnknownGraph"));
       return {
         "@id": `#${d.id}`,
         // One type stays a string, several become a list — JSON-LD permits

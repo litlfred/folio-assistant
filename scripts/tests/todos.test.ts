@@ -3,7 +3,7 @@
  *
  * All three, because the failure mode is the middle one going missing.
  * `schemas/todo.ts`, `schemas/todo-graph.ts` and the `todos` / `todo-items`
- * graph kinds existed before any todo did, and `cat-harness.json` did not
+ * graph kinds existed before any todo did, and `harness.json` did not
  * declare `todos/`. A schema ahead of its graph is harmless. A **declared
  * directory nothing reads** is the bean `dh4f` defect — a consumer scans
  * nothing and reports a clean run over it.
@@ -18,7 +18,7 @@ import { TODO_GRAPH_FILE, parseTodoGraph } from "../../schemas/todo-graph.js";
 import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../todos.js";
 
 describe("the declaration and the directory agree", () => {
-  test("`cat-harness.json` declares a `todos` graph", () => {
+  test("`harness.json` declares a `todos` graph", () => {
     const d = readDeclaration(ROOT);
     const entry = d?.directories?.find((x) => x.graphs?.includes("todos"));
     expect(entry?.path).toBe("todos/");

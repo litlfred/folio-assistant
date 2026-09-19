@@ -120,6 +120,29 @@ export const MemoryNodeSchema = CarriedNoteSchema.extend({
    */
   measured: MeasurementSchema.optional(),
   /**
+   * Retained as a graph node, injected into no agent's file.
+   *
+   * **The third state between "reaches everybody" and "deleted".** An untagged
+   * entry reaches every agent; an entry tagged with an agent that no longer
+   * exists reaches nobody *by accident*, which is indistinguishable from a
+   * typo. This says so on purpose.
+   *
+   * It exists because retiring a subagent would otherwise force a choice
+   * between destroying knowledge and blowing the injection budget. Measured
+   * when `content-pipeline-navigator` was retired, 2026-09-19: nine of its
+   * twelve entries reached it and nothing else, two of them TRAPs written by
+   * *other* sessions, and the only remaining agent with a related subject was
+   * already at 189 of its 200 lines — so there was nowhere to put them and
+   * deleting them would have thrown away work somebody else had paid for.
+   *
+   * Same discipline as a `scrapped` bean, which `AGENTS.md` keeps rather than
+   * deletes so the next agent does not re-enter a dead end: the record of what
+   * was learned survives the mechanism that carried it. An archived entry is
+   * still found by grep, still readable, still a node of the graph — it simply
+   * is not in anybody's prompt.
+   */
+  archived: z.boolean().optional(),
+  /**
    * What this file IS, declared inside it.
    *
    * The same convention the workflow instances and todos use, and for the
@@ -208,6 +231,11 @@ export function memoryForRoles(entries: readonly MemoryNode[], roles: readonly s
  */
 export function memoryForAgent(entries: readonly MemoryNode[], agent: string): MemoryNode[] {
   return entries.filter((e) => {
+    // Archived first, and before the untagged rule: an archived entry carries
+    // no agent tag once its agent is gone, so checking it second would let the
+    // "untagged reaches everybody" clause hand it to every agent — the exact
+    // opposite of what archiving means.
+    if (e.archived) return false;
     const agents = e.tags.references.filter((r) => r.kind === AGENT_REF_KIND);
     return agents.length === 0 || agents.some((r) => r.id === agent);
   });

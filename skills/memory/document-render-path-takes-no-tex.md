@@ -4,8 +4,9 @@ id: document-render-path-takes-no-tex
 label: stable
 summary: "the document render path takes no TeX"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
-  - content-pipeline-navigator
   - platform-boundary-guard
 ---
 `content/pipeline/render-markdown.ts` assembles the folio to one Markdown

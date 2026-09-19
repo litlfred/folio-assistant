@@ -159,6 +159,10 @@ const RULES: Rule[] = [
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       "scripts/check-workflows.ts",          // YAML GitHub will actually parse
+      // Same question, same answer: it projects the PLATFORM's own term
+      // vocabulary — every class and property hanging off `FOLIO_NS` — and
+      // needs no folio to have anything to do.
+      "scripts/ns-export.ts",                // the folio namespace → a document that dereferences
 
       // `schemas/` is claimed wholesale by a core prefix rule, but the
       // directory holds schemas from all three layers. These four are the
@@ -211,7 +215,7 @@ const RULES: Rule[] = [
       "scripts/harness-dirs.ts",
       // The `@graphNode` declarations under `schemas/` and the gate over them.
       // Harness because the `schemas` GRAPH KIND is the harness's vocabulary —
-      // `cat-harness.json` declares it — even though the directory holds
+      // `harness.json` declares it — even though the directory holds
       // content-model schemas too. These read the declarations; they define no
       // part of the content model.
       "scripts/schema-nodes.ts",
@@ -350,6 +354,12 @@ const RULES: Rule[] = [
       // constant BOTH need cannot live in core without reintroducing the edge
       // it was extracted to remove.
       "schemas/namespaces.ts",
+      // What the terms in that namespace MEAN, and therefore the same
+      // argument one step along: a core placement made `ns-export.ts` — which
+      // is harness — import its definitions from core, the wrong-direction
+      // edge `namespaces.ts` was extracted to remove. Measured on first run:
+      // the prefix rule claimed it for core and the edge appeared immediately.
+      "schemas/vocabulary.ts",
     ],
     prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "skills/framework/", "skills/remote-packages/"],
   },

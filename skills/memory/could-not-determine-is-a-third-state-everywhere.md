@@ -4,6 +4,8 @@ id: could-not-determine-is-a-third-state-everywhere
 label: trap
 summary: "\"could not determine\" is a THIRD state, everywhere"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

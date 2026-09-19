@@ -36,13 +36,18 @@
       "findings": []
     },
     "actor-kind-fits-role": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "platform-boundary-guard",
+          "detail": "actor \"platform-boundary-guard\" is a agent and declares role \"code-reviewer\", which admits person. Either the role is too narrow — widen its `actorKinds` — or the actor cannot take this role on and its `roles` list is wrong. The descriptions of both are where to settle it."
+        }
+      ]
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 6,
+    "fail": 1,
     "n/a": 1,
     "unknown": 0
   }

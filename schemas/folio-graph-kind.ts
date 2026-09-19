@@ -30,11 +30,11 @@
 import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./cat-harness";
 // Straight from the namespace leaf, not via the harness: the IRI is the
 // platform's, not the harness's to re-export.
-import { FOLIO_NS } from "./namespaces";
+import { termIri } from "./namespaces";
 
 /** The one renderable graph kind. */
 export const FOLIO_GRAPH_KIND: GraphKindDef = {
-  type: `${FOLIO_NS}FolioGraph`,
+  type: termIri("FolioGraph"),
   renderable: true,
   summary: "Authored content, rendered to a website by the just-the-docs pipeline.",
 };

@@ -1,4 +1,50 @@
 <!--
+  The browser-tab icon, from the same declared mark the sidebar title
+  (`title.html`) renders — reused rather than looked up by its own
+  `browser-icon` role. There WAS a second role for exactly that, on
+  `mark-small` in `harness.json`, and it went unread: nothing in this
+  repo ever emitted a favicon at all, `rel="icon"` included. It also could
+  not have driven this lookup as declared — `imagesForRole()`
+  (`schemas/kg-node.ts`) requires an image's `layout` field, which neither
+  mark entry carries, so a `browser-icon`-role lookup returns nothing. Reusing
+  the already-resolved `icon` (the same field `title.html` reads) sidesteps
+  that and, more importantly, is what was asked for: the sidebar mark and the
+  tab icon are meant to be the SAME glyph, so one declaration driving both is
+  correct, not just convenient — flip `icon` in `harness.json` and both
+  follow in one edit, no template change needed.
+
+  SVG-only. No PNG/ICO fallback exists in the repo and none is generated
+  here — every browser this matters for (evergreen Chrome/Firefox/Edge, and
+  Safari since 16) reads `type="image/svg+xml"` directly; a raster fallback
+  would need generating actual image files, which is out of scope for this
+  change.
+
+  `relative_url`, same as `title.html` and `landing.html` — a bare
+  `/assets/...` 404s on the same baseurl this file's landing-panel fix exists
+  for.
+-->
+{%- assign h = site.data.harness -%}
+{%- comment -%}
+  TWO links, so the browser picks by size rather than us picking for it.
+
+  The unsized link is the full mark, whiskers and all, used wherever there is
+  room — a pinned tab, a bookmark tile, a home-screen icon. The `16x16` link is
+  the mark drawn for small sizes, which is what a tab strip actually shows.
+
+  The split exists because the whiskers are `stroke-width="2.4"` against a
+  120-unit viewBox: 0.32 px at 16 px and 0.48 px at 24 px. Sub-pixel at 1x, and
+  still under a whole device pixel at 2x, so at tab size they render as haze on
+  the face rather than as whiskers. One link would have meant choosing between
+  losing them everywhere and showing them where they cannot be drawn.
+{%- endcomment -%}
+{%- if h.icon.src -%}
+<link rel="icon" type="image/svg+xml" href="{{ h.icon.src | relative_url }}">
+{%- endif -%}
+{%- if h.smallIcon.src -%}
+<link rel="icon" type="image/svg+xml" sizes="16x16" href="{{ h.smallIcon.src | relative_url }}">
+{%- endif -%}
+
+<!--
   Site-wide styling for the BPMN workflow figures.
 
   just-the-docs pulls this file into <head> on every page. The diagrams are wide
@@ -176,7 +222,7 @@
   quiet part of its declared backdrop. Markup: `_includes/landing.html`.
 
   The region comes in as custom properties (`--fl-x` …) set per instance from
-  `cat-harness.json`, so this stylesheet knows nothing about where any
+  `harness.json`, so this stylesheet knows nothing about where any
   particular picture is quiet. That is the whole design: a downstream folio
   swaps the art and the numbers and needs no CSS.
 -->
@@ -185,6 +231,32 @@
   .folio-landing__art { display: block; }
   .folio-landing__art img {
     display: block; width: 100%; height: auto; border-radius: 8px;
+  }
+  /* Fade the backdrop so the overlaid text reads more clearly against it.
+     Scoped to the region-overlay case only: `--no-region` puts the words
+     BELOW the picture rather than over it, so there is nothing there for a
+     fade to help legibility of — it would just be a dimmer picture.
+
+     The two schemes need different values, not the same one, because
+     `opacity` does not tint toward a fixed colour: it blends the image with
+     whatever renders behind it, which is the page background — near-black
+     under this site's default `color_scheme: dark`, near-white under the
+     `data-fa-scheme="light"` override `docs-ui.js` sets (see docs-ui.css).
+     The overlay's ink is a fixed dark green (`#2f4636`, above) sized against
+     the cream thought-cloud in the artwork, so fading toward WHITE only
+     brightens that cloud and widens the contrast margin; fading toward BLACK
+     by the same amount darkens it and narrows it — enough fade in dark mode
+     reads as the ink sinking into a dimmed cloud rather than standing out
+     from one. Dark mode therefore gets the gentler value.
+
+     Chosen without being able to render the page (see the commit message) —
+     modest on both sides so the art is dimmed, not washed out: 0.9 by
+     default, 0.8 under the light override where fading only helps. */
+  .folio-landing:not(.folio-landing--no-region) .folio-landing__art img {
+    opacity: 0.9;
+  }
+  :root[data-fa-scheme="light"] .folio-landing:not(.folio-landing--no-region) .folio-landing__art img {
+    opacity: 0.8;
   }
   .folio-landing__text {
     position: absolute;

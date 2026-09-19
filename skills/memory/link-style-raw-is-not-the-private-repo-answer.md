@@ -4,6 +4,8 @@ id: link-style-raw-is-not-the-private-repo-answer
 label: stable
 summary: "link style: `raw` is not the private-repo answer"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

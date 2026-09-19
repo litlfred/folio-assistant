@@ -119,7 +119,7 @@ self-describing graph and a graph with documentation.
 
 The schema half is `scripts/harness-schema-export.ts`: the declaration's JSON
 Schema, published at the URL its own `$id` names, so a consumer holding an
-`cat-harness.json` it does not understand has somewhere to go. It is a third
+`harness.json` it does not understand has somewhere to go. It is a third
 rendering of `CatHarnessDeclarationSchema` beside the JSON-LD — **not a
 second authority**; the Zod is authoritative, per
 [`directory-conventions`](directory-conventions.md).
@@ -164,7 +164,7 @@ exist — a generated broken link is still a broken link, and a test now pins it
 
 ## Naming — artefacts take the repository's name, the config does not
 
-The **stub** (`cat-harness.json` → `stub`, defaulting to `name`) is the
+The **stub** (`harness.json` → `stub`, defaulting to `name`) is the
 filename stem of everything this instance publishes: `<stub>.jsonld`,
 `<stub>.schema.json`. One helper, `artefactStub()`, computes it, so the two
 exporters cannot disagree about what this instance is called.
@@ -174,7 +174,7 @@ smart-base does the same and derives its stub by stripping a prefix
 published path are one word.
 
 **The declaration file itself is deliberately NOT stub-named.** It stays
-`cat-harness.json`, exactly as smart-base's config stays `dak.json`. A
+`harness.json`, exactly as smart-base's config stays `dak.json`. A
 consumer bootstrapping into a repository it knows nothing about needs **one
 fixed filename to open first**; everything that config *describes* is free to
 be named, because by the time you fetch those you have read the config naming

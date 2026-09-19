@@ -4,9 +4,16 @@ id: re-measure-the-pipeline
 label: stable
 summary: "re-measure, do not quote"
 createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
+archived: "true"
 ---
+> **Archived 2026-09-19.** Its only reader, the `content-pipeline-navigator`
+> subagent, was retired. Kept rather than deleted: the record of what was
+> learned outlives the mechanism that carried it, which is why a bean is
+> `scrapped` and not removed. Not injected into any agent's prompt —
+> `platform-boundary-guard` was already at 189 of its 200 lines, so there
+> was nowhere to put it without pushing an entry past the line the harness
+> silently truncates at.
+
 | what | command |
 |---|---|
 | the pipeline's actual entrypoints | `ls content/pipeline/` |

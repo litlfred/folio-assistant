@@ -4,6 +4,8 @@ id: re-measure-the-platform-boundary
 label: stable
 summary: "re-measure, do not quote"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

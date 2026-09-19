@@ -4,6 +4,8 @@ id: there-is-no-recommendation-block-kind
 label: stable
 summary: "there is no `recommendation` block kind"
 createdAt: 2026-09-19
+roles:
+  - code-reviewer
 agents:
   - platform-boundary-guard
 ---

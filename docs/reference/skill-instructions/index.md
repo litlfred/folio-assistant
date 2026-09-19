@@ -76,7 +76,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/detangler-integration-watcher](detangler-integration-watcher.html) | `detangler-integration-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [/devils-advocate-watcher](devils-advocate-watcher.html) | `devils-advocate-watcher` | — | A concrete instance of [`integration-watcher`](integration-watcher.md). |
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
-| [Directory conventions](directory-conventions.html) | `directory-conventions` | — | Every instance carries an **`cat-harness.json`** at its repository root. It declares the directories |
+| [Directory conventions](directory-conventions.html) | `directory-conventions` | — | Every instance carries an **`harness.json`** at its repository root. It declares the directories the |
 | [/dispatch-agent](dispatch-agent.html) | `dispatch-agent` | — | The expensive failure mode of multi-agent dispatch is **going dark**: you |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [Editor](editor.html) | `editor` | — |  |

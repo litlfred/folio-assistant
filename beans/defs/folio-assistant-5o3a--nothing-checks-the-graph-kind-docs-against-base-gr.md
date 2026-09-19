@@ -1,10 +1,11 @@
 ---
 # folio-assistant-5o3a
 title: Nothing checks the graph-kind docs against BASE_GRAPH_KINDS — prose drifted through three clean merges
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-18T18:30:40Z
-updated_at: 2026-09-18T18:30:40Z
+updated_at: 2026-09-19T08:44:11Z
 ---
 
 
@@ -57,3 +58,76 @@ Two things to decide before writing it, neither obvious:
    argument for scoping there rather than grepping the file.
 
 Not urgent. The instance is fixed; this closes the class.
+
+## Worked 2026-09-19 — the guard, and the drift had already recurred
+
+### Two decisions, made rather than deferred
+
+The owner said "go", so both calls in this bean are made, with the reasoning
+written down so either is cheap to overrule.
+
+**1. Both directions hard.** Table-names-unknown-kind is the measured defect;
+registry-kind-missing-from-table is the same class reversed. Measured before
+choosing: **both directions were already clean**, so making the reverse hard
+costs nothing today and locks in a property the corpus has rather than demanding
+work to reach it. The price the bean named — every new kind lands with its prose
+in the same PR — is the right one in a repo whose recurring defect is two
+spellings of one fact. Softening it is one assertion.
+
+**2. Scoped to the table's first column**, as proposed. Verified this is
+structural rather than a dressed-up grep: the file holds exactly two pipe-tables
+and this one is located by its header row, `| kind | declared by | holds |
+renderable |`. A header that is absent or duplicated **throws** — a table the
+test cannot find is not an empty table, and a silent pass over nothing is the
+failure mode this bean is about.
+
+### The bean's own references had drifted, twice over
+
+- It names `schemas/agent-harness.ts`. That file does not exist; the registry is
+  `schemas/cat-harness.ts:166`.
+- `kg` was renamed to **`cat-harness`** on 2026-09-19, with `kg` kept in
+  `GRAPH_KIND_ALIASES` as a deprecated alias — the same class of change as #266,
+  hours before this guard was written.
+
+### The prose was fixed once and drifted again, in the file that DEFINES the map
+
+`BASE_GRAPH_KINDS`'s doc comment opened **"Four, and deliberately none of them
+renderable"** over a map of **fourteen**. This bean records #269 correcting the
+previous version of that same sentence — "Five" over a map of four. Corrected,
+then wrong again.
+
+So the number is **removed, not corrected**: the map is the only answer to how
+many, and the sentence now says so. Same fix `AGENTS.md` applied to
+`KG_CRITERIA`, and for the same reason — a count in prose is a claim that has to
+be maintained, it was maintained wrongly twice, and
+`Object.keys(BASE_GRAPH_KINDS).length` is checkable and free. Two stale `kg`
+references in the same comment fixed with it.
+
+### Verified by perturbing every direction
+
+| probe | result |
+|---|---|
+| add a `workplan` row the registry lacks | fail, naming `workplan` |
+| delete the `voices` row from the table | fail, naming `voices` |
+| rename the table header | **throws**, naming the line it looked for |
+| restored | 3 pass |
+
+`folio` is registered by the layer above (`schemas/folio-graph-kind.ts`), so the
+test imports it for that side effect — without it the registry omits `folio` and
+the table reads as over-documented, a false finding that would have made the
+first run a puzzle.
+
+### Not done
+
+Guarding `kg` → `cat-harness` in *prose* generally. The file legitimately
+discusses `kg` historically, and deliberately keeps the name for `kg:audit`,
+`kg-export`, the `kg-qa` sidecars and the `kg` QA family — so a text check there
+would read those as live claims, which is the trap scoping to the table avoids.
+
+## Done when
+
+- [x] a test asserts the table's first column against the registry, both directions
+- [x] the historical-prose exemption handled by scoping rather than by a skip-list
+- [x] the table-not-found case throws rather than passing vacuously
+- [x] the live drift in the registry's own doc comment fixed, and its count removed
+      rather than re-corrected

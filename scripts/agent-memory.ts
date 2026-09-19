@@ -185,6 +185,7 @@ export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
       references: agents,
     };
     const node: Record<string, unknown> = {
+      ...(fm["archived"] === "true" ? { archived: true } : {}),
       id: String(fm["id"] ?? basename(f, ".md")),
       summary: String(fm["summary"] ?? ""),
       comment: body.trim(),

@@ -46,7 +46,7 @@ function stub(): string {
 }
 
 function decl(): { canonicalUrl?: string; stub?: string; name?: string } {
-  const p = join(ROOT, "cat-harness.json");
+  const p = join(ROOT, "harness.json");
   if (!existsSync(p)) return {};
   try {
     return JSON.parse(readFileSync(p, "utf-8")) as ReturnType<typeof decl>;
@@ -170,7 +170,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "cat-harness-schema",
       title: "Instance declaration schema",
       description:
-        "The zod definition of `cat-harness.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+        "The zod definition of `harness.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
       install: { none: true },
       invoke: { shell: "bun run kg:schema" },
       io: {
