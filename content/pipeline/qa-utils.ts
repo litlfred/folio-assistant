@@ -36,6 +36,7 @@ import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
 import { loadBlockModuleSync, type BlockLoadFailure } from "./block-module";
+import { existingBlockQaPath } from "./qa-paths";
 
 // ── Hashing ─────────────────────────────────────────────────────
 
@@ -1048,7 +1049,6 @@ export function* walkBlocks(
         const root = full.slice(0, -3); // strip ".ts"
         const md = root + ".md";
         const lean = root + ".lean";
-        const qa = root + ".qa.json";
         let leanResolved: string | undefined = existsSync(lean) ? lean : undefined;
         if (!leanResolved) {
           // Parse the .ts source for a lean.ref URI and try Lake-tree
@@ -1066,7 +1066,15 @@ export function* walkBlocks(
           ts: full,
           md: mdResolved,
           lean: leanResolved,
-          qa: existsSync(qa) ? qa : undefined,
+          // Prefer the results-tree verdict, falling back to the legacy
+          // sibling (a downstream folio that has not migrated its verdicts
+          // yet) — see qa-paths.ts. `undefined` here means genuinely
+          // unaudited, never "looked in the wrong place": every consumer of
+          // `BlockPaths.qa` (e.g. qa-agent-drain-queue, semantic-cone) already
+          // treats an absent path as "no report", so this preserves that
+          // absent/present distinction exactly while widening where "present"
+          // is looked for.
+          qa: existingBlockQaPath(REPO_ROOT, root),
           companions: resolveCompanions(root, {
             ts: full,
             md: mdResolved,
