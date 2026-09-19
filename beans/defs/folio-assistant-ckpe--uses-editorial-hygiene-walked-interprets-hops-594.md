@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-08-24T20:27:21Z
-updated_at: 2026-08-30T07:30:49Z
+updated_at: 2026-09-19T00:41:01Z
 ---
 
 ## The ruling that settles it
@@ -100,3 +100,5 @@ and silently change `cone`/`out`/`in`/`outEdges` for existing callers.
 
 Now verified on all four gates, not two: tsc --noEmit clean, bun test
 1214/38/0, eslint clean, generated docs no diff.
+
+_2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. content/pipeline/qa-checkers-uses.ts no longer walks cone(other,'editorial') — it calls g.usesCone(other), and carries the reasoning inline at lines 180-196 including the owner's 2026-08-24 ruling and the measured cost (374 blocks, 594 reports, all interprets-only). This bean's defect is closed. NOT closing it — not my bean to resolve.
