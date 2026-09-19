@@ -87,3 +87,76 @@ That reading makes all three owner statements consistent — beans takes no stub
 The directories that MOVE are exactly the per-instance parts of `docs/`, `tools/`, `skills/`, `schemas/`, `library/`, `voices/`, `translations/`. The stores that DO NOT move are `beans/`, `todos/`, `fsh-guts/`, and `bootstrap/` is already where it will stay.
 
 That is a smaller migration than the first framing implied, and it removes the expensive half: no committed work-plan store moves, so no path that reads a bean or a todo changes, and `.beans.yml` and `WORKFLOW_DIR` — the two duplicates `check:harness-dirs` gates because neither can be removed — are untouched.
+
+## Measured — a config file that names the site root will NOT be caught by the code guard
+
+_2026-09-19T13:40Z, on `0f110b294`._ Pass 1 moved the site root by changing one
+function, and every one of 73 code references already went through
+`siteDir`/`siteDirFor`. That was true, and it is why the code half looked free.
+
+`.gitignore` is not code. It named the site root **five times**, every one
+still `docs/`, while `docs-site.yml` had already been pointed at
+`./folio-assistant/docs` — so it broke in both directions at once:
+
+- `!docs/assets/js/` and `!docs/_includes/*.js` stopped reaching the moved
+  tree, so the blanket `*.js` rule swallowed it. The three files already there
+  survive only because git does not untrack what is tracked; a NEW asset under
+  the site root would have been invisible to `git add`. **The comment beside
+  that negation records this exact failure happening before**, verbatim:
+  "`git add` reported nothing and the file would simply never have deployed."
+- `docs/.bundle/` and `docs/vendor/` stopped reaching it too, unignoring the
+  bundler gem tree — which the same comment prices at **3,080 files and 53 MB**
+  that any `git add -A` sweeps into a commit. Measured that morning;
+  reintroduced that afternoon by this move.
+
+**Neither was visible, and the reason generalises past `.gitignore`.** A
+working tree that predates the move still HAS a `docs/`, holding build
+residue, so the stale rules went on matching something. A rule that matches
+the wrong thing reads exactly like a rule that matches the right thing —
+which is why "I moved the site root and nothing broke" was not evidence.
+
+Fixed, and guarded in `site-dir-single-answer.test.ts`: it asserts what git
+DOES to a probe path (assets stay addable, build state stays ignored) rather
+than how the rule is spelled, and it is perturbed both ways — reverting either
+half fails it alone.
+
+### What this means for the `cat-harness` rename, which is the next step
+
+The guard composes its probes from `siteDirFor(ROOT)`, so renaming the stub
+flips it to red until `.gitignore` follows. That is the intended behaviour and
+should not be worked around.
+
+Checked each non-`.ts` file that can name the site root, rather than assuming:
+
+- [ ] **`.github/workflows/*.yml` — outstanding, and the largest.**
+      `docs-site.yml` carries `folio-assistant/docs` in five places, including
+      a literal `source: ./folio-assistant/docs` and the `paths:` trigger that
+      decides whether the workflow fires AT ALL; `feature-staging.yml` the
+      same. A stale `paths:` is the `xom7` shape — the site silently stops
+      redeploying, and nothing says so.
+- [x] **`eslint.config.mjs` — already fixed in pass 1, and it is the pattern
+      to copy.** Its ignore glob was `docs/**/_includes/`, which broke the
+      moment the stub inverted and got a Jekyll Liquid fragment linted as
+      TypeScript. It is now `**/docs/**/_includes/`, which the comment states
+      "survives the site root moving in EITHER direction" — a glob loose
+      enough to be indifferent to the layout beats a literal that has to be
+      maintained, wherever correctness does not need the precision.
+- [x] `.gitignore` — fixed and guarded above.
+
+**`folio-assistant/docs/_config.yml` is a TRAP, not a to-do.** It carries
+`baseurl: "/folio-assistant"`, and I nearly listed it as something the rename
+must update. It must NOT be touched. `baseurl` is the PUBLISHED base path,
+which on GitHub Pages follows the REPOSITORY name — it is unrelated to the
+stub directory the sources happen to sit in. Renaming `folio-assistant/` to
+`cat-harness/` changes where the sources live and nothing about where they
+publish. Anyone running a find-and-replace of `folio-assistant` across the
+repo breaks every published URL in one commit, and the site would still build
+green.
+
+That is the same `canonicalUrl`-vs-path distinction the declaration already
+draws, arriving in a file that is not the declaration.
+
+The lesson to carry, not just the list: **pass 1's "it was one function" was a
+measurement over `.ts` only.** Every config format in the repo spells the site
+root a second time, none is covered by the guard that made pass 1 look cheap,
+and one of them looks like it needs updating when it must be left alone.
