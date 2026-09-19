@@ -118,17 +118,17 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T01:20:01.531Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b2b9934ae577a6647365a99ef5e0a1f5b73735d6",
-  "sourceCommitSha": "b2b9934ae577a6647365a99ef5e0a1f5b73735d6",
-  "sourceCommitAt": "2026-09-19T01:18:22Z",
+  "generatedAt": "2026-09-19T01:32:18.269Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6f0fd1b2da2b87c5c013f784e3bd75260e6673e6",
+  "sourceCommitSha": "6f0fd1b2da2b87c5c013f784e3bd75260e6673e6",
+  "sourceCommitAt": "2026-09-19T01:30:52Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 149,
+    "Skill": 174,
     "Actor": 24,
     "Capability": 23,
     "Role": 64,
-    "SkillPackage": 14,
+    "SkillPackage": 15,
     "Process": 30,
     "SequenceFlow": 416,
     "ProcessNode": 387,
@@ -185,35 +185,35 @@
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 149
+      "occurrences": 174
     },
     {
       "term": "hasIOContract",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 149
+      "occurrences": 174
     },
     {
       "term": "instructions",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 149
+      "occurrences": 174
     },
     {
       "term": "lines",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 149
+      "occurrences": 174
     },
     {
       "term": "packagePaths",
       "onTypes": [
         "Skill"
       ],
-      "occurrences": 149
+      "occurrences": 174
     },
     {
       "term": "source",
@@ -315,7 +315,7 @@
         "Directory",
         "SkillPackage"
       ],
-      "occurrences": 21
+      "occurrences": 22
     },
     {
       "term": "meta",
@@ -336,7 +336,7 @@
       "onTypes": [
         "SkillPackage"
       ],
-      "occurrences": 14
+      "occurrences": 15
     },
     {
       "term": "renderable",
@@ -850,6 +850,406 @@
       "hasInstructions": true,
       "hasIOContract": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-publishing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/three-literals-worth-recognising-in-new-code",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "three-literals-worth-recognising-in-new-code",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/three-literals-worth-recognising-in-new-code.md",
+      "lines": 20,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/three-literals-worth-recognising-in-new-code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/the-readme-generator-that-replaced-the-whole-file",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "the-readme-generator-that-replaced-the-whole-file",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/the-readme-generator-that-replaced-the-whole-file.md",
+      "lines": 31,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/the-readme-generator-that-replaced-the-whole-file"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/the-builder-shim-and-why-folio-init-is-generic",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "the-builder-shim-and-why-folio-init-is-generic",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/the-builder-shim-and-why-folio-init-is-generic.md",
+      "lines": 22,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/the-builder-shim-and-why-folio-init-is-generic"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/two-load-bearing-properties-of-ci-health-yml",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "two-load-bearing-properties-of-ci-health-yml",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/two-load-bearing-properties-of-ci-health-yml.md",
+      "lines": 19,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/two-load-bearing-properties-of-ci-health-yml"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/qa-sidecars",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "qa-sidecars",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/qa-sidecars.md",
+      "lines": 21,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/qa-sidecars"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/could-not-determine-is-a-third-state-everywhere",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "could-not-determine-is-a-third-state-everywhere",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/could-not-determine-is-a-third-state-everywhere.md",
+      "lines": 22,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/could-not-determine-is-a-third-state-everywhere"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/the-stages-in-order",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "the-stages-in-order",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/the-stages-in-order.md",
+      "lines": 19,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/the-stages-in-order"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/schema-cannot-catch-a-profile-violation",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "schema-cannot-catch-a-profile-violation",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/schema-cannot-catch-a-profile-violation.md",
+      "lines": 20,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/schema-cannot-catch-a-profile-violation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/the-shape-of-every-defect-here",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "the-shape-of-every-defect-here",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/the-shape-of-every-defect-here.md",
+      "lines": 13,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/the-shape-of-every-defect-here"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/why-the-watchdog-exists",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "why-the-watchdog-exists",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/why-the-watchdog-exists.md",
+      "lines": 26,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/why-the-watchdog-exists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/the-complement",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "the-complement",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/the-complement.md",
+      "lines": 14,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/the-complement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/link-style-raw-is-not-the-private-repo-answer",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "link-style-raw-is-not-the-private-repo-answer",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/link-style-raw-is-not-the-private-repo-answer.md",
+      "lines": 20,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/link-style-raw-is-not-the-private-repo-answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/the-check-and-its-three-rules",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "the-check-and-its-three-rules",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/the-check-and-its-three-rules.md",
+      "lines": 21,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/the-check-and-its-three-rules"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/two-workflows-fail-by-design-here-do-not-fix-them-by-dispatc",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "two-workflows-fail-by-design-here-do-not-fix-them-by-dispatc",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/two-workflows-fail-by-design-here-do-not-fix-them-by-dispatc.md",
+      "lines": 22,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/two-workflows-fail-by-design-here-do-not-fix-them-by-dispatc"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/re-measure-ci-health",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "re-measure-ci-health",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/re-measure-ci-health.md",
+      "lines": 24,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/re-measure-ci-health"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/who-owns-which-file-the-split-agents-get-wrong",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "who-owns-which-file-the-split-agents-get-wrong",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/who-owns-which-file-the-split-agents-get-wrong.md",
+      "lines": 29,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/who-owns-which-file-the-split-agents-get-wrong"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/compose-nothing-resolve-everything",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "compose-nothing-resolve-everything",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/compose-nothing-resolve-everything.md",
+      "lines": 23,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/compose-nothing-resolve-everything"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/document-render-path-takes-no-tex",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "document-render-path-takes-no-tex",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/document-render-path-takes-no-tex.md",
+      "lines": 18,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/document-render-path-takes-no-tex"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/re-measure-the-pipeline",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "re-measure-the-pipeline",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/re-measure-the-pipeline.md",
+      "lines": 22,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/re-measure-the-pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/adding-a-block-kind-is-30-files-not-one",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "adding-a-block-kind-is-30-files-not-one",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/adding-a-block-kind-is-30-files-not-one.md",
+      "lines": 19,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/adding-a-block-kind-is-30-files-not-one"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/the-commands-that-do-exist-here",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "the-commands-that-do-exist-here",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/the-commands-that-do-exist-here.md",
+      "lines": 22,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/the-commands-that-do-exist-here"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/there-is-no-recommendation-block-kind",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "there-is-no-recommendation-block-kind",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/there-is-no-recommendation-block-kind.md",
+      "lines": 19,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/there-is-no-recommendation-block-kind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/adapter-vs-profile",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "adapter-vs-profile",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/adapter-vs-profile.md",
+      "lines": 26,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/adapter-vs-profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/uses-is-editorial-and-immediate-neighbours-only",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "uses-is-editorial-and-immediate-neighbours-only",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/uses-is-editorial-and-immediate-neighbours-only.md",
+      "lines": 14,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/uses-is-editorial-and-immediate-neighbours-only"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/re-measure-the-platform-boundary",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "re-measure-the-platform-boundary",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory"
+      ],
+      "packagePaths": [
+        "skills/memory"
+      ],
+      "instructions": "skills/memory/re-measure-the-platform-boundary.md",
+      "lines": 22,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/re-measure-the-platform-boundary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#skill/html-rendering-qc",
@@ -3973,6 +4373,14 @@
       "path": "skills/remote-packages",
       "hasManifest": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/remote-packages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/memory",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
+      "name": "memory",
+      "path": "skills/memory",
+      "hasManifest": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/memory"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/kg/folio-assistant.jsonld#package/framework",
@@ -19458,8 +19866,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "83e0400500e1b3e1cd57ec64affe9e4e553d5318",
+    "sha": "20f81ae692375bef770e445e4b002d2701f96f57",
     "pr": "314/merge",
-    "run": "35412245222"
+    "run": "35412891517"
   }
 }
