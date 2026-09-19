@@ -300,6 +300,25 @@
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
 <link rel="stylesheet" href="/folio-assistant/assets/css/themes.css">
+<!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
+     `avatars:css:check` fails the build when it is stale. One stylesheet
+     rather than 68 assets: the glyph is a mask and the colour is a property,
+     so a scheme swap is a custom property and the trash state is a selector. -->
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css">
+
+<!--
+  The kinds THIS INSTANCE DECLARES, for the avatar fan.
+
+  Owner: "shows the DECLared kinds for that instance, not inheritance." Written
+  by `sync-docs-harness.ts` from the instance's own `harness.json`, BEFORE
+  `resolveDirectories` overlays a dependency's. The effective set is strictly
+  larger, and showing it would name kinds this repository never claimed.
+
+  Inline rather than a fetched URL, unlike the todo index and the discarded
+  document: this is a dozen short strings, it is needed to render the fan at
+  all, and a fetch for that would put a spinner in front of a badge.
+-->
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","fsh-guts","health","library","qa","schemas","todos","tools","translation-sources","uploads","voices"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
 <script src="/folio-assistant/assets/js/docs-ui.js" defer></script>
@@ -779,7 +798,7 @@ expands it to full width.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35450722811"><code>51b9989</code></a> &middot; 2026-09-19T15:06:19Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35452392669"><code>1d6ec3d</code></a> &middot; 2026-09-19T15:38:15Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
