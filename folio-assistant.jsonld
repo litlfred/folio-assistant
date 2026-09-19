@@ -239,11 +239,11 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T07:39:25.204Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/39e41161163a7c549aa09fd53677267aae719285",
-  "sourceCommitSha": "39e41161163a7c549aa09fd53677267aae719285",
-  "sourceCommitAt": "2026-09-19T09:37:56+02:00",
-  "sourceTreeDirty": false,
+  "generatedAt": "2026-09-19T07:42:13.021Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dc08354b1e2c08c73477699b5f62a6a1dc3345b4",
+  "sourceCommitSha": "dc08354b1e2c08c73477699b5f62a6a1dc3345b4",
+  "sourceCommitAt": "2026-09-19T09:40:51+02:00",
+  "sourceTreeDirty": true,
   "counts": {
     "Skill": 150,
     "Actor": 25,
@@ -2686,7 +2686,6 @@
       "hasCapability": [],
       "roleName": [
         "authoring-agent",
-        "editor",
         "sibling-session"
       ],
       "permissionName": [
@@ -8380,7 +8379,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Personas and scenarios",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
       "implementedBy": [
@@ -8400,7 +8399,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Business processes · BPMN 2.0",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
       "implementedBy": [
@@ -8420,7 +8419,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Decision logic · DMN tables",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
       "implementedBy": [
@@ -8440,7 +8439,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Data dictionary and core data elements",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
       "implementedBy": [
@@ -8460,7 +8459,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Indicators and requirements",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
       "implementedBy": [
@@ -8486,7 +8485,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Terminology bindings",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Terminologist",
       "implementedBy": [
@@ -8574,7 +8573,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Assemble and validate the DAK",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
       "implementedBy": [
@@ -11049,7 +11048,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Author FSH profiles",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/FHIR%20modeller",
       "implementedBy": [
@@ -11711,7 +11710,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#ProcessNode",
       "name": "Attach the evidence to the recommendation",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Author%20/%20guideline%20developer%20(person)",
       "implementedBy": [
@@ -16901,8 +16900,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "39e41161163a7c549aa09fd53677267aae719285",
+    "sha": "dc08354b1e2c08c73477699b5f62a6a1dc3345b4",
     "pr": "main",
-    "run": "35429850965"
+    "run": "35429983709"
   }
 }
