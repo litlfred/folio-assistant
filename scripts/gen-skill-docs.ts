@@ -87,6 +87,45 @@ const GROUPS: Group[] = [
   { category: "Paper adapter (folio-paper-adapter)", dir: join(REPO_ROOT, "skills", "folio-paper-adapter"), repoPrefix: "skills/folio-paper-adapter" },
 ];
 
+/**
+ * Inline a split skill's parts into its published page.
+ *
+ * A long skill may be an entry point plus siblings under `<name>/`, read on
+ * demand — the pattern `AGENTS.md` prescribes for `MEMORY.md`, and what
+ * `kg-audit`'s `skill-not-a-document` pushes a 1281-line skill towards. That
+ * split exists to bound what an AGENT loads at invocation time. It is not a
+ * reason to fragment the human-facing reference, where a reader browsing one
+ * skill wants the whole of it.
+ *
+ * So the parts are appended here rather than published as pages of their own.
+ * Publishing them separately would also collide: this output directory is
+ * flat, and `integration-watcher/idle-backlog.md` shares a basename with the
+ * real `idle-backlog` skill.
+ *
+ * Found by measurement, not design: splitting five skills silently dropped
+ * ~2,500 lines from the published site, and left every entry point linking to
+ * a path that 404s there. The link rewrite below is the other half — a
+ * relative `](name/part.md)` becomes an in-page anchor.
+ */
+function withParts(dir: string, name: string, body: string): string {
+  const partsDir = join(dir, name);
+  if (!existsSync(partsDir)) return body;
+  const parts = readdirSync(partsDir).filter((f) => f.endsWith(".md")).sort();
+  if (parts.length === 0) return body;
+
+  // `](integration-watcher/lifecycle.md)` -> `](#part-lifecycle)`
+  let out = body.replace(
+    new RegExp(`\\]\\(${name}/([\\w.-]+)\\.md\\)`, "g"),
+    (_m, part: string) => `](#part-${part})`,
+  );
+  for (const part of parts) {
+    const stem = basename(part, ".md");
+    const text = stripFrontMatter(readFileSync(join(partsDir, part), "utf-8")).replace(/^\n+/, "");
+    out += `\n\n---\n\n<a id="part-${stem}"></a>\n\n${text}`;
+  }
+  return out;
+}
+
 /** Strip a leading YAML front-matter block (`---\n…\n---`) if present. */
 function stripFrontMatter(text: string): string {
   if (text.startsWith("---")) {
@@ -134,7 +173,7 @@ function main(): void {
         continue;
       }
       const raw = readFileSync(join(group.dir, file), "utf-8");
-      const body = stripFrontMatter(raw).replace(/^\n+/, "");
+      const body = withParts(group.dir, name, stripFrontMatter(raw).replace(/^\n+/, ""));
       const title = deriveTitle(body, name);
 
       const hasSchema = existsSync(join(SCHEMA_DIR, `${name}.md`));
