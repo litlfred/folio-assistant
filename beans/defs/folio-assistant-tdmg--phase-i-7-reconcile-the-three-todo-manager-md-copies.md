@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tdmg
 title: Phase I.7 — reconcile the three `todo-manager.md` copies (#223)
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-09-19T09:54:27Z
+updated_at: 2026-09-19T10:20:05Z
 ---
 
 `AGENTS.md` records three copies, diverging two ways:
@@ -196,3 +196,70 @@ diff is unreviewable, and the stub should land against the split it points at.
 `.claude/skills/local/bean-coordination.md` (62) remain unservable duplicates.
 Their four unique rules are now safely in the servable copy, so stubbing them
 no longer loses anything — which was the blocker.
+
+## Done 2026-09-19 — the local copies are stubs
+
+`.claude/skills/local/todo-manager.md` 369 → **29** lines and
+`.claude/skills/local/bean-coordination.md` 62 → **21**, both thin pointers at
+their `skills/folio-core/` counterparts, following the `CLAUDE.md` / `GEMINI.md`
+pattern this repo already uses. ~380 lines of unservable duplicate gone.
+
+### One check I had not run, and it changed the plan
+
+I had verified `todo-manager`'s unique content in both directions and said
+stubbing "loses nothing". **I had never measured `bean-coordination` that way.**
+It turned out to carry five sections the servable copy lacked, including a rule
+worth keeping:
+
+> **If you stop mid-flight, leave the bean `in-progress` with a note saying
+> where you got to**, so the next session resumes instead of re-deriving.
+
+Checked whether that was covered elsewhere before porting: `continual-progress`
+covers making in-flight work trackable and `bean-blocking` covers a *block* with
+its expiry and handoff, but neither covers simply stopping. Ported, along with
+the four-step Prime → Claim → Work → Hand-off lifecycle and the parallel-sessions
+problem statement that motivates it. `skills/folio-core/bean-coordination.md` is
+now 166 lines — inside both thresholds.
+
+`## Session-start coordination sweep` was **not** ported: measured against
+`AGENTS.md` §"At session start", which already carries every item in it.
+
+### A false claim that was published, not just written
+
+The old local `bean-coordination.md` described *itself* as "the generic source of
+truth" from which downstream repos sync. `skills/folio-core/bean-coordination.md`
+now carries a §"Which copy is canonical" saying the opposite, with the
+measurement.
+
+Worse, `gen-skill-docs.ts` **emitted** a banner onto the published pages reading:
+
+> "Two different skills share this name … They are **not** copies: measured
+> 2026-09-19 they differ by 202 diff lines … Which is canonical is an open
+> question … **Read both before relying on either.**"
+
+Every clause of that is now false, and it was live on the docs site. Replaced
+with a **directional** banner: the canonical page says it is what `skill_fetch`
+serves and to never edit the stub; the stub page says it is a stub and names the
+real one. A generator that publishes a stale claim about which document governs
+is worse than one that publishes no banner, because a reader acts on it.
+
+**And a gap found while fixing it:** `SAME_BASENAME_DIFFERENT_DOCUMENT` held
+`todo-manager` only. `bean-coordination` collides identically and had **no
+banner at all**, so a reader landing on either page could not tell the other
+existed. Added.
+
+Three stale comments in `gen-skill-docs.ts` corrected too — they quoted "323 and
+356 lines, 202 diff lines" and called the canonical question open.
+
+### Verification
+
+`tsc` 0 · `eslint` 0 · `bun test` 2344 pass / 0 fail · all nine gates from
+`code-quality-gates.yml` · `gen-skill-docs --check` clean · `kg:audit:check`
+clean. Both banner directions confirmed by reading the generated pages rather
+than by trusting the template.
+
+### What this bean did NOT settle
+
+Nothing checks that two hand-authored copies of one skill agree with each other
+— it is only that there are no longer two. Re-adding content to a stub would be
+caught by review, not by a gate.
