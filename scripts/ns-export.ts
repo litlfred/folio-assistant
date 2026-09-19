@@ -51,7 +51,21 @@ const OWL = "http://www.w3.org/2002/07/owl#";
 
 /** The namespace with its trailing `#` removed — the DOCUMENT, not the stem. */
 export function vocabularyIri(): string {
-  return LEGACY_FOLIO_NS.replace(/#$/, "");
+  // `<base>/ns/vocabulary.jsonld`, NOT `<base>/ns`.
+  //
+  // `schemas/jsonld.ts` publishes the content `@context` at
+  // `<base>/ns/content/v1.jsonld`, so `<base>/ns` has to be a DIRECTORY. A
+  // static host cannot serve a file and a directory at one path, and the
+  // first version of this exporter wrote the union document straight to
+  // `<base>/ns` — which would have made the content context unreachable the
+  // day it deployed.
+  //
+  // Nothing is lost by moving: no term hangs off this document. Every term
+  // lives in its layer's namespace (`bootstrap/ns`, `cat-harness/ns`,
+  // `folio-assist-core/ns`), each of which IS a file and dereferences. The
+  // union is a convenience for a person reading the whole vocabulary at once,
+  // so it can sit anywhere that resolves.
+  return `${LEGACY_FOLIO_NS.replace(/ns#$/, "")}ns/vocabulary.jsonld`;
 }
 
 /**

@@ -384,9 +384,12 @@ describe("every self-URL the export publishes resolves to something published", 
       // lives in the document `<base>/ns`. The `.jsonld` and `.json` are the
       // canonical-extension and correct-Content-Type aliases, exactly as for
       // the graph itself.
-      "ns",
-      "ns.jsonld",
-      "ns.json",
+      // `ns/` is a directory: the union vocabulary and the content context
+      // live inside it. There is deliberately no file at `ns` — see
+      // `vocabularyIri()`.
+      "ns/vocabulary.jsonld",
+      "ns/vocabulary.json",
+      "ns/content/v1.jsonld",
     ]);
     // One document per NAMESPACE. Splitting `folio:` into three made three
     // new stems, and a stem nothing serves is the defect this whole check
