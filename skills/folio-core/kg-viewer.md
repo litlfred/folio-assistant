@@ -177,7 +177,7 @@ same holds for the agent that wrote it. "The HTML looks right" is not evidence
 that the document loads, that an edge is clickable, or that a failed fetch says
 so.
 
-Drive the real page in a real browser. `tests/kg-viewer.e2e.ts` is the worked
+Drive the real page in a real browser. `test/kg-viewer.e2e.ts` is the worked
 example, and it asserts against the *generated* artefacts rather than a fixture,
 so a test cannot agree with a stand-in while disagreeing with what ships. It
 generates them if absent, so the suite runs from a clean checkout.

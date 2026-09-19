@@ -39,7 +39,7 @@
  * `skills/folio-core/deletion-requires-confirmation.md`, and bean `plj1` for
  * what a workflow that tidies up on its own initiative actually costs.
  *
- * @module tests/health/checks
+ * @module test/health/checks
  */
 
 import type {

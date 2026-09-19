@@ -1,14 +1,14 @@
 {
   "$schema": "health-report/v1",
   "producer": {
-    "script": "tests/health/run.ts",
-    "script_hash": "be4f1d686def"
+    "script": "test/health/run.ts",
+    "script_hash": "77270e6b9179"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-19T10:31:57.916Z",
+  "updated_at": "2026-09-19T10:52:12.838Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,7 +34,7 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 326525569,
+          "value": 354302818,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
@@ -47,7 +47,7 @@
       ],
       "findings": [
         {
-          "summary": "9 staging preview(s) total 311.4 MB, over the 100 MB warning point.",
+          "summary": "9 staging preview(s) total 337.9 MB, over the 100 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
@@ -62,18 +62,23 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 4,
+          "value": 5,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 155992186,
+          "value": 194711052,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
+        {
+          "summary": "`STAGING/claude-brave-hypatia-r820sf` (37.2 MB, 778 files) matches no open pull request.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-brave-hypatia-r820sf` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+        },
         {
           "summary": "`STAGING/claude-d2kp-live-verdicts` (36.8 MB, 787 files) matches no open pull request.",
           "severity": "minor",
@@ -85,9 +90,9 @@
           "action": "Ask the owner whether the review of `claude-ecstatic-goldberg-eroyaz` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
         },
         {
-          "summary": "`STAGING/claude-fervent-mccarthy-nw4olk` (37.4 MB, 778 files) matches no open pull request.",
+          "summary": "`STAGING/claude-health-checks` (37.1 MB, 781 files) matches no open pull request.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-fervent-mccarthy-nw4olk` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `claude-health-checks` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
         },
         {
           "summary": "`STAGING/claude-placement-skill` (37.1 MB, 779 files) matches no open pull request.",
@@ -133,38 +138,38 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 35232066,
+          "value": 35328517,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 383278952,
+          "value": 397754462,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 360448000,
+          "value": 374104064,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 46,
+          "value": 49,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 10.88,
+          "value": 11.26,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 365.5 MB against 33.6 MB of tracked content — 10.9x, in 46 pack(s).",
+          "summary": "`.git` is 379.3 MB against 33.7 MB of tracked content — 11.3x, in 49 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -208,19 +213,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 267,
+          "value": 268,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 83,
+          "value": 82,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 184,
+          "value": 186,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -239,7 +244,7 @@
       ],
       "findings": [
         {
-          "summary": "184 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "186 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."

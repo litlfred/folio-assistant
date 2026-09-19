@@ -24,7 +24,7 @@
  * would go wrong on the day the store moves — which is the day somebody most
  * needs the sweep to still work.
  *
- * @module tests/health/probes
+ * @module test/health/probes
  */
 
 import { spawnSync } from "node:child_process";

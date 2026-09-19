@@ -109,7 +109,7 @@ export type DecisionOutcome = (typeof DECISION_OUTCOMES)[number];
  *
  * Every kind here is a node something else in this repo already owns, so a
  * citation is resolvable rather than decorative: `witness` a test result under
- * `tests/results/`, `finding` another finding in the same review, `qa-report` a
+ * `test/results/`, `finding` another finding in the same review, `qa-report` a
  * `.qa.json` / `.kg-qa.json` / `.script-qa.json` sidecar, `block` a content
  * label (`thm:foo`), `file` a repo-relative path with an optional line range,
  * `bib` a key in the folio's references, `workflow-instance` a running process

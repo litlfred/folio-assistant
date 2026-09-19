@@ -495,10 +495,10 @@ opposite defect — one that fires constantly and fails every time.
 ## Repository health — the same shape, one level out
 
 `check:ci-health` asks whether the **workflows** pass. `bun run health`
-(`tests/health/`, daily via `.github/workflows/health-check.yml`) asks about
+(`test/health/`, daily via `.github/workflows/health-check.yml`) asks about
 the **repository**: how much of `gh-pages` the review previews occupy, how big
 a clone costs, whether the work plan has duplicates or unhonoured claims.
-Results are committed under `tests/health/results/`, declared in
+Results are committed under `test/health/results/`, declared in
 `harness.json` as the `health` graph, and carry every threshold's **basis** —
 structurally, so a check cannot ship a bare number.
 
