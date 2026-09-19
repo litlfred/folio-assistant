@@ -147,8 +147,43 @@ async function fetchHeadSha(): Promise<string | undefined> {
   }
 }
 
+/**
+ * The paths the head commit changed, or `undefined` if that cannot be known
+ * completely.
+ *
+ * **The cap matters more than the request.** GitHub's commit endpoint returns
+ * at most 300 entries in `files`, and it does not say when it truncated. A
+ * short list makes a matching path look absent, which flips "this workflow
+ * ran" to "no run judged the head" — a false fire, from the one direction this
+ * module refuses. So a list at or above the cap is treated as unknown, and a
+ * large commit simply gets silence.
+ */
+const GITHUB_COMMIT_FILES_CAP = 300;
+
+async function fetchChangedFiles(sha: string): Promise<string[] | undefined> {
+  if (!slug) return undefined;
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${slug}/commits/${sha}`, {
+      headers: {
+        accept: "application/vnd.github+json",
+        ...(token ? { authorization: `Bearer ${token}` } : {}),
+      },
+      signal: AbortSignal.timeout(20_000),
+    });
+    if (!res.ok) return undefined;
+    const body = (await res.json()) as { files?: Array<{ filename?: string }> };
+    const files = (body.files ?? []).map((f) => f.filename).filter((f): f is string => !!f);
+    if (files.length >= GITHUB_COMMIT_FILES_CAP) return undefined;
+    return files;
+  } catch {
+    return undefined;
+  }
+}
+
 const { runs, unreachable } = await fetchRuns();
 const headSha = unreachable ? undefined : await fetchHeadSha();
+const changedFiles = headSha ? await fetchChangedFiles(headSha) : undefined;
 const repoRoot = (() => {
   try {
     return git(["rev-parse", "--show-toplevel"]);
@@ -201,7 +236,7 @@ function workflowChangedAt(path: string): string | undefined {
 function triggersOnPush(p: string): boolean | undefined {
   if (!p) return undefined;
   try {
-    return pushTriggerOf(readFileSync(resolve(repoRoot, p), "utf8"));
+    return pushTriggerOf(readFileSync(resolve(repoRoot, p), "utf8"), { branch, changedFiles });
   } catch {
     return undefined;
   }

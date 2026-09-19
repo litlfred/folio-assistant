@@ -116,3 +116,90 @@ describe("triggersOnPush distinguishes an unfiltered push from a filtered one", 
     });
   }
 });
+
+/**
+ * Bean `g62s`, second pass. The conservative version answered `undefined` for
+ * any filtered push trigger, which made `headUnjudged` inert: 0 of this repo's
+ * 36 workflows were flaggable. Evaluating the filters is what makes it fire.
+ *
+ * The patterns below are the REAL ones, copied from the four workflows that
+ * declare a filtered push on `main`. A matcher that passes invented globs and
+ * fails these would be worse than the silence it replaced.
+ */
+describe("a filtered push trigger is decided, not waved away", () => {
+  const branchOnly = "on:\n  push:\n    branches: [main]\njobs: {}\n";
+
+  test("branches-only is decidable with no path data at all", () => {
+    // `code-quality-gates.yml` is this shape, and it is the repo's main gate.
+    expect(pushTriggerOf(branchOnly, { branch: "main" })).toBe(true);
+    expect(pushTriggerOf(branchOnly, { branch: "release" })).toBe(false);
+  });
+
+  test("branches-only without a branch still claims nothing", () => {
+    expect(pushTriggerOf(branchOnly)).toBeUndefined();
+  });
+
+  const docsSite =
+    "on:\n  push:\n    branches: [main]\n    paths:\n" +
+    "      - 'docs/**'\n      - 'schemas/**'\n      - '.github/workflows/docs-site.yml'\njobs: {}\n";
+
+  test("docs-site: a docs change runs it, a src change does not", () => {
+    const ctx = (files: string[]) => ({ branch: "main", changedFiles: files });
+    expect(pushTriggerOf(docsSite, ctx(["docs/index.md"]))).toBe(true);
+    expect(pushTriggerOf(docsSite, ctx(["docs/a/b/c.md"]))).toBe(true);
+    expect(pushTriggerOf(docsSite, ctx([".github/workflows/docs-site.yml"]))).toBe(true);
+    expect(pushTriggerOf(docsSite, ctx(["src/index.ts"]))).toBe(false);
+    expect(pushTriggerOf(docsSite, ctx(["src/a.ts", "docs/b.md"]))).toBe(true);
+  });
+
+  test("the wrong branch short-circuits before paths are consulted", () => {
+    expect(pushTriggerOf(docsSite, { branch: "other", changedFiles: ["docs/x.md"] })).toBe(false);
+  });
+
+  const jsonld =
+    "on:\n  push:\n    paths:\n      - 'content/**/*.ts'\n" +
+    "      - 'schemas/jsonld.ts'\n      - 'library/**/structure.json'\njobs: {}\n";
+
+  test("`a/**/b` matches zero directories as well as many", () => {
+    // The case a naive `.*` gets wrong: GitHub runs this for `content/a.ts`.
+    const ctx = (files: string[]) => ({ changedFiles: files });
+    expect(pushTriggerOf(jsonld, ctx(["content/a.ts"]))).toBe(true);
+    expect(pushTriggerOf(jsonld, ctx(["content/deep/er/a.ts"]))).toBe(true);
+    expect(pushTriggerOf(jsonld, ctx(["library/x/structure.json"]))).toBe(true);
+    expect(pushTriggerOf(jsonld, ctx(["library/structure.json"]))).toBe(true);
+  });
+
+  test("`*` does not cross a slash", () => {
+    const one = "on:\n  push:\n    paths: ['content/*.ts']\njobs: {}\n";
+    expect(pushTriggerOf(one, { changedFiles: ["content/a.ts"] })).toBe(true);
+    expect(pushTriggerOf(one, { changedFiles: ["content/deep/a.ts"] })).toBe(false);
+  });
+
+  test("an exact path is exact", () => {
+    expect(pushTriggerOf(jsonld, { changedFiles: ["schemas/jsonld.ts"] })).toBe(true);
+    expect(pushTriggerOf(jsonld, { changedFiles: ["schemas/jsonld.ts.bak"] })).toBe(false);
+  });
+
+  test("paths without the file list claims nothing", () => {
+    expect(pushTriggerOf(jsonld, { branch: "main" })).toBeUndefined();
+  });
+
+  test("paths-ignore runs unless EVERY changed file is ignored", () => {
+    const ig = "on:\n  push:\n    paths-ignore: ['docs/**']\njobs: {}\n";
+    expect(pushTriggerOf(ig, { changedFiles: ["docs/a.md"] })).toBe(false);
+    expect(pushTriggerOf(ig, { changedFiles: ["docs/a.md", "src/b.ts"] })).toBe(true);
+    expect(pushTriggerOf(ig, { changedFiles: ["src/b.ts"] })).toBe(true);
+  });
+
+  test("syntax this cannot evaluate claims nothing rather than guessing", () => {
+    for (const pat of ["!docs/**", "docs/?.md", "docs/[ab].md", "docs/+.md"]) {
+      const y = `on:\n  push:\n    paths: ['${pat}']\njobs: {}\n`;
+      expect(pushTriggerOf(y, { changedFiles: ["docs/a.md"] })).toBeUndefined();
+    }
+  });
+
+  test("a tag filter is not a branch push", () => {
+    const t = "on:\n  push:\n    tags: ['v*']\njobs: {}\n";
+    expect(pushTriggerOf(t, { branch: "main", changedFiles: ["a.ts"] })).toBeUndefined();
+  });
+});
