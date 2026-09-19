@@ -68,10 +68,10 @@ function sourceFiles(): string[] {
 
 describe("the site root is one answer, not a literal", () => {
   test("siteDir composes docs/<stub> and siteDirFor reads this instance's", () => {
-    expect(siteDir({ name: "x", stub: "y" })).toBe("docs/y");
+    expect(siteDir({ name: "x", stub: "y" })).toBe("y/docs");
     // Falls back to `name` exactly as `artefactStub` does — one rule, not two.
-    expect(siteDir({ name: "x" })).toBe("docs/x");
-    expect(siteDirFor(ROOT)).toBe("docs/folio-assistant");
+    expect(siteDir({ name: "x" })).toBe("x/docs");
+    expect(siteDirFor(ROOT)).toBe("folio-assistant/docs");
   });
 
   test("an instance with no name or stub cannot get a guessed site root", () => {

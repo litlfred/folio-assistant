@@ -698,7 +698,15 @@ export function artefactStub(d: Pick<CatHarnessDeclaration, "name" | "stub">): s
  * one line reading the declared directory instead of composing it.
  */
 export function siteDir(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
-  return `docs/${artefactStub(d)}`;
+  // `<stub>/docs`, not `docs/<stub>` — the INVERTED stub pattern (bean
+  // `wggr`). One directory per instance at the top level, holding everything
+  // that instance will take with it, so separation is a `git mv` of one
+  // directory rather than a sift across eight.
+  //
+  // It is also what stops the published IRIs repeating themselves: the old
+  // shape produced `…/folio-assistant/docs/folio-assistant/…`, with the stub
+  // named twice for no reader's benefit.
+  return `${artefactStub(d)}/docs`;
 }
 
 /**

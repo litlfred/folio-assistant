@@ -63,4 +63,4 @@ guessing produces a setup nobody asked for.
 [process](../skills/workflows) ·
 [tool](../schemas/tool.ts).
 Why bootstrapping is built this way:
-[the proposal](../docs/folio-assistant/proposals/bootstrap.md).
+[the proposal](../folio-assistant/docs/proposals/bootstrap.md).

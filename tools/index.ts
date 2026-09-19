@@ -3,7 +3,7 @@
  *
  * ## Why this file exists rather than each consumer importing a stub
  *
- * Tool definitions moved from `tools/*.ts` to `tools/<stub>/*.ts` so that a
+ * Tool definitions moved from `tools/*.ts` to `<stub>/tools/*.ts` so that a
  * composed instance can contribute its own without colliding on a filename —
  * the stub pattern the owner set for `tools/`, `skills/`, `library/` and
  * `docs/`, and deliberately NOT for `beans/` or `todos/`, which are never
@@ -12,7 +12,7 @@
  * Five modules import `../tools/index.js` — `check-tools`, `kg-export`,
  * `harness-schema-export`, `tool-coverage` and the MCP projection. Had the
  * move stopped at relocating the files, each of those would now name
- * `../tools/folio-assistant/index.js`, baking THIS instance's stub into five
+ * `../folio-assistant/tools/index.js`, baking THIS instance's stub into five
  * import paths. That is the exact defect the stub pattern exists to remove,
  * reintroduced one directory along: a downstream instance would have to patch
  * platform code to be seen.
@@ -32,7 +32,7 @@
  * @module tools/index
  */
 import type { ToolDefinition } from "../schemas/tool.js";
-import { tools as folioAssistantTools } from "./folio-assistant/index.js";
+import { tools as folioAssistantTools } from "../folio-assistant/tools/index.js";
 
 /**
  * Every Tool node this instance can see, its own and its dependencies'.

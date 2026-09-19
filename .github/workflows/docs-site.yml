@@ -20,7 +20,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'docs/folio-assistant/**'
+      - 'folio-assistant/docs/**'
       # The BPMN/DMN sources moved OUT of docs/ into the `kg` graph, where the
       # roles and skills they reference live. The SVGs the site embeds are
       # still rendered from them at deploy time, so without this path a diagram
@@ -119,21 +119,21 @@ jobs:
       # the build cannot half-apply.
       - name: Stamp the build sha
         run: |
-          mkdir -p docs/folio-assistant/_data
+          mkdir -p folio-assistant/docs/_data
           {
             echo "sha: \"${GITHUB_SHA}\""
             echo "short_sha: \"${GITHUB_SHA:0:7}\""
             echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
             echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
-          } > docs/folio-assistant/_data/build.yml
-          cat docs/folio-assistant/_data/build.yml
+          } > folio-assistant/docs/_data/build.yml
+          cat folio-assistant/docs/_data/build.yml
 
       # Build the Jekyll site from docs/ using the github-pages gem
       # (whitelists jekyll-remote-theme, so just-the-docs works).
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./docs/folio-assistant
+          source: ./folio-assistant/docs
           destination: ./_site
 
       # actions/jekyll-build-pages runs Jekyll in a container as root, so _site/

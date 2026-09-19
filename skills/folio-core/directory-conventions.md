@@ -362,7 +362,7 @@ word.
 ### `docs/<stub>/` — the site is packaged for the split (STRICT)
 
 The stub that names `<stub>.jsonld` also names the directory holding this
-instance's renderable site: `docs/folio-assistant/`, not `docs/`. After
+instance's renderable site: `folio-assistant/docs/`, not `docs/`. After
 [#223](https://github.com/litlfred/folio-assistant/issues/223) each layer is
 its own repository, so under its own stub the split is a directory move rather
 than a file-by-file sift, and two layers can be checked out side by side.

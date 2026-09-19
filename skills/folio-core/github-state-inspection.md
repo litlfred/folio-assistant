@@ -24,10 +24,15 @@ in an HTTP request. This skill says which to reach for and in what order.
 > **A published URL is LOOKED UP in the publish ref's tree. It is never built
 > from the source path.**
 
-`docs/folio-assistant/proposals/bootstrap.md` publishes to
+`folio-assistant/docs/proposals/bootstrap.md` publishes to
 `/proposals/bootstrap.html`. The `folio-assistant/` segment is a source-tree
 stub that Jekyll does not carry into the site. Anyone composing the URL from
 the source path gets a 404 and concludes the page is missing.
+
+**And the source path itself moved**: it was `docs/folio-assistant/proposals/`
+until the stub pattern inverted (bean `wggr`). So a URL composed from a
+remembered source path is now wrong in two ways at once — which is the
+argument for resolving rather than composing, made twice over.
 
 This is the same defect `AGENTS.md` records for generated README links —
 *"It composed links instead of resolving them"*, where all twenty-three
