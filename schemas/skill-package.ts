@@ -36,7 +36,26 @@ import { z } from "zod";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
 
-export const ActorTypeSchema = z.enum(["person", "system"]);
+/**
+ * What kind of thing an actor is — **human, agentic or mechanical**, plus
+ * `external` for a participant outside this instance entirely.
+ *
+ * `person` names the human, `agent` the agentic and `system` the mechanical.
+ * The prose reading, the table and the argument for the split live on the
+ * re-export in `schemas/role-graph.ts`; the values live HERE, because this
+ * module is the dependency-free base (zod only) that both the registry schema
+ * and the role graph can import.
+ *
+ * **It is one vocabulary because it was two, and that is what broke.** This
+ * enum read `["person", "system"]` until 2026-09-19 while `ACTOR_KINDS` in the
+ * role graph read all four — two spellings of one concept, in the one place
+ * where the difference decides what a task may be handed to. The narrower of
+ * the two was what `.claude/skills/actors/*.json` validated against, so an LLM
+ * agent and a CI runner were both recorded `system` and no consumer could tell
+ * a participant that exercises judgement from one that runs a program.
+ */
+export const ACTOR_KINDS = ["person", "agent", "system", "external"] as const;
+export const ActorKindSchema = z.enum(ACTOR_KINDS);
 export const ConformanceSchema = z.enum(["SHALL", "SHOULD", "MAY", "SHALL NOT"]);
 export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallback"]);
 export const ScriptRuntimeSchema = z.enum(["bash", "python", "typescript", "bun"]);
@@ -69,7 +88,7 @@ export const CapabilityDetectionSchema = z.discriminatedUnion("method", [
 export const ActorDefinitionSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
-  type: ActorTypeSchema,
+  kind: ActorKindSchema,
   description: z.string(),
   // DEPRECATED. An actor does not inherit — a ROLE does, and the lattice that
   // used to live here now lives in `skills/roles/roles.json`. Kept optional so
@@ -254,6 +273,33 @@ export const SkillRegistrySchema = z.object({
 
 export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkout", "subtree"]);
 
+/**
+ * How a remote package WOULD be brought in. **Declared intent; nothing performs
+ * it.**
+ *
+ * Measured 2026-09-19 (bean `wlqd`): `shallow-clone` appears only as a value in
+ * {@link RemoteSyncStrategySchema}; `src/tools/skill-fetch.ts` and
+ * `scripts/generate-registry.ts` contain no mention of `skills/remote-packages/`
+ * at all; and the directory's only substantive reader,
+ * `scripts/generate-docs.ts`, reads it for the Docker requirements this type's
+ * own doc comment names. So `frequency` and `autoUpdate` are fields no code
+ * consults.
+ *
+ * It is documented rather than deleted because the intent is real information
+ * about two real external dependencies — a maintainer chose `shallow-clone` over
+ * `subtree` — and losing that costs the next reader the same decision. What was
+ * costly was stating it as fact: the generated docs page said "Agents can sync
+ * and update these automatically based on the sync configuration", which a reader
+ * of the published site cannot check against the code.
+ *
+ * **If you implement it, two things are decisions and not details.** Both
+ * wrappers currently pin `ref: "main"` with `autoUpdate: true`, which would
+ * auto-ingest whatever the upstream pushes — prefer a pinned commit. And
+ * `manifest-skill-exists` deliberately stops treating a remote declaration as
+ * resolution (bean `nup0`); that allowance should come back, and
+ * `scripts/tests/manifest-remote-resolution.test.ts` records the argument for
+ * closing it so it is revisited rather than rediscovered.
+ */
 export const RemoteSyncConfigSchema = z.object({
   strategy: RemoteSyncStrategySchema,
   frequency: z.enum(["daily", "weekly", "monthly", "manual"]),
@@ -267,7 +313,12 @@ export const RemotePackageRefSchema = z.object({
   ref: z.string(),
   path: z.string(),
   maintainer: z.string(),
-  sync: RemoteSyncConfigSchema,
+  /**
+   * OPTIONAL, because a wrapper whose only job is to supply Docker requirements
+   * should not have to claim a sync strategy to be valid. Required until
+   * 2026-09-19, which is why both wrappers carry one.
+   */
+  sync: RemoteSyncConfigSchema.optional(),
   wrapper: z.object({
     description: z.string(),
     docker: DockerRequirementsSchema,
@@ -285,7 +336,7 @@ export const RemotePackageRefSchema = z.object({
 // schema that four harness modules were importing.
 
 /** Actor classification: human user or automated system. */
-export type ActorType = z.infer<typeof ActorTypeSchema>;
+export type ActorKind = z.infer<typeof ActorKindSchema>;
 
 /** FHIR R5 conformance verbs for requirement statements. */
 export type Conformance = z.infer<typeof ConformanceSchema>;

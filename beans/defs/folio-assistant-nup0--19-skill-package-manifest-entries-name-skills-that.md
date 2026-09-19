@@ -1,10 +1,11 @@
 ---
 # folio-assistant-nup0
 title: 19 skill-package manifest entries name skills that do not exist — resolve or retire, per package
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-18T18:20:54Z
-updated_at: 2026-09-18T18:20:54Z
+updated_at: 2026-09-19T05:48:15Z
 ---
 
 
@@ -84,3 +85,87 @@ naive way first would have deleted three correct entries.
 `src/tools/skill-fetch.ts` while **52** `<folio:skill ref>` activities named its
 eight skills — so `workflow_next` handed an agent `content-validate` and
 `skill_fetch` answered "package not found".
+
+## Worked 2026-09-19 — the 19 were already resolved; a hole they left was not
+
+**The title's premise is dead twice over and I nearly acted on it a third time.**
+`m4zg` corrected 19 → 0 truly unresolvable; `d3e63f15a` then closed the ratchet —
+`KNOWN_DANGLING` is `[]`, `skills/authoring-document/` is gone,
+`skills/folio-document-adapter/package-manifest.json` is written, and
+`manifest-skill-exists` passes. Verified all of that on `f098b530` before
+touching anything.
+
+**What was actually left.** Two checkers disagreed for two hours and the corpus
+followed whichever ran last.
+
+- 20:12 — `m4zg` builds `manifest-skill-exists` to resolve against
+  `remote-packages/`, and records the near-miss in the bean and in
+  `kg-audit.ts:772`: *"collapsing them would have had this criterion demand the
+  deletion of three correct manifest entries the first time it ran. That very
+  nearly happened."*
+- 22:18 — `d3e63f15a`, a different session, sets out to fix the same
+  two-definitions defect by pointing `skill-manifest-coverage.test.ts` at the
+  shared `knownSkills()`. But `known-skills.ts` had never read
+  `remote-packages/`, so that was a **third** definition. Under it the three
+  `authoring-math` entries read as dangling and were deleted, on the evidence of
+  a `git log --diff-filter=A` search finding no file ever added for any of
+  them — the wrong question, since a remote skill has no file here by design.
+
+**I restored the three, and that was wrong.** The deciding question is not
+whether the skills exist somewhere but whether anything here can offer them.
+Measured: `shallow-clone` is only a Zod enum value; `src/tools/skill-fetch.ts`
+and `scripts/generate-registry.ts` contain **no** mention of `remote-packages/`;
+the single real consumer, `scripts/generate-docs.ts`, reads those files for
+Docker requirements, which is what `schemas/skill-package.ts` documents them as
+providing. So an entry resolvable only that way publishes a name `skill_fetch`
+answers "not found" for — the exact defect this bean was opened about.
+
+Reverted the restore. `d3e63f15a` stands.
+
+**The fix is therefore the opposite of my first attempt.** The allowance in
+`manifest-skill-exists` was protecting the wrong answer, so it is closed: a
+remote declaration no longer resolves a manifest entry. `remotePackageSkills`
+stays, moved from `kg-audit.ts` into `scripts/known-skills.ts` beside
+`knownSkills`, and is used to **classify** the finding — "declared by a remote
+package nothing syncs" and "named nowhere at all" have different remedies, and a
+finding that does not say which is one somebody measures again.
+`manifestResolvableSkills` names the wider question so the union is a call-site
+choice rather than an accident of which module scanned which directory. That
+accident is what made the third definition.
+
+**Verified.** Probe: adding `scientific-visualization` back takes
+`manifest-skill-exists` from `pass`/0 to `fail`/1 with the classifying detail,
+and removing it returns to `pass`/0 — so the gate bites rather than being
+vacuous. **Falsification criterion from the opening brief held**: `skill-servable`
+is still 0 findings in every workflow sidecar and `check:workflow-refs` is
+unchanged, so the narrow and wide questions did not collapse. Zero manifests
+currently claim a remote skill, so this closes a hole rather than fixing a live
+break, and it is honest to say so.
+
+`scripts/tests/manifest-remote-resolution.test.ts` (5 tests) holds the rule
+against a synthetic instance — a criterion with nothing to find cannot show that
+it would find it — plus the evidence the change rests on, including a pinned list
+of the five readers of `remote-packages/` with each one's role, so a sixth is
+visible. Grepping for `shallow-clone` was the first attempt at that and is not
+evidence: it cannot tell an implementation from a comment, and it flagged the
+comment this change itself added.
+
+The underlying gap — a declaration that overstates what exists — is bean `wlqd`,
+with the two options and their costs.
+
+## Summary of Changes
+
+- `scripts/known-skills.ts` — `remotePackageSkills()` moved here from
+  `kg-audit.ts`; `manifestResolvableSkills()` names the wider question. Kept
+  **separate** from `knownSkills()`, because folding remote skills into the
+  servable set would make `skill-servable` pass for a skill this instance cannot
+  serve.
+- `scripts/kg-audit.ts` — the allowance closed, the finding classified, the
+  measurement written down at the point of decision.
+- `scripts/tests/manifest-remote-resolution.test.ts` — new, 5 tests.
+- `scripts/tests/skill-manifest-coverage.test.ts` — header records the other half
+  of its own reading, and cross-references the new test.
+- Bean `wlqd` opened for the declaration-without-implementation gap.
+
+No manifest changed. The 19 were already resolved; what is added is the guard
+that stops them coming back through a door nobody had closed.

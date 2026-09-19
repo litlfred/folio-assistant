@@ -1,0 +1,13 @@
+# Declared in `../todos.json`, and empty until a todo is raised against a block.
+#
+# This file exists because git does not track an empty directory, and a
+# DECLARED directory that is absent is the bean `dh4f` defect: a consumer scans
+# nothing and reports a clean run over it. An empty directory is a determined
+# empty; an absent one is a question nobody asked.
+#
+# Caught by `scripts/tests/todos.test.ts` — which passed locally, where the
+# directory existed unstaged, and failed on CI's fresh clone. That is the only
+# place the defect is visible, which is precisely why it is worth a test.
+#
+# The explanation of what belongs here lives in `../todos.json`'s `description`,
+# not repeated here. One fact, one place.

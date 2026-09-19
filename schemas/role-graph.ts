@@ -99,6 +99,7 @@ import { join } from "node:path";
 import { z } from "zod";
 
 import { FOLIO_NS } from "./namespaces";
+import { ACTOR_KINDS, type ActorKind } from "./skill-package";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
 export const ROLE_GRAPH_DIR = "roles";
@@ -108,15 +109,95 @@ export const ROLE_GRAPH_FILENAME = "roles.json";
 // ── Actors ──────────────────────────────────────────────────────
 
 /**
- * What kind of thing an actor is.
+ * What kind of thing an actor is — **human, agentic or mechanical**, plus
+ * `external` for a participant outside this instance entirely.
  *
- * `agent` and `system` are both non-human and are still distinguished: an
- * agent exercises judgement and can be handed a skill to read, a system runs
- * a fixed program and cannot. A lane owned by a system that carries skill
- * refs is a modelling error worth seeing, which is why the audit can ask.
+ * Those three words are the author's; `person`, `agent` and `system` are the
+ * ids they are spelled with here, and the mapping is one-to-one:
+ *
+ * | id | the kind it names | what it can be handed |
+ * |---|---|---|
+ * | `person` | **human** | a skill to read, and a judgement to make |
+ * | `agent` | **agentic** | a skill to read, and a judgement to make |
+ * | `system` | **mechanical** | a program to run, and nothing to decide |
+ * | `external` | outside this instance | nothing — it is not ours to task |
+ *
+ * There is deliberately no second vocabulary carrying the author's words. Two
+ * spellings of one concept is the drift this repository keeps paying for, and
+ * a `fulfilment: "mechanical"` field beside `actorKind: "system"` would be a
+ * fresh instance of it. The words live in this table; the ids live in the data.
+ *
+ * ## Why agentic and mechanical must not be one kind
+ *
+ * **An agent exercises judgement; a mechanical system executes a procedure.**
+ * That is the whole difference, and it decides what a task may be handed to:
+ * a step requiring a judgement call cannot be given to a build pipeline, and a
+ * step that is a fixed program does not need — and should not claim — a reader.
+ *
+ * The registry said so in prose long before anything could read it.
+ * `ci-pipeline`'s own description: *"It runs a fixed program and exercises no
+ * judgement, so anything needing a decision belongs in another lane."*
+ * `review-agent`'s: *"LLM agent performing NON-MECHANICAL validation …
+ * judgement calls escalate to a human reviewer."* Both sentences state the
+ * distinction; neither was machine-readable, because every actor file carried
+ * a two-valued `type` (`person` or `system`) that collapsed them. Measured
+ * 2026-09-19 before the split: **16 `person`, 8 `system`**, with the 8 holding
+ * five agents and three mechanical services.
+ *
+ * That is the same failure `judgementOnly` was introduced for one level up —
+ * a load-bearing rule recorded only in a summary, which a later pass is free to
+ * re-litigate. See {@link RoleDef.judgementOnly}.
+ *
+ * ## One vocabulary, re-exported rather than restated
+ *
+ * The values live in `schemas/skill-package.ts`, the dependency-free base that
+ * the registry schema reads. They were declared TWICE until 2026-09-19 — four
+ * kinds here, two (`person`, `system`) there — and the registry validated
+ * `.claude/skills/actors/*.json` against the narrower one, so the four-kind
+ * vocabulary could not be used by the files it was written for. Re-exported so
+ * there is one place to change and one answer to give.
  */
-export const ACTOR_KINDS = ["person", "agent", "system", "external"] as const;
-export type ActorKind = (typeof ACTOR_KINDS)[number];
+export { ACTOR_KINDS, type ActorKind };
+
+/**
+ * Kinds that can be handed an instruction body and asked to exercise judgement.
+ *
+ * The union of **human** and **agentic**. Derived from {@link ACTOR_KINDS}
+ * rather than written out again, so a kind added there cannot go unclassified —
+ * the same rule `DOCUMENT_BLOCK_KINDS` follows against `BLOCK_KINDS`.
+ */
+export const JUDGEMENT_KINDS: readonly ActorKind[] = ACTOR_KINDS.filter(
+  (k) => k === "person" || k === "agent",
+);
+
+/** Kinds that run a fixed program: **mechanical**. */
+export const MECHANICAL_KINDS: readonly ActorKind[] = ACTOR_KINDS.filter((k) => k === "system");
+
+/**
+ * Which actor kinds may fulfil an activity, **derived from its BPMN type**.
+ *
+ * BPMN already answers this and the corpus was not reading the answer. The
+ * spec's own semantics:
+ *
+ * - `bpmn:UserTask` — *"performed by a human being with the assistance of a
+ *   software application"*. Only a **human** fulfils one.
+ * - `bpmn:ServiceTask` — *"uses some sort of service … a Web service or an
+ *   automated application"*, with no human in the loop. An **agentic** or
+ *   **mechanical** actor fulfils one.
+ * - `bpmn:Task` — the abstract task. It says nothing, so neither does this:
+ *   `undefined` means unconstrained, not "no kind may fulfil it".
+ * - `bpmn:CallActivity` — the constraint belongs to the steps of the process it
+ *   calls, each of which is checked in its own diagram. Also unconstrained.
+ *
+ * `undefined` rather than `ACTOR_KINDS` so a caller can tell "every kind is
+ * allowed" from "nothing was asserted" — the third state this repository
+ * insists on everywhere else. A declared `<folio:fulfilment/>` overrides it.
+ */
+export function fulfilmentKindsForBpmnType(bpmnType: string): readonly ActorKind[] | undefined {
+  if (bpmnType === "bpmn:UserTask") return JUDGEMENT_KINDS.filter((k) => k === "person");
+  if (bpmnType === "bpmn:ServiceTask") return ACTOR_KINDS.filter((k) => k === "agent" || k === "system");
+  return undefined;
+}
 
 /**
  * A concrete participant — the thing that persists across processes.
@@ -348,12 +429,29 @@ function detectCycle(graph: RoleGraph, id: string, path: string[]): void {
 /**
  * Read the actor registry.
  *
- * Reads `.claude/skills/actors/*.json`, whose entries carry `type` rather than
- * `kind`. That is mapped, not rewritten: `type: "person"` → `person`,
- * `"system"` → `system`, anything else → `agent`, so an older registry still
- * loads. An entry carrying the deprecated `inherits` is returned with
- * {@link LoadedActor.looksLikeRole} set, so a caller can report it instead of
- * either ignoring it or acting on a field that means something else here.
+ * Reads `.claude/skills/actors/*.json`. An entry states its kind in `kind`,
+ * against the full {@link ACTOR_KINDS} vocabulary, and an unknown value is
+ * **rejected** rather than accepted and ignored — the same rule
+ * {@link readRoleGraph} follows for a role's `actorKind`. An entry carrying the
+ * deprecated `inherits` is returned with {@link LoadedActor.looksLikeRole} set,
+ * so a caller can report it instead of either ignoring it or acting on a field
+ * that means something else here.
+ *
+ * ## The legacy `type`, and why it is a fallback rather than the field
+ *
+ * Every entry carried `type` until 2026-09-19, with two values — `person` and
+ * `system` — and `system` covered an LLM agent and a CI runner alike. That is
+ * the conflation {@link ACTOR_KINDS} documents: it made "which tasks can this
+ * actor perform" unanswerable, because the answer turns on judgement and both
+ * sides of the question wore the same label.
+ *
+ * `type` is still read when `kind` is absent, so an unmigrated downstream
+ * registry loads. It maps conservatively — `person` → `person`, anything else
+ * → `system` — and **never invents `agent`**: guessing that an entry is agentic
+ * because its id ends in `-agent` would put an unreviewed claim into the graph
+ * under the appearance of data. A registry that has not said is read as
+ * mechanical, which is the reading that refuses it a judgement task rather than
+ * granting it one.
  */
 export interface LoadedActor extends ActorDef {
   /**
@@ -370,6 +468,26 @@ export interface LoadedActor extends ActorDef {
   looksLikeRole: boolean;
 }
 
+/**
+ * One entry's kind: `kind` when declared, else the legacy `type`.
+ *
+ * An unrecognised `kind` throws. It is the one case where being permissive
+ * costs more than failing: a typo silently read as `system` would quietly
+ * disqualify an actor from every judgement task it is meant to perform, and
+ * nothing downstream would say so.
+ */
+function actorKindOf(raw: Record<string, unknown>, path: string): ActorKind {
+  if (typeof raw.kind === "string") {
+    if (!(ACTOR_KINDS as readonly string[]).includes(raw.kind)) {
+      throw new Error(
+        `${path}: kind "${raw.kind}" is not an actor kind. One of: ${ACTOR_KINDS.join(", ")}.`,
+      );
+    }
+    return raw.kind as ActorKind;
+  }
+  return raw.type === "person" ? "person" : "system";
+}
+
 export function readActors(actorsDir: string): LoadedActor[] {
   if (!existsSync(actorsDir)) return [];
   const out: LoadedActor[] = [];
@@ -381,11 +499,10 @@ export function readActors(actorsDir: string): LoadedActor[] {
     } catch (e) {
       throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
     }
-    const type = typeof raw.type === "string" ? raw.type : "agent";
     out.push({
       id: String(raw.id ?? f.slice(0, -5)),
       title: String(raw.title ?? raw.id ?? f.slice(0, -5)),
-      kind: type === "person" ? "person" : type === "system" ? "system" : "agent",
+      kind: actorKindOf(raw, p),
       description: typeof raw.description === "string" ? raw.description : undefined,
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
       capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,

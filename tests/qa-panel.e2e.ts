@@ -3,6 +3,8 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { applyVerdicts, sidecarWithVerdicts } from "./support/qa-fixture.js";
+
 /**
  * The QA icon has to OPEN, and what it opens has to name its witnesses.
  *
@@ -37,9 +39,9 @@ const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
 /** A block sidecar from the corpus, and two states derived from it. */
-const CORPUS_JSON = readFileSync(
-  join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
-  "utf8",
+const CORPUS_PATH = join(
+  ROOT,
+  "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json",
 );
 
 /**
@@ -67,111 +69,75 @@ const CORPUS_JSON = readFileSync(
 /** The criterion this spec drives, named once so both fixtures agree. */
 const LOUD_ID = "voice-status-leak";
 
-interface Witness {
-  kind: string;
-  freshness: string;
-  changed?: string[];
-}
-interface Criterion {
-  id: string;
-  result: string;
-  severity?: string;
-  evidence?: string[];
-  witnesses: Witness[];
-}
-interface Sidecar {
-  state: string;
-  counts: Record<string, number>;
-  criteria: Criterion[];
-}
-
 /**
- * The one criterion under test, located BY ID rather than by position.
+ * The same document with that one criterion made to FAIL.
  *
- * Two things follow from that and neither is cosmetic.
+ * **This used to be served straight from the corpus, and that is why the suite
+ * went red on `main` at 78a399ee5.** The block really did carry a failing
+ * `voice-status-leak` — the assertions below were written against it — and
+ * #302 legitimately FIXED that finding. The sidecar became 22 pass and 26 n/a
+ * with nothing failing, so "worst criterion first" had no worst criterion to
+ * put first, and a test of the PANEL failed because the CONTENT got better.
  *
- * **Its witness stays the corpus's own.** The alternative is writing the
- * criterion out as a literal — id, evidence, and a witness carrying
- * `scriptHash: "5af6856733f3"`. That hash is the thing test 2 asserts, so a
- * frozen copy keeps passing after the voice checker changes, asserting a value
- * the corpus no longer holds. A fixture drifting from the corpus is the exact
- * defect this whole section exists to fix; it must not be reintroduced one
- * field down.
+ * The file already knew this shape of mistake: {@link STALE_JSON} exists
+ * because that block's verdict was stale on the day it was written and stopped
+ * being stale when the sweep re-ran. The same reasoning applies to a failing
+ * row and was simply not applied to it.
  *
- * **A criterion that has LEFT the corpus is a different change from one that
- * was adjudicated**, so it throws by name instead of reading as a pass.
+ * **FLIPPED WHERE IT SITS — criterion 19 of 48 — rather than hoisted to 0.**
+ * That is what makes "worst criterion first" an assertion about the panel. Put
+ * the failure at index 0 and the row the spec reads is the first row in
+ * DOCUMENT order, so a panel that sorted nothing at all would pass; that is
+ * precisely how the original verbatim fixture managed to assert nothing here.
+ *
+ * The witness stays the corpus's own rather than being written out as a
+ * literal: `scriptHash: "5af6856733f3"` is the value test 2 asserts, and a
+ * frozen copy keeps passing after the voice checker changes — a fixture
+ * drifting from the corpus is the exact defect this section exists to fix.
+ *
+ * Built through `tests/support/qa-fixture.ts`, which throws by name if
+ * `LOUD_ID` ever leaves the sidecar. Bean `iumj`.
  */
-function loudCriterion(doc: Sidecar): Criterion {
-  const c = doc.criteria.find((x) => x.id === LOUD_ID);
-  if (!c) throw new Error(`${LOUD_ID} is no longer in the block sidecar`);
-  return c;
-}
-
-const BLOCK_JSON = (() => {
-  const doc = JSON.parse(CORPUS_JSON) as Sidecar;
-  const c = loudCriterion(doc);
-
-  // FLIPPED WHERE IT SITS — criterion 19 of 48 — rather than hoisted to 0.
-  //
-  // This is what makes "worst criterion first" an assertion about the panel.
-  // Put the failure at index 0 and the row the spec reads is the first row in
-  // DOCUMENT order, so a panel that sorted nothing at all would pass; that is
-  // precisely how the original verbatim fixture managed to assert nothing here.
-  // Left in place, the row has to be lifted past nineteen quiet ones.
-  c.result = "fail";
-  c.severity = "critical";
-  c.evidence = [
-    "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
-  ];
-  // The script verdict alone. The agent witness that overturned it IS the
-  // adjudication, and a criterion shown as failing has not been adjudicated
-  // yet — keeping both would render a panel no sweep ever produced.
-  c.witnesses = c.witnesses.filter((w) => w.kind === "script");
-
-  doc.state = "fail";
-  doc.counts = {
-    fail: 1,
-    warn: 0,
-    pass: doc.criteria.filter((x) => x.result === "pass").length,
-    na: doc.criteria.filter((x) => x.result === "n/a").length,
-    unknown: 0,
-  };
-  return JSON.stringify(doc);
-})();
+const BLOCK_JSON = sidecarWithVerdicts(CORPUS_PATH, [
+  {
+    id: LOUD_ID,
+    result: "fail",
+    severity: "critical",
+    evidence: [
+      "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
+    ],
+    // The script verdict alone. The agent witness that overturned it IS the
+    // adjudication, and a criterion shown as failing has not been adjudicated
+    // yet — keeping both would render a panel no sweep ever produced.
+    witnessKinds: ["script"],
+  },
+]);
 
 /**
- * How many rows the panel folds away behind its disclosure: everything but the
- * one failure shown first.
+ * How many rows the panel folds away: everything but the one failure.
  *
  * Computed from the fixture for the same reason the fixture is computed at all
- * — the number belongs to this document, and a literal here is one more way for
- * a content change to turn a panel test red.
+ * — the number belongs to this document, and a literal `47` here is one more
+ * way for a content change to turn a panel test red.
  */
 const FOLDED_COUNT = (JSON.parse(BLOCK_JSON) as { criteria: unknown[] }).criteria.length - 1;
+
 /**
- * The same document with its witness marked stale.
+ * The same document with that criterion's witness marked stale.
  *
- * This was served straight from the corpus, where that block's verdict WAS
- * stale — measured at 17:33 against an `.md` edited at 19:06 the same day.
- * Re-running the sweep cleared it, which is the system behaving correctly and
- * this test then failing for the right reason. Whether a hash comparison yields
- * `stale` is settled in `qa-witness.test.ts` against files it controls; what
- * belongs HERE is whether the panel renders that state — which must not depend
- * on the corpus happening to hold an out-of-date verdict on the day the suite
- * runs.
+ * Derived from {@link BLOCK_JSON}, not from the pristine corpus, so the row
+ * marked stale and the row the spec clicks are the SAME criterion rather than
+ * two that happen to coincide. **By id, like the fixture above** — marking
+ * `criteria[0]` worked only while the failure was forced to sit there, and
+ * index and render order coinciding is what let this test pass earlier while
+ * asserting a stale badge on a row it had never marked.
+ *
+ * Whether a hash comparison yields `stale` is settled in `qa-witness.test.ts`
+ * against files it controls; what belongs HERE is whether the panel RENDERS
+ * that state — which must not depend on the corpus happening to hold an
+ * out-of-date verdict on the day the suite runs.
  */
-const STALE_JSON = (() => {
-  const doc = JSON.parse(BLOCK_JSON) as Sidecar;
-  // BY ID, like the fixture above. Marking `criteria[0]` worked only while the
-  // failure was forced to sit there; the spec clicks the first RENDERED row,
-  // which is the loud one wherever it lives in the document. Index and render
-  // order coinciding is what let this test pass earlier while asserting a
-  // stale badge on a row it had never marked.
-  const w = loudCriterion(doc).witnesses[0]!;
-  w.freshness = "stale";
-  w.changed = ["md"];
-  return JSON.stringify(doc);
-})();
+const STALE_JSON = applyVerdicts(BLOCK_JSON, [{ id: LOUD_ID, stale: { changed: ["md"] } }]);
 
 /** A KG sidecar: one auditor, no timestamp, a `sha256:`-prefixed hash. */
 const KG_JSON = readFileSync(

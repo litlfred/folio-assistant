@@ -8,7 +8,7 @@
   "source_hash": "sha256:5b5dcea2e15e2de1514c0f2d41d994408305e42208e4747a01de1e4b76b49d77",
   "auditor": {
     "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:56f6e5e13e391484d26af5a9640eeae6b1e967cfaa7d4ed48812e472a7b69ab2",
+    "script_hash": "sha256:1a5400e124a00fff426438955a162661875f37a4d04324b95f418e7e0146866e",
     "engine_version": "1"
   },
   "criteria": {
@@ -44,6 +44,15 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_PublishRelease",
+          "detail": "\"Version, tag and publish\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
@@ -51,7 +60,7 @@
   },
   "totals": {
     "pass": 9,
-    "fail": 0,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }

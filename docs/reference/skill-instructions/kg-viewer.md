@@ -81,9 +81,13 @@ Two things the export reports and the viewer must not swallow:
 
 - **`undeclaredTerms`** — property names absent from the `@context`. Every one
   is *dropped* when the document is processed as the JSON-LD it claims to be.
-  Measured on this instance at the time of writing: 34 names, 3461 occurrences.
-  Mark them in the detail panel; do not silently show them as ordinary
-  properties.
+  It was 34 names and 3583 occurrences on this instance when the viewer was
+  written, which is how the gap was found; bean `ovkk` took it to **zero** and
+  `kg-export` now exits non-zero rather than publishing a new one. Mark them in
+  the detail panel; do not silently show them as ordinary properties. **Keep
+  the marking even while the list is empty** — it is the guard that makes the
+  next one visible, and a viewer for this instance is a viewer for any
+  instance, including one whose export is older or whose context is thinner.
 - **`danglingLinks`** and **`problems`** — a link with no target node, and a
   source that could not be read.
 
@@ -102,6 +106,72 @@ A reader looking at a staged graph must be able to tell it is staged **from the
 data**, not from an injected banner that a JSON file would not carry anyway —
 and `sourceTreeDirty` is the difference between a graph a SHA reproduces and
 one it does not.
+
+## Translate the chrome from the GENERATOR, never from the page
+
+A generated artefact is not a translation source. Its generator is.
+
+Run an extractor over the emitted HTML and the `.pot` fills with the
+generator's OUTPUT: regenerate for any reason — a new node kind, a changed
+commit line — and every reference churns while no string has changed, and
+every sign-off is invalidated by the regeneration rather than by an edit.
+
+So the viewer's own words live in a **declared table in the source**
+(`scripts/kg-viewer-strings.ts`): the English text, which IS the `msgid` as
+everywhere else here, plus the translator comment naming where it appears and
+what each `{placeholder}` will hold. `bun run translate-kg-viewer --extract`
+turns the table into `translations/<locale>/kg-viewer.pot` through the shared
+`formatPot`, and the generator reads each `.po` back through the shared
+`parsePo` and embeds the catalogues. **There is no inject step**: generating
+the page is the injection, and a second artefact would serve nothing.
+
+`--check` separates two things that look alike. **Drift fails**: a `.pot` that
+no longer matches the table, a translation that dropped a `{placeholder}`, an
+entry for a string the page no longer says. **Coverage only reports**: a string
+nobody has translated is the ordinary state of a translation in progress, and
+the page falls back to English string by string.
+
+## Say where the translation stops
+
+**Chrome-only translation is half a translation, and the half that is missing
+is the half the reader came for.** Node titles, descriptions and property names
+arrive in the graph document in whatever language the corpus is written in; no
+catalogue in the viewer can reach them.
+
+Draw that boundary **on the page**, in the language the reader chose. A screen
+that is two-thirds translated and silent about it is worse than one that states
+its edge: the reader cannot tell a missing translation from a corpus that is
+simply English, and will read the gap as a defect or as a claim, depending on
+which way they guess.
+
+The same rule that governs an unreadable document governs this: three states,
+never two.
+
+## A language switcher is a UI control
+
+It is bound by [`ui-accessibility`](ui-accessibility.md) like everything else,
+and four things are easy to get wrong:
+
+- **Label each option in ITS OWN language** — Français, العربية, 中文 — and set
+  `lang` on the control. That is what a reader scanning for their language
+  looks for, it leaves no accessible name to mistranslate, and it is what lets
+  a screen reader switch voice.
+- **Translate the accessible names too.** A page whose visible text is Spanish
+  and whose `aria-label`s are English is a page that is translated for sighted
+  readers only, and nothing on screen says so.
+- **Announce the change.** The panel is rewritten in place and the reader's
+  cursor has not moved.
+- **Turn the page, not just the words.** A right-to-left language needs `dir`
+  on the document, and the layout has to be checked in it — axe over an RTL
+  render catches what an LTR one cannot.
+
+**Do not invent a second locale mechanism.** The docs site already stores the
+reader's choice in the `fa-locale` key; read that, let a `lang` query parameter
+override it for a shared link, and fall back to the browser's own preference.
+
+**Offer only what the page can show.** A catalogue with nothing translated is
+not a language the viewer can render, and listing it would promise a
+translation the reader would not get.
 
 ## Verifying it
 

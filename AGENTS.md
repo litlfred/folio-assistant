@@ -479,7 +479,7 @@ One sentence, and every word in it is a distinct declared object:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant — human or agentic. Persists across processes. | `.claude/skills/actors/*.json` |
+| **Actor** | a concrete participant — **human, agentic or mechanical**. Persists across processes. | `.claude/skills/actors/*.json` |
 | **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
 | **Skill** | the instruction body the actor needs to perform the task. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
 | **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |
@@ -495,6 +495,16 @@ the duration of a lane, and the same actor is a different role in another
 diagram — the session agent is `Lane_Agent` in `crdm-requirements.bpmn` and the
 *sibling session* in `bean-lifecycle.bpmn`, whose whole point is marking what is
 not yours to close.
+
+**An actor is human, agentic or mechanical**, and the line between the last two
+is judgement: an agent can be handed a skill and asked to decide something, a
+mechanical system runs a fixed program and decides nothing. `kind` on
+`.claude/skills/actors/*.json` says which. It was a two-valued `type` until
+2026-09-19 — 16 `person`, 8 `system`, with five agents and three mechanical
+services sharing that second label — so "which tasks can this actor perform"
+had no answer for a third of the registry. **The discipline is in the skill**:
+[`role-model.md`](skills/folio-core/role-model.md) §"An actor is one of three
+kinds" and §"A task declares which actor kinds may fulfil it".
 
 **An actor has three lists and they answer three questions:** `roles` — what may
 it act AS (per lane); `permissions` — what may it DO (every lane);
@@ -519,7 +529,9 @@ resolution rules, how to bind a lane, the severity scale, and how to add a role.
 
 ### The audit — `bun run kg:audit`
 
-Fourteen criteria, one per join above, written as **committed QA sidecars** under
+One criterion per join above — `KG_CRITERIA` in `schemas/kg-qa.ts` is the
+registry and the only current answer to how many; this line said "Fourteen"
+while it held 32. They are written as **committed QA sidecars** under
 `kg-qa/` beside whatever they audit: `skills/workflows/kg-qa/`,
 `skills/workflows/decisions/kg-qa/`, `skills/roles/kg-qa/`. Schema:
 `schemas/kg-qa.ts`. This is the **third** QA subject kind, after the block sweep's
@@ -640,10 +652,75 @@ fact in one of these areas adds it as a TRAP in the same PR; a session that
 re-measures a BASELINE updates the entry with the fresh number and date. A
 memory file that only accretes becomes the thing it exists to prevent.
 
-`MEMORY.md` is the injected entry point, so keep it under 200 lines — split
-detail into sibling files the agent reads on demand. `memory: project` writes
-under `.claude/agent-memory/`, which is **committed**; `memory: local` writes
-under `.claude/agent-memory-local/`, gitignored, for anything per-machine.
+### Entries are authored in `skills/memory/`, not in `MEMORY.md`
+
+**Edit the node, then run `bun run agent-memory`.** One entry per file under
+`skills/memory/`, carrying `$schema: folio-memory/v1`, a `label`, a `summary`
+and the agents it reaches. `bun run agent-memory:check` gates it in CI, so an
+entry edited and never assembled fails the build rather than quietly never
+reaching the agent.
+
+**`MEMORY.md` is generated — but only between its markers.** The tool writes
+between `<!-- folio:memory:begin -->` and `<!-- folio:memory:end -->` and
+touches nothing else, exactly as `readme-sections.ts` does. That is what keeps
+each file's `## Session log` — and `content-pipeline-navigator`'s
+`## Corrected invocations` — intact: those are the agent's own running notes,
+and a whole-file regenerator would delete them. A file with no markers is
+reported as not opted in and left alone; it is never rewritten and never
+counted as up to date.
+
+**One entry can reach several agents, and that is the point.** Before this,
+a fact two agents needed had to be written into two files — measured
+2026-09-19, **3 subject areas** were (the document render path taking no TeX,
+adapter-vs-profile, and what the schema structurally cannot catch). 28 entries
+became 25 nodes.
+
+**A `baseline` without `measured` is refused by the schema.** The rule above
+was prose; it is now structural. It bit immediately and correctly: all three
+entries labelled BASELINE stored no number — they are tables of commands to
+RUN — so they were relabelled `stable`. A table of how to measure is a stable
+fact, not a measurement.
+
+**Scoping is by agent today and that is transitional.** Memory is knowledge,
+and `AGENTS.md` puts knowledge in the lane, so it should scope by **role** —
+`memoryForRoles` exists for it. It is unused because the three memory-carrying
+subagents are **not declared actors**: `.claude/skills/actors/` holds 24
+participants and none of them is one.
+
+**That is a fact about the registry, not a reason to leave it alone — and an
+earlier version of this paragraph drew the wrong conclusion from it.** It said
+choosing their roles was "not something to guess, since inventing a role to
+absorb a tool is the failure `skill-in-role-or-process` is written not to
+force." For `ci-health-watcher` that is simply false, and checkable in one
+command: `roles.json` already carries **`build-pipeline`** (*"runs a fixed
+program and exercises no judgement"*) and **`validation-pipeline`** (*"the
+mechanical half of the HCI validation gate. Its findings are inputs to the
+editor's decision, never the decision"*), both `actorKind: "system"`, and
+`.claude/skills/actors/ci-pipeline.json` already takes both. A CI watcher is a
+mechanical role in the CI process; the lane was declared before the watcher
+was written.
+
+The judgement-free property is what makes those the *correct* home rather than
+a convenient one — and it is also why the other two are **not** settled by the
+same argument. A platform-boundary guard exercises judgement, which is the one
+thing a `system` lane excludes.
+
+**A watcher also has dispatch points, and they are process events.** It fires
+when a feature branch changes, and again when a change is approved for
+publication / merge to `main` — so they belong in a BPMN diagram under
+`skills/workflows/`, not in prose here. Bean `29ij`.
+
+**A `.md` under `skills/` that declares its own `$schema` is not a skill.** The
+`kg` directory's path is `skills/` and the audit walks it recursively, so
+without that rule all 25 memory nodes were audited as skills — measured, with
+25 bogus `kg-qa/` sidecars written beside them. Declaration over location, the
+same contract `part-of:` carries.
+
+`MEMORY.md` is the injected entry point, so keep it under 200 lines — the
+generator warns when a file passes it, because the harness silently drops the
+overflow. `memory: project` writes under `.claude/agent-memory/`, which is
+**committed**; `memory: local` writes under `.claude/agent-memory-local/`,
+gitignored, for anything per-machine.
 
 The agents defer to this file and to `skills/` as the source of truth. Memory
 summarises; the skill governs. Where the two disagree, the skill wins and the

@@ -12,11 +12,10 @@
  *
  * @module scripts/known-skills
  */
-import { existsSync, readdirSync } from "node:fs";
-import { join as joinPath } from "node:path";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { join, join as joinPath } from "node:path";
 
 import { resolveDirectories } from "../schemas/cat-harness.js";
-import { join } from "node:path";
 
 /**
  * Groups under `.claude/skills/` that hold something other than skills.
@@ -39,10 +38,19 @@ import { join } from "node:path";
  */
 export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hooks", "requirements"]);
 
-/** Does this directory hold at least one `.md` directly? */
+/**
+ * Does this directory hold at least one SKILL `.md` directly?
+ *
+ * Not merely a `.md`. The two halves of this arrived from opposite directions
+ * and meet here: declaration-driven discovery asks WHICH DIRECTORIES to look
+ * in, and {@link isSkillMd} asks WHICH FILES in one count. Either alone
+ * overcounts — `skills/memory/`'s 25 agent-memory nodes are `.md` in a
+ * declared directory, and were admitted until the file-level predicate
+ * existed.
+ */
 function holdsMarkdown(abs: string): boolean {
   if (!existsSync(abs)) return false;
-  return readdirSync(abs).some((f) => f.endsWith(".md"));
+  return readdirSync(abs).some((f) => f.endsWith(".md") && isSkillMd(joinPath(abs, f)));
 }
 
 /**
@@ -78,6 +86,46 @@ function kgDirectories(root: string): Array<{ path: string; absPath: string }> {
 }
 
 /**
+ * Is this `.md` a skill, or another node kind that happens to live here?
+ *
+ * **Declaration over location.** A markdown file whose front matter carries
+ * `$schema:` is declaring what it IS, and a skill does not — skills declare
+ * `name` / `summary`. So a `$schema` is a positive statement that this file is
+ * something else, and it is the same contract `part-of:` carries for a split
+ * skill's siblings.
+ *
+ * ## This module's own header was falsified, and this is the repair
+ *
+ * {@link skillMdDirs} says non-skill directories under `skills/` "are excluded
+ * by carrying **no `.md`**, which is the same test that admits a package", and
+ * that "a directory that later grows a `.md` is a decision somebody makes
+ * visibly". `skills/memory/` is exactly that directory: 25 agent-memory nodes,
+ * every one a `.md`, none a skill. Measured 2026-09-19 — before this guard,
+ * `skill-coverage.test.ts` demanded a published reference page for all 25, and
+ * `kg-audit` had already written 25 bogus `kg-qa/` sidecars beside them
+ * asserting brevity and heading rules against files that are not instruction
+ * bodies.
+ *
+ * The visible decision the header asks for is the `$schema` line inside each
+ * file, not the directory's name — a name list is the thing this module exists
+ * to stop, and a directory's contents can be mixed.
+ *
+ * Unreadable is **not** "not a skill": an unreadable file returns `true` and is
+ * counted, so a permissions error or a truncated read cannot silently shrink
+ * the skill set. Undercounting here is what produces a clean run over nothing.
+ */
+export function isSkillMd(path: string): boolean {
+  let text: string;
+  try {
+    text = readFileSync(path, "utf-8");
+  } catch {
+    return true;
+  }
+  const fm = /^---\n([\s\S]*?)\n---/.exec(text);
+  return fm === null || !/^\$schema:\s*\S+/m.test(fm[1]!);
+}
+
+/**
  * Directories holding one `<skill>.md` per skill, DISCOVERED rather than listed.
  *
  * ## Why it stopped being a literal
@@ -104,10 +152,17 @@ function kgDirectories(root: string): Array<{ path: string; absPath: string }> {
  *
  * `skills/` is not uniformly skill packages — `framework/`, `permissions/`,
  * `remote-packages/`, `requirements/`, `roles/` and `workflows/` are other
- * node kinds. They are excluded by carrying **no `.md`**, which is the same
+ * node kinds. Most are excluded by carrying **no `.md`**, which is the same
  * test that admits a package, rather than by a name list that would need the
- * same remembering. A directory that later grows a `.md` is a decision
- * somebody makes visibly; today all six are exactly the packages.
+ * same remembering.
+ *
+ * **That test alone was not enough, and it was falsified within the day.**
+ * This doc said "a directory that later grows a `.md` is a decision somebody
+ * makes visibly"; `skills/memory/` then arrived with 25 of them, none a skill.
+ * So the admitting test is now `.md` **that {@link isSkillMd} accepts** — the
+ * visible decision is the `$schema` line inside each file rather than the
+ * directory's name, because a name list is the thing this module exists to
+ * stop and a directory's contents can be mixed.
  */
 export function skillMdDirs(root: string): string[][] {
   const dirs: string[][] = [];
@@ -162,6 +217,69 @@ export function skillMdDirs(root: string): string[][] {
 
 
 
+/**
+ * Skills a **declared remote package** supplies, which this instance does not hold.
+ *
+ * Two questions, and they must not be collapsed:
+ *
+ *  - **can this instance SERVE it** — {@link knownSkills}. A remote skill is
+ *    `false` here: its body is in another repository, so `skill_fetch` cannot
+ *    answer for it and an activity naming it is a real dangling reference.
+ *  - **is this entry a real skill SOMEWHERE** — this function, unioned with
+ *    {@link knownSkills}. A bundle manifest curating a remote skill is the
+ *    design, not a defect.
+ *
+ * This lived only in `kg-audit.ts`, whose own comment records the near-miss:
+ * *"collapsing them would have had this criterion demand the deletion of three
+ * correct manifest entries the first time it ran. That very nearly happened."*
+ *
+ * **It then happened anyway, because the answer was in one checker and not the
+ * other.** `d3e63f15a` set out to fix exactly the two-definitions defect — it
+ * pointed `skill-manifest-coverage.test.ts` at `knownSkills()` so the test and
+ * this module could not disagree — but `knownSkills()` had never read
+ * `remote-packages/`, so it was a THIRD definition. Under it,
+ * `scientific-visualization`, `hypothesis-generation` and
+ * `scientific-critical-thinking` read as dangling, and all three were deleted
+ * from `skills/authoring-math/package-manifest.json` two hours after bean
+ * `m4zg` recorded that deleting them would be wrong. The evidence offered was a
+ * `git log --diff-filter=A` search finding no file ever added for any of them —
+ * which is the wrong question, because a remote skill has no file here by
+ * design.
+ *
+ * So the answer lives beside the other one now. A checker that needs the wider
+ * question unions the two; a checker that needs the narrower one does not, and
+ * the difference is visible at the call site instead of buried in whether a
+ * module happened to scan a directory.
+ */
+export function remotePackageSkills(root: string): Set<string> {
+  const out = new Set<string>();
+  const dir = join(root, "skills", "remote-packages");
+  if (!existsSync(dir)) return out;
+  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
+    try {
+      const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as {
+        wrapper?: { skills?: string[] };
+      };
+      for (const s of p.wrapper?.skills ?? []) out.add(s);
+    } catch {
+      // A remote-package file that will not parse is validate-skills.ts's finding.
+    }
+  }
+  return out;
+}
+
+/**
+ * Every name a **manifest entry** may legitimately carry: held here, or
+ * declared by a remote package.
+ *
+ * The one answer to "is this a real skill somewhere". Named rather than left as
+ * a union at each call site, because the union IS the rule and two call sites
+ * spelling it out is how they come to disagree.
+ */
+export function manifestResolvableSkills(root: string): Set<string> {
+  return new Set([...knownSkills(root), ...remotePackageSkills(root)]);
+}
+
 /** Every skill name this instance can resolve. */
 export function knownSkills(root: string): Set<string> {
   const names = new Set<string>();
@@ -170,7 +288,11 @@ export function knownSkills(root: string): Set<string> {
     const dir = join(root, ...parts);
     if (!existsSync(dir)) continue;
     for (const f of readdirSync(dir)) {
-      if (f.endsWith(".md")) names.add(f.slice(0, -3));
+      // Filtered per FILE, not per directory: admitting a package says the
+      // directory holds skills, never that everything in it is one. A mixed
+      // directory is explicitly allowed here -- #263's rule that a place to
+      // look may hold more than one part of the graph.
+      if (f.endsWith(".md") && isSkillMd(join(dir, f))) names.add(f.slice(0, -3));
     }
   }
 

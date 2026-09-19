@@ -40,6 +40,9 @@
   ],
   "scripts": {
     "beans:fallback": "bun run scripts/beans-fallback.ts",
+    "agent-memory": "bun run scripts/agent-memory.ts",
+    "agent-memory:check": "bun run scripts/agent-memory.ts --check",
+    "todos": "bun run scripts/todos.ts",
     "check-deps": "bun run src/index.ts --check-deps",
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
@@ -85,6 +88,8 @@
     "test:e2e": "playwright test",
     "tools:coverage": "bun run scripts/tool-coverage.ts",
     "translate-bpmn": "bun run scripts/translate-bpmn.ts",
+    "translate-kg-viewer": "bun run scripts/translate-kg-viewer.ts",
+    "translate-kg-viewer:check": "bun run scripts/translate-kg-viewer.ts --check",
     "translation:block-qa": "bun run content/pipeline/translation-block-qa.ts",
     "translation:block-qa:check": "bun run content/pipeline/translation-block-qa.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json",

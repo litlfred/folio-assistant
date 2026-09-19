@@ -51,12 +51,24 @@
 // ---------------------------------------------------------------------------
 
 /**
- * Whether the actor is a human user or a system process.
+ * What kind of participant the actor is — **human, agentic or mechanical**.
  *
- * - `person` — A human with an identity (git config, OAuth, etc.)
- * - `system` — An automated process (MCP server, CI runner, etc.)
+ * - `person` — **human**. An identity a real person holds (git config, OAuth).
+ * - `agent` — **agentic**. An LLM agent: it can be handed a skill to read and
+ *   asked for a judgement.
+ * - `system` — **mechanical**. A fixed program — an MCP server, a CI runner. It
+ *   executes a procedure and decides nothing.
+ * - `external` — a participant outside this instance entirely.
+ *
+ * Re-exported from `schemas/skill-package.ts`, which holds the one vocabulary,
+ * so this file does not become a second place the values can be edited.
+ *
+ * It read `"person" | "system"` until 2026-09-19, and that two-way split is
+ * what made *"which tasks can this actor perform"* unanswerable: the question
+ * turns on whether the participant exercises judgement, and an LLM agent and a
+ * CI runner wore the same label.
  */
-export type ActorType = "person" | "system";
+export type { ActorKind };
 
 /**
  * FHIR conformance verbs for requirement statements.
@@ -94,8 +106,8 @@ export interface ActorDefinition {
   id: string;
   /** Display text. `title`/`description`, like every KG node — see `schemas/kg-node.ts`. */
   title: string;
-  /** Person or system actor. */
-  type: ActorType;
+  /** Human, agentic or mechanical — see {@link ActorKind}. */
+  kind: ActorKind;
   /** What this actor can do. */
   description: string;
   /**
@@ -258,7 +270,7 @@ export interface SkillValidator {
  * enabling auto-generated documentation to cross-reference skills
  * with their data models.
  */
-import type { LifecycleStage, SkillPackageManifest } from "./skill-package.js";
+import type { ActorKind, LifecycleStage, SkillPackageManifest } from "./skill-package.js";
 
 export interface SkillSchemaRef {
   /** Schema module (e.g., "schemas/types", "schemas/formalization-types"). */
