@@ -1762,3 +1762,20 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   gap: 0.7em;
   margin: 0 0 1.2em;
 }
+
+/* The process a sticky belongs to, and how deep that process sits in the BPMN
+ * call hierarchy. Indent is a LEFT BORDER rather than a margin, so a nested
+ * card keeps its full width in the grid — indenting by margin would make the
+ * deepest column narrower than its neighbours for no reason a reader can use. */
+.fa-sticky-slot-in-process { border-left: 2px solid rgba(128, 128, 128, 0.3); padding-left: 0.5em; }
+.fa-sticky-slot-in-process[data-fa-depth="1"] { border-left-width: 4px; }
+.fa-sticky-slot-in-process[data-fa-depth="2"] { border-left-width: 6px; }
+.fa-sticky-slot-in-process[data-fa-depth="3"] { border-left-width: 8px; }
+
+.fa-sticky-process {
+  display: block;
+  margin-bottom: 0.25em;
+  font-family: var(--fa-mono, monospace);
+  font-size: 0.7rem;
+  opacity: 0.8;
+}

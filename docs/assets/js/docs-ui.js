@@ -964,7 +964,7 @@
     'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
-  var todoState = { items: [], floating: {} };
+  var todoState = { items: [], floating: {}, processes: {} };
 
   /** The published index, or `null` when it could not be read. */
   function fetchTodoIndex(done) {
@@ -976,7 +976,11 @@
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
       })
-      .then(function (doc) { done(doc && Array.isArray(doc.items) ? doc.items : null); })
+      .then(function (doc) {
+        if (!doc || !Array.isArray(doc.items)) return done(null);
+        todoState.processes = doc.processes || {};
+        done(doc.items);
+      })
       .catch(function (e) {
         // Third state, reported rather than rendered as "no todos". A board
         // that opens empty is indistinguishable from a person with nothing
@@ -999,6 +1003,75 @@
       wrap.appendChild(el("p", { class: "fa-sticky-empty" }, "No detail recorded."));
     }
     return wrap;
+  }
+
+
+  /**
+   * Board order: todos stacked by the BPMN subprocess hierarchy.
+   *
+   * "stacking should follow hiearchy od busines subprocesses". The diagrams
+   * already carry that hierarchy as `calledElement` refs — `Process_Lifecycle`
+   * calls `Process_Publication`, which calls `Process_Editing` — and the
+   * generator publishes it beside the todos.
+   *
+   * ## Depth is the process's own, not the todo's
+   *
+   * A todo tagged `Process_Publication` sits at the depth `Process_Publication`
+   * sits at, so two todos on the same process always land together and a todo
+   * on a caller always sorts above one on its callee. Computing depth from the
+   * todo would make the same process appear at different levels depending on
+   * which todo reached it first.
+   *
+   * ## A todo on SEVERAL processes takes the shallowest
+   *
+   * `what-kick-off-means-for-a-ci-watcher` is tagged `Process_CodeReview` AND
+   * `Process_Publication`, because its two dispatch points are in different
+   * diagrams. It belongs where a reader would look first, which is the outer
+   * one; listing it twice would double a single outstanding item.
+   *
+   * ## Untagged todos are not orphans
+   *
+   * They sort FIRST, not last. Most todos carry no process — both of the
+   * others here do not — and sinking them below a process hierarchy they are
+   * not part of would bury the common case under the rare one.
+   */
+  function processDepth(id, hierarchy) {
+    // A process's depth is how many callers stand above it. Cycles are
+    // possible in principle (two diagrams calling each other), so the walk is
+    // bounded by the number of processes rather than trusting acyclicity.
+    var parents = {};
+    for (var p in hierarchy) {
+      var kids = hierarchy[p] || [];
+      for (var k = 0; k < kids.length; k++) if (!parents[kids[k]]) parents[kids[k]] = p;
+    }
+    var depth = 0;
+    var at = id;
+    var guard = 0;
+    var limit = Object.keys(hierarchy).length + 1;
+    while (parents[at] && guard++ < limit) { at = parents[at]; depth++; }
+    return depth;
+  }
+
+  function stackTodos(items, hierarchy) {
+    var rows = [];
+    for (var i = 0; i < items.length; i++) {
+      var t = items[i];
+      var procs = (t.tags && t.tags.processes) || [];
+      if (procs.length === 0) { rows.push({ todo: t, process: null, depth: -1 }); continue; }
+      var best = procs[0];
+      var bestD = processDepth(best, hierarchy);
+      for (var j = 1; j < procs.length; j++) {
+        var d = processDepth(procs[j], hierarchy);
+        if (d < bestD) { best = procs[j]; bestD = d; }
+      }
+      rows.push({ todo: t, process: best, depth: bestD });
+    }
+    rows.sort(function (a, b) {
+      if (a.depth !== b.depth) return a.depth - b.depth;
+      if (a.process !== b.process) return String(a.process).localeCompare(String(b.process));
+      return a.todo.id.localeCompare(b.todo.id);
+    });
+    return rows;
   }
 
   function buildSticky(todo, onFloat, onDock, opts) {
@@ -1207,10 +1280,21 @@
       if (t) t.focus();
     }
 
-    for (var i = 0; i < items.length; i++) {
-      var slot = el("div", { class: "fa-sticky-slot" });
-      slot.appendChild(buildSticky(items[i], float, dock));
-      slots[items[i].id] = slot;
+    var rows = stackTodos(items, todoState.processes);
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      var slot = el("div", {
+        class: "fa-sticky-slot" + (row.process ? " fa-sticky-slot-in-process" : ""),
+      });
+      if (row.process) {
+        // The process is named ON the sticky rather than as a run-in heading,
+        // so the grid stays a grid: a full-width heading between cards would
+        // break the `auto-fill` columns into one per group.
+        slot.setAttribute("data-fa-depth", String(row.depth));
+        slot.appendChild(el("span", { class: "fa-sticky-process" }, row.process));
+      }
+      slot.appendChild(buildSticky(row.todo, float, dock));
+      slots[row.todo.id] = slot;
       grid.appendChild(slot);
     }
     if (items.length === 0) {

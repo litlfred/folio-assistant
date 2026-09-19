@@ -383,3 +383,119 @@ test.describe("todos attached to a block", () => {
     await expect(page.locator(".fa-sticky-board").getByText("Orphan")).toHaveCount(1);
   });
 });
+
+/* ── Stacking by subprocess hierarchy ───────────────────────────────────── */
+
+test.describe("board stacking", () => {
+  // `Process_Lifecycle` calls `Process_Publication`, which calls
+  // `Process_Editing`. Real edges, copied from the diagrams.
+  const HIER = {
+    Process_Lifecycle: ["Process_Editing", "Process_Publication"],
+    Process_Publication: ["Process_Editing"],
+    Process_Editing: ["Process_EvidenceRetrieval"],
+    Process_EvidenceRetrieval: [],
+  };
+  const tagged = (id: string, processes: string[]) => ({
+    ...ITEMS[0],
+    id,
+    summary: id,
+    tags: { ...ITEMS[0].tags, processes },
+  });
+
+  test.beforeEach(async ({ page }) => {
+    await page.route("http://todo.test/**", (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/page.html")) {
+        return route.fulfill({ contentType: "text/html", body: HARNESS });
+      }
+      if (url.endsWith("/assets/todos/index.json")) {
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({
+            processes: HIER,
+            items: [
+              tagged("deep", ["Process_EvidenceRetrieval"]),
+              tagged("untagged", []),
+              tagged("mid", ["Process_Publication"]),
+              tagged("outer", ["Process_Lifecycle"]),
+              // Two processes at different depths: takes the SHALLOWEST.
+              tagged("both", ["Process_EvidenceRetrieval", "Process_Lifecycle"]),
+            ],
+          }),
+        });
+      }
+      return route.fulfill({ status: 404, body: "not found" });
+    });
+  });
+
+  test("callers sort above their callees, and untagged todos come first", async ({ page }) => {
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+    const order = await page
+      .locator(".fa-sticky-board .fa-sticky-summary")
+      .allTextContents();
+    // `untagged` first: most todos carry no process, and sinking them below a
+    // hierarchy they are not part of buries the common case under the rare one.
+    expect(order[0]).toBe("untagged");
+    expect(order.indexOf("outer")).toBeLessThan(order.indexOf("mid"));
+    expect(order.indexOf("mid")).toBeLessThan(order.indexOf("deep"));
+  });
+
+  test("a todo on several processes takes the SHALLOWEST, and appears once", async ({ page }) => {
+    // `what-kick-off-means-for-a-ci-watcher` really is tagged with two
+    // processes in different diagrams, because its two dispatch points are.
+    // Listing it twice would double a single outstanding item.
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+    const both = page.locator(".fa-sticky-board .fa-sticky[data-todo-id='both']");
+    await expect(both).toHaveCount(1);
+    // `has:` is RELATIVE to the slot, so a board-scoped selector can never
+    // match inside one — the board is the slot's ancestor, not its descendant.
+    const slot = page.locator(".fa-sticky-slot", {
+      has: page.locator(".fa-sticky[data-todo-id='both']"),
+    });
+    await expect(slot.locator(".fa-sticky-process")).toHaveText("Process_Lifecycle");
+    await expect(slot).toHaveAttribute("data-fa-depth", "0");
+  });
+
+  test("depth is the PROCESS's, so two todos on one process land together", async ({ page }) => {
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+    const mid = page.locator(".fa-sticky-slot", {
+      has: page.locator(".fa-sticky[data-todo-id='mid']"),
+    });
+    await expect(mid).toHaveAttribute("data-fa-depth", "1");
+  });
+
+  test("an untagged todo carries no process label at all", async ({ page }) => {
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+    const slot = page.locator(".fa-sticky-slot", {
+      has: page.locator(".fa-sticky[data-todo-id='untagged']"),
+    });
+    await expect(slot.locator(".fa-sticky-process")).toHaveCount(0);
+  });
+
+  test("a cycle between two processes does not hang the board", async ({ page }) => {
+    // Two diagrams calling each other is possible in principle, and an
+    // unbounded parent walk would spin forever. The walk is bounded by the
+    // process count; this proves the board still renders.
+    await page.route("http://todo.test/assets/todos/index.json", (route) =>
+      route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          processes: { Process_A: ["Process_B"], Process_B: ["Process_A"] },
+          items: [tagged("cyclic", ["Process_A"])],
+        }),
+      }),
+    );
+    await page.goto(PAGE_URL);
+    await page.locator(".fa-qr-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Todos" }).click();
+    await expect(page.locator(".fa-sticky-board .fa-sticky")).toHaveCount(1);
+  });
+});

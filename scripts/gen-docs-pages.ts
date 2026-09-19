@@ -553,6 +553,38 @@ function beanFile(id: string): string | undefined {
   return hit ? `beans/defs/${hit}` : undefined;
 }
 
+/**
+ * The BPMN call hierarchy — which process calls which as a subprocess.
+ *
+ * Published so the board can STACK todos the way the owner asked: "stacking
+ * should follow hierarchy of business subprocesses". A todo tagged
+ * `Process_Publication` sits under `Process_Lifecycle`, because that is what
+ * the diagrams say.
+ *
+ * Read by regex rather than through `loadProcessModel`, deliberately: that
+ * loader is async and pulls in `bpmn-moddle` for a page generator that
+ * otherwise touches no XML, and the two facts wanted here — a process's id and
+ * its `calledElement` refs — are attributes, not structure. The risk of a
+ * regex over XML is that it silently reads NOTHING and the hierarchy comes out
+ * flat, so `scripts/tests/todos.test.ts` pins the real edges: a parse that
+ * stops working fails the build rather than quietly flattening the board.
+ */
+function processHierarchy(): Record<string, string[]> {
+  const dir = join(REPO_ROOT, "skills", "workflows");
+  if (!existsSync(dir)) return {};
+  const out: Record<string, string[]> = {};
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith(".bpmn")) continue;
+    const xml = readFileSync(join(dir, f), "utf-8");
+    const id = /<bpmn:process id="([^"]+)"/.exec(xml)?.[1];
+    if (!id) continue;
+    const calls = new Set<string>();
+    for (const m of xml.matchAll(/calledElement="([^"]+)"/g)) calls.add(m[1]!);
+    out[id] = [...calls].sort();
+  }
+  return out;
+}
+
 // The todo board's data. Published here rather than by a separate script
 // because it is the same job `qaIcons` already does for verdicts: take
 // something the repo holds as files and make it fetchable by a static page.
@@ -579,7 +611,12 @@ function beanFile(id: string): string | undefined {
     editHref: `${EDIT_BASE}/${path}`,
   }));
   mkdirSync(dirname(TODO_ASSET), { recursive: true });
-  emit(TODO_ASSET, JSON.stringify({ $schema: "folio-todo-index/v1", items }) + "\n", "qa");
+  const processes = processHierarchy();
+  emit(
+    TODO_ASSET,
+    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }) + "\n",
+    "qa",
+  );
   console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
 }
 
