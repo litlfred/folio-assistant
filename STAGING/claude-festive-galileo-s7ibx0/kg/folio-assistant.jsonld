@@ -116,13 +116,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T00:10:31.329Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/28979e1f27b30468f439936da3292de321e0e636",
-  "sourceCommitSha": "28979e1f27b30468f439936da3292de321e0e636",
-  "sourceCommitAt": "2026-09-19T00:08:53Z",
+  "generatedAt": "2026-09-19T00:12:35.818Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2cd6c43625a660cdbe94b239a691c7da9c9f5f2f",
+  "sourceCommitSha": "2cd6c43625a660cdbe94b239a691c7da9c9f5f2f",
+  "sourceCommitAt": "2026-09-19T00:11:03Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 143,
+    "Skill": 144,
     "Actor": 24,
     "Capability": 23,
     "Role": 64,
@@ -1523,6 +1523,23 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/test-engineer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/serving-renderings",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "serving-renderings",
+      "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/serving-renderings.md",
+      "lines": 85,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/serving-renderings"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
@@ -3823,6 +3840,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/scientific-accuracy",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/kg/folio-assistant.jsonld#skill/staging-review",
@@ -18601,8 +18619,8 @@
   ],
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "c439a5340b5f32deeb1f5cf3eae4e3d8c6aa6f07",
+    "sha": "daa823c3656df99f98603df1d0cfcc2dc6fd38b1",
     "pr": "304/merge",
-    "run": "35408342398"
+    "run": "35408474204"
   }
 }
