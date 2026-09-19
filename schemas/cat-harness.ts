@@ -304,6 +304,43 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
   },
+  // The gettext side of translation: `.pot` templates, `.po` catalogues and
+  // the `TranslationNode` manifests that make each pair addressable.
+  //
+  // THE INPUT TO INJECTION, NEVER THE OUTPUT — and there is deliberately no
+  // matching kind for the output. A rendered translation is the SAME KIND OF
+  // THING as the page it translates: renderable content, differing by a
+  // field. `docs/fr/index.md` declares `lang: fr` and `translation_source:
+  // index.md` in its own front matter, exactly as a bean declares its status
+  // and a workflow instance declares its `$schema`, so the file answers what
+  // it is and the directory does not have to be enumerated.
+  //
+  // An earlier cut of this (PR #351, first draft) added a `translated-content`
+  // kind and a `locale` field, with one declaration per locale subtree — ten
+  // entries for five locales across two subtrees, growing as
+  // O(locales x subtrees). It restated in `cat-harness.json` what all ten
+  // files already said in their own front matter, which is one fact in two
+  // places and free to drift. The owner's framing is what settles it:
+  // "narrative/audio/visual content with text should be translatable. its not
+  // so much the node schema itself but its content (e.g. markdown, bpmn)
+  // should be translatable" — translatability is a property of a FORMAT
+  // within a content type, which `schemas/translation-tools.ts` already
+  // declares, not a property of a directory.
+  //
+  // `.po` catalogues are different: they are not content in any language, and
+  // `translations/` was undeclared entirely until 2026-09-19 — the `dh4f`
+  // defect in reverse, five committed directories that no declaration
+  // mentioned. That is what this kind is for.
+  "translation-sources": {
+    type: `${FOLIO_NS}TranslationSourceGraph`,
+    renderable: false,
+    summary:
+      "POT templates, PO catalogues and their `TranslationNode` manifests, one directory " +
+      "per target locale. The INPUT to injection; the rendered output is ordinary content " +
+      "that declares its own `lang`.",
+    skill: "translation-manager",
+    schema: "schemas/translation.ts",
+  },
 };
 
 /** A graph kind name. Open, not a closed union — downstream layers add kinds. */
@@ -507,6 +544,21 @@ export const ContentDirectorySchema = z.object({
   graphs: z.array(z.string().min(1)).min(1),
   ...kgNodeLabelShape,
 });
+
+// THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
+// omission. A first draft of PR #351 added one, required on a
+// `translated-content` directory and refused elsewhere. It worked and it was
+// the wrong axis: a translated page already declares `lang` and
+// `translation_source` in its own front matter, so the directory entry
+// restated what every file inside it already said — one fact in two places,
+// free to drift, and growing as O(locales x subtrees).
+//
+// The rule this repository keeps returning to: a declaration states what to
+// EXPECT in a directory, and THE FILES DECLARE WHAT THEY ARE. `beans/` is one
+// entry whose contents are told apart by a bean's front matter and a workflow
+// instance's `$schema`; `docs/assets/qa/` is one entry holding three witness
+// families, told apart by the documents. Translated pages are the same shape:
+// one declaration for the content, and `lang` on the file.
 
 /**
  * The conventional directories every instance gets without declaring them.
@@ -939,7 +991,11 @@ export function toJsonLd(
   registry: GraphKindRegistry = defaultGraphKinds,
 ): Record<string, unknown> {
   return {
-    "@context": { fa: FOLIO_NS, path: `${FOLIO_NS}path`, directories: `${FOLIO_NS}scans` },
+    "@context": {
+      fa: FOLIO_NS,
+      path: `${FOLIO_NS}path`,
+      directories: `${FOLIO_NS}scans`,
+    },
     "@type": `${FOLIO_NS}CatHarness`,
     name: decl.name,
     ...(decl.title ? { title: decl.title } : {}),
