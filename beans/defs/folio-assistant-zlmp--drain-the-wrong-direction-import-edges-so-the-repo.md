@@ -4,7 +4,7 @@ title: Drain the wrong-direction import edges so the repo split can cut
 status: in-progress
 type: task
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-18T21:55:40Z
+updated_at: 2026-09-19T00:54:54Z
 ---
 
 
@@ -161,3 +161,5 @@ projector read `ToolDefinition.summary` while this branch renamed it to
 `schemas/agent-harness.js` after this branch renamed it to `cat-harness.ts`.
 CI builds the PR MERGED WITH MAIN — 1829 tests across 134 files locally, 1883
 across 138 there. Merge main before trusting a local green.
+
+_2026-09-19T00:54:54Z_ — The feedback cluster: 10 -> 6, and the reason the obvious fix failed twice. Measured at d26a96fd — reclassifying src/core/feedback.ts, src/routes/feedback.ts and src/routes/relevance.ts to core ALONE gives 11 edges, not 6, because src/server.ts, src/index.ts and src/routes/chat.ts then cross the line to MOUNT them: five new edges replace four. Content handlers mounted by a harness composition root cross whichever side holds them. That is why moving them was recommended and measured worse twice before the mechanism was understood. The fix is two steps and only works in this order. (1) src/route-groups.ts — routes resolved by VARIABLE specifier from a declaration, like tool-groups, qa-checker-discovery and render-discovery; each route module exports a mount* factory that casts what it needs out of an opaque services bag, so the cast lives in the layer that owns the type. Edge-neutral by itself, still 10, which is the expected result since all five route modules were harness. Order is behaviour here unlike the tool groups, because dispatch is first-match-wins, so the declaration order is asserted by test. (2) The reclassification, now a net win: four modules to core (the store plus the feedback, relevance and glossary routes), 10 -> 6. Three imports had to go first or the move would have traded four edges for three: the adapter now takes feedbackDir and builds its OWN FeedbackStore rather than being handed one by src/index.ts (a directory is a path, a store is content; ContentAdapter declares getFeedbackStore?(): unknown, so the harness declares the slot and the content layer fills it); the server's getFeedbackStore() was deleted rather than retyped because nothing called it; and handleChatPost's _feedbackStore parameter was deleted because it was never read — harmless while the store was the harness's, a wrong-direction import bought with nothing once it became core's, now pinned by a test. Six remain, unrelated to each other: harness-config -> contributions, schemas/index.ts -> dak-blocks, check-workflow-refs -> translation-tools, src/types.ts -> FeedbackItem/PaperMacro, corpus-gate -> qa-utils and -> block-module. PR #316.
