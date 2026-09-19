@@ -127,7 +127,13 @@ describe("the witnesses are committed in one place and published in another", ()
     // where a reviewer checks.
     for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
       const text = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", wf), "utf-8");
-      expect(text).toContain("cp -rT test/results/witnesses ./_site/assets/qa");
+      // Two facts rather than one command line: `-T` so the CONTENTS land in
+      // `assets/qa/`, and the destination both workflows must agree on. The
+      // SOURCE path moved with the instance and is not what this is about —
+      // pinning the whole string made it fail on a correct relocation, the
+      // same way `site-links.test.ts` did an hour earlier.
+      expect(text).toContain("cp -rT ");
+      expect(text).toContain("test/results/witnesses ./_site/assets/qa");
       // The RESULTS too, since bean `2634` took the findings out of the
       // published graph: this file is now the only place a consumer can see
       // what the QA pass found about the document it just fetched.
