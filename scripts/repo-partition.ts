@@ -252,6 +252,33 @@ const RULES: Rule[] = [
   },
 
   // ── agentic-harness: Roles, Skills, Tools, BPMN, RBAC, the server itself
+  // ── Content handlers that live under a harness prefix (2026-09-19).
+  //
+  //    `src/` is claimed by SUBDIRECTORY, and `src/core/` and `src/routes/`
+  //    are claimed for the harness — but those directories hold modules from
+  //    both layers. These three act on a FOLIO's content: its feedback items,
+  //    its glossary candidates, its bibliography relevance. None of them has
+  //    anything to do without a folio, which is the same question every entry
+  //    in the harness triage list above was read against.
+  //
+  //    **Classifying them alone makes the count worse, and that was measured.**
+  //    `check:partition` at d26a96fd: 10 wrong-direction edges with them in
+  //    the harness, 11 with them here, because `src/server.ts`, `src/index.ts`
+  //    and `src/routes/chat.ts` then crossed the line to MOUNT them. Content
+  //    handlers mounted by a harness composition root cross whichever side
+  //    holds them. `src/route-groups.ts` is what removed the mounting edges
+  //    first; this rule is only safe after it.
+  {
+    repo: "core",
+    triaged: true,
+    exact: [
+      "src/core/feedback.ts",    // the feedback/<paper>/*.ts store
+      "src/routes/feedback.ts",  // /api/feedback
+      "src/routes/relevance.ts", // /api/relevance — bibliography adjudication
+      "src/routes/glossary.ts",  // /api/glossary — a folio's glossary candidates
+    ],
+  },
+
   {
     repo: "harness",
     exact: [

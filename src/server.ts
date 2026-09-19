@@ -13,7 +13,6 @@ import { existsSync, readFileSync } from "fs";
 import { join, extname, resolve } from "path";
 
 import type { ContentAdapter } from "./types.js";
-import { FeedbackStore } from "./core/feedback.js";
 import { GitHelper } from "./core/git.js";
 import { log, logDebug } from "./core/logging.js";
 import { registerDeclaredToolGroups, type ToolGroupDeclaration } from "./tool-groups.js";
@@ -71,7 +70,7 @@ export const SERVER_ROUTES: readonly RouteDeclaration[] = [
   { id: "feedback",  module: "src/routes/feedback.ts",  mount: "mountFeedbackRoutes",  layer: "core",    needs: ["feedbackStore"] },
   { id: "glossary",  module: "src/routes/glossary.ts",  mount: "mountGlossaryRoutes",  layer: "core" },
   { id: "relevance", module: "src/routes/relevance.ts", mount: "mountRelevanceRoutes", layer: "core" },
-  { id: "chat",      module: "src/routes/chat.ts",      mount: "mountChatRoutes",      layer: "harness", needs: ["feedbackStore"] },
+  { id: "chat",      module: "src/routes/chat.ts",      mount: "mountChatRoutes",      layer: "harness" },
 ];
 
 // ── MIME types for static serving ────────────────────────────────
@@ -120,7 +119,6 @@ export interface FolioServerConfig {
 export class FolioServer {
   private mcpServer: McpServer;
   private gitHelper: GitHelper;
-  private feedbackStore: FeedbackStore;
   private adapter: ContentAdapter;
   private config: FolioServerConfig;
 
@@ -128,7 +126,6 @@ export class FolioServer {
     this.config = config;
     this.adapter = config.adapter;
     this.gitHelper = new GitHelper(config.repoRoot);
-    this.feedbackStore = new FeedbackStore(config.feedbackDir);
 
     this.mcpServer = new McpServer(
       {
@@ -188,9 +185,6 @@ export class FolioServer {
   /** Expose internals for the adapter. */
   getGitHelper(): GitHelper {
     return this.gitHelper;
-  }
-  getFeedbackStore(): FeedbackStore {
-    return this.feedbackStore;
   }
 
   // ── GET request handler ──────────────────────────────────────
@@ -285,7 +279,12 @@ export class FolioServer {
     const { routes, outcomes } = await mountDeclaredRoutes(SERVER_ROUTES, PLATFORM_ROOT, {
       repoRoot,
       adapter: this.adapter,
-      services: { gitHelper: this.gitHelper, feedbackStore: this.feedbackStore },
+      // The feedback store comes FROM the adapter, which owns it: it is
+      // per-folio content state, and a harness server constructing one was
+      // the wrong-direction dependency this change removes. An adapter
+      // without a feedback surface returns `undefined`, and the `needs` on
+      // the declaration turns that into a named skip at boot.
+      services: { gitHelper: this.gitHelper, feedbackStore: this.adapter.getFeedbackStore?.() },
     });
     this.routes = routes;
     for (const o of outcomes) {

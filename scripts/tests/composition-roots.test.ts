@@ -194,11 +194,11 @@ describe("HTTP routes", () => {
       services: {},
     });
     const failed = outcomes.filter((o) => o.state === "failed");
-    expect(failed.map((o) => o.id).sort()).toEqual(["branches", "chat", "feedback"]);
+    expect(failed.map((o) => o.id).sort()).toEqual(["branches", "feedback"]);
     for (const f of failed) expect((f as { detail: string }).detail).toMatch(/gitHelper|feedbackStore/);
-    // The two that need nothing still mount: one route's missing service must
-    // not take the others down.
-    expect(routes).toHaveLength(2);
+    // The three that need nothing still mount: one route's missing service
+    // must not take the others down.
+    expect(routes).toHaveLength(3);
   });
 
   test("an absent module is `absent`, a broken one is `failed`", async () => {
@@ -220,6 +220,13 @@ describe("HTTP routes", () => {
     );
     expect(broken.outcomes[0]!.state).toBe("failed");
     expect((broken.outcomes[0] as { detail: string }).detail).toContain("noSuchFactory");
+  });
+
+  test("chat declares no `needs` — it never read the store it was handed", () => {
+    // `handleChatPost` took a `_feedbackStore` it never read. Harmless while
+    // the store was the harness's; a wrong-direction import bought with
+    // nothing once it became core's. Pinned so it cannot quietly come back.
+    expect(SERVER_ROUTES.find((r) => r.id === "chat")!.needs).toBeUndefined();
   });
 
   test("dispatch returns null for a URL nobody claims", async () => {
