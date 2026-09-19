@@ -32,6 +32,7 @@ const KG = JSON.parse(readFileSync("_kg/folio-assistant.jsonld", "utf-8")) as {
   "@graph": Array<Record<string, unknown>>;
   counts: Record<string, number>;
   undeclaredTerms: Array<{ term: string }>;
+  sourceCommit?: string;
 };
 
 test.describe("kg viewer", () => {
@@ -113,6 +114,34 @@ test.describe("kg viewer", () => {
     // Capped deliberately: a hairball answers no question. 14 neighbours + self.
     expect(n).toBeLessThanOrEqual(15);
     await expect(page.locator(".detail svg circle.self")).toHaveCount(1);
+  });
+
+  test("the page links back to the document it renders, relatively", async ({ page }) => {
+    // RELATIVE, not composed. The page already fetched its sibling by this
+    // path, so the link is right wherever the page is served from — canonical
+    // or STAGING/<slug>/. Composing <base>/kg/<stub>.jsonld from the
+    // declaration would be a second answer to a question already answered,
+    // and the one that breaks on a preview.
+    await page.goto("/_kg/index.html");
+    const src = page.locator("#meta a").first();
+    await expect(src).toHaveAttribute("href", "folio-assistant.jsonld");
+    // A name that says what it gets you: "JSON-LD" alone names a syntax.
+    await expect(src).toHaveAttribute("aria-label", /Download this graph as JSON-LD/);
+    // And it actually resolves.
+    const res = await page.request.get("/_kg/" + (await src.getAttribute("href")));
+    expect(res.status()).toBe(200);
+  });
+
+  test("the source commit is linked when the export knew it", async ({ page }) => {
+    await page.goto("/_kg/index.html");
+    const commit = KG.sourceCommit;
+    if (commit === undefined) {
+      // Third state: a tarball or export-stripped checkout produces a complete
+      // graph that cannot say which commit it came from. Absent, not wrong.
+      await expect(page.locator("#meta a")).toHaveCount(1);
+      return;
+    }
+    await expect(page.locator("#meta a", { hasText: "source commit" })).toHaveAttribute("href", commit);
   });
 
   test("a document that cannot be fetched says so, and is never drawn as empty", async ({ page }) => {
