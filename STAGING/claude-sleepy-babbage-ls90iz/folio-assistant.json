@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T16:06:45.626Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/edebb87aaf12bd89b5f2fd53b3c2f722bf8624af",
-  "sourceCommitSha": "edebb87aaf12bd89b5f2fd53b3c2f722bf8624af",
-  "sourceCommitAt": "2026-09-19T16:03:52Z",
+  "generatedAt": "2026-09-19T16:35:37.650Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/eec6a8a16eccb0fe6549845c9d23c361262713e8",
+  "sourceCommitSha": "eec6a8a16eccb0fe6549845c9d23c361262713e8",
+  "sourceCommitAt": "2026-09-19T16:32:46Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 168,
@@ -262,7 +262,7 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 51,
+    "Schema": 52,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -19499,6 +19499,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tabular-records"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#schema/test-run",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "test-run",
+      "title": "A TEST RUN — what was measured, with what, and whether it can be redone.",
+      "module": "schemas/test-run.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/test-run"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/folio-assistant.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "theme",
@@ -20555,8 +20563,8 @@
   ],
   "staging": {
     "branch": "claude/sleepy-babbage-ls90iz",
-    "sha": "319cb528041ab7d12c259053f1e68ab569997047",
+    "sha": "1541c848cf4f225f062d0d01118a99e7423cda22",
     "pr": "435/merge",
-    "run": "35453809524"
+    "run": "35455379783"
   }
 }
