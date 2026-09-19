@@ -98,7 +98,16 @@ docs/_data/build.yml
 _kg/
 .claude/skills/registry.json
 
-# Playwright failure artefacts. `.last-run.json` is tracked (bb28f8e); the
-# per-test directories are snapshots of a failing run — one reproduce-then-fix
-# cycle wrote 3,040 lines of them into a commit here on 2026-09-19.
+# Playwright failure artefacts. `.last-run.json` is tracked (bb28f8e) and
+# deliberately restored on main after a sibling session deleted it, so it stays
+# tracked here — ignoring the whole directory was this branch's first answer and
+# main's reason is the better one. The per-test directories are snapshots of a
+# failing run: one reproduce-then-fix cycle wrote 3,040 lines of them into a
+# commit on 2026-09-19.
+#
+# Note for whoever hits it next: a tracked `.last-run.json` is rewritten by
+# every `bunx playwright test`, so it dirties the tree mid-run and a `git stash`
+# taken then will carry it. That is a cost of tracking it, not an argument
+# against — but it is what made this branch untrack it in the first place.
 test-results/*/
+playwright-report/

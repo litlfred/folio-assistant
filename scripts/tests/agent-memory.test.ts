@@ -17,6 +17,7 @@ import {
   BEGIN,
   END,
   agentNames,
+  entriesPastBudget,
   parseMemoryFile,
   readMemoryNodes,
   renderEntries,
@@ -59,12 +60,28 @@ describe("the corpus", () => {
     }
   });
 
-  test("no agent's file overruns the harness's 200-line injection budget", () => {
-    // Past 200 lines the harness silently drops the rest, so an over-long file
-    // is memory that exists on disk and reaches nobody.
+  test("no memory ENTRY falls past the harness's 200-line injection budget", () => {
+    // Deliberately not `lines > 200`, which is what this asserted first and is
+    // the wrong question. The harness injects the FIRST 200 lines, so a long
+    // file loses its TAIL — the hand-written `## Session log`, which costs
+    // nothing. An ENTRY past the line is memory the agent will never see.
+    //
+    // Measured 2026-09-19: a sibling's 37-line TRAP took
+    // `content-pipeline-navigator` 13 lines over, losing only session-log
+    // lines. A total-lines gate would have failed the build over that and
+    // taught the next agent to write less down.
     for (const r of syncAll(false)) {
-      expect({ agent: r.agent, over: r.lines > 200 }).toEqual({ agent: r.agent, over: false });
+      expect({ agent: r.agent, lost: r.overflowEntries }).toEqual({ agent: r.agent, lost: [] });
     }
+  });
+
+  test("the overflow check can actually fire", () => {
+    // A gate that cannot fail is not a gate. `entriesPastBudget` is exported so
+    // this can be shown against a file it controls, rather than waiting for the
+    // corpus to grow into the failure.
+    const file = ["x", ...Array(210).fill("y"), "## TRAP — dropped"].join("\n");
+    expect(entriesPastBudget(file)).toEqual(["TRAP — dropped"]);
+    expect(entriesPastBudget(file, 1000)).toEqual([]);
   });
 });
 

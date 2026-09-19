@@ -1,8 +1,9 @@
 # ci-health-watcher — memory
 
-Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote —
-and here *everything* measured is a live signal that goes stale by design).
-Seeded 2026-08-29 from `AGENTS.md`. Confirm entries as you use them.
+**Edit `skills/memory/*.md`, not this file.** The region below is assembled by
+`bun run agent-memory` and anything written into it by hand is overwritten;
+everything outside it — the session log — is yours and is never touched.
+Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote).
 
 ---
 

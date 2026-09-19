@@ -235,6 +235,15 @@ export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
 
 // ── Rendering ───────────────────────────────────────────────────
 
+/** Entry headings that begin after `budget` lines of `file`. */
+export function entriesPastBudget(file: string, budget = 200): string[] {
+  return file
+    .split("\n")
+    .slice(budget)
+    .filter((l) => /^##\s+(STABLE|TRAP|BASELINE)\s/.test(l))
+    .map((l) => l.replace(/^##\s*/, ""));
+}
+
 /** The markdown for one agent's entries — what goes between the markers. */
 export function renderEntries(entries: readonly MemoryNode[]): string {
   // Order is STABLE, TRAP, BASELINE: what is true, then what goes wrong, then
@@ -283,6 +292,21 @@ export interface SyncResult {
   state: "written" | "unchanged" | "no-markers" | "missing";
   entries: number;
   lines: number;
+  /**
+   * Memory entries that fall past the harness's 200-line injection budget.
+   *
+   * **Over budget is not one thing, and gating on total lines gets it wrong.**
+   * The harness injects the FIRST 200 lines, so what a long file loses is its
+   * TAIL — and the tail is the hand-written `## Session log`, which costs
+   * nothing to drop. An entry falling past the line is a different event: that
+   * is memory the agent will never see, which is the whole failure this module
+   * exists to prevent.
+   *
+   * Measured 2026-09-19: `content-pipeline-navigator` went 13 lines over when
+   * a sibling's 37-line TRAP arrived, and lost nothing but session-log lines.
+   * A total-lines gate would have failed the build over that.
+   */
+  overflowEntries: string[];
 }
 
 /** Assemble every agent's file. `write: false` reports without touching disk. */
@@ -290,20 +314,25 @@ export function syncAll(write: boolean): SyncResult[] {
   const nodes = readMemoryNodes();
   return agentNames().map((agent) => {
     const path = join(AGENT_MEMORY_DIR, agent, "MEMORY.md");
-    if (!existsSync(path)) return { agent, state: "missing", entries: 0, lines: 0 };
+    if (!existsSync(path)) {
+      return { agent, state: "missing", entries: 0, lines: 0, overflowEntries: [] };
+    }
     const entries = memoryForAgent(nodes, agent);
     const current = readFileSync(path, "utf8");
     const next = spliceRegion(current, renderEntries(entries));
     if (next === undefined) {
-      return { agent, state: "no-markers", entries: entries.length, lines: 0 };
+      return { agent, state: "no-markers", entries: entries.length, lines: 0, overflowEntries: [] };
     }
     const lines = next.split("\n").length;
-    if (next === current) return { agent, state: "unchanged", entries: entries.length, lines };
+    const overflowEntries = entriesPastBudget(next);
+    if (next === current) {
+      return { agent, state: "unchanged", entries: entries.length, lines, overflowEntries };
+    }
     if (write) {
       mkdirSync(dirname(path), { recursive: true });
       writeFileSync(path, next);
     }
-    return { agent, state: "written", entries: entries.length, lines };
+    return { agent, state: "written", entries: entries.length, lines, overflowEntries };
   });
 }
 
@@ -334,10 +363,18 @@ if (import.meta.main) {
           : `${r.entries} entries, ${r.lines} lines`;
     console.log(`  ${r.state.padEnd(11)} ${r.agent.padEnd(28)} ${note}`);
     if (r.state === "written" && check) stale++;
-    // The harness injects the first 200 lines. A file past that is not an
-    // error -- it still works -- but the overflow is silently dropped, so it
-    // has to be said out loud or nobody learns their memory was truncated.
-    if (r.lines > 200) console.log(`  ${"".padEnd(11)} ${"".padEnd(28)} ⚠ over the harness's 200-line injection budget by ${r.lines - 200}`);
+    // The harness injects the FIRST 200 lines, so an over-long file is not an
+    // error -- it still works -- but the TAIL is silently dropped. Naming what
+    // falls past the line is what makes this actionable: overflowing into the
+    // session log costs nothing, and overflowing into a TRAP costs the entry.
+    if (r.lines > 200) {
+      const detail = r.overflowEntries.length
+        ? `and ${r.overflowEntries.length} MEMORY ENTRY(S) fall past it: ${r.overflowEntries.join("; ")}`
+        : "and nothing past it is a memory entry — only the hand-written tail";
+      console.log(
+        `  ${"".padEnd(11)} ${"".padEnd(28)} ⚠ ${r.lines - 200} line(s) over the harness's 200-line budget, ${detail}`,
+      );
+    }
   }
   if (stale > 0) {
     console.error(

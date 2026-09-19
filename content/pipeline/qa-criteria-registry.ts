@@ -159,8 +159,16 @@ const VOICE: QaCriterionDefinition[] = [
     domain: "voice",
     description:
       "No editorialising phrases ('surprisingly', 'remarkably', " +
-      "'interestingly', 'it is worth noting that', 'a beautiful result'). " +
-      "Results speak for themselves.",
+      "'interestingly', 'it is worth noting that', 'a beautiful result', " +
+      "'the most important result'). Results speak for themselves. " +
+      "EXEMPT: proof economy — an adverb routing the reader away from a routine " +
+      "verification ('Clearly the relation is reflexive', 'it is easy to see " +
+      "that', 'easily verified') — and a term of art where the adverb IS the " +
+      "name ('naturally isomorphic'). Those are the opposite move from " +
+      "editorializing: they spend none of the reader's attention and save some. " +
+      "The exemption is the CONSTRUCTION, not the word: a value judgement in " +
+      "the same clause still fails, so 'Clearly this is the most important " +
+      "result' fails on the superlative. Bean `2t41`.",
     default_severity: "minor",
     depends_on: ["md"],
     automated: true,
