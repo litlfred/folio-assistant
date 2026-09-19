@@ -655,15 +655,42 @@ function generatePackagesMd(): string {
   if (remotePackages.length) {
     L.push("# Remote Packages");
     L.push("");
-    L.push("Remote packages are maintained in external repositories. A light wrapper in");
-    L.push("`skills/remote-packages/` provides `SkillPackageManifest`-compatible Docker requirements.");
-    L.push("Agents can sync and update these automatically based on the sync configuration.");
+    // WHAT THESE ARE, not what they were going to be — bean `wlqd`.
+    //
+    // This said "Agents can sync and update these automatically based on the
+    // sync configuration", which was false on the published site. Measured
+    // 2026-09-19: `shallow-clone` exists only as a value in
+    // `RemoteSyncStrategySchema`, neither `src/tools/skill-fetch.ts` nor
+    // `scripts/generate-registry.ts` mentions `skills/remote-packages/` at all,
+    // and this generator is the directory's only substantive reader — for the
+    // Docker requirements, which is what `schemas/skill-package.ts` documents
+    // the wrappers as providing.
+    //
+    // A docs page is the one place a reader cannot check the claim against the
+    // code, so an aspiration stated in the present tense there is worse than
+    // one stated nowhere.
+    L.push("Remote packages are skill packages maintained in **other** repositories. A light");
+    L.push("wrapper in `skills/remote-packages/` records what each one is and supplies");
+    L.push("`SkillPackageManifest`-compatible Docker requirements, which is what this page is");
+    L.push("generated from.");
     L.push("");
-    L.push("| Package | Maintainer | Repo | Strategy | Frequency | Skills |");
-    L.push("|---------|-----------|------|----------|-----------|--------|");
+    L.push("> **Declared, not integrated.** Nothing in this repository clones a remote package");
+    L.push("> or serves its skills: `skill_fetch` and the skill registry do not read");
+    L.push("> `skills/remote-packages/`, so the skills below **cannot be fetched from this");
+    L.push("> instance** and the sync columns record an intended strategy that no code acts on.");
+    L.push("> A `package-manifest.json` that claims one of these skills fails the");
+    L.push("> `manifest-skill-exists` audit criterion. Tracked as bean `wlqd`.");
+    L.push("");
+    L.push("| Package | Maintainer | Repo | Intended strategy | Intended frequency | Skills (not fetchable here) |");
+    L.push("|---------|-----------|------|-------------------|--------------------|------------------------------|");
     for (const rp of remotePackages) {
       const d = rp.data;
-      L.push(`| **${d.name}** | ${d.maintainer} | \`${d.repo}\` | ${d.sync?.strategy} | ${d.sync?.frequency} | ${d.wrapper?.skills?.join(", ") || "—"} |`);
+      // `sync` is optional: a wrapper that is purely a Docker-requirements input
+      // need not claim a strategy, and "—" is the third state rather than the
+      // string "undefined", which is what a template hole prints.
+      const strat = d.sync?.strategy ?? "—";
+      const freq = d.sync?.frequency ?? "—";
+      L.push(`| **${d.name}** | ${d.maintainer} | \`${d.repo}\` | ${strat} | ${freq} | ${d.wrapper?.skills?.join(", ") || "—"} |`);
     }
     L.push("");
 
@@ -675,7 +702,12 @@ function generatePackagesMd(): string {
       L.push(`**Repository:** \`${d.repo}\`  `);
       L.push(`**Ref:** \`${d.ref}\`  `);
       L.push(`**Maintainer:** ${d.maintainer}  `);
-      L.push(`**Sync Strategy:** ${d.sync?.strategy} (${d.sync?.frequency}, autoUpdate: ${d.sync?.autoUpdate})  `);
+      if (d.sync) {
+        L.push(
+          `**Intended sync:** ${d.sync.strategy} (${d.sync.frequency}, autoUpdate: ` +
+            `${d.sync.autoUpdate}) — *declared; no code performs it*  `,
+        );
+      }
       L.push("");
       L.push("### Wrapper Docker Requirements");
       L.push("");
@@ -691,7 +723,12 @@ function generatePackagesMd(): string {
         L.push(`**Provides Capabilities:** ${d.wrapper.providesCapabilities.map((c: string) => `\`${c}\``).join(", ")}  `);
       }
       if (d.wrapper?.skills?.length) {
-        L.push(`**Skills:** ${d.wrapper.skills.join(", ")}  `);
+        // Named as the external package's, not as this instance's. A bare
+        // "**Skills:**" list reads as things a reader can ask for here.
+        L.push(
+          `**Skills in the external package:** ${d.wrapper.skills.join(", ")} — ` +
+            `*not fetchable from this instance*  `,
+        );
       }
       if (d.wrapper?.lifecycleStages?.length) {
         L.push(`**Lifecycle:** ${d.wrapper.lifecycleStages.join(", ")}  `);
