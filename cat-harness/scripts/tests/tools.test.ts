@@ -6,6 +6,7 @@
  * rather than asserted.
  */
 import { describe, expect, test } from "bun:test";
+import { resolve } from "node:path";
 
 import { tools } from "../../tools/index.js";
 import { ToolDefinitionSchema } from "../../schemas/tool.js";
@@ -14,6 +15,16 @@ import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
 
 const BASE = "https://example.invalid/fa";
+
+/**
+ * The INSTANCE root, not `process.cwd()`.
+ *
+ * `contractRequires(root, …)` resolves `<root>/schemas/skills/<skill>/` — an
+ * instance path. `process.cwd()` is the REPOSITORY root when the suite runs,
+ * and the two were the same directory until the move (bean `wggr`), so passing
+ * the cwd was right by coincidence rather than by argument.
+ */
+const INSTANCE = resolve(import.meta.dir, "../..");
 
 describe("tools", () => {
   test("there are tools to check — otherwise everything below is vacuous", () => {
@@ -45,8 +56,8 @@ describe("tools", () => {
     // requiring nothing) are different answers and the checker keeps them
     // apart; an unreadable file is reported rather than passed.
     expect(checkTools().unreadableContracts).toEqual([]);
-    expect(contractRequires(process.cwd(), "no-such-skill-exists")).toBeUndefined();
-    const req = contractRequires(process.cwd(), "content-validate");
+    expect(contractRequires(INSTANCE, "no-such-skill-exists")).toBeUndefined();
+    const req = contractRequires(INSTANCE, "content-validate");
     expect(req).toContain("targetPath");
   });
 

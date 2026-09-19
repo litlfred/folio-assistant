@@ -25,7 +25,14 @@ import { defineTool, type ToolDefinition } from "../schemas/tool.js";
 import { toolTypeIri } from "../schemas/tool-types.js";
 import { mcpTools } from "./mcp.js";
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+// The INSTANCE root — `<repo>/cat-harness`, where `harness.json` lives.
+//
+// Was `"..", ".."`, which reached the repository root, and that was the same
+// directory as the instance root until the move (bean `wggr`). Afterwards it
+// overshot by one: `decl()` found no declaration, `base()` returned "", every
+// `io` IRI came out relative, and Zod rejected the lot with "io schema
+// references must be absolute IRIs". Seven failures from one segment.
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /** The declared publication base, or a local placeholder when none is set. */
 function base(): string {
