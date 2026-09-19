@@ -6,6 +6,7 @@ type: bug
 priority: high
 created_at: 2026-09-19T10:16:09Z
 updated_at: 2026-09-19T11:35:38Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-19 after the site root moved to `docs/<stub>/` (bean `x4a6`).

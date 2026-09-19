@@ -6,6 +6,7 @@ type: bug
 priority: normal
 created_at: 2026-09-19T00:12:09Z
 updated_at: 2026-09-19T00:18:29Z
+parent: folio-assistant-0lmb
 ---
 
 Measured 2026-09-19 ingesting `uploads/WPR-RDO-2020-003-eng.pdf` (WHO WPRO 'Publication and Information Products Style Guide', 33pp, no embedded outline).

@@ -6,6 +6,7 @@ type: bug
 priority: normal
 created_at: 2026-09-19T05:47:28Z
 updated_at: 2026-09-19T11:05:51Z
+parent: folio-assistant-zzmr
 ---
 
 Found 2026-09-19 while working `nup0`. Two remote packages are declared and

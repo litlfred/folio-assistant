@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
 updated_at: 2026-09-18T15:08:32Z
+parent: folio-assistant-ahvw
 blocked_by:
     - folio-assistant-vjbl
 ---
