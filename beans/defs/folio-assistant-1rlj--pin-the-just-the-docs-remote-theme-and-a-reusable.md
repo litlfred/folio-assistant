@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T08:24:10Z
-updated_at: 2026-09-19T08:39:34Z
+updated_at: 2026-09-19T08:55:41Z
 ---
 
 
@@ -38,3 +38,12 @@ _2026-09-19T08:39:34Z_ — ## Delivered (PR #362)
 ## Not verified
 
 The GitHub Actions issue-maintenance path (`upstream-pins.yml`) has not run — it needs a scheduled or dispatched run in the repo, and the check currently exits 0, so the open/edit path would not fire anyway. Its shape is copied clause-for-clause from `ci-health.yml`, which is proven here. Not resolving this bean: the PR is unmerged.
+
+_2026-09-19T08:55:41Z_ — ## The pin is now VERIFIED against a real Jekyll build
+
+`feature-staging.yml` builds the site with `docs/_config.yml` (it appends only a `baseurl:` override), so the `stage` job IS a build against the pin. It went green, and the artefact at gh-pages `11b2415fb`, `STAGING/claude-pin-theme-upstream-watch/`, says both halves of the claim:
+
+- `assets/css/just-the-docs-dark.css` — **zero** `text-wrap` hits, against 1 on the live main site. The pin took effect; the site is on a release rather than upstream main, and the predicted delta is exactly the one declaration.
+- `index.html` — still carries `d-md-block d-none site-footer`, the v0.11.2 -> v0.12.0 marker. So the pin resolved to v0.12.0 and not to something older.
+
+That retires the "I have not seen the site built against the pin" caveat. Side finding recorded separately as bean `plj1`: the STAGING directory no longer exists at the gh-pages tip, because `docs-site.yml` publishes without `keep_files` and wipes every open PR's preview.
