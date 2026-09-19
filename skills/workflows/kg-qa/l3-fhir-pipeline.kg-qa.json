@@ -5,7 +5,7 @@
     "id": "Process_L3Fhir",
     "path": "skills/workflows/l3-fhir-pipeline.bpmn"
   },
-  "source_hash": "sha256:3aab9923a7332ebdbd9b2848c795d7c45b2f020349209fa16d0b8ab3e79d2b1d",
+  "source_hash": "sha256:ab17ee54e17cbdff270f80b03d95c8a31830f1abd5d37ad3c9cf078c62b6d915",
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -40,17 +40,8 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_AuthorFsh",
-          "detail": "\"Author FSH profiles\" — a ServiceTask is performed by agent or system, but its lane's role \"fhir-modeller\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
-        },
-        {
-          "where": "Task_PublishIg",
-          "detail": "\"Publish the IG site\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "n/a",
@@ -58,8 +49,8 @@
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "n/a": 2,
     "unknown": 0
   }
