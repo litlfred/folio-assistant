@@ -23,6 +23,7 @@ import {
   BEGIN,
   END,
   agentNames,
+  droppedEntryReport,
   entriesPastBudget,
   parseMemoryFile,
   readMemoryNodes,
@@ -280,5 +281,42 @@ describe("the budget check sees a TRUNCATED entry, not just a late heading", () 
       if (r.state === "missing" || r.state === "no-markers") continue;
       expect(r.overflowEntries).toEqual([]);
     }
+  });
+});
+
+describe("the dropped-entry gate", () => {
+  // `entriesPastBudget` measures; this decides whether the build stops. They
+  // were one thing inside `import.meta.main` and so the DECISION was never
+  // reachable from a test — only its input was.
+  test("nothing dropped is not a failure", () => {
+    expect(droppedEntryReport([])).toBeNull();
+  });
+
+  test("a long file whose overflow is only the session log is not a failure", () => {
+    // The state of `platform-boundary-guard` on `main`: over 200 lines, but
+    // every entry lands inside the cut. Gating on line count instead of on
+    // dropped entries would make this red for a reason nobody should act on.
+    expect(droppedEntryReport([{ agent: "platform-boundary-guard", entries: [] }])).toBeNull();
+  });
+
+  test("a dropped entry is named, counted, and given a way out", () => {
+    const report = droppedEntryReport([
+      { agent: "platform-boundary-guard", entries: ["TRAP — a", "TRAP — b"] },
+    ]);
+    expect(report).toContain("platform-boundary-guard: 2 dropped");
+    expect(report).toContain("TRAP — a; TRAP — b");
+    // The remedy matters as much as the finding: the tempting "fix" is to let
+    // the last entry fall off the end, which is the defect, not the cure.
+    expect(report).toContain("archived: true");
+    expect(report).toContain("Do not fix this by letting the last entry fall off the end");
+  });
+
+  test("every affected agent gets its own row", () => {
+    const report = droppedEntryReport([
+      { agent: "one", entries: ["TRAP — x"] },
+      { agent: "two", entries: ["TRAP — y"] },
+    ]);
+    expect(report).toContain("one: 1 dropped");
+    expect(report).toContain("two: 1 dropped");
   });
 });

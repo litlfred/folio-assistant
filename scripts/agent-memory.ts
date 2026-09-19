@@ -275,6 +275,57 @@ export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
  * past the budget is reported too, naming the last entry — the one actually
  * being cut.
  */
+/**
+ * The build-failing half of the budget warning, separated so it can be tested.
+ *
+ * **A dropped ENTRY is a different failure from a long file, and only one of
+ * them is worth a red build.** Overflowing into the hand-written session log
+ * costs nothing — that tail was never injected. Overflowing into an entry
+ * costs the agent that entry, SILENTLY: the file still reads perfectly well,
+ * the harness simply truncates, and nothing says which TRAP stopped arriving.
+ *
+ * Measured 2026-09-19 (bean `4kiw`): adding one 70-line node took
+ * `platform-boundary-guard` from 204 to 259 lines and pushed THREE TRAPs past
+ * the cut, while `--check` exited 0. `entriesPastBudget` had already computed
+ * the exact list; it was printed as a warning nobody had to act on.
+ *
+ * **This is ergonomics, not a hole — do not read it as the only guard.**
+ * `scripts/tests/agent-memory.test.ts` already asserts `overflowEntries` is
+ * empty for every agent, and `bun test` runs in the same CI job, so a dropped
+ * TRAP was never going to reach `main`. Verified by re-creating the probe:
+ * the suite fails 3 tests. What this adds is that the command named `:check`
+ * fails its own check, with a message saying what to do instead of an
+ * assertion diff. The first version of this comment claimed the entry could
+ * drop silently, which was inferred from one command exiting 0 without
+ * running the suite against the failing state.
+ *
+ * Deliberately NOT keyed on total line count. `platform-boundary-guard` is
+ * over 200 on `main` today by a one-line session-log tail, and a gate that is
+ * red for a reason nobody should act on is a gate people learn to route
+ * around.
+ *
+ * @returns the message to print before failing, or `null` when nothing is dropped.
+ */
+export function droppedEntryReport(
+  dropped: readonly { agent: string; entries: readonly string[] }[],
+): string | null {
+  // Filter rather than trust the caller's shape: an agent that is over budget
+  // on its session log alone belongs in the WARNING, and a row with no dropped
+  // entries reaching here would fail the build for it.
+  const real = dropped.filter((d) => d.entries.length > 0);
+  if (real.length === 0) return null;
+  const rows = real
+    .map((d) => `  ${d.agent}: ${d.entries.length} dropped — ${d.entries.join("; ")}`)
+    .join("\n");
+  return (
+    `\nMemory entries fall past the harness's 200-line injection budget and will be\n` +
+    `silently dropped before the agent ever sees them:\n\n${rows}\n\n` +
+    `Shorten or split an entry, or archive one that has outlived its subject\n` +
+    `(\`archived: true\` keeps the node in the graph and out of the prompt).\n` +
+    `Do not fix this by letting the last entry fall off the end.`
+  );
+}
+
 export function entriesPastBudget(file: string, budget = 200): string[] {
   const lines = file.split("\n");
   const isHead = (l: string): boolean => /^##\s+(STABLE|TRAP|BASELINE)\s/.test(l);
@@ -444,6 +495,7 @@ if (import.meta.main) {
   const check = process.argv.includes("--check");
   const results = syncAll(!check);
   let stale = 0;
+  const dropped: { agent: string; entries: string[] }[] = [];
   for (const r of results) {
     const note =
       r.state === "no-markers"
@@ -464,12 +516,18 @@ if (import.meta.main) {
       console.log(
         `  ${"".padEnd(11)} ${"".padEnd(28)} ⚠ ${r.lines - 200} line(s) over the harness's 200-line budget, ${detail}`,
       );
+      if (r.overflowEntries.length) dropped.push({ agent: r.agent, entries: r.overflowEntries });
     }
   }
   if (stale > 0) {
     console.error(
       `\n${stale} memory file(s) are stale. Run \`bun run agent-memory\` and commit the result.`,
     );
+    process.exit(1);
+  }
+  const report = droppedEntryReport(dropped);
+  if (check && report) {
+    console.error(report);
     process.exit(1);
   }
 }
