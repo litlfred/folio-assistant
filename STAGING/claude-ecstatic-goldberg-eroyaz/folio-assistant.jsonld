@@ -247,10 +247,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T15:57:53.684Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b92b192e17e0135aca56bb0512cc52ab6d0cc0a9",
-  "sourceCommitSha": "b92b192e17e0135aca56bb0512cc52ab6d0cc0a9",
-  "sourceCommitAt": "2026-09-19T15:54:48Z",
+  "generatedAt": "2026-09-19T16:16:18.264Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a82205ac24f4cd95d7da0394dab88916e36cc5f2",
+  "sourceCommitSha": "a82205ac24f4cd95d7da0394dab88916e36cc5f2",
+  "sourceCommitAt": "2026-09-19T16:13:11Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 168,
@@ -262,7 +262,7 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 50,
+    "Schema": 51,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -2122,7 +2122,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 275,
+      "instructionLines": 314,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -19411,6 +19411,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/memory"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/narrative",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "narrative",
+      "title": "A generated narrative, and who stands behind it — bean `ju0u`.",
+      "module": "schemas/narrative.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/narrative"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/note-anchor",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "note-anchor",
@@ -20547,8 +20555,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "90e93f3d19a0f130f23cb2752193b19f52dd28ed",
-    "pr": "427/merge",
-    "run": "35453363078"
+    "sha": "5628fb9e443efd1745d46a002d98991d3027cf18",
+    "pr": "436/merge",
+    "run": "35454334539"
   }
 }

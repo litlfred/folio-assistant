@@ -182,6 +182,40 @@
           ],
           "additionalProperties": false
         },
+        "topology": {
+          "type": "object",
+          "properties": {
+            "forge": {
+              "type": "string",
+              "enum": [
+                "none",
+                "github",
+                "self-hosted",
+                "jurisdiction-hosted"
+              ]
+            },
+            "network": {
+              "type": "string",
+              "enum": [
+                "internet",
+                "egress-restricted",
+                "air-gapped"
+              ]
+            },
+            "modelProvenance": {
+              "type": "string",
+              "enum": [
+                "open-weight-local",
+                "hosted",
+                "mixed"
+              ]
+            },
+            "outwardFacing": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
         "directories": {
           "type": "array",
           "items": {
@@ -235,8 +269,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "90e93f3d19a0f130f23cb2752193b19f52dd28ed",
-    "pr": "427/merge",
-    "run": "35453363078"
+    "sha": "5628fb9e443efd1745d46a002d98991d3027cf18",
+    "pr": "436/merge",
+    "run": "35454334539"
   }
 }
