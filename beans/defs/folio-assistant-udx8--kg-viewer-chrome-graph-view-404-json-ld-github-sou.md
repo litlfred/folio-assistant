@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T07:30:04Z
-updated_at: 2026-09-19T08:00:31Z
+updated_at: 2026-09-19T08:07:49Z
 ---
 
 
@@ -28,3 +28,11 @@ The e2e fixture for just-the-docs' search was written from memory with aria-labe
 axe passed it in BOTH schemes. Its `label` rule accepts a non-empty placeholder attribute as a last-resort pass, and it checks the attribute rather than the computed name. So this is another instance of the thesis tests/a11y.e2e.ts already argues: axe is necessary and not sufficient.
 
 Found only by fetching the real Jekyll output of the staging build from gh-pages (STAGING/claude-kg-viewer-chrome/index.html) and reading the markup the site actually ships. Both fixtures are now copied from that build; the label is clipped rather than display:none; and the guard is an accessible-name assertion read out of Chromium over CDP, verified to FAIL when display:none is reinstated — getByLabel and a for= lookup both pass under the defect, so either would have been a guard that cannot fire.
+
+_2026-09-19T08:07:49Z_ — PR #352 MERGED by the owner at sha 5cbad6e — the four fixes are in main.
+
+Follow-up PR #357 carries the two commits that landed after that merge and are NOT in main:
+ - the accessible-name fix (main currently ships a search field whose computed accessible name is empty)
+ - the site-links check mirrored into feature-staging.yml, with a test holding both workflows together
+
+Gates on the merged state: bun test 2248/0 fail, playwright 121 pass (CI=1), eslint clean, tsc clean, kg:audit:check exit 0.
