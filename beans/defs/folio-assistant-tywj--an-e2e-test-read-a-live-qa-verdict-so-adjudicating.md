@@ -120,3 +120,49 @@ rather than fixed by overruling them.
 - [x] conflict resolved keeping the version whose sort assertion bites
 - [x] the property freezing gave up bought back by a shape-drift test
 - [x] `qjyi` and `iumj` cross-referenced; no bean resolved but this one
+
+## Second merge: #319 landed a better resolution, and this branch's is withdrawn
+
+`main` moved again — #319 merged with `508f50242` *"Merge main, and resolve
+qa-panel.e2e.ts by keeping the best of both"*, a third resolution of the same
+file. It is better than this branch's, on the axis that matters most, and the
+frozen fixture is withdrawn rather than defended.
+
+**Their argument, which is correct.** Freezing the criterion freezes its
+witness, so `scriptHash: "5af6856733f3"` becomes a literal that outlives the
+checker. Change `qa-checkers-voice.ts`, re-run the sweep, and this branch's test
+keeps passing while asserting a hash the corpus no longer holds — *"a fixture
+drifting from the corpus is the exact defect this whole section exists to fix;
+it must not be reintroduced one field down."* Reading the value out of the frozen
+document rather than pinning it (which this branch did) makes the assertion
+self-consistent, not correct: it stops saying anything about the checker that
+actually ran.
+
+**Every property this branch's version had, theirs also has**, arrived at more
+cheaply:
+
+| | this branch | #319's, on main |
+|---|---|---|
+| lookup by id, throws if absent | yes | yes |
+| sort actually exercised | yes — re-sorted to 42/48 | yes — flipped **in place** at 19/48 |
+| shape cannot drift from generator | via a separate drift test | intrinsic: read live |
+| witness/hash tracks the real checker | **no** — frozen | **yes** |
+| `evidence` not invented | yes — real capture | no — one literal string |
+
+Only the last row favours this branch, and it is one string against a live hash.
+Not worth a committed fixture plus a drift test to keep.
+
+**Withdrawn:** `tests/fixtures/` (README + the captured sidecar) and
+`scripts/tests/qa-panel-fixture.test.ts`, whose only subject was that fixture.
+The drift test did earn its keep before being deleted — it failed on its first
+run and found `changed`, a witness field written only for a stale witness, which
+I would not have enumerated from memory. Recorded here because the finding
+outlives the test.
+
+**Kept from this branch**, none of it contested: the `.gitignore` reconciliation
+with main's tracked `.last-run.json`, the dead duplicate `timeout` key in
+`playwright.config.ts`, the TRAP in `content-pipeline-navigator`'s memory, and
+this record.
+
+- [x] resolution taken from #319, not from ownership of mine
+- [x] fixture and drift test removed, with the one finding they produced kept
