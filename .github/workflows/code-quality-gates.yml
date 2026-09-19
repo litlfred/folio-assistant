@@ -290,28 +290,42 @@ jobs:
       # harness injects. An entry edited and never assembled is a fact the
       # author believes an agent has and the agent has never seen -- invisible,
       # because the generated file still reads perfectly well without it.
-      # NOT un-folded, deliberately, and this comment is the finding rather
-      # than the fix.
-      #
-      # The `bun run scripts/gen-docs-pages.ts --check` below is a CONTINUATION
-      # LINE of this step's `run`, so YAML folds it into one scalar and it is
-      # passed to `agent-memory:check` as trailing arguments, which that script
-      # ignores. **The gate has never run.** Bean `folio-assistant-2u6m`.
-      #
-      # Turning it on is not a one-line fix, which is why it is not done here.
-      # `gen-docs-pages` writes LIVE QA VERDICTS into the pages it generates —
-      # the badge on `publication-workflow.md` currently reads "1 fail" where
-      # the graph now says "0 fail, 10 pass", stale since the actor-kind fixes
-      # landed in #353. So the pages go stale whenever the knowledge graph
-      # changes, and enabling the check makes every KG-touching PR red unless
-      # it also regenerates. That is a real policy decision with a real
-      # maintenance cost, and smuggling it into an unrelated PR is how a gate
-      # gets turned back off by the next person it blocks.
-      #
-      # Measured 2026-09-19 on `origin/main` at ed3403322: 12 pages stale.
       - name: agent memory is assembled
         run: bun run agent-memory:check
-          bun run scripts/gen-docs-pages.ts --check
+
+      # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
+      #
+      # This was a CONTINUATION LINE of the step above: more-indented, so YAML
+      # folded it into one plain scalar and the runner executed
+      #
+      #     bun run agent-memory:check bun run scripts/gen-docs-pages.ts --check
+      #
+      # `scripts/agent-memory.ts` ignores trailing arguments and exits 0, so
+      # the gate its own comment described had NEVER RUN. Two months of green.
+      #
+      # It could not simply be un-folded, and that is the more interesting
+      # half. `gen-docs-pages` wrote LIVE QA VERDICTS into the pages -- the
+      # state class, the glyph and "0 fail, 0 warn, 10 pass, 0 n/a" -- so a
+      # page went stale whenever a sweep changed its mind. Measured on `main`
+      # at ed3403322: 12 pages stale, one of them because the actor-kind fixes
+      # in #353 turned a failing criterion GREEN. Enabling the check as it
+      # stood would have reddened every KG-touching PR that did not also
+      # regenerate, which teaches exactly the wrong lesson.
+      #
+      # So the verdicts came out of the pages first. `docs/*.md` now carries
+      # only corpus STRUCTURE -- which nodes exist, which QA families apply,
+      # and whether a sidecar exists at all -- and the badge fetches its page's
+      # verdict index at load, the way the QA panel has always fetched its
+      # contents. The witness projections under `test/results/witnesses/` are
+      # gated on EXISTENCE and not on contents, because their contents are a
+      # function of the sidecars and of the working tree and the site build
+      # regenerates them on every publish.
+      #
+      # What a red here means now: somebody added a node, renamed a block, ran
+      # a first sweep, or moved a sidecar, and did not regenerate. A real
+      # omission, every time.
+      - name: generated docs pages are current
+        run: bun run scripts/gen-docs-pages.ts --check
 
       # The translation index is what the navbar's locale filter reads. It is
       # derived from what each page DECLARES — `lang`, and `translation_source`
