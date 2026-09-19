@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pn6j
 title: 'INGEST: L1 completeness gate — derived content must be present before L1 KG is complete'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-16T06:44:43Z
+updated_at: 2026-09-19T12:23:18Z
 parent: folio-assistant-slw1
 ---
 
@@ -33,3 +33,5 @@ The gate runs in the ingest path, a failure opens a bean and holds the document
 in `uploads/`, and the verdict is recorded on the document.
 
 Diagram: `skills/workflows/ingest-l1-completeness-gate.bpmn`.
+
+_2026-09-19T12:23:18Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
