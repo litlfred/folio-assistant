@@ -32,6 +32,8 @@ L1 completeness gate (`folio-assistant-pn6j`) fails a narrative that lacks it.
 
 Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Provenance`.
 
+_2026-09-19T15:17:59Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## 2026-09-19 — the closed union, and what a gate over zero narratives can honestly claim
 
 Done. `schemas/attribution.ts` is the vocabulary; `check:l1-complete` enforces
