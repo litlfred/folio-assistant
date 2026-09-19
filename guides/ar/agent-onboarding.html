@@ -255,6 +255,25 @@
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/assets/todos/index.json">
+
+<!--
+  The discarded-items document — `fsh-guts.jsonld`, published at the base by
+  `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
+  then some: it carries every node's BODY, which is 64 KB against a 5 KB
+  document without them. Inlining that into every page's <head> would be
+  absurd for content reached through one control inside Settings.
+
+  `.json` rather than `.jsonld`. Both are published and they are the same
+  bytes; Pages has no media type for `.jsonld` and serves it as
+  octet-stream. `fetch().json()` would parse it anyway, but every other
+  rendering here uses the alias and one that did not would be the odd case a
+  later reader has to work out.
+
+  The viewer fetches this WHEN SETTINGS OPENS, never on page load, and a
+  fetch that fails is reported rather than shown as an empty trashcan —
+  "nothing discarded" and "could not read the document" are opposite facts.
+-->
+<meta name="fa-fsh-guts-src" content="/folio-assistant/fsh-guts.json">
 <link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
@@ -906,7 +925,7 @@ lean_build)، ثم يدفع التغييرات. <strong>إنه لا يقوم ب�
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35444520113"><code>0d18db3</code></a> &middot; 2026-09-19T13:01:46Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35450392753"><code>79d3782</code></a> &middot; 2026-09-19T15:00:31Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
