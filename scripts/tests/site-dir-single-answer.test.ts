@@ -48,12 +48,31 @@ const TREES = ["scripts", "content", "schemas", "src", "test"];
  *
  * `content/docs/` is the generator's INPUT — a different directory that
  * happens to share a segment — so a preceding `content` disqualifies a hit.
+ *
+ * ## `scanSync` and a bare `cwd:` were added after they let one through
+ *
+ * `html-comment-delimiters.test.ts` globbed with `scanSync` and a bare `cwd`
+ * set to the site-root literal — matching none of the named functions, so this
+ * guard passed it. (Spelled around rather than quoted, because writing it out
+ * makes this guard fire on its own rationale; the sibling test reassembles its
+ * fixture from parts for the same reason.) The stub
+ * inversion then broke it in the worst available way: the move left an empty
+ * `docs/` holding only the gitignored bundler tree, so LOCALLY the glob
+ * matched nothing and the test passed over zero files — while in CI
+ * `bundle install` populates that tree and the test reported findings in
+ * third-party gem HTML. Green locally, red in CI, and neither run was looking
+ * at the site.
+ *
+ * The lesson is about the SHAPE of the list, not the one missing entry: a
+ * function allow-list only covers the resolution idioms somebody thought of.
+ * A bare `cwd:`/`dir:`/`root:` property is a path-resolving position whatever
+ * consumes it, so those are matched directly.
  */
 const LITERAL =
   // `[^\n]*` rather than `[^)\n]*`: a nested call -- `join(dirname(x), "..",
   // "docs/…")` -- puts a `)` between the opener and the literal, and the
   // tighter pattern walked straight past exactly that line in `a11y.e2e.ts`.
-  /\b(?:join|resolve|readFileSync|existsSync|readdirSync|statSync)\s*\([^\n]*(["'`])\.?\/?docs(\/[^"'`\n]*)?\1/;
+  /(?:\b(?:join|resolve|readFileSync|existsSync|readdirSync|statSync|scanSync|glob|Glob)\s*\([^\n]*|\b(?:cwd|dir|root|base)\s*:\s*)(["'`])\.?\/?docs(\/[^"'`\n]*)?\1/;
 
 function sourceFiles(): string[] {
   const out: string[] = [];
