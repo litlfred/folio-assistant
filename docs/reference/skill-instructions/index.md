@@ -126,6 +126,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
+| [Adopting an upstream version bump](upstream-version-adoption.html) | `upstream-version-adoption` | — | An unpinned dependency is an unreviewed commit from a stranger, merged on every |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
 | [Voice authoring guidance](voice-authoring-guidance.html) | `voice-authoring-guidance` | — |  |
 | [Voice editorial review](voice-editorial-review.html) | `voice-editorial-review` | — |  |

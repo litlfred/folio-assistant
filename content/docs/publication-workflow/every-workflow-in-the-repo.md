@@ -1,8 +1,8 @@
-Thirty BPMN 2.0 files, all under
+Thirty-two BPMN 2.0 files, all under
 [`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
 (`ls skills/workflows/*.bpmn | wc -l` on 2026-09-19 — this line said "six", then
-"nineteen", each for long enough to be wrong, which is why it now carries the
-command as well as the date).
+"nineteen", then "thirty", each for long enough to be wrong, which is why it now
+carries the command as well as the date).
 Each is a real BPMN 2.0 document with diagram interchange — open it in
 [bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN tool. The SVGs
 throughout the docs are generated from these files by `bun run render:bpmn`;
@@ -78,6 +78,16 @@ the outer process; the rest are its call activities:
 | `ingest-derive-content.bpmn` | Archive, technical metadata, images, audio, tabular data, provenance |
 | `ingest-build-l1-kg.bpmn` | Dublin Core, manifest, assets, binding, linking |
 | `ingest-l1-completeness-gate.bpmn` | Is the derived content complete enough to promote, and who says so? |
+
+**Upstream dependencies** — what happens when somebody else's release changes
+what we ship. The first is the watcher and the second is the reusable
+subprocess it calls; any pinned dependency enters the second the same way, so a
+new tenant is a row in `upstream-pins.json` rather than a third diagram:
+
+| Diagram | Answers |
+|---------|---------|
+| `upstream-pin-watch.bpmn` | Has a pinned dependency fallen behind a release, and what happens when the check cannot tell? Mechanical throughout, and it maintains ONE tracking issue rather than sending mail nobody reads |
+| `upstream-version-adoption.bpmn` | A candidate version exists. What of ours binds it, what does the MVP build prove, and who is allowed to say yes? The accept is a `userTask` in a person-only lane, and no package may relax it |
 
 **Translation and evidence**:
 
