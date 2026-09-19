@@ -13,6 +13,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { readDeclaration } from "../../schemas/cat-harness.js";
+import { BEAN_GRAPH_FILE, parseBeanGraph } from "../../schemas/bean-graph.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../../schemas/todo-graph.js";
 import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../todos.js";
 
@@ -38,7 +39,29 @@ describe("the declaration and the directory agree", () => {
   test("every declared node directory is on disk", () => {
     // The `dh4f` shape one level down: a node declared inside the graph but
     // absent, so the reader walks nothing and reports no todos.
+    //
+    // This caught its own author. `todos/feedback/` existed locally and was
+    // never committed — git does not track an empty directory — so the suite
+    // passed here and failed on CI's fresh clone, which is the ONLY place the
+    // defect is visible. A `.gitkeep` fixes it; the test is why anyone knew.
     for (const d of todoDirs()) expect({ dir: d, there: existsSync(d) }).toEqual({ dir: d, there: true });
+  });
+
+  test("the BEAN graph's declared directories are on disk too", () => {
+    // Same assertion, same defect, different graph — and this one was
+    // PRE-EXISTING: `beans/beans.json` has declared a `workflows` node since
+    // the graph was written and the directory had never been committed.
+    // Nothing checked it, because the bean graph had no equivalent of this
+    // test. Found 2026-09-19 while fixing the todo instance.
+    //
+    // Asserted here rather than in a bean-graph test file so the two cannot
+    // drift: the rule is about DECLARATIONS, not about todos.
+    const decl = join(ROOT, "beans", BEAN_GRAPH_FILE);
+    const g = parseBeanGraph(JSON.parse(readFileSync(decl, "utf8")));
+    for (const d of g.directories) {
+      const dir = join(ROOT, "beans", d.path);
+      expect({ node: d.id, there: existsSync(dir) }).toEqual({ node: d.id, there: true });
+    }
   });
 });
 
