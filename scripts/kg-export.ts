@@ -169,7 +169,7 @@ function graphKindNamespace(kindName: string): string {
 }
 
 /** A type IRI with whichever folio namespace it carries removed. */
-function stripNamespace(iri: string): string {
+export function stripNamespace(iri: string): string {
   for (const ns of Object.values(NS_PREFIXES)) if (iri.startsWith(ns)) return iri.slice(ns.length);
   return iri;
 }
@@ -204,7 +204,7 @@ const XSD = "http://www.w3.org/2001/XMLSchema#";
  * **`@version: 1.1`** because aliasing and scoped type-coercion are 1.1
  * features; a 1.0 processor must fail loudly rather than half-read the file.
  */
-function buildContext(): Record<string, unknown> {
+export function buildContext(): Record<string, unknown> {
   const link = { "@type": "@id" } as const;
   return {
     "@version": 1.1,
@@ -975,7 +975,13 @@ async function collectProcesses(doc: string, problems: string[], root: string = 
   const dirs = findBpmnDirs(root);
   if (dirs.length === 0) {
     // Zero diagrams is a determined empty ONLY if we looked. Say which.
-    problems.push(`no directory containing .bpmn files was found under ${root}`);
+    // REPO-RELATIVE, not absolute: this string is written into a COMMITTED
+    // artefact (`bootstrap/bootstrap.jsonld`), and an absolute path differs
+    // between a developer's machine and CI, so its staleness gate would fail
+    // on a tree nobody touched.
+    problems.push(
+      `no directory containing .bpmn files was found under ${relative(ROOT, root) || "."}`,
+    );
   }
   for (const rel of dirs) {
   const dir = join(root, rel);
@@ -1457,7 +1463,7 @@ function findDanglingLinks(graph: Node[], docIri: string): Array<{ from: string;
 }
 
 /** Strip `undefined` so the published JSON has no empty keys. */
-function compact(n: Node): Node {
+export function compact(n: Node): Node {
   return Object.fromEntries(Object.entries(n).filter(([, v]) => v !== undefined)) as Node;
 }
 
