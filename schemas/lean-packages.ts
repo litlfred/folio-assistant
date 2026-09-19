@@ -38,6 +38,7 @@
  * carries no corpus to skip.
  *
  * @module schemas/lean-packages
+ * @graphNode schema
  */
 
 export interface LeanPackage {

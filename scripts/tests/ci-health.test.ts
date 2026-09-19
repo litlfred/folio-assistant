@@ -366,3 +366,82 @@ describe("an unsettled newest run never reads as a verdict about the head", () =
     expect(h.newestUnsettled).toBeUndefined();
   });
 });
+
+/**
+ * Bean `gpuu`, second half. `newestUnsettled` answers "a run for the head
+ * exists but has not finished". It does not reach the other silence: no run
+ * for the head was ever created, because the workflow did not fire or has not
+ * yet. `docs-site.yml` sat in that state for two months under bean `xom7`.
+ *
+ * The hard part is not detecting it — it is NOT detecting it for a workflow
+ * that never owed a run. `witness-refresh.yml` and `qa-sweep.yml` are
+ * `workflow_dispatch`-only, so a naive check reports two permanent false
+ * fires, which is the defect the `superseded` rule exists to retire.
+ */
+describe("no run for the head is reported — but only where a run was owed", () => {
+  const HEAD = "deadbeefcafe";
+  const onPush = () => true;
+  const older = (sha: string, at: string) =>
+    run({ path: ".github/workflows/docs-site.yml", head_sha: sha, created_at: at });
+
+  test("a workflow that runs on push and has no run for the head is flagged", () => {
+    const [h] = assess([older("aaa111", "2026-08-26T10:00:00Z")], {
+      headSha: HEAD,
+      triggersOnPush: onPush,
+    });
+    expect(h.health).toBe("green");
+    expect(h.headUnjudged).toBe(true);
+  });
+
+  test("a dispatch-only workflow is NOT flagged — it never owed a run", () => {
+    const [h] = assess([older("aaa111", "2026-08-26T10:00:00Z")], {
+      headSha: HEAD,
+      triggersOnPush: () => false,
+    });
+    expect(h.headUnjudged).toBeUndefined();
+  });
+
+  test("an unreadable trigger block claims nothing", () => {
+    const [h] = assess([older("aaa111", "2026-08-26T10:00:00Z")], {
+      headSha: HEAD,
+      triggersOnPush: () => undefined,
+    });
+    expect(h.headUnjudged).toBeUndefined();
+  });
+
+  test("no head supplied claims nothing — not knowing is not a finding", () => {
+    const [h] = assess([older("aaa111", "2026-08-26T10:00:00Z")], { triggersOnPush: onPush });
+    expect(h.headUnjudged).toBeUndefined();
+  });
+
+  test("a run that DID judge the head clears it, even in flight", () => {
+    const [h] = assess(
+      [
+        run({
+          path: ".github/workflows/docs-site.yml",
+          head_sha: HEAD,
+          status: "in_progress",
+          conclusion: null,
+          created_at: "2026-08-26T12:00:00Z",
+        }),
+        older("aaa111", "2026-08-26T10:00:00Z"),
+      ],
+      { headSha: HEAD, triggersOnPush: onPush },
+    );
+    expect(h.headUnjudged).toBeUndefined();
+    expect(h.newestUnsettled).toBe(true);
+  });
+
+  test("the summary refuses 'all green' and says which silence it is", () => {
+    const out = render(
+      assess([older("aaa111", "2026-08-26T10:00:00Z")], {
+        headSha: HEAD,
+        triggersOnPush: onPush,
+      }),
+      { branch: "main" },
+    );
+    expect(out).not.toContain("every workflow with a recent run");
+    expect(out).toContain("no run has judged the current head");
+    expect(out).toContain("the head has not been judged");
+  });
+});

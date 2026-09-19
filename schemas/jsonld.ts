@@ -51,6 +51,7 @@
  * not rewrite thousands of files.
  *
  * @module schemas/jsonld
+ * @graphNode schema
  */
 
 import {

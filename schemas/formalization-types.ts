@@ -9,6 +9,7 @@
  * Content-agnostic: nothing here is specific to a particular paper.
  *
  * @module schemas/formalization-types
+ * @graphNode schema
  */
 
 // =============================================================================

@@ -44,6 +44,7 @@
  * than restating it, so the two cannot drift.
  *
  * @module schemas/dak
+ * @graphNode schema
  */
 
 import { existsSync, readFileSync } from "node:fs";

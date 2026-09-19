@@ -4,6 +4,7 @@
  *
  * Each builder validates the input against its Zod schema and returns
  * the typed object, providing compile-time AND runtime safety.
+ * @graphNode none — constructor functions over other modules' schemas, not a schema
  */
 
 import type {

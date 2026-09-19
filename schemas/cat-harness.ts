@@ -53,6 +53,7 @@
  * module understands.
  *
  * @module schemas/cat-harness
+ * @graphNode schema
  */
 
 import {

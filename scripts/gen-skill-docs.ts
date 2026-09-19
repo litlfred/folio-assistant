@@ -25,6 +25,8 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { join, resolve, basename } from "path";
 
+import { isSkillMd } from "./known-skills.js";
+
 const REPO_ROOT = resolve(import.meta.dir, "..");
 // A pencil, as a text glyph rather than an inline SVG. 130 generated pages
 // each carrying an SVG is 130 copies of the same markup in the repo and in
@@ -180,10 +182,16 @@ function discoverGroups(): Group[] {
     for (const d of readdirSync(skillsRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       if (!d.isDirectory()) continue;
       const dir = join(skillsRoot, d.name);
-      // No `.md` means it is not a skill package: `workflows/`, `roles/`,
-      // `permissions/`, `requirements/`, `framework/` and `remote-packages/`
-      // are other node kinds. Same test `scripts/known-skills.ts` uses.
-      if (!readdirSync(dir).some((f) => f.endsWith(".md"))) continue;
+      // No SKILL `.md` means it is not a skill package: `workflows/`,
+      // `roles/`, `permissions/`, `requirements/`, `framework/`,
+      // `remote-packages/` and `memory/` are other node kinds.
+      //
+      // Literally the same test as `scripts/known-skills.ts`, by calling it.
+      // This comment used to CLAIM that while carrying its own copy, and the
+      // copy was falsified by `skills/memory/` — 25 agent-memory nodes, every
+      // one a `.md`, none a skill. The generator then demanded a category
+      // heading for a package that publishes nothing.
+      if (!readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)))) continue;
       const category = SKILLS_CATEGORIES[d.name];
       if (category === undefined) {
         undeclared.push(d.name);
@@ -245,7 +253,8 @@ const GROUPS: Group[] = [
 function withParts(dir: string, name: string, body: string): string {
   const partsDir = join(dir, name);
   if (!existsSync(partsDir)) return body;
-  const parts = readdirSync(partsDir).filter((f) => f.endsWith(".md")).sort();
+  const parts = readdirSync(partsDir)
+    .filter((f) => f.endsWith(".md") && isSkillMd(join(partsDir, f))).sort();
   if (parts.length === 0) return body;
 
   // `](integration-watcher/lifecycle.md)` -> `](#part-lifecycle)`
