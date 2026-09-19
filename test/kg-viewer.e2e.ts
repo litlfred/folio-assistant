@@ -11,7 +11,7 @@
  * actual generated artefacts under `_kg/` — not a hand-written stand-in that
  * could agree with the test while disagreeing with what ships.
  *
- * @module tests/kg-viewer.e2e
+ * @module test/kg-viewer.e2e
  */
 import { test, expect } from "@playwright/test";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";

@@ -97,7 +97,7 @@ const LOUD_ID = "voice-status-leak";
  * frozen copy keeps passing after the voice checker changes — a fixture
  * drifting from the corpus is the exact defect this section exists to fix.
  *
- * Built through `tests/support/qa-fixture.ts`, which throws by name if
+ * Built through `test/support/qa-fixture.ts`, which throws by name if
  * `LOUD_ID` ever leaves the sidecar. Bean `iumj`.
  */
 const BLOCK_JSON = sidecarWithVerdicts(CORPUS_PATH, [

@@ -149,15 +149,33 @@ jobs:
           } > docs/folio-assistant/_data/build.yml
           cat docs/folio-assistant/_data/build.yml
 
-      # Set baseurl so Jekyll generates links relative to the STAGING subdir
+      # Set baseurl so Jekyll generates links relative to the STAGING subdir.
+      #
+      # THE REPOSITORY NAME IS READ, NEVER SPELLED (bean `kuxk`). Jekyll builds
+      # every internal link from `baseurl`, so a literal here means that in any
+      # folio not named `folio-assistant` every link on every staging page
+      # points at a path that does not exist — while the build and the deploy
+      # both succeed. It is wrong only in a browser, which is why it survived.
+      #
+      # This was the ONE outlier in the file: lines below compose the same URL
+      # from `github.event.repository.name` / `GITHUB_REPOSITORY` in five other
+      # places and get it right. Swept the other thirteen workflows for the same
+      # shape and found none — the remaining `folio-assistant` strings are
+      # either prose, or the `folio-assistant/` SUBMODULE directory a folio
+      # checks the platform out into, which is a different fact and correct as
+      # written.
+      #
+      # It is the repo name and not the stub, even though they coincide here:
+      # Pages serves at `<owner>.github.io/<repo>/`, so the path the browser
+      # sees is the repo's. The site DIRECTORY is `docs/<stub>` and that is a
+      # separate question, answered by `siteDirFor`.
       - name: Configure Jekyll for staging subdirectory
         run: |
           SLUG="${{ steps.slug.outputs.slug }}"
-          # Append baseurl override to _config.yml so Jekyll generates all
-          # links relative to /folio-assistant/STAGING/<slug>/
+          REPO="${{ github.event.repository.name }}"
           echo "" >> docs/folio-assistant/_config.yml
           echo "# Auto-appended by feature-staging.yml" >> docs/folio-assistant/_config.yml
-          echo "baseurl: \"/folio-assistant/STAGING/${SLUG}\"" >> docs/folio-assistant/_config.yml
+          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> docs/folio-assistant/_config.yml
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1

@@ -217,6 +217,11 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       // like every other harness concept. `kg` still READS, as a deprecated
       // alias — see the alias test below.
       "cat-harness",
+      // The daily repository sweep's own reports. A SEPARATE kind from `qa`:
+      // a QA verdict judges an artefact this repository produced, a health
+      // report judges the repository itself — its size, its publish branch,
+      // its work plan. Neither criterion belongs to the other's subject.
+      "health",
       // The two stages of the ingestion pipeline, declared separately because
       // they are not interchangeable: the corpus checklist greps `library/`
       // and not `uploads/`.
@@ -256,7 +261,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
     expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "cat-harness", "library", "qa", "schemas",
+      "bean-defs", "beans", "cat-harness", "health", "library", "qa", "schemas",
       "todo-feedback", "todo-items", "todos",
       "tools", "translation-sources", "uploads", "voices", "workflow-state",
     ]);

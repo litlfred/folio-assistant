@@ -25,8 +25,15 @@ const ROOT = resolve(import.meta.dir, "../..");
 /**
  * Source trees that resolve paths at runtime. `docs/` itself is excluded: its
  * pages legitimately talk about their own layout in prose.
+ *
+ * `test` rather than `tests` since 2026-09-19 (bean `auap`), when the two test
+ * trees were consolidated. `sourceFiles()` keeps only `.ts`/`.mjs`, so naming
+ * `test/` here does not drag in the 500-odd JSON verdicts under
+ * `test/results/` — but a stale `tests` WOULD have dropped `a11y.e2e.ts`, the
+ * very file the `[^\n]*` widening above was written for, and the guard would
+ * have kept passing.
  */
-const TREES = ["scripts", "content", "schemas", "src", "tests"];
+const TREES = ["scripts", "content", "schemas", "src", "test"];
 
 /**
  * A literal naming the OUTPUT site root **in a path-resolving position**.

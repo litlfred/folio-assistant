@@ -77,7 +77,7 @@ import {
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
-import { isSkillMd, knownSkills, remotePackageSkills } from "./known-skills.js";
+import { isSkillMd, knownSkills, remotePackageDeclarations, remotePackageSkills } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
@@ -1002,6 +1002,29 @@ function auditGraph(
             })),
         );
       })(),
+      // The other half of the same measurement, and the one the owner asked to
+      // FAIL rather than be explained. `manifest-skill-exists` above asks
+      // whether a MANIFEST names something unresolvable; this asks whether a
+      // REMOTE PACKAGE declares something this instance cannot serve — five
+      // names today, across two wrappers that both claim a weekly shallow-clone
+      // nothing performs. Bean `wlqd`.
+      //
+      // Read from the wrapper files rather than from `remotePackageSkills`'s
+      // flattened set, because a finding has to name WHICH wrapper declares it:
+      // the two have different owners and different remedies.
+      "remote-skill-is-servable": entry(
+        remotePackageDeclarations(root)
+          .filter((d) => !skills.has(d.skill))
+          .map((d) => ({
+            where: `${d.file}/${d.skill}`,
+            detail:
+              `skills/remote-packages/${d.file} declares "${d.skill}", which this instance holds no body ` +
+              `for and cannot serve — skill_fetch does not read that directory and the generated registry ` +
+              `does not carry it. The wrapper declares sync ${JSON.stringify(d.sync ?? null)}, and nothing ` +
+              `performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow ` +
+              `first), or drop the declaration so the name stops being published.`,
+          })),
+      ),
       // Without a role graph there is nothing to resolve against, and reporting
       // every actor's roles as dangling would be a wall of false findings.
       "actor-roles-resolve": graph

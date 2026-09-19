@@ -27,6 +27,27 @@ authorised.
 skill implements it. `workflow_complete` refuses a step that is not enabled.
 Those two are the ground truth; your memory of where you were is not.
 
+## Say which process you are in — every turn
+
+Claiming a work item says *what* you are working on. This says **where in the
+process** you are working, which is the question a reader cannot answer from an
+id.
+
+**Name the process, the lane and the task**, and say when you switch:
+
+> **Process:** `crdm-requirements`, Agent lane · **Phase 6 — implement**.
+> Completed `A_Implement`; next is `A_Summary`.
+
+**The machinery already answers this**, and the habit is what was missing rather
+than the capability: the engine's "what is enabled now" call reports the enabled
+step, the lane that owns it, and the skill that implements it — so the answer is
+something to act on rather than a bare step name.
+
+**Switching processes is the case that matters.** Moving between processes
+changes who is accountable for the next step and which gates apply, and **a
+reader who does not know you switched will assume the old lane's rules still
+hold.**
+
 ## How to tell you are out of process
 
 This is the part that makes the skill a procedure rather than an exhortation.

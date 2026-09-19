@@ -20,8 +20,8 @@ while you work.
 1. **Always have an open PR (from commit #1).** Branch, make the first
    (even stub) commit, push, open the PR — *before* further work. The PR
    is the durable, visible artifact; the chat session is ephemeral. Never
-   accumulate work on a local branch with no PR. (Operationalises
-   AGENTS.md "Branch + PR workflow" rule 2.)
+   accumulate work on a local branch with no PR. **Never ask permission to
+   open one** — branch, commit, push and PR are all pre-authorised.
 
 2. **Commit + push small, coherent increments — continuously.** Each
    logically distinct change is its own commit (a single fix, a single
@@ -45,6 +45,49 @@ while you work.
    for genuine coordination (overlap, a blocker, a handoff-relevant
    finding). Defer to [`/coordinate`](coordinate.md) for the full
    cross-PR triage protocol.
+
+## The fifth invariant, and the one agents get wrong
+
+5. **Do not hold a green change proposal back waiting for someone to look at
+   it.** This is the rule that gets inverted in the name of care, and inverting
+   it is not caution — it is a blocked reviewer.
+
+An agent that has just built something it cannot fully verify — a rendered page,
+a diagram, a UI — reaches for the responsible-sounding move: leave it open,
+attach a preview, ask the human to confirm first. That feels safer. It is worse,
+for a reason worth internalising:
+
+> **A human cannot assess a rendered artefact from a description of it, and a
+> preview pasted into chat is a strictly worse proxy than the deployed thing.**
+
+Holding the merge does not transfer the verification to them — it *withholds the
+only form in which they could do it*, and asks them to adjudicate from a
+screenshot.
+
+Measured, 2026-09-16. A documentation change with five generated diagrams was
+green, unreviewed and unmerged, held back with three SVGs attached in chat and a
+note that the layout was machine-accepted but not confirmed legible. The
+author's reply was *"jsut merge so i can help assess"*. The hold made assessment
+harder, not safer, and cost a round-trip to someone who types with difficulty.
+
+### What to do with the thing you could not verify
+
+**Say it in the body, and merge anyway.** `## Not verified` is a real section
+and an honest one; an unmerged proposal is not a substitute for it.
+Reversibility is what makes this safe — a docs or content change is one revert
+away, and the cost of reverting is far below the cost of a human blocked on a
+decision they have no artefact for.
+
+### The exceptions, and none of them is "I am unsure"
+
+- **Never merge red.** A failing or unrun required check is a real blocker.
+- **Never merge over an unresolved review thread** you have not answered.
+- **Where the repository requires explicit merge permission, that wins**, and
+  nothing here relaxes it by a word. Some folios require an explicit "merge it"
+  from the author for *every* merge to the default branch. There the rule reads:
+  get it green, get it mergeable, **say once that it is ready**, then stop — do
+  not re-ask on a timer, and **do not let "not merged yet" become a reason to
+  stop pushing.**
 
 ## Why — the failure modes this prevents
 
@@ -74,8 +117,10 @@ while you work.
 - [`/coordinate`](coordinate.md) — cross-PR triage (scope map, sibling
   intent, cherry-picks, ledger). `continual-progress` keeps *your* PR
   legible so `/coordinate` (yours or a sibling's) has something to triage.
-- **AGENTS.md "Branch + PR workflow"** — this skill operationalises rules
-  2–6 (always-PR, microcommit, push-often) as a runnable checklist.
+- **A folio's own `AGENTS.md`** may carry these rules for that repository, and
+  a stricter merge gate — `litlfred/qou` §"Branch + PR workflow" is the worked
+  case. This skill is the platform-side statement; where a folio is stricter,
+  the folio wins.
 - [`/todo-manager`](todo-manager.md) — the session work-plan; the
   PR-body status checklist (invariant 3) is its externally-visible
   projection, so a watcher needs no access to the session's bean queue.

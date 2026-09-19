@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kuxk
 title: feature-staging.yml hardcodes /folio-assistant/ as the Jekyll baseurl, 76 lines above the correct idiom
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T10:06:56Z
-updated_at: 2026-09-19T10:06:56Z
+updated_at: 2026-09-19T10:22:08Z
 ---
 
 Found 2026-09-19 while researching `folio-assistant-1lfx`.
@@ -52,10 +52,10 @@ should be asked of every `.github/workflows/*.yml`.
 
 ## Done when
 
-- [ ] line 160 reads the repository name rather than spelling it
-- [ ] the remaining workflows are swept for the same shape, and the result is
+- [x] line 160 reads the repository name rather than spelling it
+- [x] the remaining workflows are swept for the same shape, and the result is
       written down — including "none found", which is a determined answer
-- [ ] a test or check catches a folio literal in a workflow, or there is a
+- [x] a test or check catches a folio literal in a workflow, or there is a
       recorded reason why that is not worth automating
 
 ## Not verified
@@ -63,3 +63,45 @@ should be asked of every `.github/workflows/*.yml`.
 That a staging build in another repo actually breaks. The reasoning is from
 reading Jekyll's `baseurl` semantics and the workflow, not from standing up a
 second folio — which is bean `58h0`'s job, not this one's.
+
+## Summary of Changes, 2026-09-19
+
+`feature-staging.yml` now composes the baseurl from
+`github.event.repository.name`. Guard:
+`scripts/tests/workflow-repo-name.test.ts`, proven to FAIL against the real
+pre-fix line and pass after — not only against a string fixture.
+
+## The sweep, with its result
+
+All 14 workflows, `grep` for `folio-assistant`. **One** true instance:
+line 160. It was the single outlier in its own file — five other places in
+`feature-staging.yml` compose the same URL from
+`github.event.repository.name` or `GITHUB_REPOSITORY` and are correct.
+Only one `baseurl` is written anywhere in the repository's workflows.
+
+**What is NOT the defect**, and why the guard is narrow rather than a
+`folio-assistant` grep — a checker that flagged these would be disabled
+within a week:
+
+- prose (`::error::folio-assistant is the PLATFORM and carries no papers`)
+- the SUBMODULE directory (`folio-assistant/computations`,
+  `working-directory: folio-assistant`) — a folio checks the platform out
+  into a directory of that name. A fact about the DEPENDENCY, not about this
+  repository's own name, and correct as written
+- artefact stems (`folio-assistant.jsonld`), which come from the stub
+
+## One thing noticed and deliberately not chased
+
+`discoverability-docs.yml:208` sets `working-directory: folio-assistant`,
+and **no such directory exists in this repository** — it is the
+platform-as-submodule path, which only resolves when the platform is checked
+out inside a folio. Whether that step can ever run here is a separate
+question from this bean's, and I did not verify it either way rather than
+assert it. Worth someone's look.
+
+## Repo name, not stub
+
+They coincide here and the distinction matters elsewhere: Pages serves at
+`<owner>.github.io/<repo>/`, so the browser path is the REPO's, while the
+site DIRECTORY is `docs/<stub>` and is `siteDirFor`'s answer. Recorded in
+the workflow comment so the next reader does not have to re-derive it.

@@ -134,6 +134,12 @@ explicit question tool: the end-of-turn "next" line, a bean's `## Done when`, a
 PR body asking the author to choose, a comment on an issue. Those are where it
 is most often broken, because they feel like reporting rather than asking.
 
+**Feature work breaks this more than content work, and for a specific reason:
+the agent has just finished an impact analysis, and the vocabulary it built
+doing that *feels* defined.** It is not. The names you coined an hour ago inside
+an issue are the ones most likely to reach the reader undefined, precisely
+because you can no longer see them as new.
+
 #### Worked example — a real failure, 2026-09-18
 
 Ending a turn, this agent wrote:
@@ -171,6 +177,26 @@ The same decision, askable:
 
 Same information, same length, and the second can be answered by typing one
 character.
+
+#### More than one decision pending — ask ONE, count the rest
+
+The six parts above are per decision, and nothing said what to do when three are
+open at once. Stating all three in full is a wall; naming all three compactly is
+the teaser the rule forbids. Neither is the answer.
+
+**Ask the one that is actually next, in full. For the others, give a COUNT and
+no option names.**
+
+> Two other decisions are waiting; I will put each properly when it is next.
+
+A count is honest and costs the reader nothing: it says work is queued without
+inviting them to answer a question they cannot see the terms of. An option name
+without its cost invites exactly that, which is why the compact list is worse
+than silence.
+
+**There is no "just listing what's open" exemption.** A wrap-up that names a
+decision has handed it over, whatever the framing sentence says. Either the
+options and their costs are there, or the name comes out and a count goes in.
 
 ### 4.2 Form — the checklist
 
