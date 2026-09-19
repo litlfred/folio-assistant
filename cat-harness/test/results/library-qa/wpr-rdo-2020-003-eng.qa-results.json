@@ -2,26 +2,18 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/check-l1-complete.ts",
-    "script_hash": "4b82d5a8f949"
+    "script_hash": "b4605c88f4de"
   },
   "subject": {
     "kind": "library-document",
     "id": "library/wpr-rdo-2020-003-eng"
   },
-  "updated_at": "2026-09-19T12:54:53.448Z",
+  "updated_at": "2026-09-19T15:52:30.682Z",
   "families": {
     "notDerivable": {
       "summary": "L1 requirements NO ingest arm can produce yet. Not a defect in this entry and not a pass either — nothing has checked them, so this entry is not fully verified. Each names the bean that would make it checkable.",
-      "count": 6,
+      "count": 2,
       "entries": [
-        {
-          "requirement": "archive-contents",
-          "detail": "no arm builds this yet — bean twqe"
-        },
-        {
-          "requirement": "technical-metadata",
-          "detail": "no arm builds this yet — bean nso8"
-        },
         {
           "requirement": "image-descriptions",
           "detail": "no arm builds this yet — bean d5f1"
@@ -29,14 +21,6 @@
         {
           "requirement": "audio-transcripts",
           "detail": "no arm builds this yet — bean 1r0p"
-        },
-        {
-          "requirement": "tabular-records",
-          "detail": "no arm builds this yet — bean p67i"
-        },
-        {
-          "requirement": "narrative-provenance",
-          "detail": "no arm builds this yet — bean iqim"
         }
       ]
     },
@@ -46,5 +30,5 @@
       "entries": []
     }
   },
-  "total": 6
+  "total": 2
 }

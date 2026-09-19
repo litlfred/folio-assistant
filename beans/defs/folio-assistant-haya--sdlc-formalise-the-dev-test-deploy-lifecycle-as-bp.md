@@ -1,11 +1,11 @@
 ---
 # folio-assistant-haya
 title: 'SDLC: formalise the dev / test / deploy lifecycle as BPMN, with MVP as a subprocess'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T09:56:19Z
+updated_at: 2026-09-19T15:47:55Z
 parent: folio-assistant-5a3l
 ---
 

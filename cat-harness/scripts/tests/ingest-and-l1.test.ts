@@ -73,10 +73,30 @@ function entry(over: Partial<Record<"structure" | "manifest", unknown>> = {}, op
   mkdirSync(join(dir, "sections"), { recursive: true });
   mkdirSync(join(dir, "blocks"), { recursive: true });
   for (let i = 0; i < (opts.sections ?? 2); i++) writeFileSync(join(dir, "sections", `s${i}.md`), "x");
-  for (let i = 0; i < (opts.blocks ?? 1); i++) writeFileSync(join(dir, "blocks", `b${i}.json`), "{}");
+  // `.jsonld` with a real `kind` and `provenance`, because that is what
+  // `gen-library-jsonld.ts` writes and what `narrative-provenance` reads. The
+  // fixture used to write `b0.json` containing `{}`, which satisfied a
+  // file-COUNT requirement and nothing else — fine until a requirement looked
+  // inside, which is an argument for fixtures that resemble the artefact.
+  for (let i = 0; i < (opts.blocks ?? 1); i++) {
+    writeFileSync(
+      join(dir, "blocks", `b${i}.jsonld`),
+      JSON.stringify({ "@id": `b${i}`, kind: "prose", provenance: "ingested" }),
+    );
+  }
   writeFileSync(
     join(dir, "structure.json"),
-    JSON.stringify(over.structure ?? { _schema: "pdf-structure/v1", toc_source: "none", sections: [1, 2] }),
+    JSON.stringify(
+      over.structure ?? {
+        _schema: "pdf-structure/v1",
+        toc_source: "none",
+        sections: [1, 2],
+        // Bean `nso8`: technical metadata is a CHECKED requirement, so a
+        // fixture that stands for "every derivable requirement satisfied" has
+        // to carry it. It was `not-derivable` until `_tech_meta.py` existed.
+        source: { file: "x.pdf", sha256: "a".repeat(64), bytes: 1, mtime: "2026-01-01T00:00:00Z", mimetype_sniffed: "application/pdf", mimetype_source: "magic-bytes" },
+      },
+    ),
   );
   writeFileSync(
     join(dir, "manifest.jsonld"),
@@ -99,6 +119,21 @@ describe("L1 completeness", () => {
     expect(states(entry({ manifest: { "@id": "x" } })).manifest).toBe("unmet");
     expect(states(entry({ manifest: { "@id": "x", "@type": [], contains: [] } })).provenance).toBe("unmet");
     expect(states(entry({ structure: { _schema: "pdf-structure/v1", sections: [] } })).structure).toBe("unmet");
+    // No `source` at all is the `milnorlink` state before `nso8`: the entry
+    // looked ingested and nothing recorded what file it came from.
+    expect(states(entry({ structure: { _schema: "pdf-structure/v1", sections: [1] } }))["technical-metadata"]).toBe(
+      "unmet",
+    );
+    // A PARTIAL `source` is unmet too. `pdf-structure.py` wrote one without
+    // `mtime` or a sniffed mimetype, and a half-filled block that read `met`
+    // would have hidden exactly the gap this bean closed.
+    expect(
+      states(
+        entry({
+          structure: { _schema: "pdf-structure/v1", sections: [1], source: { file: "x.pdf", sha256: "a", bytes: 1 } },
+        }),
+      )["technical-metadata"],
+    ).toBe("unmet");
   });
 
   test("unparseable JSON is unmet rather than an exception", () => {

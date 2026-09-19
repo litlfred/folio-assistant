@@ -121,7 +121,9 @@
     "translation:block-qa:check": "bun run cat-harness/content/pipeline/translation-block-qa.ts --check",
     "translation:index": "bun run cat-harness/content/pipeline/translation-index.ts",
     "translation:index:check": "bun run cat-harness/content/pipeline/translation-index.ts --check",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "ci:gates": "bun run cat-harness/scripts/ci-gates.ts",
+    "ci:gates:list": "bun run cat-harness/scripts/ci-gates.ts --list"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

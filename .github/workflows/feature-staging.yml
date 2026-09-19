@@ -29,7 +29,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - 'folio-assistant/docs/**'
+      - 'cat-harness/docs/**'
       - 'schemas/**'
       - 'content/**'
       - 'skills/**'
@@ -168,7 +168,7 @@ jobs:
         env:
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
         run: |
-          mkdir -p folio-assistant/docs/_data
+          mkdir -p cat-harness/docs/_data
           {
             echo "sha: \"${GITHUB_SHA}\""
             echo "short_sha: \"${GITHUB_SHA:0:7}\""
@@ -178,8 +178,8 @@ jobs:
             echo "staging_slug: \"${{ steps.slug.outputs.slug }}\""
             echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
             echo "pr_number: \"${{ github.event.pull_request.number || '' }}\""
-          } > folio-assistant/docs/_data/build.yml
-          cat folio-assistant/docs/_data/build.yml
+          } > cat-harness/docs/_data/build.yml
+          cat cat-harness/docs/_data/build.yml
 
       # Set baseurl so Jekyll generates links relative to the STAGING subdir.
       #
@@ -205,14 +205,14 @@ jobs:
         run: |
           SLUG="${{ steps.slug.outputs.slug }}"
           REPO="${{ github.event.repository.name }}"
-          echo "" >> folio-assistant/docs/_config.yml
-          echo "# Auto-appended by feature-staging.yml" >> folio-assistant/docs/_config.yml
-          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> folio-assistant/docs/_config.yml
+          echo "" >> cat-harness/docs/_config.yml
+          echo "# Auto-appended by feature-staging.yml" >> cat-harness/docs/_config.yml
+          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./folio-assistant/docs
+          source: ./cat-harness/docs
           destination: ./_site
 
       - name: Take ownership of Jekyll output
