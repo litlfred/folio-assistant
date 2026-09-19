@@ -129,3 +129,60 @@ _2026-09-18T23:58:56Z_ — OWNER DIRECTION 2026-09-19, superseding the three-way
 _2026-09-19T00:00:30Z_ — MEASURED 2026-09-19, and the three types do not exist yet. .claude/skills/actors/ carries TWO: person (16) and system (8). `system` conflates agentic with mechanical, so the owner's three-way split needs that field widened before anything can be classified against it. Triaging the eight by their own descriptions: AGENTIC (an LLM exercising judgement) = authoring-agent ('LLM agent that drafts and revises a PROPOSED change'), review-agent ('LLM agent performing NON-MECHANICAL validation'), evidence-agent ('retrieves and appraises'), ingestion-agent ('runs unattended... every gate it reaches'), onboarding-agent ('the authoring agent acting before there is a folio'). MECHANICAL (deterministic, no judgement) = ci-pipeline ('the build and validation system'), ig-publisher-service ('FHIR IG Publisher build and QA reporting'), lean-mcp ('Lean 4 proof checking and diagnostics'). So 5 agentic, 3 mechanical, 16 human. Note the boundary is judgement, not autonomy: ci-pipeline runs unattended and is still mechanical, while ingestion-agent also runs unattended and is agentic because it decides. SEPARATELY: Actor.type currently COLLIDES with the JSON-LD `type` alias for @type in the published graph (24 nodes), so whatever this field is renamed or widened to must not be called `type` — see the kg-viewer branch.
 
 _2026-09-19T00:41:33Z_ — Checked 2026-09-19 on main at 17dc1e6 — GENUINELY LIVE. The build half is landed (#279: schemas/tool.ts, schemas/tool-types.ts, four Tool nodes, check:tools gated). What this bean's title asks for — auditing which of the uncovered skills describe an action — is editorial work that no commit can be checked against, so it stays open until someone does it.
+
+_2026-09-19T05:52:08Z_ — ## Actor-kind slice shipped — PR #329, branch `claude/ce65-actor-kinds` (2026-09-19). NOT merged.
+
+Owner's direction, verbatim: *"classify as you suggest. agentic, human or mechanical... corresponding to three actor types. tasks can be fulfilled by only certain actor types"*. Three kinds, and the POINT of them is a checkable constraint. Both halves are in #329.
+
+### Re-measured on main, 2026-09-19 — do not quote later without re-running
+
+24 actors (16 `person`, 8 `system`); 30 roles (17 person, 5 agent, 7 system, 1 external); 143 skills via `scripts/known-skills.ts`; 30 diagrams, 247 activities, 190 serviceTask + 72 userTask. **The bean's stated finding is CONFIRMED**: `type` had two values and `system` covered five LLM agents and three mechanical services alike.
+
+### Two things the re-measure turned up that this bean did not have
+
+1. **The three-way split was ALREADY in a schema — the wrong one of two.** `ACTOR_KINDS` in `schemas/role-graph.ts` has read `person|agent|system|external` all along, while `ActorTypeSchema` in `schemas/skill-package.ts` read `["person","system"]` — and `SkillRegistrySchema` validates the actor FILES against that narrower one. Two spellings of one concept, in the one place where the difference decides what a task may be handed to. Now one declaration in `skill-package.ts`, re-exported from `role-graph.ts`; `ActorType` deleted.
+2. **The distinction was already written in the registry's own PROSE.** `ci-pipeline`: "runs a fixed program and exercises no judgement". `review-agent`: "NON-MECHANICAL validation ... judgement calls escalate". Unreadable by anything. The same failure `judgementOnly` exists for.
+
+### The split: `type` -> `kind`. 16 person, 5 agent, 3 system
+
+agent: authoring-agent, evidence-agent, ingestion-agent, onboarding-agent, review-agent.
+system: ci-pipeline, ig-publisher-service, lean-mcp.
+Each follows the entry's own description. An unknown `kind` THROWS; a legacy `type` still loads and is NEVER read as agent — an unmigrated registry has not said, so it is refused a judgement task rather than granted one on a guess.
+
+### New criterion `activity-fulfilment-kind` (major)
+
+Derived from the BPMN task type, which already answers it and was not being read: `userTask` -> person; `serviceTask` -> agent|system; `bpmn:Task` and `callActivity` assert NOTHING (`undefined`, never `[]` — an empty list would fail every plain task). `n/a` for actedUpon lanes; silent where `lane-binds-role` or `activity-in-lane` already reports. Override with `<folio:fulfilment kinds="..." reason="..."/>`, reason required AT LOAD, same rule as `<folio:no-skill reason>`.
+
+**FOUND: 15 findings in 6 processes, ALL serviceTask in a human lane. ZERO on the 72 userTasks** — that half is a regression guard, not debt. Sharpest: `editing-hci-validation` `Task_AgentReview`, "Agent review of the change", a serviceTask in the `reviewer` (person) lane. **LEFT AS FINDINGS deliberately** — each has three possible answers (task type wrong / lane wrong / step really does admit that kind) and choosing is per-diagram judgement, not a sweep.
+
+### OPEN QUESTION for the owner — measured, not guessed
+
+Actor `kind` vs the `actorKind` of each role it declares: 7 mismatches before the split, 5 of them artefacts of the conflation. TWO remain and both are substantive:
+
+    authoring-agent (agent) -> role editor   (person)
+    review-agent    (agent) -> role reviewer (person)
+
+These may not be bugs. `review-agent`'s own description says it DOES review and escalates only the judgement calls, so `reviewer`'s single `actorKind: person` may simply be too narrow. Two options, with costs:
+
+- **(a) Role keeps ONE `actorKind`** — these are data errors; drop `editor` from `authoring-agent` and `reviewer` from `review-agent`. Near-zero cost, but it asserts an agent may never review, contradicting `review-agent`'s description AND `Task_AgentReview` in the corpus.
+- **(b) Role declares a SET** — `reviewer: ["person","agent"]`. Costs a schema change, 30 role entries, and `readsProse` + `activity-fulfilment-kind` updated to read a set. Makes agent-assisted review sayable.
+
+If nothing is said, it stays as it is: 2 measured mismatches, checked by nothing. I did NOT write an `actor-kind-fits-role` criterion, because writing one means picking (a) or (b), and a criterion whose summary must hedge is a bad criterion.
+
+### Deliberately NOT done — still open on this bean
+
+- **The bean's ORIGINAL question is untouched**: Tool nodes for 11 of 138 skills, the tier A/B/C/D triage, opening Tools for the mechanism-inlined group.
+- **88 activities are drawn as abstract `bpmn:Task`**, which asserts nothing — about a third of the corpus is outside the new constraint for that reason. LARGEST remaining gap. Retyping them is a corpus sweep plus 30 regenerated SVGs, and guessing each type is the fake-ref failure.
+- **No rename** of person/agent/system to human/agentic/mechanical. The ids are load-bearing in 30 roles, `kg-export`, `kg-audit` and the sidecars; the owner's words are documented as their READING. A second vocabulary alongside the first is the one thing I would not do.
+
+### Gates — exit codes checked directly, never through a pipe
+
+tsc 0; eslint 0; kg:audit:check 0; kg:schema:check 0; check:workflows 0; check:workflow-refs/policy/tools 0; gen-schema-docs / gen-skill-docs / gen-docs-pages `--check` all 0; gen:jsonld:check 0; playwright 60 passed after `rm -rf _kg`. `bun test` 2035 pass / 1 fail — `folio-root.test.ts` asserts REPO_ROOT ends in "folio-assistant" and this agent runs in a worktree; fails identically before this branch. `render:bpmn:check` could not run (bpmn-js absent from node_modules) but no `.bpmn` file changed.
+
+### TRAP worth keeping
+
+`gen-docs-pages` writes `docs/assets/qa/**/*.kg.json` witnesses that carry **kg-audit.ts's OWN script hash**. Editing the auditor made 134 of them stale and took the TypeScript gate red on the first commit — green alone, red together, bean `nytj`'s family. `gen-docs-pages` is NOT named in most briefs; it is the third generator after `gen-skill-docs` and `gen-schema-docs`. Re-run all three plus `gen:jsonld` after touching KG data.
+
+### Fixed in passing
+
+`role-model.md` and `AGENTS.md` both said "Fourteen criteria" while `KG_CRITERIA` held **32**. Replaced with a pointer to the registry rather than a fresh number — a count in prose is a claim.
