@@ -23,6 +23,7 @@ import {
 import { readActiveVoices } from "../../schemas/voices";
 import { criterionDefHash } from "../../content/pipeline/qa-utils";
 import { QA_CRITERIA_BY_ID } from "../../content/pipeline/qa-criteria-registry";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 
 describe("criterionVoices", () => {
   test("absent means NOT voice-scoped — the opposite default from profiles", () => {
@@ -110,7 +111,11 @@ describe("readActiveVoices", () => {
   test("this instance activates no voice", () => {
     // Issue #208: "the folio-asst's own docuemtnation conent doesnt have any
     // voice". Asserted so that activating one here is a deliberate act.
-    const root = join(import.meta.dir, "../..");
+    // The REPOSITORY root: `readActiveVoices` reads `harness.config.json`,
+    // which lives beside `package.json`. Passing the instance root found no
+    // config and returned `undefined` — the third state, correctly meaning
+    // "could not determine", for a file that is right there one level up.
+    const root = repoRootFor(join(import.meta.dir, "../.."));
     expect(readActiveVoices(root)).toEqual([]);
   });
 });

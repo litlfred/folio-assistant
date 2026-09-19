@@ -37,7 +37,18 @@ function kgRoot(root: string): string {
 // file's own location is right here — unlike the content pipeline, which must
 // find the folio.
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const rootDir = repoRootFor(join(__dirname, ".."));
+/**
+ * TWO roots, because this script reads from both and they stopped being one
+ * directory with the move (bean `wggr`).
+ *
+ * `.claude/` and `package.json` belong to the REPOSITORY. The knowledge graph
+ * and `skills/requirements/` belong to the INSTANCE. A sweep that moved the
+ * single `rootDir` to the repository root got the first three right and made
+ * the registry scan for skill packages one level above them — it emitted ZERO
+ * packages where six exist, and "no packages" is a plausible-looking answer.
+ */
+const instanceDir = join(__dirname, "..");
+const rootDir = repoRootFor(instanceDir);
 
 /**
  * The registry, plus the generation stamp that is not part of the schema.
@@ -91,7 +102,7 @@ function loadRoleAssignments(): RoleAssignment[] {
 }
 
 function loadPackageManifests(): SkillPackageManifest[] {
-  const skillsDir = kgRoot(rootDir);
+  const skillsDir = kgRoot(instanceDir);
   if (!existsSync(skillsDir)) return [];
   return readdirSync(skillsDir, { withFileTypes: true })
     .filter(d => d.isDirectory())
@@ -121,7 +132,7 @@ const registry: RegistryOutput = {
   actors: loadJsonFiles<ActorDefinition>(join(rootDir, ".claude", "skills", "actors")),
   capabilities: loadJsonFiles<CapabilityDefinition>(join(rootDir, ".claude", "skills", "capabilities")),
   skills: loadJsonFiles<SkillDefinition>(join(rootDir, ".claude", "skills", "local")),
-  requirements: loadJsonFiles<Requirement>(join(rootDir, "skills", "requirements")),
+  requirements: loadJsonFiles<Requirement>(join(instanceDir, "skills", "requirements")),
   packages: loadPackageManifests(),
   hooks: [],
   roleAssignments: loadRoleAssignments(),
