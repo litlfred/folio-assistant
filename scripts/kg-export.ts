@@ -60,7 +60,7 @@ import {
   renderingPath,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
-import { isSkillMd, kgRoots, skillMdDirs as knownSkillDirs } from "./known-skills.js";
+import { isSkillMd, kgRoots, skillMdDirs as knownSkillDirs, workflowDirs } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
@@ -136,26 +136,27 @@ const REGISTRY_GROUPS: Record<string, string> = {
  * path in this module to be wrong; the pattern is now a rule: this exporter
  * locates corpora, it does not remember where they were.
  */
+/**
+ * Directories holding this instance's `.bpmn`, read from its DECLARATION.
+ *
+ * ## Measured: the walk this replaces was leaking, in `main`, today
+ *
+ * It walked the filesystem — every directory under the root to depth 4, minus
+ * a skip list of *names*. That was right while this repository was the only
+ * instance in the tree. `bootstrap/` is now a second one, with its own
+ * declaration, and the walk does not know that: measured 2026-09-19 on `main`,
+ * `_kg/folio-assistant.jsonld` contained **88** references to
+ * `Process_Bootstrap`. Bootstrap's process was being published as part of
+ * folio-assistant's graph.
+ *
+ * The repair that suggests itself is `skip.add("bootstrap")` — a directory
+ * name written in code, which is the defect `check:declared-paths` exists to
+ * refuse, and which would need another line for every instance ever added.
+ * Reading the declaration needs none: an instance's diagrams are the ones it
+ * DECLARES, and a directory it does not declare is not its graph.
+ */
 function findBpmnDirs(root: string = ROOT): string[] {
-  const out = new Set<string>();
-  const skip = new Set(["node_modules", ".git", "_site", "_kg", ".beans"]);
-  const walk = (rel: string, depth: number): void => {
-    if (depth > 4) return;
-    let entries;
-    try {
-      entries = readdirSync(join(root, rel), { withFileTypes: true });
-    } catch {
-      return;
-    }
-    if (entries.some((e) => e.isFile() && e.name.endsWith(".bpmn"))) out.add(rel);
-    for (const e of entries) {
-      if (e.isDirectory() && !skip.has(e.name) && !e.name.startsWith(".")) {
-        walk(rel === "." ? e.name : `${rel}/${e.name}`, depth + 1);
-      }
-    }
-  };
-  walk(".", 0);
-  return [...out];
+  return workflowDirs(root).map((abs) => relative(root, abs));
 }
 
 

@@ -50,9 +50,15 @@ describe("a minimal instance exports through the same code path", () => {
     const rootDirs = typesOf(
       (await collectInstanceNodes(ROOT, DOC, BASE, [])).nodes,
     ).get("Directory")!;
-    // Bootstrap declares ONE directory; this repository declares many. Equal
-    // counts would mean the root's declaration leaked in.
-    expect(dirs).toBe(1);
+    // Strictly fewer than the root's, and NOT a pinned number.
+    //
+    // This asserted `toBe(1)` until 2026-09-19 and broke the moment bootstrap
+    // declared a second directory for its `workflows/`. One was an incidental
+    // fact about bootstrap that day; the PROPERTY is that bootstrap's
+    // declaration is its own and smaller. A pinned count makes "the isolation
+    // holds" and "somebody changed a declaration" indistinguishable — the
+    // mistake this repository has paid for with coverage counts more than once.
+    expect(dirs).toBeGreaterThan(0);
     expect(rootDirs).toBeGreaterThan(dirs);
   });
 

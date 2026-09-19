@@ -250,7 +250,7 @@
     "Role": 2,
     "ProcessNode": 10,
     "GraphKind": 16,
-    "Directory": 1
+    "Directory": 2
   },
   "problems": [],
   "omitted": [
@@ -721,6 +721,16 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/cat-harness-workflows",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-workflows",
+      "path": "workflows/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+      ],
+      "description": "The bootstrap PROCESS — `bootstrap.bpmn`, the decision tree. Declared because discovery reads declarations rather than walking the tree: until 2026-09-19 `findBpmnDirs` found this directory by WALKING from the repository root, which also walked it into folio-assistant's graph (88 references to `Process_Bootstrap` in `_kg/folio-assistant.jsonld`, measured). A separate id from `cat-harness`, because overrides match on id and `skills/` already holds that one — reusing it would replace bootstrap's skills with its workflows."
     }
   ]
 }
