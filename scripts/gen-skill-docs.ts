@@ -23,9 +23,9 @@
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
-import { join, resolve, basename } from "path";
+import { join, resolve, basename, relative } from "path";
 
-import { isSkillMd } from "./known-skills.js";
+import { isSkillMd, kgRoots } from "./known-skills.js";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
@@ -166,6 +166,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
   "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
+  // A declared kg directory that holds its skills DIRECTLY rather than in
+  // package subdirectories, so it is keyed by its repo-relative path. This was
+  // a hand-written entry in `GROUPS` until `src/skills/` was declared (bean
+  // `osbo`); discovery reaches it now, and a second entry would publish it
+  // twice.
+  "src/skills": "Agent skills",
 };
 
 /**
@@ -196,11 +202,30 @@ const SKILLS_CATEGORIES: Record<string, string> = {
  * going missing without anything saying so. Adding a package is one line;
  * forgetting it stops the build.
  */
+/** Does this directory hold at least one skill `.md` directly? */
+function holdsSkill(dir: string): boolean {
+  try {
+    return readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)));
+  } catch {
+    return false;
+  }
+}
+
 function discoverGroups(): Group[] {
   const out: Group[] = [];
-  const skillsRoot = join(REPO_ROOT, "skills");
   const undeclared: string[] = [];
-  if (existsSync(skillsRoot)) {
+  // Every DECLARED knowledge-graph directory, not `skills/` alone: an instance
+  // may put its graph anywhere, and this repository declares two since
+  // `src/skills/` was declared (bean `osbo`).
+  for (const skillsRoot of kgRoots(REPO_ROOT)) {
+    const rel = relative(REPO_ROOT, skillsRoot);
+    // A kg directory may hold skills DIRECTLY as well as in packages —
+    // `src/skills/` holds `corpus-grep.md` beside the `.ts` implementing it.
+    if (holdsSkill(skillsRoot)) {
+      const direct = SKILLS_CATEGORIES[rel];
+      if (direct === undefined) undeclared.push(rel);
+      else out.push({ category: direct, dir: skillsRoot, repoPrefix: rel });
+    }
     for (const d of readdirSync(skillsRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       if (!d.isDirectory()) continue;
       const dir = join(skillsRoot, d.name);
@@ -213,13 +238,13 @@ function discoverGroups(): Group[] {
       // copy was falsified by `skills/memory/` — 25 agent-memory nodes, every
       // one a `.md`, none a skill. The generator then demanded a category
       // heading for a package that publishes nothing.
-      if (!readdirSync(dir).some((f) => f.endsWith(".md") && isSkillMd(join(dir, f)))) continue;
+      if (!holdsSkill(dir)) continue;
       const category = SKILLS_CATEGORIES[d.name];
       if (category === undefined) {
         undeclared.push(d.name);
         continue;
       }
-      out.push({ category, dir, repoPrefix: `skills/${d.name}` });
+      out.push({ category, dir, repoPrefix: `${rel}/${d.name}` });
     }
   }
   if (undeclared.length > 0) {
@@ -235,7 +260,6 @@ function discoverGroups(): Group[] {
 
 const GROUPS: Group[] = [
   ...discoverGroups(),
-  { category: "Agent skills", dir: join(REPO_ROOT, "src", "skills"), repoPrefix: "src/skills" },
   // Local skills — the harness-specific ones under `.claude/skills/local/`.
   //
   // Absent from this list until 2026-09-19, which meant the authoritative spec

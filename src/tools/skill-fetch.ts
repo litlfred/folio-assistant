@@ -6,6 +6,7 @@ import { resolve, join } from "node:path";
 import { nodeSummary } from "../../scripts/front-matter.js";
 import { isSkillMd } from "../../scripts/known-skills.js";
 import { resolveSkillDirs } from "../../schemas/harness-config.js";
+import { readDeclaration } from "../../schemas/cat-harness.js";
 
 // Session-level cache (lives for the lifetime of the MCP server process)
 const skillCache = new Map<string, { content: string; fetchedAt: number }>();
@@ -73,25 +74,6 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // reachable when something can SERVE it. `scripts/kg-audit.ts` reads this table
 // rather than keeping its own copy, so a package added here cannot be reported
 // as unreachable, and one removed here cannot pass.
-/**
- * Where this instance's own one-skill package lives, and why it is named here.
- *
- * `src/skills/` holds exactly one skill — `corpus-grep.md`, beside the
- * `corpus-grep.ts` that implements it — and it is **not a declared knowledge-
- * graph directory**, so discovery cannot see it.
- *
- * Declaring it was tried and measured (2026-09-19): it makes discovery exactly
- * reproduce this table, and it also trips `declared-paths`' ratchet in three
- * scripts, because `"skills"` as a literal then names a declared path those
- * files should be resolving instead. That is real debt the declaration
- * surfaces rather than creates — and raising a ratchet baseline to absorb it
- * would be recording new debt as though it were progress. So it stays a named
- * exception with its reason, and the declaration is follow-up work.
- */
-const CO_LOCATED_PACKAGES: Record<string, string> = {
-  "folio-assistant": resolve(__dirname, "..", "skills"),
-};
-
 /** A directory is a skill PACKAGE when it directly holds at least one skill `.md`. */
 function holdsSkill(dir: string): boolean {
   try {
@@ -139,8 +121,19 @@ function holdsSkill(dir: string): boolean {
 export function discoverLocalPackages(root: string): Record<string, string> {
   const out: Record<string, string> = {};
   for (const kgDir of resolveSkillDirs(root)) {
-    // A kg directory that holds skills DIRECTLY is the instance's own package;
-    // here `skills/` holds none directly and every package is a subdirectory.
+    // A kg directory may hold skills DIRECTLY as well as in subdirectories,
+    // and BOTH shapes are real here: `skills/` holds none directly and every
+    // package is a subdirectory, while `src/skills/` holds `corpus-grep.md`
+    // beside the `.ts` implementing it and has no subdirectory at all.
+    //
+    // A directly-held set is the INSTANCE's own package, named after the
+    // instance, because that is what it is — there is no subdirectory name to
+    // take. Before `src/skills/` was declared this was a hand-written
+    // exception in this file; now it falls out of the declaration.
+    if (holdsSkill(kgDir)) {
+      const name = readDeclaration(root)?.name;
+      if (name !== undefined) out[name] = kgDir;
+    }
     for (const e of readdirSync(kgDir, { withFileTypes: true })) {
       if (!e.isDirectory()) continue;
       const dir = join(kgDir, e.name);
@@ -154,10 +147,9 @@ export function discoverLocalPackages(root: string): Record<string, string> {
 // reachable when something can SERVE it. `scripts/kg-audit.ts` reads this table
 // rather than keeping its own copy, so a package added here cannot be reported
 // as unreachable, and one removed here cannot pass.
-export const LOCAL_PACKAGES: Record<string, string> = {
-  ...CO_LOCATED_PACKAGES,
-  ...discoverLocalPackages(resolve(__dirname, "..", "..")),
-};
+export const LOCAL_PACKAGES: Record<string, string> = discoverLocalPackages(
+  resolve(__dirname, "..", ".."),
+);
 
 /** A servable skill: its id, and what it says it is — when it says anything. */
 export interface LocalSkill {
