@@ -177,32 +177,37 @@ jobs:
           bun run scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
-          # The VOCABULARY, at the IRI stem every term already hangs off.
+          # THE VOCABULARY — one document per namespace, plus the union.
           #
-          # FOLIO_NS is `<base>/ns#`, so `<base>/ns` is the document those
-          # fragments live in — and nothing served it. `kg-export.test.ts`
-          # exempted the stem from the dead-link walk by name, on the reasoning
-          # that an IRI stem is not a file. True while a term only had to be an
-          # IDENTIFIER; false once the terms have to be DEFINITIONS, which the
-          # bootstrap README's "link almost every word to its definition"
-          # requires.
+          # Every term now hangs off its declaring layer's namespace: bs: for
+          # bootstrap, cat: for the harness, fac: for core. Each of those is an
+          # IRI stem, so each needs a document or `bs:Actor` dereferences to
+          # nothing — the very defect this work exists to fix, and splitting
+          # one namespace into three created three fresh instances of it. The
+          # dead-link walk in `kg-export.test.ts` caught that within a minute
+          # of the split, which is what retiring its by-name exemption bought.
           #
-          # `ns` is extensionless BECAUSE the IRI is: `<base>/ns#Actor` resolves
-          # to the document `<base>/ns`. Pages serves it as octet-stream, hence
-          # the `.jsonld` (canonical extension) and `.json` (the only correct
-          # Content-Type this host emits) alongside — the same three-way the
-          # graph itself gets, for the same reason.
+          # A namespace document is EXACT — `cat-harness/ns` carries only cat:
+          # terms. A document that also defined bs:Actor would be claiming a
+          # term in somebody else's namespace.
           #
-          # `ns-bootstrap` is the same vocabulary cut to the base layer: 11
-          # terms against 93. A bootstrap instance reads a declaration and
-          # hands over, so it must not be made to define voices, an L1 library
-          # or a preview target. Owner, 2026-09-19: "we shouldnt need
-          # voicegraph or librarygrph or previewgrapjh in bootstrap!!"
-          bun run scripts/ns-export.ts                     --out "./_site/ns.jsonld"
-          bun run scripts/ns-export.ts --layer bootstrap   --out "./_site/ns-bootstrap.jsonld"
-          cp "./_site/ns.jsonld"           "./_site/ns"
-          cp "./_site/ns.jsonld"           "./_site/ns.json"
-          cp "./_site/ns-bootstrap.jsonld" "./_site/ns-bootstrap.json"
+          # `<base>/ns` stays as the UNION of all three: one place to read the
+          # whole vocabulary, which is what a person wants and no single
+          # namespace can be.
+          #
+          # Extensionless because the IRIs are; `.json` alongside because Pages
+          # emits no correct Content-Type for `.jsonld`.
+          bun run scripts/ns-export.ts --out "./_site/ns.jsonld"
+          cp "./_site/ns.jsonld" "./_site/ns"
+          cp "./_site/ns.jsonld" "./_site/ns.json"
+
+          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
+            LAYER="${pair%%:*}"; DIR="${pair##*:}"
+            mkdir -p "./_site/${DIR}"
+            bun run scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
+            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
+            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
+          done
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll

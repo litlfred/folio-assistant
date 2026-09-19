@@ -137,8 +137,13 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: "What a declared directory holds — the vocabulary a consumer matches on to decide whether to scan it.",
     seeAlso: "/architecture.html",
   },
-  CatHarness: {
-    layer: "bootstrap",
+  // `Harness`, not `CatHarness`, and `cat:` not `bs:`. The owner, 2026-09-19:
+  // "but why bs:catharness? shouldnt that be in cat?... and maybe we name the
+  // type scheme harness so it is more readable cat:harness". Right on both:
+  // the declaration is the harness's own object, and `cat:CatHarness`
+  // stuttered the layer into the term.
+  Harness: {
+    layer: "harness",
     gloss: "An instance's root declaration: the directories it scans and the graphs they hold.",
     seeAlso: "/architecture.html",
   },
@@ -253,3 +258,21 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   detection: { gloss: "How a value was arrived at, where it was inferred rather than declared." },
   ambiguous: { gloss: "That more than one answer matched, and none was chosen." },
 };
+
+/**
+ * Which layer owns a term, by name — the ONE answer, used to mint its IRI.
+ *
+ * `namespaces.ts` calls this to decide which namespace a term hangs off, so
+ * the layer and the IRI cannot disagree. An earlier draft kept a separate
+ * `GRAPH_KIND_LAYERS` map inside `ns-export.ts`, which decided the same fact a
+ * second time and in a different file from the one that mints the type — the
+ * shape of drift this repository keeps paying for.
+ *
+ * A name this file does not gloss is `harness`, the middle. Same default and
+ * same reasoning as {@link TermGloss.layer}: over-assigning to harness costs
+ * an instance a term it did not need, while under-assigning to bootstrap makes
+ * the base depend on something above it.
+ */
+export function termLayer(name: string): TermLayer {
+  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? "harness";
+}

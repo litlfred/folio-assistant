@@ -28,7 +28,17 @@ import { spawnSync } from "node:child_process";
 import { buildExport, exportIdentity } from "../kg-export.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
 import { readDeclaration, artefactStub } from "../../schemas/cat-harness.js";
-import { FOLIO_NS } from "../../schemas/namespaces.js";
+import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
+
+/**
+ * Does this IRI sit in ANY of the three folio namespaces?
+ *
+ * It was `startsWith(FOLIO_NS)` against one namespace. That assertion passed
+ * for as long as there was one, and the moment the vocabulary split by layer
+ * it would have failed on every bootstrap and core term — which is the test
+ * doing its job, not a bug in it.
+ */
+const inFolioNs = (iri: string): boolean => Object.values(NS_PREFIXES).some((ns) => iri.startsWith(ns));
 
 // The repo's own canonicalUrl, so the shared fixture is the CANONICAL export.
 // Using an arbitrary base made it a preview, which (correctly) gave it an
@@ -36,7 +46,11 @@ import { FOLIO_NS } from "../../schemas/namespaces.js";
 // test below, which is the test doing its job.
 const BASE = readDeclaration(join(import.meta.dir, "../.."))!.canonicalUrl!;
 const EXPORT = await buildExport();
-const typed = (t: string) => EXPORT["@graph"].filter((n) => n["@type"] === `${FOLIO_NS}${t}`);
+// Minted through `termIri`, exactly as the exporter mints it. Rebuilding the
+// IRI from a namespace constant is what made this helper silently return zero
+// rows for every type once the namespaces split — a green-looking suite over
+// an empty set.
+const typed = (t: string) => EXPORT["@graph"].filter((n) => n["@type"] === termIri(t));
 
 describe("kg export", () => {
   test("no source failed to read", () => {
@@ -187,7 +201,7 @@ describe("kg export", () => {
     const ids = EXPORT["@graph"].map((n) => n["@id"]);
     for (const n of EXPORT["@graph"]) {
       expect(typeof n["@id"]).toBe("string");
-      expect(String(n["@type"]).startsWith(FOLIO_NS)).toBe(true);
+      expect(inFolioNs(String(n["@type"]))).toBe(true);
     }
     expect(ids.length).toBe(new Set(ids).size);
   });
@@ -197,7 +211,7 @@ describe("kg export", () => {
     // can disagree with `@graph`, it is worse than absent.
     const recomputed: Record<string, number> = {};
     for (const n of EXPORT["@graph"]) {
-      const t = String(n["@type"]).replace(FOLIO_NS, "");
+      const t = String(n["@type"]).split("#")[1] ?? String(n["@type"]);
       recomputed[t] = (recomputed[t] ?? 0) + 1;
     }
     expect(EXPORT.counts).toEqual(recomputed);
@@ -238,7 +252,7 @@ describe("kg export", () => {
     const canonical = await buildExport();
 
     expect(Array.isArray(preview["@type"])).toBe(true);
-    expect(preview["@type"]).toContain(`${FOLIO_NS}PreviewGraph`);
+    expect(preview["@type"]).toContain(termIri("PreviewGraph"));
     expect(preview.canonicalDocument).toBe(canonical["@id"]);
 
     // Canonical must carry neither marker — otherwise "is this the real one?"
@@ -264,7 +278,7 @@ describe("kg export", () => {
     // another-name was a broken link, and a generated one is still a broken one.
     const kinds = typed("GraphKind");
     expect(kinds.length).toBeGreaterThan(0);
-    for (const k of kinds) expect(String(k["@id"]).startsWith(FOLIO_NS)).toBe(true);
+    for (const k of kinds) expect(inFolioNs(String(k["@id"]))).toBe(true);
   });
 });
 
@@ -366,16 +380,23 @@ describe("every self-URL the export publishes resolves to something published", 
       "tool-types.schema.json",
       `${stub}/`,
       // The vocabulary, published by the same step. `ns` is extensionless
-      // because the IRI is: FOLIO_NS is `<base>/ns#`, so every term's fragment
+      // because the IRI is: the vocabulary document is `<base>/ns`, so every term's fragment
       // lives in the document `<base>/ns`. The `.jsonld` and `.json` are the
       // canonical-extension and correct-Content-Type aliases, exactly as for
       // the graph itself.
       "ns",
       "ns.jsonld",
       "ns.json",
-      "ns-bootstrap.jsonld",
-      "ns-bootstrap.json",
     ]);
+    // One document per NAMESPACE. Splitting `folio:` into three made three
+    // new stems, and a stem nothing serves is the defect this whole check
+    // exists for — so each is published and each is listed here, where
+    // deleting an entry fails rather than 404s.
+    for (const dir of ["bootstrap", "cat-harness", "folio-assist-core"]) {
+      out.add(`${dir}/ns`);
+      out.add(`${dir}/ns.jsonld`);
+      out.add(`${dir}/ns.json`);
+    }
     for (const c of buildSkillIoContracts({ baseUrl: BASE })) out.add(c.published.split("\\").join("/"));
     return out;
   }

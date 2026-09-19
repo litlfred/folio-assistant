@@ -72,9 +72,11 @@ import {
  * harness-layer module must not import the content vocabulary — see that
  * module's note.
  */
-import { FOLIO_NS } from "./namespaces";
+import { CORE_NS } from "./namespaces";
 
-export { FOLIO_NS };
+// Content terms are folio-assist-core's, so they hang off core's namespace —
+// the same layer that owns block kinds, voices and the library.
+export { CORE_NS };
 /** SPAR Document Components Ontology — structural document parts. */
 export const DOCO_NS = "http://purl.org/spar/doco/";
 /** SPAR Discourse Elements Ontology — rhetorical roles. */
@@ -521,7 +523,7 @@ export function resolveReferenceKey(key: string): string {
 export const CONTENT_CONTEXT = {
   "@version": 1.1,
   "@base": FOLIO_BASE,
-  folio: FOLIO_NS,
+  fac: CORE_NS,
   doco: DOCO_NS,
   deo: DEO_NS,
   cito: CITO_NS,

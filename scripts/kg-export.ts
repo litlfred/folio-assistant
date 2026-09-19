@@ -45,7 +45,9 @@ import { join, dirname, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
-import { FOLIO_NS } from "../schemas/namespaces.js";
+import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
+import { termLayer } from "../schemas/vocabulary.js";
+import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
 import { artefactStub, defaultGraphKinds, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
 import { skillMdDirs as knownSkillDirs } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
@@ -146,6 +148,19 @@ function findBpmnDirs(): string[] {
 
 // ── JSON-LD context ─────────────────────────────────────────────
 
+/** The namespace a declared graph kind's nodes belong in. */
+function graphKindNamespace(kindName: string): string {
+  const def = BASE_GRAPH_KINDS[kindName];
+  const local = def?.type.split("#")[1];
+  return local ? namespaceForLayer(termLayer(local)) : namespaceForLayer("harness");
+}
+
+/** A type IRI with whichever folio namespace it carries removed. */
+function stripNamespace(iri: string): string {
+  for (const ns of Object.values(NS_PREFIXES)) if (iri.startsWith(ns)) return iri.slice(ns.length);
+  return iri;
+}
+
 const PROV = "http://www.w3.org/ns/prov#";
 const RDFS = "http://www.w3.org/2000/01/rdf-schema#";
 const SCHEMA = "https://schema.org/";
@@ -180,7 +195,7 @@ function buildContext(): Record<string, unknown> {
   const link = { "@type": "@id" } as const;
   return {
     "@version": 1.1,
-    folio: FOLIO_NS,
+    ...NS_PREFIXES,
     prov: PROV,
     rdfs: RDFS,
     schema: SCHEMA,
@@ -197,50 +212,50 @@ function buildContext(): Record<string, unknown> {
     generatedAt: { "@id": `${PROV}generatedAtTime`, "@type": `${XSD}dateTime` },
     // Provenance of the SOURCE, as against provenance of the run above.
     sourceCommit: { "@id": `${PROV}wasDerivedFrom`, "@type": "@id" },
-    sourceCommitSha: `${FOLIO_NS}sourceCommitSha`,
-    sourceCommitAt: { "@id": `${FOLIO_NS}sourceCommitAt`, "@type": `${XSD}dateTime` },
-    sourceTreeDirty: { "@id": `${FOLIO_NS}sourceTreeDirty`, "@type": `${XSD}boolean` },
-    sourceCommitUnavailable: `${FOLIO_NS}sourceCommitUnavailable`,
+    sourceCommitSha: termIri("sourceCommitSha"),
+    sourceCommitAt: { "@id": termIri("sourceCommitAt"), "@type": `${XSD}dateTime` },
+    sourceTreeDirty: { "@id": termIri("sourceTreeDirty"), "@type": `${XSD}boolean` },
+    sourceCommitUnavailable: termIri("sourceCommitUnavailable"),
 
     // Edges. Each of these is a LINK, not a string — see above.
-    partOf: { "@id": `${FOLIO_NS}partOf`, ...link },
-    implementedBy: { "@id": `${FOLIO_NS}implementedBy`, ...link },
-    performedBy: { "@id": `${FOLIO_NS}performedBy`, ...link },
-    declaresSkill: { "@id": `${FOLIO_NS}declaresSkill`, ...link },
-    inPackage: { "@id": `${FOLIO_NS}inPackage`, ...link },
-    providesCapability: { "@id": `${FOLIO_NS}providesCapability`, ...link },
-    requiresCapability: { "@id": `${FOLIO_NS}requiresCapability`, ...link },
-    satisfies: { "@id": `${FOLIO_NS}satisfies`, ...link },
+    partOf: { "@id": termIri("partOf"), ...link },
+    implementedBy: { "@id": termIri("implementedBy"), ...link },
+    performedBy: { "@id": termIri("performedBy"), ...link },
+    declaresSkill: { "@id": termIri("declaresSkill"), ...link },
+    inPackage: { "@id": termIri("inPackage"), ...link },
+    providesCapability: { "@id": termIri("providesCapability"), ...link },
+    requiresCapability: { "@id": termIri("requiresCapability"), ...link },
+    satisfies: { "@id": termIri("satisfies"), ...link },
     // A LINK: the artefact's published URL, which dereferences. Undeclared it
     // would be dropped by any JSON-LD processor — the `ovkk` defect, where 34
     // property names were used in `@graph` and absent from `@context`, so the
     // document lost nearly all its property data the moment anything treated
     // it as JSON-LD rather than as plain JSON.
-    maintains: { "@id": `${FOLIO_NS}maintains`, ...link },
+    maintains: { "@id": termIri("maintains"), ...link },
     // A LITERAL, deliberately: a repo-relative module path is not
     // dereferenceable, and coercing it to `@id` would resolve it against the
     // document IRI and mint a URL that nothing serves.
-    maintainsFrom: `${FOLIO_NS}maintainsFrom`,
+    maintainsFrom: termIri("maintainsFrom"),
     // The inverse of `maintains`, on a Schema node. A LINK: it names a Tool
     // node in this same document.
-    maintainedBy: { "@id": `${FOLIO_NS}maintainedBy`, ...link },
+    maintainedBy: { "@id": termIri("maintainedBy"), ...link },
     // A LITERAL: a repo-relative module path, for the same reason
     // `maintainsFrom` is one.
-    module: `${FOLIO_NS}module`,
-    holdsGraph: { "@id": `${FOLIO_NS}holdsGraph`, ...link },
-    startNode: { "@id": `${FOLIO_NS}startNode`, ...link },
-    incoming: { "@id": `${FOLIO_NS}incoming`, ...link },
-    outgoing: { "@id": `${FOLIO_NS}outgoing`, ...link },
-    from: { "@id": `${FOLIO_NS}from`, ...link },
-    to: { "@id": `${FOLIO_NS}to`, ...link },
+    module: termIri("module"),
+    holdsGraph: { "@id": termIri("holdsGraph"), ...link },
+    startNode: { "@id": termIri("startNode"), ...link },
+    incoming: { "@id": termIri("incoming"), ...link },
+    outgoing: { "@id": termIri("outgoing"), ...link },
+    from: { "@id": termIri("from"), ...link },
+    to: { "@id": termIri("to"), ...link },
     // The preview → canonical link. `prov:alternateOf`, NOT `owl:sameAs`:
     // sameAs entails identity, so a reasoner would merge every statement about
     // both nodes and a changed description in a preview would make the merged
     // graph assert two conflicting descriptions of one thing. alternateOf says
     // "same underlying thing, different presentation" and merges nothing.
     alternateOf: { "@id": `${PROV}alternateOf`, ...link },
-    canonicalDocument: { "@id": `${FOLIO_NS}canonicalDocument`, ...link },
-    typeIri: { "@id": `${FOLIO_NS}typeIri`, "@type": "@id" },
+    canonicalDocument: { "@id": termIri("canonicalDocument"), ...link },
+    typeIri: { "@id": termIri("typeIri"), "@type": "@id" },
 
     // A skill's I/O contract, as a LINK to the published schema document.
     //
@@ -257,14 +272,14 @@ function buildContext(): Record<string, unknown> {
     // would resolve against the document IRI and give
     // `<base>/schemas/skills/…`, which nothing serves. The values are now
     // the published `$id` of each contract — see `skillIoIri`.
-    inputSchema: { "@id": `${FOLIO_NS}inputSchema`, ...link },
-    outputSchema: { "@id": `${FOLIO_NS}outputSchema`, ...link },
+    inputSchema: { "@id": termIri("inputSchema"), ...link },
+    outputSchema: { "@id": termIri("outputSchema"), ...link },
 
     // The registry's own fields, renamed on the way in — see
     // `collectRegistryNodes`. Literals, not links: `localId` is a name within
     // a kind, not an IRI.
-    localId: `${FOLIO_NS}localId`,
-    actorKind: `${FOLIO_NS}actorKind`,
+    localId: termIri("localId"),
+    actorKind: termIri("actorKind"),
 
     // ---- BPMN, as it comes off a diagram -----------------------------------
     //
@@ -274,46 +289,46 @@ function buildContext(): Record<string, unknown> {
     // serves. `nodeKind` was emitted as the bare term `kind`, which this
     // document already uses in another sense -- a GraphKind is a "kind" too --
     // so the term now says which one it is.
-    bpmnType: `${FOLIO_NS}bpmnType`,
-    nodeKind: `${FOLIO_NS}nodeKind`,
-    enforcement: `${FOLIO_NS}enforcement`,
-    workPlanOp: `${FOLIO_NS}workPlanOp`,
-    touchesWorkPlan: { "@id": `${FOLIO_NS}touchesWorkPlan`, "@type": `${XSD}boolean` },
-    relaxable: { "@id": `${FOLIO_NS}relaxable`, "@type": `${XSD}boolean` },
-    nodeCount: { "@id": `${FOLIO_NS}nodeCount`, "@type": `${XSD}integer` },
-    flowCount: { "@id": `${FOLIO_NS}flowCount`, "@type": `${XSD}integer` },
+    bpmnType: termIri("bpmnType"),
+    nodeKind: termIri("nodeKind"),
+    enforcement: termIri("enforcement"),
+    workPlanOp: termIri("workPlanOp"),
+    touchesWorkPlan: { "@id": termIri("touchesWorkPlan"), "@type": `${XSD}boolean` },
+    relaxable: { "@id": termIri("relaxable"), "@type": `${XSD}boolean` },
+    nodeCount: { "@id": termIri("nodeCount"), "@type": `${XSD}integer` },
+    flowCount: { "@id": termIri("flowCount"), "@type": `${XSD}integer` },
     // A LITERAL, and the one term here whose call is expected to change. The
     // value is a repo-relative DMN path plus the decision's own id
     // (`decisions/draft-qa-gate.dmn#Decision_DraftQaGate`) and this graph emits
     // no Decision nodes at all, so coercing it would mint four IRIs that
     // resolve to nothing -- `makeIri`'s rule applied to a value rather than to
     // an `@id`. It becomes a link on the day decision tables are nodes.
-    decisionRef: `${FOLIO_NS}decisionRef`,
+    decisionRef: termIri("decisionRef"),
     // WHERE A NODE CAME FROM, and the two senses are not one term. A Process
     // carries the `.bpmn` path it was loaded from; a lane-derived Role carries
     // the string `bpmn-lane`, which is a provenance KIND and not a path. Both
     // were emitted as `source`, so a single declaration would have asserted
     // that `bpmn-lane` is a file. Literals, for `maintainsFrom`'s reason: a
     // repo-relative path is not dereferenceable.
-    sourcePath: `${FOLIO_NS}sourcePath`,
-    sourceKind: `${FOLIO_NS}sourceKind`,
+    sourcePath: termIri("sourcePath"),
+    sourceKind: termIri("sourceKind"),
 
     // ---- Skills, packages, directories -------------------------------------
     //
     // `instructionsPath` is a repo-relative path, so a LITERAL for exactly
     // `maintainsFrom`'s reason. It was `instructions`, a name that promises the
     // text itself and delivers a path.
-    instructionsPath: `${FOLIO_NS}instructionsPath`,
-    instructionLines: { "@id": `${FOLIO_NS}instructionLines`, "@type": `${XSD}integer` },
-    hasInstructions: { "@id": `${FOLIO_NS}hasInstructions`, "@type": `${XSD}boolean` },
-    hasIOContract: { "@id": `${FOLIO_NS}hasIOContract`, "@type": `${XSD}boolean` },
-    ambiguous: { "@id": `${FOLIO_NS}ambiguous`, "@type": `${XSD}boolean` },
-    hasManifest: { "@id": `${FOLIO_NS}hasManifest`, "@type": `${XSD}boolean` },
-    renderable: { "@id": `${FOLIO_NS}renderable`, "@type": `${XSD}boolean` },
+    instructionsPath: termIri("instructionsPath"),
+    instructionLines: { "@id": termIri("instructionLines"), "@type": `${XSD}integer` },
+    hasInstructions: { "@id": termIri("hasInstructions"), "@type": `${XSD}boolean` },
+    hasIOContract: { "@id": termIri("hasIOContract"), "@type": `${XSD}boolean` },
+    ambiguous: { "@id": termIri("ambiguous"), "@type": `${XSD}boolean` },
+    hasManifest: { "@id": termIri("hasManifest"), "@type": `${XSD}boolean` },
+    renderable: { "@id": termIri("renderable"), "@type": `${XSD}boolean` },
     // A repo-relative directory, on a Directory and on a SkillPackage. ONE term
     // because it is one relation in both places -- unlike `source` above, which
     // was one name over two relations.
-    path: `${FOLIO_NS}path`,
+    path: termIri("path"),
     // `schema:` is declared as a prefix above and this is its first use: a
     // package version is a software version and schema.org already has the
     // predicate. Minting `folio:version` beside it would be a second name for
@@ -328,7 +343,7 @@ function buildContext(): Record<string, unknown> {
     // bare names: a bare name under `{"@type": "@id"}` resolves against the
     // document base and yields `<base>/git-push`, which is the confidently
     // wrong coercion this bean warns about, not an edge.
-    hasCapability: { "@id": `${FOLIO_NS}hasCapability`, ...link },
+    hasCapability: { "@id": termIri("hasCapability"), ...link },
     // Roles and permissions stay LITERALS, deliberately and provisionally. The
     // role registry (`skills/roles/roles.json`) and the permission vocabulary
     // (`skills/permissions/permissions.json`) are NOT exported, so this graph
@@ -337,8 +352,8 @@ function buildContext(): Record<string, unknown> {
     // mint 44 role and 21 permission IRIs resolving to nothing. They are names
     // until those registries are nodes, and `roleName`/`permissionName` say so
     // instead of implying an edge the graph cannot honour.
-    roleName: `${FOLIO_NS}roleName`,
-    permissionName: `${FOLIO_NS}permissionName`,
+    roleName: termIri("roleName"),
+    permissionName: termIri("permissionName"),
 
     // ---- Structured values whose own vocabulary this graph does not model ---
     //
@@ -348,23 +363,23 @@ function buildContext(): Record<string, unknown> {
     // dropped, and a consumer gets a well-formed EMPTY node where a Tool's I/O
     // contract used to be, with nothing to say anything was lost. Modelling
     // `io.inputs[].schema` as real edges is worth doing and is not this change.
-    io: { "@id": `${FOLIO_NS}io`, "@type": "@json" },
-    invoke: { "@id": `${FOLIO_NS}invoke`, "@type": "@json" },
+    io: { "@id": termIri("io"), "@type": "@json" },
+    invoke: { "@id": termIri("invoke"), "@type": "@json" },
     // Heterogeneous by source, and that is the point: a Capability's `install`
     // is a command string, a Tool's is a dispatch object. The RELATION is the
     // same -- how do I get this -- so one term, with a range `@json` tolerates.
     // Contrast `sourcePath`/`sourceKind`, where the two senses were different
     // relations sharing a name and had to be split.
-    install: { "@id": `${FOLIO_NS}install`, "@type": "@json" },
-    detection: { "@id": `${FOLIO_NS}detection`, "@type": "@json" },
-    meta: { "@id": `${FOLIO_NS}meta`, "@type": "@json" },
-    assignments: { "@id": `${FOLIO_NS}assignments`, "@type": "@json" },
+    install: { "@id": termIri("install"), "@type": "@json" },
+    detection: { "@id": termIri("detection"), "@type": "@json" },
+    meta: { "@id": termIri("meta"), "@type": "@json" },
+    assignments: { "@id": termIri("assignments"), "@type": "@json" },
     // A Tool's environment requirements -- `{ runtime: ["go"], network: true }`.
     // NOT `requiresCapability`: `go` is not a capability id (0 of 1 runtime
     // names match a Capability node), so these are two relations wearing one
     // name. It was `requires`, which a Capability also carried in the other
     // sense -- see `collectRegistryNodes`.
-    requirements: { "@id": `${FOLIO_NS}requirements`, "@type": "@json" },
+    requirements: { "@id": termIri("requirements"), "@type": "@json" },
   };
 }
 
@@ -593,7 +608,7 @@ function collectSkills(doc: string, base: string, problems: string[]): Node[] {
 
   return [...byName.entries()].map(([name, s]) => ({
     "@id": makeIri(doc, "skill", name),
-    "@type": `${FOLIO_NS}Skill`,
+    "@type": termIri("Skill"),
     name,
     declaredName: s.fmName !== name ? s.fmName : undefined,
     title: s.title,
@@ -709,7 +724,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
         const actorKind = kind ?? legacyType;
         nodes.push({
           "@id": makeIri(doc, type.toLowerCase(), id),
-          "@type": `${FOLIO_NS}${type}`,
+          "@type": termIri(type),
           ...(localId === undefined ? {} : { localId: String(localId) }),
           ...(actorKind === undefined ? {} : { actorKind: String(actorKind) }),
           ...registryFields(group, rest, doc),
@@ -737,7 +752,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
     seen.add(leaf);
     nodes.push({
       "@id": makeIri(doc, "package", leaf),
-      "@type": `${FOLIO_NS}SkillPackage`,
+      "@type": termIri("SkillPackage"),
       name: leaf,
       path: dir,
       hasManifest: existsSync(join(ROOT, dir, "package-manifest.json")),
@@ -757,7 +772,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
       if (stubAt !== -1) nodes.splice(stubAt, 1);
       nodes.push({
         "@id": makeIri(doc, "package", d.name),
-        "@type": `${FOLIO_NS}SkillPackage`,
+        "@type": termIri("SkillPackage"),
         name: m.name ?? d.name,
         version: m.version,
         description: m.description,
@@ -792,7 +807,7 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
       const m = await loadProcessModel(path);
       nodes.push({
         "@id": makeIri(doc, "process", m.id),
-        "@type": `${FOLIO_NS}Process`,
+        "@type": termIri("Process"),
         name: m.name,
         enforcement: m.enforcement,
         sourcePath: relative(ROOT, m.source),
@@ -806,7 +821,7 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
         // for an element the exporter declined to emit.
         nodes.push({
           "@id": makeIri(doc, "process", `${m.id}/flow/${f.id}`),
-          "@type": `${FOLIO_NS}SequenceFlow`,
+          "@type": termIri("SequenceFlow"),
           name: f.name,
           partOf: makeIri(doc, "process", m.id),
           from: makeIri(doc, "process", `${m.id}/node/${f.from}`),
@@ -820,7 +835,7 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
           lanes.add(n.lane);
           nodes.push({
             "@id": makeIri(doc, "role", n.lane),
-            "@type": `${FOLIO_NS}Role`,
+            "@type": termIri("Role"),
             name: n.lane,
             // NOT `source`: a Process's `source` is the file it was read from,
             // and this is a provenance KIND. One term over both would assert
@@ -830,7 +845,7 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
         }
         nodes.push({
           "@id": makeIri(doc, "process", `${m.id}/node/${n.id}`),
-          "@type": `${FOLIO_NS}ProcessNode`,
+          "@type": termIri("ProcessNode"),
           name: n.name,
           nodeKind: n.kind,
           bpmnType: n.type,
@@ -895,7 +910,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
   }
   return defs.map((t) => ({
     "@id": makeIri(doc, "tool", t.id),
-    "@type": `${FOLIO_NS}Tool`,
+    "@type": termIri("Tool"),
     name: t.id,
     title: t.title,
     description: t.description,
@@ -972,7 +987,7 @@ function collectSchemas(doc: string, base: string): Node[] {
 
   return audit.nodes.map((m) => ({
     "@id": makeIri(doc, "schema", m.name),
-    "@type": `${FOLIO_NS}Schema`,
+    "@type": termIri("Schema"),
     name: m.name,
     title: m.summary,
     module: m.module,
@@ -984,8 +999,12 @@ function collectGraphKinds(): Node[] {
   return defaultGraphKinds.names().map((name) => {
     const def = defaultGraphKinds.get(name)!;
     return {
-      "@id": `${FOLIO_NS}graphKind/${name}`,
-      "@type": `${FOLIO_NS}GraphKind`,
+      // The instance sits in the SAME namespace as the class it instantiates,
+      // which is not always the harness's: `cat-harness` and `schemas` are
+      // bootstrap's kinds, `voices` and `library` are core's. Derived from the
+      // kind's own `type` rather than chosen here, so the two cannot drift.
+      "@id": `${graphKindNamespace(name)}graphKind/${name}`,
+      "@type": termIri("GraphKind"),
       name,
       typeIri: def.type,
       renderable: def.renderable,
@@ -1016,10 +1035,10 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
       const kinds = x.graphs ?? [];
       return {
         "@id": makeIri(doc, "directory", x.id),
-        "@type": `${FOLIO_NS}Directory`,
+        "@type": termIri("Directory"),
         name: x.id,
         path: x.path,
-        holdsGraph: kinds.map((k) => `${FOLIO_NS}graphKind/${k}`),
+        holdsGraph: kinds.map((k) => `${graphKindNamespace(k)}graphKind/${k}`),
         // `graphKinds: kinds` was here. REMOVED as denormalised: `holdsGraph`
         // lands on a GraphKind node whose `name` is the kind, and the export's
         // own test already asserts every one of those links resolves.
@@ -1322,7 +1341,11 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
 
   const counts: Record<string, number> = {};
   for (const n of graph) {
-    const t = String(n["@type"]).replace(FOLIO_NS, "");
+    // Strip WHICHEVER namespace applies. A single `.replace(FOLIO_NS, "")`
+    // silently left the full IRI as the key once the namespaces split, which
+    // reads as a plausible-looking count under a very long label rather than
+    // as an error.
+    const t = stripNamespace(String(n["@type"]));
     counts[t] = (counts[t] ?? 0) + 1;
   }
 
@@ -1335,7 +1358,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     // without reading a convention. This is where the `#STAGING` marker idea
     // belongs — as a type, not as a fragment on a URL the document is not
     // served from.
-    "@type": isPreview ? [`${PROV}Entity`, `${FOLIO_NS}PreviewGraph`] : `${PROV}Entity`,
+    "@type": isPreview ? [`${PROV}Entity`, termIri("PreviewGraph")] : `${PROV}Entity`,
     ...(isPreview && canonicalIri !== undefined ? { canonicalDocument: canonicalIri } : {}),
     repository: stub,
     generatedAt: new Date().toISOString(),

@@ -98,7 +98,7 @@ import { kgNodeLabelShape } from "./kg-node";
 import { join } from "node:path";
 import { z } from "zod";
 
-import { FOLIO_NS } from "./namespaces";
+import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
@@ -627,17 +627,17 @@ export function boundLaneNames(graph: RoleGraph): Set<string> {
 export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
   return {
     "@context": {
-      fa: FOLIO_NS,
-      skills: `${FOLIO_NS}hasSkill`,
-      lanes: `${FOLIO_NS}bindsLane`,
-      inherits: `${FOLIO_NS}isA`,
-      roles: `${FOLIO_NS}declaresRole`,
+      ...NS_PREFIXES,
+      skills: termIri("hasSkill"),
+      lanes: termIri("bindsLane"),
+      inherits: termIri("isA"),
+      roles: termIri("declaresRole"),
     },
-    "@type": `${FOLIO_NS}RoleGraph`,
+    "@type": termIri("RoleGraph"),
     name: graph.name,
     roles: graph.roles.map((r) => ({
       "@id": `#${r.id}`,
-      "@type": `${FOLIO_NS}Role`,
+      "@type": termIri("Role"),
       title: r.title,
       description: r.description,
       actorKind: r.actorKind,

@@ -41,7 +41,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, resolve } from "node:path";
 
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
-import { FOLIO_NS } from "../schemas/namespaces.js";
+import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer } from "../schemas/namespaces.js";
 import { CLASS_GLOSSES, PROPERTY_GLOSSES, type TermGloss, type TermLayer } from "../schemas/vocabulary.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -51,7 +51,7 @@ const OWL = "http://www.w3.org/2002/07/owl#";
 
 /** The namespace with its trailing `#` removed — the DOCUMENT, not the stem. */
 export function vocabularyIri(): string {
-  return FOLIO_NS.replace(/#$/, "");
+  return LEGACY_FOLIO_NS.replace(/#$/, "");
 }
 
 /**
@@ -70,14 +70,25 @@ export function vocabularyIri(): string {
  */
 export function mintedTermsFromSource(root = ROOT): Set<string> {
   const out = new Set<string>();
-  const pat = /\$\{FOLIO_NS\}([A-Za-z][A-Za-z0-9_]*)/g;
+  // `termIri("Name")` is the ONE minting form since the namespaces split —
+  // 94 hand-written template literals became this single call, which is also
+  // what makes the scan a scan for one pattern rather than for four.
+  const pat = /\btermIri\(\s*"([A-Za-z][A-Za-z0-9_]*)"\s*\)/g;
   const walk = (dir: string): void => {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
       if (e.name === "node_modules" || e.name.startsWith(".")) continue;
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
       else if (e.name.endsWith(".ts") && !e.name.endsWith(".test.ts")) {
-        for (const m of readFileSync(p, "utf-8").matchAll(pat)) out.add(m[1]!);
+        // COMMENTS ARE STRIPPED FIRST, and this is not fussiness: the first
+        // version scanned raw source and reported `Name` as an undefined
+        // term, matched from THIS function's own comment describing the
+        // pattern it looks for. A scanner that reads its own documentation as
+        // data will do it again the next time somebody writes an example, and
+        // a phantom term in a completeness check is worse than none — it is a
+        // finding nobody can act on.
+        const src = readFileSync(p, "utf-8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+        for (const m of src.matchAll(pat)) out.add(m[1]!);
       }
     }
   };
@@ -116,7 +127,7 @@ const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
 export function graphKindTerms(): Map<string, TermGloss> {
   const out = new Map<string, TermGloss>();
   for (const [name, def] of Object.entries(BASE_GRAPH_KINDS)) {
-    const local = def.type.startsWith(FOLIO_NS) ? def.type.slice(FOLIO_NS.length) : undefined;
+    const local = def.type.includes("#") ? def.type.split("#")[1] : undefined;
     if (local && def.summary) out.set(local, { gloss: def.summary, layer: GRAPH_KIND_LAYERS[name] ?? "harness" });
   }
   return out;
@@ -143,13 +154,27 @@ export function buildVocabulary(
    * and it is genuinely minimal — it is the bottom of the stack.
    */
   layer?: TermLayer,
+  /**
+   * EXACTLY this layer, rather than it and everything below.
+   *
+   * The two modes answer different questions and conflating them would publish
+   * a lie. `--layer harness` is what a HARNESS CONSUMER wants: it meets
+   * bootstrap's terms constantly, so the document includes them. A NAMESPACE
+   * document is what `cat:Harness` dereferences to, and it must contain only
+   * `cat:` terms — a `cat-harness/ns` that also defined `bs:Actor` would be
+   * asserting ownership of a term in somebody else's namespace.
+   */
+  exact = false,
 ): { doc: unknown; report: VocabularyReport } {
   const kinds = graphKindTerms();
   const doublyDefined = [...kinds.keys()].filter((t) => t in CLASS_GLOSSES || t in PROPERTY_GLOSSES).sort();
 
   const ORDER: readonly TermLayer[] = ["bootstrap", "harness", "core"];
   const cutoff = layer ? ORDER.indexOf(layer) : ORDER.length - 1;
-  const inSlice = (g: TermGloss): boolean => ORDER.indexOf(g.layer ?? "harness") <= cutoff;
+  const inSlice = (g: TermGloss): boolean => {
+    const i = ORDER.indexOf(g.layer ?? "harness");
+    return exact ? i === cutoff : i <= cutoff;
+  };
 
   const nodes: Record<string, unknown>[] = [];
   const defined = new Set<string>();
@@ -157,7 +182,7 @@ export function buildVocabulary(
     if (!inSlice(g)) return;
     defined.add(name);
     nodes.push({
-      "@id": `folio:${name}`,
+      "@id": `${prefixForLayer(g.layer ?? "harness")}:${name}`,
       "@type": kind === "class" ? "rdfs:Class" : "rdf:Property",
       label: name,
       comment: g.gloss,
@@ -188,15 +213,19 @@ export function buildVocabulary(
       rdf: RDF,
       rdfs: RDFS,
       owl: OWL,
-      folio: FOLIO_NS,
+      ...NS_PREFIXES,
       label: "rdfs:label",
       comment: "rdfs:comment",
       isDefinedBy: { "@id": "rdfs:isDefinedBy", "@type": "@id" },
       seeAlso: { "@id": "rdfs:seeAlso", "@type": "@id" },
     },
-    "@id": vocabularyIri(),
+    "@id": exact && layer ? namespaceForLayer(layer).replace(/#$/, "") : vocabularyIri(),
     "@type": "owl:Ontology",
-    label: layer ? `folio-assistant vocabulary (${layer} and below)` : "folio-assistant vocabulary",
+    label: !layer
+      ? "folio-assistant vocabulary"
+      : exact
+        ? `folio-assistant vocabulary (${layer} only)`
+        : `folio-assistant vocabulary (${layer} and below)`,
     comment:
       "Every class and property the folio knowledge graph projects, one node each. " +
       "Generated by scripts/ns-export.ts; graph-kind definitions are read from the " +
@@ -219,7 +248,7 @@ if (import.meta.main) {
   const outIdx = argv.indexOf("--out");
   const out = outIdx >= 0 ? argv[outIdx + 1] : join(ROOT, layer ? `_kg/ns-${layer}.jsonld` : "_kg/ns.jsonld");
 
-  const { doc, report } = buildVocabulary(ROOT, layer);
+  const { doc, report } = buildVocabulary(ROOT, layer, argv.includes("--exact"));
 
   for (const t of report.doublyDefined) {
     console.error(`  DOUBLY DEFINED: ${t} — glossed in vocabulary.ts AND summarised in the graph-kind registry.`);
@@ -238,7 +267,7 @@ if (import.meta.main) {
   mkdirSync(dirname(out!), { recursive: true });
   writeFileSync(out!, `${JSON.stringify(doc, null, 2)}\n`);
   console.log(`ns vocabulary → ${out}`);
-  console.log(`  @id  ${vocabularyIri()}`);
+  console.log(`  @id  ${(doc as { "@id": string })["@id"]}`);
   console.log(`  ${report.defined.length} term(s) defined, ${report.undefinedTerms.length} undefined`);
   if (!existsSync(out!)) process.exit(2);
 }
