@@ -71,7 +71,7 @@ exists**, so it is not a lock: a sibling reading `origin/main` still sees
 the bean id. Two sessions claimed `plj1` 61 seconds apart on 2026-09-19 and
 opened two PRs for it; see `folio-core/bean-coordination.md`
 §"A claim is branch-local".
-Never resolve a sibling's bean, and never delete ANY bean; never resolve a sibling's bean, and never delete ANY bean — scrap with reasons instead. See
+Never resolve a sibling's bean, and never delete ANY bean — scrap with reasons instead. See
 `bean-coordination.md` for the full claim/handoff lifecycle.
 
 **What beans is *not* for:**
