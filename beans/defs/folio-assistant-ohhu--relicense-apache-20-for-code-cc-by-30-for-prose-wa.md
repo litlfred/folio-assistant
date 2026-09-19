@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ohhu
 title: 'Relicense: Apache-2.0 for code, CC BY 3.0 for prose (was MIT)'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-18T23:12:56Z
-updated_at: 2026-09-18T23:12:56Z
+updated_at: 2026-09-19T00:09:48Z
 ---
 
 Owner decision (2026-09-18): move folio-assistant off MIT to a split licence —
