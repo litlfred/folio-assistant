@@ -70,7 +70,7 @@ import {
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
-import { isSkillMd, knownSkills } from "./known-skills.js";
+import { isSkillMd, knownSkills, remotePackageSkills } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
@@ -758,38 +758,6 @@ function localHarnessSkills(): Set<string> {
   return out;
 }
 
-/**
- * Skills a REMOTE package declares it provides.
- *
- * `skills/remote-packages/*.json` name an external repo and, under
- * `wrapper.skills`, the skills it supplies — `claude-scientific-skills`
- * provides `scientific-visualization`, `hypothesis-generation` and
- * `scientific-critical-thinking`. Their bodies are not in this checkout until
- * the package is synced, so they are correctly ABSENT from `knownSkills()`:
- * nothing here can serve one.
- *
- * But a local manifest naming one is not lying — it is naming a skill that
- * comes from a dependency. Counting them only for `manifest-skill-exists` is
- * the distinction: *can this instance serve it* and *is this entry a real
- * skill somewhere* are different questions, and collapsing them would have had
- * this criterion demand the deletion of three correct manifest entries the
- * first time it ran. That very nearly happened.
- */
-function remotePackageSkills(): Set<string> {
-  const out = new Set<string>();
-  const dir = join(root, "skills", "remote-packages");
-  if (!existsSync(dir)) return out;
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
-    try {
-      const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { wrapper?: { skills?: string[] } };
-      for (const s of p.wrapper?.skills ?? []) out.add(s);
-    } catch {
-      // A remote-package file that will not parse is validate-skills.ts's finding.
-    }
-  }
-  return out;
-}
-
 /** Manifest entries, with the package each came from, for the reverse check. */
 function manifestEntries(): { pkg: string; skill: string }[] {
   const out: { pkg: string; skill: string }[] = [];
@@ -903,16 +871,46 @@ function auditGraph(
       "skill-in-role-or-process": graph
         ? entry(unmodelled)
         : { result: "unknown" as KgResult, findings: [{ where: "—", detail: "no role graph declared." }] },
+      // A REMOTE DECLARATION IS NOT RESOLUTION — measured 2026-09-19, bean `nup0`.
+      //
+      // This criterion used to accept an entry that any file under
+      // `skills/remote-packages/` named, on the reading that "is this a real skill
+      // somewhere" is the manifest's question, distinct from "can this instance
+      // serve it". The distinction is right. What is missing is that nothing here
+      // implements the "somewhere": `shallow-clone` exists only as a Zod enum
+      // value, `src/tools/skill-fetch.ts` and `scripts/generate-registry.ts`
+      // contain no mention of `remote-packages/` at all, and the single consumer —
+      // `scripts/generate-docs.ts` — reads those files solely for Docker
+      // requirements, which is what `schemas/skill-package.ts` documents them as.
+      //
+      // So an entry resolvable only that way publishes a registry name that
+      // `skill_fetch` answers "not found" for, which is exactly the defect this
+      // criterion is `critical` about.
+      //
+      // The allowance existed to stop this criterion demanding the deletion of
+      // three `authoring-math` entries. Those three were deleted two hours later
+      // by a session that had not seen it, and — measured above — deleting them
+      // was RIGHT. The allowance was protecting the wrong answer.
+      //
+      // `remotePackageSkills` stays, to CLASSIFY the finding rather than excuse
+      // it. "Declared by a remote package nothing syncs" and "named nowhere at
+      // all" have different remedies, and a finding that does not say which is one
+      // somebody has to measure again.
       "manifest-skill-exists": (() => {
-        const remote = remotePackageSkills();
+        const remote = remotePackageSkills(root);
         return entry(
           manifestEntries()
-            .filter((e) => !skills.has(e.skill) && !remote.has(e.skill))
+            .filter((e) => !skills.has(e.skill))
             .map((e) => ({
               where: `${e.pkg}/${e.skill}`,
-              detail:
-                `skills/${e.pkg}/package-manifest.json names "${e.skill}", which resolves to no skill here ` +
-                `and is declared by no remote package.`,
+              detail: remote.has(e.skill)
+                ? `skills/${e.pkg}/package-manifest.json names "${e.skill}", which this instance holds no ` +
+                  `body for. A file under skills/remote-packages/ declares it, but nothing in this ` +
+                  `repository syncs or serves a remote package — neither skill_fetch nor the registry ` +
+                  `reads that directory — so the entry publishes a name that cannot be fetched. Implement ` +
+                  `the sync or drop the entry; the declaration alone is not enough.`
+                : `skills/${e.pkg}/package-manifest.json names "${e.skill}", which resolves to no skill here ` +
+                  `and is declared by no remote package.`,
             })),
         );
       })(),
