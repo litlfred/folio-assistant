@@ -53,6 +53,8 @@
  * has stopped being possible. So `status` lives on the todo, not here, and a
  * consumer that wants "everything outstanding" filters the todos rather than
  * reading a status field that memory would have to fake.
+ *
+ * @graphNode schema
  */
 
 import { z } from "zod";

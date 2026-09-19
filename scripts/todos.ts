@@ -39,7 +39,7 @@
  */
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, join, relative, resolve } from "node:path";
 
 import { EMPTY_NOTE_TAGS, type ArtefactRef, type KgRef, type NoteTags } from "../schemas/carried-note.js";
 import { TODO_SCHEMA_TAG, TodoNodeSchema, type TodoNode } from "../schemas/todo.js";
@@ -153,7 +153,21 @@ export function todoDirs(root: string = TODO_ROOT): string[] {
  * them, and reporting a clean run over it is worse than failing.
  */
 export function readTodos(root: string = TODO_ROOT): TodoNode[] {
-  const out: TodoNode[] = [];
+  return readTodoFiles(root).map((f) => f.todo);
+}
+
+/**
+ * The same, each paired with the file it came from.
+ *
+ * The path is what an **edit link** needs. `gen-docs-pages.ts` already emits
+ * `.fa-node-edit` per node — `✎ Edit` pointing at
+ * `github.com/<owner>/<repo>/edit/main/<file>` — and a todo is a content
+ * object like any other, so it gets the same affordance rather than an editor
+ * of its own. Deriving the path from the id would be a guess: `id` defaults to
+ * the basename but front matter may set it to anything.
+ */
+export function readTodoFiles(root: string = TODO_ROOT): Array<{ todo: TodoNode; path: string }> {
+  const out: Array<{ todo: TodoNode; path: string }> = [];
   for (const dir of todoDirs(root)) {
     if (!existsSync(dir)) continue;
     for (const f of readdirSync(dir).sort()) {
@@ -171,11 +185,17 @@ export function readTodos(root: string = TODO_ROOT): TodoNode[] {
         status: String(fm["status"] ?? ""),
         priority: String(fm["priority"] ?? ""),
         origin: String(fm["origin"] ?? ""),
+        // The block this todo is attached to. Page-QUALIFIED
+        // (`sec:<page>-<node>`), which is what makes it an address: the node
+        // id `what-is-not-built-yet` exists on two different pages, so a bare
+        // id would resolve to whichever one a consumer happened to look at
+        // first. Same lesson as `TaskRef` carrying its process.
+        targetLabel: typeof fm["targetLabel"] === "string" ? fm["targetLabel"] : undefined,
         tags: tagsFrom(fm),
         $schema: TODO_SCHEMA_TAG,
       });
       if (!parsed.success) throw new Error(`${path}: ${JSON.stringify(parsed.error.issues)}`);
-      out.push(parsed.data);
+      out.push({ todo: parsed.data, path: relative(ROOT, path) });
     }
   }
   return out;

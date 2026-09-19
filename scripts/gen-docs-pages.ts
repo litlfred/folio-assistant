@@ -41,6 +41,7 @@ import {
   type QaFamily,
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
+import { readTodoFiles } from "./todos.js";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -188,6 +189,17 @@ function readBlock(page: WebPage, nodeId: string, block: string): string {
 // browser code that fetches them, for no gain — the reader's path to the
 // evidence is not what was in the wrong place.
 const QA_ASSET_DIR = join(REPO_ROOT, "test", "results", "witnesses");
+
+/**
+ * The todo board's data, published as ONE file rather than one per node.
+ *
+ * QA verdicts are per-node and there are 134 of them, so a reader opening one
+ * icon should fetch one file. Todos are the opposite: the navbar badge needs a
+ * COUNT over all of them before anybody opens anything, and the board shows
+ * the whole set lined up. Per-todo files would mean N requests to render a
+ * number.
+ */
+const TODO_ASSET = join(OUT_DIR, "assets", "todos", "index.json");
 const emittedQa = new Set<string>();
 
 /** Every published witness JSON currently on disk, for orphan detection. */
@@ -303,6 +315,23 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
   return ` <span class="fa-qa-badges">${out.join("").trim()}</span>`;
 }
 
+/**
+ * The block's label, read from its own module rather than composed.
+ *
+ * `sec:<page-slug>-<node-id>` is the convention every block follows, and
+ * composing it here would work until one block did not. The label is the
+ * block's own declaration; this reads it and returns `undefined` when the
+ * block has none, so a node with no label emits no attribute rather than a
+ * guessed one.
+ */
+function blockLabel(page: WebPage, node: WebPageNode): string | undefined {
+  const slug = page.slug.replace(/\//g, "-");
+  const file = join(REPO_ROOT, "content", "docs", slug, `${node.id}.ts`);
+  if (!existsSync(file)) return undefined;
+  const m = /^\s*label:\s*"([^"]+)"/m.exec(readFileSync(file, "utf-8"));
+  return m ? m[1] : undefined;
+}
+
 function emitNode(page: WebPage, node: WebPageNode): string[] {
   const out: string[] = [];
   const level = node.level ?? 2;
@@ -311,7 +340,15 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
     out.push(`${"#".repeat(level)} ${node.title}`);
     // The id is PINNED here rather than left to `heading_anchors`, which would
     // derive it from the words above. See the header comment.
-    out.push(`{: #${node.id} }`);
+    //
+    // `data-fa-label` carries the block's PAGE-QUALIFIED label alongside it,
+    // which is what a todo's `targetLabel` addresses. The bare `id` cannot
+    // serve: `what-is-not-built-yet` is a node on both `agentic-harness` and
+    // `crdm-methodology`, so matching on it would attach a todo to whichever
+    // page the reader happened to open. Same lesson as `TaskRef` carrying its
+    // process — an id is unique only within its container.
+    const label = blockLabel(page, node);
+    out.push(label ? `{: #${node.id} data-fa-label="${label}" }` : `{: #${node.id} }`);
     out.push("");
   }
 
@@ -458,6 +495,145 @@ for (const slug of slugs) {
   mkdirSync(dirname(outPath), { recursive: true });
   emit(outPath, renderPage(page));
   console.log(`  ${check ? "·" : "✓"} ${slug}.md (${page.nodes.length} nodes)`);
+}
+
+/**
+ * Resolve a todo's knowledge-graph edges to things a reader can follow.
+ *
+ * Composed at BUILD time, like `editHref` and for the same reason: the client
+ * would otherwise need the repo's web URL and the bean store's layout, and
+ * both are this instance's business rather than shared client code's.
+ *
+ * **A reference that cannot be resolved is still rendered, without a link.**
+ * `folio-assistant-29ij` names a bean whether or not a file for it is on disk,
+ * and dropping it would make a dangling edge look like no edge at all — the
+ * distinction `resolveTodoTags` already reports as `dangling` against
+ * `not-checked`. A chip with no href says "this points somewhere I could not
+ * reach", which is a third state and not a failure.
+ */
+function todoRelations(tags: {
+  roles: string[];
+  processes: string[];
+  tasks: Array<{ process: string; task: string }>;
+  identities: Array<{ provider: string; id: string; displayName?: string }>;
+  references: Array<{ kind: string; id: string }>;
+  artefacts: Array<{ kind: string; id: string; repo?: string; provider?: string }>;
+}): Array<{ axis: string; label: string; href?: string }> {
+  const out: Array<{ axis: string; label: string; href?: string }> = [];
+
+  for (const r of tags.roles) out.push({ axis: "role", label: r });
+  for (const p of tags.processes) out.push({ axis: "process", label: p });
+  for (const t of tags.tasks) out.push({ axis: "task", label: `${t.process}▸${t.task}` });
+
+  for (const i of tags.identities) {
+    // Provider-qualified, because `litlfred` is not an identity and
+    // `github:litlfred` is. Only GitHub resolves to a profile; another
+    // provider's handle is shown as written rather than linked to a guess.
+    const label = i.displayName ?? `${i.provider}:${i.id}`;
+    out.push(
+      i.provider === "github"
+        ? { axis: "who", label, href: `https://github.com/${i.id}` }
+        : { axis: "who", label },
+    );
+  }
+
+  for (const r of tags.references) {
+    if (r.kind === "bean") {
+      const file = beanFile(r.id);
+      out.push(file ? { axis: "bean", label: r.id, href: `${REPO_WEB}/blob/main/${file}` }
+                    : { axis: "bean", label: r.id });
+      continue;
+    }
+    out.push({ axis: r.kind, label: r.id });
+  }
+
+  for (const a of tags.artefacts) {
+    // An absent `repo` means THIS repository -- the schema says so, because
+    // requiring it would make every local reference verbose enough that people
+    // go back to writing prose.
+    const base = a.repo ? `https://github.com/${a.repo}` : REPO_WEB;
+    if (a.kind === "pull-request") out.push({ axis: "PR", label: `#${a.id}`, href: `${base}/pull/${a.id}` });
+    else if (a.kind === "issue") out.push({ axis: "issue", label: `#${a.id}`, href: `${base}/issues/${a.id}` });
+    else if (a.kind === "commit") out.push({ axis: "commit", label: a.id.slice(0, 9), href: `${base}/commit/${a.id}` });
+    else out.push({ axis: a.kind, label: a.id });
+  }
+
+  return out;
+}
+
+/** The bean's file, or `undefined` when nothing on disk carries that id. */
+function beanFile(id: string): string | undefined {
+  const dir = join(REPO_ROOT, "beans", "defs");
+  if (!existsSync(dir)) return undefined;
+  const hit = readdirSync(dir).find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
+  return hit ? `beans/defs/${hit}` : undefined;
+}
+
+/**
+ * The BPMN call hierarchy — which process calls which as a subprocess.
+ *
+ * Published so the board can STACK todos the way the owner asked: "stacking
+ * should follow hierarchy of business subprocesses". A todo tagged
+ * `Process_Publication` sits under `Process_Lifecycle`, because that is what
+ * the diagrams say.
+ *
+ * Read by regex rather than through `loadProcessModel`, deliberately: that
+ * loader is async and pulls in `bpmn-moddle` for a page generator that
+ * otherwise touches no XML, and the two facts wanted here — a process's id and
+ * its `calledElement` refs — are attributes, not structure. The risk of a
+ * regex over XML is that it silently reads NOTHING and the hierarchy comes out
+ * flat, so `scripts/tests/todos.test.ts` pins the real edges: a parse that
+ * stops working fails the build rather than quietly flattening the board.
+ */
+function processHierarchy(): Record<string, string[]> {
+  const dir = join(REPO_ROOT, "skills", "workflows");
+  if (!existsSync(dir)) return {};
+  const out: Record<string, string[]> = {};
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith(".bpmn")) continue;
+    const xml = readFileSync(join(dir, f), "utf-8");
+    const id = /<bpmn:process id="([^"]+)"/.exec(xml)?.[1];
+    if (!id) continue;
+    const calls = new Set<string>();
+    for (const m of xml.matchAll(/calledElement="([^"]+)"/g)) calls.add(m[1]!);
+    out[id] = [...calls].sort();
+  }
+  return out;
+}
+
+// The todo board's data. Published here rather than by a separate script
+// because it is the same job `qaIcons` already does for verdicts: take
+// something the repo holds as files and make it fetchable by a static page.
+//
+// `editHref` is composed HERE, at build time, for the reason `.fa-node-edit`
+// is: the client would otherwise need the repo's web URL, and a literal in
+// `docs-ui.js` is a folio's own address inside shared client code.
+{
+  const items = readTodoFiles().map(({ todo, path }) => ({
+    id: todo.id,
+    summary: todo.summary,
+    comment: todo.comment,
+    status: todo.status,
+    priority: todo.priority,
+    origin: todo.origin,
+    createdAt: todo.createdAt,
+    targetLabel: todo.targetLabel,
+    tags: todo.tags,
+    // The edges, already resolved. A sticky that showed only status and
+    // priority would waste a six-axis relationship model on two enums.
+    relations: todoRelations(todo.tags),
+    // The SAME affordance every node already gets, pointed at this todo's own
+    // file. A sticky is a content object; it does not need an editor of its own.
+    editHref: `${EDIT_BASE}/${path}`,
+  }));
+  mkdirSync(dirname(TODO_ASSET), { recursive: true });
+  const processes = processHierarchy();
+  emit(
+    TODO_ASSET,
+    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }) + "\n",
+    "qa",
+  );
+  console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
 }
 
 // A subject that loses its sidecar — or a page that loses a node — must lose its

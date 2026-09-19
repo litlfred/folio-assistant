@@ -6,6 +6,7 @@ status: blocked
 priority: medium
 origin: agent
 createdAt: 2026-09-19
+targetLabel: sec:publication-workflow-agents-and-system-actors
 identities:
   - github:litlfred
 references:
