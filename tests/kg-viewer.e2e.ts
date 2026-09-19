@@ -35,6 +35,16 @@ for (const [file, script] of [
   if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
 }
 
+/**
+ * The page under test, named once.
+ *
+ * It was inlined at every `page.goto`. When the layout moved from
+ * `_kg/index.html` to `_kg/<stub>/index.html`, two tests added on a branch kept
+ * the old path and went green locally against a leftover `_kg/` — a constant
+ * would have moved all of them together.
+ */
+const PAGE = "/_kg/folio-assistant/index.html";
+
 const KG = JSON.parse(readFileSync("_kg/folio-assistant.jsonld", "utf-8")) as {
   "@graph": Array<Record<string, unknown>>;
   counts: Record<string, number>;
@@ -44,7 +54,7 @@ const KG = JSON.parse(readFileSync("_kg/folio-assistant.jsonld", "utf-8")) as {
 
 test.describe("kg viewer", () => {
   test("loads the sibling document and reports the real node count", async ({ page }) => {
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     // The count comes from the document, so this fails if the page silently
     // fetched nothing — which is the failure mode that matters most.
     await expect(page.locator("#meta")).toContainText(`${KG["@graph"].length} nodes`);
@@ -52,7 +62,7 @@ test.describe("kg viewer", () => {
   });
 
   test("every type in the export is offered as a facet, with its count", async ({ page }) => {
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     for (const [type, n] of Object.entries(KG.counts)) {
       // Name THEN count — the facet button's DOM order, which is also the
       // order a screen reader reads ("ProcessNode 374", not "374 ProcessNode").
@@ -64,7 +74,7 @@ test.describe("kg viewer", () => {
   });
 
   test("filtering by a facet narrows the list to that kind", async ({ page }) => {
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     await page.locator(".facet", { hasText: /^Tool\d+$/ }).click();
     const kinds = await page.locator("#list li button .kind").allTextContents();
     expect(kinds.length).toBeGreaterThan(0);
@@ -72,7 +82,7 @@ test.describe("kg viewer", () => {
   });
 
   test("selecting a node shows its properties and its IRI", async ({ page }) => {
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     await page.locator("#q").fill("beans-cli");
     await page.locator("#list li button").first().click();
     await expect(page.locator(".detail h3")).toContainText("beans CLI");
@@ -81,7 +91,7 @@ test.describe("kg viewer", () => {
   });
 
   test("an edge is a link you can follow, and following it changes the panel", async ({ page }) => {
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     await page.locator("#q").fill("beans-cli");
     await page.locator("#list li button").first().click();
     const before = await page.locator(".detail h3").textContent();
@@ -92,7 +102,7 @@ test.describe("kg viewer", () => {
   });
 
   test("back-links are computed, so a node says what points AT it", async ({ page }) => {
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     await page.locator("#q").fill("todo-manager");
     await page.locator("#list li button").first().click();
     // Several Tools satisfy this skill; none of them is stored on the skill.
@@ -104,7 +114,7 @@ test.describe("kg viewer", () => {
     // property names a JSON-LD processor drops. Displaying them unmarked would
     // hide exactly what the first real consumer is for.
     expect(KG.undeclaredTerms.length).toBeGreaterThan(0);
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     await page.locator(".facet", { hasText: /^ProcessNode\d+$/ }).click();
     await page.locator("#list li button").first().click();
     await expect(page.locator(".detail .note")).toContainText("not in the");
@@ -112,7 +122,7 @@ test.describe("kg viewer", () => {
   });
 
   test("a one-hop neighbourhood is drawn, and is not the whole graph", async ({ page }) => {
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     await page.locator("#q").fill("beans-cli");
     await page.locator("#list li button").first().click();
     const circles = page.locator(".detail svg circle");
@@ -129,18 +139,30 @@ test.describe("kg viewer", () => {
     // or STAGING/<slug>/. Composing <base>/kg/<stub>.jsonld from the
     // declaration would be a second answer to a question already answered,
     // and the one that breaks on a preview.
-    await page.goto("/_kg/index.html");
+    //
+    // The path is `../folio-assistant.jsonld`, not a bare sibling name: the
+    // viewer lives one level down at `_kg/<stub>/index.html` and the graph sits
+    // in the parent. That layout changed under this branch, and these two tests
+    // kept passing locally against a STALE `_kg/` while failing in CI — which
+    // is the same class of defect as the one this PR fixes in `qa-panel`, so it
+    // is worth saying out loud: `_kg/` is gitignored build output, and a suite
+    // run against a leftover copy of it is not evidence about what ships.
+    await page.goto(PAGE);
     const src = page.locator("#meta a").first();
-    await expect(src).toHaveAttribute("href", "folio-assistant.jsonld");
+    await expect(src).toHaveAttribute("href", "../folio-assistant.jsonld");
     // A name that says what it gets you: "JSON-LD" alone names a syntax.
     await expect(src).toHaveAttribute("aria-label", /Download this graph as JSON-LD/);
-    // And it actually resolves.
-    const res = await page.request.get("/_kg/" + (await src.getAttribute("href")));
+    // And it actually resolves — from the PAGE's own directory, the way a
+    // browser would follow it, rather than from a path this test composes.
+    const res = await page.request.get(new URL(
+      String(await src.getAttribute("href")),
+      new URL(PAGE, page.url()),
+    ).toString());
     expect(res.status()).toBe(200);
   });
 
   test("the source commit is linked when the export knew it", async ({ page }) => {
-    await page.goto("/_kg/index.html");
+    await page.goto(PAGE);
     const commit = KG.sourceCommit;
     if (commit === undefined) {
       // Third state: a tarball or export-stripped checkout produces a complete
@@ -155,7 +177,7 @@ test.describe("kg viewer", () => {
     // Three states, not two. An empty index and a failed fetch look identical
     // on screen and mean opposite things.
     await page.route("**/folio-assistant.jsonld", (r) => r.fulfill({ status: 404, body: "" }));
-    await page.goto("/_kg/folio-assistant/index.html");
+    await page.goto(PAGE);
     await expect(page.locator("#meta")).toContainText("could not load");
     await expect(page.locator(".detail")).toContainText("not an empty graph");
   });
