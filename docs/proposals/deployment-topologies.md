@@ -205,10 +205,35 @@ not tried to.
 
 I have therefore left it **out** of the incompatibility table rather than
 encode a rule I cannot check, and flagged it here instead. If the answer is
-"assume unavailable", it is one row to add. Encoding it wrongly would make the
-model refuse a configuration that works, which is worse than the model staying
-silent — the same reason `serving-renderings` reports "could not enforce" as its
-own state rather than guessing.
+"assume unavailable", it is one row to add.
+
+### The principle that decides it — do not encode a rule against a working setup
+
+Stated by the owner, 2026-09-19, and it governs every row of the table above:
+
+> **"dont encode rules against a working setup."**
+
+A constraint is a **refusal**, and the two ways it can be wrong are not
+symmetric. A *missing* constraint lets a bad topology through, and it fails
+visibly at the point of use with the real error. A *wrong* constraint refuses a
+good topology at the gate, with a confident message asserting the thing is
+impossible — and nobody investigates a settled question. The same asymmetry is
+why `serving-renderings` reports "could not enforce" as its own state, and why
+`ci-health` never renders "could not check" as green.
+
+So the bar for a row in §3 is **evidence, not confidence**:
+
+| encode it | do not encode it |
+|---|---|
+| an **entailment of the mechanism** — Pages has no per-file media-type configuration; air-gapped compute cannot reach hosted inference | **someone said so**, however authoritative |
+| **measured here**, with the command and the date | true of **one account, one plan, one version** |
+
+Every one of the five pairs in §3 is an entailment. The private-repo row is a
+report, which is why it is prose and not a row. The test is never how certain
+the claim feels — it is whether a counter-example is conceivable.
+
+Recorded for future sessions as the memory node
+`do-not-encode-a-rule-against-a-working-setup`.
 
 ---
 

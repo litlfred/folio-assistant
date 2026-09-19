@@ -42,6 +42,7 @@ import {
   insertAdjudication,
 } from "./qa-utils";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
+import { blockQaPath, existingBlockQaPath } from "./qa-paths";
 import type {
   BlockQaReport,
   QaCriterionEntry,
@@ -171,7 +172,12 @@ function run(): void {
     const tsPath = rootAbs + ".ts";
     const mdPath = rootAbs + ".md";
     const leanPath = rootAbs + ".lean";
-    const qaPath = rootAbs + ".qa.json";
+    // `qaPath` is the WRITE target — this tool is a writer per the
+    // qa-paths.ts contract and never puts a verdict beside its block; loading
+    // just below falls back to the legacy sibling so a not-yet-migrated
+    // folio's history is read rather than overwritten with an empty report.
+    const repo = repoRoot();
+    const qaPath = blockQaPath(repo, rootAbs);
     if (!existsSync(tsPath)) {
       console.error(`no .ts manifest at ${tsPath}`);
       skipped++;
@@ -190,7 +196,9 @@ function run(): void {
       lean: existsSync(leanPath) ? leanPath : undefined,
     });
 
-    let report: BlockQaReport | undefined = loadQaReport(qaPath);
+    // READ: prefer the results-tree verdict, fall back to the legacy sidecar
+    // (see the comment on `qaPath` above).
+    let report: BlockQaReport | undefined = loadQaReport(existingBlockQaPath(repo, rootAbs) ?? qaPath);
     if (!report) {
       // Bootstrap a fresh sidecar — agent can write the first
       // entry even if qa-sweep hasn't run yet. Reuses the shared

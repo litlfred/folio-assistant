@@ -246,3 +246,39 @@ describe("archived entries are retained but injected nowhere", () => {
     expect(memoryForAgent([untagged, archived], "anyone").map((n) => n.id)).toEqual(["a"]);
   });
 });
+
+describe("the budget check sees a TRUNCATED entry, not just a late heading", () => {
+  // Bean `g1ph`. Heading position alone let a real truncation through:
+  // after evidence moved into detail files the region ended at line 209, so
+  // the last entry's body ran nine lines past the cut while its heading sat
+  // comfortably inside — and the check returned nothing. A truncated entry is
+  // worse than a dropped one, because it still looks complete to the agent.
+  const filler = (n: number): string => "x\n".repeat(n);
+
+  test("a region ending past the budget names the last entry", () => {
+    const f = `## TRAP — a thing\n${filler(250)}${END}\n`;
+    const past = entriesPastBudget(f);
+    expect(past).toHaveLength(1);
+    expect(past[0]).toContain("a thing");
+    expect(past[0]).toContain("truncated");
+  });
+
+  test("a region ending inside the budget is silent", () => {
+    expect(entriesPastBudget(`## TRAP — a thing\n${filler(10)}${END}\n`)).toEqual([]);
+  });
+
+  test("a heading past the budget still wins — it is the more specific report", () => {
+    const f = `${filler(210)}## TRAP — late one\n${END}\n`;
+    expect(entriesPastBudget(f)[0]).toContain("late one");
+    expect(entriesPastBudget(f)[0]).not.toContain("truncated");
+  });
+
+  test("this repo's own generated files are whole", () => {
+    // The live assertion, not a fixture: every agent's region must END inside
+    // the budget, which is what the entries-past-heading check never asked.
+    for (const r of syncAll(false)) {
+      if (r.state === "missing" || r.state === "no-markers") continue;
+      expect(r.overflowEntries).toEqual([]);
+    }
+  });
+});

@@ -22,10 +22,7 @@ on all **eight** shared kinds. When adding a content type, ask whether it
 needs different **code** (adapter) or only different **rules** (profile plus
 a subclass).
 
-`PaperContentAdapter` extends `DocumentContentAdapter`; `MATH_BLOCK_KINDS` is
-written out in `schemas/block-kinds.ts` and `DOCUMENT_BLOCK_KINDS` is its
-**derived** complement, so a kind added to `BLOCK_KINDS` cannot go
-unclassified. Keep that derivation — do not hand-maintain both lists.
+More: `detail/adapter-vs-profile.md`
 
 ## STABLE — the document render path takes no TeX
 

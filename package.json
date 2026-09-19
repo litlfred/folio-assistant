@@ -46,6 +46,7 @@
     "check:ci-health": "bun run scripts/check-ci-health.ts",
     "check:corpus-gate": "bun run scripts/check-corpus-gate.ts",
     "check:harness-dirs": "bun run scripts/check-harness-dirs.ts",
+    "check:orphan-verdicts": "bun run content/pipeline/orphan-verdict-sweep.ts",
     "check:partition": "bun run scripts/repo-partition.ts",
     "check:partition:edges": "bun run scripts/repo-partition.ts --edges",
     "check:schema-nodes": "bun run scripts/check-schema-nodes.ts",

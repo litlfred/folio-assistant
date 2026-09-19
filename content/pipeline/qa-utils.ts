@@ -36,6 +36,7 @@ import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
 import { loadBlockModuleSync, type BlockLoadFailure } from "./block-module";
+import { existingBlockQaPath } from "./qa-paths";
 
 // ── Hashing ─────────────────────────────────────────────────────
 
@@ -1048,7 +1049,6 @@ export function* walkBlocks(
         const root = full.slice(0, -3); // strip ".ts"
         const md = root + ".md";
         const lean = root + ".lean";
-        const qa = root + ".qa.json";
         let leanResolved: string | undefined = existsSync(lean) ? lean : undefined;
         if (!leanResolved) {
           // Parse the .ts source for a lean.ref URI and try Lake-tree
@@ -1066,7 +1066,15 @@ export function* walkBlocks(
           ts: full,
           md: mdResolved,
           lean: leanResolved,
-          qa: existsSync(qa) ? qa : undefined,
+          // Prefer the results-tree verdict, falling back to the legacy
+          // sibling (a downstream folio that has not migrated its verdicts
+          // yet) — see qa-paths.ts. `undefined` here means genuinely
+          // unaudited, never "looked in the wrong place": every consumer of
+          // `BlockPaths.qa` (e.g. qa-agent-drain-queue, semantic-cone) already
+          // treats an absent path as "no report", so this preserves that
+          // absent/present distinction exactly while widening where "present"
+          // is looked for.
+          qa: existingBlockQaPath(REPO_ROOT, root),
           companions: resolveCompanions(root, {
             ts: full,
             md: mdResolved,
@@ -1252,6 +1260,19 @@ export function loadQaReport(path: string): BlockQaReport | undefined {
 }
 
 export function saveQaReport(path: string, report: BlockQaReport): void {
+  // The directory may not exist, and that is new since bean `2634`.
+  //
+  // A verdict used to be the block's own sibling, so its directory was the
+  // block's directory and existed by construction — no writer ever had to
+  // think about it. The results tree mirrors that directory instead, and a
+  // chapter that has never had a verdict written under the new convention has
+  // no mirrored directory yet. Without this, the FIRST write for every such
+  // block throws ENOENT.
+  //
+  // Centralised here rather than at each call site: four writers reach the
+  // verdict through this function, and a rule that has to be remembered
+  // separately by each of them is one that will be forgotten by the fifth.
+  mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, JSON.stringify(report, null, 2) + "\n");
 }
 
