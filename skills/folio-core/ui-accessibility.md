@@ -87,11 +87,11 @@ on the region, and a count announced when a filter changes the list.
 
 ## How to check it
 
-`tests/a11y.e2e.ts` is the worked example and the gate. It runs in CI as the
+`test/a11y.e2e.ts` is the worked example and the gate. It runs in CI as the
 `End-to-end + accessibility (hard)` job.
 
 ```sh
-bunx playwright test tests/a11y.e2e.ts
+bunx playwright test test/a11y.e2e.ts
 ```
 
 Two halves, deliberately:

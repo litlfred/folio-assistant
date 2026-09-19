@@ -3,7 +3,7 @@
 # `ci-health.yml` watches whether the WORKFLOWS pass. This watches the
 # REPOSITORY: how big it has grown, how much of the publish branch the review
 # previews occupy, and whether the work plan and the todo store have drifted.
-# Registry and thresholds: `tests/health/checks.ts`. Results shape:
+# Registry and thresholds: `test/health/checks.ts`. Results shape:
 # `schemas/health-report.ts`. Declared in `harness.json` as the `health` graph.
 #
 # ## Why daily, where `ci-health.yml` is deliberately weekly
@@ -93,7 +93,7 @@ jobs:
         id: check
         run: |
           set +e
-          bun run tests/health/run.ts --out "$RUNNER_TEMP/health.md"
+          bun run test/health/run.ts --out "$RUNNER_TEMP/health.md"
           status=$?
           set -e
           echo "status=$status" >> "$GITHUB_OUTPUT"
@@ -125,7 +125,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: repository-health-report
-          path: tests/health/results/repository.health-report.json
+          path: test/health/results/repository.health-report.json
           if-no-files-found: warn
           retention-days: 90
 

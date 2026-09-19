@@ -22,7 +22,7 @@ sorted nothing would pass.
 
 <!-- detail -->
 
-Measured 2026-09-19 (bean `tywj`): `tests/qa-panel.e2e.ts` pinned the first row
+Measured 2026-09-19 (bean `tywj`): `test/qa-panel.e2e.ts` pinned the first row
 to `voice-status-leak`/`fail`/`critical`, the fold count to `47` and the checker
 hash to `5af6856733f3`. An adjudication in `c8fbad385` turned that criterion
 `pass`; four assertions went red for reasons unrelated to the panel.

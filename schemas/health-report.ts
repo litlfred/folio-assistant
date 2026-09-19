@@ -1,5 +1,5 @@
 /**
- * Repository health reports — what the daily sweep under `tests/health/` wrote.
+ * Repository health reports — what the daily sweep under `test/health/` wrote.
  *
  * This is the **fourth** committed QA-shaped artefact family in this
  * repository, after the block sweep's `*.qa.json`, the script sweep's
@@ -51,14 +51,24 @@ export const HEALTH_REPORT_SCHEMA = "health-report/v1";
 /**
  * Where reports live, relative to the instance root.
  *
- * `tests/health/results/`, at the owner's instruction (2026-09-19: "health
- * checks under tests/health with results tests/health/results"). Note that
- * this repository has BOTH `test/` (the declared `qa` graph) and `tests/`
- * (Playwright e2e specs) — see `skills/folio-core/directory-conventions.md`
- * §"`test/` and `tests/`", which flags the inconsistency rather than resolving
- * it as a side effect of adding this family.
+ * `test/health/results/`. It was `tests/health/results/` when this family
+ * landed, at the owner's instruction (2026-09-19: "health checks under
+ * tests/health with results tests/health/results"), and this repository then
+ * had BOTH `test/` (the declared `qa` graph) and `tests/` (Playwright e2e
+ * specs). The owner settled that on `test/` the same day — bean `auap`, see
+ * `skills/folio-core/directory-conventions.md` §"`test/` is the one test
+ * tree".
+ *
+ * **This constant is the reason the move is safe, and it was nearly the
+ * reason it was not.** The path is composed here from three `join` segments,
+ * so a corpus-wide grep for the string `tests/health/results` does not find
+ * it — a repoint driven by grep alone would have left this reading `tests`
+ * while every consumer moved, and {@link healthReportPath} would then have
+ * written and read a report under a directory no declaration names. That is
+ * the `dh4f` failure exactly: nothing errors, the sweep reports a clean run,
+ * and the declared directory holds nothing.
  */
-export const HEALTH_RESULTS_DIR = join("tests", "health", "results");
+export const HEALTH_RESULTS_DIR = join("test", "health", "results");
 
 /** The one report this sweep writes, and the one every reader opens. */
 export const HEALTH_REPORT_FILENAME = "repository.health-report.json";

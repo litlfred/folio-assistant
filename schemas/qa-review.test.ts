@@ -44,7 +44,7 @@ function note(over: Partial<AuditNote> = {}): AuditNote {
     id: "n-1",
     author: { kind: "human", id: "litlfred" },
     rationale: "The declaration moved in the Lean refactor; the ref is right and the checker's index is stale.",
-    cites: [{ kind: "witness", ref: "tests/results/lean-build.witness.json" }],
+    cites: [{ kind: "witness", ref: "test/results/lean-build.witness.json" }],
     written_at: NOW,
     ...over,
   };

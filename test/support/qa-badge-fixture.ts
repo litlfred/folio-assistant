@@ -2,7 +2,7 @@
  * Derive a badge e2e fixture from the GENERATED page, without inheriting the
  * corpus's verdict.
  *
- * @module tests/support/qa-badge-fixture
+ * @module test/support/qa-badge-fixture
  *
  * ## Two rules, pulling in opposite directions
  *
@@ -11,7 +11,7 @@
  * `gen-docs-pages.ts` really emits — which is how a badge ships broken with a
  * green suite. So the markup here is lifted verbatim out of `docs/<page>.md`.
  *
- * **A verdict is not.** `tests/support/qa-fixture.ts` already records what
+ * **A verdict is not.** `test/support/qa-fixture.ts` already records what
  * happens otherwise: `qa-panel.e2e.ts` read a sidecar straight off disk, #302
  * correctly adjudicated the failure it asserted on, and `main` went red
  * because the CONTENT got better. That is bean `d2kp`'s own subject one level

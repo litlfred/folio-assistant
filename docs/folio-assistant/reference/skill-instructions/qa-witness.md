@@ -100,7 +100,7 @@ fold is what keeps the two rows that need reading at the top.
 
 The trap this family has already paid for, twice in one day.
 
-`tests/qa-panel.e2e.ts` read a real sidecar and asserted the panel put its one
+`test/qa-panel.e2e.ts` read a real sidecar and asserted the panel put its one
 `fail` first. Then the finding was correctly adjudicated to `pass`, the block
 went to zero failures, and a test of the PANEL went red because the CONTENT got
 better. **A verdict is not a fixture.** The corpus is supposed to reach zero

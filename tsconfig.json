@@ -49,13 +49,20 @@
   // Every tree is now compiled. A green `bun run typecheck` finally means what
   // it says.
   //
-  // `tests/health/**` is in scope, and `tests/**` deliberately is not. The
-  // health sweep is ordinary program code that ships behind a workflow, so a
-  // green `typecheck` has to mean something about it. The rest of `tests/` is
-  // Playwright specs, matched by `**/*.e2e.ts` and compiled by Playwright's
-  // own pipeline; pulling them in here would put a second typechecker over
-  // files that already have one, and a disagreement between the two is a
-  // failure with no owner.
-  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts", "adapters/**/*.ts", "tests/health/**/*.ts", "types/**/*.d.ts"],
+  // `test/health/**` is in scope, and the rest of `test/**` deliberately is
+  // not. The health sweep is ordinary program code that ships behind a
+  // workflow, so a green `typecheck` has to mean something about it. The rest
+  // of `test/` is `test/results/` — 500-odd committed JSON verdicts, not
+  // program code — plus the Playwright `*.e2e.ts` specs and their `support/`
+  // fixtures, matched by `**/*.e2e.ts` and compiled by Playwright's own
+  // pipeline; pulling those in here would put a second typechecker over files
+  // that already have one, and a disagreement between the two is a failure
+  // with no owner.
+  //
+  // This said `tests/health/**` until 2026-09-19 (bean `auap`), when the two
+  // test trees were consolidated onto `test/`. The narrow glob is what keeps
+  // the distinction intact across that move: `test/**` would have quietly
+  // widened the program to the e2e specs.
+  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts", "adapters/**/*.ts", "test/health/**/*.ts", "types/**/*.d.ts"],
   "exclude": ["dist", "node_modules"]
 }

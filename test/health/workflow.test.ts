@@ -14,7 +14,7 @@
  * report exactly that. It is a one-word edit away at any time and nothing else
  * in the repository would notice.
  *
- * @module tests/health/workflow.test
+ * @module test/health/workflow.test
  */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -67,7 +67,7 @@ describe("the trigger", () => {
     const pkg = JSON.parse(readFileSync(resolve(ROOT, "package.json"), "utf-8")) as {
       scripts: Record<string, string>;
     };
-    expect(pkg.scripts.health).toContain("tests/health/run.ts");
+    expect(pkg.scripts.health).toContain("test/health/run.ts");
     expect(pkg.scripts["health:list"]).toContain("--list");
   });
 

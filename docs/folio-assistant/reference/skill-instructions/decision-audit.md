@@ -53,10 +53,10 @@ Three sentences is usually enough. Say what you decided, what you decided it
 > question the criterion was asking. Overruled; the criterion's index is the
 > thing to fix, tracked separately.
 >
-> cites: `tests/results/lean-build.witness.json`; `content/ch3/thm-transfer-bound.qa.json` @ `lean-ref-resolves`
+> cites: `test/results/lean-build.witness.json`; `content/ch3/thm-transfer-bound.qa.json` @ `lean-ref-resolves`
 
 **A rationale with no citation is an assertion**, so `cites` may not be empty.
-Cite the node, not a description of it: a witness under `tests/results/`,
+Cite the node, not a description of it: a witness under `test/results/`,
 another finding, a `.qa.json` / `.kg-qa.json` / `.script-qa.json` sidecar, a
 block label, a file range, a bib key, a workflow instance under
 `beans/workflows/`.

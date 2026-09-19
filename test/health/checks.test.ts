@@ -12,7 +12,7 @@
  * could-not-determine are asserted separately, because collapsing them is the
  * defect the whole family exists to refuse.
  *
- * @module tests/health/checks.test
+ * @module test/health/checks.test
  */
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -380,7 +380,7 @@ describe("the registry and the report", () => {
   it("the schema refuses a report that claims ok while holding findings", () => {
     const base = {
       $schema: "health-report/v1",
-      producer: { script: "tests/health/run.ts", script_hash: "deadbeefcafe" },
+      producer: { script: "test/health/run.ts", script_hash: "deadbeefcafe" },
       subject: { kind: "repository", id: "litlfred/folio-assistant" },
       updated_at: "2026-09-19T12:00:00Z",
       verdict: "clean",
@@ -402,7 +402,7 @@ describe("the registry and the report", () => {
     expect(() =>
       HealthReportSchema.parse({
         $schema: "health-report/v1",
-        producer: { script: "tests/health/run.ts", script_hash: "deadbeefcafe" },
+        producer: { script: "test/health/run.ts", script_hash: "deadbeefcafe" },
         subject: { kind: "repository", id: "r" },
         updated_at: "2026-09-19T12:00:00Z",
         verdict: "unknown",
@@ -415,7 +415,7 @@ describe("the registry and the report", () => {
     expect(() =>
       HealthReportSchema.parse({
         $schema: "health-report/v1",
-        producer: { script: "tests/health/run.ts", script_hash: "deadbeefcafe" },
+        producer: { script: "test/health/run.ts", script_hash: "deadbeefcafe" },
         subject: { kind: "repository", id: "r" },
         updated_at: "2026-09-19T12:00:00Z",
         verdict: "clean",
@@ -437,7 +437,7 @@ describe("the registry and the report", () => {
     expect(() =>
       HealthReportSchema.parse({
         $schema: "health-report/v1",
-        producer: { script: "tests/health/run.ts", script_hash: "deadbeefcafe" },
+        producer: { script: "test/health/run.ts", script_hash: "deadbeefcafe" },
         subject: { kind: "repository", id: "r" },
         updated_at: "2026-09-19T12:00:00Z",
         verdict: "clean",

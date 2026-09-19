@@ -21,7 +21,7 @@ import os
 import sys
 
 # `scripts/`, which is this file's PARENT — the idiom in the sibling tests here
-# (`HERE` then `dirname(HERE)`). Copying `tests/test_pypdf_compat.py`'s version
+# (`HERE` then `dirname(HERE)`). Copying `test/test_pypdf_compat.py`'s version
 # instead pointed at `scripts/scripts` and failed on the first run.
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS = os.path.dirname(HERE)

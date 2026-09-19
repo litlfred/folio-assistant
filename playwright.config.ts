@@ -13,11 +13,18 @@ if (chromium.kind === 'fallback' || chromium.kind === 'unknown') {
 }
 
 export default defineConfig({
-  testDir: './tests',
+  // `./test`, not `./tests`. This repository had both until 2026-09-19 (bean
+  // `auap`): `test/` because a declaration in `harness.json` pointed at
+  // `test/results/`, `tests/` because this one line pointed here. An id in a
+  // declaration is the expensive thing to move, a `testDir` is one line, so
+  // the specs came to the declaration rather than the other way round.
+  testDir: './test',
   // `*.e2e.ts`, not `*.spec.ts`: `bun test` collects `*.spec.*` anywhere in
   // the tree and chokes on Playwright's `test.describe()`. Keeping the two
   // runners on separate conventions is what stops an e2e spec reddening the
-  // unit-test gate.
+  // unit-test gate. It is also what makes sharing a directory with
+  // `test/results/` (504 committed JSON verdicts) and `test/health/*.test.ts`
+  // safe: Playwright collects only `**/*.e2e.ts` beneath `testDir`.
   testMatch: ['**/*.e2e.ts'],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,

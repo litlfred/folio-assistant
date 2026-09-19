@@ -36,7 +36,7 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  * The verdicts are NOT the corpus's: `qa-badge-fixture.ts` sets them, and
  * throws by name if a node the spec addresses has left the page. A test whose
  * fixture is a live corpus verdict is the very defect this PR is about, and
- * `tests/support/qa-fixture.ts` already records `main` going red once because
+ * `test/support/qa-fixture.ts` already records `main` going red once because
  * a content fix was correct.
  */
 
@@ -97,7 +97,7 @@ const ALL = [LOUD, EMPTY, NO_ROW, KG];
  * `Accessibility.getFullAXTree` is what a screen reader sees. Matched on a
  * SUBSTRING of the expected name rather than on a node index, because index
  * agreeing with identity is a coincidence of the current page — the same
- * lesson `tests/support/qa-fixture.ts` records about marking `criteria[0]`.
+ * lesson `test/support/qa-fixture.ts` records about marking `criteria[0]`.
  *
  * Returns `undefined` when no node carries it, which the caller asserts
  * against a real string. A helper that returned `""` for "not found" would
