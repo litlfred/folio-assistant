@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:57:53Z
-updated_at: 2026-09-19T11:48:27Z
+updated_at: 2026-09-19T11:52:42Z
 ---
 
 ## The ask, owner 2026-09-19 (verbatim)
@@ -88,9 +88,12 @@ chat that is gone.
       then.
 - [x] a drop never implicitly duplicates, proved by a test that would fail if
       it did — `duplicateNote` cannot be called without naming the copy
-- [ ] `process-state` names the transfer/move skills in its recovery path
-- [ ] a worked example of a bean read back as an audit trail of one off-track
-      recovery
+- [x] `process-state` covers artefact movement in its recovery path — as a
+      new section rather than a mention, because the gap was bigger than the
+      item assumed: recovery reconstructed WHERE you were and never WHAT you
+      re-anchored
+- [x] a worked example of a bean read back as an audit trail — this bean's
+      own 2026-09-19 premise-correction, in `process-state.md`
 
 ## Relation to `iurf`
 
@@ -119,3 +122,6 @@ _2026-09-19_ — OWNER RULE, verbatim: "beans no anchor. no change bean schema. 
 
 
 _2026-09-19_ — "todo-graph.ts's prose claim" RESOLVED, and the answer is a third option this bean did not offer. The Done-when said "either true or removed". It is now ACCURATE instead, which is better than both. What I found: BOTH halves of the claim are available — the block anchor (targetLabel, plus the new NoteAnchorSchema) and identities[] are declared on CarriedNoteSchema, which TodoNodeSchema extends. So the claim is not describing something unimplemented. But there is exactly ONE TodoNodeSchema, and the kind is a property of the DIRECTORY a note lives in, not of the note. Nothing requires a `feedback` todo to name a block or a submitter, and nothing stops an `items` todo from doing both. So the sentence described a FILING CONVENTION in the voice of a CONSTRAINT. That is why it misled twice in opposite directions: first as evidence the relation was enforced, then as evidence it did not exist at all (this bean's opening premise, already corrected above — I grepped schemas/todo.ts and not the base it extends). The comment now states the convention as a convention, names where the two fields actually live, and says that keying a refinement on kind is what enforcement WOULD look like and does not exist today. Verified: eslint clean, tsc clean, schemas/todo-graph.test.ts 11 pass 0 fail. No behaviour changed — this is a comment that stops lying.
+
+
+_2026-09-19_ — FINAL TWO ITEMS DONE, and the load-bearing finding is one neither item anticipated: **A MOVE IS NOT SELF-DOCUMENTING.** moveNote returns the note with its new anchor and nothing about the old one, so a sticky re-anchored during an off-process detour leaves NO TRACE IN THE ARTEFACT — no field to read back, no diff separating "moved deliberately" from "moved by an agent that had lost the thread", and, because a move keeps the id, nothing that even looks unusual. The only possible record is what was written to a bean at the time. That is what makes the owner's beans-no-anchor rule load-bearing rather than merely tidy: a bean is not a thing pinned to a block, it is the record that a pinning CHANGED. I checked my own falsification condition from the opening brief and it half-fired: the recovery path IS about process position only (branch name, claimed bean, opening brief, all pinning WHERE you were), so I nearly reported "wrong home". It is the right home — step 2 is explicitly "reconstruct from context", and a move log is that context — but the gap was a SECTION rather than the mention the Done-when item asked for. Three recovery instructions added: name every note you re-anchored with its anchor before and after, read off the bean trail rather than the notes which no longer know; if the trail is silent and you moved things, SAY SO, because a gap is a finding while "everything is fine" is unrecoverable; and do not move anything back on your own judgement, since re-anchoring to undo is another unlogged move made to cover one. CONSIDERED AND REJECTED, recorded in the skill: a `movedFrom` field on the note would make a move self-documenting and remove the need for all of this. Not taken — the history would then live in the artefact being moved, so a note deleted or handled by a tool that does not maintain the field takes its own audit trail with it. A bean is a SEPARATE record, which is what an audit trail has to be. WORKED EXAMPLE: this bean's own premise correction, chosen because what makes it usable is that the WRONG CLAIM WAS LEFT IN PLACE with the correction beside it — read back, it shows premise, disproof and re-scoped work in order, so a resuming agent sees the framing was abandoned and why. A bean tidied to show only the correct conclusion would read as though the work had always been aimed there, which is the failure bean-coordination names when it says unwanted work is scrapped WITH ITS REASONS. Verified: kg:audit sidecar regenerated, process-state passes all three criteria (skill-is-brief, skill-not-a-document, skill-no-repeated-heading) at 178 lines; kg:audit:check rc=0; check:agents-xref rc=0; check:voices clean; skill-instruction docs mirror regenerated; full suite 2502 pass 0 fail.
