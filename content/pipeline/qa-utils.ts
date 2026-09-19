@@ -1252,6 +1252,19 @@ export function loadQaReport(path: string): BlockQaReport | undefined {
 }
 
 export function saveQaReport(path: string, report: BlockQaReport): void {
+  // The directory may not exist, and that is new since bean `2634`.
+  //
+  // A verdict used to be the block's own sibling, so its directory was the
+  // block's directory and existed by construction — no writer ever had to
+  // think about it. The results tree mirrors that directory instead, and a
+  // chapter that has never had a verdict written under the new convention has
+  // no mirrored directory yet. Without this, the FIRST write for every such
+  // block throws ENOENT.
+  //
+  // Centralised here rather than at each call site: four writers reach the
+  // verdict through this function, and a rule that has to be remembered
+  // separately by each of them is one that will be forgotten by the fifth.
+  mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, JSON.stringify(report, null, 2) + "\n");
 }
 

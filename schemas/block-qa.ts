@@ -463,7 +463,16 @@ export interface QaCriterionEntry {
 /**
  * The full per-block QA report file shape.
  *
- * Filename: `<block-root>.qa.json` (sibling of `<block-root>.md`).
+ * Filename: `<block-root>.qa.json`, under `test/results/block-qa/` in a tree
+ * that MIRRORS the block's own directory — never composed by hand. The one
+ * answer is `blockQaPath` / `existingBlockQaPath` in
+ * `content/pipeline/qa-paths.ts`.
+ *
+ * It WAS a sibling of `<block-root>.md`, one member of the block's companion
+ * family alongside `.ts` and `.lean`, until bean `2634` moved it: placement
+ * follows provenance, and a verdict is a QA reviewer's output. A reader who
+ * still finds one beside a block is looking at a folio that has not migrated —
+ * that location is read as a fallback and never written to.
  *
  * `criteria` maps each named criterion to an **array** of reviewer
  * entries. Multiple entries are allowed; the criterion's "current
