@@ -6,6 +6,7 @@ type: bug
 priority: normal
 created_at: 2026-09-18T17:59:38Z
 updated_at: 2026-09-19T00:35:16Z
+parent: folio-assistant-1xhc
 ---
 
 AGENTS.md lists `bunx playwright test` under Commands. It cannot work:

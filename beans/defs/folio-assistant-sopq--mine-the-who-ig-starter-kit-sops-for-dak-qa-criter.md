@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-08-26T19:15:00Z
 updated_at: 2026-08-26T19:15:00Z
+parent: folio-assistant-1swy
 ---
 
 Split out of `p2en`, whose original question — what schema consolidates math and

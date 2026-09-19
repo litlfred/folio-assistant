@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
 updated_at: 2026-09-18T15:07:53Z
+parent: folio-assistant-ahvw
 ---
 
 The `crdm-detect` eval's ground truth is **one annotator's, unblinded** — the
