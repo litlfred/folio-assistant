@@ -125,6 +125,10 @@ describe("the witnesses are committed in one place and published in another", ()
     for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
       const text = readFileSync(join(ROOT, ".github", "workflows", wf), "utf-8");
       expect(text).toContain("cp -rT test/results/witnesses ./_site/assets/qa");
+      // The RESULTS too, since bean `2634` took the findings out of the
+      // published graph: this file is now the only place a consumer can see
+      // what the QA pass found about the document it just fetched.
+      expect(text).toContain("*.qa-results.json");
     }
   });
 
