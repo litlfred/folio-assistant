@@ -351,17 +351,17 @@ jobs:
         run: |
           BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
           STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          # Both exporters stamp their own output with the build identity, from
+          # the one `stagingStamp()` in scripts/staging-stamp.ts. It was an
+          # inline `bun -e` here that rewrote the JSON-LD after the fact and
+          # reached that document only — so every `*.schema.json` the second
+          # command writes went out with no build identity at all (bean `lx2s`).
+          # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
+          # sets for every step.
           bun run scripts/kg-export.ts             --base-url "$BASE" --out "./_site/${STUB}.jsonld"
           bun run scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
-          STUB="$STUB" bun -e '
-            const f = `./_site/${process.env.STUB}.jsonld`;
-            const d = JSON.parse(await Bun.file(f).text());
-            d.staging = { branch: process.env.KG_BRANCH, sha: process.env.GITHUB_SHA,
-                          pr: process.env.GITHUB_REF_NAME, run: process.env.GITHUB_RUN_ID };
-            await Bun.write(f, JSON.stringify(d, null, 2) + "\n");
-          '
-          # The `.json` alias is copied AFTER the staging stamp, so the two
-          # documents cannot disagree about which build they came from.
+          # The `.json` alias is copied AFTER the export, so the two documents
+          # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json" 
         shell: bash
 
