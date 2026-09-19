@@ -177,6 +177,33 @@ jobs:
           bun run scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
+          # The VOCABULARY, at the IRI stem every term already hangs off.
+          #
+          # FOLIO_NS is `<base>/ns#`, so `<base>/ns` is the document those
+          # fragments live in — and nothing served it. `kg-export.test.ts`
+          # exempted the stem from the dead-link walk by name, on the reasoning
+          # that an IRI stem is not a file. True while a term only had to be an
+          # IDENTIFIER; false once the terms have to be DEFINITIONS, which the
+          # bootstrap README's "link almost every word to its definition"
+          # requires.
+          #
+          # `ns` is extensionless BECAUSE the IRI is: `<base>/ns#Actor` resolves
+          # to the document `<base>/ns`. Pages serves it as octet-stream, hence
+          # the `.jsonld` (canonical extension) and `.json` (the only correct
+          # Content-Type this host emits) alongside — the same three-way the
+          # graph itself gets, for the same reason.
+          #
+          # `ns-bootstrap` is the same vocabulary cut to the base layer: 11
+          # terms against 93. A bootstrap instance reads a declaration and
+          # hands over, so it must not be made to define voices, an L1 library
+          # or a preview target. Owner, 2026-09-19: "we shouldnt need
+          # voicegraph or librarygrph or previewgrapjh in bootstrap!!"
+          bun run scripts/ns-export.ts                     --out "./_site/ns.jsonld"
+          bun run scripts/ns-export.ts --layer bootstrap   --out "./_site/ns-bootstrap.jsonld"
+          cp "./_site/ns.jsonld"           "./_site/ns"
+          cp "./_site/ns.jsonld"           "./_site/ns.json"
+          cp "./_site/ns-bootstrap.jsonld" "./_site/ns-bootstrap.json"
+
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
 

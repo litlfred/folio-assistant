@@ -365,6 +365,16 @@ describe("every self-URL the export publishes resolves to something published", 
       "tool.schema.json",
       "tool-types.schema.json",
       `${stub}/`,
+      // The vocabulary, published by the same step. `ns` is extensionless
+      // because the IRI is: FOLIO_NS is `<base>/ns#`, so every term's fragment
+      // lives in the document `<base>/ns`. The `.jsonld` and `.json` are the
+      // canonical-extension and correct-Content-Type aliases, exactly as for
+      // the graph itself.
+      "ns",
+      "ns.jsonld",
+      "ns.json",
+      "ns-bootstrap.jsonld",
+      "ns-bootstrap.json",
     ]);
     for (const c of buildSkillIoContracts({ baseUrl: BASE })) out.add(c.published.split("\\").join("/"));
     return out;
@@ -386,10 +396,17 @@ describe("every self-URL the export publishes resolves to something published", 
       // Strip the fragment: `…/x.schema.json#/$defs/BeanId` is a pointer INTO
       // a document, so the document is what has to exist.
       const rel = url.slice(PUB.length).split("#")[0];
-      // The term namespace is an IRI stem, not a file — nothing serves it and
-      // nothing should try to. Excluded by name rather than by pattern so a
-      // new non-file stem has to be declared here to be exempt.
-      if (rel === "ns" || rel.startsWith("ns/")) continue;
+      // The term namespace WAS exempted here, on the reasoning that an IRI
+      // stem is not a file and "nothing serves it and nothing should try to".
+      // That held while a term only had to be an IDENTIFIER. It stopped
+      // holding when the terms had to be DEFINITIONS a reader can follow, and
+      // the exemption is why nothing noticed: 93 terms pointing at a stem no
+      // check was allowed to look at.
+      //
+      // `scripts/ns-export.ts` now publishes `<base>/ns`, so the walk covers
+      // it like anything else. `publishedPaths()` knows it, and removing that
+      // entry is now a test failure rather than a silent 404 — which is the
+      // point of retiring an exemption rather than just filling the gap.
       if (!published.has(rel)) dead.push(rel);
     }
     expect([...new Set(dead)].sort()).toEqual([]);
