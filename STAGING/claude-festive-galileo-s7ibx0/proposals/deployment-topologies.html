@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(60)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(2)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(60) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(18) > ul > li:nth-child(2) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(60) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(18) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(18) > ul > li:nth-child(2) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(60) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(18) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(18) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Documentation Generation | folio-assistant</title>
+<title>Deployment topologies | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Documentation Generation" />
+<meta property="og:title" content="Deployment topologies" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/reference/skill-instructions/docs-generation.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/reference/skill-instructions/docs-generation.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/proposals/deployment-topologies.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/proposals/deployment-topologies.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Documentation Generation" />
+<meta property="twitter:title" content="Deployment topologies" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Documentation Generation","url":"https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/reference/skill-instructions/docs-generation.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Deployment topologies","url":"https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/proposals/deployment-topologies.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -270,7 +270,7 @@
   those are opposite facts.
 
   `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
-  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">066ed5b</span> · built 2026-09-19T10:05:54Z · <a href="https://github.com/litlfred/folio-assistant/pull/386" style="color:#fff;text-decoration:underline">PR #386</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/docs-generation.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35436408189" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
+  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">066ed5b</span> · built 2026-09-19T10:05:54Z · <a href="https://github.com/litlfred/folio-assistant/pull/386" style="color:#fff;text-decoration:underline">PR #386</a> · <a href="https://litlfred.github.io/folio-assistant/proposals/deployment-topologies.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35436408189" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/todos/index.json">
@@ -429,7 +429,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">066ed5b</span> · built 2026-09-19T10:05:54Z · <a href="https://github.com/litlfred/folio-assistant/pull/386" style="color:#fff;text-decoration:underline">PR #386</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/docs-generation.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35436408189" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">066ed5b</span> · built 2026-09-19T10:05:54Z · <a href="https://github.com/litlfred/folio-assistant/pull/386" style="color:#fff;text-decoration:underline">PR #386</a> · <a href="https://litlfred.github.io/folio-assistant/proposals/deployment-topologies.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35436408189" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -557,8 +557,8 @@
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Documentation Generation</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/proposals/">Proposals</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Deployment topologies</span></li>
   </ol>
 </nav>
 
@@ -566,456 +566,683 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/docs-generation.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/docs-generation.md</code></a> — do not edit here.</p>
-
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/docs-generation.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
-</blockquote>
-<h1 id="documentation-generation-skill">
+            <h1 class="no_toc" id="deployment-topologies-and-operating-modes--a-strawperson">
   
   
-    <a href="#documentation-generation-skill" class="anchor-heading" aria-labelledby="documentation-generation-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documentation Generation Skill
+    <a href="#deployment-topologies-and-operating-modes--a-strawperson" class="anchor-heading" aria-labelledby="deployment-topologies-and-operating-modes--a-strawperson"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Deployment topologies and operating modes — a strawperson
   
   
 </h1>
     
-<h2 id="role">
+
+<p>Asked on <a href="https://github.com/litlfred/folio-assistant/issues/363">#363</a>,
+“self-sovereign compute + test harness deployments”, which lists roughly ten
+deployment and utilization scenarios and asks for a strawperson of each.</p>
+
+<p><strong>This is a strawperson.</strong> It is written to be argued with. Every named profile
+below is a starting position, not a decision, and nothing in it is implemented.
+Work items are tracked under the epic
+<code class="language-plaintext highlighter-rouge">folio-assistant-5a3l</code>; the three topologies #363 asks to have reviewed have
+their own issues, linked at the foot.</p>
+
+<ol id="markdown-toc">
+  <li><a href="#0-the-claim-and-the-sentence-that-forces-it" id="markdown-toc-0-the-claim-and-the-sentence-that-forces-it">0. The claim, and the sentence that forces it</a></li>
+  <li><a href="#1-the-topology-axes" id="markdown-toc-1-the-topology-axes">1. The topology axes</a>    <ol>
+      <li><a href="#what-is-derived-and-must-not-become-an-axis" id="markdown-toc-what-is-derived-and-must-not-become-an-axis">What is derived, and must not become an axis</a></li>
+    </ol>
+  </li>
+  <li><a href="#2-the-operating-modes" id="markdown-toc-2-the-operating-modes">2. The operating modes</a>    <ol>
+      <li><a href="#the-test-mode-carries-an-axis-of-its-own" id="markdown-toc-the-test-mode-carries-an-axis-of-its-own">The <code class="language-plaintext highlighter-rouge">test</code> mode carries an axis of its own</a></li>
+      <li><a href="#where-a-modes-output-goes--provenance-not-file-family" id="markdown-toc-where-a-modes-output-goes--provenance-not-file-family">Where a mode’s output goes — provenance, not file family</a></li>
+    </ol>
+  </li>
+  <li><a href="#3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist" id="markdown-toc-3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist">3. Incompatibilities — a free product admits combinations that must not exist</a>    <ol>
+      <li><a href="#the-one-i-am-least-sure-of" id="markdown-toc-the-one-i-am-least-sure-of">The one I am least sure of</a></li>
+      <li><a href="#the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup" id="markdown-toc-the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup">The principle that decides it — do not encode a rule against a working setup</a></li>
+    </ol>
+  </li>
+  <li><a href="#4-the-named-scenarios-as-points-in-the-product" id="markdown-toc-4-the-named-scenarios-as-points-in-the-product">4. The named scenarios as points in the product</a></li>
+  <li><a href="#5-the-sdlc-and-what-is-actually-missing" id="markdown-toc-5-the-sdlc-and-what-is-actually-missing">5. The SDLC, and what is actually missing</a></li>
+  <li><a href="#6-what-would-change-my-mind" id="markdown-toc-6-what-would-change-my-mind">6. What would change my mind</a></li>
+  <li><a href="#related-work" id="markdown-toc-related-work">Related work</a></li>
+</ol><hr />
+<h2 id="0-the-claim-and-the-sentence-that-forces-it">
   
   
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+    <a href="#0-the-claim-and-the-sentence-that-forces-it" class="anchor-heading" aria-labelledby="0-the-claim-and-the-sentence-that-forces-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. The claim, and the sentence that forces it
   
   
 </h2>
     
 
-<p>Coordinate all documentation generation pipelines. This covers the
-full set of rendered artifacts published to the docs site, from the
-content-object schemas through to per-paper PDF/HTML viewers.</p>
-<h2 id="documentation-artifacts">
-  
-  
-    <a href="#documentation-artifacts" class="anchor-heading" aria-labelledby="documentation-artifacts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documentation artifacts
-  
-  
-</h2>
-    
+<p>#363 names the scenarios — local git only, private GitHub, sovereign cloud,
+self-sovereign, developer, test/swarm, benchmarking, QA review — and then adds
+this:</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Artifact</th>
-      <th>Generator</th>
-      <th>Output path (docs site)</th>
-      <th>Trigger</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Paper PDF</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/build.ts</code> + PDF engine</td>
-      <td><code class="language-plaintext highlighter-rouge">papers/&lt;dir&gt;/&lt;dir&gt;.pdf</code></td>
-      <td>publish workflow</td>
-    </tr>
-    <tr>
-      <td><strong>Paper HTML</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">generate-html.py</code> (Pandoc + enhance)</td>
-      <td><code class="language-plaintext highlighter-rouge">papers/&lt;dir&gt;/paper.html</code></td>
-      <td>publish workflow</td>
-    </tr>
-    <tr>
-      <td><strong>Paper Markdown</strong></td>
-      <td>Pandoc (<code class="language-plaintext highlighter-rouge">gfm</code>)</td>
-      <td><code class="language-plaintext highlighter-rouge">papers/&lt;dir&gt;/&lt;dir&gt;.md</code></td>
-      <td>publish workflow</td>
-    </tr>
-    <tr>
-      <td><strong>Paper viewer</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">generate-index.py</code></td>
-      <td><code class="language-plaintext highlighter-rouge">papers/&lt;dir&gt;/index.html</code></td>
-      <td>publish workflow</td>
-    </tr>
-    <tr>
-      <td><strong>Folio landing</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">generate-folio-index.py</code></td>
-      <td><code class="language-plaintext highlighter-rouge">index.html</code></td>
-      <td>publish workflow</td>
-    </tr>
-    <tr>
-      <td><strong>Schema docs</strong></td>
-      <td>TypeDoc (<code class="language-plaintext highlighter-rouge">npm run build:docs</code>)</td>
-      <td><code class="language-plaintext highlighter-rouge">schema-docs/</code></td>
-      <td>publish workflow</td>
-    </tr>
-    <tr>
-      <td><strong>Schema manifest</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">scripts/generate-schema-manifest.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">/api/schema-manifest</code></td>
-      <td>MCP server</td>
-    </tr>
-    <tr>
-      <td><strong>Formal API docs</strong></td>
-      <td>doc generator</td>
-      <td><code class="language-plaintext highlighter-rouge">docs/</code></td>
-      <td>formal-layer workflow</td>
-    </tr>
-    <tr>
-      <td><strong>Dependency graph</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">generate_dependency_graph.py</code></td>
-      <td><code class="language-plaintext highlighter-rouge">dependency-graph.svg</code></td>
-      <td>publish / formal workflow</td>
-    </tr>
-    <tr>
-      <td><strong>Proof/object report</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">extract_proof_objects.py</code></td>
-      <td><code class="language-plaintext highlighter-rouge">proof-objects.json</code></td>
-      <td>all workflows</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="paper-document-generation">
-  
-  
-    <a href="#paper-document-generation" class="anchor-heading" aria-labelledby="paper-document-generation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Paper document generation
-  
-  
-</h2>
-    
-<h3 id="pipeline-content-objects--pdf">
-  
-  
-    <a href="#pipeline-content-objects--pdf" class="anchor-heading" aria-labelledby="pipeline-content-objects--pdf"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pipeline: content objects → PDF
-  
-  
-</h3>
-    
+<blockquote>
+  <p>may also oprate in mixed modalities, self sovergn cloud except models could be
+closed not openweight etc, or self-sovering connects to their national portal
+or PCP emr</p>
+</blockquote>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content/&lt;paper&gt;/&lt;paper&gt;.ts          paper manifest (metadata, sections)
-     ↓
-content/pipeline/build.ts           validates + renders sections → output
-     ↓
-preamble template + manifest        generate-main.ts → main document
-     ↓
-PDF engine                          main → PDF
-     ↓
-pandoc                              → .md → paper-raw.html
-     ↓
-generate-html.py                    → paper.html (enhanced)
-     ↓
-generate-index.py                   → per-paper index.html (viewer)
-</code></pre></div></div>
-<h3 id="running-locally">
-  
-  
-    <a href="#running-locally" class="anchor-heading" aria-labelledby="running-locally"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running locally
-  
-  
-</h3>
-    
+<p><strong>A fixed list of named modes cannot express a mix.</strong> Each example given is a
+named profile with exactly one thing moved. Model them as an enum and every mix
+needs a new entry, combinatorially, forever.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Build sections + generate the main document from the manifest</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/build.ts <span class="se">\</span>
-  &lt;paper&gt;/&lt;paper&gt;.ts <span class="se">\</span>
-  <span class="nt">--out-dir</span> ../sections/ <span class="se">\</span>
-  <span class="nt">--generate-main</span> <span class="se">\</span>
-  <span class="nt">--main-out</span> ../main.tex <span class="se">\</span>
-  <span class="nt">--preamble</span> ../latex/preamble.tex
-
-<span class="c"># Compile PDF (requires the PDF engine). No engine in the sandbox? Run</span>
-<span class="c"># scripts/install-tex.sh first, or fall back to the Docker image.</span>
-<span class="nb">cd</span> .. <span class="o">&amp;&amp;</span> &lt;pdf-engine&gt; main.tex
-</code></pre></div></div>
-<h3 id="key-files">
-  
-  
-    <a href="#key-files" class="anchor-heading" aria-labelledby="key-files"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Key files
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">latex/preamble.tex</code></td>
-      <td>Shared rendering preamble template (paper-agnostic)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/build.ts</code></td>
-      <td>Content → output section build</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/generate-main.ts</code></td>
-      <td>Manifest + preamble → main document</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/render.ts</code></td>
-      <td>Block-level markdown → output conversion</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">.github/scripts/generate-html.py</code></td>
-      <td>Pandoc HTML → enhanced paper.html</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">.github/scripts/generate-index.py</code></td>
-      <td>Per-paper viewer (paper/visualizer toggle)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">.github/scripts/generate-folio-index.py</code></td>
-      <td>Root folio landing page</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="schema-documentation-typedoc">
-  
-  
-    <a href="#schema-documentation-typedoc" class="anchor-heading" aria-labelledby="schema-documentation-typedoc"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Schema documentation (TypeDoc)
-  
-  
-</h2>
-    
-
-<p>Pretty-printed HTML reference for the content-object type system.</p>
-<h3 id="configuration">
-  
-  
-    <a href="#configuration" class="anchor-heading" aria-labelledby="configuration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Configuration
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>File</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">typedoc.json</code></td>
-      <td>TypeDoc config (entry points, output dir, theme)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/types.ts</code></td>
-      <td>Core types: <code class="language-plaintext highlighter-rouge">Block</code>, <code class="language-plaintext highlighter-rouge">Section</code>, <code class="language-plaintext highlighter-rouge">Paper</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/constraints.ts</code></td>
-      <td>Zod runtime validation schemas</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/builders.ts</code></td>
-      <td>Constructor functions (<code class="language-plaintext highlighter-rouge">definition()</code>, <code class="language-plaintext highlighter-rouge">theorem()</code>, etc.)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/output-types.ts</code></td>
-      <td>CI/output types (objects, glossary, coverage)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/README.md</code></td>
-      <td>TypeDoc landing page content</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">package.json</code></td>
-      <td><code class="language-plaintext highlighter-rouge">build:docs</code> script</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="running-locally-1">
-  
-  
-    <a href="#running-locally-1" class="anchor-heading" aria-labelledby="running-locally-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running locally
-  
-  
-</h3>
-    
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Install TypeDoc (if not already)</span>
-npm <span class="nb">install</span>
-
-<span class="c"># Generate schema docs</span>
-npm run build:docs
-<span class="c"># Output: build/schema-docs/</span>
-</code></pre></div></div>
-<h3 id="schema-manifest-lightweight-json">
-  
-  
-    <a href="#schema-manifest-lightweight-json" class="anchor-heading" aria-labelledby="schema-manifest-lightweight-json"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Schema manifest (lightweight JSON)
-  
-  
-</h3>
-    
-
-<p>For programmatic access (viewer, MCP server):</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/generate-schema-manifest.ts
-<span class="c"># Output: build/schema-manifest.json</span>
-</code></pre></div></div>
-<h2 id="formal-layer-documentation">
-  
-  
-    <a href="#formal-layer-documentation" class="anchor-heading" aria-labelledby="formal-layer-documentation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Formal-layer documentation
-  
-  
-</h2>
-    
-
-<p>When a paper carries a formal layer (e.g. a proof assistant), its API
-documentation is generated by the formal-layer CI workflow after the
-formal build succeeds. If the primary doc generator fails, the workflow
-falls back to a static HTML source browser.</p>
-
-<p>A gap/axiom report lists unproved-gap declarations and dependency
-transparency; it is produced by the same workflow.</p>
-<h2 id="folio-landing-page">
-  
-  
-    <a href="#folio-landing-page" class="anchor-heading" aria-labelledby="folio-landing-page"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Folio landing page
-  
-  
-</h2>
-    
-
-<p>The root <code class="language-plaintext highlighter-rouge">index.html</code> on the docs site is a folio page listing all
-papers with viewer links. Generated from <code class="language-plaintext highlighter-rouge">content/folio.ts</code>.</p>
-<h3 id="adding-a-new-paper-to-the-folio">
-  
-  
-    <a href="#adding-a-new-paper-to-the-folio" class="anchor-heading" aria-labelledby="adding-a-new-paper-to-the-folio"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a new paper to the folio
-  
-  
-</h3>
-    
-
-<ol>
-  <li>Create <code class="language-plaintext highlighter-rouge">content/&lt;paper-dir&gt;/&lt;paper-dir&gt;.ts</code> (paper manifest with
-title, authors, abstract, macros, sections)</li>
-  <li>Create section directories with content objects</li>
-  <li>Add <code class="language-plaintext highlighter-rouge">paperRef({ dir: "&lt;paper-dir&gt;", title: "...", ... })</code> to
-<code class="language-plaintext highlighter-rouge">content/folio.ts</code></li>
-  <li>The pipeline discovers it automatically via <code class="language-plaintext highlighter-rouge">extract-folio.py</code></li>
-</ol>
-<h3 id="key-scripts">
-  
-  
-    <a href="#key-scripts" class="anchor-heading" aria-labelledby="key-scripts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Key scripts
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Script</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">.github/scripts/extract-folio.py</code></td>
-      <td>Parse <code class="language-plaintext highlighter-rouge">folio.ts</code> → JSON paper list</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">.github/scripts/generate-folio-index.py</code></td>
-      <td>Generate root <code class="language-plaintext highlighter-rouge">index.html</code></td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="dependency-graph">
-  
-  
-    <a href="#dependency-graph" class="anchor-heading" aria-labelledby="dependency-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Dependency graph
-  
-  
-</h2>
-    
-
-<p>Visual SVG showing dependencies between content blocks.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 .github/scripts/generate_dependency_graph.py <span class="se">\</span>
-  <span class="nt">--manifest</span> proof-objects.json <span class="se">\</span>
-  <span class="nt">--output</span> dependency-graph.svg
-</code></pre></div></div>
-<h2 id="unified-docker-image">
-  
-  
-    <a href="#unified-docker-image" class="anchor-heading" aria-labelledby="unified-docker-image"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Unified Docker image
-  
-  
-</h2>
-    
-
-<p>All CI/CD workflows use the same <strong>paper-assistant</strong> Docker image
-(<code class="language-plaintext highlighter-rouge">adapters/mcp-server/Dockerfile</code>), which is also the folio MCP server.
-This eliminates per-workflow tool installation and ensures consistent
-build environments. The image bundles the PDF engine, the content
-pipeline runtime (Bun), pandoc, graph tooling, and CI scripts.</p>
-<h3 id="using-locally-docker-fallback">
-  
-  
-    <a href="#using-locally-docker-fallback" class="anchor-heading" aria-labelledby="using-locally-docker-fallback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using locally (Docker fallback)
-  
-  
-</h3>
-    
-
-<p>When the PDF engine isn’t installed locally, the render hooks
-automatically fall back to the Docker image. The <code class="language-plaintext highlighter-rouge">scripts/lib/docker-tex.sh</code>
-helper automates this fallback for the render hooks.</p>
-<h2 id="ci-workflows">
-  
-  
-    <a href="#ci-workflows" class="anchor-heading" aria-labelledby="ci-workflows"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CI workflows
-  
-  
-</h2>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Workflow</th>
-      <th>Container</th>
-      <th>Docs generated</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">publish.yml</code></td>
-      <td>paper-assistant</td>
-      <td>Paper PDF/HTML/MD, folio index, schema docs, dep graph</td>
-    </tr>
-    <tr>
-      <td>formal-layer workflow</td>
-      <td>paper-assistant</td>
-      <td>Formal API docs, gap report, manifests</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="when-to-use-this-skill">
-  
-  
-    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to use this skill
-  
-  
-</h2>
-    
+<p>So this proposal models two orthogonal things and derives the named scenarios
+from their product:</p>
 
 <ul>
-  <li>“generate docs” / “build docs” / “rebuild documentation”</li>
-  <li>“schema docs” / “type docs” / “TypeDoc”</li>
-  <li>“build paper” / “compile PDF” / “render HTML”</li>
-  <li>“update folio page” / “add paper to landing page”</li>
-  <li>“dependency graph” / “gap report”</li>
+  <li>a <strong>topology</strong> — WHERE the instance and its artefacts live;</li>
+  <li>an <strong>operating mode</strong> — WHAT the harness is doing.</li>
 </ul>
+
+<p>A mode runs <em>on</em> a topology. “Self-sovereign cloud with closed models” is not an
+eleventh mode; it is one topology with one axis set differently.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    subgraph M["Operating mode — what the harness is doing"]
+        A[author] --- I[ingest] --- D[develop] --- T[test] --- Q[qa-review] --- P[publish]
+    end
+    subgraph TP["Topology — where things live"]
+        F[forge] --- V[visibility] --- H[publication host] --- C[compute] --- N[network reach] --- S[tool surface] --- MC[model cardinality] --- MP[model provenance] --- DS[data stores] --- O[outward facing]
+    end
+    M --&gt;|runs on| TP
+</code></pre>
+
+<p>The same mode runs on many topologies, and the same topology hosts many modes
+over its life. That is the whole reason to separate them.</p><hr />
+<h2 id="1-the-topology-axes">
+  
+  
+    <a href="#1-the-topology-axes" class="anchor-heading" aria-labelledby="1-the-topology-axes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The topology axes
+  
+  
+</h2>
+    
+
+<p>Ten axes. Each is a property of the <strong>deployment</strong>, not of the content, and each
+is declared rather than inferred.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>axis</th>
+      <th>values</th>
+      <th>what it decides</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><strong>forge</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">none</code> (local git only) · <code class="language-plaintext highlighter-rouge">github</code> · <code class="language-plaintext highlighter-rouge">self-hosted</code> (GitLab, Gitea, …) · <code class="language-plaintext highlighter-rouge">jurisdiction-hosted</code></td>
+      <td>where change proposals live</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>visibility</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">public</code> · <code class="language-plaintext highlighter-rouge">private</code> · <code class="language-plaintext highlighter-rouge">internal</code></td>
+      <td>who can reach the repository</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>publication host</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">github-pages</code> · <code class="language-plaintext highlighter-rouge">local-server</code> · <code class="language-plaintext highlighter-rouge">jurisdiction-endpoint</code> · <code class="language-plaintext highlighter-rouge">none</code></td>
+      <td>where a rendering is served from</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>compute</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">workstation</code> · <code class="language-plaintext highlighter-rouge">vendor-cloud</code> · <code class="language-plaintext highlighter-rouge">jurisdiction-cloud</code> · <code class="language-plaintext highlighter-rouge">own-infrastructure</code></td>
+      <td>whose hardware runs the harness</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>network reach</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">internet</code> · <code class="language-plaintext highlighter-rouge">egress-restricted</code> · <code class="language-plaintext highlighter-rouge">air-gapped</code></td>
+      <td>what the harness may call out to</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><strong>tool surface</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mcp</code> · <code class="language-plaintext highlighter-rouge">cli</code> · <code class="language-plaintext highlighter-rouge">both</code></td>
+      <td>how a capability is invoked</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><strong>model cardinality</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">single</code> · <code class="language-plaintext highlighter-rouge">stack</code></td>
+      <td>one model for every workflow, or several</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td><strong>model provenance</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">open-weight-local</code> · <code class="language-plaintext highlighter-rouge">hosted</code> · <code class="language-plaintext highlighter-rouge">mixed</code></td>
+      <td>where inference happens and under whose terms</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td><strong>data stores</strong></td>
+      <td><em>a set</em>: <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">hapi-fhir</code> · <code class="language-plaintext highlighter-rouge">national-portal</code> · <code class="language-plaintext highlighter-rouge">emr</code> · <code class="language-plaintext highlighter-rouge">wallet</code></td>
+      <td>what live systems exist in the L4–L5 context</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td><strong>outward facing</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">yes</code> · <code class="language-plaintext highlighter-rouge">no</code></td>
+      <td>whether the deployment serves people outside the operator</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Three of these deserve a note, because they are the ones most likely to be
+argued with.</p>
+
+<p><strong>Axis 6, tool surface, was not in my first draft.</strong> It was found by the
+falsification check in §4: #363’s developer mode says “run CLI version of tools”,
+and that is not a fact about <em>where</em> anything lives — it survives every value of
+every other axis. Every capability here nominally exists twice, as an MCP tool
+and as a <code class="language-plaintext highlighter-rouge">bun run</code> script, but the parity between the two is <strong>unmeasured</strong>. If
+a capability is MCP-only, a <code class="language-plaintext highlighter-rouge">cli</code> deployment silently cannot do it. That is bean
+<code class="language-plaintext highlighter-rouge">folio-assistant-2ngl</code>, and it is measurement work before it is design work.</p>
+
+<p><strong>Axes 7 and 8 are split deliberately.</strong> “How many models” and “whose models”
+vary independently: a stack of open-weight local models and a single closed
+hosted one are both real configurations. Collapsing them into one
+“model supply” axis was the first draft’s error and it is what made the
+air-gapped contradiction in §3 invisible.</p>
+
+<p><strong>Axis 9 is a set, not a single value.</strong> A sovereign deployment may hold a HAPI
+FHIR store <em>and</em> reach a national portal. Every other axis takes one value.</p>
+<h3 id="what-is-derived-and-must-not-become-an-axis">
+  
+  
+    <a href="#what-is-derived-and-must-not-become-an-axis" class="anchor-heading" aria-labelledby="what-is-derived-and-must-not-become-an-axis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is derived, and must not become an axis
+  
+  
+</h3>
+    
+
+<p>Some facts follow from the axes and must be computed, never declared
+separately — a second declaration is a second thing to disagree with.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>derived fact</th>
+      <th>from</th>
+      <th>why it matters</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>can <code class="language-plaintext highlighter-rouge">Content-Type</code> be enforced?</td>
+      <td>axis 3</td>
+      <td><code class="language-plaintext highlighter-rouge">github-pages</code> <strong>cannot</strong> serve <code class="language-plaintext highlighter-rouge">application/ld+json</code>; <code class="language-plaintext highlighter-rouge">local-server</code> can. Settled in <a href="../reference/skill-instructions/serving-renderings.html"><code class="language-plaintext highlighter-rouge">serving-renderings</code></a></td>
+    </tr>
+    <tr>
+      <td>where did this render, and what URL do I tell the author?</td>
+      <td>axis 3</td>
+      <td>bean <code class="language-plaintext highlighter-rouge">folio-assistant-1lfx</code> — today this is composed on the assumption of Pages</td>
+    </tr>
+    <tr>
+      <td>may a capability probe install a missing tool?</td>
+      <td>axis 5</td>
+      <td><code class="language-plaintext highlighter-rouge">--check-deps</code> assumes it may. On <code class="language-plaintext highlighter-rouge">air-gapped</code> it may not</td>
+    </tr>
+    <tr>
+      <td>is a pull request the term of art?</td>
+      <td>axis 1</td>
+      <td>GitHub says pull request, GitLab says merge request. Bean <code class="language-plaintext highlighter-rouge">folio-assistant-4dbr</code></td>
+    </tr>
+  </tbody>
+</table></div><hr />
+<h2 id="2-the-operating-modes">
+  
+  
+    <a href="#2-the-operating-modes" class="anchor-heading" aria-labelledby="2-the-operating-modes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. The operating modes
+  
+  
+</h2>
+    
+
+<p>Six. A mode is a <em>thing the harness is doing</em>, and more than one may be live at
+once in different sessions against the same repository.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>mode</th>
+      <th>what it does</th>
+      <th>already has a process?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>author</strong></td>
+      <td>produce and edit folio content</td>
+      <td>yes — <code class="language-plaintext highlighter-rouge">authoring-a-paper</code>, <code class="language-plaintext highlighter-rouge">authoring-a-document</code>, <code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></td>
+    </tr>
+    <tr>
+      <td><strong>ingest</strong></td>
+      <td>receive external content into <code class="language-plaintext highlighter-rouge">uploads/</code> → <code class="language-plaintext highlighter-rouge">library/</code></td>
+      <td>yes — the five <code class="language-plaintext highlighter-rouge">ingest-*.bpmn</code></td>
+    </tr>
+    <tr>
+      <td><strong>develop</strong></td>
+      <td>change the platform itself</td>
+      <td><strong>no</strong> — §5</td>
+    </tr>
+    <tr>
+      <td><strong>test</strong></td>
+      <td>run a scenario bank; benchmark across models</td>
+      <td><strong>no</strong></td>
+    </tr>
+    <tr>
+      <td><strong>qa-review</strong></td>
+      <td>produce audited verdicts about the folio</td>
+      <td>partly — the QA sweep, <code class="language-plaintext highlighter-rouge">editing-hci-validation</code></td>
+    </tr>
+    <tr>
+      <td><strong>publish</strong></td>
+      <td>render and serve</td>
+      <td>yes — <code class="language-plaintext highlighter-rouge">draft-to-publication</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">ingest</code> is a mode and not a topology property</strong>, though #363 raises it as one
+(“have incoming DAK content” under self-sovereign). Receiving content is
+something the harness <em>does</em>; that a given deployment does it often is a fact
+about how it is used, not about where it lives. The reason to be careful here:
+the ingestion pipeline’s capability probes assume tools can be installed on
+demand, which is an <em>axis 5</em> constraint — so the interaction is real, but it is
+an interaction between a mode and an axis, which is exactly what this model is
+shaped to express.</p>
+<h3 id="the-test-mode-carries-an-axis-of-its-own">
+  
+  
+    <a href="#the-test-mode-carries-an-axis-of-its-own" class="anchor-heading" aria-labelledby="the-test-mode-carries-an-axis-of-its-own"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The <code class="language-plaintext highlighter-rouge">test</code> mode carries an axis of its own
+  
+  
+</h3>
+    
+
+<p>#363: “shared or indepedent work queues.” This is not a topology axis — it is a
+property of a <strong>run</strong>:</p>
+
+<ul>
+  <li><strong>shared</strong> — any model may take any item. Maximises throughput. The models end
+up having worked on <em>different items</em>, so their outputs are not comparable.</li>
+  <li><strong>independent</strong> — every model gets the same bank. Necessary for benchmarking,
+and wasteful for anything else.</li>
+</ul>
+
+<p>These are not a setting to tune, they are different activities, and conflating
+them produces a benchmark that means nothing. Bean <code class="language-plaintext highlighter-rouge">folio-assistant-amom</code>.</p>
+<h3 id="where-a-modes-output-goes--provenance-not-file-family">
+  
+  
+    <a href="#where-a-modes-output-goes--provenance-not-file-family" class="anchor-heading" aria-labelledby="where-a-modes-output-goes--provenance-not-file-family"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a mode’s output goes — provenance, not file family
+  
+  
+</h3>
+    
+
+<p>The rule is already the repository’s, recorded in <code class="language-plaintext highlighter-rouge">harness.json</code>’s declaration
+of the <code class="language-plaintext highlighter-rouge">qa</code> graph: <strong>placement follows provenance.</strong> This proposal adds one
+consequence and does not change the rule.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>mode</th>
+      <th>output</th>
+      <th>goes in the KG?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>qa-review</td>
+      <td>a verdict about a block, a translation, a recommendation</td>
+      <td><strong>yes</strong> — it is an assertion about the folio</td>
+    </tr>
+    <tr>
+      <td>test</td>
+      <td>a benchmark number for a model under a configuration</td>
+      <td><strong>no</strong> — it is an assertion about a <em>model</em></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>That second row is a deliberate exception to “everything is a graph node”, so it
+needs its reason written down or the next agent will helpfully declare a graph
+for it. The reason: admitting benchmark numbers would make the graph’s contents
+depend on which model happened to run it, and two instances of the same folio
+would then hold different graphs. Beans <code class="language-plaintext highlighter-rouge">folio-assistant-wp49</code> (the report) and
+<code class="language-plaintext highlighter-rouge">folio-assistant-6qk5</code> (the verdicts).</p><hr />
+<h2 id="3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist">
+  
+  
+    <a href="#3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist" class="anchor-heading" aria-labelledby="3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Incompatibilities — a free product admits combinations that must not exist
+  
+  
+</h2>
+    
+
+<p>This is the part that makes the model checkable rather than merely expressive.
+An axis product of ten axes is large and most of it is nonsense. The following
+pairs <strong>cannot co-occur</strong>, and a declaration naming one should be refused rather
+than quietly accepted.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th>why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">publication: github-pages</code></td>
+      <td><code class="language-plaintext highlighter-rouge">forge: none</code> / <code class="language-plaintext highlighter-rouge">self-hosted</code> / <code class="language-plaintext highlighter-rouge">jurisdiction-hosted</code></td>
+      <td>Pages is a GitHub product; there is nothing to publish from</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">network: air-gapped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">forge: github</code></td>
+      <td>the forge is unreachable</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">network: air-gapped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">model provenance: hosted</code></td>
+      <td><strong>inference cannot leave the airlock.</strong> This is #363’s own mixed example — “self-sovereign … models could be closed” — and it is expressible <em>only</em> if that deployment is <code class="language-plaintext highlighter-rouge">egress-restricted</code> rather than <code class="language-plaintext highlighter-rouge">air-gapped</code>. See below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">network: air-gapped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">publication: github-pages</code></td>
+      <td>follows from the two above</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">outward facing: yes</code></td>
+      <td><code class="language-plaintext highlighter-rouge">publication: none</code></td>
+      <td>nothing is served, so nobody outside can reach it</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>The third row is the most useful thing in this document.</strong> #363 gives
+“self-sovereign cloud except models could be closed not openweight” as a mixed
+modality it must support. The axes express it — but only at
+<code class="language-plaintext highlighter-rouge">egress-restricted</code>, not at <code class="language-plaintext highlighter-rouge">air-gapped</code>. Those two were one value in the first
+draft of this proposal, and the contradiction was invisible until they were
+split. A deployment that wants closed hosted models is, by that choice, not
+air-gapped, and whoever operates it should be told so by a check rather than
+discover it in procurement.</p>
+<h3 id="the-one-i-am-least-sure-of">
+  
+  
+    <a href="#the-one-i-am-least-sure-of" class="anchor-heading" aria-labelledby="the-one-i-am-least-sure-of"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The one I am least sure of
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">visibility: private</code> × <code class="language-plaintext highlighter-rouge">publication: github-pages</code>. #363 states it as a flat
+impossibility — “github on private repo so gh-pages not avaialbe” — and for the
+topology that prompted the issue that is the operative fact. It is <strong>not
+universally true</strong>: GitHub has offered Pages for private repositories on paid
+plans. I have not verified what is available to this project’s account and have
+not tried to.</p>
+
+<p>I have therefore left it <strong>out</strong> of the incompatibility table rather than
+encode a rule I cannot check, and flagged it here instead. If the answer is
+“assume unavailable”, it is one row to add.</p>
+<h3 id="the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup">
+  
+  
+    <a href="#the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup" class="anchor-heading" aria-labelledby="the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The principle that decides it — do not encode a rule against a working setup
+  
+  
+</h3>
+    
+
+<p>Stated by the owner, 2026-09-19, and it governs every row of the table above:</p>
+
+<blockquote>
+  <p><strong>“dont encode rules against a working setup.”</strong></p>
+</blockquote>
+
+<p>A constraint is a <strong>refusal</strong>, and the two ways it can be wrong are not
+symmetric. A <em>missing</em> constraint lets a bad topology through, and it fails
+visibly at the point of use with the real error. A <em>wrong</em> constraint refuses a
+good topology at the gate, with a confident message asserting the thing is
+impossible — and nobody investigates a settled question. The same asymmetry is
+why <code class="language-plaintext highlighter-rouge">serving-renderings</code> reports “could not enforce” as its own state, and why
+<code class="language-plaintext highlighter-rouge">ci-health</code> never renders “could not check” as green.</p>
+
+<p>So the bar for a row in §3 is <strong>evidence, not confidence</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>encode it</th>
+      <th>do not encode it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>an <strong>entailment of the mechanism</strong> — Pages has no per-file media-type configuration; air-gapped compute cannot reach hosted inference</td>
+      <td><strong>someone said so</strong>, however authoritative</td>
+    </tr>
+    <tr>
+      <td><strong>measured here</strong>, with the command and the date</td>
+      <td>true of <strong>one account, one plan, one version</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Every one of the five pairs in §3 is an entailment. The private-repo row is a
+report, which is why it is prose and not a row. The test is never how certain
+the claim feels — it is whether a counter-example is conceivable.</p>
+
+<p>Recorded for future sessions as the memory node
+<code class="language-plaintext highlighter-rouge">do-not-encode-a-rule-against-a-working-setup</code>.</p><hr />
+<h2 id="4-the-named-scenarios-as-points-in-the-product">
+  
+  
+    <a href="#4-the-named-scenarios-as-points-in-the-product" class="anchor-heading" aria-labelledby="4-the-named-scenarios-as-points-in-the-product"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. The named scenarios as points in the product
+  
+  
+</h2>
+    
+
+<p>The falsification test for §0’s claim: take every scenario #363 names and
+express it. <strong>Every one is expressible.</strong> Nothing was left over, and the
+exercise found axis 6 and the <code class="language-plaintext highlighter-rouge">ingest</code> mode, both of which were missing from the
+first draft.</p>
+
+<p>Axes in column order: forge · visibility · publication · compute · network ·
+tool surface · cardinality · provenance · stores · outward.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>profile</th>
+      <th>axis values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>current state</strong> (this repo, today)</td>
+      <td><code class="language-plaintext highlighter-rouge">github</code> · <code class="language-plaintext highlighter-rouge">public</code> · <code class="language-plaintext highlighter-rouge">github-pages</code> · <code class="language-plaintext highlighter-rouge">vendor-cloud</code> · <code class="language-plaintext highlighter-rouge">internet</code> · <code class="language-plaintext highlighter-rouge">both</code> · <code class="language-plaintext highlighter-rouge">single</code> · <code class="language-plaintext highlighter-rouge">hosted</code> · <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">yes</code></td>
+    </tr>
+    <tr>
+      <td><strong>local git only</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">none</code> · — · <code class="language-plaintext highlighter-rouge">local-server</code> · <code class="language-plaintext highlighter-rouge">workstation</code> · any · <code class="language-plaintext highlighter-rouge">cli</code> · <code class="language-plaintext highlighter-rouge">single</code> · any · <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">no</code></td>
+    </tr>
+    <tr>
+      <td><strong>private repo</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">github</code> · <code class="language-plaintext highlighter-rouge">private</code> · <code class="language-plaintext highlighter-rouge">local-server</code> · any · <code class="language-plaintext highlighter-rouge">internet</code> · <code class="language-plaintext highlighter-rouge">both</code> · <code class="language-plaintext highlighter-rouge">single</code> · <code class="language-plaintext highlighter-rouge">hosted</code> · <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">no</code></td>
+    </tr>
+    <tr>
+      <td><strong>developer</strong></td>
+      <td>any · any · <code class="language-plaintext highlighter-rouge">local-server</code> · <code class="language-plaintext highlighter-rouge">workstation</code> · <code class="language-plaintext highlighter-rouge">internet</code> · <code class="language-plaintext highlighter-rouge">cli</code> · <code class="language-plaintext highlighter-rouge">single</code> · any · <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">no</code></td>
+    </tr>
+    <tr>
+      <td><strong>sovereign cloud</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">jurisdiction-hosted</code> · <code class="language-plaintext highlighter-rouge">internal</code> · <code class="language-plaintext highlighter-rouge">jurisdiction-endpoint</code> · <code class="language-plaintext highlighter-rouge">jurisdiction-cloud</code> · <code class="language-plaintext highlighter-rouge">egress-restricted</code> · <code class="language-plaintext highlighter-rouge">both</code> · any · any · <code class="language-plaintext highlighter-rouge">{hapi-fhir, portal, wallet}</code> · <strong><code class="language-plaintext highlighter-rouge">yes</code></strong></td>
+    </tr>
+    <tr>
+      <td><strong>self-sovereign</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">self-hosted</code> or <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">internal</code> · <code class="language-plaintext highlighter-rouge">local-server</code> · <code class="language-plaintext highlighter-rouge">own-infrastructure</code> · <code class="language-plaintext highlighter-rouge">egress-restricted</code> or <code class="language-plaintext highlighter-rouge">air-gapped</code> · <code class="language-plaintext highlighter-rouge">both</code> · any · <code class="language-plaintext highlighter-rouge">open-weight-local</code> · <code class="language-plaintext highlighter-rouge">{hapi-fhir, wallet}</code> · <strong><code class="language-plaintext highlighter-rouge">no</code></strong></td>
+    </tr>
+    <tr>
+      <td><strong>self-sovereign + closed models</strong></td>
+      <td>as above, but <code class="language-plaintext highlighter-rouge">provenance: hosted</code> and therefore <code class="language-plaintext highlighter-rouge">network: egress-restricted</code> — see §3</td>
+    </tr>
+    <tr>
+      <td><strong>self-sovereign + national portal / EMR</strong></td>
+      <td>as self-sovereign, <code class="language-plaintext highlighter-rouge">stores: {hapi-fhir, wallet, national-portal, emr}</code>. Still <code class="language-plaintext highlighter-rouge">outward: no</code> — it <em>consumes</em> those systems, it does not serve them</td>
+    </tr>
+    <tr>
+      <td><strong>test / swarm</strong></td>
+      <td>a <em>mode</em> on any topology, with <code class="language-plaintext highlighter-rouge">cardinality: stack</code></td>
+    </tr>
+    <tr>
+      <td><strong>benchmarking</strong></td>
+      <td>a <em>mode</em> on any topology; queue discipline <code class="language-plaintext highlighter-rouge">independent</code></td>
+    </tr>
+    <tr>
+      <td><strong>qa review</strong></td>
+      <td>a <em>mode</em> on any topology</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Sovereign cloud and self-sovereign differ on exactly one axis</strong>: <code class="language-plaintext highlighter-rouge">outward
+facing</code>. Everything else about them is a range that overlaps. If that line does
+not survive review, the honest conclusion is that they are <em>one</em> topology with
+an outward-facing axis, and two named profiles is one too many.</p><hr />
+<h2 id="5-the-sdlc-and-what-is-actually-missing">
+  
+  
+    <a href="#5-the-sdlc-and-what-is-actually-missing" class="anchor-heading" aria-labelledby="5-the-sdlc-and-what-is-actually-missing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. The SDLC, and what is actually missing
+  
+  
+</h2>
+    
+
+<p>#363: “need better documentation on deve, testing and deployment lifecycle to
+fit in with the software development lifecycle (SDLC - it needs to be formal
+formal, subprocess includes developing MVP etc, align/cleanup exisrting
+documentation).”</p>
+
+<p><strong>Measured 2026-09-19.</strong> <code class="language-plaintext highlighter-rouge">skills/workflows/</code> holds 31 BPMN files. The
+content-agnostic, <code class="language-plaintext highlighter-rouge">strict</code> ones — <code class="language-plaintext highlighter-rouge">content-lifecycle</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication</code>,
+<code class="language-plaintext highlighter-rouge">editing-hci-validation</code> — plus seven <code class="language-plaintext highlighter-rouge">crdm-*</code> cover requirements and content.
+There is <strong>no BPMN for the software development lifecycle itself</strong>: for how a
+change to the <em>platform</em> travels from a need to a released capability.
+<code class="language-plaintext highlighter-rouge">beans list -S SDLC</code> returns empty.</p>
+
+<p>So the gap is not that the documentation is scattered. It is that the SDLC is
+the one process here described only in prose — <code class="language-plaintext highlighter-rouge">AGENTS.md</code> §”Commit early,
+commit often, always PR”, <a href="../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a>,
+<code class="language-plaintext highlighter-rouge">docs/contributing.md</code> — while this project’s own rule is that anything with
+actors, activities and a control flow is authored as BPMN, not as prose and not
+as a Mermaid fence.</p>
+
+<p><strong>“Formal formal” has to mean executable, not longer.</strong> A process here is formal
+when its lanes bind to declared roles, every activity carries
+<code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code>, bean operations are declared with <code class="language-plaintext highlighter-rouge">&lt;folio:bean op&gt;</code>, and
+<code class="language-plaintext highlighter-rouge">bun run kg:audit</code> is green on its joins. <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> already meets
+that bar and is the model to copy.</p>
+
+<p>Two cautions for whoever takes bean <code class="language-plaintext highlighter-rouge">folio-assistant-haya</code>:</p>
+
+<ul>
+  <li><strong>MVP may already be a subprocess.</strong> <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code> contains “share MVP”
+and loops back into implementation. Check before drawing a second one.</li>
+  <li><strong>Do not draw over the existing 31.</strong> The first deliverable is an audit
+saying which diagram owns which phase — <em>including the phases nothing owns</em>.</li>
+</ul>
+
+<p><strong>Where this proposal touches the SDLC</strong>: it adds a deployment phase whose
+activities differ per topology. That is why the SDLC bean depends on the axes
+being agreed — a lane whose steps change with the deployment target cannot be
+drawn before the targets are named.</p><hr />
+<h2 id="6-what-would-change-my-mind">
+  
+  
+    <a href="#6-what-would-change-my-mind" class="anchor-heading" aria-labelledby="6-what-would-change-my-mind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. What would change my mind
+  
+  
+</h2>
+    
+
+<p>Per the standard this project sets for a proposal: if it cannot say what
+evidence would move it, it is an opinion wearing a heading.</p>
+
+<ol>
+  <li><strong>A scenario that is not a point in the product.</strong> If the BA names a
+deployment needing a value no axis ranges over, the axes are incomplete.
+Two were already found this way and added.</li>
+  <li><strong>Two axes that do not vary independently.</strong> If fixing one always fixes
+another, they are one axis wearing two names — which is what axes 7 and 8
+were, until splitting them exposed the air-gapped contradiction.</li>
+  <li><strong>An incompatibility table that grows without bound.</strong> A handful of stated
+incompatibilities is a feature. Dozens would mean the axes carve the space
+badly and a smaller set of richer values would serve better.</li>
+  <li><strong>Sovereign cloud and self-sovereign collapsing.</strong> If review finds the
+outward-facing line does not hold, they are one topology, and this document
+should say so rather than keep two names for one thing.</li>
+</ol><hr />
+<h2 id="related-work">
+  
+  
+    <a href="#related-work" class="anchor-heading" aria-labelledby="related-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related work
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>item</th>
+      <th>what it holds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/litlfred/folio-assistant/issues/363">#363</a></td>
+      <td>the request</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-5a3l</code></td>
+      <td>the epic, and the fourteen beans under it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-4dbr</code></td>
+      <td>forge portability as Tool nodes, not a sixth repo. Its §”Sovereign compute” already separates <em>which service hosts change proposals</em> from <em>running with no external service at all</em>, and records that the portability claim is asserted and never exercised</td>
+    </tr>
+    <tr>
+      <td><a href="../reference/skill-instructions/serving-renderings.html"><code class="language-plaintext highlighter-rouge">serving-renderings</code></a></td>
+      <td>per-host media types, and the three enforcement states. Explicitly leaves “how to run a server” uncovered — the hole bean <code class="language-plaintext highlighter-rouge">folio-assistant-0hi8</code> fills</td>
+    </tr>
+    <tr>
+      <td><a href="../architecture/cat-harness-minimum.html"><code class="language-plaintext highlighter-rouge">cat-harness-minimum</code></a></td>
+      <td>the written claim that the harness runs with no forge and no MCP. 614 lines, and untested</td>
+    </tr>
+    <tr>
+      <td><a href="../swarm-management.html"><code class="language-plaintext highlighter-rouge">swarm-management</code></a></td>
+      <td>a swarm is asked for every time, per swarm, with agent count, model level and rough cost. Unchanged by this proposal</td>
+    </tr>
+  </tbody>
+</table></div>
 
           
 
