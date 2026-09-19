@@ -182,6 +182,40 @@
           ],
           "additionalProperties": false
         },
+        "topology": {
+          "type": "object",
+          "properties": {
+            "forge": {
+              "type": "string",
+              "enum": [
+                "none",
+                "github",
+                "self-hosted",
+                "jurisdiction-hosted"
+              ]
+            },
+            "network": {
+              "type": "string",
+              "enum": [
+                "internet",
+                "egress-restricted",
+                "air-gapped"
+              ]
+            },
+            "modelProvenance": {
+              "type": "string",
+              "enum": [
+                "open-weight-local",
+                "hosted",
+                "mixed"
+              ]
+            },
+            "outwardFacing": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
         "directories": {
           "type": "array",
           "items": {
@@ -235,8 +269,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "afbb4d55be4b679f691b9636239d01448ca07d78",
+    "sha": "065553a086fc61ee45b31e56ab62d9c97622824f",
     "pr": "434/merge",
-    "run": "35453958911"
+    "run": "35454251823"
   }
 }
