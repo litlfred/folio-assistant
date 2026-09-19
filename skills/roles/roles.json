@@ -150,13 +150,15 @@
       "title": "Code reviewer",
       "description": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
       "actorKinds": [
-        "person"
+        "person",
+        "agent"
       ],
       "lanes": [
         "Code reviewer"
       ],
       "skills": [
         "code-node-review",
+        "placement",
         "skills-and-tools",
         "test-engineer"
       ],
@@ -451,6 +453,7 @@
         "document-structure",
         "feature-staging",
         "normative-statements",
+        "placement",
         "prepare-merge",
         "prepare-merge-auto",
         "semantic-review-scoping",
