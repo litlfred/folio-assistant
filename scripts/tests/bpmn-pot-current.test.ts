@@ -1,0 +1,58 @@
+/**
+ * Every diagram has a current `.pot` in every locale that translates diagrams.
+ *
+ * ## Why this is a test and why the gate is per-locale
+ *
+ * `render-bpmn` has `render:bpmn:check` and `AGENTS.md` records why at length:
+ * a generated artefact with no staleness check drifts silently. `translate-bpmn`
+ * had no counterpart, so adding a diagram and not re-extracting cost nothing
+ * until somebody ran extract by hand. Bean `0hd6`, measured 2026-09-19:
+ * **12 of 32** diagrams had no `fr` template at all, and **18 of the 20 that
+ * existed were stale** — still naming `.beans/`, the dot-prefixed directory
+ * that moved to `beans/` on 2026-09-18. A translator working from those would
+ * have translated a path that no longer exists.
+ *
+ * The gate is per-locale because `fr` is the only locale with workflow
+ * coverage; `ar`, `es`, `ru` and `zh` carry `kg-viewer` and nothing else.
+ * Demanding 32 templates each would invent 128 files of coverage those locales
+ * do not have anywhere, which is worse than the gap. They are REPORTED by the
+ * checker instead — a locale scanned, found empty and called clean is the
+ * `dh4f` defect.
+ *
+ * ## Read a failure here as one of two things
+ *
+ * A diagram you added needs `bun run translate-bpmn --extract`, or a diagram
+ * you edited changed a label and the template must follow. Both are the same
+ * one-line fix. What a failure is NEVER is a reason to drop the locale from
+ * the gate.
+ */
+import { describe, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
+import { existsSync, readdirSync } from "node:fs";
+import { join, resolve } from "node:path";
+
+const root = resolve(import.meta.dir, "../..");
+
+describe("BPMN translation templates", () => {
+  test("at least one locale gates — otherwise this proves nothing", () => {
+    // Without this, deleting `translations/fr/workflows/` makes the checker
+    // report every locale as "not a target" and exit 0, which is a vacuous
+    // pass over the exact defect being guarded against.
+    const dir = join(root, "translations");
+    const gating = existsSync(dir)
+      ? readdirSync(dir, { withFileTypes: true }).filter(
+          (e) => e.isDirectory() && existsSync(join(dir, e.name, "workflows")),
+        )
+      : [];
+    expect(gating.map((e) => e.name)).toContain("fr");
+  });
+
+  test("no diagram is missing or stale in a gating locale", () => {
+    const r = spawnSync("bun", ["run", "scripts/translate-bpmn.ts", "--check"], {
+      cwd: root,
+      encoding: "utf-8",
+    });
+    expect(r.stdout, "run `bun run translate-bpmn --extract`").toContain("never extracted");
+    expect(r.status).toBe(0);
+  });
+});

@@ -59,6 +59,8 @@ That is worse than the unwired gate, because it would survive wiring it up.
 The eight paths are repointed, on the branch that found them. That is the
 symptom; the two boxes above are the defect.
 
+_2026-09-19T11:35:38Z_ — Claimed by claude/fervent-mccarthy-nw4olk — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## Done 2026-09-19
 
 Both boxes, measured before and after.
@@ -128,3 +130,13 @@ alone would have left the extraction correct and the gate green.
 `readme:audit` still does not fetch external URLs, deliberately — 24 links are
 `not checked` for that reason and making CI depend on the reachability of two
 dozen third-party hosts would trade a silent hole for a flaky gate.
+
+### A footnote the merge itself produced
+
+Merging `main` conflicted on THIS file, between the claim `beans:claim` pushed
+to `main` and the completion written here. That is the `35nj` hazard in a second
+facet — and the good one. Mirroring the status locally stops a stale `todo`
+**silently reverting** the claim; it does not stop a conflict when both sides
+edit the bean, and it should not. A conflict is git asking a person to
+reconcile, which is loud and correct; the revert was silent and wrong. Resolved
+by keeping both: the claim is history, the completion is the outcome.

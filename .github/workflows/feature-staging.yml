@@ -45,19 +45,51 @@ on:
         required: false
         default: ''
         type: string
+      # ── The two below are a DELETION TRIGGER. ────────────────
+      # They exist because the label path cannot reach the previews the
+      # health sweep reports: `cleanup` below fires on `pull_request_target:
+      # closed`, and being findable as an orphan REQUIRES the pull request to
+      # be closed already — so the event has fired, the job has run, and the
+      # label was absent. Labelling afterwards fires nothing, and re-running
+      # the old run replays the stored payload, which still carries no label.
+      # Bean `w2g5`.
+      #
+      # Guarded three ways, because a dispatch input is a deletion trigger and
+      # must be guarded at least as carefully as the label it replaces:
+      # `workflow_dispatch` is available only to an actor with write access;
+      # `cleanup_confirm` must repeat the slug exactly, so a confirmation
+      # cannot be carried over from a previous run against a different
+      # preview; and the removal is preflighted against the same liveness
+      # signals the health sweep uses, at removal time.
+      cleanup_slug:
+        description: 'DELETION: the STAGING/<slug> to remove. Leave blank to stage a branch instead.'
+        required: false
+        default: ''
+        type: string
+      cleanup_confirm:
+        description: 'Type the slug again, exactly, to confirm the removal. Anything else refuses.'
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: write
   pull-requests: write
 
 concurrency:
-  group: staging-${{ github.event.pull_request.head.ref || github.ref_name }}
+  # `cleanup_slug` sits in the middle so two dispatched cleanups of
+  # DIFFERENT previews do not cancel each other: without it they would both
+  # land in `staging-main` and `cancel-in-progress` would drop the first.
+  group: staging-${{ github.event.pull_request.head.ref || inputs.cleanup_slug || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
   # ── Deploy feature branch to STAGING/ ─────────────────────────
   stage:
-    if: github.event.action != 'closed'
+    # A cleanup dispatch is not a staging request. `github.event.action` is
+    # empty on `workflow_dispatch`, so without the second clause a run asked to
+    # REMOVE a preview would deploy one as well.
+    if: github.event.action != 'closed' && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
     runs-on: ubuntu-latest
     # NO shared `gh-pages-push` group. This job keeps only the per-branch
     # workflow-level group above, plus the retry on its push.
@@ -539,8 +571,14 @@ jobs:
 
       - name: Remove staging directory (confirmed)
         if: steps.check.outputs.confirmed == 'true'
+        # Bound to env rather than interpolated, like every other branch-derived
+        # value in this file. The sed pipeline above already reduces the slug to
+        # [a-zA-Z0-9._-], so this is not a hole being closed — it is the one
+        # shape in this workflow that a reader should be able to copy.
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         run: |
-          SLUG="${{ steps.slug.outputs.slug }}"
+          SLUG="$STAGING_SLUG"
           if [ -d "STAGING/$SLUG" ]; then
             rm -rf "STAGING/$SLUG"
             git config user.name 'github-actions[bot]'
@@ -583,9 +621,15 @@ jobs:
               '',
               `The staging preview at [${pagesUrl}](${pagesUrl}) has **not** been removed.`,
               '',
-              'To remove it, add the \`staging:cleanup\` label to this PR and re-run',
-              'this workflow, or manually delete the `STAGING/' + slug + '/` directory',
-              'from the `gh-pages` branch.',
+              'To remove it while this PR is still open, add the \`staging:cleanup\`',
+              'label and re-run this workflow.',
+              '',
+              '**Once the PR is closed the label can no longer reach it** — a re-run',
+              'replays the stored event payload, which still carries no label. Use the',
+              '`Feature Staging` workflow\'s **Run workflow** button instead, with',
+              '`cleanup_slug: ' + slug + '` and `cleanup_confirm: ' + slug + '`. It',
+              're-checks that nothing is still using the preview before it removes',
+              'anything, and refuses if it cannot tell.',
               '',
               '_Staging previews require explicit human confirmation to remove,_',
               '_so reviewers can continue comparing before/after._',
@@ -594,3 +638,151 @@ jobs:
               owner, repo, issue_number: context.issue.number, body,
             });
 
+
+  # ── Remove ONE preview, on an explicit human dispatch ─────────
+  cleanup-dispatch:
+    # THE REMEDY A PERSON CAN ACTUALLY INVOKE — bean `w2g5`, second half.
+    #
+    # `cleanup` above is the only mechanism that removes a preview and it is
+    # gated on `pull_request_target: closed`. The health sweep's
+    # `staging-preview-orphans` finding can only ever name a preview whose
+    # pull request is ALREADY closed, so by the time anybody reads the finding
+    # the event has fired, the job has run and the label was absent. Labelling
+    # afterwards fires nothing; re-running the old run replays the stored
+    # payload, which still carries no label. So the documented remedy was
+    # unreachable for every orphan the check can report, and the alternatives
+    # were a hand-pushed `gh-pages` commit — the unilateral removal
+    # `skills/folio-core/deletion-requires-confirmation.md` exists to stop —
+    # or leaving the size check firing forever on artefacts nobody can remove,
+    # which is how a check gets switched off.
+    #
+    # ## Why it re-checks liveness instead of trusting the report
+    #
+    # A dispatch that removes a preview still in use is the same defect one
+    # level out, and worse: the sweep proposes, this acts. The sweep runs
+    # daily; between it and the dispatch a branch can come back to life, which
+    # is exactly the behaviour `w2g5` documents — a session reusing one branch
+    # across five successive pull requests. So the preflight re-evaluates the
+    # signals at REMOVAL time, through the same `previewLiveness` the sweep
+    # uses rather than a second implementation of it, and refuses on `live`
+    # (exit 1) AND on could-not-tell (exit 2). Refusing to delete is the only
+    # recoverable direction.
+    #
+    # ## Why the inputs are safe
+    #
+    # `workflow_dispatch` is available only to an actor with write access, so
+    # the caller is already trusted — unlike `pull_request_target`, which runs
+    # with the base repository's token on a FORK's branch name. That is why
+    # `cleanup`'s slug step carries the warning it does, and the same rule is
+    # kept here regardless: every input is bound to `env:` and read as a shell
+    # VARIABLE, never interpolated into the script text, and the slug's shape
+    # is checked before it can reach `rm`.
+    if: github.event_name == 'workflow_dispatch' && inputs.cleanup_slug != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate the slug and the confirmation
+        id: guard
+        env:
+          CLEANUP_SLUG: ${{ inputs.cleanup_slug }}
+          CLEANUP_CONFIRM: ${{ inputs.cleanup_confirm }}
+        run: |
+          set -eu
+          SLUG="$CLEANUP_SLUG"
+          # Exactly what the `Determine staging slug` sed pipeline can produce.
+          # `.` and `..` are spelled entirely out of permitted characters and
+          # neither names a preview, so they are refused by name.
+          case "$SLUG" in
+            ""|.|..)
+              echo "::error::cleanup_slug must name one STAGING/<slug> directory, not a path."
+              exit 1
+              ;;
+            *[!A-Za-z0-9._-]*)
+              echo "::error::cleanup_slug may only contain A-Za-z0-9._- — the characters the staging slug pipeline produces."
+              exit 1
+              ;;
+          esac
+          # Repeating the SLUG rather than ticking a box, so a confirmation
+          # cannot be carried over from an earlier run against a different
+          # preview: the confirmation names the artefact it confirms.
+          if [ "$CLEANUP_CONFIRM" != "$SLUG" ]; then
+            echo "::error::cleanup_confirm must repeat cleanup_slug exactly. Nothing was removed."
+            exit 1
+          fi
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "Confirmed target: STAGING/$SLUG"
+
+      - name: Check out the platform, for the liveness preflight
+        uses: actions/checkout@v4
+        with:
+          # The preflight asks whether a branch is an ancestor of the default
+          # branch, which a truncated history cannot answer. It says so rather
+          # than guessing, and saying so REFUSES — so a shallow checkout here
+          # would make every dispatch fail.
+          fetch-depth: 0
+          path: source
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install deps
+        working-directory: source
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Refuse to remove a preview that is still in use
+        working-directory: source
+        env:
+          CLEANUP_SLUG: ${{ steps.guard.outputs.slug }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
+
+      - name: Check out the publish branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: pages
+
+      - name: Remove the preview
+        working-directory: pages
+        env:
+          CLEANUP_SLUG: ${{ steps.guard.outputs.slug }}
+          DISPATCHED_BY: ${{ github.actor }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          if [ ! -d "STAGING/$CLEANUP_SLUG" ]; then
+            echo "No STAGING/$CLEANUP_SLUG on gh-pages — nothing to remove."
+            exit 0
+          fi
+          # Say what is going, with its size and file count, BEFORE it goes:
+          # a deletion that leaves no record of what it removed is the first
+          # property `deletion-requires-confirmation` warns about.
+          echo "Removing STAGING/$CLEANUP_SLUG"
+          du -sh "STAGING/$CLEANUP_SLUG" || true
+          find "STAGING/$CLEANUP_SLUG" -type f | wc -l
+          rm -rf -- "STAGING/$CLEANUP_SLUG"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A "STAGING/$CLEANUP_SLUG"
+          git commit \
+            -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
+            -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in scripts/staging-cleanup-preflight.ts." \
+            -m "$RUN_URL" || true
+          # Same race as every other writer of this ref, and the same reason a
+          # queue is not enough: a PENDING job is cancelled by the next
+          # arrival rather than waiting. Rebase and retry — this commit removes
+          # one directory, so it rebases onto whatever landed without touching it.
+          for attempt in 1 2 3; do
+            if git push origin gh-pages; then
+              echo "pushed on attempt $attempt"
+              break
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::could not push cleanup after 3 attempts"
+              exit 1
+            fi
+            echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            git pull --rebase origin gh-pages
+            sleep $((attempt * 5))
+          done
+          echo "Removed STAGING/$CLEANUP_SLUG"

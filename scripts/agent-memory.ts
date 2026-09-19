@@ -47,6 +47,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, join, resolve } from "node:path";
 
 import { EMPTY_NOTE_TAGS, type KgRef, type NoteTags } from "../schemas/carried-note.js";
+import { kgRoots } from "./known-skills.js";
 import {
   AGENT_REF_KIND,
   MEMORY_LABELS,
@@ -59,7 +60,14 @@ import {
 
 export const ROOT = resolve(import.meta.dir, "..");
 /** Authored entries. Inside the declared `kg` directory, which is `skills/`. */
-export const MEMORY_DIR = join(ROOT, "skills", "memory");
+// Every declared knowledge-graph root's `memory/`, not the literal
+// `skills/memory`. A topical layout puts memory nodes wherever the instance
+// declares its graph, and a generator that looks in one place would assemble
+// a MEMORY.md missing whatever it did not visit.
+export const MEMORY_DIRS = kgRoots(ROOT).map((d) => join(d, "memory")).filter((d) => existsSync(d));
+// declared-path-literal: the convention fallback, so a generator in an
+// instance that declares nothing still has a directory to report on.
+export const MEMORY_DIR = MEMORY_DIRS[0] ?? join(ROOT, "skills", "memory");
 /** Where the HARNESS looks. Not ours to move. */
 export const AGENT_MEMORY_DIR = join(ROOT, ".claude", "agent-memory");
 

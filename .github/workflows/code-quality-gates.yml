@@ -233,6 +233,24 @@ jobs:
       - name: tool definitions
         run: bun run check:tools
 
+      # Every voice rule cites a library section that is actually there.
+      #
+      # A voice is a rule set OVERLAID on the house voice, and 36 of this
+      # repo's 37 rules cite `library/<slug>/sections/<id>.md` as the passage
+      # they were derived from. A citation that does not resolve is a rule
+      # nobody can check against its source — the `blv9` class (a link-shaped
+      # value that does not dereference), in the one place where the source is
+      # the entire justification for the rule.
+      #
+      # IT WAS WIRED AS AN npm SCRIPT AND RUN BY NOTHING. Measured
+      # 2026-09-19: `grep -rn 'check:voices' .github/` returned zero. That is
+      # the `xom7` shape — a gate that looks green from inside the repo
+      # because nothing ever runs it — with the workflow missing outright
+      # rather than failing. Found while inventorying the planned `library/`
+      # extraction, which would have broken 28 citations silently.
+      - name: voice citations resolve
+        run: bun run check:voices
+
       # Workflow YAML GitHub will actually parse, and no attacker-controlled
       # expression interpolated into a run body.
       #
