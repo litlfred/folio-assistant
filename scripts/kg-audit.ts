@@ -42,6 +42,7 @@
  */
 
 import { createHash } from "node:crypto";
+import { workflowDirs, workflowFiles } from "./known-skills.js";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
@@ -152,17 +153,21 @@ function report(
 // ── Corpus ──────────────────────────────────────────────────────
 
 interface LoadedProcess {
+  /** ABSOLUTE path. Was a bare basename joined to one WORKFLOW_DIR, which
+   *  stopped being a single directory once an instance can declare several. */
   file: string;
   model?: ProcessModel;
   error?: string;
 }
 
 async function loadProcesses(): Promise<LoadedProcess[]> {
-  const files = readdirSync(WORKFLOW_DIR).filter((f) => f.endsWith(".bpmn")).sort();
+  // Every declared knowledge-graph directory, via the same helper the other
+  // consumers use, so none of them can disagree about where diagrams live.
+  const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
   const out: LoadedProcess[] = [];
   for (const file of files) {
     try {
-      out.push({ file, model: await loadProcessModel(join(WORKFLOW_DIR, file)) });
+      out.push({ file, model: await loadProcessModel(file) });
     } catch (e) {
       out.push({ file, error: e instanceof Error ? e.message : String(e) });
     }
@@ -178,11 +183,11 @@ async function auditProcess(
   skills: Set<string>,
   processIds: Set<string>,
 ): Promise<KgQaReport> {
-  const rel = relative(root, join(WORKFLOW_DIR, p.file));
-  const hash = sha256(readFileSync(join(WORKFLOW_DIR, p.file), "utf-8"));
+  const rel = relative(root, p.file);
+  const hash = sha256(readFileSync(p.file, "utf-8"));
 
   if (!p.model) {
-    return report("process", p.file.replace(/\.bpmn$/, ""), rel, hash, allUnknown("process", `the diagram would not load: ${p.error}`));
+    return report("process", basename(p.file, ".bpmn"), rel, hash, allUnknown("process", `the diagram would not load: ${p.error}`));
   }
   const m = p.model;
   const activities = [...m.nodes.values()].filter(isActivity);
@@ -406,7 +411,10 @@ async function auditProcess(
 async function auditDecisions(
   processes: LoadedProcess[],
 ): Promise<KgQaReport[]> {
-  if (!existsSync(DECISION_DIR)) return [];
+  const decisionDirs = workflowDirs(root)
+    .map((d) => join(d, "decisions"))
+    .filter((d) => existsSync(d));
+  if (decisionDirs.length === 0) return [];
   const referenced = new Set<string>();
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) {
@@ -415,8 +423,10 @@ async function auditDecisions(
   }
 
   const out: KgQaReport[] = [];
-  for (const f of readdirSync(DECISION_DIR).filter((f) => f.endsWith(".dmn")).sort()) {
-    const abs = join(DECISION_DIR, f);
+  for (const abs of decisionDirs
+    .flatMap((d) => readdirSync(d).filter((f) => f.endsWith(".dmn")).map((f) => join(d, f)))
+    .sort()) {
+    const f = basename(abs);
     const rel = relative(root, abs);
     const hash = sha256(readFileSync(abs, "utf-8"));
     // Every `<decision id>` the file declares. Read from the XML rather than
@@ -1007,28 +1017,32 @@ function auditGraph(
 // ── Sidecar IO ──────────────────────────────────────────────────
 
 function sidecarPath(r: KgQaReport): string {
-  // A skill's sidecar sits beside the skill, because skills live under
-  // several packages and a single directory would collide two packages'
-  // same-named skills into one file.
-  if (r.subject.kind === "skill" && r.subject.path) {
-    const abs = join(root, r.subject.path);
-    return kgQaSidecarPath(root, dirname(abs), basename(abs, ".md"));
-  }
-  // The directory each subject kind LIVES in. The results tree mirrors it —
-  // see `kgQaSidecarPath` for why a flat one collides, measurably.
+  // ANY subject that records its own path resolves its directory from THAT,
+  // not from a table keyed on its kind.
+  //
+  // This was skill-only, for a reason that turned out to be general: skills
+  // live under several packages, so one directory per kind would collide two
+  // packages' same-named skills into one sidecar. Processes have exactly that
+  // shape the moment an instance declares more than one knowledge-graph
+  // directory — `bootstrap/workflows/` and `crdm/workflows/` can each hold a
+  // `review.bpmn`, and a kind-keyed table sends both to one file, so one
+  // silently overwrites the other's findings.
+  //
+  // So the table below is now what its own comment already called it for
+  // skills: a FALLBACK, for subjects that carry no path — a role, a
+  // requirement, the graph itself.
   const dirFor: Record<KgSubjectKind, string> = {
     process: WORKFLOW_DIR,
     decision: DECISION_DIR,
     role: join(KG_ROOT, "roles"),
     requirement: join(KG_ROOT, "requirements"),
-    // Fallback only: a skill's subject directory is resolved above, from its
-    // own path, so two packages' skills of the same name stay distinct.
     skill: KG_ROOT,
     graph: join(KG_ROOT, "roles"),
   };
-  const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json)$/, "") : r.subject.id;
+  const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json|md)$/, "") : r.subject.id;
   const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
-  return kgQaSidecarPath(root, dirFor[r.subject.kind], name);
+  const dir = r.subject.path ? dirname(join(root, r.subject.path)) : dirFor[r.subject.kind];
+  return kgQaSidecarPath(root, dir, name);
 }
 
 function serialise(r: KgQaReport): string {
