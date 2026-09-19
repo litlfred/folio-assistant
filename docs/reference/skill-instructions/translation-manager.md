@@ -316,9 +316,13 @@ published as semantic drift. Per-block QA replaces them: the `TR` icon beside
 each block opens `<stem>.<locale>.translation-qa.json`, where a verdict names
 the witness that reached it.
 
-**Do not** manually add `{% include translation-warning.html %}` to pages —
-`docs-ui.js` handles it automatically. (`qa-translation-badge.html` is deleted,
-not deprecated: it rendered the removed numbers.)
+`docs-ui.js` injects the unverified-translation warning itself, from the page's
+own front matter. **There is no include to add**:
+`_includes/translation-warning.html` is deleted, not deprecated, as is
+`_includes/language-selector.html` — `buildLanguageBar` renders the six UN
+languages and greys out the ones not yet translated, which the include only
+promised in a comment. (`qa-translation-badge.html` went the same way: it
+rendered the removed numbers.)
 
 ## Official vs unofficial
 
@@ -385,9 +389,9 @@ pipeline (IG Publisher) are complementary and independent.
 
 ## Do not
 
-- **Do not manually add badge includes.** `docs-ui.js` renders them automatically
-  from front matter; the `{% include translation-warning.html %}` call is
-  deprecated.
+- **Do not manually add badge includes.** `docs-ui.js` renders them
+  automatically from front matter. The include it replaced is **deleted, not
+  deprecated** — an include that still exists is one somebody adds back.
 - **Do not publish a semantic-QA number a script cannot establish.** A
   back-translation from this repo's own PO map, or from a word-substitution
   table, scores the table rather than the translation — and a string with no
