@@ -10,10 +10,11 @@ roles:
 agents:
   - ci-health-watcher
 ---
-Three CI checks are invoked **by path**, not by npm-script name, so a sweep
-over `bun run <script-name>` structurally cannot see them: `gen-docs-pages.ts`,
-`gen-schema-docs.ts`, `gen-skill-docs.ts`, each `--check`. Get the list from the
-workflow itself, not from `package.json`.
+**`bun run gates`** runs what CI runs, derived from the workflow at run time
+(`--all` adds the browser job). Never hand-list them: three checks are invoked
+by PATH so a `bun run <script>` sweep cannot see them, and a hand-list of 17
+read as coverage while the real set was 37 (measured 2026-09-19, by the agent
+that wrote this entry's advice into a command).
 
 **Editing a script that WRITES a witness restales every published projection of
 it** — regenerate both sides and verify by parsing, not by grep.

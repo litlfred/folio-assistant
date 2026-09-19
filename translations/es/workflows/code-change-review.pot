@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-change-review\n"
-"POT-Creation-Date: 2026-09-19T17:17:28.340Z\n"
+"POT-Creation-Date: 2026-09-19T18:16:19.845Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,22 +14,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/code-change-review.bpmn:176
+#: skills/workflows/code-change-review.bpmn:178
 #. Diagram element documentation
 msgid "\"Flake\" is not a root cause. A red PR is work now, whatever its review state — only a green, mergeable head waits on reviewers."
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:213
+#: skills/workflows/code-change-review.bpmn:215
 #. Diagram element documentation
 msgid "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:227
+#: skills/workflows/code-change-review.bpmn:229
 #. Diagram element documentation
 msgid "A closed work item is read later by somebody deciding whether to reopen the subject, so \"completed\" with nothing behind it cannot be audited. An ISSUE is never closed on the agent's own say-so."
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:262
+#: skills/workflows/code-change-review.bpmn:264
 #. Diagram element documentation
 msgid "A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane."
 msgstr ""
@@ -39,7 +39,7 @@ msgstr ""
 msgid "A platform change is needed"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:193
+#: skills/workflows/code-change-review.bpmn:195
 #. Diagram label
 msgid "Address the review"
 msgstr ""
@@ -64,12 +64,12 @@ msgstr ""
 msgid "Branch, and announce it"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:169
+#: skills/workflows/code-change-review.bpmn:171
 #. Diagram label
 msgid "CI green?"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:247
+#: skills/workflows/code-change-review.bpmn:249
 #. Diagram element documentation
 msgid "CI tests the MERGE, not the branch. That is why a locally green tree can go red here: the agent's tree and the merge result are different trees, and the difference is invisible from a checkout."
 msgstr ""
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Claim the work item"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:287
+#: skills/workflows/code-change-review.bpmn:289
 #. Diagram label
 msgid "clear"
 msgstr ""
@@ -104,22 +104,22 @@ msgstr ""
 msgid "Code reviewer"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:156
+#: skills/workflows/code-change-review.bpmn:158
 #. Diagram label
 msgid "Commit, push, open the PR"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:194
+#: skills/workflows/code-change-review.bpmn:196
 #. Diagram element documentation
 msgid "Every finding is answered — implemented, or replied to with why not. A design question does not excuse skipping the nits in the same review."
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:285
+#: skills/workflows/code-change-review.bpmn:287
 #. Diagram label
 msgid "findings"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:281
+#: skills/workflows/code-change-review.bpmn:283
 #. Diagram label
 msgid "green"
 msgstr ""
@@ -129,7 +129,7 @@ msgstr ""
 msgid "Make the change"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:240
+#: skills/workflows/code-change-review.bpmn:242
 #. Diagram label
 msgid "Merged"
 msgstr ""
@@ -139,37 +139,37 @@ msgstr ""
 msgid "Platform change — claim to merge"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:212
+#: skills/workflows/code-change-review.bpmn:214
 #. Diagram label
 msgid "Prepare the merge, and watch it through"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:226
+#: skills/workflows/code-change-review.bpmn:228
 #. Diagram label
 msgid "Record what was done, and close"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:282
+#: skills/workflows/code-change-review.bpmn:284
 #. Diagram label
 msgid "red"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:187
+#: skills/workflows/code-change-review.bpmn:189
 #. Diagram label
 msgid "Review clear?"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:261
+#: skills/workflows/code-change-review.bpmn:263
 #. Diagram label
 msgid "Review the change"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:175
+#: skills/workflows/code-change-review.bpmn:177
 #. Diagram label
 msgid "Root-cause the failure"
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:246
+#: skills/workflows/code-change-review.bpmn:248
 #. Diagram label
 msgid "Run the gates against the merge of head into base"
 msgstr ""
@@ -184,7 +184,7 @@ msgstr ""
 msgid "The loop's only open-ended step. Everything around it is procedure; this is the work."
 msgstr ""
 
-#: skills/workflows/code-change-review.bpmn:157
+#: skills/workflows/code-change-review.bpmn:159
 #. Diagram element documentation
 msgid "The PR opens at the FIRST commit, even on a stub, and permission is never asked for it. Holding a green PR back for someone to look at is not caution — it is a blocked reviewer."
 msgstr ""
