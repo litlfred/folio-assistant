@@ -9,6 +9,7 @@ roles:
   - validation-pipeline
 agents:
   - ci-health-watcher
+  - platform-boundary-guard
 ---
 Owner, 2026-09-19: **"dont encode rules against a working setup."**
 
@@ -33,6 +34,6 @@ Worked case: `docs/proposals/deployment-topologies.md` §3 leaves
 states it as flatly unavailable, but GitHub has offered Pages on private
 repos on paid plans and the account's entitlement was never checked.
 
-Belongs in `platform-boundary-guard` too; not tagged there because that file
-is at its 200-line injection budget and a 14th entry evicts three TRAPs.
-Bean `folio-assistant-4kiw`.
+The same rule in both lanes: a watcher must not render "could not check" as
+green, and a boundary guard must not encode a constraint that refuses a folio
+nobody has tried.
