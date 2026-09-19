@@ -243,13 +243,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T15:01:01.123Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/79d3782016fb43b7f38bceffa409d63368839f44",
-  "sourceCommitSha": "79d3782016fb43b7f38bceffa409d63368839f44",
-  "sourceCommitAt": "2026-09-19T16:59:23+02:00",
+  "generatedAt": "2026-09-19T15:06:49.357Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/51b998953132f0580eca01ee9fcb67907d5852fe",
+  "sourceCommitSha": "51b998953132f0580eca01ee9fcb67907d5852fe",
+  "sourceCommitAt": "2026-09-19T17:05:29+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 166,
+    "Skill": 167,
     "Actor": 26,
     "Capability": 23,
     "Role": 98,
@@ -891,6 +891,21 @@
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
       "instructionLines": 271,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/flushable-containers",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "flushable-containers",
+      "title": "Flushable containers",
+      "description": "A flushable container is a named store that accumulates by design — a trash you can recover from, a review preview, a console log. It declares a buffer limit, badges when over it, and offers three flush actions: flush all, trim to limit, and select to prune. What \"flush\" means, and which end of the order is expendable, are declared per container and differ.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/flushable-containers.md",
+      "instructionLines": 176,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3758,6 +3773,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/editor",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/flushable-containers",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/glossary-build",
@@ -19127,8 +19143,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "79d3782016fb43b7f38bceffa409d63368839f44",
+    "sha": "51b998953132f0580eca01ee9fcb67907d5852fe",
     "pr": "main",
-    "run": "35450392753"
+    "run": "35450722811"
   }
 }
