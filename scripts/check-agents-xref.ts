@@ -1,0 +1,189 @@
+#!/usr/bin/env bun
+/**
+ * Audit every citation a skill makes to a section of an `AGENTS.md`.
+ *
+ * @module scripts/check-agents-xref
+ *
+ * ## Why this has to exist before anything is migrated
+ *
+ * Bean `1hsf` moves substantive rules out of `AGENTS.md` into the skills that
+ * govern them. Moving a section silently breaks every skill that cited it, and
+ * measured on `main` 2026-09-19 — **before** a single line was moved — 18 of
+ * the 20 section-naming citations already failed to resolve against this
+ * repository's `AGENTS.md`. Nothing reported that, so nobody could tell an
+ * inherited break from one the migration had just caused. A migration run
+ * without this check is a migration whose damage is indistinguishable from the
+ * damage already there.
+ *
+ * ## The third state, and why collapsing it would be wrong
+ *
+ * **There are two `AGENTS.md` files and a citation does not say which it
+ * means.** The platform carries one; every folio built on it carries its own,
+ * and skills are *synced into* a folio, where the same sentence resolves
+ * against a different file. This repository's own `AGENTS.md` says so
+ * explicitly — *"`litlfred/qou`'s `AGENTS.md` carries the same first two rules
+ * for that folio — §'Branch + PR workflow'"* — and `continual-progress.md`
+ * cites exactly that section.
+ *
+ * So a citation is one of three things, never two:
+ *
+ * | verdict | meaning |
+ * |---|---|
+ * | `resolves` | names a heading in this repository's `AGENTS.md` |
+ * | `folio` | names a section this file itself attributes to a folio's `AGENTS.md` |
+ * | `unresolved` | names neither — either deleted here, or a folio section nothing records |
+ *
+ * `unresolved` is **not** "dead". This checkout cannot read a folio's
+ * `AGENTS.md`, so it cannot prove absence — it can only report that nothing
+ * here accounts for the reference. Rendering that as a dead link would produce
+ * a wall of false findings in exactly the checkout (platform-only, no folio)
+ * where this runs.
+ *
+ * Exit codes: 0 clean · 1 unresolved citations found · 2 could not check.
+ */
+import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
+
+export type Verdict = "resolves" | "folio" | "unresolved";
+
+export interface Citation {
+  file: string;
+  section: string;
+  verdict: Verdict;
+}
+
+/** Headings of an `AGENTS.md`, at any level. */
+export function headingsOf(markdown: string): string[] {
+  return [...markdown.matchAll(/^#{1,4}\s+(.+?)\s*$/gm)].map((m) => m[1]);
+}
+
+/**
+ * Compare a cited name with a heading loosely enough to survive formatting.
+ *
+ * A citation writes the section's *name*; the heading often carries a dash and
+ * a gloss after it (`## Commit early, commit often, always PR (STRICT)` cited
+ * as "always PR"). Matching exact strings would report almost everything as
+ * broken, which is a checker nobody runs twice.
+ */
+export function normalise(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[`*_"'‘’“”]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function matches(cited: string, headings: string[]): boolean {
+  const want = normalise(cited);
+  if (!want) return false;
+  return headings.map(normalise).some((h) => h === want || h.includes(want) || want.includes(h));
+}
+
+/**
+ * Sections this file itself hands to a folio's `AGENTS.md`.
+ *
+ * Derived from the text rather than listed by hand: a sentence naming a folio
+ * repository and a quoted `§` section in the same breath is this file saying
+ * "that section lives over there". Hardcoding the list would rot the moment
+ * the cross-reference paragraph is edited — which this very migration will do.
+ *
+ * **Scanned per PARAGRAPH, not per line, and that is not a detail.** The first
+ * version scanned lines and found zero, because the one attribution in this
+ * file wraps: `litlfred/qou`'s ... ends a line and `§"Branch + PR workflow"`
+ * begins the next. A three-state check whose middle state can never fire is a
+ * two-state check with a longer description.
+ */
+export function folioAttributedSections(agentsMd: string): Set<string> {
+  const out = new Set<string>();
+  for (const para of agentsMd.split(/\n\s*\n/)) {
+    if (!/litlfred\/\w+|the folio's|a folio's|that folio/i.test(para)) continue;
+    for (const m of para.matchAll(/§\s*["“]?([^"”\n,;]{4,60}?)["”]?(?=\s*(?:rule|,|;|and|\.|$))/gim)) {
+      out.add(normalise(m[1]));
+    }
+  }
+  return out;
+}
+
+/** Every `.md` under the given roots. */
+function markdownUnder(root: string): string[] {
+  if (!existsSync(root)) return [];
+  const out: string[] = [];
+  for (const e of readdirSync(root)) {
+    const p = join(root, e);
+    if (statSync(p).isDirectory()) out.push(...markdownUnder(p));
+    else if (e.endsWith(".md")) out.push(p);
+  }
+  return out;
+}
+
+/** A citation names a section: `AGENTS.md §"X"`, `AGENTS.md "X"`, `AGENTS.md's §X`. */
+const CITATION = /AGENTS\.md(?:'s)?\s*(?:§\s*)?["“]([^"”\n]{4,90})["”]/g;
+
+export function auditXrefs(repoRoot: string, skillRoots: string[]): Citation[] {
+  const agentsPath = join(repoRoot, "AGENTS.md");
+  if (!existsSync(agentsPath)) throw new Error(`no AGENTS.md at ${agentsPath}`);
+  const agentsMd = readFileSync(agentsPath, "utf8");
+  const headings = headingsOf(agentsMd);
+  const folio = folioAttributedSections(agentsMd);
+
+  const out: Citation[] = [];
+  for (const root of skillRoots) {
+    for (const f of markdownUnder(join(repoRoot, root))) {
+      const text = readFileSync(f, "utf8");
+      for (const m of text.matchAll(CITATION)) {
+        const section = m[1];
+        const verdict: Verdict = matches(section, headings)
+          ? "resolves"
+          : folio.has(normalise(section))
+            ? "folio"
+            : "unresolved";
+        out.push({ file: relative(repoRoot, f), section, verdict });
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * The roots holding hand-authored skills.
+ *
+ * `docs/reference/skill-instructions/` is deliberately absent: it is GENERATED
+ * from `skills/`, so every finding there is a duplicate of one already
+ * reported against its source, and fixing it directly would be overwritten by
+ * the next `gen-skill-docs` run.
+ */
+export const SKILL_ROOTS = ["skills", "src/skills", ".claude/skills"];
+
+if (import.meta.main) {
+  const strict = process.argv.includes("--strict");
+  let cites: Citation[];
+  try {
+    cites = auditXrefs(process.cwd(), SKILL_ROOTS);
+  } catch (e) {
+    console.error(`could not check: ${(e as Error).message}`);
+    process.exit(2);
+  }
+
+  const by = (v: Verdict): Citation[] => cites.filter((c) => c.verdict === v);
+  const unresolved = by("unresolved");
+
+  console.log(`AGENTS.md section citations: ${cites.length}`);
+  console.log(`  resolves here : ${by("resolves").length}`);
+  console.log(`  folio's file  : ${by("folio").length}   (attributed to a folio by AGENTS.md itself)`);
+  console.log(`  unresolved    : ${unresolved.length}`);
+
+  if (by("folio").length) {
+    console.log("\nNaming a folio's AGENTS.md — correct, but ambiguous to a reader:");
+    for (const c of by("folio")) console.log(`  · ${c.file}  §"${c.section}"`);
+  }
+
+  if (unresolved.length) {
+    console.log("\nUnresolved — no heading here, and this file does not attribute them to a folio.");
+    console.log("NOT proof of a dead reference: a folio's AGENTS.md cannot be read from a");
+    console.log("platform-only checkout. Qualify the citation, or repoint it at the skill.");
+    for (const c of unresolved) console.log(`  ✗ ${c.file}  §"${c.section}"`);
+  }
+
+  if (unresolved.length && strict) process.exit(1);
+  process.exit(0);
+}
