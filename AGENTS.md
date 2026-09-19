@@ -250,10 +250,10 @@ the platform carries no folio.
 ## Repository health — the same shape, one level out
 
 `check:ci-health` asks whether the **workflows** pass. `bun run health`
-(`tests/health/`, daily via `.github/workflows/health-check.yml`) asks about
+(`test/health/`, daily via `.github/workflows/health-check.yml`) asks about
 the **repository**: how much of `gh-pages` the review previews occupy, how big
 a clone costs, whether the work plan has duplicates or unhonoured claims.
-Results are committed under `tests/health/results/`, declared in
+Results are committed under `test/health/results/`, declared in
 `harness.json` as the `health` graph, and carry every threshold's **basis** —
 structurally, so a check cannot ship a bare number.
 
@@ -458,6 +458,13 @@ where the terms are defined.
 (the end-of-turn "next" line, a bean's `## Done when`, a PR body, an issue
 comment), why feature work breaks it more than content work, and a worked
 before/after from a real failure here.
+
+It also carries two rules added 2026-09-19 after this one was broken by the
+agent enforcing it: **with several decisions open, ask ONE in full and give a
+COUNT for the rest** — never a compact list of option names — and a
+**write-time pass** over the report you actually wrote, since the failure
+happens while composing a status update rather than a question
+([`turn-reporting.md`](skills/folio-core/turn-reporting.md)).
 
 ## Opening a bean or a topic — brief it before you touch anything (STRICT)
 

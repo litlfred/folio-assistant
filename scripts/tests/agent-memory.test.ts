@@ -8,7 +8,8 @@
  * nobody reads because "it's generated".
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import {
@@ -245,6 +246,38 @@ describe("archived entries are retained but injected nowhere", () => {
     const untagged = MemoryNodeSchema.parse(base);
     const archived = MemoryNodeSchema.parse({ ...base, id: "b", archived: true });
     expect(memoryForAgent([untagged, archived], "anyone").map((n) => n.id)).toEqual(["a"]);
+  });
+
+  test("the ordering holds through the READER, for both front-matter spellings", () => {
+    // The test above pins `memoryForAgent`, which is handed an already-parsed
+    // node. The path an author actually takes is the front matter, and there
+    // the flag is a STRING COMPARE -- `fm["archived"] === "true"` -- so the
+    // two spellings the corpus uses (`archived: true` and `archived: "true"`)
+    // must both survive the read. If one did not, the node would come back
+    // live AND untagged, and the untagged clause would hand it to every agent:
+    // the exact inversion archiving exists to prevent, arriving as a widened
+    // blast radius rather than as a missing entry.
+    const dir = mkdtempSync(join(tmpdir(), "memory-archived-"));
+    try {
+      const node = (id: string, archived: string): string =>
+        `---\n$schema: ${MEMORY_SCHEMA_TAG}\nid: ${id}\nlabel: stable\n` +
+        `summary: "${id}"\ncreatedAt: 2026-09-19\narchived: ${archived}\nagents:\n---\nbody\n`;
+      writeFileSync(join(dir, "bare.md"), node("bare", "true"));
+      writeFileSync(join(dir, "quoted.md"), node("quoted", '"true"'));
+      writeFileSync(
+        join(dir, "live.md"),
+        `---\n$schema: ${MEMORY_SCHEMA_TAG}\nid: live\nlabel: stable\n` +
+          `summary: "live"\ncreatedAt: 2026-09-19\nagents:\n---\nbody\n`,
+      );
+
+      const nodes = readMemoryNodes(dir);
+      expect(nodes.filter((n) => n.archived).map((n) => n.id).sort()).toEqual(["bare", "quoted"]);
+      // All three are untagged, so only archiving can keep two of them out.
+      expect(nodes.every((n) => n.tags.references.length === 0)).toBe(true);
+      expect(memoryForAgent(nodes, "anyone").map((n) => n.id)).toEqual(["live"]);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
 

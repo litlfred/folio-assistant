@@ -7,7 +7,7 @@
  * Those are different tests: a probe that returned `{ state: "ok", value: [] }`
  * on an unreachable branch would pass every test in the other file.
  *
- * @module tests/health/probes.test
+ * @module test/health/probes.test
  */
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";

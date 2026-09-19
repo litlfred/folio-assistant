@@ -8,7 +8,7 @@
  * bun run health -- --list       # what checks exist, one line each
  * bun run health -- --warn       # report only, never fail
  * bun run health -- --strict     # also fail on `minor` findings
- * bun run health -- --no-write   # do not touch tests/health/results/
+ * bun run health -- --no-write   # do not touch test/health/results/
  * bun run health -- --out F      # write the markdown to F, KEEP the exit code
  * ```
  *
@@ -32,7 +32,7 @@
  * declare it unchecked. The notifier gets `--out`, which writes the same
  * markdown and keeps the real exit code.
  *
- * @module tests/health/run
+ * @module test/health/run
  */
 
 import { createHash } from "node:crypto";
@@ -59,7 +59,7 @@ export function checkerHash(root: string = ROOT): string {
   // evidence gathering and this entry point. The schema is deliberately NOT
   // included: it constrains the report rather than deciding it, and a comment
   // edit there would rewrite the file for no change in meaning.
-  for (const f of ["tests/health/checks.ts", "tests/health/probes.ts", "tests/health/run.ts"]) {
+  for (const f of ["test/health/checks.ts", "test/health/probes.ts", "test/health/run.ts"]) {
     h.update(readFileSync(resolve(root, f)));
   }
   return h.digest("hex").slice(0, 12);
@@ -73,7 +73,7 @@ export function buildReport(
 ): HealthReport {
   return parseHealthReport({
     $schema: HEALTH_REPORT_SCHEMA,
-    producer: { script: "tests/health/run.ts", script_hash: opts.hash },
+    producer: { script: "test/health/run.ts", script_hash: opts.hash },
     subject: { kind: "repository", id: ctx.subject },
     updated_at: opts.updatedAt,
     verdict: healthVerdict(results),

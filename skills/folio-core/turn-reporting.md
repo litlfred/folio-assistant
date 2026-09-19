@@ -39,6 +39,39 @@ attempting — before the first tool call, not after the work lands:
 > - **worked** [`fwr8`](beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md) — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
 > - **next** [`fwr7`](beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md) — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
 
+### Before you send the report — one pass for named decisions (STRICT)
+
+The §"next" rule below is precise and was still broken by the agent enforcing it.
+Measured 2026-09-19: after a session spent applying it — including shipping a
+rule that a bean mention carries two sentences or does not appear — that same
+agent closed a turn with
+
+> Two decisions still yours, neither blocking: `35nj` (three claim-visibility
+> mechanism options, each with a cost I shouldn't pick unilaterally) and `wlqd`
+> (remote-package sync, needing pinned-commit vs `ref: main`).
+
+Every clause of that is the forbidden teaser. `35nj` and `wlqd` are opaque, the
+"three options" are unnamed, "pinned-commit vs `ref: main`" is two phrases whose
+costs live in a bean, and "neither blocking" is the framing that made it feel
+like reporting. The author's reply was *"show questions and context/pros/cons"* —
+the round trip the rule exists to prevent, paid by somebody who types with
+difficulty.
+
+**So prose was not the gap; a write-time pass is.** Before sending a closing
+report, scan your own text for anything that hands over a choice — a bean id, an
+option name, a "your call", a "needing X vs Y" — and for each one:
+
+- **carries its options with their costs, a recommendation and a default** → send it;
+- **does not** → delete the name and put a count in its place
+  ([`interaction-modality.md` §4.1](interaction-modality.md) §"More than one
+  decision pending");
+- **you are unsure whether it reads as a question** → treat it as one. The
+  framing sentence does not decide this; the reader's next keystroke does.
+
+The test is unchanged and takes one pass: **can they answer without opening
+anything?** Apply it to the report you just wrote, not to the question you
+planned to ask.
+
 ### The rules that make a report worth reading
 
 **1. Every bean reference carries TWO sentences and a link — what it is, then

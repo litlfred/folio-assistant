@@ -37,7 +37,7 @@
  * assertion below holds the 24px line so a regression is caught even if the
  * comfort margin is spent.
  *
- * @module tests/a11y.e2e
+ * @module test/a11y.e2e
  */
 import { test, expect } from "@playwright/test";
 import { AxeBuilder } from "@axe-core/playwright";

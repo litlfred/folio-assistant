@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T10:57:53Z
-updated_at: 2026-09-19T11:25:16Z
+updated_at: 2026-09-19T11:27:55Z
 ---
 
 ## The ask, owner 2026-09-19 (verbatim)
@@ -89,3 +89,5 @@ They share the sticky panel and nothing else, which is why they are two beans;
 say the word and they merge.
 
 _2026-09-19T11:25:16Z_ — READING CONFIRMED by the owner 2026-09-19: a drop is always a MOVE, never an implicit copy. Duplication is a separate, explicit action that mints a new sticky, which you then drop. The 'Done when' item asking for this confirmation is settled; the item requiring a test that a drop never implicitly duplicates stands as written.
+
+_2026-09-19T11:27:55Z_ — FIRST REAL CONSUMER, owner 2026-09-19: 'i want that the current landing page is a themetodo attached to node.' That is this bean's PAGE-GLOBAL case with a concrete instance rather than a hypothetical one, which is worth a lot — it means the anchor design gets built against something real. Reading to confirm before building: the landing page carries a ThemedTodo anchored page-globally (the 'global at top of page' state from the original ask), attached to the landing page's own node rather than to a block within it. Note this makes page-global a REAL requirement rather than an edge case, and it settles a design question the bean had left open: page-global cannot be a sentinel block id, because the landing page has no block to point at. It is an absence of block, as the bean already proposed. Depends on iurf (ThemedTodo exists, PR #405) and on this bean's Phase 1 anchor field.

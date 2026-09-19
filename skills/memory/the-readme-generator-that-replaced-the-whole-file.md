@@ -4,6 +4,7 @@ id: the-readme-generator-that-replaced-the-whole-file
 label: trap
 summary: "the README generator that replaced the whole file"
 createdAt: 2026-09-19
+archived: "true"
 roles:
   - code-reviewer
 agents:
@@ -30,3 +31,16 @@ tool and the staleness check all read the registry.
 `readme_sync` is registered among the **generic** tools: a document folio has
 chapters, simulators and workflows for the same reason a paper folio does,
 and simply never carries the Lean markers.
+
+**Archived 2026-09-19** (bean `folio-assistant-4kiw`). Superseded by
+`skills/folio-core/placement.md` §"The worked failure this skill exists to
+prevent", which restates this sentence for sentence — the `cp "$OUT"
+README.md`, the title, the three badges, the Knot Registry, the Project
+Structure table, the CC BY 4.0 block, *"Run it in any other folio and the
+author loses their README"*, and the five-of-N sections point — and then
+the ownership inversion, the marker pair, and `skip` as a third state. What
+it does not restate is the `SECTIONS` registry's member names and
+`readme_sync` being registered among the generic tools; it points at
+`AGENTS.md` §"README sections" for those, calling it the full post-mortem,
+so neither fact becomes unreachable. Retained as a node; injected into no
+prompt.

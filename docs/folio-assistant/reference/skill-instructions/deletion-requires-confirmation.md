@@ -179,7 +179,7 @@ eviction, a `git rm` that globs. If so, name what it removes, in the code, and
 make sure a person chose it.
 
 **If it is a sweep, does it act or does it report?** A checker that finds
-accumulation will be tempted to clear it. `tests/health/checks.ts` is the
+accumulation will be tempted to clear it. `test/health/checks.ts` is the
 worked counter-example in this repository: five checks, four of which are
 about artefacts piling up, and every `action` on every finding names something
 a *person* does. The daily workflow that runs them opens an issue and removes

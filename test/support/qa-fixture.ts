@@ -1,11 +1,11 @@
 /**
  * Derive an e2e fixture from a real QA sidecar, without inheriting its verdict.
  *
- * @module tests/support/qa-fixture
+ * @module test/support/qa-fixture
  *
  * ## The failure this exists to stop
  *
- * `tests/qa-panel.e2e.ts` read
+ * `test/qa-panel.e2e.ts` read
  * `test/results/witnesses/crdm-methodology/what-is-not-built-yet.block.json` straight
  * off disk and asserted the panel's first row was a **failing**
  * `voice-status-leak`. Its header argued for exactly that — read the corpus,

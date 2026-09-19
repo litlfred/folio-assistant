@@ -460,6 +460,31 @@
       "result": "pass",
       "findings": []
     },
+    "remote-skill-is-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "claude-scientific-skills.json/scientific-visualization",
+          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"scientific-visualization\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        },
+        {
+          "where": "claude-scientific-skills.json/scientific-critical-thinking",
+          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"scientific-critical-thinking\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        },
+        {
+          "where": "claude-scientific-skills.json/hypothesis-generation",
+          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"hypothesis-generation\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        },
+        {
+          "where": "smarter-fhir.json/smart-launch",
+          "detail": "skills/remote-packages/smarter-fhir.json declares \"smart-launch\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        },
+        {
+          "where": "smarter-fhir.json/fhir-client-operations",
+          "detail": "skills/remote-packages/smarter-fhir.json declares \"fhir-client-operations\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        }
+      ]
+    },
     "actor-roles-resolve": {
       "result": "pass",
       "findings": []
@@ -479,7 +504,7 @@
   },
   "totals": {
     "pass": 6,
-    "fail": 1,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }
