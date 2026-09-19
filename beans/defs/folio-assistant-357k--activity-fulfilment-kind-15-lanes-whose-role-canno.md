@@ -1,11 +1,11 @@
 ---
 # folio-assistant-357k
 title: 'activity-fulfilment-kind: 15 lanes whose role cannot perform the step type'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T07:27:41Z
-updated_at: 2026-09-19T07:27:41Z
+updated_at: 2026-09-19T07:43:28Z
 ---
 
 ## What the audit found
