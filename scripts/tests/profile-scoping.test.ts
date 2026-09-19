@@ -28,6 +28,7 @@
  *    because a tool could not read its configuration.
  */
 import { describe, test, expect, afterEach } from "bun:test";
+import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, rmSync, writeFileSync, appendFileSync, readFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
@@ -145,7 +146,7 @@ describe("readDeclaredFolioProfile — undetermined is not `paper`", () => {
   function folio(config?: string): string {
     const d = mkdtempSync(join(tmpdir(), "profile-scope-"));
     dirs.push(d);
-    if (config !== undefined) writeFileSync(join(d, "harness.config.json"), config, "utf-8");
+    if (config !== undefined) writeFileSync(join(d, HARNESS_CONFIG), config, "utf-8");
     return d;
   }
 
@@ -257,7 +258,7 @@ describe("the sweep's profile gate, end to end", () => {
     // up to — and a test that changed two things at once would not show which
     // one the gate reacted to.
     const { root, blockRoot } = scaffoldFolio("document");
-    const configPath = join(root, "harness.config.json");
+    const configPath = join(root, HARNESS_CONFIG);
     expect(readFileSync(configPath, "utf-8")).toContain("document");
     appendFileSync(configPath, "\n{ truncated", "utf-8");
     expect(readDeclaredFolioProfile(root).profile).toBeUndefined();

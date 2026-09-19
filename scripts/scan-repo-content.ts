@@ -41,6 +41,7 @@
  */
 
 import { spawnSync } from "node:child_process";
+import { HARNESS_CONFIG } from "../schemas/harness-config";
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { extname, join, relative, resolve, sep } from "node:path";
 
@@ -125,7 +126,7 @@ const SKIP_FILES = new Set([
  * scaffolding it wrote last time.
  */
 const FOLIO_FILES = new Set([
-  "harness.config.json", "agents.md", "claude.md", "gemini.md", ".mcp.json",
+  HARNESS_CONFIG, "agents.md", "claude.md", "gemini.md", ".mcp.json",
 ]);
 
 function isSkipped(rel: string): boolean {

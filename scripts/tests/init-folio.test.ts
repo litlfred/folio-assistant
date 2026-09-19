@@ -11,6 +11,7 @@
  * nowhere else, because every individual file is syntactically fine.
  */
 import { describe, test, expect, afterEach } from "bun:test";
+import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync, symlinkSync } from "fs";
 import { join, resolve } from "path";
 import { tmpdir } from "os";
@@ -88,7 +89,7 @@ describe("what gets written", () => {
     const d = tmp();
     const r = initFolio(opts(d));
     for (const f of [
-      "harness.config.json",
+      HARNESS_CONFIG,
       ".mcp.json",
       ".beans.yml",
       "content/schema/builders.ts",
@@ -111,13 +112,13 @@ describe("what gets written", () => {
   test("the config selects the adapter matching the content type", () => {
     const doc = tmp();
     initFolio(opts(doc));
-    const docCfg = JSON.parse(readFileSync(join(doc, "harness.config.json"), "utf-8"));
+    const docCfg = JSON.parse(readFileSync(join(doc, HARNESS_CONFIG), "utf-8"));
     expect(docCfg.contentType).toBe("document");
     expect(docCfg.adapterModule).toContain("adapters/document/index.ts");
 
     const pap = tmp();
     initFolio(opts(pap, { contentType: "paper" }));
-    const papCfg = JSON.parse(readFileSync(join(pap, "harness.config.json"), "utf-8"));
+    const papCfg = JSON.parse(readFileSync(join(pap, HARNESS_CONFIG), "utf-8"));
     expect(papCfg.contentType).toBe("paper");
     expect(papCfg.adapterModule).toContain("adapters/paper/index.ts");
   });
@@ -188,7 +189,7 @@ describe("re-running is safe", () => {
     const d = tmp();
     const r = initFolio(opts(d, { dryRun: true }));
     expect(r.created.length).toBeGreaterThan(10);
-    expect(existsSync(join(d, "harness.config.json"))).toBe(false);
+    expect(existsSync(join(d, HARNESS_CONFIG))).toBe(false);
     expect(existsSync(join(d, "content"))).toBe(false);
   });
 
@@ -233,7 +234,7 @@ describe("the scaffolded folio actually builds", () => {
     const { checkFolioProfile } = await import("../../content/pipeline/profile-check");
     const r = checkFolioProfile(d);
     expect(r.profile).toBe("document");
-    expect(r.declaredBy).toContain("harness.config.json");
+    expect(r.declaredBy).toContain(HARNESS_CONFIG);
     expect(r.blocksChecked).toBe(1);
     expect(r.violations).toEqual([]);
   });

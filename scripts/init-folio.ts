@@ -34,6 +34,7 @@
  */
 
 import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { HARNESS_CONFIG } from "../schemas/harness-config";
 import { materialiseDeclaredDirectories } from "../schemas/harness-config";
 import { relative, dirname, join, resolve } from "path";
 import { spawnSync } from "child_process";
@@ -519,7 +520,7 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   if (!o.dryRun) mkdirSync(root, { recursive: true });
 
   // 1. Configuration and the platform link.
-  write("harness.config.json", harnessConfig(o, assistant));
+  write(HARNESS_CONFIG, harnessConfig(o, assistant));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));

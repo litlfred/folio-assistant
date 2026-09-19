@@ -57,6 +57,7 @@
  */
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { HARNESS_CONFIG } from "./harness-config";
 import { join, resolve } from "node:path";
 import { z } from "zod";
 
@@ -328,7 +329,7 @@ export function unionRules(
  * lose every voice check while reporting a clean run.
  */
 export function readActiveVoices(repoRoot: string): string[] | undefined {
-  for (const name of ["harness.config.json", "folio.config.json"]) {
+  for (const name of [HARNESS_CONFIG, "folio.config.json"]) {
     const p = resolve(repoRoot, name);
     if (!existsSync(p)) continue;
     try {
