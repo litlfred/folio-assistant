@@ -36,11 +36,86 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
-/** A block sidecar carrying the corpus's one real failure, and a stale witness. */
-const BLOCK_JSON = readFileSync(
-  join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
-  "utf8",
-);
+/**
+ * A block sidecar: the corpus's real shape, with one failing criterion injected.
+ *
+ * ## Why injected rather than served straight from the corpus
+ *
+ * It WAS served straight from the corpus, and that is exactly how it broke.
+ * The block carried one real failure — `voice-status-leak`, a `\u26A0` glyph that
+ * turned out to be the only one in all 122 blocks — and four assertions below
+ * were pinned to it by position: the criterion's id, the fold's count, the
+ * checker filename, and the checker's source hash.
+ *
+ * PR #302 adjudicated all 26 `voice-*` findings to zero, correctly. The block
+ * went clean, the first criterion became a `canonical-*` one owned by a
+ * different checker, and both tests failed on `main` — while the data was
+ * right and the panel was working. Measured 2026-09-19: `main` at `78a399e`,
+ * the `End-to-end + accessibility` job, 2 failed and 40 passed.
+ *
+ * **This is the same trap `STALE_JSON` below was already written to avoid**, and
+ * its comment states the rule this now follows too: whether a block actually
+ * fails is settled elsewhere, against files those tests control; what belongs
+ * HERE is whether the panel RENDERS a failure — which must not depend on the
+ * corpus happening to hold one on the day the suite runs. A green corpus is the
+ * goal, so a spec that needs a red one is a spec that gets worse as the work
+ * succeeds.
+ *
+ * So the criterion is injected, with the exact shape the sweep really wrote for
+ * it (recovered from commit `55ee7ca`, before the adjudication), and every
+ * expectation is **derived from this object** rather than restated. Re-audit the
+ * corpus as often as you like; nothing below moves.
+ *
+ * It is appended LAST, so the "worst criterion first" test proves the panel
+ * reorders rather than that it happened to come first.
+ */
+interface QaWitness {
+  kind: string;
+  id: string;
+  scriptHash?: string;
+  freshness: string;
+  changed?: string[];
+}
+interface QaCriterion {
+  id: string;
+  result: string;
+  severity?: string;
+  evidence?: string[];
+  witnesses: QaWitness[];
+}
+interface QaDoc {
+  counts: Record<string, number>;
+  criteria: QaCriterion[];
+}
+
+const FAILING_CRITERION: QaCriterion = {
+  id: "voice-status-leak",
+  result: "fail",
+  severity: "critical",
+  evidence: ["content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**"],
+  witnesses: [
+    {
+      kind: "script",
+      id: "content/pipeline/qa-checkers-voice.ts",
+      scriptHash: "5af6856733f3",
+      freshness: "fresh",
+    },
+  ],
+};
+
+const BLOCK_DOC: QaDoc = (() => {
+  const doc = JSON.parse(
+    readFileSync(join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"), "utf8"),
+  ) as QaDoc;
+  doc.criteria.push(structuredClone(FAILING_CRITERION));
+  doc.counts = { ...doc.counts, fail: (doc.counts.fail ?? 0) + 1 };
+  return doc;
+})();
+const BLOCK_JSON = JSON.stringify(BLOCK_DOC);
+
+/** The one loud criterion, so the fold holds everything else. */
+const QUIET_COUNT = BLOCK_DOC.criteria.length - 1;
+const FAIL_WITNESS = FAILING_CRITERION.witnesses[0]!;
 /**
  * The same document with its witness marked stale.
  *
@@ -54,10 +129,11 @@ const BLOCK_JSON = readFileSync(
  * runs.
  */
 const STALE_JSON = (() => {
-  const doc = JSON.parse(BLOCK_JSON) as {
-    criteria: Array<{ witnesses: Array<{ freshness: string; changed?: string[] }> }>;
-  };
-  const w = doc.criteria[0]!.witnesses[0]!;
+  const doc = JSON.parse(BLOCK_JSON) as QaDoc;
+  // The FAILING criterion, not `criteria[0]`: the panel sorts worst-first, so
+  // that is the row this spec clicks. Marking the first entry of the source
+  // order would mark a passing criterion folded away behind the count.
+  const w = doc.criteria.find((c) => c.result === "fail")!.witnesses[0]!;
   w.freshness = "stale";
   w.changed = ["md"];
   return JSON.stringify(doc);
@@ -92,7 +168,7 @@ const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   <h1>Harness</h1>
   <h2 id="node-a">A block node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
-     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/block.json", "Content QA: 1 fail, 0 warn, 22 pass, 25 n/a — open for witnesses")}</span></p>
+     <span class="fa-qa-badges">${badge("block", "fail", "/assets/qa/block.json", `Content QA: ${BLOCK_DOC.counts.fail} fail, ${BLOCK_DOC.counts.warn} warn, ${BLOCK_DOC.counts.pass} pass, ${BLOCK_DOC.counts.na} n/a — open for witnesses`)}</span></p>
   <p>Narrative of the block.</p>
   <h2 id="node-b">A diagram node</h2>
   <p><a class="fa-node-edit" href="#">✎ Edit</a>
@@ -141,14 +217,16 @@ test("a block icon opens its sidecar, worst criterion first", async ({ page }) =
   expect(parentTag).toBe("DIV");
 
   // Worst first: the failing criterion is the first row, and it is not folded
-  // away with the 47 that pass or do not apply.
+  // away with the rest, which pass or do not apply.
   const firstRow = panel.locator(".fa-qa-crit").first();
-  await expect(firstRow.locator(".fa-qa-chip").first()).toHaveText("fail");
-  await expect(firstRow.locator(".fa-qa-crit-id")).toHaveText("voice-status-leak");
-  await expect(firstRow.locator(".fa-qa-chip", { hasText: "critical" })).toBeVisible();
+  await expect(firstRow.locator(".fa-qa-chip").first()).toHaveText(FAILING_CRITERION.result);
+  await expect(firstRow.locator(".fa-qa-crit-id")).toHaveText(FAILING_CRITERION.id);
+  await expect(
+    firstRow.locator(".fa-qa-chip", { hasText: FAILING_CRITERION.severity! }),
+  ).toBeVisible();
 
   // The passing bulk is behind one labelled control that states its own count.
-  await expect(panel.locator(".fa-qa-more")).toContainText("47");
+  await expect(panel.locator(".fa-qa-more")).toContainText(String(QUIET_COUNT));
   await expect(panel.locator(".fa-qa-crit-list").nth(1)).toBeHidden();
 });
 
@@ -165,19 +243,17 @@ test("a criterion expands to the witness that ruled on it, with the checker's ha
   const witness = page.locator(".fa-qa-witness").first();
   await expect(witness).toBeVisible();
   await expect(witness).toHaveClass(/fa-qa-kind-script/);
-  await expect(witness.locator(".fa-qa-chip-kind")).toHaveText("script");
-  await expect(witness.locator(".fa-qa-witness-id")).toHaveText(
-    "content/pipeline/qa-checkers-voice.ts",
-  );
+  await expect(witness.locator(".fa-qa-chip-kind")).toHaveText(FAIL_WITNESS.kind);
+  await expect(witness.locator(".fa-qa-witness-id")).toHaveText(FAIL_WITNESS.id);
   // The hash of the checker's own source at audit time — the thing that says
   // whether the verdict came from the logic now in the tree.
   await expect(witness).toContainText("checker source hash");
-  await expect(witness).toContainText("5af6856733f3");
+  await expect(witness).toContainText(FAIL_WITNESS.scriptHash!);
   // Evidence is quoted verbatim out of the content, and reaches the page
   // through textContent — if it were concatenated into markup it would be the
   // string that closes a tag.
   await expect(page.locator(".fa-qa-evidence pre").first()).toContainText(
-    "**Not yet implemented:**",
+    FAILING_CRITERION.evidence![0]!.split(": ").at(-1)!,
   );
 });
 
