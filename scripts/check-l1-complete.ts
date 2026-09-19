@@ -36,6 +36,7 @@
  *   bun run check:l1-complete                 # every entry in library/
  *   bun run check:l1-complete library/<slug>  # one
  *   bun run check:l1-complete -- --json
+ *   bun run check:l1-complete -- --write   # commit the verdict as a sidecar
  *
  * Exit: 0 complete (or nothing to check), 1 a requirement unmet, 2 could not check.
  *
@@ -45,6 +46,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 export type State = "met" | "unmet" | "not-derivable";
 
@@ -181,6 +183,101 @@ export function checkAll(root: string): EntryReport[] {
     .map((d) => checkEntry(join(lib, d)));
 }
 
+/**
+ * The verdict as a committed sidecar, so it outlives the console.
+ *
+ * Bean `pn6j` asks that "the verdict is recorded on the document". This is the
+ * half of that which does not need a decision nobody has made yet: a
+ * `qa-results/v1` document under the declared `qa` tree, whose **subject is the
+ * asset** and whose **producer records the tool** — `script` plus
+ * `script_hash`, so a verdict written by an older checker is visibly that.
+ *
+ * No sixth schema family. `qa-results/v1` already carries
+ * `subject: { kind, id }` with an OPEN vocabulary, so an ingested document is a
+ * new `kind`, not a new shape. The tool was never a separate subject: it is
+ * provenance, and it was already on every one of these.
+ *
+ * ## `total` is deliberately never zero, and that is the honest reading
+ *
+ * It is tempting to count only `unmet` so a good entry reads `total: 0`. That
+ * would be a lie: six requirements are **not derivable by any arm that
+ * exists**, so no entry in `library/` is fully verified today, and a sidecar
+ * claiming otherwise is exactly the "unknown rendered as a pass" this
+ * repository keeps paying for. The two families are separate so a reader can
+ * tell a DEFECT from a GAP at a glance, and neither is hidden.
+ *
+ * Path mirrors the subject (`library-qa/<slug>`) rather than flattening: the
+ * `kg-qa` tree learned that the hard way, where four basenames already
+ * collided across packages.
+ */
+export function sidecarDocument(report: EntryReport, now?: Date) {
+  const unmet = report.requirements.filter((q) => q.state === "unmet");
+  const nd = report.requirements.filter((q) => q.state === "not-derivable");
+  const result = buildQaResult({
+    script: "scripts/check-l1-complete.ts",
+    scriptAbsPath: join(import.meta.dir, "check-l1-complete.ts"),
+    subject: { kind: "library-document", id: `library/${report.slug}` },
+    families: {
+      unmet: {
+        summary:
+          "L1 requirements this entry does not satisfy. A DEFECT in the entry, " +
+          "fixable by re-running the ingest rung that produces the artefact.",
+        entries: unmet.map((q) => ({ requirement: q.name, detail: q.detail })),
+      },
+      notDerivable: {
+        summary:
+          "L1 requirements NO ingest arm can produce yet. Not a defect in this " +
+          "entry and not a pass either — nothing has checked them, so this " +
+          "entry is not fully verified. Each names the bean that would make it " +
+          "checkable.",
+        entries: nd.map((q) => ({ requirement: q.name, detail: q.detail })),
+      },
+    },
+    now,
+  });
+  return result;
+}
+
+/** {@link sidecarDocument}, written under the declared `qa` tree. */
+export function sidecarFor(root: string, report: EntryReport, now?: Date): string {
+  return writeQaResult(root, join("library-qa", report.slug), sidecarDocument(report, now));
+}
+
+/**
+ * Is the committed sidecar what this checker would write now?
+ *
+ * A committed verdict that nobody re-writes is worse than none: it reads as a
+ * current answer while describing an older corpus, which is the defect
+ * `kg-audit` grew its `source_hash` for. Compared on everything EXCEPT
+ * `updated_at`, which churns on every run and would make each verdict look
+ * stale forever.
+ *
+ * Returns the stems that are missing or stale, so CI names them rather than
+ * saying "something drifted".
+ */
+export function staleSidecars(root: string, reports: EntryReport[]): string[] {
+  const out: string[] = [];
+  for (const r of reports) {
+    const path = join(root, "test", "results", "library-qa", `${r.slug}.qa-results.json`);
+    if (!existsSync(path)) {
+      out.push(`${r.slug}: no sidecar`);
+      continue;
+    }
+    const fresh = JSON.parse(JSON.stringify(sidecarDocument(r)));
+    let committed: Record<string, unknown>;
+    try {
+      committed = JSON.parse(readFileSync(path, "utf-8")) as Record<string, unknown>;
+    } catch {
+      out.push(`${r.slug}: sidecar will not parse`);
+      continue;
+    }
+    delete (fresh as Record<string, unknown>).updated_at;
+    delete committed.updated_at;
+    if (JSON.stringify(fresh) !== JSON.stringify(committed)) out.push(`${r.slug}: stale`);
+  }
+  return out;
+}
+
 function format(reports: EntryReport[]): string {
   if (reports.length === 0) return "L1 completeness\n  · no library/ entries — nothing to check";
   const mark = { met: "✓", unmet: "✗", "not-derivable": "·" } as const;
@@ -214,6 +311,19 @@ if (import.meta.main) {
     console.error(`Could not check L1 completeness: ${e instanceof Error ? e.message : e}`);
     console.error("This is NOT a pass. Treat it as unknown.");
     process.exit(2);
+  }
+  if (argv.includes("--check")) {
+    const stale = staleSidecars(resolve("."), reports);
+    if (stale.length) {
+      console.error("Committed L1 verdicts are out of date:");
+      for (const x of stale) console.error(`  ✗ ${x}`);
+      console.error("\nRun: bun run check:l1-complete -- --write");
+      process.exit(1);
+    }
+    console.log(`✓ ${reports.length} committed L1 verdict(s) current`);
+  }
+  if (argv.includes("--write")) {
+    for (const r of reports) console.log(`wrote ${sidecarFor(resolve("."), r)}`);
   }
   console.log(argv.includes("--json") ? JSON.stringify(reports, null, 2) : format(reports));
   process.exit(reports.some((r) => r.requirements.some((q) => q.state === "unmet")) ? 1 : 0);

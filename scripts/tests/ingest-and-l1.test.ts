@@ -14,7 +14,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { NOT_DERIVABLE, checkAll, checkEntry } from "../check-l1-complete.ts";
+import { NOT_DERIVABLE, checkAll, checkEntry, sidecarDocument, staleSidecars } from "../check-l1-complete.ts";
 import { OCR_THRESHOLD_CHARS, planFor } from "../ingest-document.ts";
 
 const made: string[] = [];
@@ -137,5 +137,62 @@ describe("L1 completeness", () => {
       r.requirements.filter((q) => q.state === "unmet").map((q) => `${r.slug}: ${q.name} — ${q.detail}`),
     );
     expect(bad).toEqual([]);
+  });
+});
+
+describe("the verdict as a committed sidecar", () => {
+  const doc = (d: string) => sidecarDocument(checkEntry(d), new Date("2026-01-01T00:00:00Z"));
+
+  test("the ASSET is the subject and the TOOL is the producer", () => {
+    // The owner's question was which of the two a sidecar hangs off. It is not
+    // a choice: `qa-results/v1` already carries both, and the tool was never a
+    // separate subject -- it is provenance.
+    const d = doc(entry());
+    expect(d.$schema).toBe("qa-results/v1");
+    expect(d.subject.kind).toBe("library-document");
+    expect(d.producer.script).toBe("scripts/check-l1-complete.ts");
+    expect(d.producer.script_hash).toMatch(/^[0-9a-f]{12}$/);
+  });
+
+  test("a DEFECT and a GAP are separate families, and neither is hidden", () => {
+    const d = doc(entry({}, { sections: 0 }));
+    expect(d.families.unmet.count).toBe(1);
+    expect(d.families.notDerivable.count).toBe(NOT_DERIVABLE.length);
+  });
+
+  test("total is NEVER zero — no entry is fully verified yet", () => {
+    // The tempting design counts only `unmet`, so a good entry reads
+    // `total: 0`. That is the lie: six requirements no arm can produce have
+    // never been checked, and "unknown rendered as a pass" is the failure this
+    // repository keeps paying for.
+    const clean = doc(entry());
+    expect(clean.families.unmet.count).toBe(0);
+    expect(clean.total).toBe(NOT_DERIVABLE.length);
+    expect(clean.total).toBeGreaterThan(0);
+  });
+
+  test("rerunning produces the same bytes apart from the timestamp", () => {
+    const d = entry();
+    // Round-tripped through JSON so the timestamp can be dropped without
+    // fighting the typed shape -- the property under test is byte stability,
+    // which is what keeps a committed verdict out of every diff.
+    const strip = (r: unknown) => {
+      const o = JSON.parse(JSON.stringify(r)) as Record<string, unknown>;
+      delete o.updated_at;
+      return JSON.stringify(o);
+    };
+    expect(strip(doc(d))).toBe(strip(sidecarDocument(checkEntry(d), new Date("2026-06-06T00:00:00Z"))));
+  });
+
+  test("a missing sidecar is stale, not absent-and-fine", () => {
+    const root = mkdtempSync(join(tmpdir(), "l1-side-"));
+    made.push(root);
+    expect(staleSidecars(root, [checkEntry(entry())])).toHaveLength(1);
+    expect(staleSidecars(root, [checkEntry(entry())])[0]).toContain("no sidecar");
+  });
+
+  test("the committed verdicts for the real corpus are current", () => {
+    const root = join(import.meta.dir, "../..");
+    expect(staleSidecars(root, checkAll(root))).toEqual([]);
   });
 });

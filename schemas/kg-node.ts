@@ -197,6 +197,76 @@ export const KgImageSchema = z.object({
 });
 
 /**
+ * Where a declared asset was copied from, for the staleness question.
+ *
+ * **A copy with no source ref cannot be checked, and is believed anyway.** The
+ * bootstrap proposal states it for the cache and it is no different here:
+ * *"'It was copied at init' is not an answer. The cheapest honest version
+ * records the source ref and compares against it, reporting could not
+ * determine when the upstream is unreachable."*
+ *
+ * Absent is a **third state, not "unknown"**: an asset with no `source` was
+ * authored in this instance and is its own origin, which is a different fact
+ * from one whose upstream cannot be reached.
+ */
+export const AssetSourceSchema = z.object({
+  /** The instance it came from, as a reference — `litlfred/cat-harness`. */
+  instance: z.string().min(1),
+  /** Path within that instance. */
+  path: z.string().min(1),
+  /** The ref it was taken at, when known. Absent means "not recorded". */
+  ref: z.string().min(1).optional(),
+});
+export type AssetSource = z.infer<typeof AssetSourceSchema>;
+
+/**
+ * A declared non-image artefact of an instance — `AGENTS.md` first among them.
+ *
+ * ## Why this is not {@link KgImageSchema} with a wider type
+ *
+ * An image carries `layout`, `width`, `height` and `textRegion` because a
+ * renderer picks between crops. An `AGENTS.md` has no crops. Widening the
+ * image schema would give every asset four fields that are meaningless for it
+ * and optional for images, so nothing could tell a missing `width` from an
+ * inapplicable one.
+ *
+ * The **vocabulary is shared on purpose**: `id`, `src`, `role`, and the label
+ * shape, exactly as an image declares them. Two spellings of `role` is the
+ * drift this repository keeps paying for.
+ *
+ * ## Why declare it at all
+ *
+ * Measured 2026-09-19: `AGENTS.md` is the only root artefact this instance
+ * does not declare — `harness.json` carries `directories[]` and `images[]` and
+ * it is in neither. Bean `v8gh` is what that costs: seven dead links in it,
+ * five broken by a single directory move, including the one its own banner
+ * calls the place to start, so a cold agent following the banner hit a 404.
+ * Nothing caught them, because `readme:audit` checks `README.md` alone and
+ * `check:agents-xref` checks citations INTO the file rather than links out.
+ *
+ * Declaring it is what makes a check follow rather than be special-cased.
+ */
+export const KgAssetSchema = z.object({
+  id: z.string().min(1),
+  /** Path within this instance, relative to its root. */
+  src: z.string().min(1),
+  /** What this artefact is FOR — `agent-instructions`, `licence`, … */
+  role: z.string().min(1).optional(),
+  /** Where it was copied from; absent means authored here. */
+  source: AssetSourceSchema.optional(),
+  ...kgNodeLabelShape,
+});
+export type KgAsset = z.infer<typeof KgAssetSchema>;
+
+/** The declared assets carrying a role, in declaration order. */
+export function assetsForRole(
+  assets: readonly KgAsset[] | undefined,
+  role: string,
+): KgAsset[] {
+  return (assets ?? []).filter((a) => a.role === role);
+}
+
+/**
  * The variants of one role, by layout.
  *
  * Returns a map rather than a list so a caller asks for the layout it is
