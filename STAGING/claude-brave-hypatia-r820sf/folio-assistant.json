@@ -247,13 +247,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T13:28:08.948Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/477e60ae099f700a50c703fc1a1dc9654ea7909c",
-  "sourceCommitSha": "477e60ae099f700a50c703fc1a1dc9654ea7909c",
-  "sourceCommitAt": "2026-09-19T13:26:35Z",
+  "generatedAt": "2026-09-19T15:17:10.137Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5b0227e2c632e8b1d72aeddda7768bcc5f18752d",
+  "sourceCommitSha": "5b0227e2c632e8b1d72aeddda7768bcc5f18752d",
+  "sourceCommitAt": "2026-09-19T15:15:42Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 166,
+    "Skill": 167,
     "Actor": 26,
     "Capability": 23,
     "Role": 98,
@@ -262,7 +262,7 @@
     "SequenceFlow": 459,
     "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 46,
+    "Schema": 47,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -939,6 +939,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/skills-and-tools"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/flushable-containers",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "flushable-containers",
+      "title": "Flushable containers",
+      "description": "A flushable container is a named store that accumulates by design — a trash you can recover from, a review preview, a console log. It declares a buffer limit, badges when over it, and offers three flush actions: flush all, trim to limit, and select to prune. What \"flush\" means, and which end of the order is expendable, are declared per container and differ.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/flushable-containers.md",
+      "instructionLines": 176,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/flushable-containers"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/uses-editorial-review",
@@ -3984,6 +4000,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/editor",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/exposition-swarm-drain",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/flushable-containers",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/glossary-build",
@@ -19181,6 +19198,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/assistant-workflow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/avatars",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "avatars",
+      "title": "An avatar for every declared kind — in and out of the trash, in both",
+      "module": "schemas/avatars.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/avatars"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/bean-graph",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "bean-graph",
@@ -20458,8 +20483,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "6574c904fe75bc247283a7ec9a0454a0da5d3b25",
-    "pr": "421/merge",
-    "run": "35445783285"
+    "sha": "615186f01e36df916c6312880908878f008538a5",
+    "pr": "425/merge",
+    "run": "35451260147"
   }
 }
