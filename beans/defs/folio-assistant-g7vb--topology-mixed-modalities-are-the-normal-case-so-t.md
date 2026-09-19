@@ -1,0 +1,60 @@
+---
+# folio-assistant-g7vb
+title: 'TOPOLOGY: mixed modalities are the normal case, so the axes must vary independently'
+status: todo
+type: task
+priority: high
+created_at: 2026-09-19T08:55:37Z
+updated_at: 2026-09-19T08:55:37Z
+parent: folio-assistant-5a3l
+---
+
+**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):
+"may also oprate in mixed modalities, self sovergn cloud except models could be
+closed not openweight etc, or self-sovering connects to their national portal or
+PCP emr, bean up to strwaperson these too."
+
+## This sentence is why the parent epic is axes and not an enum
+
+Both examples given are a named profile with **one axis moved**:
+
+- self-sovereign, but the model supply axis is "closed weights" instead of open
+- self-sovereign, but the data-stores axis gains a national portal or a primary
+  care EMR
+
+Neither is an eleventh mode. If the model were an enum of named modes, each
+would need its own entry, and the next mix would need another — combinatorially.
+With axes, both are already expressible and neither needs new vocabulary. **That
+is the strawperson's central claim, and this bean is where it gets tested.**
+
+## The test that would falsify it
+
+Take every scenario named in #363 and every mix the owner can think of, and try
+to express each as a point in the axis product. The design fails if:
+
+- a scenario needs a value no axis ranges over — the axes are incomplete; or
+- two axes turn out not to vary independently — e.g. if "closed weights" forces
+  a publication host, they are one axis wearing two names; or
+- a mix is expressible but **wrong** — the axes admit a combination that must
+  not exist, and the model needs a stated constraint rather than a free product
+
+The third is the interesting failure, and the likeliest. Air-gapped plus closed
+hosted models is probably contradictory. A free product will happily represent
+it.
+
+## So the deliverable may be constraints, not more axes
+
+If mixes are mostly expressible, the remaining work is a small set of **stated
+incompatibilities** — pairs of axis values that cannot co-occur, with the reason.
+That is a far smaller artefact than a mode enum and it is checkable.
+
+## Done when
+
+- [ ] every scenario in #363, and every mix the BA raises, is expressed as axis
+      values or recorded as inexpressible
+- [ ] the incompatible pairs are listed, each with its reason
+- [ ] a declaration naming an incompatible pair is refused, not silently accepted
+
+## Review
+
+Issue to be opened per #363's instruction.
