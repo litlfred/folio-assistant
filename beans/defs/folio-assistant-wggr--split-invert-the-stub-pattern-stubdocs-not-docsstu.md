@@ -1,10 +1,11 @@
 ---
 # folio-assistant-wggr
 title: 'SPLIT: invert the stub pattern — <stub>/docs not docs/<stub>, so a repo is one directory'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-19T11:51:29Z
-updated_at: 2026-09-19T11:51:29Z
+updated_at: 2026-09-19T18:04:06Z
 parent: folio-assistant-vke6
 ---
 
@@ -160,3 +161,41 @@ The lesson to carry, not just the list: **pass 1's "it was one function" was a
 measurement over `.ts` only.** Every config format in the repo spells the site
 root a second time, none is covered by the guard that made pass 1 look cheap,
 and one of them looks like it needs updating when it must be left alone.
+
+
+## Progress — PR #437
+
+<https://github.com/litlfred/folio-assistant/pull/437>. Unit suite **106 → 0**
+failures; all **35 CI gates** green (`render:bpmn:check` needs a browser and
+passes with `--with-browser`).
+
+**The declaration gained `scope: "repository"`** — on a directory entry and on
+an asset. Four directories (`beans/`, `todos/`, `fsh-guts/`, `bootstrap/skills/`)
+and both assets (`AGENTS.md`, `README.md`) belong to the CHECKOUT rather than to
+any instance in it. `rootForScope` is the one place it becomes a directory, so
+**no consumer changed**. Two alternatives were rejected and why matters:
+`"../beans/"` spells the mechanism, states no fact, and is refused by
+`check-harness-dirs`, which rejects every dot-prefixed segment; a second
+`harness.json` at the repository root would have made every consumer of those
+four directories look in two places, which is the criticism `.beans/` already
+paid. A repository-scoped entry is **not inherited** — the never-overlaid
+property of `beans/` and `todos/` is now held by the resolver rather than
+remembered.
+
+**`findInstanceRoot` / `instanceRootFor`.** Nine scripts read this instance's
+declaration from `process.cwd()`, which was a claim about the working directory
+rather than about the instance. Each passes `import.meta.dir` now, and the
+helper walks up to the nearest `harness.json` rather than counting `..`.
+
+**Five checks were reporting clean runs over empty sets**, each found by fixing
+the roots rather than by the check itself: `check-declared-assets` (45 dead
+links in `AGENTS.md` / `README.md` it had never opened — bean `v8gh`'s shape in
+the check written for it), `check-agents-xref` (a census of **0** where it had
+been 8, at exit 0), `bean-store-hygiene`, `fsh-guts-not-rendered`,
+`harness:dirs:check`.
+
+**Held back deliberately: `stub` stays `folio-assistant`.** An earlier commit on
+this branch set it to `cat-harness`, which renames every published `@id` while
+the site still builds green. Verified on the publish ref afterwards: 1349 nodes,
+**0** minted against `cat-harness`. The directory is a filesystem fact; the stub
+is a published name, and they are now allowed to differ.

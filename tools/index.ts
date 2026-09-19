@@ -31,8 +31,8 @@
  *
  * @module tools/index
  */
-import type { ToolDefinition } from "../schemas/tool.js";
-import { tools as folioAssistantTools } from "../folio-assistant/tools/index.js";
+import type { ToolDefinition } from "../cat-harness/schemas/tool.js";
+import { tools as folioAssistantTools } from "../cat-harness/tools/index.js";
 
 /**
  * Every Tool node this instance can see, its own and its dependencies'.

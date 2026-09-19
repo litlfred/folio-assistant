@@ -63,6 +63,6 @@
   // test trees were consolidated onto `test/`. The narrow glob is what keeps
   // the distinction intact across that move: `test/**` would have quietly
   // widened the program to the e2e specs.
-  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts", "adapters/**/*.ts", "test/health/**/*.ts", "types/**/*.d.ts"],
+  "include": ["cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

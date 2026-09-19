@@ -83,9 +83,29 @@ jobs:
           # reports the first while meaning the second is worse than no gate:
           # it reads as coverage. The Lean tree lives in the FOLIO; this job is
           # here for folios that vendor this workflow.
-          count=$(find content -name '*.lean' 2>/dev/null | wc -l)
+          # THREE states, not two, and the missing one is what broke this.
+          #
+          # This was `count=$(find content … | wc -l)` guarding `-eq 0`. It
+          # distinguished "no Lean files" from "some Lean files" and had no
+          # answer for "no `content/` AT ALL" — so when the move (bean `wggr`)
+          # put this repo's `content/` under `cat-harness/`, `find` exited 1 on
+          # the missing directory, `set -o pipefail` promoted that to the
+          # pipeline's status, and `set -e` killed the job. A gate written
+          # expressly to skip when there is nothing here failed instead.
+          #
+          # `2>/dev/null` hid the message and not the exit code, which is why it
+          # reads as a mystery rather than as "directory not found".
+          #
+          # `content/` stays UNPREFIXED deliberately: this job is vendored by
+          # folios, where the Lean tree really is at `content/<paper>/lean/`.
+          # Prefixing it would fix this repo and break every folio.
+          if [ ! -d content ]; then
+            echo "SKIP — no content/ directory (this is the PLATFORM repo; the Lean tree lives in a folio). Nothing scanned."
+            exit 0
+          fi
+          count=$(find content -name '*.lean' | wc -l)
           if [ "$count" -eq 0 ]; then
-            echo "SKIP — no content/**/*.lean in this repo (the Lean tree lives in the folio). Nothing scanned."
+            echo "SKIP — content/ exists but holds no .lean files. Nothing scanned."
             exit 0
           fi
           echo "Scanning $count Lean file(s)…"
@@ -132,7 +152,7 @@ jobs:
         run: |
           set -uo pipefail
           targets=""
-          for d in scripts .github/scripts content/pipeline schemas src adapters; do
+          for d in cat-harness/scripts .github/scripts cat-harness/content/pipeline cat-harness/schemas cat-harness/src cat-harness/adapters; do
             [ -d "$d" ] && targets="$targets $d"
           done
           if [ -z "$targets" ]; then
@@ -152,11 +172,11 @@ jobs:
       #
       # Discovered rather than listed, so a new one is picked up by
       # existing; a listed set is a set that goes stale.
-      - name: Python tests (scripts/tests/*.test.py)
+      - name: Python tests (cat-harness/scripts/tests/*.test.py)
         run: |
           set -uo pipefail
           shopt -s nullglob
-          tests=(scripts/tests/*.test.py)
+          tests=(cat-harness/scripts/tests/*.test.py)
           if [ ${#tests[@]} -eq 0 ]; then
             echo "SKIP — no Python tests present."
             exit 0
@@ -338,8 +358,8 @@ jobs:
       # and names every file that would change.
       - name: generated docs are current
         run: |
-          bun run scripts/gen-schema-docs.ts --check
-          bun run scripts/gen-skill-docs.ts --check
+          bun run cat-harness/scripts/gen-schema-docs.ts --check
+          bun run cat-harness/scripts/gen-skill-docs.ts --check
 
       # The README's AUTHORED half. `readme-sections.ts` owns the marked
       # regions; this owns every other link, and `AGENTS.md` claims that
@@ -424,9 +444,9 @@ jobs:
       # This was a CONTINUATION LINE of the step above: more-indented, so YAML
       # folded it into one plain scalar and the runner executed
       #
-      #     bun run agent-memory:check bun run scripts/gen-docs-pages.ts --check
+      #     bun run agent-memory:check bun run cat-harness/scripts/gen-docs-pages.ts --check
       #
-      # `scripts/agent-memory.ts` ignores trailing arguments and exits 0, so
+      # `cat-harness/scripts/agent-memory.ts` ignores trailing arguments and exits 0, so
       # the gate its own comment described had NEVER RUN. Two months of green.
       #
       # It could not simply be un-folded, and that is the more interesting
@@ -451,7 +471,7 @@ jobs:
       # a first sweep, or moved a sidecar, and did not regenerate. A real
       # omission, every time.
       - name: generated docs pages are current
-        run: bun run scripts/gen-docs-pages.ts --check
+        run: bun run cat-harness/scripts/gen-docs-pages.ts --check
 
       # The translation index is what the navbar's locale filter reads. It is
       # derived from what each page DECLARES — `lang`, and `translation_source`
