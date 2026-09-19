@@ -21,7 +21,6 @@ import {
 } from "../../schemas/log-entry.ts";
 import { loadProcessModel } from "../../src/workflow/process-model.ts";
 import { describeCapture, writeLogEntry } from "../../src/logging/log-writer.ts";
-import { repoRootFor } from "../../schemas/cat-harness.js";
 
 /** An instance whose declaration names a trashcan, so there is somewhere to log. */
 function instance(declareFshGuts = true): string {
@@ -50,7 +49,9 @@ function entries(root: string): Record<string, unknown>[] {
 describe("the log directory is composed from the declaration, not spelled", () => {
   test("it follows the declared fsh-guts path wherever that is", () => {
     const root = instance();
-    expect(logDirs(root)).toEqual([join(repoRootFor(root), "fsh-guts", "logs")]);
+    // `root` is the FIXTURE's own repository root — `logDirs` resolves
+    // `fsh-guts/logs` inside it, not in the fixture's parent (`/tmp`).
+    expect(logDirs(root)).toEqual([join(root, "fsh-guts", "logs")]);
   });
 
   test("an instance that declares no trashcan has nowhere to log", () => {

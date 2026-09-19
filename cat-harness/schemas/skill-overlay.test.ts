@@ -15,7 +15,6 @@ import { join } from "node:path";
 
 import { ownDirectories, isKgOnlyDirectory, resolveDirectories } from "./cat-harness.js";
 import { resolveSkillDirs } from "./harness-config.js";
-import { repoRootFor } from "./cat-harness.js";
 
 const roots: string[] = [];
 afterAll(() => roots.forEach((r) => rmSync(r, { recursive: true, force: true })));
@@ -37,7 +36,8 @@ function instance(name: string, kgPath: string): string {
 
 function dependsOn(root: string, dep: string, provides?: string[]): void {
   writeFileSync(
-    join(repoRootFor(root), "harness.config.json"),
+    // `root` is a FIXTURE instance root; its config belongs IN it.
+    join(root, "harness.config.json"),
     JSON.stringify({
       dependencies: { folioAssistant: [{ name: "dep", path: dep, ...(provides ? { provides } : {}) }] },
     }),

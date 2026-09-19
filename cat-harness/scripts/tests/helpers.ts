@@ -97,7 +97,15 @@ export const QOU_LEAN_DIR = join(
  * against `FOLIO_ROOT`; this is the same rule, and the same split-repo trap
  * the `FOLIO_ROOT` comment warns about.
  */
-export const CHAPTERS_DIR = join(FOLIO_ROOT ?? REPO_ROOT, "chapters");
+// Falls back to the INSTANCE, not the repository. `chapters/` is CONTENT, and
+// the platform's own content root is its instance directory — `chapters-dir`'s
+// own test calls that fallback "the platform" and resolves it as
+// `resolve(import.meta.dir, "..", "..")`, which is this instance.
+//
+// It read `REPO_ROOT`, which was this instance until that constant was renamed
+// to say what it is. The rename made the line's meaning change without the
+// line changing, which is the one hazard a rename carries.
+export const CHAPTERS_DIR = join(FOLIO_ROOT ?? INSTANCE_ROOT, "chapters");
 export const SCHEMAS_DIR = join(REPO_ROOT, "schemas");
 
 // ── Lean project discovery ──────────────────────────────────────
