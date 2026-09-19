@@ -463,14 +463,35 @@ its own stub. That is the point of the stub being per-instance rather than
 per-repository: after the split, <code class="language-plaintext highlighter-rouge">folio-assist-core</code> depending on
 <code class="language-plaintext highlighter-rouge">cat-harness</code> means both are present, and both publish.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;base&gt;/kg/&lt;stub&gt;.jsonld          the knowledge graph        application/ld+json
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;base&gt;/&lt;stub&gt;.jsonld             the knowledge graph        application/ld+json
+&lt;base&gt;/&lt;stub&gt;.json               the same bytes             application/json
 &lt;base&gt;/&lt;stub&gt;.schema.json        its declaration's schema   application/schema+json
+&lt;base&gt;/&lt;stub&gt;/                   the viewer                 text/html
 </code></pre></div></div>
 
-<p>So <code class="language-plaintext highlighter-rouge">…/folio-assistant/kg/cat-harness.jsonld</code> is the <em>cat-harness</em> instance’s
+<p>So <code class="language-plaintext highlighter-rouge">…/folio-assistant/cat-harness.jsonld</code> is the <em>cat-harness</em> instance’s
 rendering, served from a tree whose root happens to be <code class="language-plaintext highlighter-rouge">folio-assistant</code>. A
 consumer asking for one instance’s graph must not be handed another’s because
 the paths collided.</p>
+
+<p><strong>They sit at the base, not in a subdirectory.</strong> An instance’s repository IS its
+declaration that it holds a graph — <code class="language-plaintext highlighter-rouge">cat-harness.json</code> at the root says which
+graphs are here — so there is nothing left for a <code class="language-plaintext highlighter-rouge">kg/</code> segment to distinguish it
+from, and the stub is already doing the separating that a directory would have
+been doing. The renderings lived under <code class="language-plaintext highlighter-rouge">kg/</code> until 2026-09-19 and were moved.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">&lt;stub&gt;/</code> is a directory because an extensionless URL has to be.</strong> GitHub
+Pages resolves <code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;stub&gt;</code> only to a directory index, so the viewer is what
+makes the bare stub openable. It reads <code class="language-plaintext highlighter-rouge">../&lt;stub&gt;.jsonld</code> — its PARENT, not its
+sibling, which is the one thing about it that changed with the layout.</p>
+
+<p><strong>One function computes all of this</strong>, <code class="language-plaintext highlighter-rouge">renderingPath()</code> in
+<code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>. The path was written out in six template literals
+across two exporters, a type vocabulary and two workflows — five of them
+minting an <code class="language-plaintext highlighter-rouge">$id</code>, which is an identity rather than a link. Moving the
+renderings meant editing all six, and the sixth was found only because 95
+published <code class="language-plaintext highlighter-rouge">schema</code> refs pointed at a URL that 404s. A path a consumer
+dereferences is not a string to type twice.</p>
 <h2 id="every-endpoint-declares-its-media-type">
   
   
@@ -556,10 +577,22 @@ from “enforced wrongly”. Same rule as <code class="language-plaintext highli
 
 <p>A client fetching <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code> from Pages <strong>will</strong> receive the wrong
 <code class="language-plaintext highlighter-rouge">Content-Type</code>. A strict JSON-LD processor may refuse it. That is a known and
-accepted cost of publishing there, and the remedy is the local deployment, not
-a different extension: renaming the artefact to <code class="language-plaintext highlighter-rouge">.json</code> to make Pages serve it
-as JSON would trade a wrong type for a wrong <em>name</em>, and the name is the part
-a reader uses.</p>
+accepted cost of publishing there, and the remedy is the local deployment.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">&lt;stub&gt;.json</code> is an alias, and the distinction from a rename is the whole
+point.</strong> Renaming the artefact to <code class="language-plaintext highlighter-rouge">.json</code> would trade a wrong type for a wrong
+<em>name</em>, and the name is the part a reader uses — that argument stands. Serving
+the same bytes at BOTH extensions costs nothing and concedes nothing: <code class="language-plaintext highlighter-rouge">.jsonld</code>
+stays canonical and is what every <code class="language-plaintext highlighter-rouge">@id</code> in the document names, while <code class="language-plaintext highlighter-rouge">.json</code> is
+the one path by which a correct <code class="language-plaintext highlighter-rouge">Content-Type</code> can come out of this host at all.
+A consumer that needs the media type more than the identity has somewhere to
+go, and neither document claims to be the other.</p>
+
+<p>What that does <strong>not</strong> license is a <code class="language-plaintext highlighter-rouge">.json</code> whose bytes differ, or an <code class="language-plaintext highlighter-rouge">@id</code>
+pointing at it. Two documents asserting the same IRIs is the defect
+<code class="language-plaintext highlighter-rouge">--base-url</code> exists to prevent, and an alias is only an alias while it is
+byte-identical — which is why the staging build copies it <em>after</em> stamping,
+so the two cannot disagree about which build they came from.</p>
 <h2 id="what-this-skill-does-not-cover">
   
   
@@ -586,7 +619,7 @@ is an implementation of this, not a prerequisite for it.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35411526766"><code>78a399e</code></a> &middot; 2026-09-19T01:06:25Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35414155444"><code>717c932</code></a> &middot; 2026-09-19T01:56:43Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
