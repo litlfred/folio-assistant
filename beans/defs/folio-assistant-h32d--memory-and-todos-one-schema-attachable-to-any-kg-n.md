@@ -1,10 +1,11 @@
 ---
 # folio-assistant-h32d
 title: 'Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-19T00:58:13Z
-updated_at: 2026-09-19T00:58:13Z
+updated_at: 2026-09-19T01:30:52Z
 ---
 
 
@@ -123,3 +124,56 @@ time, one layer up.
 sibling's schema is ahead of its graph. The generator that assembles
 `.claude/agent-memory/<agent>/MEMORY.md` from scoped entries is not written.
 The sticky UI is untouched.
+
+## Progress, 2026-09-19 — the generator landed
+
+`schemas/carried-note.ts`, `schemas/memory.ts`, `scripts/agent-memory.ts`,
+`scripts/tests/agent-memory.test.ts`. PR #314. 28 hand-maintained entries →
+25 nodes under `skills/memory/`; `bun run agent-memory` assembles, and
+`agent-memory:check` gates in CI.
+
+Four things measurement changed, recorded because each was a claim made
+before it was checked:
+
+1. **"5 subject areas duplicated" was wrong — it is 3.** The BASELINE
+   "re-measure, do not quote" is a TITLE collision with DISJOINT bodies, not
+   a duplicated fact. The number came from reading the files; the correction
+   came from parsing them.
+2. **The schema refused all three BASELINE entries, correctly.** None stores
+   a number; they are tables of commands to run. Relabelled `stable`. The
+   `measured` refinement now has zero instances in the corpus.
+3. **Summary-derived ids would have dropped an entry.** Those two entries
+   collide on any summary slug, and `overlayMemory` resolves by id.
+   Duplicate ids are now refused rather than resolved.
+4. **All 25 nodes were audited as skills**, with 25 bogus `kg-qa/` sidecars.
+   Fixed by the `part-of:` contract generalised: a `.md` declaring its own
+   `$schema` is not a skill.
+
+## Still open, and the one that needs a decision
+
+**Scoping is by agent, which is the defect this was supposed to end.**
+`memoryForRoles` exists and is unused, because the three memory-carrying
+subagents (`ci-health-watcher`, `content-pipeline-navigator`,
+`platform-boundary-guard`) are **not declared actors at all** —
+`.claude/skills/actors/` holds 24 participants and none of them.
+
+Deciding this means choosing, for each of the three, which of the 30
+declared roles it takes on. Three ways to go, with what each costs:
+
+- **Map onto existing roles.** No new roles, and `role-has-actor` gains three
+  actors. But none of the 30 fits cleanly: `ci-health-watcher` reads
+  pipelines rather than being one, and `build-pipeline` / `validation-pipeline`
+  are the closest candidates. A forced mapping is a wrong edge in the graph
+  that every later audit trusts.
+- **Add roles for them.** Honest edges, and `memoryForRoles` starts working
+  immediately. But it is exactly what `AGENTS.md` warns against under
+  `skill-in-role-or-process`: "inventing roles and activities to absorb tools
+  that do not want them." Three roles with one actor each is a lattice
+  describing the tool, not the work.
+- **Leave agent-scoping, and say so.** Costs nothing now; the duplication
+  stays fixed either way, because one node already reaches several agents.
+  The cost is that `memoryForRoles` sits unused as dead code with an argument
+  attached to it, and dead code with a rationale is how a wrong idea survives.
+
+No recommendation yet — this is the author's call, and none of the three is
+obviously right. The work is not blocked on it: agent-scoping works today.
