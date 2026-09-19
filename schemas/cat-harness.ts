@@ -466,6 +466,56 @@ export const ContentDirectorySchema = z.object({
   ...kgNodeLabelShape,
 });
 
+/**
+ * The conventional directories every instance gets without declaring them.
+ *
+ * ## Why defaults live in the CONTAINER SCHEMA
+ *
+ * The owner, 2026-09-19: *"inherit, set default dirs/graphs in container
+ * schema definitions."* An instance that follows the convention should declare
+ * NOTHING — the friction of a new topical directory ought to be a line, and
+ * the friction of a conventional one ought to be zero. Before this, every
+ * instance restated the same seven entries, which is seven chances to disagree
+ * with the platform about what `beans/` is.
+ *
+ * `resolveDirectories` seeds from these and the declaration chain overrides
+ * **by `id`**, exactly as a dependency's entries are overridden — so a default
+ * is not a special case in the resolution rules, it is the outermost link of
+ * the chain.
+ *
+ * ## A default is only real if the directory EXISTS
+ *
+ * They are filtered by existence at resolve time, and that is not an
+ * optimisation. `AGENTS.md`: *"Declare only what exists — a declared-but-absent
+ * directory is the bean `dh4f` defect, where a consumer scans nothing and
+ * reports a clean run over it."* Seeding a default for `voices/` into an
+ * instance with no voices would manufacture exactly that, at scale, in every
+ * instance at once.
+ *
+ * An EXPLICIT declaration is honoured whether or not the directory is there:
+ * that is the instance asserting something, and `readDeclaration` already
+ * refuses a declaration it cannot read. A default is the platform guessing,
+ * and a guess has to be checked.
+ *
+ * ## What is not here
+ *
+ * `folio` — the one renderable kind — is registered by CORE, not the harness,
+ * and the harness cannot default a directory to a kind it does not know. Any
+ * topical directory (`bootstrap/`, `crdm/`, …) is declared, one line each: the
+ * platform cannot guess names it has never met, and guessing would re-create
+ * the `dh4f` shape for every name it guessed wrong.
+ */
+export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
+  { id: "tools", path: "tools/", graphs: ["tools"] },
+  { id: "schemas", path: "schemas/", graphs: ["schemas", "cat-harness"] },
+  { id: "cat-harness", path: "skills/", graphs: ["cat-harness"] },
+  { id: "beans", path: "beans/", graphs: ["beans"] },
+  { id: "todos", path: "todos/", graphs: ["todos"] },
+  { id: "uploads", path: "uploads/", graphs: ["uploads"] },
+  { id: "library", path: "library/", graphs: ["library"] },
+  { id: "voices", path: "voices/", graphs: ["voices"] },
+];
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -654,6 +704,22 @@ export function resolveDirectories(
   registry: GraphKindRegistry = defaultGraphKinds,
 ): ResolvedDirectory[] {
   const byId = new Map<string, ResolvedDirectory>();
+
+  // The outermost link: the conventional set, for the root of the chain.
+  //
+  // Existence-filtered — see DEFAULT_DIRECTORIES on why a default that is not
+  // there is the `dh4f` defect rather than a harmless extra. `declaredBy` says
+  // `(default)` so a consumer can tell an inherited convention from something
+  // an instance chose, and `own` is false: a default is not the instance's own
+  // declaration, it is what it did not have to write.
+  const rootLink = chain.find((l) => l.own === true) ?? chain[chain.length - 1];
+  if (rootLink) {
+    for (const dir of DEFAULT_DIRECTORIES) {
+      const absPath = resolve(rootLink.root, dir.path);
+      if (!existsSync(absPath)) continue;
+      byId.set(dir.id, { ...dir, declaredBy: "(default)", absPath, own: false });
+    }
+  }
 
   for (const link of chain) {
     const decl = readDeclaration(link.root, registry);

@@ -22,6 +22,7 @@ import {
   keepMarker,
   materialiseDirectories,
   renderableDirectories,
+  DEFAULT_DIRECTORIES,
   resolveDirectories,
   resolveGraphKind,
   toJsonLd,
@@ -31,6 +32,8 @@ import {
 const TMP = join(import.meta.dir, "__test_agent_harness__");
 const REPO_ROOT = resolve(import.meta.dir, "..");
 const HARNESS = join(TMP, "agentic-harness");
+/** This repository itself — the instance that declares all seven. */
+const ROOT = resolve(import.meta.dir, "..");
 const CORE = join(TMP, "folio-assist-core");
 const RELOCATED = join(TMP, "relocated");
 const BROKEN = join(TMP, "broken");
@@ -442,5 +445,83 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
     const d = readDeclaration(old);
     expect(d).toBeDefined();
     expect(d!.directories[0]!.graphs).toEqual(["kg"]);
+  });
+});
+
+describe("default directories — inherit the convention, declare only the deviation", () => {
+  /**
+   * The owner, 2026-09-19: "inherit, set default dirs/graphs in container
+   * schema definitions." An instance that follows the convention should
+   * declare NOTHING; before this, every instance restated the same seven
+   * entries, which is seven chances to disagree with the platform about what
+   * `beans/` is.
+   */
+  const inst = join(TMP, "defaults-instance");
+
+  it("an instance declaring nothing inherits the directories it actually has", () => {
+    mkdirSync(join(inst, "skills"), { recursive: true });
+    mkdirSync(join(inst, "beans"), { recursive: true });
+    mkdirSync(join(inst, "tools"), { recursive: true });
+    writeFileSync(join(inst, DECLARATION_FILENAME), JSON.stringify({ name: "minimal" }), "utf-8");
+
+    const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
+    expect(d.map((x) => x.id).sort()).toEqual(["beans", "cat-harness", "tools"]);
+    // `(default)` rather than the instance's name: a consumer can tell an
+    // inherited convention from something this instance chose.
+    expect(d.every((x) => x.declaredBy === "(default)")).toBe(true);
+    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("skills/");
+  });
+
+  it("a default whose directory is ABSENT is not seeded", () => {
+    // The `dh4f` defect, and the reason defaults are existence-filtered:
+    // "a declared-but-absent directory is where a consumer scans nothing and
+    // reports a clean run over it". Seeding `voices/` into an instance with no
+    // voices would manufacture that in every instance at once.
+    const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
+    for (const absent of ["voices", "library", "uploads", "todos", "schemas"]) {
+      expect(d.find((x) => x.id === absent)).toBeUndefined();
+      expect(existsSync(join(inst, absent))).toBe(false);
+    }
+  });
+
+  it("an explicit entry overrides the default of the same id", () => {
+    // Defaults are the OUTERMOST link of the chain, not a special case: the
+    // same override-by-id rule that lets a dependent relocate an inherited
+    // directory lets an instance relocate a defaulted one.
+    const moved = join(TMP, "defaults-override");
+    mkdirSync(join(moved, "graph", "knowledge"), { recursive: true });
+    mkdirSync(join(moved, "tools"), { recursive: true });
+    writeFileSync(
+      join(moved, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "relocated",
+        directories: [{ id: "cat-harness", path: "graph/knowledge/", graphs: ["cat-harness"] }],
+      }),
+      "utf-8",
+    );
+    const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
+    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("graph/knowledge/");
+    expect(d.find((x) => x.id === "cat-harness")!.declaredBy).toBe("relocated");
+    // ...and the defaults it did NOT override are still there.
+    expect(d.find((x) => x.id === "tools")!.declaredBy).toBe("(default)");
+  });
+
+  it("an instance that declares everything is unaffected", () => {
+    // This repository declares all seven. Nothing should read `(default)`,
+    // because nothing was left to the convention — the defaults must not
+    // quietly replace an explicit declaration.
+    const mine = resolveDirectories([{ name: "folio-assistant", root: ROOT, own: true }]);
+    expect(mine.length).toBeGreaterThan(0);
+    expect(mine.every((x) => x.declaredBy === "folio-assistant")).toBe(true);
+  });
+
+  it("no default claims a kind the harness registry does not know", () => {
+    // `folio` is CORE's and is registered at load; the harness cannot default
+    // a directory to a kind it has never heard of, or `readDeclaration` would
+    // refuse its own defaults.
+    const bare = new GraphKindRegistry();
+    for (const d of DEFAULT_DIRECTORIES) {
+      for (const g of d.graphs) expect(bare.has(g)).toBe(true);
+    }
   });
 });
