@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
 updated_at: 2026-09-19T00:41:33Z
+parent: folio-assistant-bzyu
 ---
 
 The "next" recorded on bean `t8g3`. Re-render BPMN diagrams so translated

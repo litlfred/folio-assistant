@@ -45,6 +45,11 @@ import {
   nodeOfKind as todoNodeOfKind,
   parseTodoGraph,
 } from "../../schemas/todo-graph.ts";
+import {
+  stagingSlug,
+  type BranchEvidence,
+  type BranchEvidenceSet,
+} from "./checks.ts";
 import type {
   BeanEvidence,
   HealthContext,
@@ -198,6 +203,229 @@ export function probeStaging(o: StagingProbeOptions): Probe<StagingEvidence> {
     previews.push({ slug, bytes, files });
   }
   return { state: "ok", value: { branch: "present", previews, command } };
+}
+
+/**
+ * Is this clone's history of `base` cut off at a graft boundary, and if so, where?
+ *
+ * Exact rather than heuristic: git reports a graft boundary as a parentless
+ * commit, and every graft boundary is listed in `.git/shallow`. So the
+ * parentless commits reachable from `base` are intersected with that file —
+ * a real root commit is not in it, and a `--depth` fetch of a DIFFERENT
+ * branch puts a boundary in it that `base` cannot reach.
+ *
+ * `frontier` is the newest such boundary's committer date, in epoch
+ * milliseconds, and `undefined` when the history is complete. It is what
+ * bounds the damage: a branch tip after the frontier cannot have been merged
+ * before it, so the ancestry answer about it is sound even here.
+ *
+ * Returns a `reason` rather than a verdict when it could not tell, because
+ * "the history might be truncated" and "the history is fine" are the two
+ * answers this decides between, and guessing either way is the failure the
+ * whole module is written against.
+ */
+function defaultBranchHistory(repoRoot: string, base: string): { frontier?: number } | { reason: string } {
+  const shallowPath = git(repoRoot, ["rev-parse", "--git-path", "shallow"]);
+  if (shallowPath.code !== 0) {
+    return { reason: `git rev-parse --git-path shallow exited ${shallowPath.code}: ${shallowPath.err.trim()}` };
+  }
+  const path = resolve(repoRoot, shallowPath.out.trim());
+  if (!existsSync(path)) return {};
+  let grafts: Set<string>;
+  try {
+    grafts = new Set(
+      readFileSync(path, "utf-8")
+        .split("\n")
+        .map((l) => l.trim())
+        .filter((l) => l !== ""),
+    );
+  } catch (e) {
+    return { reason: `${path} exists but could not be read: ${String(e).slice(0, 160)}` };
+  }
+  if (grafts.size === 0) return {};
+  const roots = git(repoRoot, ["log", "--format=%H %cI", "--max-parents=0", base]);
+  if (roots.code !== 0) {
+    return { reason: `git log --max-parents=0 ${base.slice(0, 8)} exited ${roots.code}: ${roots.err.trim()}` };
+  }
+  let frontier: number | undefined;
+  for (const line of roots.out.split("\n")) {
+    const [sha, date] = line.trim().split(" ");
+    if (sha === undefined || !grafts.has(sha)) continue;
+    const t = Date.parse(date ?? "");
+    // A boundary whose date is unreadable is treated as infinitely recent:
+    // every negative ancestry answer under it becomes `unevaluated`, which
+    // reports the blindness rather than guessing past it.
+    frontier = Number.isNaN(t) ? Number.POSITIVE_INFINITY : Math.max(frontier ?? Number.NEGATIVE_INFINITY, t);
+  }
+  return { frontier };
+}
+
+export interface BranchProbeOptions {
+  repoRoot: string;
+  remote: string;
+  /** The preview slugs to look for branches behind. Nothing else is fetched. */
+  previewSlugs: readonly string[];
+  /** Skip default-branch discovery and use this. For tests, and for a runner with a pinned base. */
+  defaultBranch?: string;
+}
+
+/**
+ * The remote branches that could keep a preview alive, with their ancestry and tip dates.
+ *
+ * ## Only the candidates, and only what is missing
+ *
+ * Every remote head is listed — one `ls-remote`, no objects — and only those
+ * whose slug matches a preview are looked at further. Of those, a tip already
+ * present locally is not fetched at all, which is the common case: a branch
+ * that has been merged into the default branch is, by definition, already in
+ * the history this clone holds. On this repository, 2026-09-19, that was four
+ * of the five candidates.
+ *
+ * ## Three states, per branch as well as per probe
+ *
+ * A `git` failure that makes the whole listing impossible is `unknown` for the
+ * probe. A failure that touches ONE branch — its tip could not be fetched, its
+ * ancestry could not be computed — is recorded on that branch as
+ * `unevaluated`, with the fields it could not fill left undefined, and the
+ * check sends that preview to `unknown` rather than to the orphan list.
+ * **A branch whose ancestry could not be computed is not a merged branch.**
+ *
+ * ## The truncated-history trap
+ *
+ * `merge-base --is-ancestor` answers "no" for a merged branch whose merge
+ * point this clone does not hold — a shallow checkout, or a `--depth` fetch.
+ * "No" means "carries unmerged work", which SPARES the preview, so the error
+ * is in the safe direction; but a check that silently spares everything has
+ * stopped working, and nothing would say so. So a negative answer is only
+ * trusted when the default branch's history is known to be complete.
+ *
+ * **Complete is asked exactly, not inferred.** The parentless commits
+ * reachable from the default branch are intersected with `.git/shallow`: a
+ * graft boundary git reports as parentless is in that file, a real root
+ * commit is not. `--is-shallow-repository` cannot be used for this, because
+ * `probeStaging` runs first and fetches `gh-pages` with `--depth=1`, which
+ * makes the whole repository shallow by that test while `main`'s own history
+ * is untouched — it would report every sweep blind. A date comparison cannot
+ * be used on its own either: a branch tip older than the repository's root
+ * commit is unusual but legal, and it would blind a sweep over a complete
+ * history for a reason that has nothing to do with truncation.
+ *
+ * Truncation alone does not condemn the answer, though, so the two are used
+ * together. A merge of a branch whose tip is NEWER than the graft boundary
+ * must itself be newer than the boundary, and so inside the fetched range —
+ * "not an ancestor" is then a fact. Only a tip at or before the boundary is
+ * `unevaluated`. Where a date is missing or skewed the branch reads as
+ * unmerged, which spares the preview.
+ */
+export function probeBranches(o: BranchProbeOptions): Probe<BranchEvidenceSet> {
+  const command = `git ls-remote --heads ${o.remote}, then merge-base --is-ancestor per matching branch`;
+  if (o.previewSlugs.length === 0) {
+    return { state: "ok", value: { candidates: [], defaultBranch: o.defaultBranch ?? "", command } };
+  }
+
+  let defaultBranch = o.defaultBranch;
+  if (defaultBranch === undefined) {
+    const sym = git(o.repoRoot, ["ls-remote", "--symref", o.remote, "HEAD"]);
+    if (sym.code !== 0) {
+      return {
+        state: "unknown",
+        reason: `git ls-remote --symref ${o.remote} HEAD exited ${sym.code}: ${sym.err.trim() || "no output"}`,
+      };
+    }
+    const m = /^ref:\s+refs\/heads\/(\S+)\s+HEAD$/m.exec(sym.out);
+    if (m === null) {
+      return {
+        state: "unknown",
+        reason: `git ls-remote --symref ${o.remote} HEAD named no default branch, so "already merged" has nothing to be measured against.`,
+      };
+    }
+    defaultBranch = m[1];
+  }
+
+  const listed = git(o.repoRoot, ["ls-remote", "--heads", o.remote]);
+  if (listed.code !== 0) {
+    return {
+      state: "unknown",
+      reason: `git ls-remote --heads ${o.remote} exited ${listed.code}: ${listed.err.trim() || "no output"}`,
+    };
+  }
+  const wanted = new Set(o.previewSlugs);
+  const heads: { ref: string; sha: string }[] = [];
+  for (const line of listed.out.split("\n")) {
+    const m = /^([0-9a-f]{40})\s+refs\/heads\/(.+)$/.exec(line.trim());
+    if (m === null) continue;
+    if (wanted.has(stagingSlug(m[2]))) heads.push({ sha: m[1], ref: m[2] });
+  }
+  if (heads.length === 0) {
+    // A determined empty: the remote WAS listed, and nothing on it slugifies
+    // to any preview. Distinct from the `unknown`s above, and the distinction
+    // is the difference between "these previews are orphans" and "I could not
+    // tell".
+    return { state: "ok", value: { candidates: [], defaultBranch, command } };
+  }
+
+  const fetchedDefault = git(o.repoRoot, ["fetch", "--no-tags", o.remote, defaultBranch]);
+  if (fetchedDefault.code !== 0) {
+    return {
+      state: "unknown",
+      reason: `git fetch ${o.remote} ${defaultBranch} exited ${fetchedDefault.code}: ${fetchedDefault.err.trim()}`,
+    };
+  }
+  const defaultSha = git(o.repoRoot, ["rev-parse", "FETCH_HEAD"]);
+  if (defaultSha.code !== 0) {
+    return { state: "unknown", reason: `git rev-parse FETCH_HEAD after fetching ${defaultBranch} exited ${defaultSha.code}` };
+  }
+  const base = defaultSha.out.trim();
+
+  // Is this clone's history of the default branch complete? See the header:
+  // the question is asked of `.git/shallow`, never of a date or of
+  // `--is-shallow-repository`.
+  const history = defaultBranchHistory(o.repoRoot, base);
+  if ("reason" in history) return { state: "unknown", reason: history.reason };
+
+  const candidates: BranchEvidence[] = [];
+  for (const head of heads) {
+    const have = git(o.repoRoot, ["cat-file", "-e", `${head.sha}^{commit}`]);
+    if (have.code !== 0) {
+      const fetched = git(o.repoRoot, ["fetch", "--no-tags", o.remote, `refs/heads/${head.ref}`]);
+      if (fetched.code !== 0) {
+        candidates.push({
+          ref: head.ref,
+          unevaluated: `git fetch ${o.remote} refs/heads/${head.ref} exited ${fetched.code}: ${fetched.err.trim() || "no output"}`,
+        });
+        continue;
+      }
+    }
+    const dated = git(o.repoRoot, ["show", "-s", "--format=%cI", head.sha]);
+    const headCommittedAt = dated.code === 0 && dated.out.trim() !== "" ? dated.out.trim() : undefined;
+
+    const anc = git(o.repoRoot, ["merge-base", "--is-ancestor", head.sha, base]);
+    let mergedIntoDefault: boolean | undefined;
+    let why: string | undefined;
+    if (anc.code === 0) mergedIntoDefault = true;
+    else if (anc.code === 1) mergedIntoDefault = false;
+    else why = `git merge-base --is-ancestor exited ${anc.code}: ${anc.err.trim() || "no output"}`;
+
+    // See the header: a "not merged" answer out of a truncated history is an
+    // artefact of the fetch depth unless the tip postdates the graft boundary,
+    // in which case any merge of it would be inside the fetched range too.
+    if (
+      mergedIntoDefault === false &&
+      history.frontier !== undefined &&
+      (headCommittedAt === undefined || Date.parse(headCommittedAt) <= history.frontier)
+    ) {
+      mergedIntoDefault = undefined;
+      why =
+        `this clone's history of \`${defaultBranch}\` is truncated at a graft boundary, so "not an ancestor of ` +
+        `${defaultBranch}" cannot be told from "the merge point was never fetched". Re-run with the full ` +
+        "history (`fetch-depth: 0`).";
+    }
+    if (headCommittedAt === undefined) {
+      why = `${why ? `${why}; ` : ""}git show -s --format=%cI ${head.sha.slice(0, 8)} exited ${dated.code}`;
+    }
+    candidates.push({ ref: head.ref, mergedIntoDefault, headCommittedAt, unevaluated: why });
+  }
+  return { state: "ok", value: { candidates, defaultBranch, command } };
 }
 
 /**
@@ -440,20 +668,37 @@ export interface GatherOptions {
   branch?: string;
   prefix?: string;
   now?: Date;
+  /** Override the remote's default branch, which is otherwise discovered. */
+  defaultBranch?: string;
 }
 
 /** Gather everything the registry needs. Never throws; every failure is a `reason`. */
 export async function gatherContext(o: GatherOptions): Promise<HealthContext> {
   const slug = originSlug(o.repoRoot);
+  const remote = o.remote ?? "origin";
+  const staging = probeStaging({
+    repoRoot: o.repoRoot,
+    remote,
+    branch: o.branch ?? "gh-pages",
+    prefix: o.prefix ?? STAGING_PREFIX,
+  });
+  // The branch probe is scoped to the previews that exist, so it has to run
+  // after the staging one. When staging itself is unknown there is nothing to
+  // scope it to — and the orphan check is already unknown at that point, so
+  // asking would be network cost spent on an answer nobody reads.
   return {
     now: o.now ?? new Date(),
     subject: slug ?? "unknown-repository",
-    staging: probeStaging({
-      repoRoot: o.repoRoot,
-      remote: o.remote ?? "origin",
-      branch: o.branch ?? "gh-pages",
-      prefix: o.prefix ?? STAGING_PREFIX,
-    }),
+    staging,
+    branches:
+      staging.state === "ok"
+        ? probeBranches({
+            repoRoot: o.repoRoot,
+            remote,
+            previewSlugs: staging.value.previews.map((p) => p.slug),
+            defaultBranch: o.defaultBranch,
+          })
+        : { state: "unknown", reason: `the previews could not be read, so there was nothing to match branches against: ${staging.reason}` },
     openPrHeads: await probeOpenPrHeads(slug),
     repoSize: probeRepoSize(o.repoRoot),
     beans: probeBeans(o.repoRoot),

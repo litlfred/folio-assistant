@@ -4,7 +4,7 @@ title: A bean claim is invisible to a sibling until the PR exists, so claim-befo
 status: completed
 type: task
 created_at: 2026-09-19T09:41:30Z
-updated_at: 2026-09-19T11:16:40Z
+updated_at: 2026-09-19T11:40:54Z
 ---
 
 
@@ -144,3 +144,54 @@ Also worth recording: `35nj` read as `todo` on the default branch while being
 `completed` in my working tree, which is **correct** — the tool reads
 `origin/main`, where this commit has not landed. My first reading of that output
 was that the tool was wrong; it was measuring the thing it is supposed to measure.
+
+### The open question is closed: `main` DOES accept a claim push
+
+The PR that shipped this said the one thing it could not verify was whether
+`beans:claim` can actually reach the default branch here, since the protection
+API answers 403 and a dry-run push does not run the receive hooks — and that the
+answer would come the first time somebody ran it.
+
+Ran it, 2026-09-19T11:35:38Z, claiming `t373`:
+
+    ✓ claimed t373 on the default branch — every session can see it now
+
+Verified on the branch rather than trusting the exit code: `origin/main` carries
+`status: in-progress`, the note `Claimed by claude/fervent-mccarthy-nw4olk`, and
+commit `1112c823f` touching **exactly one file**. The mechanism works end to end
+against this repository.
+
+`fell-back` remains implemented and tested against a simulated protected branch,
+because the answer could change the moment a protection rule is added.
+
+### And using it found a hazard in it: the claim reverted itself at merge time
+
+The claim lands on the default branch and left the caller's own checkout
+untouched. Measured immediately after the `t373` claim above:
+
+    main:  status: in-progress
+    local: status: todo
+
+Committing that stale copy on the feature branch and merging would have
+**reverted the claim** — the branch's older value wins as an ordinary content
+change, so the tool would have quietly undone its own work. A claim mechanism
+that unclaims on merge is worse than none, because the window it closes reopens
+silently at exactly the moment the work lands.
+
+Fixed: a successful push now writes the same status into the caller's tree, so
+the merge is a no-op for that field instead of a regression. It is deliberately
+**not committed** — what to commit and when is the session's business, and a tool
+that commits to your branch behind your back is worse than the problem. If the
+local write fails the push still stands, and the outcome says so rather than
+undoing a landed claim.
+
+**An existing test had to change, and that is worth flagging rather than
+hiding.** "a free bean is claimed there … without touching the working tree"
+asserted a clean `git status`. It is now asserted as *exactly one* modified
+file — the bean — which keeps the original guarantee (no checkout, nothing else
+touched) while stating the new behaviour. A loosened assertion would have hidden
+the change; a precise one records it.
+
+That is the fifth defect this tool surfaced by being run rather than reasoned
+about, after the platform-root default, the `repoAt + 1` off-by-one, the relative
+remote, and claiming a `completed` bean.

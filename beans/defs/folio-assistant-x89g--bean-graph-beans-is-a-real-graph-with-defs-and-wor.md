@@ -5,6 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-18T17:56:09Z
 updated_at: 2026-09-18T17:56:09Z
+parent: folio-assistant-zzmr
 ---
 
 ## The ask

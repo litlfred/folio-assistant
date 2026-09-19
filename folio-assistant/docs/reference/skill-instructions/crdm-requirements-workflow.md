@@ -245,9 +245,12 @@ For each bean:
    uses the staging preview URLs
 7. **Ask user for explicit confirmation before merging to main**
 8. **Update documentation** — content/docs/ pages, workflow BPMNs
-9. **Staging cleanup** — staging previews are retained by default. To
-   remove, the user must add the `staging:cleanup` label to the PR.
-   **Do not remove staging without this label.**
+9. **Staging cleanup** — staging previews are retained by default. While the
+   PR is open, the user adds the `staging:cleanup` label; **once it is closed
+   the label can no longer reach it**, and removal is a `feature-staging.yml`
+   dispatch the user runs with `cleanup_slug` and a matching `cleanup_confirm`
+   (see [`staging-review`](staging-review.md)). **Never remove a staging
+   preview any other way, and never on your own initiative.**
 
 When a round of implementation is complete (one or more beans resolved):
 1. **Post a round summary comment on the issue** — addressed to the BA and

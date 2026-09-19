@@ -315,6 +315,23 @@ jobs:
           bun run scripts/gen-schema-docs.ts --check
           bun run scripts/gen-skill-docs.ts --check
 
+      # The README's AUTHORED half. `readme-sections.ts` owns the marked
+      # regions; this owns every other link, and `AGENTS.md` claims that
+      # "between the two tools no link in a folio README is unaccounted for".
+      #
+      # It ran in NO workflow until 2026-09-19 (bean `t373`) -- a check that
+      # exists, works, and is wired to nothing. That is `xom7` (a workflow
+      # failing unseen) and `cnlf` (a workflow that never fires) in a third
+      # form, and it is why `main` carried eight dead README paths after the
+      # site root moved to `docs/<stub>/`.
+      #
+      # `readme:sync:check` is deliberately NOT added beside it: this README
+      # carries zero `<!-- folio:*:begin -->` markers, because generated
+      # sections belong to a folio and this repository is the platform. Wiring
+      # it here would pass over nothing and read as coverage.
+      - name: README links resolve
+        run: bun run readme:audit
+
       # Agent memory is authored under `skills/memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
       # harness injects. An entry edited and never assembled is a fact the
@@ -322,6 +339,56 @@ jobs:
       # because the generated file still reads perfectly well without it.
       - name: agent memory is assembled
         run: bun run agent-memory:check
+
+      # Thirteen gates that were REGISTERED IN package.json AND RUN BY NOBODY.
+      #
+      # Measured 2026-09-19: of 33 `check:`/`:check` scripts, 21 appeared in no
+      # workflow at all. That is bean `5rfy`'s defect -- a gate that never
+      # fires -- and it is worse than a missing gate, because `package.json`
+      # advertises it and an agent (this one, repeatedly, this session) runs it
+      # by hand, reports it green, and reasonably assumes CI does the same. It
+      # does not. A sibling who does not run them merges the break.
+      #
+      # All thirteen PASS on `main` as of this commit, so wiring them locks in
+      # a property the repo HAS rather than demanding work to reach one. They
+      # share a step because they are fast and because thirteen near-identical
+      # entries is noise; `-e` means the first failure names itself and stops.
+      #
+      # DELIBERATELY NOT WIRED, and each for a stated reason -- an unexplained
+      # omission here is how the next person re-derives this list:
+      #   render:bpmn:check     -- needs a BROWSER: bpmn-js renders through
+      #                            Chromium, and this job installs none. It is
+      #                            not dropped, it is MOVED to the e2e job,
+      #                            which already has one. It passed on my
+      #                            machine only because a browser had been
+      #                            staged there earlier in the session -- the
+      #                            precise "green locally, red on a clean
+      #                            runner" gap these gates exist to close.
+      #   check:ci-health       -- a REPORT, not a gate. It reads the default
+      #                            branch, so on a PR it describes main rather
+      #                            than the diff. `ci-health.yml` runs it.
+      #   check:corpus-gate     -- needs a folio; the platform carries none.
+      #   check:upstream-pins   -- `upstream-pins.yml` runs it weekly.
+      #   check:partition:edges -- prints the edge list; `check:partition` is
+      #                            the gate and is wired below.
+      #   translate-*:check     -- need a translation toolchain not installed
+      #                            on this runner.
+      - name: gates that were registered and never run
+        run: |
+          set -e
+          bun run check:bean-parents
+          bun run check:declared-paths
+          bun run check:harness-dirs
+          bun run harness:dirs:check
+          bun run check:schema-nodes
+          bun run check:xml-comments
+          bun run check:orphan-verdicts
+          bun run check:partition
+          bun run docs:harness:check
+          bun run gen:jsonld:check
+          bun run readme:sync:check
+          bun run themes:css:check
+          bun run translation:block-qa:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
@@ -407,6 +474,13 @@ jobs:
       # artefacts under test are the ones the deploy emits rather than a
       # committed fixture that could agree with the test and disagree with
       # what ships.
+      # Here rather than in the `typescript` job because bpmn-js renders
+      # through Chromium, which only this job installs. Before the e2e run so
+      # a stale SVG is reported on its own terms rather than inside a browser
+      # test's output.
+      - name: rendered BPMN SVGs are current
+        run: bun run render:bpmn:check
+
       - name: playwright test
         run: bunx playwright test
 
