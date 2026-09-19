@@ -181,6 +181,13 @@ const RULES: Rule[] = [
       // its top level falls through — reported `unassigned`, which is the
       // tool working: it declined to guess rather than defaulting.
       "src/builtin-adapters.ts",
+      // Two scripts that arrived from `main` and fell through every prefix.
+      // Both are harness tooling about the KG's own artefacts, not about any
+      // folio's content: one introspects which Tools this instance's MCP
+      // server actually serves, the other refuses a `.bpmn`/`.dmn` whose
+      // comments are not well-formed XML.
+      "scripts/capture-mcp-tools.ts",
+      "scripts/xml-comment-check.ts",
 
       // `adapters/mcp-server/` was claimed wholesale by the harness prefix
       // rule, but `server.ts` opens "QOU Paper Writing Assistant — MCP
@@ -313,6 +320,14 @@ const RULES: Rule[] = [
       // sci. Named for `witness`, which the sci keyword rule would otherwise
       // claim — hence the explicit entry.
       "content/pipeline/witness-address.ts",
+      // The QA sidecar PROJECTION — the families (`block`, `translation`,
+      // `script`, `kg`), their states and freshness, read by `gen-docs-pages`
+      // to publish one file per (subject, family). Nothing in it is science:
+      // it imports only `block-qa`, `kg-qa` and `script-qa`, all core. It is
+      // here because the sci keyword rule matches `witness` in its NAME, which
+      // is the second file that has caught — a reminder that the keyword rule
+      // is a heuristic and the triage list is where its misses are corrected.
+      "content/pipeline/qa-witness.ts",
     ],
   },
 
