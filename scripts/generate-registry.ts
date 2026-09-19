@@ -17,6 +17,20 @@ import type {
   SessionHook, SkillDefinition, SkillRegistry,
 } from "../schemas/assistant-types.ts";
 import type { SkillPackageManifest } from "../schemas/skill-package.ts";
+import { kgRoots } from "./known-skills.js";
+
+/**
+ * The declared knowledge-graph root, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `kgRoots()` returns a LIST because a topical layout has several;
+ * this site wants one directory, and takes the first, which is the instance's
+ * own root in every layout shipped so far.
+ */
+function kgRoot(root: string): string {
+  return kgRoots(root)[0] ?? join(root, "skills");
+}
+
 
 // `.claude/skills/` and `skills/` are PLATFORM directories, so rooting at this
 // file's own location is right here — unlike the content pipeline, which must
@@ -76,7 +90,7 @@ function loadRoleAssignments(): RoleAssignment[] {
 }
 
 function loadPackageManifests(): SkillPackageManifest[] {
-  const skillsDir = join(rootDir, "skills");
+  const skillsDir = kgRoot(rootDir);
   if (!existsSync(skillsDir)) return [];
   return readdirSync(skillsDir, { withFileTypes: true })
     .filter(d => d.isDirectory())

@@ -118,6 +118,20 @@ const RULES: Rule[] = [
   //    modules quietly reclassified, and a partition report that still
   //    printed a total.
   {
+    repo: "harness",
+    // BEFORE the `test/` prefix below, because rules are FIRST-MATCH and an
+    // exact entry further down cannot override an earlier prefix — measured
+    // by putting these in the harness list at the bottom first and watching
+    // the two edges survive.
+    //
+    // `test/health/` is a LIBRARY that happens to live under `test/`: its own
+    // header calls it "the registry, and the pure verdict logic", and
+    // `scripts/staging-cleanup-preflight.ts` — a real workflow step, not a
+    // test — imports it. The blanket prefix is right for everything else in
+    // that tree.
+    exact: ["test/health/checks.ts", "test/health/probes.ts"],
+  },
+  {
     repo: "test",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
@@ -266,6 +280,19 @@ const RULES: Rule[] = [
     repo: "core",
     triaged: true,
     exact: [
+      // CORE despite matching the smart-base keyword rule, and the core's own
+      // declaration is the evidence: `schemas/block-kinds.ts` (core) declares
+      // `CONTENT_ADAPTERS = ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so a DAK
+      // block kind is part of the core content model. The module defining
+      // their schemas cannot be in a different repository from the union that
+      // names them — and calling it smart-base made the CORE barrel
+      // `schemas/index.ts` re-export a smart-base module, which was the single
+      // `folio-assist-core → smart-base` wrong-direction edge. The
+      // classification was wrong, not the import.
+      //
+      // What stays smart-base is the L2/L3 AUTHORING skills: the procedures
+      // for producing a DAK, as against the block kinds a folio may contain.
+      "schemas/dak-blocks.ts",
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
       "scripts/gen-jsonld-context.ts",       // from schemas/jsonld.ts
@@ -324,7 +351,89 @@ const RULES: Rule[] = [
     exact: [
       "src/server.ts",
       "src/index.ts",
+      // HARNESS, and the LAST wrong-direction edge lives here — left
+      // deliberately, because moving it is worse and the fix is a design
+      // decision rather than a filing one.
+      //
+      // Measured 2026-09-19, both ways. The file is 18 exports of which
+      // SIXTEEN are content model, so `core` looks obviously right; assigning
+      // it there takes the edge count from 1 to 4, because `src/core/rbac.ts`
+      // needs `UserRole`/`ROLE_LEVELS` and `server.ts`/`chat.ts` need
+      // `ContentAdapter`. Both halves have real consumers on their own side.
+      //
+      // So the file IS two things and wants splitting — except that
+      // `ContentAdapter`, the half the harness calls into, is defined
+      // ENTIRELY in content terms: every method returns `FolioItem`,
+      // `ContentOutline`, `ChapterDetail`, `ResolvedSection` or
+      // `ResolvedDocument`. Splitting it out does not remove the edge, it
+      // moves it. The harness's plug-in interface being written in the
+      // vocabulary of what it plugs into is the real question, and it is
+      // task 10's.
+      //
+      // Recorded here rather than acted on: a partition-tuning pass is the
+      // wrong place to redesign an adapter contract.
       "src/types.ts",
+      // HARNESS, both re-triaged 2026-09-19 while draining the last edges.
+      //
+      // `schemas/contributions.ts` is what a DEPENDENCY may add to the root
+      // instance — its own header calls it Phase 0.1 of the separation. It is
+      // the composition mechanism of the harness, not a thing a folio
+      // contains, so `harness-config.ts` importing it was never the wrong
+      // direction; the target was on the wrong side. Its other importer,
+      // `content/pipeline/render-discovery.ts`, is core, and core may import
+      // harness.
+      //
+      // `content/pipeline/repo-root.ts` resolves WHERE the content repo is by
+      // walking up for `computations/` and `content/`. Those directory names
+      // are markers it matches on, not a model it defines — and the cut is
+      // processes versus tooling. Measured: twelve importers, every one under
+      // `scripts/`. A module used only by tooling, doing path resolution, is
+      // tooling.
+      "content/pipeline/repo-root.ts",
+      // Ten scripts left unjudged, classified 2026-09-19. Every one is
+      // TOOLING under the process-versus-tooling cut — four checkers, two
+      // generators, two staging helpers, a bean-claim CLI and a front-matter
+      // parser — and none reads content. Left unassigned they produced 21
+      // edges the tool "declined to judge", which its own message says must
+      // NOT be read as clean: an unjudged edge is not a passing one.
+      //
+      // Several arrived from sibling sessions within the hour, which is the
+      // normal way this list goes stale rather than a lapse.
+      // HARNESS, exposed once the ten above stopped hiding their edges.
+      //
+      // `schemas/theme.ts` / `themes.ts` are the STICKY-NOTE themes — colour
+      // roles and layouts for the docs site, generated into CSS by
+      // `gen-themes-css.ts`. Site presentation belongs to the platform that
+      // publishes the site, not to a folio's content model, and their own
+      // headers say so: "named colour roles plus the three layouts".
+      //
+      // `test/health/checks.ts` and `probes.ts` are a LIBRARY, not test
+      // material: "the registry, and the pure verdict logic", imported by
+      // `staging-cleanup-preflight.ts`, which is a real workflow step. A
+      // module under `test/` that production code imports is shared tooling
+      // that happens to live there; the blanket `test/` rule is right for
+      // everything else in that tree and wrong for these two.
+      "schemas/theme.ts",
+      "schemas/themes.ts",
+      // Exposed by moving `test/health/` here — the same reveal-on-move
+      // pattern, third time in this pass. Both are harness by their own
+      // headers: "Repository health reports — what the daily sweep under
+      // `test/health/` wrote" is about the REPOSITORY, not a folio's content;
+      // and the todo graph is the human half of the work plan, a sibling of
+      // `beans/`, which is harness-level workflow rather than anything a
+      // folio contains.
+      "schemas/health-report.ts",
+      "schemas/todo-graph.ts",
+      "scripts/check-agents-xref.ts",
+      "scripts/check-bean-parents.ts",
+      "scripts/check-declared-paths.ts",
+      "scripts/claim-bean.ts",
+      "scripts/front-matter.ts",
+      "scripts/gen-themes-css.ts",
+      "scripts/playwright-chromium.ts",
+      "scripts/restore-staging.ts",
+      "scripts/serve-rendering.ts",
+      "scripts/staging-cleanup-preflight.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
       "src/tools/skill-fetch.ts",
@@ -541,7 +650,17 @@ const RULES: Rule[] = [
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["skills/authoring-who-smart-guidelines/"],
-    exact: ["schemas/dak-blocks.ts"],
+    // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
+    // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
+    // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
+    // part of the core content model by the core's own declaration. Calling
+    // the module that defines their schemas `smart-base` made the core barrel
+    // re-export a smart-base module — the one `folio-assist-core → smart-base`
+    // wrong-direction edge, and it was the classification that was wrong
+    // rather than the import.
+    //
+    // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
+    // for producing a DAK, as against the block kinds a folio may contain.
   },
   {
     repo: "base",
@@ -779,6 +898,10 @@ function main(): void {
       else console.log(`  ${repoName(f)} → ${repoName(t)}: ${es.length}`);
     }
     if (wantEdges) {
+      const un = [...new Set(unresolvedEdges.flatMap((e) => [e.from, e.to]))]
+        .filter((m) => modules.get(m)?.repo === "unassigned")
+        .sort();
+      if (un.length) console.log(`\n${markdown ? "### " : ""}Unassigned modules\n${un.map((m) => `  ${m}`).join("\n")}`);
       console.log(`\n${markdown ? "### " : ""}Every wrong-direction edge\n`);
       for (const e of crossEdges.sort((a, b) => a.from.localeCompare(b.from))) {
         console.log(`${markdown ? "- " : "  "}\`${e.from}\` (${repoName(e.fromRepo)}) → \`${e.to}\` (${repoName(e.toRepo)})`);

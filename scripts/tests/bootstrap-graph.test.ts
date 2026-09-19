@@ -73,9 +73,31 @@ describe("what it contains, and what it admits it did not look at", () => {
     ]);
   });
 
-  test("the missing BPMN directory is reported rather than passed over", async () => {
+  test("bootstrap's process IS in the graph, with its flows and lanes", async () => {
+    // This asserted the OPPOSITE until 2026-09-19 — "the missing BPMN
+    // directory is reported rather than passed over", against the real
+    // `bootstrap/`, which had no `workflows/` when it was written. #413 gave
+    // bootstrap its decision tree and the assertion inverted: the directory is
+    // no longer missing, so nothing reports it missing.
+    //
+    // The behaviour it meant to pin — an absent directory is REPORTED, not
+    // passed over — is real and still guarded, on a FIXTURE that declares the
+    // absence, in `kg-export-instance.test.ts`. A property of a real instance
+    // that is still being built cannot carry it: the test breaks when the
+    // instance grows the feature, which is a fact about the subject rather
+    // than about the code.
+    //
+    // What belongs here is the fact that is now true and worth defending.
     const doc = await buildBootstrapDocument();
-    expect((doc["problems"] as string[]).some((p) => p.includes("bpmn"))).toBe(true);
+    const counts = doc["counts"] as Record<string, number>;
+    expect({
+      Process: counts["Process"] ?? 0,
+      hasNodes: (counts["ProcessNode"] ?? 0) > 0,
+      hasFlows: (counts["SequenceFlow"] ?? 0) > 0,
+      hasRoles: (counts["Role"] ?? 0) > 0,
+    }).toEqual({ Process: 1, hasNodes: true, hasFlows: true, hasRoles: true });
+    // And nothing about the diagram is reported as a problem.
+    expect((doc["problems"] as string[]).filter((p) => p.includes("bpmn"))).toEqual([]);
   });
 });
 

@@ -25,7 +25,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { join, resolve, basename, relative } from "path";
 
-import { isSkillMd, kgRoots } from "./known-skills.js";
+import { isSkillMd, kgDirectories } from "./known-skills.js";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
@@ -166,12 +166,20 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
   "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
-  // A declared kg directory that holds its skills DIRECTLY rather than in
-  // package subdirectories, so it is keyed by its repo-relative path. This was
-  // a hand-written entry in `GROUPS` until `src/skills/` was declared (bean
-  // `osbo`); discovery reaches it now, and a second entry would publish it
-  // twice.
-  "src/skills": "Agent skills",
+  // The two entries below are declared kg directories that hold their skills
+  // DIRECTLY rather than in package subdirectories, so they are keyed by the
+  // directory's DECLARED ID — `bootstrap` and `cat-harness-src`, not
+  // `bootstrap/skills` and `src/skills`.
+  //
+  // #428 keyed them by repo-relative path, which works and has a short
+  // half-life: `harness.json` says on its own entry that "ids are stable
+  // across a relocation, paths are not", and this file had already paid for
+  // that twice in one day — the basename was `bootstrap` only until #422 moved
+  // those skills to `bootstrap/skills/`. A path key breaks again at the
+  // `cat-harness/` move, which is the next step on bean `wggr` and would turn
+  // `src/skills` into `cat-harness/src/skills`.
+  bootstrap: "Bootstrap (read before anything else is known)",
+  "cat-harness-src": "Agent skills",
 };
 
 /**
@@ -215,15 +223,26 @@ function discoverGroups(): Group[] {
   const out: Group[] = [];
   const undeclared: string[] = [];
   // Every DECLARED knowledge-graph directory, not `skills/` alone: an instance
-  // may put its graph anywhere, and this repository declares two since
-  // `src/skills/` was declared (bean `osbo`).
-  for (const skillsRoot of kgRoots(REPO_ROOT)) {
+  // may put its graph anywhere, and this repository declares three —
+  // `skills/`, `bootstrap/skills/` and `src/skills/` (beans `x3bd`, `osbo`).
+  //
+  // A directory may hold skills DIRECTLY as well as in packages: `src/skills/`
+  // holds `corpus-grep.md` beside the `.ts` implementing it, and
+  // `bootstrap/skills/` holds both of bootstrap's.
+  //
+  // THE TWO CASES ARE KEYED DIFFERENTLY, and that is the point. A package
+  // NAMES ITSELF, so its basename is the key. A root does not — its basename
+  // is an artefact of where the declaration happens to point — so the key is
+  // its DECLARED ID. This file keyed a root by basename until #422 moved
+  // bootstrap's skills one level down and the generator demanded a heading for
+  // a package called "skills"; #428 then keyed by repo-relative path, which
+  // has the same shape of failure one move later.
+  for (const decl of kgDirectories(REPO_ROOT)) {
+    const skillsRoot = decl.absPath;
     const rel = relative(REPO_ROOT, skillsRoot);
-    // A kg directory may hold skills DIRECTLY as well as in packages —
-    // `src/skills/` holds `corpus-grep.md` beside the `.ts` implementing it.
     if (holdsSkill(skillsRoot)) {
-      const direct = SKILLS_CATEGORIES[rel];
-      if (direct === undefined) undeclared.push(rel);
+      const direct = SKILLS_CATEGORIES[decl.id];
+      if (direct === undefined) undeclared.push(decl.id);
       else out.push({ category: direct, dir: skillsRoot, repoPrefix: rel });
     }
     for (const d of readdirSync(skillsRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
@@ -358,7 +377,14 @@ function main(): void {
   for (const group of GROUPS) {
     indexRows[group.category] = [];
     if (!existsSync(group.dir)) continue;
-    const files = readdirSync(group.dir).filter((f) => f.endsWith(".md")).sort();
+    // `isSkillMd`, not a bare `.md` test — the FOURTH place in this repository
+    // that predicate was spelled out by hand, and the second in this file.
+    // Without it `bootstrap/README.md` was published as a skill instruction
+    // page titled "bootstrap", complete with an "edit this page's source"
+    // link, for a file that is not a skill.
+    const files = readdirSync(group.dir)
+      .filter((f) => f.endsWith(".md") && isSkillMd(join(group.dir, f)))
+      .sort();
 
     for (const file of files) {
       const name = basename(file, ".md");

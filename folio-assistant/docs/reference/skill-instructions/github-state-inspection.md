@@ -23,10 +23,20 @@ in an HTTP request. This skill says which to reach for and in what order.
 > **A published URL is LOOKED UP in the publish ref's tree. It is never built
 > from the source path.**
 
-`docs/folio-assistant/proposals/bootstrap.md` publishes to
-`/proposals/bootstrap.html`. The `folio-assistant/` segment is a source-tree
-stub that Jekyll does not carry into the site. Anyone composing the URL from
-the source path gets a 404 and concludes the page is missing.
+`folio-assistant/docs/guides/agent-onboarding.md` publishes to
+`/guides/agent-onboarding.html`. The `folio-assistant/` segment is a
+source-tree stub that Jekyll does not carry into the site. Anyone composing
+the URL from the source path gets a 404 and concludes the page is missing.
+
+**And a source path moves under you.** The worked example below was
+`docs/folio-assistant/proposals/bootstrap.md`; the stub pattern inverted it to
+`folio-assistant/docs/proposals/` (bean `wggr`), and then proposals were
+relocated out of the site entirely to `fsh-guts/proposals/`, which is kept and
+addressable but **deliberately unpublished** — so that page has no URL at all
+now. Three moves in one day, and a URL composed from any remembered source
+path would have been wrong after each. The third move is the worst case for
+composing, because the composed URL is not merely the wrong path: it asserts a
+page exists where the repository has decided none should.
 
 This is the same defect `AGENTS.md` records for generated README links —
 *"It composed links instead of resolving them"*, where all twenty-three

@@ -35,6 +35,20 @@ import { fileURLToPath } from "node:url";
 import { tools } from "../tools/index.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
 import { kgRoots } from "./known-skills.js";
+import { directoryForGraph } from "../schemas/cat-harness.js";
+
+/**
+ * The declared `schemas` graph, or the convention.
+ *
+ * declared-path-literal: the fallback is at the call site so the choice is
+ * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
+ * the schema definitions — which is why `directoryForGraph` is asked for the
+ * `schemas` one by name rather than being handed a single-home guess.
+ */
+function schemasRoot(root: string): string {
+  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+}
+
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -78,7 +92,7 @@ export function knownSkills(): Set<string> {
  * this repo keeps writing down.
  */
 export function contractRequires(root: string, skill: string): string[] | undefined {
-  const f = join(root, "schemas", "skills", skill, "input.schema.json");
+  const f = join(schemasRoot(root), "skills", skill, "input.schema.json");
   if (!existsSync(f)) return undefined;
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as { required?: unknown };
