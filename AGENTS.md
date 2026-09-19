@@ -305,7 +305,14 @@ beans <id> --status in-progress          # claim an item (durable, visible to si
   that something was considered and rejected, which is what stops the next
   agent re-entering the same dead end; a deleted one leaves a sibling unable
   to tell abandonment from accident. `beans delete` exists in the CLI, which
-  is why this is written down rather than assumed. Full cycle:
+  is why this is written down rather than assumed. **This is one instance of a
+  general rule and the general rule is the source of truth:**
+  [`deletion-requires-confirmation`](skills/folio-core/deletion-requires-confirmation.md)
+  — an agent never removes a durable artefact on its own initiative, it reports
+  what would go with sizes and ages and waits to be told. The bean case is the
+  strictest because a bean id is referenced from commits, issues and other
+  beans; the reasoning above is not about beans and the skill says where else
+  it lands. Full cycle:
   [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
 - **`beans ≠ sidecars`:** never `beans create` bulk machine-generated queues (QA
   `*.qa.json`, witness `*.witness.json`, watcher queues) — keep those as bulk JSON.
