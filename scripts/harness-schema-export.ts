@@ -41,6 +41,7 @@ import { CatHarnessDeclarationSchema, artefactStub, readDeclaration, renderingPa
 import { tools } from "../tools/index.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
+import { stagingFields } from "./staging-stamp.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -395,10 +396,21 @@ if (import.meta.main) {
   const outDir = arg("--out-dir") ?? join(ROOT, "_kg");
   mkdirSync(outDir, { recursive: true });
 
+  // Which build wrote these. Stamped at WRITE time, not in the builders: the
+  // `build*` functions describe what a declaration IS, which is the same answer
+  // in every run, and folding a run id into them would make two calls in one
+  // process return documents that differ. See `scripts/staging-stamp.ts` for
+  // why it is absent rather than fabricated outside CI.
+  //
+  // JSON Schema draft-07 ignores keywords it does not know, so this is inert
+  // for validation and readable for a human — the same trade the JSON-LD export
+  // makes, and it is why both use the one key.
+  const staging = stagingFields();
+
   const files = schemaFiles(stub, baseUrl);
   for (const [name, schema] of files) {
     const out = join(outDir, name);
-    writeFileSync(out, JSON.stringify(schema, null, 2) + "\n");
+    writeFileSync(out, JSON.stringify({ ...schema, ...staging }, null, 2) + "\n");
     console.log(`${relative(ROOT, out)}`);
     console.log(`  $id  ${schema.$id ?? "(none — no canonicalUrl declared)"}`);
   }
@@ -408,7 +420,10 @@ if (import.meta.main) {
   for (const c of contracts) {
     const out = join(outDir, c.published);
     mkdirSync(dirname(out), { recursive: true });
-    writeFileSync(out, JSON.stringify(c.schema, null, 2) + "\n");
+    // The contracts are stamped too. They are the artefacts a Tool node's
+    // `io.*.schema` dereferences to, so "which build is this contract from" is
+    // the question with the most riding on it, not the least.
+    writeFileSync(out, JSON.stringify({ ...c.schema, ...staging }, null, 2) + "\n");
   }
   if (contracts.length > 0) {
     console.log(

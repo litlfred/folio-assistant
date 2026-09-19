@@ -206,7 +206,7 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds — the harness declares twelve, core adds folio", () => {
+describe("graph kinds — the harness declares its own, core adds folio", () => {
   it("the harness's own vocabulary contains no renderable kind", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
@@ -221,6 +221,11 @@ describe("graph kinds — the harness declares twelve, core adds folio", () => {
       // they are not interchangeable: the corpus checklist greps `library/`
       // and not `uploads/`.
       "library",
+      // The published projection of every verdict. Its own kind rather than
+      // part of `kg`, because a witness and the verdict it projects are
+      // different artefacts: one is what a checker wrote and lives beside its
+      // subject, the other is that flattened for the web and is never edited.
+      "qa",
       "schemas",
       // The todo graph: human actors' outstanding work. NOT a second work
       // plan — `beans` is the agent work plan — but the harness owns the KIND
@@ -229,6 +234,13 @@ describe("graph kinds — the harness declares twelve, core adds folio", () => {
       "todo-items",
       "todos",
       "tools",
+      // The gettext INPUT to injection — `.pot`, `.po`, and the manifests
+      // that make each pair addressable. There is deliberately no matching
+      // kind for the OUTPUT: a rendered translation is the same kind of thing
+      // as the page it translates, differing by a `lang` the file declares
+      // for itself. See this kind's comment in cat-harness.ts for the version
+      // of PR #351 that got this wrong and why.
+      "translation-sources",
       "uploads",
       "voices",
       "workflow-state",
@@ -244,9 +256,9 @@ describe("graph kinds — the harness declares twelve, core adds folio", () => {
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
     expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "cat-harness", "library", "schemas",
+      "bean-defs", "beans", "cat-harness", "library", "qa", "schemas",
       "todo-feedback", "todo-items", "todos",
-      "tools", "uploads", "voices", "workflow-state",
+      "tools", "translation-sources", "uploads", "voices", "workflow-state",
     ]);
   });
 

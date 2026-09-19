@@ -1491,3 +1491,486 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   border: 0;
   background: transparent;
 }
+
+/* ── The search field, inside the launcher ────────────────────────────── */
+
+/* THE SEARCH LEFT THE MAIN PANEL. The owner: "move the search to a icon in
+   navbar that expands.... keep main display panel uncluttered."
+
+   `docs-ui.js` MOVES just-the-docs' own `.search` container in here rather
+   than rebuilding it, so the theme's input, label, results list and handlers
+   all arrive intact. What it does not bring is a layout that fits: the theme
+   sizes that container to fill a full-width `.main-header`, with an
+   absolutely-positioned input stretched to its parent's height. Dropped into
+   a 16.5rem sidebar panel with no height of its own, that collapses to
+   nothing. Everything below is the un-stretching.
+
+   The holder is `hidden` while parked. It stays IN THE DOCUMENT the whole
+   time — see the note in `docs-ui.js`: the theme looks its input up by id,
+   and `getElementById` does not find a detached node. */
+.fa-search-holder[hidden] { display: none; }
+
+.fa-tiles .fa-search-holder {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Per-scheme, OPAQUE tokens, for the same reason the language bar carries its
+   own: a translucent field makes its contrast a property of whatever the
+   theme paints underneath, and the numbers below would then be a claim about
+   one page rather than a fact about these colours. Ratios are against
+   `--fa-search-bg`, computed per WCAG relative luminance on the COMPOSITED
+   colour (nothing here is blended by `opacity`) and confirmed by axe.
+
+   Dark is the default, as everywhere else in this file. */
+.fa-tiles .fa-search-holder {
+  --fa-search-bg: #1c2029;
+  --fa-search-fg: #e6e9ee;      /* 13.40:1 — what the reader types            */
+  --fa-search-muted: #9aa4b2;   /*  6.47:1 — the placeholder and result blurb */
+  --fa-search-border: #6b7684;  /*  3.53:1 — a UI component, SC 1.4.11 floor  */
+}
+
+:root[data-fa-scheme="light"] .fa-tiles .fa-search-holder {
+  --fa-search-bg: #ffffff;
+  --fa-search-fg: #1f2933;      /* 14.76:1 */
+  --fa-search-muted: #5a6472;   /*  6.00:1 */
+  --fa-search-border: #767d88;  /*  4.15:1 */
+}
+
+/* The theme gives `.search` `position: relative; height: 100%; flex-grow: 1`
+   and, above 50rem, a width tied to the main column. None of that survives
+   the move, and `height: 100%` of a parent with no height is zero. */
+.fa-tiles .search,
+.fa-tiles .search-input-wrap {
+  position: static;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  flex: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* The input is `position: absolute` in the theme, stretched to the header's
+   height. In normal flow it needs a height of its own. 2.25rem is 36px —
+   above the 24px SC 2.5.8 floor by the same margin the tiles take, because
+   this instance's declared interaction profile is low-dexterity. */
+.fa-tiles .search-input {
+  position: static;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: var(--fa-search-bg);
+  color: var(--fa-search-fg);
+  font-size: 0.8rem;
+}
+
+/* `::placeholder` is rendered at a reduced opacity by every engine unless it
+   is told otherwise, and an opacity-blended foreground fails SC 1.4.3 even
+   when the token it was blended from passes. `opacity: 1` is what makes the
+   6.47:1 above a fact about what is on screen. */
+.fa-tiles .search-input::placeholder {
+  color: var(--fa-search-muted);
+  opacity: 1;
+}
+
+.fa-tiles .search-input:focus-visible,
+.fa-tiles .search-input:focus {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
+}
+
+/* THE LABEL IS HIDDEN VISUALLY AND KEPT IN THE ACCESSIBILITY TREE, and the
+   difference between those two is the whole point.
+
+   The theme's magnifier label is absolutely positioned over its input, and
+   there is already a magnifier on the tile that opened this view, so a second
+   one inside the field is noise in a panel whose job is to be uncluttered.
+
+   This rule was `display: none` for exactly one commit. That is not hiding a
+   picture — it removes the label from the accessibility tree, **and the
+   theme's input carries no `aria-label`**: its name comes from this label and
+   the `sr-only` span inside it. So `display: none` silently demoted the
+   field's accessible name to its `placeholder`, which vanishes the moment the
+   reader types.
+
+   It was found by reading the REAL Jekyll output of this branch, not by the
+   gate: the test fixture had been written from memory with an `aria-label`
+   the theme does not emit, so axe was measuring a name the site never
+   renders. axe does not flag it even with the fixture corrected — its `label`
+   rule accepts a non-empty placeholder as a last-resort pass. This is the
+   same class of defect as the bare `<circle>` nodes in the neighbourhood
+   diagram: real, and outside what an automated pass can see. An explicit
+   accessible-name assertion guards it instead.
+
+   So: clipped to a pixel rather than removed. Invisible, still named. */
+.fa-tiles .search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Results drop BELOW the field in normal flow rather than floating over the
+   sidebar nav, and the panel scrolls instead of growing past the viewport. */
+.fa-tiles .search-results {
+  position: static;
+  width: 100%;
+  max-height: 16rem;
+  margin-top: 0.4rem;
+  overflow-y: auto;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: var(--fa-search-bg);
+  color: var(--fa-search-fg);
+  box-shadow: none;
+}
+
+.fa-tiles .search-results:empty { display: none; }
+
+.fa-tiles .search-result {
+  display: block;
+  padding: 0.35rem 0.5rem;
+  min-height: 2rem;
+  color: var(--fa-search-fg);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.fa-tiles .search-result:hover,
+.fa-tiles .search-result:focus-visible,
+.fa-tiles .search-result.active {
+  background: rgba(128, 128, 128, 0.22);
+}
+
+.fa-tiles .search-result-rel-url,
+.fa-tiles .search-result-previews,
+.fa-tiles .search-no-result {
+  color: var(--fa-search-muted);
+  font-size: 0.72rem;
+}
+
+/* ═══ Sticky todos ═══════════════════════════════════════════════════════
+ *
+ * Scheme-agnostic BY CONSTRUCTION: every surface here is a neutral rgba
+ * overlay plus `currentColor`, so it inherits the page's own foreground in
+ * either scheme and there is no second palette to keep in step.
+ *
+ * That is not stylistic. #319 measured `#fff` on this site's accent at
+ * 5.97:1 in light and 2.19:1 in dark — a fixed colour that passes in one
+ * scheme and fails in the other, from one declaration. An overlay cannot
+ * have that defect, because it never names a colour.
+ *
+ * Targets are 2.75rem minimum, well past the 24px SC 2.5.8 floor, because
+ * this instance's declared interaction profile is low-dexterity and a target
+ * that is barely legal is a target that is hard to hit (bean `gjli`).
+ */
+
+.fa-sticky-board {
+  margin: 0 0 1.5em;
+  padding: 1em 1.1em 1.2em;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 8px;
+  background: rgba(128, 128, 128, 0.06);
+}
+
+.fa-sticky-board-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  margin-bottom: 0.8em;
+}
+
+.fa-sticky-board-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.fa-sticky-board-close,
+.fa-sticky-close {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* `auto-fill` with a floor, so the board is one readable column on a phone and
+ * lines the stickies up on a wide screen — without a media query naming a
+ * breakpoint that the next layout change would invalidate. */
+.fa-sticky-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 0.9em;
+  align-items: start;
+}
+
+.fa-sticky {
+  padding: 0.7em 0.8em;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  /* The priority stripe is the only per-card differentiator, and it is a
+   * WIDTH as well as an opacity — colour alone would carry the whole signal,
+   * which SC 1.4.1 forbids and a monochrome reader cannot see at all. */
+  border-left-width: 5px;
+  border-radius: 6px;
+  background: rgba(128, 128, 128, 0.08);
+}
+
+.fa-sticky-p-critical { border-left-color: rgba(200, 60, 60, 0.85); }
+.fa-sticky-p-high     { border-left-color: rgba(200, 120, 40, 0.8); }
+.fa-sticky-p-medium   { border-left-color: rgba(128, 128, 128, 0.7); }
+.fa-sticky-p-low      { border-left-color: rgba(128, 128, 128, 0.35); }
+
+.fa-sticky-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+}
+
+.fa-sticky-toggle {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.2em 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fa-sticky-toggle::before {
+  content: "\25B8\00a0";
+  display: inline-block;
+}
+.fa-sticky-toggle[aria-expanded="true"]::before { content: "\25BE\00a0"; }
+
+.fa-sticky-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+}
+
+.fa-sticky-chip {
+  padding: 0.1em 0.5em;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  text-transform: lowercase;
+}
+
+.fa-sticky-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.fa-sticky-pin,
+.fa-sticky-recall {
+  min-height: 2.75rem;
+  padding: 0.2em 0.7em;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+/* `.fa-node-edit` is the right CLASS — same affordance, same href shape, same
+ * glyph — but its per-node STYLING does not transfer, and axe caught that
+ * rather than review.
+ *
+ * Beside a heading it floats right, pulls up into the heading's line, and sits
+ * at `opacity: 0.35` so it stays quiet until hovered. In a sticky's tool row it
+ * is a primary control on its own line, and 0.35 opacity measured **2.22:1**
+ * against the floating card — WCAG AA asks 4.5:1.
+ *
+ * Semantics inherited, presentation overridden. A pattern adopted at the class
+ * level still has to be looked at where it lands. */
+.fa-sticky-edit {
+  float: none;
+  margin: 0;
+  padding: 0.2em 0.7em;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 6px;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  opacity: 1;
+}
+
+.fa-sticky-body {
+  margin-top: 0.6em;
+  font-size: 0.85rem;
+}
+.fa-sticky-body p { margin: 0 0 0.6em; white-space: pre-wrap; }
+.fa-sticky-body p:last-child { margin-bottom: 0; }
+.fa-sticky-empty { opacity: 0.7; font-style: italic; }
+
+/* A pinned sticky. `position: fixed` so it stays put while the page scrolls —
+ * which is the whole point of pinning one. */
+.fa-sticky-layer { position: fixed; inset: auto 1rem 1rem auto; z-index: 90; width: min(22rem, calc(100vw - 2rem)); }
+.fa-sticky-layer:empty { display: none; }
+
+/* A pinned sticky sits OVER page content, so it must be opaque — and which
+ * opaque colour depends on the scheme.
+ *
+ * `background: Canvas` was the first attempt and is wrong in a way worth
+ * recording: `Canvas` is a SYSTEM colour that follows the OS/UA scheme, while
+ * the text inside follows the page's own `data-fa-scheme`. When a reader sets
+ * the page to dark on a light system, or the reverse, the two disagree and the
+ * card renders dark text on dark or light on light. axe measured it as light
+ * lavender on white.
+ *
+ * So: the same shape `.fa-qr-panel` already uses — a dark base, a light-scheme
+ * override, and BOTH background and colour set together in each, because
+ * setting only one is exactly how the mismatch happened. */
+.fa-sticky-floating {
+  margin-top: 0.6em;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  background: var(--sidebar-color, #27262b);
+  color: #f4f4f6;
+}
+
+:root[data-fa-scheme="light"] .fa-sticky-floating {
+  background: #fff;
+  color: #27262b;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-fa-scheme="dark"]) .fa-sticky-floating {
+    background: #fff;
+    color: #27262b;
+  }
+}
+
+/* The board slot for a sticky that is currently pinned. Greyed, still present,
+ * and still a real control — the owner asked that clicking it bring the sticky
+ * back, and `disabled` would take it out of the tab order entirely. */
+.fa-sticky-slot-floating .fa-sticky-recall {
+  width: 100%;
+  opacity: 0.55;
+  text-align: left;
+  font-style: italic;
+}
+
+.fa-tile-count {
+  display: inline-block;
+  min-width: 1.4em;
+  margin-left: 0.3em;
+  padding: 0 0.35em;
+  border-radius: 999px;
+  background: rgba(128, 128, 128, 0.3);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fa-sticky-floating { transition: box-shadow 120ms ease; }
+}
+
+/* A sticky's knowledge-graph edges. Each is `axis: label`, because a bare
+ * `#314` or `folio-assistant-29ij` is opaque without the word that says what
+ * kind of thing it is. */
+.fa-sticky-rels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fa-sticky-rel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.1em 0.5em;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.fa-sticky-rel-axis { opacity: 0.75; text-transform: lowercase; }
+
+/* A dangling edge is dashed and italic, NOT hidden and NOT greyed to the point
+ * of illegibility. It points somewhere real that this site cannot reach, which
+ * is a third state — the reader should be able to read the id and go looking. */
+.fa-sticky-rel-dangling {
+  border-bottom: 1px dashed currentColor;
+  font-style: italic;
+}
+
+/* A per-block todo badge, beside the heading its todos are attached to. */
+.fa-sticky-inline { margin: 0.2em 0 0.4em; }
+
+.fa-sticky-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 2.75rem;
+  padding: 0.2em 0.7em;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 999px;
+  background: rgba(128, 128, 128, 0.08);
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.fa-sticky-badge .fa-tile-glyph { width: 1em; height: 1em; }
+
+.fa-sticky-badge-count {
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: rgba(128, 128, 128, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-sticky-inline-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 0.7em;
+  margin: 0 0 1.2em;
+}
+
+/* The process a sticky belongs to, and how deep that process sits in the BPMN
+ * call hierarchy. Indent is a LEFT BORDER rather than a margin, so a nested
+ * card keeps its full width in the grid — indenting by margin would make the
+ * deepest column narrower than its neighbours for no reason a reader can use. */
+.fa-sticky-slot-in-process { border-left: 2px solid rgba(128, 128, 128, 0.3); padding-left: 0.5em; }
+.fa-sticky-slot-in-process[data-fa-depth="1"] { border-left-width: 4px; }
+.fa-sticky-slot-in-process[data-fa-depth="2"] { border-left-width: 6px; }
+.fa-sticky-slot-in-process[data-fa-depth="3"] { border-left-width: 8px; }
+
+.fa-sticky-process {
+  display: block;
+  margin-bottom: 0.25em;
+  font-family: var(--fa-mono, monospace);
+  font-size: 0.7rem;
+  opacity: 0.8;
+}

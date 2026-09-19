@@ -29,8 +29,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
+import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
 import { readDeclaration } from "../schemas/cat-harness.js";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
+import { siteLinks } from "./site-links.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const OUT = join(ROOT, "docs/_data/harness.json");
@@ -89,6 +91,48 @@ for (const [layout, img] of imagesForRole(decl.images, "landing")) {
   };
 }
 
+/**
+ * Where the header's action tiles point.
+ *
+ * Resolved through `siteLinks`, which computes from `artefactStub` and
+ * `renderingPath` — so the tile agrees with what the Pages workflow actually
+ * publishes. The previous answer was `'/kg/' | relative_url` written into
+ * `head_custom.html`, a path composed by convention that had never resolved.
+ *
+ * `path` is site-ROOT-relative and the template applies `relative_url` to it,
+ * which is what makes it correct under this site's `/folio-assistant/`
+ * baseurl. `url` is absolute and is printed as-is.
+ *
+ * ## "Could not determine" keeps the previous answer
+ *
+ * The forge URL is read from `git remote get-url origin` rather than written
+ * down a second time — `harness.config.json` already argues the case for this
+ * repo's Pages address ("resolve it, do not compose it"), and the same holds
+ * for its repository address. But this file is COMMITTED and gated by
+ * `--check`, and a checkout with no git (a release tarball, a container that
+ * copied the tree in) would otherwise drop a link that is perfectly good and
+ * report the committed file as stale. So an undetectable remote KEEPS
+ * whatever the file already says. Absent and unknown are different, and the
+ * previous answer is the better of the two things to do with unknown.
+ */
+const detected = detectRepoUrl(ROOT);
+let repoUrl = detected;
+if (!repoUrl && existsSync(OUT)) {
+  try {
+    const prev = JSON.parse(readFileSync(OUT, "utf-8")) as { links?: { id: string; url?: string }[] };
+    repoUrl = prev.links?.find((l) => l.id === "source")?.url;
+    if (repoUrl) {
+      console.warn(
+        `sync-docs-harness: could not read git remote "origin"; keeping the ` +
+          `repository URL already in docs/_data/harness.json (${repoUrl}).`,
+      );
+    }
+  } catch {
+    // An unreadable previous file is not a reason to fail: it is about to be
+    // rewritten anyway, and the source link is simply absent this run.
+  }
+}
+
 const payload = {
   _generated: "scripts/sync-docs-harness.ts — do not hand-edit; edit harness.json",
   name: decl.name,
@@ -99,6 +143,7 @@ const payload = {
     ? { src: siteRelative(smallIcon.src), title: smallIcon.title ?? "", description: smallIcon.description ?? "" }
     : null,
   landing,
+  links: siteLinks(decl, repoUrl),
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;
 const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";

@@ -97,6 +97,48 @@
 -->
 <script type="application/json" id="fa-site-scheme">{"scheme": "{{ site.color_scheme | default: 'light' }}"}</script>
 <!--
+  The TRANSLATION INDEX — which source page has a translation in which locale.
+
+  `mountNavLocale` in docs-ui.js reads this to decide what the left-hand navbar
+  shows: with the source language selected it does nothing, and with `fr`
+  selected it swaps each nav item that HAS a French page for that page, IN
+  PLACE OF the English one. An item with no translation is left exactly as it
+  is — that is the fallback, and it is the absence of a rewrite rather than a
+  code path of its own.
+
+  Generated into `docs/_data/translations.json` by
+  `content/pipeline/translation-index.ts`, from what each page DECLARES about
+  itself: `lang`, and `translation_source` naming the page it expresses. NOT
+  from a scan for directories whose names look like language subtags — see
+  that module's header for why that inference is wrong in both directions.
+
+  THREE STATES, and the third is the reason this is a JSON island rather than
+  a conditional. (The tag name is written inside {% raw %}{% raw %}{% endraw %}
+  below because LIQUID PARSES TAGS INSIDE HTML COMMENTS -- `<!-- -->` means
+  nothing to it -- so naming one in prose is a syntax error at build time, and
+  the message points at the THEME's head.html because Liquid attributes an
+  include's line to the includer. This comment cost one red deploy.)
+  A {% raw %}{% if %}{% endraw %} would have to choose between the second and
+  third rows below, and there is no expression that can:
+
+    1. the data file is there      -> `index` is an object; filter the nav.
+    2. it is there and EMPTY       -> `pages` is `{}`; there is nothing to
+                                      swap, so every item correctly falls back
+                                      to the source language.
+    3. the data file is ABSENT     -> `jsonify` emits `null`, and docs-ui.js
+                                      leaves the navbar EXACTLY as built.
+
+  A build that could not determine the translation set must never render as a
+  folio that has no translations. `null` is how that is said.
+
+  `baseurl` travels with it because the client has no other way to strip the
+  site prefix off a nav `href` before matching it.
+-->
+<script type="application/json" id="fa-translation-index">{
+  "baseurl": "{{ site.baseurl }}",
+  "index": {{ site.data.translations | jsonify }}
+}</script>
+<!--
   Translation metadata for this page, consumed by docs-ui.js to auto-render
   language coverage and QA badges. The translation pipeline stamps front matter;
   this block publishes it to the client. No manual editing needed.
@@ -118,21 +160,58 @@
 <!--
   Where the action tiles point.
 
-  Computed by Liquid from `_config.yml` rather than written into docs-ui.js,
-  because a URL hardcoded in a stylesheet's sibling script is a folio fact
-  living in shared code: it is right for this site and wrong for every other
-  instance that uses the same assets. `relative_url` also makes it correct
-  under a `baseurl`, which a literal is not.
+  RESOLVED, not composed. `scripts/sync-docs-harness.ts` writes
+  `docs/_data/harness.json` from the instance's own `cat-harness.json`,
+  through `siteLinks` in `scripts/site-links.ts` -- which computes every path
+  with `artefactStub` and `renderingPath`, the same functions the knowledge
+  graph exporter and the Pages workflow use. The tile therefore cannot
+  disagree with what is published.
 
-  `source` is the first `aux_links` entry, which is where a just-the-docs site
-  already records its repository. Absent config leaves the string empty and the
-  tile is simply not drawn -- an action pointing nowhere is worse than one
-  missing, because the reader cannot tell a broken link from a broken site.
+  This block previously wrote `{{ '/kg/' | relative_url }}` by hand. Nothing
+  has ever been published at `<base>/kg/` -- the renderings sit at the base,
+  named after the stub -- so the only entry point to the viewer anywhere on
+  this site was a 404 from the day it was added. See bean `udx8`, and the
+  identical defect AGENTS.md records against the README's chapter PDFs. A
+  path built by convention is a claim; `bun run site:links --site _site`
+  checks it against the tree that actually ships, and the Pages workflow runs
+  that check after the export.
+
+  `path` is site-ROOT-relative and gets `relative_url`, which is what makes it
+  right under this site's `/folio-assistant/` baseurl. `url` is off-site and
+  is printed as-is. `source` is no longer taken from `aux_links`: those were
+  removed so the forge link stops appearing as text at the top of the main
+  panel (the owner asked for it as an icon, not a header), and the URL is
+  resolved from the git remote instead of written down twice.
 -->
 <script type="application/json" id="fa-site-links">{
-  "kg": "{{ '/kg/' | relative_url }}",
-  "source": "{% for link in site.aux_links %}{{ link[1] | first }}{% break %}{% endfor %}"
+{%- assign sep = "" -%}
+{%- for l in site.data.harness.links -%}
+{{ sep }}"{{ l.id }}":"{% if l.path %}{{ l.path | relative_url }}{% else %}{{ l.url }}{% endif %}"
+{%- assign sep = "," -%}
+{%- endfor -%}
 }</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="{{ '/assets/todos/index.json' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}">
 <script src="{{ '/assets/js/vendor/qrcode.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/vendor/qrcode_UTF8.js' | relative_url }}" defer></script>

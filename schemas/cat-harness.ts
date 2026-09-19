@@ -100,6 +100,27 @@ export interface GraphKindDef {
    */
   renderable: boolean;
   summary: string;
+  /**
+   * The skill that says how to READ a graph of this kind, by name.
+   *
+   * A property of the KIND rather than of the directory, because a `qa` graph
+   * is read the same way wherever it sits — putting it on the directory entry
+   * would restate one fact per instance and let the copies drift.
+   *
+   * Optional, and absent means absent: naming a skill that does not exist
+   * would be the fake-reference failure `activity-names-skill` exists to
+   * prevent, where silencing a gap costs less than filling it.
+   */
+  skill?: string;
+  /**
+   * Where the shape of a node in this graph is defined — a repo-relative
+   * module path, or a `$schema` tag the files themselves carry.
+   *
+   * Optional because not every kind has one answer: `kg` holds five node kinds
+   * typed in different places, and a single pointer there would be a lie of
+   * precision rather than a fact.
+   */
+  schema?: string;
 }
 
 /**
@@ -167,6 +188,27 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: termIri("SchemaGraph"),
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
+  },
+  // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
+  //
+  // Declared as its own kind rather than folded into `kg` because the two are
+  // different artefacts with different owners: a verdict lives beside its
+  // subject and is what a checker wrote, while a witness is that verdict
+  // flattened for the web and is what the docs panel fetches. One is edited by
+  // fixing a checker; the other is never edited at all.
+  //
+  // Undeclared until 2026-09-19 — 134 committed files that no instance
+  // declaration mentioned, so a consumer scanning the declared directories saw
+  // none of them and reported a clean run over the lot.
+  qa: {
+    type: termIri("QaGraph"),
+    renderable: false,
+    summary:
+      "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
+      "families (`block`, `kg`, `translation`), projected for the docs site from the " +
+      "verdicts that live beside their subjects. Generated; never hand-edited.",
+    skill: "qa-witness",
+    schema: "content/pipeline/qa-witness.ts",
   },
   // ONE kind for the whole work plan, not one per store. It replaced `workplan`
   // + `process-state` in #266; the rationale is in this map's doc comment above,
@@ -261,6 +303,43 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
+  },
+  // The gettext side of translation: `.pot` templates, `.po` catalogues and
+  // the `TranslationNode` manifests that make each pair addressable.
+  //
+  // THE INPUT TO INJECTION, NEVER THE OUTPUT — and there is deliberately no
+  // matching kind for the output. A rendered translation is the SAME KIND OF
+  // THING as the page it translates: renderable content, differing by a
+  // field. `docs/fr/index.md` declares `lang: fr` and `translation_source:
+  // index.md` in its own front matter, exactly as a bean declares its status
+  // and a workflow instance declares its `$schema`, so the file answers what
+  // it is and the directory does not have to be enumerated.
+  //
+  // An earlier cut of this (PR #351, first draft) added a `translated-content`
+  // kind and a `locale` field, with one declaration per locale subtree — ten
+  // entries for five locales across two subtrees, growing as
+  // O(locales x subtrees). It restated in `cat-harness.json` what all ten
+  // files already said in their own front matter, which is one fact in two
+  // places and free to drift. The owner's framing is what settles it:
+  // "narrative/audio/visual content with text should be translatable. its not
+  // so much the node schema itself but its content (e.g. markdown, bpmn)
+  // should be translatable" — translatability is a property of a FORMAT
+  // within a content type, which `schemas/translation-tools.ts` already
+  // declares, not a property of a directory.
+  //
+  // `.po` catalogues are different: they are not content in any language, and
+  // `translations/` was undeclared entirely until 2026-09-19 — the `dh4f`
+  // defect in reverse, five committed directories that no declaration
+  // mentioned. That is what this kind is for.
+  "translation-sources": {
+    type: termIri("TranslationSourceGraph"),
+    renderable: false,
+    summary:
+      "POT templates, PO catalogues and their `TranslationNode` manifests, one directory " +
+      "per target locale. The INPUT to injection; the rendered output is ordinary content " +
+      "that declares its own `lang`.",
+    skill: "translation-manager",
+    schema: "schemas/translation.ts",
   },
 };
 
@@ -465,6 +544,21 @@ export const ContentDirectorySchema = z.object({
   graphs: z.array(z.string().min(1)).min(1),
   ...kgNodeLabelShape,
 });
+
+// THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
+// omission. A first draft of PR #351 added one, required on a
+// `translated-content` directory and refused elsewhere. It worked and it was
+// the wrong axis: a translated page already declares `lang` and
+// `translation_source` in its own front matter, so the directory entry
+// restated what every file inside it already said — one fact in two places,
+// free to drift, and growing as O(locales x subtrees).
+//
+// The rule this repository keeps returning to: a declaration states what to
+// EXPECT in a directory, and THE FILES DECLARE WHAT THEY ARE. `beans/` is one
+// entry whose contents are told apart by a bean's front matter and a workflow
+// instance's `$schema`; `docs/assets/qa/` is one entry holding three witness
+// families, told apart by the documents. Translated pages are the same shape:
+// one declaration for the content, and `lang` on the file.
 
 /**
  * The conventional directories every instance gets without declaring them.

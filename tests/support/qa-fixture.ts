@@ -6,7 +6,7 @@
  * ## The failure this exists to stop
  *
  * `tests/qa-panel.e2e.ts` read
- * `docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json` straight
+ * `test/results/witnesses/crdm-methodology/what-is-not-built-yet.block.json` straight
  * off disk and asserted the panel's first row was a **failing**
  * `voice-status-leak`. Its header argued for exactly that — read the corpus,
  * so "nothing here can drift from what the generator produces".

@@ -185,6 +185,7 @@
     <bpmn:serviceTask id="Task_PublishRelease" name="Version, tag and publish&#10;[content-publish]">
       <bpmn:documentation>Version bump, release notes, tag, build the final artifacts, deploy to the publication platform.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:fulfilment kinds="person system" reason="the release runs unattended once Task_AuthorizeRelease has been given: version bump, tag, build, deploy. It sits in the publication manager’s lane because that role is ACCOUNTABLE for what goes live, not because a person performs each step — and a publication manager may still tag and push by hand." />
         <folio:policy relaxable="false" />
               <folio:skill ref="content-publish" />
         <folio:skill ref="ig-publication" />

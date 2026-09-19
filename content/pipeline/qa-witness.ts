@@ -59,7 +59,8 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 
 import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts";
-import type { KgQaReport } from "../../schemas/kg-qa.ts";
+import { KG_QA_MANIFEST_PATH, kgQaSidecarPath } from "../../schemas/kg-qa.ts";
+import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
 
 /** The QA sidecar families a subject can carry. */
@@ -260,8 +261,14 @@ export function freshnessOf(
  * `translation` returns EVERY locale's sidecar for the block — one file per
  * locale, mirroring `translations/<locale>/`, collected into one view so the
  * block carries one icon rather than one per language.
+ *
+ * `repoRoot` is REQUIRED rather than defaulted, and only the `kg` family reads
+ * it. A default would make a caller that forgot it resolve to a plausible
+ * wrong tree and find nothing there — which this projector renders as
+ * "unaudited", a false pass rather than an error. The three families that do
+ * not need it still pay one argument, which is the cheaper mistake.
  */
-export function sidecarPaths(family: QaFamily, subjectPath: string): string[] {
+export function sidecarPaths(family: QaFamily, subjectPath: string, repoRoot: string): string[] {
   const dir = dirname(subjectPath);
   const stem = basename(subjectPath).replace(/\.[^.]+$/, "");
   switch (family) {
@@ -278,7 +285,10 @@ export function sidecarPaths(family: QaFamily, subjectPath: string): string[] {
     case "script":
       return [join(dir, "script-qa", `${stem}.script-qa.json`)].filter((p) => existsSync(p));
     case "kg":
-      return [join(dir, "kg-qa", `${stem}.kg-qa.json`)].filter((p) => existsSync(p));
+      // The SAME function the auditor writes with. Composing the path here a
+      // second time is how a reader ends up looking where nothing was
+      // written — and finding nothing reads as "unaudited", a false pass.
+      return [kgQaSidecarPath(repoRoot, dir, stem)].filter((p) => existsSync(p));
   }
 }
 
@@ -452,7 +462,7 @@ export function readWitnessDoc(
   subjectPath: string,
   repoRoot: string,
 ): QaWitnessDoc | undefined {
-  const paths = sidecarPaths(family, subjectPath);
+  const paths = sidecarPaths(family, subjectPath, repoRoot);
   if (paths.length === 0) return undefined;
   const rel = (p: string) => p.slice(repoRoot.length).replace(/^\//, "");
   const dir = dirname(subjectPath);
@@ -497,6 +507,11 @@ export function readWitnessDoc(
     // file records — not padded out to look like a multi-reviewer history.
     const doc = readJson<KgQaReport>(paths[0]!);
     if (!doc) return undefined;
+    // The auditor is recorded ONCE for the corpus, not per sidecar — see
+    // `KG_QA_MANIFEST_SCHEMA`. Absent manifest reports "unrecorded" rather
+    // than inventing a hash, the same rule this file already applies to the
+    // timestamp `kg-audit` does not keep.
+    const auditor = readJson<KgQaManifest>(join(repoRoot, KG_QA_MANIFEST_PATH))?.auditor;
     const live = { source: hash12(subjectPath) };
     const { freshness, changed } = freshnessOf({ source: doc.source_hash ?? undefined }, live);
     subject = doc.subject?.id ? `${doc.subject.kind} ${doc.subject.id}` : rel(subjectPath);
@@ -511,9 +526,9 @@ export function readWitnessDoc(
         witnesses: [
           {
             kind: "script",
-            id: doc.auditor?.script ?? "unrecorded",
-            version: doc.auditor?.engine_version,
-            scriptHash: doc.auditor?.script_hash,
+            id: auditor?.script ?? "unrecorded",
+            version: auditor?.engine_version,
+            scriptHash: auditor?.script_hash,
             // `kg-audit` records no timestamp and no repo SHA. Absent rather
             // than invented: a witness with a made-up date is worse than one
             // that admits it has none, and the panel says "not recorded".

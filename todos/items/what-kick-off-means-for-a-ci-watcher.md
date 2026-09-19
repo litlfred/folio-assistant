@@ -6,6 +6,10 @@ status: open
 priority: medium
 origin: agent
 createdAt: 2026-09-19
+targetLabel: sec:publication-workflow-agents-and-system-actors
+processes:
+  - Process_CodeReview
+  - Process_Publication
 identities:
   - github:litlfred
 references:
@@ -31,6 +35,18 @@ the three candidates differ enough that guessing would be wasted work.
    covered.
 3. **An MCP tool a workflow step calls.** Both, at the price of building the
    tool and deciding who calls it.
+
+## Where the two dispatch points already live
+
+Both are steps in diagrams that exist, which is why this todo is tagged with
+them rather than describing them:
+
+- **"approved for final publication / merge to `main`"** is
+  `Process_Publication` (`draft-to-publication.bpmn`), whose lane carries
+  *Authorise the release* and *Version, tag and publish*. The dispatch point
+  the owner named is that authorisation step.
+- **"once changes are made to feature branch"** is `Process_CodeReview`,
+  reached from `Process_Review`.
 
 ## What is already true, so this is not started from nothing
 

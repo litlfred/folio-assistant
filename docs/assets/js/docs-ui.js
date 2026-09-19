@@ -551,6 +551,36 @@
     '<path d="M13.6 3.6 10 20.4l-1.9-.4L11.7 3.2z"/>' +
     "</svg>";
 
+  // A braced document: the graph as DATA, as against the net (the graph as a
+  // thing to browse) and the angle brackets (the code that produced it). The
+  // three tiles are three different artefacts and must not share a glyph.
+  var DATA_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path d="M13 3v5h5" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path d="M10.2 12.3c-1 0-1.2.5-1.2 1.2v.9c0 .7-.3 1.1-1 1.1.7 0 1 .4 1 1.1v.9c0 .7.2 1.2 1.2 1.2" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>' +
+    '<path d="M13.8 12.3c1 0 1.2.5 1.2 1.2v.9c0 .7.3 1.1 1 1.1-.7 0-1 .4-1 1.1v.9c0 .7-.2 1.2-1.2 1.2" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>' +
+    "</svg>";
+
+  // A magnifier: search. The owner asked for the search to leave the main
+  // panel and become "a icon in navbar that expands" -- this is the icon, and
+  // the launcher it lives in is the expansion.
+  var SEARCH_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+    '<path d="M15.2 15.2 20 20" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+    'stroke-linecap="round"/>' +
+    "</svg>";
+
+  // Where just-the-docs puts its search. `.search` is the container holding
+  // BOTH the input and the results list; moving the container keeps them
+  // together and keeps the theme's own handlers, which are bound to the
+  // elements rather than to their position.
+  var SEARCH_SELECTORS = [".search", "#search", ".main-header .search"];
+
   /**
    * Where the knowledge-graph and source tiles point.
    *
@@ -664,6 +694,59 @@
     panel.appendChild(view);
     mountPanelInSidebarColumn(host, panel);
 
+    /* ── The search field, adopted out of the main panel ────────────────── */
+
+    /*
+     * The owner: "move the search to a icon in navbar that expands.... keep
+     * main display panel uncluttered." just-the-docs renders its search at
+     * the top of `.main-header`, which is exactly the clutter named.
+     *
+     * ## Moved, never rebuilt
+     *
+     * The theme's own script binds to the input it rendered. A search box
+     * reconstructed here would look identical and do nothing -- the failure
+     * mode this file's header calls out, a feature that quietly does nothing.
+     * So the theme's `.search` container is MOVED, with its input, its label
+     * and its results list intact, and every handler moves with it because
+     * handlers belong to elements and not to positions.
+     *
+     * ## It must never leave the document
+     *
+     * just-the-docs looks its input up by id when it initialises, and
+     * `getElementById` does not find a detached node. Parking the container
+     * in a variable until the view is first opened would therefore kill
+     * search outright on any page where the theme initialises second.
+     *
+     * So it is moved at MOUNT time into a holder that is already inside the
+     * panel -- in the document, hidden by CSS -- and shuttled between that
+     * holder and the open view. `display: none` on an ancestor keeps a node
+     * in the tree; removing it from the tree does not.
+     *
+     * ## Absent is a real state
+     *
+     * `search_enabled: false`, or a theme that renamed the container, means
+     * there is nothing to adopt. The tile is then NOT DRAWN and the warning
+     * says what was looked for -- rather than a Search tile that opens onto
+     * an empty panel.
+     */
+    var searchHolder = null;
+    var adopted = firstMatch(SEARCH_SELECTORS);
+    if (adopted) {
+      searchHolder = el("div", { class: "fa-search-holder", hidden: "hidden" });
+      searchHolder.appendChild(adopted);
+      panel.appendChild(searchHolder);
+    } else {
+      console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
+                   "); the Search tile was not mounted and the theme's search, if any, " +
+                   "was left where it was.");
+    }
+
+    /** Put the search back in its always-in-document holder. */
+    function parkSearch() {
+      if (searchHolder && searchHolder.parentNode !== panel) panel.appendChild(searchHolder);
+      if (searchHolder) searchHolder.setAttribute("hidden", "hidden");
+    }
+
     /* ── The views ─────────────────────────────────────────────────────── */
 
     // Built once, on first open, and kept. Rebuilding on every open would
@@ -710,6 +793,9 @@
 
     function showGrid() {
       view.setAttribute("hidden", "hidden");
+      // Before the wipe: `innerHTML = ""` DETACHES, and a detached search
+      // input is one `getElementById` away from being dead.
+      parkSearch();
       view.innerHTML = "";
       grid.removeAttribute("hidden");
       if (openTile) openTile.focus();
@@ -720,6 +806,7 @@
       buildViews();
       openTile = tile;
       grid.setAttribute("hidden", "hidden");
+      parkSearch();
       view.innerHTML = "";
 
       var head = el("div", { class: "fa-tiles-head" });
@@ -735,13 +822,30 @@
       head.appendChild(back);
       head.appendChild(heading);
       view.appendChild(head);
-      view.appendChild(views[key]);
+      if (key === "search") {
+        // A move, not a copy: the holder travels into the view with the
+        // theme's own input inside it, and travels back on the way out.
+        view.appendChild(searchHolder);
+        searchHolder.removeAttribute("hidden");
+      } else {
+        view.appendChild(views[key]);
+      }
       view.removeAttribute("hidden");
 
       if (key === "qr") renderQr();
       // The panel is rewritten in place, so a reader whose cursor did not move
       // would be told nothing at all about what just happened.
-      heading.focus();
+      //
+      // Search is the exception, and deliberately: a reader who pressed a
+      // magnifier is going to type. The input carries the theme's own label,
+      // so a screen reader is still told what it landed on -- the heading is
+      // reachable by Shift+Tab, one key away, rather than in the way of the
+      // thing the tile exists for.
+      var input = key === "search" && searchHolder
+        ? searchHolder.querySelector("input")
+        : null;
+      if (input) input.focus();
+      else heading.focus();
     }
 
     /* ── The grid ──────────────────────────────────────────────────────── */
@@ -761,6 +865,20 @@
       return a;
     }
 
+    // Search leads the grid. It is the one action here a reader reaches for
+    // repeatedly, and it is the one that was taken off the main panel -- so
+    // it gets the first cell rather than being buried behind the others.
+    //
+    // TWO PRESSES IS THE ANSWER, NOT A COMPROMISE. Reaching search costs
+    // launcher-then-tile, and the obvious "improvement" is a second, dedicated
+    // magnifier in the header row: one press instead of two. Do not make it.
+    // That row is capped at 3.75rem and shares its width with the site title,
+    // and a single launcher exists precisely because the navbar was getting
+    // crowded (bean `1le7`). Put to the repo owner on 2026-09-19 with both
+    // costs stated; the answer was "search is two". It is ~20 lines here and
+    // the CSS already exists, which is exactly why this comment is here: the
+    // change is cheap enough to look like a tidy-up.
+    if (searchHolder) grid.appendChild(tileButton(SEARCH_GLYPH, "Search", "search"));
     grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
     grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
     // The encoder is a separate vendor script. Without it the OTHER tiles must
@@ -774,12 +892,48 @@
                    "first); the other action tiles were mounted without it.");
     }
 
+    // A tile that DOES something rather than opening a sidebar view. The board
+    // lives in the main display, so `showView` is the wrong machinery for it.
+    function tileAction(glyph, label, onClick) {
+      var b = el("button", { type: "button", class: "fa-tile", "aria-label": label });
+      b.innerHTML = glyph;
+      b.appendChild(el("span", { class: "fa-tile-caption" }, label));
+      b.addEventListener("click", function () { open(false); onClick(); });
+      return b;
+    }
+
+    // The todo tile is added when the board reports itself ready, because the
+    // index is fetched and the tile carries its COUNT. A tile that appeared
+    // immediately would show no count, then change under the reader's cursor.
+    function addTodoTile(board) {
+      if (board.count === 0) return;   // nothing outstanding is not a tile
+      var tile = tileAction(STICKY_GLYPH, "Todos", function () { board.toggle(); });
+      tile.appendChild(el("span", { class: "fa-tile-count" }, String(board.count)));
+      tile.setAttribute("aria-label", "Todos — " + board.count + " outstanding");
+      grid.appendChild(tile);
+    }
+    if (window.__faTodoBoard) addTodoTile(window.__faTodoBoard);
+    else document.addEventListener("fa:todos-ready", function (e) { addTodoTile(e.detail); });
+
     var links = getSiteLinks();
     if (links.kg) {
       grid.appendChild(tileLink(NET_GLYPH, "Knowledge graph", links.kg,
                                 "browse this instance's skills, tools and schemas"));
     }
+    // The owner: "the source goes to github, i wanted the jsonld and github
+    // available." One affordance was doing two jobs. They are two artefacts --
+    // the graph as data, and the code that produced it -- so they are two
+    // tiles, each saying where it goes.
+    if (links.jsonld) {
+      grid.appendChild(tileLink(DATA_GLYPH, "JSON-LD", links.jsonld,
+                                "this instance's knowledge graph as a JSON-LD document"));
+    }
     if (links.source) {
+      // A `github.com/<owner>/<repo>` link, never a `raw.githubusercontent`
+      // one: raw 404s on a private repository and a browser session cookie
+      // does not authenticate it, while the blob form follows the viewer's
+      // own GitHub session. Same rule as `readme-toc`'s `linkStyle: "blob"`
+      // default, and the reason it is the default there.
       grid.appendChild(tileLink(CODE_GLYPH, "Source", links.source,
                                 "this site's repository on the forge"));
     }
@@ -896,6 +1050,494 @@
       "fa-has-fullwidth",
       !!document.querySelector(".fa-figure-scope.is-fullwidth"),
     );
+  }
+
+
+  /* ═══ Sticky todos ════════════════════════════════════════════════════
+   *
+   * A TODO is a person's outstanding item, published by `gen-docs-pages.ts`
+   * to `/assets/todos/index.json`. This mounts three surfaces over it:
+   *
+   *   - a tile in the action launcher, carrying a COUNT;
+   *   - a board in the MAIN display, with every sticky lined up;
+   *   - a sticky that can be lifted off the board and pinned to the page.
+   *
+   * ## Why the board is not a tile view
+   *
+   * Every other tile renders into `.fa-tiles-view`, which is the QR panel's
+   * footprint -- 16.5rem in the sidebar column. The owner asked for the board
+   * "in the main display", and a wall of stickies at 16.5rem would be a
+   * single column of slivers. So the tile is a LAUNCHER for a surface that
+   * lives in `.main-content`, and the panel machinery is left alone rather
+   * than widened for one caller.
+   *
+   * ## Content reaches the DOM through textContent, never innerHTML
+   *
+   * A todo's `summary` and `comment` are authored -- by a person, or by an
+   * agent on their behalf -- and travel through a JSON file to this page. The
+   * only glyphs built with `innerHTML` here are the static SVG constants
+   * above, which no input touches. That is the same rule the QA panel's
+   * evidence follows, and for the same reason: the string that closes a tag
+   * is exactly the string somebody eventually writes.
+   *
+   * ## The pencil is `.fa-node-edit`, not an editor
+   *
+   * "default pattern for any content object in just-the-docs -- it should be
+   * at that class level". `gen-docs-pages.ts` already emits that affordance
+   * per node, and `editHref` is composed there at build time, so this file
+   * carries no repo URL. A published page cannot write back to the repo, and
+   * the honest control is the one that takes you where writing happens.
+   */
+
+  var STICKY_GLYPH =
+    '<svg class="fa-tile-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linejoin="round"/></svg>';
+
+  var todoState = { items: [], floating: {}, processes: {} };
+
+  /** The published index, or `null` when it could not be read. */
+  function fetchTodoIndex(done) {
+    var src = document.querySelector('meta[name="fa-todo-src"]');
+    var url = src && src.getAttribute("content");
+    if (!url) return done(null);
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (doc) {
+        if (!doc || !Array.isArray(doc.items)) return done(null);
+        todoState.processes = doc.processes || {};
+        done(doc.items);
+      })
+      .catch(function (e) {
+        // Third state, reported rather than rendered as "no todos". A board
+        // that opens empty is indistinguishable from a person with nothing
+        // outstanding, and those are opposite facts.
+        console.warn("docs-ui: could not read " + url + " (" + e.message + "); " +
+                     "the todo board was not mounted.");
+        done(null);
+      });
+  }
+
+  /** Paragraphs, split on blank lines. Text only -- see the header. */
+  function renderBody(text) {
+    var wrap = el("div", { class: "fa-sticky-body" });
+    var paras = String(text || "").split(/\n{2,}/);
+    for (var i = 0; i < paras.length; i++) {
+      var p = paras[i].trim();
+      if (p !== "") wrap.appendChild(el("p", null, p));
+    }
+    if (wrap.childNodes.length === 0) {
+      wrap.appendChild(el("p", { class: "fa-sticky-empty" }, "No detail recorded."));
+    }
+    return wrap;
+  }
+
+
+  /**
+   * Board order: todos stacked by the BPMN subprocess hierarchy.
+   *
+   * "stacking should follow hiearchy od busines subprocesses". The diagrams
+   * already carry that hierarchy as `calledElement` refs — `Process_Lifecycle`
+   * calls `Process_Publication`, which calls `Process_Editing` — and the
+   * generator publishes it beside the todos.
+   *
+   * ## Depth is the process's own, not the todo's
+   *
+   * A todo tagged `Process_Publication` sits at the depth `Process_Publication`
+   * sits at, so two todos on the same process always land together and a todo
+   * on a caller always sorts above one on its callee. Computing depth from the
+   * todo would make the same process appear at different levels depending on
+   * which todo reached it first.
+   *
+   * ## A todo on SEVERAL processes takes the shallowest
+   *
+   * `what-kick-off-means-for-a-ci-watcher` is tagged `Process_CodeReview` AND
+   * `Process_Publication`, because its two dispatch points are in different
+   * diagrams. It belongs where a reader would look first, which is the outer
+   * one; listing it twice would double a single outstanding item.
+   *
+   * ## Untagged todos are not orphans
+   *
+   * They sort FIRST, not last. Most todos carry no process — both of the
+   * others here do not — and sinking them below a process hierarchy they are
+   * not part of would bury the common case under the rare one.
+   */
+  function processDepth(id, hierarchy) {
+    // A process's depth is how many callers stand above it. Cycles are
+    // possible in principle (two diagrams calling each other), so the walk is
+    // bounded by the number of processes rather than trusting acyclicity.
+    var parents = {};
+    for (var p in hierarchy) {
+      var kids = hierarchy[p] || [];
+      for (var k = 0; k < kids.length; k++) if (!parents[kids[k]]) parents[kids[k]] = p;
+    }
+    var depth = 0;
+    var at = id;
+    var guard = 0;
+    var limit = Object.keys(hierarchy).length + 1;
+    while (parents[at] && guard++ < limit) { at = parents[at]; depth++; }
+    return depth;
+  }
+
+  function stackTodos(items, hierarchy) {
+    var rows = [];
+    for (var i = 0; i < items.length; i++) {
+      var t = items[i];
+      var procs = (t.tags && t.tags.processes) || [];
+      if (procs.length === 0) { rows.push({ todo: t, process: null, depth: -1 }); continue; }
+      var best = procs[0];
+      var bestD = processDepth(best, hierarchy);
+      for (var j = 1; j < procs.length; j++) {
+        var d = processDepth(procs[j], hierarchy);
+        if (d < bestD) { best = procs[j]; bestD = d; }
+      }
+      rows.push({ todo: t, process: best, depth: bestD });
+    }
+    rows.sort(function (a, b) {
+      if (a.depth !== b.depth) return a.depth - b.depth;
+      if (a.process !== b.process) return String(a.process).localeCompare(String(b.process));
+      return a.todo.id.localeCompare(b.todo.id);
+    });
+    return rows;
+  }
+
+  function buildSticky(todo, onFloat, onDock, opts) {
+    var compact = opts && opts.compact;
+    var card = el("article", {
+      class: "fa-sticky fa-sticky-p-" + (todo.priority || "medium"),
+      "data-todo-id": todo.id,
+    });
+
+    var head = el("div", { class: "fa-sticky-head" });
+    var toggle = el("button", {
+      type: "button",
+      class: "fa-sticky-toggle",
+      "aria-expanded": "false",
+    });
+    toggle.appendChild(el("span", { class: "fa-sticky-summary" }, todo.summary));
+    head.appendChild(toggle);
+
+    var chips = el("div", { class: "fa-sticky-chips" });
+    chips.appendChild(el("span", { class: "fa-sticky-chip fa-sticky-status" }, todo.status));
+    chips.appendChild(el("span", { class: "fa-sticky-chip fa-sticky-prio" }, todo.priority));
+    head.appendChild(chips);
+
+    // The EDGES. A todo carries six relationship axes -- who it is for, which
+    // lane and process and task it sits in, what it points at in the knowledge
+    // graph, and which issues, PRs and commits it concerns -- and a sticky that
+    // showed only `status` and `priority` would waste all of it on two enums.
+    //
+    // Each edge is resolved to an href at BUILD time where one exists. An edge
+    // that could not be resolved is still shown, as a chip with no link: a
+    // dangling reference and no reference at all are different facts, and
+    // dropping the first makes it look like the second.
+    var rels = todo.relations || [];
+    if (rels.length) {
+      var relBox = el("ul", { class: "fa-sticky-rels", "aria-label": "Related" });
+      for (var r = 0; r < rels.length; r++) {
+        var rel = rels[r];
+        var li = el("li", { class: "fa-sticky-rel" });
+        li.appendChild(el("span", { class: "fa-sticky-rel-axis" }, rel.axis));
+        if (rel.href) {
+          li.appendChild(el("a", { class: "fa-sticky-rel-link", href: rel.href }, rel.label));
+        } else {
+          // Title says WHY there is no link, so a reader is not left guessing
+          // whether the chip is broken or the target simply is not reachable.
+          li.appendChild(el("span", {
+            class: "fa-sticky-rel-dangling",
+            title: "No link: nothing on this site resolves " + rel.label,
+          }, rel.label));
+        }
+        relBox.appendChild(li);
+      }
+      head.appendChild(relBox);
+    }
+
+    var tools = el("div", { class: "fa-sticky-tools" });
+    // The SAME affordance every node on this site already has, pointed at this
+    // todo's own file. `editHref` is composed at build time.
+    if (todo.editHref) {
+      var pencil = el("a", {
+        class: "fa-node-edit fa-sticky-edit",
+        href: todo.editHref,
+        title: "Edit this todo's markdown",
+        "aria-label": "Edit " + todo.summary,
+      }, "✎ Edit");
+      tools.appendChild(pencil);
+    }
+    // An INLINE sticky is already beside the content it is about, so Pin and
+    // Close have nothing to do: pinning it would move it AWAY from the thing
+    // it annotates, and closing it would hide a block-level annotation with no
+    // way back. The board is where those two controls mean something.
+    if (!compact) {
+      var pin = el("button", {
+        type: "button",
+        class: "fa-sticky-pin",
+        "aria-label": "Pin " + todo.summary + " to the page",
+      }, "⇱ Pin");
+      pin.addEventListener("click", function () { onFloat(todo); });
+      tools.appendChild(pin);
+
+      var close = el("button", {
+        type: "button",
+        class: "fa-sticky-close",
+        "aria-label": "Close " + todo.summary,
+      }, "×");
+      close.addEventListener("click", function () { onDock(todo); });
+      tools.appendChild(close);
+    }
+
+    head.appendChild(tools);
+
+    card.appendChild(head);
+    var body = renderBody(todo.comment);
+    body.setAttribute("hidden", "hidden");
+    card.appendChild(body);
+
+    toggle.addEventListener("click", function () {
+      var open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", open ? "false" : "true");
+      if (open) body.setAttribute("hidden", "hidden");
+      else body.removeAttribute("hidden");
+    });
+    return card;
+  }
+
+  /**
+   * The board, and the float layer.
+   *
+   * ## "Pick up and move" is a MOVE, not a drag
+   *
+   * The spec says the reader picks a sticky up off the panel and fixes it to
+   * the page. A pointer drag cannot be operated from a keyboard without
+   * reimplementing the whole interaction -- arrow-key nudging, a grab mode, an
+   * escape hatch -- and this instance's declared interaction profile is
+   * low-dexterity, where a drag is the single worst control to depend on.
+   *
+   * So the gesture is a BUTTON: Pin lifts the sticky onto the page, Close
+   * returns it. It is one keystroke either way, it needs no pointer at all,
+   * and nothing about it is harder with a mouse than a drag would have been.
+   * Drag can be added ON TOP later as an accelerator; it must not be the only
+   * way in.
+   *
+   * ## A floating sticky is greyed on the board, not removed from it
+   *
+   * The owner's words: "when floating, they are greyed out on sticky panel but
+   * can also return the sticky note by clicking disabled." So the board keeps
+   * every sticky in a stable position -- a list that reflows when you pin one
+   * makes the next one you want move under your cursor -- and the greyed entry
+   * is a real button that docks it again.
+   */
+  function mountTodoBoard(items) {
+    var main = firstMatch(["#main-content", ".main-content", "main"]);
+    if (!main) {
+      console.warn("docs-ui: no main content region found; the todo board was not mounted.");
+      return null;
+    }
+
+    var layer = el("div", { class: "fa-sticky-layer", "aria-live": "polite" });
+    document.body.appendChild(layer);
+
+    var board = el("section", {
+      class: "fa-sticky-board",
+      hidden: "hidden",
+      tabindex: "-1",
+      role: "region",
+      "aria-label": "Todos",
+    });
+    var head = el("div", { class: "fa-sticky-board-head" });
+    var heading = el("h2", { class: "fa-sticky-board-title", tabindex: "-1" }, "Todos");
+    head.appendChild(heading);
+    var boardClose = el("button", {
+      type: "button",
+      class: "fa-sticky-board-close",
+      "aria-label": "Close the todo board",
+    }, "×");
+    head.appendChild(boardClose);
+    board.appendChild(head);
+
+    var grid = el("div", { class: "fa-sticky-grid" });
+    board.appendChild(grid);
+    main.insertBefore(board, main.firstChild);
+
+    var slots = {};
+
+    function dock(todo) {
+      var f = todoState.floating[todo.id];
+      if (f) {
+        layer.removeChild(f);
+        delete todoState.floating[todo.id];
+      }
+      var slot = slots[todo.id];
+      if (slot) {
+        slot.classList.remove("fa-sticky-slot-floating");
+        var b = slot.querySelector(".fa-sticky-recall");
+        if (b) slot.removeChild(b);
+        var card = slot.querySelector(".fa-sticky");
+        if (card) card.removeAttribute("hidden");
+      }
+    }
+
+    function float(todo) {
+      if (todoState.floating[todo.id]) return;
+      var card = buildSticky(todo, float, dock);
+      card.classList.add("fa-sticky-floating");
+      layer.appendChild(card);
+      todoState.floating[todo.id] = card;
+
+      var slot = slots[todo.id];
+      if (slot) {
+        slot.classList.add("fa-sticky-slot-floating");
+        var inner = slot.querySelector(".fa-sticky");
+        if (inner) inner.setAttribute("hidden", "hidden");
+        // The greyed entry is a REAL button, not a disabled one. `disabled`
+        // removes it from the tab order, and the owner asked that clicking it
+        // bring the sticky back -- a control you cannot reach is not a control.
+        var recall = el("button", {
+          type: "button",
+          class: "fa-sticky-recall",
+          "aria-label": "Return " + todo.summary + " to the board",
+        }, todo.summary);
+        recall.addEventListener("click", function () { dock(todo); });
+        slot.appendChild(recall);
+      }
+      // Focus follows the sticky, or a reader who cannot see the page has no
+      // idea anything happened.
+      var t = card.querySelector(".fa-sticky-toggle");
+      if (t) t.focus();
+    }
+
+    var rows = stackTodos(items, todoState.processes);
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      var slot = el("div", {
+        class: "fa-sticky-slot" + (row.process ? " fa-sticky-slot-in-process" : ""),
+      });
+      if (row.process) {
+        // The process is named ON the sticky rather than as a run-in heading,
+        // so the grid stays a grid: a full-width heading between cards would
+        // break the `auto-fill` columns into one per group.
+        slot.setAttribute("data-fa-depth", String(row.depth));
+        slot.appendChild(el("span", { class: "fa-sticky-process" }, row.process));
+      }
+      slot.appendChild(buildSticky(row.todo, float, dock));
+      slots[row.todo.id] = slot;
+      grid.appendChild(slot);
+    }
+    if (items.length === 0) {
+      grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
+    }
+
+    function setOpen(isOpen) {
+      if (isOpen) {
+        board.removeAttribute("hidden");
+        heading.focus();
+      } else {
+        board.setAttribute("hidden", "hidden");
+      }
+      return isOpen;
+    }
+    boardClose.addEventListener("click", function () { setOpen(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !board.hasAttribute("hidden")) setOpen(false);
+    });
+
+    return {
+      toggle: function () { return setOpen(board.hasAttribute("hidden")); },
+      count: items.length,
+    };
+  }
+
+  /**
+   * Todos attached to a block ON THIS PAGE, rendered beside the block.
+   *
+   * Matched on `targetLabel` against the heading's `data-fa-label`, which is
+   * PAGE-QUALIFIED (`sec:<page>-<node>`). The bare heading id cannot serve:
+   * `what-is-not-built-yet` is a node on two different pages, so matching on
+   * it would attach a todo to whichever page the reader opened.
+   *
+   * The count sits on a toggle beside the heading rather than at the top of
+   * the page. The owner asked for "a sticky icon with a count" at the top and
+   * for the stickies to appear "relative to content they are assigned to" —
+   * and those pull apart once a page has blocks with different counts. One
+   * badge per block says which block, which is the half that carries
+   * information; a single page-level number cannot say where to look.
+   */
+  function mountPageStickies(items, board) {
+    var byLabel = {};
+    for (var i = 0; i < items.length; i++) {
+      var t = items[i];
+      if (!t.targetLabel) continue;
+      (byLabel[t.targetLabel] = byLabel[t.targetLabel] || []).push(t);
+    }
+
+    var heads = document.querySelectorAll("[data-fa-label]");
+    var placed = 0;
+    for (var h = 0; h < heads.length; h++) {
+      var head = heads[h];
+      var mine = byLabel[head.getAttribute("data-fa-label")];
+      if (!mine || mine.length === 0) continue;
+
+      var host = el("div", { class: "fa-sticky-inline" });
+      var badge = el("button", {
+        type: "button",
+        class: "fa-sticky-badge",
+        "aria-expanded": "false",
+        "aria-label": mine.length + " todo(s) on this section",
+      });
+      badge.innerHTML = STICKY_GLYPH;
+      badge.appendChild(el("span", { class: "fa-sticky-badge-count" }, String(mine.length)));
+
+      var list = el("div", { class: "fa-sticky-inline-list", hidden: "hidden" });
+      (function (list, mine) {
+        for (var k = 0; k < mine.length; k++) {
+          list.appendChild(buildSticky(mine[k], function () {}, function () {}, { compact: true }));
+        }
+      })(list, mine);
+
+      (function (badge, list) {
+        badge.addEventListener("click", function () {
+          var open = badge.getAttribute("aria-expanded") === "true";
+          badge.setAttribute("aria-expanded", open ? "false" : "true");
+          if (open) list.setAttribute("hidden", "hidden");
+          else list.removeAttribute("hidden");
+        });
+      })(badge, list);
+
+      host.appendChild(badge);
+      // A SIBLING of the heading, not a child: a <div> inside an <h2> is not
+      // valid HTML and the browser would reparent it -- the same rule the QA
+      // panel already follows for the same reason.
+      head.parentNode.insertBefore(host, head.nextSibling);
+      host.parentNode.insertBefore(list, host.nextSibling);
+      placed += mine.length;
+    }
+
+    // Reported, not silent. A todo carrying a `targetLabel` that matches no
+    // block on any page is a dangling edge, and the reader would otherwise
+    // only ever see it on the board -- where nothing says it was SUPPOSED to
+    // appear somewhere and did not.
+    var tagged = 0;
+    for (var j = 0; j < items.length; j++) if (items[j].targetLabel) tagged++;
+    if (board) board.placed = placed;
+    return { placed: placed, tagged: tagged };
+  }
+
+  /** Fetch, then mount the board and hand the launcher a way to open it. */
+  function mountTodoStickies() {
+    fetchTodoIndex(function (items) {
+      if (items === null) return;
+      todoState.items = items;
+      var board = mountTodoBoard(items);
+      if (!board) return;
+      mountPageStickies(items, board);
+      window.__faTodoBoard = board;
+      document.dispatchEvent(new CustomEvent("fa:todos-ready", { detail: board }));
+    });
   }
 
   function mountFigure(scope, isPlain) {
@@ -1169,6 +1811,190 @@
         })
         .then(settle, settle);
     });
+  }
+
+  /* ── The navbar filters by the selected locale ───────────────────────── */
+
+  /*
+   * THE BUG THIS EXISTS FOR, in the owner's words (2026-09-19):
+   *
+   *   "i have english selected, but i see the translated pages in LHS navbar."
+   *
+   * Two halves, and only the second is here.
+   *
+   * The first half is `nav_exclude: true` on every translated page. The nav is
+   * built by just-the-docs AT BUILD TIME, from front matter, on a static site
+   * that is serving the same HTML to every reader. It cannot know which locale
+   * anybody selected, so a translated page left in it is in it FOR EVERYBODY.
+   * No amount of client-side work fixes that: a script can swap a nav item,
+   * it cannot un-render one without a flash of the wrong nav first. So the
+   * translations leave the static nav entirely, and the navbar a reader gets
+   * with no JavaScript at all is the SOURCE-LANGUAGE one -- which is the
+   * correct degraded answer rather than an arbitrary one.
+   *
+   * The second half is this function. With a non-source locale selected, each
+   * nav item that HAS a page in that locale is rewritten IN PLACE -- same
+   * position, same parent, translated title, translated href. "In place of",
+   * not "in addition to", is the requirement, and rewriting rather than
+   * inserting is what makes it structurally true rather than something the
+   * ordering has to be trusted to preserve.
+   *
+   * FALLBACK IS THE ABSENCE OF A REWRITE. An item with no page in the selected
+   * locale is not touched, so it keeps its source-language title and link.
+   * There is deliberately no code path for it: a fallback implemented as its
+   * own branch is a branch that can be wrong, and this one cannot be.
+   *
+   * ## Three states, and the third is why the index is published as `null`
+   *
+   *   ok        -- the index parsed; filter the nav.
+   *   empty     -- it parsed and holds no pages; nothing to swap, and every
+   *                item correctly stays in the source language.
+   *   unknown   -- no island, or it would not parse, or `index` is `null`
+   *                because the data file was absent at build time. The nav is
+   *                left EXACTLY as built and nothing is claimed.
+   *
+   * `empty` and `unknown` produce the same navbar and are not the same answer:
+   * one is "this folio has no translations", the other is "this build could not
+   * tell". They are recorded separately in `data-fa-nav-index` so that a
+   * reader, a test, or the next person debugging this can distinguish them --
+   * the same rule the README sections and the CI-health report follow.
+   */
+
+  /**
+   * The key a nav `href` and an indexed page are matched on.
+   *
+   * MUST stay in step with `pageKey` in content/pipeline/translation-index.ts
+   * — the two are one convention implemented twice, once in the generator and
+   * once in the consumer, because they run in different languages on different
+   * machines. Jekyll serves one page at several spellings (`/`, `/x.html`,
+   * `/x/`) under a `baseurl` this script is told rather than guesses, so both
+   * sides normalise to a bare extensionless path with no `index` and no
+   * slashes at either end.
+   */
+  function navKey(href, baseurl) {
+    if (!href) return null;
+    var path;
+    try {
+      // Resolves relative hrefs against the current page, and rejects
+      // `mailto:`/`#`/external links by their origin below.
+      var u = new URL(href, window.location.href);
+      if (u.origin !== window.location.origin) return null;
+      path = u.pathname;
+    } catch (_e) {
+      return null;
+    }
+    if (baseurl && path.indexOf(baseurl) === 0) path = path.slice(baseurl.length);
+    path = path.replace(/^\/+/, "").replace(/\/+$/, "");
+    path = path.replace(/\.html?$/i, "");
+    path = path.replace(/(^|\/)index$/i, "");
+    return path.replace(/^\/+|\/+$/g, "");
+  }
+
+  /** The published index, or null when this build could not determine one. */
+  function getTranslationIndex() {
+    var node = document.getElementById("fa-translation-index");
+    if (!node) return null;
+    var parsed;
+    try { parsed = JSON.parse(node.textContent); } catch (_e) { return null; }
+    if (!parsed || typeof parsed !== "object") return null;
+    // `index: null` is the deliberate signal that `docs/_data/translations.json`
+    // was not there when the site was built. It is NOT an empty index.
+    if (!parsed.index || typeof parsed.index !== "object") return null;
+    if (!parsed.index.pages || typeof parsed.index.pages !== "object") return null;
+    return { baseurl: typeof parsed.baseurl === "string" ? parsed.baseurl : "", data: parsed.index };
+  }
+
+  /**
+   * Which locale the navbar should be in.
+   *
+   * In precedence order, and each step answers a question the next cannot:
+   *
+   *   1. `?lang=` on the URL -- an explicit, shareable request for one page
+   *      view. It wins because somebody typed it.
+   *   2. the page's own `lang`, when the page IS a translation. A reader
+   *      looking at the French page is reading French, whatever a stale
+   *      localStorage entry from another device says; a navbar in English
+   *      around French prose is the mismatch this whole change is about.
+   *   3. the remembered choice (`fa-locale`), which the sidebar language bar
+   *      has been writing since it was built.
+   *   4. the source language.
+   *
+   * A locale the index has never heard of is NOT honoured -- it would rewrite
+   * nothing and merely label the nav with a language it is not in.
+   */
+  function navLocale(data, pageLang) {
+    var sourceLocale = data.sourceLocale || "en";
+    var known = (data.locales || []).concat([sourceLocale]);
+    var wanted = null;
+    try {
+      var q = new URL(window.location.href).searchParams.get("lang");
+      if (q) wanted = q;
+    } catch (_e) { /* a URL we cannot parse simply does not ask for a locale */ }
+    if (!wanted && pageLang && pageLang !== sourceLocale) wanted = pageLang;
+    if (!wanted) wanted = getGlobalLocale();
+    if (!wanted || known.indexOf(wanted) === -1) return sourceLocale;
+    return wanted;
+  }
+
+  function mountNavLocale() {
+    var nav = document.querySelector(".site-nav") || document.querySelector(".nav-list");
+    if (!nav) return;
+
+    var idx = getTranslationIndex();
+    if (!idx) {
+      // Degrade LOUDLY, the discipline this whole file follows: a feature that
+      // quietly does nothing is indistinguishable from one nobody looked at.
+      nav.setAttribute("data-fa-nav-index", "unknown");
+      if (window.console && console.warn) {
+        console.warn(
+          "docs-ui: no readable translation index (#fa-translation-index). " +
+          "The navbar is left exactly as built -- this is NOT a claim that " +
+          "the folio has no translations. Run: bun run translation:index"
+        );
+      }
+      return;
+    }
+
+    var data = idx.data;
+    var pages = data.pages;
+    var meta = getTranslationMeta();
+    var locale = navLocale(data, meta && meta.lang);
+    nav.setAttribute("data-fa-nav-index", Object.keys(pages).length === 0 ? "empty" : "ok");
+    nav.setAttribute("data-fa-nav-locale", locale);
+
+    // The source language needs no rewriting at all, and saying so explicitly
+    // is cheaper than walking the nav to discover it.
+    if (locale === (data.sourceLocale || "en")) return;
+
+    var here = navKey(window.location.href, idx.baseurl);
+    var links = nav.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      var key = navKey(link.getAttribute("href"), idx.baseurl);
+      if (key === null) continue;
+      var entry = Object.prototype.hasOwnProperty.call(pages, key) ? pages[key] : null;
+      var t = entry && entry.translations ? entry.translations[locale] : null;
+      if (!t || !t.url) {
+        // FALLBACK. Not a branch that does something -- a branch that does
+        // nothing, on purpose, so the item keeps the source-language page it
+        // already points at.
+        link.setAttribute("data-fa-translated", "source");
+        continue;
+      }
+      link.setAttribute("href", (idx.baseurl || "") + t.url);
+      if (t.title) link.textContent = t.title;
+      link.setAttribute("lang", locale);
+      // Per-LINK direction, not per-page: an Arabic item inside an otherwise
+      // English navbar has to carry its own, or the bracket and the trailing
+      // "(AR)" render on the wrong side of it.
+      link.setAttribute("dir", t.dir === "rtl" ? "rtl" : "ltr");
+      link.setAttribute("data-fa-translated", locale);
+      if (t.status) link.setAttribute("data-fa-translation-status", t.status);
+      // just-the-docs computed "you are here" at build time against the SOURCE
+      // page's url, so a reader on the translated page loses the marker unless
+      // it is put back against the rewritten target.
+      if (here !== null && navKey(t.url, "") === here) link.setAttribute("aria-current", "page");
+    }
   }
 
   /* ── Translation badges ──────────────────────────────────────────────── */
@@ -1717,8 +2543,12 @@
     }
 
     mountActionTiles();
+    // Before the badges: both read the same translation metadata, and the nav
+    // is the thing a reader sees first.
+    mountNavLocale();
     mountTranslationBadges();
     mountQaPanels();
+    mountTodoStickies();
     mountPageLanguageBar();
     // Figures are mounted only after the inlining settles, so the scan sees the
     // real <svg> rather than the <img> it replaces and does not wrap both.

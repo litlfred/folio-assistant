@@ -1,0 +1,39 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "translation-manager",
+    "path": "skills/folio-core/translation-manager.md"
+  },
+  "source_hash": "6ec85df447bd",
+  "criteria": {
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/translation-manager.md",
+          "detail": "583 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/translation-manager.md",
+          "detail": "583 lines; p90 is 391. At this length it is a document."
+        }
+      ]
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 1,
+    "fail": 2,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

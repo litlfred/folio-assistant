@@ -31,7 +31,7 @@ so there is something concrete to refine.
 ---
 
 ## Why this is a subprocess of editing
-{: #why-this-is-a-subprocess }
+{: #why-this-is-a-subprocess data-fa-label="sec:evidence-why-this-is-a-subprocess" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/why-this-is-a-subprocess.md){: .fa-node-edit title="Edit content/docs/evidence/why-this-is-a-subprocess.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/evidence/why-this-is-a-subprocess.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -50,9 +50,9 @@ content that carries no recommendations — a mathematics folio has none — and
 skipped there rather than satisfied vacuously.
 
 ## The subprocess
-{: #the-subprocess }
+{: #the-subprocess data-fa-label="sec:evidence-the-subprocess" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/evidence-retrieval.bpmn){: .fa-node-edit title="Edit skills/workflows/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 1 fail, 0 warn, 7 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 1 fail, 0 warn, 7 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/evidence-retrieval.bpmn){: .fa-node-edit title="Edit skills/workflows/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
 Four lanes, because four different kinds of actor are involved and conflating
 them is how accountability gets lost:
@@ -77,7 +77,7 @@ lane inside the system boundary would make "authoritative" a self-assessment.
 {: .bpmn-source }
 
 ## Step one looks inward
-{: #review-first }
+{: #review-first data-fa-label="sec:evidence-review-first" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/review-first.md){: .fa-node-edit title="Edit content/docs/evidence/review-first.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/evidence/review-first.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -91,7 +91,7 @@ reveal — the sources can all be impeccable and the guideline still incoherent.
 This is also the cheapest step by far, and it is the one most often skipped.
 
 ## Framing the question as PICO
-{: #pico }
+{: #pico data-fa-label="sec:evidence-pico" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/pico.md){: .fa-node-edit title="Edit content/docs/evidence/pico.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/evidence/pico.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -108,7 +108,7 @@ what a later reader needs in order to tell whether new evidence bears on this
 recommendation or a different one.
 
 ## Three classes of evidence, not one
-{: #three-classes }
+{: #three-classes data-fa-label="sec:evidence-three-classes" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/three-classes.md){: .fa-node-edit title="Edit content/docs/evidence/three-classes.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/evidence/three-classes.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -136,7 +136,7 @@ Distinct again because the unit of evidence is a **measurement** with a
 population, a period and a method attached — not a claim in prose.
 
 ## Verifying authority, not asserting it
-{: #authority }
+{: #authority data-fa-label="sec:evidence-authority" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/authority.md){: .fa-node-edit title="Edit content/docs/evidence/authority.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/evidence/authority.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -163,7 +163,7 @@ nobody re-checks.
 > requirements question, and there is a separate process for it.
 
 ## Grading the body, and recording a gap
-{: #grading-and-gaps }
+{: #grading-and-gaps data-fa-label="sec:evidence-grading-and-gaps" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/grading-and-gaps.md){: .fa-node-edit title="Edit content/docs/evidence/grading-and-gaps.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/evidence/grading-and-gaps.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -184,7 +184,7 @@ citation with its resolved authority record are written onto the recommendation
 block. A reader can then retrace the chain from the sentence back to the source.
 
 ## What is not built
-{: #what-is-not-built }
+{: #what-is-not-built data-fa-label="sec:evidence-what-is-not-built" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/what-is-not-built.md){: .fa-node-edit title="Edit content/docs/evidence/what-is-not-built.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/evidence/what-is-not-built.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 

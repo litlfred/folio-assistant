@@ -54,6 +54,8 @@ import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { skillIoIri } from "./harness-schema-export.js";
+import { stagingFields } from "./staging-stamp.js";
+import { buildQaResult, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -279,7 +281,12 @@ function buildContext(): Record<string, unknown> {
     // `collectRegistryNodes`. Literals, not links: `localId` is a name within
     // a kind, not an IRI.
     localId: termIri("localId"),
+    // TWO terms, and the distinction is load-bearing rather than clumsy: an
+    // actor IS one kind of thing, a role ADMITS several. Collapsing them into
+    // one name would assert that a lane open to a person and an agent is
+    // itself some third kind of actor.
     actorKind: termIri("actorKind"),
+    actorKinds: termIri("actorKinds"),
 
     // ---- BPMN, as it comes off a diagram -----------------------------------
     //
@@ -380,7 +387,151 @@ function buildContext(): Record<string, unknown> {
     // name. It was `requires`, which a Capability also carried in the other
     // sense -- see `collectRegistryNodes`.
     requirements: { "@id": termIri("requirements"), "@type": "@json" },
+
+    // Which build produced this document — see `scripts/staging-stamp.ts`.
+    //
+    // **Declared, because the stamp was being dropped.** Until 2026-09-19 the
+    // staging workflow appended `staging` to the document root with an inline
+    // `bun -e`, and no term declared it: a JSON-LD processor discards a
+    // property that is neither in the `@context` nor an absolute IRI, so the
+    // one artefact this build stamped carried its stamp in the one form the
+    // consumer this export exists to serve cannot read. Exactly the `ovkk`
+    // defect recorded on `inputSchema`/`outputSchema` above, one level up on
+    // the document root — where `undeclaredTerms` does not look, because it
+    // walks `@graph`.
+    //
+    // A SCOPED context (JSON-LD 1.1 §4.1.8), not four global terms. `branch`,
+    // `sha`, `pr` and `run` are words a graph node could plausibly use for
+    // something else, and a global term would silently give that other use
+    // this meaning. Scoped, they mean this only inside `staging`.
+    staging: {
+      "@id": termIri("staging"),
+      "@context": {
+        branch: termIri("stagingBranch"),
+        sha: termIri("stagingSha"),
+        pr: termIri("stagingRef"),
+        run: termIri("stagingRun"),
+      },
+    },
+
+    // ---- The DOCUMENT ROOT's own fields ------------------------------------
+    //
+    // `ovkk` drove `@graph`'s undeclared count to zero. These six were the
+    // same defect one level up, and they survived it for a structural reason:
+    // `undeclaredTerms` walks `@graph`, so the root is the one place it cannot
+    // look. Half the root WAS declared — `generatedAt`, `sourceCommit` and the
+    // three `sourceCommit*` fields — which is what made the other half
+    // invisible.
+    //
+    // `undeclaredRootTerms` now checks it, and is fatal for `undeclaredTerms`'
+    // reason: with the count at zero, a new entry can only mean somebody added
+    // a root field and did not decide what it means.
+    //
+    // A LINK, and `schema:codeRepository` rather than a minted `folio:` term —
+    // the wider web already agrees on this one, exactly as `version` uses
+    // `schema:softwareVersion`. It sits beside `sourceCommit`, which has been
+    // declared all along; this was a gap, not a judgement.
+    repository: { "@id": `${SCHEMA}codeRepository`, "@type": "@id" },
+    // `{"@type": "@json"}`, for the reason `io` and `install` carry it: the
+    // value is `{"Actor": 25, "Skill": 149, …}`, keyed by TYPE NAME, so there
+    // is no fixed set of terms to declare. Declaring the container alone would
+    // keep `counts` and drop all twelve numbers — a well-formed empty object
+    // where the truncation check used to be, which is worse than leaving it
+    // undeclared, because undeclared at least loses the whole thing visibly.
+    counts: { "@id": termIri("counts"), "@type": "@json" },
+    //
+    // `problems`, `undeclaredTerms`, `undeclaredSchemaModules` and
+    // `danglingLinks` were declared here and are NOT any more — the document
+    // no longer carries them. They are a QA reviewer's findings about the
+    // graph this run produced, so they are written to `test/results/` as a
+    // `qa-results/v1` document instead. See `publishedDocument`.
+    //
+    // The terms went WITH the fields, deliberately. A `@context` describes what
+    // its document carries; a term for a field nothing emits is a promise to a
+    // consumer that this document will answer a question it has stopped
+    // answering, which is a worse kind of wrong than an undeclared term —
+    // undeclared at least fails loudly against `undeclaredRootTerms`.
   };
+}
+
+/**
+ * Root-level property names the `@context` does not declare.
+ *
+ * ## The blind spot this closes
+ *
+ * {@link undeclaredTerms} walks `@graph`, so the DOCUMENT ROOT is the one
+ * place it structurally cannot look — and the root carries real data:
+ * provenance, node counts, and every diagnostic this export produces. Half of
+ * it was declared (`generatedAt`, the four `sourceCommit*` fields) and half
+ * was not, which is precisely what kept the gap invisible: a spot check on any
+ * declared field said the root was covered.
+ *
+ * It is not hypothetical. `staging` shipped through this gap in #340 — written
+ * into the root by the staging workflow, declared nowhere, and therefore
+ * dropped by the only consumer the export exists to serve — while this file's
+ * own comments stated the rule it was breaking. Six more were found the moment
+ * anyone looked: `repository`, `counts`, `problems`, `undeclaredTerms`,
+ * `undeclaredSchemaModules`, `danglingLinks`.
+ *
+ * ## Why this is not a field on the document
+ *
+ * Same call {@link keywordCollisions} makes, for the same reason. A field
+ * reporting undeclared root terms would itself be a root term needing
+ * declaration, and would have to be computed before it existed. It is a
+ * DOCUMENT-VALIDITY check, run against the assembled document at the point of
+ * writing, and fatal there.
+ *
+ * Fatal for `undeclaredTerms`' reason, now that the count is zero: the only
+ * thing a new entry can mean is that somebody added a root field and did not
+ * decide what it means. Deciding costs one line in {@link buildContext}.
+ */
+/**
+ * The document as PUBLISHED — the computation minus its QA findings.
+ *
+ * ## Why the findings left the document
+ *
+ * `undeclaredTerms`, `undeclaredSchemaModules`, `danglingLinks` and `problems`
+ * are what a QA reviewer found about the graph this run produced. The owner's
+ * rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs
+ * under `test/results/` as part of a QA process. They are written there, as a
+ * `qa-results/v1` document, by the CLI below.
+ *
+ * They are **not** dropped — they are relocated, and the relocation is checked:
+ * a test asserts the result's families equal what this function strips out, so
+ * nothing can leave the document without arriving in the result.
+ *
+ * ## What STAYS, and why the line is not "everything diagnostic"
+ *
+ * `counts` and `repository` stay. Neither is a finding: `counts` is what the
+ * graph CONTAINS, which is how a consumer spots a truncated document, and
+ * `repository` is provenance sitting beside `sourceCommit`. A reviewer's
+ * verdict moves; a fact about the artefact does not.
+ *
+ * `sourceCommitUnavailable` stays for the same reason, and it is the sharpest
+ * case: it reads like a problem and is not one. A tarball exports a complete
+ * graph and simply cannot say which commit it came from.
+ */
+export function publishedDocument(data: Export): Omit<Export, "undeclaredTerms" | "undeclaredSchemaModules" | "danglingLinks" | "problems"> {
+  const {
+    undeclaredTerms: _ut,
+    undeclaredSchemaModules: _usm,
+    danglingLinks: _dl,
+    problems: _p,
+    ...doc
+  } = data;
+  return doc;
+}
+
+export function undeclaredRootTerms(
+  doc: Record<string, unknown>,
+  context: Record<string, unknown>,
+): string[] {
+  const declared = new Set(Object.keys(context).filter((k) => !k.startsWith("@")));
+  return Object.keys(doc)
+    // `@`-prefixed keys are JSON-LD keywords, which need no declaration — and
+    // an ALIAS of one is handled by `keywordCollisions`, not here.
+    .filter((k) => !k.startsWith("@") && !declared.has(k))
+    .sort();
 }
 
 /**
@@ -1388,7 +1539,14 @@ if (import.meta.main) {
   const data = await buildExport({ baseUrl });
 
   mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, JSON.stringify(data, null, 2) + "\n");
+  // The staging stamp, from the same function `harness-schema-export` uses, so
+  // the two documents a build publishes side by side cannot disagree about
+  // which build they came from. It was an inline `bun -e` in
+  // `feature-staging.yml` that reached this document and nothing else.
+  // The PROJECTION, not the computation — the QA findings are written to
+  // `test/results/` below instead. See `publishedDocument`.
+  const published = { ...publishedDocument(data), ...stagingFields() };
+  writeFileSync(out, JSON.stringify(published, null, 2) + "\n");
 
   console.log(`KG export → ${relative(ROOT, out)}\n  @id  ${data["@id"]}`);
   for (const [t, n] of Object.entries(data.counts).sort()) console.log(`  ${String(n).padStart(5)}  ${t}`);
@@ -1399,6 +1557,64 @@ if (import.meta.main) {
   // a graph whose nodes offer two answers for their own identity must not be
   // published as a whole one. Checked here against the assembled graph rather
   // than trusted from the collectors.
+  // The DOCUMENT ROOT, which `undeclaredTerms` below cannot see — see
+  // `undeclaredRootTerms`. Checked before the graph-level report because a
+  // root field that vanishes takes the provenance and the counts with it.
+  const rootUndeclared = undeclaredRootTerms(published as unknown as Record<string, unknown>, data["@context"]);
+  if (rootUndeclared.length > 0) {
+    console.error(`\n${rootUndeclared.length} root-level field(s) are NOT in the @context, so a JSON-LD processor drops them:`);
+    for (const t of rootUndeclared) console.error(`  \u2717 ${t}`);
+    console.error("  Declare each in `buildContext` — see the DOCUMENT ROOT section there.");
+    process.exit(1);
+  }
+
+  // The QA RESULT, under the declared `test/results/`.
+  //
+  // The owner's rule, 2026-09-19: an artefact generated primarily as a QA
+  // reviewer belongs there as part of a QA process — placement follows
+  // PROVENANCE, not file family. These four findings are exactly that: a
+  // review of the graph this run just produced.
+  //
+  // Written from the SAME values the document carries, not recomputed. Two
+  // renderings of one computation cannot disagree; two computations can. It is
+  // the rule `feature-staging.yml` already follows when it copies the `.json`
+  // alias AFTER the staging stamp, and the reason `stagingStamp` is one
+  // function rather than one per exporter.
+  //
+  // The document still carries these fields. Moving them out is a SEPARATE
+  // change, because `scripts/kg-viewer.ts:573` reads `doc.undeclaredTerms` off
+  // the published document and renders it — so removing them needs the viewer
+  // pointed at the published result first, and a half-moved field would take
+  // the viewer's panel with it.
+  const resultPath = writeQaResult(ROOT, "kg-export", buildQaResult({
+    script: "scripts/kg-export.ts",
+    scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
+    subject: { kind: "graph", id: `${stub}.jsonld` },
+    families: {
+      undeclaredTerms: {
+        summary:
+          "Property names used in `@graph` that the `@context` does not declare. " +
+          "Dropped outright by a JSON-LD processor.",
+        entries: data.undeclaredTerms,
+      },
+      undeclaredSchemaModules: {
+        summary:
+          "Modules in the declared schemas/ directory that do not say what they are, " +
+          "so they are absent from the graph.",
+        entries: data.undeclaredSchemaModules,
+      },
+      danglingLinks: {
+        summary: "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
+        entries: data.danglingLinks,
+      },
+      problems: {
+        summary: "Sources that could not be read. Never empty-by-omission.",
+        entries: data.problems,
+      },
+    },
+  }));
+  console.log(`QA result → ${relative(ROOT, resultPath)}`);
+
   const collisions = keywordCollisions(data["@graph"]);
   if (collisions.length > 0) {
     console.error(`\n${collisions.length} node(s) carry a JSON-LD keyword AND its alias:`);

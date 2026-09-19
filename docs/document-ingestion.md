@@ -26,7 +26,7 @@ every not-yet-built step linked to the bean that tracks it.
 ---
 
 ## `uploads/` and `library/` are two stages of one pipeline
-{: #uploads-and-library-are-two-stages-of-one-pipeline }
+{: #uploads-and-library-are-two-stages-of-one-pipeline data-fa-label="sec:document-ingestion-uploads-and-library-are-two-stages-of-one-pipeline" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md){: .fa-node-edit title="Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -46,7 +46,7 @@ while the source is sitting on disk. An un-ingested source is worse than an
 absent one, because it produces false confidence rather than a gap.
 
 ## `library/` is L1
-{: #library-is-l1 }
+{: #library-is-l1 data-fa-label="sec:document-ingestion-library-is-l1" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/library-is-l1.md){: .fa-node-edit title="Edit content/docs/document-ingestion/library-is-l1.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/library-is-l1.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -62,7 +62,7 @@ url-or-path / checksum / retrieved — **not** inside `library:`, because
 placed there is silently dropped.
 
 ## The pipeline
-{: #the-pipeline }
+{: #the-pipeline data-fa-label="sec:document-ingestion-the-pipeline" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/document-ingestion.bpmn){: .fa-node-edit title="Edit skills/workflows/document-ingestion.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/the-pipeline.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/document-ingestion/the-pipeline.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 9 pass, 1 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 9 pass, 1 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -93,7 +93,7 @@ the hand-off into [the publication workflow](publication-workflow.html) — the
 same corpus an author edits and a reviewer reviews.
 
 ### Extract structure
-{: #extract-structure }
+{: #extract-structure data-fa-label="sec:document-ingestion-extract-structure" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-extract-structure.bpmn){: .fa-node-edit title="Edit skills/workflows/ingest-extract-structure.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/extract-structure.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/document-ingestion/extract-structure.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -115,7 +115,7 @@ contextual retrieval: a chunk in isolation loses what makes it mean anything, so
 a hit is interpretable without opening anything else.
 
 ### Derive content
-{: #derive-content }
+{: #derive-content data-fa-label="sec:document-ingestion-derive-content" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-derive-content.bpmn){: .fa-node-edit title="Edit skills/workflows/ingest-derive-content.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/derive-content.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/document-ingestion/derive-content.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -138,7 +138,7 @@ version — is what lets a reader weigh it, and what makes a superseded model's
 descriptions findable as a set later. It is unrecoverable once lost.
 
 ### Build the L1 knowledge graph
-{: #build-the-l1-knowledge-graph }
+{: #build-the-l1-knowledge-graph data-fa-label="sec:document-ingestion-build-the-l1-knowledge-graph" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-build-l1-kg.bpmn){: .fa-node-edit title="Edit skills/workflows/ingest-build-l1-kg.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/build-the-l1-knowledge-graph.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/document-ingestion/build-the-l1-knowledge-graph.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -157,7 +157,7 @@ The folder name **is** the bibliography citation key, so a citation and a
 directory are the same string.
 
 ### The L1 completeness gate
-{: #the-l1-completeness-gate }
+{: #the-l1-completeness-gate data-fa-label="sec:document-ingestion-the-l1-completeness-gate" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-l1-completeness-gate.bpmn){: .fa-node-edit title="Edit skills/workflows/ingest-l1-completeness-gate.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/the-l1-completeness-gate.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/document-ingestion/the-l1-completeness-gate.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 8 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -182,7 +182,7 @@ that edge goes to a reviewer.
 ---
 
 ## What is not built yet
-{: #what-is-not-built-yet }
+{: #what-is-not-built-yet data-fa-label="sec:document-ingestion-what-is-not-built-yet" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/what-is-not-built-yet.md){: .fa-node-edit title="Edit content/docs/document-ingestion/what-is-not-built-yet.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/what-is-not-built-yet.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -202,7 +202,7 @@ implemented.
 | Round-trip translation QA | [`folio-assistant-ktt2`](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-ktt2--ingest-round-trip-translation-qa-back-translate-to.md) | Detects drift; a human adjudicates it |
 
 ## How much of this does Dublin Core carry?
-{: #how-much-of-this-does-dublin-core-carry }
+{: #how-much-of-this-does-dublin-core-carry data-fa-label="sec:document-ingestion-how-much-of-this-does-dublin-core-carry" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md){: .fa-node-edit title="Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/how-much-of-this-does-dublin-core-carry.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -227,7 +227,7 @@ and must be settled against the published specifications rather than from
 memory.
 
 ## Editing an ingested source
-{: #editing-an-ingested-source }
+{: #editing-an-ingested-source data-fa-label="sec:document-ingestion-editing-an-ingested-source" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/document-ingestion/editing-an-ingested-source.md){: .fa-node-edit title="Edit content/docs/document-ingestion/editing-an-ingested-source.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/document-ingestion/editing-an-ingested-source.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 

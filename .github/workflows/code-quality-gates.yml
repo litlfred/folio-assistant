@@ -290,9 +290,43 @@ jobs:
       # harness injects. An entry edited and never assembled is a fact the
       # author believes an agent has and the agent has never seen -- invisible,
       # because the generated file still reads perfectly well without it.
+      # NOT un-folded, deliberately, and this comment is the finding rather
+      # than the fix.
+      #
+      # The `bun run scripts/gen-docs-pages.ts --check` below is a CONTINUATION
+      # LINE of this step's `run`, so YAML folds it into one scalar and it is
+      # passed to `agent-memory:check` as trailing arguments, which that script
+      # ignores. **The gate has never run.** Bean `folio-assistant-2u6m`.
+      #
+      # Turning it on is not a one-line fix, which is why it is not done here.
+      # `gen-docs-pages` writes LIVE QA VERDICTS into the pages it generates —
+      # the badge on `publication-workflow.md` currently reads "1 fail" where
+      # the graph now says "0 fail, 10 pass", stale since the actor-kind fixes
+      # landed in #353. So the pages go stale whenever the knowledge graph
+      # changes, and enabling the check makes every KG-touching PR red unless
+      # it also regenerates. That is a real policy decision with a real
+      # maintenance cost, and smuggling it into an unrelated PR is how a gate
+      # gets turned back off by the next person it blocks.
+      #
+      # Measured 2026-09-19 on `origin/main` at ed3403322: 12 pages stale.
       - name: agent memory is assembled
         run: bun run agent-memory:check
           bun run scripts/gen-docs-pages.ts --check
+
+      # The translation index is what the navbar's locale filter reads. It is
+      # derived from what each page DECLARES — `lang`, and `translation_source`
+      # naming what it expresses — never from a directory whose name looks like
+      # a language subtag. Three outcomes, and the third is why this is not a
+      # plain diff: exit 2 means the translation set could NOT BE DETERMINED
+      # (no Jekyll site where one was expected, or a page whose front matter
+      # will not parse and that something translates), which must never be
+      # published as "this folio has no translations".
+      #
+      # It also catches the one thing that is easy to forget and invisible
+      # locally: a translated page with no `nav_exclude: true` goes into the
+      # statically built navbar for EVERY reader, whatever locale they chose.
+      - name: translation index is current
+        run: bun run translation:index:check
 
   # ── End-to-end, including the accessibility gate ────────────────────
   #

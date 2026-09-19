@@ -32,6 +32,11 @@ on:
       - 'scripts/gen-docs-pages.ts'
       - 'content/docs/**'
       - 'scripts/render-bpmn.ts'
+      # The navbar's locale filter reads `docs/_data/translations.json`, built
+      # by this module from the pages' own front matter. A change to how that
+      # is derived changes the published navbar while touching nothing under
+      # `docs/`, so without this path the site would not rebuild.
+      - 'content/pipeline/translation-index.ts'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -86,6 +91,17 @@ jobs:
       # the deploy-time refresh.
       - name: Regenerate content-backed docs pages
         run: bun run scripts/gen-docs-pages.ts
+
+      # Same reasoning as the three regenerations above: the committed copy is
+      # browsable on GitHub and the PUBLISHED one must never be the stale half
+      # of that pair. A stale index here is not cosmetic — it is the navbar
+      # showing the wrong set of translations to every reader.
+      #
+      # A non-zero exit fails the deploy on purpose. Publishing a site whose
+      # translation set could not be determined would render "could not tell"
+      # as "there are none", which is the one thing this pipeline must not do.
+      - name: Regenerate the translation index
+        run: bun run translation:index
 
       # The BPMN sources under skills/workflows/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless
@@ -218,6 +234,51 @@ jobs:
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
+
+      # The QA witnesses, published at the path the badges already point at.
+      #
+      # They are COMMITTED under `test/results/witnesses/` — placement follows
+      # provenance, and a witness is a QA process's output, not an authored
+      # page. They are SERVED from `/assets/qa/`, which is what every
+      # `data-qa-src` in the generated pages says and what `docs-ui.js` fetches.
+      # Jekyll only builds `docs/`, so without this copy the panel 404s on
+      # every badge — and an empty panel looks exactly like "nothing has been
+      # audited", which is the false pass the badges exist to prevent.
+      #
+      # `-T` so the CONTENTS land in `assets/qa/` rather than a nested
+      # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
+      # asserts both workflows carry it, because missing it in one publishes a
+      # site whose evidence links are all dead.
+      - name: Publish the QA witnesses and results
+        run: |
+          mkdir -p ./_site/assets
+          cp -rT test/results/witnesses ./_site/assets/qa
+          # The RESULTS beside them. `kg-export` writes this during the export
+          # step above, so the copy picks up THIS run's findings rather than
+          # whatever was last committed. Since bean `2634` the published graph
+          # no longer carries them, so this file is the only place a consumer
+          # can see what the QA pass found about the document it just fetched.
+          find test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
+
+      # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
+      # composed.
+      #
+      # The knowledge-graph tile's href was `'/kg/' | relative_url` written
+      # into `head_custom.html` by hand, and nothing has ever been published
+      # at `<base>/kg/`. The only entry point to the viewer anywhere on this
+      # site was a 404 from the day it was added, and no test caught it
+      # because every test asserted the attribute rather than the target --
+      # the same defect that left all twenty-three of the README's chapter
+      # PDF links dead. See bean `udx8`.
+      #
+      # This runs AFTER the export, against the real `_site`, so a tile that
+      # outlives the artefact it points at fails the build instead of
+      # shipping. Exit 2 ("could not determine" -- no build to check) is a
+      # failure here too: at this point in the job there IS a build, so not
+      # finding one means something earlier went wrong quietly.
+      - name: Check the navbar tiles resolve against the built site
+        run: bun run scripts/site-links.ts --site ./_site
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kg-viewer\n"
-"POT-Creation-Date: 2026-09-19T05:52:43.732Z\n"
+"POT-Creation-Date: 2026-09-19T07:43:52.535Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "{stub} — knowledge graph"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:190
+#: scripts/kg-viewer-strings.ts:200
 #. Row label listing the nodes that point AT this one. Flip the arrow if the language reads right to left.
 msgid "← referenced by"
 msgstr ""
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Kind"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:210
+#: scripts/kg-viewer-strings.ts:220
 #. Accessible name of one neighbour in the diagram. {name} is a node's name from the graph and {via} the property that links to it — both stay in the graph's language.
 msgid "Links to {name} via {via}"
 msgstr ""
@@ -104,7 +104,7 @@ msgstr ""
 msgid "loading {doc}…"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:198
+#: scripts/kg-viewer-strings.ts:208
 #. Shown in place of the neighbourhood diagram for an isolated node.
 msgid "No links to or from this node."
 msgstr ""
@@ -124,22 +124,22 @@ msgstr ""
 msgid "Nodes"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:194
+#: scripts/kg-viewer-strings.ts:204
 #. Shown for a property that is present but holds an empty list — as opposed to one that is absent, which is not shown at all.
 msgid "none"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:206
+#: scripts/kg-viewer-strings.ts:216
 #. Accessible name of that diagram. {n} is the number of neighbours drawn, 0 or 2 and above.
 msgid "One-hop neighbourhood, {n} linked nodes"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:202
+#: scripts/kg-viewer-strings.ts:212
 #. Accessible name of the diagram under a node's properties when it has exactly one neighbour.
 msgid "One-hop neighbourhood, 1 linked node"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:214
+#: scripts/kg-viewer-strings.ts:224
 #. As above, for a neighbour that points AT the selected node rather than away from it. {name} is that node's name and {via} the property it points along; both stay in the graph's language.
 msgid "Referenced by {name} via {via}"
 msgstr ""
@@ -170,6 +170,11 @@ msgid "Skip to results"
 msgstr ""
 
 #: scripts/kg-viewer-strings.ts:182
+#. The same second half, for a document that does not report a graph-wide count. Since bean `2634` the export publishes its QA findings to `test/results/` rather than into the graph, so most documents no longer carry one — and an absent count must not be rendered as zero, which would claim a clean bill of health the document never gave. Keep the two variants consistent: this is the other one minus its final sentence.
+msgid "so a JSON-LD processor drops them. They are shown below, marked."
+msgstr ""
+
+#: scripts/kg-viewer-strings.ts:182
 #. Second half of that warning, following a comma. {n} is a number — the count across the whole graph, not this node.
 msgid "so a JSON-LD processor drops them. They are shown below, marked. Across the graph: {n} such property names."
 msgstr ""
@@ -184,12 +189,12 @@ msgstr ""
 msgid "The graph could not be read, so nothing is shown. This is not an empty graph."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:223
+#: scripts/kg-viewer-strings.ts:233
 #. Shown under the heading whenever a language other than English is chosen. It states the boundary: a reader must not have to infer from a half-translated screen where the translation stops.
 msgid "The interface is shown in {language}. The graph itself — node names, descriptions and property names — comes from this repository and is shown as written, in English."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:227
+#: scripts/kg-viewer-strings.ts:237
 #. Shown with the note above when the chosen language's catalogue is not signed off. Dropped once a reviewer signs it off.
 msgid "This interface translation was produced by an agent and has not been reviewed by a person."
 msgstr ""

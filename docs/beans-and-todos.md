@@ -36,7 +36,7 @@ This page describes the first in full. The second is **not built yet** and
 says so.
 
 ## Two things that share a word
-{: #two-things-one-word }
+{: #two-things-one-word data-fa-label="sec:beans-and-todos-two-things-one-word" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-things-one-word.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/two-things-one-word.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/beans-and-todos/two-things-one-word.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -61,7 +61,7 @@ second, and machinery sized for the second is nowhere near enough for the
 first.
 
 ## The agent bean lifecycle
-{: #the-agent-bean-lifecycle }
+{: #the-agent-bean-lifecycle data-fa-label="sec:beans-and-todos-the-agent-bean-lifecycle" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/bean-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/bean-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 3 n/a — open for witnesses" aria-label="Knowledge-graph QA: 0 fail, 0 warn, 7 pass, 3 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button></span>
 
@@ -92,7 +92,7 @@ blocker recorded and something said about what would clear it. Leaving it
 every other session, as active work.
 
 ## A bean is never deleted
-{: #never-delete }
+{: #never-delete data-fa-label="sec:beans-and-todos-never-delete" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/never-delete.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/never-delete.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/beans-and-todos/never-delete.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -115,7 +115,7 @@ precisely because the tool offers the operation. A rule that depends on nobody
 noticing a command is not a rule.
 
 ## Engine operations are not CLI calls
-{: #two-layers }
+{: #two-layers data-fa-label="sec:beans-and-todos-two-layers" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/two-layers.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/two-layers.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/beans-and-todos/two-layers.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -145,7 +145,7 @@ reference that does not resolve; it cannot catch a plausible attribute the
 engine never reads.
 
 ## Human todos — not built yet
-{: #human-todos }
+{: #human-todos data-fa-label="sec:beans-and-todos-human-todos" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/human-todos.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/human-todos.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/beans-and-todos/human-todos.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 

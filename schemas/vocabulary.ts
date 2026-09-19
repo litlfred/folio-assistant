@@ -198,6 +198,11 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
 
   // ── Actors, roles, skills ────────────────────────────────────────────
   actorKind: { gloss: "Whether an actor is human, agentic or mechanical." },
+  // TWO terms, not one, and `kg-export.ts` explains why at the point of use:
+  // an actor IS one kind of thing, a role ADMITS several. Collapsing them
+  // would assert that a lane open to both a person and an agent is itself
+  // some third kind of actor.
+  actorKinds: { gloss: "Which kinds of actor a role admits." },
   hasSkill: { gloss: "A skill this role carries." },
   declaresSkill: { gloss: "A skill this package declares." },
   declaresRole: { gloss: "A role this registry declares." },
@@ -254,7 +259,19 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   sourceTreeDirty: { gloss: "Whether the working tree had uncommitted changes when the export ran." },
   sourceCommitUnavailable: { gloss: "That the commit could not be determined — never rendered as clean." },
 
+  // ── Staging provenance ───────────────────────────────────────────────
+  //
+  // Arrived on main while this branch was open, and `ns:check` refused the
+  // merge until they were defined — which is the gate doing precisely what it
+  // was written for. Every one was minted and glossed nowhere.
+  staging: { gloss: "Which build produced this document, when it is a staging preview rather than a release." },
+  stagingBranch: { gloss: "The branch a staging preview was built from." },
+  stagingSha: { gloss: "The commit a staging preview was built from." },
+  stagingRef: { gloss: "The pull request a staging preview belongs to." },
+  stagingRun: { gloss: "The CI run that produced a staging preview." },
+
   // ── Reporting ────────────────────────────────────────────────────────
+  counts: { gloss: "How many nodes of each type the export produced." },
   detection: { gloss: "How a value was arrived at, where it was inferred rather than declared." },
   ambiguous: { gloss: "That more than one answer matched, and none was chosen." },
 };

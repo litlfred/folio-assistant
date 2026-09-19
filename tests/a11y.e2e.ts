@@ -246,12 +246,21 @@ const tilesPage = (scheme: "light" | "dark") => `<!doctype html><html lang="en" 
   ${readFileSync(join(REPO, "docs/assets/css/docs-ui.css"), "utf8")}
 </style></head><body>
   <script type="application/json" id="fa-translation-meta">{"lang":"en","availableLocales":["fr","es"]}<\/script>
-  <script type="application/json" id="fa-site-links">{"kg":"/kg/","source":"https://example.invalid/r"}<\/script>
+  <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://example.invalid/r"}<\/script>
   <div class="side-bar">
     <div class="site-header"><a class="site-title">folio-assistant</a></div>
     <nav class="site-nav"><a href="#">Home</a></nav>
   </div>
-  <div class="main"><div class="main-content"><h1>Harness</h1></div></div>
+  <div class="main"><div class="main-header">
+    <!-- just-the-docs' own search, which docs-ui.js MOVES into the launcher.
+         It is here so axe measures the field WHERE IT ENDS UP -- on the
+         opaque sidebar panel, not on the main column it was written for. -->
+    <div class="search" role="search"><div class="search-input-wrap">
+      <input type="text" id="search-input" class="search-input" tabindex="0"
+             placeholder="Search folio-assistant" autocomplete="off">
+      <label for="search-input" class="search-label"><span class="sr-only">Search folio-assistant</span><svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor"/></svg></label>
+    </div><div id="search-results" class="search-results"></div></div>
+  </div><div class="main-content"><h1>Harness</h1></div></div>
   <script>window.jtd = { theme: "${scheme}", getTheme: function () { return this.theme; },
     setTheme: function (t) { this.theme = t; } };<\/script>
   <script>${readFileSync(join(REPO, "docs/assets/js/vendor/qrcode.js"), "utf8")}<\/script>
@@ -263,6 +272,9 @@ test.describe("accessibility — the docs-site UI", () => {
     for (const [state, open] of [
       ["the grid", [] as string[]],
       ["a view", ["Settings"]],
+      // The search field is the new control and the one most likely to fail
+      // contrast: it lands on an opaque sidebar panel it was not styled for.
+      ["the search view", ["Search"]],
     ] as const) {
       test(`no WCAG A/AA violations — ${state}, ${colorScheme}`, async ({ browser }) => {
         const ctx = await browser.newContext({ colorScheme });
@@ -402,4 +414,95 @@ test.describe("accessibility — what axe cannot check", () => {
     expect(outline.style).not.toBe("none");
     expect(parseFloat(outline.width)).toBeGreaterThanOrEqual(2);
   });
+});
+
+/* ── The sticky todo board ──────────────────────────────────────────────── */
+
+/**
+ * The board, the pinned layer, and the greyed slot.
+ *
+ * Run in BOTH schemes and BOTH viewports, like the viewer above, because the
+ * defect this catches is a colour that passes in one scheme and fails in the
+ * other from a single declaration — measured at 5.97:1 light / 2.19:1 dark.
+ * The sticky CSS is written as neutral overlays over `currentColor` precisely
+ * so it cannot have that shape; this is what says so rather than assuming it.
+ *
+ * The board is checked OPEN and with a sticky PINNED, because a hidden region
+ * has no contrast to measure and an empty float layer has no card in it. An
+ * axe run over a surface that is not on screen is a green that means nothing.
+ */
+test.describe("the sticky todo board", () => {
+  const STICKY_ITEMS = [
+    {
+      id: "a", summary: "Decide the thing", comment: "Some detail.",
+      status: "open", priority: "high", origin: "agent", createdAt: "2026-09-19",
+      tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+      // Relations must be PRESENT here or the axe runs below are green over
+      // chips that never rendered. Silence is not success.
+      relations: [
+        { axis: "who", label: "github:litlfred", href: "https://example.invalid/u" },
+        { axis: "PR", label: "#314", href: "https://example.invalid/pr/314" },
+        { axis: "bean", label: "unresolvable-bean" },
+      ],
+      // Attached to the section above, so the per-block badge and its inline
+      // list are ON SCREEN when axe looks. A surface the run never renders is
+      // a green that means nothing.
+      targetLabel: "sec:a11y-one",
+      editHref: "https://example.invalid/edit/main/todos/items/a.md",
+    },
+    {
+      id: "b", summary: "Decide the other thing", comment: "More detail.",
+      status: "blocked", priority: "critical", origin: "human", createdAt: "2026-09-19",
+      tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+      editHref: "https://example.invalid/edit/main/todos/items/b.md",
+    },
+  ];
+
+  const ROOT2 = join(dirname(fileURLToPath(import.meta.url)), "..");
+  const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Sticky todo harness</title>
+<meta name="fa-todo-src" content="/assets/todos/index.json">
+<style>${readFileSync(join(ROOT2, "docs/assets/css/docs-ui.css"), "utf8")}</style></head><body>
+<div class="side-bar"><div class="site-header"><a class="site-title">Site</a></div><nav class="site-nav"></nav></div>
+<div class="main-content-wrap"><div class="main-content" id="main-content"><h1>Harness</h1>
+<h2 id="s" data-fa-label="sec:a11y-one">A section</h2><p>Body.</p></div></div>
+<script>${readFileSync(join(ROOT2, "docs/assets/js/docs-ui.js"), "utf8")}</script></body></html>`;
+
+  for (const colorScheme of ["light", "dark"] as const) {
+    for (const [name, viewport] of [
+      ["desktop", { width: 1280, height: 860 }],
+      ["phone", { width: 390, height: 780 }],
+    ] as const) {
+      test(`no WCAG A/AA violations — ${colorScheme}, ${name}`, async ({ browser }) => {
+        const ctx = await browser.newContext({ colorScheme, viewport });
+        const page = await ctx.newPage();
+        await page.route("http://todo.a11y/**", (route) => {
+          const url = route.request().url();
+          if (url.endsWith("/page.html")) {
+            return route.fulfill({ contentType: "text/html", body: HARNESS });
+          }
+          if (url.endsWith("/assets/todos/index.json")) {
+            return route.fulfill({
+              contentType: "application/json",
+              body: JSON.stringify({ items: STICKY_ITEMS }),
+            });
+          }
+          return route.fulfill({ status: 404, body: "not found" });
+        });
+        await page.goto("http://todo.a11y/page.html");
+        await page.locator(".fa-qr-toggle").click();
+        await page.locator(".fa-tile", { hasText: "Todos" }).click();
+        // Expand one body and pin one sticky, so every surface this PR adds is
+        // actually on screen when axe looks at it.
+        // Open the per-block badge first, so its inline sticky renders too.
+        await page.locator(".fa-sticky-badge").first().click();
+        await page.locator(".fa-sticky-board .fa-sticky").first().locator(".fa-sticky-toggle").click();
+        await page.locator(".fa-sticky-board .fa-sticky").first().locator(".fa-sticky-pin").click();
+
+        const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
+        expect(violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);
+        await ctx.close();
+      });
+    }
+  }
 });

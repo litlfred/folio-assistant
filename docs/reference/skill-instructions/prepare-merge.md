@@ -154,4 +154,23 @@ harness git instructions). Do not include the model identifier in the PR.
   your-change red blocks the "ready" claim.
 - **One branch.** Develop on the assigned `claude/*` branch; moving work to a
   different branch needs explicit permission.
+- **NEVER DELETE A FEATURE OR STAGING BRANCH** without explicit assent from the
+  user or the repository owner. Not after a merge, not as cleanup, not to quiet a
+  tool that complains about it, and never by passing `--delete-branch` or its API
+  equivalent. A merged branch is still the record of how the work was done, the
+  base a revert or a follow-up is cut from, and the ref a staging deploy is served
+  under; deleting it is irreversible from the agent's side and buys nothing the
+  owner asked for.
+
+  **This is stated in [`prepare-merge-auto.md`](prepare-merge-auto.md) too** —
+  Phase 4 step 4 and Phase 5 — and it was stated there *only*, which is how it got
+  broken. `AGENTS.md` §"Shipping a branch" points at THIS file, so an agent that
+  followed the pointer never met the rule: measured 2026-09-19, a session proposed
+  "deleting the branch after each merge" as a way to stop a stop-hook false
+  positive. If you change one copy, change the other.
+
+  **When a tool or hook complains about a branch, fix the tool.** The false
+  positive above was a stop hook counting a branch restarted from the default
+  branch as having unpushed work; the answer was a reachability check in the hook,
+  not a deletion.
 {% endraw %}

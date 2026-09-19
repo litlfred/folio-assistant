@@ -48,7 +48,8 @@ const PAGE = "/_kg/folio-assistant/index.html";
 const KG = JSON.parse(readFileSync("_kg/folio-assistant.jsonld", "utf-8")) as {
   "@graph": Array<Record<string, unknown>>;
   counts: Record<string, number>;
-  undeclaredTerms: Array<{ term: string }>;
+  /** Absent since bean `2634` — kept optional so the fixture below can set it. */
+  undeclaredTerms?: Array<{ term: string }>;
   sourceCommit?: string;
 };
 
@@ -115,7 +116,12 @@ test.describe("kg viewer", () => {
     // impossible to miss. Bean `ovkk` closed the backlog, so the same fact is
     // now asserted the other way round — and `kg-export` exits non-zero if a
     // new one appears, which is what stops this quietly inverting again.
-    expect(KG.undeclaredTerms).toEqual([]);
+    // Bean `2634`: the published document no longer CARRIES `undeclaredTerms`
+    // — it is a QA finding and lives in `test/results/kg-export.qa-results.json`.
+    // Absent is the assertion now, and it is a stronger one than `[]` was: the
+    // exporter exits non-zero if the count is ever non-zero, so a document can
+    // only ship when there is nothing to report.
+    expect(KG.undeclaredTerms).toBeUndefined();
     await page.goto(PAGE);
     // Both the types that carried the worst of it. A mark HERE would mean the
     // page and the document disagree about what the context declares.
