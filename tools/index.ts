@@ -29,13 +29,29 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /** The declared publication base, or a local placeholder when none is set. */
 function base(): string {
+  return decl().canonicalUrl ?? "";
+}
+
+/**
+ * This instance's artefact stub, read from the declaration.
+ *
+ * NEVER written in. `<stub>.schema.json` is one of the artefacts declared
+ * below, and an instance that renames itself — the `folio-assistant` /
+ * `cat-harness` question still open at the time of writing — must not have to
+ * edit a Tool node for the declaration to stay true.
+ */
+function stub(): string {
+  const d = decl();
+  return d.stub ?? d.name ?? "instance";
+}
+
+function decl(): { canonicalUrl?: string; stub?: string; name?: string } {
   const p = join(ROOT, "cat-harness.json");
-  if (!existsSync(p)) return "";
+  if (!existsSync(p)) return {};
   try {
-    const d = JSON.parse(readFileSync(p, "utf-8")) as { canonicalUrl?: string };
-    return d.canonicalUrl ?? "";
+    return JSON.parse(readFileSync(p, "utf-8")) as ReturnType<typeof decl>;
   } catch {
-    return "";
+    return {};
   }
 }
 
@@ -137,6 +153,72 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["kg-export"],
       requires: { network: true },
+    }),
+
+    // ── The zod modules that maintain this instance's public schemas ──────
+    //
+    // The owner's requirement: "the zod(.ts) should be tool KG nodes that
+    // implement maintaining a json-ld/json schema for public authoritative".
+    // Each of these three IS the definition of an artefact the instance
+    // publishes, and until now that relation lived only in a local array
+    // inside `scripts/harness-schema-export.ts`.
+    //
+    // They satisfy `kg-export`, the skill that covers rendering the instance's
+    // own graph and schemas. `invoke.shell` is the command that regenerates
+    // them, so the node says how to exercise it rather than only what it is.
+    defineTool({
+      id: "cat-harness-schema",
+      title: "Instance declaration schema",
+      description:
+        "The zod definition of `cat-harness.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+      install: { none: true },
+      invoke: { shell: "bun run kg:schema" },
+      io: {
+        inputs: [
+          { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base; a preview passes its own." },
+        ],
+        outputs: [{ name: "schema", schema: t("RepoPath"), description: "The written JSON Schema." }],
+      },
+      satisfies: ["kg-export"],
+      maintains: [
+        { source: "schemas/cat-harness.ts", artefact: `${stub()}.schema.json`, format: "json-schema" },
+      ],
+    }),
+
+    defineTool({
+      id: "tool-schema",
+      title: "Tool node schema",
+      description:
+        "The zod definition of a Tool node — what `defineTool` accepts — and the published JSON Schema generated from it.",
+      install: { none: true },
+      invoke: { shell: "bun run kg:schema" },
+      io: {
+        inputs: [
+          { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" } },
+        ],
+        outputs: [{ name: "schema", schema: t("RepoPath") }],
+      },
+      satisfies: ["kg-export"],
+      maintains: [{ source: "schemas/tool.ts", artefact: "tool.schema.json", format: "json-schema" }],
+    }),
+
+    defineTool({
+      id: "tool-types-schema",
+      title: "Tool I/O type vocabulary",
+      description:
+        "The zod definitions of the shared types a Tool's inputs and outputs reference by IRI, and the published JSON Schema whose `$defs` those IRIs point into.",
+      install: { none: true },
+      invoke: { shell: "bun run kg:schema" },
+      io: {
+        inputs: [
+          { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" } },
+        ],
+        outputs: [{ name: "schema", schema: t("RepoPath") }],
+      },
+      satisfies: ["kg-export"],
+      maintains: [
+        { source: "schemas/tool-types.ts", artefact: "tool-types.schema.json", format: "json-schema" },
+      ],
     }),
 
     // The twenty tools this instance already serves over MCP. Kept in a sibling

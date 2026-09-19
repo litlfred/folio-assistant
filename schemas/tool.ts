@@ -192,6 +192,63 @@ export const ToolRequiresSchema = z.object({
   network: z.boolean().optional(),
 });
 
+/**
+ * A published artefact this Tool is AUTHORITATIVE for, and the source it is
+ * generated from.
+ *
+ * ## The relation this exists to declare
+ *
+ * The owner's requirement, 2026-09-18: *"the zod(.ts) should be tool KG nodes
+ * that implement maintaining a json-ld/json schema for public authoritative …
+ * it is the CODING convention of cat-harness that the zod/.ts toolchain is
+ * used to maintain INTERNAL the json schema"* — with the split *"external =
+ * the JSON-LD is definitional. internal = zod/typescript is definitional and
+ * json-ld is downstream."*
+ *
+ * That relation was real and written down nowhere a consumer could read it.
+ * `scripts/harness-schema-export.ts` knew that `schemas/cat-harness.ts`
+ * produces `<stub>.schema.json`, `schemas/tool.ts` produces
+ * `tool.schema.json` and `schemas/tool-types.ts` produces
+ * `tool-types.schema.json` — three facts living in one script's local array.
+ * A reader of the published graph could not get from a schema module to the
+ * artefact it defines, or back.
+ *
+ * ## Why `source` is a path and `artefact` is not
+ *
+ * `source` is repo-relative and stable: it names a file in the tree the graph
+ * describes. `artefact` is the PUBLISHED path relative to the instance's base,
+ * because the base differs per deployment — main, a STAGING preview, a local
+ * checkout — and baking one in would make the node wrong everywhere else.
+ * `renderingPath()` in `schemas/cat-harness.ts` is what joins the two, and is
+ * the single place that knows the layout.
+ *
+ * ## Declared, then checked both ways
+ *
+ * `harness-schema-export --check` verifies every declared artefact is actually
+ * produced AND every produced artefact is declared. One direction alone is
+ * half a guarantee: the first catches a declaration that rotted, the second
+ * catches a new artefact nobody declared — which is how the relation drifts
+ * back into the script.
+ */
+export const ToolMaintainsSchema = z.object({
+  /** Repo-relative module that defines it, e.g. `schemas/tool.ts`. */
+  source: z.string().min(1),
+  /**
+   * Published path relative to the instance's base, e.g. `tool.schema.json`.
+   * No leading slash: it is joined by `renderingPath`, which owns the layout.
+   */
+  artefact: z.string().min(1).refine((a) => !a.startsWith("/"), {
+    message: "artefact is relative to the instance base — a leading slash names the domain root",
+  }),
+  /**
+   * What the artefact IS, for a consumer deciding whether it can read it.
+   * Open string: an instance may maintain kinds this vocabulary has not met.
+   */
+  format: z.string().min(1).optional(),
+});
+
+export type ToolMaintains = z.infer<typeof ToolMaintainsSchema>;
+
 export const ToolDefinitionSchema = z
   .object({
     id: ToolId,
@@ -206,6 +263,15 @@ export const ToolDefinitionSchema = z
     /** Skills this Tool can satisfy. One skill may have several Tools. */
     satisfies: z.array(z.string().min(1)).min(1, "a Tool must satisfy at least one skill"),
     requires: ToolRequiresSchema.optional(),
+    /**
+     * Published artefacts this Tool is authoritative for. See
+     * {@link ToolMaintainsSchema}.
+     *
+     * Optional because most Tools maintain nothing — they DO something. A Tool
+     * that maintains an artefact is the specific case the owner asked for: a
+     * zod module whose job is to keep a public JSON Schema true.
+     */
+    maintains: z.array(ToolMaintainsSchema).optional(),
   })
   .refine(
     (t) =>
