@@ -52,8 +52,21 @@ describe("tag shapes", () => {
   });
 
   test("every tag axis defaults to an empty array", () => {
+    // `artefacts` joined the shape when the tags were lifted into
+    // `schemas/carried-note.ts` and shared with agent memory: an issue, a PR
+    // or a commit is neither a graph node nor a person, so neither existing
+    // axis could hold one. Asserted as the whole object rather than per key —
+    // a new axis SHOULD break this test, because a consumer reading the shape
+    // needs to know it grew.
     const t = TodoTagsSchema.parse({});
-    expect(t).toEqual({ roles: [], processes: [], tasks: [], identities: [], references: [] });
+    expect(t).toEqual({
+      roles: [],
+      processes: [],
+      tasks: [],
+      identities: [],
+      references: [],
+      artefacts: [],
+    });
   });
 
   test("several people can be tagged on ONE todo", () => {

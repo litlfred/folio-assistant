@@ -79,3 +79,47 @@ creating it without the author's permission, so that is the next ask.
 Issue scan done 2026-09-19 — nothing existing covers this. Open issues are
 #203 (business requirements gathering — CRDM), #202, #201 (migration records),
 #247 (cross-agent skill install), #204 (IG incremental build).
+
+## Progress — the schema layer, 2026-09-19
+
+**A sibling had already built the todo half.** `schemas/todo.ts` (279 lines,
+*"Todos are content: a declared `todos` graph, tagged by the role model"*),
+plus `todo-graph.ts`, the `TodoStatus`/`Priority`/`Origin` types, and 17 tests.
+Found by looking before building — the same check-before-you-create discipline
+beans has, applied to code. What was missing was exactly the remainder of this
+spec.
+
+**Done:**
+
+- `schemas/carried-note.ts` — the shared base. The reference vocabulary moved
+  here (`TaskRef`, `ExternalIdentity`, `KgRef`), plus the missing third kind,
+  **`ArtefactRef`** for issues, PRs and commits. That gap was real and visible:
+  agent memory records them in PROSE today — an entry reading "Bean `lq7e`" is
+  a string in a paragraph that nothing resolves and nothing audits.
+- `schemas/todo.ts` now **extends** the base, keeping `status`/`priority`/
+  `origin` as the human-specific half, and re-exports every moved type so no
+  existing importer breaks.
+- `schemas/memory.ts` — the agent half. `label` (stable/trap/baseline) lifted
+  out of `## LABEL — heading` prose into a field; `overlayMemory` for
+  dependency-order composition; `memoryForRoles` for the scoping that ends the
+  duplication.
+
+**The change I would most want reviewed:** `MemoryNodeSchema` **refuses a
+`baseline` without `measured`** (command, date, result). `AGENTS.md` has always
+said a BASELINE must carry its command and date and never be quoted as a
+current answer — as prose. This is that rule made structural, and it is the
+`judgementOnly` lesson applied again: a rule stated only in prose is one the
+next agent re-litigates. Verified by a test that the refusal fires.
+
+**Deliberately NOT answered:** scoped, call-path overlay. `overlayMemory`
+handles the DEPENDENCY axis only, which is the `inherits`-like one.
+`AGENTS.md` records that roles compose two ways and that merging them *"would
+give every role every caller's skills, and a closure that broad cannot fail an
+audit"*. Answering both with one function would make that mistake a second
+time, one layer up.
+
+**Still open:** todos graph is not declared in `cat-harness.json` (it lists
+`tools`, `schemas`, `kg`, `beans` only) and no todo files exist on disk — the
+sibling's schema is ahead of its graph. The generator that assembles
+`.claude/agent-memory/<agent>/MEMORY.md` from scoped entries is not written.
+The sticky UI is untouched.
