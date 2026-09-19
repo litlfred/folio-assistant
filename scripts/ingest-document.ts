@@ -38,6 +38,7 @@
  * Usage:
  *   bun run ingest uploads/FILE.pdf
  *   bun run ingest uploads/FILE.pdf --dry-run
+ *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
  *
  * Exit: 0 ingested (or dry-run reported), 1 ingestion failed, 2 could not probe.
  *
@@ -46,6 +47,8 @@
 import { existsSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
+import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
+import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 
 /**
@@ -67,7 +70,7 @@ export function libraryRoot(root = resolve(".")): string {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "tabular" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
@@ -142,7 +145,104 @@ except Exception as e:
  */
 export const OCR_THRESHOLD_CHARS = 200;
 
-export function planFor(pdf: string, p: Probe = probe(pdf), lib: string = libraryRoot()): Plan {
+/**
+ * What the file IS, or `null` when nothing could determine it.
+ *
+ * `_tech_meta.sniff_effective_mimetype`, asked rather than reimplemented —
+ * THE SAME call that fills `source.mimetype_sniffed` (bean `nso8`), so the
+ * routing decision and the recorded fact cannot disagree. They did for one
+ * commit: this called the magic-bytes-only `sniff_mimetype`, so every `.xlsx`
+ * routed as `application/zip` to the archive rung while its own `source` block
+ * correctly called it a workbook.
+ */
+export function sniffMimetype(file: string): string | null {
+  const py =
+    "import sys, json, importlib.util as u\n" +
+    "spec = u.spec_from_file_location('t', 'scripts/_tech_meta.py')\n" +
+    "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
+    "print(json.dumps(m.sniff_effective_mimetype(sys.argv[1])[0]))\n";
+  const r = Bun.spawnSync(["python3", "-c", py, file]);
+  if (r.exitCode !== 0) return null;
+  try {
+    return JSON.parse(new TextDecoder().decode(r.stdout)) as string | null;
+  } catch {
+    return null;
+  }
+}
+
+
+/** The delimiter `scripts/tabular-records.py` finds in this file, or `null`. */
+export function tabularDelimiter(file: string): string | null {
+  const py =
+    "import sys, json, importlib.util as u\n" +
+    "spec = u.spec_from_file_location('t', 'scripts/tabular-records.py')\n" +
+    "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
+    "print(json.dumps(m.is_tabular_text(sys.argv[1])))\n";
+  const r = Bun.spawnSync(["python3", "-c", py, file]);
+  if (r.exitCode !== 0) return null;
+  try {
+    return JSON.parse(new TextDecoder().decode(r.stdout)) as string | null;
+  } catch {
+    return null;
+  }
+}
+
+export function planFor(
+  pdf: string,
+  p: Probe | undefined = undefined,
+  lib: string = libraryRoot(),
+  mimetype: string | null | undefined = undefined,
+): Plan {
+  // CONTENT decides the rung, before anything opens the file as a PDF.
+  //
+  // Bean `twqe`. Handing this a zip used to answer `undetermined` with
+  // `why: "no PDF backend: No module named 'fitz'"` — the refusal was right
+  // and the DIAGNOSIS was wrong: it reported a missing tool when the fact was
+  // that the file is not a PDF, and a reader would go install PyMuPDF and fail
+  // again. The probe opens everything as a PDF, so it could not say otherwise.
+  //
+  // Sniffed, not by extension, for the reason `nso8` gives: the name is a
+  // claim by whoever made the file. A `.pdf` that is really a zip belongs on
+  // the archive rung, and this is the only thing that can tell.
+  const mime = mimetype === undefined ? sniffMimetype(pdf) : mimetype;
+
+  // A spreadsheet before an archive, because an .xlsx IS a zip and would
+  // otherwise be listed as a bag of XML parts rather than read as a workbook.
+  // The magic bytes cannot tell them apart — both are genuinely `PK\x03\x04`
+  // — so `_tech_meta.sniff_zip_package` asks the CONTAINER, which declares
+  // itself via `[Content_Types].xml` or ODF's `mimetype` member. Bean `p67i`;
+  // the defect was introduced by `twqe`'s routing and caught before it shipped.
+  if (mime !== null && (TABULAR_MIMETYPES as readonly string[]).includes(mime)) {
+    return {
+      rung: "tabular",
+      why: `the package declares ${mime} — a workbook, read for its sheets and headers`,
+      steps: [["python3", "scripts/tabular-records.py", "-o", lib, pdf]],
+    };
+  }
+
+  // A CSV has NO magic bytes, so routing one is not a sniff and must not
+  // become an extension guess. `is_tabular_text` asks the only content
+  // question there is: do the first rows split into the same number of fields,
+  // more than one? Prose, a single column and anything ragged all answer no.
+  if (mime === null && tabularDelimiter(pdf) !== null) {
+    return {
+      rung: "tabular",
+      why: "no magic bytes, but the rows split consistently — delimited text",
+      steps: [["python3", "scripts/tabular-records.py", "-o", lib, pdf]],
+    };
+  }
+
+  if (mime !== null && (ARCHIVE_MIMETYPES as readonly string[]).includes(mime)) {
+    return {
+      rung: "archive",
+      why: `sniffed ${mime} — an archive. Its entries are listed as data, not extracted`,
+      steps: [["python3", "scripts/archive-contents.py", "-o", lib, pdf]],
+    };
+  }
+  return planForPdf(pdf, p ?? probe(pdf), lib);
+}
+
+function planForPdf(pdf: string, p: Probe, lib: string): Plan {
   if (p.error || p.outline === null || p.chars === null) {
     return {
       rung: "undetermined",
@@ -178,6 +278,50 @@ export function planFor(pdf: string, p: Probe = probe(pdf), lib: string = librar
   };
 }
 
+/**
+ * Recompute `source` on an entry that already exists, from the upload.
+ *
+ * Bean `nso8` says the technical facts must be "produced by the ingest path
+ * rather than backfilled", which is why this lives HERE rather than in a
+ * migration script: it is the same entry point calling the same
+ * `scripts/_tech_meta.py` the rungs call, applied to a document ingested
+ * before those fields existed. A separate backfiller would be a second
+ * implementation of the one thing `_tech_meta.py` exists to keep single.
+ *
+ * It needs no PDF backend — every field is computed from the file's bytes —
+ * so it works where a full re-ingest cannot. It **merges**, never replaces:
+ * `pages`, `text_source` and `extractor` are the rung's knowledge and this
+ * has no way to recompute them.
+ */
+export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
+  const slug = bibSlug(pdf);
+  const structure = join(resolve(libRoot), slug, "structure.json");
+  if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
+  // The indent is READ OFF the file, never chosen here. `pdf-structure.py`
+  // writes `indent=1` and `pdf-pages.py` writes `indent=2`, so a refresh that
+  // picked either would reformat every entry the other rung authored: adding
+  // three fields to `9789241548960-eng` re-wrote 4 349 lines, which buries the
+  // change it was making and fights every later diff. A metadata refresh is
+  // not a licence to reformat a file it did not write.
+  const py =
+    "import sys, json, importlib.util as u\n" +
+    "spec = u.spec_from_file_location('t', 'scripts/_tech_meta.py')\n" +
+    "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
+    "p = sys.argv[2]\n" +
+    "raw = open(p).read()\n" +
+    "lines = raw.split('\\n')\n" +
+    "ind = next((len(l) - len(l.lstrip(' ')) for l in lines[1:] if l.startswith(' ')), 2)\n" +
+    "d = json.loads(raw)\n" +
+    "d['source'] = {**d.get('source', {}), **m.tech_meta(sys.argv[1])}\n" +
+    "open(p, 'w').write(json.dumps(d, indent=ind) + ('\\n' if raw.endswith('\\n') else ''))\n" +
+    "print(d['source']['mimetype_source'])\n";
+  const r = Bun.spawnSync(["python3", "-c", py, pdf, structure]);
+  if (r.exitCode !== 0) {
+    throw new Error(`refreshing ${slug}: ${new TextDecoder().decode(r.stderr).trim()}`);
+  }
+  return `${slug}: ${new TextDecoder().decode(r.stdout).trim()}`;
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const dry = argv.includes("--dry-run");
@@ -189,6 +333,10 @@ if (import.meta.main) {
   if (!existsSync(pdf)) {
     console.error(`${pdf}: not there`);
     process.exit(1);
+  }
+  if (argv.includes("--refresh-meta")) {
+    console.log(refreshMeta(pdf));
+    process.exit(0);
   }
   const plan = planFor(pdf);
   const slug = bibSlug(pdf);

@@ -45,6 +45,17 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import {
+  ARCHIVE_CONTENTS_SCHEMA_ID,
+  ArchiveContentsSchema,
+  isArchiveMimetype,
+} from "../schemas/archive-contents.ts";
+import { LIBRARY_BLOCK_ORIGIN, ProvenanceSchema, isIngested } from "../schemas/attribution.ts";
+import {
+  TABULAR_RECORDS_SCHEMA_ID,
+  TabularRecordsSchema,
+  isTabularMimetype,
+} from "../schemas/tabular-records.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
@@ -117,6 +128,238 @@ function derivableRequirements(dir: string): Requirement[] {
     });
   }
 
+  // Tabular records (bean `p67i`).
+  //
+  // Scoped the same way as `archive-contents`, and for the same reason: the
+  // entry's OWN `source.mimetype_sniffed` says whether it came from a
+  // workbook, so this is derived rather than judged. That field carries the
+  // refined answer — an `.xlsx` reads as the spreadsheet type, not as
+  // `application/zip` — because the router and the recorder ask one function.
+  //
+  // A CSV is the case the mimetype cannot cover: it has no magic bytes and is
+  // honestly `unrecognised`, so an entry with a `tabular.jsonld` is checked on
+  // its merits whatever its mimetype, and one without is only REQUIRED to have
+  // it when the mimetype declares a workbook. Requiring it of every
+  // unrecognised entry would demand a dataset of every text file.
+  {
+    const src = (() => {
+      try {
+        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
+          | Record<string, unknown>
+          | undefined;
+      } catch {
+        return undefined;
+      }
+    })();
+    const mime = src?.mimetype_sniffed;
+    if (!has("tabular.jsonld")) {
+      out.push(
+        isTabularMimetype(mime)
+          ? {
+              name: "tabular-records",
+              state: "unmet",
+              detail: `declares ${mime} but no tabular.jsonld — run scripts/tabular-records.py`,
+            }
+          : {
+              name: "tabular-records",
+              state: "met",
+              detail: `not tabular (${typeof mime === "string" && mime ? mime : "no sniffed mimetype"})`,
+            },
+      );
+    } else {
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(readFileSync(join(dir, "tabular.jsonld"), "utf-8"));
+      } catch (e) {
+        parsed = undefined;
+        out.push({ name: "tabular-records", state: "unmet", detail: `tabular.jsonld unparseable: ${String(e)}` });
+      }
+      if (parsed !== undefined) {
+        const r = TabularRecordsSchema.safeParse(parsed);
+        out.push({
+          name: "tabular-records",
+          state: r.success ? "met" : "unmet",
+          detail: r.success
+            ? `${r.data.n_sheets} sheet(s), ${r.data.header_vocabulary.length} header(s), narrative ${r.data.narrative_state}`
+            : `tabular.jsonld is not ${TABULAR_RECORDS_SCHEMA_ID}: ${r.error.issues[0]?.message ?? "invalid"}`,
+        });
+      }
+    }
+  }
+
+  // Archive contents (bean `twqe`).
+  //
+  // WHICH entries this applies to is DERIVED, not guessed: `nso8` already
+  // records `source.mimetype_sniffed`, so "this entry came from a zip" is a
+  // fact on the entry rather than a judgement about its name. An entry whose
+  // source sniffed as an archive must carry `contents.jsonld`, validated
+  // against `ArchiveContentsSchema` so the gate and the writer cannot drift.
+  //
+  // The corpus holds FOUR PDFs and no archives, so this reports a determined
+  // zero — `not an archive (application/pdf)`. That is the point of saying it
+  // rather than staying silent: "nothing to check here" and "the check never
+  // ran" are different facts, and only one of them is a pass. The requirement
+  // is proved to fire by fixtures in `scripts/tests/archive-contents.test.ts`.
+  {
+    const src = (() => {
+      try {
+        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
+          | Record<string, unknown>
+          | undefined;
+      } catch {
+        return undefined;
+      }
+    })();
+    const mime = src?.mimetype_sniffed;
+    if (!isArchiveMimetype(mime)) {
+      out.push({
+        name: "archive-contents",
+        state: "met",
+        // An EMPTY string is an absence, not a mimetype: rendering it gave
+        // `not an archive ()`, which tells a reader nothing about whether
+        // anything looked. `_tech_meta.py` writes `null` for unrecognised
+        // bytes, and both spellings of "there isn't one" say so here.
+        detail: `not an archive (${typeof mime === "string" && mime ? mime : "no sniffed mimetype"})`,
+      });
+    } else if (!has("contents.jsonld")) {
+      out.push({
+        name: "archive-contents",
+        state: "unmet",
+        detail: `sniffed ${mime} but no contents.jsonld — run scripts/archive-contents.py`,
+      });
+    } else {
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(readFileSync(join(dir, "contents.jsonld"), "utf-8"));
+      } catch (e) {
+        parsed = undefined;
+        out.push({ name: "archive-contents", state: "unmet", detail: `contents.jsonld unparseable: ${String(e)}` });
+      }
+      if (parsed !== undefined) {
+        const r = ArchiveContentsSchema.safeParse(parsed);
+        out.push({
+          name: "archive-contents",
+          state: r.success ? "met" : "unmet",
+          detail: r.success
+            ? `${r.data.n_files} file(s), ${r.data.n_directories} dir(s), ${r.data.format}`
+            : `contents.jsonld is not ${ARCHIVE_CONTENTS_SCHEMA_ID}: ${r.error.issues[0]?.message ?? "invalid"}`,
+        });
+      }
+    }
+  }
+
+  // Narrative provenance (bean `iqim`).
+  //
+  // Every block declares how its text came to be: the literal `"ingested"` for
+  // verbatim source text, which has no author, or an `Attribution` naming the
+  // human, agent (with its model) or script that wrote it.
+  //
+  // TWO failures are checked, and the second is the one that matters.
+  //
+  //   1. A `provenance` that is neither — an open string, a malformed
+  //      attribution, an `agent` with no `model`. `ProvenanceSchema` decides,
+  //      so the gate and the type cannot drift apart.
+  //   2. A block of an AUTHORED kind carrying `"ingested"`. That is a false
+  //      statement about verbatim extraction, and it is what stops a narrative
+  //      arm landing descriptions with no attribution: closing the union means
+  //      a new arm has to choose rather than omit.
+  //
+  // The narrative COUNT is reported either way, including a determined zero.
+  // "No narrative blocks here" and "the classifier never ran" are different
+  // facts, and a gate that renders them the same way is the failure this
+  // repository keeps paying for. Today every one of the 424 blocks is
+  // extracted prose, so the count is a real zero — and the authored branch is
+  // proved to fire by a fixture in `scripts/tests/attribution.test.ts`, not by
+  // the corpus.
+  {
+    const bdir = join(dir, "blocks");
+    const files = has("blocks") && statSync(bdir).isDirectory()
+      ? readdirSync(bdir).filter((f) => f.endsWith(".jsonld"))
+      : [];
+    if (files.length === 0) {
+      out.push({
+        name: "narrative-provenance",
+        state: "unmet",
+        detail: "no blocks to attribute — see the `blocks` requirement",
+      });
+    } else {
+      const bad: string[] = [];
+      let narrative = 0;
+      let unclassified = 0;
+      for (const f of files) {
+        let b: Record<string, unknown>;
+        try {
+          b = JSON.parse(readFileSync(join(bdir, f), "utf-8")) as Record<string, unknown>;
+        } catch {
+          bad.push(`${f}: unparseable`);
+          continue;
+        }
+        const kind = typeof b.kind === "string" ? b.kind : "";
+        const origin = LIBRARY_BLOCK_ORIGIN[kind];
+        if (origin === undefined) {
+          unclassified++;
+          bad.push(`${f}: kind \`${kind || "(absent)"}\` is not classified in LIBRARY_BLOCK_ORIGIN`);
+          continue;
+        }
+        if (!ProvenanceSchema.safeParse(b.provenance).success) {
+          bad.push(`${f}: \`provenance\` is neither "ingested" nor a well-formed attribution`);
+          continue;
+        }
+        if (origin === "authored") {
+          narrative++;
+          if (isIngested(b.provenance)) {
+            bad.push(`${f}: kind \`${kind}\` is authored, but claims "ingested" — nobody is credited`);
+          }
+        }
+      }
+      const tally = `${files.length} block(s), ${narrative} narrative, ${unclassified} unclassified kind(s)`;
+      out.push({
+        name: "narrative-provenance",
+        state: bad.length ? "unmet" : "met",
+        detail: bad.length ? `${bad.length} of ${files.length}: ${bad.slice(0, 3).join("; ")}` : tally,
+      });
+    }
+  }
+
+  // Technical metadata (bean `nso8`) — moved out of NOT-DERIVABLE once both
+  // ingest rungs began writing it. `sha256` is the load-bearing field: an
+  // asset with one can be re-fetched and compared, an asset without one is an
+  // assertion.
+  //
+  // `mimetype_sniffed: null` is NOT a failure. The sniffer reads magic bytes
+  // and refuses to fall back to the extension, so an unrecognised format is
+  // honestly unrecognised — `mimetype_source: "unrecognised"` records that the
+  // file WAS looked at, which absence alone would not say. What fails is the
+  // field being absent entirely, i.e. an older ingest that never sniffed.
+  {
+    const src = (() => {
+      try {
+        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
+          | Record<string, unknown>
+          | undefined;
+      } catch {
+        return undefined;
+      }
+    })();
+    if (!src) {
+      out.push({
+        name: "technical-metadata",
+        state: "unmet",
+        detail: "no `source` block — re-run the ingest rung",
+      });
+    } else {
+      const want = ["file", "sha256", "bytes", "mtime", "mimetype_source"];
+      const missing = want.filter((k) => !(k in src));
+      out.push({
+        name: "technical-metadata",
+        state: missing.length ? "unmet" : "met",
+        detail: missing.length
+          ? `\`source\` missing ${missing.join(", ")}`
+          : `sha256 ${String(src.sha256).slice(0, 12)}…, ${src.bytes} bytes, ${src.mimetype_source}`,
+      });
+    }
+  }
+
   if (!has("manifest.jsonld")) {
     out.push({ name: "manifest", state: "unmet", detail: "no manifest.jsonld" });
   } else {
@@ -150,12 +393,8 @@ function derivableRequirements(dir: string): Requirement[] {
  * work rather than by editing.
  */
 export const NOT_DERIVABLE: ReadonlyArray<readonly [string, string]> = [
-  ["archive-contents", "twqe"],
-  ["technical-metadata", "nso8"],
   ["image-descriptions", "d5f1"],
   ["audio-transcripts", "1r0p"],
-  ["tabular-records", "p67i"],
-  ["narrative-provenance", "iqim"],
 ];
 
 export function checkEntry(dir: string): EntryReport {

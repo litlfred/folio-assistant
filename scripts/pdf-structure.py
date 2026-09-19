@@ -385,6 +385,15 @@ class Section:
     text: str = field(repr=False, default="")
 
 
+def _tech_meta(path: str) -> dict:
+    """`scripts/_tech_meta.py`'s `tech_meta`, loaded by path (hyphenless import)."""
+    import importlib.util as _u
+    spec = _u.spec_from_file_location("_tech_meta", os.path.join(os.path.dirname(__file__), "_tech_meta.py"))
+    mod = _u.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.tech_meta(path)
+
+
 def sha256_of(path: str) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as fh:
@@ -1152,6 +1161,18 @@ def process(path: str, outdir: str | None = None, use_ocr: bool = False,
             # Additive provenance: it lets a consumer tell an outline read by
             # PyMuPDF's get_toc() from one walked out of pypdf's outline object.
             "extractor": reader.name,
+            # `mtime` and the SNIFFED mimetype (bean `nso8`). Merged from the
+            # shared module rather than restated so this rung and `pdf-pages`
+            # cannot disagree about what the fields mean; `sha256`, `bytes` and
+            # `file` are recomputed identically there and simply agree.
+            #
+            # The mimetype is read from the leading bytes and is **None** when
+            # they are unrecognised — never the extension. A `.pdf` that is
+            # really a saved error page extracts to nothing, and every verdict
+            # about it is then about the wrong document; a guess that agrees
+            # with the filename could not tell you that.
+            **{k: v for k, v in _tech_meta(path).items()
+               if k in ("mtime", "mimetype_sniffed", "mimetype_source")},
         },
         "metadata": meta | {"docinfo": docinfo},
         "toc": [asdict(e) for e in toc],

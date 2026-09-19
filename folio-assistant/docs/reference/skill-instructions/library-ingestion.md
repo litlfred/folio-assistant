@@ -76,7 +76,8 @@ is never rendered as one that was.
 ```
 library/<bib-slug>/
   structure.json     "$schema": "pdf-structure/v1" — doc_id, toc_source,
-                     granularity, text_source, sections[], structure_note
+                     granularity, text_source, sections[], structure_note,
+                     source{} (see below)
   sections/          one Markdown file per section, front matter + body
   blocks/            the block projection consumers read
   manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
@@ -85,9 +86,178 @@ library/<bib-slug>/
 
 `bun run check:l1-complete` is the gate. It reports three states, never two: a
 requirement **met**, **unmet**, or **not yet derivable** — the last because the
-per-format arms (images, audio, tables, archives, technical metadata) are
-tracked separately and a check that cannot run must not read as a pass. Bean
-`pn6j`.
+per-format arms (images, audio, tables, archives) are tracked separately and a
+check that cannot run must not read as a pass. Bean `pn6j`.
+
+## `source{}` — the technical facts, written by whichever rung ran
+
+Every rung writes `source` on `structure.json`, from the single definition in
+`scripts/_tech_meta.py`: `file`, full 64-hex `sha256`, `bytes`, `mtime` (the
+SOURCE's, UTC to the second — not the ingest time, because what tells you a
+re-fetch got something new is the file changing), `mimetype_sniffed` and
+`mimetype_source`. `pdf-structure` adds `pages`, `text_source` and `extractor`.
+
+**The mimetype is sniffed from the leading bytes and never falls back to the
+extension.** An extension is a claim by whoever named the file; the magic bytes
+are what the content is, and a `.pdf` that is really an HTML error page
+extracts to nothing while every downstream verdict is about the wrong document.
+Unrecognised bytes give `mimetype_sniffed: null` with `mimetype_source:
+"unrecognised"` — the third state again, and it is load-bearing: a guess that
+agrees with the filename is indistinguishable from a real sniff, which would
+make the field worthless for the one case it exists to catch.
+
+This was a **gap in the no-outline rung**, not a new requirement.
+`pdf-structure.py` wrote `source`; `pdf-pages.py` wrote none and merged into
+whatever file already existed — so `library/milnorlink/`, the one entry
+`pdf-structure` never touched, carried no technical metadata at all, and the
+other page-granularity entries had it only because `pdf-structure` ran on them
+first. Bean `nso8`.
+
+`bun run scripts/ingest-document.ts <pdf> --refresh-meta` backfills an existing
+entry. It **reads the indent off the file** rather than choosing one: the two
+rungs write at different widths, and hardcoding either reformats every entry
+the other authored — measured at 4 349 changed lines to add three fields.
+
+## `provenance` — who wrote it, and the closed union that makes omission impossible
+
+Every block declares how its text came to be. The vocabulary is
+`schemas/attribution.ts`, and it is **closed**:
+
+- the literal `"ingested"` — verbatim source text. There is no author to name;
+  the document it came out of is recorded by `source{}` above.
+- an `Attribution` — `kind` (`script | agent | human`), `id`, and optionally
+  `version`, `model`, `session`, `date`, `skill`.
+
+**An `agent` must name its `model`, structurally.** A narrative is a claim by
+somebody, and the difference between "a curator described this figure" and "a
+model described it, version X" is exactly what a reader needs in order to weigh
+it — and what makes the set re-generatable when that model is superseded. An
+agent attribution with no model records that a machine wrote it while losing
+the only part anyone can act on, so `AttributionSchema` refuses it.
+
+**The vocabulary is the QA reviewer's, not a second one.** `block-qa.ts`
+re-exports `ATTRIBUTION_KINDS` as `QA_REVIEWER_KINDS`; the same three
+participants review and author. What is *not* shared is `QaReviewer` itself,
+most of which is about whether a criterion's cached verdict is stale.
+
+### What the gate can and cannot enforce
+
+`check:l1-complete` checks two things per block, and the second is the point:
+
+1. `provenance` parses as a `Provenance`. An open string, a malformed
+   attribution, an `agent` with no `model` — all `unmet`.
+2. A block of an **authored** kind must not claim `"ingested"`.
+
+`LIBRARY_BLOCK_ORIGIN` classifies each library block kind as `extracted` or
+`authored`, and a test asserts it is **total over what actually occurs in
+`library/`** — so a narrative arm cannot land a new kind without classifying
+it, and classifying one `authored` arms requirement 2 immediately.
+
+Closing the union does not stop an arm asserting something false. It makes the
+**omission** impossible: a new arm has to choose, and choosing `"ingested"` for
+a generated description is a false statement rather than a missing field.
+
+**Today every one of the 424 blocks is extracted prose**, so the narrative count
+is a real, reported zero — never silence. The authored branch is proved to fire
+by fixtures in `scripts/tests/attribution.test.ts`, not by the corpus: a checker
+that returned "fine" unconditionally would pass the corpus just as well. Each of
+the three branches is mutation-checked — removing it fails a named test. Bean
+`iqim`.
+
+## Archives — the entry list is data, and the rung is chosen by CONTENT
+
+A tar or zip in `uploads/` is opaque to every grep in the corpus: a search for
+a filename inside one finds nothing, and that absence is indistinguishable from
+the file not being there. `scripts/archive-contents.py` writes
+`library/<slug>/contents.jsonld` — **one schema whatever the container**
+(`schemas/archive-contents.ts`), so a consumer reads archives without knowing
+whether it was tar or zip.
+
+Per entry: `path`, `bytes`, `sha256`, `mtime`, `mimetype_sniffed`,
+`mimetype_source` — the `source{}` vocabulary above, reused verbatim, because
+**an archive entry is not a different kind of thing from a loose file**. The
+mimetype is sniffed from the entry's own leading bytes, never from its name,
+for the same reason it is outside an archive.
+
+Four entry states, not two: a `directory` carries no size and no digest (a zero
+would be a measurement nobody made); an unreadable member is
+`mimetype_source: "unreadable"`, which is not an empty file; a `symlink` or
+`special` is listed with its kind rather than dropped. Dropping directories
+would make an archive of empty ones indistinguishable from an empty archive.
+A file the sniffer does not recognise as an archive is **refused** — an empty
+`entries[]` would read as an empty archive, a different fact.
+
+### The rung is chosen before anything opens the file as a PDF
+
+`planFor` sniffs first. Handing it a zip used to answer `undetermined` with
+`why: "no PDF backend: No module named 'fitz'"` — the **refusal was right and
+the diagnosis was wrong**: it reported a missing tool when the fact was that
+the file is not a PDF, and a reader would go install PyMuPDF and fail again.
+A file *named* `.pdf` that is really a zip now takes the archive rung, which is
+the case only a sniff can decide.
+
+### What the gate checks, and the determined zero
+
+Which entries the requirement applies to is **derived, not guessed**: `source.
+mimetype_sniffed` is already on every entry, so "this came from a zip" is a
+recorded fact. An archive entry must carry a `contents.jsonld` that validates
+against the declared schema.
+
+`uploads/` holds four PDFs and **no archives**, so every entry reports
+`not an archive (application/pdf)` — said out loud rather than passed in
+silence, because "nothing to check here" and "the check never ran" are
+different facts. The requirement is proved to fire by fixture archives built in
+`scripts/tests/archive-contents.test.ts`, and each of its four branches is
+mutation-checked. Bean `twqe`.
+
+## Datasets — findable by their headers, and the narrative nobody wrote
+
+`scripts/tabular-records.py` writes `library/<slug>/tabular.jsonld`: sheet
+names, the header row, and the shape of each sheet. `header_vocabulary` is the
+union across sheets, and it is the field a `grep` for a column name lands in —
+without it a dataset is stored but not findable, and a failed search is
+indistinguishable from the dataset not having that column.
+
+**Stdlib only** (`zipfile` + `xml.etree`, `csv`). This repository declares no
+Python dependencies — no `requirements.txt`, and CI installs only `ruff` — so a
+tool needing openpyxl would pass locally and fail there. Everything this arm
+needs is in `xl/workbook.xml` and each sheet's `<dimension>`. Verified by
+reading back a workbook openpyxl itself wrote, **with openpyxl uninstalled**.
+
+### The narrative is declared empty, never fabricated
+
+`narrative: null`, `narrative_state: "not-authored"`. A description of what a
+dataset is *about* is somebody's account and needs an author; the headers are
+right there and a plausible summary could be assembled from them, and that is
+exactly why it isn't. When one is written it carries an `Attribution`
+([above](#provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible)).
+The schema refuses a record that says both things at once.
+
+A null `rows`/`columns` is likewise not an empty sheet: `shape_source` says
+whether the shape was read, counted, or `undetermined`.
+
+### An `.xlsx` IS a zip, and that broke the archive routing
+
+The magic bytes of an OOXML or ODF document say `application/zip`, which is
+true and useless: it sent every spreadsheet to the archive rung to be listed as
+a bag of XML parts. The magic cannot tell them apart, so
+`_tech_meta.sniff_zip_package` asks the **container**, which declares itself —
+OOXML by `[Content_Types].xml` plus the part names, ODF by its `mimetype`
+member. Same principle as the byte sniff, one level in.
+
+`sniff_effective_mimetype` is the single answer the router and the recorder
+both ask. They disagreed for one commit — `planFor` called the magic-only
+function, so an `.xlsx` routed as an archive while its own `source` block
+correctly called it a workbook.
+
+**A CSV has no magic bytes at all**, so routing one cannot be a sniff and must
+not become an extension guess. `is_tabular_text` asks the only content question
+available: do the first rows split into the *same* number of fields, more than
+one? Prose, a single column and anything ragged all answer no — a one-column
+"table" is indistinguishable from a list of lines.
+
+Proved on fixtures built at test time, all five branches mutation-checked.
+Bean `p67i`.
 
 ## Ingestion is a HARNESS capability, not core's
 
