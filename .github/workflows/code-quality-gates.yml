@@ -340,7 +340,7 @@ jobs:
       - name: agent memory is assembled
         run: bun run agent-memory:check
 
-      # Fourteen gates that were REGISTERED IN package.json AND RUN BY NOBODY.
+      # Thirteen gates that were REGISTERED IN package.json AND RUN BY NOBODY.
       #
       # Measured 2026-09-19: of 33 `check:`/`:check` scripts, 21 appeared in no
       # workflow at all. That is bean `5rfy`'s defect -- a gate that never
@@ -356,6 +356,14 @@ jobs:
       #
       # DELIBERATELY NOT WIRED, and each for a stated reason -- an unexplained
       # omission here is how the next person re-derives this list:
+      #   render:bpmn:check     -- needs a BROWSER: bpmn-js renders through
+      #                            Chromium, and this job installs none. It is
+      #                            not dropped, it is MOVED to the e2e job,
+      #                            which already has one. It passed on my
+      #                            machine only because a browser had been
+      #                            staged there earlier in the session -- the
+      #                            precise "green locally, red on a clean
+      #                            runner" gap these gates exist to close.
       #   check:ci-health       -- a REPORT, not a gate. It reads the default
       #                            branch, so on a PR it describes main rather
       #                            than the diff. `ci-health.yml` runs it.
@@ -379,7 +387,6 @@ jobs:
           bun run docs:harness:check
           bun run gen:jsonld:check
           bun run readme:sync:check
-          bun run render:bpmn:check
           bun run themes:css:check
           bun run translation:block-qa:check
 
@@ -467,6 +474,13 @@ jobs:
       # artefacts under test are the ones the deploy emits rather than a
       # committed fixture that could agree with the test and disagree with
       # what ships.
+      # Here rather than in the `typescript` job because bpmn-js renders
+      # through Chromium, which only this job installs. Before the e2e run so
+      # a stale SVG is reported on its own terms rather than inside a browser
+      # test's output.
+      - name: rendered BPMN SVGs are current
+        run: bun run render:bpmn:check
+
       - name: playwright test
         run: bunx playwright test
 
