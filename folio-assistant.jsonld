@@ -124,14 +124,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T05:48:27.699Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6c1550e0aadb40bf43bf46ba23e4caecb6731a2c",
-  "sourceCommitSha": "6c1550e0aadb40bf43bf46ba23e4caecb6731a2c",
-  "sourceCommitAt": "2026-09-19T07:46:46+02:00",
-  "sourceTreeDirty": false,
+  "generatedAt": "2026-09-19T05:56:01.232Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/12f7a182fec61d678a3536447ee14a19e4326258",
+  "sourceCommitSha": "12f7a182fec61d678a3536447ee14a19e4326258",
+  "sourceCommitAt": "2026-09-19T07:54:30+02:00",
+  "sourceTreeDirty": true,
   "counts": {
     "Skill": 149,
-    "Actor": 24,
+    "Actor": 25,
     "Capability": 23,
     "Role": 64,
     "SkillPackage": 8,
@@ -141,7 +141,7 @@
     "Tool": 27,
     "Schema": 37,
     "GraphKind": 13,
-    "Directory": 7
+    "Directory": 8
   },
   "problems": [],
   "undeclaredTerms": [
@@ -300,14 +300,14 @@
       "onTypes": [
         "Actor"
       ],
-      "occurrences": 24
+      "occurrences": 25
     },
     {
       "term": "roles",
       "onTypes": [
         "Actor"
       ],
-      "occurrences": 24
+      "occurrences": 25
     },
     {
       "term": "detection",
@@ -317,14 +317,14 @@
       "occurrences": 23
     },
     {
-      "term": "meta",
+      "term": "permissions",
       "onTypes": [
         "Actor"
       ],
-      "occurrences": 17
+      "occurrences": 18
     },
     {
-      "term": "permissions",
+      "term": "meta",
       "onTypes": [
         "Actor"
       ],
@@ -336,7 +336,7 @@
         "Directory",
         "SkillPackage"
       ],
-      "occurrences": 15
+      "occurrences": 16
     },
     {
       "term": "renderable",
@@ -346,18 +346,18 @@
       "occurrences": 13
     },
     {
+      "term": "graphKinds",
+      "onTypes": [
+        "Directory"
+      ],
+      "occurrences": 8
+    },
+    {
       "term": "hasManifest",
       "onTypes": [
         "SkillPackage"
       ],
       "occurrences": 8
-    },
-    {
-      "term": "graphKinds",
-      "onTypes": [
-        "Directory"
-      ],
-      "occurrences": 7
     },
     {
       "term": "version",
@@ -388,7 +388,16 @@
       "occurrences": 1
     }
   ],
-  "undeclaredSchemaModules": [],
+  "undeclaredSchemaModules": [
+    {
+      "module": "schemas/carried-note.ts",
+      "why": "no-tag"
+    },
+    {
+      "module": "schemas/memory.ts",
+      "why": "no-tag"
+    }
+  ],
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/quality-control",
@@ -3200,6 +3209,22 @@
           "review"
         ]
       }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/ci-health-watcher",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
+      "localId": "ci-health-watcher",
+      "actorKind": "system",
+      "title": "CI health watcher",
+      "description": "Reads whether a workflow is actually working on the default branch, and reports it. A mechanical participant in the CI process: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in another lane. Its three reporting rules are the judgement-free ones — \"could not check\" is never rendered as green, a red that has not re-run in a week is flagged as possibly stale rather than as an active fire, and a red whose workflow file changed after the failing run is reported superseded. Each is a statement about evidence, not a verdict on what to do about it.",
+      "roles": [
+        "build-pipeline",
+        "validation-pipeline"
+      ],
+      "permissions": [
+        "qa-reporting"
+      ],
+      "capabilities": []
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/publication-manager",
@@ -18642,6 +18667,19 @@
         "beans"
       ],
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state)."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/todos",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
+      "name": "todos",
+      "path": "todos/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/todos"
+      ],
+      "graphKinds": [
+        "todos"
+      ],
+      "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/uploads",
