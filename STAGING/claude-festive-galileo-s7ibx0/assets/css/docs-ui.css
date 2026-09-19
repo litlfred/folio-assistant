@@ -1095,6 +1095,38 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-qa-unswept { color: currentcolor; opacity: 0.38; }
 .fa-qa-unswept .fa-qa-tag { font-weight: 600; }
 
+/* ── The three states a badge reaches by FETCHING its verdict ──────────────
+ *
+ * The generated page carries no verdict any more (bean `d2kp`): it says which
+ * subjects exist and which have been swept, and `paintQaBadges` in
+ * `docs-ui.js` fetches the page's verdict index at load. So a badge is in one
+ * of three states the markup alone cannot be in, and none of them may be
+ * mistaken for `pass`.
+ *
+ * `pending` is the state the server writes and the only one with motion. It is
+ * dulled and carries `…`, so a reader who arrives before the fetch lands — or
+ * with JavaScript off — sees "not yet known" rather than a verdict. */
+.fa-qa-pending { color: currentcolor; opacity: 0.45; }
+
+/* `empty` — swept, and every criterion came back `n/a`. No mark, for the same
+ * reason `unswept` has none. It is deliberately NOT `.fa-qa-unswept`: that one
+ * means nobody ever checked, this one means somebody did and nothing applied,
+ * and they differ where it counts — this badge OPENS and lists what did not
+ * apply, the other is an inert `<span>` with nothing behind it. */
+.fa-qa-empty { color: currentcolor; opacity: 0.5; }
+.fa-qa-empty .fa-qa-tag { font-weight: 600; }
+
+/* `unknown` — the verdict could not be read. Loud, and closer to a warning
+ * than to a pass: a badge that does not know must not look like one that
+ * knows the answer is fine. The dotted underline survives monochrome and a
+ * colour-blind reader, which hue alone does not. */
+.fa-qa-unknown {
+  color: #8a6100;
+  opacity: 1;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
 /* Dark mode: the light-mode reds and greens sit too dark on a dark surface to
  * meet contrast. Guarded the same way the rest of this file guards its dark
  * rules, so an explicitly-light reader is unaffected. */
@@ -1102,11 +1134,13 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   :root:not([data-theme="light"]) .fa-qa-fail { color: #ff8a80; }
   :root:not([data-theme="light"]) .fa-qa-warn { color: #ffcc66; }
   :root:not([data-theme="light"]) .fa-qa-pass { color: #a5d6a7; }
+  :root:not([data-theme="light"]) .fa-qa-unknown { color: #ffcc66; }
 }
 
 :root[data-theme="dark"] .fa-qa-fail { color: #ff8a80; }
 :root[data-theme="dark"] .fa-qa-warn { color: #ffcc66; }
 :root[data-theme="dark"] .fa-qa-pass { color: #a5d6a7; }
+:root[data-theme="dark"] .fa-qa-unknown { color: #ffcc66; }
 
 
 

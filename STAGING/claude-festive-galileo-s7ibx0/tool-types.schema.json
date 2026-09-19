@@ -245,6 +245,13 @@
       "description": "Dots per inch for rendered formulae.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "Port": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535,
+      "description": "TCP port for a locally bound server; 0 asks the OS for a free one.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "DecisionFacts": {
       "type": "object",
       "additionalProperties": {
@@ -260,8 +267,8 @@
   },
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "37a2f7a21fb6408abc00a7ee9af2e7fb2aa931b3",
+    "sha": "33f0282d1c9d48db7c54c2f08253041be2d7d9dc",
     "pr": "386/merge",
-    "run": "35436523957"
+    "run": "35437587323"
   }
 }

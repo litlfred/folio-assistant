@@ -2510,6 +2510,162 @@
       });
   }
 
+  /* ── Badge verdicts, fetched rather than baked in ─────────────────────── */
+
+  /**
+   * The state mark, and it has to say GOOD or BAD without a legend.
+   *
+   * Moved here from `scripts/gen-docs-pages.ts` when the badges stopped
+   * carrying their verdict in the markup (bean `d2kp`). The reasoning is the
+   * generator's and is kept verbatim because it was paid for:
+   *
+   * `● ◐ ○ ·` shipped in #274 and was reported unreadable by the first person
+   * to use it: filled-vs-open circles encode a scale, but nothing in them says
+   * which end is the good one, and at 0.75rem `●` and `·` differ only in size.
+   * `✓ ! ✕` carry their meaning on their own, survive monochrome, and keep
+   * colour as reinforcement rather than as the message.
+   *
+   * **Two states carry no mark at all, and they are not the same state.**
+   * `empty` is a subject that WAS swept and whose every criterion came back
+   * `n/a`; a subject nobody has swept never reaches this map, because the
+   * generator renders it server-side as a dulled `<span>` — there is nothing
+   * to fetch and nothing to open. Any glyph on either would be a claim about a
+   * check that returned no verdict.
+   *
+   * **`unknown` is the third state and it is NOT a quiet pass.** `?` is loud
+   * on purpose: a badge that could not read its verdict must not look like one
+   * that read a clean one. This repository has paid for that collapse before —
+   * an absent simulators directory rendered as "this folio has no simulators",
+   * replacing a correct nine-row table.
+   */
+  var QA_GLYPH = { fail: "✕", warn: "!", pass: "✓", empty: "", unknown: "?" };
+
+  /** Every class this painter owns, so painting twice cannot leave two on. */
+  var QA_STATE_CLASSES = [
+    "fa-qa-pending", "fa-qa-fail", "fa-qa-warn", "fa-qa-pass",
+    "fa-qa-empty", "fa-qa-unknown"
+  ];
+
+  /** One fetch per page index, shared by every badge that names it. */
+  var QA_INDEX_CACHE = {};
+
+  /**
+   * The counts line, shared by the icon's tooltip and its accessible name.
+   *
+   * `n/a` and `unknown` are reported, never folded into the others: a criterion
+   * that did not apply and one the sidecar holds no verdict for are different
+   * facts, and both are the reader's business. Lifted from the generator with
+   * its wording intact, so the badge reads as it always did.
+   */
+  function qaBadgeTitle(label, noun, state, counts) {
+    if (state === "unknown") {
+      return label + ": could not determine — this page's verdict index could not be read";
+    }
+    if (state === "empty") {
+      return label + ": swept, and no criterion applied to this " + noun +
+        " — open for witnesses";
+    }
+    var c = counts || {};
+    var parts = [
+      (c.fail || 0) + " fail", (c.warn || 0) + " warn",
+      (c.pass || 0) + " pass", (c.na || 0) + " n/a"
+    ];
+    if (c.unknown > 0) parts.push(c.unknown + " no verdict");
+    return label + ": " + parts.join(", ") + " — open for witnesses";
+  }
+
+  /**
+   * Paint one badge into one of the three determinable outcomes.
+   *
+   * `entry` is the index row for this badge, or null for could-not-determine.
+   * A row whose `state` is the projector's `unswept` becomes `empty` here: the
+   * projector uses one word for "nothing ruled on this" whatever the reason,
+   * and by the time a row EXISTS the subject has demonstrably been swept.
+   */
+  function qaPaintBadge(badge, entry) {
+    var label = badge.getAttribute("data-qa-label") || "QA";
+    var noun = badge.getAttribute("data-qa-noun") || "subject";
+    var state = entry ? (entry.state === "unswept" ? "empty" : entry.state) : "unknown";
+    if (!QA_GLYPH.hasOwnProperty(state)) state = "unknown";
+
+    QA_STATE_CLASSES.forEach(function (c) { badge.classList.remove(c); });
+    badge.classList.add("fa-qa-" + state);
+
+    var title = qaBadgeTitle(label, noun, state, entry && entry.counts);
+    badge.setAttribute("title", title);
+    badge.setAttribute("aria-label", title);
+    badge.removeAttribute("aria-busy");
+
+    // The glyph node is replaced rather than left in place with new text: a
+    // state with no mark must contribute nothing to the accessible name, and
+    // an empty `<span>` beside the tag still opens a gap in the flex row.
+    var glyph = badge.querySelector(".fa-qa-glyph");
+    var mark = QA_GLYPH[state];
+    if (mark === "") {
+      if (glyph) glyph.parentNode.removeChild(glyph);
+      return;
+    }
+    if (!glyph) {
+      glyph = el("span", { class: "fa-qa-glyph", "aria-hidden": "true" });
+      badge.appendChild(glyph);
+    }
+    glyph.textContent = mark;
+  }
+
+  /**
+   * Fetch each page's verdict index and paint the badges that named it.
+   *
+   * **Why the page no longer carries the verdict.** `gen-docs-pages.ts` used
+   * to write the state class, the glyph and the counts straight into
+   * `docs/*.md`, which made a generated page stale every time a sweep changed
+   * its mind. Bean `d2kp` measured both halves of the damage: twelve pages
+   * stale on `main`, one of them because the graph got BETTER, and a published
+   * page telling readers a knowledge-graph check failed on
+   * `publication-workflow.md` when it passed. A document that carries a
+   * measurement does not go stale loudly; it goes stale by lying.
+   *
+   * **One request per page, not one per badge.** `publication-workflow` has 39
+   * badges over 21 projections totalling 376 KB. The index holds the state and
+   * the counts only, so it is a few kilobytes; the projection behind a badge
+   * is still fetched on click, by `qaToggle`, exactly as before.
+   *
+   * **A failure paints `unknown`, never a verdict.** No network, a 404, a body
+   * that is not JSON, or an index that has no row for this badge all land in
+   * the same honest place: the reader is told the verdict could not be
+   * determined, and the badge still opens — `qaToggle` fetches the projection
+   * itself and says which file it could not read if that fails too.
+   */
+  function paintQaBadges(root) {
+    var scope = root || document;
+    var badges = scope.querySelectorAll(".fa-qa-badge[data-qa-index]");
+    if (badges.length === 0) return;
+
+    var byIndex = {};
+    Array.prototype.forEach.call(badges, function (b) {
+      var src = b.getAttribute("data-qa-index");
+      (byIndex[src] = byIndex[src] || []).push(b);
+    });
+
+    Object.keys(byIndex).forEach(function (src) {
+      var group = byIndex[src];
+      function paintAll(doc) {
+        group.forEach(function (b) {
+          var key = b.getAttribute("data-qa-key");
+          var row = doc && doc.badges && key ? doc.badges[key] : null;
+          qaPaintBadge(b, row || null);
+        });
+      }
+      if (QA_INDEX_CACHE[src]) { paintAll(QA_INDEX_CACHE[src]); return; }
+      fetch(src, { credentials: "same-origin" })
+        .then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.json();
+        })
+        .then(function (doc) { QA_INDEX_CACHE[src] = doc; paintAll(doc); })
+        .catch(function () { paintAll(null); });
+    });
+  }
+
   function mountQaPanels() {
     // Delegated, so icons added later (or by a future client-side render) work
     // without re-binding, and one listener serves a page with fifty of them.
@@ -2548,6 +2704,7 @@
     mountNavLocale();
     mountTranslationBadges();
     mountQaPanels();
+    paintQaBadges();
     mountTodoStickies();
     mountPageLanguageBar();
     // Figures are mounted only after the inlining settles, so the scan sees the
