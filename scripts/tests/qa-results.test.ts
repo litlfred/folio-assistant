@@ -6,13 +6,13 @@
  * process."* Placement follows PROVENANCE — what produced an artefact and why
  * — not its file family and not who fetches it afterwards.
  */
-import { describe, expect, it } from "bun:test";
-import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
+import { describe, expect, it, test } from "bun:test";
+import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { buildQaResult, sourceHashOf, QA_RESULTS_DIR } from "../qa-results.js";
+import { buildQaResult, sourceHashOf, writeQaResult, QA_RESULTS_DIR } from "../qa-results.js";
 import { readDeclaration } from "../../schemas/cat-harness.js";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { exitCodeFor, verifySiteLinks, type CheckableLink } from "../site-links.js";
@@ -341,5 +341,62 @@ describe("the badge URLs resolve against a tree built the way the site is", () =
       n.startsWith("_"),
     );
     expect(underscored).toEqual([]);
+  });
+});
+
+/**
+ * A result whose findings did not change is not rewritten.
+ *
+ * `updated_at` moves on every run, so an unconditional write made EVERY QA
+ * producer dirty the working tree whenever anybody ran it. That is not a
+ * tidiness complaint: these sidecars exist so a reviewer can tell "this
+ * finding is new" from "this finding was already there", and a file that
+ * always appears changed has given up the property it was created to have.
+ */
+describe("writeQaResult does not churn", () => {
+  function result(entries: unknown[], when: string) {
+    return buildQaResult({
+      script: "scripts/x.ts",
+      scriptAbsPath: join(import.meta.dir, "../../package.json"),
+      subject: { kind: "t", id: "t" },
+      families: { f: { summary: "s", entries } },
+      now: new Date(when),
+    });
+  }
+
+  test("identical findings leave the file untouched, timestamp and all", () => {
+    const root = mkdtempSync(join(tmpdir(), "qa-churn-"));
+    const p = writeQaResult(root, "x", result([], "2026-01-01T00:00:00.000Z"));
+    const first = readFileSync(p, "utf-8");
+
+    // A LATER timestamp, same findings. The whole point: a re-run must not
+    // rewrite, and must not quietly rewrite with the old timestamp either —
+    // that would be equally clean and would misreport the bytes as
+    // reconsidered.
+    writeQaResult(root, "x", result([], "2026-06-01T00:00:00.000Z"));
+    expect(readFileSync(p, "utf-8")).toBe(first);
+    expect(first).toContain("2026-01-01");
+  });
+
+  test("CHANGED findings do rewrite, and the timestamp moves with them", () => {
+    // The guard must not be a freeze. The timestamp answers "when were these
+    // findings established", so it moves when they do.
+    const root = mkdtempSync(join(tmpdir(), "qa-churn-"));
+    const p = writeQaResult(root, "x", result([], "2026-01-01T00:00:00.000Z"));
+    writeQaResult(root, "x", result([{ finding: "new" }], "2026-06-01T00:00:00.000Z"));
+    const after = readFileSync(p, "utf-8");
+    expect(after).toContain("2026-06-01");
+    expect(after).toContain("new");
+  });
+
+  test("an unreadable previous result is replaced, not skipped", () => {
+    // "Could not tell" resolves to WRITE here, which is the opposite of the
+    // log sweep's rule and right for the same reason: the risk is a stale
+    // verdict surviving, not a good one being lost.
+    const root = mkdtempSync(join(tmpdir(), "qa-churn-"));
+    const p = writeQaResult(root, "x", result([], "2026-01-01T00:00:00.000Z"));
+    writeFileSync(p, "{ not json");
+    writeQaResult(root, "x", result([], "2026-06-01T00:00:00.000Z"));
+    expect(readFileSync(p, "utf-8")).toContain("2026-06-01");
   });
 });

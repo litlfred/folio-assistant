@@ -641,6 +641,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * address is a `--port` at run time, not a property of the instance.
    */
   publication?: Publication;
+  /**
+   * The topology axes this deployment declares about itself. See
+   * {@link Topology} — every field optional, absent meaning "has not said".
+   */
+  topology?: Topology;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
 }
@@ -753,6 +758,194 @@ export const PublicationSchema = z.object({
   host: z.enum(PUBLICATION_HOSTS),
 });
 
+/**
+ * The **forge** axis — where change proposals live.
+ *
+ * `deployment-topologies.md` §1 axis 1. `none` is local git with no service
+ * at all, and is a real answer rather than a missing one.
+ */
+export const FORGES = ["none", "github", "self-hosted", "jurisdiction-hosted"] as const;
+export type Forge = (typeof FORGES)[number];
+
+/**
+ * The **network reach** axis — what the harness may call out to.
+ *
+ * §1 axis 5. The distinction between `egress-restricted` and `air-gapped`
+ * carries real weight: they were ONE value in the proposal's first draft, and
+ * splitting them is what exposed the hosted-inference contradiction below. A
+ * deployment that wants closed hosted models is, by that choice, not
+ * air-gapped.
+ */
+export const NETWORK_REACHES = ["internet", "egress-restricted", "air-gapped"] as const;
+export type NetworkReach = (typeof NETWORK_REACHES)[number];
+
+/**
+ * The **model provenance** axis — where inference happens and under whose terms.
+ *
+ * §1 axis 8. Deliberately separate from model *cardinality* (how many): a
+ * stack of open-weight local models and a single closed hosted one are both
+ * real configurations, and collapsing the two axes is what made the
+ * air-gapped contradiction invisible.
+ */
+export const MODEL_PROVENANCES = ["open-weight-local", "hosted", "mixed"] as const;
+export type ModelProvenance = (typeof MODEL_PROVENANCES)[number];
+
+/**
+ * The topology axes an instance declares about ITSELF.
+ *
+ * ## Why only four of the ten
+ *
+ * `deployment-topologies.md` names ten axes. Four are declared here, and the
+ * choice is not arbitrary: these are exactly the axes that
+ * {@link topologyConflicts} reads. Declaring the other six would add
+ * vocabulary nothing consumes — the `dh4f` defect pointing the other way,
+ * where a declaration exists and no code is behind it. They land when a check
+ * or a tool needs them.
+ *
+ * ## Every field is optional, and absent is a THIRD STATE
+ *
+ * Absent means *this deployment has not said*, never a default. That is not
+ * politeness, it is what makes the check safe to add: no instance in
+ * existence declares any of these, so a rule that treated absent as a value
+ * would refuse every one of them on the day it shipped.
+ *
+ * The owner's rule, 2026-09-19: **"dont encode rules against a working
+ * setup."** A missing constraint fails visibly at the point of use with the
+ * real error; a wrong constraint refuses a good deployment at the gate with a
+ * confident message, and nobody investigates a settled question.
+ *
+ * **`publication.host` is axis 3 and is NOT here** — it lives on
+ * {@link Publication}, where it already was, because it answers a publication
+ * question and has two other fields it must be told apart from. The axes are
+ * therefore read from two places, and {@link topologyConflicts} is the single
+ * place that joins them rather than a second home for the vocabulary.
+ */
+export interface Topology {
+  forge?: Forge;
+  network?: NetworkReach;
+  modelProvenance?: ModelProvenance;
+  /** Whether the deployment serves people outside the operator. §1 axis 10. */
+  outwardFacing?: boolean;
+}
+
+export const TopologySchema = z.object({
+  forge: z.enum(FORGES).optional(),
+  network: z.enum(NETWORK_REACHES).optional(),
+  modelProvenance: z.enum(MODEL_PROVENANCES).optional(),
+  outwardFacing: z.boolean().optional(),
+});
+
+/** One refused combination, with the reason a reader can argue with. */
+export interface TopologyConflict {
+  /** The two declared values that cannot co-occur, as `axis: value`. */
+  pair: [string, string];
+  /** Why the mechanism forbids it — an entailment, never a report. */
+  reason: string;
+}
+
+/**
+ * Every incompatible pair a declaration names. Empty is the normal answer.
+ *
+ * ## The bar for a rule here
+ *
+ * Each of these is an **entailment of the mechanism**, which is the standard
+ * `deployment-topologies.md` §3 sets and the reason the table is short:
+ *
+ * | encode it | do not encode it |
+ * |---|---|
+ * | Pages has no per-file media-type configuration; air-gapped compute cannot reach hosted inference | someone said so, however authoritative |
+ * | measured, with the command and the date | true of one account, one plan, one version |
+ *
+ * The operative test is **not how certain the claim feels — it is whether a
+ * counter-example is conceivable.**
+ *
+ * ## Two things deliberately absent
+ *
+ * **`visibility: private` with `github-pages` is NOT a conflict.** Settled by
+ * the owner 2026-09-19: Pages on a private repository exists on some plans,
+ * so a deployment may legitimately declare both. It is a *reason to reach for
+ * the local server*, not a property of the mechanism. Do not re-litigate it;
+ * `visibility` is not even declared, so there is nothing to trip over.
+ *
+ * **`air-gapped` with `modelProvenance: "mixed"` is NOT refused**, although
+ * `hosted` is. The same entailment appears to apply — but only if `mixed`
+ * necessarily includes a live hosted component, and a deployment could
+ * reasonably mean "local models, with a hosted path that is configured and
+ * disabled here". A counter-example is conceivable, so by the bar above the
+ * rule does not go in. Raised for the owner rather than decided quietly.
+ */
+export function topologyConflicts(
+  topology: Topology | undefined,
+  host: PublicationHost | undefined,
+): TopologyConflict[] {
+  const t = topology ?? {};
+  const out: TopologyConflict[] = [];
+
+  // Every guard below tests for a DECLARED value on both sides. An undeclared
+  // axis contributes to no conflict, which is the third state doing its job.
+  if (host === "github-pages" && t.forge !== undefined && t.forge !== "github") {
+    out.push({
+      pair: ["publication.host: github-pages", `topology.forge: ${t.forge}`],
+      reason:
+        "GitHub Pages is a GitHub product and publishes from a GitHub repository. " +
+        "With any other forge there is nothing for it to publish from.",
+    });
+  }
+
+  if (t.network === "air-gapped" && t.forge === "github") {
+    out.push({
+      pair: ["topology.network: air-gapped", "topology.forge: github"],
+      reason: "An air-gapped deployment cannot reach github.com, so the forge is unreachable.",
+    });
+  }
+
+  if (t.network === "air-gapped" && t.modelProvenance === "hosted") {
+    out.push({
+      pair: ["topology.network: air-gapped", "topology.modelProvenance: hosted"],
+      reason:
+        "Inference cannot leave the airlock. A deployment that wants hosted models " +
+        'is, by that choice, `egress-restricted` rather than `air-gapped`.',
+    });
+  }
+
+  // NOT redundant with the two above, though the proposal calls it a
+  // consequence of them. It follows only when `forge` is also declared — and
+  // `forge` is optional, so on a declaration that names the network and the
+  // host and nothing else, this is the only rule that fires.
+  if (t.network === "air-gapped" && host === "github-pages") {
+    out.push({
+      pair: ["topology.network: air-gapped", "publication.host: github-pages"],
+      reason: "An air-gapped deployment cannot reach GitHub Pages to publish to it.",
+    });
+  }
+
+  if (t.outwardFacing === true && host === "none") {
+    out.push({
+      pair: ["topology.outwardFacing: true", "publication.host: none"],
+      reason:
+        "Nothing is served, so nobody outside the operator can reach it. " +
+        "Declare a host, or say the deployment is not outward-facing.",
+    });
+  }
+
+  return out;
+}
+
+/** Thrown when a declaration names a combination that cannot exist. */
+export class TopologyConflictError extends Error {
+  constructor(
+    readonly path: string,
+    readonly conflicts: TopologyConflict[],
+  ) {
+    super(
+      `${path} declares ${conflicts.length} incompatible ` +
+        `combination${conflicts.length === 1 ? "" : "s"}:\n` +
+        conflicts.map((c) => `  - ${c.pair[0]} with ${c.pair[1]}\n      ${c.reason}`).join("\n"),
+    );
+    this.name = "TopologyConflictError";
+  }
+}
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -770,6 +963,7 @@ export const CatHarnessDeclarationSchema = z.object({
   canonicalUrl: z.string().url().optional(),
   previewUrl: z.string().url().optional(),
   publication: PublicationSchema.optional(),
+  topology: TopologySchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
 });
 
@@ -1150,6 +1344,18 @@ export function readDeclaration(
     if (seen.has(i.id)) throw new Error(`${p}: image "${i.id}" is declared twice.`);
     seen.add(i.id);
   }
+  // A self-contradictory topology is REFUSED rather than reported, which is
+  // the one thing bean `folio-assistant-g7vb` asks for that a table of prose
+  // cannot do. Refusing here, on the same path as an unregistered graph kind
+  // and an icon naming no image, is deliberate: those are also declarations
+  // that parse and cannot be true, and a consumer that got a valid-looking
+  // object back would carry the contradiction onward.
+  //
+  // Safe to add because every axis is optional and absent is a third state:
+  // no declaration that exists today names either side of any pair, so this
+  // throws for nobody until somebody opts in. See {@link topologyConflicts}.
+  const conflicts = topologyConflicts(parsed.data.topology, parsed.data.publication?.host);
+  if (conflicts.length) throw new TopologyConflictError(p, conflicts);
   return parsed.data;
 }
 
