@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T07:50:26Z
-updated_at: 2026-09-19T09:28:29Z
+updated_at: 2026-09-19T09:48:24Z
 ---
 
 
@@ -74,3 +74,5 @@ change is how a gate gets turned back off by the next person it blocks.
 ## Done when
 The step runs as its own step, and a red result means a real omission rather
 than a graph that changed.
+
+_2026-09-19T09:48:24Z_ — Implemented option 3 in PR #378 (branch claude/d2kp-live-verdicts). Pages now carry corpus STRUCTURE only; the badge fetches a per-page qa-index.json at load and paints one of three states (determined / determined-empty / could-not-determine), never collapsing them. The YAML continuation line is un-folded into its own step. Second finding, from the gate's first ever run: docs/assets/todos/index.json was UNREPRODUCIBLE, not stale -- processHierarchy and beanFile iterated readdirSync in raw directory order, which Bun does not sort, so the published key order differed per checkout. Both now sort, with an order (not set) assertion in scripts/tests/todos.test.ts. Third: the index was briefly _qa-index.json, which GitHub Pages strips without .nojekyll; renamed and guarded by a test.
