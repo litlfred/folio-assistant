@@ -114,17 +114,17 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T01:57:13.167Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/717c9320ba2f7e78de2e8dad3cfd42782e9bcfc8",
-  "sourceCommitSha": "717c9320ba2f7e78de2e8dad3cfd42782e9bcfc8",
-  "sourceCommitAt": "2026-09-19T03:55:50+02:00",
+  "generatedAt": "2026-09-19T05:23:31.824Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c3ff21e8f148c9628419704a3aaa146778f43459",
+  "sourceCommitSha": "c3ff21e8f148c9628419704a3aaa146778f43459",
+  "sourceCommitAt": "2026-09-19T07:22:05+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 149,
     "Actor": 24,
     "Capability": 23,
     "Role": 64,
-    "SkillPackage": 14,
+    "SkillPackage": 8,
     "Process": 30,
     "SequenceFlow": 416,
     "ProcessNode": 387,
@@ -306,14 +306,6 @@
       "occurrences": 23
     },
     {
-      "term": "path",
-      "onTypes": [
-        "Directory",
-        "SkillPackage"
-      ],
-      "occurrences": 21
-    },
-    {
       "term": "meta",
       "onTypes": [
         "Actor"
@@ -328,11 +320,12 @@
       "occurrences": 17
     },
     {
-      "term": "hasManifest",
+      "term": "path",
       "onTypes": [
+        "Directory",
         "SkillPackage"
       ],
-      "occurrences": 14
+      "occurrences": 15
     },
     {
       "term": "renderable",
@@ -340,6 +333,13 @@
         "GraphKind"
       ],
       "occurrences": 13
+    },
+    {
+      "term": "hasManifest",
+      "onTypes": [
+        "SkillPackage"
+      ],
+      "occurrences": 8
     },
     {
       "term": "graphKinds",
@@ -3732,48 +3732,6 @@
           "priority": 0
         }
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/permissions",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
-      "name": "permissions",
-      "path": "skills/permissions",
-      "hasManifest": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflows",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
-      "name": "workflows",
-      "path": "skills/workflows",
-      "hasManifest": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/requirements",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
-      "name": "requirements",
-      "path": "skills/requirements",
-      "hasManifest": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/roles",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
-      "name": "roles",
-      "path": "skills/roles",
-      "hasManifest": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/remote-packages",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
-      "name": "remote-packages",
-      "path": "skills/remote-packages",
-      "hasManifest": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/framework",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#SkillPackage",
-      "name": "framework",
-      "path": "skills/framework",
-      "hasManifest": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills",
