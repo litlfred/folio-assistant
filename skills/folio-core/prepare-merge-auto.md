@@ -168,4 +168,7 @@ After merge:
 - Do NOT skip sibling coordination — it prevents post-merge conflicts.
 - Do NOT ask trivial questions in Phase 3 — only genuinely ambiguous
   decisions warrant user input.
-- **Do NOT delete the branch after merging.**
+- **Do NOT delete the branch after merging** — and not at any other time either,
+  without explicit assent from the user or the repository owner. Same rule, same
+  wording, in [`prepare-merge.md`](prepare-merge.md) §Guardrails; change one and
+  change the other.

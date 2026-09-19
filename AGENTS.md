@@ -319,7 +319,10 @@ them. In short, and not as a substitute for reading it:
 - every bean reference gets **two sentences and a link** — what it is, then
   **what you would do** about it, in the first person as a proposal. A gloss
   alone is a menu with no prices: it tells the reader what the bean is and not
-  whether your answer is a one-line fix or a question back to them;
+  whether your answer is a one-line fix or a question back to them. **This binds
+  every mention of an id, not just a report's Beans list** — a status line, an
+  aside, a commit message, an issue comment. If it is not worth two sentences,
+  do not name the bean;
 - asking for review means **linking the artefact** — staging URL, PR, and the
   changed page;
 - say **what to review**, not that CI is green;

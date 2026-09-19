@@ -20,6 +20,14 @@ FHIR Implementation Guides — backed by an MCP server, role-based access contro
 and a typed content-object model.
 {: .fs-6 .fw-300 }
 
+<!--
+  `View on GitHub` STAYS. The site-wide `aux_links` GitHub text was removed from
+  the chrome above every page (bean `udx8`, PR #352), and the obvious follow-up
+  is to delete this button for consistency. Do not. Put to the repo owner on
+  2026-09-19: this button is part of the landing page's own readme/description
+  note — authored content on one page, not chrome — and the forge remains
+  reachable from the navbar's Source tile regardless.
+-->
 [Get started](getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Install](installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }

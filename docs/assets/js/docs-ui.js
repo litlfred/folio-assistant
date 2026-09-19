@@ -868,6 +868,16 @@
     // Search leads the grid. It is the one action here a reader reaches for
     // repeatedly, and it is the one that was taken off the main panel -- so
     // it gets the first cell rather than being buried behind the others.
+    //
+    // TWO PRESSES IS THE ANSWER, NOT A COMPROMISE. Reaching search costs
+    // launcher-then-tile, and the obvious "improvement" is a second, dedicated
+    // magnifier in the header row: one press instead of two. Do not make it.
+    // That row is capped at 3.75rem and shares its width with the site title,
+    // and a single launcher exists precisely because the navbar was getting
+    // crowded (bean `1le7`). Put to the repo owner on 2026-09-19 with both
+    // costs stated; the answer was "search is two". It is ~20 lines here and
+    // the CSS already exists, which is exactly why this comment is here: the
+    // change is cheap enough to look like a tidy-up.
     if (searchHolder) grid.appendChild(tileButton(SEARCH_GLYPH, "Search", "search"));
     grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
     grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
@@ -1803,6 +1813,190 @@
     });
   }
 
+  /* ── The navbar filters by the selected locale ───────────────────────── */
+
+  /*
+   * THE BUG THIS EXISTS FOR, in the owner's words (2026-09-19):
+   *
+   *   "i have english selected, but i see the translated pages in LHS navbar."
+   *
+   * Two halves, and only the second is here.
+   *
+   * The first half is `nav_exclude: true` on every translated page. The nav is
+   * built by just-the-docs AT BUILD TIME, from front matter, on a static site
+   * that is serving the same HTML to every reader. It cannot know which locale
+   * anybody selected, so a translated page left in it is in it FOR EVERYBODY.
+   * No amount of client-side work fixes that: a script can swap a nav item,
+   * it cannot un-render one without a flash of the wrong nav first. So the
+   * translations leave the static nav entirely, and the navbar a reader gets
+   * with no JavaScript at all is the SOURCE-LANGUAGE one -- which is the
+   * correct degraded answer rather than an arbitrary one.
+   *
+   * The second half is this function. With a non-source locale selected, each
+   * nav item that HAS a page in that locale is rewritten IN PLACE -- same
+   * position, same parent, translated title, translated href. "In place of",
+   * not "in addition to", is the requirement, and rewriting rather than
+   * inserting is what makes it structurally true rather than something the
+   * ordering has to be trusted to preserve.
+   *
+   * FALLBACK IS THE ABSENCE OF A REWRITE. An item with no page in the selected
+   * locale is not touched, so it keeps its source-language title and link.
+   * There is deliberately no code path for it: a fallback implemented as its
+   * own branch is a branch that can be wrong, and this one cannot be.
+   *
+   * ## Three states, and the third is why the index is published as `null`
+   *
+   *   ok        -- the index parsed; filter the nav.
+   *   empty     -- it parsed and holds no pages; nothing to swap, and every
+   *                item correctly stays in the source language.
+   *   unknown   -- no island, or it would not parse, or `index` is `null`
+   *                because the data file was absent at build time. The nav is
+   *                left EXACTLY as built and nothing is claimed.
+   *
+   * `empty` and `unknown` produce the same navbar and are not the same answer:
+   * one is "this folio has no translations", the other is "this build could not
+   * tell". They are recorded separately in `data-fa-nav-index` so that a
+   * reader, a test, or the next person debugging this can distinguish them --
+   * the same rule the README sections and the CI-health report follow.
+   */
+
+  /**
+   * The key a nav `href` and an indexed page are matched on.
+   *
+   * MUST stay in step with `pageKey` in content/pipeline/translation-index.ts
+   * — the two are one convention implemented twice, once in the generator and
+   * once in the consumer, because they run in different languages on different
+   * machines. Jekyll serves one page at several spellings (`/`, `/x.html`,
+   * `/x/`) under a `baseurl` this script is told rather than guesses, so both
+   * sides normalise to a bare extensionless path with no `index` and no
+   * slashes at either end.
+   */
+  function navKey(href, baseurl) {
+    if (!href) return null;
+    var path;
+    try {
+      // Resolves relative hrefs against the current page, and rejects
+      // `mailto:`/`#`/external links by their origin below.
+      var u = new URL(href, window.location.href);
+      if (u.origin !== window.location.origin) return null;
+      path = u.pathname;
+    } catch (_e) {
+      return null;
+    }
+    if (baseurl && path.indexOf(baseurl) === 0) path = path.slice(baseurl.length);
+    path = path.replace(/^\/+/, "").replace(/\/+$/, "");
+    path = path.replace(/\.html?$/i, "");
+    path = path.replace(/(^|\/)index$/i, "");
+    return path.replace(/^\/+|\/+$/g, "");
+  }
+
+  /** The published index, or null when this build could not determine one. */
+  function getTranslationIndex() {
+    var node = document.getElementById("fa-translation-index");
+    if (!node) return null;
+    var parsed;
+    try { parsed = JSON.parse(node.textContent); } catch (_e) { return null; }
+    if (!parsed || typeof parsed !== "object") return null;
+    // `index: null` is the deliberate signal that `docs/_data/translations.json`
+    // was not there when the site was built. It is NOT an empty index.
+    if (!parsed.index || typeof parsed.index !== "object") return null;
+    if (!parsed.index.pages || typeof parsed.index.pages !== "object") return null;
+    return { baseurl: typeof parsed.baseurl === "string" ? parsed.baseurl : "", data: parsed.index };
+  }
+
+  /**
+   * Which locale the navbar should be in.
+   *
+   * In precedence order, and each step answers a question the next cannot:
+   *
+   *   1. `?lang=` on the URL -- an explicit, shareable request for one page
+   *      view. It wins because somebody typed it.
+   *   2. the page's own `lang`, when the page IS a translation. A reader
+   *      looking at the French page is reading French, whatever a stale
+   *      localStorage entry from another device says; a navbar in English
+   *      around French prose is the mismatch this whole change is about.
+   *   3. the remembered choice (`fa-locale`), which the sidebar language bar
+   *      has been writing since it was built.
+   *   4. the source language.
+   *
+   * A locale the index has never heard of is NOT honoured -- it would rewrite
+   * nothing and merely label the nav with a language it is not in.
+   */
+  function navLocale(data, pageLang) {
+    var sourceLocale = data.sourceLocale || "en";
+    var known = (data.locales || []).concat([sourceLocale]);
+    var wanted = null;
+    try {
+      var q = new URL(window.location.href).searchParams.get("lang");
+      if (q) wanted = q;
+    } catch (_e) { /* a URL we cannot parse simply does not ask for a locale */ }
+    if (!wanted && pageLang && pageLang !== sourceLocale) wanted = pageLang;
+    if (!wanted) wanted = getGlobalLocale();
+    if (!wanted || known.indexOf(wanted) === -1) return sourceLocale;
+    return wanted;
+  }
+
+  function mountNavLocale() {
+    var nav = document.querySelector(".site-nav") || document.querySelector(".nav-list");
+    if (!nav) return;
+
+    var idx = getTranslationIndex();
+    if (!idx) {
+      // Degrade LOUDLY, the discipline this whole file follows: a feature that
+      // quietly does nothing is indistinguishable from one nobody looked at.
+      nav.setAttribute("data-fa-nav-index", "unknown");
+      if (window.console && console.warn) {
+        console.warn(
+          "docs-ui: no readable translation index (#fa-translation-index). " +
+          "The navbar is left exactly as built -- this is NOT a claim that " +
+          "the folio has no translations. Run: bun run translation:index"
+        );
+      }
+      return;
+    }
+
+    var data = idx.data;
+    var pages = data.pages;
+    var meta = getTranslationMeta();
+    var locale = navLocale(data, meta && meta.lang);
+    nav.setAttribute("data-fa-nav-index", Object.keys(pages).length === 0 ? "empty" : "ok");
+    nav.setAttribute("data-fa-nav-locale", locale);
+
+    // The source language needs no rewriting at all, and saying so explicitly
+    // is cheaper than walking the nav to discover it.
+    if (locale === (data.sourceLocale || "en")) return;
+
+    var here = navKey(window.location.href, idx.baseurl);
+    var links = nav.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      var key = navKey(link.getAttribute("href"), idx.baseurl);
+      if (key === null) continue;
+      var entry = Object.prototype.hasOwnProperty.call(pages, key) ? pages[key] : null;
+      var t = entry && entry.translations ? entry.translations[locale] : null;
+      if (!t || !t.url) {
+        // FALLBACK. Not a branch that does something -- a branch that does
+        // nothing, on purpose, so the item keeps the source-language page it
+        // already points at.
+        link.setAttribute("data-fa-translated", "source");
+        continue;
+      }
+      link.setAttribute("href", (idx.baseurl || "") + t.url);
+      if (t.title) link.textContent = t.title;
+      link.setAttribute("lang", locale);
+      // Per-LINK direction, not per-page: an Arabic item inside an otherwise
+      // English navbar has to carry its own, or the bracket and the trailing
+      // "(AR)" render on the wrong side of it.
+      link.setAttribute("dir", t.dir === "rtl" ? "rtl" : "ltr");
+      link.setAttribute("data-fa-translated", locale);
+      if (t.status) link.setAttribute("data-fa-translation-status", t.status);
+      // just-the-docs computed "you are here" at build time against the SOURCE
+      // page's url, so a reader on the translated page loses the marker unless
+      // it is put back against the rewritten target.
+      if (here !== null && navKey(t.url, "") === here) link.setAttribute("aria-current", "page");
+    }
+  }
+
   /* ── Translation badges ──────────────────────────────────────────────── */
 
   // Auto-injects language coverage badges and QA indicators on every page.
@@ -2349,6 +2543,9 @@
     }
 
     mountActionTiles();
+    // Before the badges: both read the same translation metadata, and the nav
+    // is the thing a reader sees first.
+    mountNavLocale();
     mountTranslationBadges();
     mountQaPanels();
     mountTodoStickies();
