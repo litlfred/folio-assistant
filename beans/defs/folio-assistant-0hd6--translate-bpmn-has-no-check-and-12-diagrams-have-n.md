@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-19T10:06:30Z
 updated_at: 2026-09-19T10:07:02Z
+parent: folio-assistant-bzyu
 ---
 
 

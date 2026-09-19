@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-19T11:52:47.702Z",
+  "updated_at": "2026-09-19T11:57:59.283Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,7 +34,7 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 360163869,
+          "value": 360491609,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
@@ -47,7 +47,7 @@
       ],
       "findings": [
         {
-          "summary": "9 staging preview(s) total 343.5 MB, over the 100 MB warning point.",
+          "summary": "9 staging preview(s) total 343.8 MB, over the 100 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
@@ -89,12 +89,12 @@
       ],
       "findings": [
         {
-          "summary": "`STAGING/claude-4kiw-memory-pointer` (38.3 MB, 786 files) — no open pull request; `claude/4kiw-memory-pointer` is already in `main`, tip 56 min old.",
+          "summary": "`STAGING/claude-4kiw-memory-pointer` (38.3 MB, 786 files) — no open pull request; `claude/4kiw-memory-pointer` is already in `main`, tip 61 min old.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `claude-4kiw-memory-pointer` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-4kiw-memory-pointer` and `cleanup_confirm: claude-4kiw-memory-pointer`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         },
         {
-          "summary": "`STAGING/claude-consolidate-test-dir` (38.4 MB, 786 files) — no open pull request; `claude/consolidate-test-dir` is already in `main`, tip 50 min old.",
+          "summary": "`STAGING/claude-consolidate-test-dir` (38.4 MB, 786 files) — no open pull request; `claude/consolidate-test-dir` is already in `main`, tip 55 min old.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `claude-consolidate-test-dir` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-consolidate-test-dir` and `cleanup_confirm: claude-consolidate-test-dir`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         }
@@ -137,38 +137,38 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 35765975,
+          "value": 35767120,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 439470436,
+          "value": 445811131,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 413643776,
+          "value": 420214784,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 58,
+          "value": 59,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 12.29,
+          "value": 12.46,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 419.1 MB against 34.1 MB of tracked content — 12.3x, in 58 pack(s).",
+          "summary": "`.git` is 425.2 MB against 34.1 MB of tracked content — 12.5x, in 59 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -212,19 +212,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 276,
+          "value": 286,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 86,
+          "value": 95,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 190,
+          "value": 191,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -243,7 +243,7 @@
       ],
       "findings": [
         {
-          "summary": "190 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "191 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."

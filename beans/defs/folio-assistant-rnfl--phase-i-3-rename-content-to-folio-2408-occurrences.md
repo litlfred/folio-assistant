@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
 updated_at: 2026-09-18T15:00:27Z
+parent: folio-assistant-vke6
 ---
 
 Mechanical but wide: **2,408** literal `content/` occurrences across **429**
