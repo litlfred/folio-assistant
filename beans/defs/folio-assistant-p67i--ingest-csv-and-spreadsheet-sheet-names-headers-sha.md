@@ -22,6 +22,8 @@ provenance stamp, and a grep for a column header finds the dataset that has it.
 
 Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Tabular`.
 
+_2026-09-19T15:46:59Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## 2026-09-19 — headers as the findable surface, and the narrative nobody wrote
 
 Done. `scripts/tabular-records.py` + `schemas/tabular-records.ts`;
