@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-19T10:48:00Z
-updated_at: 2026-09-19T12:24:54Z
+updated_at: 2026-09-19T12:43:12Z
 parent: folio-assistant-zzmr
 ---
 
@@ -97,3 +97,38 @@ graph kind plus the `<base>/fsh-guts.jsonld` endpoint that publishes it, and
 those are the epic's two stated subjects. Its three UI children (`7vhe`,
 `d1r6`, `4kj4`) moved to `o3xy` at the same time, since a feature cannot
 parent a feature; each records its dependency on this bean in prose.
+
+
+## `<base>/fsh-guts.jsonld` exists (commit `8d1c8f27`)
+
+`scripts/fsh-guts-export.ts` → published by `docs-site.yml`, with the `.json`
+alias every rendering here needs because Pages serves `.jsonld` as
+octet-stream. 5 nodes from the committed corpus.
+
+**A separate document, not a subgraph** — folding these nodes into the main
+export would have undone the strip in one step. Reachable by name and by no
+edge; a test asserts the main graph still contains zero `fsh-guts` mentions.
+
+**Logs excluded by DECLARATION.** `.gitignore` keeping them off a CI machine
+is a property of the build, not of the export. Verified by writing a real log
+entry into the tree and re-exporting.
+
+### Two gates caught me
+
+- `schemas/fsh-guts.ts` is emitted as a Schema node, so the published graph
+  named the trashcan again. `isPublishedSchemaModule` is the **fourth** strip
+  site; the gap was latent from the day the strip was written.
+- `ns:check` refused four terms, one of which I had minted where the main
+  export maps to `rdfs:label`.
+
+### Also, and worth knowing
+
+`fsh-guts` summaries use `summary: >-`, and `agent-memory.ts`'s parser has no
+block-scalar support — it would have read every summary as the literal `>-`
+and dropped the prose. Extracted to `schemas/front-matter.ts` rather than
+writing a second hand-rolled YAML parser.
+
+### What remains on this bean
+
+Nothing in the store itself. `7vhe` (the dead-fish viewer) now has a document
+to read, which was the blocker.
