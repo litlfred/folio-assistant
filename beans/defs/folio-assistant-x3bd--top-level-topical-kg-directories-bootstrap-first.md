@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-09-19T06:40:18Z
+updated_at: 2026-09-19T06:48:18Z
 ---
 
 
@@ -46,3 +46,17 @@ SMART-BASE ALSO MODELS SKILLS AS ACTORS, which is worth knowing before we diverg
 BRIEF DEFINITIONS IN THE SCHEMA, RICH ONES IN cat-harness/docs — owner, same message. Note that smart-base already works this way and is the worked example: the FSH Description of SGUserStory is one sentence containing the As/I want/So that template and nothing else, and the interpretation lives in the IG's page content. Also note the shape to copy from UserScenario.fsh, which solves the same brief-vs-rich problem inside one field: `description[x] 1..1 string or uri` — either the markdown inline OR a URI to a markdown file relative to the repository root. That is precisely the 'brief in the schema, rich in the docs' rule made structural rather than editorial, and it is a pattern worth lifting.
 
 NOT DECIDED, and it is the one real question: whether we adopt SGUserStory's IRI (http://smart.who.int/base/StructureDefinition/SGUserStory) or mint our own term under FOLIO_NS. Adopting costs nothing today and makes a DAK folio's stories the same objects as ours; minting keeps the harness free of a WHO dependency, which is the direction rule this repo enforces everywhere else. Deferred deliberately — it is one line in @context either way, and it wants the owner.
+
+_2026-09-19T06:48:18Z_ — README'S CLOSING SECTION — THREE STEPS, ORDERED, owner 2026-09-19: 'in README once given functional explanation invoving all the terms, it should tell the reader they shoud: point the reader to .md containing skill to load, navigate and read documentation in a KG; point the read to the bootstrap jsonld and have them load the graph and read the bootstrap process; start the bootstrap bpmn process.' So the file's shape is now fully specified: the linked functional explanation first (actor/role/process/task/skill, reading the KG, user input, tool overview, one user story, every term a link), then a THREE-LINE HANDOFF, then nothing. That is the end of the README and the beginning of everything else.
+
+THE ORDERING IS THE DESIGN, NOT THE FORMATTING. Step 1 hands over a .md — a skill body a reader can read with no tooling at all. Step 2 hands over a JSON-LD graph, which the reader can now navigate BECAUSE OF STEP 1. Step 3 starts a process the reader found IN that graph in step 2. Each step is usable only after the previous one, and step 1 needs nothing. THE CONSEQUENCE, AND IT IS EASY TO BREAK: the README and step 1 must both be readable WITHOUT the ability to navigate the graph, because acquiring that ability is what step 1 IS. A future edit that makes the README's terms resolvable only through the graph, or makes the skill body reachable only via skill_fetch, closes the loop and bootstrap stops bootstrapping. Worth stating as the falsifier: A COLD READER WITH A BROWSER AND NO TOOLING MUST GET THROUGH STEP 1.
+
+THREE THINGS THIS MAKES CONCRETE THAT WERE VAGUE BEFORE.
+
+(1) BOOTSTRAP NEEDS ITS OWN JSON-LD EXPORT. 'point the reader to the bootstrap jsonld' is a different artefact from _kg/folio-assistant.jsonld (1185 nodes, this whole instance). Bootstrap is a standalone graph, so it exports itself — small, its own @id, and it must be loadable WITHOUT the instance it is about to load. That is also the falsifier for bootstrap's leanness restated as an artefact: if bootstrap.jsonld cannot be produced from bootstrap/ alone, bootstrap is not standalone. kg-export already takes a root, so this is plausibly a parameter rather than a second exporter — check before writing one.
+
+(2) STEP 1 NEEDS A REAL URL FOR A .md, WHICH IS PREREQUISITE (1) FROM TWO NOTES AGO, NOW UNAVOIDABLE. Previously the README sidestepped the undereferenceable-skill-body defect by carrying its content inline; this step does not sidestep it, it IS it — the README's job here is to hand over a link to a skill body. For a human the blob URL works today (AGENTS.md's readme.linkStyle default is blob precisely so a private repo's links follow the viewer's session). For the JSON-LD consumer reached in step 2 it still does not: a Skill node's `instructions` is a repo-relative path and is not in @context, so a processor drops it. So the two audiences need the same target published two ways, and that is a single decision to make once rather than twice.
+
+(3) STEP 3 HAS TWO READERS AND ONLY ONE OF THEM HAS MCP. 'Start the bootstrap bpmn process' is workflow_start for an MCP-connected agent and is 'read the .bpmn the graph pointed you at, and do its first step' for anybody else — a cold agent, a human, a different toolchain. The README must state it in a way that is true for both, which argues for naming the PROCESS and its first step rather than naming a tool call. This is the same reason the diagram is a decision tree with one gateway: a first step you can perform by reading is a first step that does not require the thing you have not loaded yet.
+
+NOTHING HERE CHANGES THE BREVITY CONSTRAINT. Three steps, three links, three lines. The temptation this creates is to explain each step, and the link-density rule already forbids it: the skill body explains itself, the graph describes itself, and the BPMN is the process.
