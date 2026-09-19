@@ -103,7 +103,11 @@ bun run beans:claim <bean-id> --dry-run    # say what would happen
 ```
 
 It is a **claim only** — never your work, which is the point: a claim bundled
-with work cannot be pushed until the work is ready. It builds the commit in a
+with work cannot be pushed until the work is ready. It does write the same
+status into **your** copy of the bean, and that is correctness rather than
+convenience: the claim lands on the default branch, so a branch still carrying
+`todo` would **revert it at merge time** as an ordinary content change. It does
+not commit that — what to commit and when is yours. It builds the commit in a
 detached `git worktree`, so a session mid-edit is not asked to accept a checkout,
 and removes it on every path including failure.
 

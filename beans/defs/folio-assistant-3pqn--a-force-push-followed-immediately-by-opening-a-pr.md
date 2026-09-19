@@ -42,14 +42,44 @@ I had independently guessed 'GitHub suppresses events authored by the app token'
 
 What is NOT in doubt, and is the part worth acting on: a PR with zero checks renders identically to one whose checks have not started, so 'nothing red' is not evidence of anything. Verify against the workflow-run list (actions_list on the workflow, filtered by branch) and compare head_sha, rather than reading the PR page.
 
-_2026-09-19T11:58:33Z_ — Live instance of this, observed 2026-09-19T11:53-11:57Z on PR #411 (branch claude/close-w2g5), and worth recording because it was caught only by accident.
+_2026-09-19T11:48Z_ — FIFTH observation, and the first that was **not a force-push**, which narrows this.
 
-The PR opened with ZERO workflow runs — not code-quality-gates, not feature-staging, nothing. 'list_workflow_runs' filtered to that branch returned total_count 0 across ALL workflows. The branch and the PR were both fine: local head, remote head and the PR's head all agreed on 1e05815db, state open, not a draft. Actions was healthy repo-wide at the same moment — PRs opened at 11:49, 11:49 and 11:51 each got their runs via the 'pull_request' event and all concluded success. So this was a dropped event in a narrow window, not a misconfiguration and not a queue backlog.
+- **#409**, head `678065a99`. Only the push-triggered `.jsonld` check fired; no `pull_request` run for that sha at all. The newest `code-quality-gates` run on the branch was for `ca62e8892` — the commit the PREVIOUS PR (#399) had merged, exactly the #340/#349/#383 pattern. Fixed by `workflow_dispatch` against the branch, as before.
 
-WHAT MAKES IT THIS BEAN'S DEFECT RATHER THAN A TRANSIENT: there was nothing to see. No red X, no failed run, no pending check — the checks list was simply empty, which at a glance is indistinguishable from a PR whose checks are green and which the GitHub UI does not distinguish either. I found it only because I went looking for a result I had a specific reason to expect. An agent following the 'never merge red' rule would have merged this quite happily: it is not red.
+**The new evidence: this was a plain fast-forward push.** `git push -u` with no `--force`, and `git merge-base --is-ancestor ca62e8892 678065a99` returns true, so the old remote tip is an ancestor of the new head — no history was rewritten. Every prior observation in this bean was a `--force-with-lease` push, so the title ("A force-push followed immediately by…") is **too narrow** and a reader filtering for force-pushes will not recognise their own case. Not renaming it here, since it is not my bean; flagging it because the title is what the next agent greps.
 
-Corroborating signal from the same window, which suggests the drop was not unique to my PR: another session dispatched code-quality-gates manually for its own PR #409 at 11:52:34Z (run 35441299274, event workflow_dispatch) rather than receiving a pull_request run.
+Timing, added to the four already recorded: push 11:44:03Z, PR opened ~11:44:30Z, so **~30 s**. The series is now 52 s fail, ~45 s pass, 30 s fail, 13 s pass, seconds fail — which continues to show no monotonic relationship and is further counter-evidence to a ref-update/opened race.
 
-REMEDY USED, for the record: 'actions_run_trigger run_workflow' on code-quality-gates.yml with ref=claude/close-w2g5, which ran the real gates against the real head commit 1e05815db and concluded success (run 35441434015, associated with PR 411). That is not the forbidden 'kick CI' move — no empty commit, no close-and-reopen — it is the same checks on the same code, reached by a different trigger. But it depends on a person noticing, which is exactly what this bean says cannot be relied on.
+One hypothesis this observation is consistent with and the bean has not recorded: the branch had just been **reset to `origin/main` and force-updated locally** (`branch: Reset to origin/main` in the reflog at 11:33:42Z) after its previous PR merged, so the PUSH was a fast-forward but the branch had very recently pointed at a merged commit. #340, #349 and #383 all also opened a PR on a branch whose predecessor had just merged. That is a property of the BRANCH's recent history rather than of the push, and it would explain why elapsed time predicts nothing. Stated as a hypothesis, not a finding — I have not tested it, and the correct test is to open a PR on a freshly-created branch name and compare.
 
-Suggests the check this bean needs is positive rather than negative: not 'did any check fail' but 'did the expected set of checks REPORT AT ALL on this head', with absent treated as a third state rather than folded into pass.
+What is unchanged and is the part worth acting on: a PR with zero checks renders identically to one whose checks have not started, so "nothing red" is evidence of nothing. Verify with `actions_list` on the workflow and compare `head_sha` against the PR's head.
+
+_2026-09-19T11:50Z_ — SIXTH observation on #409, and it contradicts this bean's own counter-evidence.
+
+The note above records #409's PR-open getting no run. I then pushed a second commit (`d87c66031`) to the **already-open** PR — the case this bean explicitly recorded as WORKING:
+
+> Counter-evidence that isolates the timing: a NORMAL push to an open PR (#349, merge commit `08d304b4`) fired all seven checks immediately.
+
+It did not fire. No `code-quality-gates` run exists for `d87c66031` on any event, minutes later. So "a normal push to an open PR always fires" is now falsified too, and the remaining shared property across all six observations is narrower than either the push kind or the elapsed time: **every one of them is on a branch whose previous PR had recently merged**, i.e. a reused branch name.
+
+That strengthens the hypothesis in the note above from "consistent with" to "the only property not yet contradicted". It is still untested — the test remains: open a PR on a **freshly created** branch name and push to it twice, comparing both against the run list.
+
+One incidental result worth keeping, because it is the only thing here that is good news: the hand-dispatched run (#980, `workflow_dispatch`, `678065a99`) completed **success**, including the `readme:audit` step wired in that same commit. So `workflow_dispatch` remains a reliable workaround, and the gate it exercised is sound in CI rather than only locally.
+
+_2026-09-19T11:58:33Z_ — SEVENTH observation, and it is the test the two notes above asked for: **a freshly created branch name**. It falsifies the reused-branch hypothesis.
+
+PR #411, branch `claude/close-w2g5`. The branch was created new from `HEAD` (reflog: `branch: Created from HEAD` at `98144b5a8`) and **#411 is the only pull request that has ever had it as head** — `list_pull_requests` with `state=all` and `head=litlfred:claude/close-w2g5` returns exactly one row. There is no previous PR on this branch name, recently merged or otherwise. So "every one of them is on a branch whose previous PR had recently merged" does not hold: this one is not.
+
+What happened, in the same shape as the observations above:
+
+- push `1e05815db`, PR opened 11:53:43Z → **ZERO runs**, across ALL workflows, not just `code-quality-gates`: `list_workflow_runs` filtered to the branch returned `total_count: 0`. No staging preview either.
+- Fixed by `workflow_dispatch` on `code-quality-gates.yml` with `ref=claude/close-w2g5` — run `35441434015`, against the real head `1e05815db`, conclusion success.
+- Then pushed a second commit `13cf37c76` to the **already-open** PR → the `pull_request` run **DID** fire (run `35441561712`, event `pull_request`, success).
+
+That last point cuts against the sixth observation above, which recorded a push to an already-open PR NOT firing on #409. Mine fired. So neither "a normal push to an open PR always fires" nor "it never does" survives; the behaviour is intermittent across both cases.
+
+Where that leaves the narrowing, stated as what is left rather than as a new hypothesis: the remaining shared property across all seven is only that a PR was opened or pushed to during a window in which GitHub dropped the event. Elapsed time predicts nothing (already established above), push kind predicts nothing (fifth observation), branch reuse predicts nothing (this one), and push-to-open-PR predicts nothing (this one against the sixth). I have no better hypothesis to offer and would rather say so than invent one.
+
+Corroborating, from the same window: another session hand-dispatched `code-quality-gates` for its own #409 at 11:52:34Z (run `35441299274`, event `workflow_dispatch`) — so two sessions hit this within ninety seconds of each other.
+
+Unchanged and still the part worth acting on, agreeing with the notes above: **a PR with zero checks renders identically to one whose checks are green.** No red X, no failure, no pending row — just an empty list. An agent following "never merge red" merges it happily, because it is not red. The check wants to be POSITIVE — did the expected set of checks report at all on this head, with absent as a third state — rather than a search for failures.
