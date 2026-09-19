@@ -176,11 +176,20 @@ const RULES: Rule[] = [
       // core `schemas/` prefix and made four harness modules read as depending
       // on the content layer. None of it describes a folio's content.
       "schemas/skill-package.ts",
+      // What happened when a Tool ran, and under whose authority. Tools are
+      // the HARNESS's vocabulary — the `tools` graph is declared by
+      // `agentic-harness`, not by any folio — and this file imports only
+      // `zod`, so it carries nothing of the content model with it. Its one
+      // production consumer, `src/mcp/project.ts`, is the harness's too.
+      "schemas/tool-invocation.ts",
       // The composition root's own inventory of which content adapters this
       // instance ships. `src/` is claimed by subdirectory, so a new file at
       // its top level falls through — reported `unassigned`, which is the
       // tool working: it declined to guess rather than defaulting.
       "src/builtin-adapters.ts",
+      // The generic tool-group loader, shared by both servers. `src/` is
+      // claimed by subdirectory, so a file at its top level falls through.
+      "src/tool-groups.ts",
       // Two scripts that arrived from `main` and fell through every prefix.
       // Both are harness tooling about the KG's own artefacts, not about any
       // folio's content: one introspects which Tools this instance's MCP
