@@ -4,7 +4,7 @@ title: A force-push followed immediately by opening a PR produces a PR with zero
 status: todo
 type: bug
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-09-19T11:46:36Z
+updated_at: 2026-09-19T11:48:27Z
 ---
 
 OBSERVED TWICE, 2026-09-19, on `litlfred/folio-assistant`.
@@ -52,3 +52,15 @@ Timing, added to the four already recorded: push 11:44:03Z, PR opened ~11:44:30Z
 One hypothesis this observation is consistent with and the bean has not recorded: the branch had just been **reset to `origin/main` and force-updated locally** (`branch: Reset to origin/main` in the reflog at 11:33:42Z) after its previous PR merged, so the PUSH was a fast-forward but the branch had very recently pointed at a merged commit. #340, #349 and #383 all also opened a PR on a branch whose predecessor had just merged. That is a property of the BRANCH's recent history rather than of the push, and it would explain why elapsed time predicts nothing. Stated as a hypothesis, not a finding — I have not tested it, and the correct test is to open a PR on a freshly-created branch name and compare.
 
 What is unchanged and is the part worth acting on: a PR with zero checks renders identically to one whose checks have not started, so "nothing red" is evidence of nothing. Verify with `actions_list` on the workflow and compare `head_sha` against the PR's head.
+
+_2026-09-19T11:50Z_ — SIXTH observation on #409, and it contradicts this bean's own counter-evidence.
+
+The note above records #409's PR-open getting no run. I then pushed a second commit (`d87c66031`) to the **already-open** PR — the case this bean explicitly recorded as WORKING:
+
+> Counter-evidence that isolates the timing: a NORMAL push to an open PR (#349, merge commit `08d304b4`) fired all seven checks immediately.
+
+It did not fire. No `code-quality-gates` run exists for `d87c66031` on any event, minutes later. So "a normal push to an open PR always fires" is now falsified too, and the remaining shared property across all six observations is narrower than either the push kind or the elapsed time: **every one of them is on a branch whose previous PR had recently merged**, i.e. a reused branch name.
+
+That strengthens the hypothesis in the note above from "consistent with" to "the only property not yet contradicted". It is still untested — the test remains: open a PR on a **freshly created** branch name and push to it twice, comparing both against the run list.
+
+One incidental result worth keeping, because it is the only thing here that is good news: the hand-dispatched run (#980, `workflow_dispatch`, `678065a99`) completed **success**, including the `readme:audit` step wired in that same commit. So `workflow_dispatch` remains a reliable workaround, and the gate it exercised is sound in CI rather than only locally.
