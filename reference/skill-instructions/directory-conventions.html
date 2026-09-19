@@ -498,6 +498,50 @@ graph</strong>. <code class="language-plaintext highlighter-rouge">folio</code> 
 
 <p>The vocabulary is <strong>open</strong>, and split across two layers.</p>
 
+<blockquote>
+<h3 id="kg-was-renamed-to-cat-harness-2026-09-19">
+  
+  
+    <a href="#kg-was-renamed-to-cat-harness-2026-09-19" class="anchor-heading" aria-labelledby="kg-was-renamed-to-cat-harness-2026-09-19"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">kg</code> was renamed to <code class="language-plaintext highlighter-rouge">cat-harness</code> (2026-09-19)
+  
+  
+</h3>
+    
+
+  <p>Every other harness concept is named for the <strong>layer that defines it</strong> —
+<code class="language-plaintext highlighter-rouge">cat-harness.json</code>, the <code class="language-plaintext highlighter-rouge">CatHarness</code> declaration, the <code class="language-plaintext highlighter-rouge">cat-harness</code>
+instance. <code class="language-plaintext highlighter-rouge">kg</code> named what the graph HOLDS instead, and was the odd one out.</p>
+
+  <p><strong>The old spelling still reads, and that is load-bearing rather than
+politeness.</strong> This document says overrides match on the entry’s <code class="language-plaintext highlighter-rouge">id</code>, not
+its <code class="language-plaintext highlighter-rouge">path</code>, because “matching on path makes two knowledge graphs out of one
+relocation”. The same property makes renaming a kind a CROSS-INSTANCE
+breaking change: a downstream instance declaring <code class="language-plaintext highlighter-rouge">graphs: ["kg"]</code> would
+resolve nothing, and would do so <strong>silently</strong> — scanning, finding nothing,
+reporting a clean run. That is the <code class="language-plaintext highlighter-rouge">dh4f</code> defect delivered to somebody
+else’s repository.</p>
+
+  <p>So <code class="language-plaintext highlighter-rouge">GRAPH_KIND_ALIASES</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> maps <code class="language-plaintext highlighter-rouge">kg</code> →
+<code class="language-plaintext highlighter-rouge">cat-harness</code>, resolved once at the registry boundary and nowhere else.
+<code class="language-plaintext highlighter-rouge">resolveGraphKind</code> reports WHICH spelling was used, so a caller can warn —
+an alias that resolves silently is an alias nobody ever removes.</p>
+
+  <p><strong>A directory <code class="language-plaintext highlighter-rouge">id</code> of <code class="language-plaintext highlighter-rouge">kg</code> is untouched.</strong> An id is the instance’s own
+handle and must survive a rename of anything else; this repository’s own
+declaration moved to <code class="language-plaintext highlighter-rouge">id: "cat-harness"</code> because it chose to, not because
+it had to.</p>
+
+  <p><strong>The JSON-LD projection canonicalises.</strong> <code class="language-plaintext highlighter-rouge">toJsonLd</code> emits the type IRI, not
+the spelling, so reading a projection back yields <code class="language-plaintext highlighter-rouge">cat-harness</code> whatever was
+written. Project-and-read-back is therefore a migration path for an old
+declaration rather than a way to lose information.</p>
+
+  <p>Not renamed, deliberately: <code class="language-plaintext highlighter-rouge">kg:audit</code>, <code class="language-plaintext highlighter-rouge">kg-export</code>, <code class="language-plaintext highlighter-rouge">kg-qa</code> sidecars and the
+<code class="language-plaintext highlighter-rouge">kg</code> QA family. Those are command and file-format names, not the graph kind,
+and churning them would touch hundreds of references for no gain in what a
+declaration MEANS.</p>
+</blockquote>
+
 <div class="table-wrapper"><table>
   <thead>
     <tr>
@@ -515,9 +559,9 @@ graph</strong>. <code class="language-plaintext highlighter-rouge">folio</code> 
       <td>no</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">kg</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
       <td><strong>harness</strong></td>
-      <td>skills, workflows, roles — the instance’s own knowledge graph</td>
+      <td>skills, workflows, roles — the harness layer’s own knowledge graph. Renamed from <code class="language-plaintext highlighter-rouge">kg</code> on 2026-09-19; <code class="language-plaintext highlighter-rouge">kg</code> still reads, deprecated.</td>
       <td>no</td>
     </tr>
     <tr>
@@ -1042,7 +1086,7 @@ rendering pipeline depends on.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35426548948"><code>6b54cdf</code></a> &middot; 2026-09-19T06:26:05Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35427815974"><code>381d948</code></a> &middot; 2026-09-19T06:53:56Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

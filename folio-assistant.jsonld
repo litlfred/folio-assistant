@@ -208,10 +208,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T06:26:35.048Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6b54cdfaf4408506a7b2593d4def0cca54e23aa1",
-  "sourceCommitSha": "6b54cdfaf4408506a7b2593d4def0cca54e23aa1",
-  "sourceCommitAt": "2026-09-19T08:25:12+02:00",
+  "generatedAt": "2026-09-19T06:54:24.302Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/381d9484acee628b39e83c5cc936609e9cd886be",
+  "sourceCommitSha": "381d9484acee628b39e83c5cc936609e9cd886be",
+  "sourceCommitAt": "2026-09-19T08:53:03+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 149,
@@ -1059,7 +1059,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 387,
+      "instructionLines": 422,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1386,7 +1386,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 357,
+      "instructionLines": 375,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true
@@ -16657,12 +16657,12 @@
       "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/kg",
+      "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/cat-harness",
       "@type": "https://litlfred.github.io/folio-assistant/ns#GraphKind",
-      "name": "kg",
+      "name": "cat-harness",
       "typeIri": "https://litlfred.github.io/folio-assistant/ns#KnowledgeGraph",
       "renderable": false,
-      "summary": "Skills, workflows, roles — the instance's own knowledge graph."
+      "summary": "Skills, workflows, roles — the harness layer's own knowledge graph."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/ns#graphKind/schemas",
@@ -16769,17 +16769,17 @@
       "path": "schemas/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/ns#graphKind/schemas",
-        "https://litlfred.github.io/folio-assistant/ns#graphKind/kg"
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/cat-harness"
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/kg",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-harness",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
-      "name": "kg",
+      "name": "cat-harness",
       "path": "skills/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/ns#graphKind/kg"
+        "https://litlfred.github.io/folio-assistant/ns#graphKind/cat-harness"
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), and the `kg-qa/` audit sidecars beside each. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not."
     },
