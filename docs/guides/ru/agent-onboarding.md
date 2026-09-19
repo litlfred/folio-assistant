@@ -135,8 +135,8 @@ beans update <id> --status in-progress    # CLAIM before you work
 параллельное хранилище задач. Не используйте `beans create` для массовых машинно-генерируемых
 очередей (`*.qa.json`, файлы свидетельств) — они остаются в виде массового JSON.
 
-Полные правила работы: `.claude/skills/local/todo-manager.md`,
-`.claude/skills/local/bean-coordination.md`.
+Полные правила работы: `skills/folio-core/todo-manager.md`,
+`skills/folio-core/bean-coordination.md`.
 
 ## 7. Файлы QA и оси
 

@@ -22,7 +22,7 @@ generic agent infrastructure (beans work-plan, MCP server, session-start harness
 storing issues as markdown under `beans/`. It backs the agent session work-plan
 and supersedes `TodoWrite` / `todos/*.json`. Discipline: **`beans ≠ sidecars`** —
 never `beans create` a QA/witness/watcher queue; those stay as bulk JSON read by
-their own `.ts` tooling. See `.claude/skills/local/todo-manager.md`.
+their own `.ts` tooling. See `skills/folio-core/todo-manager.md`.
 
 ## §2 Why this migration exists
 
@@ -112,7 +112,7 @@ Handoff item **A** is qou-only (no `settings.json` exists here).
   won't build (Q1 decided).** A separate todos platform (MCP `/api/todos` route,
   `/todos` dashboard, `content-todos.ts` store) is **intentionally not ported** —
   beans *is* the todo mechanism for both session and cross-session/cross-agent
-  coordinated work. Guidance lives in `.claude/skills/local/todo-manager.md`
+  coordinated work. Guidance lives in `skills/folio-core/todo-manager.md`
   ("Using beans for todos"). Note: the content-review feedback workflow (the
   `todo-review` skill over `feedback/<paper>/*.ts`) is a **separate domain
   feature** and is left untouched. The 3 qou goal queues and QA sidecar remain a
