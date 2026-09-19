@@ -227,13 +227,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T09:36:10.012Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c8b79f43507d9be1e9f2378cadbf7506165c242e",
-  "sourceCommitSha": "c8b79f43507d9be1e9f2378cadbf7506165c242e",
-  "sourceCommitAt": "2026-09-19T11:34:34+02:00",
+  "generatedAt": "2026-09-19T09:56:58.735Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/42b29893544bc5f63dc7f6519fb4a940bf0308d0",
+  "sourceCommitSha": "42b29893544bc5f63dc7f6519fb4a940bf0308d0",
+  "sourceCommitAt": "2026-09-19T11:55:25+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 151,
+    "Skill": 152,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -1087,6 +1087,21 @@
       "ambiguous": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "kg-navigation",
+      "title": "Reading the knowledge graph — how to find the skill you need",
+      "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/kg-navigation.md",
+      "instructionLines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "role-model",
@@ -1186,7 +1201,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 64,
+      "instructionLines": 121,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true
@@ -1423,7 +1438,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 392,
+      "instructionLines": 397,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true
@@ -3523,6 +3538,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/interaction-modality",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/markdown-render-check",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/mcp-assembly",
@@ -17594,7 +17610,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/tools"
       ],
-      "description": "Tool definitions — one concrete way to exercise a skill, each naming the skills it satisfies. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated."
+      "description": "Tool definitions, one subdirectory per contributing instance (tools/<stub>/) so a composed instance adds its own without colliding on a filename. tools/index.ts merges them and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/schemas",
@@ -17690,8 +17706,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "c8b79f43507d9be1e9f2378cadbf7506165c242e",
+    "sha": "42b29893544bc5f63dc7f6519fb4a940bf0308d0",
     "pr": "main",
-    "run": "35435073822"
+    "run": "35436008166"
   }
 }
