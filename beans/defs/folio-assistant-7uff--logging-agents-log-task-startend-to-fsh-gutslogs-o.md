@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-19T11:23:31Z
-updated_at: 2026-09-19T12:18:23Z
+updated_at: 2026-09-19T12:22:52Z
 ---
 
 Owner, 2026-09-19:
@@ -223,3 +223,31 @@ Marked: `crdm-requirements`, `editing-hci-validation`, `content-lifecycle`.
   question.
 - **Emptying is specified and not implemented.** The skill defines one entry,
   all of them, and a periodic sweep; no code does any of the three.
+
+
+## Emptying (commit `8289e34d`) — 7uff is complete
+
+`emptyLog(root, selector)`, selector one of `{id}`, `{session}`, `{before}`,
+`{all: true}`. No default selector.
+
+**The judgement worth recording:** the exception fsh-guts grants is to a KIND
+OF FILE, not to a path. An `rm` over the directory's contents would have
+relaxed never-delete for `fsh-guts/logs/` itself, so a stray proposal dropped
+there would have gone with the logs. A file is removed only if it declares
+itself `folio-log/v1`; "could not tell" resolves to keep; a symlink out is
+refused by `realpath`; and every file not removed says why, with
+`describeSweep` separating a selector miss from a refusal.
+
+13 tests, both guards proven load-bearing by disabling them.
+
+### Everything on this bean is now done
+
+schema · role · skill · BPMN · producer · rich references · `<folio:log>`
+capture on three processes · emptying. Ready to resolve once the owner
+confirms; not resolving unilaterally.
+
+### The one thing I would still add, as its own bean if wanted
+
+Nothing outside `workflow_start` / `workflow_complete` calls the producer, so
+an agent working outside a process logs nothing. Whether that wants a session
+hook or its own MCP tool is a real design question, not an oversight.
