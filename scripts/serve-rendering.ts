@@ -41,7 +41,7 @@
  *   the third state, kept as one.
  *
  * ```sh
- * bun run scripts/serve-rendering.ts --dir docs/_site --port 4000
+ * bun run scripts/serve-rendering.ts --dir <site> --port 4000
  * ```
  *
  * @module scripts/serve-rendering
@@ -49,7 +49,7 @@
 import { existsSync, realpathSync, statSync } from "node:fs";
 import { join, normalize, resolve, sep } from "node:path";
 
-import { renderingMediaType } from "../schemas/cat-harness.js";
+import { renderingMediaType, siteDirFor } from "../schemas/cat-harness.js";
 
 export interface ServeOptions {
   /** Directory to serve. */
@@ -160,6 +160,32 @@ export function serveRendering(opts: ServeOptions): ReturnType<typeof Bun.serve>
   });
 }
 
+/**
+ * The directory to serve when `--dir` is not given.
+ *
+ * **The site root is `siteDirFor`'s answer, never a literal.** The first draft
+ * of this file wrote `docs/_site`, which was wrong twice over: hardcoded, and
+ * naming a directory that had already stopped being the site root when the
+ * build moved to `docs/<stub>` for the repo split. `site-dir-single-answer`
+ * (bean `x4a6`) landed on `main` while this was in review and caught it.
+ *
+ * `siteDirFor` **throws** when the declaration cannot be read, because a site
+ * root guessed wrong writes pages into a directory nothing serves. Here the
+ * stakes are lower — nothing is written, and the caller sees the resolved
+ * path printed — so an unreadable declaration falls back to the working
+ * directory rather than refusing to start. That is not a guess dressed as an
+ * answer: the path is echoed on the first line of output.
+ */
+function defaultDir(): string {
+  try {
+    const site = siteDirFor(process.cwd());
+    if (existsSync(site)) return site;
+  } catch {
+    // No declaration, or a nameless one. Fall through.
+  }
+  return ".";
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const flag = (name: string): string | undefined => {
@@ -171,18 +197,20 @@ if (import.meta.main) {
     console.log(
       `Serve an instance's renderings with their declared media types.\n\n` +
         `  bun run scripts/serve-rendering.ts [--dir <path>] [--port <n>] [--host <iface>]\n\n` +
-        `  --dir   directory to serve (default: docs/_site if present, else .)\n` +
+        `  --dir   directory to serve (default: the declared site root, else .)\n` +
         `  --port  port to bind (default 4000)\n` +
         `  --host  interface (default 127.0.0.1 — loopback, deliberately)\n`,
     );
     process.exit(0);
   }
 
-  const fallback = existsSync("docs/_site") ? "docs/_site" : ".";
+  const dir = flag("--dir") ?? defaultDir();
   const server = serveRendering({
-    dir: flag("--dir") ?? fallback,
+    dir,
     port: Number(flag("--port") ?? 4000),
     hostname: flag("--host"),
   });
-  console.log(`serving ${resolve(flag("--dir") ?? fallback)} at http://${server.hostname}:${server.port}`);
+  // Always print the RESOLVED directory, so the default is never a silent
+  // guess even when it was inferred.
+  console.log(`serving ${resolve(dir)} at http://${server.hostname}:${server.port}`);
 }
