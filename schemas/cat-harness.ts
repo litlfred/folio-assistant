@@ -100,6 +100,27 @@ export interface GraphKindDef {
    */
   renderable: boolean;
   summary: string;
+  /**
+   * The skill that says how to READ a graph of this kind, by name.
+   *
+   * A property of the KIND rather than of the directory, because a `qa` graph
+   * is read the same way wherever it sits — putting it on the directory entry
+   * would restate one fact per instance and let the copies drift.
+   *
+   * Optional, and absent means absent: naming a skill that does not exist
+   * would be the fake-reference failure `activity-names-skill` exists to
+   * prevent, where silencing a gap costs less than filling it.
+   */
+  skill?: string;
+  /**
+   * Where the shape of a node in this graph is defined — a repo-relative
+   * module path, or a `$schema` tag the files themselves carry.
+   *
+   * Optional because not every kind has one answer: `kg` holds five node kinds
+   * typed in different places, and a single pointer there would be a lie of
+   * precision rather than a fact.
+   */
+  schema?: string;
 }
 
 /**
@@ -167,6 +188,27 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: `${FOLIO_NS}SchemaGraph`,
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
+  },
+  // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
+  //
+  // Declared as its own kind rather than folded into `kg` because the two are
+  // different artefacts with different owners: a verdict lives beside its
+  // subject and is what a checker wrote, while a witness is that verdict
+  // flattened for the web and is what the docs panel fetches. One is edited by
+  // fixing a checker; the other is never edited at all.
+  //
+  // Undeclared until 2026-09-19 — 134 committed files that no instance
+  // declaration mentioned, so a consumer scanning the declared directories saw
+  // none of them and reported a clean run over the lot.
+  qa: {
+    type: `${FOLIO_NS}QaGraph`,
+    renderable: false,
+    summary:
+      "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
+      "families (`block`, `kg`, `translation`), projected for the docs site from the " +
+      "verdicts that live beside their subjects. Generated; never hand-edited.",
+    skill: "qa-witness",
+    schema: "content/pipeline/qa-witness.ts",
   },
   // ONE kind for the whole work plan, not one per store. It replaced `workplan`
   // + `process-state` in #266; the rationale is in this map's doc comment above,
