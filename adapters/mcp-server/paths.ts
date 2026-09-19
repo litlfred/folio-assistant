@@ -7,6 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -35,7 +36,21 @@ export const CONTENT_DIR = resolve(REPO_ROOT, "content");
  * and the graph index reports an absent root as absent rather than as an
  * empty one, so a caller can tell "not built yet" from "nothing matched".
  */
-export const LIBRARY_DIR = resolve(REPO_ROOT, "library");
+// declared-path-literal: as above — ingestion CREATES library/ on its
+// first run, so resolving to nothing before then would make the first
+// ingest impossible rather than merely empty.
+// The declared `library` graph. Fallback to the convention because ingestion
+// CREATES this directory on its first run, and resolving to nothing before
+// then would make the first ingest impossible rather than merely empty.
+// declared-path-literal: the convention fallback for a WRITE target.
+// `directoryForGraph` returns undefined for a directory that is not there
+// yet, and the ingestion queue must be creatable before anything is in it.
+// The declared `uploads` graph — the ingestion queue, before anything is L1.
+// Write-target fallback, as above.
+export const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? resolve(REPO_ROOT, "uploads");
+
+// declared-path-literal: the convention fallback, at the call site so the choice is visible — ingestion CREATES library/ on its first run.
+export const LIBRARY_DIR = directoryForGraph(REPO_ROOT, "library") ?? resolve(REPO_ROOT, "library");
 
 /** LaTeX chapters output directory. */
 export const CHAPTERS_DIR = resolve(REPO_ROOT, "chapters");
@@ -60,7 +75,10 @@ export const BUILD_DIR = resolve(REPO_ROOT, "build");
 export const PREFS_FILE = resolve(REPO_ROOT, ".folio-assistant-prefs.json");
 
 /** Gitignored todos directory (survives branch switches). */
-export const TODOS_DIR = resolve(REPO_ROOT, "todos");
+// declared-path-literal: as above, a write target.
+// The declared `todos` graph — a person's outstanding items, as against
+// `beans/`. Same write-target fallback as above.
+export const TODOS_DIR = directoryForGraph(REPO_ROOT, "todos") ?? resolve(REPO_ROOT, "todos");
 
 /** Feedback directory — committed to main via worktree.
  *  Structure: feedback/<paper-dir>/<rootName>.ts */

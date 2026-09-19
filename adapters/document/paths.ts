@@ -9,6 +9,7 @@
  */
 
 import { resolve } from "path";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 // Default: assume folio-assistant/adapters/paper/ is inside the repo
 let _repoRoot = resolve(import.meta.dir, "../../..");
@@ -39,7 +40,13 @@ export const get = {
   BUILD_DIR: () => resolve(_repoRoot, "build"),
   PREFS_FILE: () => resolve(_repoRoot, ".folio-prefs.json"),
   FEEDBACK_DIR: () => resolve(_repoRoot, ".folio-feedback"),
-  UPLOADS_DIR: () => resolve(_repoRoot, "uploads"),
+  // declared-path-literal: the convention fallback for a WRITE target —
+  // see adapters/mcp-server/paths.ts for the reasoning.
+  // The declared `uploads` graph, falling back to the convention because
+  // this is a WRITE target: `directoryForGraph` returns undefined for a
+  // directory that is not there yet, and the ingestion queue has to be
+  // creatable before anything has been dropped in it.
+  UPLOADS_DIR: () => directoryForGraph(_repoRoot, "uploads") ?? resolve(_repoRoot, "uploads"),
 };
 
 // ── Static exports for backward compatibility with tool files ────

@@ -23,6 +23,19 @@ import { createHash } from "crypto";
 
 import { extractMarkdown, formatPot, type PotEntry } from "../../content/pipeline/pot-extract.js";
 import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject.js";
+/**
+ * The declared `translation-sources` graph — where a translator's `.pot` and
+ * `.po` live. Falls back to the convention because extraction CREATES the
+ * tree for a locale that has none yet.
+ *
+ * declared-path-literal: the convention fallback, stated at the call site
+ * rather than inside `directoryForGraph` so the choice is visible.
+ */
+function translationsRoot(repoRoot: string): string {
+  return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
+}
+
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 export function registerTranslationTools(server: McpServer, repoRoot: string): void {
 
@@ -88,7 +101,7 @@ export function registerTranslationTools(server: McpServer, repoRoot: string): v
 
       // Write POT
       const name = basename(inputPath, ".md");
-      const outDir = join(repoRoot, "translations", locale);
+      const outDir = join(translationsRoot(repoRoot), locale);
       mkdirSync(outDir, { recursive: true });
       const potPath = join(outDir, `${name}.pot`);
       const pot = formatPot(allEntries, { projectName: project_name, locale });
@@ -144,7 +157,7 @@ export function registerTranslationTools(server: McpServer, repoRoot: string): v
       const result = injectMarkdown(sourceMd, translations);
 
       // Write output
-      const outDir = join(repoRoot, "translations", locale);
+      const outDir = join(translationsRoot(repoRoot), locale);
       mkdirSync(outDir, { recursive: true });
       const outPath = join(outDir, basename(source));
       writeFileSync(outPath, result.translated);
@@ -176,7 +189,7 @@ export function registerTranslationTools(server: McpServer, repoRoot: string): v
       ),
     },
     async ({ locale }) => {
-      const translationsDir = join(repoRoot, "translations");
+      const translationsDir = translationsRoot(repoRoot);
       if (!existsSync(translationsDir)) {
         return { content: [{ type: "text" as const, text: "No translations/ directory found." }] };
       }
@@ -291,7 +304,7 @@ export function registerTranslationTools(server: McpServer, repoRoot: string): v
       const sourceContent = readFileSync(sourcePath, "utf-8");
       const sourceHash = createHash("sha256").update(sourceContent).digest("hex");
 
-      const statusDir = join(repoRoot, "translations", locale);
+      const statusDir = join(translationsRoot(repoRoot), locale);
       mkdirSync(statusDir, { recursive: true });
       const statusPath = join(statusDir, "status.json");
 

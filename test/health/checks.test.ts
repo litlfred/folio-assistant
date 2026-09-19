@@ -25,6 +25,8 @@ import {
   BEAN_OPEN_LIMIT,
   BEAN_RESOLVED_INLINE_LIMIT,
   HEALTH_CHECKS,
+  ORPHAN_THRESHOLDS,
+  RECENT_COMMIT_MINUTES,
   STAGING_CRITICAL_BYTES,
   STAGING_WARN_BYTES,
   TRACKED_MAJOR_BYTES,
@@ -33,11 +35,13 @@ import {
   formatBytes,
   repositorySizeCheck,
   runHealthChecks,
+  previewLiveness,
   stagingOrphanCheck,
   stagingSizeCheck,
   stagingSlug,
   todoStoreCheck,
   type BeanEvidence,
+  type BranchEvidenceSet,
   type HealthContext,
   type StagingPreview,
 } from "./checks.ts";
@@ -54,6 +58,7 @@ function healthyContext(over: Partial<HealthContext> = {}): HealthContext {
       value: { branch: "present", previews: [{ slug: "claude-a", bytes: 10 * MB, files: 5 }], command: "fixture" },
     },
     openPrHeads: { state: "ok", value: ["claude/a"] },
+    branches: { state: "ok", value: { candidates: [], defaultBranch: "main", command: "fixture" } },
     repoSize: { state: "ok", value: { gitDirBytes: 20 * MB, trackedBytes: 10 * MB, packs: 1, packBytes: 18 * MB } },
     beans: {
       state: "ok",
@@ -192,6 +197,267 @@ describe("staging-preview-orphans", () => {
     // `claude/a-b` and `claude-a-b` collide, which is exactly why the check
     // never tries to recover a branch name from a directory name.
     expect(stagingSlug("claude/a-b")).toBe(stagingSlug("claude-a-b"));
+  });
+});
+
+/**
+ * The liveness signals, one at a time and then together.
+ *
+ * **Every test here names the preview it is about.** A count would pass while
+ * the wrong preview was spared, and sparing the wrong one is how a live
+ * collaborator's review artefact gets proposed for removal — which is the
+ * failure bean `w2g5` reports and the only one this check must never produce.
+ *
+ * `NOW` and the fixture dates are chosen so each test turns on ONE difference
+ * from the one before it.
+ */
+describe("staging-preview-orphans — liveness", () => {
+  const NOW = new Date("2026-09-19T12:00:00Z");
+
+  function branchSet(over: Partial<BranchEvidenceSet> = {}): BranchEvidenceSet {
+    return { candidates: [], defaultBranch: "main", command: "fixture", ...over };
+  }
+
+  /** A context whose only preview is `slug`, with the branches and PRs given. */
+  function withPreview(
+    slug: string,
+    openPrHeads: string[],
+    branches: BranchEvidenceSet,
+    extra: StagingPreview[] = [],
+  ): HealthContext {
+    return healthyContext({
+      now: NOW,
+      staging: {
+        state: "ok",
+        value: {
+          branch: "present",
+          previews: [{ slug, bytes: 37 * MB, files: 700 }, ...extra],
+          command: "fixture",
+        },
+      },
+      openPrHeads: { state: "ok", value: openPrHeads },
+      branches: { state: "ok", value: branches },
+    });
+  }
+
+  describe("each signal, firing on its own", () => {
+    it("`open-pr` spares a preview whose branch is merged and long idle", () => {
+      const l = previewLiveness(
+        "claude-live",
+        ["claude/live"],
+        branchSet({
+          candidates: [{ ref: "claude/live", mergedIntoDefault: true, headCommittedAt: "2026-08-01T00:00:00Z" }],
+        }),
+        NOW,
+      );
+      expect(l.slug).toBe("claude-live");
+      expect(l.live).toEqual(["open-pr"]);
+    });
+
+    it("`unmerged-branch` spares a preview with no PR whose branch carries work not in `main`", () => {
+      const l = previewLiveness(
+        "claude-carries-work",
+        [],
+        branchSet({
+          candidates: [
+            // Three days idle: far outside the recency horizon, so this is the
+            // unmerged signal alone and nothing else.
+            { ref: "claude/carries-work", mergedIntoDefault: false, headCommittedAt: "2026-09-16T12:00:00Z" },
+          ],
+        }),
+        NOW,
+      );
+      expect(l.live).toEqual(["unmerged-branch"]);
+    });
+
+    it("`recent-commit` spares a preview in the gap between one PR merging and the next — the window nothing else covers", () => {
+      // The shape of the gap: the merge commit has put the branch back INSIDE
+      // `main`, so `unmerged-branch` is silent, and the next PR does not exist
+      // yet, so `open-pr` is silent too. Only recency is left.
+      const l = previewLiveness(
+        "claude-between-prs",
+        [],
+        branchSet({
+          candidates: [
+            { ref: "claude/between-prs", mergedIntoDefault: true, headCommittedAt: "2026-09-19T11:55:00Z" },
+          ],
+        }),
+        NOW,
+      );
+      expect(l.live).toEqual(["recent-commit"]);
+    });
+
+    it("stops sparing on recency one minute past the horizon, and the horizon is the declared threshold", () => {
+      const at = (minutesAgo: number): string => new Date(NOW.getTime() - minutesAgo * 60_000).toISOString();
+      const judge = (minutesAgo: number) =>
+        previewLiveness(
+          "claude-idle",
+          [],
+          branchSet({
+            candidates: [{ ref: "claude/idle", mergedIntoDefault: true, headCommittedAt: at(minutesAgo) }],
+          }),
+          NOW,
+        );
+      expect(judge(RECENT_COMMIT_MINUTES - 1).live).toEqual(["recent-commit"]);
+      expect(judge(RECENT_COMMIT_MINUTES).live).toEqual(["recent-commit"]);
+      expect(judge(RECENT_COMMIT_MINUTES + 1).live).toEqual([]);
+      // The number in the report is the number the code compares against.
+      const t = ORPHAN_THRESHOLDS.find((x) => x.metric === "preview-branch-idle-minutes");
+      expect(t?.value).toBe(RECENT_COMMIT_MINUTES);
+      expect(t?.unit).toBe("minutes");
+      expect(t?.basis).toContain("NO EXTERNAL STANDARD");
+    });
+
+    it("a tip dated in the future reads as recent, because clock skew must not convict", () => {
+      const l = previewLiveness(
+        "claude-skewed",
+        [],
+        branchSet({
+          candidates: [{ ref: "claude/skewed", mergedIntoDefault: true, headCommittedAt: "2026-09-19T12:30:00Z" }],
+        }),
+        NOW,
+      );
+      expect(l.live).toEqual(["recent-commit"]);
+    });
+  });
+
+  it("does NOT report the `claude-brave-hypatia-r820sf` shape — the regression this was rewritten for", () => {
+    // Bean `w2g5`, measured 2026-09-19: no open pull request (all five of its
+    // PRs closed), the branch present on the remote, NOT an ancestor of
+    // `main`, and a 343-line commit two minutes before the sweep ran. The old
+    // check named it an orphan and invited a person to remove a live
+    // collaborator's review artefact.
+    const ctx = withPreview(
+      "claude-brave-hypatia-r820sf",
+      [],
+      branchSet({
+        candidates: [
+          {
+            ref: "claude/brave-hypatia-r820sf",
+            mergedIntoDefault: false,
+            headCommittedAt: "2026-09-19T11:58:00Z",
+          },
+        ],
+      }),
+    );
+    const r = stagingOrphanCheck(ctx);
+    expect(r.state).toBe("ok");
+    expect(r.findings).toEqual([]);
+    // Named rather than counted: the slug must appear in nothing a reader is
+    // invited to act on. (It appears in the threshold's `basis`, which is the
+    // measurement this horizon was calibrated from, and that is the point.)
+    expect(JSON.stringify(r.findings)).not.toContain("brave-hypatia");
+    expect(r.measurements.find((m) => m.metric === "staging-orphan-count")?.value).toBe(0);
+    expect(r.measurements.find((m) => m.metric === "staging-live-count")?.value).toBe(1);
+    // The regression made visible rather than implied: the signal the OLD
+    // check relied on is silent here — there is no open pull request — and
+    // the preview is spared anyway, by the two signals that did not exist.
+    const l = previewLiveness("claude-brave-hypatia-r820sf", [], ctx.branches.state === "ok" ? ctx.branches.value : branchSet(), NOW);
+    expect(l.live).not.toContain("open-pr");
+    expect(l.undetermined).toBeUndefined();
+    // And both signals that spared it are visible, not just the verdict.
+    expect(previewLiveness("claude-brave-hypatia-r820sf", [], ctx.branches.state === "ok" ? ctx.branches.value : branchSet(), NOW).live)
+      .toEqual(["unmerged-branch", "recent-commit"]);
+  });
+
+  it("STILL reports a genuinely dead preview — merged, no PR, long idle", () => {
+    const r = stagingOrphanCheck(
+      withPreview(
+        "claude-merged-last-week",
+        [],
+        branchSet({
+          candidates: [
+            { ref: "claude/merged-last-week", mergedIntoDefault: true, headCommittedAt: "2026-09-08T09:00:00Z" },
+          ],
+        }),
+      ),
+    );
+    expect(r.state).toBe("finding");
+    expect(r.findings.map((f) => f.summary)).toEqual([
+      expect.stringContaining("STAGING/claude-merged-last-week"),
+    ]);
+    // The evidence travels with the name, so a reader can see WHICH signals were silent.
+    expect(r.findings[0].summary).toContain("no open pull request");
+    expect(r.findings[0].summary).toContain("already in `main`");
+    expect(r.findings[0].summary).toContain("11 days");
+    expect(r.measurements.find((m) => m.metric === "staging-orphan-count")?.value).toBe(1);
+  });
+
+  it("reports a preview no branch on the remote answers for — a determined empty is not a blind spot", () => {
+    // The branch was deleted after its merge. The remote WAS listed and
+    // nothing on it slugifies to this preview, which is an answer, not a
+    // failure to look.
+    const r = stagingOrphanCheck(withPreview("claude-branch-gone", [], branchSet({ candidates: [] })));
+    expect(r.state).toBe("finding");
+    expect(r.findings[0].summary).toContain("STAGING/claude-branch-gone");
+    expect(r.findings[0].summary).toContain("no branch on the remote slugifies to it");
+  });
+
+  it("names the remedy a person can actually invoke, since the label alone cannot reach a closed PR", () => {
+    const r = stagingOrphanCheck(withPreview("claude-branch-gone", [], branchSet()));
+    const action = r.findings[0].action;
+    expect(action).toContain("staging:cleanup");
+    expect(action).toContain("cleanup_slug: claude-branch-gone");
+    expect(action).toContain("cleanup_confirm: claude-branch-gone");
+    expect(action).toContain("Leaving it is a valid answer");
+    // Nothing in this check ever removes anything.
+    expect(action).not.toMatch(/\brm -rf\b/);
+  });
+
+  describe("a signal that cannot be evaluated", () => {
+    const blindBranch = {
+      ref: "claude/unreadable",
+      headCommittedAt: "2026-09-08T09:00:00Z",
+      unevaluated: "git merge-base --is-ancestor exited 128: bad object",
+    };
+
+    it("sends that preview to `unknown`, never to the orphan list", () => {
+      const r = stagingOrphanCheck(
+        withPreview("claude-unreadable", [], branchSet({ candidates: [blindBranch] })),
+      );
+      expect(r.state).toBe("unknown");
+      expect(r.findings).toEqual([]);
+      expect(r.reason).toContain("STAGING/claude-unreadable");
+      expect(r.reason).toContain("bad object");
+    });
+
+    it("takes the WHOLE check to `unknown`, and still names the orphan it had determined", () => {
+      // `unknown` outranks `findings` at every level of this family —
+      // `healthVerdict` one layer up, `probeStaging` one layer down. A blind
+      // check must not hide behind a sighted one; the determined orphan is
+      // named in the reason so the measurement is not lost either.
+      const r = stagingOrphanCheck(
+        withPreview("claude-unreadable", [], branchSet({ candidates: [blindBranch] }), [
+          { slug: "claude-clearly-dead", bytes: 36 * MB, files: 690 },
+        ]),
+      );
+      expect(r.state).toBe("unknown");
+      expect(r.findings).toEqual([]);
+      expect(r.reason).toContain("STAGING/claude-clearly-dead");
+      expect(r.reason).toContain("Determined but NOT reported");
+    });
+
+    it("does not blind a preview another signal has already spared", () => {
+      // Liveness is a disjunction: one true disjunct settles it, so an
+      // unreadable ancestry cannot turn "leave it alone" into "I do not know".
+      const l = previewLiveness("claude-unreadable", ["claude/unreadable"], branchSet({ candidates: [blindBranch] }), NOW);
+      expect(l.live).toEqual(["open-pr"]);
+      expect(l.undetermined).toBeUndefined();
+    });
+
+    it("is `unknown` when the branches could not be listed at all, rather than calling every preview an orphan", () => {
+      const r = stagingOrphanCheck(
+        healthyContext({
+          staging: { state: "ok", value: { branch: "present", previews: previews(6, 37 * MB), command: "fixture" } },
+          openPrHeads: { state: "ok", value: [] },
+          branches: { state: "unknown", reason: "git ls-remote --heads origin exited 128: could not read Username" },
+        }),
+      );
+      expect(r.state).toBe("unknown");
+      expect(r.findings).toEqual([]);
+      expect(r.reason).toContain("ls-remote");
+      expect(r.reason).toContain("w2g5");
+    });
   });
 });
 

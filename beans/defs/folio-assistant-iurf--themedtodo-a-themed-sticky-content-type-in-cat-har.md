@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-19T10:55:05Z
 updated_at: 2026-09-19T11:32:08Z
+parent: folio-assistant-8jt6
 ---
 
 ## The ask, owner 2026-09-19 (verbatim)

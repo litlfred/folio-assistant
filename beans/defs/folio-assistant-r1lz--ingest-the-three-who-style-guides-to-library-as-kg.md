@@ -5,6 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-18T23:46:13Z
 updated_at: 2026-09-19T09:10:43Z
+parent: folio-assistant-slw1
 ---
 
 Issue #208. **The documents are now in the repo** — owner uploaded them in `eec93ecc8` (on `main`), at the repo root: `9789241548960_eng.pdf` (2.1 MB), `WHO_PUB_TPS_93.1.pdf` (3.3 MB), `WPR-RDO-2020-003-eng.pdf` (2.8 MB). This removes the blocker recorded earlier this session: `iris.who.int` is denied by this environment's network egress policy (`curl` -> `CONNECT tunnel failed, response 403`; `WebFetch` -> `EGRESS_BLOCKED`), so they could not be fetched.

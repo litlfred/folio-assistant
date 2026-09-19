@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: document-ingestion\n"
-"POT-Creation-Date: 2026-09-18T16:52:41.008Z\n"
+"POT-Creation-Date: 2026-09-19T10:47:34.729Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes."
 msgstr ""
 
-#: skills/workflows/document-ingestion.bpmn:144
+#: skills/workflows/document-ingestion.bpmn:147
 #. Diagram label
 msgid "Available to cite as an L1 source"
 msgstr ""
@@ -34,7 +34,7 @@ msgstr ""
 msgid "Build the L1 knowledge graph [document-intake]"
 msgstr ""
 
-#: skills/workflows/document-ingestion.bpmn:161
+#: skills/workflows/document-ingestion.bpmn:169
 #. Diagram label
 msgid "complete"
 msgstr ""
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Document ingestion — uploads/ to the L1 source knowledge graph"
 msgstr ""
 
-#: skills/workflows/document-ingestion.bpmn:146
+#: skills/workflows/document-ingestion.bpmn:149
 #. Diagram element documentation
 msgid "Every knowledge-graph reference to this source now resolves through library/. Authoring and review consume it from here -- see authoring-a-document.bpmn."
 msgstr ""
@@ -76,15 +76,15 @@ msgstr ""
 
 #: skills/workflows/document-ingestion.bpmn:29
 #. Diagram element documentation
-msgid "folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` -- never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in .beans/."
+msgid "folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: skills/workflows/document-ingestion.bpmn:159
+#: skills/workflows/document-ingestion.bpmn:167
 #. Diagram label
 msgid "gap"
 msgstr ""
 
-#: skills/workflows/document-ingestion.bpmn:150
+#: skills/workflows/document-ingestion.bpmn:158
 #. Diagram label
 msgid "Ingested"
 msgstr ""
@@ -104,7 +104,7 @@ msgstr ""
 msgid "L1 completeness gate"
 msgstr ""
 
-#: skills/workflows/document-ingestion.bpmn:135
+#: skills/workflows/document-ingestion.bpmn:138
 #. Diagram label
 msgid "Move into library/<bib-slug>/"
 msgstr ""
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Sniff the media type rather than trusting the extension, and mint the doc id from the page-1 arXiv stamp where there is one, else from the filename."
 msgstr ""
 
-#: skills/workflows/document-ingestion.bpmn:137
+#: skills/workflows/document-ingestion.bpmn:140
 #. Diagram element documentation
 msgid "The folder name IS the bibliography citation key, so a citation and a directory are the same string."
 msgstr ""

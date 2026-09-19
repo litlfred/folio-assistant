@@ -33,8 +33,8 @@
  */
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { workflowFiles } from "../../scripts/known-skills.js";
 import { z } from "zod";
-import { existsSync, readdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { findInModel, loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
 import { complete, describe, startInstance } from "../workflow/instance.js";
@@ -42,30 +42,31 @@ import { instanceId, listInstances, loadInstance, saveInstance } from "../workfl
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
 import { readRoleGraph, type RoleGraph } from "../../schemas/role-graph.js";
-
-const WORKFLOW_SRC = join("skills", "workflows");
+import { kgRoots } from "../../scripts/known-skills.js";
 
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
 
 /** Resolve a process by file stem (`editing-hci-validation`) or by process id. */
 async function resolveModel(repoRoot: string, ref: string): Promise<ProcessModel> {
-  const dir = join(repoRoot, WORKFLOW_SRC);
+  // EVERY declared knowledge-graph directory, not the literal
+  // `skills/workflows/`. A topical layout puts diagrams in more than one
+  // place, and a resolver that knows only one of them reports a process that
+  // exists as missing — which reads to a caller exactly like a typo.
+  const files = workflowFiles(repoRoot).filter((f) => f.endsWith(".bpmn"));
   const stem = basename(ref).replace(/\.bpmn$/, "");
-  const direct = join(dir, `${stem}.bpmn`);
-  if (existsSync(direct)) return loadProcessModel(direct);
 
-  for (const f of existsSync(dir) ? readdirSync(dir).filter((x) => x.endsWith(".bpmn")) : []) {
-    const model = await loadProcessModel(join(dir, f));
+  const direct = files.find((f) => basename(f, ".bpmn") === stem);
+  if (direct) return loadProcessModel(direct);
+
+  for (const f of files) {
+    const model = await loadProcessModel(f);
     if (model.id === ref) return model;
   }
   throw new Error(
     `No process "${ref}". Available: ` +
-      (existsSync(dir)
-        ? readdirSync(dir)
-            .filter((f) => f.endsWith(".bpmn"))
-            .map((f) => f.replace(/\.bpmn$/, ""))
-            .join(", ")
-        : `none — ${WORKFLOW_SRC} does not exist`),
+      (files.length > 0
+        ? files.map((f) => basename(f, ".bpmn")).join(", ")
+        : "none — no declared directory holds a .bpmn"),
   );
 }
 
@@ -85,7 +86,9 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
   const roles = (): RoleGraph | undefined => {
     if (!rolesCache) {
       try {
-        rolesCache = { graph: readRoleGraph(join(root, "skills")) };
+        // declared-path-literal: the convention fallback, at the call site.
+        // A role graph lives in a declared knowledge-graph root.
+        rolesCache = { graph: readRoleGraph(kgRoots(root)[0] ?? join(root, "skills")) };
       } catch {
         rolesCache = { graph: undefined };
       }
@@ -95,16 +98,15 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
 
   server.tool(
     "workflow_list",
-    "List the BPMN processes this folio defines (skills/workflows/*.bpmn) and any " +
+    "List the BPMN processes this folio defines, across every directory it declares as holding its knowledge graph, and any " +
       "instances currently open. Use before workflow_start to see what exists.",
     {},
     async () => {
-      const dir = join(root, WORKFLOW_SRC);
-      const files = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".bpmn")) : [];
+      const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
       const lines: string[] = ["# Processes", ""];
       for (const f of files) {
         try {
-          const m = await loadProcessModel(join(dir, f));
+          const m = await loadProcessModel(f);
           const acts = [...m.nodes.values()].filter((n) => n.kind === "activity");
           lines.push(
             `- **${f.replace(/\.bpmn$/, "")}** — ${m.name} (\`${m.id}\`), ` +

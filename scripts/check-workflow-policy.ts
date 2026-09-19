@@ -14,19 +14,20 @@
  *
  * Usage:  bun run check:workflow-policy
  */
-import { readdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
+import { workflowFiles } from "./known-skills.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { loadRelaxations, validateRelaxations, PolicyError } from "../src/workflow/gate.js";
 
 const root = resolve(import.meta.dir, "..");
-const dir = join(root, "skills", "workflows");
-
+// Every declared knowledge-graph directory. A relaxation is validated
+// against the processes it can name, so a process this script cannot see is
+// one whose relaxations go unchecked — the policy gate passing because it
+// never looked.
 const models = await Promise.all(
-  readdirSync(dir)
+  workflowFiles(root)
     .filter((f) => f.endsWith(".bpmn"))
-    .sort()
-    .map((f) => loadProcessModel(join(dir, f))),
+    .map((f) => loadProcessModel(f)),
 );
 
 console.log("Processes");

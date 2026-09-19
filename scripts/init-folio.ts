@@ -525,6 +525,9 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
   write(".beans.yml", beansYml(o.slug));
+  // declared-path-literal: the scaffolder CREATES the layout. There is no
+  // declaration to read in a repo that does not exist yet — this is the
+  // write that makes one possible.
   write("beans/.gitkeep", "");
 
   // 2. The builder shim — the one place the platform path is written down.
@@ -544,7 +547,10 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   // FOR — the keep-marker exists to stop an empty directory vanishing, not to
   // explain a pipeline. The materialiser then covers whatever else this folio
   // inherits from the platform and does not have.
+  // declared-path-literal: as above — scaffolding the layout a declaration
+  // will describe, not reading one.
   write("uploads/README.md", uploadsReadme());
+  // declared-path-literal: as above.
   write("library/README.md", libraryReadme());
 
   // 4b. The folio README, carrying the markers `readme_sync` writes between.

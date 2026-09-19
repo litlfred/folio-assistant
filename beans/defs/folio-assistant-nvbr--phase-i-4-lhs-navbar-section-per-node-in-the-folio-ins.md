@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
 updated_at: 2026-09-18T15:00:27Z
+parent: folio-assistant-vke6
 ---
 
 From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):

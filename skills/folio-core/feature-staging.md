@@ -115,3 +115,15 @@ An author needs to change the immunization schedule:
 5. Author submits to the guidance review committee
 6. Committee compares `main` vs `STAGING/feature-update-immunization-schedule/`
 7. Committee approves → merge → staging cleaned up → main site updated
+
+## Before you report a staging URL as broken
+
+**Look at the publish ref, not the site.** A staging URL is LOOKED UP in
+`gh-pages` under `STAGING/<branch-slug>/`, never composed from the source
+path — `docs/<stub>/proposals/x.md` publishes to `/proposals/x.html`, and
+composing it from the source path yields a 404 for a page that is there. From
+an agent container a `curl` against a Pages URL fails on the proxy regardless,
+so a failed fetch is not evidence either way.
+
+Full rule and the measured failure:
+[`github-state-inspection`](github-state-inspection.md).
