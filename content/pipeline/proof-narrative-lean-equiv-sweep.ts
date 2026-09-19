@@ -12,8 +12,8 @@
  *   bun run pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir> --json
  */
 
-import { readFileSync, existsSync } from "fs";
-import { resolve, basename, relative as pathRelative } from "path";
+import { readFileSync, existsSync, mkdirSync } from "fs";
+import { resolve, basename, dirname, relative as pathRelative } from "path";
 import { findContentRepoRoot } from "./repo-root";
 import {
   hashBlockFiles,
@@ -25,6 +25,12 @@ import {
 } from "./qa-utils";
 import type {
   QaCriterionEntry } from "../../schemas/block-qa";
+// The one contract for where a block's verdict lives — see
+// content/pipeline/qa-paths.ts. `blockQaPath` for writing (results tree
+// only, mirroring REPO_ROOT — the content repo root the module comment above
+// anchors everything else to); `existingBlockQaPath` for reading (results
+// tree first, legacy `<block>.qa.json` sibling as fallback).
+import { blockQaPath, existingBlockQaPath } from "./qa-paths";
 
 /**
  * Root of the CONTENT repo being swept.
@@ -498,7 +504,15 @@ async function main() {
     const mdPath = block.md;
     const tsPath = block.ts;
     const leanPath = block.lean;
-    const qaPath = block.root + ".qa.json";
+    // Load-then-write, so the two halves get different qa-paths.ts helpers.
+    // Read wherever the verdict already lives — results tree first, legacy
+    // `<block>.qa.json` sibling as fallback, so a folio that has not moved
+    // its own sidecars yet still has its history read rather than dropped —
+    // and write only to the results tree, per REPO_ROOT (the content repo
+    // root the module comment above anchors everything to, never the
+    // platform checkout).
+    const qaWritePath = blockQaPath(REPO_ROOT, block.root);
+    const qaReadPath = existingBlockQaPath(REPO_ROOT, block.root) ?? qaWritePath;
 
     if (!mdPath || !existsSync(mdPath)) {
       skipped_no_lean++;
@@ -512,7 +526,7 @@ async function main() {
     });
 
     // Check if fresh entry already exists
-    const existing = loadQaReport(qaPath);
+    const existing = loadQaReport(qaReadPath);
     if (existing && !args.force) {
       const entries = existing.criteria[CRITERION_ID] ?? [];
       if (entries.some((e) => entryIsFresh(e, currentHashes, ["md", "ts", "lean"]))) {
@@ -563,7 +577,12 @@ async function main() {
       report.criteria[CRITERION_ID].push(entry);
       report.source_hashes = currentHashes;
       report.updated_at = now;
-      saveQaReport(qaPath, report);
+      // Unlike the legacy sibling location (which always existed, since it
+      // shared the block's own directory), the mirrored results-tree
+      // directory is not guaranteed to exist yet for a block that has never
+      // had a verdict written under the new convention.
+      mkdirSync(dirname(qaWritePath), { recursive: true });
+      saveQaReport(qaWritePath, report);
     }
 
     results.push({
@@ -572,7 +591,7 @@ async function main() {
       result: check.result,
       notes: check.notes,
       evidence: check.evidence,
-      qa_path: pathRelative(REPO_ROOT, qaPath),
+      qa_path: pathRelative(REPO_ROOT, qaWritePath),
     });
     written++;
   }
