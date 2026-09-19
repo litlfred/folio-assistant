@@ -47,6 +47,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, join, resolve } from "node:path";
 
 import { EMPTY_NOTE_TAGS, type KgRef, type NoteTags } from "../schemas/carried-note.js";
+import { parseFrontMatter } from "../schemas/front-matter.js";
 import { kgRoots } from "./known-skills.js";
 import {
   AGENT_REF_KIND,
@@ -145,32 +146,6 @@ export function slugify(s: string): string {
     .slice(0, 60);
 }
 
-function parseFrontMatter(text: string): { fm: Record<string, unknown>; body: string } {
-  const m = /^---\n([\s\S]*?)\n---\n?/.exec(text);
-  if (!m) return { fm: {}, body: text };
-  const fm: Record<string, unknown> = {};
-  let key = "";
-  for (const line of m[1]!.split("\n")) {
-    const kv = /^([A-Za-z$][\w$-]*):\s*(.*)$/.exec(line);
-    if (kv) {
-      key = kv[1]!;
-      const v = kv[2]!.trim();
-      fm[key] = v === "" ? [] : stripQuotes(v);
-      continue;
-    }
-    const item = /^\s*-\s+(.*)$/.exec(line);
-    if (item && key) {
-      const list = Array.isArray(fm[key]) ? (fm[key] as string[]) : [];
-      list.push(stripQuotes(item[1]!.trim()));
-      fm[key] = list;
-    }
-  }
-  return { fm, body: text.slice(m[0].length) };
-}
-
-function stripQuotes(v: string): string {
-  return /^"(.*)"$/.test(v) ? v.slice(1, -1).replace(/\\"/g, '"') : v;
-}
 
 /** Read every memory node under `dir`, newest-id-last. */
 /** The marker separating an entry's trigger from its evidence. */

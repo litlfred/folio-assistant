@@ -105,6 +105,62 @@ Four questions, in this order. The worked call for each term is in
 `problems[]` rather than papered over. A fabricated absolute base is the same
 failure as a fabricated link.
 
+## `fsh-guts` NEVER reaches a published graph
+
+Owner, 2026-09-19: *"NEVER include fsh-guts, references to fsh-guts stripped
+out of KG before sending to publication."*
+
+**Keeping the CONTENT out of the render pipeline is a different property from
+keeping the REFERENCE out of the graph**, and shipping the first while
+believing it covered the second is exactly how this was got wrong. An
+instance's declared directories become nodes in `<stub>.jsonld`, so declaring
+`fsh-guts/` — which is required, or no tool can find it and the never-delete
+rule has no destination — put its id, path and description into the published
+document.
+
+`UNPUBLISHED_GRAPH_KINDS` in `schemas/cat-harness.ts` is the one list, read by
+every emitter, so two filters cannot disagree about what is excluded.
+
+**Three emitters had to be filtered, and the third was found only because the
+first two were not enough:**
+
+| emitter | what leaked |
+|---|---|
+| graph kinds | the `fsh-guts` GraphKind node |
+| declared directories | the Directory node — id, path, description — and its `holdsGraph` edge |
+| **skills** | `skill/fsh-guts`, plus the `declaresSkill` edge from `package/folio-core` |
+
+The skill is excluded on the merits as well as the letter: its subject IS
+where SDLC churn goes, so publishing it advertises the trashcan to every
+consumer of the graph. **An edge to a stripped node is not a compromise —
+it is a dangling reference that still spells the name it was meant to
+remove.**
+
+**A directory is excluded when ANY graph it holds is excluded**, not when all
+of them are. `graphs` is an array and `schemas/` already holds two; an "all"
+test would publish a directory holding both `cat-harness` and `fsh-guts`,
+naming the path on the way past.
+
+### This is not a contradiction of `<base>/fsh-guts.jsonld`
+
+Different documents. That one IS the trashcan's graph and is fetched by name;
+every other published artefact must carry no path to it. A consumer may go
+there deliberately and must never arrive by following an edge.
+
+### Strip where the document is built
+
+Not at upload. A strip on the happy path only leaves a graph that **looks**
+clean and is not, and the test must read the built artefact rather than the
+inputs. `scripts/tests/fsh-guts-unpublished.test.ts` serialises the whole
+export and asserts the substring is absent — a structural check would have to
+know every field that could carry it, and the one it forgets is the one that
+leaks.
+
+That test also carries its own cautionary tale: its first version read
+`.graph` where the export uses `@graph`, filtered `undefined`, and passed
+while two nodes were still leaking. It now asserts the node list is non-empty
+before filtering it.
+
 ## Staging must not claim to be canonical
 
 CI passes `--base-url` for a branch preview. Without it every staged export

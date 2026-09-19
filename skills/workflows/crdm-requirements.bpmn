@@ -11,6 +11,14 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_CRDM" name="CRDM requirements" isExecutable="false">
     <bpmn:documentation>The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step&#39;s own id. Detection stays here rather than in a child because its &#34;not a feature&#34; branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <!-- Capture ON: this process is where a feature request becomes a
+           commitment, so the record of which phase ran and when is what a
+           stakeholder asks for afterwards. Explicit opt-in per the owner;
+           an unmarked process leaves capture undetermined and reaches no
+           data store either way. -->
+      <folio:log capture="on" />
+    </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CRDM">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:flowNodeRef>Start_BA</bpmn:flowNodeRef>

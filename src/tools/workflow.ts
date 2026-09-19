@@ -38,6 +38,7 @@ import { z } from "zod";
 import { basename, join, resolve } from "node:path";
 import { findInModel, loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
 import { complete, describe, startInstance } from "../workflow/instance.js";
+import { describeCapture, writeLogEntry } from "../logging/log-writer.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
 import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
@@ -150,7 +151,25 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       }
       const state = startInstance(model, { id, subject, bean });
       const path = saveInstance(root, state);
-      return text(`Started. State in \`${path.replace(`${root}/`, "")}\`.\n\n${describe(model, state, roles())}`);
+      // The activity log's `task-start`. Reported on the tool's own output
+      // rather than written silently: the skill requires the capture state to
+      // be SAID, and a caller that has to go and look at a directory to find
+      // out whether it has an audit trail does not have one it can rely on.
+      const log = writeLogEntry(
+        root,
+        {
+          event: "task-start",
+          summary: `started ${model.id} for ${subject}`,
+          process: model.id,
+          bean,
+          session: id,
+        },
+        model.logCapture,
+      );
+      return text(
+        `Started. State in \`${path.replace(`${root}/`, "")}\`.\n` +
+          `${describeCapture(log)}\n\n${describe(model, state, roles())}`,
+      );
     },
   );
 
@@ -249,8 +268,29 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
           })
         : undefined;
 
+      // `task-end` for the step just recorded. The EVENT is task-end even
+      // when the instance runs on: the unit an agent starts and ends is the
+      // step, and waiting for the whole process would lose every intermediate
+      // one — which is most of what a log is read for. The instance's own
+      // status rides along in the detail so the two are distinguishable.
+      const log = writeLogEntry(
+        root,
+        {
+          event: "task-end",
+          summary: `completed ${node} in ${model.id}`,
+          detail: `instance ${next.id} is now ${next.status}` + (note ? ` — ${note}` : ""),
+          process: model.id,
+          task: node,
+          role: findInModel(model, node)?.model.nodes.get(node)?.lane,
+          bean: next.bean,
+          session: next.id,
+        },
+        model.logCapture,
+      );
       return text(
-        describe(model, next, roles()) + (plan ? `\n\n  work plan: ${plan.summary}` : ""),
+        describe(model, next, roles()) +
+          (plan ? `\n\n  work plan: ${plan.summary}` : "") +
+          `\n  ${describeCapture(log)}`,
       );
     },
   );

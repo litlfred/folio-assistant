@@ -126,3 +126,20 @@ playwright-report/
 # Same word, opposite intent.
 docs/.bundle/
 docs/vendor/
+
+# Agent activity log — OFF BY DEFAULT (bean `folio-assistant-7uff`).
+#
+# `fsh-guts/logs/` is inside the repository, so writing there would be
+# committing unless this line stops it. The owner's rule: "by default commit
+# audit log to git data store is turned off - need explict like (cpature log
+# when agent runs this workflow)."
+#
+# The agent still WRITES and READS its log during a session; only persistence
+# is off. A workflow or config that sets capture `on` force-adds the entries
+# it wants kept (`git add -f`), so opting in is a deliberate act at the point
+# of capture rather than a global switch somebody forgets is flipped.
+#
+# NOT `fsh-guts/` wholesale: the rest of the trashcan is committed on purpose
+# — that is what makes the never-delete rule a relocation rather than a
+# disappearance.
+fsh-guts/logs/

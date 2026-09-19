@@ -48,9 +48,19 @@ import { fileURLToPath } from "node:url";
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
-import { artefactStub, defaultGraphKinds, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
+import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
+import {
+  artefactStub,
+  defaultGraphKinds,
+  isPublishedDirectory,
+  isPublishedGraphKind,
+  isPublishedSchemaModule,
+  isPublishedSkill,
+  readDeclaration,
+  renderingPath,
+} from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
-import { skillMdDirs as knownSkillDirs } from "./known-skills.js";
+import { kgRoots, skillMdDirs as knownSkillDirs } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
@@ -229,6 +239,20 @@ function buildContext(): Record<string, unknown> {
     providesCapability: { "@id": termIri("providesCapability"), ...link },
     requiresCapability: { "@id": termIri("requiresCapability"), ...link },
     satisfies: { "@id": termIri("satisfies"), ...link },
+    // The role REGISTRY's own two edges, as against the lane-derived view.
+    // `hasSkill` is what the role knows; `bindsLane` is where it is bound.
+    //
+    // REUSED, not coined. `schemas/role-graph.ts`'s own JSON-LD projection
+    // already publishes exactly these two relations under these two IRIs, so
+    // a second spelling here would put one concept in the vocabulary twice --
+    // the drift this repo keeps paying for. `ns:check` is what caught it, by
+    // naming two minted terms as undefined; the reflex is to write the two
+    // glosses rather than to go looking for what they duplicate.
+    //
+    // Links for `partOf`'s reason: a bare name leaves a consumer to re-derive
+    // the IRI this document already minted.
+    hasSkill: { "@id": termIri("hasSkill"), ...link },
+    bindsLane: { "@id": termIri("bindsLane"), ...link },
     // A LINK: the artefact's published URL, which dereferences. Undeclared it
     // would be dropped by any JSON-LD processor — the `ovkk` defect, where 34
     // property names were used in `@graph` and absent from `@context`, so the
@@ -288,6 +312,13 @@ function buildContext(): Record<string, unknown> {
     // itself some third kind of actor.
     actorKind: termIri("actorKind"),
     actorKinds: termIri("actorKinds"),
+    // The two declared exemptions, and they are NOT one flag with two names.
+    // `actedUpon` says the role never acts, so `role-has-actor` is `n/a`;
+    // `judgementOnly` says it acts but no procedure yields its answer, so
+    // `activity-names-skill` is. A consumer that collapsed them would give a
+    // store an actor or a stakeholder a skill.
+    actedUpon: { "@id": termIri("actedUpon"), "@type": `${XSD}boolean` },
+    judgementOnly: { "@id": termIri("judgementOnly"), "@type": `${XSD}boolean` },
 
     // ---- BPMN, as it comes off a diagram -----------------------------------
     //
@@ -738,7 +769,12 @@ function collectSkills(doc: string, base: string, problems: string[]): Node[] {
     }
   }
 
-  return [...byName.entries()].map(([name, s]) => ({
+  // The skill documenting an unpublished kind is itself unpublished — it
+  // carries that kind's name, and its subject is where SDLC churn goes, so
+  // publishing it advertises the trashcan. Bean `folio-assistant-uv09`.
+  return [...byName.entries()]
+    .filter(([name]) => isPublishedSkill(name))
+    .map(([name, s]) => ({
     "@id": makeIri(doc, "skill", name),
     "@type": termIri("Skill"),
     name,
@@ -911,7 +947,11 @@ function collectPackages(doc: string, problems: string[]): Node[] {
         path: `skills/${d.name}`,
         hasManifest: true,
         // Links, so a consumer can walk package → skill without string surgery.
-        declaresSkill: ((m.skills as string[]) ?? []).map((n) => makeIri(doc, "skill", n)),
+        // Filtered too: an edge to a stripped node is a dangling reference
+        // that still spells the name it was meant to remove.
+        declaresSkill: ((m.skills as string[]) ?? [])
+          .filter(isPublishedSkill)
+          .map((n) => makeIri(doc, "skill", n)),
         providesCapability: ((m.providesCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
         requiresCapability: ((m.requiresCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
       });
@@ -960,21 +1000,29 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
           to: makeIri(doc, "process", `${m.id}/node/${f.to}`),
         });
       }
+      // A lane IS a role, and `performedBy` points at it. Minting the link
+      // without emitting the node left all 328 of them dangling.
+      //
+      // Read from the DECLARED lane set, not from the lanes flow nodes happen
+      // to name. An `actedUpon` lane holds no activities by construction — it
+      // is written to and never acts — so deriving lanes from node references
+      // drops exactly the lanes whose emptiness is the point. Measured: the
+      // `log` role's `bindsLane` was the one dangling link in the graph.
+      for (const lane of m.lanes) {
+        const name = lane.name ?? lane.id;
+        if (lanes.has(name)) continue;
+        lanes.add(name);
+        nodes.push({
+          "@id": makeIri(doc, "role", name),
+          "@type": termIri("Role"),
+          name,
+          // NOT `source`: a Process's `source` is the file it was read from,
+          // and this is a provenance KIND. One term over both would assert
+          // that `bpmn-lane` is a path.
+          sourceKind: "bpmn-lane",
+        });
+      }
       for (const n of m.nodes.values()) {
-        // A lane IS a role, and `performedBy` points at it. Minting the link
-        // without emitting the node left all 328 of them dangling.
-        if (n.lane !== undefined && !lanes.has(n.lane)) {
-          lanes.add(n.lane);
-          nodes.push({
-            "@id": makeIri(doc, "role", n.lane),
-            "@type": termIri("Role"),
-            name: n.lane,
-            // NOT `source`: a Process's `source` is the file it was read from,
-            // and this is a provenance KIND. One term over both would assert
-            // that `bpmn-lane` is a path.
-            sourceKind: "bpmn-lane",
-          });
-        }
         nodes.push({
           "@id": makeIri(doc, "process", `${m.id}/node/${n.id}`),
           "@type": termIri("ProcessNode"),
@@ -1117,7 +1165,9 @@ function collectSchemas(doc: string, base: string): Node[] {
     // identical problem entry would read as two failures.
   }
 
-  return audit.nodes.map((m) => ({
+  return audit.nodes
+    .filter((m) => isPublishedSchemaModule(m.name))
+    .map((m) => ({
     "@id": makeIri(doc, "schema", m.name),
     "@type": termIri("Schema"),
     name: m.name,
@@ -1127,8 +1177,65 @@ function collectSchemas(doc: string, base: string): Node[] {
   }));
 }
 
+/**
+ * The DECLARED roles, from `skills/roles/roles.json`.
+ *
+ * **Role nodes used to come only from BPMN lane names**, and that left the
+ * role model itself out of the graph. Measured 2026-09-19: 65 of 66 Role
+ * nodes carried `sourceKind: "bpmn-lane"`, so what a role IS — which actor
+ * kinds may fill it, which skills it carries, whether it is `actedUpon` —
+ * was nowhere in the published KG. `roles.json` is the declaration and was
+ * not a source at all.
+ *
+ * The gap bites hardest on exactly the roles the lane heuristic cannot see.
+ * An `actedUpon` role is written to and never acts, so its lane carries no
+ * flow node, so no node names it, so it was never emitted: `corpus` and
+ * `log` were both absent while `work-plan` happened to be present only
+ * because some other diagram gave its lane an activity.
+ *
+ * Lane-derived nodes are kept as they were — they are keyed by lane name and
+ * other links point at them — and a declared role that claims a lane links
+ * to it with `bindsLane`, so the two views join rather than compete.
+ */
+function collectDeclaredRoles(doc: string): Node[] {
+  // EVERY declared `kg` root, not the literal `skills/` and not the first one
+  // that answers. `kgRoots` is explicit that taking the first is the `dh4f`
+  // defect arriving through the helper written to prevent it: a topical
+  // layout (`bootstrap/`, `crdm/`) would report a clean run over the roots
+  // this never visited. First declaration of a role id wins, so a later root
+  // cannot silently redefine one.
+  const roles: RoleDef[] = [];
+  const seen = new Set<string>();
+  for (const root of kgRoots(ROOT)) {
+    for (const r of readRoleGraph(root)?.roles ?? []) {
+      if (seen.has(r.id)) continue;
+      seen.add(r.id);
+      roles.push(r);
+    }
+  }
+  return roles.map((r) => ({
+    "@id": makeIri(doc, "role", r.id),
+    "@type": termIri("Role"),
+    name: r.id,
+    title: r.title,
+    description: r.description,
+    sourceKind: "role-registry",
+    actorKinds: r.actorKinds,
+    actedUpon: r.actedUpon,
+    judgementOnly: r.judgementOnly,
+    // Links, so a consumer can walk role -> skill without string surgery.
+    hasSkill: (r.skills ?? []).map((n) => makeIri(doc, "skill", n)),
+    bindsLane: (r.lanes ?? []).map((l) => makeIri(doc, "role", l)),
+  }));
+}
+
 function collectGraphKinds(): Node[] {
-  return defaultGraphKinds.names().map((name) => {
+  // `fsh-guts` and anything else in UNPUBLISHED_GRAPH_KINDS never reaches a
+  // published graph. Filtered HERE, where the document is built, rather than
+  // at upload: a strip that runs only on the happy path leaves a graph that
+  // LOOKS clean and is not. Bean `folio-assistant-uv09`.
+  const published = defaultGraphKinds.names().filter(isPublishedGraphKind);
+  return published.map((name) => {
     const def = defaultGraphKinds.get(name)!;
     return {
       // The instance sits in the SAME namespace as the class it instantiates,
@@ -1160,7 +1267,10 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
         description?: string;
       }>;
     };
-    return (d.directories ?? []).map((x) => {
+    // Same exclusion on the other emitter: a declared directory holding an
+    // unpublished kind would otherwise put the trashcan's id, path and
+    // description into the graph, plus a `holdsGraph` edge pointing at it.
+    return (d.directories ?? []).filter(isPublishedDirectory).map((x) => {
       // `graph` became `graphs[]` — a directory may hold more than one graph,
       // and `schemas/` is the first real use of that. Both spellings are read
       // so this does not break on a declaration written before the change.
@@ -1189,6 +1299,7 @@ const LINK_TERMS = [
   "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage",
   "providesCapability", "requiresCapability", "holdsGraph", "startNode",
   "incoming", "outgoing", "from", "to", "satisfies", "hasCapability",
+  "hasSkill", "bindsLane",
 ] as const;
 
 /**
@@ -1446,6 +1557,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...collectTools(docIri, base, problems),
     ...collectSchemas(docIri, base),
     ...collectGraphKinds(),
+    ...collectDeclaredRoles(docIri),
     ...collectDeclaration(docIri, problems),
   ].map(compact);
 
