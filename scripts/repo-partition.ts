@@ -348,6 +348,14 @@ const RULES: Rule[] = [
       // across the boundary by directory alone. Nothing in the pipeline
       // imports it; its only other consumer is its own test.
       "content/pipeline/refactor-strategy.ts",
+      // Elaboration-cost checkers: "QA checkers for proof elaboration cost",
+      // reading `docs/audits/lean-profile.json`. Entirely Lean, and blocked
+      // from moving until now only because `qa-checkers-voice.ts` spread its
+      // dispatch table into the merged `AUTOMATED_CHECKERS` — an aggregation
+      // that lost its last production caller when the sweep began resolving
+      // checkers from the registry. With the spread gone, this moves without
+      // trading one wrong-direction edge for another.
+      "content/pipeline/qa-checkers-cost.ts",
     ],
   },
 
