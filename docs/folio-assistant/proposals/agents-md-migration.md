@@ -112,39 +112,34 @@ Two consequences for the migration:
    migration that a revert does not cleanly undo, because by then two repos
    disagree about who owns the rule.
 
-## The hazard every move runs into: some skills exist in three copies
+## The hazard every move ran into — and how it was removed mid-migration
 
-`AGENTS.md` carried this as a standing warning; it belongs here, because it is a
-fact about **how to move things**, not about how to work.
+This began as a standing warning: `todo-manager` existed in **three** copies —
+the hand-authored skill, its CI-gated generated mirror, and a hand-authored copy
+under `.claude/skills/local/` that **nothing checked at all**, diverging by
+hundreds of diff lines. The two hand-authored copies failed in opposite
+directions: forgetting to regenerate the mirror turned CI red (loud, and it had
+taken `main` red before), while editing the unchecked copy produced no signal
+whatever.
 
-`todo-manager` is the worked case. Measured 2026-09-19 on this branch:
+So the rule for this migration was: **when a destination skill has a local copy,
+write the same addition to both.** Sections 16, 17 and 18 all landed in skills
+with one, and §18's addition went to both.
 
-| copy | lines | generated? | CI-gated? |
-|---|---|---|---|
-| `skills/folio-core/todo-manager.md` | 438 | no — hand-authored | yes, indirectly (its mirror drifts) |
-| `docs/reference/skill-instructions/todo-manager.md` | 406 | **yes**, from the row above | **yes** — `gen-skill-docs.ts --check` |
-| `.claude/skills/local/todo-manager.md` | 411 | no | **no** |
+**A sibling then removed the hazard rather than working around it** (bean
+`tdmg`, PR #392). The local copies are now ~29-line stubs pointing at the
+servable skill, and the divergence is gone. The finding that decided it is worth
+keeping: the local copy was **never servable** — `LOCAL_PACKAGES` in
+`src/tools/skill-fetch.ts` has no `.claude/skills/local` entry — so an agent
+asking for the skill by name had *always* received the `folio-core` file, while
+the onboarding guide, in five languages, pointed at the copy nobody was served.
+The same sibling also split the 396-line skill into `todo-manager`,
+`opening-brief` and `turn-reporting`.
 
-**The two hand-authored copies fail in opposite directions**, and that asymmetry
-is the thing to plan around:
-
-- Edit `skills/folio-core/` and forget to regenerate, and CI goes red. Loud. It
-  has taken `main` red before.
-- Edit `.claude/skills/local/` and **nothing checks anything.** `GROUPS` in
-  [`scripts/gen-skill-docs.ts`](../../scripts/gen-skill-docs.ts) does not list
-  that directory.
-
-The divergence between the two hand-authored copies is **205 diff lines**. Which
-copy is canonical is a question for whoever owns the skills layout; resolving it
-as a side effect of a migration edit is how one of them quietly becomes wrong.
-
-**So the rule for this migration is: when a destination skill has a local copy,
-write the same addition to both.** Sections 16, 17 and 18 all land in skills
-with one. §"Opening brief" was added to both; the count above is after that, and
-the migration has not widened the gap.
-
-Do not quote the 205 — re-measure. An earlier version of this note said 188, and
-a sibling's edit moved it to 261 before this branch's additions brought it back.
+**What this migration should take from it:** the write-to-both rule is now
+obsolete, and the reason is the better answer — *one source of truth, thin
+pointers to it*, which is the same discipline `CLAUDE.md` and `GEMINI.md`
+already follow and exactly what this proposal argues for `AGENTS.md` itself.
 
 ## Sequence
 

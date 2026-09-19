@@ -4,7 +4,7 @@ title: A force-push followed immediately by opening a PR produces a PR with zero
 status: todo
 type: bug
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-09-19T08:11:21Z
+updated_at: 2026-09-19T10:15:56Z
 ---
 
 OBSERVED TWICE, 2026-09-19, on `litlfred/folio-assistant`.
@@ -29,3 +29,14 @@ I caught it only by checking twice and comparing against the workflow-run list.
 - [ ] the cause is established (GitHub-side race vs. something this repo controls)
 - [ ] whatever the cause, a PR with NO check runs on its head is reported as such, not read as green — the third state, as everywhere else here
 - [ ] if the workaround is procedural (settle between push and PR-open), it is written in the skill that governs opening a PR, not left as folklore
+
+_2026-09-19T10:15:56Z_ — Two more observations, 2026-09-19, and one is COUNTER-EVIDENCE to the timing hypothesis.
+
+- #383, head 1bbe12b20: force-with-lease push, PR opened ~52s later. ZERO pull_request runs — only a push-triggered jsonld check. Had to workflow_dispatch code-quality-gates and feature-staging by hand.
+- #390, head 18a60583b: force-with-lease push, PR opened ~13s later. FULL check set fired automatically on pull_request.
+
+So the shorter gap worked and the longer one did not, which is the opposite of what a ref-update/opened race predicts, and the opposite direction from the ~45s finding on #354/#356. Whatever the cause is, elapsed time alone does not predict it — four observations now, and no monotonic relationship.
+
+I had independently guessed 'GitHub suppresses events authored by the app token' after seeing #383, and #390 falsified that within fifteen minutes. Recording both the wrong guess and its falsification so the next agent does not re-derive it.
+
+What is NOT in doubt, and is the part worth acting on: a PR with zero checks renders identically to one whose checks have not started, so 'nothing red' is not evidence of anything. Verify against the workflow-run list (actions_list on the workflow, filtered by branch) and compare head_sha, rather than reading the PR page.

@@ -327,21 +327,36 @@ word.
   `artefactStub()`, never by re-deriving it, so two exporters cannot disagree
   about what this instance is called.
 - **The declaration file is `harness.json` and is NOT stub-named.**
+- **The renderable site lives at `docs/<stub>/`.** Compute it with
+  `siteDir(d)` or `siteDirFor(root)`, never by writing the path out.
 
-That second half is the one that looks inconsistent, so here is why. A consumer
-bootstrapping into a repository it knows nothing about needs **one fixed
-filename to open first**. Everything that config *describes* is free to be
-named after the repository, because by the time you fetch those you have read
-the config that names them. smart-base makes exactly this split: `dak.json`
-fixed, artefacts stub-named. Renaming the config to match the repo buys
-consistency and costs discovery — and fails **silently**, since a resolver
-computing `basename($PWD) + ".json"` finds nothing when a repo is cloned into a
-differently-named directory, and reports no config rather than an error.
+### `docs/<stub>/` — the site is packaged for the split (STRICT)
 
-**No `canonicalUrl` → no absolute IRIs.** The exporters emit none and say so,
-rather than inventing a plausible base. A fabricated absolute IRI is the README
-generator's composed-link defect in another costume: it looks dereferenceable
-and resolves to nothing.
+The stub that names `<stub>.jsonld` also names the directory holding this
+instance's renderable site: `docs/folio-assistant/`, not `docs/`. After
+[#223](https://github.com/litlfred/folio-assistant/issues/223) each layer is
+its own repository, so under its own stub the split is a directory move rather
+than a file-by-file sift, and two layers can be checked out side by side.
+
+**No published URL changes**, because Jekyll is pointed at the stub directory
+as its **source root** (`source: ./docs/<stub>`), leaving the site's internal
+layout untouched. Verified on `gh-pages` after the move.
+
+**It is not the `folio` graph-kind declaration.** `docs/` still does not appear
+in `harness.json`: measured 2026-09-19, adding it makes `harness:dirs`,
+`kg:schema:check` and `docs:harness:check` throw `unknown graph kind "folio"`,
+because `folio` is contributed by **core** and those readers do not load its
+registration. Packaging is unblocked; the declaration waits. Bean `x4a6`.
+
+**`siteDirFor` throws rather than defaulting** when an instance declares
+neither `stub` nor `name` — a guessed site root writes the whole site where
+nothing serves it, and "could not determine" is not an answer.
+
+**`scripts/tests/site-dir-single-answer.test.ts` fails on any new `docs/…`
+literal in a path-resolving position** (prose is left alone). It found 154
+stale paths on its first run, including the e2e suite that `bun test` never
+runs, and five more that arrived later in a clean merge from a branch cut
+before the move — which is the case it exists for.
 
 ## The declaration is itself a graph
 
