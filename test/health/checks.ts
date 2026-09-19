@@ -78,6 +78,46 @@ export interface StagingEvidence {
   command: string;
 }
 
+/**
+ * One remote branch whose slug matches a preview, and what could be
+ * established about it.
+ *
+ * **Every field that can be undetermined is optional, and `unevaluated` says
+ * which.** A branch whose ancestry could not be computed is NOT a merged
+ * branch, and a tip date that could not be read is not an old one. Collapsing
+ * either into its determined neighbour is how this check went back to naming
+ * live work, which is the whole of bean `w2g5`.
+ */
+export interface BranchEvidence {
+  /** The short ref as the remote carries it — `claude/brave-hypatia-r820sf`, NOT slugified. */
+  ref: string;
+  /** True when the tip is an ancestor of the default branch: the work is already in it. */
+  mergedIntoDefault?: boolean;
+  /** ISO 8601 committer date of the tip. */
+  headCommittedAt?: string;
+  /** Why a field above is absent. Set if and only if at least one is. */
+  unevaluated?: string;
+}
+
+export interface BranchEvidenceSet {
+  /**
+   * The remote branches whose slug matches one of the previews — only those.
+   *
+   * The probe has to fetch a tip it does not already hold, and fetching all
+   * 226 branches this repository carried on 2026-09-19 to answer a question
+   * about five previews would make a daily sweep cost a clone.
+   *
+   * An EMPTY set is a **determined** answer — the remote was listed and
+   * nothing on it slugifies to any preview — not a failure to look. The
+   * distinction is carried by the probe's three states, not by this field.
+   */
+  candidates: BranchEvidence[];
+  /** What the ancestry was measured against, so a finding can name it. */
+  defaultBranch: string;
+  /** How they were read, for the report's `command` fields. */
+  command: string;
+}
+
 export interface RepoSizeEvidence {
   /** This clone's `.git`, on disk. Includes local gc state — see the check. */
   gitDirBytes: number;
@@ -114,6 +154,14 @@ export interface HealthContext {
   staging: Probe<StagingEvidence>;
   /** Head refs of the currently open pull requests — `claude/foo`, unsanitised. */
   openPrHeads: Probe<string[]>;
+  /**
+   * The remote branches that could keep a preview alive.
+   *
+   * Separate from {@link openPrHeads} because they answer different questions
+   * and fail independently: the API can be rate-limited while `git` is fine,
+   * and vice versa. A check that needs both says which one it lost.
+   */
+  branches: Probe<BranchEvidenceSet>;
   repoSize: Probe<RepoSizeEvidence>;
   beans: Probe<BeanEvidence[]>;
   todos: Probe<TodoEvidence[]>;
@@ -184,6 +232,30 @@ function daysBetween(later: Date, iso: string | undefined): number | undefined {
   return Math.floor((later.getTime() - t) / 86_400_000);
 }
 
+/**
+ * Minutes between an ISO timestamp and `now`, or `undefined` if it is unreadable.
+ *
+ * Signed, deliberately: a tip dated in the future — clock skew on a runner, or
+ * an author date that outruns the committer date — yields a negative age and
+ * so reads as RECENT. That is the safe direction. Every error this module can
+ * make about a timestamp should end in sparing a preview, never in accusing
+ * one.
+ */
+function minutesSince(now: Date, iso: string | undefined): number | undefined {
+  if (iso === undefined) return undefined;
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return undefined;
+  return (now.getTime() - t) / 60_000;
+}
+
+/** An age a person reads, from minutes. */
+export function formatAge(minutes: number): string {
+  const m = Math.max(0, minutes);
+  if (m < 120) return `${Math.round(m)} min`;
+  if (m < 2880) return `${(m / 60).toFixed(1)} h`;
+  return `${Math.round(m / 1440)} days`;
+}
+
 // ── Thresholds ──────────────────────────────────────────────────
 
 /**
@@ -209,6 +281,17 @@ export const STAGING_WARN_BYTES = 100 * MB;
  * updating.
  */
 export const STAGING_CRITICAL_BYTES = 750 * MB;
+
+/**
+ * How recently a branch must have been committed to for its preview to count
+ * as still in use. **Minutes, not days — the shortness is the whole point.**
+ *
+ * See {@link ORPHAN_THRESHOLDS} for the measurement it was calibrated on: a
+ * longer horizon spares every just-merged preview and leaves the check with
+ * nothing to say, which is the failure mode opposite to the one bean `w2g5`
+ * reports and no better.
+ */
+export const RECENT_COMMIT_MINUTES = 30;
 
 /** See {@link repositorySizeCheck} for the basis of each of these. */
 export const TRACKED_WARN_BYTES = 250 * MB;
@@ -307,7 +390,145 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
 }
 
 /**
- * A preview whose pull request is no longer open.
+ * The signals that say somebody is still using a preview.
+ *
+ * **A disjunction, never a conjunction.** Any one of these sparing the preview
+ * is the design: they are cheap, independent proxies for one question the
+ * check cannot ask directly — *is anybody still using this?* — and a proxy
+ * that is sometimes silent must not be able to convict on its own.
+ */
+export const LIVENESS_SIGNALS = ["open-pr", "unmerged-branch", "recent-commit"] as const;
+export type LivenessSignal = (typeof LIVENESS_SIGNALS)[number];
+
+/** What the signals said about one preview. */
+export interface PreviewLiveness {
+  slug: string;
+  /** Every signal that fired. **Empty means orphan** — but only when `undetermined` is unset. */
+  live: LivenessSignal[];
+  /**
+   * Set when a signal could not be evaluated AND nothing else said live.
+   *
+   * A preview in this state is neither live nor an orphan: it is **not
+   * known**, and the check reports it as such. It is never folded into the
+   * orphan list.
+   */
+  undetermined?: string;
+  /** One line of the evidence behind the verdict, for a finding a person can act on. */
+  evidence: string;
+}
+
+/**
+ * Is this preview still in use?
+ *
+ * Pure, and exported on its own rather than buried in the check, because
+ * **the same question is asked again at deletion time** —
+ * `scripts/staging-cleanup-preflight.ts` calls this function, so the mechanism
+ * that removes a preview and the sweep that proposes removing one cannot
+ * disagree about what "live" means. Two implementations of one judgement is
+ * two answers free to diverge, and the one that diverges here deletes
+ * somebody's work.
+ *
+ * The three signals, and what each covers that the others do not:
+ *
+ * - **`open-pr`** — a pull request is open on the branch. The original test,
+ *   and still the strongest, because it is a statement about a person's
+ *   intent rather than about a commit graph.
+ * - **`unmerged-branch`** — a branch on the remote slugifies to this preview
+ *   and its tip is NOT an ancestor of the default branch, so it carries work
+ *   that is not in `main`. This is what makes the preview worth looking at.
+ * - **`recent-commit`** — that branch's tip is newer than
+ *   {@link RECENT_COMMIT_MINUTES}. It covers exactly one window, and it is the
+ *   window bean `w2g5` was written from: between one PR merging and the same
+ *   session's next push, a merge commit has put the branch back INSIDE the
+ *   default branch, so `unmerged-branch` goes quiet and `open-pr` has already
+ *   gone quiet. Measured on `claude/brave-hypatia-r820sf`, that window was
+ *   5m42s wide and the sweep landed in the middle of it.
+ *
+ * **An unevaluable signal cannot change a verdict that is already live.**
+ * Liveness is a disjunction, so one true disjunct settles it; asking for
+ * certainty about the others would turn a decided "leave it alone" into an
+ * `unknown` for no gain.
+ */
+export function previewLiveness(
+  slug: string,
+  openPrHeads: readonly string[],
+  branches: BranchEvidenceSet,
+  now: Date,
+): PreviewLiveness {
+  const fired = new Set<LivenessSignal>();
+  const notes: string[] = [];
+  const blind: string[] = [];
+
+  if (openPrHeads.some((ref) => stagingSlug(ref) === slug)) {
+    fired.add("open-pr");
+    notes.push("an open pull request has it as its head");
+  } else {
+    notes.push("no open pull request");
+  }
+
+  // Forward only: every branch is slugified and compared, and no slug is ever
+  // turned back into a branch name. `stagingSlug` says why — the inverse is
+  // ambiguous, and an ambiguous inverse on a finding whose action is "consider
+  // removing this" would name the wrong thing.
+  const candidates = branches.candidates.filter((b) => stagingSlug(b.ref) === slug);
+  if (candidates.length === 0) {
+    notes.push("and no branch on the remote slugifies to it");
+  }
+  for (const b of candidates) {
+    const age = minutesSince(now, b.headCommittedAt);
+    if (b.mergedIntoDefault === false) fired.add("unmerged-branch");
+    if (age !== undefined && age <= RECENT_COMMIT_MINUTES) fired.add("recent-commit");
+    const merged =
+      b.mergedIntoDefault === undefined
+        ? `ancestry against \`${branches.defaultBranch}\` unknown`
+        : b.mergedIntoDefault
+          ? `already in \`${branches.defaultBranch}\``
+          : `NOT in \`${branches.defaultBranch}\``;
+    notes.push(`\`${b.ref}\` is ${merged}, tip ${age === undefined ? "date unknown" : `${formatAge(age)} old`}`);
+    if (b.mergedIntoDefault === undefined || b.headCommittedAt === undefined) {
+      blind.push(`\`${b.ref}\`: ${b.unevaluated ?? "the probe returned neither an ancestry nor a tip date for it"}`);
+    }
+  }
+
+  const live = LIVENESS_SIGNALS.filter((sig) => fired.has(sig));
+  const evidence = notes.join("; ");
+  if (live.length > 0) return { slug, live, evidence };
+  if (blind.length > 0) return { slug, live: [], undetermined: blind.join("; "), evidence };
+  return { slug, live: [], evidence };
+}
+
+/**
+ * The one number this check compares against, and it needed a basis.
+ *
+ * The orphan verdict itself is a reference that resolves to nothing rather
+ * than a quantity, so it still has no threshold — "more than zero orphans"
+ * would be a number pretending to be a judgement. The recency horizon is a
+ * real quantity, and {@link HealthThreshold} requires its basis structurally.
+ */
+export const ORPHAN_THRESHOLDS: HealthThreshold[] = [
+  {
+    metric: "preview-branch-idle-minutes",
+    value: RECENT_COMMIT_MINUTES,
+    unit: "minutes",
+    severity: "minor",
+    basis:
+      "NO EXTERNAL STANDARD; calibrated on this repository, 2026-09-19, and deliberately SHORT. The signal " +
+      "exists for one window only — between a session's pull request merging and its next push to the same " +
+      "branch, during which the merge commit has made the branch an ancestor of the default branch again so " +
+      "the unmerged-work signal goes quiet. Measured: `claude/brave-hypatia-r820sf` had PR #396 merged at " +
+      "10:37:21Z and its next commit at 10:43:03Z, a gap of 5m42s; 30 minutes is roughly five times that. " +
+      "It CANNOT be much longer: measured at 11:19Z the same day, the four previews whose branches were " +
+      "fully merged had tips 42, 56, 59 and 80 minutes old, so a horizon past ~40 minutes would have spared " +
+      "every genuine orphan and left this check with nothing to say — the opposite failure to bean `w2g5` " +
+      "and no better. The error it can still make is naming a preview whose session returns after a longer " +
+      "pause; that costs one line in a report somebody reads, which is why " +
+      "`scripts/staging-cleanup-preflight.ts` re-runs these signals at REMOVAL time rather than trusting a " +
+      "verdict that may be a day old.",
+  },
+];
+
+/**
+ * A preview no liveness signal claims.
  *
  * `minor`, and the severity is the argument. A retained preview is
  * `feature-staging.yml`'s **policy working as written**: it removes one on PR
@@ -316,47 +537,124 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
  * defect report. It is the list somebody needs in order to make the decision
  * the policy reserves for them, and it is the only place the size curve above
  * can actually be bent.
+ *
+ * ## Why "no open pull request" is not the question — bean `w2g5`
+ *
+ * It was, until 2026-09-19, and on that day it named
+ * `STAGING/claude-brave-hypatia-r820sf` an orphan while the branch carried an
+ * unmerged commit **two minutes old**, on a branch a sibling session had used
+ * for five successive pull requests, each merged and closed before the next
+ * opened. "No open PR" is true of such a branch for the entire gap between
+ * them, and a session that reuses one branch spends much of its life in that
+ * gap. The finding invited a person to remove a live collaborator's review
+ * artefact — the one false positive this check must never produce, guarded
+ * against for the 403 case and not for this one, because "no open PR" had
+ * been read as a synonym for "abandoned".
+ *
+ * So the test is {@link previewLiveness}: three independent signals, any one
+ * of which spares the preview.
+ *
+ * ## One preview that cannot be judged takes the whole check to `unknown`
+ *
+ * Not to a finding, and not quietly dropped. `probes.ts` keeps the same rule
+ * one layer down — *"one unreadable preview makes the TOTAL unknown, not
+ * smaller"* — and `healthVerdict` keeps it one layer up, where `unknown`
+ * outranks `findings` so that a blind check cannot hide behind a sighted one.
+ * The reason is the same at all three levels: a partial answer compared
+ * against a threshold is a wrong answer wearing a right one's clothes. The
+ * `reason` still NAMES the previews that were determined to be orphans, so
+ * nothing measured is lost — it is simply not offered as a list to act on
+ * while a signal is unreadable.
  */
 export function stagingOrphanCheck(ctx: HealthContext): HealthCheckResult {
   const id = "staging-preview-orphans";
   const summary =
-    "A `STAGING/` preview whose pull request is no longer open. Retained by policy, not by mistake — " +
-    "this is the list a person needs in order to decide, never a list to act on unasked.";
-  // No thresholds: this is a reference that resolves to nothing, not a
-  // quantity. A threshold of "more than zero" would be a number pretending to
-  // be a judgement.
-  const thresholds: HealthThreshold[] = [];
-  if (ctx.staging.state === "unknown") return unknownResult(id, summary, thresholds, ctx.staging.reason);
+    "A `STAGING/` preview that no liveness signal claims — no open pull request, no branch carrying " +
+    "unmerged work, no recent commit. Retained by policy, not by mistake: this is the list a person " +
+    "needs in order to decide, never a list to act on unasked.";
+  if (ctx.staging.state === "unknown") return unknownResult(id, summary, ORPHAN_THRESHOLDS, ctx.staging.reason);
   if (ctx.openPrHeads.state === "unknown") {
     return unknownResult(
       id,
       summary,
-      thresholds,
+      ORPHAN_THRESHOLDS,
       `the previews were read, but the open pull requests were not: ${ctx.openPrHeads.reason}. ` +
         "Without them every preview looks orphaned, which is the one false positive this check must never produce.",
     );
   }
+  if (ctx.branches.state === "unknown") {
+    return unknownResult(
+      id,
+      summary,
+      ORPHAN_THRESHOLDS,
+      `the previews and the open pull requests were read, but the remote branches were not: ${ctx.branches.reason}. ` +
+        "Without them a branch carrying unmerged work cannot be told from an abandoned one, and the gap between " +
+        "one pull request merging and the next opening reads as abandonment — the false positive bean `w2g5` " +
+        "was written from.",
+    );
+  }
   const ev = ctx.staging.value;
-  const open = new Set(ctx.openPrHeads.value.map(stagingSlug));
-  const orphans = ev.previews.filter((p) => !open.has(p.slug));
+  const branches = ctx.branches.value;
+  // Read out here rather than inside the callback: TypeScript discards a
+  // narrowing of `ctx.openPrHeads` across a closure boundary, and the cast
+  // that would silence it is exactly how a three-state value gets treated as
+  // a two-state one.
+  const openHeads = ctx.openPrHeads.value;
+  const judged = ev.previews.map((preview) => ({
+    preview,
+    liveness: previewLiveness(preview.slug, openHeads, branches, ctx.now),
+  }));
+  const blind = judged.filter((j) => j.liveness.undetermined !== undefined);
+  const orphans = judged.filter((j) => j.liveness.undetermined === undefined && j.liveness.live.length === 0);
+
+  if (blind.length > 0) {
+    const determined =
+      orphans.length > 0
+        ? `Determined but NOT reported this run: ${orphans.map((j) => `\`STAGING/${j.preview.slug}\``).join(", ")} — ` +
+          "named here so the measurement is not lost, but nothing should be acted on while a signal is unreadable."
+        : "No other preview was determined to be an orphan this run.";
+    return unknownResult(
+      id,
+      summary,
+      ORPHAN_THRESHOLDS,
+      `${blind.length} preview(s) could not be judged: ` +
+        `${blind.map((j) => `\`STAGING/${j.preview.slug}\` — ${j.liveness.undetermined}`).join("; ")}. ` +
+        "A signal that cannot be evaluated sends that preview to `unknown`, never to the orphan list. " +
+        determined,
+    );
+  }
+
   const measurements: HealthMeasurement[] = [
     { metric: "staging-orphan-count", value: orphans.length, unit: "count", command: ev.command },
     {
       metric: "staging-orphan-bytes",
-      value: orphans.reduce((s, p) => s + p.bytes, 0),
+      value: orphans.reduce((s, j) => s + j.preview.bytes, 0),
       unit: "bytes",
       command: ev.command,
     },
+    {
+      metric: "staging-live-count",
+      value: judged.length - orphans.length,
+      unit: "count",
+      command: `${ev.command} + ${branches.command}`,
+    },
   ];
-  // Named, not counted: a reader acts on a slug, never on a number.
-  const findings: HealthFinding[] = orphans.map((p) => ({
+  // Named, not counted: a reader acts on a slug, never on a number. And the
+  // evidence travels with the name, so the reader can see WHICH signals were
+  // silent rather than being asked to trust the verdict.
+  const findings: HealthFinding[] = orphans.map((j) => ({
     severity: "minor" as const,
-    summary: `\`STAGING/${p.slug}\` (${formatBytes(p.bytes)}, ${p.files} files) matches no open pull request.`,
+    summary:
+      `\`STAGING/${j.preview.slug}\` (${formatBytes(j.preview.bytes)}, ${j.preview.files} files) — ` +
+      `${j.liveness.evidence}.`,
     action:
-      `Ask the owner whether the review of \`${p.slug}\` is finished. If it is, they add \`staging:cleanup\` ` +
-      "to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer.",
+      `Ask the owner whether the review of \`${j.preview.slug}\` is finished. Nothing here removes it. ` +
+      "Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, " +
+      `or a \`workflow_dispatch\` with \`cleanup_slug: ${j.preview.slug}\` and \`cleanup_confirm: ${j.preview.slug}\`, ` +
+      "which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a " +
+      "valid answer.",
   }));
-  return settle(id, summary, thresholds, measurements, findings);
+  return settle(id, summary, ORPHAN_THRESHOLDS, measurements, findings);
 }
 
 const REPO_SIZE_THRESHOLDS: HealthThreshold[] = [
@@ -709,7 +1007,9 @@ export const HEALTH_CHECKS: readonly {
   },
   {
     id: "staging-preview-orphans",
-    summary: "Previews whose pull request is no longer open — retained by policy, listed for a person to decide.",
+    summary:
+      "Previews no liveness signal claims — no open PR, no unmerged branch, no recent commit. " +
+      "Retained by policy, listed for a person to decide.",
     run: stagingOrphanCheck,
   },
   {

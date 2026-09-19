@@ -2,13 +2,13 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "77270e6b9179"
+    "script_hash": "d8c95d3b0a3a"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-19T11:00:23.386Z",
+  "updated_at": "2026-09-19T11:40:58.966Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,20 +34,20 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 394593563,
+          "value": 476024334,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 10,
+          "value": 12,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
         {
-          "summary": "10 staging preview(s) total 376.3 MB, over the 100 MB warning point.",
+          "summary": "12 staging preview(s) total 454.0 MB, over the 100 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
@@ -57,47 +57,66 @@
     {
       "id": "staging-preview-orphans",
       "state": "finding",
-      "summary": "A `STAGING/` preview whose pull request is no longer open. Retained by policy, not by mistake — this is the list a person needs in order to decide, never a list to act on unasked.",
-      "thresholds": [],
+      "summary": "A `STAGING/` preview that no liveness signal claims — no open pull request, no branch carrying unmerged work, no recent commit. Retained by policy, not by mistake: this is the list a person needs in order to decide, never a list to act on unasked.",
+      "thresholds": [
+        {
+          "metric": "preview-branch-idle-minutes",
+          "value": 30,
+          "unit": "minutes",
+          "basis": "NO EXTERNAL STANDARD; calibrated on this repository, 2026-09-19, and deliberately SHORT. The signal exists for one window only — between a session's pull request merging and its next push to the same branch, during which the merge commit has made the branch an ancestor of the default branch again so the unmerged-work signal goes quiet. Measured: `claude/brave-hypatia-r820sf` had PR #396 merged at 10:37:21Z and its next commit at 10:43:03Z, a gap of 5m42s; 30 minutes is roughly five times that. It CANNOT be much longer: measured at 11:19Z the same day, the four previews whose branches were fully merged had tips 42, 56, 59 and 80 minutes old, so a horizon past ~40 minutes would have spared every genuine orphan and left this check with nothing to say — the opposite failure to bean `w2g5` and no better. The error it can still make is naming a preview whose session returns after a longer pause; that costs one line in a report somebody reads, which is why `scripts/staging-cleanup-preflight.ts` re-runs these signals at REMOVAL time rather than trusting a verdict that may be a day old.",
+          "severity": "minor"
+        }
+      ],
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 5,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 196034942,
+          "value": 236111897,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
+        },
+        {
+          "metric": "staging-live-count",
+          "value": 6,
+          "unit": "count",
+          "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
       ],
       "findings": [
         {
-          "summary": "`STAGING/claude-d2kp-live-verdicts` (36.8 MB, 787 files) matches no open pull request.",
+          "summary": "`STAGING/claude-4kiw-memory-pointer` (38.3 MB, 786 files) — no open pull request; `claude/4kiw-memory-pointer` is already in `main`, tip 44 min old.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-d2kp-live-verdicts` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `claude-4kiw-memory-pointer` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-4kiw-memory-pointer` and `cleanup_confirm: claude-4kiw-memory-pointer`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         },
         {
-          "summary": "`STAGING/claude-ecstatic-goldberg-eroyaz` (37.5 MB, 778 files) matches no open pull request.",
+          "summary": "`STAGING/claude-consolidate-test-dir` (38.4 MB, 786 files) — no open pull request; `claude/consolidate-test-dir` is already in `main`, tip 38 min old.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-ecstatic-goldberg-eroyaz` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `claude-consolidate-test-dir` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-consolidate-test-dir` and `cleanup_confirm: claude-consolidate-test-dir`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         },
         {
-          "summary": "`STAGING/claude-health-checks` (37.1 MB, 781 files) matches no open pull request.",
+          "summary": "`STAGING/claude-d2kp-live-verdicts` (36.8 MB, 787 files) — no open pull request; `claude/d2kp-live-verdicts` is already in `main`, tip 102 min old.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-health-checks` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `claude-d2kp-live-verdicts` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-d2kp-live-verdicts` and `cleanup_confirm: claude-d2kp-live-verdicts`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         },
         {
-          "summary": "`STAGING/claude-placement-skill` (37.1 MB, 779 files) matches no open pull request.",
+          "summary": "`STAGING/claude-ecstatic-goldberg-eroyaz` (37.5 MB, 778 files) — no open pull request; `claude/ecstatic-goldberg-eroyaz` is already in `main`, tip 81 min old.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-placement-skill` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `claude-ecstatic-goldberg-eroyaz` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-ecstatic-goldberg-eroyaz` and `cleanup_confirm: claude-ecstatic-goldberg-eroyaz`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         },
         {
-          "summary": "`STAGING/claude-wonderful-bohr-6kxh7b` (38.4 MB, 786 files) matches no open pull request.",
+          "summary": "`STAGING/claude-health-checks` (37.1 MB, 781 files) — no open pull request; `claude/health-checks` is already in `main`, tip 64 min old.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-wonderful-bohr-6kxh7b` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `claude-health-checks` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-health-checks` and `cleanup_confirm: claude-health-checks`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/claude-placement-skill` (37.1 MB, 779 files) — no open pull request; `claude/placement-skill` is already in `main`, tip 78 min old.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-placement-skill` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-placement-skill` and `cleanup_confirm: claude-placement-skill`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         }
       ]
     },
@@ -138,38 +157,38 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 35334900,
+          "value": 35760949,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 404500125,
+          "value": 423254696,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 380216320,
+          "value": 398302208,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 50,
+          "value": 56,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 11.45,
+          "value": 11.84,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 385.8 MB against 33.7 MB of tracked content — 11.4x, in 50 pack(s).",
+          "summary": "`.git` is 403.6 MB against 34.1 MB of tracked content — 11.8x, in 56 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -213,19 +232,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 271,
+          "value": 276,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 84,
+          "value": 86,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 187,
+          "value": 190,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -244,7 +263,7 @@
       ],
       "findings": [
         {
-          "summary": "187 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "190 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."

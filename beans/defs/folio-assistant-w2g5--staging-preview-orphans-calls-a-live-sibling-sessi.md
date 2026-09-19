@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w2g5
-title: 'staging-preview-orphans calls a live sibling session''s branch an orphan, and there is no way to act on a true one'
-status: todo
+title: staging-preview-orphans calls a live sibling session's branch an orphan, and there is no way to act on a true one
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T10:48:19Z
-updated_at: 2026-09-19T10:48:19Z
+updated_at: 2026-09-19T11:42:18Z
 parent: folio-assistant-1xhc
 ---
 
@@ -101,3 +101,69 @@ Recommendation: **1**.
 recent commits, there is a test that fires on exactly the
 `claude-brave-hypatia-r820sf` shape, and a true orphan can be removed by a
 mechanism a person can actually invoke.
+
+_2026-09-19T11:20:55Z_ — Claimed on branch `claude/w2g5-orphan-liveness` (session_01SFCwxF2nePwDpnQrX66fZE).
+
+## Opening brief
+
+**What and why.** Both defects in this bean: the orphan check names live branches, and its documented remedy cannot be invoked. Worth doing because the two compound — a false positive whose only advertised remedy is unreachable trains a reader to ignore the check, and acting on it by hand is the unilateral removal `deletion-requires-confirmation` exists to stop.
+
+**What I already know, measured myself in this worktree at 2026-09-19T11:19Z** (`git fetch` + `merge-base --is-ancestor` per branch, against `origin/main`):
+
+| branch | merged into main | tip (committer date) | age at measurement |
+|---|---|---|---|
+| `claude/d2kp-live-verdicts` | yes | 09:58:56Z | 80 min |
+| `claude/ecstatic-goldberg-eroyaz` | yes | 10:19:49Z | 59 min |
+| `claude/placement-skill` | yes | 10:23:07Z | 56 min |
+| `claude/health-checks` | yes | 10:36:41Z | 42 min |
+| `claude/brave-hypatia-r820sf` | **no** | 11:16:31Z | 2.6 min |
+
+That measurement changes the design. **The bean's three signals as an ungated disjunction do not work on this data**: all four genuinely dead previews have tips from the last 80 minutes, so any recency horizon above ~40 minutes spares them too and the check reports nothing. Recency is still needed — it is the only signal covering the inter-PR gap, where a merge commit makes the branch an ancestor of `main` again and signal 2 goes quiet (brave-hypatia: PR #396 merged 10:37:21Z, next commit 10:43:03Z, gap 5m42s). So the horizon has to be SHORT, and its basis has to say so.
+
+**How.** Liveness becomes a pure, exported function over per-preview evidence, with a new `branches` probe (remote refs whose slug matches a preview, plus ancestry and tip date). Any live signal spares; a signal that cannot be evaluated makes the check `unknown`, following `probes.ts`' own precedent that one unreadable preview makes the total unknown rather than smaller. The same function backs a `workflow_dispatch` cleanup preflight, so deletion re-checks liveness at deletion time rather than trusting a report that may be a day old.
+
+**What would falsify it.** If the dead previews' branches were deleted from the remote after merge, the branch signals would be unevaluable for exactly the previews the check must still report. They are not: `git ls-remote --heads` lists 226 branches including all four. If this repo squash-merged, "ancestor of main" would never be true and every preview would be spared forever — it merge-commits (`Merge pull request #400 ...`), so it holds here, and I will say it is an assumption.
+
+**Not doing.** Not deleting any preview. Not dispatching the workflow. Not changing the size check.
+
+_2026-09-19T11:42:18Z_ — ## Outcome — PR #407, branch `claude/w2g5-orphan-liveness`
+
+**Both defects addressed. Nothing was removed; no preview, no branch, no bean.**
+
+### 1. Liveness is a disjunction now
+
+`previewLiveness` in `test/health/checks.ts`, pure and exported. Three signals, any one spares:
+
+| signal | test | threshold |
+|---|---|---|
+| `open-pr` | an open PR's head slugifies to the preview | — |
+| `unmerged-branch` | a remote branch slugifies to the preview and its tip is not an ancestor of the default branch | — |
+| `recent-commit` | that branch's tip is newer than `RECENT_COMMIT_MINUTES` | **30 minutes** |
+
+**The bean's three signals as an ungated disjunction do not work**, and this is the one place the plan changed. Measured at 11:19Z on 2026-09-19, all four genuinely dead previews' branches had tips 42–80 minutes old, so a recency horizon above ~40 minutes spares every one of them and the check goes silent — the opposite failure, and no better. Recency is still necessary, because it is the only signal covering the inter-PR gap: a merge commit puts the branch back inside `main`, so `unmerged-branch` goes quiet exactly when `open-pr` has. 30 min ≈ five times the measured 5m42s gap between #396 merging and that branch's next commit. The basis says all of this, and says it is calibrated rather than standard.
+
+Unevaluable → `unknown`, per preview, and one undetermined preview takes the WHOLE check to `unknown` while still naming the orphans it had determined. That follows `probes.ts` ("one unreadable preview makes the TOTAL unknown, not smaller") and `healthVerdict` (`unknown` outranks `findings`).
+
+New `probeBranches`: one `ls-remote`, candidates only, no fetch for a tip already held. It refuses to read "not an ancestor" out of a truncated history — asked exactly, by intersecting the parentless commits reachable from the default branch with `.git/shallow`, bounded by the graft boundary's date so a tip that postdates it is still trusted. `--is-shallow-repository` is unusable here because `probeStaging` fetches `gh-pages` with `--depth=1` first and would blind every sweep. This container's clone IS shallow (780 commits, grafted root), which is how that was found.
+
+### 2. A remedy that can be invoked
+
+`cleanup-dispatch` in `feature-staging.yml`: `workflow_dispatch` with `cleanup_slug` + `cleanup_confirm`. The confirmation must REPEAT the slug, so it names the artefact it confirms and cannot be carried over from an earlier run. Shape checked against exactly what the workflow's sed pipeline can produce, `.`/`..` refused by name, every input bound to `env:` and never interpolated, `rm -rf --`. The `stage` job is excluded on a cleanup dispatch, and the concurrency group includes the slug.
+
+**Decision on re-checking liveness at dispatch time: yes, and it fails closed.** `scripts/staging-cleanup-preflight.ts` calls the same `previewLiveness` — not a second implementation — and exits 0 remove / 1 live / 2 could-not-tell. The sweep is daily; between report and dispatch a branch can come back, which is the very behaviour this bean documents. The sweep proposes, the dispatch acts, so the acting end has to be the stricter one. Note the inversion: `unknown` means *do not accuse* in the check and *do not delete* here — both err away from removal.
+
+### Verified positively
+
+Per signal, by naming: each fires alone (`checks.test.ts`); the exact brave-hypatia shape is NOT reported and the old signal is shown silent; a merged/PR-less/11-day-idle preview still IS; unevaluable → `unknown` with the determined orphan still named; `probeBranches` against a real remote with a real merge, including both shallow cases. `feature-staging.yml` parsed and its guards asserted in `scripts/tests/staging-cleanup.test.ts` — parsed, never run, because running it deletes something.
+
+Live run, 2026-09-19T12:5xZ: 12 previews, **6 orphans, all merged into `main`**; `claude-brave-hypatia-r820sf` and this branch's own preview dropped out. Preflight run bare against live slugs: brave-hypatia exit 1 (live), `claude-health-checks` exit 0, `../../etc` exit 2.
+
+### Skills corrected
+
+`staging-review` told a reader to re-run the cleanup workflow or hand-delete from `gh-pages`; both were wrong for a closed PR. `deletion-requires-confirmation` gains the sequel to `plj1`: a confirmation policy needs a removal that can be confirmed, or the confirmation has nowhere to go. `crdm-requirements-workflow` step 9 likewise.
+
+### Not done / could not verify
+
+- The workflow was never dispatched, so the removal path is verified by parsing only. The four authorised slugs are the owner's to run.
+- `unmerged-branch` assumes merge-commit or rebase merges. Under squash-merge a branch tip is never an ancestor of the default branch, so every preview would be spared forever — safe direction, useless check. Stated in the code; this repo merge-commits.
+- `bun run health` exits 1, as it did before this change, on the pre-existing 100 MB `staging-preview-size` finding.
