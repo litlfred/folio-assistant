@@ -207,6 +207,23 @@ a reader assumes it is queued. Two sentences settle a bean somebody can say yes
 to; when **next** hands over a real decision between costed routes, §"The `next`
 line is a question" below is the binding form.
 
+**EVERY MENTION, not every report.** This rule is filed under "what makes a
+report worth reading" and the scope is wider than that heading: a bean id in an
+ordinary sentence is exactly as opaque as one in a list, and a reader hunting for
+its meaning cannot see which section of your message it came from. So it binds a
+one-line status, a mid-paragraph aside, a commit message, a PR body, an issue
+comment — anywhere the id appears at all. If naming the bean is not worth two
+sentences, do not name it: say "nothing outstanding" or describe the work without
+the id.
+
+Measured here, 2026-09-19. A turn ended *"Next unstarted is `5o3a`, or either
+standing decision."* — bare id, no summary, no link — in the same session that
+shipped the two-sentence rule and listed four other beans correctly under a
+**Beans** heading. The rule was obeyed where it was filed and broken one line
+below it, which is what a scope written as a section heading buys you. The
+author's reply was *"what is 5o3a?"*, which is the round-trip the whole rule
+exists to remove.
+
 **2. Asking for review means linking the artefact — deep, not the root.** If a
 turn ends with "please look at this", it must carry the **PR link** and a
 **direct link to every page that changed**, not the staging root.

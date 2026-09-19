@@ -51,6 +51,48 @@
 -->
 <script type="application/json" id="fa-site-scheme">{"scheme": "{{ site.color_scheme | default: 'light' }}"}</script>
 <!--
+  The TRANSLATION INDEX — which source page has a translation in which locale.
+
+  `mountNavLocale` in docs-ui.js reads this to decide what the left-hand navbar
+  shows: with the source language selected it does nothing, and with `fr`
+  selected it swaps each nav item that HAS a French page for that page, IN
+  PLACE OF the English one. An item with no translation is left exactly as it
+  is — that is the fallback, and it is the absence of a rewrite rather than a
+  code path of its own.
+
+  Generated into `docs/_data/translations.json` by
+  `content/pipeline/translation-index.ts`, from what each page DECLARES about
+  itself: `lang`, and `translation_source` naming the page it expresses. NOT
+  from a scan for directories whose names look like language subtags — see
+  that module's header for why that inference is wrong in both directions.
+
+  THREE STATES, and the third is the reason this is a JSON island rather than
+  a conditional. (The tag name is written inside {% raw %}{% raw %}{% endraw %}
+  below because LIQUID PARSES TAGS INSIDE HTML COMMENTS -- `<!-- -->` means
+  nothing to it -- so naming one in prose is a syntax error at build time, and
+  the message points at the THEME's head.html because Liquid attributes an
+  include's line to the includer. This comment cost one red deploy.)
+  A {% raw %}{% if %}{% endraw %} would have to choose between the second and
+  third rows below, and there is no expression that can:
+
+    1. the data file is there      -> `index` is an object; filter the nav.
+    2. it is there and EMPTY       -> `pages` is `{}`; there is nothing to
+                                      swap, so every item correctly falls back
+                                      to the source language.
+    3. the data file is ABSENT     -> `jsonify` emits `null`, and docs-ui.js
+                                      leaves the navbar EXACTLY as built.
+
+  A build that could not determine the translation set must never render as a
+  folio that has no translations. `null` is how that is said.
+
+  `baseurl` travels with it because the client has no other way to strip the
+  site prefix off a nav `href` before matching it.
+-->
+<script type="application/json" id="fa-translation-index">{
+  "baseurl": "{{ site.baseurl }}",
+  "index": {{ site.data.translations | jsonify }}
+}</script>
+<!--
   Translation metadata for this page, consumed by docs-ui.js to auto-render
   language coverage and QA badges. The translation pipeline stamps front matter;
   this block publishes it to the client. No manual editing needed.
