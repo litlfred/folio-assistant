@@ -30,6 +30,7 @@ from __future__ import annotations
 import datetime
 import hashlib
 import os
+import zipfile
 from typing import Any
 
 # Leading-byte signatures, longest first so a prefix cannot shadow a longer
@@ -72,6 +73,56 @@ def sniff_mimetype(path: str) -> str | None:
     return None
 
 
+# An OOXML or ODF document IS a zip, so the magic bytes say `application/zip`
+# and stop there. That is TRUE and useless: it sends a spreadsheet to the
+# archive rung, where it is listed as a bag of XML parts instead of read as a
+# workbook (bean `p67i`, defect introduced by `twqe`'s routing).
+#
+# The package declares itself one level in, and this is the same principle as
+# the byte sniff rather than an exception to it — neither the extension nor the
+# outer magic can say, so ASK THE CONTAINER:
+#
+#   * OOXML carries `[Content_Types].xml`, and the part names say which member
+#     of the family it is (`xl/` workbook, `word/` document, `ppt/` deck).
+#   * ODF carries `mimetype` as an entry whose CONTENT is the type, which the
+#     format requires to be stored first and uncompressed precisely so it can
+#     be read this way.
+_OOXML_PARTS: list[tuple[str, str]] = [
+    ("xl/workbook.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+    ("word/document.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+    ("ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation"),
+]
+
+
+def sniff_zip_package(path: str) -> str | None:
+    """What a zip DECLARES itself to be, or None when it is a plain archive.
+
+    Reads the member list and, for ODF, the `mimetype` entry's content. Never
+    looks at the file's name. Returns None for an ordinary zip, which is a
+    determined answer and not a failure.
+    """
+    try:
+        with zipfile.ZipFile(path) as z:
+            names = set(z.namelist())
+            if "mimetype" in names:
+                # ODF states its own type. Bounded read: a conforming package
+                # holds a short media type here, and anything longer is not one.
+                declared = z.read("mimetype")[:200].decode("ascii", "replace").strip()
+                if declared.startswith("application/vnd.oasis.opendocument"):
+                    return declared
+            if "[Content_Types].xml" in names:
+                for part, mime in _OOXML_PARTS:
+                    if part in names:
+                        return mime
+                # An OOXML package whose family we do not recognise. Reported
+                # as the generic one rather than as a plain zip: something
+                # declared itself, and losing that is the defect above.
+                return "application/vnd.openxmlformats-officedocument"
+    except (zipfile.BadZipFile, OSError, KeyError):
+        return None
+    return None
+
+
 def sha256_of(path: str) -> str:
     """Full 64-hex digest, streamed so a large PDF does not land in memory."""
     h = hashlib.sha256()
@@ -79,6 +130,24 @@ def sha256_of(path: str) -> str:
         for chunk in iter(lambda: fh.read(1 << 20), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def sniff_effective_mimetype(path: str) -> tuple[str | None, str]:
+    """What this file IS, and how that was determined.
+
+    Magic bytes, then — for a zip — the package's own declaration. ONE
+    definition, because the routing decision and the recorded fact are two
+    readings of the same question: `planFor` asks this and `tech_meta` records
+    it, so an `.xlsx` cannot route as an archive while its `source` block calls
+    it a workbook. That disagreement was real for one commit, and it sent every
+    spreadsheet to the archive rung.
+    """
+    mime = sniff_mimetype(path)
+    if mime == "application/zip":
+        declared = sniff_zip_package(path)
+        if declared:
+            return declared, "zip-package"
+    return mime, "magic-bytes" if mime else "unrecognised"
 
 
 def tech_meta(path: str) -> dict[str, Any]:
@@ -90,7 +159,11 @@ def tech_meta(path: str) -> dict[str, Any]:
     looked at, which absence alone does not tell it.
     """
     st = os.stat(path)
-    mime = sniff_mimetype(path)
+    # The shared answer, so the recorded fact and the routing decision cannot
+    # disagree. `mimetype_source` says HOW it was determined, which lets a
+    # reader tell a byte sniff from a container declaration rather than infer
+    # it from the value.
+    mime, source = sniff_effective_mimetype(path)
     return {
         "file": os.path.basename(path),
         "sha256": sha256_of(path),
@@ -101,5 +174,5 @@ def tech_meta(path: str) -> dict[str, Any]:
             st.st_mtime, tz=datetime.timezone.utc
         ).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "mimetype_sniffed": mime,
-        "mimetype_source": "magic-bytes" if mime else "unrecognised",
+        "mimetype_source": source,
     }

@@ -210,6 +210,55 @@ different facts. The requirement is proved to fire by fixture archives built in
 `scripts/tests/archive-contents.test.ts`, and each of its four branches is
 mutation-checked. Bean `twqe`.
 
+## Datasets — findable by their headers, and the narrative nobody wrote
+
+`scripts/tabular-records.py` writes `library/<slug>/tabular.jsonld`: sheet
+names, the header row, and the shape of each sheet. `header_vocabulary` is the
+union across sheets, and it is the field a `grep` for a column name lands in —
+without it a dataset is stored but not findable, and a failed search is
+indistinguishable from the dataset not having that column.
+
+**Stdlib only** (`zipfile` + `xml.etree`, `csv`). This repository declares no
+Python dependencies — no `requirements.txt`, and CI installs only `ruff` — so a
+tool needing openpyxl would pass locally and fail there. Everything this arm
+needs is in `xl/workbook.xml` and each sheet's `<dimension>`. Verified by
+reading back a workbook openpyxl itself wrote, **with openpyxl uninstalled**.
+
+### The narrative is declared empty, never fabricated
+
+`narrative: null`, `narrative_state: "not-authored"`. A description of what a
+dataset is *about* is somebody's account and needs an author; the headers are
+right there and a plausible summary could be assembled from them, and that is
+exactly why it isn't. When one is written it carries an `Attribution`
+([above](#provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible)).
+The schema refuses a record that says both things at once.
+
+A null `rows`/`columns` is likewise not an empty sheet: `shape_source` says
+whether the shape was read, counted, or `undetermined`.
+
+### An `.xlsx` IS a zip, and that broke the archive routing
+
+The magic bytes of an OOXML or ODF document say `application/zip`, which is
+true and useless: it sent every spreadsheet to the archive rung to be listed as
+a bag of XML parts. The magic cannot tell them apart, so
+`_tech_meta.sniff_zip_package` asks the **container**, which declares itself —
+OOXML by `[Content_Types].xml` plus the part names, ODF by its `mimetype`
+member. Same principle as the byte sniff, one level in.
+
+`sniff_effective_mimetype` is the single answer the router and the recorder
+both ask. They disagreed for one commit — `planFor` called the magic-only
+function, so an `.xlsx` routed as an archive while its own `source` block
+correctly called it a workbook.
+
+**A CSV has no magic bytes at all**, so routing one cannot be a sniff and must
+not become an extension guess. `is_tabular_text` asks the only content question
+available: do the first rows split into the *same* number of fields, more than
+one? Prose, a single column and anything ragged all answer no — a one-column
+"table" is indistinguishable from a list of lines.
+
+Proved on fixtures built at test time, all five branches mutation-checked.
+Bean `p67i`.
+
 ## Ingestion is a HARNESS capability, not core's
 
 `uploads` and `library` are both graph kinds declared by the **harness** layer;

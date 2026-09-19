@@ -51,6 +51,11 @@ import {
   isArchiveMimetype,
 } from "../schemas/archive-contents.ts";
 import { LIBRARY_BLOCK_ORIGIN, ProvenanceSchema, isIngested } from "../schemas/attribution.ts";
+import {
+  TABULAR_RECORDS_SCHEMA_ID,
+  TabularRecordsSchema,
+  isTabularMimetype,
+} from "../schemas/tabular-records.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
@@ -121,6 +126,65 @@ function derivableRequirements(dir: string): Requirement[] {
       state: n > 0 ? "met" : "unmet",
       detail: n < 0 ? `no ${rel}/ directory` : `${n} files`,
     });
+  }
+
+  // Tabular records (bean `p67i`).
+  //
+  // Scoped the same way as `archive-contents`, and for the same reason: the
+  // entry's OWN `source.mimetype_sniffed` says whether it came from a
+  // workbook, so this is derived rather than judged. That field carries the
+  // refined answer — an `.xlsx` reads as the spreadsheet type, not as
+  // `application/zip` — because the router and the recorder ask one function.
+  //
+  // A CSV is the case the mimetype cannot cover: it has no magic bytes and is
+  // honestly `unrecognised`, so an entry with a `tabular.jsonld` is checked on
+  // its merits whatever its mimetype, and one without is only REQUIRED to have
+  // it when the mimetype declares a workbook. Requiring it of every
+  // unrecognised entry would demand a dataset of every text file.
+  {
+    const src = (() => {
+      try {
+        return (JSON.parse(readFileSync(structPath, "utf-8")) as Record<string, unknown>).source as
+          | Record<string, unknown>
+          | undefined;
+      } catch {
+        return undefined;
+      }
+    })();
+    const mime = src?.mimetype_sniffed;
+    if (!has("tabular.jsonld")) {
+      out.push(
+        isTabularMimetype(mime)
+          ? {
+              name: "tabular-records",
+              state: "unmet",
+              detail: `declares ${mime} but no tabular.jsonld — run scripts/tabular-records.py`,
+            }
+          : {
+              name: "tabular-records",
+              state: "met",
+              detail: `not tabular (${typeof mime === "string" && mime ? mime : "no sniffed mimetype"})`,
+            },
+      );
+    } else {
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(readFileSync(join(dir, "tabular.jsonld"), "utf-8"));
+      } catch (e) {
+        parsed = undefined;
+        out.push({ name: "tabular-records", state: "unmet", detail: `tabular.jsonld unparseable: ${String(e)}` });
+      }
+      if (parsed !== undefined) {
+        const r = TabularRecordsSchema.safeParse(parsed);
+        out.push({
+          name: "tabular-records",
+          state: r.success ? "met" : "unmet",
+          detail: r.success
+            ? `${r.data.n_sheets} sheet(s), ${r.data.header_vocabulary.length} header(s), narrative ${r.data.narrative_state}`
+            : `tabular.jsonld is not ${TABULAR_RECORDS_SCHEMA_ID}: ${r.error.issues[0]?.message ?? "invalid"}`,
+        });
+      }
+    }
   }
 
   // Archive contents (bean `twqe`).
@@ -331,7 +395,6 @@ function derivableRequirements(dir: string): Requirement[] {
 export const NOT_DERIVABLE: ReadonlyArray<readonly [string, string]> = [
   ["image-descriptions", "d5f1"],
   ["audio-transcripts", "1r0p"],
-  ["tabular-records", "p67i"],
 ];
 
 export function checkEntry(dir: string): EntryReport {

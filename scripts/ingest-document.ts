@@ -48,6 +48,7 @@ import { existsSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
+import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
 
 /**
@@ -69,7 +70,7 @@ export function libraryRoot(root = resolve(".")): string {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "archive" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "tabular" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
@@ -145,18 +146,21 @@ except Exception as e:
 export const OCR_THRESHOLD_CHARS = 200;
 
 /**
- * What the file's leading bytes say it is, or `null` when unrecognised.
+ * What the file IS, or `null` when nothing could determine it.
  *
- * `_tech_meta.py`'s sniffer, asked rather than reimplemented — the same one
- * that fills `source.mimetype_sniffed` (bean `nso8`), so the routing decision
- * and the recorded fact cannot disagree.
+ * `_tech_meta.sniff_effective_mimetype`, asked rather than reimplemented —
+ * THE SAME call that fills `source.mimetype_sniffed` (bean `nso8`), so the
+ * routing decision and the recorded fact cannot disagree. They did for one
+ * commit: this called the magic-bytes-only `sniff_mimetype`, so every `.xlsx`
+ * routed as `application/zip` to the archive rung while its own `source` block
+ * correctly called it a workbook.
  */
 export function sniffMimetype(file: string): string | null {
   const py =
     "import sys, json, importlib.util as u\n" +
     "spec = u.spec_from_file_location('t', 'scripts/_tech_meta.py')\n" +
     "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
-    "print(json.dumps(m.sniff_mimetype(sys.argv[1])))\n";
+    "print(json.dumps(m.sniff_effective_mimetype(sys.argv[1])[0]))\n";
   const r = Bun.spawnSync(["python3", "-c", py, file]);
   if (r.exitCode !== 0) return null;
   try {
@@ -166,6 +170,22 @@ export function sniffMimetype(file: string): string | null {
   }
 }
 
+
+/** The delimiter `scripts/tabular-records.py` finds in this file, or `null`. */
+export function tabularDelimiter(file: string): string | null {
+  const py =
+    "import sys, json, importlib.util as u\n" +
+    "spec = u.spec_from_file_location('t', 'scripts/tabular-records.py')\n" +
+    "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
+    "print(json.dumps(m.is_tabular_text(sys.argv[1])))\n";
+  const r = Bun.spawnSync(["python3", "-c", py, file]);
+  if (r.exitCode !== 0) return null;
+  try {
+    return JSON.parse(new TextDecoder().decode(r.stdout)) as string | null;
+  } catch {
+    return null;
+  }
+}
 
 export function planFor(
   pdf: string,
@@ -185,6 +205,33 @@ export function planFor(
   // claim by whoever made the file. A `.pdf` that is really a zip belongs on
   // the archive rung, and this is the only thing that can tell.
   const mime = mimetype === undefined ? sniffMimetype(pdf) : mimetype;
+
+  // A spreadsheet before an archive, because an .xlsx IS a zip and would
+  // otherwise be listed as a bag of XML parts rather than read as a workbook.
+  // The magic bytes cannot tell them apart — both are genuinely `PK\x03\x04`
+  // — so `_tech_meta.sniff_zip_package` asks the CONTAINER, which declares
+  // itself via `[Content_Types].xml` or ODF's `mimetype` member. Bean `p67i`;
+  // the defect was introduced by `twqe`'s routing and caught before it shipped.
+  if (mime !== null && (TABULAR_MIMETYPES as readonly string[]).includes(mime)) {
+    return {
+      rung: "tabular",
+      why: `the package declares ${mime} — a workbook, read for its sheets and headers`,
+      steps: [["python3", "scripts/tabular-records.py", "-o", lib, pdf]],
+    };
+  }
+
+  // A CSV has NO magic bytes, so routing one is not a sniff and must not
+  // become an extension guess. `is_tabular_text` asks the only content
+  // question there is: do the first rows split into the same number of fields,
+  // more than one? Prose, a single column and anything ragged all answer no.
+  if (mime === null && tabularDelimiter(pdf) !== null) {
+    return {
+      rung: "tabular",
+      why: "no magic bytes, but the rows split consistently — delimited text",
+      steps: [["python3", "scripts/tabular-records.py", "-o", lib, pdf]],
+    };
+  }
+
   if (mime !== null && (ARCHIVE_MIMETYPES as readonly string[]).includes(mime)) {
     return {
       rung: "archive",
