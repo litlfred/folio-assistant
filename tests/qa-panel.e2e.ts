@@ -36,11 +36,83 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
 
-/** A block sidecar carrying the corpus's one real failure, and a stale witness. */
-const BLOCK_JSON = readFileSync(
+/** A block sidecar from the corpus, and two states derived from it. */
+const CORPUS_JSON = readFileSync(
   join(ROOT, "docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json"),
   "utf8",
 );
+
+/**
+ * The same document with one criterion made to FAIL.
+ *
+ * **This used to be served straight from the corpus, and that is why the suite
+ * went red on `main` at 78a399ee5.** The block really did carry a failing
+ * `voice-status-leak` — the assertions below were written against it — and
+ * #302 ("Adjudicate the remaining 12 voice findings") legitimately FIXED that
+ * finding. The sidecar is now 22 pass and 26 n/a with nothing failing, so
+ * "worst criterion first" had no worst criterion to put first, and a test of
+ * the PANEL failed because the CONTENT got better.
+ *
+ * The file already knew this shape of mistake: {@link STALE_JSON} exists
+ * because that block's verdict was stale on the day it was written and stopped
+ * being stale when the sweep re-ran. The same reasoning applies to a failing
+ * row and was simply not applied to it. A test of how the panel RENDERS a
+ * failure must not depend on the corpus containing one — otherwise every
+ * content fix is a CI failure, which teaches exactly the wrong lesson.
+ *
+ * The row is the real one, copied from the sidecar as it stood at c8fbad385^,
+ * so the hash and witness the assertions name are the generator's own output
+ * rather than invented values.
+ */
+const BLOCK_JSON = (() => {
+  const doc = JSON.parse(CORPUS_JSON) as {
+    state: string;
+    counts: Record<string, number>;
+    criteria: Array<Record<string, unknown>>;
+  };
+  // Replace the first criterion rather than appending: the panel sorts
+  // worst-first itself, so a row appended at the end still has to be hoisted,
+  // which is the behaviour under test.
+  doc.criteria[0] = {
+    id: "voice-status-leak",
+    result: "fail",
+    severity: "critical",
+    evidence: [
+      "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
+    ],
+    witnesses: [
+      {
+        kind: "script",
+        id: "content/pipeline/qa-checkers-voice.ts",
+        version: "v1",
+        at: "2026-09-18T20:37:32.525Z",
+        sha: "49978409e8e51e42ce6400a99f424c9f99095326",
+        scriptHash: "5af6856733f3",
+        scriptCommitSha: "e3beb66d17f43a20564671e34ffb167ca016b11c",
+        freshness: "fresh",
+      },
+    ],
+  };
+  doc.state = "fail";
+  doc.counts = {
+    fail: 1,
+    warn: 0,
+    pass: doc.criteria.filter((c) => c.result === "pass").length,
+    na: doc.criteria.filter((c) => c.result === "n/a").length,
+    unknown: 0,
+  };
+  return JSON.stringify(doc);
+})();
+
+/**
+ * How many rows the panel folds away behind its disclosure: everything but the
+ * one failure shown first.
+ *
+ * Computed from the fixture for the same reason the fixture is computed at all
+ * — the number belongs to this document, and a literal here is one more way for
+ * a content change to turn a panel test red.
+ */
+const FOLDED_COUNT = (JSON.parse(BLOCK_JSON) as { criteria: unknown[] }).criteria.length - 1;
 /**
  * The same document with its witness marked stale.
  *
@@ -148,7 +220,13 @@ test("a block icon opens its sidecar, worst criterion first", async ({ page }) =
   await expect(firstRow.locator(".fa-qa-chip", { hasText: "critical" })).toBeVisible();
 
   // The passing bulk is behind one labelled control that states its own count.
-  await expect(panel.locator(".fa-qa-more")).toContainText("47");
+  //
+  // DERIVED, not pinned. `47` was a literal here, which is a property of the
+  // corpus — how many criteria this one block happens to carry — not of the
+  // panel. Perturbing the sidecar showed the assertion still failing after the
+  // failing row was made synthetic, so the corpus dependency this test was
+  // fixed for survived in the one number nobody looked at.
+  await expect(panel.locator(".fa-qa-more")).toContainText(String(FOLDED_COUNT));
   await expect(panel.locator(".fa-qa-crit-list").nth(1)).toBeHidden();
 });
 
