@@ -32,6 +32,28 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
+## Bootstrapping — what to do with an empty repository
+
+**`bootstrap litlfred/cat-harness`** means: *make this repository an instance of
+that one.* You give **one** reference; the harness type, the knowledge graph to
+load and the editorial voice are all **read** from that instance's declaration,
+not asked for one at a time.
+
+An agent sent to a repository that is not yet an instance starts at
+**[`bootstrap/README.md`](bootstrap/README.md)** and nowhere else. That
+directory is a standalone knowledge graph — it does not import this one, and it
+assumes no connected tools, because an agent cold-starting has neither. It ends
+in three steps: load the graph-navigation skill, load the bootstrap graph, start
+the bootstrap process.
+
+Design, open questions, and why intent is an *instance reference* rather than a
+menu of content types:
+[proposals/bootstrap](docs/folio-assistant/proposals/bootstrap.md).
+**The graph itself is not built yet** — the README is the specification and the
+entry point.
+
+---
+
 📖 **Full documentation:** **<https://litlfred.github.io/folio-assistant/>**
 
 🤖 **Are you an LLM agent?** Start with

@@ -14,15 +14,32 @@
  * Never hand-edit `docs/assets/img/workflows/*.svg` — regenerate instead.
  */
 import { chromium } from "@playwright/test";
-import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
+import { workflowFiles } from "./known-skills.js";
+import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, join, relative, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
-const SRC_DIR = join(ROOT, "skills/workflows");
+/**
+ * The `.bpmn` sources, from EVERY directory the instance declares as holding
+ * its knowledge graph — not from the literal `skills/workflows/`.
+ *
+ * `workflowFiles` returns absolute paths, so `file` below is already complete
+ * and nothing joins it to a base. That is the point: a topical layout
+ * (`bootstrap/workflows/`, `crdm/workflows/`) is found without this script
+ * knowing the layout exists.
+ *
+ * Output names are still the BASENAME, which is a latent collision if two
+ * declared directories ever hold a diagram of the same name — today there is
+ * one such directory, so it is not a live defect, and naming it here is
+ * cheaper than a scheme nobody needs yet.
+ */
+function bpmnSources(): string[] {
+  return workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn")).sort();
+}
 const OUT_DIR = join(ROOT, siteDirFor(ROOT), "assets/img/workflows");
 const VIEWER = join(ROOT, "node_modules/bpmn-js/dist/bpmn-viewer.production.min.js");
 
@@ -36,9 +53,9 @@ if (!existsSync(VIEWER)) {
   process.exit(1);
 }
 
-const sources = (await readdir(SRC_DIR)).filter((f) => f.endsWith(".bpmn")).sort();
+const sources = bpmnSources();
 if (sources.length === 0) {
-  console.error(`No .bpmn sources found under ${SRC_DIR}`);
+  console.error("No .bpmn sources found in any declared knowledge-graph directory");
   process.exit(1);
 }
 
@@ -47,7 +64,7 @@ if (sources.length === 0) {
 // and bpmn-js will draw it regardless (that is how seven of these shipped).
 // Reporting it here costs nothing and does not need Chromium.
 const commentFindings = sources.flatMap((f) =>
-  checkXmlComments(readFileSync(join(SRC_DIR, f), "utf8"), `skills/workflows/${f}`),
+  checkXmlComments(readFileSync(f, "utf8"), relative(ROOT, f)),
 );
 if (commentFindings.length > 0) {
   console.error(`${commentFindings.length} malformed XML comment(s) — refusing to render:\n`);
@@ -75,7 +92,7 @@ await page.addScriptTag({ path: VIEWER });
  */
 const processHome = new Map<string, string>();
 for (const file of sources) {
-  const xml = await readFile(join(SRC_DIR, file), "utf8");
+  const xml = await readFile(file, "utf8");
   for (const m of xml.matchAll(/<bpmn:process\s+id="([^"]+)"/g)) {
     processHome.set(m[1], basename(file, ".bpmn"));
   }
@@ -152,7 +169,7 @@ function wrapShapeInLink(svg: string, elementId: string, href: string): string {
 let stale = 0;
 
 for (const file of sources) {
-  const xml = await readFile(join(SRC_DIR, file), "utf8");
+  const xml = await readFile(file, "utf8");
   let rendered: { svg: string; warnings: string[] };
   try {
     rendered = await page.evaluate(async (bpmnXml) => {
