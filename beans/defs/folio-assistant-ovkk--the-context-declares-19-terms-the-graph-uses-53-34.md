@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ovkk
-title: 'The @context declares 19 terms; the graph uses 53 — 3461 property occurrences are dropped by any JSON-LD processor'
-status: todo
+title: The @context declares 19 terms; the graph uses 53 — 3461 property occurrences are dropped by any JSON-LD processor
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T00:07:39Z
-updated_at: 2026-09-19T00:07:53Z
+updated_at: 2026-09-19T05:32:24Z
 ---
 
 
