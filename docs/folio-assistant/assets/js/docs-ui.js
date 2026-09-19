@@ -518,6 +518,185 @@
     return null;
   }
 
+
+  /* ── Discarded items — the fsh-guts viewer ─────────────────────────────
+   *
+   * Owner, 2026-09-19: *"only available under settings at dead fish icon.
+   * opening it shows a list of all the nodes in fsh-guts/ (has counter on
+   * icon) and use can open dialog to select and display them."*
+   *
+   * ## Why it is fetched when SETTINGS opens, not on page load
+   *
+   * The document carries every node's body. Measured: 64 KB with them
+   * against 5 KB without. The control lives inside Settings, so its count is
+   * not needed until Settings is opened — fetching 64 KB on every page view
+   * to populate a badge nobody has looked at would be indefensible. The
+   * result is cached for the page, so opening Settings twice fetches once.
+   *
+   * ## Three states, and the middle one is the whole point
+   *
+   * The todo tile hides itself when the count is zero, which is right for
+   * todos. Doing the same here would be wrong: a FAILED fetch and an empty
+   * trashcan would look identical, and they are opposite facts. So
+   *
+   *   loaded, n > 0   the control, with n in its accessible name
+   *   loaded, n === 0 a plain line saying the trashcan is empty
+   *   failed          a plain line saying it could not be read, and why
+   *
+   * ## The body is rendered as TEXT
+   *
+   * `renderBody` splits on blank lines and emits paragraphs via textContent.
+   * No markdown renderer and no sanitiser, deliberately: `fsh-guts/` is a
+   * dumping ground anyone may drop a file into, and the safe thing to do
+   * with content like that is not to interpret it. A link to the source on
+   * the forge is offered for anyone who wants it rendered.
+   */
+
+  var FISH_GLYPH =
+    '<svg class="fa-tile-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    // Body, tail, and an X for the eye — a dead fish, per the owner.
+    '<path d="M2 12c3-4 7-6 11-6s7 2 9 6c-2 4-5 6-9 6s-8-2-11-6z" fill="none" ' +
+    'stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+    '<path d="M22 12l-3-3v6z" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linejoin="round"/>' +
+    '<path d="M7.2 10.2l2 2m0-2l-2 2" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linecap="round"/></svg>';
+
+  /** `{ nodes }` on success, `{ error }` when it could not be read. Cached. */
+  var discardedCache = null;
+
+  function fetchDiscarded(done) {
+    if (discardedCache) return done(discardedCache);
+    var src = document.querySelector('meta[name="fa-fsh-guts-src"]');
+    var url = src && src.getAttribute("content");
+    if (!url) {
+      // Not an error and not an empty trashcan: this build published no
+      // document, so there is nothing to say a count about.
+      discardedCache = { absent: true };
+      return done(discardedCache);
+    }
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (doc) {
+        var g = doc && doc["@graph"];
+        if (!Array.isArray(g)) throw new Error("no @graph array");
+        discardedCache = { nodes: g };
+        done(discardedCache);
+      })
+      .catch(function (e) {
+        discardedCache = { error: e.message, url: url };
+        done(discardedCache);
+      });
+  }
+
+  /** One node's detail: what it was, where it came from, and its text. */
+  function buildDiscardedDetail(node, onBack) {
+    var wrap = el("div", { class: "fa-discarded-detail" });
+
+    var back = el("button", { type: "button", class: "fa-discarded-back" },
+                  "‹ All discarded items");
+    back.addEventListener("click", onBack);
+    wrap.appendChild(back);
+
+    var h = el("h4", { class: "fa-discarded-title", tabindex: "-1" },
+               String(node.name || node.sourcePath || "Untitled"));
+    wrap.appendChild(h);
+
+    // The metadata that makes it not an orphan. `movedFrom` first: a reader
+    // asking "what is this" is usually asking where it used to be.
+    var meta = el("dl", { class: "fa-discarded-meta" });
+    function row(label, value) {
+      if (!value) return;
+      meta.appendChild(el("dt", null, label));
+      meta.appendChild(el("dd", null, String(value)));
+    }
+    row("Was at", node.movedFrom);
+    row("Moved", node.movedOn);
+    row("Kind", node.nodeKind);
+    row("Issue", node.issue ? "#" + node.issue : "");
+    if (meta.childNodes.length) wrap.appendChild(meta);
+
+    if (node.description) {
+      wrap.appendChild(el("p", { class: "fa-discarded-summary" }, String(node.description)));
+    }
+
+    // NEVER A BLANK PANE. A node with no body says so; it does not render
+    // nothing and leave the reader wondering whether it failed.
+    if (node.body) {
+      wrap.appendChild(renderBody(node.body));
+    } else {
+      wrap.appendChild(el("p", { class: "fa-discarded-none" },
+        "This item carries no text — only the record of what it was and where it came from."));
+    }
+
+    var links = getSiteLinks();
+    if (links.source && node.sourcePath) {
+      wrap.appendChild(el("a", {
+        class: "fa-discarded-source",
+        href: String(links.source).replace(/\/$/, "") + "/blob/main/" + node.sourcePath,
+      }, "View the source of this item"));
+    }
+    return wrap;
+  }
+
+  /** The list, and the detail it swaps to. */
+  function buildDiscardedView(state) {
+    var wrap = el("div", { class: "fa-discarded fa-tile-content" });
+
+    if (state.error) {
+      wrap.appendChild(el("p", { class: "fa-discarded-error" },
+        "The discarded-items document could not be read (" + state.error + "). " +
+        "This is not the same as there being nothing discarded."));
+      return wrap;
+    }
+    var nodes = state.nodes || [];
+    if (nodes.length === 0) {
+      wrap.appendChild(el("p", { class: "fa-discarded-none" },
+        "Nothing has been discarded. Items moved here instead of being deleted would appear in this list."));
+      return wrap;
+    }
+
+    var list = el("ul", { class: "fa-discarded-list" });
+    var detail = el("div", { hidden: "hidden" });
+
+    function showList() {
+      detail.setAttribute("hidden", "hidden");
+      detail.innerHTML = "";
+      list.removeAttribute("hidden");
+      var first = list.querySelector("button");
+      if (first) first.focus();
+    }
+
+    nodes.forEach(function (node) {
+      var li = el("li");
+      var b = el("button", { type: "button", class: "fa-discarded-item" });
+      b.appendChild(el("span", { class: "fa-discarded-item-name" },
+                       String(node.name || node.sourcePath || "Untitled")));
+      if (node.nodeKind) {
+        b.appendChild(el("span", { class: "fa-discarded-item-kind" }, String(node.nodeKind)));
+      }
+      b.addEventListener("click", function () {
+        list.setAttribute("hidden", "hidden");
+        detail.innerHTML = "";
+        detail.appendChild(buildDiscardedDetail(node, showList));
+        detail.removeAttribute("hidden");
+        // Focus the heading, not the top of the pane: the reader chose this
+        // item and the first thing they should be told is which one opened.
+        var h = detail.querySelector(".fa-discarded-title");
+        if (h) h.focus();
+      });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+
+    wrap.appendChild(list);
+    wrap.appendChild(detail);
+    return wrap;
+  }
+
   /* ── Action tiles ────────────────────────────────────────────────────── */
 
   // A three-by-three of rounded squares: the launcher. It says "there are
@@ -777,6 +956,55 @@
       var settings = el("div", { class: "fa-tile-content" });
       settings.appendChild(buildThemeTile());
       settings.appendChild(buildReadingPrefs());
+
+      // The discarded-items control — UNDER SETTINGS, per the owner, which is
+      // also why the 64 KB document is fetched here and not on page load.
+      //
+      // A placeholder goes in immediately and is replaced when the fetch
+      // settles. A control that appeared later would move the rows under a
+      // reader's cursor; one that showed a count of nothing and then changed
+      // is the flicker the todo tile's comment already records.
+      var discardedSlot = el("div", { class: "fa-discarded-slot" },
+                             "Checking for discarded items\u2026");
+      settings.appendChild(discardedSlot);
+      fetchDiscarded(function (state) {
+        discardedSlot.innerHTML = "";
+        if (state.absent) {
+          // This build published no document. Not an error and not an empty
+          // trashcan — there is simply nothing to report a count about, so
+          // the control is not offered at all.
+          discardedSlot.remove();
+          return;
+        }
+        if (state.error) {
+          // NOT hidden, and this is the case the todo tile's "count === 0 is
+          // not a tile" rule would have got wrong: a failed fetch and an
+          // empty trashcan are opposite facts.
+          discardedSlot.appendChild(el("p", { class: "fa-discarded-error" },
+            "Discarded items could not be read (" + state.error + ")."));
+          return;
+        }
+        var n = (state.nodes || []).length;
+        var label = n === 1 ? "1 item" : n + " items";
+        var btn = el("button", {
+          type: "button",
+          class: "fa-tile fa-discarded-open",
+          // The accessible name says WHAT it is and HOW MANY. "Dead fish" is
+          // the icon, not the name — a screen-reader user is told what the
+          // control does, and the count is in the name rather than conveyed
+          // by the badge alone.
+          "aria-label": "Discarded items \u2014 " + label,
+        });
+        btn.innerHTML = FISH_GLYPH;
+        btn.appendChild(el("span", { class: "fa-tile-caption" }, "Discarded"));
+        btn.appendChild(el("span", { class: "fa-tile-count" }, String(n)));
+        btn.addEventListener("click", function () {
+          views.discarded = buildDiscardedView(state);
+          showView("discarded", "Discarded items", btn);
+        });
+        discardedSlot.appendChild(btn);
+      });
+
       views.settings = settings;
 
       views.language = buildLanguageBar();
