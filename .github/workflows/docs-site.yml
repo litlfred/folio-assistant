@@ -207,11 +207,36 @@ jobs:
       # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
       # asserts both workflows carry it, because missing it in one publishes a
       # site whose evidence links are all dead.
-      - name: Publish the QA witnesses
+      - name: Publish the QA witnesses and results
         run: |
           mkdir -p ./_site/assets
           cp -rT test/results/witnesses ./_site/assets/qa
-          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA witness document(s)"
+          # The RESULTS beside them. `kg-export` writes this during the export
+          # step above, so the copy picks up THIS run's findings rather than
+          # whatever was last committed. Since bean `2634` the published graph
+          # no longer carries them, so this file is the only place a consumer
+          # can see what the QA pass found about the document it just fetched.
+          find test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
+
+      # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
+      # composed.
+      #
+      # The knowledge-graph tile's href was `'/kg/' | relative_url` written
+      # into `head_custom.html` by hand, and nothing has ever been published
+      # at `<base>/kg/`. The only entry point to the viewer anywhere on this
+      # site was a 404 from the day it was added, and no test caught it
+      # because every test asserted the attribute rather than the target --
+      # the same defect that left all twenty-three of the README's chapter
+      # PDF links dead. See bean `udx8`.
+      #
+      # This runs AFTER the export, against the real `_site`, so a tile that
+      # outlives the artefact it points at fails the build instead of
+      # shipping. Exit 2 ("could not determine" -- no build to check) is a
+      # failure here too: at this point in the job there IS a build, so not
+      # finding one means something earlier went wrong quietly.
+      - name: Check the navbar tiles resolve against the built site
+        run: bun run scripts/site-links.ts --site ./_site
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll

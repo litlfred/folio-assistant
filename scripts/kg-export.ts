@@ -424,19 +424,18 @@ function buildContext(): Record<string, unknown> {
     // where the truncation check used to be, which is worse than leaving it
     // undeclared, because undeclared at least loses the whole thing visibly.
     counts: { "@id": `${FOLIO_NS}counts`, "@type": "@json" },
-    // A LITERAL and deliberately NOT `@json`, unlike its three neighbours
-    // below. `problems` is an array of plain strings, and a bare term expands
-    // an array of literals to one value each — which is what they are. `@json`
-    // would collapse three independent problems into a single opaque blob.
-    problems: `${FOLIO_NS}problems`,
-    // `@json` for the three that hold OBJECTS. Their inner keys — `term`,
-    // `onTypes`, `occurrences`, `module`, `why`, `from`, `edge`, `to` — are a
-    // vocabulary this graph does not model, and modelling a build report as
-    // RDF is not what this change is for. Verbatim is honest; a declared
-    // container over undeclared members is not.
-    undeclaredTerms: { "@id": `${FOLIO_NS}undeclaredTerms`, "@type": "@json" },
-    undeclaredSchemaModules: { "@id": `${FOLIO_NS}undeclaredSchemaModules`, "@type": "@json" },
-    danglingLinks: { "@id": `${FOLIO_NS}danglingLinks`, "@type": "@json" },
+    //
+    // `problems`, `undeclaredTerms`, `undeclaredSchemaModules` and
+    // `danglingLinks` were declared here and are NOT any more — the document
+    // no longer carries them. They are a QA reviewer's findings about the
+    // graph this run produced, so they are written to `test/results/` as a
+    // `qa-results/v1` document instead. See `publishedDocument`.
+    //
+    // The terms went WITH the fields, deliberately. A `@context` describes what
+    // its document carries; a term for a field nothing emits is a promise to a
+    // consumer that this document will answer a question it has stopped
+    // answering, which is a worse kind of wrong than an undeclared term —
+    // undeclared at least fails loudly against `undeclaredRootTerms`.
   };
 }
 
@@ -471,6 +470,43 @@ function buildContext(): Record<string, unknown> {
  * thing a new entry can mean is that somebody added a root field and did not
  * decide what it means. Deciding costs one line in {@link buildContext}.
  */
+/**
+ * The document as PUBLISHED — the computation minus its QA findings.
+ *
+ * ## Why the findings left the document
+ *
+ * `undeclaredTerms`, `undeclaredSchemaModules`, `danglingLinks` and `problems`
+ * are what a QA reviewer found about the graph this run produced. The owner's
+ * rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs
+ * under `test/results/` as part of a QA process. They are written there, as a
+ * `qa-results/v1` document, by the CLI below.
+ *
+ * They are **not** dropped — they are relocated, and the relocation is checked:
+ * a test asserts the result's families equal what this function strips out, so
+ * nothing can leave the document without arriving in the result.
+ *
+ * ## What STAYS, and why the line is not "everything diagnostic"
+ *
+ * `counts` and `repository` stay. Neither is a finding: `counts` is what the
+ * graph CONTAINS, which is how a consumer spots a truncated document, and
+ * `repository` is provenance sitting beside `sourceCommit`. A reviewer's
+ * verdict moves; a fact about the artefact does not.
+ *
+ * `sourceCommitUnavailable` stays for the same reason, and it is the sharpest
+ * case: it reads like a problem and is not one. A tarball exports a complete
+ * graph and simply cannot say which commit it came from.
+ */
+export function publishedDocument(data: Export): Omit<Export, "undeclaredTerms" | "undeclaredSchemaModules" | "danglingLinks" | "problems"> {
+  const {
+    undeclaredTerms: _ut,
+    undeclaredSchemaModules: _usm,
+    danglingLinks: _dl,
+    problems: _p,
+    ...doc
+  } = data;
+  return doc;
+}
+
 export function undeclaredRootTerms(
   doc: Record<string, unknown>,
   context: Record<string, unknown>,
@@ -1484,7 +1520,10 @@ if (import.meta.main) {
   // the two documents a build publishes side by side cannot disagree about
   // which build they came from. It was an inline `bun -e` in
   // `feature-staging.yml` that reached this document and nothing else.
-  writeFileSync(out, JSON.stringify({ ...data, ...stagingFields() }, null, 2) + "\n");
+  // The PROJECTION, not the computation — the QA findings are written to
+  // `test/results/` below instead. See `publishedDocument`.
+  const published = { ...publishedDocument(data), ...stagingFields() };
+  writeFileSync(out, JSON.stringify(published, null, 2) + "\n");
 
   console.log(`KG export → ${relative(ROOT, out)}\n  @id  ${data["@id"]}`);
   for (const [t, n] of Object.entries(data.counts).sort()) console.log(`  ${String(n).padStart(5)}  ${t}`);
@@ -1498,7 +1537,7 @@ if (import.meta.main) {
   // The DOCUMENT ROOT, which `undeclaredTerms` below cannot see — see
   // `undeclaredRootTerms`. Checked before the graph-level report because a
   // root field that vanishes takes the provenance and the counts with it.
-  const rootUndeclared = undeclaredRootTerms(data as unknown as Record<string, unknown>, data["@context"]);
+  const rootUndeclared = undeclaredRootTerms(published as unknown as Record<string, unknown>, data["@context"]);
   if (rootUndeclared.length > 0) {
     console.error(`\n${rootUndeclared.length} root-level field(s) are NOT in the @context, so a JSON-LD processor drops them:`);
     for (const t of rootUndeclared) console.error(`  \u2717 ${t}`);

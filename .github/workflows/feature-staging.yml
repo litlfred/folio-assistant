@@ -379,11 +379,17 @@ jobs:
       # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
       # asserts both workflows carry it, because missing it in one publishes a
       # site whose evidence links are all dead.
-      - name: Publish the QA witnesses
+      - name: Publish the QA witnesses and results
         run: |
           mkdir -p ./_site/assets
           cp -rT test/results/witnesses ./_site/assets/qa
-          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA witness document(s)"
+          # The RESULTS beside them. `kg-export` writes this during the export
+          # step above, so the copy picks up THIS run's findings rather than
+          # whatever was last committed. Since bean `2634` the published graph
+          # no longer carries them, so this file is the only place a consumer
+          # can see what the QA pass found about the document it just fetched.
+          find test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll

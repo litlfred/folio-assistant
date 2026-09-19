@@ -29,7 +29,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 ---
 
 ## The L2 artifacts
-{: #the-l2-artifacts }
+{: #the-l2-artifacts data-fa-label="sec:guides-who-smart-dak-the-l2-artifacts" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit skills/workflows/l2-dak-authoring.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-dak/the-l2-artifacts.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-fail fa-qa-fam-kg" data-qa-family="kg" data-qa-src="{{ '/assets/qa/guides-who-smart-dak/the-l2-artifacts.kg.json' | relative_url }}" aria-expanded="false" title="Knowledge-graph QA: 1 fail, 0 warn, 7 pass, 2 n/a — open for witnesses" aria-label="Knowledge-graph QA: 1 fail, 0 warn, 7 pass, 2 n/a — open for witnesses"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">✕</span></button></span>
 
@@ -50,7 +50,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 | Review | [`content-review`](../reference/skills/content-review.html) | criteria-based |
 
 ## Workflow
-{: #workflow }
+{: #workflow data-fa-label="sec:guides-who-smart-dak-workflow" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/workflow.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/workflow.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-dak/workflow.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -69,7 +69,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
    DAK criteria.
 
 ## A mock session
-{: #a-mock-session }
+{: #a-mock-session data-fa-label="sec:guides-who-smart-dak-a-mock-session" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/a-mock-session.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/a-mock-session.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-dak/a-mock-session.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
@@ -89,7 +89,7 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 > `content_validate`)* All artifacts valid.
 
 ## Next
-{: #next }
+{: #next data-fa-label="sec:guides-who-smart-dak-next" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-who-smart-dak/next.md){: .fa-node-edit title="Edit content/docs/guides-who-smart-dak/next.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pass fa-qa-fam-block" data-qa-family="block" data-qa-src="{{ '/assets/qa/guides-who-smart-dak/next.block.json' | relative_url }}" aria-expanded="false" title="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses" aria-label="Content QA: 0 fail, 0 warn, 22 pass, 26 n/a — open for witnesses"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">✓</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
