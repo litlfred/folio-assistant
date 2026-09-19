@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(70)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(89)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(70) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(89) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(70) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(89) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(70) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(89) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>LaTeX build performance | folio-assistant</title>
+<title>Placement | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="LaTeX build performance" />
+<meta property="og:title" content="Placement" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/latex-build-cache.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/latex-build-cache.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/placement.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/placement.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="LaTeX build performance" />
+<meta property="twitter:title" content="Placement" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"LaTeX build performance","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/latex-build-cache.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Placement","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/placement.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -558,7 +558,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>LaTeX build performance</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Placement</span></li>
   </ol>
 </nav>
 
@@ -567,221 +567,408 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/latex-build-cache.md"><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter/latex-build-cache.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/placement.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/placement.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/latex-build-cache.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/placement.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="latex-build-performance--findings--whats-safe">
+<h1 id="placement--decide-where-it-goes-before-you-write-it">
   
   
-    <a href="#latex-build-performance--findings--whats-safe" class="anchor-heading" aria-labelledby="latex-build-performance--findings--whats-safe"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> LaTeX build performance — findings + what’s safe
+    <a href="#placement--decide-where-it-goes-before-you-write-it" class="anchor-heading" aria-labelledby="placement--decide-where-it-goes-before-you-write-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Placement — decide where it goes before you write it
   
   
 </h1>
     
 
-<p>A from-scratch compile re-parses the heavy preamble on <strong>every latexmk
-pass</strong> and re-renders <strong>every</strong> diagram. Caching either was the goal.
-<strong>On real-engine testing (texlive-full 2023), both standard mechanisms
-failed on this toolchain</strong> — the default build is therefore plain
-inline-preamble + full latexmk. This doc records <em>why</em>, so the next
-attempt starts informed.</p>
-<h2 id="negative-results-read-before-re-attempting-a-cache">
-  
-  
-    <a href="#negative-results-read-before-re-attempting-a-cache" class="anchor-heading" aria-labelledby="negative-results-read-before-re-attempting-a-cache"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Negative results (read before re-attempting a cache)
-  
-  
-</h2>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Attempt</th>
-      <th>Verdict</th>
-      <th>Why (verified on a real engine)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Preamble format</strong> (<code class="language-plaintext highlighter-rouge">mylatexformat</code> → <code class="language-plaintext highlighter-rouge">paper.fmt</code>, <code class="language-plaintext highlighter-rouge">%&amp;paper</code>)</td>
-      <td>❌ unusable</td>
-      <td>mylatexformat <strong>gobbles everything between <code class="language-plaintext highlighter-rouge">%&amp;fmt</code> and <code class="language-plaintext highlighter-rouge">\begin{document}</code></strong> (log: <em>“start reading document on input line N (\begin{document})”</em>). That silently drops the per-paper <strong>manifest macros</strong> (<code class="language-plaintext highlighter-rouge">\mymacro</code> …) AND any per-render <code class="language-plaintext highlighter-rouge">\usepackage</code> (memoize). A format can only carry what’s dumped from <code class="language-plaintext highlighter-rouge">latex/preamble.tex</code>; per-paper/per-render preamble content can’t ride along.</td>
-    </tr>
-    <tr>
-      <td><strong>memoize</strong> (per-box diagram cache)</td>
-      <td>❌ unusable for tikzcd</td>
-      <td>This TeXLive’s memoize <strong>lacks its tikz library</strong> (<code class="language-plaintext highlighter-rouge">\usetikzlibrary{memoize}</code> → “I did not find the tikz library”). The manual <code class="language-plaintext highlighter-rouge">memoize</code> environment <strong>breaks tikzcd’s <code class="language-plaintext highlighter-rouge">&amp;</code> catcode</strong>. Extraction is also a 2-pass tool needing <code class="language-plaintext highlighter-rouge">pdfrw</code> (python) or <code class="language-plaintext highlighter-rouge">PDF::API2</code> (perl) — installable, but moot without box marking. All 74 diagrams are <code class="language-plaintext highlighter-rouge">tikzcd</code>, 0 are <code class="language-plaintext highlighter-rouge">tikzpicture</code>, so 0 boxes ever cache.</td>
-    </tr>
-    <tr>
-      <td><strong>tikz externalization</strong> (<code class="language-plaintext highlighter-rouge">\tikzexternalize</code>)</td>
-      <td>❌ aborts on tikzcd</td>
-      <td>The <code class="language-plaintext highlighter-rouge">external</code> library collects until <code class="language-plaintext highlighter-rouge">\end{tikzpicture}</code>; tikzcd ends with <code class="language-plaintext highlighter-rouge">\end{tikzcd}</code> → <em>“File ended while scanning…”</em> fatal. Only hooks <code class="language-plaintext highlighter-rouge">tikzpicture</code>.</td>
-    </tr>
-    <tr>
-      <td><strong>fixed numbering + per-section <code class="language-plaintext highlighter-rouge">\clearpage</code></strong></td>
-      <td>reverted</td>
-      <td>Were <em>enablers</em> for block-level caching (deterministic block output) that none of the above delivered; pure overhead + a layout change without a working cache.</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong><code class="language-plaintext highlighter-rouge">standalone</code> externalization <em>works</em> but is NOT worth doing</strong> (measured
-2026-06-15, real engine): render each <code class="language-plaintext highlighter-rouge">tikzcd</code> to its own <code class="language-plaintext highlighter-rouge">.tex</code> → <code class="language-plaintext highlighter-rouge">.pdf</code>
-→ <code class="language-plaintext highlighter-rouge">\includegraphics</code> compiles cleanly — but <strong>diagrams are not the
-bottleneck.</strong> A <code class="language-plaintext highlighter-rouge">tikzcd</code> renders in ~0 ms (10 inline added 0 ms over
-baseline, within noise); a <code class="language-plaintext highlighter-rouge">standalone</code> sub-build <em>costs</em> ~0.63 s of
-pdflatex startup per diagram. Caching them is <strong>net-negative.</strong> Do NOT
-pursue the standalone diagram cache. (Census: 94 <code class="language-plaintext highlighter-rouge">tikzcd</code> blocks / 79
-files; 6 <code class="language-plaintext highlighter-rouge">tikzpicture</code>.)</p>
+<p><strong>One question, answered before the first file exists:</strong></p>
 
 <blockquote>
-  <p><strong>Why not “cache each block’s PDF and concatenate”?</strong> LaTeX is a
-single-pass global typesetter — a block’s numbering / pagination / refs
-depend on everything before it. Only <em>self-contained boxes</em> (diagrams)
-are cacheable — and per the measurements below, caching even those is
-net-negative here.</p>
+  <p><strong>Which instance owns this, which of its declared graphs does it go in, and
+what kind of node is it?</strong></p>
 </blockquote>
-<h2 id="measured-where-the-build-time-actually-is-2026-06-15-real-engine">
+
+<p>An agent that starts writing and works the answer out afterwards produces a
+node in the wrong repository, under a hardcoded path, named by a composed
+string. All three are silent: the tests pass, the build is green, and the
+damage lands on the next consumer — usually a different folio, usually weeks
+later. The worked failure at the end of this skill is one file that would have
+destroyed the README of every folio except the one it was written for.</p>
+
+<p>This is a <strong>decision procedure</strong>. Four steps and a stop. Run it in order; the
+later steps are meaningless if an earlier one is a guess.</p><hr />
+<h2 id="step-1--which-instance">
   
   
-    <a href="#measured-where-the-build-time-actually-is-2026-06-15-real-engine" class="anchor-heading" aria-labelledby="measured-where-the-build-time-actually-is-2026-06-15-real-engine"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measured: where the build time actually is (2026-06-15, real engine)
+    <a href="#step-1--which-instance" class="anchor-heading" aria-labelledby="step-1--which-instance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1 — which instance?
   
   
 </h2>
     
 
-<p>Installed <code class="language-plaintext highlighter-rouge">texlive-full</code> via <code class="language-plaintext highlighter-rouge">install-tex.sh</code>; measured the real paper:</p>
+<p><strong><code class="language-plaintext highlighter-rouge">folio-assistant</code> is the platform, not the content.</strong> It holds skills,
+schemas, the pipeline and the MCP server an agent uses to author a <em>folio</em> — a
+paper, a WHO SMART Guideline, an IG — and the folio lives in a <strong>separate
+repository</strong>.</p>
 
-<ul>
-  <li><strong>Real <code class="language-plaintext highlighter-rouge">main.tex</code>, one pass: 14.0 s.</strong> Body (2944 blocks) ≈ <strong>95%</strong>;
-preamble/startup ≈ <strong>5%</strong> (~0.7 s); diagrams ≈ <strong>0%</strong>. The body is the
-single-pass global typeset — <strong>intrinsically uncacheable</strong> in pdflatex.</li>
-  <li>Hotspots: the two math/table-heavy chapters — chapter-A (3.5 s) +
-chapter-B (3.3 s) ≈ 40%; the rest a ~1 s/chapter tail.</li>
-  <li><strong>~50% of the body is the 2944 <code class="language-plaintext highlighter-rouge">\marginnote</code> annotations, not math:</strong>
-one pass 19.5 s → <strong>9.2 s</strong> with <code class="language-plaintext highlighter-rouge">\marginnote</code> no-op’d (→ 8.9 s also
-dropping hyperlinks). Parallel per-chapter compile (4 cores) = <strong>1.85 s</strong>
-(~10×). Both are <em>preview</em> levers — the published PDF is unchanged. The
-first is wired as <code class="language-plaintext highlighter-rouge">FAST_PREVIEW=1</code> (see What works).</li>
-  <li><code class="language-plaintext highlighter-rouge">.fmt</code> saves only ~0.45 s of startup = <strong>~3% of a pass</strong> (and is broken
-on this preamble: per-doc macro drop + <code class="language-plaintext highlighter-rouge">^^H</code> unicode corruption). Skip.</li>
-</ul>
+<p>Ask of the thing you are about to write:</p>
 
-<p><strong>Whole-pipeline CI ranking</strong> (LaTeX is NOT the dominant cost): witness
-regen (Python, ~36 min, gated by <code class="language-plaintext highlighter-rouge">skip_witnesses</code>) ≫ <code class="language-plaintext highlighter-rouge">texlive-full</code>
-install ×3 (~3–6 min) ≫ LaTeX compile (~2–3 min) ≫ bun render.</p>
+<blockquote>
+  <p><strong>Does this name, assume, or default to one folio?</strong></p>
+</blockquote>
 
-<p><strong>The only real win — the prebuilt CI image</strong>: <code class="language-plaintext highlighter-rouge">publish.yml</code>’s
-3 TeX jobs now <code class="language-plaintext highlighter-rouge">container: ghcr.io/&lt;org&gt;/&lt;paper&gt;-paper-builder</code> instead of
-<code class="language-plaintext highlighter-rouge">apt-get install texlive-full</code> ×3; <code class="language-plaintext highlighter-rouge">paper-builder-image.yml</code> now triggers
-on main pushes (touching the Dockerfile) + monthly cron — it previously
-only ran on <code class="language-plaintext highlighter-rouge">workflow_dispatch</code>, so the image was never actually built.</p>
-<h2 id="what-works-use-these">
-  
-  
-    <a href="#what-works-use-these" class="anchor-heading" aria-labelledby="what-works-use-these"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What works (use these)
-  
-  
-</h2>
-    
+<p>A paper directory, a document title, a badge URL, an owner/repo, a Lake library
+prefix, a workflow filename, a simulator path, a licence block, a vocabulary, a
+constant with a subject-matter value. If the answer is yes, it does <strong>not</strong>
+belong in platform code.</p>
+
+<p><strong>There are three destinations, not two</strong>, and collapsing the third is the
+common mistake:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Tool</th>
-      <th>Role</th>
+      <th>destination</th>
+      <th>what goes there</th>
+      <th>test</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><a href="../../../scripts/install-tex.sh"><code class="language-plaintext highlighter-rouge">scripts/install-tex.sh</code></a></td>
-      <td>Get a TeX engine into the sandbox (the base Ubuntu repos are reachable; only launchpad PPAs are firewalled). Idempotent. <strong>This is how you compile/verify at all.</strong></td>
+      <td><strong>the platform</strong></td>
+      <td>the mechanism, parameterised</td>
+      <td>the same code is correct for every folio</td>
     </tr>
     <tr>
-      <td><a href="../../../scripts/feature-build.sh"><code class="language-plaintext highlighter-rouge">scripts/feature-build.sh</code></a></td>
-      <td>Quick draft: compiles ONLY the changed chapters (not the full paper) with the <strong>inline</strong> preamble, + per-chapter latexdiff (colored + plain). Speedup is from fewer chapters, not a format. <strong>Sets <code class="language-plaintext highlighter-rouge">FAST_PREVIEW=1</code> by default</strong> (margins off, ~2× on top).</td>
+      <td><strong>the folio’s tree</strong></td>
+      <td>the subject matter itself</td>
+      <td>a reader of <em>that</em> folio would look for it</td>
     </tr>
     <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">FAST_PREVIEW=1</code></strong> env flag</td>
-      <td>Read by <code class="language-plaintext highlighter-rouge">generate-main-tex.ts</code>: no-ops <code class="language-plaintext highlighter-rouge">\marginnote</code>, skipping the 2944 per-block source/issue/Lean icons that cost <strong>~50%</strong> of compile (19.5 s → 9.2 s). Body byte-identical; <strong>published builds leave it unset</strong>. The biggest single <em>preview</em> speedup.</td>
+      <td><strong>the folio’s config</strong></td>
+      <td>the value the mechanism reads</td>
+      <td>it varies per folio but platform code needs it</td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="getting-a-tex-engine-in-the-sandbox">
+
+<p>A value that varies per folio and is consumed by platform code is a <strong>config
+field</strong> — <code class="language-plaintext highlighter-rouge">harness.config.json</code>, <code class="language-plaintext highlighter-rouge">harness.json</code>, <code class="language-plaintext highlighter-rouge">lakefile.toml</code> — never a
+literal in a script and never a file the platform has to go and find. The
+simulator directory was the literal <code class="language-plaintext highlighter-rouge">folio-assistant/simulators</code> until it
+became a config field; the Lake prefix was <code class="language-plaintext highlighter-rouge">QOU.</code> until it was read from
+<code class="language-plaintext highlighter-rouge">lakefile.toml</code>, and is now left <strong>unprefixed</strong> when no lakefile names one,
+because a wrong namespace is worse than none.</p>
+
+<p><strong>Do not infer the instance from the directory you are standing in.</strong> Read the
+declaration: <code class="language-plaintext highlighter-rouge">harness.json</code> at the repository root carries <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">stub</code> and
+<code class="language-plaintext highlighter-rouge">directories</code>. <code class="language-plaintext highlighter-rouge">basename($PWD)</code> is not an identity — a repo cloned into a
+differently-named directory resolves to nothing, and reports no config rather
+than an error.</p>
+<h2 id="step-2--which-declared-graph-and-where-does-that-instance-put-it">
   
   
-    <a href="#getting-a-tex-engine-in-the-sandbox" class="anchor-heading" aria-labelledby="getting-a-tex-engine-in-the-sandbox"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Getting a TeX engine in the sandbox
+    <a href="#step-2--which-declared-graph-and-where-does-that-instance-put-it" class="anchor-heading" aria-labelledby="step-2--which-declared-graph-and-where-does-that-instance-put-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 2 — which declared graph, and where does that instance put it?
   
   
 </h2>
     
 
-<p>The sandbox usually ships <strong>no <code class="language-plaintext highlighter-rouge">pdflatex</code></strong>, but the base Ubuntu repos
-are reachable (only the launchpad PPAs — <code class="language-plaintext highlighter-rouge">ondrej/php</code>, <code class="language-plaintext highlighter-rouge">deadsnakes</code> —
-are firewalled and break <code class="language-plaintext highlighter-rouge">apt-get update</code>). Run:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/install-tex.sh     <span class="c"># run with run_in_background: true (~5 GB, ~10-20 min)</span>
-</code></pre></div></div>
-
-<p>It disables the firewalled PPAs, installs <code class="language-plaintext highlighter-rouge">texlive-full</code> + <code class="language-plaintext highlighter-rouge">latexmk</code>,
-and verifies the packages. <code class="language-plaintext highlighter-rouge">pdflatex</code> unpacks early but isn’t usable
-until the post-install format build finishes (<code class="language-plaintext highlighter-rouge">kpsewhich memoize.sty</code>
-returning a path is the ready signal).</p>
-<h2 id="quick-feature-build">
-  
-  
-    <a href="#quick-feature-build" class="anchor-heading" aria-labelledby="quick-feature-build"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Quick feature build
-  
-  
-</h2>
-    
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/feature-build.sh <span class="o">[</span><span class="nt">--base</span> origin/main] <span class="o">[</span><span class="nt">--chapters</span> slug1,slug2]
-<span class="c"># → build-feature/changed.pdf + per-chapter &lt;c&gt;.diff-color.pdf / .diff-plain.pdf</span>
-</code></pre></div></div>
-
-<p>Uses the inline preamble (NOT <code class="language-plaintext highlighter-rouge">%&amp;paper</code> — that gobbles manifest macros).
-Cross-refs to chapters not in the build resolve to <code class="language-plaintext highlighter-rouge">??</code> (preview only).</p>
-<h2 id="verifying-a-build-pipeline-change-without-a-tex-engine">
-  
-  
-    <a href="#verifying-a-build-pipeline-change-without-a-tex-engine" class="anchor-heading" aria-labelledby="verifying-a-build-pipeline-change-without-a-tex-engine"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verifying a build-pipeline change WITHOUT a TeX engine
-  
-  
-</h2>
-    
-
-<p>CI is often <code class="language-plaintext highlighter-rouge">$</code>-billing-blocked (private-repo runs complete in 0s with
-0 jobs = startup/billing failure, not code). Without <code class="language-plaintext highlighter-rouge">pdflatex</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Real content build to a scratch dir (emits .tex only) + the macro-lint preflight.</span>
-<span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/build.ts &lt;paper&gt;.ts <span class="se">\</span>
-  <span class="nt">--out-dir</span> /tmp/fb/chapters <span class="nt">--generate-main</span> <span class="nt">--main-out</span> /tmp/fb/main.tex <span class="se">\</span>
-  <span class="nt">--preamble</span> ../latex/preamble.tex
-bun run pipeline/latex-preflight.ts /tmp/fb/main.tex   <span class="c"># exit 0 = no fatal macro/math classes</span>
-</code></pre></div></div>
-
-<p>For a real compile, install TeX (above) and run
-<code class="language-plaintext highlighter-rouge">latexmk -pdf main.tex</code>. The preflight (<code class="language-plaintext highlighter-rouge">latex-preflight.ts</code>) is the
-fast static gate that catches the recurring fatal-pdflatex classes
-(undefined control sequence, duplicate <code class="language-plaintext highlighter-rouge">\newcommand</code>, math-delimiter
-imbalance) — it gates every PR even when the heavy compile job no-ops.</p>
-<h2 id="references">
-  
-  
-    <a href="#references" class="anchor-heading" aria-labelledby="references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> References
-  
-  
-</h2>
-    
+<p><strong>A node’s location is not a path you memorise.</strong> Every instance declares the
+directories it scans in <code class="language-plaintext highlighter-rouge">harness.json</code>, and each entry names the <strong>kind of
+graph</strong> it holds — <code class="language-plaintext highlighter-rouge">cat-harness</code> (skills, roles, workflows, decisions,
+requirements, permissions), <code class="language-plaintext highlighter-rouge">schemas</code>, <code class="language-plaintext highlighter-rouge">tools</code>, <code class="language-plaintext highlighter-rouge">qa</code>, <code class="language-plaintext highlighter-rouge">beans</code>, <code class="language-plaintext highlighter-rouge">folio</code> and the
+rest. The vocabulary is open.</p>
 
 <ul>
-  <li>Strategy + full investigation log:
-<a href="../../../docs/workplans/2026-06-14-latex-build-caching-strategy.md"><code class="language-plaintext highlighter-rouge">docs/workplans/2026-06-14-latex-build-caching-strategy.md</code></a></li>
-  <li>CI billing signature: <code class="language-plaintext highlighter-rouge">AGENTS.md</code> §”CI billing failures”.</li>
+  <li><strong>Ask for a skill, do not open a file.</strong> <code class="language-plaintext highlighter-rouge">skill_list</code> for what exists here,
+<code class="language-plaintext highlighter-rouge">skill_fetch</code> to load one, <code class="language-plaintext highlighter-rouge">work_plan_prime</code> for the work plan. With no MCP,
+resolve the graph from the declaration (<code class="language-plaintext highlighter-rouge">readDeclaration</code> in
+<code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>) and read the directory it names.</li>
+  <li><strong>In <em>this</em> repository the <code class="language-plaintext highlighter-rouge">cat-harness</code> graph’s path is <code class="language-plaintext highlighter-rouge">skills/</code>.</strong> That is
+a fact about this instance, not a convention you may carry to another one.
+Ids are stable across a relocation; paths are not.</li>
+  <li><strong>Overrides match on the entry’s <code class="language-plaintext highlighter-rouge">id</code>, never on its <code class="language-plaintext highlighter-rouge">path</code>.</strong> An instance
+that sites its knowledge graph elsewhere redeclares the same id with a
+different path. Matching on path makes two knowledge graphs out of one
+relocation, and every consumer then scans a directory that is not there.</li>
+  <li><strong>Declare only what exists.</strong> A declared-but-absent directory is worse than
+an undeclared one: every consumer scans nothing and reports a clean run over
+it (bean <code class="language-plaintext highlighter-rouge">dh4f</code>, thirty pipeline scripts, three of them passing over a corpus
+they could not read).</li>
 </ul>
+
+<p>Full rules, inheritance order and the three read states:
+<a href="/folio-assistant/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions.md</code></a>.</p>
+<h3 id="the-inheritance-gap--know-it-before-you-rely-on-it">
+  
+  
+    <a href="#the-inheritance-gap--know-it-before-you-rely-on-it" class="anchor-heading" aria-labelledby="the-inheritance-gap--know-it-before-you-rely-on-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The inheritance gap — know it before you rely on it
+  
+  
+</h3>
+    
+
+<p>An instance is supposed to <strong>inherit its dependencies’ directories and skills</strong>,
+deepest dependency first and root last so the root wins. For directories that
+works: <code class="language-plaintext highlighter-rouge">declarationChain</code> + <code class="language-plaintext highlighter-rouge">resolveDirectories</code> are wired.</p>
+
+<p><strong>For skills it does not.</strong> <code class="language-plaintext highlighter-rouge">resolveSkillDirs</code> in <code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code>
+computes the cross-instance skill overlay and <strong>has no caller</strong>, so skill
+discovery is <strong>root-only in practice today</strong> and a dependency’s skills are not
+yet reachable. Outstanding Phase 0.1 work.</p>
+
+<p>What that means for placement, concretely: <strong>a skill you put in the platform
+intending a downstream folio to pick it up will not reach that folio yet.</strong> If
+the folio needs it now, that is a reason to say so and ask — not a reason to
+copy the skill into the folio, which mints a second copy free to drift.</p>
+<h2 id="step-3--which-kind-of-node">
+  
+  
+    <a href="#step-3--which-kind-of-node" class="anchor-heading" aria-labelledby="step-3--which-kind-of-node"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3 — which KIND of node?
+  
+  
+</h2>
+    
+
+<p>The axes below are distinct, and each pair has been conflated at least once at
+real cost. Ask the separating question; do not pattern-match on what the thing
+resembles.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>you are about to write</th>
+      <th>ask</th>
+      <th>the two answers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a new content type</td>
+      <td>does it need different <strong>code</strong>, or only different <strong>rules</strong>?</td>
+      <td>different code → an <strong>adapter</strong>; only rules → a <strong>profile</strong> plus a subclass</td>
+    </tr>
+    <tr>
+      <td>something a participant is or does</td>
+      <td>must the performer <strong>know</strong> it, or may the participant <strong>do</strong> it?</td>
+      <td>know → a <strong>skill</strong>, on the lane’s role; do → a <strong>permission</strong>, on the actor</td>
+    </tr>
+    <tr>
+      <td>a participant</td>
+      <td>does it persist across processes, or is it a position inside one?</td>
+      <td>persists → an <strong>actor</strong>; a position → a <strong>role</strong>, which is the BPMN swimlane</td>
+    </tr>
+    <tr>
+      <td>a sequence of steps</td>
+      <td>does it have actors, activities and a control flow?</td>
+      <td>yes → <strong>BPMN</strong> under the workflows directory, not a Mermaid fence and not prose</td>
+    </tr>
+    <tr>
+      <td>a branch at a gateway</td>
+      <td>is the answer <strong>computed from facts</strong>, or chosen by a person?</td>
+      <td>computed → a <strong>DMN</strong> table plus a <code class="language-plaintext highlighter-rouge">&lt;folio:decision/&gt;</code> ref; chosen → an ordinary gateway</td>
+    </tr>
+    <tr>
+      <td>a durable fact for one agent</td>
+      <td>does it <strong>govern</strong>, or <strong>summarise</strong> what governs?</td>
+      <td>governs → a <strong>skill</strong>; summarises → a memory entry under the memory nodes</td>
+    </tr>
+    <tr>
+      <td>subject matter</td>
+      <td>would a reader of one folio look for it?</td>
+      <td>yes → the <strong>folio</strong>, as data — never the platform</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Adapter vs profile is the expensive one.</strong> Adapters (<code class="language-plaintext highlighter-rouge">paper</code>, <code class="language-plaintext highlighter-rouge">dak</code>)
+partition block kinds into <strong>disjoint</strong> namespaces, and <code class="language-plaintext highlighter-rouge">adapterForKind</code> — what
+QA-criterion scoping reads — must stay <strong>total and unambiguous</strong>. Profiles
+(<code class="language-plaintext highlighter-rouge">document</code>, <code class="language-plaintext highlighter-rouge">paper</code>) <strong>nest</strong>: every document kind is also a paper kind.
+Making <code class="language-plaintext highlighter-rouge">document</code> a third adapter would have made <code class="language-plaintext highlighter-rouge">adapterForKind</code> ambiguous on
+all <strong>eight</strong> shared kinds.</p>
+
+<p><strong>Actor / role / skill / permission is the one with a measured cost.</strong> One
+sentence carries the model — <em>an actor performs a task in a process as a role,
+using that role’s skills</em> — and moving permissions onto Role, which looks right,
+produced <strong>36 conflicts</strong> where a permission was held by some but not all actors
+sharing a role. Resolution rules, how to bind a lane, and how to add a role:
+<a href="/folio-assistant/reference/skill-instructions/role-model.html"><code class="language-plaintext highlighter-rouge">role-model.md</code></a>. Do not re-derive them here.</p>
+
+<p><strong>A <code class="language-plaintext highlighter-rouge">.md</code> under the <code class="language-plaintext highlighter-rouge">cat-harness</code> path that declares its own <code class="language-plaintext highlighter-rouge">$schema</code> is not a
+skill.</strong> The audit walks that directory recursively; declaration beats location,
+the same contract <code class="language-plaintext highlighter-rouge">part-of:</code> carries.</p>
+
+<p><strong>Adding a <em>graph kind</em> is a registry change, not a new top-level directory.</strong>
+If nothing in the open vocabulary fits, that is a decision to hand over
+(Step 5), not one to settle by creating a folder.</p>
+<h2 id="step-4--which-stub-there-are-two-and-they-are-unrelated">
+  
+  
+    <a href="#step-4--which-stub-there-are-two-and-they-are-unrelated" class="anchor-heading" aria-labelledby="step-4--which-stub-there-are-two-and-they-are-unrelated"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 4 — which stub? There are two, and they are unrelated
+  
+  
+</h2>
+    
+
+<p>This is the step most often skipped, because “stub” reads as one word.</p>
+<h3 id="the-agent-file-stub--a-pointer-never-a-home">
+  
+  
+    <a href="#the-agent-file-stub--a-pointer-never-a-home" class="anchor-heading" aria-labelledby="the-agent-file-stub--a-pointer-never-a-home"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agent-file stub — a pointer, never a home
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">AGENTS.md</code> is the agent-generic source of truth. <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> and <code class="language-plaintext highlighter-rouge">GEMINI.md</code>
+are <strong>thin stubs whose entire content is a pointer to it</strong>; <code class="language-plaintext highlighter-rouge">scripts/init-folio.ts</code>
+writes all three for a new folio.</p>
+
+<ul>
+  <li><strong>Never put guidance in a stub.</strong> It reaches one tool’s agents and nobody
+else, and the other two stubs are then quietly wrong.</li>
+  <li><strong>And prefer not to put it in <code class="language-plaintext highlighter-rouge">AGENTS.md</code> either.</strong> That file’s own banner
+says it: it is a bootstrap pointer, and <em>the discipline lives in the skills
+graph</em>. A rule that exists only in <code class="language-plaintext highlighter-rouge">AGENTS.md</code> is not in the generated
+reference, not in the published skill docs, and not found by an agent that
+went looking for the skill first. The turn-report discipline lived there
+alone until it was moved.</li>
+</ul>
+
+<p>So: <strong>new guidance is a skill.</strong> Add a pointer from <code class="language-plaintext highlighter-rouge">AGENTS.md</code> if it needs
+one, and register the skill in its package manifest.</p>
+<h3 id="the-artefact-stub--resolve-it-never-compose-it">
+  
+  
+    <a href="#the-artefact-stub--resolve-it-never-compose-it" class="anchor-heading" aria-labelledby="the-artefact-stub--resolve-it-never-compose-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The artefact stub — resolve it, never compose it
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">harness.json</code> carries <code class="language-plaintext highlighter-rouge">stub</code>, the filename stem of <strong>every artefact this
+instance publishes</strong>. <code class="language-plaintext highlighter-rouge">artefactStub()</code> is the one function that answers it
+(<code class="language-plaintext highlighter-rouge">stub</code> when declared, otherwise <code class="language-plaintext highlighter-rouge">name</code>), and <code class="language-plaintext highlighter-rouge">renderingPath()</code> / <code class="language-plaintext highlighter-rouge">siteDir()</code>
+derive the published paths from it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;base&gt;/&lt;stub&gt;.jsonld     &lt;base&gt;/&lt;stub&gt;.json
+&lt;base&gt;/&lt;stub&gt;.schema.json     &lt;base&gt;/&lt;stub&gt;/     docs/&lt;stub&gt;/
+</code></pre></div></div>
+
+<p><strong>Compose nothing; resolve everything.</strong> The knowledge-graph tile in the site
+navbar was hand-written as <code class="language-plaintext highlighter-rouge">/kg/</code> and <strong>404’d from the day it was added</strong> —
+nothing has ever been published there, because the real path comes out of
+<code class="language-plaintext highlighter-rouge">renderingPath</code>. It is the same defect as the contents table that built every
+PDF cell by convention: all twenty-three chapter links were 404 and always had
+been, and three of six appendix links happened to resolve, which is why nobody
+noticed.</p>
+
+<p><strong>A naive guess is not merely fragile, it is wrong on real instances.</strong> WHO’s
+<code class="language-plaintext highlighter-rouge">smart-base</code> publishes under the stub <code class="language-plaintext highlighter-rouge">base</code>, so “the stub is the repo name”
+fails on the reference implementation the convention was modelled on.</p>
+
+<p><strong>The declaration file itself is deliberately NOT stub-named.</strong> A consumer
+bootstrapping into a repository it knows nothing about needs <strong>one fixed
+filename to open first</strong>; everything that file describes is free to be named
+after the instance, because by the time you fetch those you have read the
+declaration that names them.</p>
+<h2 id="step-5--when-you-cannot-tell-stop-and-ask">
+  
+  
+    <a href="#step-5--when-you-cannot-tell-stop-and-ask" class="anchor-heading" aria-labelledby="step-5--when-you-cannot-tell-stop-and-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 5 — when you cannot tell, stop and ask
+  
+  
+</h2>
+    
+
+<p>Placement has <strong>three</strong> states, like everything else here: <strong>determined</strong>,
+<strong>determined-empty</strong> (this instance genuinely has no such directory — a real
+answer), and <strong>could-not-determine</strong>. The third is never to be rendered as the
+first.</p>
+
+<p><strong>Do not guess and do not pick the repository you happen to be standing in.</strong>
+A misplaced node is not a typo: it is a second copy of something, free to
+drift, that a later agent will find and believe.</p>
+
+<p>Hand the decision over the way
+<a href="/folio-assistant/reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality.md</code> §4.1</a> requires — context →
+options <strong>with what each costs</strong> → your recommendation, marked → what happens
+if they say nothing → the question. The test is one pass:</p>
+
+<blockquote>
+  <p><strong>Can the reader answer without opening anything?</strong></p>
+</blockquote>
+
+<p>Every identifier expanded on first use. A link is where somebody goes for
+<em>more</em>; it is never where the terms are defined.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>I need to place &lt;thing&gt;, which &lt;one sentence on what it does&gt;.
+
+Two candidates:
+  A. &lt;instance/graph&gt; — costs &lt;what this makes harder, concretely&gt;
+  B. &lt;instance/graph&gt; — costs &lt;…&gt;
+
+Recommend B, because &lt;the property that decides it&gt;.
+If you say nothing I will do B and note it in the PR body.
+
+A or B?
+</code></pre></div></div>
+<h2 id="the-worked-failure-this-skill-exists-to-prevent">
+  
+  
+    <a href="#the-worked-failure-this-skill-exists-to-prevent" class="anchor-heading" aria-labelledby="the-worked-failure-this-skill-exists-to-prevent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked failure this skill exists to prevent
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">scripts/generate-readme.sh</code> lived in the <strong>platform</strong> and ended in
+<code class="language-plaintext highlighter-rouge">cp "$OUT" README.md</code>. It held one folio’s content: the title
+<code class="language-plaintext highlighter-rouge"># Quantum Observable Universe</code>, three <code class="language-plaintext highlighter-rouge">litlfred/qou</code> badges, a Knot Registry
+of Alexander-Briggs indices, a Project Structure table naming that folio’s Lean
+directory, and a CC BY 4.0 licence block. <strong>Run it in any other folio and the
+author loses their README.</strong> Only five of its sections were derived from the
+tree at all; the rest was prose, and prose about a folio belongs to that folio.</p>
+
+<p>It also resolved its own helpers against the folio root, so it could only run
+from a platform checkout — which has no papers. Every step above would have
+caught it: Step 1, the title and the badges name one folio; Step 2, the helper
+path was composed rather than resolved; Step 4, the published paths were built
+by convention and checked against nothing.</p>
+
+<p>The replacement inverts the ownership — a registry of sections, each written
+<strong>only</strong> where the README already carries its marker pair, and a section that
+cannot read its source returns <code class="language-plaintext highlighter-rouge">skip</code> and leaves the region exactly as it was.
+The folio owns the file; the platform owns the markers. <code class="language-plaintext highlighter-rouge">AGENTS.md</code>
+§”README sections” is the full post-mortem.</p>
+<h2 id="checklist">
+  
+  
+    <a href="#checklist" class="anchor-heading" aria-labelledby="checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist
+  
+  
+</h2>
+    
+
+<p>Before you create a skill, role, actor, workflow, decision, schema, tool or
+content object:</p>
+
+<ol>
+  <li><strong>Instance</strong> — platform, folio, or the folio’s config? Does anything in it
+name one folio?</li>
+  <li><strong>Graph</strong> — which declared entry, resolved from <code class="language-plaintext highlighter-rouge">harness.json</code> by <strong>id</strong>?
+Not a path you remember.</li>
+  <li><strong>Kind</strong> — which side of the separating question in Step 3, and can you say
+why in one sentence?</li>
+  <li><strong>Stub</strong> — if it is guidance, is it a skill rather than a stub or
+<code class="language-plaintext highlighter-rouge">AGENTS.md</code>? If it publishes, does every path come from <code class="language-plaintext highlighter-rouge">artefactStub()</code> /
+<code class="language-plaintext highlighter-rouge">renderingPath()</code>?</li>
+  <li><strong>Registered</strong> — package manifest updated, and <code class="language-plaintext highlighter-rouge">bun run scripts/gen-skill-docs.ts</code>
+run, so the published mirror is not stale.</li>
+  <li><strong>Could not determine?</strong> Stop. Ask in the Step 5 frame. Do not default to
+the repo you are in.</li>
+</ol>
 
           
 

@@ -227,13 +227,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T10:24:41.824Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8bce2ae118b11d681cc64cfa5bd21902ccafb87e",
-  "sourceCommitSha": "8bce2ae118b11d681cc64cfa5bd21902ccafb87e",
-  "sourceCommitAt": "2026-09-19T12:23:13+02:00",
+  "generatedAt": "2026-09-19T10:26:57.766Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1082f3cfe4027c314f97277ab5cb5b1924ea2b31",
+  "sourceCommitSha": "1082f3cfe4027c314f97277ab5cb5b1924ea2b31",
+  "sourceCommitAt": "2026-09-19T12:25:26+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 154,
+    "Skill": 155,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -1719,6 +1719,21 @@
       ],
       "instructionsPath": "skills/folio-core/bean-blocking.md",
       "instructionLines": 70,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "placement",
+      "title": "Placement — decide where it goes before you write it",
+      "description": "Establish where a new node belongs BEFORE you create it — which instance, which declared graph, which kind of node, and which of the two \"stub\" conventions applies. Read before adding a skill, role, actor, workflow, decision table, schema, tool or content object, and before writing any literal that names one folio.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/placement.md",
+      "instructionLines": 278,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3582,6 +3597,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ontologist",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state",
@@ -17789,8 +17805,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "8bce2ae118b11d681cc64cfa5bd21902ccafb87e",
+    "sha": "1082f3cfe4027c314f97277ab5cb5b1924ea2b31",
     "pr": "main",
-    "run": "35437259764"
+    "run": "35437364172"
   }
 }
