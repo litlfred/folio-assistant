@@ -17,7 +17,7 @@
  * @module scripts/tests/site-links
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -130,5 +130,59 @@ describe("verifySiteLinks", () => {
                               siteLinks(DECL, "https://github.com/o/r"));
     expect(v.find((x) => x.id === "source")!.verdict).toBe("unknown");
     expect(exitCodeFor(v)).toBe(0);
+  });
+});
+
+describe("the template and the data agree", () => {
+  const ROOT = join(import.meta.dir, "..", "..");
+
+  test("harness.json carries links, each with exactly one destination", () => {
+    const h = JSON.parse(readFileSync(join(ROOT, "docs/_data/harness.json"), "utf8")) as {
+      links?: { id: string; path?: string; url?: string }[];
+    };
+    expect(h.links).toBeDefined();
+    for (const id of ["kg", "jsonld", "source"]) {
+      const l = h.links!.find((x) => x.id === id);
+      expect(l).toBeDefined();
+      // One or the other, never both: `path` gets `relative_url` and `url`
+      // does not, so an entry carrying both would render one of them wrongly.
+      expect(Boolean(l!.path) !== Boolean(l!.url)).toBe(true);
+    }
+  });
+
+  test("no published link has the `/kg/` segment", () => {
+    const h = JSON.parse(readFileSync(join(ROOT, "docs/_data/harness.json"), "utf8")) as {
+      links: { path?: string }[];
+    };
+    for (const l of h.links) expect(l.path ?? "").not.toContain("/kg/");
+  });
+
+  test("head_custom.html READS the resolved links and composes no path of its own", () => {
+    // The structural half of the fix. The Liquid block is verified end to end
+    // by rendering it through the real Liquid engine (see the PR); what is
+    // guarded here is the regression that put the defect there in the first
+    // place — somebody writing a path into the template by hand.
+    const html = readFileSync(join(ROOT, "docs/_includes/head_custom.html"), "utf8");
+    const block = html.match(
+      /<script type="application\/json" id="fa-site-links">[\s\S]*?<\/script>/,
+    );
+    expect(block).not.toBeNull();
+    const src = block![0];
+    expect(src).toContain("site.data.harness.links");
+    // `path` is site-root-relative and MUST get the baseurl; `url` must not.
+    expect(src).toContain("l.path | relative_url");
+    // No literal path anywhere in the block. `'/kg/' | relative_url` is
+    // exactly what it used to say.
+    expect(src).not.toMatch(/'\/[^']*'\s*\|\s*relative_url/);
+  });
+
+  test("the site config no longer draws the forge link as header text", () => {
+    // "remove the github.com from the top of the display". just-the-docs
+    // renders `aux_links` as text at the top right of the MAIN panel; the
+    // forge is reachable as a tile instead. A commented-out mention is fine,
+    // an active key is not.
+    const cfg = readFileSync(join(ROOT, "docs/_config.yml"), "utf8");
+    const active = cfg.split("\n").filter((l) => /^\s*aux_links/.test(l));
+    expect(active).toEqual([]);
   });
 });
