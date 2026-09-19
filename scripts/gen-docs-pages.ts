@@ -41,6 +41,7 @@ import {
   type QaFamily,
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
+import { readTodoFiles } from "./todos.js";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -172,6 +173,17 @@ function readBlock(page: WebPage, nodeId: string, block: string): string {
  * clicks the icon.
  */
 const QA_ASSET_DIR = join(OUT_DIR, "assets", "qa");
+
+/**
+ * The todo board's data, published as ONE file rather than one per node.
+ *
+ * QA verdicts are per-node and there are 134 of them, so a reader opening one
+ * icon should fetch one file. Todos are the opposite: the navbar badge needs a
+ * COUNT over all of them before anybody opens anything, and the board shows
+ * the whole set lined up. Per-todo files would mean N requests to render a
+ * number.
+ */
+const TODO_ASSET = join(OUT_DIR, "assets", "todos", "index.json");
 const emittedQa = new Set<string>();
 
 /** Every published witness JSON currently on disk, for orphan detection. */
@@ -442,6 +454,32 @@ for (const slug of slugs) {
   mkdirSync(dirname(outPath), { recursive: true });
   emit(outPath, renderPage(page));
   console.log(`  ${check ? "·" : "✓"} ${slug}.md (${page.nodes.length} nodes)`);
+}
+
+// The todo board's data. Published here rather than by a separate script
+// because it is the same job `qaIcons` already does for verdicts: take
+// something the repo holds as files and make it fetchable by a static page.
+//
+// `editHref` is composed HERE, at build time, for the reason `.fa-node-edit`
+// is: the client would otherwise need the repo's web URL, and a literal in
+// `docs-ui.js` is a folio's own address inside shared client code.
+{
+  const items = readTodoFiles().map(({ todo, path }) => ({
+    id: todo.id,
+    summary: todo.summary,
+    comment: todo.comment,
+    status: todo.status,
+    priority: todo.priority,
+    origin: todo.origin,
+    createdAt: todo.createdAt,
+    tags: todo.tags,
+    // The SAME affordance every node already gets, pointed at this todo's own
+    // file. A sticky is a content object; it does not need an editor of its own.
+    editHref: `${EDIT_BASE}/${path}`,
+  }));
+  mkdirSync(dirname(TODO_ASSET), { recursive: true });
+  emit(TODO_ASSET, JSON.stringify({ $schema: "folio-todo-index/v1", items }) + "\n", "qa");
+  console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
 }
 
 // A subject that loses its sidecar — or a page that loses a node — must lose its
