@@ -1,11 +1,11 @@
 ---
 # folio-assistant-y8as
-title: 'simulators/ is qou''s content sitting in the platform, and qou reaches into the submodule to find it'
-status: todo
+title: simulators/ is qou's content sitting in the platform, and qou reaches into the submodule to find it
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T15:03:52Z
-updated_at: 2026-09-19T15:03:52Z
+updated_at: 2026-09-19T15:11:36Z
 parent: folio-assistant-zzmr
 ---
 
@@ -100,3 +100,21 @@ has no simulators" rather than as an error.
 declares `"dir": "simulators"`, no platform code names the literal
 `folio-assistant/simulators`, and the two boundary-guard TRAPs about it are
 updated to say it was fixed rather than that it is a live hazard.
+
+_2026-09-19T15:11:36Z_ — Half 1 of 2 is open: litlfred/qou#7444, branch claude/simulators-from-platform. NOT merged — qou requires /prepare-merge plus an explicit 'merge it' from the author, and its AGENTS.md says 'looks good' is not merge permission.
+
+WHAT LANDED IN QOU: the 11 HTML files (456 KB), folio.config.json repointed from 'folio-assistant/simulators' to 'simulators', and 15 live references repointed across content manifests, AGENTS.md, README.md and a skill doc.
+
+THREE FINDINGS THE MOVE SURFACED, none of which it caused.
+
+1. TWO REFERENCES WERE ALREADY DANGLING. descent_rate_probe.html and multi_level_jet_sum.html are named by descent-rate-probe-sim.ts and multi-level-jet-sum-sim.ts and exist in NEITHER repository — not in the platform's eleven, not in qou. They are repointed with the rest, so they are broken at the new path exactly as they were at the old one. Their own QA sidecars already describe the subjects as stubs with todo-html deferred, so this is known and recorded, not new. Verified file by file: 9 of 11 referenced simulators resolve after the move.
+
+2. TWO FILES IN THE PLATFORM ARE REFERENCED BY NOTHING: double_slit.html and empty.html. empty.html is 32 bytes and nothing in either repo names it — a leftover, not a fixture, which answers open question 3 on this bean. They moved anyway: unreferenced qou content is still qou content, and deciding whether to delete them is a separate call from deciding where they live.
+
+3. FOUR FILES IN QOU MENTION THE OLD PATH AND WERE DELIBERATELY LEFT ALONE: two *.qa.json sidecars and two docs/audits/ documents carry it inside verdict and audit PROSE describing what was true when written — one literally reads 'the .ts is a stub with tag todo-html and html: ... deferred'. Rewriting them falsifies the record, and the sidecars are generated besides.
+
+NOT VERIFIED, and stated on the PR rather than implied away: qou's own content validation has not been run. Its tooling comes from the folio-assistant submodule, which is not checked out in this shallow clone — qou's package.json declares only build:docs. The change is verified structurally (files present, config parses, every reference checked against the filesystem), not by loading the manifests through the pipeline.
+
+ALSO NOTED ON THE PR: editing the 11 content manifests stales their *.qa.json sidecars by hash. Expected, and for the QA sweep to regenerate rather than for me to hand-edit.
+
+STILL TO DO — half 2, in this repository, and ONLY after qou#7444 merges: drop simulators/, and fix what names the literal. Found so far: content/pipeline/readme-sections.ts:301 defaults to it, adapters/mcp-server/server.ts:2115 serves from repo root, scripts/repo-partition.ts:530 lists it in a package prefix array (which would then name nothing — the same silent-miss shape the test/ move hit), LICENSE-CONTENT.md and README.md name it as platform code, and platform-boundary-guard's memory carries two TRAPs about it that should change from 'live hazard' to 'fixed'.
