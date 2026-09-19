@@ -272,11 +272,11 @@ def records(path: Path) -> dict[str, Any]:
         # The header vocabulary of the whole file, deduplicated and sorted: the
         # field a `grep` for a column name actually lands in.
         "header_vocabulary": sorted({h for s in sheets for h in s["headers"] if h}),
-        # See the module docstring: a narrative needs an author, so the slot is
-        # declared empty rather than filled with a machine-made summary nobody
-        # claimed. `iqim` supplies the attribution when one is written.
-        "narrative": None,
-        "narrative_state": "not-authored",
+        # The empty slot (bean `ju0u`). A narrative needs an author, and then
+        # a HUMAN to accept it, so nothing here fills it: a machine-made
+        # summary shipped as the answer is the claim nobody made. Drafting one
+        # and saying so is a different act, and it is `state: "draft"`.
+        "narrative": {"text": None, "state": "not-authored"},
     }
 
 
