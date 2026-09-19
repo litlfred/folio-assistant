@@ -106,19 +106,21 @@
     "outputSchema": {
       "@id": "https://litlfred.github.io/folio-assistant/ns#outputSchema",
       "@type": "@id"
-    }
+    },
+    "localId": "https://litlfred.github.io/folio-assistant/ns#localId",
+    "actorKind": "https://litlfred.github.io/folio-assistant/ns#actorKind"
   },
   "danglingLinks": [],
   "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-18T23:56:18.010Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cfa8b0e221c38d632a57148a361ff01991252bd7",
-  "sourceCommitSha": "cfa8b0e221c38d632a57148a361ff01991252bd7",
-  "sourceCommitAt": "2026-09-19T01:54:33+02:00",
+  "generatedAt": "2026-09-19T00:24:47.746Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9601ccdf0abd4bd31cd48a2810cf42092154e351",
+  "sourceCommitSha": "9601ccdf0abd4bd31cd48a2810cf42092154e351",
+  "sourceCommitAt": "2026-09-19T02:23:23+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 143,
+    "Skill": 144,
     "Actor": 24,
     "Capability": 23,
     "Role": 64,
@@ -131,6 +133,250 @@
     "Directory": 4
   },
   "problems": [],
+  "undeclaredTerms": [
+    {
+      "term": "bpmnType",
+      "onTypes": [
+        "ProcessNode"
+      ],
+      "occurrences": 374
+    },
+    {
+      "term": "implementsSkillNames",
+      "onTypes": [
+        "ProcessNode"
+      ],
+      "occurrences": 374
+    },
+    {
+      "term": "kind",
+      "onTypes": [
+        "ProcessNode"
+      ],
+      "occurrences": 374
+    },
+    {
+      "term": "laneName",
+      "onTypes": [
+        "ProcessNode"
+      ],
+      "occurrences": 374
+    },
+    {
+      "term": "relaxable",
+      "onTypes": [
+        "ProcessNode"
+      ],
+      "occurrences": 374
+    },
+    {
+      "term": "touchesWorkPlan",
+      "onTypes": [
+        "ProcessNode"
+      ],
+      "occurrences": 374
+    },
+    {
+      "term": "hasInstructions",
+      "onTypes": [
+        "Skill"
+      ],
+      "occurrences": 144
+    },
+    {
+      "term": "hasIOContract",
+      "onTypes": [
+        "Skill"
+      ],
+      "occurrences": 144
+    },
+    {
+      "term": "instructions",
+      "onTypes": [
+        "Skill"
+      ],
+      "occurrences": 144
+    },
+    {
+      "term": "lines",
+      "onTypes": [
+        "Skill"
+      ],
+      "occurrences": 144
+    },
+    {
+      "term": "packagePaths",
+      "onTypes": [
+        "Skill"
+      ],
+      "occurrences": 144
+    },
+    {
+      "term": "source",
+      "onTypes": [
+        "Process",
+        "Role"
+      ],
+      "occurrences": 92
+    },
+    {
+      "term": "requires",
+      "onTypes": [
+        "Capability",
+        "Tool"
+      ],
+      "occurrences": 35
+    },
+    {
+      "term": "enforcement",
+      "onTypes": [
+        "Process"
+      ],
+      "occurrences": 29
+    },
+    {
+      "term": "flowCount",
+      "onTypes": [
+        "Process"
+      ],
+      "occurrences": 29
+    },
+    {
+      "term": "nodeCount",
+      "onTypes": [
+        "Process"
+      ],
+      "occurrences": 29
+    },
+    {
+      "term": "workPlanOp",
+      "onTypes": [
+        "ProcessNode"
+      ],
+      "occurrences": 27
+    },
+    {
+      "term": "install",
+      "onTypes": [
+        "Capability",
+        "Tool"
+      ],
+      "occurrences": 25
+    },
+    {
+      "term": "capabilities",
+      "onTypes": [
+        "Actor"
+      ],
+      "occurrences": 24
+    },
+    {
+      "term": "invoke",
+      "onTypes": [
+        "Tool"
+      ],
+      "occurrences": 24
+    },
+    {
+      "term": "io",
+      "onTypes": [
+        "Tool"
+      ],
+      "occurrences": 24
+    },
+    {
+      "term": "roles",
+      "onTypes": [
+        "Actor"
+      ],
+      "occurrences": 24
+    },
+    {
+      "term": "satisfiesSkillNames",
+      "onTypes": [
+        "Tool"
+      ],
+      "occurrences": 24
+    },
+    {
+      "term": "detection",
+      "onTypes": [
+        "Capability"
+      ],
+      "occurrences": 23
+    },
+    {
+      "term": "path",
+      "onTypes": [
+        "Directory",
+        "SkillPackage"
+      ],
+      "occurrences": 18
+    },
+    {
+      "term": "meta",
+      "onTypes": [
+        "Actor"
+      ],
+      "occurrences": 17
+    },
+    {
+      "term": "permissions",
+      "onTypes": [
+        "Actor"
+      ],
+      "occurrences": 17
+    },
+    {
+      "term": "hasManifest",
+      "onTypes": [
+        "SkillPackage"
+      ],
+      "occurrences": 14
+    },
+    {
+      "term": "renderable",
+      "onTypes": [
+        "GraphKind"
+      ],
+      "occurrences": 10
+    },
+    {
+      "term": "version",
+      "onTypes": [
+        "SkillPackage"
+      ],
+      "occurrences": 6
+    },
+    {
+      "term": "decisionRef",
+      "onTypes": [
+        "ProcessNode"
+      ],
+      "occurrences": 4
+    },
+    {
+      "term": "graphKinds",
+      "onTypes": [
+        "Directory"
+      ],
+      "occurrences": 4
+    },
+    {
+      "term": "ambiguous",
+      "onTypes": [
+        "Skill"
+      ],
+      "occurrences": 2
+    },
+    {
+      "term": "assignments",
+      "onTypes": [
+        "Role"
+      ],
+      "occurrences": 1
+    }
+  ],
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/quality-control",
@@ -1043,7 +1289,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/role-model.md",
-      "lines": 327,
+      "lines": 328,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1474,7 +1720,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/bib-qa.md",
-      "lines": 571,
+      "lines": 355,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1675,7 +1921,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/integration-watcher.md",
-      "lines": 1281,
+      "lines": 241,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1693,6 +1939,23 @@
       ],
       "instructions": "skills/folio-core/content-graph.md",
       "lines": 447,
+      "hasInstructions": true,
+      "hasIOContract": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/kg-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
+      "name": "kg-viewer",
+      "title": "Rendering the knowledge graph",
+      "description": "Render a published knowledge-graph document so a person can read it — faceted index, node detail, followable edges, and an honest account of what the document is missing. Host-agnostic; the publishing is a separate Tool.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#package/folio-core"
+      ],
+      "packagePaths": [
+        "skills/folio-core"
+      ],
+      "instructions": "skills/folio-core/kg-viewer.md",
+      "lines": 121,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -1726,7 +1989,7 @@
         "skills/folio-core"
       ],
       "instructions": "skills/folio-core/coordinate.md",
-      "lines": 732,
+      "lines": 272,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -2166,7 +2429,7 @@
         "skills/folio-paper-adapter"
       ],
       "instructions": "skills/folio-paper-adapter/formalizer.md",
-      "lines": 842,
+      "lines": 232,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -2334,7 +2597,7 @@
         "skills/folio-paper-adapter"
       ],
       "instructions": "skills/folio-paper-adapter/lean-environment-setup.md",
-      "lines": 587,
+      "lines": 182,
       "hasInstructions": true,
       "hasIOContract": false
     },
@@ -2579,9 +2842,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/review-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "review-agent",
+      "localId": "review-agent",
+      "actorKind": "system",
       "title": "Review Agent",
-      "type": "system",
       "description": "LLM agent performing NON-MECHANICAL validation — accuracy, voice, exposition, whether a change says what the editor meant. Judgement calls escalate to a human reviewer or SME.",
       "roles": [
         "reviewer"
@@ -2601,9 +2864,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/technical-officer",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "technical-officer",
+      "localId": "technical-officer",
+      "actorKind": "person",
       "title": "Technical Officer",
-      "type": "person",
       "description": "Programme area coordinator and first-pass reviewer who bridges the development team and subject matter experts.",
       "roles": [
         "reviewer",
@@ -2629,9 +2892,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/lean-mcp",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "lean-mcp",
+      "localId": "lean-mcp",
+      "actorKind": "system",
       "title": "Lean MCP Server",
-      "type": "system",
       "description": "System actor providing Lean 4 proof checking and diagnostics via MCP protocol.",
       "roles": [
         "lean-toolchain"
@@ -2647,9 +2910,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/reviewer",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "reviewer",
+      "localId": "reviewer",
+      "actorKind": "person",
       "title": "Reviewer",
-      "type": "person",
       "description": "A person who reads a change and judges it. Acting as `reviewer` does not carry the authority to accept — that is the editor's lane.",
       "roles": [
         "reviewer",
@@ -2663,9 +2926,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/translator",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "translator",
+      "localId": "translator",
+      "actorKind": "person",
       "title": "Translator",
-      "type": "person",
       "description": "Localization specialist who adapts content for UN-supported languages.",
       "roles": [
         "translator"
@@ -2686,9 +2949,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/ci-pipeline",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "ci-pipeline",
+      "localId": "ci-pipeline",
+      "actorKind": "system",
       "title": "CI pipeline",
-      "type": "system",
       "description": "The build and validation system: validate, render, publish, and the mechanical half of the HCI gate. It runs a fixed program and exercises no judgement, so anything needing a decision belongs in another lane.",
       "roles": [
         "build-pipeline",
@@ -2704,9 +2967,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/ig-publisher-service",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "ig-publisher-service",
+      "localId": "ig-publisher-service",
+      "actorKind": "system",
       "title": "IG Publisher Service",
-      "type": "system",
       "description": "System actor providing FHIR IG Publisher build and QA reporting.",
       "roles": [
         "ig-publisher-service"
@@ -2726,9 +2989,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/authoring-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "authoring-agent",
+      "localId": "authoring-agent",
+      "actorKind": "system",
       "title": "Authoring Agent",
-      "type": "system",
       "description": "LLM agent that drafts and revises a PROPOSED change to a content block. It never commits: its output enters the HCI validation pipeline and the editor accepts, revises or discards it.",
       "roles": [
         "authoring-agent",
@@ -2749,9 +3012,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/fhir-modeller",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "fhir-modeller",
+      "localId": "fhir-modeller",
+      "actorKind": "person",
       "title": "FHIR Modeller",
-      "type": "person",
       "description": "L3 machine-readable artifact creator who translates L2 specifications into FHIR Implementation Guide artifacts using FSH, SUSHI, CQL, and IG Publisher.",
       "roles": [
         "fhir-modeller",
@@ -2775,9 +3038,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/evidence-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "evidence-agent",
+      "localId": "evidence-agent",
+      "actorKind": "system",
       "title": "Evidence agent",
-      "type": "system",
       "description": "Retrieves and appraises external evidence for a guideline claim, against trusted registries it does not control.",
       "roles": [
         "evidence-agent"
@@ -2793,9 +3056,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/programme-manager",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "programme-manager",
+      "localId": "programme-manager",
+      "actorKind": "person",
       "title": "Programme Manager",
-      "type": "person",
       "description": "Overall coordination and governance. Responsible for scope definition, team formation, resource allocation, timeline planning, and stakeholder engagement.",
       "roles": [
         "programme-manager",
@@ -2822,9 +3085,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/content-reviewer",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "content-reviewer",
+      "localId": "content-reviewer",
+      "actorKind": "person",
       "title": "Content Reviewer",
-      "type": "person",
       "description": "Formal approval and sign-off authority who gates phase transitions and ensures alignment with source guidelines.",
       "roles": [
         "reviewer",
@@ -2845,9 +3108,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/publication-manager",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "publication-manager",
+      "localId": "publication-manager",
+      "actorKind": "person",
       "title": "Publication Manager",
-      "type": "person",
       "description": "Release and deployment manager responsible for IG configuration, builds, versioning, publication, and platform updates.",
       "roles": [
         "publication-manager",
@@ -2871,9 +3134,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/stakeholder",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "stakeholder",
+      "localId": "stakeholder",
+      "actorKind": "person",
       "title": "Stakeholder",
-      "type": "person",
       "description": "Signs off that a requirement is met. Holds no capabilities here deliberately: sign-off is a judgement, and a capability would suggest it could be automated.",
       "roles": [
         "stakeholder"
@@ -2883,9 +3146,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/end-user",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "end-user",
+      "localId": "end-user",
+      "actorKind": "person",
       "title": "End user",
-      "type": "person",
       "description": "The person the assistant is working for — the one who states intent and answers what the agent cannot decide from the filesystem.",
       "roles": [
         "user"
@@ -2895,9 +3158,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/ingestion-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "ingestion-agent",
+      "localId": "ingestion-agent",
+      "actorKind": "system",
       "title": "Ingestion engine",
-      "type": "system",
       "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material itself.",
       "roles": [
         "ingestion-agent"
@@ -2913,9 +3176,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/onboarding-agent",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "onboarding-agent",
+      "localId": "onboarding-agent",
+      "actorKind": "system",
       "title": "Onboarding agent",
-      "type": "system",
       "description": "The authoring agent acting before there is a folio: clarifying what \"create a folio\" means here, scanning an existing repo, scaffolding, and reporting the published URL only once it answers.",
       "roles": [
         "onboarding-agent"
@@ -2931,9 +3194,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/terminologist",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "terminologist",
+      "localId": "terminologist",
+      "actorKind": "person",
       "title": "Terminologist",
-      "type": "person",
       "description": "Semantic interoperability and terminology governance specialist who maps data elements to standard terminologies (ICD-11, SNOMED CT, LOINC).",
       "roles": [
         "terminologist",
@@ -2953,9 +3216,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/author",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "author",
+      "localId": "author",
+      "actorKind": "person",
       "title": "Author",
-      "type": "person",
       "description": "A person who writes and revises content. Acts as the `author` role, and as `editor` when accepting a change into the corpus.",
       "roles": [
         "author",
@@ -2971,9 +3234,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/business-analyst",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "business-analyst",
+      "localId": "business-analyst",
+      "actorKind": "person",
       "title": "Business Analyst",
-      "type": "person",
       "description": "L2 DAK component author who translates clinical guidelines into structured digital artifacts including BPMN processes, data dictionaries, decision logic, and indicators.",
       "roles": [
         "business-analyst",
@@ -2994,9 +3257,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/admin",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "admin",
+      "localId": "admin",
+      "actorKind": "person",
       "title": "Administrator",
-      "type": "person",
       "description": "Full administrative access. The three fields say three different things: `roles` is what it may act AS, `permissions` what it may DO in any lane, `capabilities` what its machine has.",
       "roles": [
         "programme-manager",
@@ -3018,9 +3281,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/qc-reviewer",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "qc-reviewer",
+      "localId": "qc-reviewer",
+      "actorKind": "person",
       "title": "QC Reviewer",
-      "type": "person",
       "description": "Quality control reviewer who validates publication readiness across L1-L4 layers, runs QA reports, and verifies conformance.",
       "roles": [
         "qc-reviewer"
@@ -3043,9 +3306,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/viewer",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "viewer",
+      "localId": "viewer",
+      "actorKind": "person",
       "title": "Viewer",
-      "type": "person",
       "description": "A read-only identity. Takes on no role: it never appears in a swimlane, which is why `roles` is empty rather than absent.",
       "roles": [],
       "capabilities": []
@@ -3053,9 +3316,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#actor/clinical-sme",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Actor",
-      "id": "clinical-sme",
+      "localId": "clinical-sme",
+      "actorKind": "person",
       "title": "Clinical Subject Matter Expert",
-      "type": "person",
       "description": "Clinical validator and ground-truth provider who ensures clinical accuracy and completeness of authored content.",
       "roles": [
         "clinical-sme"
@@ -3076,7 +3339,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/ig-publisher",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "ig-publisher",
+      "localId": "ig-publisher",
       "name": "FHIR IG Publisher",
       "description": "HL7 FHIR Implementation Guide Publisher for building and validating FHIR IGs.",
       "detection": {
@@ -3090,7 +3353,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/latex-compiler",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "latex-compiler",
+      "localId": "latex-compiler",
       "name": "LaTeX Compiler",
       "description": "Full LaTeX distribution with latexmk and biber for document compilation.",
       "detection": {
@@ -3101,7 +3364,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/lean-mcp",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "lean-mcp",
+      "localId": "lean-mcp",
       "name": "Lean MCP Server",
       "description": "MCP server providing Lean 4 diagnostics, proof state, and goal information.",
       "detection": {
@@ -3116,7 +3379,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/smart-base",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "smart-base",
+      "localId": "smart-base",
       "name": "WHO SMART Guidelines smart-base toolchain",
       "description": "A checkout of WorldHealthOrganization/smart-base, whose input/scripts/ carries the DAK extractors, generators and XSLT transforms. Loaded from, never vendored: the scripts are invoked by the DAK repositories' own GitHub Actions, so smart-base stays their authoritative home and this platform depends on it rather than copying it. Resolved from SMART_BASE_HOME, defaulting to /opt/smart-base.",
       "detection": {
@@ -3130,7 +3393,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/docling",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "docling",
+      "localId": "docling",
       "name": "Docling (layout-aware PDF parsing)",
       "description": "IBM's MIT-licensed document parser: layout analysis, TableFormer table structure, formula enrichment. Stage 3 of docs/proposals/rag-document-ingestion.md §10 — the ~20 documents pypdf cannot serve (7 no-TOC, 17 unsectioned, 7 likely-scanned) plus the WHO L1 guidelines, where boxed recommendations and GRADE tables are layout facts. IMPORTANT: `pip install docling` succeeds but a first parse fetches weights from huggingface.co, which returns `CONNECT tunnel failed, response 403` under organisation policy (re-measured 2026-08-26). So the import is NOT the capability, and this probe does not stop there: it passes when the weights are already cached locally, and otherwise falls back to a 5-second reachability check. A sandboxed session therefore reports ABSENT and a workstation with models downloaded passes offline and instantly. Run it where egress allows and commit the artefacts.",
       "detection": {
@@ -3144,7 +3407,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/pymupdf",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "pymupdf",
+      "localId": "pymupdf",
       "name": "PyMuPDF (preferred PDF reader backend for pdf-structure.py)",
       "description": "Optional PDF reader backend for scripts/pdf-structure.py, preferred over pypdf when present. Its text layer is cleaner on math PDFs (fewer split words, correct accents, correct CJK where pypdf yields mojibake), and it reads the embedded outline directly via get_toc() rather than walking pypdf's outline object. pdf-structure.py auto-detects it and falls back to pypdf when absent, so it is never required. LICENCE: PyMuPDF is AGPL-3.0 (or commercial); the shipped Docker image installs pypdf (BSD-3-Clause), not PyMuPDF, so this stays an opt-in accelerator. Install: pip install pymupdf.",
       "detection": {
@@ -3158,7 +3421,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/docker",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "docker",
+      "localId": "docker",
       "name": "Docker",
       "description": "Docker container runtime for building and running containerized skill environments.",
       "detection": {
@@ -3169,7 +3432,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/node-runtime",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "node-runtime",
+      "localId": "node-runtime",
       "name": "Node.js Runtime",
       "description": "Node.js runtime with npm package manager.",
       "detection": {
@@ -3180,7 +3443,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/lean-atlas",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "lean-atlas",
+      "localId": "lean-atlas",
       "name": "Lean Atlas",
       "description": "Extracts the Lean constant-dependency graph, classified into type (statement-level) and value (proof-level) edges — the authoritative source for the formal dependency relation. MIT. Added as a Lake require in the CONTENT repo's lakefile.toml (scope NyxFoundation, https://github.com/NyxFoundation/lean-atlas), not installed as a standalone binary, so `lake update` needs github.com egress. Export with `lake exe atlas graph-data --output graph.json --pretty`, then adapt to JSONL for `content/pipeline/lean-atlas-ingest.ts --ingest`. Requires Lean >= 4.17.0 (v4.28.0 tested); the folio image and CI now pin v4.24.0, matching qou. When unavailable, `lean-atlas-ingest.ts --scan` gives an approximate syntactic fallback and every consumer degrades to n/a rather than a false pass.",
       "install": "scripts/install-lean-atlas.sh [content-repo-root]",
@@ -3195,7 +3458,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/python3",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "python3",
+      "localId": "python3",
       "name": "Python 3",
       "description": "Python 3 runtime with pip package manager.",
       "detection": {
@@ -3206,7 +3469,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/pdfplumber",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "pdfplumber",
+      "localId": "pdfplumber",
       "name": "pdfplumber (deterministic table extraction)",
       "description": "Pure-Python PDF geometry reader, the default backend of scripts/pdf-tables.py. Extracts ruled and alignment-based tables with exact column edges and bounding boxes, which pdf-structure/v1 does not model. No model weights and no egress after install, so unlike Docling it runs in a sandboxed session. Install: pip install pdfplumber.",
       "detection": {
@@ -3220,7 +3483,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/lean-toolchain",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "lean-toolchain",
+      "localId": "lean-toolchain",
       "name": "Lean 4 Toolchain",
       "description": "Lean 4 theorem prover and build system (elan + lake).",
       "detection": {
@@ -3231,7 +3494,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/fhir-validator",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "fhir-validator",
+      "localId": "fhir-validator",
       "name": "HL7 FHIR Validator",
       "description": "HL7's standalone FHIR resource validator. Distinct from ig-publisher, which builds a whole IG: this validates individual resources and profiles against a package, and is what an L3 authoring loop runs between builds.",
       "detection": {
@@ -3245,7 +3508,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/pandoc",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "pandoc",
+      "localId": "pandoc",
       "name": "Pandoc",
       "description": "Universal document converter. The document adapter's whole render path goes through it: Markdown → HTML and Markdown → PDF, neither of which needs a TeX installation.",
       "detection": {
@@ -3256,7 +3519,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/plantuml",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "plantuml",
+      "localId": "plantuml",
       "name": "PlantUML",
       "description": "PlantUML diagram generator for UML, BPMN, and other diagram types.",
       "detection": {
@@ -3271,7 +3534,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/bun-runtime",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "bun-runtime",
+      "localId": "bun-runtime",
       "name": "Bun Runtime",
       "description": "Bun JavaScript/TypeScript runtime.",
       "detection": {
@@ -3282,7 +3545,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/java-runtime",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "java-runtime",
+      "localId": "java-runtime",
       "name": "Java Runtime",
       "description": "Java Runtime Environment for running Java-based tools (IG Publisher, validators).",
       "detection": {
@@ -3293,7 +3556,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/jekyll",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "jekyll",
+      "localId": "jekyll",
       "name": "Jekyll",
       "description": "Jekyll static site generator for IG publication.",
       "detection": {
@@ -3304,7 +3567,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/git-push",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "git-push",
+      "localId": "git-push",
       "name": "Git Push",
       "description": "Ability to push commits to the remote Git repository.",
       "detection": {
@@ -3315,7 +3578,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/html-pdf-engine",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "html-pdf-engine",
+      "localId": "html-pdf-engine",
       "name": "TeX-free PDF engine",
       "description": "An HTML-to-PDF engine pandoc can drive without LaTeX — weasyprint, prince, or wkhtmltopdf. Probed as weasyprint, the recommended one; document_render_pdf accepts any of the three and names the missing ones rather than falling back to latexmk.",
       "detection": {
@@ -3326,7 +3589,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/graphviz",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "graphviz",
+      "localId": "graphviz",
       "name": "Graphviz",
       "description": "Graph visualization tool for generating diagrams.",
       "detection": {
@@ -3337,7 +3600,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/camelot",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "camelot",
+      "localId": "camelot",
       "name": "camelot-py (table extraction with a confidence score)",
       "description": "Optional second backend for scripts/pdf-tables.py, preferred when present. Extracts the same cells and column edges as pdfplumber on a ruled grid, and additionally reports a per-table parsing accuracy that lands in the artefact's `confidence` field, which pdfplumber has no equivalent for. Camelot 2.0 moved Ghostscript to an optional extra; the base install is numpy/pandas/opencv-headless/pypdfium2 and needs no egress after install. Install: pip install camelot-py.",
       "detection": {
@@ -3351,7 +3614,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#capability/sushi-compiler",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Capability",
-      "id": "sushi-compiler",
+      "localId": "sushi-compiler",
       "name": "SUSHI Compiler",
       "description": "FSH (FHIR Shorthand) to FHIR JSON compiler.",
       "detection": {
@@ -3597,6 +3860,7 @@
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/interaction-modality",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/markdown-render-check",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/mcp-assembly",
         "https://litlfred.github.io/folio-assistant/kg/folio-assistant.jsonld#skill/mcp-contract",
