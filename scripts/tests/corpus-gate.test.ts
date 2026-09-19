@@ -3,6 +3,26 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { checkCorpusGate, COMMIT_ACTIVITY } from "../../src/workflow/corpus-gate";
+import { readBlockManifest } from "../../content/pipeline/qa-utils";
+import { loadBlockModuleSync } from "../../content/pipeline/block-module";
+
+/**
+ * The same resolver `scripts/check-corpus-gate.ts` supplies in production.
+ *
+ * The gate takes it as a parameter rather than importing the content pipeline
+ * itself (bean `zlmp`), so the tests have to provide the real one — a stub
+ * here would leave the production path untested.
+ */
+function labelFor(tsPath: string): string | undefined {
+  if (!readBlockManifest(tsPath)) return undefined;
+  const loaded = loadBlockModuleSync(tsPath);
+  if (!loaded) {
+    throw new Error(
+      `${tsPath} looks like a block manifest but its default export is not a labelled block`,
+    );
+  }
+  return loaded.label;
+}
 import { drainSubprocess } from "./helpers";
 import { loadProcessModel } from "../../src/workflow/process-model";
 import { complete, startInstance } from "../../src/workflow/instance";
@@ -67,7 +87,7 @@ beforeEach(() => {
 });
 afterEach(() => rmSync(repo, { recursive: true, force: true }));
 
-const check = (files: string[]) => checkCorpusGate(repo, { files, platformRoot: PLATFORM });
+const check = (files: string[]) => checkCorpusGate(repo, { files, platformRoot: PLATFORM, labelFor });
 
 describe("what the gate ignores", () => {
   test("non-content files are not its business", async () => {
@@ -190,7 +210,7 @@ describe("it does not fail open", () => {
 
     // Treating a broken policy as "no relaxations" would refuse work a package
     // had legitimately declared.
-    await expect(checkCorpusGate(repo, { files: [], platformRoot: platform })).rejects.toThrow(
+    await expect(checkCorpusGate(repo, { files: [], platformRoot: platform, labelFor })).rejects.toThrow(
       /policy is not loadable/,
     );
     rmSync(platform, { recursive: true, force: true });
