@@ -2048,6 +2048,94 @@ const EXPO_NARRATIVE_KINDS = [
   "conjecture",
 ];
 
+// ── Domain: voice overlays (opt-in, one criterion per voice) ────
+//
+// One criterion per shipped voice rather than one per RULE, and that is the
+// whole design decision here.
+//
+// A rule-level criterion would put 34 rows on every block's sidecar, 30 of them
+// `judgementOnly` and therefore permanently `needs-agent` — a sidecar nobody
+// reads and a queue nobody drains. The unit an agent actually adjudicates is a
+// block against a voice: it loads that voice's rules, checks the mechanical
+// halves, opens the citations it needs, and records ONE verdict with the
+// findings as evidence. `voice-review.bpmn` is that loop, and these criteria are
+// where its verdict lands.
+//
+// Each names its voice in `voices`, so `voiceExcludesCriterion` makes it `n/a`
+// on a folio that has not activated it — with the reason written into the entry
+// rather than left to a reader to infer. This instance activates none, so all
+// four read `n/a` here, which is the correct and intended output.
+//
+// `automated: false` on all four: the mechanical half belongs to the individual
+// rule's `patterns` and `terminology`, and three of the four voices are mostly
+// judgement. Declaring a checker that can only ever confirm a handful of regexes
+// would misreport what the criterion covers.
+const VOICE_OVERLAYS: QaCriterionDefinition[] = [
+  {
+    id: "voice-overlay-who-editorial",
+    domain: "voice",
+    description:
+      "Block conforms to the WHO editorial style (voices/who-editorial.json, 9 rules " +
+      "derived from the WHO Editorial Style Manual, 1993): -ize rather than -ise; an " +
+      "eponym without the Saxon genitive; the manual's two capitalization lists " +
+      "(Member State and the Organization up, headquarters and primary health care " +
+      "down); all authors to three and et al. from four; journal names written out in " +
+      "full; and the non-discriminatory pairs, whose general rules are to delete " +
+      "redundant possessive pronouns, rephrase, use the first person plural and use " +
+      "neutral job titles. Open the cited page before upholding a finding.",
+    default_severity: "major",
+    voices: ["who-editorial"],
+    depends_on: ["md"],
+    automated: false,
+  },
+  {
+    id: "voice-overlay-who-guideline-development",
+    domain: "voice",
+    description:
+      "Normative statements conform to the WHO handbook for guideline development, 2nd ed " +
+      "(voices/who-guideline-development.json, 8 rules): \"should\" for strong and " +
+      "\"suggest\" for conditional; NEVER the ambiguous \"not recommended\"; active " +
+      "voice, worded consistently across the whole guideline; outcomes kept out of the " +
+      "statement; PICO shape; certainty stated as high/moderate/low/very low; and each " +
+      "recommendation carrying its justification, its remarks and a link to the evidence.",
+    default_severity: "critical",
+    voices: ["who-guideline-development"],
+    depends_on: ["md"],
+    automated: false,
+  },
+  {
+    id: "voice-overlay-who-publication-design",
+    domain: "voice",
+    description:
+      "Presentation conforms to the WHO Western Pacific Region publication style guide " +
+      "(voices/who-publication-design.json, 8 rules): never red with green or blue with " +
+      "yellow in a figure; 10pt inside figures and tables; Roman front matter and Arabic " +
+      "body; the logo placed and never redrawn, with 1cm clear space and a 3cm floor; the " +
+      "regional blue as given; one of the four typefaces; and photographs credited.",
+    default_severity: "major",
+    voices: ["who-publication-design"],
+    depends_on: ["md"],
+    automated: false,
+  },
+  {
+    id: "voice-overlay-milnor",
+    domain: "voice",
+    description:
+      "Block reads in the register measured from Milnor's \"Link Groups\" (1954) — " +
+      "voices/milnor.json, 12 rules. Complements expo-milnor-clarity rather than " +
+      "duplicating it: that criterion is the strict 16/16 gate on the eight hallmarks, " +
+      "this one is the three findings the measurement produced that the hallmarks do not " +
+      "cover. \"Clearly\" before a routine verification is proof economy and must not be " +
+      "failed (14 uses in the exemplar); \"I\" is correct in an acknowledgement and " +
+      "nowhere else (1 use against 20 of \"we\"); and median sentence length runs to 17 " +
+      "words.",
+    default_severity: "minor",
+    voices: ["milnor"],
+    depends_on: ["md"],
+    automated: false,
+  },
+];
+
 const EXPO: QaCriterionDefinition[] = [
   {
     id: "expo-milnor-clarity",
@@ -2275,6 +2363,7 @@ const TRAP: QaCriterionDefinition[] = [
 
 export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...VOICE,
+  ...VOICE_OVERLAYS,
   ...FIT,
   ...FRAMEWORK,
   ...RENDER,

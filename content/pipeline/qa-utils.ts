@@ -291,8 +291,10 @@ export interface CriterionScriptHashes {
  *
  * The six fields, and why each is here:
  *
- * - `profiles` / `adapters` — whether the criterion applies to this folio at
- *   all. These are the ones that were silently inert: the profile gate in
+ * - `profiles` / `adapters` / `voices` — whether the criterion applies to this
+ *   folio at all. `voices` is here for the same reason the other two are: a
+ *   criterion narrowed to a voice nobody activated must go `n/a` on the next
+ *   sweep, not keep its last verdict. These are the ones that were silently inert: the profile gate in
  *   `qa-sweep` is reached only when the freshness gate lets the block through.
  * - `applies_to` — whether it applies to this block's KIND.
  * - `depends_on` — which companion files gate applicability AND which hashes
@@ -312,6 +314,7 @@ export interface CriterionScriptHashes {
  */
 export function criterionDefHash(def: {
   profiles?: readonly string[];
+  voices?: readonly string[];
   adapters?: readonly string[];
   applies_to?: readonly string[];
   depends_on?: readonly string[];
@@ -324,6 +327,7 @@ export function criterionDefHash(def: {
     v === undefined ? "" : [...v].sort().join(",");
   const parts = [
     list(def.profiles),
+    list(def.voices),
     list(def.adapters),
     list(def.applies_to),
     list(def.depends_on),
@@ -1400,6 +1404,29 @@ export function insertAdjudication(
   existing: QaCriterionEntry[],
   entry: QaCriterionEntry,
 ): QaCriterionEntry[] {
+  // A reviewer's LATER opinion supersedes their own earlier one, so it goes
+  // ahead of it; a DIFFERENT reviewer's opinion is additional history and keeps
+  // its place. Without the first half, re-adjudicating a criterion leaves the
+  // superseded entry leading — and since `list[0]` is the effective verdict, the
+  // sidecar then serves reasoning its own author has withdrawn.
+  //
+  // Measured 2026-09-19 on `every-workflow-in-the-repo`: the diagram count line
+  // was edited, the script re-fired, and the re-adjudication landed BEHIND the
+  // original — whose notes quoted a sentence that no longer existed. Both said
+  // `pass`, so nothing broke; that is exactly what makes it worth pinning,
+  // because the next such pair will disagree.
+  const sameReviewer = (e: QaCriterionEntry | undefined) =>
+    e?.reviewer?.kind === entry.reviewer.kind &&
+    e?.reviewer?.id === entry.reviewer.id;
+  const firstOwn = existing.findIndex(sameReviewer);
+  if (firstOwn !== -1) {
+    // Replace in place: an audit trail of one reviewer contradicting themselves
+    // is noise, and `preserveNonScriptEntries` exists to stop arrays growing
+    // without bound. The superseded text is in git.
+    return existing.map((e, i) => (i === firstOwn ? entry : e)).filter((e, i) =>
+      i === firstOwn ? true : !sameReviewer(e),
+    );
+  }
   const firstScript = existing.findIndex((e) => e?.reviewer?.kind === "script");
   return firstScript === -1
     ? [...existing, entry]

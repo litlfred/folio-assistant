@@ -307,3 +307,41 @@ export function unionRules(
 ): Array<{ voice: string; rule: VoiceRule }> {
   return voices.flatMap((v) => v.rules.map((rule) => ({ voice: v.id, rule })));
 }
+
+/**
+ * The voice ids a folio has activated, read from its `harness.config.json`.
+ *
+ * THREE-VALUED, and the distinction is what the QA voice gate turns on:
+ *
+ * - `[]` — the config was read and activates no voice. The common case, and this
+ *   instance's. A voice-scoped criterion is `n/a`.
+ * - `["who-editorial", …]` — the config was read and activates these.
+ * - `undefined` — the config could NOT be read: absent, or present and
+ *   unparseable. A criterion must then RUN, because "could not determine" must
+ *   not be spent granting a skip. Same rule `readDeclaredFolioProfile` follows,
+ *   and the reason that function exists as a named thing rather than an inline
+ *   read.
+ *
+ * Collapsing the first and third into "no voices" is the defect this shape
+ * exists to prevent: a folio whose config a tool cannot parse would silently
+ * lose every voice check while reporting a clean run.
+ */
+export function readActiveVoices(repoRoot: string): string[] | undefined {
+  for (const name of ["harness.config.json", "folio.config.json"]) {
+    const p = resolve(repoRoot, name);
+    if (!existsSync(p)) continue;
+    try {
+      const raw = JSON.parse(readFileSync(p, "utf-8")) as {
+        voices?: unknown;
+      };
+      const parsed = VoiceConfigSchema.safeParse(raw.voices ?? {});
+      // A `voices` key that will not parse is not "no voices": the author meant
+      // something, and guessing which voices they meant is worse than running
+      // every check.
+      return parsed.success ? parsed.data.active : undefined;
+    } catch {
+      return undefined; // unparseable config — third state
+    }
+  }
+  return undefined; // no config at all — third state
+}

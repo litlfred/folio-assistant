@@ -196,10 +196,14 @@ describe("insertAdjudication — an adjudication leads its criterion", () => {
   });
 
   test("with no script entry it appends, preserving reviewer history order", () => {
-    const out = insertAdjudication(
-      [entry("agent", { tag: "first" })],
-      entry("agent", { tag: "second" }),
-    );
+    // Two DISTINCT agent reviewers: the multi-reviewer trail is history and both
+    // are kept, in order. (One reviewer entered twice is a supersession, not
+    // history — see the describe block below.)
+    const first = entry("agent", { tag: "first" });
+    first.reviewer.id = "watcher-a";
+    const second = entry("agent", { tag: "second" });
+    second.reviewer.id = "watcher-b";
+    const out = insertAdjudication([first], second);
     // `tag` lands in `field_hash.md` in this fixture, which is what
     // distinguishes the two agent entries.
     expect(out.map((e) => e.field_hash.md)).toEqual(["first", "second"]);
@@ -226,5 +230,48 @@ describe("insertAdjudication — an adjudication leads its criterion", () => {
     ];
     expect(swept.map((e) => e.reviewer.kind)).toEqual(["agent", "script"]);
     expect(swept[0]!.result).toBe("pass");
+  });
+});
+
+describe("insertAdjudication — a reviewer supersedes their own earlier entry", () => {
+  const agent = (tag: string, result: QaCriterionEntry["result"] = "pass") => {
+    const e = entry("agent", { result, tag });
+    e.reviewer.id = "voice-editorial-review";
+    return e;
+  };
+
+  test("a re-adjudication replaces the reviewer's own earlier one", () => {
+    const out = insertAdjudication(
+      [agent("old"), entry("script", { result: "fail" })],
+      agent("new"),
+    );
+    expect(out.map((e) => e.reviewer.kind)).toEqual(["agent", "script"]);
+    expect(out[0]!.field_hash.md).toBe("new");
+  });
+
+  test("a DIFFERENT reviewer's entry is history and is kept", () => {
+    const other = entry("agent", { tag: "other" });
+    other.reviewer.id = "one-voice-integration-watcher";
+    const out = insertAdjudication(
+      [other, entry("script", { result: "fail" })],
+      agent("mine"),
+    );
+    expect(out).toHaveLength(3);
+    // The earlier reviewer keeps the lead: among DIFFERENT reviewers the order is
+    // history, and only the script entry is required to trail. Changing that
+    // would be a separate decision about which of two disagreeing agents wins,
+    // and this change is only about a reviewer superseding THEMSELVES.
+    expect(out.map((e) => e.reviewer.id)).toEqual([
+      "one-voice-integration-watcher",
+      "voice-editorial-review",
+      "content/pipeline/qa-checkers-voice.ts",
+    ]);
+  });
+
+  test("a human entry is never displaced by an agent one", () => {
+    const human = entry("human", { result: "fail", tag: "authority" });
+    const out = insertAdjudication([human, entry("script")], agent("mine"));
+    expect(out.some((e) => e.reviewer.kind === "human")).toBe(true);
+    expect(out).toHaveLength(3);
   });
 });

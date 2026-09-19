@@ -238,6 +238,57 @@ export function criterionProfiles(def: {
 }
 
 /**
+ * The voices a criterion belongs to. Absent means the criterion is not
+ * voice-scoped and runs regardless.
+ *
+ * NOTE THE ASYMMETRY WITH {@link criterionProfiles}, which is deliberate and is
+ * the third time this codebase has had to choose a default direction for a
+ * scoping axis:
+ *
+ * - `profiles` absent means EVERY profile, because narrowing silently stops a
+ *   criterion running and "a wrong pass is believed where a wrong fail is
+ *   argued with".
+ * - `voices` absent means NOT VOICE-SCOPED — the criterion is part of the base
+ *   house standard, which always applies.
+ * - `voices` PRESENT means the criterion applies only while one of those voices
+ *   is activated, and is `n/a` otherwise. A voice is opt-in (issue #208: "we
+ *   shouldnt autmoatically apply voices"), so a voice criterion running against
+ *   a folio that never asked for it produces confident findings against prose
+ *   written to a different standard.
+ */
+export function criterionVoices(def: {
+  voices?: string[];
+}): readonly string[] | undefined {
+  return def.voices;
+}
+
+/**
+ * Should the voice axis exclude this criterion, given the folio's ACTIVE voices?
+ *
+ * Three cases, and the third is the one that needs saying:
+ *
+ * 1. The criterion names no voice → runs. Base standard.
+ * 2. The criterion names voices and one is active → runs.
+ * 3. The criterion names voices and NONE is active → excluded, `n/a`.
+ *
+ * `activeVoices` is `undefined` when the folio's configuration could not be
+ * read at all, and that returns **`false`** — the criterion runs — for the same
+ * reason `profileExcludesCriterion` does: "could not determine" must not be
+ * spent granting a skip. An empty ARRAY is different from `undefined`: it is a
+ * folio that read its config and activates nothing, which is the common case and
+ * does exclude.
+ */
+export function voiceExcludesCriterion(
+  def: { voices?: string[] },
+  activeVoices: readonly string[] | undefined,
+): boolean {
+  const scope = criterionVoices(def);
+  if (scope === undefined) return false; // not voice-scoped
+  if (activeVoices === undefined) return false; // could not determine
+  return !scope.some((v) => activeVoices.includes(v));
+}
+
+/**
  * Should the profile axis exclude this criterion from a folio declaring
  * `folioProfile`?
  *
@@ -547,6 +598,24 @@ export interface QaCriterionDefinition {
    * Resolve with `criterionProfiles()` rather than reading this directly.
    */
   profiles?: ContentProfile[];
+  /**
+   * Named editorial voices this criterion belongs to.
+   *
+   * Absent means the criterion is part of the base house standard and always
+   * applies. Present means it applies only while one of those voices is
+   * ACTIVATED in `harness.config.json` — the opposite default from `profiles`,
+   * and for the opposite reason. Narrowing a profile silently stops a check
+   * running, so `profiles` defaults open; applying an editorial register nobody
+   * asked for produces confident findings against prose written to a different
+   * standard, so a voice defaults closed. Issue #208: "we shouldnt autmoatically
+   * apply voices. not all authors will want to use the who voice (e.g. a
+   * mministry of health)".
+   *
+   * Resolve with `voiceExcludesCriterion()` rather than reading this directly:
+   * a folio whose configuration could not be READ is a third state and must not
+   * be granted the skip.
+   */
+  voices?: string[];
   depends_on: CompanionRole[];
   /**
    * Extra files that invalidate a cached verdict WITHOUT gating

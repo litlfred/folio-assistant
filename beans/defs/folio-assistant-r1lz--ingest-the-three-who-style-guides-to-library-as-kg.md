@@ -4,7 +4,7 @@ title: Ingest the three WHO style guides to library/ as KG, then derive the thre
 status: todo
 type: task
 created_at: 2026-09-18T23:46:13Z
-updated_at: 2026-09-19T00:13:21Z
+updated_at: 2026-09-19T00:52:55Z
 ---
 
 Issue #208. **The documents are now in the repo** — owner uploaded them in `eec93ecc8` (on `main`), at the repo root: `9789241548960_eng.pdf` (2.1 MB), `WHO_PUB_TPS_93.1.pdf` (3.3 MB), `WPR-RDO-2020-003-eng.pdf` (2.8 MB). This removes the blocker recorded earlier this session: `iris.who.int` is denied by this environment's network egress policy (`curl` -> `CONNECT tunnel failed, response 403`; `WebFetch` -> `EGRESS_BLOCKED`), so they could not be fetched.
@@ -42,3 +42,15 @@ Two pipeline defects found and beaned: `6xaz` (pdf-structure read a sample table
 - Reconcile with PR #210 (merge, not rebase — its base `b6fab8ce4` is far behind).
 - Keep folio-assistant's own docs on NO voice, per #208.
 - The L1 completeness gate has not been run over these three.
+
+_2026-09-19T00:52:55Z_ — ## Voices landed, with a third scoping axis
+
+All four voices derived and cited; `voice-review.bpmn` called from `review-narrative.bpmn`; two skills bound to roles; one QA criterion per voice.
+
+**`voices` is a third criterion-scoping axis, and it defaults the OPPOSITE way from `profiles`.** `profiles` absent means every profile, because narrowing silently stops a check and a wrong pass is believed where a wrong fail is argued with. `voices` present means opt-in only, because applying an unasked-for register produces confident findings against prose written to a different standard — a wrong FAIL at scale. Added to `def_hash` so re-scoping invalidates cached verdicts (bean `cv10` in a new axis).
+
+**The gate is applied ONCE at criterion selection, not per block.** A voice is a property of the folio, so asking 122 times gives 122 identical answers — and for the `automated: false` voice criteria it would have put 4 x 122 phantom rows in the agent queue. Verified both ways: no voice active -> 4 skipped; `who-editorial` active -> 3 skipped and the fourth correctly enters the queue.
+
+**One criterion per VOICE, not per rule.** 34 rules would put 30 permanently `needs-agent` rows on every sidecar — a queue nobody drains. The unit an agent adjudicates is a block against a voice.
+
+Found a third instance of the 'recorded but not in force' family while verifying: `insertAdjudication` appended a RE-adjudication behind the reviewer's own earlier entry, so `list[0]` served reasoning its author had withdrawn. Surfaced because I edited the diagram-count line and my own 2026-09-18 ruling quoted a sentence that no longer existed. A reviewer now supersedes themselves; a different reviewer is still history.

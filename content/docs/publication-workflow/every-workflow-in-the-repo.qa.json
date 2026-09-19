@@ -244,7 +244,7 @@
     "voice-author-notes-pollution": [
       {
         "field_hash": {
-          "md": "6cbdcf38dd3d",
+          "md": "d0252840e31d",
           "ts": "78a681ebd551"
         },
         "result": "pass",
@@ -257,9 +257,9 @@
           "agent_skill": "folio-core/voice-editorial-review",
           "agent_session": "https://claude.ai/code/session_01AJcLBkPxvPZYaUeQUFEYTD"
         },
-        "reviewed_at": "2026-09-18T23:52:40.659Z",
-        "reviewed_sha": "339c01a7b8fb032ec02f807456a076bb4dceec78",
-        "notes": "P4 (ISO date) fired on '(counted on `main`, 2026-09-18 — this line said \"six\" for long enough that it is worth saying where the number came from)'. Two rules in this repo are in tension here and the other one wins: a measured number must carry the command and date that produced it (AGENTS.md, BASELINE; `.claude/agents/*/MEMORY.md` labels every such entry that way, and 'never quoted as a current answer'). The date is not authoring residue — it is what stops 'nineteen' becoming the next stale 'six'. P4 cannot distinguish a provenance stamp from a changelog entry."
+        "reviewed_at": "2026-09-19T00:51:32.576Z",
+        "reviewed_sha": "64593b722a7be84c029a7ece61b66440c0112e20",
+        "notes": "Re-adjudicated after the line changed. P4 (ISO date) fires on the provenance stamp attached to the diagram count, which now reads '(`ls skills/workflows/*.bpmn | wc -l` on 2026-09-19 — this line said \"six\", then \"nineteen\", each for long enough to be wrong, which is why it now carries the command as well as the date)'. Two of this repo's rules are in tension here and the other one wins: AGENTS.md's BASELINE rule requires a measured number to carry the command that produced it and the date, and never to be quoted as a current answer. The line is the rule being obeyed, and it has now been wrong twice — 'six', then 'nineteen' — which is the evidence FOR the stamp rather than against it. P4 cannot distinguish a provenance stamp from a changelog entry, and no lexical rule can."
       },
       {
         "field_hash": {
@@ -361,7 +361,7 @@
     "wall-base-ring-minimal": [
       {
         "field_hash": {
-          "md": "6cbdcf38dd3d",
+          "md": "d0252840e31d",
           "ts": "78a681ebd551"
         },
         "result": "n/a",
@@ -371,10 +371,10 @@
           "version": "v1",
           "script_hash": "391e2b097f22",
           "script_commit_sha": "ca24559d6afa4200f79eb650b2c16b84ee8a76b4",
-          "def_hash": "0d2f9d37976c"
+          "def_hash": "10db4d17cd96"
         },
-        "reviewed_at": "2026-09-18T23:48:21.996Z",
-        "reviewed_sha": "ca24559d6afa4200f79eb650b2c16b84ee8a76b4",
+        "reviewed_at": "2026-09-19T00:51:43.890Z",
+        "reviewed_sha": "64593b722a7be84c029a7ece61b66440c0112e20",
         "notes": "criterion applies to the paper profile; this folio is document (harness.config.json contentType: \"document\")"
       }
     ],
@@ -735,7 +735,7 @@
     "uses-editorial-hygiene": [
       {
         "field_hash": {
-          "md": "6cbdcf38dd3d",
+          "md": "d0252840e31d",
           "ts": "78a681ebd551"
         },
         "result": "pass",
@@ -746,16 +746,16 @@
           "script_hash": "5b8e9899caa8",
           "script_commit_sha": "256c90576a71c768821649d183c46de1a16d8c75",
           "deps_hash": "7fb0226f32c0",
-          "def_hash": "cf8561354ecf"
+          "def_hash": "f0a866b13629"
         },
-        "reviewed_at": "2026-09-18T23:48:21.996Z",
-        "reviewed_sha": "ca24559d6afa4200f79eb650b2c16b84ee8a76b4"
+        "reviewed_at": "2026-09-19T00:51:43.890Z",
+        "reviewed_sha": "64593b722a7be84c029a7ece61b66440c0112e20"
       }
     ],
     "uses-formal-coverage": [
       {
         "field_hash": {
-          "md": "6cbdcf38dd3d",
+          "md": "d0252840e31d",
           "ts": "78a681ebd551"
         },
         "result": "n/a",
@@ -766,10 +766,10 @@
           "script_hash": "b7b208d4a0c4",
           "script_commit_sha": "256c90576a71c768821649d183c46de1a16d8c75",
           "deps_hash": "06b05b9c98cc",
-          "def_hash": "9c3aa271ab60"
+          "def_hash": "ce2b8102b97f"
         },
-        "reviewed_at": "2026-09-18T23:48:21.996Z",
-        "reviewed_sha": "ca24559d6afa4200f79eb650b2c16b84ee8a76b4",
+        "reviewed_at": "2026-09-19T00:51:43.890Z",
+        "reviewed_sha": "64593b722a7be84c029a7ece61b66440c0112e20",
         "notes": "criterion applies to the paper profile; this folio is document (harness.config.json contentType: \"document\")"
       }
     ],
@@ -901,7 +901,7 @@
     "dak-bpmn-has-process": [
       {
         "field_hash": {
-          "md": "6cbdcf38dd3d",
+          "md": "d0252840e31d",
           "ts": "78a681ebd551"
         },
         "result": "n/a",
@@ -911,17 +911,17 @@
           "version": "v1",
           "script_hash": "130d5cdc6a9f",
           "script_commit_sha": "256c90576a71c768821649d183c46de1a16d8c75",
-          "def_hash": "66ca801f90f8"
+          "def_hash": "201cfe08342f"
         },
-        "reviewed_at": "2026-09-18T23:48:21.996Z",
-        "reviewed_sha": "ca24559d6afa4200f79eb650b2c16b84ee8a76b4",
+        "reviewed_at": "2026-09-19T00:51:43.890Z",
+        "reviewed_sha": "64593b722a7be84c029a7ece61b66440c0112e20",
         "notes": "criterion applies to dak; block kind \"prose\" is paper"
       }
     ],
     "dak-dmn-has-decision-table": [
       {
         "field_hash": {
-          "md": "6cbdcf38dd3d",
+          "md": "d0252840e31d",
           "ts": "78a681ebd551"
         },
         "result": "n/a",
@@ -931,17 +931,17 @@
           "version": "v1",
           "script_hash": "e53248f1ca8d",
           "script_commit_sha": "256c90576a71c768821649d183c46de1a16d8c75",
-          "def_hash": "016b2a966d4a"
+          "def_hash": "77e925e95736"
         },
-        "reviewed_at": "2026-09-18T23:48:21.996Z",
-        "reviewed_sha": "ca24559d6afa4200f79eb650b2c16b84ee8a76b4",
+        "reviewed_at": "2026-09-19T00:51:43.890Z",
+        "reviewed_sha": "64593b722a7be84c029a7ece61b66440c0112e20",
         "notes": "criterion applies to dak; block kind \"prose\" is paper"
       }
     ],
     "dak-fsh-declares-kind": [
       {
         "field_hash": {
-          "md": "6cbdcf38dd3d",
+          "md": "d0252840e31d",
           "ts": "78a681ebd551"
         },
         "result": "n/a",
@@ -951,10 +951,10 @@
           "version": "v1",
           "script_hash": "15261355053f",
           "script_commit_sha": "256c90576a71c768821649d183c46de1a16d8c75",
-          "def_hash": "d98d72669bdc"
+          "def_hash": "dead97f17ab2"
         },
-        "reviewed_at": "2026-09-18T23:48:21.996Z",
-        "reviewed_sha": "ca24559d6afa4200f79eb650b2c16b84ee8a76b4",
+        "reviewed_at": "2026-09-19T00:51:43.890Z",
+        "reviewed_sha": "64593b722a7be84c029a7ece61b66440c0112e20",
         "notes": "criterion applies to dak; block kind \"prose\" is paper"
       }
     ],
@@ -979,5 +979,5 @@
       }
     ]
   },
-  "updated_at": "2026-09-19T00:42:38.822Z"
+  "updated_at": "2026-09-19T00:51:43.890Z"
 }

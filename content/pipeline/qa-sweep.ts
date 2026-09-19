@@ -135,9 +135,11 @@ import {
   criterionAdapters,
   criterionProfiles,
   profileExcludesCriterion,
+  voiceExcludesCriterion,
 } from "../../schemas/block-qa";
 import { adapterForKind } from "../../schemas/block-kinds";
 import { readDeclaredFolioProfile } from "./profile-check";
+import { readActiveVoices } from "../../schemas/voices";
 import { resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 
@@ -213,6 +215,7 @@ interface BlockSweepResult {
       // another vocabulary" and "this folio is a document and that criterion
       // needs LaTeX" call for entirely different follow-up.
       | "n/a-wrong-profile"
+      | "n/a-voice-not-active"
       | CheckerResult["result"];
     severity?: "critical" | "major" | "minor";
     hits?: number;
@@ -237,6 +240,14 @@ async function run(): Promise<void> {
   // the folio does not say — see the profile gate below for what that means
   // and why it is not the same as "paper".
   const declaredProfile = readDeclaredFolioProfile(contentRepoRoot);
+  // The folio's ACTIVE voices, read once per run from the same repo root.
+  //
+  // `undefined` means the configuration could not be read at all, which is a
+  // third state and NOT the same as "activates nothing": an unreadable config
+  // must not be spent granting a skip, so `voiceExcludesCriterion` runs the
+  // criterion in that case. An empty array is a folio that read its config and
+  // activates none, which is the common case and does exclude.
+  const activeVoiceIds = readActiveVoices(contentRepoRoot);
   // Single-block targets: accept a sibling file path (`<block>.ts`,
   // `.md`, `.lean`, `.qa.json`) or an extension-less block-path prefix
   // in addition to a chapter/paper directory. The walk then starts at
@@ -266,12 +277,46 @@ async function run(): Promise<void> {
   //   --axis NAME[,...] one or more watcher axes (one-voice, proof,
   //                     canonical, compute, detangler)
   //   (default)         every registered criterion across all axes
-  const criteriaToRun: string[] =
+  const criteriaSelected: string[] =
     args.only && args.only.length > 0
       ? args.only.filter((id) => QA_CRITERIA_BY_ID[id])
       : args.axis && args.axis.length > 0
         ? args.axis.flatMap((a) => WATCHER_CRITERIA_BY_AXIS[a] ?? [])
         : QA_CRITERIA_REGISTRY.map((c) => c.id);
+
+  // VOICE GATE, applied ONCE here rather than per block, because the question is
+  // a property of the folio and not of any block: which editorial registers did
+  // this folio opt into?
+  //
+  // The adapter and profile gates sit inside the per-block loop because they can
+  // depend on the block's kind. A voice cannot, so asking 122 times would give
+  // 122 identical answers — and, for the `automated: false` criteria that voice
+  // overlays are, would put 4 × 122 phantom rows in the agent queue for voices
+  // nobody activated. A non-automated criterion is counted as `needs-agent` and
+  // never written to a sidecar (see the module comment), so the queue is the
+  // only place the exclusion could show, and the queue is exactly where it
+  // matters: an agent must not be handed WHO editorial review on a folio that
+  // never adopted WHO style.
+  //
+  // Reported once below rather than written 488 times as `n/a`. An `n/a` entry
+  // per block would be sidecar bloat carrying no information a reader of the
+  // folio's own configuration does not already have.
+  const voiceSkipped = criteriaSelected.filter((id) =>
+    voiceExcludesCriterion(QA_CRITERIA_BY_ID[id] ?? {}, activeVoiceIds),
+  );
+  const criteriaToRun: string[] = criteriaSelected.filter(
+    (id) => !voiceSkipped.includes(id),
+  );
+  if (voiceSkipped.length > 0 && !args.json) {
+    console.log(
+      `  voice gate: ${voiceSkipped.length} criterion(s) skipped — ` +
+        `this folio activates ${
+          activeVoiceIds && activeVoiceIds.length > 0
+            ? activeVoiceIds.join(", ")
+            : "no voice"
+        } (${voiceSkipped.join(", ")})`,
+    );
+  }
 
   // Precompute one (script_hash, script_commit_sha, deps_hash) bundle
   // per criterion under sweep. The bundle is reused for every block
@@ -556,6 +601,7 @@ async function run(): Promise<void> {
         continue;
       }
 
+
       // Applicability gate, over whichever companion roles the criterion
       // declares. This was two hard-coded `if`s for `.md` and `.lean` — the
       // paper adapter's companion set — so a criterion depending on a `.dmn`
@@ -722,6 +768,8 @@ async function run(): Promise<void> {
           head: headSha,
           generated_at: nowIso,
           criteria: criteriaToRun,
+          voice_skipped: voiceSkipped,
+          active_voices: activeVoiceIds ?? null,
           totals: {
             blocks: totalBlocks,
             fail_critical: totalCritical,
