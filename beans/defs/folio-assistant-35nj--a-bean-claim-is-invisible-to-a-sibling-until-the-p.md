@@ -121,3 +121,26 @@ handles by re-reading rather than by locking. And if the default branch refuses
 direct pushes in this repository, the mechanism degrades to exactly the old
 behaviour — a branch-local claim plus an early PR — and says so. Whether it
 actually works here will be known the first time somebody runs it.
+
+### A sixth outcome, found by running `--dry-run` against the real store
+
+`--dry-run` never pushes, so it was safe to exercise the real repository, and it
+found a defect the synthetic tests had not: **the tool offered to claim a
+`completed` bean** without comment. Two things came out of that run.
+
+1. **`already-closed`** — a bean that is `completed` or `scrapped` on the default
+   branch is now refused. Re-opening finished work is bad; re-entering a
+   `scrapped` one is worse, because a scrapped bean exists precisely to record
+   that something was considered and **rejected** so the next session does not
+   walk back into it. That is the same reasoning as never deleting a bean.
+   Reviving either is a real decision and must be deliberate, not a side effect
+   of asking to claim. Exit 0 — the question was answered.
+2. **`origin/HEAD` is not set in this checkout**, so `defaultBranch()` fell
+   through to the `origin/main` fallback, which worked. That fallback is
+   load-bearing here rather than defensive decoration — hardcoding `main` would
+   have worked by luck, and asking `origin/HEAD` alone would have failed.
+
+Also worth recording: `35nj` read as `todo` on the default branch while being
+`completed` in my working tree, which is **correct** — the tool reads
+`origin/main`, where this commit has not landed. My first reading of that output
+was that the tool was wrong; it was measuring the thing it is supposed to measure.

@@ -120,6 +120,7 @@ and removes it on every path including failure.
 |---|---|---|
 | `pushed` | 0 | on the default branch; every session sees it |
 | `already-claimed` | 0 | a sibling holds it, and is **named**. Nothing written — pick another item |
+| `already-closed` | 0 | it is `completed` or `scrapped` there. **Not claimed, deliberately** — reviving finished work, and especially a `scrapped` bean whose whole purpose is recording a rejected approach, is a decision rather than a side effect of asking to claim |
 | `new-on-branch` | 0 | the bean is not on the default branch yet, so nobody can see it and there is nothing to race over. Claim locally and open the PR early |
 | `fell-back` | **3** | the push was REJECTED. The bean is **not** claimed anywhere a sibling can see — claim on your branch and open the PR at your first commit |
 | `unknown` | **2** | the default branch could not be read. **Never** "the bean is free" |

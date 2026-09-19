@@ -86,12 +86,14 @@ const PLATFORM_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 /** How many times a non-fast-forward is re-tried before giving up. */
 export const MAX_ATTEMPTS = 3;
 
-export type ClaimState = "pushed" | "already-claimed" | "new-on-branch" | "fell-back" | "unknown";
+export type ClaimState = "pushed" | "already-claimed" | "already-closed" | "new-on-branch" | "fell-back" | "unknown";
 
 export interface ClaimOutcome {
   state: ClaimState;
   /** Branch recorded in the existing claim, when `already-claimed`. */
   heldBy?: string;
+  /** The status found on the default branch, when `already-closed`. */
+  closedAs?: string;
   /** Why, for `fell-back` and `unknown`. Always present for those. */
   reason?: string;
   /** Attempts spent. 2+ means a real race happened. */
@@ -210,6 +212,19 @@ export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: 
     // pushing WORK to the default branch, which is not what a claim is.
     if ("absent" in onBranch) return { state: "new-on-branch", attempts };
 
+    // Finished or deliberately rejected work is not claimable by accident.
+    //
+    // Found by running `--dry-run` against the real store: the tool offered to
+    // claim a `completed` bean without comment. Re-opening finished work is bad;
+    // re-entering a `scrapped` one is worse, because a scrapped bean exists
+    // precisely to record that something was considered and rejected so the next
+    // agent does not walk back into it (`AGENTS.md`, and never deleting a bean
+    // is the same reasoning). Re-opening either is a real decision, so it must
+    // be deliberate rather than a side effect of asking to claim.
+    if (onBranch.status === "completed" || onBranch.status === "scrapped") {
+      return { state: "already-closed", closedAs: onBranch.status, attempts };
+    }
+
     // Somebody else holds it. Not an error — the question was answered.
     if (onBranch.status === "in-progress" && onBranch.heldBy !== undefined && onBranch.heldBy !== branch) {
       return { state: "already-claimed", heldBy: onBranch.heldBy, attempts };
@@ -286,6 +301,14 @@ export function describe(o: ClaimOutcome, id: string): string {
   switch (o.state) {
     case "pushed":
       return o.reason ?? `claimed ${id} on the default branch — every session can see it now${o.attempts > 1 ? ` (after ${o.attempts} attempts; a sibling claim landed mid-flight)` : ""}`;
+    case "already-closed":
+      return (
+        `${id} is ${o.closedAs} on the default branch — NOT claimed, deliberately.\n` +
+        `  ${o.closedAs === "scrapped"
+          ? "A scrapped bean records that something was considered and REJECTED, which is what stops the next session re-entering the same dead end. Read its reasons before reviving it."
+          : "It is finished work. Re-opening it is a decision, not a claim."}\n` +
+        `  If you do mean to revive it, set the status yourself and say why in the bean.`
+      );
     case "new-on-branch":
       return (
         `${id} is not on the default branch yet — it is new on this branch, so no sibling session can see it ` +

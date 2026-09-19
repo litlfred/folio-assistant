@@ -138,6 +138,24 @@ describe("claiming on the default branch", () => {
     expect(git(work, "worktree", "list").trim().split("\n")).toHaveLength(1);
   });
 
+  test("a COMPLETED or SCRAPPED bean is refused — finished work is not re-opened by accident", () => {
+    // Found by running `--dry-run` against the real store: the tool offered to
+    // claim a `completed` bean without comment. Reviving a scrapped one is worse
+    // than reviving a finished one, because `scrapped` exists to record that
+    // something was considered and REJECTED.
+    const { work } = repoWith({ iiii: bean("iiii", "completed"), jjjj: bean("jjjj", "scrapped") });
+
+    for (const [id, status] of [["iiii", "completed"], ["jjjj", "scrapped"]] as const) {
+      const o = claimOnDefaultBranch(id, "claude/feature", { repo: work });
+      expect(o.state).toBe("already-closed");
+      expect(o.closedAs).toBe(status);
+      // Answered, not broken — so exit 0, like `already-claimed`.
+      expect(exitCodeFor(o)).toBe(0);
+      git(work, "fetch", "-q", "origin", "main");
+      expect(statusOnMain(work, id)).toBe(status);
+    }
+  });
+
   test("a bean that is NEW on this branch is a determined state, not 'could not tell'", () => {
     const { work } = repoWith({ eeee: bean("eeee") });
     // Created after the branch diverged, so `origin/main` has never seen it.
