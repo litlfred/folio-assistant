@@ -1,0 +1,292 @@
+{
+  "$schema": "health-report/v1",
+  "producer": {
+    "script": "tests/health/run.ts",
+    "script_hash": "be4f1d686def"
+  },
+  "subject": {
+    "kind": "repository",
+    "id": "litlfred/folio-assistant"
+  },
+  "updated_at": "2026-09-19T10:19:29.412Z",
+  "verdict": "findings",
+  "checks": [
+    {
+      "id": "staging-preview-size",
+      "state": "finding",
+      "summary": "The review previews under `STAGING/` on the publish branch have grown past what a GitHub Pages site can carry alongside the main site.",
+      "thresholds": [
+        {
+          "metric": "staging-total-bytes",
+          "value": 104857600,
+          "unit": "bytes",
+          "basis": "The owner's explicit instruction, 2026-09-19 (\"issue warning to user when exceeds > 100mb\"). It is also a tenth of GitHub's documented 1 GB limit for a published Pages site, which the previews share with the main site — an early-warning point that leaves room to act rather than a limit in itself. One preview measured 36.7–37.6 MB on 2026-09-19, so the third concurrent review breaches it.",
+          "severity": "major"
+        },
+        {
+          "metric": "staging-total-bytes",
+          "value": 786432000,
+          "unit": "bytes",
+          "basis": "Three-quarters of GitHub's documented 1 GB Pages limit. Past here the previews occupy most of the budget the main site must also fit inside, and the next deploy is the one that fails to publish — so something is about to be lost, which is what `critical` means on this scale.",
+          "severity": "critical"
+        }
+      ],
+      "measurements": [
+        {
+          "metric": "staging-total-bytes",
+          "value": 312878625,
+          "unit": "bytes",
+          "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
+        },
+        {
+          "metric": "staging-preview-count",
+          "value": 8,
+          "unit": "count",
+          "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
+        }
+      ],
+      "findings": [
+        {
+          "summary": "8 staging preview(s) total 298.4 MB, over the 100 MB warning point.",
+          "metric": "staging-total-bytes",
+          "severity": "major",
+          "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
+        }
+      ]
+    },
+    {
+      "id": "staging-preview-orphans",
+      "state": "finding",
+      "summary": "A `STAGING/` preview whose pull request is no longer open. Retained by policy, not by mistake — this is the list a person needs in order to decide, never a list to act on unasked.",
+      "thresholds": [],
+      "measurements": [
+        {
+          "metric": "staging-orphan-count",
+          "value": 4,
+          "unit": "count",
+          "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
+        },
+        {
+          "metric": "staging-orphan-bytes",
+          "value": 155715203,
+          "unit": "bytes",
+          "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
+        }
+      ],
+      "findings": [
+        {
+          "summary": "`STAGING/claude-brave-hypatia-r820sf` (37.0 MB, 776 files) matches no open pull request.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-brave-hypatia-r820sf` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/claude-d2kp-live-verdicts` (36.8 MB, 787 files) matches no open pull request.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-d2kp-live-verdicts` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/claude-ecstatic-goldberg-eroyaz` (37.3 MB, 776 files) matches no open pull request.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-ecstatic-goldberg-eroyaz` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/claude-fervent-mccarthy-nw4olk` (37.4 MB, 778 files) matches no open pull request.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-fervent-mccarthy-nw4olk` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+        }
+      ]
+    },
+    {
+      "id": "repository-size",
+      "state": "finding",
+      "summary": "The repository's tracked content, and what a full-history clone of it costs. Two different questions, reported separately.",
+      "thresholds": [
+        {
+          "metric": "tracked-tree-bytes",
+          "value": 262144000,
+          "unit": "bytes",
+          "basis": "A quarter of the 1 GB that GitHub's own documentation recommends a repository stay under (\"ideally less than 1 GB\"). Chosen as an early-warning point that leaves time to act before the documented recommendation, NOT as a limit in itself.",
+          "severity": "minor"
+        },
+        {
+          "metric": "tracked-tree-bytes",
+          "value": 1073741824,
+          "unit": "bytes",
+          "basis": "GitHub's documented recommendation that a repository remain under 1 GB.",
+          "severity": "major"
+        },
+        {
+          "metric": "git-dir-to-tree-ratio",
+          "value": 8,
+          "unit": "ratio",
+          "basis": "NO EXTERNAL STANDARD EXISTS for this ratio and this number is calibrated on this repository, which measured 12.0x on 2026-09-19 (`.git` 349 MB against 29 MB of blobs at HEAD). It is worth measuring because `ci-health.yml` documents `fetch-depth: 0` as load-bearing here, so every CI job and every agent container downloads the PACK, not the tree — at 8x, seven eighths of that download is content no longer present anywhere in the checkout.",
+          "severity": "minor"
+        },
+        {
+          "metric": "git-dir-bytes",
+          "value": 104857600,
+          "unit": "bytes",
+          "basis": "A floor on the ratio above, not a limit of its own: a 2 MB clone with a 0.16 MB tree is 12x and means nothing. Both must be exceeded before the ratio is reported.",
+          "severity": "minor"
+        }
+      ],
+      "measurements": [
+        {
+          "metric": "tracked-tree-bytes",
+          "value": 35075070,
+          "unit": "bytes",
+          "command": "git ls-tree -r -l HEAD (blob sizes summed)"
+        },
+        {
+          "metric": "git-dir-bytes",
+          "value": 371492634,
+          "unit": "bytes",
+          "command": "du -sb .git"
+        },
+        {
+          "metric": "pack-bytes",
+          "value": 348666880,
+          "unit": "bytes",
+          "command": "git count-objects -v"
+        },
+        {
+          "metric": "pack-count",
+          "value": 44,
+          "unit": "count",
+          "command": "git count-objects -v"
+        },
+        {
+          "metric": "git-dir-to-tree-ratio",
+          "value": 10.59,
+          "unit": "ratio",
+          "command": "git-dir-bytes / tracked-tree-bytes"
+        }
+      ],
+      "findings": [
+        {
+          "summary": "`.git` is 354.3 MB against 33.5 MB of tracked content — 10.6x, in 44 pack(s).",
+          "metric": "git-dir-to-tree-ratio",
+          "severity": "minor",
+          "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
+        }
+      ]
+    },
+    {
+      "id": "bean-store",
+      "state": "finding",
+      "summary": "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, and the size of the open backlog.",
+      "thresholds": [
+        {
+          "metric": "bean-duplicate-title-groups",
+          "value": 0,
+          "unit": "count",
+          "basis": "Zero, and the zero is the point. `beans create` is not idempotent and dedupes on nothing (AGENTS.md); an unguarded re-run in the `qou` folio on 2026-08-04 produced 14,688 duplicates — 92% of every open bean — which starved the idle-backlog policy of signal and collided with 15 real ids. Any duplicate at all is the leading edge of that, so there is no tolerance band.",
+          "severity": "major"
+        },
+        {
+          "metric": "bean-stale-in-progress",
+          "value": 14,
+          "unit": "days",
+          "basis": "NO EXTERNAL STANDARD; calibrated here. A claimed bean is a claim a sibling session is expected to respect, and `skills/folio-core/bean-blocking.md` says a block with no expiry cannot be told from abandoned work. Sessions are container-scoped and reclaimed, so a claim that has outlived two weeks of containers is not one anybody is honouring. Measured 2026-09-19: 29 in-progress, 0 of them older than 14 days.",
+          "severity": "minor"
+        },
+        {
+          "metric": "bean-resolved-inline",
+          "value": 100,
+          "unit": "count",
+          "basis": "AGENTS.md already calls this repo's flat `beans list` \"100+ ids in creation order … data, not a plan\". The `beans` CLI ships `beans archive` for exactly this, and archiving MOVES rather than deletes, so it is the one tidy-up here that is not a deletion. Measured 2026-09-19: 182 resolved beans still inline.",
+          "severity": "minor"
+        },
+        {
+          "metric": "bean-open",
+          "value": 150,
+          "unit": "count",
+          "basis": "NO EXTERNAL STANDARD; calibrated against 81 open beans measured 2026-09-19. Roughly double that is a backlog that has grown faster than it drains, which is a fact about the plan rather than about any one bean.",
+          "severity": "minor"
+        }
+      ],
+      "measurements": [
+        {
+          "metric": "bean-total",
+          "value": 264,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-open",
+          "value": 82,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-resolved-inline",
+          "value": 182,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-duplicate-title-groups",
+          "value": 0,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-stale-in-progress",
+          "value": 0,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        }
+      ],
+      "findings": [
+        {
+          "summary": "182 completed or scrapped beans are still inline in `beans/defs/`.",
+          "metric": "bean-resolved-inline",
+          "severity": "minor",
+          "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
+        }
+      ]
+    },
+    {
+      "id": "todo-store",
+      "state": "ok",
+      "summary": "The human todo store: how many items are open, and whether any have gone stale.",
+      "thresholds": [
+        {
+          "metric": "todo-open",
+          "value": 25,
+          "unit": "count",
+          "basis": "NO EXTERNAL STANDARD; calibrated here. `todos/` holds a PERSON's outstanding items and the human-todos page renders them as one list, so the limit is where a single list stops being readable at a glance. Measured 2026-09-19: 3 open.",
+          "severity": "minor"
+        },
+        {
+          "metric": "todo-stale-days",
+          "value": 90,
+          "unit": "days",
+          "basis": "A quarter. A todo raised about content and untouched for three months is either already done or no longer wanted; either way the status on the file is wrong, and a wrong status is worse than a long list.",
+          "severity": "minor"
+        }
+      ],
+      "measurements": [
+        {
+          "metric": "todo-total",
+          "value": 3,
+          "unit": "count",
+          "command": "todos/items/*.md front matter"
+        },
+        {
+          "metric": "todo-open",
+          "value": 3,
+          "unit": "count",
+          "command": "todos/items/*.md front matter"
+        },
+        {
+          "metric": "todo-stale-open",
+          "value": 0,
+          "unit": "count",
+          "command": "todos/items/*.md front matter"
+        }
+      ],
+      "findings": []
+    }
+  ]
+}
