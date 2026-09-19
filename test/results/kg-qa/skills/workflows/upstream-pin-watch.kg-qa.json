@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_ContentChangeReview",
-    "path": "skills/workflows/content-change-review.bpmn"
+    "id": "Process_UpstreamPinWatch",
+    "path": "skills/workflows/upstream-pin-watch.bpmn"
   },
-  "source_hash": "sha256:1af503119fbe7797bcf7c97445450081049fe81cd7877b2fa8bc519657529fa9",
+  "source_hash": "sha256:4384d86f4bc43d8314b4eeeccee154e61a2a4e42c0e65f1159b45de4e00927e7",
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -40,18 +40,18 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 9,
     "fail": 0,
-    "n/a": 3,
+    "n/a": 1,
     "unknown": 0
   }
 }
