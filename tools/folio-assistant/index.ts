@@ -155,6 +155,44 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { network: true },
     }),
 
+    // ── The other publication host ────────────────────────────────────────
+    //
+    // `pages-publish` above is one value of the `publication host` axis in
+    // `docs/proposals/deployment-topologies.md`. Four topologies in #363 do
+    // not have it at all — local git only, private repo, developer and
+    // self-sovereign — and before this node they had no publication
+    // mechanism, only a skill saying what one would have to do.
+    //
+    // ONE tool here, not two, and that is a retreat from this bean's own
+    // plan. `0hi8` said two implementations, because one is an assertion and
+    // two is a demonstration — the argument `4dbr` makes about a second
+    // forge. It still holds. But the obvious second candidate is a generic
+    // static server, and it does NOT satisfy `compound-extension-wins`:
+    // every OS table resolves `.schema.json` to `application/json`. Caddy
+    // configured per-path would satisfy it and is not installed here, so
+    // declaring it would be asserting conformance nobody measured. Left
+    // open on the bean rather than claimed.
+    defineTool({
+      id: "serve-rendering",
+      title: "Local rendering server",
+      description:
+        "Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
+      install: { none: true },
+      invoke: { shell: "bun run serve:rendering" },
+      io: {
+        inputs: [
+          { name: "directory", schema: t("RepoPath"), required: false, arg: { flag: "--dir" }, description: "Tree to serve; defaults to the built site when present." },
+          { name: "port", schema: t("Port"), required: false, arg: { flag: "--port" }, description: "0 binds a free port, which is what the tests use." },
+        ],
+        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is being served." }],
+      },
+      satisfies: ["serving-renderings"],
+      // No network: it BINDS one, it does not reach out. `requires.network`
+      // means "needs egress", and conflating the two would mark this
+      // unavailable on exactly the air-gapped topology it exists for.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     // ── The zod modules that maintain this instance's public schemas ──────
     //
     // The owner's requirement: "the zod(.ts) should be tool KG nodes that
