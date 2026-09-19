@@ -68,8 +68,38 @@ Never resolve a sibling's bean, and never delete ANY bean; never resolve a sibli
 resumable.** Both are required, and the brief comes first — before the first
 tool call, in the chat, not in the commit.
 
-AGENTS.md §"Opening a bean or a topic" states the rule and when it applies.
-This is the shape.
+### When it applies — proportionality, so this does not become ceremony
+
+**The trigger is irreversibility and surprise, not line count.**
+
+- **A one-line fix with an obvious route needs no brief.** Say what you are
+  doing and do it.
+- **Anything touching a shipped gate, a shared artefact, a formal declaration
+  with consumers, or a number a reader sees — brief it.**
+- **Anything where you expect to be wrong some of the time — brief it**, and say
+  *where* you expect to be wrong. Research is the case this is most valuable for
+  and most often skipped, on the grounds that the outcome is unknown. **The
+  unknown outcome is the reason to write down the route**, not a reason to skip
+  it.
+
+### Why it is a rule and not a style preference
+
+**Sessions end mid-thread.** Containers are reclaimed, context windows fill, a
+branch is picked up days later by an agent with none of the reasoning that
+produced it. The bean body and the commit are durable; the chain of inference
+that made them sensible is not, unless it is written down at the point where it
+was still obvious. An agent resuming cold should be able to read the brief and
+continue — not reconstruct its predecessor's rabbit hole first.
+
+**It catches wrong work before it is done rather than after.** A route stated in
+advance can be corrected by the author in one line. The same route discovered in
+a finished diff costs a review cycle and, often, a revert.
+
+It is the same discipline as the question frame in
+[`interaction-modality`](interaction-modality.md) §4.1, applied to work instead
+of decisions. That rule exists because a terse question forces the author to go
+and find context the agent already had; a terse *start* does the same thing one
+step earlier.
 
 ### The four parts
 
@@ -134,6 +164,18 @@ is before the diff.
 
 ~200 words, and it would have let a reader stop the work, redirect it, or pick
 it up cold.
+
+### What a thin brief looks like, and why it fails
+
+> Starting `qou-93hu` — fixing CriticalExponent.
+
+Names the bean and nothing else. It does not say the field is a closed numeral
+identity with no exponent variable in it, so a reader cannot tell whether this
+is cosmetic or load-bearing; it does not say the class signature changes, so
+nobody can warn that every binder in two consumer modules moves with it; and it
+does not say what "fixed" will be checked against, so the agent is free to
+declare victory on a compile. **Each of those omissions is a place the author
+could have intervened for the cost of reading one sentence.**
 
 ### The failure this prevents
 

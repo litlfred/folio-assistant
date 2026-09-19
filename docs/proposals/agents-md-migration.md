@@ -112,6 +112,40 @@ Two consequences for the migration:
    migration that a revert does not cleanly undo, because by then two repos
    disagree about who owns the rule.
 
+## The hazard every move runs into: some skills exist in three copies
+
+`AGENTS.md` carried this as a standing warning; it belongs here, because it is a
+fact about **how to move things**, not about how to work.
+
+`todo-manager` is the worked case. Measured 2026-09-19 on this branch:
+
+| copy | lines | generated? | CI-gated? |
+|---|---|---|---|
+| `skills/folio-core/todo-manager.md` | 438 | no — hand-authored | yes, indirectly (its mirror drifts) |
+| `docs/reference/skill-instructions/todo-manager.md` | 406 | **yes**, from the row above | **yes** — `gen-skill-docs.ts --check` |
+| `.claude/skills/local/todo-manager.md` | 411 | no | **no** |
+
+**The two hand-authored copies fail in opposite directions**, and that asymmetry
+is the thing to plan around:
+
+- Edit `skills/folio-core/` and forget to regenerate, and CI goes red. Loud. It
+  has taken `main` red before.
+- Edit `.claude/skills/local/` and **nothing checks anything.** `GROUPS` in
+  [`scripts/gen-skill-docs.ts`](../../scripts/gen-skill-docs.ts) does not list
+  that directory.
+
+The divergence between the two hand-authored copies is **205 diff lines**. Which
+copy is canonical is a question for whoever owns the skills layout; resolving it
+as a side effect of a migration edit is how one of them quietly becomes wrong.
+
+**So the rule for this migration is: when a destination skill has a local copy,
+write the same addition to both.** Sections 16, 17 and 18 all land in skills
+with one. §"Opening brief" was added to both; the count above is after that, and
+the migration has not widened the gap.
+
+Do not quote the 205 — re-measure. An earlier version of this note said 188, and
+a sibling's edit moved it to 261 before this branch's additions brought it back.
+
 ## Sequence
 
 1. ✅ `check:agents-xref` — so a break this migration causes is distinguishable
