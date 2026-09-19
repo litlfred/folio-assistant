@@ -161,6 +161,38 @@ block — agent/human maintained, part of the authored content. It lists
 **immediate neighbours only**: if A→B and B→C, A lists only B. It is not the
 import graph and not a transitive closure.
 
+## TRAP — derive the gate list from the WORKFLOW, not from package.json
+
+Three of CI's checks are invoked **by path**, not by npm-script name, so a sweep
+over `bun run <script-name>` cannot see them however thorough it is:
+
+```
+bun run scripts/gen-docs-pages.ts --check
+bun run scripts/gen-schema-docs.ts --check
+bun run scripts/gen-skill-docs.ts --check
+```
+
+Measured 2026-09-19 (bean `nup0`): I ran 18 named gates, `tsc`, `eslint`,
+`bun test` and the full Playwright suite, all green, and `TypeScript — tests,
+lint, types (hard)` still went red on **20 stale `docs/assets/qa/*.kg.json`
+projections**. `gen-docs-pages` has no `package.json` alias at all.
+
+**Get the list from the source of truth:**
+
+```sh
+grep -oE "bun run (scripts/[a-z-]+\.ts[^ ]*|[a-z:.-]+)" \
+  .github/workflows/code-quality-gates.yml | sort -u
+```
+
+**Any edit to a script that WRITES a witness restales every published
+projection of it.** Editing `scripts/kg-audit.ts` changes its own
+`scriptHash`, which is recorded in all 220 `kg-qa` sidecars *and* in the 20
+published `.kg.json` files under `docs/assets/qa/`. Regenerate both.
+
+Confirm a regeneration moved nothing but the hash rather than eyeballing it —
+these are single-line JSON, so a `grep -v scriptHash` filters nothing. Parse
+both sides, blank the hash keys, compare.
+
 ## BASELINE — re-measure, do not quote
 
 | what | command |
