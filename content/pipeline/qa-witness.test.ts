@@ -241,7 +241,6 @@ describe("readWitnessDoc — kg family keeps one auditor, and says what it does 
         $schema: "kg-qa/v1",
         subject: { kind: "process", id: "Process_X", path: "p.bpmn" },
         source_hash: sourceHash,
-        auditor: { script: "scripts/kg-audit.ts", script_hash: "sha256:abc", engine_version: "1" },
         criteria: {
           "activity-names-skill": {
             result: "fail",
@@ -252,9 +251,21 @@ describe("readWitnessDoc — kg family keeps one auditor, and says what it does 
         totals: { pass: 0, fail: 1, "n/a": 1, unknown: 0 },
       }),
     );
+    // The auditor is recorded ONCE for the corpus, not in each sidecar. Write
+    // the manifest the reader now consults; `kgNoManifest` below is the other
+    // half, and the two together are why this is a fixture change rather than
+    // a relaxed assertion.
+    mkdirSync(join(dir, "skills"), { recursive: true });
+    writeFileSync(
+      join(dir, "skills", "kg-qa.manifest.json"),
+      JSON.stringify({
+        $schema: "kg-qa-manifest/v1",
+        auditor: { script: "scripts/kg-audit.ts", script_hash: "sha256:abc", engine_version: "1" },
+      }),
+    );
   }
 
-  test("one criterion, one witness — synthesised from the report's auditor", () => {
+  test("one criterion, one witness — synthesised from the corpus manifest", () => {
     inTmp((dir) => {
       kg(dir, "sha256:whatever");
       const doc = readWitnessDoc("kg", join(dir, "p.bpmn"), dir)!;
@@ -264,6 +275,20 @@ describe("readWitnessDoc — kg family keeps one auditor, and says what it does 
       expect(doc.criteria[0]!.witnesses).toHaveLength(1);
       expect(doc.criteria[0]!.witnesses[0]!.id).toBe("scripts/kg-audit.ts");
       expect(doc.criteria[0]!.evidence?.[0]).toContain("Task_A");
+    });
+  });
+
+  test("no manifest says `unrecorded` rather than inventing a hash", () => {
+    // The third state. An auditor identity that cannot be read is not the same
+    // as one that is absent, and neither is a reason to emit a plausible hash
+    // — the same rule this file already applies to the timestamp `kg-audit`
+    // does not keep.
+    inTmp((dir) => {
+      kg(dir, "sha256:whatever");
+      rmSync(join(dir, "skills", "kg-qa.manifest.json"));
+      const w = readWitnessDoc("kg", join(dir, "p.bpmn"), dir)!.criteria[0]!.witnesses[0]!;
+      expect(w.id).toBe("unrecorded");
+      expect(w.scriptHash).toBeUndefined();
     });
   });
 
