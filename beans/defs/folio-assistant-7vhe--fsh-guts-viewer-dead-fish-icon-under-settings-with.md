@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T10:48:10Z
-updated_at: 2026-09-19T10:48:10Z
-parent: folio-assistant-t0i3
+updated_at: 2026-09-19T12:24:54Z
+parent: folio-assistant-o3xy
 ---
 
 Owner, 2026-09-19:
@@ -51,3 +51,13 @@ not "dead fish".
 ## Depends on
 
 The store and its JSON-LD export. There is nothing to view before that.
+
+
+---
+
+**Re-parented to `o3xy` (UI & ACCESSIBILITY), 2026-09-19.** It hung off
+`t0i3` (the fsh-guts store), which said something true — this is fsh-guts
+work — and which `check-bean-parents` correctly refuses: a feature cannot
+parent a feature, and the roadmap needs an epic. The relationship is recorded
+here because the hierarchy can no longer carry it: **this depends on `t0i3`,
+which is where the store and its JSON-LD endpoint live.**

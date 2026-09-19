@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T11:08:23Z
-updated_at: 2026-09-19T11:16:00Z
-parent: folio-assistant-t0i3
+updated_at: 2026-09-19T12:24:54Z
+parent: folio-assistant-o3xy
 ---
 
 Owner, 2026-09-19:
@@ -133,3 +133,13 @@ would list the trashcan on the published site — which
 STRIPPED graph, and the dead-fish icon under settings
 (`folio-assistant-7vhe`) is the separate door. Two routes, and only one of
 them is in the graph.
+
+
+---
+
+**Re-parented to `o3xy` (UI & ACCESSIBILITY), 2026-09-19.** It hung off
+`t0i3` (the fsh-guts store), which said something true — this is fsh-guts
+work — and which `check-bean-parents` correctly refuses: a feature cannot
+parent a feature, and the roadmap needs an epic. The relationship is recorded
+here because the hierarchy can no longer carry it: **this depends on `t0i3`,
+which is where the store and its JSON-LD endpoint live.**

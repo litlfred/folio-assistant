@@ -5,7 +5,8 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-19T10:48:00Z
-updated_at: 2026-09-19T10:59:37Z
+updated_at: 2026-09-19T12:24:54Z
+parent: folio-assistant-zzmr
 ---
 
 Owner, 2026-09-19:
@@ -86,3 +87,13 @@ Two further assertions cover the store's own contract: every node declares
 The second is what stops a node here being an orphan.
 
 Remaining: `<base>/fsh-guts.jsonld`. Not done in this pass.
+
+
+---
+
+**Parented to `zzmr` (KG: structure, declaration and publication),
+2026-09-19.** Exact fit rather than a convenient one: this bean IS a declared
+graph kind plus the `<base>/fsh-guts.jsonld` endpoint that publishes it, and
+those are the epic's two stated subjects. Its three UI children (`7vhe`,
+`d1r6`, `4kj4`) moved to `o3xy` at the same time, since a feature cannot
+parent a feature; each records its dependency on this bean in prose.

@@ -5,7 +5,8 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-19T11:23:31Z
-updated_at: 2026-09-19T12:22:52Z
+updated_at: 2026-09-19T12:24:54Z
+parent: folio-assistant-8jt6
 ---
 
 Owner, 2026-09-19:
@@ -251,3 +252,17 @@ confirms; not resolving unilaterally.
 Nothing outside `workflow_start` / `workflow_complete` calls the producer, so
 an agent working outside a process logs nothing. Whether that wants a session
 hook or its own MCP tool is a real design question, not an oversight.
+
+
+---
+
+**Parented to `8jt6` (MEMORY & TODOS), 2026-09-19**, which was previously
+absent and is why `check-bean-parents` failed on this branch.
+
+`8jt6`'s own framing is *"notes an agent or a person carries, attached to a
+node of the graph"*, and its schema bean `h32d` is one schema attachable to
+any KG node — which is structurally what a log entry with `references[]` is.
+**The alternative considered was `ahvw` (PROCESS)**, on the grounds that
+capture is declared on a BPMN process and the producer is called by
+`workflow_start` / `workflow_complete`. Recorded so a later agent can move it
+cheaply rather than re-deriving the argument: this is a judgement, not a fact.
