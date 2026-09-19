@@ -6,11 +6,6 @@
     "path": "skills/workflows/authoring-a-document.bpmn"
   },
   "source_hash": "sha256:446cfbc78bd61ad6a067835878344b046d5d35c2168326e34ec8d274ad2398e9",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,13 +39,17 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 8,
     "fail": 0,
     "n/a": 2,
     "unknown": 0

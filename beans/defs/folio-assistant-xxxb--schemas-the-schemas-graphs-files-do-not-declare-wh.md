@@ -1,10 +1,11 @@
 ---
 # folio-assistant-xxxb
 title: 'SCHEMAS: the schemas/ graph''s files do not declare what they are'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-18T19:04:01Z
-updated_at: 2026-09-19T05:40:29Z
+updated_at: 2026-09-19T05:46:54Z
 ---
 
 ## The question that found it

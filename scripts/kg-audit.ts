@@ -48,12 +48,15 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
+  KG_QA_MANIFEST_SCHEMA,
+  KG_QA_MANIFEST_PATH,
   KG_CRITERIA_BY_ID,
   criteriaFor,
   tally,
   worstSeverity,
   type KgCriterionEntry,
   type KgFinding,
+  type KgQaManifest,
   type KgQaReport,
   type KgResult,
   type KgSeverity,
@@ -65,12 +68,14 @@ import {
   readPermissions,
   resolveRoleSkills,
   roleForLane,
+  findRole,
+  fulfilmentKindsForBpmnType,
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
-import { isSkillMd, knownSkills } from "./known-skills.js";
+import { isSkillMd, knownSkills, remotePackageSkills } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 
 const ENGINE_VERSION = "1";
@@ -88,8 +93,11 @@ const ENGINE_VERSION = "1";
  * can act on, and a check that produces those is a check somebody switches
  * off — the same argument `role-has-actor` already makes for `actedUpon`.
  */
-function readsProse(r: { actedUpon?: boolean; actorKind: string }): boolean {
-  return !r.actedUpon && (r.actorKind === "person" || r.actorKind === "agent");
+function readsProse(r: { actedUpon?: boolean; actorKinds: string[] }): boolean {
+  // ANY, not every. A role a person may take on has prose read in it, even
+  // where a mechanical actor may also fill the lane — the question is whether
+  // the instructions can reach a reader, and one reader is enough.
+  return !r.actedUpon && r.actorKinds.some((k) => k === "person" || k === "agent");
 }
 
 const root = resolve(import.meta.dir, "..");
@@ -130,13 +138,11 @@ function report(
   path: string | null,
   sourceHash: string | null,
   criteria: Record<string, KgCriterionEntry>,
-  auditorHash: string,
 ): KgQaReport {
   return {
     $schema: KG_QA_SCHEMA,
     subject: { kind, id, path },
     source_hash: sourceHash,
-    auditor: { script: "scripts/kg-audit.ts", script_hash: auditorHash, engine_version: ENGINE_VERSION },
     criteria,
     totals: tally(criteria),
   };
@@ -170,13 +176,12 @@ async function auditProcess(
   graph: RoleGraph | undefined,
   skills: Set<string>,
   processIds: Set<string>,
-  auditorHash: string,
 ): Promise<KgQaReport> {
   const rel = relative(root, join(WORKFLOW_DIR, p.file));
   const hash = sha256(readFileSync(join(WORKFLOW_DIR, p.file), "utf-8"));
 
   if (!p.model) {
-    return report("process", p.file.replace(/\.bpmn$/, ""), rel, hash, allUnknown("process", `the diagram would not load: ${p.error}`), auditorHash);
+    return report("process", p.file.replace(/\.bpmn$/, ""), rel, hash, allUnknown("process", `the diagram would not load: ${p.error}`));
   }
   const m = p.model;
   const activities = [...m.nodes.values()].filter(isActivity);
@@ -294,6 +299,47 @@ async function auditProcess(
     }
   }
 
+  // Can the lane's role actually be filled by something that can perform this
+  // step? The diagram's task TYPE already answers which kinds may — BPMN says a
+  // userTask is done by a person and a serviceTask without one — and until now
+  // nothing joined that answer to the role graph's `actorKinds`.
+  //
+  // Scoped the same way `activity-names-skill` is, and for the same reason. An
+  // `actedUpon` lane is a store, and "the corpus cannot perform a serviceTask"
+  // is a finding nobody can act on. An activity whose lane is unbound or absent
+  // is already reported by `lane-binds-role` / `activity-in-lane`; repeating it
+  // here would make one defect look like two.
+  const wrongKind: KgFinding[] = [];
+  let kindApplicable = 0;
+  if (graph) {
+    for (const n of activities) {
+      if (actedUponNode(n)) continue;
+      const roleId = n.laneId ? laneRole.get(n.laneId) : undefined;
+      if (!roleId) continue;
+      const role = findRole(graph, roleId);
+      if (!role) continue;
+      const allowed = n.fulfilment?.kinds ?? fulfilmentKindsForBpmnType(n.type);
+      if (!allowed) continue; // a bpmn:Task or call activity asserts nothing
+      kindApplicable += 1;
+      // INTERSECTION, non-empty. The step says which kinds may perform it and
+      // the role says which may take it on; the step is fillable when some
+      // kind satisfies both. Requiring every kind the role admits would fail a
+      // lane the moment it was widened to include a second one, which is
+      // exactly backwards.
+      if (role.actorKinds.some((k) => allowed.includes(k))) continue;
+      const how = n.fulfilment
+        ? `<folio:fulfilment/> on the step allows ${allowed.join(", ")} (${n.fulfilment.reason})`
+        : `a ${n.type.replace("bpmn:", "")} is performed by ${allowed.join(" or ")}`;
+      wrongKind.push({
+        where: n.id,
+        detail:
+          `"${n.name}" — ${how}, but its lane's role "${roleId}" admits only ${role.actorKinds.join(", ")}. ` +
+          `Either the task type is wrong, the lane is wrong, or the step really does admit that kind — ` +
+          `in which case say so with <folio:fulfilment kinds="…" reason="…"/>.`,
+      });
+    }
+  }
+
   // Gateways computing their branch from a DMN table.
   const decisionRefs = [...m.nodes.values()].filter((n) => n.decisionRef);
   const danglingDecision: KgFinding[] = [];
@@ -334,6 +380,7 @@ async function auditProcess(
     "lane-binds-role": entry(unboundLane, Boolean(graph) && m.lanes.length > 0),
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
+    "activity-fulfilment-kind": entry(wrongKind, Boolean(graph) && kindApplicable > 0),
     // Three states, not two. A resolved target passes; a process with no call
     // activity is `n/a`; a target this instance cannot load is `unknown`,
     // because it may be hosted elsewhere — see the note on the criterion.
@@ -346,18 +393,17 @@ async function auditProcess(
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
-    for (const id of ["role-ref-resolves", "lane-binds-role", "role-carries-activity-skill"]) {
+    for (const id of ["role-ref-resolves", "lane-binds-role", "role-carries-activity-skill", "activity-fulfilment-kind"]) {
       criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at skills/roles/roles.json." }] };
     }
   }
-  return report("process", m.id, rel, hash, criteria, auditorHash);
+  return report("process", m.id, rel, hash, criteria);
 }
 
 // ── Per-decision criteria ───────────────────────────────────────
 
 async function auditDecisions(
   processes: LoadedProcess[],
-  auditorHash: string,
 ): Promise<KgQaReport[]> {
   if (!existsSync(DECISION_DIR)) return [];
   const referenced = new Set<string>();
@@ -376,7 +422,7 @@ async function auditDecisions(
     // through the loader, because the loader needs a decision id to be given.
     const ids = [...readFileSync(abs, "utf-8").matchAll(/<(?:dmn:)?decision\s[^>]*id="([^"]+)"/g)].map((m) => m[1]!);
     if (ids.length === 0) {
-      out.push(report("decision", f.replace(/\.dmn$/, ""), rel, hash, allUnknown("decision", "no <decision id=…> found in the file."), auditorHash));
+      out.push(report("decision", f.replace(/\.dmn$/, ""), rel, hash, allUnknown("decision", "no <decision id=…> found in the file.")));
       continue;
     }
     const findings: KgFinding[] = [];
@@ -395,7 +441,7 @@ async function auditDecisions(
         findings.push({ where: id, detail: `table "${id}" will not load: ${e instanceof Error ? e.message : e}` });
       }
     }
-    out.push(report("decision", f.replace(/\.dmn$/, ""), rel, hash, { "decision-outcomes-used": entry(findings) }, auditorHash));
+    out.push(report("decision", f.replace(/\.dmn$/, ""), rel, hash, { "decision-outcomes-used": entry(findings) }));
   }
   return out;
 }
@@ -462,7 +508,7 @@ function skillFiles(): string[] {
  * p75 279, p90 391, max 1280 lines. 280 and 400 are those two percentiles
  * rounded — "longer than three quarters of its peers" rather than an opinion.
  */
-function auditSkills(auditorHash: string): KgQaReport[] {
+function auditSkills(): KgQaReport[] {
   const out: KgQaReport[] = [];
   for (const file of skillFiles()) {
     const rel = relative(root, file);
@@ -504,7 +550,6 @@ function auditSkills(auditorHash: string): KgQaReport[] {
           ),
           "skill-no-repeated-heading": entry(repeats),
         },
-        auditorHash,
       ),
     );
   }
@@ -517,7 +562,6 @@ function auditRoles(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
-  auditorHash: string,
 ): KgQaReport[] {
   const hash = sha256(readFileSync(graphPath, "utf-8"));
   const rel = relative(root, graphPath);
@@ -594,8 +638,43 @@ function auditRoles(
               },
             ],
           },
+      // The other direction, and the one that was unanswerable while a role
+      // carried a single kind: an actor declares this role, so is its OWN kind
+      // among the kinds the role admits?
+      //
+      // `n/a` for an `actedUpon` lane (a store has no actor) and `unknown`
+      // where no entry declares `roles` at all — the same two scopings
+      // `role-has-actor` uses, for the same reasons, so the two directions of
+      // one question cannot disagree about when it is askable.
+      "actor-kind-fits-role": r.actedUpon
+        ? entry([], false)
+        : anyActorDeclaresRoles
+        ? entry(
+            actors
+              .filter((a) => (a.roles ?? []).includes(r.id))
+              .filter((a) => !r.actorKinds.includes(a.kind))
+              .map((a) => ({
+                where: a.id,
+                detail:
+                  `actor "${a.id}" is a ${a.kind} and declares role "${r.id}", which admits ` +
+                  `${r.actorKinds.join(", ")}. Either the role is too narrow — widen its ` +
+                  `\`actorKinds\` — or the actor cannot take this role on and its \`roles\` ` +
+                  `list is wrong. The descriptions of both are where to settle it.`,
+              })),
+          )
+        : {
+            result: "unknown",
+            findings: [
+              {
+                where: r.id,
+                detail:
+                  "the actor registry declares no `roles` on any entry, so actor-kind fit could not be evaluated. " +
+                  "This is a gap in the registry, not a pass.",
+              },
+            ],
+          },
     };
-    return report("role", r.id, rel, hash, criteria, auditorHash);
+    return report("role", r.id, rel, hash, criteria);
   });
 }
 
@@ -648,7 +727,6 @@ function auditRequirements(
   reqs: LoadedRequirement[],
   skills: Set<string>,
   actors: LoadedActor[],
-  auditorHash: string,
 ): KgQaReport[] {
   const capabilities = new Set<string>();
   if (existsSync(CAPABILITY_DIR)) {
@@ -697,7 +775,7 @@ function auditRequirements(
       "requirement-derived-from-resolves": entry(badParents, (r.raw.derivedFrom ?? []).length > 0),
       "requirement-statements-graded": entry(ungraded, (r.raw.statements ?? []).length > 0),
     };
-    return report("requirement", r.id, relative(root, r.path), hash, criteria, auditorHash);
+    return report("requirement", r.id, relative(root, r.path), hash, criteria);
   });
 }
 
@@ -758,38 +836,6 @@ function localHarnessSkills(): Set<string> {
   return out;
 }
 
-/**
- * Skills a REMOTE package declares it provides.
- *
- * `skills/remote-packages/*.json` name an external repo and, under
- * `wrapper.skills`, the skills it supplies — `claude-scientific-skills`
- * provides `scientific-visualization`, `hypothesis-generation` and
- * `scientific-critical-thinking`. Their bodies are not in this checkout until
- * the package is synced, so they are correctly ABSENT from `knownSkills()`:
- * nothing here can serve one.
- *
- * But a local manifest naming one is not lying — it is naming a skill that
- * comes from a dependency. Counting them only for `manifest-skill-exists` is
- * the distinction: *can this instance serve it* and *is this entry a real
- * skill somewhere* are different questions, and collapsing them would have had
- * this criterion demand the deletion of three correct manifest entries the
- * first time it ran. That very nearly happened.
- */
-function remotePackageSkills(): Set<string> {
-  const out = new Set<string>();
-  const dir = join(root, "skills", "remote-packages");
-  if (!existsSync(dir)) return out;
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
-    try {
-      const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { wrapper?: { skills?: string[] } };
-      for (const s of p.wrapper?.skills ?? []) out.add(s);
-    } catch {
-      // A remote-package file that will not parse is validate-skills.ts's finding.
-    }
-  }
-  return out;
-}
-
 /** Manifest entries, with the package each came from, for the reverse check. */
 function manifestEntries(): { pkg: string; skill: string }[] {
   const out: { pkg: string; skill: string }[] = [];
@@ -814,7 +860,6 @@ function auditGraph(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
-  auditorHash: string,
 ): KgQaReport {
   const reachable = manifestSkills();
   for (const s of servableSkills()) reachable.add(s);
@@ -903,16 +948,46 @@ function auditGraph(
       "skill-in-role-or-process": graph
         ? entry(unmodelled)
         : { result: "unknown" as KgResult, findings: [{ where: "—", detail: "no role graph declared." }] },
+      // A REMOTE DECLARATION IS NOT RESOLUTION — measured 2026-09-19, bean `nup0`.
+      //
+      // This criterion used to accept an entry that any file under
+      // `skills/remote-packages/` named, on the reading that "is this a real skill
+      // somewhere" is the manifest's question, distinct from "can this instance
+      // serve it". The distinction is right. What is missing is that nothing here
+      // implements the "somewhere": `shallow-clone` exists only as a Zod enum
+      // value, `src/tools/skill-fetch.ts` and `scripts/generate-registry.ts`
+      // contain no mention of `remote-packages/` at all, and the single consumer —
+      // `scripts/generate-docs.ts` — reads those files solely for Docker
+      // requirements, which is what `schemas/skill-package.ts` documents them as.
+      //
+      // So an entry resolvable only that way publishes a registry name that
+      // `skill_fetch` answers "not found" for, which is exactly the defect this
+      // criterion is `critical` about.
+      //
+      // The allowance existed to stop this criterion demanding the deletion of
+      // three `authoring-math` entries. Those three were deleted two hours later
+      // by a session that had not seen it, and — measured above — deleting them
+      // was RIGHT. The allowance was protecting the wrong answer.
+      //
+      // `remotePackageSkills` stays, to CLASSIFY the finding rather than excuse
+      // it. "Declared by a remote package nothing syncs" and "named nowhere at
+      // all" have different remedies, and a finding that does not say which is one
+      // somebody has to measure again.
       "manifest-skill-exists": (() => {
-        const remote = remotePackageSkills();
+        const remote = remotePackageSkills(root);
         return entry(
           manifestEntries()
-            .filter((e) => !skills.has(e.skill) && !remote.has(e.skill))
+            .filter((e) => !skills.has(e.skill))
             .map((e) => ({
               where: `${e.pkg}/${e.skill}`,
-              detail:
-                `skills/${e.pkg}/package-manifest.json names "${e.skill}", which resolves to no skill here ` +
-                `and is declared by no remote package.`,
+              detail: remote.has(e.skill)
+                ? `skills/${e.pkg}/package-manifest.json names "${e.skill}", which this instance holds no ` +
+                  `body for. A file under skills/remote-packages/ declares it, but nothing in this ` +
+                  `repository syncs or serves a remote package — neither skill_fetch nor the registry ` +
+                  `reads that directory — so the entry publishes a name that cannot be fetched. Implement ` +
+                  `the sync or drop the entry; the declaration alone is not enough.`
+                : `skills/${e.pkg}/package-manifest.json names "${e.skill}", which resolves to no skill here ` +
+                  `and is declared by no remote package.`,
             })),
         );
       })(),
@@ -925,7 +1000,6 @@ function auditGraph(
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
     },
-    auditorHash,
   );
 }
 
@@ -986,17 +1060,43 @@ if (graphError) {
 const processes = await loadProcesses();
 const reports: KgQaReport[] = [];
 const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, auditorHash));
-reports.push(...(await auditDecisions(processes, auditorHash)));
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds));
+reports.push(...(await auditDecisions(processes)));
 if (graph) {
-  reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills, auditorHash));
+  reports.push(...auditRoles(graph, join(KG_ROOT, "roles", "roles.json"), processes, actors, skills));
 }
-reports.push(...auditRequirements(readRequirements(), skills, actors, auditorHash));
-reports.push(...auditSkills(auditorHash));
-reports.push(auditGraph(graph, processes, actors, skills, auditorHash));
+reports.push(...auditRequirements(readRequirements(), skills, actors));
+reports.push(...auditSkills());
+reports.push(auditGraph(graph, processes, actors, skills));
 
 // Write or compare.
+//
+// THE MANIFEST IS ONE FILE, AND THAT IS THE POINT. The auditor's hash used to
+// be copied into every sidecar, where it could not differ between files —
+// `auditorHash` is computed once above and there is no subset mode — so the
+// copies were 218 restatements of one fact. Measured 2026-09-19: one added
+// comment line in this script rewrote 218 sidecars with no verdict changed,
+// which is what made two concurrent branches conflict by construction.
 const stale: string[] = [];
+
+const manifest: KgQaManifest = {
+  $schema: KG_QA_MANIFEST_SCHEMA,
+  auditor: {
+    script: "scripts/kg-audit.ts",
+    script_hash: auditorHash,
+    engine_version: ENGINE_VERSION,
+  },
+};
+const manifestPath = join(root, KG_QA_MANIFEST_PATH);
+const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;
+if (check) {
+  const current = existsSync(manifestPath) ? readFileSync(manifestPath, "utf-8") : undefined;
+  if (current !== manifestText) stale.push(KG_QA_MANIFEST_PATH);
+} else {
+  mkdirSync(join(manifestPath, ".."), { recursive: true });
+  writeFileSync(manifestPath, manifestText);
+}
+
 for (const r of reports) {
   const p = sidecarPath(r);
   const text = serialise(r);

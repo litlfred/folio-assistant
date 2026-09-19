@@ -13,7 +13,9 @@
  * @module scripts/known-skills
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, join as joinPath } from "node:path";
+
+import { resolveDirectories } from "../schemas/cat-harness.js";
 
 /**
  * Groups under `.claude/skills/` that hold something other than skills.
@@ -35,6 +37,53 @@ import { join } from "node:path";
  * and `session-start` appear as reachable skill names with nothing behind them.
  */
 export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hooks", "requirements"]);
+
+/**
+ * Does this directory hold at least one SKILL `.md` directly?
+ *
+ * Not merely a `.md`. The two halves of this arrived from opposite directions
+ * and meet here: declaration-driven discovery asks WHICH DIRECTORIES to look
+ * in, and {@link isSkillMd} asks WHICH FILES in one count. Either alone
+ * overcounts — `skills/memory/`'s 25 agent-memory nodes are `.md` in a
+ * declared directory, and were admitted until the file-level predicate
+ * existed.
+ */
+function holdsMarkdown(abs: string): boolean {
+  if (!existsSync(abs)) return false;
+  return readdirSync(abs).some((f) => f.endsWith(".md") && isSkillMd(joinPath(abs, f)));
+}
+
+/**
+ * The instance's declared `cat-harness` directories, or nothing it cannot read.
+ *
+ * A declaration that will not parse is the instance's problem to fix, not this
+ * function's to guess around — but skill discovery must not crash a tool that
+ * had nothing to do with the declaration, so an unreadable one yields an empty
+ * list and the explicit extras below still resolve.
+ */
+function kgDirectories(root: string): Array<{ path: string; absPath: string }> {
+  try {
+    return resolveDirectories([{ name: "(local)", root, own: true }])
+      // EXACTLY `cat-harness`, not merely including it.
+      //
+      // `schemas/` declares `["schemas", "cat-harness"]` — a schema IS a
+      // knowledge-graph node, which is why it carries the kind at all — but
+      // its `.md` files are READMEs and its nodes are `.ts`. Including it
+      // added `schemas/README.md` and `schemas/block-qa-schema/README.md` to
+      // the skill set: 150 where the corpus has 149.
+      //
+      // Requiring YAML front matter instead would have been the principled
+      // rule and is measurably wrong here: only 117 of 147 skill bodies carry
+      // any, so it would have dropped 30 real skills. A directory that holds
+      // one kind can be scanned for it; one that holds several has to say
+      // which file is which, and for `schemas/` that answer is `@graphNode`
+      // on the `.ts`, not a guess about the `.md`.
+      .filter((d) => d.graphs.length === 1 && d.graphs[0] === "cat-harness")
+      .filter((d) => existsSync(d.absPath));
+  } catch {
+    return [];
+  }
+}
 
 /**
  * Is this `.md` a skill, or another node kind that happens to live here?
@@ -117,13 +166,28 @@ export function isSkillMd(path: string): boolean {
  */
 export function skillMdDirs(root: string): string[][] {
   const dirs: string[][] = [];
-  const skillsRoot = join(root, "skills");
-  if (existsSync(skillsRoot)) {
-    for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-      if (!d.isDirectory()) continue;
-      const inner = join(skillsRoot, d.name);
-      if (readdirSync(inner).some((f) => f.endsWith(".md") && isSkillMd(join(inner, f))))
-        dirs.push(["skills", d.name]);
+
+  // Every directory the instance DECLARES as holding a `cat-harness` graph —
+  // not the literal `skills/`.
+  //
+  // This is what lets a topical directory (`bootstrap/`, `crdm/`, …) cost a
+  // declaration line and no code change. The literal was the last thing
+  // standing between the layout and the declaration that is supposed to
+  // describe it: `cat-harness.json` said where the knowledge graph lives and
+  // this function did not read it.
+  //
+  // `resolveDirectories` supplies the defaults too, so an instance that
+  // follows the convention still resolves `skills/` without declaring it.
+  for (const d of kgDirectories(root)) {
+    // The directory itself, when it holds skills directly — the shape a
+    // topical directory has (`bootstrap/getting-started.md`).
+    if (holdsMarkdown(d.absPath)) dirs.push([d.path.replace(/\/+$/, "")]);
+    // ...and its immediate subdirectories, which is how `skills/` is laid out
+    // today: one package per subdirectory.
+    for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
+      if (!e.isDirectory()) continue;
+      const inner = join(d.absPath, e.name);
+      if (holdsMarkdown(inner)) dirs.push([d.path.replace(/\/+$/, ""), e.name]);
     }
   }
   // Not under `skills/`, so not reachable by the scan above.
@@ -152,6 +216,69 @@ export function skillMdDirs(root: string): string[][] {
 }
 
 
+
+/**
+ * Skills a **declared remote package** supplies, which this instance does not hold.
+ *
+ * Two questions, and they must not be collapsed:
+ *
+ *  - **can this instance SERVE it** — {@link knownSkills}. A remote skill is
+ *    `false` here: its body is in another repository, so `skill_fetch` cannot
+ *    answer for it and an activity naming it is a real dangling reference.
+ *  - **is this entry a real skill SOMEWHERE** — this function, unioned with
+ *    {@link knownSkills}. A bundle manifest curating a remote skill is the
+ *    design, not a defect.
+ *
+ * This lived only in `kg-audit.ts`, whose own comment records the near-miss:
+ * *"collapsing them would have had this criterion demand the deletion of three
+ * correct manifest entries the first time it ran. That very nearly happened."*
+ *
+ * **It then happened anyway, because the answer was in one checker and not the
+ * other.** `d3e63f15a` set out to fix exactly the two-definitions defect — it
+ * pointed `skill-manifest-coverage.test.ts` at `knownSkills()` so the test and
+ * this module could not disagree — but `knownSkills()` had never read
+ * `remote-packages/`, so it was a THIRD definition. Under it,
+ * `scientific-visualization`, `hypothesis-generation` and
+ * `scientific-critical-thinking` read as dangling, and all three were deleted
+ * from `skills/authoring-math/package-manifest.json` two hours after bean
+ * `m4zg` recorded that deleting them would be wrong. The evidence offered was a
+ * `git log --diff-filter=A` search finding no file ever added for any of them —
+ * which is the wrong question, because a remote skill has no file here by
+ * design.
+ *
+ * So the answer lives beside the other one now. A checker that needs the wider
+ * question unions the two; a checker that needs the narrower one does not, and
+ * the difference is visible at the call site instead of buried in whether a
+ * module happened to scan a directory.
+ */
+export function remotePackageSkills(root: string): Set<string> {
+  const out = new Set<string>();
+  const dir = join(root, "skills", "remote-packages");
+  if (!existsSync(dir)) return out;
+  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
+    try {
+      const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as {
+        wrapper?: { skills?: string[] };
+      };
+      for (const s of p.wrapper?.skills ?? []) out.add(s);
+    } catch {
+      // A remote-package file that will not parse is validate-skills.ts's finding.
+    }
+  }
+  return out;
+}
+
+/**
+ * Every name a **manifest entry** may legitimately carry: held here, or
+ * declared by a remote package.
+ *
+ * The one answer to "is this a real skill somewhere". Named rather than left as
+ * a union at each call site, because the union IS the rule and two call sites
+ * spelling it out is how they come to disagree.
+ */
+export function manifestResolvableSkills(root: string): Set<string> {
+  return new Set([...knownSkills(root), ...remotePackageSkills(root)]);
+}
 
 /** Every skill name this instance can resolve. */
 export function knownSkills(root: string): Set<string> {
@@ -205,4 +332,59 @@ export function knownSkills(root: string): Set<string> {
   }
 
   return names;
+}
+
+/**
+ * Where this instance's BPMN and DMN live, read from the declaration.
+ *
+ * ## The literal this replaces
+ *
+ * Nine production sites hardcoded `skills/workflows` — `src/tools/workflow.ts`,
+ * `src/impact/stakeholder-map.ts`, `src/workflow/corpus-gate.ts`,
+ * `scripts/kg-audit.ts`, `scripts/translate-bpmn.ts`, `scripts/render-bpmn.ts`,
+ * `scripts/xml-comment-check.ts` among them. Nine copies of one fact is the
+ * same defect `known-skills.ts` was extracted to fix for skills, one directory
+ * along, and it is what would have made a topical split a nine-file edit
+ * instead of a declaration.
+ *
+ * ## The shape
+ *
+ * A `cat-harness` directory's `workflows/` subdirectory, plus the directory
+ * itself when it holds diagrams directly. That covers today's
+ * `skills/workflows/` and a topical `bootstrap/workflows/` without either
+ * being written down.
+ *
+ * Returns ABSOLUTE paths, unlike {@link skillMdDirs}, because every caller
+ * reads files from them rather than composing repo-relative ids.
+ */
+export function workflowDirs(root: string): string[] {
+  const out: string[] = [];
+  for (const d of kgDirectories(root)) {
+    const wf = joinPath(d.absPath, "workflows");
+    if (existsSync(wf)) out.push(wf);
+    else if (readdirSync(d.absPath).some((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))) {
+      out.push(d.absPath);
+    }
+  }
+  return out;
+}
+
+/**
+ * Every `.bpmn` and `.dmn` this instance declares, as absolute paths.
+ *
+ * One call for the common case, so a caller that only wants the files does not
+ * have to re-derive "and their `decisions/` subdirectory too".
+ */
+export function workflowFiles(root: string): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    if (!existsSync(dir)) return;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = joinPath(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith(".bpmn") || e.name.endsWith(".dmn")) out.push(p);
+    }
+  };
+  for (const d of workflowDirs(root)) walk(d);
+  return out.sort();
 }

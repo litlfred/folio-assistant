@@ -6,11 +6,6 @@
     "path": "skills/workflows/crdm-issue-linking.bpmn"
   },
   "source_hash": "sha256:dbac0504cc87ec6f7b479a4406d695ae1869c88dd382a7ebf83b9d12cd6c0dba",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,6 +39,10 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
@@ -52,7 +51,7 @@
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 2,
+    "n/a": 3,
     "unknown": 0
   }
 }

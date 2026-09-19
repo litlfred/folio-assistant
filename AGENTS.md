@@ -316,7 +316,10 @@ at the end of it.
 and closing formats, the seven rules, and the worked failure that motivates
 them. In short, and not as a substitute for reading it:
 
-- every bean reference gets a **one-sentence gloss and a link**;
+- every bean reference gets **two sentences and a link** — what it is, then
+  **what you would do** about it, in the first person as a proposal. A gloss
+  alone is a menu with no prices: it tells the reader what the bean is and not
+  whether your answer is a one-line fix or a question back to them;
 - asking for review means **linking the artefact** — staging URL, PR, and the
   changed page;
 - say **what to review**, not that CI is green;
@@ -479,7 +482,7 @@ One sentence, and every word in it is a distinct declared object:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant — human or agentic. Persists across processes. | `.claude/skills/actors/*.json` |
+| **Actor** | a concrete participant — **human, agentic or mechanical**. Persists across processes. | `.claude/skills/actors/*.json` |
 | **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
 | **Skill** | the instruction body the actor needs to perform the task. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
 | **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |
@@ -495,6 +498,16 @@ the duration of a lane, and the same actor is a different role in another
 diagram — the session agent is `Lane_Agent` in `crdm-requirements.bpmn` and the
 *sibling session* in `bean-lifecycle.bpmn`, whose whole point is marking what is
 not yours to close.
+
+**An actor is human, agentic or mechanical**, and the line between the last two
+is judgement: an agent can be handed a skill and asked to decide something, a
+mechanical system runs a fixed program and decides nothing. `kind` on
+`.claude/skills/actors/*.json` says which. It was a two-valued `type` until
+2026-09-19 — 16 `person`, 8 `system`, with five agents and three mechanical
+services sharing that second label — so "which tasks can this actor perform"
+had no answer for a third of the registry. **The discipline is in the skill**:
+[`role-model.md`](skills/folio-core/role-model.md) §"An actor is one of three
+kinds" and §"A task declares which actor kinds may fulfil it".
 
 **An actor has three lists and they answer three questions:** `roles` — what may
 it act AS (per lane); `permissions` — what may it DO (every lane);
@@ -519,7 +532,9 @@ resolution rules, how to bind a lane, the severity scale, and how to add a role.
 
 ### The audit — `bun run kg:audit`
 
-Fourteen criteria, one per join above, written as **committed QA sidecars** under
+One criterion per join above — `KG_CRITERIA` in `schemas/kg-qa.ts` is the
+registry and the only current answer to how many; this line said "Fourteen"
+while it held 32. They are written as **committed QA sidecars** under
 `kg-qa/` beside whatever they audit: `skills/workflows/kg-qa/`,
 `skills/workflows/decisions/kg-qa/`, `skills/roles/kg-qa/`. Schema:
 `schemas/kg-qa.ts`. This is the **third** QA subject kind, after the block sweep's

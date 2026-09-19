@@ -6,11 +6,6 @@
     "path": "skills/workflows/human-translation-workflow.bpmn"
   },
   "source_hash": "sha256:fe2e3f94250f7fc9d62c2da948c85b08f48041a041cf079eea99afabcb4c575e",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,13 +39,17 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 8,
     "fail": 0,
     "n/a": 2,
     "unknown": 0

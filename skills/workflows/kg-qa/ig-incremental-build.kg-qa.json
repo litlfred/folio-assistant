@@ -6,11 +6,6 @@
     "path": "skills/workflows/ig-incremental-build.bpmn"
   },
   "source_hash": "sha256:c1878b8cea1707ac58b96ba5b8a4f9fa46145c215645e9a0e8dd5c144170d7ac",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,6 +39,23 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_DeployPreview",
+          "detail": "\"Deploy the preview site\" — a ServiceTask is performed by agent or system, but its lane's role \"qc-reviewer\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_Deploy",
+          "detail": "\"Deploy the site [content-publish]\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_Seed",
+          "detail": "\"Seed the cache from the green build (ig-cache seed · verify · promote)\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
@@ -51,7 +63,7 @@
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
+    "fail": 1,
     "n/a": 2,
     "unknown": 0
   }

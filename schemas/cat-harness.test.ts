@@ -22,7 +22,9 @@ import {
   keepMarker,
   materialiseDirectories,
   renderableDirectories,
+  DEFAULT_DIRECTORIES,
   resolveDirectories,
+  resolveGraphKind,
   toJsonLd,
   type ResolvedDirectory,
 } from "./cat-harness";
@@ -30,6 +32,8 @@ import {
 const TMP = join(import.meta.dir, "__test_agent_harness__");
 const REPO_ROOT = resolve(import.meta.dir, "..");
 const HARNESS = join(TMP, "agentic-harness");
+/** This repository itself — the instance that declares all seven. */
+const ROOT = resolve(import.meta.dir, "..");
 const CORE = join(TMP, "folio-assist-core");
 const RELOCATED = join(TMP, "relocated");
 const BROKEN = join(TMP, "broken");
@@ -116,8 +120,22 @@ describe("reading a declaration", () => {
     mkdirSync(ld, { recursive: true });
     writeFileSync(join(ld, DECLARATION_FILENAME), JSON.stringify(toJsonLd(readDeclaration(HARNESS)!)), "utf-8");
     const back = readDeclaration(ld)!;
+    // The fixture declares `id: "kg"` with `graphs: ["kg"]`, the pre-rename
+    // spelling.
+    //
+    // **The id survives and the kind CANONICALISES**, and the asymmetry is
+    // right. An id is the instance's own handle — `AGENTS.md` requires it to
+    // be stable across a relocation — so a projection must hand it back
+    // unchanged. A graph KIND is projected as its type IRI, and the IRI is
+    // the identity: `kg` and `cat-harness` are two spellings of
+    // `fa:KnowledgeGraph`, of which only one is current. Reading the
+    // projection back resolves the IRI to the current name.
+    //
+    // That makes project-and-read-back a MIGRATION PATH for a downstream
+    // declaration written against the old vocabulary, rather than a way to
+    // lose information.
     expect(back.directories.map((d) => d.id).sort()).toEqual(["kg", "schemas", "tools"]);
-    expect(back.directories.find((d) => d.id === "kg")!.graphs).toEqual(["kg"]);
+    expect(back.directories.find((d) => d.id === "kg")!.graphs).toEqual(["cat-harness"]);
   });
 });
 
@@ -188,18 +206,26 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds — the harness declares twelve, core adds folio", () => {
+describe("graph kinds — the harness declares thirteen, core adds folio", () => {
   it("the harness's own vocabulary contains no renderable kind", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
     expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
       "bean-defs",
       "beans",
-      "kg",
+      // Renamed from `kg` on 2026-09-19: named for the LAYER that defines it,
+      // like every other harness concept. `kg` still READS, as a deprecated
+      // alias — see the alias test below.
+      "cat-harness",
       // The two stages of the ingestion pipeline, declared separately because
       // they are not interchangeable: the corpus checklist greps `library/`
       // and not `uploads/`.
       "library",
+      // The published projection of every verdict. Its own kind rather than
+      // part of `kg`, because a witness and the verdict it projects are
+      // different artefacts: one is what a checker wrote and lives beside its
+      // subject, the other is that flattened for the web and is never edited.
+      "qa",
       "schemas",
       // The todo graph: human actors' outstanding work. NOT a second work
       // plan — `beans` is the agent work plan — but the harness owns the KIND
@@ -223,7 +249,7 @@ describe("graph kinds — the harness declares twelve, core adds folio", () => {
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
     expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "kg", "library", "schemas",
+      "bean-defs", "beans", "cat-harness", "library", "qa", "schemas",
       "todo-feedback", "todo-items", "todos",
       "tools", "uploads", "voices", "workflow-state",
     ]);
@@ -234,7 +260,7 @@ describe("graph kinds — the harness declares twelve, core adds folio", () => {
     registerFolioGraphKind(reg);
     expect(reg.has("folio")).toBe(true);
     expect(isRenderable("folio", reg)).toBe(true);
-    for (const k of ["tools", "kg", "schemas", "beans", "bean-defs", "workflow-state"]) {
+    for (const k of ["tools", "cat-harness", "schemas", "beans", "bean-defs", "workflow-state"]) {
       expect(isRenderable(k, reg)).toBe(false);
     }
   });
@@ -377,5 +403,130 @@ describe("materialiseDirectories", () => {
     ]).map((d) => d.id);
     expect(ids).toContain("uploads");
     expect(ids).toContain("library");
+  });
+});
+
+describe("the `kg` → `cat-harness` rename keeps old declarations working", () => {
+  /**
+   * The rename is a CROSS-INSTANCE breaking change, and the alias is what
+   * makes it survivable.
+   *
+   * `AGENTS.md`: overrides match on the entry's `id`, not its `path`, because
+   * "matching on path makes two knowledge graphs out of one relocation, and
+   * every consumer then scans a directory that is not there". The same
+   * property makes renaming an id dangerous in the other direction — a
+   * downstream instance overriding `kg` overrides nothing once the kind is
+   * called something else, and the failure is SILENT: it scans, finds
+   * nothing, reports a clean run. That is the `dh4f` shape, delivered to
+   * somebody else's repository.
+   */
+  it("a registry resolves the deprecated spelling to the new kind", () => {
+    const reg = new GraphKindRegistry();
+    expect(reg.has("kg")).toBe(true);
+    expect(reg.get("kg")).toBe(reg.get("cat-harness"));
+    // And it is an alias, not a second entry: `names()` lists what EXISTS.
+    expect(reg.names()).toContain("cat-harness");
+    expect(reg.names()).not.toContain("kg");
+  });
+
+  it("resolveGraphKind says WHICH spelling was used, so a caller can warn", () => {
+    // The deprecation has to be reportable. An alias that resolves silently
+    // is an alias nobody ever removes.
+    expect(resolveGraphKind("kg")).toEqual({ kind: "cat-harness", deprecated: "kg" });
+    expect(resolveGraphKind("cat-harness")).toEqual({ kind: "cat-harness" });
+    expect(resolveGraphKind("tools")).toEqual({ kind: "tools" });
+  });
+
+  it("a declaration written against the OLD vocabulary still loads", () => {
+    // The migration guarantee, end to end: this is verbatim what a downstream
+    // instance's `cat-harness.json` looked like before the rename.
+    const old = join(TMP, "old-vocabulary");
+    mkdirSync(join(old, "skills"), { recursive: true });
+    writeFileSync(
+      join(old, DECLARATION_FILENAME),
+      JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", graphs: ["kg"] }] }),
+      "utf-8",
+    );
+    const d = readDeclaration(old);
+    expect(d).toBeDefined();
+    expect(d!.directories[0]!.graphs).toEqual(["kg"]);
+  });
+});
+
+describe("default directories — inherit the convention, declare only the deviation", () => {
+  /**
+   * The owner, 2026-09-19: "inherit, set default dirs/graphs in container
+   * schema definitions." An instance that follows the convention should
+   * declare NOTHING; before this, every instance restated the same seven
+   * entries, which is seven chances to disagree with the platform about what
+   * `beans/` is.
+   */
+  const inst = join(TMP, "defaults-instance");
+
+  it("an instance declaring nothing inherits the directories it actually has", () => {
+    mkdirSync(join(inst, "skills"), { recursive: true });
+    mkdirSync(join(inst, "beans"), { recursive: true });
+    mkdirSync(join(inst, "tools"), { recursive: true });
+    writeFileSync(join(inst, DECLARATION_FILENAME), JSON.stringify({ name: "minimal" }), "utf-8");
+
+    const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
+    expect(d.map((x) => x.id).sort()).toEqual(["beans", "cat-harness", "tools"]);
+    // `(default)` rather than the instance's name: a consumer can tell an
+    // inherited convention from something this instance chose.
+    expect(d.every((x) => x.declaredBy === "(default)")).toBe(true);
+    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("skills/");
+  });
+
+  it("a default whose directory is ABSENT is not seeded", () => {
+    // The `dh4f` defect, and the reason defaults are existence-filtered:
+    // "a declared-but-absent directory is where a consumer scans nothing and
+    // reports a clean run over it". Seeding `voices/` into an instance with no
+    // voices would manufacture that in every instance at once.
+    const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
+    for (const absent of ["voices", "library", "uploads", "todos", "schemas"]) {
+      expect(d.find((x) => x.id === absent)).toBeUndefined();
+      expect(existsSync(join(inst, absent))).toBe(false);
+    }
+  });
+
+  it("an explicit entry overrides the default of the same id", () => {
+    // Defaults are the OUTERMOST link of the chain, not a special case: the
+    // same override-by-id rule that lets a dependent relocate an inherited
+    // directory lets an instance relocate a defaulted one.
+    const moved = join(TMP, "defaults-override");
+    mkdirSync(join(moved, "graph", "knowledge"), { recursive: true });
+    mkdirSync(join(moved, "tools"), { recursive: true });
+    writeFileSync(
+      join(moved, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "relocated",
+        directories: [{ id: "cat-harness", path: "graph/knowledge/", graphs: ["cat-harness"] }],
+      }),
+      "utf-8",
+    );
+    const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
+    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("graph/knowledge/");
+    expect(d.find((x) => x.id === "cat-harness")!.declaredBy).toBe("relocated");
+    // ...and the defaults it did NOT override are still there.
+    expect(d.find((x) => x.id === "tools")!.declaredBy).toBe("(default)");
+  });
+
+  it("an instance that declares everything is unaffected", () => {
+    // This repository declares all seven. Nothing should read `(default)`,
+    // because nothing was left to the convention — the defaults must not
+    // quietly replace an explicit declaration.
+    const mine = resolveDirectories([{ name: "folio-assistant", root: ROOT, own: true }]);
+    expect(mine.length).toBeGreaterThan(0);
+    expect(mine.every((x) => x.declaredBy === "folio-assistant")).toBe(true);
+  });
+
+  it("no default claims a kind the harness registry does not know", () => {
+    // `folio` is CORE's and is registered at load; the harness cannot default
+    // a directory to a kind it has never heard of, or `readDeclaration` would
+    // refuse its own defaults.
+    const bare = new GraphKindRegistry();
+    for (const d of DEFAULT_DIRECTORIES) {
+      for (const g of d.graphs) expect(bare.has(g)).toBe(true);
+    }
   });
 });

@@ -5,12 +5,7 @@
     "id": "validation-pipeline",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:54880b2f83717c659427fbb94e541b6fda178ac5829ed9f5bdb3259c6dc5772f",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
+  "source_hash": "sha256:452b01df1e3b03d589914df46eee3c0d1d4054286bb9175614393f237918c045",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -39,10 +34,14 @@
     "role-has-actor": {
       "result": "pass",
       "findings": []
+    },
+    "actor-kind-fits-role": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 3,
+    "pass": 4,
     "fail": 0,
     "n/a": 4,
     "unknown": 0

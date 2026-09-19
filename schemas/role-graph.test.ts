@@ -20,6 +20,10 @@ import {
   toJsonLd,
   ROLE_GRAPH_DIR,
   ROLE_GRAPH_FILENAME,
+  ACTOR_KINDS,
+  JUDGEMENT_KINDS,
+  MECHANICAL_KINDS,
+  fulfilmentKindsForBpmnType,
   type RoleGraph,
 } from "./role-graph";
 
@@ -33,12 +37,12 @@ function withKg(graph: unknown): string {
 const base = {
   name: "t",
   roles: [
-    { id: "viewer", title: "Viewer", description: "reads", actorKind: "person", lanes: ["Viewer"], skills: ["read"] },
+    { id: "viewer", title: "Viewer", description: "reads", actorKinds: ["person"], lanes: ["Viewer"], skills: ["read"] },
     {
       id: "reviewer",
       title: "Reviewer",
       description: "judges",
-      actorKind: "person",
+      actorKinds: ["person"],
       lanes: ["Reviewer / SME", "Review Committee"],
       skills: ["review"],
       inherits: ["viewer"],
@@ -47,7 +51,7 @@ const base = {
       id: "editor",
       title: "Editor",
       description: "decides",
-      actorKind: "person",
+      actorKinds: ["person"],
       lanes: ["Editor"],
       skills: ["commit"],
       inherits: ["reviewer"],
@@ -73,7 +77,7 @@ describe("readRoleGraph", () => {
   test("a dangling `inherits` is refused at read, so no closure is silently short", () => {
     const root = withKg({
       name: "t",
-      roles: [{ id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["ghost"] }],
+      roles: [{ id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["ghost"] }],
     });
     expect(() => readRoleGraph(root)).toThrow(/inherits "ghost"/);
     rmSync(root, { recursive: true, force: true });
@@ -83,8 +87,8 @@ describe("readRoleGraph", () => {
     const root = withKg({
       name: "t",
       roles: [
-        { id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [] },
-        { id: "a", title: "A2", description: "s", actorKind: "person", lanes: [], skills: [] },
+        { id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [] },
+        { id: "a", title: "A2", description: "s", actorKinds: ["person"], lanes: [], skills: [] },
       ],
     });
     expect(() => readRoleGraph(root)).toThrow(/declared twice/);
@@ -95,8 +99,8 @@ describe("readRoleGraph", () => {
     const root = withKg({
       name: "t",
       roles: [
-        { id: "a", title: "A", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["b"] },
-        { id: "b", title: "B", description: "s", actorKind: "person", lanes: [], skills: [], inherits: ["a"] },
+        { id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["b"] },
+        { id: "b", title: "B", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["a"] },
       ],
     });
     expect(() => readRoleGraph(root)).toThrow(/cycle/);
@@ -106,7 +110,7 @@ describe("readRoleGraph", () => {
   test("an unknown actorKind is rejected, not accepted and ignored", () => {
     const root = withKg({
       name: "t",
-      roles: [{ id: "a", title: "A", description: "s", actorKind: "wizard", lanes: [], skills: [] }],
+      roles: [{ id: "a", title: "A", description: "s", actorKinds: ["wizard"], lanes: [], skills: [] }],
     });
     expect(() => readRoleGraph(root)).toThrow();
     rmSync(root, { recursive: true, force: true });
@@ -287,5 +291,85 @@ describe("permissions are an actor property, not a role property", () => {
     writeFileSync(join(root, "permissions", "permissions.json"), "{ not json");
     expect(() => readPermissions(root)).toThrow(/not valid JSON/);
     rmSync(root, { recursive: true, force: true });
+  });
+});
+
+describe("the actor kind is three-way: human, agentic, mechanical", () => {
+  const actorsDir = join(import.meta.dir, "..", ".claude", "skills", "actors");
+
+  function withActor(entry: unknown): string {
+    const dir = mkdtempSync(join(tmpdir(), "actors-"));
+    writeFileSync(join(dir, "a.json"), JSON.stringify(entry));
+    return dir;
+  }
+
+  test("agentic and mechanical are distinguishable in this repository's registry", () => {
+    // The measurement the split exists for. Before it every non-person actor
+    // read `system`, so the agentic set was EMPTY and "can this actor be
+    // handed a judgement" had no answer for eight of twenty-four entries.
+    const actors = readActors(actorsDir);
+    const by = (k: string) => actors.filter((a) => a.kind === k).map((a) => a.id).sort();
+    expect(by("agent").length).toBeGreaterThan(0);
+    // Named rather than counted: a bare count in a test is a claim that goes
+    // stale silently. These are mechanical for reasons stated in their own
+    // descriptions — a fixed program with nothing to decide.
+    //
+    // `ci-health-watcher` arrived from a sibling branch while this split was
+    // being written, carrying the legacy `type` field, and this assertion is
+    // what caught it: the naming is the point. A count would have absorbed a
+    // new actor silently, and the legacy field would have reached the
+    // registry schema, which — unlike `readActors` — has no fallback. Its own
+    // description settles the classification: "a mechanical participant … it
+    // runs a fixed program and exercises no judgement".
+    expect(by("system")).toEqual([
+      "ci-health-watcher", "ci-pipeline", "ig-publisher-service", "lean-mcp",
+    ]);
+  });
+
+  test("an unrecognised `kind` throws rather than being coerced", () => {
+    // Coercing it would quietly disqualify the actor from every judgement task
+    // it exists to perform, and nothing downstream would report it.
+    const dir = withActor({ id: "x", title: "X", kind: "robot" });
+    expect(() => readActors(dir)).toThrow(/not an actor kind/);
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a legacy `type` still loads, and is never read as agentic", () => {
+    // An unmigrated downstream registry must keep working. It has not said
+    // whether its non-person actors exercise judgement, so they are read as
+    // mechanical — the reading that REFUSES a judgement task rather than
+    // granting one on a guess. The id below ends in `-agent` on purpose.
+    const dir = withActor({ id: "some-agent", title: "S", type: "system" });
+    expect(readActors(dir)[0]!.kind).toBe("system");
+    rmSync(dir, { recursive: true, force: true });
+    const p = withActor({ id: "p", title: "P", type: "person" });
+    expect(readActors(p)[0]!.kind).toBe("person");
+    rmSync(p, { recursive: true, force: true });
+  });
+});
+
+describe("which actor kinds may fulfil an activity", () => {
+  test("BPMN's own semantics are read, not restated", () => {
+    // A userTask is "performed by a human being"; a serviceTask runs without
+    // one. Both answers come from the spec, which is why no diagram has to
+    // declare them and why the criterion covers the corpus on day one.
+    expect(fulfilmentKindsForBpmnType("bpmn:UserTask")).toEqual(["person"]);
+    expect(fulfilmentKindsForBpmnType("bpmn:ServiceTask")).toEqual(["agent", "system"]);
+  });
+
+  test("an abstract task and a call activity assert NOTHING, which is not allowing nothing", () => {
+    // `undefined`, never `[]`. An empty list would read as "no kind may
+    // perform this" and fail every activity drawn as a plain task — the third
+    // state this repository insists on, in the place it is easiest to lose.
+    expect(fulfilmentKindsForBpmnType("bpmn:Task")).toBeUndefined();
+    expect(fulfilmentKindsForBpmnType("bpmn:CallActivity")).toBeUndefined();
+  });
+
+  test("the judgement kinds are derived from the vocabulary, not written out again", () => {
+    // So a kind added to ACTOR_KINDS cannot go unclassified — the rule
+    // DOCUMENT_BLOCK_KINDS follows against BLOCK_KINDS.
+    expect([...JUDGEMENT_KINDS, ...MECHANICAL_KINDS].every((k) => ACTOR_KINDS.includes(k))).toBe(true);
+    expect(JUDGEMENT_KINDS).toEqual(["person", "agent"]);
+    expect(MECHANICAL_KINDS).toEqual(["system"]);
   });
 });

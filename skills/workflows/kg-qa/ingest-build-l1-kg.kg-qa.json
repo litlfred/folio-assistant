@@ -6,11 +6,6 @@
     "path": "skills/workflows/ingest-build-l1-kg.bpmn"
   },
   "source_hash": "sha256:f18db41a45dc0abf9c123a7c0d6856a7ee7d3b5a978aac9024d3edda69ffb8fb",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,13 +39,17 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 8,
     "fail": 0,
     "n/a": 2,
     "unknown": 0

@@ -6,11 +6,6 @@
     "path": "skills/workflows/document-ingestion.bpmn"
   },
   "source_hash": "sha256:8bece1953eeca33ee69f84734a1e4afdf61473e957b996467f406b4876c8d2bf",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,13 +39,17 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 9,
     "fail": 0,
     "n/a": 1,
     "unknown": 0

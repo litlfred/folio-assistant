@@ -55,6 +55,30 @@ import { z } from "zod";
 /** Marker value carried by every sidecar written by `scripts/kg-audit.ts`. */
 export const KG_QA_SCHEMA = "kg-qa/v1";
 
+/**
+ * The auditor's identity, recorded ONCE for the whole corpus.
+ *
+ * It used to live in every sidecar. That was not 214 facts — `kg-audit.ts`
+ * hashes itself once per run and threads the SAME value into every report, and
+ * it has no subset mode, so the per-file copies could not differ from each
+ * other in any run that has ever happened. What they could do is change
+ * together: measured 2026-09-19, adding a single comment line to the auditor
+ * rewrote **218 files**, none of whose verdicts had changed.
+ *
+ * That is what made two concurrent branches conflict by construction — both
+ * regenerate the same 218 files, and git has no way to know the diff carries
+ * no information. Recording the fact once costs one file per auditor change
+ * and loses nothing, because there was never per-file precision to lose.
+ *
+ * Freshness is unaffected and still has two independent halves: this hash says
+ * whether the AUDITOR is the one in the tree, and each sidecar's own
+ * `source_hash` says whether its SUBJECT has moved since it was judged.
+ */
+export const KG_QA_MANIFEST_SCHEMA = "kg-qa-manifest/v1";
+
+/** Repo-relative location of that manifest, so every reader agrees on it. */
+export const KG_QA_MANIFEST_PATH = "skills/kg-qa.manifest.json";
+
 /** Where sidecars go, relative to the audited artefact's own directory. */
 export const KG_QA_DIRNAME = "kg-qa";
 
@@ -153,6 +177,23 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "(acts, but no procedure yields the answer), and an activity carrying `<folio:no-skill reason=\"…\"/>`.",
   },
   {
+    id: "activity-fulfilment-kind",
+    applies: ["process"],
+    // `major`. Nothing dangles — both ends of this join resolve — so it is not
+    // `critical`; and it is not coverage, so it is not `minor`. It is TWO
+    // DECLARATIONS THAT CONTRADICT EACH OTHER: the diagram says this step runs
+    // without a person, and the role graph says a person is who stands in that
+    // lane. One of the two is wrong and the diagram cannot say which.
+    severity: "major",
+    summary:
+      "An activity's lane is filled by an actor kind that cannot perform it. A `userTask` is performed by a " +
+      "human (BPMN: \"by a human being with the assistance of a software application\"); a `serviceTask` runs " +
+      "without one, so an agentic or mechanical actor performs it. `bpmn:Task` and a call activity assert " +
+      "nothing and are `n/a`, as is a lane whose role is `actedUpon` — a store is written to, never asked to " +
+      "perform. Override the derived answer with `<folio:fulfilment kinds=\"…\" reason=\"…\"/>`; the reason is " +
+      "required at load time, because widening `kinds` is the cheapest way to make this criterion pass.",
+  },
+  {
     id: "call-activity-resolves",
     applies: ["process"],
     severity: "major",
@@ -193,6 +234,24 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["role"],
     severity: "minor",
     summary: "No declared actor is eligible for this role. Advisory: the actor registry is not a permission system.",
+  },
+  {
+    // Unwritable until a role could admit a SET of kinds, because with one
+    // kind per role every finding had two readings and the criterion could not
+    // say which: is the role too narrow, or is the actor claiming a role it
+    // cannot take on? `ce65` measured the mismatches and deliberately left
+    // them rather than pick. Now that widening a role is sayable, a surviving
+    // mismatch means the actor's `roles` list is wrong — one reading, so a
+    // finding somebody can act on.
+    //
+    // `major`, not `critical`: nothing dangles. Both sides exist and are
+    // readable; they contradict each other about what may fill a lane.
+    id: "actor-kind-fits-role",
+    applies: ["role"],
+    severity: "major",
+    summary:
+      "An actor declares this role, but its kind is not among the kinds the role admits — so either the " +
+      "role is too narrow or the actor cannot take it on.",
   },
   {
     id: "requirement-satisfied-by-resolves",
@@ -425,12 +484,20 @@ export interface KgAuditor {
   engine_version: string;
 }
 
+/**
+ * The corpus-wide auditor record. See {@link KG_QA_MANIFEST_SCHEMA} for why
+ * this is one file rather than a block in each sidecar.
+ */
+export interface KgQaManifest {
+  $schema: typeof KG_QA_MANIFEST_SCHEMA;
+  auditor: KgAuditor;
+}
+
 export interface KgQaReport {
   $schema: typeof KG_QA_SCHEMA;
   subject: KgSubject;
   /** sha256 of the audited file, or `null` for the roll-up. */
   source_hash: string | null;
-  auditor: KgAuditor;
   /** Criterion id → entry. Criteria not applying to this kind are omitted. */
   criteria: Record<string, KgCriterionEntry>;
   totals: Record<KgResult, number>;
@@ -454,13 +521,17 @@ export const KgQaReportSchema = z.object({
     path: z.string().nullable(),
   }),
   source_hash: z.string().nullable(),
+  criteria: z.record(z.string(), KgCriterionEntrySchema),
+  totals: z.record(z.enum(KG_RESULTS), z.number()),
+});
+
+export const KgQaManifestSchema = z.object({
+  $schema: z.literal(KG_QA_MANIFEST_SCHEMA),
   auditor: z.object({
     script: z.string(),
     script_hash: z.string(),
     engine_version: z.string(),
   }),
-  criteria: z.record(z.string(), KgCriterionEntrySchema),
-  totals: z.record(z.enum(KG_RESULTS), z.number()),
 });
 
 /** Criteria applying to a subject kind, in registry order. */

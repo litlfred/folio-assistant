@@ -6,11 +6,6 @@
     "path": "skills/workflows/bean-lifecycle.bpmn"
   },
   "source_hash": "sha256:4d694686adb6f2d3800807e6f8fab1fce4879cfe2882688b24ae5c366429f9dd",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,6 +39,10 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
@@ -52,7 +51,7 @@
   "totals": {
     "pass": 7,
     "fail": 0,
-    "n/a": 2,
+    "n/a": 3,
     "unknown": 0
   }
 }

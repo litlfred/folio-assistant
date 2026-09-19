@@ -33,6 +33,7 @@ import { BpmnModdle } from "bpmn-moddle";
 import { readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decision-table.js";
+import { ACTOR_KINDS, type ActorKind } from "../../schemas/role-graph.js";
 import { WORK_PLAN_OPS, type WorkPlanOp } from "./bean-link.js";
 
 /** Element types the interpreter can walk faithfully. */
@@ -92,6 +93,24 @@ export interface ProcessNode {
    * silencing the criterion cheaper than satisfying it.
    */
   noSkillReason?: string;
+  /**
+   * `<folio:fulfilment kinds="person agent" reason="…"/>` — which actor kinds
+   * may perform this activity, said explicitly.
+   *
+   * Almost no activity needs one. The BPMN type already answers the question
+   * for a `userTask` and a `serviceTask`, and `fulfilmentKindsForBpmnType` in
+   * `schemas/role-graph.ts` reads that answer, so this exists for the step
+   * where the derived answer is wrong — an abstract `bpmn:Task` that genuinely
+   * admits only one kind, or a `serviceTask` a person really does drive.
+   *
+   * The reason is REQUIRED and a declaration without one does not load, on the
+   * same rule as {@link ProcessNode.noSkillReason}: this declaration can
+   * SILENCE a finding, and an exemption nobody can review is one somebody adds
+   * to get to green. Widening `kinds` to every kind is the cheapest way to make
+   * `activity-fulfilment-kind` pass, so it has to cost a sentence somebody will
+   * read in the diff.
+   */
+  fulfilment?: { kinds: ActorKind[]; reason: string };
   /** True when `<folio:bean/>` marks this step as touching the work plan. */
   touchesWorkPlan: boolean;
   /**
@@ -245,6 +264,45 @@ function noSkillReasonOf(
   return reason;
 }
 
+/**
+ * `<folio:fulfilment kinds="…" reason="…"/>`, validated at LOAD time.
+ *
+ * Three ways to get it wrong, all refused here rather than recorded as a
+ * finding, because each produces a declaration that reads as an answer and is
+ * not one: no `kinds`, a kind outside {@link ACTOR_KINDS}, and no `reason`.
+ * The `kinds` list is whitespace-separated — a BPMN attribute is a string, and
+ * a one-element list must look like the same thing as a two-element one.
+ */
+function fulfilmentOf(
+  ext: { $type: string; kinds?: string; reason?: string }[],
+  id: string,
+): { kinds: ActorKind[]; reason: string } | undefined {
+  const decl = ext.find((v) => v.$type === "folio:fulfilment");
+  if (!decl) return undefined;
+  const kinds = (decl.kinds ?? "").trim().split(/\s+/).filter(Boolean);
+  if (kinds.length === 0) {
+    throw new Error(
+      `${id}: <folio:fulfilment/> names no kinds. Say which of ` +
+        `${ACTOR_KINDS.join(", ")} may perform this step.`,
+    );
+  }
+  const unknown = kinds.filter((k) => !(ACTOR_KINDS as readonly string[]).includes(k));
+  if (unknown.length) {
+    throw new Error(
+      `${id}: <folio:fulfilment/> names unknown actor kind(s) ${unknown.join(", ")}. ` +
+        `One or more of: ${ACTOR_KINDS.join(", ")}.`,
+    );
+  }
+  const reason = decl.reason?.trim();
+  if (!reason) {
+    throw new Error(
+      `${id}: <folio:fulfilment/> carries no reason. It overrides what the BPMN task ` +
+        `type already says about this step, so say why the derived answer is wrong.`,
+    );
+  }
+  return { kinds: kinds as ActorKind[], reason };
+}
+
 function kindOf(type: string): NodeKind {
   if (type === "bpmn:StartEvent") return "start";
   if (type === "bpmn:EndEvent") return "end";
@@ -268,6 +326,7 @@ interface ModdleElement {
       enforcement?: string;
       relaxable?: string;
       reason?: string;
+      kinds?: string;
     }[];
   };
   calledElement?: string;
@@ -388,6 +447,7 @@ export async function loadProcessModel(
       roleRef: roleRefOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
       noSkillReason: noSkillReasonOf(ext, el.id),
+      fulfilment: fulfilmentOf(ext, el.id),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),
       relaxable: ext.find((v) => v.$type === "folio:policy")?.relaxable !== "false",

@@ -100,6 +100,27 @@ export interface GraphKindDef {
    */
   renderable: boolean;
   summary: string;
+  /**
+   * The skill that says how to READ a graph of this kind, by name.
+   *
+   * A property of the KIND rather than of the directory, because a `qa` graph
+   * is read the same way wherever it sits — putting it on the directory entry
+   * would restate one fact per instance and let the copies drift.
+   *
+   * Optional, and absent means absent: naming a skill that does not exist
+   * would be the fake-reference failure `activity-names-skill` exists to
+   * prevent, where silencing a gap costs less than filling it.
+   */
+  skill?: string;
+  /**
+   * Where the shape of a node in this graph is defined — a repo-relative
+   * module path, or a `$schema` tag the files themselves carry.
+   *
+   * Optional because not every kind has one answer: `kg` holds five node kinds
+   * typed in different places, and a single pointer there would be a lie of
+   * precision rather than a fact.
+   */
+  schema?: string;
 }
 
 /**
@@ -148,15 +169,46 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
-  kg: {
+  // Named for the LAYER that defines it, like every other harness concept.
+  //
+  // It was `kg`, which named what the graph HOLDS rather than who owns it —
+  // the odd one out in a vocabulary where `cat-harness.json`, `CatHarness`
+  // and the `cat-harness` instance are all named for the harness. The owner,
+  // 2026-09-19: "kg -> cat-harness for naming conventions, no? skills/
+  // schemas beans all in cat-harness, voices, uploads library in
+  // folio-asst-core."
+  //
+  // `kg` remains readable as a deprecated alias — see GRAPH_KIND_ALIASES.
+  "cat-harness": {
     type: `${FOLIO_NS}KnowledgeGraph`,
     renderable: false,
-    summary: "Skills, workflows, roles — the instance's own knowledge graph.",
+    summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
   },
   schemas: {
     type: `${FOLIO_NS}SchemaGraph`,
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
+  },
+  // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
+  //
+  // Declared as its own kind rather than folded into `kg` because the two are
+  // different artefacts with different owners: a verdict lives beside its
+  // subject and is what a checker wrote, while a witness is that verdict
+  // flattened for the web and is what the docs panel fetches. One is edited by
+  // fixing a checker; the other is never edited at all.
+  //
+  // Undeclared until 2026-09-19 — 134 committed files that no instance
+  // declaration mentioned, so a consumer scanning the declared directories saw
+  // none of them and reported a clean run over the lot.
+  qa: {
+    type: `${FOLIO_NS}QaGraph`,
+    renderable: false,
+    summary:
+      "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
+      "families (`block`, `kg`, `translation`), projected for the docs site from the " +
+      "verdicts that live beside their subjects. Generated; never hand-edited.",
+    skill: "qa-witness",
+    schema: "content/pipeline/qa-witness.ts",
   },
   // ONE kind for the whole work plan, not one per store. It replaced `workplan`
   // + `process-state` in #266; the rationale is in this map's doc comment above,
@@ -281,6 +333,39 @@ export class GraphKindConflictError extends Error {
  * dependency graph reaches core twice and must not fail for it, while two
  * different layers claiming one name is a real collision.
  */
+/**
+ * Graph kinds that were renamed, mapped to what they are now.
+ *
+ * ## Why an alias and not a sweep
+ *
+ * `AGENTS.md` is explicit that **overrides match on the entry's `id`, not its
+ * `path`** — "matching on path makes two knowledge graphs out of one
+ * relocation, and every consumer then scans a directory that is not there".
+ * The same property that makes ids worth having makes renaming one a
+ * CROSS-INSTANCE BREAKING CHANGE: a downstream instance overriding `kg` is
+ * overriding nothing the moment the kind is called something else, and the
+ * failure is silent — it scans, finds nothing, and reports a clean run over
+ * it. That is the `dh4f` shape, delivered to somebody else's repository.
+ *
+ * So the old name keeps working, and says so. Reading a declaration that uses
+ * it succeeds and records a deprecation; writing one is never done by this
+ * repository's own tooling. The alias is removed only after a release in
+ * which it warned.
+ *
+ * Aliases are resolved ONCE, at the registry boundary, rather than at each
+ * call site — a second place that knows the old name is a second place that
+ * can forget it.
+ */
+export const GRAPH_KIND_ALIASES: Readonly<Record<string, string>> = {
+  kg: "cat-harness",
+};
+
+/** What a declared kind name means now, and whether it was a deprecated spelling. */
+export function resolveGraphKind(name: string): { kind: string; deprecated?: string } {
+  const to = GRAPH_KIND_ALIASES[name];
+  return to ? { kind: to, deprecated: name } : { kind: name };
+}
+
 export class GraphKindRegistry {
   private kinds = new Map<string, GraphKindDef>();
 
@@ -297,12 +382,16 @@ export class GraphKindRegistry {
     this.kinds.set(name, def);
   }
 
+  // `has` and `get` resolve a deprecated spelling, so a declaration written
+  // against the old vocabulary still finds its kind. Resolution happens HERE
+  // and nowhere else: a second place that knows the old name is a second place
+  // that can forget it.
   has(name: string): boolean {
-    return this.kinds.has(name);
+    return this.kinds.has(resolveGraphKind(name).kind);
   }
 
   get(name: string): GraphKindDef | undefined {
-    return this.kinds.get(name);
+    return this.kinds.get(resolveGraphKind(name).kind);
   }
 
   names(): string[] {
@@ -418,6 +507,56 @@ export const ContentDirectorySchema = z.object({
   graphs: z.array(z.string().min(1)).min(1),
   ...kgNodeLabelShape,
 });
+
+/**
+ * The conventional directories every instance gets without declaring them.
+ *
+ * ## Why defaults live in the CONTAINER SCHEMA
+ *
+ * The owner, 2026-09-19: *"inherit, set default dirs/graphs in container
+ * schema definitions."* An instance that follows the convention should declare
+ * NOTHING — the friction of a new topical directory ought to be a line, and
+ * the friction of a conventional one ought to be zero. Before this, every
+ * instance restated the same seven entries, which is seven chances to disagree
+ * with the platform about what `beans/` is.
+ *
+ * `resolveDirectories` seeds from these and the declaration chain overrides
+ * **by `id`**, exactly as a dependency's entries are overridden — so a default
+ * is not a special case in the resolution rules, it is the outermost link of
+ * the chain.
+ *
+ * ## A default is only real if the directory EXISTS
+ *
+ * They are filtered by existence at resolve time, and that is not an
+ * optimisation. `AGENTS.md`: *"Declare only what exists — a declared-but-absent
+ * directory is the bean `dh4f` defect, where a consumer scans nothing and
+ * reports a clean run over it."* Seeding a default for `voices/` into an
+ * instance with no voices would manufacture exactly that, at scale, in every
+ * instance at once.
+ *
+ * An EXPLICIT declaration is honoured whether or not the directory is there:
+ * that is the instance asserting something, and `readDeclaration` already
+ * refuses a declaration it cannot read. A default is the platform guessing,
+ * and a guess has to be checked.
+ *
+ * ## What is not here
+ *
+ * `folio` — the one renderable kind — is registered by CORE, not the harness,
+ * and the harness cannot default a directory to a kind it does not know. Any
+ * topical directory (`bootstrap/`, `crdm/`, …) is declared, one line each: the
+ * platform cannot guess names it has never met, and guessing would re-create
+ * the `dh4f` shape for every name it guessed wrong.
+ */
+export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
+  { id: "tools", path: "tools/", graphs: ["tools"] },
+  { id: "schemas", path: "schemas/", graphs: ["schemas", "cat-harness"] },
+  { id: "cat-harness", path: "skills/", graphs: ["cat-harness"] },
+  { id: "beans", path: "beans/", graphs: ["beans"] },
+  { id: "todos", path: "todos/", graphs: ["todos"] },
+  { id: "uploads", path: "uploads/", graphs: ["uploads"] },
+  { id: "library", path: "library/", graphs: ["library"] },
+  { id: "voices", path: "voices/", graphs: ["voices"] },
+];
 
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
@@ -607,6 +746,22 @@ export function resolveDirectories(
   registry: GraphKindRegistry = defaultGraphKinds,
 ): ResolvedDirectory[] {
   const byId = new Map<string, ResolvedDirectory>();
+
+  // The outermost link: the conventional set, for the root of the chain.
+  //
+  // Existence-filtered — see DEFAULT_DIRECTORIES on why a default that is not
+  // there is the `dh4f` defect rather than a harmless extra. `declaredBy` says
+  // `(default)` so a consumer can tell an inherited convention from something
+  // an instance chose, and `own` is false: a default is not the instance's own
+  // declaration, it is what it did not have to write.
+  const rootLink = chain.find((l) => l.own === true) ?? chain[chain.length - 1];
+  if (rootLink) {
+    for (const dir of DEFAULT_DIRECTORIES) {
+      const absPath = resolve(rootLink.root, dir.path);
+      if (!existsSync(absPath)) continue;
+      byId.set(dir.id, { ...dir, declaredBy: "(default)", absPath, own: false });
+    }
+  }
 
   for (const link of chain) {
     const decl = readDeclaration(link.root, registry);

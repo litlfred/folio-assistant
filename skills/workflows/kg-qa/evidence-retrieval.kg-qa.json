@@ -6,11 +6,6 @@
     "path": "skills/workflows/evidence-retrieval.bpmn"
   },
   "source_hash": "sha256:b8763d4942d5cce600fd837658e30f17856f62e4f5cf199304b59967a8c50d50",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,6 +39,15 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_AttachEvidence",
+          "detail": "\"Attach the evidence to the recommendation\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
@@ -51,7 +55,7 @@
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
+    "fail": 1,
     "n/a": 2,
     "unknown": 0
   }

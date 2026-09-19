@@ -120,6 +120,24 @@ automatically", in the same breath as recording that `qa-translation-badge.html`
 was **deleted, not deprecated**. These two look like the same cleanup, left
 undone.
 
+**Deleted 2026-09-19 on the owner's instruction, with the condition they set:
+only if the functionality found a home.** Verified that it had, for both:
+
+- `translation-warning.html` -> `docs-ui.js:1283` injects the unverified-
+  translation warning from the page's own front matter, guarded against
+  duplication by `!document.querySelector(".fa-translation-warning")`.
+- `language-selector.html` -> `buildLanguageBar()` renders all six UN
+  languages, highlights the current one in the same `#3b82f6`, and **greys out
+  locales with no translation** — which the include's own comment promised but
+  its Liquid never implemented. It also adds a remembered locale and global
+  locale persistence, neither of which the include had.
+
+A whole-repo sweep found no `{% include %}` of either: every remaining mention
+was prose telling people not to use them, or a `docs-ui.js` comment. That
+comment is updated — it described reading "the language-selector include (if
+present)", and the fallback now scans `[data-locale]`, which `buildLanguageBar`
+emits itself, so the behaviour survives the deletion.
+
 ### What this bean now needs
 
 Not implementation. Someone should walk #206's requirement list against the

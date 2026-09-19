@@ -183,11 +183,29 @@ attempting — before the first tool call, not after the work lands:
 
 ### The rules that make a report worth reading
 
-**1. Every bean reference carries a one-sentence gloss and a link.**
+**1. Every bean reference carries TWO sentences and a link — what it is, then
+what you would do.**
 `fa/nvbr` is an opaque four-character string. A reader cannot tell whether it
 is urgent, adjacent, or already obsolete without opening the store — and asking
 someone to go look things up is the cost this report exists to remove. Link to
 the bean file so one click gets the full body.
+
+A gloss says what the bean IS; the second sentence says what you would DO, which
+is what somebody deciding whether to let you do it needs. **Titles alone are a
+menu with no prices** — a reader can see that `rlp5` is two scripts disagreeing
+about a flag and still not know whether your answer is a one-line fix or a
+question back to them.
+
+> ✗ **next** [`rlp5`](…) — `pdf-ocr` and `pdf-structure` disagree about what `-o` means.
+>
+> ✓ **next** [`rlp5`](…) — they disagree about what `-o` means, so a command that works with one silently writes elsewhere with the other. I would measure which spelling each script's callers assume, make the minority match, and keep an alias only if an outside caller needs it.
+
+First person and a proposal — *"I would …"* — because rule 5 already says expect
+to be overruled; the passive hides whose call it is. Applies to **worked** too
+(what you did, and whether it is finished) and to anything you are declining, or
+a reader assumes it is queued. Two sentences settle a bean somebody can say yes
+to; when **next** hands over a real decision between costed routes, §"The `next`
+line is a question" below is the binding form.
 
 **2. Asking for review means linking the artefact — deep, not the root.** If a
 turn ends with "please look at this", it must carry the **PR link** and a

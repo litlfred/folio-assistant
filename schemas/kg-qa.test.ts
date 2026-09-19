@@ -57,7 +57,6 @@ describe("tally and worstSeverity", () => {
     $schema: KG_QA_SCHEMA,
     subject: { kind: "process", id: "P", path: "p.bpmn" },
     source_hash: "sha256:x",
-    auditor: { script: "s", script_hash: "sha256:y", engine_version: "1" },
     criteria,
     totals: tally(criteria),
   });

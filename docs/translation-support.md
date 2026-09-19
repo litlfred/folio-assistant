@@ -540,6 +540,75 @@ const KIND_HEADINGS: Record<string, Record<string, string>> = {
 
 ---
 
+## Generated interfaces — the knowledge-graph viewer
+
+Everything above extracts from **authored** files. The knowledge-graph viewer
+(`scripts/kg-viewer.ts`) is not one: it is a generator that writes a
+single-file HTML page, and its interface strings sit inside the code that
+emits it.
+
+**Extracting from the generated page would be the obvious move and is the
+wrong one.** The `.pot` would fill with the generator's *output*, so any
+regeneration — a new node kind, a changed commit line — churns every entry and
+invalidates every sign-off, without a single string having changed.
+
+So the strings are lifted into a declared table in the source,
+`scripts/kg-viewer-strings.ts`, and extracted from **there**:
+
+```sh
+bun run translate-kg-viewer --extract [--locale fr]  # table → translations/<loc>/kg-viewer.pot
+bun run translate-kg-viewer:check                    # drift between table, .pot and .po
+bun run kg:viewer                                    # reads every .po, embeds the catalogues
+```
+
+It is the same pipeline as everything else — `formatPot` from
+`content/pipeline/pot-extract.ts`, `parsePo` from `po-inject.ts` — with the
+same shape as `scripts/translate-bpmn.ts`, which does this for diagram labels.
+**There is no inject step**: generating the page *is* the injection, so a
+separate translated copy would be an artefact nothing serves.
+
+`--check` distinguishes two things that look alike:
+
+| finding | fails the check? | why |
+|---|---|---|
+| `.pot` no longer matches the table | **yes** | a translator is working from a document that no longer describes the page |
+| a translation dropped a `{placeholder}` | **yes** | the sentence silently loses its number |
+| an entry for a string the page no longer says | **yes** | dead work, and a msgid nothing will ever look up |
+| a string with no translation yet | no | the ordinary state of a translation in progress; the page falls back to English per string |
+
+### The boundary is drawn on the page
+
+The chrome is translatable. **The graph is not**: node titles, descriptions and
+property names arrive in the JSON-LD document in whatever language the corpus
+is written in, and no catalogue in the viewer can reach them.
+
+The page says so, in the language the reader chose, whenever that is not
+English. A screen that is two-thirds translated and silent about it is worse
+than one that states its edge — a reader cannot otherwise tell a missing
+translation from a corpus that is simply English.
+
+### What ships today: the stubs, and deliberately nothing in them
+
+`translations/<locale>/kg-viewer.po` exists for every locale with every
+`msgid` present and every `msgstr` **empty**. That is the decision, not an
+omission: machine-translating a user interface into languages nobody here
+reads produces an artefact whose correctness cannot be checked here, and a
+`X-Folio-Official: no` header does not change what a reader sees. A translator
+fills them.
+
+Until one does, the viewer offers English alone — an empty catalogue is not a
+language the page can show, so it is not listed. Fill a `.po`, run
+`bun run kg:viewer`, and that language appears in the switcher.
+
+The language switcher is a UI control and carries the obligations in
+[`ui-accessibility`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/ui-accessibility.html):
+each option named in its own language with `lang` set, accessible names
+translated alongside visible text, the change announced, and `dir` flipped for
+a right-to-left language. The reader's choice is the **same `fa-locale`
+localStorage key the docs site writes**, overridable per link with `?lang=`.
+
+---
+
 ## Integration with WHO smart-base
 
 The WHO `smart-base` repository contains a ~5,500-line translation subsystem

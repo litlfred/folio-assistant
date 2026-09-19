@@ -6,11 +6,6 @@
     "path": "skills/workflows/content-lifecycle.bpmn"
   },
   "source_hash": "sha256:8222748ec26e65ef78467bfdb606c4806bce9696a6371dc61bdbb23f60d43fba",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,13 +39,17 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 9,
     "fail": 0,
     "n/a": 1,
     "unknown": 0

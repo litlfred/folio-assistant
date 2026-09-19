@@ -6,11 +6,6 @@
     "path": "skills/workflows/getting-started.bpmn"
   },
   "source_hash": "sha256:e689d109b769d5242ef0fe5b4ca444c27f3a5f3f068f5e5e8a31fa56e2c284bf",
-  "auditor": {
-    "script": "scripts/kg-audit.ts",
-    "script_hash": "sha256:5495172dab2a6bae51586a088678ed034f7baeb174fac6a10127f804ad66406c",
-    "engine_version": "1"
-  },
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -44,13 +39,17 @@
       "result": "pass",
       "findings": []
     },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 9,
     "fail": 0,
     "n/a": 1,
     "unknown": 0
