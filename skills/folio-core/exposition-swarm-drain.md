@@ -20,7 +20,7 @@ description: >
 # /exposition-swarm-drain — Milnor-exposition audit→resolve drain
 
 Bring every narrative block up to the **Milnor exposition standard**
-(one-voice style guide → "The Milnor exposition standard"), at scale,
+(`milnor-exposition-standard` skill), at scale,
 autonomously, without hand-editing block by block.
 
 ## 0. When to use
@@ -67,7 +67,7 @@ autonomously, without hand-editing block by block.
 Score each block on the eight Milnor hallmarks, 0–2 each
 (authoritative: `expo-milnor-clarity` spec,
 [`docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md` §5A](../../../docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md);
-author-facing: `one-voice-style-guide.md` → "The Milnor exposition standard"):
+author-facing: `milnor-exposition-standard.md`):
 
 | | Hallmark |
 |---|---|
@@ -217,7 +217,7 @@ of `needs_owner` blocks for the author.
 ## Cross-references
 
 - Rubric spec: `docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md` §5A
-- Author voice: `.claude/skills/local/one-voice-style-guide.md` → "The Milnor exposition standard"
+- Author voice: `skills/folio-core/milnor-exposition-standard.md`
 - Merge pipeline: `skills/folio-core/prepare-merge-auto.md`
 - Sister drain: `.claude/skills/local/integration-backlog.md`
 - Flag guard: `content/pipeline/qa-flag-preservation-audit.ts`

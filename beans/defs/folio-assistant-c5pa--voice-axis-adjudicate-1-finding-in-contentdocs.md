@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c5pa
 title: 'Voice axis: adjudicate 1 voice-first-person-work finding in content/docs'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T22:23:37Z
-updated_at: 2026-09-18T22:23:57Z
+updated_at: 2026-09-18T23:55:14Z
 ---
 
 The QA sweep over `content/docs/` flags 1 block on `voice-first-person-work`
@@ -40,3 +40,7 @@ human/agent half of this axis; the mechanical half is `qa-checkers-voice.ts`.
 Every box above is either fixed in prose, covered by a criterion-scoping
 change, or carries a reviewer entry on its sidecar explaining the exception —
 and `bun run content/pipeline/qa-sweep.ts --root content/docs` reflects it.
+
+_2026-09-18T23:55:14Z_ — ## Summary of Changes
+
+Agent `pass`. The first person is inside a `>` quotation under the block's own heading '### What the user sees' — it is what the agent SAYS, not the author speaking. Surrounding prose is third person throughout.

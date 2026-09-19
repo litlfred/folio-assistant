@@ -245,6 +245,7 @@ async function run(): Promise<void> {
       getCriterionSourceFile(id),
       getCriterionExtraInputs(id),
       PLATFORM_ROOT,
+      QA_CRITERIA_BY_ID[id],
     );
   }
   const engineVersion = `bun-${Bun.version}`;

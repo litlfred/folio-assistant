@@ -10,6 +10,13 @@ parent: Skill instructions
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/todo-manager.md){: .fa-edit-source }
 
 {% raw %}
+> **Two different skills share this name, and this is one of them.**
+> The other is [Todo Manager — cross-agent coordination (local)](local-todo-manager.html), from `.claude/skills/local`.
+> They are **not** copies: measured 2026-09-19 they differ by 202 diff
+> lines and each carries sections the other does not. Which is canonical
+> is an open question — `AGENTS.md` leaves it to whoever owns the skills
+> layout, and bean `rmer` tracks it. Read both before relying on either.
+
 # Session Task Manager (`beans`)
 
 > **Disambiguation:**
