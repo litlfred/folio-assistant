@@ -107,6 +107,32 @@
   .folio-landing__art img {
     display: block; width: 100%; height: auto; border-radius: 8px;
   }
+  /* Fade the backdrop so the overlaid text reads more clearly against it.
+     Scoped to the region-overlay case only: `--no-region` puts the words
+     BELOW the picture rather than over it, so there is nothing there for a
+     fade to help legibility of — it would just be a dimmer picture.
+
+     The two schemes need different values, not the same one, because
+     `opacity` does not tint toward a fixed colour: it blends the image with
+     whatever renders behind it, which is the page background — near-black
+     under this site's default `color_scheme: dark`, near-white under the
+     `data-fa-scheme="light"` override `docs-ui.js` sets (see docs-ui.css).
+     The overlay's ink is a fixed dark green (`#2f4636`, above) sized against
+     the cream thought-cloud in the artwork, so fading toward WHITE only
+     brightens that cloud and widens the contrast margin; fading toward BLACK
+     by the same amount darkens it and narrows it — enough fade in dark mode
+     reads as the ink sinking into a dimmed cloud rather than standing out
+     from one. Dark mode therefore gets the gentler value.
+
+     Chosen without being able to render the page (see the commit message) —
+     modest on both sides so the art is dimmed, not washed out: 0.9 by
+     default, 0.8 under the light override where fading only helps. */
+  .folio-landing:not(.folio-landing--no-region) .folio-landing__art img {
+    opacity: 0.9;
+  }
+  :root[data-fa-scheme="light"] .folio-landing:not(.folio-landing--no-region) .folio-landing__art img {
+    opacity: 0.8;
+  }
   .folio-landing__text {
     position: absolute;
     /* The properties are set by `landing.html`, per breakpoint, from each
