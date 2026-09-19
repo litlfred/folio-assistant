@@ -5,7 +5,7 @@
     "id": "code-reviewer",
     "path": "skills/roles/roles.json"
   },
-  "source_hash": "sha256:452b01df1e3b03d589914df46eee3c0d1d4054286bb9175614393f237918c045",
+  "source_hash": "sha256:efc5762c88e67e076e951d037eb8f81b63a870d8bd1e23969e82b89659db8fe8",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -36,13 +36,18 @@
       "findings": []
     },
     "actor-kind-fits-role": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "platform-boundary-guard",
+          "detail": "actor \"platform-boundary-guard\" is a agent and declares role \"code-reviewer\", which admits person. Either the role is too narrow — widen its `actorKinds` — or the actor cannot take this role on and its `roles` list is wrong. The descriptions of both are where to settle it."
+        }
+      ]
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 6,
+    "fail": 1,
     "n/a": 1,
     "unknown": 0
   }

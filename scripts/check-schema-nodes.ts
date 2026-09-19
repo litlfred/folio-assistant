@@ -2,7 +2,7 @@
 /**
  * Every module in the declared `schemas/` directory declares what it is.
  *
- * `cat-harness.json` declares `schemas/` as holding a `schemas` graph, and
+ * `harness.json` declares `schemas/` as holding a `schemas` graph, and
  * until 2026-09-19 the export produced no nodes of that kind at all — a
  * declaration with nothing behind it, which is the `dh4f` shape reaching the
  * instance's own root declaration. Bean `xxxb`.

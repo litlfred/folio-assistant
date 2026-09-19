@@ -63,18 +63,25 @@ const LINKS = JSON.stringify(LINK_MAP);
 /**
  * just-the-docs' search, as the theme renders it into `.main-header`.
  *
- * The ids and class names are the theme's, because `docs-ui.js` MOVES this
- * container rather than rebuilding it — a stub with different names would
- * exercise a code path the site does not have.
+ * **Copied from a real Jekyll build of this branch**, not written from
+ * memory. The first version of this stub put an `aria-label` on the input.
+ * The theme does not: the accessible name comes from the `<label>` and the
+ * `sr-only` span inside it. That difference is not cosmetic — a stylesheet
+ * may hide the label and take the input's NAME with it, which is exactly
+ * what happened here and what the stub hid, since axe was reading a name the
+ * site never renders. A fixture that flatters the code under test is worse
+ * than no fixture.
  */
 const SEARCH_MARKUP =
-  '<div class="search">' +
+  '<div class="search" role="search">' +
   '<div class="search-input-wrap">' +
   '<input type="text" id="search-input" class="search-input" tabindex="0" ' +
-  'placeholder="Search folio-assistant" aria-label="Search folio-assistant" autocomplete="off">' +
+  'placeholder="Search folio-assistant" autocomplete="off">' +
   '<label for="search-input" class="search-label">' +
-  '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" ' +
-  'stroke="currentColor"/></svg></label>' +
+  '<span class="sr-only">Search folio-assistant</span>' +
+  '<svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true">' +
+  '<circle cx="10" cy="10" r="6" fill="none" stroke="currentColor"/></svg>' +
+  "</label>" +
   "</div>" +
   '<div id="search-results" class="search-results"></div>' +
   "</div>";
@@ -206,7 +213,10 @@ test.describe("action tiles", () => {
     await page.setContent(HARNESS);
     const input = page.locator(".fa-tiles .search input#search-input");
     await expect(input).toHaveCount(1);
-    await expect(input).toHaveAttribute("aria-label", "Search folio-assistant");
+    // The theme's own label came with it. NOT `aria-label` — the theme does
+    // not emit one, which an earlier version of this fixture asserted and a
+    // real build disproved.
+    await expect(page.locator(".fa-tiles .search label[for='search-input']")).toHaveCount(1);
     // The results list travelled with it; a moved input with an orphaned
     // results container renders its hits into the main panel it just left.
     await expect(page.locator(".fa-tiles .search #search-results")).toHaveCount(1);
@@ -273,6 +283,71 @@ test.describe("action tiles", () => {
     await page.keyboard.press("Escape"); // grid -> closed
     await expect(page.locator(".fa-tiles")).toBeHidden();
     await expect(page.locator("#search-input")).toHaveCount(1);
+  });
+
+  test("the field's COMPUTED accessible name comes from the label, not the placeholder", async ({ page }) => {
+    // The real accessibility tree, read out of Chromium — not the `for=`
+    // association, which resolves whether or not the label is rendered.
+    //
+    // axe cannot check this: its `label` rule accepts a non-empty
+    // `placeholder` as a last-resort pass, so an input whose real label has
+    // been hidden with `display: none` sails through the automated gate. And
+    // the theme's input carries NO `aria-label` — its name comes from the
+    // `<label>` and the `sr-only` span in it, which is precisely why a
+    // stylesheet is able to take that name away. Measured against a real
+    // Jekyll build of this branch; the fixture had said otherwise.
+    await page.setContent(HARNESS);
+    await page.locator(".fa-tiles-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Search" }).click();
+    // Straight out of Chromium's own accessibility tree over CDP.
+    // `page.accessibility` was removed from Playwright, and every DOM-level
+    // proxy for this question (a `for=` lookup, `getByLabel`) resolves
+    // whether or not the label is rendered — which is exactly the case under
+    // test, so a proxy here would be a guard that cannot fail.
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Accessibility.enable");
+    const named = async (): Promise<string> => {
+      const { root } = (await cdp.send("DOM.getDocument", { depth: -1 })) as {
+        root: { nodeId: number };
+      };
+      const { nodeId } = (await cdp.send("DOM.querySelector", {
+        nodeId: root.nodeId,
+        selector: "#search-input",
+      })) as { nodeId: number };
+      const { nodes } = (await cdp.send("Accessibility.getPartialAXTree", {
+        nodeId,
+        fetchRelatives: false,
+      })) as { nodes: { name?: { value?: string }; ignored?: boolean }[] };
+      const self = nodes.find((n) => !n.ignored && n.name?.value !== undefined);
+      return self?.name?.value ?? "";
+    };
+    expect(await named()).toBe("Search folio-assistant");
+
+    // And the name must SURVIVE TYPING. A placeholder does not: it is gone
+    // from the screen the moment there is a value, so an input named only by
+    // one loses its name exactly when it is in use. Chromium stops offering
+    // the placeholder as a name once the field is non-empty, which is what
+    // makes this the assertion that separates the two sources. The kg
+    // viewer's suite holds the same line for its own field.
+    await page.keyboard.type("bean");
+    await expect(page.locator("#search-input")).toHaveValue("bean");
+    expect(await named()).toBe("Search folio-assistant");
+  });
+
+  test("the magnifier inside the field is hidden without hiding the label", async ({ page }) => {
+    // Hidden visually, kept in the accessibility tree. `display: none` would
+    // do both, which is the defect above.
+    await page.setContent(HARNESS);
+    await page.locator(".fa-tiles-toggle").click();
+    await page.locator(".fa-tile", { hasText: "Search" }).click();
+    const label = page.locator(".fa-tiles .search-label");
+    await expect(label).toHaveCount(1);
+    const style = await label.evaluate((e) => getComputedStyle(e).display);
+    expect(style).not.toBe("none");
+    // ...and it still takes up no room the reader can see.
+    const box = await label.boundingBox();
+    expect(box!.width).toBeLessThanOrEqual(2);
+    expect(box!.height).toBeLessThanOrEqual(2);
   });
 
   test("a site with no search gets no Search tile, and keeps its other tiles", async ({ page }) => {

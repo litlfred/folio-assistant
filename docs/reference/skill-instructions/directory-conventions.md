@@ -12,7 +12,7 @@ parent: Skill instructions
 {% raw %}
 # Directory conventions — what an instance declares it scans
 
-Every instance carries an **`cat-harness.json`** at its repository root. It declares the directories the instance scans for content,
+Every instance carries an **`harness.json`** at its repository root. It declares the directories the instance scans for content,
 and what **kind of graph** each one holds.
 
 Schema and resolution: `schemas/cat-harness.ts`.
@@ -45,7 +45,7 @@ The vocabulary is **open**, and split across two layers.
 > ### `kg` was renamed to `cat-harness` (2026-09-19)
 >
 > Every other harness concept is named for the **layer that defines it** —
-> `cat-harness.json`, the `CatHarness` declaration, the `cat-harness`
+> `harness.json`, the `CatHarness` declaration, the `cat-harness`
 > instance. `kg` named what the graph HOLDS instead, and was the odd one out.
 >
 > **The old spelling still reads, and that is load-bearing rather than
@@ -92,7 +92,32 @@ The vocabulary is **open**, and split across two layers.
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
 | `voices` | **harness** | editorial voice profiles — one JSON each, `"$schema": "folio-voice/v1"`. Every rule cites its source. **Opt-in**: shipping a voice does not apply it. | no |
+| `translation-sources` | **harness** | the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; there is deliberately **no kind for the rendered output**. Read with the [`translation-manager`](translation-manager.md) skill; shape in `schemas/translation.ts`. | no |
 | `folio` | **`folio-assist-core`** | authored content | **yes** — just-the-docs renders it to a website |
+
+> **A rendered translation is not its own graph kind — the FILE declares its
+> language.** `docs/fr/index.md` carries `lang: fr` and
+> `translation_source: index.md` in its own front matter, so it is the same
+> kind of thing as the page it translates: renderable content, differing by a
+> field. `content/pipeline/translation-index.ts` discovers the locale subtrees
+> by reading those fields and **never** matches a directory name against a
+> list of language subtags — that inference is wrong in both directions,
+> silently hiding a `no/` chapter (Norwegian, or the English word) and
+> silently showing a `pt-BR/` or `translated-fr/` one.
+>
+> A first draft of PR #351 did give it a kind, with a `locale` field and one
+> declaration per locale subtree: ten entries for five locales across two
+> subtrees, restating what all ten files already said, growing as
+> O(locales x subtrees). The owner's framing is what settles it —
+> *"narrative/audio/visual content with text should be translatable. its not
+> so much the node schema itself but its content (e.g. markdown, bpmn) should
+> be translatable"*: translatability is a property of a **format within a
+> content type**, which `schemas/translation-tools.ts` already declares and
+> `isTranslatable` already answers, not a property of a directory.
+>
+> `.po` catalogues are the genuine exception, and that is what
+> `translation-sources` is for: they are not content in any language, so no
+> file inside them can declare one.
 
 > **`uploads` and `library` are two kinds, not one, and the split is
 > load-bearing.** They are the two stages of the document-ingestion pipeline,
@@ -199,7 +224,7 @@ a file extension.
 
 ```
 agentic-harness/          folio-assist-core/
-  cat-harness.json        cat-harness.json
+  harness.json        harness.json
   tools/     → tools        folio/     → folio
   kg/        → kg           (inherits tools/, kg/, schemas/)
   schemas/   → schemas
@@ -230,7 +255,7 @@ moving to the end — a relocation should not reshuffle what is scanned first.
 
 ## Three states, as everywhere else here
 
-- **No `cat-harness.json`** → `readDeclaration` returns `undefined`. An
+- **No `harness.json`** → `readDeclaration` returns `undefined`. An
   instance not yet migrated is ordinary, and callers fall back to today's
   conventions. Not an error.
 - **Present but unreadable** → **throws.** A declaration nobody can parse
@@ -273,7 +298,7 @@ word.
   `<stub>.schema.json`. Never a generic `kg.json`. Compute it with
   `artefactStub()`, never by re-deriving it, so two exporters cannot disagree
   about what this instance is called.
-- **The declaration file is `cat-harness.json` and is NOT stub-named.**
+- **The declaration file is `harness.json` and is NOT stub-named.**
 
 That second half is the one that looks inconsistent, so here is why. A consumer
 bootstrapping into a repository it knows nothing about needs **one fixed

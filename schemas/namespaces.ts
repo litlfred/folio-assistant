@@ -47,4 +47,71 @@
  * it would churn every consumer to no effect: the IRI is what is published,
  * and that does not change.
  */
-export const FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
+import { termLayer } from "./vocabulary";
+
+/**
+ * The namespace that WAS — kept only so the vocabulary document can name the
+ * stem it published under, and deliberately not exported for minting.
+ *
+ * Every term moved to a per-layer namespace before anything consumed this one.
+ * It survives as a string because `ns-export` still serves `<base>/ns` as the
+ * document that CARRIES all three vocabularies, which is a different thing
+ * from a namespace terms hang off.
+ */
+export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
+
+/**
+ * One namespace per LAYER, because a term belongs to whatever declares it.
+ *
+ * A single `folio:` namespace for everything said, in effect, that one
+ * repository owns the whole vocabulary — which stopped being true the moment
+ * the terms were layered. The owner, 2026-09-19: "folio:Actor, folio:Role,
+ * folio:Skill, folio:CatHarness seem to have wrong prefix, it should match the
+ * planned declaring instance once separation is done, like i guess bs:Actor
+ * for bootstrap? cat: for catharness?"
+ *
+ * **Now is the only cheap moment and it is why this changed immediately.**
+ * Nothing served `<base>/ns` until this branch, so no consumer holds any of
+ * these IRIs. Once the vocabulary is published, changing a term's IRI is a
+ * breaking change for every downstream instance and needs an alias to carry
+ * forever — the `kg` -> `cat-harness` migration, one layer down and with no
+ * `GRAPH_KIND_ALIASES` to soften it.
+ *
+ * The paths name the REPOSITORIES the split creates, not the layer words, so
+ * that after separation each namespace is already the IRI its own instance
+ * publishes at and nothing has to move a second time.
+ */
+export const BOOTSTRAP_NS = "https://litlfred.github.io/folio-assistant/bootstrap/ns#";
+export const CAT_HARNESS_NS = "https://litlfred.github.io/folio-assistant/cat-harness/ns#";
+export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#";
+
+/** The prefixes those namespaces bind to in a `@context`. */
+export const NS_PREFIXES = {
+  bs: BOOTSTRAP_NS,
+  cat: CAT_HARNESS_NS,
+  fac: CORE_NS,
+} as const;
+
+/** The namespace a layer's terms hang off. */
+export function namespaceForLayer(layer: "bootstrap" | "harness" | "core"): string {
+  return layer === "bootstrap" ? BOOTSTRAP_NS : layer === "core" ? CORE_NS : CAT_HARNESS_NS;
+}
+
+/** The prefix a layer's terms are written with. */
+export function prefixForLayer(layer: "bootstrap" | "harness" | "core"): "bs" | "cat" | "fac" {
+  return layer === "bootstrap" ? "bs" : layer === "core" ? "fac" : "cat";
+}
+
+/**
+ * A term's full IRI — the single call every minting site makes.
+ *
+ * This replaced 93 hand-written per-term template literals
+ * across four modules. Each of those was a place to pick the wrong namespace
+ * once the namespaces stopped being one, and `cat-harness.ts` alone mints
+ * terms in all three layers — `KnowledgeGraph` and `SchemaGraph` are
+ * bootstrap's, `BeanGraph` is the harness's, `VoiceGraph` is core's — so
+ * "which namespace does this file use" has no file-level answer.
+ */
+export function termIri(name: string): string {
+  return `${namespaceForLayer(termLayer(name))}${name}`;
+}

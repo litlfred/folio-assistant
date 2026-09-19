@@ -4,36 +4,32 @@ id: who-owns-which-file-the-split-agents-get-wrong
 label: stable
 summary: "who owns which file (the split agents get wrong)"
 createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
+archived: "true"
 ---
-**The platform** holds the pipeline that ACTS ON content (`validate.ts`,
-`render-*.ts`, `build.ts`, `qa-sweep.ts`, `profile-check.ts`, the `validate-*`
-family, everything under `schemas/`). **A folio** holds its own audit scripts
-under its own `content/pipeline/`.
+> **Archived 2026-09-19.** Its only reader, the `content-pipeline-navigator`
+> subagent, was retired. Kept rather than deleted: the record of what was
+> learned outlives the mechanism that carried it, which is why a bean is
+> `scrapped` and not removed. Not injected into any agent's prompt —
+> `platform-boundary-guard` was already at 189 of its 200 lines, so there
+> was nowhere to put it without pushing an entry past the line the harness
+> silently truncates at.
 
-From inside a folio the platform is symlinked under `folio-assistant/`, so the
-same script name resolves to two different paths. **Check which side you are on
-before invoking** — the wrong guess is a path that does not exist. Do not assume
-a `bun run <shortcut>` exists either; several aliases were dropped in the
-migration and never re-wired.
+**This repo (the platform)** holds the pipeline that *acts on* content:
+`validate.ts`, `render-latex.ts`, `render-markdown.ts`, `build.ts`,
+`qa-sweep.ts`, `qa-staleness.ts`, `profile-check.ts`, `export-bibtex.ts`,
+`citations.ts`, `build-glossary.ts`, the `validate-*` family, and every
+schema under `schemas/` (`types.ts`, `constraints.ts`, `builders.ts`,
+`block-kinds.ts`, `block-qa.ts`, `lean-packages.ts`).
 
-<!-- detail -->
+**A folio** holds its own audit scripts — vacuity/axiom, clarity, orphan,
+trace-convention, and so on — under its own `content/pipeline/`.
 
-Platform-side, in full: `validate.ts`, `render-latex.ts`,
-`render-markdown.ts`, `build.ts`, `qa-sweep.ts`, `qa-staleness.ts`,
-`profile-check.ts`, `export-bibtex.ts`, `citations.ts`, `build-glossary.ts`,
-the `validate-*` family, and every schema under `schemas/` — `types.ts`,
-`constraints.ts`, `builders.ts`, `block-kinds.ts`, `block-qa.ts`,
-`lean-packages.ts`.
+A folio reaches the platform through a clone-plus-symlink (in qou,
+`scripts/setup-folio-assistant.sh`), so from inside a folio the platform
+paths are prefixed `folio-assistant/`. **Check which side a script is on
+before invoking it**; qou's own `AGENTS.md` carries this warning because the
+wrong guess is a path that does not exist.
 
-Folio-side: vacuity/axiom, clarity, orphan and trace-convention audits, under
-the folio's own `content/pipeline/`.
-
-The link is a clone-plus-symlink — in `qou`, `scripts/setup-folio-assistant.sh`
-— which is why the platform paths are prefixed `folio-assistant/` from inside a
-folio. `qou`'s own `AGENTS.md` carries the same warning.
-
-Aliases dropped in that migration and never re-wired: `validate-refs`,
-`export-bibtex`, `migrate-lean-refs`. Check `package.json` on the side you are
-on.
+Several convenience aliases were dropped in that migration and not re-wired
+(`validate-refs`, `export-bibtex`, `migrate-lean-refs`). Do not assume a
+`bun run <shortcut>` exists — check `package.json` on the side you are on.

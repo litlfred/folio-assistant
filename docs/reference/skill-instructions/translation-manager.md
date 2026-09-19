@@ -324,6 +324,132 @@ languages and greys out the ones not yet translated, which the include only
 promised in a comment. (`qa-translation-badge.html` went the same way: it
 rendered the removed numbers.)
 
+## The navbar filters by locale
+{: #the-navbar-filters-by-locale }
+
+Reported by the owner, 2026-09-19:
+
+> translations are still not handled right. i have english selected, but i see
+> the translated pages in LHS navbar. the `fr/` `ru/` etc. sub-dirs need to be
+> explicitly labeled as translated content in the graph and not shown in navbar
+> unless that locale is selected. (if not present, fall back to source
+> language)
+
+Three rules, and each is enforced somewhere different because each can break
+somewhere different.
+
+### 1. A page is a translation because the PAGE says so
+
+Three fields in its own front matter, and nothing else anywhere:
+
+```yaml
+lang: fr                              # this page is French
+nav_exclude: true                     # keep it OUT of the static nav
+translation_source: index.md          # which page it expresses
+```
+
+`content/pipeline/translation-index.ts` walks the site and reads those. A page
+with no `lang` is the instance's **source language** — absent means the
+default, not unknown.
+
+**Never match a directory name against a list of language subtags.** That is
+the *"distinguishable by extension … a coincidence of the current layout, not a
+contract"* defect #263 named, moved to directory names, and it is wrong in both
+directions: a folio with a `no/` chapter (Norwegian, or the English word) is
+silently hidden from its own navbar, and a `pt-BR/` or `translated-fr/`
+directory is silently shown as source. Neither announces itself — the navbar
+simply has the wrong entries in it. Put the French page at `accueil-fr.md`
+beside its source and it is indexed correctly; put an English page in a folder
+called `fr/` and it is left alone.
+
+**There is deliberately no `translated-content` graph kind.** A first draft of
+PR #351 added one, with a `locale` field on `ContentDirectory` and one
+`cat-harness.json` entry per locale subtree — ten entries for five locales
+across two subtrees. It worked and it was the wrong axis: it restated what all
+ten files already said, and it grew as O(locales × subtrees). The owner's
+framing is what settles it:
+
+> narrative/audio/visual content with text should be translatable. its not so
+> much the node schema itself but its content (e.g. markdown, bpmn) should be
+> translatable.
+
+Translatability is a property of a **format within a content type**, and that
+model already exists: `schemas/translation-tools.ts` declares, per content
+type, which formats have an extract/inject pair — Markdown, LaTeX, PlantUML,
+SVG, ArchiMate, Excel, BPMN, FSH, FHIR JSON — and `isTranslatable(contentType,
+extension)` is the predicate. The index asks it rather than inventing a second
+answer, so a `.json` beside a page is data and never a language.
+
+`translations/` **is** declared, as `translation-sources`. That one earns a
+kind: a `.po` catalogue is not content in any language, so no file inside it
+can declare one.
+
+**There is no `nav_order` on a translated page.** It stands where its *source*
+stands, because it replaces that item rather than joining the list. A
+`nav_order` beside a `nav_exclude` is two facts that contradict each other, and
+the check refuses it.
+
+### 2. `nav_exclude` is the half that JavaScript cannot do
+
+just-the-docs builds the navbar **at build time**, from front matter, on a
+static site serving the same HTML to every reader. It cannot know which locale
+anybody chose, so a translated page left in the nav is in it **for everybody** —
+which is the reported bug exactly. A script can swap a nav item; it cannot
+un-render one without a flash of the wrong nav first.
+
+So the translations leave the static nav entirely, and a reader with no
+JavaScript gets the **source-language** navbar — the correct degraded answer
+rather than an arbitrary one.
+
+### 3. The swap, and the fallback that is not a code path
+
+`content/pipeline/translation-index.ts` writes `docs/_data/translations.json`; `_includes/head_custom.html` publishes it
+into every page as `#fa-translation-index`; `mountNavLocale` in
+`docs/assets/js/docs-ui.js` reads it.
+
+With a non-source locale selected, each nav item that **has** a page in that
+locale is rewritten in place — same position, same parent, translated title,
+translated href, and its own `dir` so an Arabic item inside an English column
+is not laid out backwards.
+
+**Fallback is the absence of a rewrite.** An item with no page in the selected
+locale is not touched, so it keeps its source-language title and link. There is
+deliberately no branch for it: a fallback implemented as its own code path is a
+code path that can be wrong, and this one cannot be.
+
+Which locale is "selected", in precedence order: `?lang=` on the URL, then the
+page's own `lang` when the page *is* a translation, then the remembered
+`fa-locale`, then the source language. A locale the index has never heard of is
+not honoured — labelling the navbar `tlh` while every item is in English is a
+claim the page cannot support.
+
+### Three states, and the third is why the index is published as `null`
+
+| `data-fa-nav-index` | when | what the navbar does |
+|---|---|---|
+| `ok` | the index parsed and holds pages | filter it |
+| `empty` | it parsed and holds none | nothing to swap; every item is source language |
+| `unknown` | no island, unparseable, or `index: null` because the data file was absent at build time | left **exactly** as built |
+
+`empty` and `unknown` produce the same navbar and are **not the same answer**:
+one is *"this folio has no translations"*, the other is *"this build could not
+tell"*. A build that could not determine the translation set must never render
+as a folio that has none — so `translation:index` exits **2** rather than
+writing a partial index over a complete one, and the deploy fails rather than
+publishing it.
+
+### Adding a locale
+
+1. Write the pages, each carrying `lang`, `nav_exclude: true` and
+   `translation_source`. Where they sit is up to you — the convention here is
+   `<dir>/<locale>/<page>.md`, and nothing depends on it.
+2. `bun run translation:index` and commit `docs/_data/translations.json`.
+
+There is no third step and no declaration to remember. The thing that IS easy
+to forget is `nav_exclude`, which is why `translation:index:check` fails
+without it: a translated page left in the static nav is in it for every
+reader, whatever locale they chose, which is the bug this section records.
+
 ## Official vs unofficial
 
 | Attribute | Official | Unofficial |
@@ -398,6 +524,17 @@ pipeline (IG Publisher) are complementary and independent.
   back-translation at all scores 0 and reads as drift. If no independent
   back-translator has run, the criterion has no verdict, and saying so is the
   honest output.
+- **Do not infer a locale from a directory name.** `docs/fr/index.md` is
+  French because it says `lang: fr`. A subtag match is wrong in both
+  directions and neither failure announces itself — see
+  [The navbar filters by locale](#the-navbar-filters-by-locale).
+- **Do not add a graph kind for translated content.** It is the same kind of
+  thing as the page it translates, differing by a field the file declares.
+  Translatability is a property of a FORMAT within a content type —
+  `schemas/translation-tools.ts` and `isTranslatable` — not of a directory.
+- **Do not leave a translated page in the static nav.** `nav_exclude: true` is
+  what keeps it out, and no amount of client-side work substitutes for it: the
+  nav is built once, for every reader, before anybody has chosen a locale.
 - **Do not put non-PO files in translations/.** Only `.pot`, `.po`, and `.ts`
   manifests belong there. Rendered `.md` goes in `docs/<locale>/`.
 - **Do not vendor smart-base translation scripts.** Load from checkout.

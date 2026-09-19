@@ -99,7 +99,7 @@ import {
  * The graph kinds a bean graph's directories hold.
  *
  * Both are registered in {@link BASE_GRAPH_KINDS}, not defined here — the
- * vocabulary is shared with `cat-harness.json`, so a consumer that knows
+ * vocabulary is shared with `harness.json`, so a consumer that knows
  * one declaration knows the other. This constant is a convenience for callers
  * that want the bean-specific subset, never a second source of truth.
  */

@@ -32,6 +32,11 @@ on:
       - 'scripts/gen-docs-pages.ts'
       - 'content/docs/**'
       - 'scripts/render-bpmn.ts'
+      # The navbar's locale filter reads `docs/_data/translations.json`, built
+      # by this module from the pages' own front matter. A change to how that
+      # is derived changes the published navbar while touching nothing under
+      # `docs/`, so without this path the site would not rebuild.
+      - 'content/pipeline/translation-index.ts'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -86,6 +91,17 @@ jobs:
       # the deploy-time refresh.
       - name: Regenerate content-backed docs pages
         run: bun run scripts/gen-docs-pages.ts
+
+      # Same reasoning as the three regenerations above: the committed copy is
+      # browsable on GitHub and the PUBLISHED one must never be the stale half
+      # of that pair. A stale index here is not cosmetic — it is the navbar
+      # showing the wrong set of translations to every reader.
+      #
+      # A non-zero exit fails the deploy on purpose. Publishing a site whose
+      # translation set could not be determined would render "could not tell"
+      # as "there are none", which is the one thing this pipeline must not do.
+      - name: Regenerate the translation index
+        run: bun run translation:index
 
       # The BPMN sources under skills/workflows/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless
@@ -151,7 +167,7 @@ jobs:
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
       # Both artefacts are named after the repository (the `stub` in
-      # cat-harness.json) and land AT THE BASE, at the URLs their own
+      # harness.json) and land AT THE BASE, at the URLs their own
       # `@id`/`$id` claim. There is no `kg/` subdirectory: the repository IS
       # its declaration that it holds a graph, and the stub is what separates
       # one instance's renderings from another's in a tree that overlays
@@ -176,6 +192,48 @@ jobs:
           bun run scripts/harness-schema-export.ts --out-dir ./_site
           bun run scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
+
+          # THE VOCABULARY — one document per namespace, plus the union.
+          #
+          # Every term now hangs off its declaring layer's namespace: bs: for
+          # bootstrap, cat: for the harness, fac: for core. Each of those is an
+          # IRI stem, so each needs a document or `bs:Actor` dereferences to
+          # nothing — the very defect this work exists to fix, and splitting
+          # one namespace into three created three fresh instances of it. The
+          # dead-link walk in `kg-export.test.ts` caught that within a minute
+          # of the split, which is what retiring its by-name exemption bought.
+          #
+          # A namespace document is EXACT — `cat-harness/ns` carries only cat:
+          # terms. A document that also defined bs:Actor would be claiming a
+          # term in somebody else's namespace.
+          #
+          # `<base>/ns` stays as the UNION of all three: one place to read the
+          # whole vocabulary, which is what a person wants and no single
+          # namespace can be.
+          #
+          # Extensionless because the IRIs are; `.json` alongside because Pages
+          # emits no correct Content-Type for `.jsonld`.
+          # `ns/` is a DIRECTORY, not a file. `schemas/jsonld.ts` declares the
+          # content `@context` at `<base>/ns/content/v1.jsonld`, and a static
+          # host cannot serve both a file and a directory at `<base>/ns`.
+          #
+          # That context has ALSO never been published — `ns/` lives at the
+          # repository root and nothing copied it into the site, so the URL
+          # every content document names as its `@context` has been dead since
+          # it was written. Copied here, which is the eighth instance of the
+          # defect bean `blv9` records and the cheapest one to have fixed.
+          mkdir -p "./_site/ns/content"
+          cp ./ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+          bun run scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
+          cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
+
+          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
+            LAYER="${pair%%:*}"; DIR="${pair##*:}"
+            mkdir -p "./_site/${DIR}"
+            bun run scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
+            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
+            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
+          done
 
       # The QA witnesses, published at the path the badges already point at.
       #

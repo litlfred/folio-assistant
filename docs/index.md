@@ -20,9 +20,57 @@ FHIR Implementation Guides — backed by an MCP server, role-based access contro
 and a typed content-object model.
 {: .fs-6 .fw-300 }
 
-[Get started](getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+<!--
+  `View on GitHub` STAYS. The site-wide `aux_links` GitHub text was removed from
+  the chrome above every page (bean `udx8`, PR #352), and the obvious follow-up
+  is to delete this button for consistency. Do not. Put to the repo owner on
+  2026-09-19: this button is part of the landing page's own readme/description
+  note — authored content on one page, not chrome — and the forge remains
+  reachable from the navbar's Source tile regardless.
+-->
+[Get started]({{ '/getting-started.html' | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Install](installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
+
+---
+
+## Four things, in order
+
+**1. The work plan is where you say what you are doing.**
+Not a chat message, not a comment — [beans]({{ '/beans-and-todos.html' | relative_url }}), a committed
+store any session or agent can read. Claim before you work so a sibling session
+does not pick up the same item; a bean that turns out not to be wanted is
+`scrapped`, with its reasons, never deleted.
+
+```sh
+scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+beans list                          # what is open
+beans create "<title>"              # ...after checking the title does not exist
+beans <id> --status in-progress     # claim it, visibly
+```
+
+**2. Make your first folio.** This repository is the *platform*; your content
+lives in its own. One command scaffolds it — the manifests, the declaration, the
+agent files and the link back here:
+
+```sh
+bun run init-folio --help
+```
+
+Then [Get started](getting-started.html) walks the first block through validate,
+render and review.
+
+**3. Know which kind of thing you are writing.** A *document* is structured
+prose; a *paper* is that plus the block kinds whose assertion is a formal claim,
+backed by Lean and typeset through LaTeX. The choice decides which blocks are
+legal and which gates run: [Content types]({{ '/content-types.html' | relative_url }}).
+
+**4. The documentation you will never read.**
+[All of it]({{ '/guides/index.html' | relative_url }}) — the authoring guides, the architecture, the
+publication workflow, the generated schema and skill reference. It is here, it
+is thorough, and the honest expectation is that you will arrive at it from a
+search engine at the exact moment something breaks. That is a fine way to use
+it. The three steps above are the ones worth reading now.
 
 ---
 

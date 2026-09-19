@@ -240,14 +240,14 @@ script and the table cannot drift.
 ## 8. Make the landing page yours
 
 Your site's home page opens with your instance's **own** description, drawn
-inside your **own** backdrop. Both come from one file — `cat-harness.json` at
+inside your **own** backdrop. Both come from one file — `harness.json` at
 the repository root — and nothing about the platform's grumpy cat is written
 into the template. Change the file; the page follows.
 
 ### The markdown node you edit
 
 ```jsonc
-// cat-harness.json
+// harness.json
 {
   "title": "My Folio",              // the left sidebar's heading
   "description": "One line.\nAnother line.",   // ← the landing markdown

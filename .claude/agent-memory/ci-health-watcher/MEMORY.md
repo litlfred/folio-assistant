@@ -74,6 +74,32 @@ It deliberately does **not** send another email. GitHub sent 30, and the
 premise of `xom7` is that nobody reads them. The three live badges at the top
 of `README.md` are the same state at the front door.
 
+## TRAP — derive the gate list from the WORKFLOW, not from package.json
+
+Three CI checks are invoked **by path**, not by npm-script name, so a sweep
+over `bun run <script-name>` structurally cannot see them: `gen-docs-pages.ts`,
+`gen-schema-docs.ts`, `gen-skill-docs.ts`, each `--check`. Get the list from the
+workflow itself, not from `package.json`.
+
+**Editing a script that WRITES a witness restales every published projection of
+it** — regenerate both sides and verify by parsing, not by grep.
+
+More: `detail/derive-the-gate-list-from-the-workflow.md`
+
+## TRAP — never assert on a QA VERDICT from the published corpus
+
+`test/results/witnesses/**` is live state. A test that reads a VERDICT out of it
+breaks when somebody fixes or adjudicates the finding — which is the system
+working, not a regression.
+
+**Read the document live and flip the ONE criterion you test, BY ID, where it
+sits.** Do not freeze a captured copy: freezing the criterion freezes its
+witness, so the hash literal outlives the checker. And never hoist the failure
+to `criteria[0]` — the generator already sorts worst-first, so a panel that
+sorted nothing would pass.
+
+More: `detail/never-assert-on-a-qa-verdict-from-the-published-corpus.md`
+
 ## TRAP — two workflows fail BY DESIGN here; do not "fix" them by dispatching
 
 `witness-refresh.yml` and `qa-sweep.yml` failed to **parse** on 2026-08-07 —

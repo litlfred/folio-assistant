@@ -25,7 +25,7 @@ are thin stubs pointing here.
 >
 > **Skills are knowledge-graph content, not a directory you memorise.** They
 > live in the `kg` graph an instance declares in its root
-> `cat-harness.json` — in this repo that id maps to `skills/`, but an
+> `harness.json` — in this repo that id maps to `skills/`, but an
 > instance may put it anywhere, and a downstream instance **inherits** its
 > dependencies' skills through the same declaration. Hardcoding a path is how
 > a skill goes missing the moment the layout moves.
@@ -35,7 +35,7 @@ are thin stubs pointing here.
 > - **`skill_list`** — what skills exist here, with their one-line summaries.
 > - **`skill_fetch`** — load a named skill's instructions.
 > - **`work_plan_prime`** — the work plan, for any MCP-connected agent.
-> - No MCP? Resolve the `kg` graph from `cat-harness.json`
+> - No MCP? Resolve the `kg` graph from `harness.json`
 >   (`schemas/cat-harness.ts`) and read from the directory it names.
 >
 > Conventions for the declaration and its graph kinds:
@@ -159,7 +159,7 @@ holds markdown. `beans/beans.json` declares it; the schema is
 | `defs` | `beans/defs/` | `bean-defs` — the work plan, WHAT is being worked on | yes |
 | `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |
 
-**It is the same schema as `cat-harness.json`, not a parallel one.** A
+**It is the same schema as `harness.json`, not a parallel one.** A
 bean-graph entry IS a `ContentDirectory`: an id, a path, and `graphs` — the
 kinds found there. Same shape, same open registry, same JSON-LD projection.
 `bean-defs` and `workflow-state` are registered in `BASE_GRAPH_KINDS`
@@ -213,7 +213,7 @@ first. A node declared `.defs` resolves to `beans/.defs` and is exactly as
 invisible as the stores this move existed to fix; checking only the head would
 have made the guard unfireable.
 
-`cat-harness.json` declares `beans/` **once**, as a `beans` graph, alongside
+`harness.json` declares `beans/` **once**, as a `beans` graph, alongside
 `schemas/` and `kg/`; `beans/beans.json` declares what is inside it — the
 `defs` node (work items) and the `workflows` node (running BPMN instance
 state). The harness says which directories exist and what kind of graph each
@@ -319,7 +319,10 @@ them. In short, and not as a substitute for reading it:
 - every bean reference gets **two sentences and a link** — what it is, then
   **what you would do** about it, in the first person as a proposal. A gloss
   alone is a menu with no prices: it tells the reader what the bean is and not
-  whether your answer is a one-line fix or a question back to them;
+  whether your answer is a one-line fix or a question back to them. **This binds
+  every mention of an id, not just a report's Beans list** — a status line, an
+  aside, a commit message, an issue comment. If it is not worth two sentences,
+  do not name the bean;
 - asking for review means **linking the artefact** — staging URL, PR, and the
   changed page;
 - say **what to review**, not that CI is green;
@@ -488,7 +491,7 @@ One sentence, and every word in it is a distinct declared object:
 | **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |
 | **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `skills/workflows/` |
 
-All four live in the **`kg` graph** the instance declares in `cat-harness.json`
+All four live in the **`kg` graph** the instance declares in `harness.json`
 — in this repo that id maps to `skills/`. BPMN and DMN are **not standalone
 artefacts**: a diagram is reached through the skill that describes the process,
 and a task is performed with the skills its lane's role carries.
@@ -628,7 +631,7 @@ put 46 non-skills in the set, so `<folio:skill ref="viewer"/>` would have resolv
 
 ## Subagents with persistent memory (`.claude/agents/`)
 
-Three subagents are defined under [`.claude/agents/`](.claude/agents/), each
+Two subagents are defined under [`.claude/agents/`](.claude/agents/), each
 carrying `memory: project` in its frontmatter. That gives the agent its own
 directory under `.claude/agent-memory/<agent-name>/`; the first 200 lines (or
 25 KB) of that directory's `MEMORY.md` are injected into the subagent's system
@@ -638,7 +641,6 @@ prompt when it starts, and it reads and writes the directory as it works.
 |---|---|
 | `platform-boundary-guard` | keeping folio specifics out of platform code; adapter-vs-profile; the qou↔platform split |
 | `ci-health-watcher` | whether a workflow is actually working on the default branch |
-| `content-pipeline-navigator` | validate / render / build / qa-sweep, schemas, block kinds, script ownership |
 
 Each `MEMORY.md` labels every entry as exactly one of:
 
@@ -668,8 +670,7 @@ reaching the agent.
 **`MEMORY.md` is generated — but only between its markers.** The tool writes
 between `<!-- folio:memory:begin -->` and `<!-- folio:memory:end -->` and
 touches nothing else, exactly as `readme-sections.ts` does. That is what keeps
-each file's `## Session log` — and `content-pipeline-navigator`'s
-`## Corrected invocations` — intact: those are the agent's own running notes,
+each file's `## Session log` intact: those are the agent's own running notes,
 and a whole-file regenerator would delete them. A file with no markers is
 reported as not opted in and left alone; it is never rewritten and never
 counted as up to date.
@@ -685,6 +686,43 @@ was prose; it is now structural. It bit immediately and correctly: all three
 entries labelled BASELINE stored no number — they are tables of commands to
 RUN — so they were relabelled `stable`. A table of how to measure is a stable
 fact, not a measurement.
+
+**Retiring a subagent archives its memory; it does not delete it.** An entry
+carrying `archived: "true"` is a node of the graph that reaches no agent's
+prompt — the third state between "untagged, so reaches everybody" and "gone".
+`content-pipeline-navigator` was retired 2026-09-19 and **seven** of its twelve
+entries had no other reader, two of them TRAPs written by other sessions. The
+only remaining agent with a related subject was already at 189 of its 200
+lines, so there was nowhere to inject them; deleting them would have thrown
+away work somebody else paid for. Same discipline as a `scrapped` bean.
+
+**Archived is checked BEFORE the untagged rule**, and the ordering is
+load-bearing: an archived entry has no agent tag once its agent is gone, so
+checking it second hands it to every agent — the opposite of archiving.
+Measured while doing exactly that: two entries went untagged and pushed
+`platform-boundary-guard` 39 lines over budget, dropping one of its own TRAPs
+past the line the harness truncates at.
+
+**Both remaining subagents are now declared actors, and the role axis carries
+their memory.** `ci-health-watcher` takes `build-pipeline` and
+`validation-pipeline`; `platform-boundary-guard` takes **`code-reviewer`**,
+whose own description is close to a definition of it — *"the question is
+whether the NODE is sound — does it declare what it is, do its references
+resolve, is the mechanism it advertises the one that runs — which a passing
+test suite does not answer."* That is the failure this repo keeps paying for:
+`part-of:`, `$schema` under `skills/`, and `@graphNode` each landed as a
+requirement, and the files predating each one silently failed it while their
+tests passed.
+
+Measured after tagging: **every live entry carries a lane** — a `code-reviewer`
+lane sees 12, a `build-pipeline` lane sees 8, an unrelated lane sees 0. So the
+"untagged reaches everybody" escape hatch currently has **no instances**, which
+is worth knowing before adding one: an untagged entry now goes to every agent
+in a corpus where nothing else does.
+
+Generation still goes through the AGENT axis, so tagging a lane is additive and
+changes no `MEMORY.md` byte. Wiring the two together is the composition mistake
+the role model already paid for once.
 
 **Scoping is by agent today and that is transitional.** Memory is knowledge,
 and `AGENTS.md` puts knowledge in the lane, so it should scope by **role** —
@@ -1210,7 +1248,7 @@ Full protocol, with the worked example:
   and rough cost —
   [`skills/folio-core/swarm-management.md`](skills/folio-core/swarm-management.md)
   and the [reader-facing page](docs/swarm-management.md).
-- **An instance declares the directories it scans — `cat-harness.json` at
+- **An instance declares the directories it scans — `harness.json` at
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
   `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,

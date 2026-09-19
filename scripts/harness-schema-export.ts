@@ -4,7 +4,7 @@
  *
  * The other half of a self-describing graph. `<stub>.jsonld` says what this
  * instance contains; this says what a declaration *is*, and lives at the URL
- * its own `$id` names — so a consumer holding an `cat-harness.json` it does
+ * its own `$id` names — so a consumer holding an `harness.json` it does
  * not understand has somewhere to go.
  *
  * ## The trick, from `WorldHealthOrganization/smart-base`
@@ -66,7 +66,7 @@ export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<s
     ...(base ? { $id: renderingPath(base, `${stub}.schema.json`) } : {}),
     title: "CatHarness declaration",
     description:
-      "The root declaration every instance carries as `cat-harness.json`: what it is called, " +
+      "The root declaration every instance carries as `harness.json`: what it is called, " +
       "where it publishes, and which directories it scans for which kind of graph. " +
       "Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
     ...(base ? { $comment: `Instance graph: ${renderingPath(base, `${stub}.jsonld`)}` } : {}),

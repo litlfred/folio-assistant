@@ -11,7 +11,13 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { MemoryNodeSchema, memoryForRoles } from "../../schemas/memory.js";
+import {
+  MEMORY_SCHEMA_TAG,
+  MemoryNodeSchema,
+  memoryForAgent,
+  memoryForRoles,
+} from "../../schemas/memory.js";
+import { EMPTY_NOTE_TAGS } from "../../schemas/carried-note.js";
 import {
   AGENT_MEMORY_DIR,
   BEGIN,
@@ -86,6 +92,17 @@ describe("the corpus", () => {
 });
 
 describe("the role axis discriminates — memoryForRoles is not dead code", () => {
+  test("every live entry carries a lane, so untagged has no instances", () => {
+    // Both subagents are declared actors now, and every non-archived entry is
+    // tagged with the lane that reads it. That makes the "untagged reaches
+    // everybody" clause a rule with nothing under it — worth pinning, because
+    // an untagged entry added later would silently go to EVERY agent in a
+    // corpus where nothing else does.
+    const live = readMemoryNodes().filter((n) => !n.archived);
+    const untagged = live.filter((n) => n.tags.roles.length === 0);
+    expect(untagged.map((n) => n.id)).toEqual([]);
+  });
+
   test("a CI lane sees the CI entries; another lane does not", () => {
     // The owner, 2026-09-19: "ci watchers are agents/mechanical roles that are
     // part of the CI process." `roles.json` already carried `build-pipeline`
@@ -196,6 +213,37 @@ describe("rendering", () => {
     expect(slugify("`uses[]` is EDITORIAL, and immediate-neighbours only")).toBe(
       "uses-is-editorial-and-immediate-neighbours-only",
     );
+  });
+});
+
+describe("archived entries are retained but injected nowhere", () => {
+  test("the corpus has archived entries, and they reach no agent", () => {
+    // The third state between "reaches everybody" and "deleted". Retiring
+    // `content-pipeline-navigator` created seven of these: its sole readers,
+    // with no remaining agent that had budget for them.
+    const nodes = readMemoryNodes();
+    const archived = nodes.filter((n) => n.archived);
+    expect(archived.length).toBeGreaterThan(0);
+    for (const agent of agentNames()) {
+      const got = memoryForAgent(nodes, agent).filter((n) => n.archived);
+      expect({ agent, archived: got.map((n) => n.id) }).toEqual({ agent, archived: [] });
+    }
+  });
+
+  test("archived beats UNTAGGED, which is the ordering that matters", () => {
+    // An archived entry carries no agent tag once its agent is gone, so the
+    // "untagged reaches everybody" clause would hand it to every agent if it
+    // were checked first. Measured: removing the retired agent's name from two
+    // entries without archiving them made both untagged, which pushed
+    // `platform-boundary-guard` 39 lines over its injection budget and dropped
+    // one of its own TRAPs past the line.
+    const base = {
+      id: "a", summary: "s", comment: "c", createdAt: "2026-09-19",
+      tags: EMPTY_NOTE_TAGS, label: "stable" as const, $schema: MEMORY_SCHEMA_TAG,
+    };
+    const untagged = MemoryNodeSchema.parse(base);
+    const archived = MemoryNodeSchema.parse({ ...base, id: "b", archived: true });
+    expect(memoryForAgent([untagged, archived], "anyone").map((n) => n.id)).toEqual(["a"]);
   });
 });
 

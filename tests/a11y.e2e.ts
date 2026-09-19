@@ -255,10 +255,10 @@ const tilesPage = (scheme: "light" | "dark") => `<!doctype html><html lang="en" 
     <!-- just-the-docs' own search, which docs-ui.js MOVES into the launcher.
          It is here so axe measures the field WHERE IT ENDS UP -- on the
          opaque sidebar panel, not on the main column it was written for. -->
-    <div class="search"><div class="search-input-wrap">
+    <div class="search" role="search"><div class="search-input-wrap">
       <input type="text" id="search-input" class="search-input" tabindex="0"
-             placeholder="Search folio-assistant" aria-label="Search folio-assistant" autocomplete="off">
-      <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor"/></svg></label>
+             placeholder="Search folio-assistant" autocomplete="off">
+      <label for="search-input" class="search-label"><span class="sr-only">Search folio-assistant</span><svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor"/></svg></label>
     </div><div id="search-results" class="search-results"></div></div>
   </div><div class="main-content"><h1>Harness</h1></div></div>
   <script>window.jtd = { theme: "${scheme}", getTheme: function () { return this.theme; },
@@ -504,5 +504,47 @@ test.describe("the sticky todo board", () => {
         await ctx.close();
       });
     }
+  }
+});
+
+/* ── The per-node edit link ─────────────────────────────────────────────── */
+
+/**
+ * `.fa-node-edit` is on EVERY node of the site, and it failed contrast.
+ *
+ * Bean `y8cm`. Measured 2026-09-19: **2.22:1** in light, from `opacity: 0.35`
+ * compositing the link colour toward the white behind it. In dark the same
+ * declaration moves the colour AWAY from the background and measured clean —
+ * so the fix is light-only, and this checks BOTH so the next person to
+ * "simplify" the two mechanisms into one finds out here.
+ *
+ * Driven by `data-fa-scheme` on `<html>`, which is what the page's own JS
+ * sets. An earlier probe used Playwright's `colorScheme` and loaded no JS, so
+ * both its runs silently measured light and reported dark as unknown — a
+ * harness that does not reproduce the mechanism under test measures nothing.
+ */
+test.describe("the per-node edit link", () => {
+  const EDIT_CSS = readFileSync(
+    join(dirname(fileURLToPath(import.meta.url)), "..", "docs/assets/css/docs-ui.css"),
+    "utf8",
+  );
+  const page_ = (scheme: string) => `<!doctype html><html lang="en" data-fa-scheme="${scheme}">
+<head><meta charset="utf-8"><title>Edit link harness</title><style>${EDIT_CSS}</style>
+<style>:root[data-fa-scheme="dark"] body { background:#27262b; color:#f4f4f6; }
+:root[data-fa-scheme="light"] body { background:#fff; color:#27262b; }</style></head><body>
+<div class="main-content-wrap"><div class="main-content" id="main-content">
+<h2 id="n">A node</h2>
+<p><a class="fa-node-edit" href="https://example.invalid/e" title="Edit">&#9998; Edit</a></p>
+<p>Body text.</p></div></div></body></html>`;
+
+  for (const scheme of ["light", "dark"] as const) {
+    test(`no contrast violation — ${scheme}`, async ({ page }) => {
+      await page.route("http://edit.a11y/**", (route) =>
+        route.fulfill({ contentType: "text/html", body: page_(scheme) }),
+      );
+      await page.goto("http://edit.a11y/page.html");
+      const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
+      expect(violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);
+    });
   }
 });
