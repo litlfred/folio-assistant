@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1hsf
 title: Migrate AGENTS.md migration debt into skills, and teach a cold agent to read the KG
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T07:11:55Z
-updated_at: 2026-09-19T10:29:54Z
+updated_at: 2026-09-19T10:54:05Z
 ---
 
 THE ASK, owner 2026-09-19: 'migrate Agents.md work to skills and point agent to how to read KG use skills.'
@@ -39,3 +39,5 @@ _2026-09-19T10:05:34Z_ — Both halves delivered. Half 2 in PR #381 (merged). Ha
 _2026-09-19T10:26:42Z_ — Citation backlog cleared: 20 -> 0 unresolved, and check:agents-xref:strict is now a CI gate in code-quality-gates.yml. Nine repointed at a platform skill that verifiably owns the rule. Seven could not be settled from this repo, so litlfred/qou was cloned and checked rather than guessed at: five name real sections of its 6,036-line AGENTS.md (four headings, one bullet) and are qualified rather than repointed; two — 'be frugal' and 'Executing actions with care' — are in NEITHER repository and became plain rules. Those two are the only genuinely dead references of the original twenty.
 
 _2026-09-19T10:29:54Z_ — Sections 2, 11 and 19 done too, so all 19 are now pointer or bootstrap. AGENTS.md 1289 -> 566. New skill content-profiles for the adapter-vs-profile distinction (section 2 had no owning skill); section 11 kept its bootstrap half and moved the sweep's emission order to todo-manager; section 19's uses[]/interprets bullet moved to uses-editorial-review.
+
+_2026-09-19T10:54:05Z_ — DONE — merged as ed3cf127 (PR #385), following #381. All four 'Done when' items met: every section classified with its destination (docs/folio-assistant/proposals/agents-md-migration.md); every rule that existed only in AGENTS.md identified and moved or given a skill; a cold agent has one documented route to the KG (kg-navigation, plus skill_list now emitting real summaries and onboarding s3 rewritten); and the three-copy divergence was not widened — a sibling then removed it entirely in #392. AGENTS.md 1289 -> 555 lines, all sections present as pointer or bootstrap, none deleted. Six new skills: readme-sections, ci-health, agent-memory, issue-working, content-profiles, bpmn-processes. Citations 20 -> 0, gated by check:agents-xref:strict in CI. Seven dead links in AGENTS.md fixed; bean v8gh opened because nothing checks them.
