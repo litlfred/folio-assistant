@@ -10158,14 +10158,14 @@
   },"1451": {
     "doc": "QA witnesses",
     "title": "QA witnesses — the published projection of every verdict",
-    "content": "A QA witness is what a reader sees when they open the QA badge beside a heading on the docs site. One JSON document per subject, all of them \"$schema\": \"qa-witness/v1\", all of them under docs/assets/qa/. Measured 2026-09-19: 134 documents — 113 block, 20 kg, 1 translation. ",
+    "content": "A QA witness is what a reader sees when they open the QA badge beside a heading on the docs site. One JSON document per subject, all of them \"$schema\": \"qa-witness/v1\", all of them committed under test/results/witnesses/ and published at /assets/qa/. Those are two different questions. Where a witness LIVES follows provenance — it is a QA process’s output, so it belongs in the declared test/results/ tree with everything else a QA reviewer produced. Where it is SERVED FROM is unchanged: every data-qa-src in a generated page says /assets/qa/…, and the publishing workflows copy the directory into _site/assets/qa/ after Jekyll runs. It sat in docs/ until 2026-09-19 only because that is where Jekyll could reach it, which is a fact about the build and not about the artefact. Measured 2026-09-19: 134 documents — 113 block, 20 kg, 1 translation. ",
     "url": "/folio-assistant/reference/skill-instructions/qa-witness.html#qa-witnesses--the-published-projection-of-every-verdict",
     
     "relUrl": "/reference/skill-instructions/qa-witness.html#qa-witnesses--the-published-projection-of-every-verdict"
   },"1452": {
     "doc": "QA witnesses",
     "title": "It is a projection, not the verdict",
-    "content": "This is the distinction to hold on to, because getting it backwards is how a fix lands in the wrong place. The verdict is produced by a sweep and lives beside its subject — *.qa.json beside a content block, kg-qa/*.kg-qa.json beside a skill or a diagram. The witness is the same verdict rendered for the web, flattened into the shape the panel draws and placed where the site can fetch it. So a wrong verdict is fixed in the checker; a verdict that reads wrongly on the page is fixed in content/pipeline/qa-witness.ts or in docs-ui.js. Editing a file under docs/assets/qa/ by hand fixes neither — it is generated, and the next gen-docs-pages run discards the edit. ",
+    "content": "This is the distinction to hold on to, because getting it backwards is how a fix lands in the wrong place. The verdict is produced by a sweep and lives beside its subject — *.qa.json beside a content block, kg-qa/*.kg-qa.json beside a skill or a diagram. The witness is the same verdict rendered for the web, flattened into the shape the panel draws and placed where the site can fetch it. So a wrong verdict is fixed in the checker; a verdict that reads wrongly on the page is fixed in content/pipeline/qa-witness.ts or in docs-ui.js. Editing a file under test/results/witnesses/ by hand fixes neither — it is generated, and the next gen-docs-pages run discards the edit. ",
     "url": "/folio-assistant/reference/skill-instructions/qa-witness.html#it-is-a-projection-not-the-verdict",
     
     "relUrl": "/reference/skill-instructions/qa-witness.html#it-is-a-projection-not-the-verdict"
@@ -10200,7 +10200,7 @@
   },"1457": {
     "doc": "QA witnesses",
     "title": "Where things are",
-    "content": "|   |   | . | projections | docs/assets/qa/**/*.{block,kg,translation}.json | . | schema + builder | content/pipeline/qa-witness.ts | . | written by | scripts/gen-docs-pages.ts | . | drawn by | docs/assets/js/docs-ui.js (qaBuildPanel) | . | block verdicts | content/**/*.qa.json | . | kg verdicts | **/kg-qa/*.kg-qa.json, auditor in skills/kg-qa.manifest.json | . The schema lives in content/pipeline/ rather than schemas/ because it is the pipeline’s own output shape. Worth knowing when you go looking for it in the declared schemas/ graph and do not find it. ",
+    "content": "|   |   | . | projections (committed) | test/results/witnesses/**/*.{block,kg,translation}.json | . | projections (published) | /assets/qa/…, copied into _site by docs-site.yml and feature-staging.yml | . | schema + builder | content/pipeline/qa-witness.ts | . | written by | scripts/gen-docs-pages.ts | . | drawn by | docs/assets/js/docs-ui.js (qaBuildPanel) | . | block verdicts | content/**/*.qa.json | . | kg verdicts | **/kg-qa/*.kg-qa.json, auditor in skills/kg-qa.manifest.json | . The schema lives in content/pipeline/ rather than schemas/ because it is the pipeline’s own output shape. Worth knowing when you go looking for it in the declared schemas/ graph and do not find it. ",
     "url": "/folio-assistant/reference/skill-instructions/qa-witness.html#where-things-are",
     
     "relUrl": "/reference/skill-instructions/qa-witness.html#where-things-are"

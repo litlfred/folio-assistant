@@ -458,7 +458,17 @@
 
 <p>A <strong>QA witness</strong> is what a reader sees when they open the QA badge beside a
 heading on the docs site. One JSON document per subject, all of them
-<code class="language-plaintext highlighter-rouge">"$schema": "qa-witness/v1"</code>, all of them under <code class="language-plaintext highlighter-rouge">docs/assets/qa/</code>.</p>
+<code class="language-plaintext highlighter-rouge">"$schema": "qa-witness/v1"</code>, all of them committed under
+<code class="language-plaintext highlighter-rouge">test/results/witnesses/</code> and <strong>published</strong> at <code class="language-plaintext highlighter-rouge">/assets/qa/</code>.</p>
+
+<p>Those are two different questions. Where a witness LIVES follows provenance —
+it is a QA process’s output, so it belongs in the declared <code class="language-plaintext highlighter-rouge">test/results/</code>
+tree with everything else a QA reviewer produced. Where it is SERVED FROM is
+unchanged: every <code class="language-plaintext highlighter-rouge">data-qa-src</code> in a generated page says <code class="language-plaintext highlighter-rouge">/assets/qa/…</code>, and
+the publishing workflows copy the directory into <code class="language-plaintext highlighter-rouge">_site/assets/qa/</code> after
+Jekyll runs. It sat in <code class="language-plaintext highlighter-rouge">docs/</code> until 2026-09-19 only because that is where
+Jekyll could reach it, which is a fact about the build and not about the
+artefact.</p>
 
 <p>Measured 2026-09-19: <strong>134 documents — 113 <code class="language-plaintext highlighter-rouge">block</code>, 20 <code class="language-plaintext highlighter-rouge">kg</code>, 1
 <code class="language-plaintext highlighter-rouge">translation</code>.</strong></p>
@@ -481,7 +491,7 @@ into the shape the panel draws and placed where the site can fetch it.</p>
 
 <p>So a wrong verdict is fixed in the checker; a verdict that reads wrongly on the
 page is fixed in <code class="language-plaintext highlighter-rouge">content/pipeline/qa-witness.ts</code> or in <code class="language-plaintext highlighter-rouge">docs-ui.js</code>. Editing a
-file under <code class="language-plaintext highlighter-rouge">docs/assets/qa/</code> by hand fixes neither — it is generated, and the
+file under <code class="language-plaintext highlighter-rouge">test/results/witnesses/</code> by hand fixes neither — it is generated, and the
 next <code class="language-plaintext highlighter-rouge">gen-docs-pages</code> run discards the edit.</p>
 <h2 id="the-three-families-and-why-the-distinction-is-load-bearing">
   
@@ -616,8 +626,12 @@ and render order coincide only while nothing sorts above it.</p>
   </thead>
   <tbody>
     <tr>
-      <td>projections</td>
-      <td><code class="language-plaintext highlighter-rouge">docs/assets/qa/**/*.{block,kg,translation}.json</code></td>
+      <td>projections (committed)</td>
+      <td><code class="language-plaintext highlighter-rouge">test/results/witnesses/**/*.{block,kg,translation}.json</code></td>
+    </tr>
+    <tr>
+      <td>projections (published)</td>
+      <td><code class="language-plaintext highlighter-rouge">/assets/qa/…</code>, copied into <code class="language-plaintext highlighter-rouge">_site</code> by <code class="language-plaintext highlighter-rouge">docs-site.yml</code> and <code class="language-plaintext highlighter-rouge">feature-staging.yml</code></td>
     </tr>
     <tr>
       <td>schema + builder</td>
@@ -659,7 +673,7 @@ the declared <code class="language-plaintext highlighter-rouge">schemas/</code> 
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35429119488"><code>14fc922</code></a> &middot; 2026-09-19T07:22:40Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35429850965"><code>39e4116</code></a> &middot; 2026-09-19T07:38:58Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

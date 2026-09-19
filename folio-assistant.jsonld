@@ -239,10 +239,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T07:23:10.766Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/14fc9228367d43d30a54ea26ff747bfaab41e9fe",
-  "sourceCommitSha": "14fc9228367d43d30a54ea26ff747bfaab41e9fe",
-  "sourceCommitAt": "2026-09-19T09:21:51+02:00",
+  "generatedAt": "2026-09-19T07:39:25.204Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/39e41161163a7c549aa09fd53677267aae719285",
+  "sourceCommitSha": "39e41161163a7c549aa09fd53677267aae719285",
+  "sourceCommitAt": "2026-09-19T09:37:56+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 150,
@@ -256,7 +256,7 @@
     "Tool": 27,
     "Schema": 37,
     "GraphKind": 14,
-    "Directory": 10
+    "Directory": 9
   },
   "problems": [],
   "undeclaredTerms": [],
@@ -1292,12 +1292,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/ns#Skill",
       "name": "qa-witness",
       "title": "QA witnesses — the published projection of every verdict",
-      "description": "The QA projections under `docs/assets/qa/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
+      "description": "The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/qa-witness.md",
-      "instructionLines": 114,
+      "instructionLines": 125,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -16842,21 +16842,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/qa",
       "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
       "name": "qa",
-      "path": "docs/assets/qa/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/ns#graphKind/qa"
-      ],
-      "description": "QA witnesses — the PUBLISHED PROJECTION of every verdict, one `qa-witness/v1` document per audited subject, in three families: `block` (a content block, from the QA sweep), `kg` (a process, decision, role or skill, from `kg-audit`) and `translation` (a page's locale coverage). Measured 2026-09-19: 134 documents, 113 / 20 / 1. NOT the verdicts: those live beside their subjects as `*.qa.json` and `kg-qa/*.kg-qa.json`, and are what a checker wrote. A witness is that verdict flattened into the shape the docs panel draws and placed where the site can fetch it, so a wrong verdict is fixed in the checker and a verdict that READS wrongly is fixed in the projector — editing a file here fixes neither, because `gen-docs-pages` discards it. Undeclared until 2026-09-19, which is the `dh4f` defect in reverse: 134 committed files that no declaration mentioned, so a consumer scanning the declared directories saw none of them and reported a clean run over the lot."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/qa-results",
-      "@type": "https://litlfred.github.io/folio-assistant/ns#Directory",
-      "name": "qa-results",
       "path": "test/results/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/ns#graphKind/qa"
       ],
-      "description": "QA RESULTS — what a QA process produced about a whole produced artefact, as opposed to a verdict about one authored subject. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs here, as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. First tenant: `kg-export.qa-results.json`, the four diagnostics `scripts/kg-export.ts` computes about the graph it just built. A run-scoped RESULT, not a per-subject verdict, which is why it is not a `*.qa.json` or a `kg-qa/` sidecar: its subject is one produced document and its findings are whole-corpus. Declared the same day it was created, deliberately — the `qa` witnesses above spent their whole existence undeclared, which is the `dh4f` defect in reverse, and the remedy for that is to declare a directory when you make it rather than when somebody notices."
+      "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Two kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced) and `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, projected from the verdicts that live beside their subjects). A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested pair, deliberately: #263's own comment names the defect a declaration inside another declaration creates. NOT the verdicts — 122 `*.qa.json` and 227 `kg-qa/*.kg-qa.json` still sit beside their subjects and move in later PRs. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/beans",
@@ -16911,8 +16901,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "14fc9228367d43d30a54ea26ff747bfaab41e9fe",
+    "sha": "39e41161163a7c549aa09fd53677267aae719285",
     "pr": "main",
-    "run": "35429119488"
+    "run": "35429850965"
   }
 }
