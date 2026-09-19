@@ -53,6 +53,7 @@ import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-
 import { tools } from "../tools/index.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
+import { buildQaResult, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -1499,6 +1500,53 @@ if (import.meta.main) {
     console.error("  Declare each in `buildContext` — see the DOCUMENT ROOT section there.");
     process.exit(1);
   }
+
+  // The QA RESULT, under the declared `test/results/`.
+  //
+  // The owner's rule, 2026-09-19: an artefact generated primarily as a QA
+  // reviewer belongs there as part of a QA process — placement follows
+  // PROVENANCE, not file family. These four findings are exactly that: a
+  // review of the graph this run just produced.
+  //
+  // Written from the SAME values the document carries, not recomputed. Two
+  // renderings of one computation cannot disagree; two computations can. It is
+  // the rule `feature-staging.yml` already follows when it copies the `.json`
+  // alias AFTER the staging stamp, and the reason `stagingStamp` is one
+  // function rather than one per exporter.
+  //
+  // The document still carries these fields. Moving them out is a SEPARATE
+  // change, because `scripts/kg-viewer.ts:573` reads `doc.undeclaredTerms` off
+  // the published document and renders it — so removing them needs the viewer
+  // pointed at the published result first, and a half-moved field would take
+  // the viewer's panel with it.
+  const resultPath = writeQaResult(ROOT, "kg-export", buildQaResult({
+    script: "scripts/kg-export.ts",
+    scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
+    subject: { kind: "graph", id: `${stub}.jsonld` },
+    families: {
+      undeclaredTerms: {
+        summary:
+          "Property names used in `@graph` that the `@context` does not declare. " +
+          "Dropped outright by a JSON-LD processor.",
+        entries: data.undeclaredTerms,
+      },
+      undeclaredSchemaModules: {
+        summary:
+          "Modules in the declared schemas/ directory that do not say what they are, " +
+          "so they are absent from the graph.",
+        entries: data.undeclaredSchemaModules,
+      },
+      danglingLinks: {
+        summary: "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
+        entries: data.danglingLinks,
+      },
+      problems: {
+        summary: "Sources that could not be read. Never empty-by-omission.",
+        entries: data.problems,
+      },
+    },
+  }));
+  console.log(`QA result → ${relative(ROOT, resultPath)}`);
 
   const collisions = keywordCollisions(data["@graph"]);
   if (collisions.length > 0) {
