@@ -274,16 +274,28 @@ jobs:
       # harness injects. An entry edited and never assembled is a fact the
       # author believes an agent has and the agent has never seen -- invisible,
       # because the generated file still reads perfectly well without it.
+      # NOT un-folded, deliberately, and this comment is the finding rather
+      # than the fix.
+      #
+      # The `bun run scripts/gen-docs-pages.ts --check` below is a CONTINUATION
+      # LINE of this step's `run`, so YAML folds it into one scalar and it is
+      # passed to `agent-memory:check` as trailing arguments, which that script
+      # ignores. **The gate has never run.** Bean `folio-assistant-2u6m`.
+      #
+      # Turning it on is not a one-line fix, which is why it is not done here.
+      # `gen-docs-pages` writes LIVE QA VERDICTS into the pages it generates —
+      # the badge on `publication-workflow.md` currently reads "1 fail" where
+      # the graph now says "0 fail, 10 pass", stale since the actor-kind fixes
+      # landed in #353. So the pages go stale whenever the knowledge graph
+      # changes, and enabling the check makes every KG-touching PR red unless
+      # it also regenerates. That is a real policy decision with a real
+      # maintenance cost, and smuggling it into an unrelated PR is how a gate
+      # gets turned back off by the next person it blocks.
+      #
+      # Measured 2026-09-19 on `origin/main` at ed3403322: 12 pages stale.
       - name: agent memory is assembled
         run: bun run agent-memory:check
-
-      # Was a continuation line of the step above, so YAML folded it into that
-      # step's `run` as trailing ARGUMENTS to `agent-memory:check` — which
-      # ignores them. The gate has therefore never run. Restored as its own
-      # step; verified locally that the committed pages are in fact current, so
-      # this turns a silent no-op into a passing check rather than a new red.
-      - name: content-backed docs pages are current
-        run: bun run scripts/gen-docs-pages.ts --check
+          bun run scripts/gen-docs-pages.ts --check
 
       # The translation index is what the navbar's locale filter reads, and it
       # is derived from the `translated-content` directories `cat-harness.json`
