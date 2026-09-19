@@ -47,9 +47,11 @@
         <bpmn:flowNodeRef>Task_BuildStaging</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DeployStaging</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CommentPR</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_WatchBranchCI</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Merged</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CleanupStaging</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RebuildMain</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_WatchMainCI</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Pipeline</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -363,7 +365,32 @@
       <bpmn:outgoing>p4</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Merged" name="PR merged?">
+        <bpmn:task id="Task_WatchBranchCI" name="Open the branch-watch bean&#10;[watch]">
+      <bpmn:extensionElements>
+        <folio:skill ref="watch" />
+        <folio:skill ref="todo-manager" />
+        <folio:bean store="beans/" op="claim" />
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>
+        First dispatch point for a CI watcher: the feature branch has changed
+        and a staging build now exists to watch. The watcher is DISPATCHED BY
+        OPENING A BEAN, not by a workflow_dispatch -- per the owner on bean
+        29ij, this is a task/workflow initiation.
+
+        That is the whole reason it is an activity rather than a line of prose.
+        A bean makes the watch durable past the session that opened it: the
+        container is reclaimed, and what survives is the claim. Starting the
+        watcher and recording that it is running are ONE declared step, so the
+        two cannot disagree about whether anything is watching.
+
+        Claim rather than note: the watch is work in progress, and it is
+        idempotent, so re-entering on a subsequent push does not duplicate it.
+      </bpmn:documentation>
+      <bpmn:incoming>p4</bpmn:incoming>
+      <bpmn:outgoing>p4b</bpmn:outgoing>
+    </bpmn:task>
+<bpmn:exclusiveGateway id="GW_Merged" name="PR merged?">
       <bpmn:incoming>flow_approve_to_pipeline</bpmn:incoming>
       <bpmn:outgoing>p5</bpmn:outgoing>
       <bpmn:outgoing>p8</bpmn:outgoing>
@@ -397,8 +424,31 @@
       <bpmn:outgoing>p7</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:endEvent id="End_Pipeline" name="Deployment complete">
+        <bpmn:task id="Task_WatchMainCI" name="Note the main-branch watch&#10;[watch]">
+      <bpmn:extensionElements>
+        <folio:skill ref="watch" />
+        <folio:skill ref="todo-manager" />
+        <folio:bean store="beans/" op="note" />
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>
+        Second dispatch point: the change was approved and merged, and the
+        root of the site has been rebuilt from main. This is the moment
+        docs-site.yml failed all 30 times over two months (bean xom7) while
+        looking exactly like a green run from inside the repo.
+
+        `note` rather than `claim`, and the difference is not cosmetic. By
+        here the branch-watch bean already exists, and whether the publish
+        SUCCEEDED is a judgement this step cannot make -- the build reports
+        its own exit code, and xom7 is the record of that being believed.
+        AGENTS.md: a bean is not closed on someone else's say-so. So the step
+        records what it observed and leaves the verdict to the watcher.
+      </bpmn:documentation>
       <bpmn:incoming>p7</bpmn:incoming>
+      <bpmn:outgoing>p7b</bpmn:outgoing>
+    </bpmn:task>
+<bpmn:endEvent id="End_Pipeline" name="Deployment complete">
+      <bpmn:incoming>p7b</bpmn:incoming>
       <bpmn:incoming>p8</bpmn:incoming>
     </bpmn:endEvent>
 
@@ -415,7 +465,8 @@
     <bpmn:sequenceFlow id="p1" sourceRef="Start_Pipeline" targetRef="Task_BuildStaging" />
     <bpmn:sequenceFlow id="p2" sourceRef="Task_BuildStaging" targetRef="Task_DeployStaging" />
     <bpmn:sequenceFlow id="p3" sourceRef="Task_DeployStaging" targetRef="Task_CommentPR" />
-    <bpmn:sequenceFlow id="p4" sourceRef="Task_CommentPR" targetRef="Task_ReviewStaging" />
+    <bpmn:sequenceFlow id="p4" sourceRef="Task_CommentPR" targetRef="Task_WatchBranchCI" />
+    <bpmn:sequenceFlow id="p4b" sourceRef="Task_WatchBranchCI" targetRef="Task_ReviewStaging" />
     <bpmn:sequenceFlow id="f3" sourceRef="Task_ReviewStaging" targetRef="GW_AuthorSatisfied" />
     <bpmn:sequenceFlow id="f4" name="No" sourceRef="GW_AuthorSatisfied" targetRef="Task_RequestRevision" />
     <bpmn:sequenceFlow id="f5" sourceRef="Task_RequestRevision" targetRef="Task_Iterate" />
@@ -434,7 +485,8 @@
     <bpmn:sequenceFlow id="flow_approve_to_pipeline" sourceRef="Task_Approve" targetRef="GW_Merged" />
     <bpmn:sequenceFlow id="p5" name="Yes" sourceRef="GW_Merged" targetRef="Task_CleanupStaging" />
     <bpmn:sequenceFlow id="p6" sourceRef="Task_CleanupStaging" targetRef="Task_RebuildMain" />
-    <bpmn:sequenceFlow id="p7" sourceRef="Task_RebuildMain" targetRef="End_Pipeline" />
+    <bpmn:sequenceFlow id="p7" sourceRef="Task_RebuildMain" targetRef="Task_WatchMainCI" />
+    <bpmn:sequenceFlow id="p7b" sourceRef="Task_WatchMainCI" targetRef="End_Pipeline" />
     <bpmn:sequenceFlow id="p8" name="No (iterate)" sourceRef="GW_Merged" targetRef="End_Pipeline" />
   </bpmn:process>
 
@@ -442,21 +494,21 @@
     <bpmndi:BPMNPlane id="BPMNPlane_ContentChangeReview" bpmnElement="Collaboration_ContentChangeReview">
       <!-- Participant / Pool -->
       <bpmndi:BPMNShape id="Participant_ContentChangeReview_di" bpmnElement="Participant_ContentChangeReview" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="4360" height="800" />
+        <dc:Bounds x="160" y="80" width="4560" height="800" />
       </bpmndi:BPMNShape>
 
       <!-- Lanes -->
       <bpmndi:BPMNShape id="Lane_Author_di" bpmnElement="Lane_Author" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="4330" height="200" />
+        <dc:Bounds x="190" y="80" width="4530" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Agent_di" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="190" y="280" width="4330" height="200" />
+        <dc:Bounds x="190" y="280" width="4530" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Reviewer_di" bpmnElement="Lane_Reviewer" isHorizontal="true">
-        <dc:Bounds x="190" y="480" width="4330" height="200" />
+        <dc:Bounds x="190" y="480" width="4530" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Pipeline_di" bpmnElement="Lane_Pipeline" isHorizontal="true">
-        <dc:Bounds x="190" y="680" width="4330" height="200" />
+        <dc:Bounds x="190" y="680" width="4530" height="200" />
       </bpmndi:BPMNShape>
 
       <!-- Author Shapes -->
@@ -587,13 +639,19 @@
         <dc:Bounds x="4240" y="740" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_Pipeline_di" bpmnElement="End_Pipeline">
-        <dc:Bounds x="4440" y="762" width="36" height="36" />
+        <dc:Bounds x="4640" y="762" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4420" y="805" width="80" height="30" />
+          <dc:Bounds x="4620" y="718" width="80" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
 
       <!-- Edges -->
+      <bpmndi:BPMNShape id="Task_WatchBranchCI_di" bpmnElement="Task_WatchBranchCI">
+        <dc:Bounds x="2510" y="740" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WatchMainCI_di" bpmnElement="Task_WatchMainCI">
+        <dc:Bounds x="4440" y="740" width="140" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="f1_di" bpmnElement="f1">
         <di:waypoint x="276" y="180" />
         <di:waypoint x="330" y="180" />
@@ -645,9 +703,12 @@
         <di:waypoint x="2310" y="780" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="p4_di" bpmnElement="p4">
-        <di:waypoint x="2380" y="740" />
-        <di:waypoint x="2380" y="180" />
-        <di:waypoint x="2510" y="180" />
+        <di:waypoint x="2450" y="780" />
+        <di:waypoint x="2510" y="780" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="p4b_di" bpmnElement="p4b">
+        <di:waypoint x="2580" y="740" />
+        <di:waypoint x="2580" y="220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="f3_di" bpmnElement="f3">
         <di:waypoint x="2650" y="180" />
@@ -748,11 +809,15 @@
         <di:waypoint x="4380" y="780" />
         <di:waypoint x="4440" y="780" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="p7b_di" bpmnElement="p7b">
+        <di:waypoint x="4580" y="780" />
+        <di:waypoint x="4640" y="780" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="p8_di" bpmnElement="p8">
         <di:waypoint x="3950" y="805" />
         <di:waypoint x="3950" y="850" />
-        <di:waypoint x="4458" y="850" />
-        <di:waypoint x="4458" y="798" />
+        <di:waypoint x="4658" y="850" />
+        <di:waypoint x="4658" y="798" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3960" y="825" width="70" height="14" />
         </bpmndi:BPMNLabel>

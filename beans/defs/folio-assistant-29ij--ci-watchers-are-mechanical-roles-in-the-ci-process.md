@@ -1,10 +1,11 @@
 ---
 # folio-assistant-29ij
 title: CI watchers are mechanical roles in the CI process, with two dispatch points
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-19T05:24:55Z
-updated_at: 2026-09-19T05:24:55Z
+updated_at: 2026-09-19T08:54:16Z
 ---
 
 
@@ -94,3 +95,13 @@ Queued rather than pivoted to, per the owner's standing instruction: *"in
 chats if I discuss a new task I want you to queue/run in parallel, do not pivot
 unless explicitly told so."* The chosen next task is designing the human todo
 store.
+
+_2026-09-19T08:52:50Z_ — Built both dispatch points as activities in content-change-review.bpmn's CI/CD Pipeline lane, per the owner: a dispatch point is a task/workflow initiation that opens a bean, not a workflow_dispatch.
+
+Task_WatchBranchCI (after Task_CommentPR) carries op=claim — the branch changed and a staging build exists to watch; claim is idempotent, so re-entering on a later push does not duplicate it.
+
+Task_WatchMainCI (after Task_RebuildMain) carries op=note — the bean already exists by then, and whether the publish SUCCEEDED is the judgement this lane must not make. That is bean xom7 exactly: docs-site.yml failed 30 times while reporting its own exit code.
+
+build-pipeline gained 'watch' and 'todo-manager'. The audit demanded it (role-carries-activity-skill, 4 findings) and it is consistent with the role's own description — claim and note are fixed programs; resolve would be judgement, and is deliberately not used.
+
+Measured: skill-in-role-or-process 101 -> 100. 'watch' was previously reached, if at all, by direct invocation.

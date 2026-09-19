@@ -1,10 +1,11 @@
 ---
 # folio-assistant-n98f
 title: Retire the content-pipeline-navigator subagent
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-19T08:06:05Z
-updated_at: 2026-09-19T08:06:05Z
+updated_at: 2026-09-19T08:54:16Z
 ---
 
 
