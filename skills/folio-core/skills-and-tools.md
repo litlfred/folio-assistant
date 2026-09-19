@@ -66,7 +66,7 @@ equal standing, and the skill must present it that way.
 **`agentic-harness` must work with no MCP server running.** Everything it needs
 is files in directories the instance declares: skills in the `kg` graph, Tool
 nodes beside them, the work plan in the `beans` graph. An agent with nothing but
-a filesystem and `cat-harness.json` can read all of it.
+a filesystem and `harness.json` can read all of it.
 
 MCP is **acknowledged as a future transport, not assumed as the present one.**
 Where a downstream instance runs a server, `skill_list` / `skill_fetch` /
@@ -90,7 +90,7 @@ sovereign-compute and air-gapped operation are reachable later without a second
 design — an instance with no server loses a transport, not a capability.
 
 So when this skill says "reach a Tool through the graph", the floor is: read
-`cat-harness.json`, find the `kg` entry, open the directory. Anything richer
+`harness.json`, find the `kg` entry, open the directory. Anything richer
 is an optimisation an instance may offer.
 
 ## GitHub is a Tool node, not a layer
@@ -139,7 +139,7 @@ not fine for the only statement of what to do to be `gh pr create`.
    violation.
 3. **Say a mechanism exists and where to find it** — never inline it. A Tool is
    reached the same way a skill is: resolve the `kg` graph from the instance's
-   `cat-harness.json` and read from the directory it names. Not a remembered
+   `harness.json` and read from the directory it names. Not a remembered
    path, and — see below — not necessarily a tool call.
 4. **Say when each Tool applies** if there is more than one, because choosing
    between them is judgement and judgement is skill.

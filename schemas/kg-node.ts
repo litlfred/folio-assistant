@@ -16,7 +16,7 @@
  * ## `title` is not `id`, and not `name`
  *
  * `id` is the handle other nodes reference. `name` — where a node still has one
- * — is the instance's own identifier, the thing `cat-harness.json` calls
+ * — is the instance's own identifier, the thing `harness.json` calls
  * `folio-assistant` and publishes artefacts under. `title` is neither: it is
  * display text, it may contain punctuation an identifier could not, and it is
  * **translatable**. `WHO SMART Base` is a title; `smart-base` is a name.
@@ -213,6 +213,36 @@ export function imagesForRole(
     if (i.role === role && i.layout !== undefined) out.set(i.layout, i);
   }
   return out;
+}
+
+/**
+ * The ONE image of a role that has no layout variants.
+ *
+ * A sibling of {@link imagesForRole}, not a replacement for it, because the two
+ * answer different questions. A `landing` backdrop exists once per viewport and
+ * is keyed by `layout`; a mark exists once, full stop. `imagesForRole` encodes
+ * the first shape in its filter — `i.layout !== undefined` — so asking it for a
+ * role whose images carry no layout returns an EMPTY MAP and says nothing about
+ * why.
+ *
+ * That is not hypothetical. `harness.json` declares `mark-small` with
+ * `role: "browser-icon"`, and until 2026-09-19 nothing consumed it: the site
+ * emitted no favicon at all, and the one function that could have found the
+ * image structurally could not, because neither mark declares a layout. A
+ * declared role, an unreachable lookup, and nothing reporting either — the
+ * same "declared, unread, unnoticed" failure `beans/defs/…blv9` records for
+ * template asset paths.
+ *
+ * Returns the FIRST match. A role meant to be unique that has several entries
+ * is a declaration bug, and picking the first is the same rule
+ * `resolveDirectories` uses for a repeated id — deterministic, and left to the
+ * declaration's own validation to complain about rather than guessed at here.
+ */
+export function imageForRole(
+  images: readonly KgImage[] | undefined,
+  role: string,
+): KgImage | undefined {
+  return (images ?? []).find((i) => i.role === role);
 }
 
 /** What {@link pickLayout} did, so a caller can report a substitution. */

@@ -18,11 +18,11 @@ Decision table: [`decisions/folio-intent.dmn`](../../skills/workflows/decisions/
 ## The landing page is the instance's own description
 
 A folio's home page opens with **its** description inside **its** backdrop, both
-declared in `cat-harness.json` at the repository root. Nothing about any
+declared in `harness.json` at the repository root. Nothing about any
 particular instance is written into the template, so a downstream folio does not
 inherit the platform's grumpy cat.
 
-**Where the markdown node is:** `description` in `cat-harness.json`. It is
+**Where the markdown node is:** `description` in `harness.json`. It is
 markdown and it is rendered as-is. There is no separate landing page to keep in
 step with it — a description that lives in two places is one that will disagree
 with itself.

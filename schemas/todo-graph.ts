@@ -60,7 +60,7 @@ import {
  * The graph kinds a todo graph's directories hold.
  *
  * Registered in `BASE_GRAPH_KINDS`, not defined here — the vocabulary is
- * shared with `cat-harness.json`. This is a convenience for callers wanting
+ * shared with `harness.json`. This is a convenience for callers wanting
  * the todo-specific subset, never a second source of truth.
  */
 export const TODO_NODE_KINDS = ["todo-items", "todo-feedback"] as const;

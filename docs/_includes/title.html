@@ -2,7 +2,7 @@
   The sidebar title, overriding just-the-docs' own `title.html`.
 
   Reads `docs/_data/harness.json`, which `scripts/sync-docs-harness.ts` copies
-  from the instance's `cat-harness.json`. The declaration is the source of
+  from the instance's `harness.json`. The declaration is the source of
   truth for what this instance is called; `site.title` is the fallback for a
   checkout where the sync has not run.
 
@@ -13,8 +13,24 @@
   rather than in the node.
 {%- endcomment -%}
 {%- assign h = site.data.harness -%}
+{%- comment -%}
+  The FULL mark here — whiskers and all — because it is the mark, and the
+  owner asked for this one in this place, twice.
+
+  It was briefly the small mark, on my reasoning that 24 px cannot carry the
+  detail. That was the wrong call in two ways. The small mark is a DIFFERENT
+  DRAWING, so serving it here quietly substitutes a second glyph for the one
+  the instance declares; and my attempt to make it legible at 24 px — an
+  8-unit white halo where the original has 3 — blunted the ear tips under
+  `stroke-linejoin="round"` and read as a fat white outline at full size.
+  Reverted. The lever for legibility is the RENDER SIZE below, which leaves
+  the artwork alone.
+
+  `h.icon` is the instance's declared mark, so an instance that declares a
+  different one gets its own here with no template change.
+{%- endcomment -%}
 {%- if h.icon.src -%}
   <img src="{{ h.icon.src | relative_url }}" alt="" aria-hidden="true"
-       class="fa-site-mark" width="24" height="24" />
+       class="fa-site-mark" width="32" height="32" />
 {%- endif -%}
 <span class="fa-site-title">{{ h.title | default: site.title }}</span>
