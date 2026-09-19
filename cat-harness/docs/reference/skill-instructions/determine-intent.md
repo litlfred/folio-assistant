@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`bootstrap/skills/determine-intent.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/determine-intent.md) — do not edit here.
+> Generated from [`../bootstrap/skills/determine-intent.md`](https://github.com/litlfred/folio-assistant/blob/main/../bootstrap/skills/determine-intent.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/bootstrap/skills/determine-intent.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../bootstrap/skills/determine-intent.md){: .fa-edit-source }
 
 {% raw %}
 # What is this repository supposed to be?

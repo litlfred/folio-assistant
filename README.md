@@ -126,13 +126,13 @@ gates) and **non-mechanical** validation (a review agent, escalating to a human
 or SME on a judgement call). Both must report; the findings are shown to the
 editor; only an accepted change is written to the corpus.
 
-<img src="folio-assistant/docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
+<img src="cat-harness/docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
 [BPMN source](cat-harness/skills/workflows/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
-<img src="folio-assistant/docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
+<img src="cat-harness/docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
 [BPMN source](cat-harness/skills/workflows/draft-to-publication.bpmn)
 
@@ -143,7 +143,7 @@ Both diagrams above appear here as call activities, and the **work plan
 findings, resolved on commit — so a human and an agent read the same answer to
 *what is done, and what is next*.
 
-<img src="folio-assistant/docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
+<img src="cat-harness/docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
 [BPMN source](cat-harness/skills/workflows/content-lifecycle.bpmn)
 

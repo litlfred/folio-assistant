@@ -19,7 +19,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { siteDirFor } from "../schemas/cat-harness.js";
+import { instanceRootFor, siteDirFor } from "../schemas/cat-harness.js";
 import { themeCssVars } from "../schemas/theme.js";
 import { DEFAULT_THEME_ID, THEMES } from "../schemas/themes.js";
 
@@ -96,7 +96,11 @@ export function renderThemesCss(): string {
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const root = process.cwd();
+  // THE INSTANCE this script belongs to — the one it lives in — not whatever
+  // directory the gate was invoked from. Those were the same until the move
+  // (bean `wggr`), after which `siteDirFor(cwd)` threw on a `harness.json`
+  // that is one directory down.
+  const root = instanceRootFor(import.meta.dir);
   const rel = themesCssPath(root);
   const path = join(root, rel);
   const next = renderThemesCss();

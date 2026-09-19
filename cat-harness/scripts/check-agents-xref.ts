@@ -56,6 +56,7 @@
  */
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+import { instanceRootFor, repoRootFor } from "../schemas/cat-harness.js";
 
 export type Verdict = "resolves" | "folio" | "unresolved";
 
@@ -176,9 +177,34 @@ const CITATION = /AGENTS\.md`?(?:'s)?\s*(?:§\s*)?["“]([^"”\n]{4,90})["”]/
 const OWNED_CITATION =
   /([\w.-]+\/[\w.-]+)`?(?:'s)?\s*`?AGENTS\.md`?(?:'s)?\s*(?:§\s*)?["“]([^"”\n]{4,90})["”]/g;
 
-export function auditXrefs(repoRoot: string, skillRoots: string[]): Citation[] {
+/**
+ * @param repoRoot      where `AGENTS.md` is — the REPOSITORY's.
+ * @param skillRoots    directories to scan, relative to `skillsRoot`.
+ * @param skillsRoot    what `skillRoots` are relative to. Defaults to
+ *   `repoRoot`, which is what it meant while the two were one directory.
+ *
+ * Two roots because the move (bean `wggr`) split the question in half:
+ * `AGENTS.md` stayed at the top of the checkout and `skills/` went into the
+ * instance. With one parameter the live run scanned `<repo>/skills`, found no
+ * files, and printed a census of **0** — where it had been 8 — as a clean run.
+ * The fixtures in `check-agents-xref.test.ts` still pass one root, because a
+ * fixture repository has no instance in it.
+ */
+export function auditXrefs(
+  repoRoot: string,
+  skillRoots: string[],
+  skillsRoot: string = repoRoot,
+): Citation[] {
   const agentsPath = join(repoRoot, "AGENTS.md");
   if (!existsSync(agentsPath)) throw new Error(`no AGENTS.md at ${agentsPath}`);
+  // Could-not-check, not "no citations". A census of zero over a tree that is
+  // not there is indistinguishable from a corpus with nothing to say, and the
+  // caller turns this into exit 2 rather than a green sweep.
+  if (!skillRoots.some((r) => existsSync(join(skillsRoot, r)))) {
+    throw new Error(
+      `none of the skill roots exist under ${skillsRoot}: ${skillRoots.join(", ")}`,
+    );
+  }
   const agentsMd = readFileSync(agentsPath, "utf8");
   const headings = headingsOf(agentsMd);
   const folio = folioAttributedSections(agentsMd);
@@ -189,7 +215,7 @@ export function auditXrefs(repoRoot: string, skillRoots: string[]): Citation[] {
 
   const out: Citation[] = [];
   for (const root of skillRoots) {
-    for (const f of markdownUnder(join(repoRoot, root))) {
+    for (const f of markdownUnder(join(skillsRoot, root))) {
       const text = readFileSync(f, "utf8");
       // A citation naming another repository declares its own destination, so
       // it is never reported against this file's headings.
@@ -234,7 +260,9 @@ if (import.meta.main) {
   const strict = process.argv.includes("--strict");
   let cites: Citation[];
   try {
-    cites = auditXrefs(process.cwd(), SKILL_ROOTS);
+    // `AGENTS.md` is the repository's; the skills are the instance's.
+    const instance = instanceRootFor(import.meta.dir);
+    cites = auditXrefs(repoRootFor(instance), SKILL_ROOTS, instance);
   } catch (e) {
     console.error(`could not check: ${(e as Error).message}`);
     process.exit(2);

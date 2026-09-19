@@ -35,10 +35,11 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import { join } from "path";
+import { dirname, join } from "path";
 
 import { loadReadmeConfig, detectRepoUrl, publishedPaths } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
+import { INSTANCE_README_ROLE, declaredAssetPath } from "../../schemas/cat-harness";
 
 // ── Findings ────────────────────────────────────────────────────────────────
 
@@ -231,8 +232,27 @@ export function classify(
 export function auditLinks(
   root: string,
   src: string,
-  opts: { repoUrl?: string; pagesBaseUrl?: string; publishRef: string; fetch?: boolean },
+  opts: {
+    repoUrl?: string;
+    pagesBaseUrl?: string;
+    publishRef: string;
+    fetch?: boolean;
+    /**
+     * What a relative link is relative TO — the directory holding the file
+     * being audited. Defaults to `root`, which is what it meant while the
+     * README sat in the instance.
+     *
+     * The two parted at the move (bean `wggr`): this instance's README is
+     * declared `scope: "repository"` and sits one directory above `root`, so
+     * every worktree link in it was resolved one level too deep and 25 of 25
+     * came back dead. `root` still answers the OTHER question this function
+     * asks — which checkout to run `git ls-tree` in — which is why they are
+     * two parameters rather than one renamed.
+     */
+    base?: string;
+  },
 ): AuditResult {
+  const base = opts.base ?? root;
   const dead: DeadLink[] = [];
   const unchecked: Record<string, number> = {};
   let ok = 0;
@@ -260,7 +280,7 @@ export function auditLinks(
 
     if (c.kind === "worktree") {
       checked++;
-      if (existsSync(join(root, c.path!))) ok++;
+      if (existsSync(join(base, c.path!))) ok++;
       else dead.push({ ...link, reason: `no such path in the working tree: ${c.path}` });
       continue;
     }
@@ -289,10 +309,15 @@ export function runReadmeAudit(opts: {
 }): { text: string; exitCode: number } {
   const root = opts.root ?? findContentRepoRoot();
   const cfg = loadReadmeConfig(root);
-  const file = opts.file ?? join(root, "README.md");
+  // ASKED, not composed — see the same line in `readme-sections.ts`. The
+  // README is declared `scope: "repository"` here, one directory above the
+  // instance `root` every link below is resolved against.
+  const file =
+    opts.file ?? declaredAssetPath(root, INSTANCE_README_ROLE) ?? join(root, "README.md");
   if (!existsSync(file)) return { text: `No file at ${file}.`, exitCode: 2 };
 
   const result = auditLinks(root, readFileSync(file, "utf-8"), {
+    base: dirname(file),
     repoUrl: cfg.repoUrl ?? detectRepoUrl(root),
     pagesBaseUrl: cfg.pagesBaseUrl,
     publishRef: cfg.publishRef,

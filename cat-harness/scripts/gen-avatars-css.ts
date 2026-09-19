@@ -30,7 +30,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 import { AVATARS, GENERIC, TRASH_OVERLAY, type Avatar } from "../schemas/avatars.js";
-import { siteDirFor } from "../schemas/cat-harness.js";
+import { instanceRootFor, siteDirFor } from "../schemas/cat-harness.js";
 
 /** Where the stylesheet goes. Derived from `siteDirFor`, never written down. */
 export function avatarsCssPath(root: string): string {
@@ -223,7 +223,11 @@ export function renderAvatarsCss(): string {
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const root = process.cwd();
+  // THE INSTANCE this script belongs to — the one it lives in — not whatever
+  // directory the gate was invoked from. Those were the same until the move
+  // (bean `wggr`), after which `siteDirFor(cwd)` threw on a `harness.json`
+  // that is one directory down.
+  const root = instanceRootFor(import.meta.dir);
   const rel = avatarsCssPath(root);
   const path = join(root, rel);
   const next = renderAvatarsCss();

@@ -21,7 +21,7 @@
  * @module scripts/harness-dirs
  */
 
-import { relative, resolve } from "node:path";
+import { resolve } from "node:path";
 import { materialiseDeclaredDirectories } from "../schemas/harness-config";
 
 const root = resolve(import.meta.dir, "..");
@@ -41,10 +41,15 @@ if (results.length === 0) {
 
 const missing = results.filter((r) => r.created);
 for (const r of results) {
-  const where = relative(root, r.absPath) || ".";
+  // The DECLARED path plus its scope, not `relative(root, absPath)`: that
+  // renders a repository-scoped entry as `../beans`, which reads as a
+  // traversal somebody wrote rather than as the name `beans/` under the root
+  // the declaration names.
+  const where = r.path.replace(/\/+$/, "") || ".";
+  const scope = r.scope === "repository" ? " (repo)" : "";
   const state = r.created ? (check ? "MISSING" : "created") : "ok";
   const marker = r.markerWritten ? "  +keep-marker" : "";
-  console.log(`  ${state.padEnd(8)} ${where.padEnd(14)} ${r.declaredBy}${marker}`);
+  console.log(`  ${state.padEnd(8)} ${(where + scope).padEnd(22)} ${r.declaredBy}${marker}`);
 }
 
 console.log(

@@ -54,6 +54,7 @@ import {
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
 import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { INSTANCE_README_ROLE, declaredAssetPath } from "../../schemas/cat-harness";
 
 // ── Section contract ────────────────────────────────────────────────────────
 
@@ -495,7 +496,13 @@ export async function runReadmeSync(opts: {
     }
   }
 
-  const readmePath = opts.readmePath ?? join(root, "README.md");
+  // ASKED, not composed. This instance's README is declared
+  // `scope: "repository"` — it sits at the top of the checkout, one directory
+  // above the instance — so `join(root, "README.md")` named nothing and the
+  // gate failed with "No README" on a file that exists. The composed path is
+  // still the fallback, for an instance that declares no README asset.
+  const readmePath =
+    opts.readmePath ?? declaredAssetPath(root, INSTANCE_README_ROLE) ?? join(root, "README.md");
   if (!existsSync(readmePath) || !statSync(readmePath).isFile()) {
     return { text: `No README at ${readmePath}.`, exitCode: 2 };
   }

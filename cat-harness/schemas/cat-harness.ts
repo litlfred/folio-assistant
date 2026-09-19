@@ -1115,6 +1115,56 @@ export function rootForScope(instanceRoot: string, scope?: DeclarationScope): st
 }
 
 /**
+ * The instance directory a module inside it belongs to — the nearest enclosing
+ * directory carrying a {@link DECLARATION_FILENAME}.
+ *
+ * ## Why a walk rather than `process.cwd()`
+ *
+ * Nine scripts under `scripts/` and `content/pipeline/` read this instance's
+ * declaration and got the root from the working directory. That was never a
+ * claim about the instance; it was true only because a gate is run from the
+ * repository root and the two were one directory. After the move (bean
+ * `wggr`) seven CI gates threw `ENOENT: …/harness.json` — which was at least
+ * loud. `check-declared-assets` did not throw: it read a declaration that was
+ * not there, got no assets, and reported a clean run.
+ *
+ * An instance's own tooling belongs to exactly one instance — **the one it
+ * lives in** — so the honest question is "where am I", and every such script
+ * passes `import.meta.dir`.
+ *
+ * ## Why a walk rather than `resolve(import.meta.dir, "..")`
+ *
+ * Counting `..` pins the caller's depth: a script moved one directory down
+ * starts reading a declaration from somewhere else, and nothing says so. The
+ * walk finds the DECLARATION, which is the thing being asked for.
+ *
+ * Returns `undefined` rather than guessing — a site root guessed wrong writes
+ * hundreds of pages into a directory nothing serves. {@link instanceRootFor}
+ * is the throwing form for callers that cannot continue without one.
+ */
+export function findInstanceRoot(start: string): string | undefined {
+  let dir = resolve(start);
+  for (;;) {
+    if (existsSync(join(dir, DECLARATION_FILENAME))) return dir;
+    const up = resolve(dir, "..");
+    if (up === dir) return undefined;
+    dir = up;
+  }
+}
+
+/** {@link findInstanceRoot}, throwing rather than returning `undefined`. */
+export function instanceRootFor(start: string): string {
+  const root = findInstanceRoot(start);
+  if (root === undefined) {
+    throw new Error(
+      `no ${DECLARATION_FILENAME} in ${resolve(start)} or any parent — ` +
+        `cannot determine which instance this belongs to`,
+    );
+  }
+  return root;
+}
+
+/**
  * `siteDir` for the instance rooted at `root`, read from its declaration.
  *
  * Deliberately a RAW read of `name`/`stub` rather than `readDeclaration`:
@@ -1577,6 +1627,36 @@ export function resolveDirectories(
  */
 export const AGENT_INSTRUCTIONS_ROLE = "agent-instructions";
 
+/** The role an instance's reader-facing README declares. */
+export const INSTANCE_README_ROLE = "instance-readme";
+
+/**
+ * Where a declared asset of this role actually is, or `undefined` if the
+ * instance declares none.
+ *
+ * The point of asking rather than composing `join(root, "README.md")`: an
+ * asset carries a {@link DeclarationScope}, and this instance's README and
+ * `AGENTS.md` are the REPOSITORY's — one of each per checkout, however many
+ * instances it holds. `readme:sync` and `readme:audit` composed the path and
+ * so looked inside the instance, where `readme:sync:check` reported "No
+ * README" and failed the gate on a file that was one directory up.
+ *
+ * Existence is NOT filtered here, for the same reason {@link declaredAssets}
+ * does not filter it: a declared asset that is missing is a finding, and a
+ * caller that silently fell back to a composed path would turn that finding
+ * into a different file being checked.
+ *
+ * The first declared entry when a role has several — the same rule as
+ * `assetsForRole`, which callers wanting all of them should use instead.
+ */
+export function declaredAssetPath(
+  root: string,
+  role: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string | undefined {
+  return declaredAssets(root, registry).find((a) => a.role === role)?.absPath;
+}
+
 /**
  * This instance's declared assets, resolved to absolute paths.
  *
@@ -1734,8 +1814,17 @@ function wrapComment(text: string, width = 74): string[] {
 /** One directory's outcome from {@link materialiseDirectories}. */
 export interface MaterialisedDirectory {
   id: string;
-  /** Path the directory was (or would be) created at, inside the instance. */
+  /**
+   * Path the directory was (or would be) created at — inside the instance, or
+   * at the repository root for a `repository`-scoped entry.
+   */
   absPath: string;
+  /** The DECLARED path, as written. Reported so a caller need not recover it
+   * from `absPath` — `relative(instanceRoot, absPath)` gives `../beans` for a
+   * repository-scoped entry, which is a traversal rather than a name. */
+  path: string;
+  /** Which root `path` was resolved against; absent means the instance's. */
+  scope?: DeclarationScope;
   /** The instance whose declaration contributed the entry — may be a dependency. */
   declaredBy: string;
   /** True when this call created the directory; false when it already existed. */
@@ -1764,9 +1853,14 @@ export interface MaterialisedDirectory {
  * which for a dependency is somebody else's tree; writing there would be the
  * equivalent of creating folders inside `node_modules`.
  *
- * A path that escapes the instance root is REFUSED rather than created, the
- * same rule `schemas/bean-graph.ts` applies to its node paths: a directory
- * outside the instance is not a directory of it.
+ * A path that escapes the root its SCOPE names is REFUSED rather than created,
+ * the same rule `schemas/bean-graph.ts` applies to its node paths: a directory
+ * outside that root is not a directory of it. A `repository`-scoped entry is
+ * materialised at the repository root — `beans/` and `todos/` belong to the
+ * checkout rather than to any instance in it, so creating them inside the
+ * instance would give the work plan a second home and leave the real one
+ * reported MISSING, which is what `harness:dirs:check` said about four
+ * directories that were all sitting there.
  *
  * Idempotent. Running it twice creates nothing and overwrites nothing — an
  * existing keep-marker is left exactly as it is, because a folio may have
@@ -1782,12 +1876,14 @@ export function materialiseDirectories(
   const rootAbs = resolve(instanceRoot);
   const out: MaterialisedDirectory[] = [];
   for (const dir of dirs) {
-    const abs = resolve(rootAbs, dir.path);
-    const rel = relative(rootAbs, abs);
+    const base = rootForScope(rootAbs, dir.scope);
+    const abs = resolve(base, dir.path);
+    const rel = relative(base, abs);
     if (rel.startsWith("..") || isAbsolute(rel)) {
+      const where = dir.scope === "repository" ? "repository" : "instance";
       throw new Error(
-        `declared directory "${dir.id}" resolves outside the instance ` +
-          `(${dir.path} -> ${abs}); a directory outside the instance is not a directory of it`,
+        `declared directory "${dir.id}" resolves outside the ${where} ` +
+          `(${dir.path} -> ${abs}); a directory outside the ${where} is not a directory of it`,
       );
     }
     const existed = existsSync(abs);
@@ -1806,6 +1902,8 @@ export function materialiseDirectories(
     }
     out.push({
       id: dir.id,
+      path: dir.path,
+      ...(dir.scope ? { scope: dir.scope } : {}),
       absPath: abs,
       declaredBy: dir.declaredBy,
       created: !existed,
