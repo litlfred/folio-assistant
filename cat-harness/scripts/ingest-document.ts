@@ -45,11 +45,29 @@
  * @module scripts/ingest-document
  */
 import { existsSync } from "node:fs";
-import { basename, join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { directoryForGraph } from "../schemas/cat-harness.ts";
+
+/**
+ * This module's own instance root — where its `harness.json` is.
+ *
+ * `libraryRoot` defaulted to `resolve(".")`, the CWD, which read as "the
+ * instance you are standing in" and was right while the instance and the
+ * repository were one directory. After the move (bean `wggr`) the CWD is the
+ * REPOSITORY root, which declares nothing, so `directoryForGraph` returned
+ * undefined and the ingest refused — correctly, by its own rule, for the wrong
+ * reason: "this instance declares no `library` graph" was a true sentence
+ * about a directory that is not this instance.
+ *
+ * Derived from the module's location rather than from the caller's, because
+ * this script BELONGS to this instance. A caller who means a different one
+ * passes `root`, which is what the parameter is for.
+ */
+const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 /**
  * Where L1 source content lives, READ from `harness.json` rather than written
@@ -57,7 +75,7 @@ import { directoryForGraph } from "../schemas/cat-harness.ts";
  * times in this file alone -- and `check:declared-paths` caught exactly that
  * in the first draft, as it did for the bean store an hour earlier.
  */
-export function libraryRoot(root = resolve(".")): string {
+export function libraryRoot(root = INSTANCE_ROOT): string {
   const abs = directoryForGraph(root, "library");
   if (!abs) {
     throw new Error(
