@@ -14,9 +14,10 @@
   <style id="jtd-nav-activation">
   
 
+    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(13)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(4)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
@@ -25,12 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(13) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(18) > ul > li:nth-child(4) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(13) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(18) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(18) > ul > li:nth-child(4) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(13) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(18) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(18) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list {
       display: block;
     }
   </style>
@@ -50,20 +53,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Evidence for a recommendation | folio-assistant</title>
+<title>The bootstrap graph | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Evidence for a recommendation" />
-<meta property="og:locale" content="en" />
+<meta property="og:title" content="The bootstrap graph" />
+<meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/evidence.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/evidence.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/proposals/bootstrap.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/proposals/bootstrap.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Evidence for a recommendation" />
+<meta property="twitter:title" content="The bootstrap graph" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Evidence for a recommendation","url":"https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/evidence.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"The bootstrap graph","url":"https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/proposals/bootstrap.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -267,7 +270,7 @@
   those are opposite facts.
 
   `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
-  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">2c473f5</span> · built 2026-09-19T11:00:56Z · <a href="https://github.com/litlfred/folio-assistant/pull/386" style="color:#fff;text-decoration:underline">PR #386</a> · <a href="https://litlfred.github.io/folio-assistant/evidence.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35438880123" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
+  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">2c473f5</span> · built 2026-09-19T11:00:56Z · <a href="https://github.com/litlfred/folio-assistant/pull/386" style="color:#fff;text-decoration:underline">PR #386</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35438880123" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/todos/index.json">
@@ -426,7 +429,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">2c473f5</span> · built 2026-09-19T11:00:56Z · <a href="https://github.com/litlfred/folio-assistant/pull/386" style="color:#fff;text-decoration:underline">PR #386</a> · <a href="https://litlfred.github.io/folio-assistant/evidence.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35438880123" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/festive-galileo-s7ibx0" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/festive-galileo-s7ibx0</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">2c473f5</span> · built 2026-09-19T11:00:56Z · <a href="https://github.com/litlfred/folio-assistant/pull/386" style="color:#fff;text-decoration:underline">PR #386</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35438880123" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -552,315 +555,373 @@
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/proposals/">Proposals</a></li>
+    <li class="breadcrumb-nav-list-item"><span>The bootstrap graph</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="evidence-for-a-recommendation">
+            <h1 class="no_toc" id="bootstrap--the-graph-an-agent-can-read-before-it-knows-anything">
   
   
-    <a href="#evidence-for-a-recommendation" class="anchor-heading" aria-labelledby="evidence-for-a-recommendation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Evidence for a recommendation
+    <a href="#bootstrap--the-graph-an-agent-can-read-before-it-knows-anything" class="anchor-heading" aria-labelledby="bootstrap--the-graph-an-agent-can-read-before-it-knows-anything"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">bootstrap/</code> — the graph an agent can read before it knows anything
   
   
 </h1>
     
 
-<details open="">
-  <summary class="text-delta">On this page</summary>
+<p>Every other graph in this repository assumes a reader who already knows what a
+folio is, what a lane is, and which tools are connected. <strong>Bootstrap assumes
+none of that.</strong> It is the graph an agent loads when it has just been pointed at
+a repository and does not yet know whether that repository is an instance, what
+kind, or what it is for.</p>
+
+<p>This sets out what bootstrap is, what it deliberately excludes, and the two
+questions it has not answered. It is a proposal: <strong>nothing here is built.</strong> The
+design was accumulated on bean <code class="language-plaintext highlighter-rouge">x3bd</code> over 2026-09-19 and is written down here
+because a design that lives only in bean notes is a design the next session
+reconstructs rather than reads.</p>
+
 <ol id="markdown-toc">
-  <li><a href="#why-this-is-a-subprocess" id="markdown-toc-why-this-is-a-subprocess">Why this is a subprocess of editing</a></li>
-  <li><a href="#the-subprocess" id="markdown-toc-the-subprocess">The subprocess</a></li>
-  <li><a href="#review-first" id="markdown-toc-review-first">Step one looks inward</a></li>
-  <li><a href="#pico" id="markdown-toc-pico">Framing the question as PICO</a></li>
-  <li><a href="#three-classes" id="markdown-toc-three-classes">Three classes of evidence, not one</a></li>
-  <li><a href="#authority" id="markdown-toc-authority">Verifying authority, not asserting it</a></li>
-  <li><a href="#grading-and-gaps" id="markdown-toc-grading-and-gaps">Grading the body, and recording a gap</a></li>
-  <li><a href="#what-is-not-built" id="markdown-toc-what-is-not-built">What is not built</a></li>
-</ol>
-
-</details>
-
-<p><em>This page is generated from <a href="https://github.com/litlfred/folio-assistant/tree/main/content/docs/evidence"><code class="language-plaintext highlighter-rouge">content/docs/evidence/</code></a> — each section below links to its own source.</em></p>
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/overview.md" class="fa-node-edit" title="Edit content/docs/evidence/overview.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="overview.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/overview.block.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p>How a recommendation in a guideline gets its evidence — who looks, where they
-look, and what makes a source <em>authoritative</em> rather than merely cited.</p>
-
-<p><strong>STRAWPERSON.</strong> The process shape below is real, renders, and passes the
-workflow policy gate. What is deliberately <strong>not</strong> settled here: which
-registries count as trusted, which grading system a folio declares, and how the
-observatory APIs are bound. A separate process refines requirements; this exists
-so there is something concrete to refine.</p><hr />
-<h2 id="why-this-is-a-subprocess" data-fa-label="sec:evidence-why-this-is-a-subprocess">
+  <li><a href="#0-what-would-decide-this" id="markdown-toc-0-what-would-decide-this">0. What would decide this</a></li>
+  <li><a href="#1-bootstrap-is-a-standalone-graph" id="markdown-toc-1-bootstrap-is-a-standalone-graph">1. Bootstrap is a standalone graph</a></li>
+  <li><a href="#2-readmemd-is-the-content-and-it-is-brief" id="markdown-toc-2-readmemd-is-the-content-and-it-is-brief">2. <code class="language-plaintext highlighter-rouge">README.md</code> is the content, and it is brief</a></li>
+  <li><a href="#3-the-bpmn-is-a-decision-tree" id="markdown-toc-3-the-bpmn-is-a-decision-tree">3. The BPMN is a decision tree</a></li>
+  <li><a href="#4-two-skills-and-no-mcp" id="markdown-toc-4-two-skills-and-no-mcp">4. Two skills, and no MCP</a></li>
+  <li><a href="#5-intent-is-an-instance-reference-not-an-enum" id="markdown-toc-5-intent-is-an-instance-reference-not-an-enum">5. Intent is an instance reference, not an enum</a>    <ol>
+      <li><a href="#the-order-is-load-bearing" id="markdown-toc-the-order-is-load-bearing">The order is load-bearing</a></li>
+    </ol>
+  </li>
+  <li><a href="#6-the-cache-is-the-stub-pattern-not-a-new-mechanism" id="markdown-toc-6-the-cache-is-the-stub-pattern-not-a-new-mechanism">6. The cache is the stub pattern, not a new mechanism</a></li>
+  <li><a href="#7-two-questions-this-does-not-answer" id="markdown-toc-7-two-questions-this-does-not-answer">7. Two questions this does not answer</a>    <ol>
+      <li><a href="#staleness--the-question-every-cache-owes" id="markdown-toc-staleness--the-question-every-cache-owes">Staleness — the question every cache owes</a></li>
+      <li><a href="#what-subset-is-replicated" id="markdown-toc-what-subset-is-replicated">What subset is replicated</a></li>
+    </ol>
+  </li>
+  <li><a href="#8-status" id="markdown-toc-8-status">8. Status</a></li>
+</ol><hr />
+<h2 id="0-what-would-decide-this">
   
   
-    <a href="#why-this-is-a-subprocess" class="anchor-heading" aria-labelledby="why-this-is-a-subprocess"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this is a subprocess of editing
+    <a href="#0-what-would-decide-this" class="anchor-heading" aria-labelledby="0-what-would-decide-this"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. What would decide this
   
   
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/why-this-is-a-subprocess.md" class="fa-node-edit" title="Edit content/docs/evidence/why-this-is-a-subprocess.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="why-this-is-a-subprocess.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/why-this-is-a-subprocess.block.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
+<p>A proposal that cannot say what would change its mind is an opinion wearing a
+heading. Three things would:</p>
 
-<p>It runs inside the editing loop, between claiming the bean and drafting the
-change — see <a href="publication-workflow.html#editing-and-the-hci-validation-gate">Editing and the HCI validation
-gate</a>. That
-position is the whole point: <strong>the evidence is gathered before the sentence is
-written, not assembled afterwards to support one.</strong></p>
-
-<p>A recommendation drafted first and evidenced second is a literature search for
-confirmation. The step order is what makes it not that.</p>
-
-<p>It is a <em>call activity</em>, so it has its own file, its own lanes and its own
-diagram, and the editing diagram stays readable. It also has nothing to do for
-content that carries no recommendations — a mathematics folio has none — and is
-skipped there rather than satisfied vacuously.</p>
-<h2 id="the-subprocess" data-fa-label="sec:evidence-the-subprocess">
+<ul>
+  <li><strong>A real <code class="language-plaintext highlighter-rouge">f-a-sci</code> declaration.</strong> §5’s central claim — that a named upstream
+instance’s own declaration answers the harness type, the knowledge graph and
+the voice, so nothing else need be asked — is checkable against one file the
+moment <code class="language-plaintext highlighter-rouge">folio-asst-sci</code> exists. If that declaration turns out not to carry
+what §5 assumes, the intent skill needs a second question and the design
+gets worse in a specific, measurable way.</li>
+  <li><strong>A bootstrap that cannot be read without MCP.</strong> §4 forbids tool calls. If
+writing the two skills turns out to require one — to resolve a dependency, to
+read a remote declaration — then bootstrap is not standalone and the
+boundary is in the wrong place.</li>
+  <li><strong>The size of the cached subset.</strong> §6 assumes the named instance’s
+declaration is itself the selector for what to replicate. If the honest
+answer is “most of cat-harness”, bootstrap is not lean and the cache is a
+vendoring problem rather than a stub.</li>
+</ul><hr />
+<h2 id="1-bootstrap-is-a-standalone-graph">
   
   
-    <a href="#the-subprocess" class="anchor-heading" aria-labelledby="the-subprocess"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The subprocess
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/evidence-retrieval.bpmn" class="fa-node-edit" title="Edit skills/workflows/evidence-retrieval.bpmn">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-subprocess.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/the-subprocess.kg.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p>
-
-<p>Four lanes, because four different kinds of actor are involved and conflating
-them is how accountability gets lost:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>lane</th>
-      <th>who</th>
-      <th>owns</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Author / guideline developer</td>
-      <td>person</td>
-      <td>the PICO, the appraisal, the grade</td>
-    </tr>
-    <tr>
-      <td>Evidence agent</td>
-      <td>system</td>
-      <td>retrieval across the three classes</td>
-    </tr>
-    <tr>
-      <td>Trusted registries and observatories</td>
-      <td><strong>external</strong></td>
-      <td>whether a citation resolves</td>
-    </tr>
-    <tr>
-      <td>Work plan — beans</td>
-      <td>shared</td>
-      <td>every gap and every unverified citation</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>The third lane is external on purpose. <strong>Authority is not something the folio
-can assert about itself</strong>; it is a fact resolved at the publisher. Drawing that
-lane inside the system boundary would make “authoritative” a self-assessment.</p>
-
-<div class="bpmn-figure" id="figure-the-subprocess">
-  <img src="assets/img/workflows/evidence-retrieval.svg" alt="BPMN swimlane diagram across four lanes. The author reviews the guidance already in their content, then frames the question as PICO. A parallel gateway fans out to three retrieval tasks run by the evidence agent: trusted L1 sources under library/, trusted L2 DAK and L3 IG content, and data repositories and statistical datasets. The candidates join, and the trusted-registries lane verifies each one's authority against the publishing body's API; an exclusive gateway routes an unconfirmed citation to a bean on the work plan before rejoining. The author then appraises and grades the body of evidence, and a second exclusive gateway asks whether it is sufficient for a recommendation: if not, the gap is recorded as a bean and the process ends without one; if so, the evidence is attached to the recommendation." />
-</div>
-
-<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/evidence-retrieval.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/img/workflows/evidence-retrieval.svg">full-size SVG</a></p>
-<h2 id="review-first" data-fa-label="sec:evidence-review-first">
-  
-  
-    <a href="#review-first" class="anchor-heading" aria-labelledby="review-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step one looks inward
+    <a href="#1-bootstrap-is-a-standalone-graph" class="anchor-heading" aria-labelledby="1-bootstrap-is-a-standalone-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Bootstrap is a standalone graph
   
   
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/review-first.md" class="fa-node-edit" title="Edit content/docs/evidence/review-first.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="review-first.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/review-first.block.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
+<p><strong><code class="language-plaintext highlighter-rouge">bootstrap/</code> is its own knowledge graph, not a directory inside the harness
+one.</strong> It declares itself, it is loadable on its own, and cat-harness is an
+<em>instance loaded through it</em> rather than its parent.</p>
 
-<p><strong>The first step looks inward, not outward.</strong></p>
+<p>That inversion is the whole point. The reader of bootstrap has not yet
+established that cat-harness is present, let alone which version — so a
+bootstrap that imported from cat-harness could not run in the one situation it
+exists for. The direction rule the repository already enforces between core and
+harness (core may import harness; harness may not import core) extends by one
+link: <strong>bootstrap may not import harness.</strong></p>
 
-<p>Before any search, the author reads what the document, DAK or IG <em>already</em> says
-on this question. A new recommendation that contradicts a sibling recommendation
-in the same artefact is a defect that no amount of external evidence will
-reveal — the sources can all be impeccable and the guideline still incoherent.</p>
-
-<p>This is also the cheapest step by far, and it is the one most often skipped.</p>
-<h2 id="pico" data-fa-label="sec:evidence-pico">
+<p>It is also the one exception to the stub pattern. <code class="language-plaintext highlighter-rouge">tools/</code>, <code class="language-plaintext highlighter-rouge">skills/</code>,
+<code class="language-plaintext highlighter-rouge">library/</code> and <code class="language-plaintext highlighter-rouge">docs/</code> subdivide by contributing instance —
+<code class="language-plaintext highlighter-rouge">tools/&lt;stub&gt;/</code> — so a composed instance adds its own without colliding on a
+filename. <code class="language-plaintext highlighter-rouge">beans/</code> and <code class="language-plaintext highlighter-rouge">todos/</code> do not, because they are never overlaid.
+<code class="language-plaintext highlighter-rouge">bootstrap/</code> is neither: it is a top-level directory of its own, because it is
+what runs <em>before</em> there is an instance to name a stub after.</p>
+<h2 id="2-readmemd-is-the-content-and-it-is-brief">
   
   
-    <a href="#pico" class="anchor-heading" aria-labelledby="pico"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Framing the question as PICO
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/pico.md" class="fa-node-edit" title="Edit content/docs/evidence/pico.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="pico.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/pico.block.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p><strong>Population, Intervention, Comparator, Outcome.</strong></p>
-
-<p>WHO guideline development states the question this way before any retrieval, and
-the reason is auditability rather than ceremony: without a PICO, <em>“we looked for
-evidence”</em> is not a claim anybody can check. With one, the search is
-reproducible — a second reader can run it and say whether the same body of
-evidence comes back.</p>
-
-<p>The PICO is carried on the recommendation, not discarded after the search. It is
-what a later reader needs in order to tell whether new evidence bears on this
-recommendation or a different one.</p>
-<h2 id="three-classes" data-fa-label="sec:evidence-three-classes">
-  
-  
-    <a href="#three-classes" class="anchor-heading" aria-labelledby="three-classes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three classes of evidence, not one
+    <a href="#2-readmemd-is-the-content-and-it-is-brief" class="anchor-heading" aria-labelledby="2-readmemd-is-the-content-and-it-is-brief"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. <code class="language-plaintext highlighter-rouge">README.md</code> is the content, and it is brief
   
   
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/three-classes.md" class="fa-node-edit" title="Edit content/docs/evidence/three-classes.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="three-classes.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/three-classes.block.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
+<p>The bootstrap graph’s documentation lives in <code class="language-plaintext highlighter-rouge">bootstrap/README.md</code>, so it is
+<strong>self-documenting on GitHub</strong> — a person who lands on the directory in a
+browser reads the thing itself rather than a pointer to a site.</p>
 
-<p>Retrieval fans out across <strong>three classes that are not interchangeable</strong>, and
-keeping them apart is the point of the parallel gateway:</p>
-
-<p><strong>Trusted sources — L1.</strong> Ingested primary literature under <code class="language-plaintext highlighter-rouge">library/</code>: the
-<code class="language-plaintext highlighter-rouge">sections/*.md</code> tree and, where a document was scanned, <code class="language-plaintext highlighter-rouge">ocr/page-NNN.txt</code>.</p>
-
-<blockquote>
-  <p><strong>Known blind spot.</strong> A document that was OCR’d but never re-run through
-<code class="language-plaintext highlighter-rouge">pdf-structure.py</code> has only a stub in <code class="language-plaintext highlighter-rouge">sections/</code>, so a sections-only search
-misses it entirely. Measured: <strong>26</strong> <code class="language-plaintext highlighter-rouge">library/*/ocr/</code> trees against <strong>11</strong>
-<code class="language-plaintext highlighter-rouge">structure.json</code> recording <code class="language-plaintext highlighter-rouge">"text_source": "ocr"</code>. See <a href="document-ingestion.html">Document
-ingestion</a>.</p>
-</blockquote>
-
-<p><strong>Trusted content — L2 DAKs, L3 IGs.</strong> Already-adjudicated guidance: WHO SMART
-Digital Adaptation Kits at L2, FHIR Implementation Guides at L3. A recommendation
-adopted in a published DAK <strong>is evidence of a different kind</strong> from a primary
-study — it is a <em>prior decision</em>, with its own provenance and its own grading —
-and must be cited as that. Laundering it into primary evidence is the failure
-mode this separation exists to prevent.</p>
-
-<p><strong>Data repositories and statistical datasets.</strong> Indicator series and microdata.
-Distinct again because the unit of evidence is a <strong>measurement</strong> with a
-population, a period and a method attached — not a claim in prose.</p>
-<h2 id="authority" data-fa-label="sec:evidence-authority">
-  
-  
-    <a href="#authority" class="anchor-heading" aria-labelledby="authority"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verifying authority, not asserting it
-  
-  
-</h2>
-    
-
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/authority.md" class="fa-node-edit" title="Edit content/docs/evidence/authority.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="authority.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/authority.block.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
-
-<p>Each candidate is resolved against the <strong>standard API of the body that publishes
-it</strong>, so that “authoritative” is a resolved fact rather than an assertion in a
-citation. Four things are checked:</p>
+<p>Four rules, and the last is the one that makes it work:</p>
 
 <ol>
-  <li>the identifier <strong>resolves</strong> at the publisher;</li>
-  <li>the retrieved record <strong>matches what the citation claims</strong>;</li>
-  <li>the <strong>version and date</strong> are the ones cited;</li>
-  <li>the publisher is one this folio has <strong>declared trusted</strong>.</li>
+  <li><strong>Brief.</strong> The README gives the briefest functional flow that uses every
+term: actor, role, process, task, skill, reading markdown, navigating the
+KG, user input, and a tool overview. It does not explain any of them.</li>
+  <li><strong>One user story.</strong> Not a catalogue of scenarios — one, carried end to end.</li>
+  <li><strong>Almost every word links to a definition.</strong> The README does not say what a
+Tool <em>is</em>; it hyperlinks the term to its JSON Schema definition. Same for
+every other term. The prose is a path through the vocabulary, and the
+vocabulary is defined where it is already machine-readable.</li>
+  <li><strong>It ends with a three-step handoff</strong>, which is the README’s actual job:
+point the reader at the <code class="language-plaintext highlighter-rouge">.md</code> skill for loading and navigating a KG; point
+them at the bootstrap JSON-LD and have them load the graph and read the
+bootstrap process; start the bootstrap BPMN.</li>
 </ol>
 
-<p>Check 2 is the one that catches real errors. A citation can resolve perfectly and
-still not say what the sentence citing it says.</p>
+<p><strong>The graph documents itself; the README is a conformance test of that.</strong> Not
+every term has to appear in the README — but every term must be defined in the
+graph’s own JSON/JSON-LD self-documentation, and the README is one pass that
+demonstrates it. A README that cannot be written without inventing a definition
+has found a gap in the graph.</p>
+<h2 id="3-the-bpmn-is-a-decision-tree">
+  
+  
+    <a href="#3-the-bpmn-is-a-decision-tree" class="anchor-heading" aria-labelledby="3-the-bpmn-is-a-decision-tree"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. The BPMN is a decision tree
+  
+  
+</h2>
+    
 
-<p><strong>An unresolvable citation is neither dropped nor silently kept.</strong> It becomes a
-bean, so the gap is visible in the work plan instead of surviving as a footnote
-nobody re-checks.</p>
+<p>One process, and it is small: <strong>initialize, or load.</strong></p>
+
+<ul>
+  <li>The repository is already an instance → <em>load</em> its declaration and proceed.</li>
+  <li>It is not → <em>initialize</em>, which requires <strong>user input</strong>, and the diagram says
+so with a request-user-input step rather than guessing.</li>
+</ul>
+
+<p>That is the entire control flow. It is a BPMN rather than prose for the reason
+<code class="language-plaintext highlighter-rouge">AGENTS.md</code> gives generally — if it has actors, activities and a control flow
+it is a process — and because the rest of the repository already executes BPMN,
+so bootstrap’s process is inspectable by the same tools without a second
+mechanism.</p>
+<h2 id="4-two-skills-and-no-mcp">
+  
+  
+    <a href="#4-two-skills-and-no-mcp" class="anchor-heading" aria-labelledby="4-two-skills-and-no-mcp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Two skills, and no MCP
+  
+  
+</h2>
+    
+
+<p>Bootstrap carries <strong>exactly two skills</strong>:</p>
+
+<ol>
+  <li><strong>Read and navigate a knowledge graph</strong> — how to load a JSON-LD graph, walk
+it, and read a markdown node. This is the skill the README’s handoff points
+at first, because without it the reader cannot follow the second step.</li>
+  <li><strong>Determine user intent</strong> — what the agent is being asked to make this
+repository into. §5 is about what its output is.</li>
+</ol>
+
+<p><strong>There is no MCP tool call anywhere in bootstrap.</strong> Tool calls are
+cat-harness-level machinery; an agent in bootstrap may not have a connected
+server, and a bootstrap that required one would fail in exactly the
+cold-start case it exists for.</p>
+
+<p>For the same reason, <strong>UI concerns are not bootstrap’s</strong>. Translations, the KG
+viewer, the skills and tooling around them belong to cat-harness. And bootstrap
+must not need <code class="language-plaintext highlighter-rouge">VoiceGraph</code>, <code class="language-plaintext highlighter-rouge">LibraryGraph</code> or <code class="language-plaintext highlighter-rouge">PreviewGraph</code> — those are
+content-model concepts that presuppose a folio, which bootstrap does not yet
+know it has.</p>
+
+<p><strong>Hardcoded JSON/JSON-LD assets in bootstrap are acceptable but not
+preferred.</strong> A bootstrap that cannot resolve anything has to carry something;
+the preference is that it carries as little as possible and reads the rest.
+That concession is also the rule <code class="language-plaintext highlighter-rouge">check:declared-paths</code> now enforces repo-wide:
+permitted and discouraged means <strong>declared and checked</strong>, not forbidden and not
+free.</p>
+<h2 id="5-intent-is-an-instance-reference-not-an-enum">
+  
+  
+    <a href="#5-intent-is-an-instance-reference-not-an-enum" class="anchor-heading" aria-labelledby="5-intent-is-an-instance-reference-not-an-enum"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Intent is an instance reference, not an enum
+  
+  
+</h2>
+    
+
+<p>This is the part that changed late, and the correction is worth keeping.</p>
+
+<p>Read on its own, <em>“the repo_name instance declaration needs to be made in repo
+once the user’s intent on harness type is known (e.g. folio, smart-guideline
+DAK, smart guideline IG or whatever)”</em> suggests the intent skill produces a
+<strong>harness type</strong> — a value from a closed set. The worked example says otherwise:</p>
 
 <blockquote>
-  <p><strong>Not settled here, and deliberately so:</strong> the registry list, the endpoints,
-and the shape of the stored authority record. This container has no outbound
-network, so no endpoint below the level of “the publisher’s own API” has been
-verified, and naming specific ones would be writing down a guess. That is a
-requirements question, and there is a separate process for it.</p>
+  <p><strong>“make this repo into a <code class="language-plaintext highlighter-rouge">litlfred/f-a-sci</code> instance”</strong> — which would turn it
+into a folio with the f-a-sci knowledge graph loaded and using milnor as
+voice.</p>
 </blockquote>
-<h2 id="grading-and-gaps" data-fa-label="sec:evidence-grading-and-gaps">
+
+<p><strong>The user names an upstream instance, and everything else is read from that
+instance’s declaration.</strong> One reference yields the harness type (folio), the
+knowledge graph to load (f-a-sci’s), and the voice (milnor). Nobody is asked
+three questions.</p>
+
+<p>So the intent skill’s output is <strong>an instance reference</strong>. An enum would be a
+second answer to “what kind of thing is this repo”, free to disagree with the
+upstream declaration it came from, and a fourth place the harness type is
+written down — the drift this repository keeps paying for.</p>
+
+<p><strong>And it is what makes an earlier decision pay off rather than merely be tidy.</strong>
+<code class="language-plaintext highlighter-rouge">milnorlink</code> and <code class="language-plaintext highlighter-rouge">voices/milnor.json</code> are bound for <code class="language-plaintext highlighter-rouge">folio-asst-sci</code> on the
+grounds that a library document, its voice and the skill derived from it are
+one bundle. This is what that buys: <em>“using milnor as voice”</em> is not a fourth
+thing the command configures — it is a <strong>consequence</strong> of naming f-a-sci,
+because the voice lives there. Had milnor stayed in the platform, the command
+would have had to name it separately and the bundle argument would have been
+decoration.</p>
+<h3 id="the-order-is-load-bearing">
   
   
-    <a href="#grading-and-gaps" class="anchor-heading" aria-labelledby="grading-and-gaps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Grading the body, and recording a gap
+    <a href="#the-order-is-load-bearing" class="anchor-heading" aria-labelledby="the-order-is-load-bearing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The order is load-bearing
+  
+  
+</h3>
+    
+
+<p><strong>instance reference → read ITS declaration → write this repo’s declaration
+from what that says → cache what the declaration needs.</strong></p>
+
+<p>Not: ask the type, write a declaration, fetch things. Writing a declaration
+before reading the upstream one leaves a window in which the repository
+declares something it is not — and every consumer that reads a declaration
+would believe it.</p>
+<h2 id="6-the-cache-is-the-stub-pattern-not-a-new-mechanism">
+  
+  
+    <a href="#6-the-cache-is-the-stub-pattern-not-a-new-mechanism" class="anchor-heading" aria-labelledby="6-the-cache-is-the-stub-pattern-not-a-new-mechanism"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. The cache is the stub pattern, not a new mechanism
   
   
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/grading-and-gaps.md" class="fa-node-edit" title="Edit content/docs/evidence/grading-and-gaps.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="grading-and-gaps.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/grading-and-gaps.block.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
+<p>When bootstrap instantiates a repository that is not yet an instance, the
+upstream library is <strong>replicated under <code class="language-plaintext highlighter-rouge">bootstrap/&lt;instance&gt;/</code></strong> as a local
+cache — <code class="language-plaintext highlighter-rouge">bootstrap/cat-harness/</code>, and under §5 <code class="language-plaintext highlighter-rouge">bootstrap/f-a-sci/</code> beside it —
+and those directories are <strong>declared in bootstrap’s own <code class="language-plaintext highlighter-rouge">harness.json</code></strong>, so
+ordinary resolution finds them with no special case.</p>
 
-<p>The grade attaches to the <strong>body</strong> of evidence for one PICO question — which is
-why appraisal sits after the join and not inside the fan-out. A single citation
-does not carry a certainty rating; a body of evidence answering a question does.</p>
-
-<p>Then one gateway: <strong>is this sufficient for a recommendation?</strong></p>
-
-<p><strong>Insufficient evidence is a result.</strong> It is recorded as an honest gap the
-guideline can state — <em>“the evidence does not support a recommendation here”</em> —
-rather than being closed by weakening the recommendation until the available
-evidence happens to support it. That move is always available and it is always
-wrong, which is why the “no” branch has somewhere to go.</p>
-
-<p>On the “yes” branch the PICO, the graded body of evidence, and every verified
-citation with its resolved authority record are written onto the recommendation
-block. A reader can then retrace the chain from the sentence back to the source.</p>
-<h2 id="what-is-not-built" data-fa-label="sec:evidence-what-is-not-built">
+<p>That is deliberately the same shape as <code class="language-plaintext highlighter-rouge">tools/&lt;stub&gt;/</code> (shipped 2026-09-19) and
+the planned <code class="language-plaintext highlighter-rouge">skills/</code>, <code class="language-plaintext highlighter-rouge">library/</code>, <code class="language-plaintext highlighter-rouge">docs/</code> layout. A cache needing its own
+lookup path would be a second answer to “where do skills live”; a cache that is
+just another declared directory is not. Naming each cached directory for the
+instance it came from is what makes two upstreams composable rather than
+colliding — which is what the stub pattern is <em>for</em>.</p>
+<h2 id="7-two-questions-this-does-not-answer">
   
   
-    <a href="#what-is-not-built" class="anchor-heading" aria-labelledby="what-is-not-built"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not built
+    <a href="#7-two-questions-this-does-not-answer" class="anchor-heading" aria-labelledby="7-two-questions-this-does-not-answer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Two questions this does not answer
   
   
 </h2>
     
 
-<p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/evidence/what-is-not-built.md" class="fa-node-edit" title="Edit content/docs/evidence/what-is-not-built.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="what-is-not-built.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/what-is-not-built.block.json" data-qa-index="/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/assets/qa/evidence/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
+<p>Recorded so they are not rediscovered as surprises.</p>
+<h3 id="staleness--the-question-every-cache-owes">
+  
+  
+    <a href="#staleness--the-question-every-cache-owes" class="anchor-heading" aria-labelledby="staleness--the-question-every-cache-owes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Staleness — the question every cache owes
+  
+  
+</h3>
+    
 
-<p>Everything below is <strong>absent</strong>, not partially working. The diagram is a model of
-the intended process; these are the parts with no code behind them.</p>
+<p>This repository’s doctrine is that a copy with no staleness check drifts and is
+believed anyway. <code class="language-plaintext highlighter-rouge">render:bpmn:check</code> exists for that; <code class="language-plaintext highlighter-rouge">translate-bpmn --check</code>
+was added on 2026-09-19 after twelve diagrams turned out to have no <code class="language-plaintext highlighter-rouge">.pot</code> at
+all and eighteen more still named a directory that had moved; <code class="language-plaintext highlighter-rouge">check:harness-dirs</code>
+gates the two duplicates <code class="language-plaintext highlighter-rouge">AGENTS.md</code> says cannot be removed.</p>
+
+<p><strong>“It was copied at init” is not an answer.</strong> The cheapest honest version
+records the source ref and compares against it, reporting <strong>could not
+determine</strong> when the upstream is unreachable rather than silently passing —
+the third state this repository applies everywhere else.</p>
+<h3 id="what-subset-is-replicated">
+  
+  
+    <a href="#what-subset-is-replicated" class="anchor-heading" aria-labelledby="what-subset-is-replicated"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What subset is replicated
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">f-a-sci</code>’s knowledge graph is not all of cat-harness, and a bootstrap that
+copies everything stops being lean. Under §5 the named instance’s own
+declaration is the obvious selector — it already says which directories it has,
+which would mean the subset needs no separate rule.</p>
+
+<p><strong>That claim is untested.</strong> It should be checked against a real <code class="language-plaintext highlighter-rouge">f-a-sci</code>
+declaration before anything relies on it, and §0 treats it as one of the three
+things that would change this design.</p><hr />
+<h2 id="8-status">
+  
+  
+    <a href="#8-status" class="anchor-heading" aria-labelledby="8-status"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Status
+  
+  
+</h2>
+    
+
+<p><strong>Not built.</strong> The design is settled to the level above and no code exists. The
+adjacent work that has shipped and that bootstrap depends on:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th> </th>
-      <th>state</th>
+      <th>shipped</th>
+      <th>why bootstrap needs it</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>the trusted-registry list</td>
-      <td>not decided</td>
+      <td><code class="language-plaintext highlighter-rouge">tools/&lt;stub&gt;/</code> with an aggregating barrel</td>
+      <td>the cache in §6 reuses this exact shape</td>
     </tr>
     <tr>
-      <td>observatory API bindings</td>
-      <td>not written; no endpoint verified from this container</td>
+      <td><code class="language-plaintext highlighter-rouge">harness.json</code> directory declarations</td>
+      <td>bootstrap declares its cache through them</td>
     </tr>
     <tr>
-      <td>the authority record’s schema</td>
-      <td>not designed</td>
+      <td><code class="language-plaintext highlighter-rouge">workflowDirs()</code> / <code class="language-plaintext highlighter-rouge">workflowFiles()</code> reading the declaration</td>
+      <td>a topical <code class="language-plaintext highlighter-rouge">bootstrap/workflows/</code> is found without a code change</td>
     </tr>
     <tr>
-      <td>the grading system a folio declares</td>
-      <td>not chosen</td>
+      <td><code class="language-plaintext highlighter-rouge">bs:</code> / <code class="language-plaintext highlighter-rouge">cat:</code> / <code class="language-plaintext highlighter-rouge">fac:</code> namespaces</td>
+      <td>bootstrap’s terms are minted in its own namespace</td>
     </tr>
     <tr>
-      <td>an <code class="language-plaintext highlighter-rouge">evidence-retrieval</code> skill</td>
-      <td>does not exist — the diagram names it, nothing implements it</td>
-    </tr>
-    <tr>
-      <td>PICO fields on a recommendation block</td>
-      <td>not in the schema</td>
+      <td><code class="language-plaintext highlighter-rouge">check:declared-paths</code></td>
+      <td>enforces §4’s “declared and checked” rule corpus-wide</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>The diagram naming a skill that does not exist is deliberate and is the same
-convention the ingestion diagrams use: the model says what <em>would</em> implement a
-step, and the gap between the model and the code is visible rather than hidden.</p>
+<p>Still outstanding before bootstrap can be built as described: <code class="language-plaintext highlighter-rouge">resolveSkillDirs</code>
+in <code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> computes the cross-instance skill overlay and has
+<strong>no caller</strong>, so a dependency’s skills are not reachable today — which is
+precisely what §6’s cache assumes works.</p>
 
           
 
