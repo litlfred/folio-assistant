@@ -48,7 +48,15 @@ import { fileURLToPath } from "node:url";
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
-import { artefactStub, defaultGraphKinds, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
+import {
+  artefactStub,
+  defaultGraphKinds,
+  isPublishedDirectory,
+  isPublishedGraphKind,
+  isPublishedSkill,
+  readDeclaration,
+  renderingPath,
+} from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
 import { skillMdDirs as knownSkillDirs } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
@@ -738,7 +746,12 @@ function collectSkills(doc: string, base: string, problems: string[]): Node[] {
     }
   }
 
-  return [...byName.entries()].map(([name, s]) => ({
+  // The skill documenting an unpublished kind is itself unpublished — it
+  // carries that kind's name, and its subject is where SDLC churn goes, so
+  // publishing it advertises the trashcan. Bean `folio-assistant-uv09`.
+  return [...byName.entries()]
+    .filter(([name]) => isPublishedSkill(name))
+    .map(([name, s]) => ({
     "@id": makeIri(doc, "skill", name),
     "@type": termIri("Skill"),
     name,
@@ -911,7 +924,11 @@ function collectPackages(doc: string, problems: string[]): Node[] {
         path: `skills/${d.name}`,
         hasManifest: true,
         // Links, so a consumer can walk package → skill without string surgery.
-        declaresSkill: ((m.skills as string[]) ?? []).map((n) => makeIri(doc, "skill", n)),
+        // Filtered too: an edge to a stripped node is a dangling reference
+        // that still spells the name it was meant to remove.
+        declaresSkill: ((m.skills as string[]) ?? [])
+          .filter(isPublishedSkill)
+          .map((n) => makeIri(doc, "skill", n)),
         providesCapability: ((m.providesCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
         requiresCapability: ((m.requiresCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
       });
@@ -1128,7 +1145,12 @@ function collectSchemas(doc: string, base: string): Node[] {
 }
 
 function collectGraphKinds(): Node[] {
-  return defaultGraphKinds.names().map((name) => {
+  // `fsh-guts` and anything else in UNPUBLISHED_GRAPH_KINDS never reaches a
+  // published graph. Filtered HERE, where the document is built, rather than
+  // at upload: a strip that runs only on the happy path leaves a graph that
+  // LOOKS clean and is not. Bean `folio-assistant-uv09`.
+  const published = defaultGraphKinds.names().filter(isPublishedGraphKind);
+  return published.map((name) => {
     const def = defaultGraphKinds.get(name)!;
     return {
       // The instance sits in the SAME namespace as the class it instantiates,
@@ -1160,7 +1182,10 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
         description?: string;
       }>;
     };
-    return (d.directories ?? []).map((x) => {
+    // Same exclusion on the other emitter: a declared directory holding an
+    // unpublished kind would otherwise put the trashcan's id, path and
+    // description into the graph, plus a `holdsGraph` edge pointing at it.
+    return (d.directories ?? []).filter(isPublishedDirectory).map((x) => {
       // `graph` became `graphs[]` — a directory may hold more than one graph,
       // and `schemas/` is the first real use of that. Both spellings are read
       // so this does not break on a declaration written before the change.

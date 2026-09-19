@@ -41,7 +41,7 @@ import { join, resolve } from "node:path";
 
 import { isSkillMd, knownSkills, skillMdDirs } from "../known-skills.js";
 import { buildExport } from "../kg-export.js";
-import { siteDirFor } from "../../schemas/cat-harness.ts";
+import { isPublishedSkill, siteDirFor } from "../../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const PUBLISHED = join(ROOT, siteDirFor(ROOT), "reference/skill-instructions");
@@ -97,7 +97,19 @@ describe("skill coverage", () => {
         .filter((n) => String(n["@type"]).endsWith("Skill"))
         .map((n) => n.name as string),
     );
-    const known = knownSkills(ROOT);
+    // UNPUBLISHED_GRAPH_KINDS names skills that are deliberately stripped
+    // from the published graph — `fsh-guts` documents the trashcan, and the
+    // owner's rule is that no published graph references it. They are
+    // resolvable skills that must NOT be nodes, so this invariant excludes
+    // them rather than being weakened. Bean `folio-assistant-uv09`.
+    const known = new Set([...knownSkills(ROOT)].filter(isPublishedSkill));
+
+    // The exclusion must be doing something, or a later change that stops
+    // stripping would pass here unnoticed.
+    expect([...knownSkills(ROOT)].filter((n) => !isPublishedSkill(n)).sort()).toEqual([
+      "fsh-guts",
+    ]);
+
     // Both directions. A skill the graph omits is unfindable through the KG; a
     // node with no skill behind it is a ref that resolves to nothing.
     expect([...known].filter((n) => !nodes.has(n)).sort()).toEqual([]);

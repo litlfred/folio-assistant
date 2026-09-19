@@ -837,6 +837,68 @@ export function renderingPath(base: string, ...segments: string[]): string {
 }
 
 /**
+ * Graph kinds that must NEVER reach a published knowledge graph.
+ *
+ * Owner, 2026-09-19: *"NEVER include fsh-guts, references to fsh-guts
+ * stripped out of KG before sending to publication."*
+ *
+ * **Keeping the CONTENT out of the render pipeline is not the same as keeping
+ * the REFERENCE out of the graph, and the first was shipped believing it
+ * covered the second.** An instance's declared directories become nodes in
+ * `<stub>.jsonld`, so declaring `fsh-guts/` locally — which is required, or
+ * no tool can find it and the never-delete rule has no destination — put its
+ * id, path and description into the published graph.
+ *
+ * **This is not a contradiction of `<base>/fsh-guts.jsonld`.** They are
+ * different documents: that one IS the trashcan's graph and is asked for by
+ * name; every other published artefact must contain no path to it. A consumer
+ * may go there deliberately and must never arrive by following an edge.
+ *
+ * One list, read by every emitter, so two filters cannot disagree about what
+ * is excluded.
+ */
+export const UNPUBLISHED_GRAPH_KINDS: readonly string[] = ["fsh-guts"] as const;
+
+/** Is this graph kind allowed into a published graph? */
+export function isPublishedGraphKind(name: string): boolean {
+  return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+}
+
+/**
+ * Is this SKILL allowed into a published graph?
+ *
+ * The skill that documents an unpublished kind is itself unpublished, and it
+ * carries the kind's name. Leaving it in was the second leak found while
+ * building this: the graph-kind and directory nodes were filtered, and
+ * `skill/fsh-guts` plus the `declaresSkill` edge from `package/folio-core`
+ * still named the trashcan, its purpose and its path.
+ *
+ * That is the right outcome on the merits as well as the letter. The skill's
+ * subject IS where to put SDLC churn, so publishing it advertises the
+ * trashcan to every consumer of the folio's graph — the precise thing the
+ * owner's instruction forbids.
+ *
+ * Same list, because the skill and the kind share a name by construction.
+ * If that ever stops being true this needs its own list, not a cleverer
+ * derivation.
+ */
+export function isPublishedSkill(name: string): boolean {
+  return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+}
+
+/**
+ * Is this declared directory allowed into a published graph?
+ *
+ * A directory is excluded when ANY graph it holds is excluded — not when all
+ * of them are. `graphs` is an array and a directory may hold more than one
+ * part of the graph, so an "all" test would publish a directory that holds
+ * both `kg` and `fsh-guts`, naming the trashcan's path in the process.
+ */
+export function isPublishedDirectory(d: { graphs?: readonly string[] }): boolean {
+  return (d.graphs ?? []).every(isPublishedGraphKind);
+}
+
+/**
  * The declared publication host for the instance rooted at `root`, or
  * `undefined` when it has not said.
  *

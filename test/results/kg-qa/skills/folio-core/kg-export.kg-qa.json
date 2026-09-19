@@ -5,11 +5,16 @@
     "id": "kg-export",
     "path": "skills/folio-core/kg-export.md"
   },
-  "source_hash": "0c2398f2dc1c",
+  "source_hash": "495dfebb40bd",
   "criteria": {
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/kg-export.md",
+          "detail": "336 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -21,8 +26,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 0,
+    "pass": 2,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }

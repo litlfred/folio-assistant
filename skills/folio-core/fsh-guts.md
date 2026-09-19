@@ -78,12 +78,27 @@ where there is one.
 nobody calls any more — the trashcan does not get to be fussy about what is
 thrown into it.
 
-## It is exported, and it is not rendered
+## It is exported, and it is not rendered — and it is not in the KG either
 
 - served as `<base>/fsh-guts.jsonld`, alongside the instance's other
-  renderings, so a consumer can walk it
+  renderings, so a consumer can walk it **by name**
 - **absent from the site build** — this is the property, not a side effect.
   A change that causes `fsh-guts/` to render has broken it
+- **stripped from every other published graph.** Owner, 2026-09-19: *"NEVER
+  include fsh-guts, references to fsh-guts stripped out of KG before sending
+  to publication."*
+
+**Those last two are different properties and the second is easy to miss.**
+Keeping the CONTENT out of the render pipeline does not keep the REFERENCE
+out of the graph: an instance's declared directories become nodes in
+`<stub>.jsonld`, so declaring this directory — required, or nothing can find
+it — put its id, path and description into the published document. That was
+shipped and then corrected the same day.
+
+A consumer may fetch `fsh-guts.jsonld` deliberately. It must never **arrive**
+there by following an edge. Mechanism and the three emitters that had to be
+filtered: [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published
+graph".
 
 Reaching it as a human is the dead-fish icon under settings, with a node
 counter and a select dialog. Bean `folio-assistant-7vhe`; until that exists,
