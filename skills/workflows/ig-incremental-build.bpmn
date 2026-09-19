@@ -246,6 +246,7 @@
     <bpmn:serviceTask id="Task_DeployPreview" name="Deploy the preview site&#10;[content-publish]">
       <bpmn:documentation>A preview never seeds the shared cache.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:fulfilment kinds="person system" reason="the preview deploy is mechanical but belongs to the reviewer’s lane because the preview exists FOR the review — moving it to Lane_Build would hide who the artefact is built for. A reviewer may also deploy one by hand." />
         <folio:skill ref="content-publish" />
       </bpmn:extensionElements>
       <bpmn:incoming>F23</bpmn:incoming>
@@ -256,6 +257,7 @@
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_Deploy" name="Deploy the site&#10;[content-publish] [ig-publication]">
       <bpmn:extensionElements>
+        <folio:fulfilment kinds="person system" reason="deploying the built site is mechanical; the lane records who is accountable for what is live, and its name “Publication manager — deploy and seed” says so. A publication manager may also deploy by hand." />
         <folio:skill ref="content-publish" />
         <folio:skill ref="ig-publication" />
       </bpmn:extensionElements>
@@ -265,6 +267,7 @@
     <bpmn:serviceTask id="Task_Seed" name="Seed the cache from the green build&#10;(ig-cache seed · verify · promote)">
       <bpmn:documentation>Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes.</bpmn:documentation>
       <bpmn:extensionElements>
+        <folio:fulfilment kinds="person system" reason="seeding, verifying and promoting the cache is a fixed program the publication manager is accountable for; the manual promote is the same program run by hand." />
         <folio:skill ref="ig-publication" />
         <folio:skill ref="ig-publication" />
         <folio:skill ref="ig-publication" />

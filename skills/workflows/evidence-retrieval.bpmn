@@ -165,14 +165,14 @@ a plausible-looking wrong answer. Left uncovered until the skill is written.</bp
       <bpmn:incoming>Flow_16</bpmn:incoming>
       <bpmn:outgoing>Flow_18</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_AttachEvidence" name="Attach the evidence to the recommendation&#10;[content-author]">
+    <bpmn:userTask id="Task_AttachEvidence" name="Attach the evidence to the recommendation&#10;[content-author]">
       <bpmn:documentation>The PICO, the graded body of evidence, each verified citation and its resolved authority record are written onto the recommendation block, so a reader can retrace the whole chain from the sentence back to the source.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="content-author" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_17</bpmn:incoming>
       <bpmn:outgoing>Flow_19</bpmn:outgoing>
-    </bpmn:serviceTask>
+    </bpmn:userTask>
     <bpmn:endEvent id="EndEvent_EvidenceAttached" name="Recommendation is evidence-backed">
       <bpmn:incoming>Flow_19</bpmn:incoming>
     </bpmn:endEvent>

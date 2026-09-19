@@ -196,6 +196,26 @@ jobs:
           bun run scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
+      # The QA witnesses, published at the path the badges already point at.
+      #
+      # They are COMMITTED under `test/results/witnesses/` — placement follows
+      # provenance, and a witness is a QA process's output, not an authored
+      # page. They are SERVED from `/assets/qa/`, which is what every
+      # `data-qa-src` in the generated pages says and what `docs-ui.js` fetches.
+      # Jekyll only builds `docs/`, so without this copy the panel 404s on
+      # every badge — and an empty panel looks exactly like "nothing has been
+      # audited", which is the false pass the badges exist to prevent.
+      #
+      # `-T` so the CONTENTS land in `assets/qa/` rather than a nested
+      # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
+      # asserts both workflows carry it, because missing it in one publishes a
+      # site whose evidence links are all dead.
+      - name: Publish the QA witnesses
+        run: |
+          mkdir -p ./_site/assets
+          cp -rT test/results/witnesses ./_site/assets/qa
+          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA witness document(s)"
+
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
 

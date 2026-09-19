@@ -96,49 +96,49 @@
       <bpmn:outgoing>B10</bpmn:outgoing>
       <bpmn:outgoing>B07</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:serviceTask id="Task_Personas" name="Personas and scenarios&#10;[l2-dak-authoring]">
+    <bpmn:userTask id="Task_Personas" name="Personas and scenarios&#10;[l2-dak-authoring]">
       <bpmn:extensionElements>
         <folio:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B05</bpmn:incoming>
       <bpmn:outgoing>B11</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_Bpmn" name="Business processes · BPMN 2.0&#10;[bpmn-authoring]">
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Bpmn" name="Business processes · BPMN 2.0&#10;[bpmn-authoring]">
       <bpmn:extensionElements>
         <folio:skill ref="bpmn-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B06</bpmn:incoming>
       <bpmn:outgoing>B12</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_Dmn" name="Decision logic · DMN tables&#10;[dmn-authoring]">
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Dmn" name="Decision logic · DMN tables&#10;[dmn-authoring]">
       <bpmn:extensionElements>
         <folio:skill ref="dmn-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B07</bpmn:incoming>
       <bpmn:outgoing>B13</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_DataDict" name="Data dictionary and core data elements&#10;[l2-dak-authoring]">
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_DataDict" name="Data dictionary and core data elements&#10;[l2-dak-authoring]">
       <bpmn:extensionElements>
         <folio:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B08</bpmn:incoming>
       <bpmn:outgoing>B14</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_Indicators" name="Indicators and requirements&#10;[l2-dak-authoring]">
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Indicators" name="Indicators and requirements&#10;[l2-dak-authoring]">
       <bpmn:extensionElements>
         <folio:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B09</bpmn:incoming>
       <bpmn:outgoing>B15</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_Terminology" name="Terminology bindings&#10;[terminology-management]">
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Terminology" name="Terminology bindings&#10;[terminology-management]">
       <bpmn:documentation>ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="terminology-management" />
       </bpmn:extensionElements>
       <bpmn:incoming>B10</bpmn:incoming>
       <bpmn:outgoing>B16</bpmn:outgoing>
-    </bpmn:serviceTask>
+    </bpmn:userTask>
     <bpmn:parallelGateway id="Gateway_AuthorJoin" name="">
       <bpmn:incoming>B11</bpmn:incoming>
       <bpmn:incoming>B12</bpmn:incoming>
@@ -161,13 +161,13 @@
       <bpmn:outgoing>B19</bpmn:outgoing>
       <bpmn:outgoing>B20</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Task_AssembleDak" name="Assemble and validate the DAK&#10;[content-validate]">
+    <bpmn:userTask id="Task_AssembleDak" name="Assemble and validate the DAK&#10;[content-validate]">
       <bpmn:extensionElements>
         <folio:skill ref="content-validate" />
       </bpmn:extensionElements>
       <bpmn:incoming>B20</bpmn:incoming>
       <bpmn:outgoing>B21</bpmn:outgoing>
-    </bpmn:serviceTask>
+    </bpmn:userTask>
     <bpmn:endEvent id="EndEvent_L2Ready" name="L2 DAK ready for L3">
       <bpmn:incoming>B21</bpmn:incoming>
     </bpmn:endEvent>

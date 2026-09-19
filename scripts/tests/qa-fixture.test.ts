@@ -169,9 +169,13 @@ describe("the real corpus still holds the subject the e2e spec keys to", () => {
   test("`voice-status-leak` is present, whatever its verdict", () => {
     // If this fails, the e2e fixture's throw is about to fire — and this says
     // so in `bun test`, which runs everywhere, rather than in the browser job.
+    // The witnesses moved to `test/results/witnesses/` on 2026-09-19 (bean
+    // `2634`): placement follows provenance, and a witness is a QA process's
+    // output rather than an authored page. They are still PUBLISHED at
+    // `/assets/qa/`, which is a different question and unchanged.
     const p = join(
       import.meta.dir,
-      "../../docs/assets/qa/crdm-methodology/what-is-not-built-yet.block.json",
+      "../../test/results/witnesses/crdm-methodology/what-is-not-built-yet.block.json",
     );
     expect(() =>
       sidecarWithVerdicts(p, [{ id: "voice-status-leak", result: "fail" }]),
