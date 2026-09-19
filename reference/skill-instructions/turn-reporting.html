@@ -631,6 +631,49 @@ alone, because the edge is wrong rather than the block’s position.</p>
     <li><strong>next</strong> <a href="beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md"><code class="language-plaintext highlighter-rouge">fwr7</code></a> — Retarget seven <code class="language-plaintext highlighter-rouge">uses[]</code> edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.</li>
   </ul>
 </blockquote>
+<h3 id="before-you-send-the-report--one-pass-for-named-decisions-strict">
+  
+  
+    <a href="#before-you-send-the-report--one-pass-for-named-decisions-strict" class="anchor-heading" aria-labelledby="before-you-send-the-report--one-pass-for-named-decisions-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you send the report — one pass for named decisions (STRICT)
+  
+  
+</h3>
+    
+
+<p>The §”next” rule below is precise and was still broken by the agent enforcing it.
+Measured 2026-09-19: after a session spent applying it — including shipping a
+rule that a bean mention carries two sentences or does not appear — that same
+agent closed a turn with</p>
+
+<blockquote>
+  <p>Two decisions still yours, neither blocking: <code class="language-plaintext highlighter-rouge">35nj</code> (three claim-visibility
+mechanism options, each with a cost I shouldn’t pick unilaterally) and <code class="language-plaintext highlighter-rouge">wlqd</code>
+(remote-package sync, needing pinned-commit vs <code class="language-plaintext highlighter-rouge">ref: main</code>).</p>
+</blockquote>
+
+<p>Every clause of that is the forbidden teaser. <code class="language-plaintext highlighter-rouge">35nj</code> and <code class="language-plaintext highlighter-rouge">wlqd</code> are opaque, the
+“three options” are unnamed, “pinned-commit vs <code class="language-plaintext highlighter-rouge">ref: main</code>” is two phrases whose
+costs live in a bean, and “neither blocking” is the framing that made it feel
+like reporting. The author’s reply was <em>“show questions and context/pros/cons”</em> —
+the round trip the rule exists to prevent, paid by somebody who types with
+difficulty.</p>
+
+<p><strong>So prose was not the gap; a write-time pass is.</strong> Before sending a closing
+report, scan your own text for anything that hands over a choice — a bean id, an
+option name, a “your call”, a “needing X vs Y” — and for each one:</p>
+
+<ul>
+  <li><strong>carries its options with their costs, a recommendation and a default</strong> → send it;</li>
+  <li><strong>does not</strong> → delete the name and put a count in its place
+(<a href="/folio-assistant/reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality.md</code> §4.1</a> §”More than one
+decision pending”);</li>
+  <li><strong>you are unsure whether it reads as a question</strong> → treat it as one. The
+framing sentence does not decide this; the reader’s next keystroke does.</li>
+</ul>
+
+<p>The test is unchanged and takes one pass: <strong>can they answer without opening
+anything?</strong> Apply it to the report you just wrote, not to the question you
+planned to ask.</p>
 <h3 id="the-rules-that-make-a-report-worth-reading">
   
   
@@ -819,7 +862,7 @@ reach it — never post a teaser whose only resolution is a document.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35438636854"><code>ed3cf12</code></a> &middot; 2026-09-19T10:54:41Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35439941058"><code>2fcb73d</code></a> &middot; 2026-09-19T11:23:25Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
