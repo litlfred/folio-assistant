@@ -96,10 +96,12 @@ folio, where `definition`'s `lean` field is required.
 A section that cannot read its source returns `skip` and the region is left
 exactly as it was. Not decoration:
 
-- qou configures its simulators under `folio-assistant/simulators`, which
-  exists only once the platform submodule is checked out. The first version
+- qou configured its simulators under `folio-assistant/simulators`, which
+  existed only once the platform submodule was checked out. The first version
   rendered "directory absent" as "this folio has no simulators" — replacing a
-  correct nine-row table with a sentence.
+  correct nine-row table with a sentence. qou owns them outright since
+  2026-09-19, so that cause is gone and the third state is what still
+  covers a sparse checkout or an undeclared directory.
 - A shallow clone with no `gh-pages` must not silently blank a contents table
   that was right yesterday.
 
@@ -173,7 +175,8 @@ Each shipped once:
 2. **Workflow descriptions from a hardcoded map of twelve `qou` filenames**,
    consulted *before* the workflow's own `name:`. Now always the `name:`.
 3. **The simulator directory as the literal `folio-assistant/simulators`.**
-   Now `harness.config.json`.
+   Now `harness.config.json`, and the fallback is the folio-root `simulators`
+   — the platform has no such directory since 2026-09-19.
 
 <!-- folio:memory:end -->
 

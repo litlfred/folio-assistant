@@ -12,7 +12,8 @@
     "port": 8080
   },
   "simulators": {
-    "dir": "folio-assistant/simulators",
+    "_comment": "The FOLIO's own directory. `viewer` above points into the platform because the viewer is platform code; simulators are subject matter, so they belong to the folio and this path is relative to its root.",
+    "dir": "simulators",
     "pyodideCache": true
   },
   "harness": {
