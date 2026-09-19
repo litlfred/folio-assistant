@@ -61,7 +61,15 @@ const MOVED = [
  * because the five real failures were spread across exactly those five shapes
  * and a rule per shape is a rule per shape somebody forgot.
  */
-const TOKEN = new RegExp(String.raw`(?<![\w/.\-])((?:${MOVED.join("|")})/[\w./*\-]*)`, "g");
+const TOKEN = new RegExp(
+  // `\.?/?` so a `./`-prefixed path is caught. The lookbehind excluded `.`,
+  // which meant `cp ./ns/content/v1.jsonld` slipped past on this guard's first
+  // outing — a real broken path, in a workflow already on the list. A guard
+  // that misses the shape it was written for is worse than none, so this is
+  // the one place to be generous.
+  String.raw`(?<![\w/\-])\.?/?((?:${MOVED.join("|")})/[\w./*\-]*)`,
+  "g",
+);
 
 /** Path segments that mean "not a literal file to check". */
 const SKIP = /\$\{\{|\*|__|\.\.\./;

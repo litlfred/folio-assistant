@@ -243,7 +243,7 @@ jobs:
           # it was written. Copied here, which is the eighth instance of the
           # defect bean `blv9` records and the cheapest one to have fixed.
           mkdir -p "./_site/ns/content"
-          cp ./ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+          cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
@@ -298,7 +298,7 @@ jobs:
       # failure here too: at this point in the job there IS a build, so not
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
-        run: bun run cat-harness/scripts/site-links.ts --site ./_site
+        run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll

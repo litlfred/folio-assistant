@@ -486,7 +486,7 @@ jobs:
       #
       # A test asserts both workflows carry this step.
       - name: Check the navbar tiles resolve against the built site
-        run: bun run cat-harness/scripts/site-links.ts --site ./_site
+        run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll

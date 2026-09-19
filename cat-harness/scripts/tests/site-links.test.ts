@@ -199,7 +199,12 @@ describe("both publishing workflows check their own tiles", () => {
     // witness copy already carries, and the same shape of test.
     for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
       const text = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", wf), "utf-8");
-      expect(text).toContain("scripts/site-links.ts --site ./_site");
+      // Asserted as two facts rather than one exact command line: that the
+      // checker RUNS, and that it is pointed at the built site. Pinning the
+      // whole string made this fail when `--root ./cat-harness` was added —
+      // a correct change, rejected for the shape of its argument list.
+      expect(text).toContain("scripts/site-links.ts");
+      expect(text).toContain("--site ./_site");
     }
   });
 });
