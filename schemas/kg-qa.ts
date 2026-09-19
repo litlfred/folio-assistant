@@ -50,6 +50,8 @@
  * @graphNode schema
  */
 
+import { join, relative } from "node:path";
+
 import { z } from "zod";
 
 /** Marker value carried by every sidecar written by `scripts/kg-audit.ts`. */
@@ -79,8 +81,54 @@ export const KG_QA_MANIFEST_SCHEMA = "kg-qa-manifest/v1";
 /** Repo-relative location of that manifest, so every reader agrees on it. */
 export const KG_QA_MANIFEST_PATH = "skills/kg-qa.manifest.json";
 
-/** Where sidecars go, relative to the audited artefact's own directory. */
+/**
+ * The directory name sidecars used to sit in, beside their subject.
+ *
+ * Kept because the audit still has to SKIP such a directory when walking a
+ * corpus that has not migrated, and because a folio consuming this platform
+ * may still carry the old layout. Nothing in this repository writes one any
+ * more — see {@link kgQaSidecarPath}.
+ */
 export const KG_QA_DIRNAME = "kg-qa";
+
+/** Where KG verdicts live now, relative to the instance root. */
+export const KG_QA_RESULTS_DIR = join("test", "results", "kg-qa");
+
+/**
+ * Where one subject's verdict lives — the ONE answer, for writer and reader.
+ *
+ * ## Why it is a function and not two path expressions
+ *
+ * It was two. `kg-audit.ts` composed the write path from the subject's own
+ * directory and `content/pipeline/qa-witness.ts` composed the read path the
+ * same way, independently — two spellings of one concept, which is the drift
+ * this repository keeps paying for. They agreed only because neither had
+ * changed. Moving the corpus is exactly the change that would have made them
+ * disagree, and a reader that looks in the wrong place finds nothing and
+ * reports a subject as unaudited, which is a false pass rather than an error.
+ *
+ * ## Why the tree MIRRORS the subject's path
+ *
+ * A flat directory keyed by stem collides, and not hypothetically: measured
+ * 2026-09-19, four sidecar basenames already occur twice across packages —
+ * `editor`, `getting-started`, `idle-backlog` and `l2-dak-authoring`. Flat,
+ * four verdicts would silently overwrite four others. `kg-audit.ts` had
+ * recorded the risk in a comment ("one shared directory would collide two
+ * packages' skills of the same name") and kept the sidecars beside their
+ * subjects because of it; mirroring keeps that guarantee while moving the
+ * files, and keeps the package legible in the path.
+ *
+ * @param repoRoot   absolute instance root
+ * @param subjectDir absolute directory the subject itself lives in
+ * @param stem       the subject's filename without extension, or its id
+ */
+export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: string): string {
+  // `relative` rather than string surgery: a subject reached by a different
+  // spelling of the same directory must land on the same results path, or the
+  // writer and the reader disagree again by another route.
+  const rel = relative(repoRoot, subjectDir);
+  return join(repoRoot, KG_QA_RESULTS_DIR, rel, `${stem}.kg-qa.json`);
+}
 
 /** What kind of node a sidecar audits. */
 export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "skill", "graph"] as const;
