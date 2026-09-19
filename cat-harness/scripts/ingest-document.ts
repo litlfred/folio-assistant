@@ -70,6 +70,24 @@ import { directoryForGraph } from "../schemas/cat-harness.ts";
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 /**
+ * A python helper beside this module, as an ABSOLUTE path.
+ *
+ * Three call sites spelled `'scripts/<name>.py'` relative to the CWD inside a
+ * python source string, which is the least visible place a path can hide: not
+ * TypeScript, not YAML, not a config file, and unreachable by every scan here.
+ * Each failed SILENTLY — the import raised, python exited non-zero, and the
+ * caller's `exitCode !== 0` guard turned that into `null` or `undetermined`,
+ * which reads as "this file could not be identified" rather than "the helper
+ * is missing".
+ *
+ * One function so the next relocation is one line, and so that a reader
+ * grepping for `.py` finds the resolution rather than three copies of it.
+ */
+function pyHelper(name: string): string {
+  return join(dirname(fileURLToPath(import.meta.url)), name);
+}
+
+/**
  * Where L1 source content lives, READ from `harness.json` rather than written
  * out. Each rung takes it as `-o`, so the literal would otherwise appear four
  * times in this file alone -- and `check:declared-paths` caught exactly that
@@ -108,7 +126,7 @@ export interface Plan {
 export function bibSlug(file: string): string {
   const py =
     "import sys, importlib.util as u\n" +
-    "spec = u.spec_from_file_location('d', 'scripts/_pdf_doc_id.py')\n" +
+    `spec = u.spec_from_file_location('d', ${JSON.stringify(pyHelper("_pdf_doc_id.py"))})\n` +
     "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
     "print(m.derive_doc_id(sys.argv[1]))\n";
   const r = Bun.spawnSync(["python3", "-c", py, file]);
@@ -174,9 +192,21 @@ export const OCR_THRESHOLD_CHARS = 200;
  * correctly called it a workbook.
  */
 export function sniffMimetype(file: string): string | null {
+  // ABSOLUTE, from this module's own location. It was `'scripts/_tech_meta.py'`
+  // — a relative path inside a PYTHON SOURCE STRING inside a TypeScript file,
+  // resolved against the CWD, and invisible to every path scan this repository
+  // has. The move (bean `wggr`) put the helper under `cat-harness/scripts/`.
+  //
+  // It failed SILENTLY, which is the part worth fixing beyond the path: the
+  // import raised, python exited non-zero, and the `exitCode !== 0` guard below
+  // returned `null` — "nothing could determine what this file is". So every
+  // `.xlsx` would have routed to the ARCHIVE rung and been listed as a bag of
+  // XML parts, which is precisely the defect bean `twqe` records and this
+  // function was written to fix.
+  const helper = pyHelper("_tech_meta.py");
   const py =
     "import sys, json, importlib.util as u\n" +
-    "spec = u.spec_from_file_location('t', 'scripts/_tech_meta.py')\n" +
+    `spec = u.spec_from_file_location('t', ${JSON.stringify(helper)})\n` +
     "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
     "print(json.dumps(m.sniff_effective_mimetype(sys.argv[1])[0]))\n";
   const r = Bun.spawnSync(["python3", "-c", py, file]);
@@ -193,7 +223,7 @@ export function sniffMimetype(file: string): string | null {
 export function tabularDelimiter(file: string): string | null {
   const py =
     "import sys, json, importlib.util as u\n" +
-    "spec = u.spec_from_file_location('t', 'scripts/tabular-records.py')\n" +
+    `spec = u.spec_from_file_location('t', ${JSON.stringify(pyHelper("tabular-records.py"))})\n` +
     "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
     "print(json.dumps(m.is_tabular_text(sys.argv[1])))\n";
   const r = Bun.spawnSync(["python3", "-c", py, file]);
