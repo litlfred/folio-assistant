@@ -13,6 +13,7 @@ import { fileURLToPath } from "node:url";
 
 import { buildQaResult, sourceHashOf, QA_RESULTS_DIR } from "../qa-results.js";
 import { readDeclaration } from "../../schemas/cat-harness.js";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -111,7 +112,7 @@ describe("the witnesses are committed in one place and published in another", ()
     // what a checker found. It sat in `docs/` only because that is where Jekyll
     // could reach it, which is a fact about the build, not about the artefact.
     expect(existsSync(WITNESS_DIR)).toBe(true);
-    expect(existsSync(join(ROOT, "docs", "assets", "qa"))).toBe(false);
+    expect(existsSync(join(ROOT, siteDirFor(ROOT), "assets", "qa"))).toBe(false);
   });
 
   it("BOTH publishing workflows copy them into the site", () => {
@@ -136,7 +137,7 @@ describe("the witnesses are committed in one place and published in another", ()
     // Where a file LIVES and where it is SERVED FROM are different questions.
     // Moving the URL as well would have rewritten every badge in every
     // generated page and the browser code that fetches them, for no gain.
-    const page = readFileSync(join(ROOT, "docs", "agentic-harness.md"), "utf-8");
+    const page = readFileSync(join(ROOT, siteDirFor(ROOT), "agentic-harness.md"), "utf-8");
     expect(page).toContain("data-qa-src=\"{{ '/assets/qa/");
   });
 });

@@ -16,6 +16,7 @@ import { readDeclaration } from "../../schemas/cat-harness.js";
 import { BEAN_GRAPH_FILE, parseBeanGraph } from "../../schemas/bean-graph.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../../schemas/todo-graph.js";
 import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../todos.js";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 describe("the declaration and the directory agree", () => {
   test("`harness.json` declares a `todos` graph", () => {
@@ -68,7 +69,7 @@ describe("the declaration and the directory agree", () => {
 describe("the published process hierarchy", () => {
   const index = () =>
     JSON.parse(
-      readFileSync(join(ROOT, "docs/assets/todos/index.json"), "utf8"),
+      readFileSync(join(ROOT, siteDirFor(ROOT), "assets/todos/index.json"), "utf8"),
     ) as { processes: Record<string, string[]>; items: Array<{ tags: { processes: string[] } }> };
 
   test("real call edges are present — a silent regex failure would flatten the board", () => {

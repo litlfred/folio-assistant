@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 /**
  * The three sidebar disclosure panels — QR, reading preferences, language —
@@ -33,13 +34,14 @@ import { fileURLToPath } from "node:url";
 // `import.meta.dir` is a Bun extension and is undefined under Node, which is
 // what Playwright runs the spec with.
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
-const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
+const SITE = siteDirFor(ROOT);
+const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
+const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 // The QR encoder must load FIRST: `mountQr` returns early without it, and
 // mountQr is what mounts the theme toggle, reading preferences and language
 // switcher too. Omitting it mounts nothing and every assertion below fails
 // for the wrong reason.
-const QR = readFileSync(join(ROOT, "docs/assets/js/vendor/qrcode.js"), "utf8");
+const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
 
 const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8"><style>
   body { margin: 0; }

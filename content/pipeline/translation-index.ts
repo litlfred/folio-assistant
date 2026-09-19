@@ -73,6 +73,7 @@ import { parse as parseYaml } from "yaml";
 
 import { LOCALE_RTL } from "../../schemas/translation.ts";
 import { isTranslatable } from "../../schemas/translation-tools.ts";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..", "..");
@@ -82,10 +83,10 @@ const REPO_ROOT = resolve(HERE, "..", "..");
  *
  * A literal, and a CHECKED one: {@link siteRoot} confirms it by finding
  * `_config.yml` there and reports "could not determine" rather than scanning
- * an empty tree if it is not. Every other consumer in this repo uses the same
- * path — `scripts/gen-docs-pages.ts`'s `OUT_DIR`, `docs-site.yml`'s
- * `source: ./docs`, `docs/_data/` — so inventing a configurable one here
- * would add a fifth spelling of a fact that has four already.
+ * an empty tree if it is not. It is no longer a literal: `siteDir()` in
+ * `schemas/cat-harness.ts` composes it from the instance's own `stub`, so
+ * `gen-docs-pages.ts`, `gen-skill-docs.ts`, `gen-schema-docs.ts` and
+ * `translation-qa-sweep.ts` all read one answer rather than five copies.
  *
  * It is not in `cat-harness.json` because `docs/` would have to be declared
  * with the `folio` kind, which is registered by CORE rather than the harness.
@@ -94,10 +95,10 @@ const REPO_ROOT = resolve(HERE, "..", "..");
  * readers do not import core's registration. That is issue #223's split to
  * land, not translation's. Bean `folio-assistant-x4a6`.
  */
-export const SITE_DIR = "docs";
+export const SITE_DIR = siteDirFor(REPO_ROOT);
 
 /** Where the generated index lands, relative to the instance root. */
-export const INDEX_PATH = join("docs", "_data", "translations.json");
+export const INDEX_PATH = join(SITE_DIR, "_data", "translations.json");
 
 /** The `$schema` tag the generated document carries, per the repo convention. */
 export const INDEX_SCHEMA = "folio-translation-index/v1";

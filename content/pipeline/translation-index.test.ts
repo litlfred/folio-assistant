@@ -99,8 +99,8 @@ translation_source: index.md
 describe("a page is a translation because IT says so", () => {
   it("indexes a page that declares a non-source `lang`", () => {
     const { root, dispose } = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/fr/index.md": FRENCH_PAGE,
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/fr/index.md`]: FRENCH_PAGE,
     });
     try {
       const { index, findings } = buildTranslationIndex(root);
@@ -119,8 +119,8 @@ describe("a page is a translation because IT says so", () => {
     // same filename, no `lang` — so it is a source-language page that happens
     // to live in a folder called `fr`, and it is treated as exactly that.
     const { root, dispose } = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/fr/index.md": "---\nlayout: default\ntitle: Foreign relations\n---\n\n# x\n",
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/fr/index.md`]: "---\nlayout: default\ntitle: Foreign relations\n---\n\n# x\n",
     });
     try {
       const { index, findings } = buildTranslationIndex(root);
@@ -136,8 +136,8 @@ describe("a page is a translation because IT says so", () => {
     // The other direction: `accueil-fr.md` sitting beside its source is a
     // French page because it says so, and a path-shaped rule would miss it.
     const { root, dispose } = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/accueil-fr.md": FRENCH_PAGE,
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/accueil-fr.md`]: FRENCH_PAGE,
     });
     try {
       const { index, findings } = buildTranslationIndex(root);
@@ -150,8 +150,8 @@ describe("a page is a translation because IT says so", () => {
 
   it("a page with no `lang` is the source language, not unknown", () => {
     const { root, dispose } = instance({
-      "docs/index.md": "---\ntitle: Home\npermalink: /\n---\n\n# Home\n",
-      "docs/fr/index.md": FRENCH_PAGE,
+      [`${SITE_DIR}/index.md`]: "---\ntitle: Home\npermalink: /\n---\n\n# Home\n",
+      [`${SITE_DIR}/fr/index.md`]: FRENCH_PAGE,
     });
     try {
       const { index } = buildTranslationIndex(root);
@@ -165,11 +165,11 @@ describe("a page is a translation because IT says so", () => {
     // A folio authored in French: the ENGLISH page is the translation.
     const { root, dispose } = instance(
       {
-        "docs/index.md": FRENCH_PAGE.replace("nav_exclude: true\n", "").replace(
+        [`${SITE_DIR}/index.md`]: FRENCH_PAGE.replace("nav_exclude: true\n", "").replace(
           "translation_source: index.md\n",
           "permalink: /\n",
         ),
-        "docs/en/index.md":
+        [`${SITE_DIR}/en/index.md`]:
           "---\ntitle: Home (EN)\nlang: en\nnav_exclude: true\ntranslation_source: index.md\n---\n\n# Home\n",
       },
       { contentType: "document", translation: { defaultLocale: "fr" } },
@@ -192,8 +192,8 @@ describe("a page is a translation because IT says so", () => {
     expect(isTranslatable("document", ".md")).toBe(true);
     expect(isTranslatable("document", ".json")).toBe(false);
     const { root, dispose } = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/data-fr.json": '{"lang":"fr"}',
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/data-fr.json`]: '{"lang":"fr"}',
     });
     try {
       const { index, findings } = buildTranslationIndex(root);
@@ -206,8 +206,8 @@ describe("a page is a translation because IT says so", () => {
 
   it("Jekyll's own underscore directories are not content", () => {
     const { root, dispose } = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/_includes/fragment.md": FRENCH_PAGE,
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/_includes/fragment.md`]: FRENCH_PAGE,
     });
     try {
       const { index } = buildTranslationIndex(root);
@@ -245,13 +245,13 @@ describe("what a translated page must also say", () => {
   for (const c of cases) {
     it(`reports ${c.name}`, () => {
       const { root, dispose } = instance({
-        "docs/index.md": SOURCE_PAGE,
-        "docs/fr/index.md": c.page,
+        [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+        [`${SITE_DIR}/fr/index.md`]: c.page,
       });
       try {
         const { index, findings } = buildTranslationIndex(root);
         const errors = findings.filter((f) => f.severity === "error");
-        expect(errors.map((f) => f.where)).toEqual(["docs/fr/index.md"]);
+        expect(errors.map((f) => f.where)).toEqual([`${SITE_DIR}/fr/index.md`]);
         expect(errors[0].message).toContain(c.expect);
         // A page that fails a rule is never half-indexed: a nav item pointing
         // at a page whose declaration is wrong is worse than no nav item.
@@ -264,9 +264,9 @@ describe("what a translated page must also say", () => {
 
   it("reports a translation whose source is itself a translation", () => {
     const { root, dispose } = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/fr/index.md": FRENCH_PAGE,
-      "docs/es/index.md": FRENCH_PAGE.replace("lang: fr", "lang: es").replace(
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/fr/index.md`]: FRENCH_PAGE,
+      [`${SITE_DIR}/es/index.md`]: FRENCH_PAGE.replace("lang: fr", "lang: es").replace(
         "translation_source: index.md",
         "translation_source: fr/index.md",
       ),
@@ -274,7 +274,7 @@ describe("what a translated page must also say", () => {
     try {
       const { findings } = buildTranslationIndex(root);
       const errors = findings.filter((f) => f.severity === "error");
-      expect(errors.map((f) => f.where)).toEqual(["docs/es/index.md"]);
+      expect(errors.map((f) => f.where)).toEqual([`${SITE_DIR}/es/index.md`]);
       expect(errors[0].message).toContain("translation of a translation");
     } finally {
       dispose();
@@ -283,9 +283,9 @@ describe("what a translated page must also say", () => {
 
   it("reports two translations of one page in one locale", () => {
     const { root, dispose } = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/fr/index.md": FRENCH_PAGE,
-      "docs/accueil-fr.md": FRENCH_PAGE,
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/fr/index.md`]: FRENCH_PAGE,
+      [`${SITE_DIR}/accueil-fr.md`]: FRENCH_PAGE,
     });
     try {
       const { findings } = buildTranslationIndex(root);
@@ -315,7 +315,7 @@ describe("three states", () => {
   });
 
   it("a site with no translations at all is DETERMINED empty", () => {
-    const { root, dispose } = instance({ "docs/index.md": SOURCE_PAGE });
+    const { root, dispose } = instance({ [`${SITE_DIR}/index.md`]: SOURCE_PAGE });
     try {
       const { index, findings } = buildTranslationIndex(root);
       expect(findings.filter((f) => f.severity !== "note")).toEqual([]);
@@ -329,16 +329,16 @@ describe("three states", () => {
   it("an unparseable page is a note until a translation names it", () => {
     const broken = "---\ntitle: Lean cache: the loop\n---\n\nx\n";
     const a = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/broken.md": broken,
-      "docs/fr/index.md": FRENCH_PAGE,
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/broken.md`]: broken,
+      [`${SITE_DIR}/fr/index.md`]: FRENCH_PAGE,
     });
     try {
       const { findings } = buildTranslationIndex(a.root);
       expect(findings.filter((f) => f.severity === "error")).toEqual([]);
       expect(findings.filter((f) => f.severity === "unreadable")).toEqual([]);
       expect(findings.filter((f) => f.severity === "note").map((f) => f.where)).toEqual([
-        "docs/broken.md",
+        `${SITE_DIR}/broken.md`,
       ]);
     } finally {
       a.dispose();
@@ -347,9 +347,9 @@ describe("three states", () => {
     // A translation names it: now its URL is load-bearing and cannot be
     // determined, so it escalates.
     const b = instance({
-      "docs/index.md": SOURCE_PAGE,
-      "docs/broken.md": broken,
-      "docs/fr/broken.md": FRENCH_PAGE.replace(
+      [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
+      [`${SITE_DIR}/broken.md`]: broken,
+      [`${SITE_DIR}/fr/broken.md`]: FRENCH_PAGE.replace(
         "translation_source: index.md",
         "translation_source: broken.md",
       ),
@@ -357,7 +357,7 @@ describe("three states", () => {
     try {
       const { findings } = buildTranslationIndex(b.root);
       expect(findings.filter((f) => f.severity === "unreadable").map((f) => f.where)).toEqual([
-        "docs/fr/broken.md",
+        `${SITE_DIR}/fr/broken.md`,
       ]);
     } finally {
       b.dispose();
