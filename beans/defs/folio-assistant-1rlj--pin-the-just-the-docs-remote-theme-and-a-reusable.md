@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T08:24:10Z
-updated_at: 2026-09-19T08:55:41Z
+updated_at: 2026-09-19T09:04:33Z
 ---
 
 
@@ -47,3 +47,7 @@ _2026-09-19T08:55:41Z_ — ## The pin is now VERIFIED against a real Jekyll buil
 - `index.html` — still carries `d-md-block d-none site-footer`, the v0.11.2 -> v0.12.0 marker. So the pin resolved to v0.12.0 and not to something older.
 
 That retires the "I have not seen the site built against the pin" caveat. Side finding recorded separately as bean `plj1`: the STAGING directory no longer exists at the gh-pages tip, because `docs-site.yml` publishes without `keep_files` and wipes every open PR's preview.
+
+_2026-09-19T09:04:33Z_ — READY FOR REVIEW. Final head 341d774f9 — CI 7/7 green (TypeScript, End-to-end + accessibility, Python, Lean, Rust, stage, cleanup-skipped). Local suite green on the same commit: bun test 2309 pass, eslint clean, playwright 133 pass, kg:audit 0 unknown, render:bpmn:check / check:workflows / check:workflow-refs / check:workflow-policy / gen-skill-docs --check / gen-docs-pages --check all 0, check:upstream-pins exit 0.
+
+Pin re-verified on the final head's staging deploy (gh-pages 469bfb2e6): 0 text-wrap hits in the compiled dark CSS against 1 on live main, and the v0.12.0 site-footer marker still present. Not merging — awaiting the owner.
