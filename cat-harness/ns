@@ -253,7 +253,15 @@
       "@id": "cat:issue",
       "@type": "rdf:Property",
       "label": "issue",
-      "comment": "The issue that superseded this node, where there is one.",
+      "comment": "The issue that superseded this node, or that it was written for.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:bean",
+      "@type": "rdf:Property",
+      "label": "bean",
+      "comment": "The work-plan item a node was written under, where there is one.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
     },

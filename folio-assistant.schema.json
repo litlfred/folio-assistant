@@ -182,6 +182,40 @@
           ],
           "additionalProperties": false
         },
+        "topology": {
+          "type": "object",
+          "properties": {
+            "forge": {
+              "type": "string",
+              "enum": [
+                "none",
+                "github",
+                "self-hosted",
+                "jurisdiction-hosted"
+              ]
+            },
+            "network": {
+              "type": "string",
+              "enum": [
+                "internet",
+                "egress-restricted",
+                "air-gapped"
+              ]
+            },
+            "modelProvenance": {
+              "type": "string",
+              "enum": [
+                "open-weight-local",
+                "hosted",
+                "mixed"
+              ]
+            },
+            "outwardFacing": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
         "directories": {
           "type": "array",
           "items": {
@@ -235,8 +269,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "f77f9bcf4938891040d36c12ce7f88a2ca074fa2",
+    "sha": "3f1c9ae679df48d4115953f5b1d0851f8ca10afb",
     "pr": "main",
-    "run": "35453709986"
+    "run": "35453925645"
   }
 }
