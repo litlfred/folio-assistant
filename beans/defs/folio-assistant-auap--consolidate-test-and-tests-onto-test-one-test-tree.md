@@ -1,11 +1,11 @@
 ---
 # folio-assistant-auap
 title: Consolidate test/ and tests/ onto test/ — one test tree, one declaration
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T10:48:26Z
-updated_at: 2026-09-19T11:02:43Z
+updated_at: 2026-09-19T11:16:54Z
 ---
 
 
@@ -67,3 +67,9 @@ _2026-09-19T11:02:43Z_ — Done on `claude/consolidate-test-dir`, PR #400 — NO
 **Verified positively, not on a green `bun test`:** `harness:dirs:check` 11 declared / 0 missing with `test/health/results` ok; `health:list` all five checks; Playwright 140 passed from `test/`.
 
 **Open risk I could not close:** whether any instance outside this repository resolves against `tests/`. Override-by-id, `GRAPH_KIND_ALIASES` and the migration doc all say no, but my access is scoped to `litlfred/folio-assistant`, so this is unverified rather than ruled out.
+
+_2026-09-19T11:16:53Z_ — Closing: merged as PR #400, merge commit 9c2b6a8aa on main, after the owner said to proceed on 2026-09-19. Verified on main rather than taken on the implementing agent's report: zero paths remain under tests/ in the tree; all four composed-path constants now read 'test' (schemas/health-report.ts HEALTH_RESULTS_DIR, scripts/repo-partition.ts SCAN_ROOTS and its test-material prefixes, scripts/tests/site-dir-single-answer.test.ts TREES), with scripts/tests/ — a different directory that stays — correctly untouched. Verified POSITIVELY rather than on a green suite, because the failure mode of a path move is a tool that scans nothing and reports clean: 'bun run harness:dirs:check' reports 11 declared / 0 missing with test/health/results listed ok, and 'bun run health:list' names all five checks rather than zero.
+
+THE OPEN RISK IS NOW CLOSED, and closed negatively, which is the strongest form. The PR's ## Not verified said it could not rule out an instance outside this repository resolving against tests/, since its access was scoped to folio-assistant. litlfred/qou was added to the session and cloned at c98c47345. It has NO directory declaration at all — no harness.json, no cat-harness.json, and no file anywhere in it containing a "graphs" key — so there is nothing that could override or resolve against this repository's tests/ path. That is exactly the case AGENTS.md calls fine: 'Absent declaration is fine (an unmigrated instance falls back to today's conventions).' Three supporting checks, all clean: folio.config.json names exactly three platform paths (folio-assistant/feedback, folio-assistant/viewer, folio-assistant/simulators) and none is a test directory; 'grep -rn folio-assistant/tests' across every config, workflow and script in qou returns zero matches; and there is no .gitmodules, so the platform is not attached as a submodule whose paths would bind. Every tests/ hit in qou is its own — tools/pyhecke/tests/, tools/qou-substrate/tests/, tests/simulators.spec.ts — its own Python and Playwright layout, untouched by anything here.
+
+Left open deliberately, per the PR: tests/test_pypdf_compat.py was moved for consistency but NOT relocated into scripts/tests/, because nothing references it and no workflow runs it, and moving it there would make it execute for the first time — a behaviour change dressed as a path fix.
