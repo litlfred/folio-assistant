@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-19T10:10:02Z
-updated_at: 2026-09-19T10:10:02Z
+updated_at: 2026-09-19T10:33:21Z
 ---
 
 
@@ -60,3 +60,15 @@ declared directory as a side effect of an unrelated change is how `dh4f`
 happens. The inconsistency is flagged in the PR, not silently resolved. Not
 opening a GitHub issue to exercise the tracking-issue path — that is forbidden
 without the owner's permission, so the path is exercised with a fixture.
+
+_2026-09-19T10:33:21Z_ — All four deliverables landed on claude/health-checks (PR #395), main merged in at b10aca59e.
+
+Skill: skills/folio-core/deletion-requires-confirmation.md, registered in folio-core's package-manifest, mirror regenerated into docs/folio-assistant/reference/skill-instructions/. AGENTS.md's bean rule now points at it as the general case rather than restating it.
+
+Checks: five in tests/health/checks.ts, results at tests/health/results/repository.health-report.json ($schema health-report/v1). Measured at the merge commit 2026-09-19: 9 staging previews totalling 311.4 MB (major), 4 of them matching no open PR, .git 365.5 MB against 33.6 MB tracked (10.9x, 46 packs), 184 resolved beans still inline. Todo store clean at 3 open.
+
+Harness: new 'health' graph kind at tests/health/results/, touching BASE_GRAPH_KINDS, both enumerating assertions in cat-harness.test.ts, and the documented-kinds table.
+
+Trigger: .github/workflows/health-check.yml, daily 06:41 UTC plus workflow_dispatch plus 'bun run health'.
+
+Open question for the owner, stated in the PR: this repo has both test/ and tests/. My recommendation is consolidating on test/ in a separate PR, because it is the side with a harness declaration pointing at it. Not done here.
