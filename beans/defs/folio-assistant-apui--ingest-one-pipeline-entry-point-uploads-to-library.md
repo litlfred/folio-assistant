@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-19T12:12:22Z
+updated_at: 2026-09-19T12:14:45Z
 parent: folio-assistant-slw1
 ---
 
@@ -41,3 +41,19 @@ _2026-09-19T12:12:22Z_ — Re-measured 2026-09-19 before starting. The bean's de
 3. Its motivating harm is not currently live. All four files in uploads/ already have matching library/ slugs (9789241548960_eng.pdf -> 9789241548960-eng, WHO_PUB_TPS_93.1.pdf -> who-pub-tps-931, WPR-RDO-2020-003-eng.pdf -> wpr-rdo-2020-003-eng, milnorlink.pdf -> milnorlink). So there is no un-ingested source making a clean corpus-grep lie right now. The RISK the bean describes is real; the instance is not.
 
 So this is not 'consolidate several scattered paths into one entry point'. It is 'write the pipeline, which does not exist' — with PDF extraction, sectioning, derived content, a Dublin Core record and a manifest all to be designed, and it is the spine nine sibling beans in the INGEST epic hang off. Left unclaimed rather than started, because that is a materially bigger and more design-heavy job than the bean advertises and the owner should price it before I build it.
+
+_2026-09-19T12:14:45Z_ — CORRECTION to the note above, same day. Point 2 of that re-measurement is WRONG and I am retracting it.
+
+I wrote 'NOTHING in the repo writes library/ at all'. False. scripts/pdf-pages.py and scripts/pdf-structure.py both ingest into library/, and milnorlink/structure.json says so in its own structure_note: 'Ingested at PAGE granularity by scripts/pdf-pages.py'. I had that file in front of me in the grep output and dismissed it as a PDF helper.
+
+Why the grep could not have found it, because the method is the lesson: I searched for (writeFile|mkdir|open..w|copy|move|rename) and library/ ON THE SAME LINE. pdf-pages.py writes via secdir.mkdir(...) and (secdir / f'{id}.md').write_text(...), where secdir descends from the -o library argument. The literal 'library' never appears on a write line, so a same-line pattern structurally could not match. I asserted a strong negative from a pattern that could not have produced the positive.
+
+What is actually there — four rungs, each with a stated reason to exist:
+  pdf-structure.py  primary; reads an EMBEDDED outline into real sections (--ocr, --no-sections, --json)
+  pdf-pages.py      fallback when there is no outline: PAGE granularity, refusing to infer a chapter tree (bean 6xaz records two measured cases where inference was confidently wrong)
+  pdf-ocr.py        recovers text where extraction fails entirely (scanned, image-only)
+  pdf-tables.py     tables and figures, which pdf-structure/v1's Section does not carry at all
+
+So the bean's ORIGINAL description was closer to right than my correction: the script name it gives is wrong, but 'scripts plus whatever the ingesting agent remembers to run' is exactly the situation — the agent must choose between pdf-structure and pdf-pages on whether an outline exists, decide whether OCR is needed first, and remember pdf-tables separately.
+
+That makes apui tractable and small after all: ONE entry point that sequences these four with the decision rules made mechanical, and the rules written down as a skill rather than carried in an agent's head. Point 3 of the previous note stands (all four uploads have library slugs; the risk is real, the instance is not).
