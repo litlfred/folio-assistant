@@ -594,6 +594,39 @@
   opacity: 0.35;
 }
 
+/* LIGHT ONLY. `opacity: 0.35` composites the link toward whatever is behind
+ * it, so on white it lands at **2.22:1** — measured 2026-09-19, bean `y8cm`,
+ * on every `✎ Edit` on the site, not just the one in a sticky. In DARK the
+ * same declaration moves the colour AWAY from the background and measures
+ * clean, so the base rule above is left exactly as it is: the defect belongs
+ * to one scheme, and "fix it in both" would change a rendering that is already
+ * correct.
+ *
+ * Quiet is kept, by a different mechanism. The point of the opacity was that
+ * a full-strength link pulled up into a heading's line is noisy — and that is
+ * a real concern, so this does not simply delete it. A muted NEUTRAL reads as
+ * chrome rather than as body text: it is visibly not one of the page's purple
+ * links, which is what an edit affordance should look like, and it measures
+ * **6.78:1**.
+ *
+ * Worth knowing before changing this: the site's own `--link-color` (#7253ed)
+ * measures 5.03:1 on white and would also pass. It was rejected because it
+ * makes the control read as a content link, not because it was unsafe.
+ *
+ * The two schemes now differ in MECHANISM — dark mutes by opacity, light by
+ * colour. Do not "tidy" that into one: the tidy version is the defect. */
+:root[data-fa-scheme="light"] .fa-node-edit {
+  opacity: 1;
+  color: #5a5a68;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-fa-scheme="dark"]) .fa-node-edit {
+    opacity: 1;
+    color: #5a5a68;
+  }
+}
+
 .fa-node-edit:hover,
 .fa-node-edit:focus-visible {
   opacity: 1;
@@ -1285,12 +1318,38 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 /* ── The sidebar mark and title ───────────────────────────────────
    just-the-docs draws `site.title` at the top left; `_includes/title.html`
    overrides it to read the instance's own declaration instead (see
-   scripts/sync-docs-harness.ts). The mark uses `currentColor` for its ring
-   and inner `a`, so it follows the sidebar's text colour in either scheme;
-   only its ears carry a fixed sage. */
+   scripts/sync-docs-harness.ts).
+
+   THIS COMMENT USED TO CLAIM the mark "uses `currentColor` for its ring and
+   inner `a`, so it follows the sidebar's text colour in either scheme; only
+   its ears carry a fixed sage." That was never true. Checked 2026-09-19
+   against every commit that has ever touched docs/assets/img/icons/
+   (e5c171029, 2d1b22905, c8c58f28b): `currentColor` appears zero times in
+   either mark, in all three. Both bake `#6f8b66`.
+
+   It could not have been true anyway, and that is the part worth keeping.
+   `title.html` renders the mark as an `<img>`, and an `<img>` is opaque to
+   CSS colour — `currentColor` inside an externally-referenced SVG resolves
+   against that SVG's own root, not against the page. Making the claim true
+   would take INLINING the mark, not editing it.
+
+   So the mark is fixed sage in both schemes. On the dark sidebar that is
+   dimmer than the text beside it. Left as-is deliberately: sage on near-black
+   still reads, and inlining the SVG is a real change to how the mark is
+   served rather than a colour tweak. Recorded here rather than silently
+   corrected, because a comment asserting behaviour the asset never had is the
+   same "declared, unread, unnoticed" failure as the unconsumed
+   `role: "browser-icon"` — see beans/defs/…blv9. */
+/* 2rem, not 1.5rem. The mark's ears CROSS the @ ring by design, and the only
+   thing separating them is a 3-unit white halo against a 120-unit viewBox —
+   0.6 px at 1.5rem, which fuses the two sage shapes into a disc (measured
+   2026-09-19 from a screenshot of this element). At 2rem it is 0.8 px, and
+   the whiskers go 0.48 px -> 0.64 px. Still thin; visibly better, and it
+   changes the ARTWORK not at all, which is the point — the alternative was
+   redrawing the glyph, and that lost the ear tips. */
 .fa-site-mark {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   vertical-align: -0.32em;
   margin-right: 0.4rem;
   flex: none;
