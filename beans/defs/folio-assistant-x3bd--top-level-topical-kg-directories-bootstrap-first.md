@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-09-19T06:49:45Z
+updated_at: 2026-09-19T06:50:56Z
 ---
 
 
@@ -72,3 +72,13 @@ THREE EXISTING SKILLS LOOK LIKE THIS ONE AND NONE OF THEM IS IT. Measured 2026-0
 SIZE CHECK, since the whole point is leanness. Two skills, one BPMN with one gateway, one README. The three near-neighbours total 616 lines and none is loadable at bootstrap time; the two bootstrap skills should be a small fraction of that, and if the intent skill starts approaching crdm-detect's 123 lines it has probably absorbed instance knowledge it should be deferring to the graph for.
 
 PR STATE, unrelated but recorded so the next session does not re-derive it: #334's merge conflict is resolved (main merged, isSkillMd and declaration-driven discovery composed), 8c88b88f8 is fully green on all six hard checks, and mergeable_state is now 'unstable' — CI in progress on a later beans-only commit, NOT a conflict.
+
+_2026-09-19T06:50:56Z_ — HARDCODING JSON/JSON-LD ASSETS IN BOOTSTRAP IS PERMITTED, NOT PREFERRED — owner 2026-09-19: 'if need to hardcode json/jsonld assets, thats ok. not preferrred'. Recorded with a fence, because this repository has spent the last two days removing exactly this: the /kg/ literal in toolTypeIri that would have 404'd 95 published refs, nine production sites hardcoding skills/workflows, five hardcoded skill directories that had already gone stale, and a generate-readme.sh holding one folio's title and badges. A blanket concession would re-open the class on the day it was closed. The fence below is not stricter than the owner said; it is the distinction that makes the concession safe to use.
+
+THERE IS EXACTLY ONE HARDCODE THAT IS NOT A COMPROMISE AT ALL, AND BOOTSTRAP IS WHERE IT LIVES. You cannot discover the graph you use to discover things. bootstrap/README.md must name bootstrap.jsonld literally, because there is no prior graph to read that name from, and the same is true of the @context the file loads with. That is the BASE CASE OF THE RECURSION, not debt — it is permanent, it is correct, and marking it as a compromise would be wrong. Every bootstrap in every system has one; the failure mode is having more than one.
+
+EVERYTHING ELSE IS A STAND-IN FOR A LOOKUP, AND THE TEST IS ONE QUESTION: COULD A GRAPH ALREADY LOADED HAVE ANSWERED THIS? If yes, the hardcode is debt, permitted but marked. Candidates that will come up: the term namespace (FOLIO_NS is a constant in schemas/namespaces.ts and is the RIGHT shape — one definition, imported, not retyped); the skill-instructions URL (derivable once instructions is in @context and dereferenceable, so hardcoding it now is a temporary stand-in for prerequisite 1 and should say so); and the workflow file's path (bootstrap's own BPMN is named by bootstrap.jsonld, so hardcoding it separately would be a second answer to a question the graph already answers).
+
+THE MECHANISM ALREADY EXISTS IN THIS REPO AND SHOULD BE REUSED RATHER THAN INVENTED. AGENTS.md on the two duplicated harness directories: '.beans.yml because the beans binary is third-party and will never read our schema, and WORKFLOW_DIR in workflow/store.ts because it is on the hot path ... The duplication is unavoidable; an unchecked one is not.' Both are checked by bun run check:harness-dirs. Apply the same pattern: a hardcoded asset path in bootstrap is fine AND IS CHECKED — a test that the literal resolves to a file that exists and, where it is a URL, that it is among the paths the publish step actually produces. kg-export.test.ts already does the URL half for the whole exported graph (the dead-link walk over PUB), so this is an extension of a working check rather than a new one.
+
+AND THE GATE STILL HELD BACK FROM STEP 1 GETS ITS ANSWER FROM THIS. The remaining piece of step 1 is a gate refusing a NEWLY hardcoded workflow path. The open question was what it does about legitimate literals; an allow-list is what this repo warns against. This settles it: the gate refuses a hardcode that a declaration could have answered, and a literal that is a base case declares itself as one and is checked to resolve. Same rule, one sentence, and it is the owner's 'ok but not preferred' made mechanical instead of remembered.
