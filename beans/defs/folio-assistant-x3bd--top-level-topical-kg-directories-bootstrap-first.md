@@ -166,3 +166,28 @@ TWO REAL DEFECTS FOUND ON THE FIRST RUN, which is the argument for the gate. (1)
 AND ONE I HAD JUST INTRODUCED. `ab62c9dfe` rewired `check-workflow-refs`'s NOT-INDEXED scan to `workflowFiles()`, which returns ABSOLUTE paths, and left the prose comparison alone — all 32 diagrams read as unindexed. Fixed by matching basename again, but only where the basename is UNAMBIGUOUS: two `review.bpmn` under a topical layout are indexed by neither a single mention.
 
 WHAT THE 125 ARE, roughly: 16 generate-docs, 11 repo-partition (now marked), 9 kg-audit, 7 each check-tools / generate-registry / skill-fetch, 6 known-skills, 5 each validate-skills / harness-schema-export / mcp-server, 4 each translate-bpmn / translation / document adapter. Draining them is not one task: skill-fetch's is a design question, the adapters' `uploads` is a different declaration, and generate-docs is mostly output paths.
+
+## Note — 2026-09-19, the library/ extraction inventory
+
+MEASURED, not planned: the move cannot be executed from this session. `who-style-guide` and `folio-asst-sci` DO NOT EXIST, and this session's repo scope is `litlfred/folio-assistant` and `litlfred/folio-test` only. So this records what would move and what would break, and the repo question goes to the owner.
+
+WHAT IS THERE. Four slugs under `library/`, 1401 files, ~5.9M:
+
+| slug | files | ocr/ | what |
+|---|---|---|---|
+| `9789241548960-eng` | 752 | no | WHO Handbook for Guideline Development, 2nd ed, 179pp |
+| `who-pub-tps-931` | 486 | YES (121) | WHO Editorial Style Manual, 121pp — the ONLY scanned source |
+| `wpr-rdo-2020-003-eng` | 101 | no | WHO W-Pacific Publication Style Guide, 33pp |
+| `milnorlink` | 62 | no | Milnor, "Link Groups", Annals of Math 59(2) 1954 |
+
+Four voices, 1:1 onto the slugs, no voice citing two: `who-editorial` -> `who-pub-tps-931`, `who-guideline-development` -> `9789241548960-eng`, `who-publication-design` -> `wpr-rdo-2020-003-eng`, `milnor` -> `milnorlink`. So the owner's split is clean on the voice axis: three WHO bundles leave together, one milnor bundle leaves alone.
+
+WHAT BREAKS, and it is remarkably little. EXACTLY ONE TEST: `scripts/tests/qa-checkers-voice.test.ts:527` reads `library/milnorlink/sections` from the real corpus and asserts `hits === 1`. Deleting the slug makes `readdirSync` throw ENOENT — it ERRORS rather than merely failing, which is worse to debug. NO test touches any WHO slug: every other library-reading test builds fixtures under `mkdtempSync` with invented slugs (`who-anc-2016`, `doc-1`, `src-1`, `0110001v3`). `scripts/tests/pdf-doc-id.test.py` asserts the STRING `who-pub-tps-931` and the path `library/who-pub-tps-931/ocr` but never stats them.
+
+A LIVE DEFECT FOUND ALONG THE WAY, and it is worth a bean of its own. `scripts/check-voices.ts` validates the whole voice graph against disk — 36 of 37 voice rules cite a `library/<slug>/sections/<id>.md`, and every voice source requires a `structure.json`. It is wired as `package.json` `check:voices`. It appears in NO CI workflow: `grep -rn 'check:voices\|check-voices' .github/` returns ZERO, verified independently of the survey that reported it. So the one gate that would catch this extraction breaking the voice graph is a gate nobody runs. That is the `xom7` shape (a red workflow looks like a green one from in here) with the workflow missing entirely rather than failing.
+
+THE INGESTION-FIXTURE ARGUMENT STILL HOLDS AND SHARPENS. The earlier note on this bean recorded the owner's "current OCR etc pipeline is jsut one set of tools. another is coming", and concluded something must stay as the corpus both pipelines are measured against. The inventory names which: `who-pub-tps-931` is the ONLY slug carrying OCR output at all (121 pages). Lose it and the second pipeline's OCR half has nothing to be compared on. So if the three WHO documents leave as a bundle, the platform needs either a retained copy or a synthetic OCR fixture BEFORE the move, not after.
+
+BLAST RADIUS OF THE NAMES, 25 non-test files. The heaviest are `content/pipeline/qa-criteria-registry.ts` (17 hits: four `voice-overlay-*` criteria plus `expo-milnor-clarity` and `milnor-brevity`) and three folio-core skills that link `library/milnorlink/` and `voices/milnor.json` by relative path — `milnor-exposition-standard.md`, `exposition-swarm-drain.md`, `one-voice-style-guide.md` — each with a generated mirror under `docs/`. `.claude/` has ZERO references. No BPMN element id encodes a slug; the two mentions are prose in `<bpmn:documentation>`.
+
+WHAT I WOULD DO, for the owner's call: create the two repos, move the bundles, keep `who-pub-tps-931` (or a reduced OCR fixture from it) in the platform as the ingestion corpus, put `check:voices` into CI FIRST so the move is gated rather than hoped, and convert the one live test to a fixture so the platform's test suite stops depending on a document that is leaving.
