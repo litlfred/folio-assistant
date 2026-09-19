@@ -176,7 +176,7 @@ harness git instructions). Do not include the model identifier in the PR.
 
   **This is stated in [`prepare-merge-auto.md`](prepare-merge-auto.md) too** —
   Phase 4 step 4 and Phase 5 — and it was stated there *only*, which is how it got
-  broken. `AGENTS.md` §"Shipping a branch" points at THIS file, so an agent that
+  broken. `AGENTS.md` §More, "Shipping a branch", points at THIS file, so an agent that
   followed the pointer never met the rule: measured 2026-09-19, a session proposed
   "deleting the branch after each merge" as a way to stop a stop-hook false
   positive. If you change one copy, change the other.

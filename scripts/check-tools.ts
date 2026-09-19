@@ -34,6 +34,7 @@ import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
+import { kgRoots } from "./known-skills.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -41,7 +42,9 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export function knownSkills(): Set<string> {
   const names = new Set<string>();
   const dirs: string[] = [];
-  const skillsRoot = join(ROOT, "skills");
+  // declared-path-literal: the convention fallback. Every declared root is
+  // scanned below; this names one for the message when none is declared.
+  const skillsRoot = kgRoots(ROOT)[0] ?? join(ROOT, "skills");
   if (existsSync(skillsRoot)) {
     for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
       if (d.isDirectory()) dirs.push(join(skillsRoot, d.name));

@@ -43,6 +43,7 @@ import { join, resolve } from "node:path";
 
 import { formatPot } from "../content/pipeline/pot-extract.js";
 import { parsePo, parsePoEntries } from "../content/pipeline/po-inject.js";
+import { directoryForGraph } from "../schemas/cat-harness.js";
 import {
   STRINGS_SOURCE,
   UI_STRINGS,
@@ -51,6 +52,18 @@ import {
 } from "./kg-viewer-strings.js";
 
 const root = resolve(import.meta.dir, "..");
+
+/**
+ * The declared `translation-sources` graph — where a translator's `.pot` and
+ * `.po` live. Falls back to the convention because extraction CREATES the
+ * tree for a locale that has none yet.
+ *
+ * declared-path-literal: the convention fallback, stated at the call site
+ * rather than inside `directoryForGraph` so the choice is visible.
+ */
+function translationsRoot(repoRoot: string): string {
+  return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
+}
 const argv = process.argv.slice(2);
 
 function flag(name: string): string | undefined {
@@ -74,7 +87,7 @@ function placeholders(s: string): string[] {
 
 /** Locales that already have a translations directory. */
 function knownLocales(): string[] {
-  const dir = join(root, "translations");
+  const dir = translationsRoot(root);
   if (!existsSync(dir)) return [];
   return readdirSync(dir, { withFileTypes: true })
     .filter((e) => e.isDirectory())
@@ -96,7 +109,7 @@ if (wantExtract) {
   }
   console.log(`Extracting ${entries.length} string(s) from ${STRINGS_SOURCE} for: ${targets.join(", ")}\n`);
   for (const loc of targets) {
-    const outDir = join(root, "translations", loc);
+    const outDir = join(translationsRoot(root), loc);
     mkdirSync(outDir, { recursive: true });
     writeFileSync(
       join(outDir, "kg-viewer.pot"),
@@ -180,7 +193,7 @@ if (wantCheck) {
   let seen = 0;
 
   for (const loc of knownLocales()) {
-    const dir = join(root, "translations", loc);
+    const dir = join(translationsRoot(root), loc);
     const po = join(dir, "kg-viewer.po");
     const pot = join(dir, "kg-viewer.pot");
     if (!existsSync(po) && !existsSync(pot)) continue;

@@ -15,6 +15,10 @@
       "result": "fail",
       "findings": [
         {
+          "where": "agent-memory",
+          "detail": "no role carries \"agent-memory\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "bean-blocking",
           "detail": "no role carries \"bean-blocking\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -33,6 +37,10 @@
         {
           "where": "block-density",
           "detail": "no role carries \"block-density\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
+          "where": "bpmn-processes",
+          "detail": "no role carries \"bpmn-processes\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
           "where": "build-docs",
@@ -59,6 +67,10 @@
           "detail": "no role carries \"chapter-complexity-review\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
+          "where": "ci-health",
+          "detail": "no role carries \"ci-health\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "compute-audit",
           "detail": "no role carries \"compute-audit\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -73,6 +85,10 @@
         {
           "where": "content-block-review",
           "detail": "no role carries \"content-block-review\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
+          "where": "content-profiles",
+          "detail": "no role carries \"content-profiles\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
           "where": "content-validation",
@@ -97,6 +113,10 @@
         {
           "where": "definition-clarity-audit",
           "detail": "no role carries \"definition-clarity-audit\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
+          "where": "deletion-requires-confirmation",
+          "detail": "no role carries \"deletion-requires-confirmation\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
           "where": "deployment-auth",
@@ -143,6 +163,10 @@
           "detail": "no role carries \"fsh-guts\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
+          "where": "github-state-inspection",
+          "detail": "no role carries \"github-state-inspection\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "glossary-build",
           "detail": "no role carries \"glossary-build\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -173,6 +197,10 @@
         {
           "where": "integration-watcher",
           "detail": "no role carries \"integration-watcher\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
+          "where": "issue-working",
+          "detail": "no role carries \"issue-working\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
           "where": "kg-export",
@@ -359,6 +387,10 @@
           "detail": "no role carries \"readability-editing\" and no activity names it — reached, if at all, by direct invocation."
         },
         {
+          "where": "readme-sections",
+          "detail": "no role carries \"readme-sections\" and no activity names it — reached, if at all, by direct invocation."
+        },
+        {
           "where": "remark-audit",
           "detail": "no role carries \"remark-audit\" and no activity names it — reached, if at all, by direct invocation."
         },
@@ -440,6 +472,31 @@
       "result": "pass",
       "findings": []
     },
+    "remote-skill-is-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "claude-scientific-skills.json/scientific-visualization",
+          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"scientific-visualization\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        },
+        {
+          "where": "claude-scientific-skills.json/scientific-critical-thinking",
+          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"scientific-critical-thinking\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        },
+        {
+          "where": "claude-scientific-skills.json/hypothesis-generation",
+          "detail": "skills/remote-packages/claude-scientific-skills.json declares \"hypothesis-generation\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        },
+        {
+          "where": "smarter-fhir.json/smart-launch",
+          "detail": "skills/remote-packages/smarter-fhir.json declares \"smart-launch\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        },
+        {
+          "where": "smarter-fhir.json/fhir-client-operations",
+          "detail": "skills/remote-packages/smarter-fhir.json declares \"fhir-client-operations\", which this instance holds no body for and cannot serve — skill_fetch does not read that directory and the generated registry does not carry it. The wrapper declares sync {\"strategy\":\"shallow-clone\",\"frequency\":\"weekly\",\"autoUpdate\":true}, and nothing performs it. Implement the sync (a platform capability change: GitHub issue + CRDM workflow first), or drop the declaration so the name stops being published."
+        }
+      ]
+    },
     "actor-roles-resolve": {
       "result": "pass",
       "findings": []
@@ -459,7 +516,7 @@
   },
   "totals": {
     "pass": 6,
-    "fail": 1,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }

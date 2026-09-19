@@ -210,8 +210,9 @@ If the author says "apply all" or "go ahead":
   `.lean` files. Dispatch skills do that, under author approval.
 - **Honest confidence**: if a specialist reports low confidence
   (< 0.7), surface that to the author — don't smooth it over.
-- **Link every finding** to a GitHub blob URL per the AGENTS.md
-  "always provide GitHub links" rule. Default to `.md` for block
+- **Link every finding** to a GitHub blob URL, per
+  [`turn-reporting`](../folio-core/turn-reporting.md) §"Asking for review means
+  linking the artefact". Default to `.md` for block
   citations; include `.lean` sibling when the finding is Lean-specific.
 - **Downstream-consumer sync.** When a finding touches a proposition
   consumed by a derived chain (e.g. an algorithm or appendix block

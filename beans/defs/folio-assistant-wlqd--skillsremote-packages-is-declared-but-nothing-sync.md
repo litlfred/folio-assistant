@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-19T05:47:28Z
-updated_at: 2026-09-19T06:25:42Z
+updated_at: 2026-09-19T11:05:51Z
 ---
 
 Found 2026-09-19 while working `nup0`. Two remote packages are declared and
@@ -147,3 +147,79 @@ What is left is the decision in `## Done when`, unchanged: implement the sync
 (a platform capability change, so a GitHub issue and the CRDM workflow first),
 or declare these files a docs input and drop `sync`. Nothing in the tree now
 overstates the position, so this is not urgent.
+
+## 2026-09-19 — the owner asked for a third thing, and it was better than my four options
+
+I put the remaining decision as four options: rename `sync` → `intendedSync`,
+drop `sync`, implement the sync, or leave it. The answer was none of them:
+
+> **want it as a todo that fails QA**
+
+That is better than all four, and the reason is worth keeping. Every option I
+offered resolved to *prose* — a renamed field, a deleted field, a doc block —
+and the honesty pass had already shown where that leads: the generated docs now
+say "declared, not integrated", which made the overstatement **accurate and
+invisible at the same time**. Nothing tripped. A failing check keeps the
+pressure on until it is either implemented or removed.
+
+### What now fails
+
+`remote-skill-is-servable`, a new `graph`-scoped criterion in `KG_CRITERIA`
+(`schemas/kg-qa.ts`, now 34). It reports **5** findings, one per declared and
+unservable skill, each naming the wrapper that declares it:
+
+| wrapper | skills |
+|---|---|
+| `claude-scientific-skills.json` | `scientific-visualization`, `scientific-critical-thinking`, `hypothesis-generation` |
+| `smarter-fhir.json` | `smart-launch`, `fhir-client-operations` |
+
+So `bun run kg:audit` reports `Worst severity: major`, the committed sidecar
+`test/results/kg-qa/skills/roles/kg.kg-qa.json` records `fail`, and
+`bun run kg:audit:strict` exits non-zero.
+
+### What deliberately does NOT fail, and the argument for it
+
+**`kg:audit:check` — the CI gate — still passes**, because it fires on
+`critical` only. Making this `critical` would turn every unrelated pull request
+red until somebody implements a remote-package sync, which is exactly the defect
+`AGENTS.md` documents at length: `docs-site.yml` failed all 30 runs over two
+months and the failure became invisible *because* it was constant (bean `xom7`).
+A permanently-red required check is not a stronger signal, it is a disabled one.
+
+`major` also follows the established precedent: `activity-names-skill` is
+enforced by a dedicated test rather than by switching CI to `kg:audit:strict`,
+which would promote all 34 criteria at once.
+
+**Escalating is a one-line change** — the severity in `schemas/kg-qa.ts` — and
+the argument above is recorded in
+`scripts/tests/remote-skill-servable.test.ts` so whoever overrides it is
+overriding something stated, not rediscovering it.
+
+### The test pins the set in BOTH directions
+
+- It cannot silently **grow**: a sixth declared-but-unservable name fails, which
+  is the regression that matters, because adding such a name is currently free.
+  Probed — added `probe-sixth-unservable` to a wrapper: 4 pass → 3 pass / 1 fail,
+  and the criterion moved 5 → 6.
+- It cannot silently **vanish**: implementing the sync or dropping a declaration
+  fails the test and names what to do, so closing this bean is a deliberate act
+  with the expectation updated rather than a green run nobody reads.
+
+The five names are written out rather than counted — a bare `toBe(5)` passes when
+one name is swapped for another, and *which* skills are unfetchable is the
+finding.
+
+### One consolidation on the way
+
+`remotePackageSkills` now derives from a new `remotePackageDeclarations`, which
+is the single reader of `skills/remote-packages/`. Two readers of one directory
+is how they come to disagree, and a finding needs the wrapper as well as the
+name: the two files have different maintainers and different remedies.
+
+### Status: stays `todo`
+
+Deliberately. Neither `## Done when` box is ticked — the five skills are still
+unfetchable and the sync is still unimplemented. What changed is that QA now
+says so on every run instead of a doc block saying it once. Implementing the
+sync remains a platform capability change, so a GitHub issue and the CRDM
+workflow come first.

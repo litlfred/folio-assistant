@@ -48,7 +48,7 @@ import { fileURLToPath } from "node:url";
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
-import { readRoleGraph } from "../schemas/role-graph.js";
+import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import {
   artefactStub,
   defaultGraphKinds,
@@ -59,7 +59,7 @@ import {
   renderingPath,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
-import { skillMdDirs as knownSkillDirs } from "./known-skills.js";
+import { kgRoots, skillMdDirs as knownSkillDirs } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
@@ -1195,9 +1195,22 @@ function collectSchemas(doc: string, base: string): Node[] {
  * to it with `bindsLane`, so the two views join rather than compete.
  */
 function collectDeclaredRoles(doc: string): Node[] {
-  const graph = readRoleGraph(join(ROOT, "skills"));
-  if (!graph) return [];
-  return graph.roles.map((r) => ({
+  // EVERY declared `kg` root, not the literal `skills/` and not the first one
+  // that answers. `kgRoots` is explicit that taking the first is the `dh4f`
+  // defect arriving through the helper written to prevent it: a topical
+  // layout (`bootstrap/`, `crdm/`) would report a clean run over the roots
+  // this never visited. First declaration of a role id wins, so a later root
+  // cannot silently redefine one.
+  const roles: RoleDef[] = [];
+  const seen = new Set<string>();
+  for (const root of kgRoots(ROOT)) {
+    for (const r of readRoleGraph(root)?.roles ?? []) {
+      if (seen.has(r.id)) continue;
+      seen.add(r.id);
+      roles.push(r);
+    }
+  }
+  return roles.map((r) => ({
     "@id": makeIri(doc, "role", r.id),
     "@type": termIri("Role"),
     name: r.id,

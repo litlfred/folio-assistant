@@ -12,7 +12,7 @@ import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { sidecar, sidecarWithVerdicts } from "../../tests/support/qa-fixture.js";
+import { sidecar, sidecarWithVerdicts } from "../../test/support/qa-fixture.js";
 
 const dir = mkdtempSync(join(tmpdir(), "qa-fixture-"));
 const write = (name: string, doc: unknown): string => {

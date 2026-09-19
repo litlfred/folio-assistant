@@ -69,7 +69,7 @@ partition, `bun run check:partition`
 (`scripts/repo-partition.ts`).
 
 The tool walks every `.ts` module under `src/`, `schemas/`, `adapters/`,
-`content/`, `scripts/`, `tests/` and `types/`, resolves each relative import
+`content/`, `scripts/`, `test/` and `types/`, resolves each relative import
 (the codebase writes bare, `.js`-for-`.ts`, and directory forms, so all three
 are tried), assigns each module to one of the five proposed repositories, and
 reports the edges that cross a boundary **in the wrong direction**.
@@ -270,7 +270,7 @@ Reading the taxonomy against the measurements:
   the BPMN processes under `skills/workflows/`. These are schemas and Skill
   definitions: Content-repo material by the taxonomy, even though no subject
   matter lives here.
-- **Test** — no Test repo exists. Fixtures are distributed: `tests/`,
+- **Test** — no Test repo exists. Fixtures are distributed: `test/`,
   `scripts/tests/`, and the synthetic-folio helpers bean `dh4f` describes. There
   are no Test Plans and no Gherkin. Test data is **not** a folio content type,
   which the taxonomy says it should be.

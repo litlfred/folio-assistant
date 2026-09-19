@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-09-19T09:07:23Z
+updated_at: 2026-09-19T10:15:04Z
 ---
 
 
@@ -126,3 +126,68 @@ MY ERROR, named precisely so the same mistake is recognisable. I read the _comme
 SO THE PREMISE OF THE RECOMMENDATION WAS FALSE. I told the owner the two root files are structure-versus-content and that the shared 'harness' stem plus a '.config' suffix invites a permanent misreading. They are both HARNESS concerns: harness.json says WHAT DIRECTORIES EXIST, harness.config.json says HOW THE HARNESS BEHAVES. On that reading the shared stem is correct and the pairing is informative rather than misleading, which removes the entire basis for the change.
 
 WHAT WOULD ACTUALLY BE WORTH DOING, if the pairing still reads badly to a fresh eye: the constant HARNESS_CONFIG already exists in schemas/harness-config.ts with resolveHarnessConfigPath beside it, and 110 of its occurrences across 39 .ts files are BARE LITERALS that ignore it. Routing those through the constant makes any future rename one line, which is what DECLARATION_FILENAME bought for harness.json — that rename cost 39 files and one constant edit, against this one's 332. That is a real improvement available at any time and it does not require deciding the name.
+
+_2026-09-19T10:15:04Z_ — BOOTSTRAP INSTANTIATION INTO A REPO THAT IS NOT YET AN INSTANCE — owner, 2026-09-19, three messages that together describe the whole no-instance branch of the gateway, and the third one changes the shape of the other two.
+
+(1) 'when doing a boot strap instantation into a repo that is not an instnace, the bootrap/ skills should have the cat-harness library replicated under bootstrap/cat-harness/ etc. as local cache and dirs gets declared in bootstrap'.
+
+(2) 'the repo_name instance declaation needs to be made in repo once the user's intent on harnes type is known (e.g. folio, smart-guidewline DAK, smart guideline IG or whatever)'.
+
+(3) THE WORKED EXAMPLE, and it is the one to design against: 'typical command woudl be "make this repo into a litlfred/f-a-sci instnace" which would turn it into a folio with the f-a-sci knowldfge grpah loaded and using milnor as voice'.
+
+WHAT (3) CORRECTS. Reading (2) alone, I had the intent skill producing a HARNESS TYPE — folio, DAK, IG — as a value from a closed set. That is wrong, or at least far weaker than what (3) describes. THE USER NAMES AN UPSTREAM INSTANCE, and everything else is READ from that instance's declaration: `litlfred/f-a-sci` yields the harness type (folio), the knowledge graph to load (f-a-sci's), and the voice (milnor). Nobody is asked three questions; one reference answers all of them.
+
+So the intent skill's output is AN INSTANCE REFERENCE, not an enum. That is better in the way this repository keeps rediscovering: a declaration is read rather than a property re-stated. An enum would be a second answer to 'what kind of thing is this repo', free to disagree with the upstream declaration it came from, and a fourth place the harness type is written down.
+
+AND IT MAKES AN EARLIER DECISION ON THIS BEAN PAY OFF RATHER THAN MERELY BEING TIDY. The owner sent milnorlink and voices/milnor.json to folio-asst-sci, on the grounds that a library document, its voice and the skill derived from it are one bundle. (3) is what that buys: 'using milnor as voice' is not a fourth thing the command configures — it is a consequence of naming f-a-sci, because the voice LIVES there. Had milnor stayed in the platform, the command would have had to name it separately and the bundle argument would have been decoration.
+
+THE ORDER IS THEREFORE: instance reference -> read ITS declaration -> write this repo's declaration from what that says -> cache what the declaration needs. Not: ask the type, write a declaration, fetch things. The difference matters because writing a declaration before reading the upstream one leaves a window in which the repo declares something it is not, and every consumer that reads a declaration would believe it.
+
+THE CACHE IS bootstrap/cat-harness/, WHICH IS THE STUB PATTERN AGAIN — one subdirectory per contributing instance, the same shape as tools/<stub>/ (shipped 2026-09-19) and the skills//library//docs/ plan. So bootstrap invents no mechanism for vendoring; it uses the one in place, and the cached copy is DECLARED in bootstrap's own harness.json so ordinary resolution finds it with no special case. A cache needing its own lookup path would be a second answer to 'where do skills live'; a cache that is just another declared directory is not. Under (3) the cached directory is named for the instance it came from — bootstrap/f-a-sci/ alongside bootstrap/cat-harness/ — which is what the stub pattern is FOR and what makes two upstreams composable rather than colliding.
+
+TWO THINGS STILL UNANSWERED, recorded so they are not rediscovered.
+
+STALENESS, the question every cache owes. This repository's doctrine is that a copy with no staleness check drifts and is believed anyway — render:bpmn:check exists for that, translate-bpmn's missing equivalent is bean 0hd6, and check:harness-dirs gates the two duplicates AGENTS.md says cannot be removed. 'It was copied at init' is not an answer. The cheapest honest version records the source ref and compares against it, reporting COULD NOT DETERMINE when the upstream is unreachable rather than silently passing.
+
+WHAT SUBSET IS REPLICATED. f-a-sci's knowledge graph is not all of cat-harness, and a bootstrap that copies everything stops being lean in the way the owner asked for ('bootstrap is super lean, referencing only the minimum of schema'). Under (3) the named instance's own declaration is the obvious selector — it already says which directories it has — which would mean the subset needs no separate rule. Worth checking that claim against a real f-a-sci declaration before relying on it.
+
+## Note — 2026-09-19, the gate
+
+THE GATE IS SHIPPED — `check:declared-paths`, 2026-09-19, and it is the piece this bean named as next after `workflowDirs()`.
+
+WHAT IT DOES. Reads `harness.json`, walks this instance's `.ts`, and classifies every string literal naming a declared directory into three buckets. 49 name a FILE that exists (authored prose naming one artefact, which no declaration would answer) and are CHECKED TO RESOLVE — that closes the `blv9` class over this corpus as a property of the corpus rather than as one run's result. 27 carry `declared-path-literal: <reason>` and are the base cases. 125 are unaccounted for.
+
+WHY A RATCHET AND NOT A WALL. 125 is the finding: the debt is an order of magnitude past the nine sites the rewire knew about. It is also why a blocking gate cannot land — some sites need real design (`LOCAL_PACKAGES` in skill-fetch.ts is a package->directory map, not a lookup), and a gate that fails 125 times on the day it arrives is a gate somebody switches off. Baseline committed PER FILE rather than per line, because a count churns far less under an unrelated edit than a line number does; a file may only lose literals.
+
+THE RULE, from the owner's hardcoding concession ("if need to hardcode json/jsonld assets, thats ok. not preferrred"): permitted and discouraged means DECLARED AND CHECKED, not forbidden and not free. The reason is required and marked sites are printed on every run, so silencing costs more than satisfying — the same shape as `<folio:no-skill reason>`.
+
+TWO REAL DEFECTS FOUND ON THE FIRST RUN, which is the argument for the gate. (1) `src/impact/stakeholder-map.ts` listed four skill directories where `skillMdDirs()` finds six, so `authoring-math` (3 skills) and `authoring-who-smart-guidelines` (9) were invisible to the impact analysis: changing one reported no roles, no lanes, nobody accountable — indistinguishable from a change affecting nobody, the one wrong answer that tool must not give. (2) Reading the declaration then admitted `.claude/skills/local/`, and `todo-manager.md` exists THREE times, so the `name -> path` index silently dropped two. Keyed by PATH now.
+
+AND ONE I HAD JUST INTRODUCED. `ab62c9dfe` rewired `check-workflow-refs`'s NOT-INDEXED scan to `workflowFiles()`, which returns ABSOLUTE paths, and left the prose comparison alone — all 32 diagrams read as unindexed. Fixed by matching basename again, but only where the basename is UNAMBIGUOUS: two `review.bpmn` under a topical layout are indexed by neither a single mention.
+
+WHAT THE 125 ARE, roughly: 16 generate-docs, 11 repo-partition (now marked), 9 kg-audit, 7 each check-tools / generate-registry / skill-fetch, 6 known-skills, 5 each validate-skills / harness-schema-export / mcp-server, 4 each translate-bpmn / translation / document adapter. Draining them is not one task: skill-fetch's is a design question, the adapters' `uploads` is a different declaration, and generate-docs is mostly output paths.
+
+## Note — 2026-09-19, the library/ extraction inventory
+
+MEASURED, not planned: the move cannot be executed from this session. `who-style-guide` and `folio-asst-sci` DO NOT EXIST, and this session's repo scope is `litlfred/folio-assistant` and `litlfred/folio-test` only. So this records what would move and what would break, and the repo question goes to the owner.
+
+WHAT IS THERE. Four slugs under `library/`, 1401 files, ~5.9M:
+
+| slug | files | ocr/ | what |
+|---|---|---|---|
+| `9789241548960-eng` | 752 | no | WHO Handbook for Guideline Development, 2nd ed, 179pp |
+| `who-pub-tps-931` | 486 | YES (121) | WHO Editorial Style Manual, 121pp — the ONLY scanned source |
+| `wpr-rdo-2020-003-eng` | 101 | no | WHO W-Pacific Publication Style Guide, 33pp |
+| `milnorlink` | 62 | no | Milnor, "Link Groups", Annals of Math 59(2) 1954 |
+
+Four voices, 1:1 onto the slugs, no voice citing two: `who-editorial` -> `who-pub-tps-931`, `who-guideline-development` -> `9789241548960-eng`, `who-publication-design` -> `wpr-rdo-2020-003-eng`, `milnor` -> `milnorlink`. So the owner's split is clean on the voice axis: three WHO bundles leave together, one milnor bundle leaves alone.
+
+WHAT BREAKS, and it is remarkably little. EXACTLY ONE TEST: `scripts/tests/qa-checkers-voice.test.ts:527` reads `library/milnorlink/sections` from the real corpus and asserts `hits === 1`. Deleting the slug makes `readdirSync` throw ENOENT — it ERRORS rather than merely failing, which is worse to debug. NO test touches any WHO slug: every other library-reading test builds fixtures under `mkdtempSync` with invented slugs (`who-anc-2016`, `doc-1`, `src-1`, `0110001v3`). `scripts/tests/pdf-doc-id.test.py` asserts the STRING `who-pub-tps-931` and the path `library/who-pub-tps-931/ocr` but never stats them.
+
+A LIVE DEFECT FOUND ALONG THE WAY, and it is worth a bean of its own. `scripts/check-voices.ts` validates the whole voice graph against disk — 36 of 37 voice rules cite a `library/<slug>/sections/<id>.md`, and every voice source requires a `structure.json`. It is wired as `package.json` `check:voices`. It appears in NO CI workflow: `grep -rn 'check:voices\|check-voices' .github/` returns ZERO, verified independently of the survey that reported it. So the one gate that would catch this extraction breaking the voice graph is a gate nobody runs. That is the `xom7` shape (a red workflow looks like a green one from in here) with the workflow missing entirely rather than failing.
+
+THE INGESTION-FIXTURE ARGUMENT STILL HOLDS AND SHARPENS. The earlier note on this bean recorded the owner's "current OCR etc pipeline is jsut one set of tools. another is coming", and concluded something must stay as the corpus both pipelines are measured against. The inventory names which: `who-pub-tps-931` is the ONLY slug carrying OCR output at all (121 pages). Lose it and the second pipeline's OCR half has nothing to be compared on. So if the three WHO documents leave as a bundle, the platform needs either a retained copy or a synthetic OCR fixture BEFORE the move, not after.
+
+BLAST RADIUS OF THE NAMES, 25 non-test files. The heaviest are `content/pipeline/qa-criteria-registry.ts` (17 hits: four `voice-overlay-*` criteria plus `expo-milnor-clarity` and `milnor-brevity`) and three folio-core skills that link `library/milnorlink/` and `voices/milnor.json` by relative path — `milnor-exposition-standard.md`, `exposition-swarm-drain.md`, `one-voice-style-guide.md` — each with a generated mirror under `docs/`. `.claude/` has ZERO references. No BPMN element id encodes a slug; the two mentions are prose in `<bpmn:documentation>`.
+
+WHAT I WOULD DO, for the owner's call: create the two repos, move the bundles, keep `who-pub-tps-931` (or a reduced OCR fixture from it) in the platform as the ingestion corpus, put `check:voices` into CI FIRST so the move is gated rather than hoped, and convert the one live test to a fixture so the platform's test suite stops depending on a document that is leaving.

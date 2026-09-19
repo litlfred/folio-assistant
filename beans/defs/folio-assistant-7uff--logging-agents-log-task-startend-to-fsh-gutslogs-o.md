@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-19T11:23:31Z
-updated_at: 2026-09-19T11:32:32Z
+updated_at: 2026-09-19T11:49:29Z
 ---
 
 Owner, 2026-09-19:
@@ -136,3 +136,48 @@ and redone.
   and nothing calls it yet
 - a writer: no code creates an entry, so the schema is unexercised by a real
   producer
+
+
+## KG wiring — done, and it turned up three things (commit `db7e9124`)
+
+Owner: *"it should be wired into cat-harness KG"*.
+
+**Measured: `skills/roles/roles.json` was never a source of Role nodes.** 65 of
+66 carried `sourceKind: "bpmn-lane"`, so what a role IS — its actor kinds, its
+skills, whether it is `actedUpon` — was absent from the published graph
+entirely. `collectDeclaredRoles()` now emits the registry view **joined to**
+the lane view by `bindsLane` rather than replacing it: **31 registry roles, 98
+Role nodes**. `log`, `corpus` and `work-plan` are all present; `corpus` was a
+pre-existing instance of the same gap.
+
+Three findings, none predicted:
+
+1. **An empty lane was invisible.** The lane view read lanes off the lanes that
+   flow nodes *name*, and an `actedUpon` lane holds no flow nodes by
+   construction — it is written to and never acts. So exactly the lanes whose
+   emptiness is the point were the ones dropped, and the `log` role's
+   `bindsLane` was the graph's one dangling link. Now read from the declared
+   lane set.
+2. **`ns:check` named four undefined minted terms, and two were duplicates.**
+   `carriesSkill` and `hasLane` restated `hasSkill` and `bindsLane`, which
+   `schemas/role-graph.ts`'s own JSON-LD projection already publishes. Reused,
+   not glossed — the reflex on that gate is to write the missing definition,
+   which would have put one concept in the vocabulary twice. `actedUpon` and
+   `judgementOnly` are genuinely new and glossed as two flags: collapsing them
+   would give a store an actor or a stakeholder a skill.
+3. **The fsh-guts strip caught me.** The `log` role's own `description` named
+   `fsh-guts/logs/`, and `roles.json` carried a stale lane alias with the same
+   path. A role description IS published; the location belongs in the skill.
+   Zero `fsh-guts` mentions in the export.
+
+Five tests, each verified to fail without its fix, with a vacuity guard on the
+filters — every assertion here filters, and a filter over nothing passes.
+
+### Still open on this bean
+
+- **Nothing writes a log entry.** The schema, the role, the skill and the BPMN
+  exist; no code produces one. A producer is the next piece.
+- **`activity-log.bpmn` is not called from any existing process.** The owner
+  asked to "connect it to existing agentic processes" — that means call
+  activities in `crdm-requirements`, `editing-hci-validation` and
+  `content-lifecycle`, which is not done.

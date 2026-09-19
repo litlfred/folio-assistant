@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-requirements\n"
-"POT-Creation-Date: 2026-09-18T16:52:41.007Z\n"
+"POT-Creation-Date: 2026-09-19T10:47:34.727Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,312 +14,127 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/crdm-requirements.bpmn:260
-#. Diagram label
-msgid "accepted"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:210
-#. Diagram label
-msgid "Accepted?"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:48
+#: skills/workflows/crdm-requirements.bpmn:19
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:163
-#. Diagram label
-msgid "Announce the branch on the issue"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:205
-#. Diagram label
-msgid "Approve requirements"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:121
-#. Diagram element documentation
-msgid "Ask — never create. Creating an issue without the BA's permission is the thing this step exists to prevent."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:120
-#. Diagram label
-msgid "Ask BA to create or link issue"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:34
+#: skills/workflows/crdm-requirements.bpmn:15
 #. Diagram label
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:136
+#: skills/workflows/crdm-requirements.bpmn:65
 #. Diagram label
-msgid "BA approves?"
+msgid "Close-out"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:138
-#. Diagram element documentation
-msgid "Business-process analysis here means reading the existing diagrams under skills/workflows/ and drawing the gap, so the skill that implements this step is the BPMN one."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:191
-#. Diagram label
-msgid "Close issue ONLY on BA authorisation"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:107
-#. Diagram label
-msgid "Confirm all criteria met"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:204
-#. Diagram label
-msgid "Confirm needs statement"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:115
+#: skills/workflows/crdm-requirements.bpmn:44
 #. Diagram label
 msgid "Continue authoring"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:201
+#: skills/workflows/crdm-requirements.bpmn:10
 #. Diagram label
-msgid "CRDM complete"
+msgid "CRDM requirements"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:23
-#. Diagram label
-msgid "CRDM requirements workflow"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:27
-#. Diagram element documentation
-msgid "CRDM requirements workflow — from feature detection through iterative MVP development to stakeholder sign-off. Three lanes: BA/Feature Requestor (coordinates), Agent (implements), Stakeholders (approve)."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:80
+#: skills/workflows/crdm-requirements.bpmn:33
 #. Diagram label
 msgid "Describe the need (chat, issue, discussion)"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:111
+#: skills/workflows/crdm-requirements.bpmn:39
 #. Diagram label
 msgid "Detect feature request (crdm-detect skill)"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:108
+#: skills/workflows/crdm-requirements.bpmn:69
 #. Diagram label
 msgid "Feature delivered"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:211
-#. Diagram label
-msgid "Feature sign-off on issue"
+#: skills/workflows/crdm-requirements.bpmn:46
+#. Diagram element documentation
+msgid "Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad."
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:114
+#: skills/workflows/crdm-requirements.bpmn:43
 #. Diagram label
 msgid "Feature?"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:258
-#. Diagram label
-msgid "findings"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:179
+#: skills/workflows/crdm-requirements.bpmn:50
 #. Diagram element documentation
-msgid "Inner loop: agent claims a bean, implements on feature branch, opens PR, posts summary to the issue."
+msgid "Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it. The loop is the phase: a needs statement nobody confirmed is an agent's summary, not a requirement."
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:94
+#: skills/workflows/crdm-requirements.bpmn:45
+#. Diagram label
+msgid "Link the work to an issue"
+msgstr ""
+
+#: skills/workflows/crdm-requirements.bpmn:54
 #. Diagram element documentation
-msgid "Inner loop: the BA tests each delivered increment against the acceptance criteria. They do not review code — they test behaviour."
+msgid "Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal."
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:119
-#. Diagram label
-msgid "Issue found?"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:125
-#. Diagram label
-msgid "Link to existing issue"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:97
-#. Diagram label
-msgid "Meets criteria?"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:98
-#. Diagram label
-msgid "MVP ready for stakeholders?"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:79
+#: skills/workflows/crdm-requirements.bpmn:32
 #. Diagram label
 msgid "Need identified"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:217
+#: skills/workflows/crdm-requirements.bpmn:73
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:254
-#. Diagram label
-msgid "not yet"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:164
+#: skills/workflows/crdm-requirements.bpmn:62
 #. Diagram element documentation
-msgid "On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created."
+msgid "One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says."
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:100
+#: skills/workflows/crdm-requirements.bpmn:49
+#. Diagram label
+msgid "Phase 1 Needs"
+msgstr ""
+
+#: skills/workflows/crdm-requirements.bpmn:57
+#. Diagram label
+msgid "Phase 5 Beans + sign-off"
+msgstr ""
+
+#: skills/workflows/crdm-requirements.bpmn:61
+#. Diagram label
+msgid "Phase 6 Implement + acceptance"
+msgstr ""
+
+#: skills/workflows/crdm-requirements.bpmn:53
+#. Diagram label
+msgid "Phases 2–4 BPA + requirements"
+msgstr ""
+
+#: skills/workflows/crdm-requirements.bpmn:58
 #. Diagram element documentation
-msgid "Outer loop: the BA presents the accumulated increments to stakeholders as a testable MVP. Staging URL, demo, or walkthrough."
+msgid "The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce."
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:128
-#. Diagram label
-msgid "Phase 1: Identify stakeholders"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:133
-#. Diagram label
-msgid "Phase 1: Synthesise needs from sources"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:137
-#. Diagram label
-msgid "Phase 2: Map current workflow (BPA)"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:153
-#. Diagram label
-msgid "Phase 5: Create beans"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:178
-#. Diagram label
-msgid "Phase 6: Implement (feature branch + PR)"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:143
-#. Diagram label
-msgid "Phases 3–4: Define requirements + impact"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:186
-#. Diagram label
-msgid "Post summary to issue"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:192
-#. Diagram element documentation
-msgid "Reachable only through BA_Confirm, which is the BA saying every criterion is met. An agent must never close an issue without that explicit authorisation — the gate is the preceding task, and this name says so rather than leaving a reader to trace the flow for it."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:93
-#. Diagram label
-msgid "Review increment (test behaviour)"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:88
-#. Diagram label
-msgid "Review requirements and impact analysis"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:84
-#. Diagram label
-msgid "Review synthesised needs statement"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:230
-#. Diagram label
-msgid "revise"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:116
-#. Diagram label
-msgid "Scan open issues for match"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:99
-#. Diagram label
-msgid "Share MVP with stakeholders"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:92
-#. Diagram label
-msgid "Sign off on requirements"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:69
-#. Diagram label
-msgid "Stakeholders"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:207
-#. Diagram element documentation
-msgid "Stakeholders test the delivered feature in their own workflow, with their own data. They report what works and what does not."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:206
-#. Diagram label
-msgid "Test MVP in own context"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:129
-#. Diagram element documentation
-msgid "The agent asks the BA who is affected by this change. The BA knows the domain — the agent does not guess."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:154
-#. Diagram element documentation
-msgid "The agent mints the implementation beans itself with `beans create`, running the exact-title existence check first. The engine has no `create` op — it claims, notes and resolves the instance's OWN bean — so what this step records here is a note that the plan now exists."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:81
+#: skills/workflows/crdm-requirements.bpmn:35
 #. Diagram element documentation
 msgid "The BA describes the capability gap in their own words. They do not need to know it is called CRDM."
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:89
+#: skills/workflows/crdm-requirements.bpmn:13
 #. Diagram element documentation
-msgid "The BA reviews the formal requirements and the impact analysis the agent produced."
+msgid "The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step&#39;s own id. Detection stays here rather than in a child because its &#34;not a feature&#34; branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer."
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:85
+#: skills/workflows/crdm-requirements.bpmn:66
 #. Diagram element documentation
-msgid "The BA reviews what the agent synthesised and checks it against what they actually need."
+msgid "The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion."
 msgstr ""
 
-#: skills/workflows/crdm-requirements.bpmn:104
-#. Diagram element documentation
-msgid "The BA translates stakeholder findings into actionable direction: new beans or bean updates for the agent."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:103
-#. Diagram label
-msgid "Translate feedback into agent direction"
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:144
-#. Diagram element documentation
-msgid "Two skills, because this step is two things: the requirements come from the CRDM process, the impact half is a dependency question the content graph answers."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:187
-#. Diagram element documentation
-msgid "What was accomplished, what remains, and links to the updated content for review."
-msgstr ""
-
-#: skills/workflows/crdm-requirements.bpmn:218
+#: skills/workflows/crdm-requirements.bpmn:74
 #. Diagram label
 msgid "yes"
 msgstr ""

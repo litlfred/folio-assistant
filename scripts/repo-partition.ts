@@ -108,9 +108,20 @@ interface Rule {
 const RULES: Rule[] = [
   // ── Test material. FIRST, so that `scripts/tests/lean-witness.test.ts` is
   //    classified by what it IS (a test) rather than by what it exercises.
+  //
+  //    `"test/"` since 2026-09-19 (bean `auap`): the two test trees were
+  //    consolidated onto `test/`. Leaving this as `"tests/"` would NOT have
+  //    errored — the 10 `*.e2e.ts` specs, their two `support/` fixtures and
+  //    the health sweep's three non-`.test.ts` modules would simply have
+  //    fallen past this rule to keyword matching, since the rule below keys
+  //    on `.test.ts`/`.spec.ts` and an `.e2e.ts` matches neither. Fifteen
+  //    modules quietly reclassified, and a partition report that still
+  //    printed a total.
   {
     repo: "test",
-    prefixes: ["tests/", "scripts/tests/"],
+    // declared-path-literal: the TARGET layout of the five-repo split, which no
+    // declaration in THIS repo describes — that is the whole point of the plan.
+    prefixes: ["test/", "scripts/tests/"],
   },
   {
     repo: "test",
@@ -233,6 +244,8 @@ const RULES: Rule[] = [
       // pieces stay here.
       "adapters/mcp-server/tools/check-deps.ts",  // what is installed on this machine
     ],
+    // declared-path-literal: the TARGET layout of the five-repo split, which no
+    // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["src/impact/"],               // who a change affects: skills, roles, BPMN lanes
   },
   {
@@ -404,6 +417,8 @@ const RULES: Rule[] = [
       "scripts/translate-kg-viewer.ts",
       "src/upstream/pins.ts",
     ],
+    // declared-path-literal: the TARGET layout of the five-repo split, which no
+    // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["src/core/", "src/workflow/", "src/routes/", "src/auth/", "src/skills/", "src/issue-watch/", "skills/framework/", "skills/remote-packages/"],
   },
 
@@ -510,6 +525,8 @@ const RULES: Rule[] = [
   // ── folio-asst-sci: Lean, LaTeX, simulators, proofs
   {
     repo: "sci",
+    // declared-path-literal: the TARGET layout of the five-repo split, which no
+    // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/paper/", "skills/authoring-math/", "skills/folio-paper-adapter/", "simulators/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
     exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
@@ -521,6 +538,8 @@ const RULES: Rule[] = [
   // ── smart-base: WHO L2-L3, DAK, FHIR, OCL
   {
     repo: "base",
+    // declared-path-literal: the TARGET layout of the five-repo split, which no
+    // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["skills/authoring-who-smart-guidelines/"],
     exact: ["schemas/dak-blocks.ts"],
   },
@@ -532,6 +551,8 @@ const RULES: Rule[] = [
   // ── folio-assist-core: the generic document model and its pipeline
   {
     repo: "core",
+    // declared-path-literal: the TARGET layout of the five-repo split, which no
+    // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: [
       "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts",
@@ -556,7 +577,12 @@ const RULES: Rule[] = [
 const ROOT = resolve(import.meta.dir, "..");
 
 /** Directories scanned for TypeScript modules. */
-const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "tests", "types"];
+// `"test"`, not `"tests"`: the two test trees were consolidated onto `test/`
+// on 2026-09-19 (bean `auap`). A scan root that names a directory which no
+// longer exists is not an error here — `walkTs` returns early on a missing
+// dir — so this would have gone on partitioning the repo while silently
+// seeing none of the e2e specs or the health sweep.
+const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "test", "types"];
 
 const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "beans", "docs"]);
 

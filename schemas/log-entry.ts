@@ -34,12 +34,49 @@
  * @graphNode schema
  */
 
+import { join } from "node:path";
+
 import { z } from "zod";
+
+import { resolveDirectories } from "./cat-harness.ts";
 
 /** The `$schema` tag every log entry carries, per the declare-yourself rule. */
 export const LOG_ENTRY_SCHEMA_ID = "folio-log/v1";
 
-/** Where logs live inside the trashcan, relative to the instance root. */
+/** The node within the trashcan that holds logs. NOT a path — see {@link logDirs}. */
+export const LOG_NODE = "logs";
+
+/**
+ * Where logs live, for every `fsh-guts` directory the instance declares.
+ *
+ * **Composed, never spelled.** This schema owns the NODE name (`logs`); the
+ * declaration owns where the trashcan is. Writing `fsh-guts/logs` as a literal
+ * would be the `dh4f` defect one level down: an instance that puts its
+ * trashcan elsewhere gets a writer that creates a second one beside it and a
+ * reader that reports a clean run over the real one.
+ *
+ * A LIST, and callers must not quietly take the first — same contract
+ * `kgRoots` carries and for the same reason. An unreadable declaration yields
+ * nothing rather than a guess.
+ */
+export function logDirs(root: string): string[] {
+  try {
+    return resolveDirectories([{ name: "(local)", root, own: true }])
+      .filter((d) => d.graphs.includes("fsh-guts"))
+      .map((d) => join(d.absPath, LOG_NODE));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * The conventional location, for a caller with no root to resolve against.
+ *
+ * declared-path-literal: the convention fallback. `logDirs` is the declared
+ * answer and every writer uses it; this exists because the `.gitignore` entry
+ * and the not-published tests name a path rather than resolving one, and a
+ * repository's own ignore file cannot read a declaration.
+ */
 export const LOG_DIR = "fsh-guts/logs";
 
 /**

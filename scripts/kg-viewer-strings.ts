@@ -39,6 +39,19 @@ import { join } from "node:path";
 
 import { parsePo } from "../content/pipeline/po-inject.js";
 import type { PotEntry } from "../content/pipeline/pot-extract.js";
+/**
+ * The declared `translation-sources` graph — where a translator's `.pot` and
+ * `.po` live. Falls back to the convention because extraction CREATES the
+ * tree for a locale that has none yet.
+ *
+ * declared-path-literal: the convention fallback, stated at the call site
+ * rather than inside `directoryForGraph` so the choice is visible.
+ */
+function translationsRoot(repoRoot: string): string {
+  return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
+}
+
+import { directoryForGraph } from "../schemas/cat-harness.js";
 
 /** This file's own path, for the POT's `#:` source references. */
 export const STRINGS_SOURCE = "scripts/kg-viewer-strings.ts";
@@ -337,7 +350,7 @@ export function poHeader(poText: string, field: string): string | undefined {
  * language, and the switcher offers only what the page can actually show.
  */
 export function loadCatalogues(root: string): LocaleCatalogue[] {
-  const dir = join(root, "translations");
+  const dir = translationsRoot(root);
   if (!existsSync(dir)) return [];
   const out: LocaleCatalogue[] = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {

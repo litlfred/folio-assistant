@@ -116,16 +116,68 @@ Two consequences for the migration:
    migration that a revert does not cleanly undo, because by then two repos
    disagree about who owns the rule.
 
+## The hazard every move ran into — and how it was removed mid-migration
+
+This began as a standing warning: `todo-manager` existed in **three** copies —
+the hand-authored skill, its CI-gated generated mirror, and a hand-authored copy
+under `.claude/skills/local/` that **nothing checked at all**, diverging by
+hundreds of diff lines. The two hand-authored copies failed in opposite
+directions: forgetting to regenerate the mirror turned CI red (loud, and it had
+taken `main` red before), while editing the unchecked copy produced no signal
+whatever.
+
+So the rule for this migration was: **when a destination skill has a local copy,
+write the same addition to both.** Sections 16, 17 and 18 all landed in skills
+with one, and §18's addition went to both.
+
+**A sibling then removed the hazard rather than working around it** (bean
+`tdmg`, PR #392). The local copies are now ~29-line stubs pointing at the
+servable skill, and the divergence is gone. The finding that decided it is worth
+keeping: the local copy was **never servable** — `LOCAL_PACKAGES` in
+`src/tools/skill-fetch.ts` has no `.claude/skills/local` entry — so an agent
+asking for the skill by name had *always* received the `folio-core` file, while
+the onboarding guide, in five languages, pointed at the copy nobody was served.
+The same sibling also split the 396-line skill into `todo-manager`,
+`opening-brief` and `turn-reporting`.
+
+**What this migration should take from it:** the write-to-both rule is now
+obsolete, and the reason is the better answer — *one source of truth, thin
+pointers to it*, which is the same discipline `CLAUDE.md` and `GEMINI.md`
+already follow and exactly what this proposal argues for `AGENTS.md` itself.
+
 ## Sequence
 
 1. ✅ `check:agents-xref` — so a break this migration causes is distinguishable
-   from the 16 already there. **Done**; not yet wired into CI, deliberately.
-2. Triage the 16 unresolved citations: qualify, repoint at a skill, or record as
-   the folio's.
-3. Move the **verified-destination** sections (5, 6, 9, 14, 16, 17, 18), one PR
-   each, leaving a pointer of roughly section 12's length.
-4. Write the four missing skills (7, 8, 10, 15), then move.
-5. Wire `check:agents-xref --strict` into CI once the backlog is zero.
+   from the 16 already there.
+2. ✅ **Backlog cleared, and the check is in CI.** The 16 unresolved citations
+   are zero; `check:agents-xref:strict` gates `code-quality-gates.yml`.
+
+   How, because the method is the point. Nine repointed at a platform skill that
+   verifiably owns the rule. The rest could not be settled by reading this
+   repository, so **`litlfred/qou` was cloned and checked** rather than guessed
+   at: five named real sections of its 6,036-line `AGENTS.md` — four headings
+   and one bullet — and are now **qualified** rather than repointed, because the
+   rule genuinely is the folio's. **Two, `be frugal` and `Executing actions with
+   care`, were in neither repository** and became plain rules with no citation.
+   Those two are the only genuinely dead references of the original twenty.
+
+   That required one change to the checker: a citation can now **declare** which
+   `AGENTS.md` it means. Before it, `folio` was reachable only when the
+   platform's own prose attributed a section — so clearing the backlog would
+   have meant restating a folio's table of contents here, which is the boundary
+   violation this whole plan exists to avoid.
+3. ✅ Moved the verified-destination sections (5, 6, 9, 14, 16, 17, 18).
+4. ✅ Wrote the four missing skills (7, 8, 10, 15) and moved them.
+5. ✅ `check:agents-xref:strict` is in CI.
+6. ✅ Sections 2, 11 and 19 — the three the first pass left partly debt.
+   **§2** got the skill it had none for, `content-profiles`. **§11** kept the
+   bootstrap half (getting `beans` in hand is what an agent needs before it can
+   ask for anything) and moved the sweep's contents to `todo-manager`. **§19**
+   was mostly pointers already; its one substantive bullet, the `uses[]` /
+   `interprets` editorial relation, went to `uses-editorial-review`.
+
+**Done: 1,289 lines → 566.** Every one of the 19 sections is still present, as
+a pointer or as genuine bootstrap; none was deleted.
 
 **Step 1 comes first and already has.** Every later step is a move, and a move
 without the check is a move whose damage cannot be told from the 16 findings

@@ -31,6 +31,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
+import { workflowFiles } from "./known-skills.js";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
@@ -706,15 +707,14 @@ function beanFile(id: string): string | undefined {
  * stops working fails the build rather than quietly flattening the board.
  */
 function processHierarchy(): Record<string, string[]> {
-  const dir = join(REPO_ROOT, "skills", "workflows");
-  if (!existsSync(dir)) return {};
   const out: Record<string, string[]> = {};
-  // `.sort()`, and it is load-bearing rather than tidy. `readdirSync` under
-  // Bun returns RAW DIRECTORY ORDER — on ext4 that is a hash of the filename
-  // against the directory's own seed, so two checkouts of the same commit
-  // enumerate these 32 files differently. The ids below become object keys and
-  // `JSON.stringify` preserves insertion order, so the published index came
-  // out byte-different on every machine.
+  // SORTED, and it is load-bearing rather than tidy — `workflowFiles` sorts,
+  // and that guarantee is why this reads it rather than a directory.
+  // `readdirSync` under Bun returns RAW DIRECTORY ORDER: on ext4 that is a
+  // hash of the filename against the directory's own seed, so two checkouts
+  // of the same commit enumerate these 32 files differently. The ids below
+  // become object keys and `JSON.stringify` preserves insertion order, so the
+  // published index came out byte-different on every machine.
   //
   // Nobody noticed for the reason bean `d2kp` is about: the `--check` that
   // would have caught it was a folded YAML continuation line and had never
@@ -722,9 +722,9 @@ function processHierarchy(): Record<string, string[]> {
   // committed file that reproduced perfectly on the machine that wrote it.
   // An artefact that is only reproducible where it was generated is not a
   // generated artefact; it is a snapshot.
-  for (const f of readdirSync(dir).sort()) {
+  for (const f of workflowFiles(REPO_ROOT)) {
     if (!f.endsWith(".bpmn")) continue;
-    const xml = readFileSync(join(dir, f), "utf-8");
+    const xml = readFileSync(f, "utf-8");
     const id = /<bpmn:process id="([^"]+)"/.exec(xml)?.[1];
     if (!id) continue;
     const calls = new Set<string>();

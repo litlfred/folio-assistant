@@ -9,7 +9,7 @@
  *     is not one. That second case is the whole point — it is what would
  *     still pass if anything anywhere read a language subtag out of a path.
  *   * The STATIC-NAV half: that every translated page carries
- *     `nav_exclude: true`. `tests/nav-locale.e2e.ts` cannot check this,
+ *     `nav_exclude: true`. `test/nav-locale.e2e.ts` cannot check this,
  *     because it hand-writes the nav markup and would "verify" the rule by
  *     simply not putting the French item in. Jekyll honours `nav_exclude`;
  *     this is what makes sure the pages still ask it to.
@@ -407,7 +407,7 @@ describe("this repository's own corpus", () => {
   });
 
   it("every translated page is out of the STATIC nav", () => {
-    // The half `tests/nav-locale.e2e.ts` cannot check, and the half that is
+    // The half `test/nav-locale.e2e.ts` cannot check, and the half that is
     // most easily lost: a new translation added without `nav_exclude` is the
     // reported bug, reintroduced, and it looks fine locally.
     //

@@ -25,13 +25,14 @@ import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join, basename } from "path";
 import { extractMarkdown, formatPot } from "../../content/pipeline/pot-extract";
 import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 // ── Configuration ───────────────────────────────────────────────
 
 const ROOT = join(import.meta.dir, "../..");
 const DEFAULT_PAGE = "docs/guides/agent-onboarding.md";
 const TARGET_LOCALE = "fr";
-const OUTPUT_DIR = join(ROOT, "translations", TARGET_LOCALE);
+const OUTPUT_DIR = join(directoryForGraph(ROOT, "translation-sources") ?? join(ROOT, "translations"), TARGET_LOCALE);
 
 // ── Agentic translation (simulated) ─────────────────────────────
 

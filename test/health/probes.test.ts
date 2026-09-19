@@ -1,0 +1,315 @@
+/**
+ * The evidence gathering, against real git repositories built for the purpose.
+ *
+ * `checks.test.ts` proves each check fires when handed the right evidence.
+ * This proves the evidence is gathered correctly — and, more importantly, that
+ * each way of failing to gather it produces the RIGHT ONE of the three states.
+ * Those are different tests: a probe that returned `{ state: "ok", value: [] }`
+ * on an unreachable branch would pass every test in the other file.
+ *
+ * @module test/health/probes.test
+ */
+import { spawnSync } from "node:child_process";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import { afterAll, describe, expect, it } from "bun:test";
+
+import { frontMatter, frontMatterValue, probeBranches, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
+
+const made: string[] = [];
+afterAll(() => {
+  for (const d of made) rmSync(d, { recursive: true, force: true });
+});
+
+function run(cwd: string, cmd: string, args: string[]): void {
+  const r = spawnSync(cmd, args, { cwd, encoding: "utf-8" });
+  if (r.status !== 0) throw new Error(`${cmd} ${args.join(" ")} failed: ${r.stderr}`);
+}
+
+/** A throwaway repository with one commit. */
+function repo(files: Record<string, string>): string {
+  const dir = mkdtempSync(join(tmpdir(), "health-probe-"));
+  made.push(dir);
+  run(dir, "git", ["init", "-q", "-b", "main"]);
+  run(dir, "git", ["config", "user.email", "t@example.invalid"]);
+  run(dir, "git", ["config", "user.name", "T"]);
+  for (const [rel, body] of Object.entries(files)) {
+    const full = join(dir, rel);
+    mkdirSync(join(full, ".."), { recursive: true });
+    writeFileSync(full, body);
+  }
+  run(dir, "git", ["add", "-A"]);
+  run(dir, "git", ["commit", "-qm", "fixture"]);
+  return dir;
+}
+
+/**
+ * The branch evidence, against a real remote with a real merge in it.
+ *
+ * The three answers this probe can give about one branch are different facts
+ * and are tested separately: **merged**, **carries unmerged work**, and **I
+ * could not tell**. Collapsing the third into either of the first two is what
+ * bean `w2g5` is about, and a probe that returned `mergedIntoDefault: true`
+ * whenever it failed would pass any test that only looked at the two decided
+ * cases.
+ */
+describe("probeBranches", () => {
+  /** `git`, at a fixed commit date — the dates are what the frontier test turns on. */
+  function runAt(cwd: string, iso: string, args: string[]): void {
+    const r = spawnSync("git", args, {
+      cwd,
+      encoding: "utf-8",
+      env: { ...process.env, GIT_AUTHOR_DATE: iso, GIT_COMMITTER_DATE: iso },
+    });
+    if (r.status !== 0) throw new Error(`git ${args.join(" ")} failed: ${r.stderr}`);
+  }
+
+  /**
+   * A remote carrying `main`, a branch merged into it, and one that is not.
+   *
+   * Dated deliberately and in order: `claude/merged`'s tip is BEFORE the merge
+   * commit and `claude/still-going`'s is AFTER it, which is what lets the
+   * shallow tests tell "the answer is unreliable" from "the answer is sound
+   * even here".
+   */
+  function remoteWithBranches(): string {
+    const dir = repo({ "a.txt": "a" });
+    run(dir, "git", ["checkout", "-q", "-b", "claude/merged"]);
+    writeFileSync(join(dir, "b.txt"), "b");
+    run(dir, "git", ["add", "-A"]);
+    runAt(dir, "2026-09-02T00:00:00Z", ["commit", "-qm", "work that landed"]);
+    run(dir, "git", ["checkout", "-q", "main"]);
+    // A merge COMMIT, which is how this repository merges — the tip of
+    // `claude/merged` becomes an ancestor of `main`. Under squash-merge it
+    // would not, and the probe would report every branch as unmerged; that is
+    // stated in the check's own documentation as an assumption.
+    runAt(dir, "2026-09-03T00:00:00Z", ["merge", "-q", "--no-ff", "-m", "Merge pull request #1", "claude/merged"]);
+    run(dir, "git", ["checkout", "-q", "-b", "claude/still-going"]);
+    writeFileSync(join(dir, "c.txt"), "c");
+    run(dir, "git", ["add", "-A"]);
+    runAt(dir, "2026-09-04T00:00:00Z", ["commit", "-qm", "work that has not landed"]);
+    run(dir, "git", ["checkout", "-q", "main"]);
+    run(dir, "git", ["config", "--bool", "core.bare", "true"]);
+    return dir;
+  }
+
+  function local(remote: string): string {
+    const dir = repo({ "unrelated.txt": "x" });
+    run(dir, "git", ["remote", "add", "origin", remote]);
+    return dir;
+  }
+
+  it("tells a merged branch from one that carries unmerged work, and dates both", () => {
+    const dir = local(remoteWithBranches());
+    const p = probeBranches({
+      repoRoot: dir,
+      remote: "origin",
+      previewSlugs: ["claude-merged", "claude-still-going"],
+    });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.defaultBranch).toBe("main");
+    const by = new Map(p.value.candidates.map((c) => [c.ref, c]));
+    expect([...by.keys()].sort()).toEqual(["claude/merged", "claude/still-going"]);
+    expect(by.get("claude/merged")?.mergedIntoDefault).toBe(true);
+    expect(by.get("claude/still-going")?.mergedIntoDefault).toBe(false);
+    for (const c of p.value.candidates) {
+      expect(c.unevaluated).toBeUndefined();
+      expect(Number.isNaN(Date.parse(c.headCommittedAt ?? ""))).toBe(false);
+    }
+  });
+
+  it("carries only the branches a preview slug asks about — 226 branches must not cost 226 fetches", () => {
+    const dir = local(remoteWithBranches());
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-still-going"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.candidates.map((c) => c.ref)).toEqual(["claude/still-going"]);
+  });
+
+  it("an empty candidate set is a DETERMINED answer, not a failure to look", () => {
+    const dir = local(remoteWithBranches());
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-no-such-branch"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.candidates).toEqual([]);
+    expect(p.value.defaultBranch).toBe("main");
+  });
+
+  it("a remote that cannot be reached is `unknown`, never an empty candidate set", () => {
+    // An empty set means "no branch answers for this preview", which sends it
+    // to the orphan list. A remote that could not be asked must not produce it.
+    const dir = repo({ "a.txt": "a" });
+    run(dir, "git", ["remote", "add", "origin", join(dir, "no-such-remote.git")]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-anything"] });
+    expect(p.state).toBe("unknown");
+    if (p.state !== "unknown") return;
+    expect(p.reason).toContain("ls-remote");
+  });
+
+  it("is NOT blinded by a shallow fetch of a DIFFERENT branch — the `gh-pages --depth=1` case", () => {
+    // `probeStaging` runs first in `gatherContext` and fetches the publish
+    // branch with `--depth=1`, which writes a graft into `.git/shallow` and
+    // makes `--is-shallow-repository` say yes. The default branch's own
+    // history is untouched, and a guard that used that flag would report
+    // every sweep blind.
+    const dir = local(remoteWithBranches());
+    run(dir, "git", ["fetch", "-q", "--depth=1", "origin", "claude/still-going"]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-merged"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.candidates.find((x) => x.ref === "claude/merged")?.mergedIntoDefault).toBe(true);
+  });
+
+  it("still trusts `not merged` for a branch whose tip POSTDATES the graft boundary", () => {
+    // Truncation does not condemn every answer. `claude/still-going`'s tip is
+    // dated after the merge commit the shallow fetch stopped at, so a merge of
+    // it would have to be inside the fetched range — the negative is a fact,
+    // and blinding here would cost the check its only remaining signal on a CI
+    // runner that forgot `fetch-depth: 0`.
+    const dir = local(remoteWithBranches());
+    run(dir, "git", ["fetch", "-q", "--depth=1", "origin", "main"]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-still-going"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    const c = p.value.candidates.find((x) => x.ref === "claude/still-going");
+    expect(c?.mergedIntoDefault).toBe(false);
+    expect(c?.unevaluated).toBeUndefined();
+  });
+
+  it("refuses to call a branch unmerged when the default branch's history is truncated past its tip", () => {
+    // The trap: `merge-base --is-ancestor` says "no" for a merged branch whose
+    // merge point was never fetched. "No" SPARES the preview, so nothing is
+    // wrongly accused — but a check that silently spares everything has
+    // stopped working, and that is what this guard reports instead.
+    const remote = remoteWithBranches();
+    const dir = local(remote);
+    run(dir, "git", ["fetch", "-q", "--depth=1", "origin", "main"]);
+    const p = probeBranches({ repoRoot: dir, remote: "origin", previewSlugs: ["claude-merged"] });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    const c = p.value.candidates.find((x) => x.ref === "claude/merged");
+    expect(c).toBeDefined();
+    expect(c?.mergedIntoDefault).toBeUndefined();
+    expect(c?.unevaluated).toContain("fetch-depth: 0");
+    expect(c?.unevaluated).toContain("graft boundary");
+  });
+});
+
+describe("probeStaging", () => {
+  it("reads the previews and sums their blob sizes", () => {
+    const dir = repo({
+      "STAGING/claude-one/index.html": "x".repeat(1000),
+      "STAGING/claude-one/assets/a.css": "y".repeat(500),
+      "STAGING/claude-two/index.html": "z".repeat(2000),
+      "index.html": "not a preview",
+    });
+    const p = probeStaging({ repoRoot: dir, remote: "origin", branch: "gh-pages", prefix: "STAGING", localRev: "HEAD" });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.previews.map((x) => x.slug)).toEqual(["claude-one", "claude-two"]);
+    expect(p.value.previews[0].bytes).toBe(1500);
+    expect(p.value.previews[0].files).toBe(2);
+    expect(p.value.previews[1].bytes).toBe(2000);
+  });
+
+  it("a branch with no STAGING directory is a DETERMINED empty, not an unknown", () => {
+    const dir = repo({ "index.html": "the main site" });
+    const p = probeStaging({ repoRoot: dir, remote: "origin", branch: "gh-pages", prefix: "STAGING", localRev: "HEAD" });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.branch).toBe("present");
+    expect(p.value.previews).toEqual([]);
+  });
+
+  it("a publish branch that positively does not exist is `ok`/`absent` — the first-deploy case", () => {
+    const remote = repo({ "index.html": "main" });
+    run(remote, "git", ["config", "--bool", "core.bare", "true"]);
+    const dir = repo({ "a.txt": "a" });
+    run(dir, "git", ["remote", "add", "origin", remote]);
+    const p = probeStaging({ repoRoot: dir, remote: "origin", branch: "gh-pages", prefix: "STAGING" });
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.branch).toBe("absent");
+    expect(p.value.previews).toEqual([]);
+  });
+
+  it("a remote that cannot be reached is `unknown`, and says which command failed", () => {
+    const dir = repo({ "a.txt": "a" });
+    run(dir, "git", ["remote", "add", "origin", join(dir, "no-such-remote-directory")]);
+    const p = probeStaging({ repoRoot: dir, remote: "origin", branch: "gh-pages", prefix: "STAGING" });
+    // THE test in this file. An unreachable remote must not look like a branch
+    // with no previews: the first is "I could not ask", the second is an
+    // answer, and `restore-staging.ts` exists because they were once the same.
+    expect(p.state).toBe("unknown");
+    if (p.state !== "unknown") return;
+    expect(p.reason).toContain("git ls-remote");
+  });
+});
+
+describe("probeRepoSize", () => {
+  it("measures tracked blobs at HEAD, not the working tree", () => {
+    const dir = repo({ "a.txt": "x".repeat(4096), "b/c.txt": "y".repeat(2048) });
+    // An untracked file is not repository content and must not be counted.
+    writeFileSync(join(dir, "untracked.bin"), "z".repeat(1_000_000));
+    const p = probeRepoSize(dir);
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.trackedBytes).toBe(4096 + 2048);
+    expect(p.value.gitDirBytes).toBeGreaterThan(0);
+  });
+
+  it("is `unknown` outside a repository rather than reporting a zero-byte one", () => {
+    const dir = mkdtempSync(join(tmpdir(), "health-not-a-repo-"));
+    made.push(dir);
+    const p = probeRepoSize(dir);
+    expect(p.state).toBe("unknown");
+  });
+});
+
+describe("probeTodos", () => {
+  it("reads the declared store, following todos.json rather than a hardcoded path", () => {
+    const dir = repo({
+      // The node is declared as `elsewhere`, NOT `items`. A probe that
+      // hardcoded `todos/items` would read nothing here and report a clean,
+      // empty store — the `dh4f` shape.
+      "todos/todos.json": JSON.stringify({
+        name: "fixture",
+        directories: [{ id: "elsewhere", path: "elsewhere", graphs: ["todo-items"] }],
+      }),
+      "todos/elsewhere/one.md": "---\n$schema: folio-todo/v1\nid: one\nstatus: open\ncreatedAt: 2026-01-01\n---\nbody\n",
+      "todos/items/decoy.md": "---\nid: decoy\nstatus: open\n---\n",
+    });
+    const p = probeTodos(dir);
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    expect(p.value.map((t) => t.id)).toEqual(["one"]);
+  });
+
+  it("a PRESENT but unreadable declaration is `unknown`, never a fallback to the default path", () => {
+    const dir = repo({
+      "todos/todos.json": "{ this is not json",
+      "todos/items/one.md": "---\nid: one\nstatus: open\n---\n",
+    });
+    const p = probeTodos(dir);
+    expect(p.state).toBe("unknown");
+    if (p.state !== "unknown") return;
+    expect(p.reason).toContain("todos.json");
+  });
+});
+
+describe("front matter", () => {
+  it("reads a quoted title, which `beans` writes whenever the value holds a colon", () => {
+    const fm = frontMatter("---\n# folio-assistant-3vge\ntitle: 'Workflow failure: invisible'\nstatus: todo\n---\nbody");
+    expect(fm).toBeDefined();
+    expect(frontMatterValue(fm!, "title")).toBe("Workflow failure: invisible");
+    expect(frontMatterValue(fm!, "status")).toBe("todo");
+    expect(frontMatterValue(fm!, "updated_at")).toBeUndefined();
+  });
+
+  it("returns undefined for a file with no front matter at all", () => {
+    expect(frontMatter("# just a heading\n")).toBeUndefined();
+  });
+});
