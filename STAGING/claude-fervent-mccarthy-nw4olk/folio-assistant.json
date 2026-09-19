@@ -231,13 +231,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T09:50:38.580Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/136f524346e1997f60577e7db81d894bb684574a",
-  "sourceCommitSha": "136f524346e1997f60577e7db81d894bb684574a",
-  "sourceCommitAt": "2026-09-19T09:48:35Z",
+  "generatedAt": "2026-09-19T10:02:33.431Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/68b8bfd45cd9a20ad8b7768ef5f9d3476f8272e2",
+  "sourceCommitSha": "68b8bfd45cd9a20ad8b7768ef5f9d3476f8272e2",
+  "sourceCommitAt": "2026-09-19T10:00:36Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 151,
+    "Skill": 152,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -1144,6 +1144,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/directory-conventions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "kg-navigation",
+      "title": "Reading the knowledge graph — how to find the skill you need",
+      "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/kg-navigation.md",
+      "instructionLines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/role-model",
@@ -3734,6 +3750,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/interaction-modality",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/markdown-render-check",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/mcp-assembly",
@@ -18826,7 +18843,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/tools"
       ],
-      "description": "Tool definitions — one concrete way to exercise a skill, each naming the skills it satisfies. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
+      "description": "Tool definitions, one subdirectory per contributing instance (tools/<stub>/) so a composed instance adds its own without colliding on a filename. tools/index.ts merges them and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/tools"
     },
     {
@@ -18932,8 +18949,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "0aa861b557b84d511ecb38c49f88f64288d16871",
-    "pr": "382/merge",
-    "run": "35435737952"
+    "sha": "be85b0400e4b081a17eca64d2899749f62784eb7",
+    "pr": "387/merge",
+    "run": "35436254276"
   }
 }
