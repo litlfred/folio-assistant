@@ -206,7 +206,8 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // never-delete rule exists to prevent.
   movedOn: { gloss: "When a node was moved into the trashcan." },
   movedFrom: { gloss: "Where a node in the trashcan used to live." },
-  issue: { gloss: "The issue that superseded this node, where there is one." },
+  issue: { gloss: "The issue that superseded this node, or that it was written for." },
+  bean: { gloss: "The work-plan item a node was written under, where there is one." },
   nodeCount: { gloss: "How many nodes a graph or directory yielded." },
   flowCount: { gloss: "How many sequence flows a process carries." },
 

@@ -85,14 +85,45 @@ describe("fsh-guts stays out of the render pipeline", () => {
     expect(undeclared).toEqual([]);
   });
 
-  test("a moved node records where it came from", () => {
-    // `movedFrom` is what stops a node here being an orphan — the reader can
-    // otherwise see what it says and not where it used to live, which is the
-    // abandonment-or-accident ambiguity the whole rule exists to prevent.
+  test("no node here is an orphan — each says what put it here", () => {
+    // The property is PROVENANCE, not the `movedFrom` key. A reader must be
+    // able to tell why a file is in the trashcan rather than in the site, or
+    // they cannot distinguish a considered move from an accident — the
+    // ambiguity the never-delete rule exists to prevent.
+    //
+    // There are two honest answers, because there are two ways in. A node
+    // that was MOVED says where it came from. A node BORN here — a proposal
+    // written as working material, never published and never intended to be
+    // — has no prior location, and demanding one would mean writing a
+    // `movedFrom` that names a path the file never occupied. That is a
+    // fabricated provenance, which is worse than none: it reads as evidence.
+    //
+    // So a born-here node carries the work that produced it instead, and the
+    // check accepts either. It is not weaker — it is the same question asked
+    // of both populations, where before it was asked only of one and the
+    // other could not answer it truthfully.
     const proposals = join(ROOT, GUTS, "proposals");
-    const missing = readdirSync(proposals)
+    const orphans = readdirSync(proposals)
       .filter((f) => f.endsWith(".md"))
-      .filter((f) => !readFileSync(join(proposals, f), "utf8").includes("movedFrom:"));
-    expect(missing).toEqual([]);
+      .filter((f) => {
+        const text = readFileSync(join(proposals, f), "utf8");
+        const moved = /^movedFrom:/m.test(text);
+        const born = /^issue:/m.test(text) || /^bean:/m.test(text);
+        return !moved && !born;
+      });
+    expect(orphans).toEqual([]);
+  });
+
+  test("a node that says it moved says when", () => {
+    // `movedFrom` without `movedOn` dates the move to "sometime", which is
+    // the state the two fields exist together to avoid: a reader comparing
+    // the trashcan against the site's history needs a point to compare at.
+    const proposals = join(ROOT, GUTS, "proposals");
+    const undated = readdirSync(proposals)
+      .filter((f) => f.endsWith(".md"))
+      .map((f) => [f, readFileSync(join(proposals, f), "utf8")] as const)
+      .filter(([, text]) => /^movedFrom:/m.test(text) && !/^movedOn:/m.test(text))
+      .map(([f]) => f);
+    expect(undated).toEqual([]);
   });
 });

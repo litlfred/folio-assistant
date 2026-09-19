@@ -242,6 +242,23 @@ than quietly accepted.
 | `network: air-gapped` | `publication: github-pages` | follows from the two above |
 | `outward facing: yes` | `publication: none` | nothing is served, so nobody outside can reach it |
 
+> **Enforced since 2026-09-19.** All five pairs are now refused rather than
+> described: `topologyConflicts()` in `schemas/cat-harness.ts`, thrown from
+> `readDeclaration` as `TopologyConflictError`. Four axes are declared —
+> `forge`, `network`, `modelProvenance`, `outwardFacing` — joined with the
+> `publication.host` that already existed. **Every axis is optional and absent
+> means "has not said"**, so no existing deployment is refused; the first test
+> in the suite is that this repository's own declaration still reads.
+> Bean `folio-assistant-g7vb`.
+>
+> Two things stayed out, both on §3's own bar — *is a counter-example
+> conceivable?* Private repo × Pages, settled above. And `air-gapped` ×
+> `modelProvenance: mixed`, where the entailment looks identical to the
+> `hosted` row but only holds if `mixed` necessarily means a LIVE hosted
+> component; a deployment could mean "local models, hosted path configured
+> and disabled". **Open for the owner**, and recorded in a test so it is a
+> decision rather than an omission.
+
 **The third row is the most useful thing in this document.** #363 gives
 "self-sovereign cloud except models could be closed not openweight" as a mixed
 modality it must support. The axes express it — but only at
@@ -330,7 +347,9 @@ fit in with the software development lifecycle (SDLC - it needs to be formal
 formal, subprocess includes developing MVP etc, align/cleanup exisrting
 documentation)."
 
-**Measured 2026-09-19.** `skills/workflows/` holds 31 BPMN files. The
+**Measured 2026-09-19.** `skills/workflows/` holds 33 BPMN files (this said
+31 when first written; two landed the same day, which is why
+[the audit](sdlc-process-audit.html) re-measures rather than quotes). The
 content-agnostic, `strict` ones — `content-lifecycle`, `draft-to-publication`,
 `editing-hci-validation` — plus seven `crdm-*` cover requirements and content.
 There is **no BPMN for the software development lifecycle itself**: for how a
@@ -354,8 +373,12 @@ Two cautions for whoever takes bean `folio-assistant-haya`:
 
 - **MVP may already be a subprocess.** `crdm-deliver.bpmn` contains "share MVP"
   and loops back into implementation. Check before drawing a second one.
-- **Do not draw over the existing 31.** The first deliverable is an audit
+- **Do not draw over the existing 33.** The first deliverable is an audit
   saying which diagram owns which phase — *including the phases nothing owns*.
+  **Done:** [SDLC process audit](sdlc-process-audit.html). It confirms the MVP
+  caution above (the subprocess exists, in `crdm-deliver.bpmn`), finds five
+  phases unowned and one half-owned, and finds that the missing artefact has
+  an exact template in `content-change-review.bpmn`.
 
 **Where this proposal touches the SDLC**: it adds a deployment phase whose
 activities differ per topology. That is why the SDLC bean depends on the axes

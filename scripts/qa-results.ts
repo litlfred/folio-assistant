@@ -39,7 +39,7 @@
  *
  * @module scripts/qa-results
  */
-import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 
@@ -132,10 +132,55 @@ export function buildQaResult(args: {
   };
 }
 
-/** Write a result under `test/results/`, creating the directory if needed. */
+/**
+ * Everything about a result except WHEN it was produced.
+ *
+ * The comparison key for {@link writeQaResult}'s churn guard. `updated_at`
+ * is the only field that changes when nothing changed, so it is the only one
+ * held out.
+ */
+function withoutTimestamp(r: QaResult): string {
+  const { updated_at: _when, ...rest } = r;
+  return JSON.stringify(rest);
+}
+
+/**
+ * Write a result under `test/results/`, creating the directory if needed.
+ *
+ * ## It does NOT rewrite a result whose findings are unchanged
+ *
+ * `updated_at` moves on every run, so an unconditional write made every QA
+ * producer dirty the working tree whenever anybody ran it — a one-line diff
+ * with identical findings. Measured 2026-09-19 across
+ * `kg-export.qa-results.json` and `avatar-coverage.qa-results.json`: run the
+ * check, get a modified file, commit nothing of substance.
+ *
+ * That is not a tidiness complaint. A sidecar that churns trains a reader to
+ * skip it in a diff, and these files exist precisely so a REVIEWER can tell
+ * "this finding is new" from "this finding was already there" — the argument
+ * `check-workflow-refs` paid for. A file that always appears changed has
+ * given up the property it was created to have.
+ *
+ * So the timestamp answers "when were these findings established", not "when
+ * did somebody last run the script". It moves when the findings move.
+ */
 export function writeQaResult(root: string, stem: string, result: QaResult): string {
   const out = join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
   mkdirSync(dirname(out), { recursive: true });
+
+  if (existsSync(out)) {
+    try {
+      const prior = JSON.parse(readFileSync(out, "utf-8")) as QaResult;
+      // Unchanged findings: keep the file exactly as it is, timestamp and
+      // all. Rewriting with the OLD timestamp would be just as clean and
+      // would lie about the bytes on disk having been reconsidered.
+      if (withoutTimestamp(prior) === withoutTimestamp(result)) return out;
+    } catch {
+      // An unreadable previous result is not a reason to skip the write —
+      // it is a reason to replace it.
+    }
+  }
+
   writeFileSync(out, JSON.stringify(result, null, 2) + "\n");
   return out;
 }
