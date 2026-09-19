@@ -31,6 +31,41 @@ Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
 [`schemas/kg-qa.ts`](../../schemas/kg-qa.ts).
 
+### A skill's own `roles:` front matter is NOT this table's Role
+
+Measured 2026-09-19, bean `folio-assistant-qif9`. **Look at the top of this
+file**: it declares `roles: [reader, collaborator, owner]`. None of those
+three is a Role in the sense the table above defines, and none is a
+Permission either — they are in neither registry.
+
+Across 178 skill files, 133 carry `roles:`, and the field holds **two
+vocabularies at once**:
+
+| | uses |
+|---|---|
+| `reader` / `collaborator` / `owner` / `admin` / `auditor` — **in no registry** | 254 |
+| real swimlane roles (`code-reviewer`, `build-pipeline`, …) | 52 |
+
+They mix inside single files: `library-ingestion.md` declares
+`roles: [ingestion-agent, authoring-agent, collaborator, owner]`.
+
+**And nothing reads the field.** All 168 Skill nodes in the exported graph
+carry zero role-ish keys; `gen-skill-docs` drops it; no check resolves it.
+`SkillDefinitionSchema` in `schemas/skill-package.ts` does require `roles`,
+but that describes a skill *definition object* and nothing parses front
+matter against it.
+
+So: **do not read a skill's `roles:` as saying who performs it, and do not
+add a binding on its authority.** To learn who performs a skill, read
+`skills/roles/roles.json` — the registry is the only answer that resolves.
+
+This is recorded rather than fixed because fixing it means deciding what
+the tier words MEAN, and if they are forge permission tiers that is a
+deployment fact belonging to the topology axes rather than to a skill.
+`qif9` carries the four options; `folio-assistant-y1w9` (110 skills bound
+to no role or process) is blocked on the answer, because the obvious
+evidence for that triage is exactly this field.
+
 ## Why a role is the lane and not the person
 
 Because the same actor is a different thing in two diagrams, and two different
