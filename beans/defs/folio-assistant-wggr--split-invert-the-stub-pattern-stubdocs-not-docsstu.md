@@ -42,3 +42,25 @@ Same PR is a live conflict for a different reason: it deletes `docs/folio-assist
 Four PRs opened within the hour, all of which this move would conflict with if it landed first: #410 (roadmap epics, beans only), #409 (readme:audit in CI — which will make a dead README link a RED BUILD once this moves docs), #408 (note anchors), #403 (fsh-guts, above). `ListAgents` reports no live peer session, so coordination is through this bean and the PRs, not messaging.
 
 THE SEQUENCING CONSEQUENCE: this touches nearly every path in the repo, so it should land when the in-flight set is small, and the four above should merge first. A move of this size that jumps the queue costs four sessions a conflict each.
+
+## Answered — bootstrap is top-level, and is the ONE exception
+
+Owner, 2026-09-19: "boottreap is top level but will be a part of cat-harness (one exception for top-leve vs repo name)".
+
+THE RULE, stated fully: a top-level directory's name IS a repository name. Exactly one directory breaks it — `bootstrap/`, which sits at top level but SHIPS INSIDE cat-harness.
+
+WHY THE EXCEPTION IS THE RIGHT ONE, and it is not convenience. Bootstrap's whole job is to be readable BEFORE the reader knows which stub to resolve. Putting it at `cat-harness/bootstrap/` makes that circular: an agent would have to already know cat-harness is the harness in order to find the file that tells it what a harness is. Every other directory can be found once you know the instance; this one is what you read to find out.
+
+So `bootstrap/` is top-level for RESOLUTION and part of cat-harness for OWNERSHIP, and those two facts do not have to agree. Worth saying plainly because a later reader will see a top-level directory that no repository is named after and try to tidy it away.
+
+## Still open, and the answer above sharpens rather than settles it
+
+"One exception" and the earlier rule that `beans/` and `todos/` take no stub cannot both be read the loose way. Two readings reconcile them and they lead to different trees:
+
+(a) THEY STAY TOP-LEVEL — then there are three exceptions, not one, and the rule as stated is wrong.
+
+(b) THEY LIVE IN EXACTLY ONE STUB — `cat-harness/beans/`, `cat-harness/todos/`. "Takes no stub pattern" then means what it originally meant: they are never OVERLAID across instances, one directory per instance merging into a whole. That is a different claim from "sits at the top level", and (b) keeps the exception count at one.
+
+(b) is the reading consistent with both statements, so it is what this bean assumes until told otherwise. Recorded rather than silently adopted because it moves two committed stores and every path that reads them, and being wrong about it is expensive.
+
+`fsh-guts/` from PR #403 is a third case the rule has to answer: a top-level directory that is neither a repository name nor bootstrap. Under (b) it is a second exception, which the rule as stated does not allow.
