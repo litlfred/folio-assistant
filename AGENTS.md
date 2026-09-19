@@ -316,7 +316,10 @@ at the end of it.
 and closing formats, the seven rules, and the worked failure that motivates
 them. In short, and not as a substitute for reading it:
 
-- every bean reference gets a **one-sentence gloss and a link**;
+- every bean reference gets **two sentences and a link** — what it is, then
+  **what you would do** about it, in the first person as a proposal. A gloss
+  alone is a menu with no prices: it tells the reader what the bean is and not
+  whether your answer is a one-line fix or a question back to them;
 - asking for review means **linking the artefact** — staging URL, PR, and the
   changed page;
 - say **what to review**, not that CI is green;
