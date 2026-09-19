@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { badgeRunFor, indexWithRows } from "./support/qa-badge-fixture.js";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 /**
  * A badge has THREE outcomes it can reach by fetching, and none of them may be
@@ -40,10 +41,11 @@ import { badgeRunFor, indexWithRows } from "./support/qa-badge-fixture.js";
  */
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const CSS = readFileSync(join(ROOT, "docs/assets/css/docs-ui.css"), "utf8");
-const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
+const SITE = siteDirFor(ROOT);
+const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
+const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
-const PAGE_MD = join(ROOT, "docs/publication-workflow.md");
+const PAGE_MD = join(ROOT, SITE, "publication-workflow.md");
 const INDEX_JSON = join(ROOT, "test/results/witnesses/publication-workflow/qa-index.json");
 
 /**

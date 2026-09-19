@@ -35,9 +35,10 @@ import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const INCLUDES = join(REPO_ROOT, "docs", "_includes");
+const INCLUDES = join(REPO_ROOT, siteDirFor(REPO_ROOT), "_includes");
 
 /** Tags that take no expression. Anything else must carry one. */
 const NO_EXPRESSION = new Set(["else", "endif", "endfor", "endunless", "endcase", "endraw", "raw", "endcomment", "comment", "endtablerow", "break", "continue"]);
