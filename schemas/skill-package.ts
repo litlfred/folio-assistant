@@ -254,6 +254,33 @@ export const SkillRegistrySchema = z.object({
 
 export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkout", "subtree"]);
 
+/**
+ * How a remote package WOULD be brought in. **Declared intent; nothing performs
+ * it.**
+ *
+ * Measured 2026-09-19 (bean `wlqd`): `shallow-clone` appears only as a value in
+ * {@link RemoteSyncStrategySchema}; `src/tools/skill-fetch.ts` and
+ * `scripts/generate-registry.ts` contain no mention of `skills/remote-packages/`
+ * at all; and the directory's only substantive reader,
+ * `scripts/generate-docs.ts`, reads it for the Docker requirements this type's
+ * own doc comment names. So `frequency` and `autoUpdate` are fields no code
+ * consults.
+ *
+ * It is documented rather than deleted because the intent is real information
+ * about two real external dependencies — a maintainer chose `shallow-clone` over
+ * `subtree` — and losing that costs the next reader the same decision. What was
+ * costly was stating it as fact: the generated docs page said "Agents can sync
+ * and update these automatically based on the sync configuration", which a reader
+ * of the published site cannot check against the code.
+ *
+ * **If you implement it, two things are decisions and not details.** Both
+ * wrappers currently pin `ref: "main"` with `autoUpdate: true`, which would
+ * auto-ingest whatever the upstream pushes — prefer a pinned commit. And
+ * `manifest-skill-exists` deliberately stops treating a remote declaration as
+ * resolution (bean `nup0`); that allowance should come back, and
+ * `scripts/tests/manifest-remote-resolution.test.ts` records the argument for
+ * closing it so it is revisited rather than rediscovered.
+ */
 export const RemoteSyncConfigSchema = z.object({
   strategy: RemoteSyncStrategySchema,
   frequency: z.enum(["daily", "weekly", "monthly", "manual"]),
@@ -267,7 +294,12 @@ export const RemotePackageRefSchema = z.object({
   ref: z.string(),
   path: z.string(),
   maintainer: z.string(),
-  sync: RemoteSyncConfigSchema,
+  /**
+   * OPTIONAL, because a wrapper whose only job is to supply Docker requirements
+   * should not have to claim a sync strategy to be valid. Required until
+   * 2026-09-19, which is why both wrappers carry one.
+   */
+  sync: RemoteSyncConfigSchema.optional(),
   wrapper: z.object({
     description: z.string(),
     docker: DockerRequirementsSchema,
