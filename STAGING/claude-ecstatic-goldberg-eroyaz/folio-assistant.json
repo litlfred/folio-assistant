@@ -247,22 +247,22 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T15:46:41.597Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ab0a67d8731ac331fd862d0ea65a6e5809419fd9",
-  "sourceCommitSha": "ab0a67d8731ac331fd862d0ea65a6e5809419fd9",
-  "sourceCommitAt": "2026-09-19T15:43:32Z",
+  "generatedAt": "2026-09-19T15:57:53.684Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b92b192e17e0135aca56bb0512cc52ab6d0cc0a9",
+  "sourceCommitSha": "b92b192e17e0135aca56bb0512cc52ab6d0cc0a9",
+  "sourceCommitAt": "2026-09-19T15:54:48Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 168,
     "Actor": 26,
     "Capability": 23,
-    "Role": 100,
+    "Role": 98,
     "SkillPackage": 8,
-    "Process": 34,
-    "SequenceFlow": 470,
-    "ProcessNode": 439,
+    "Process": 33,
+    "SequenceFlow": 459,
+    "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 49,
+    "Schema": 50,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -2122,7 +2122,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 226,
+      "instructionLines": 275,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4154,325 +4154,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#capability/git-push"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-paper-adapter"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
-      "name": "Bootstrap an instance",
-      "enforcement": "strict",
-      "sourcePath": "bootstrap/workflows/bootstrap.bpmn",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/Start_Pointed"
-      ],
-      "nodeCount": 10,
-      "flowCount": 11,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_start",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/Start_Pointed",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_ReadDeclaration",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_start"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toGate",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_ReadDeclaration",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/Gate_IsInstance",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toGate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_yes",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "yes — load",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/Gate_IsInstance",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_LoadInstance",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_no",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "no — initialize",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/Gate_IsInstance",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_DetermineIntent",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_no"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_loaded",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_LoadInstance",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/End_Ready",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_loaded"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_ask",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_DetermineIntent",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/H_NameInstance",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_ask"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_answered",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/H_NameInstance",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_DetermineIntent",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_answered"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_ask2",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_DetermineIntent",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_ReadUpstream",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_ask2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toWrite",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_ReadUpstream",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_WriteDeclaration",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toWrite"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toCache",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_WriteDeclaration",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_Cache",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toCache"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_cached",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_Cache",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/End_Ready",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_cached"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Bootstrapping agent",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Bootstrapping%20agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Person%20asking%20(judgement%20only)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Person asking (judgement only)",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Person%20asking%20(judgement%20only)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/Start_Pointed",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Pointed at a repository",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_start"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/Start_Pointed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_ReadDeclaration",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Read this repository's declaration, if it has one",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-navigation"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_start"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toGate"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/A_ReadDeclaration"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/Gate_IsInstance",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Already an instance?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toGate"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_yes",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_no"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/Gate_IsInstance"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_LoadInstance",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Load the declared graphs and stop",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-navigation"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_yes"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_loaded"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/A_LoadInstance"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_DetermineIntent",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Determine intent — an INSTANCE REFERENCE, not a content type",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/determine-intent"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_no",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_answered"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_ask",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_ask2"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/A_DetermineIntent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/H_NameInstance",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Name the instance this repository should be an instance of",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Person%20asking%20(judgement%20only)",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_ask"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_answered"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/H_NameInstance"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_ReadUpstream",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Read the named instance's declaration",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-navigation"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_ask2"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toWrite"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/A_ReadUpstream"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_WriteDeclaration",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Write this repository's declaration from what that said",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-navigation"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toWrite"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toCache"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/A_WriteDeclaration"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/A_Cache",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Cache what the declaration needs under bootstrap/<instance>/",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/kg-navigation"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_toCache"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_cached"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/A_Cache"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/node/End_Ready",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "This repository is an instance",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_loaded",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_Bootstrap/flow/F_cached"
-      ],
-      "outgoing": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Bootstrap/node/End_Ready"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#process/Process_DeriveContent",
@@ -19802,6 +19483,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/tabular-records",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "tabular-records",
+      "title": "What makes a dataset findable — bean `p67i`.",
+      "module": "schemas/tabular-records.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tabular-records"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "theme",
@@ -20858,8 +20547,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "60e39f619e3b774a46cde62bae6233363bbde725",
+    "sha": "90e93f3d19a0f130f23cb2752193b19f52dd28ed",
     "pr": "427/merge",
-    "run": "35452789532"
+    "run": "35453363078"
   }
 }
