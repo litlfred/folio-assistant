@@ -14,6 +14,10 @@
  *
  * @module tests/health/checks.test
  */
+import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { describe, expect, it } from "bun:test";
 
 import { HealthReportSchema, healthVerdict } from "../../schemas/health-report.ts";
@@ -148,6 +152,37 @@ describe("staging-preview-orphans", () => {
     expect(r.state).toBe("unknown");
     expect(r.findings).toHaveLength(0);
     expect(r.reason).toContain("403");
+  });
+
+  it("agrees with `feature-staging.yml`'s own sed pipeline, branch for branch", () => {
+    // A CHECKED duplication, in the idiom `check:harness-dirs` uses for
+    // `.beans.yml`: the rule is written in sed inside the workflow and in
+    // TypeScript here, and it cannot be written once because one runs in a
+    // shell step and the other in this process. What can be avoided is an
+    // UNCHECKED duplication — a drift here would make the orphan check name
+    // the wrong preview, on a finding whose action invites removal.
+    const wf = readFileSync(resolve(import.meta.dir, "..", "..", ".github/workflows/feature-staging.yml"), "utf-8");
+    const pipelines = [...wf.matchAll(/SLUG=\$\(echo "\$BRANCH" \| (.+)\)$/gm)].map((m) => m[1]);
+    // Both occurrences, so a fix applied to one of them is caught.
+    expect(pipelines.length).toBeGreaterThanOrEqual(2);
+    expect(new Set(pipelines).size).toBe(1);
+
+    for (const branch of [
+      "claude/health-checks",
+      "feat/a//b",
+      "-lead-and-trail-",
+      "release/v1.2.3",
+      // ASCII only, deliberately: `sed`'s `[^a-zA-Z0-9._-]` is byte-oriented
+      // or character-oriented depending on the locale, so a non-ASCII branch
+      // name would make this test's verdict a fact about `LC_ALL` rather than
+      // about either implementation. A failure nobody can act on is worse
+      // than a gap.
+      "a__b--c",
+    ]) {
+      const r = spawnSync("bash", ["-c", `echo "$1" | ${pipelines[0]}`, "_", branch], { encoding: "utf-8" });
+      expect(r.status).toBe(0);
+      expect(stagingSlug(branch)).toBe(r.stdout.trim());
+    }
   });
 
   it("slugifies the branch the way feature-staging.yml does, and only forwards", () => {
