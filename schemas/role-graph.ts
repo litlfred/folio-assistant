@@ -86,7 +86,7 @@
  * Absent declaration → `undefined`, and callers fall back to documented
  * defaults. Present but unparseable → **throws**, because a role graph nobody
  * can read leaves every consumer assigning tasks to nobody. An unknown
- * `actorKind` or a dangling `inherits` → rejected at read, not accepted and
+ * `actorKinds` or a dangling `inherits` → rejected at read, not accepted and
  * ignored.
  *
  * @module schemas/role-graph
@@ -124,7 +124,7 @@ export const ROLE_GRAPH_FILENAME = "roles.json";
  *
  * There is deliberately no second vocabulary carrying the author's words. Two
  * spellings of one concept is the drift this repository keeps paying for, and
- * a `fulfilment: "mechanical"` field beside `actorKind: "system"` would be a
+ * a `fulfilment: "mechanical"` field beside `actorKinds: ["system"]` would be a
  * fresh instance of it. The words live in this table; the ids live in the data.
  *
  * ## Why agentic and mechanical must not be one kind
@@ -237,10 +237,27 @@ export interface RoleDef {
   title: string;
   description: string;
   /**
-   * What kind of actor takes this role on. `external` marks a participant
+   * Which kinds of actor may take this role on. `external` marks a participant
    * outside the instance's control (a registry, a third-party service).
+   *
+   * A SET, not one kind, and the corpus is what settled it. `reviewer` carried
+   * `person` alone while `review-agent`'s own description says it performs
+   * review and escalates only the judgement calls, and while
+   * `editing-hci-validation.bpmn` draws `Task_AgentReview` — "Agent review of
+   * the change" — inside that very lane. One kind per role made both of those
+   * defects rather than facts, and the only way to record them was to widen
+   * the role.
+   *
+   * Non-empty by construction: an empty list would read as "no actor may take
+   * this role", which is not a role. That is the same third-state care
+   * `fulfilmentKindsForBpmnType` takes in returning `undefined` rather than
+   * `[]` for a task type that asserts nothing.
+   *
+   * It is a SET on the role and a SINGLE kind on the actor, deliberately. An
+   * actor IS one kind of thing; a role ADMITS several. Collapsing either into
+   * the other loses a distinction the graph is built on.
    */
-  actorKind: ActorKind;
+  actorKinds: ActorKind[];
   /**
    * Exact BPMN lane names this role binds, across every diagram.
    *
@@ -360,7 +377,7 @@ export const RoleDefSchema = z.object({
   ...kgNodeLabelShape,
   title: z.string().min(1),
   description: z.string().min(1),
-  actorKind: z.enum(ACTOR_KINDS),
+  actorKinds: z.array(z.enum(ACTOR_KINDS)).min(1),
   lanes: z.array(z.string()).default([]),
   skills: z.array(z.string()).default([]),
   inherits: z.array(z.string()).optional(),
@@ -432,7 +449,7 @@ function detectCycle(graph: RoleGraph, id: string, path: string[]): void {
  * Reads `.claude/skills/actors/*.json`. An entry states its kind in `kind`,
  * against the full {@link ACTOR_KINDS} vocabulary, and an unknown value is
  * **rejected** rather than accepted and ignored — the same rule
- * {@link readRoleGraph} follows for a role's `actorKind`. An entry carrying the
+ * {@link readRoleGraph} follows for an ACTOR's `kind` — one kind, unlike a role's set. An entry carrying the
  * deprecated `inherits` is returned with {@link LoadedActor.looksLikeRole} set,
  * so a caller can report it instead of either ignoring it or acting on a field
  * that means something else here.
@@ -640,7 +657,7 @@ export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
       "@type": `${FOLIO_NS}Role`,
       title: r.title,
       description: r.description,
-      actorKind: r.actorKind,
+      actorKinds: r.actorKinds,
       lanes: r.lanes,
       skills: r.skills,
       ...(r.inherits?.length ? { inherits: r.inherits.map((i) => ({ "@id": `#${i}` })) } : {}),

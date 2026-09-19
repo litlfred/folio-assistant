@@ -44,15 +44,15 @@
       "findings": [
         {
           "where": "Task_DeployPreview",
-          "detail": "\"Deploy the preview site\" — a ServiceTask is performed by agent or system, but its lane's role \"qc-reviewer\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Deploy the preview site\" — a ServiceTask is performed by agent or system, but its lane's role \"qc-reviewer\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
         },
         {
           "where": "Task_Deploy",
-          "detail": "\"Deploy the site [content-publish]\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Deploy the site [content-publish]\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
         },
         {
           "where": "Task_Seed",
-          "detail": "\"Seed the cache from the green build (ig-cache seed · verify · promote)\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Seed the cache from the green build (ig-cache seed · verify · promote)\" — a ServiceTask is performed by agent or system, but its lane's role \"publication-manager\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },

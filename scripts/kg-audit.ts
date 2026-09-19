@@ -93,8 +93,11 @@ const ENGINE_VERSION = "1";
  * can act on, and a check that produces those is a check somebody switches
  * off — the same argument `role-has-actor` already makes for `actedUpon`.
  */
-function readsProse(r: { actedUpon?: boolean; actorKind: string }): boolean {
-  return !r.actedUpon && (r.actorKind === "person" || r.actorKind === "agent");
+function readsProse(r: { actedUpon?: boolean; actorKinds: string[] }): boolean {
+  // ANY, not every. A role a person may take on has prose read in it, even
+  // where a mechanical actor may also fill the lane — the question is whether
+  // the instructions can reach a reader, and one reader is enough.
+  return !r.actedUpon && r.actorKinds.some((k) => k === "person" || k === "agent");
 }
 
 const root = resolve(import.meta.dir, "..");
@@ -299,7 +302,7 @@ async function auditProcess(
   // Can the lane's role actually be filled by something that can perform this
   // step? The diagram's task TYPE already answers which kinds may — BPMN says a
   // userTask is done by a person and a serviceTask without one — and until now
-  // nothing joined that answer to the role graph's `actorKind`.
+  // nothing joined that answer to the role graph's `actorKinds`.
   //
   // Scoped the same way `activity-names-skill` is, and for the same reason. An
   // `actedUpon` lane is a store, and "the corpus cannot perform a serviceTask"
@@ -318,14 +321,19 @@ async function auditProcess(
       const allowed = n.fulfilment?.kinds ?? fulfilmentKindsForBpmnType(n.type);
       if (!allowed) continue; // a bpmn:Task or call activity asserts nothing
       kindApplicable += 1;
-      if (allowed.includes(role.actorKind)) continue;
+      // INTERSECTION, non-empty. The step says which kinds may perform it and
+      // the role says which may take it on; the step is fillable when some
+      // kind satisfies both. Requiring every kind the role admits would fail a
+      // lane the moment it was widened to include a second one, which is
+      // exactly backwards.
+      if (role.actorKinds.some((k) => allowed.includes(k))) continue;
       const how = n.fulfilment
         ? `<folio:fulfilment/> on the step allows ${allowed.join(", ")} (${n.fulfilment.reason})`
         : `a ${n.type.replace("bpmn:", "")} is performed by ${allowed.join(" or ")}`;
       wrongKind.push({
         where: n.id,
         detail:
-          `"${n.name}" — ${how}, but its lane's role "${roleId}" is filled by a ${role.actorKind}. ` +
+          `"${n.name}" — ${how}, but its lane's role "${roleId}" admits only ${role.actorKinds.join(", ")}. ` +
           `Either the task type is wrong, the lane is wrong, or the step really does admit that kind — ` +
           `in which case say so with <folio:fulfilment kinds="…" reason="…"/>.`,
       });
@@ -626,6 +634,41 @@ function auditRoles(
                 where: r.id,
                 detail:
                   "the actor registry declares no `roles` on any entry, so actor-to-role eligibility could not be evaluated. " +
+                  "This is a gap in the registry, not a pass.",
+              },
+            ],
+          },
+      // The other direction, and the one that was unanswerable while a role
+      // carried a single kind: an actor declares this role, so is its OWN kind
+      // among the kinds the role admits?
+      //
+      // `n/a` for an `actedUpon` lane (a store has no actor) and `unknown`
+      // where no entry declares `roles` at all — the same two scopings
+      // `role-has-actor` uses, for the same reasons, so the two directions of
+      // one question cannot disagree about when it is askable.
+      "actor-kind-fits-role": r.actedUpon
+        ? entry([], false)
+        : anyActorDeclaresRoles
+        ? entry(
+            actors
+              .filter((a) => (a.roles ?? []).includes(r.id))
+              .filter((a) => !r.actorKinds.includes(a.kind))
+              .map((a) => ({
+                where: a.id,
+                detail:
+                  `actor "${a.id}" is a ${a.kind} and declares role "${r.id}", which admits ` +
+                  `${r.actorKinds.join(", ")}. Either the role is too narrow — widen its ` +
+                  `\`actorKinds\` — or the actor cannot take this role on and its \`roles\` ` +
+                  `list is wrong. The descriptions of both are where to settle it.`,
+              })),
+          )
+        : {
+            result: "unknown",
+            findings: [
+              {
+                where: r.id,
+                detail:
+                  "the actor registry declares no `roles` on any entry, so actor-kind fit could not be evaluated. " +
                   "This is a gap in the registry, not a pass.",
               },
             ],
