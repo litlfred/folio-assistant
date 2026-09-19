@@ -1,11 +1,11 @@
 ---
 # folio-assistant-iqim
 title: 'INGEST: narrative provenance — cite the human or agent (with model version) that wrote it'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-16T06:44:43Z
+updated_at: 2026-09-19T15:17:59Z
 parent: folio-assistant-slw1
 ---
 
@@ -31,3 +31,5 @@ The provenance field is required by the schema, not merely permitted, and the
 L1 completeness gate (`folio-assistant-pn6j`) fails a narrative that lacks it.
 
 Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Provenance`.
+
+_2026-09-19T15:17:59Z_ — Claimed by claude/ecstatic-goldberg-eroyaz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

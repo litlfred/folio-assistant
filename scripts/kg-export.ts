@@ -103,8 +103,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * Two readers with two copies of "where skills live" is the exact failure
  * `known-skills.ts` was extracted to prevent, restated one module along.
  */
-function skillMdDirs(): string[] {
-  return knownSkillDirs(ROOT).map((p) => p.join("/"));
+function skillMdDirs(root: string = ROOT): string[] {
+  return knownSkillDirs(root).map((p) => p.join("/"));
 }
 
 /**
@@ -136,14 +136,14 @@ const REGISTRY_GROUPS: Record<string, string> = {
  * path in this module to be wrong; the pattern is now a rule: this exporter
  * locates corpora, it does not remember where they were.
  */
-function findBpmnDirs(): string[] {
+function findBpmnDirs(root: string = ROOT): string[] {
   const out = new Set<string>();
   const skip = new Set(["node_modules", ".git", "_site", "_kg", ".beans"]);
   const walk = (rel: string, depth: number): void => {
     if (depth > 4) return;
     let entries;
     try {
-      entries = readdirSync(join(ROOT, rel), { withFileTypes: true });
+      entries = readdirSync(join(root, rel), { withFileTypes: true });
     } catch {
       return;
     }
@@ -720,13 +720,13 @@ interface SkillFacts {
   outputSchema?: string;
 }
 
-function collectSkills(doc: string, base: string, problems: string[]): Node[] {
+function collectSkills(doc: string, base: string, problems: string[], root: string = ROOT): Node[] {
   const byName = new Map<string, SkillFacts>();
   const get = (n: string): SkillFacts =>
     byName.get(n) ?? (byName.set(n, { packages: [] }), byName.get(n)!);
 
-  for (const dir of skillMdDirs()) {
-    const abs = join(ROOT, dir);
+  for (const dir of skillMdDirs(root)) {
+    const abs = join(root, dir);
     if (!existsSync(abs)) continue; // A package this instance does not carry.
     for (const f of readdirSync(abs)) {
       if (!f.endsWith(".md")) continue;
@@ -752,7 +752,7 @@ function collectSkills(doc: string, base: string, problems: string[]): Node[] {
     }
   }
 
-  const ioRoot = join(ROOT, SKILL_IO_DIR);
+  const ioRoot = join(root, SKILL_IO_DIR);
   if (existsSync(ioRoot)) {
     for (const e of readdirSync(ioRoot, { withFileTypes: true })) {
       if (!e.isDirectory()) continue;
@@ -962,16 +962,23 @@ function collectPackages(doc: string, problems: string[]): Node[] {
   return nodes;
 }
 
-async function collectProcesses(doc: string, problems: string[]): Promise<Node[]> {
+async function collectProcesses(doc: string, problems: string[], root: string = ROOT): Promise<Node[]> {
   const nodes: Node[] = [];
   const lanes = new Set<string>();
-  const dirs = findBpmnDirs();
+  const dirs = findBpmnDirs(root);
   if (dirs.length === 0) {
     // Zero diagrams is a determined empty ONLY if we looked. Say which.
-    problems.push("no directory containing .bpmn files was found under the repository root");
+    problems.push(`no directory containing .bpmn files was found under ${root}`);
   }
   for (const rel of dirs) {
-  const dir = join(ROOT, rel);
+  const dir = join(root, rel);
+  // A directory that was found and then vanished, or one a declaration names
+  // and the tree does not carry, is a FINDING rather than a crash — and
+  // rather than a silent skip, which is the `dh4f` shape.
+  if (!existsSync(dir)) {
+    problems.push(`declared workflow directory is absent: ${rel}`);
+    continue;
+  }
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".bpmn")) continue;
     const path = join(dir, f);
@@ -982,7 +989,7 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
         "@type": termIri("Process"),
         name: m.name,
         enforcement: m.enforcement,
-        sourcePath: relative(ROOT, m.source),
+        sourcePath: relative(root, m.source),
         startNode: m.startNodes.map((n) => makeIri(doc, "process", `${m.id}/node/${n}`)),
         nodeCount: m.nodes.size,
         flowCount: m.flows.size,
@@ -1197,7 +1204,7 @@ function collectSchemas(doc: string, base: string): Node[] {
  * other links point at them — and a declared role that claims a lane links
  * to it with `bindsLane`, so the two views join rather than compete.
  */
-function collectDeclaredRoles(doc: string): Node[] {
+function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // EVERY declared `kg` root, not the literal `skills/` and not the first one
   // that answers. `kgRoots` is explicit that taking the first is the `dh4f`
   // defect arriving through the helper written to prevent it: a topical
@@ -1206,8 +1213,8 @@ function collectDeclaredRoles(doc: string): Node[] {
   // cannot silently redefine one.
   const roles: RoleDef[] = [];
   const seen = new Set<string>();
-  for (const root of kgRoots(ROOT)) {
-    for (const r of readRoleGraph(root)?.roles ?? []) {
+  for (const kgRoot of kgRoots(root)) {
+    for (const r of readRoleGraph(kgRoot)?.roles ?? []) {
       if (seen.has(r.id)) continue;
       seen.add(r.id);
       roles.push(r);
@@ -1252,8 +1259,8 @@ function collectGraphKinds(): Node[] {
   });
 }
 
-function collectDeclaration(doc: string, problems: string[]): Node[] {
-  const f = join(ROOT, "harness.json");
+function collectDeclaration(doc: string, problems: string[], root: string = ROOT): Node[] {
+  const f = join(root, "harness.json");
   if (!existsSync(f)) return [];
   try {
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
@@ -1310,6 +1317,71 @@ const LINK_TERMS = [
  * points at a graph-kind IRI in the namespace, which is a vocabulary term
  * rather than a node here, so it is excluded by the same rule.
  */
+/**
+ * What a collector reads, and therefore which instances it can serve.
+ *
+ * Measured 2026-09-19 (bean `gn4l`) by reading each collector rather than
+ * trusting its name. The distinction is NOT "does it mention `ROOT`" — two of
+ * the instance-bound ones do not.
+ */
+export const COLLECTOR_SCOPE = {
+  /** Reads only DECLARED directories, so any instance with a declaration works. */
+  generic: ["skills", "processes", "declaredRoles", "declaration"],
+  /** Reads nothing instance-specific at all — the global graph-kind registry. */
+  universal: ["graphKinds"],
+  /**
+   * Bound to THIS repository, and each for a different reason:
+   *
+   * - `registry` — `.claude/skills/<group>` as a path literal.
+   * - `packages` — `package-manifest.json` plus directories named in code.
+   * - `schemas` — `auditSchemaNodes`, which audits this repo's `schemas/`.
+   * - `tools` — **compile-time `import`** of `tools/index.ts`. This one is the
+   *   sharpest: it is not root-hardcoded, it is IMPORT-BOUND, so threading a
+   *   root through it reaches nothing. It would need the tool set passed in.
+   */
+  instanceBound: ["registry", "packages", "schemas", "tools"],
+} as const;
+
+/**
+ * The nodes ANY declared instance contributes — bootstrap included.
+ *
+ * ## Why this exists rather than a `--root` flag
+ *
+ * A flag reads like the fix and is not. `kg-export` was never merely rooted at
+ * this repository; it is **written for its shape**. Adding `--root` and
+ * calling the whole pipeline would make it export a minimal instance *as if
+ * that instance were folio-assistant* — walking `.claude/skills/`, demanding a
+ * `package.json`, auditing schema nodes it does not have, and serving
+ * folio-assistant's own compiled-in tools as though they were its.
+ *
+ * So the seam is drawn by **what a collector reads**, per
+ * {@link COLLECTOR_SCOPE}, and this function is the generic side of it.
+ *
+ * ## An absent section is NOT an audited-empty one
+ *
+ * `omitted` names every instance-bound collector that was not run, so a
+ * consumer can tell "this instance has no tools" from "tools were never
+ * looked for". Rendering the second as the first is the `dh4f` defect — a
+ * consumer scanning nothing and reporting a clean run over it — and it is the
+ * specific risk of exporting a minimal instance through machinery built for a
+ * maximal one.
+ */
+export async function collectInstanceNodes(
+  root: string,
+  doc: string,
+  base: string,
+  problems: string[],
+): Promise<{ nodes: Node[]; omitted: readonly string[] }> {
+  const nodes = [
+    ...collectSkills(doc, base, problems, root),
+    ...(await collectProcesses(doc, problems, root)),
+    ...collectGraphKinds(),
+    ...collectDeclaredRoles(doc, root),
+    ...collectDeclaration(doc, problems, root),
+  ];
+  return { nodes, omitted: COLLECTOR_SCOPE.instanceBound };
+}
+
 function undeclaredTerms(
   graph: Node[],
   context: Record<string, unknown>,

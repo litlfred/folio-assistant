@@ -220,6 +220,14 @@ export function auditXrefs(repoRoot: string, skillRoots: string[]): Citation[] {
  * reported against its source, and fixing it directly would be overwritten by
  * the next `gen-skill-docs` run.
  */
+// declared-path-literal: these are relative roots applied to an ARBITRARY
+// repository root — `auditXrefs(root, SKILL_ROOTS)` is called against fixture
+// repositories throughout `check-agents-xref.test.ts`, which have no
+// `harness.json` at all. Reading THIS instance's declaration would answer a
+// question about a different tree, which is worse than a literal: it would be
+// confidently wrong rather than obviously fixed. `.claude/skills` is not a
+// declared `cat-harness` directory in any instance, so no declaration reaches
+// it either.
 export const SKILL_ROOTS = ["skills", "src/skills", ".claude/skills"];
 
 if (import.meta.main) {

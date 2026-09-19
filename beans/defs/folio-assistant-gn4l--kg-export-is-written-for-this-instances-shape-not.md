@@ -1,11 +1,11 @@
 ---
 # folio-assistant-gn4l
 title: kg-export is written for THIS instance's shape, not just hardcoded to its root
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T15:06:44Z
-updated_at: 2026-09-19T15:07:03Z
+updated_at: 2026-09-19T15:14:47Z
 parent: folio-assistant-vke6
 ---
 
@@ -51,12 +51,18 @@ pass in `kg-export` itself.
 
 ## Done when
 
-- [ ] the generic half of `kg-export` is separated from the
-      folio-assistant-specific half, with the boundary stated rather than
-      implied
-- [ ] the generic half takes an instance root and is exercised against one
-      that is NOT this repository — a test fixture instance is enough
-- [ ] whatever a minimal instance genuinely lacks is a THIRD STATE in the
-      output, not an empty section that reads as "audited and clean"
+- [x] the generic half of `kg-export` is separated from the
+      folio-assistant-specific half — `COLLECTOR_SCOPE` states the boundary
+      and `collectInstanceNodes` is the generic side
+- [x] the generic half takes an instance root and is exercised against one
+      that is NOT this repository — **bootstrap**, a real instance, rather
+      than a fixture: 19 nodes including its 2 skills and its 1 declared
+      directory, where the root instance yields 1212
+- [x] whatever a minimal instance lacks is a THIRD STATE — `omitted` names
+      every instance-bound collector that was not run, and an absent declared
+      directory is a reported problem rather than a crash or a silent skip
 - [ ] `bootstrap.jsonld` is generated rather than authored, or this bean
       records why that was refused
+
+
+_2026-09-19_ — THE SEAM IS DRAWN, and it is drawn by WHAT EACH COLLECTOR READS rather than by whether it mentions ROOT. That distinction is the finding: two of the four instance-bound collectors never mention ROOT at all, so the obvious classifier would have put them on the wrong side. CLASSIFIED BY READING EACH ONE: generic and root-parameterisable — collectSkills (knownSkillDirs), collectProcesses (workflowDirs), collectDeclaredRoles (kgRoots), collectDeclaration (<root>/harness.json). Universal, needing no root at all — collectGraphKinds, the global kind registry. Instance-bound, each for a DIFFERENT reason — collectRegistryNodes (`.claude/skills/<group>` as a path literal), collectPackages (package-manifest.json plus directories named in code), collectSchemas (auditSchemaNodes over this repo's schemas/), and collectTools, which is the sharpest of the four: it is IMPORT-BOUND, a compile-time `import { tools } from "tools/index.ts"`, so threading a root through it reaches nothing. It would need the tool set passed in. PROVEN A REFACTOR, NOT A BEHAVIOUR CHANGE: captured _kg/folio-assistant.jsonld before touching anything (1,117,150 bytes) and diffed after — IDENTICAL apart from `generatedAt`, a timestamp. That is the same discipline as the LOCAL_PACKAGES change: the equality IS the evidence. EXERCISED AGAINST A REAL NON-ROOT INSTANCE rather than a fixture — bootstrap, which has a declaration, two skills, no BPMN, no tools/, no package.json and no .claude/. It now exports 19 nodes (2 Skill, 16 GraphKind, 1 Directory) where the root yields 1212 across seven types. A fixture would have proven the plumbing; bootstrap proves the SHAPE, because bootstrap is exactly what the exporter was never written for. TWO BUGS I MADE AND CAUGHT, both the same class — a helper called without the root it was just given. collectProcesses called findBpmnDirs() bare, so it found THIS repository's BPMN directories and joined them against bootstrap/, throwing ENOENT; and collectSkills called skillMdDirs() bare, which is why bootstrap first exported 17 nodes with ZERO skills while having two. The second is the more instructive: it did not crash, it silently returned an empty section — precisely the dh4f shape this bean exists to prevent, produced by the change meant to prevent it. THIRD STATE, because of that: `omitted` names every instance-bound collector that was not run, so "this instance has no tools" and "tools were never looked for" stay different facts; and a declared-but-absent directory is now a reported problem rather than a crash or a skip. 9 tests, and they assert PRESENCE rather than counts — a pinned number would make "it still works" and "somebody deleted a diagram" indistinguishable, a mistake already made twice this session. Verified: full suite 2802 pass 0 fail; tsc and eslint clean; kg:audit:check, ns:check, check:declared-paths, check:declared-assets, check:bean-parents, check:schema-nodes all rc=0. STILL OPEN: bootstrap.jsonld is now GENERATABLE but not generated — main() still exports only this instance, and wiring a second output plus its staleness gate is the next step, not this one.
