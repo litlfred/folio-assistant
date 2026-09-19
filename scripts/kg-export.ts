@@ -266,7 +266,12 @@ function buildContext(): Record<string, unknown> {
     // `collectRegistryNodes`. Literals, not links: `localId` is a name within
     // a kind, not an IRI.
     localId: `${FOLIO_NS}localId`,
+    // TWO terms, and the distinction is load-bearing rather than clumsy: an
+    // actor IS one kind of thing, a role ADMITS several. Collapsing them into
+    // one name would assert that a lane open to a person and an agent is
+    // itself some third kind of actor.
     actorKind: `${FOLIO_NS}actorKind`,
+    actorKinds: `${FOLIO_NS}actorKinds`,
 
     // ---- BPMN, as it comes off a diagram -----------------------------------
     //

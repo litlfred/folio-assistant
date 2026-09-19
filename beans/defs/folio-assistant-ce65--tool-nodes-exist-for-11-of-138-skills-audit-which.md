@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T20:21:01Z
-updated_at: 2026-09-19T00:41:33Z
+updated_at: 2026-09-19T07:07:53Z
 ---
 
 
@@ -186,3 +186,21 @@ tsc 0; eslint 0; kg:audit:check 0; kg:schema:check 0; check:workflows 0; check:w
 ### Fixed in passing
 
 `role-model.md` and `AGENTS.md` both said "Fourteen criteria" while `KG_CRITERIA` held **32**. Replaced with a pointer to the registry rather than a fresh number — a count in prose is a claim.
+
+_2026-09-19T07:07:53Z_ — The open modelling question is ANSWERED by the owner: "role can set of actor kinds". Implemented 2026-09-19 on branch claude/role-actor-kinds-set.
+
+`Role.actorKind: ActorKind` -> `Role.actorKinds: ActorKind[]`, non-empty, across all 30 roles. A RENAME rather than "singular that also accepts an array", because two spellings of one concept is the drift this repo keeps paying for. The ACTOR keeps its single `kind`: an actor IS one kind of thing, a role ADMITS several, and collapsing either into the other loses a distinction the graph is built on. `kg-export` now declares both terms for exactly that reason -- and ovkk's new undeclared-term gate caught the mistake within seconds when I first renamed the wrong one.
+
+THE TWO MISMATCHES TURNED OUT TO BE DIFFERENT QUESTIONS, which is why leaving them was right.
+
+1. `review-agent (agent) -> reviewer (person)` is a role that was too narrow. Three independent pieces of corpus evidence: `reviewer`'s own description says "Reads a change and judges it. Cannot accept it"; `review-agent`'s description says it performs NON-MECHANICAL validation and escalates only the judgement calls; and the BPMN lane holding `Task_AgentReview` is literally named "Non-mechanical validation (review agent or SME)". Widened to ["person", "agent"].
+
+2. `authoring-agent (agent) -> editor (person)` is NOT. `editor` is defined as "Author plus THE AUTHORITY TO ACCEPT a change into the corpus. The lane that sees QA findings and decides." And `authoring-agent`'s own description says "It NEVER COMMITS: its output enters the HCI validation pipeline and the editor accepts, revises or discards." The actor's description forbids it the role. So the defect is the `editor` entry in that actor's `roles` list, not the role's narrowness. LEFT as a recorded finding rather than resolved either way: removing a role from an actor and redefining `editor` are both larger than this change, and picking one silently is the failure this bean already avoided once.
+
+NEW CRITERION `actor-kind-fits-role`, `major`, on the role subject -- the one this bean deliberately did not write. It was unwritable before because with one kind per role every finding had two readings and the criterion could not say which. Now that widening a role is SAYABLE, a surviving mismatch means the actor's `roles` list is wrong: one reading, so a finding somebody can act on. Scoped exactly like `role-has-actor` (`n/a` for an actedUpon lane, `unknown` when no entry declares `roles`) so the two directions of one question cannot disagree about when it is askable. It reports exactly 1 finding: `role:editor`, case 2 above.
+
+FALSIFICATION CHECK, stated before the work and run after: if widening `reviewer` made the existing `activity-fulfilment-kind` findings disappear, the constraint had been loosened into uselessness. Measured: 15 findings / 6 processes -> 14 / 5. Exactly one cleared, and it is `editing-hci-validation`'s `Task_AgentReview` -- the case the widening was justified by. The constraint held.
+
+Both readers updated to set semantics with the reasoning recorded: `readsProse` uses ANY (one reader is enough for prose to be reachable), and the fulfilment check uses a non-empty INTERSECTION between the step's allowed kinds and the role's admitted kinds -- requiring every kind would fail a lane the moment it was widened, which is exactly backwards.
+
+Still untouched: the bean's ORIGINAL question (Tool nodes for 11 of 138 skills) and the 88 abstract bpmn:Task activities that assert nothing.

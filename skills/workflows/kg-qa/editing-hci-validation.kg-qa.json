@@ -40,13 +40,8 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_AgentReview",
-          "detail": "\"Agent review of the change\" — a ServiceTask is performed by agent or system, but its lane's role \"reviewer\" is filled by a person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "pass",
@@ -54,8 +49,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 1,
+    "pass": 9,
+    "fail": 0,
     "n/a": 1,
     "unknown": 0
   }
