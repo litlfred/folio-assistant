@@ -19,6 +19,7 @@ import type { FeedbackItem } from "../../schemas/types.js";
 import type { ContentAdapter } from "../types.js";
 import { getUserName, getUserEmail, hasRole, forbidden } from "../core/rbac.js";
 import { log } from "../core/logging.js";
+import type { MountedRoute, RouteDeps } from "../route-groups.js";
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
 
@@ -180,4 +181,27 @@ export async function handleFeedbackPost(
   }
 
   return null;
+}
+
+// ── Mount ────────────────────────────────────────────────────────
+
+/**
+ * Mount factory read by the route declaration in `src/server.ts`.
+ *
+ * **The casts belong here, not in the loader.** This module is in the layer
+ * that owns `FeedbackStore` and `ContentAdapter`, so naming them costs
+ * nothing; naming them in `src/route-groups.ts` would put the content model
+ * back into the harness, which is the import the declaration exists to remove.
+ *
+ * The declaration lists `feedbackStore` under `needs`, so the loader has
+ * already refused to call this with the service absent — which is why the cast
+ * is safe rather than hopeful.
+ */
+export function mountFeedbackRoutes(deps: RouteDeps): MountedRoute {
+  const store = deps.services.feedbackStore as FeedbackStore;
+  const adapter = deps.adapter as ContentAdapter;
+  return {
+    get: (url) => handleFeedbackGet(url, store),
+    post: (url, req) => handleFeedbackPost(url, req, store, adapter),
+  };
 }

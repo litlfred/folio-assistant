@@ -46,7 +46,8 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { FOLIO_NS } from "../schemas/namespaces.js";
-import { artefactStub, defaultGraphKinds, readDeclaration } from "../schemas/cat-harness.js";
+import { artefactStub, defaultGraphKinds, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
+import { skillMdDirs as knownSkillDirs } from "./known-skills.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { skillIoIri } from "./harness-schema-export.js";
@@ -71,18 +72,23 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * out-of-tree homes. Adding a package now requires changing nothing here,
  * which is the only version of this that stops being wrong.
  */
+/**
+ * Every directory holding skill instruction bodies, from the ONE function that
+ * decides — `scripts/known-skills.ts`.
+ *
+ * This had its own copy, and the copies disagreed in both directions. It
+ * scanned every `skills/*` subdirectory (so it saw packages the hardcoded
+ * `SKILL_MD_DIRS` missed) and hardcoded `.claude/skills/local` alone (so it
+ * missed groups the deny-list there admits). Measured 2026-09-19 by creating
+ * `.claude/skills/probegroup/probe-skill.md`: `knownSkills()` resolved it and
+ * this export did not — a skill by the repository's own definition, absent
+ * from the graph it publishes.
+ *
+ * Two readers with two copies of "where skills live" is the exact failure
+ * `known-skills.ts` was extracted to prevent, restated one module along.
+ */
 function skillMdDirs(): string[] {
-  const dirs: string[] = [];
-  const skillsRoot = join(ROOT, "skills");
-  if (existsSync(skillsRoot)) {
-    for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-      if (d.isDirectory()) dirs.push(`skills/${d.name}`);
-    }
-  }
-  for (const extra of ["src/skills", ".claude/skills/local"]) {
-    if (existsSync(join(ROOT, extra))) dirs.push(extra);
-  }
-  return dirs;
+  return knownSkillDirs(ROOT).map((p) => p.join("/"));
 }
 
 /**
@@ -232,7 +238,7 @@ function buildContext(): Record<string, unknown> {
     //
     // Both halves had to be fixed together: a term here with a relative value
     // would resolve against the document IRI and give
-    // `<base>/kg/schemas/skills/…`, which nothing serves. The values are now
+    // `<base>/schemas/skills/…`, which nothing serves. The values are now
     // the published `$id` of each contract — see `skillIoIri`.
     inputSchema: { "@id": `${FOLIO_NS}inputSchema`, ...link },
     outputSchema: { "@id": `${FOLIO_NS}outputSchema`, ...link },
@@ -946,8 +952,12 @@ export function exportIdentity(opts: ExportOptions = {}): {
   const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
   // No base declared → a document-relative IRI. Deliberately NOT a fabricated
   // absolute one: see makeIri's note on links that look dereferenceable.
-  const docIri = base ? `${base}/kg/${stub}.jsonld` : `${stub}.jsonld`;
-  const canonicalIri = canonicalBase ? `${canonicalBase}/kg/${stub}.jsonld` : undefined;
+  // `renderingPath` rather than a template literal: the `kg/` segment that used
+  // to be here was written out in seven places, five of them minting an `$id`.
+  // An empty base still yields a document-RELATIVE IRI, deliberately — see
+  // `makeIri`'s note on links that look dereferenceable.
+  const docIri = renderingPath(base, `${stub}.jsonld`);
+  const canonicalIri = canonicalBase ? renderingPath(canonicalBase, `${stub}.jsonld`) : undefined;
   return { stub, docIri, base, canonicalIri, isPreview: canonicalIri !== undefined && docIri !== canonicalIri };
 }
 

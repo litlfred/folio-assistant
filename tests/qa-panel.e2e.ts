@@ -68,6 +68,13 @@ const JS = readFileSync(join(ROOT, "docs/assets/js/docs-ui.js"), "utf8");
  * Nothing below is asserted as a literal. Every expected value is read out of
  * this document, so the test says "the panel shows what the sidecar records"
  * rather than "the panel shows 47".
+ *
+ * **Freezing costs one property, and it is bought back elsewhere.** This file's
+ * header argues that a fixture read off disk cannot "agree with the code while
+ * the code disagrees with the corpus" — true, and a frozen copy gives that up.
+ * `scripts/tests/qa-panel-fixture.test.ts` checks the fixture's SHAPE against
+ * what the generator writes today, so a renamed or dropped field fails there and
+ * is named, while the verdict stays frozen here. It found one on its first run.
  */
 const FIXTURE = readFileSync(
   join(ROOT, "tests/fixtures/block-with-one-failure.block.json"),

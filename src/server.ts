@@ -13,15 +13,13 @@ import { existsSync, readFileSync } from "fs";
 import { join, extname, resolve } from "path";
 
 import type { ContentAdapter } from "./types.js";
-import { FeedbackStore } from "./core/feedback.js";
 import { GitHelper } from "./core/git.js";
 import { log, logDebug } from "./core/logging.js";
-import { handleBranchGet, handleBranchPost } from "./routes/branches.js";
-import { handleFeedbackGet, handleFeedbackPost } from "./routes/feedback.js";
-import { handleChatPost } from "./routes/chat.js";
-import { handleGlossaryGet, handleGlossaryPost } from "./routes/glossary.js";
-import { handleRelevanceGet, handleRelevancePost } from "./routes/relevance.js";
 import { registerDeclaredToolGroups, type ToolGroupDeclaration } from "./tool-groups.js";
+import {
+  dispatchGet, dispatchPost, mountDeclaredRoutes,
+  type MountedRoute, type RouteDeclaration,
+} from "./route-groups.js";
 
 /** Where this server's declared tool modules resolve from. */
 const PLATFORM_ROOT = resolve(import.meta.dir, "..");
@@ -37,6 +35,42 @@ const SERVER_TOOL_GROUPS: readonly ToolGroupDeclaration[] = [
   { id: "workflow", module: "src/tools/workflow.ts", registrar: "registerWorkflowTools", layer: "harness" },
   { id: "stakeholder", module: "src/tools/stakeholder-map.ts", registrar: "registerStakeholderTools", layer: "harness" },
   { id: "translation", module: "src/tools/translation.ts", registrar: "registerTranslationTools", layer: "core" },
+];
+
+/**
+ * The HTTP routes this server serves, IN DISPATCH ORDER.
+ *
+ * Declared rather than imported, for the reason `SERVER_TOOL_GROUPS` above is:
+ * three of these five are CORE's — a folio's feedback items, its glossary
+ * candidates, its bibliography relevance — and the harness is the base
+ * repository, so it may not import them.
+ *
+ * **Reclassifying them without this table makes the count worse, measured.**
+ * `bun run check:partition` on `d26a96fd`: the three content routes in the
+ * harness give 10 wrong-direction edges; moved to core they give 11, because
+ * `src/server.ts`, `src/index.ts` and `src/routes/chat.ts` then cross the line
+ * to MOUNT them. They are content handlers mounted by a harness composition
+ * root, so whichever side holds them the mounting crosses — unless the root
+ * stops naming them, which is what this list does.
+ *
+ * **Order is behaviour here, unlike the tool groups.** Dispatch is
+ * first-match-wins, so this list reproduces the sequence of `if` blocks it
+ * replaced exactly: branches, feedback, glossary, relevance, then chat. `chat`
+ * is POST-only and therefore simply absent from GET dispatch, which is how the
+ * two chains had different lengths before and still do.
+ *
+ * The adapter's own `handleGet`/`handlePost` still run LAST, after this list.
+ * They are not declared here because the adapter is passed in at construction
+ * rather than resolved from a path — a different mechanism for a different
+ * question ("which content type is this?" rather than "which layer is
+ * installed?").
+ */
+export const SERVER_ROUTES: readonly RouteDeclaration[] = [
+  { id: "branches",  module: "src/routes/branches.ts",  mount: "mountBranchRoutes",    layer: "harness", needs: ["gitHelper"] },
+  { id: "feedback",  module: "src/routes/feedback.ts",  mount: "mountFeedbackRoutes",  layer: "core",    needs: ["feedbackStore"] },
+  { id: "glossary",  module: "src/routes/glossary.ts",  mount: "mountGlossaryRoutes",  layer: "core" },
+  { id: "relevance", module: "src/routes/relevance.ts", mount: "mountRelevanceRoutes", layer: "core" },
+  { id: "chat",      module: "src/routes/chat.ts",      mount: "mountChatRoutes",      layer: "harness" },
 ];
 
 // ── MIME types for static serving ────────────────────────────────
@@ -85,7 +119,6 @@ export interface FolioServerConfig {
 export class FolioServer {
   private mcpServer: McpServer;
   private gitHelper: GitHelper;
-  private feedbackStore: FeedbackStore;
   private adapter: ContentAdapter;
   private config: FolioServerConfig;
 
@@ -93,7 +126,6 @@ export class FolioServer {
     this.config = config;
     this.adapter = config.adapter;
     this.gitHelper = new GitHelper(config.repoRoot);
-    this.feedbackStore = new FeedbackStore(config.feedbackDir);
 
     this.mcpServer = new McpServer(
       {
@@ -137,7 +169,12 @@ export class FolioServer {
     // a constructor is not. Kicking it off here keeps it overlapping with the
     // rest of construction; awaiting it before serving is what guarantees no
     // request arrives before the tools are registered.
-    this.toolsReady = this.registerToolGroups(config.repoRoot);
+    // Tool groups and routes resolve in parallel: neither reads the other's
+    // result, and both must be done before a request is served.
+    this.ready = Promise.all([
+      this.registerToolGroups(config.repoRoot),
+      this.mountRoutes(config.repoRoot),
+    ]).then(() => undefined);
 
     // Register adapter-specific MCP tools
     if (this.adapter.registerMcpTools) {
@@ -148,9 +185,6 @@ export class FolioServer {
   /** Expose internals for the adapter. */
   getGitHelper(): GitHelper {
     return this.gitHelper;
-  }
-  getFeedbackStore(): FeedbackStore {
-    return this.feedbackStore;
   }
 
   // ── GET request handler ──────────────────────────────────────
@@ -166,21 +200,9 @@ export class FolioServer {
       return serveFile(join(this.config.assistantDir, path.slice("/folio/".length)));
     }
 
-    // Branch routes
-    const branchRes = handleBranchGet(url, this.gitHelper);
-    if (branchRes) return branchRes;
-
-    // Feedback routes
-    const feedbackRes = handleFeedbackGet(url, this.feedbackStore);
-    if (feedbackRes) return feedbackRes;
-
-    // Glossary curator routes
-    const glossaryRes = await handleGlossaryGet(url, { repoRoot: this.config.repoRoot });
-    if (glossaryRes) return glossaryRes;
-
-    // Source-relevance routes
-    const relevanceRes = await handleRelevanceGet(url, { repoRoot: this.config.repoRoot });
-    if (relevanceRes) return relevanceRes;
+    // Declared routes, in declaration order (see SERVER_ROUTES).
+    const routed = await dispatchGet(this.routes, url);
+    if (routed) return routed;
 
     // Content adapter routes
     const adapterRes = await this.adapter.handleGet(url);
@@ -192,25 +214,9 @@ export class FolioServer {
   // ── POST request handler ─────────────────────────────────────
 
   private async handlePost(url: URL, req: Request): Promise<Response | null> {
-    // Branch operations
-    const branchRes = await handleBranchPost(url, req, this.gitHelper);
-    if (branchRes) return branchRes;
-
-    // Feedback operations
-    const feedbackRes = await handleFeedbackPost(url, req, this.feedbackStore, this.adapter);
-    if (feedbackRes) return feedbackRes;
-
-    // Glossary curator operations
-    const glossaryRes = await handleGlossaryPost(url, req, { repoRoot: this.config.repoRoot });
-    if (glossaryRes) return glossaryRes;
-
-    // Source-relevance adjudication
-    const relevanceRes = await handleRelevancePost(req, url, { repoRoot: this.config.repoRoot });
-    if (relevanceRes) return relevanceRes;
-
-    // Chat
-    const chatRes = await handleChatPost(url, req, this.adapter, this.feedbackStore);
-    if (chatRes) return chatRes;
+    // Declared routes, in declaration order (see SERVER_ROUTES).
+    const routed = await dispatchPost(this.routes, url, req);
+    if (routed) return routed;
 
     // Content adapter routes
     const adapterRes = await this.adapter.handlePost(url, req);
@@ -259,8 +265,37 @@ export class FolioServer {
 
   // ── Start methods ────────────────────────────────────────────
 
-  /** Resolves once every declared tool group has been registered or reported. */
-  private readonly toolsReady: Promise<void>;
+  /**
+   * Resolves once every declared tool group and route has been mounted or
+   * reported. Awaited by `startStdio`/`startHttp` BEFORE `Bun.serve`, which is
+   * what guarantees no request reaches an unmounted route.
+   */
+  private readonly ready: Promise<void>;
+
+  /** Mounted routes, in declaration order. Empty until {@link ready}. */
+  private routes: MountedRoute[] = [];
+
+  private async mountRoutes(repoRoot: string): Promise<void> {
+    const { routes, outcomes } = await mountDeclaredRoutes(SERVER_ROUTES, PLATFORM_ROOT, {
+      repoRoot,
+      adapter: this.adapter,
+      // The feedback store comes FROM the adapter, which owns it: it is
+      // per-folio content state, and a harness server constructing one was
+      // the wrong-direction dependency this change removes. An adapter
+      // without a feedback surface returns `undefined`, and the `needs` on
+      // the declaration turns that into a named skip at boot.
+      services: { gitHelper: this.gitHelper, feedbackStore: this.adapter.getFeedbackStore?.() },
+    });
+    this.routes = routes;
+    for (const o of outcomes) {
+      // Same three-state reporting as the tool groups, and for the same
+      // reason: a server quietly starting without its feedback routes looks
+      // identical to one where they are broken, and the operator finds out
+      // from a 404 instead of from the boot log.
+      if (o.state === "absent") log("init", `\u2212 route ${o.id}`, `${o.layer} layer: ${o.detail}`);
+      else if (o.state === "failed") log("init", `\u2717 route ${o.id}`, o.detail);
+    }
+  }
 
   private async registerToolGroups(repoRoot: string): Promise<void> {
     for (const o of await registerDeclaredToolGroups(
@@ -279,7 +314,7 @@ export class FolioServer {
   }
 
   async startStdio(): Promise<void> {
-    await this.toolsReady;
+    await this.ready;
     const transport = new StdioServerTransport();
     await this.mcpServer.connect(transport);
 
@@ -294,7 +329,7 @@ export class FolioServer {
   }
 
   async startHttp(): Promise<void> {
-    await this.toolsReady;
+    await this.ready;
     const port = parseInt(process.env.MCP_PORT || "8080", 10);
     // Use the Web-Standard transport (Request/Response), not the Node
     // Express/http one: Bun.serve's `fetch` speaks the fetch API, and this

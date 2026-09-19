@@ -12,6 +12,7 @@
 import type { GitHelper } from "../core/git.js";
 import { log, logDebug } from "../core/logging.js";
 import { spawnSync } from "child_process";
+import type { MountedRoute, RouteDeps } from "../route-groups.js";
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
 
@@ -127,4 +128,22 @@ export async function handleBranchPost(url: URL, req: Request, gitHelper: GitHel
   } catch (e) {
     return Response.json({ error: String(e) }, { status: 500, headers: CORS });
   }
+}
+
+// ── Mount ────────────────────────────────────────────────────────
+
+/**
+ * Mount factory read by the route declaration in `src/server.ts`.
+ *
+ * `gitHelper` is the harness's own service, so this cast crosses no layer —
+ * branches are declared for uniformity, not because they were part of the
+ * boundary problem. Having ONE dispatch list is the point: a route mounted a
+ * second way is a route nobody reviews alongside the others.
+ */
+export function mountBranchRoutes(deps: RouteDeps): MountedRoute {
+  const git = deps.services.gitHelper as GitHelper;
+  return {
+    get: (url) => handleBranchGet(url, git),
+    post: (url, req) => handleBranchPost(url, req, git),
+  };
 }

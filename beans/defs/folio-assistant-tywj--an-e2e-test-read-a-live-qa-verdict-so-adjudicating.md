@@ -89,3 +89,34 @@ Taken up: the served document is sorted **by criterion id** (failure at 42 of
 
 - [x] no index stands in for a verdict; every lookup is by id
 - [x] the sort assertion exercises the panel, not the generator's ordering
+
+## Merge with main: #320 landed its own fix, and this resolution keeps the stronger one
+
+`main` moved between CI going green and the merge attempt. #320 landed
+`84dd7503e` — *"test(qa-panel): derive the fixture's expectations instead of
+pinning them"* — with bean `qjyi`. So the conflict is two fixes for one defect,
+and the resolution had to pick rather than blend.
+
+**Kept this branch's, for one measurable reason.** #320 synthesises the failing
+row into **`criteria[0]`**, with the comment *"Replace the first criterion rather
+than appending: the panel sorts worst-first itself, so a row appended at the end
+still has to be hoisted, which is the behaviour under test."* The reasoning is
+inverted: replacing at index 0 means **no hoisting is needed**, so the sort is
+exactly what stops being tested. That is #319's second finding, restated — and
+`STALE_JSON` marking `criteria[0]` remains index-based there too. This branch
+serves the document sorted by criterion id, failure at **42 of 48**.
+
+**Took #320's better point.** Reading the fixture live is what keeps its shape
+honest, and freezing gives that up. Bought back with
+`scripts/tests/qa-panel-fixture.test.ts`: shape checked against every published
+`*.block.json`, verdict frozen. `n/a` and passing when no sidecars exist.
+
+**Deferred to main on `.gitignore`.** This branch ignored `test-results/`
+wholesale; main tracks `.last-run.json` deliberately (`bb28f8e`) and restored it
+after a sibling deleted it. Main's reason is better, so `test-results/*/` stands
+and the file is back. The stash hazard is recorded in the `.gitignore` comment
+rather than fixed by overruling them.
+
+- [x] conflict resolved keeping the version whose sort assertion bites
+- [x] the property freezing gave up bought back by a shape-drift test
+- [x] `qjyi` and `iumj` cross-referenced; no bean resolved but this one

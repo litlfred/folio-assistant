@@ -69,3 +69,31 @@ every assertion retarget the first row of whatever remains.
 
 The frozen fixture is also the only place `evidence` still exists, which is why
 the verbatim-quoting assertion is still meaningful.
+
+## Freezing gives up one property, and it is bought back
+
+The e2e spec's header argues that a fixture read off disk cannot *"agree with
+the code while the code disagrees with the corpus"*. That is right, and a frozen
+copy gives it up: if `qa-witness` grows a field or renames one, this file would
+go on satisfying a spec the generator no longer produces.
+
+`scripts/tests/qa-panel-fixture.test.ts` is the other half. It checks this
+document's **shape** against every published `*.block.json` — `$schema`, the
+criterion fields, the witness fields — while the **verdict** stays frozen here.
+A checkout with no published sidecars reports `n/a` and passes: "could not
+compare" is not "compared and matched".
+
+It earned its place on its first run, by failing. Three fields are written only
+in a state the corpus is not currently in, so the live corpus cannot vouch for
+them: `evidence` and `severity` (a failing criterion — #314 measured that no
+criterion anywhere carries `evidence` any more) and **`changed`** (a stale
+witness, and nothing is stale today). That third one I had not thought of, which
+is exactly why the exemption list is derived from a measurement rather than
+written from memory.
+
+## Beans
+
+`tywj` here; `qjyi` on `main` (#320's, which fixed it by synthesising the
+failure into `criteria[0]`); `iumj` (#314's, for the general pattern). Four
+sessions, three beans, one defect — cross-referenced rather than merged, so none
+of the three reads as the whole story.

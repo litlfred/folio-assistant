@@ -286,3 +286,83 @@ describe("a verdict against a file that has since changed", () => {
     expect(h.at(-1)!.health).toBe("superseded");
   });
 });
+
+/**
+ * Bean `gpuu`. The module already had a `running` health state, but it fired
+ * only when NOTHING had settled. The ordinary case — a newest run still in
+ * flight over older settled runs — fell straight through to the settled
+ * verdict, and the report printed it as the answer.
+ *
+ * Measured on this repository, 2026-09-19: `main` took a merge at 02:39 that
+ * broke `kg:audit:check`, and a run of this check at 02:39 printed
+ * "✓ every workflow with a recent run on `main` is green (3)". #312 fixed the
+ * breakage at 02:40. In between, an agent wrote "`main` is not red" into a
+ * pull request body and flagged the PR that was fixing it as mistaken.
+ *
+ * Each test below is that situation with exactly one thing varied.
+ */
+describe("an unsettled newest run never reads as a verdict about the head", () => {
+  const green = (at: string) => run({ created_at: at });
+
+  test("newest in flight over an older success is flagged, not reported as green", () => {
+    const [h] = assess([
+      run({ status: "in_progress", conclusion: null, created_at: "2026-08-26T12:00:00Z" }),
+      green("2026-08-26T10:00:00Z"),
+    ]);
+    expect(h.health).toBe("green");
+    expect(h.newestUnsettled).toBe(true);
+  });
+
+  test("a queued newest run counts the same as one in flight", () => {
+    const [h] = assess([
+      run({ status: "queued", conclusion: null, created_at: "2026-08-26T12:00:00Z" }),
+      green("2026-08-26T10:00:00Z"),
+    ]);
+    expect(h.newestUnsettled).toBe(true);
+  });
+
+  test("a cancelled newest run counts too — completed is not the same as judged", () => {
+    const [h] = assess([
+      run({ conclusion: "cancelled", created_at: "2026-08-26T12:00:00Z" }),
+      green("2026-08-26T10:00:00Z"),
+    ]);
+    expect(h.newestUnsettled).toBe(true);
+  });
+
+  test("the summary line does not say every workflow is green", () => {
+    const out = render(
+      assess([
+        run({ status: "in_progress", conclusion: null, created_at: "2026-08-26T12:00:00Z" }),
+        green("2026-08-26T10:00:00Z"),
+      ]),
+      { branch: "main" },
+    );
+    expect(out).not.toContain("every workflow with a recent run");
+    expect(out).toContain("has not reported");
+    expect(out).toContain("the head has not been judged");
+  });
+
+  test("a settled newest run is not flagged — the ordinary case is unchanged", () => {
+    const [h] = assess([green("2026-08-26T12:00:00Z"), green("2026-08-26T10:00:00Z")]);
+    expect(h.health).toBe("green");
+    expect(h.newestUnsettled).toBeUndefined();
+    expect(render([h], { branch: "main" })).toContain("every workflow with a recent run");
+  });
+
+  test("the trend survives: red with a run in flight is still red, and still flagged", () => {
+    const [h] = assess([
+      run({ status: "in_progress", conclusion: null, created_at: "2026-08-26T14:00:00Z" }),
+      run({ conclusion: "failure", created_at: "2026-08-26T12:00:00Z" }),
+      run({ conclusion: "failure", created_at: "2026-08-26T10:00:00Z" }),
+    ]);
+    expect(h.health).toBe("red");
+    expect(h.consecutiveFailures).toBe(2);
+    expect(h.newestUnsettled).toBe(true);
+  });
+
+  test("`running` is not doubly reported — nothing settled stays just `running`", () => {
+    const [h] = assess([run({ status: "in_progress", conclusion: null })]);
+    expect(h.health).toBe("running");
+    expect(h.newestUnsettled).toBeUndefined();
+  });
+});

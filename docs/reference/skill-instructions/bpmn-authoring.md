@@ -1,0 +1,78 @@
+---
+layout: default
+title: bpmn-authoring
+parent: Skill instructions
+---
+
+{: .note }
+> Generated from [`skills/authoring-who-smart-guidelines/bpmn-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/bpmn-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/bpmn-authoring.html).
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/bpmn-authoring.md){: .fa-edit-source }
+
+{% raw %}
+# bpmn-authoring
+
+> Skill id: `bpmn-authoring` · Package: `authoring-who-smart-guidelines` ·
+> Named by `l2-dak-authoring.bpmn` (**Business processes · BPMN 2.0**,
+> `Business analyst` lane) and `crdm-requirements.bpmn` (**Phase 2: Map current
+> workflow (BPA)**, `Agent` lane).
+
+Author BPMN 2.0 business process diagrams — both a DAK's L2 business processes
+and this repository's own `skills/workflows/*.bpmn`.
+
+## Inputs and outputs
+
+`schemas/skills/bpmn-authoring/`:
+
+- **in** — `processName` (required), `sourceWorkflow`, `existingBpmn`,
+  `participants`
+- **out** — `bpmnFile`, `diagramFile`, `taskCount`, `gatewayCount`,
+  `participantCount`
+
+`graphviz` is a declared capability with `degradation: skip` — layout help
+degrades, authoring does not stop.
+
+## Diagram Interchange is not optional
+
+A `.bpmn` with no DI section — no explicit `x`/`y` on its shapes — parses and
+renders **blank**. This is the single most common way a new diagram here
+arrives broken, and it survives review because the XML looks complete.
+
+`bun run render:bpmn` renders every diagram to `docs/assets/img/workflows/`
+with bpmn-js in headless Chromium; `bun run render:bpmn:check` fails when an
+SVG is stale. Run the renderer and look at the SVG before you call a diagram
+done.
+
+## In this repository, a diagram is executable
+
+`skills/workflows/*.bpmn` are not pictures. `workflow_start` / `workflow_next`
+/ `workflow_complete` run them, and `workflow_complete` **refuses a step that
+is not enabled**. That has consequences for how you author:
+
+- **Every activity carries `<folio:skill ref="…"/>`** naming the skill that
+  implements it, and `<folio:bean store="beans/"/>` where it touches the work
+  plan. `bun run check:workflow-refs` fails on a ref that resolves to nothing,
+  and `bun run kg:audit` additionally fails when the named skill exists but no
+  package can **serve** it.
+- **Every lane is a role.** Bind it with `<folio:role ref="…"/>` against
+  `skills/roles/roles.json`. Lane names are free text and sixty of them once
+  spelled two dozen positions; an explicit ref is the join that does not depend
+  on spelling.
+- **A gateway may be computed rather than chosen** — see `dmn-authoring`.
+- **Policy is declared on the process.** `<folio:policy enforcement="strict"/>`
+  means `workflow_gate` refuses a step that is not enabled; absent policy means
+  strict. Steps marked `relaxable="false"` may never be relaxed by any package.
+
+## If it has actors, activities and a control flow, it is BPMN
+
+Not a Mermaid fence. Mermaid stays for the things that are *not* processes —
+component maps, lattices, navigation graphs. The audit of which is which is in
+`docs/publication-workflow.md`.
+
+## For a DAK
+
+`smart-base`'s `bpmn2fsh` transform turns an authored business process into
+FHIR Shorthand, so the BPMN is a **source artefact** rather than documentation
+of one. Author it knowing it will be transformed: names and ids you choose here
+appear in generated FSH. `smart-base-tools` has the mechanics.
+{% endraw %}
