@@ -236,7 +236,32 @@ function buildContext(): Record<string, unknown> {
     // the published `$id` of each contract — see `skillIoIri`.
     inputSchema: { "@id": `${FOLIO_NS}inputSchema`, ...link },
     outputSchema: { "@id": `${FOLIO_NS}outputSchema`, ...link },
+
+    // The registry's own fields, renamed on the way in — see
+    // `collectRegistryNodes`. Literals, not links: `localId` is a name within
+    // a kind, not an IRI.
+    localId: `${FOLIO_NS}localId`,
+    actorKind: `${FOLIO_NS}actorKind`,
   };
+}
+
+/**
+ * Terms in the context that ALIAS a JSON-LD keyword.
+ *
+ * A node object carrying both a keyword and an alias of it is a
+ * `colliding keywords` error (JSON-LD 1.1 §4.1.3), and the practical effect is
+ * worse than an error: `{"@id": "<abs>", "id": "programme-manager"}` offers a
+ * processor an absolute IRI and a relative one for the same node.
+ *
+ * Derived from `buildContext` rather than written out, so adding an alias
+ * there cannot leave this list behind.
+ */
+function keywordAliases(): Set<string> {
+  return new Set(
+    Object.entries(buildContext())
+      .filter(([, v]) => typeof v === "string" && v.startsWith("@"))
+      .map(([k]) => k),
+  );
 }
 
 /**
@@ -307,6 +332,23 @@ interface Export {
   sourceCommitUnavailable?: string;
   /** Node counts by `@type`, so a consumer can spot a truncated graph. */
   counts: Record<string, number>;
+  /**
+   * Property names used in `@graph` that the `@context` does not declare.
+   *
+   * **Every one of these is DROPPED when the document is processed as the
+   * JSON-LD it says it is.** A term that is neither in the context nor an
+   * absolute IRI is not a property; it simply disappears. Reading the file as
+   * plain JSON shows it, which is why this goes unnoticed — `inputSchema` was
+   * published and invisible for exactly this reason until #297.
+   *
+   * Reported, not fatal, and the distinction is deliberate. Declaring a term
+   * means choosing a predicate IRI and deciding whether it is a link or a
+   * literal, which is modelling work per property; blocking publication on the
+   * backlog would hold the graph hostage to it. The same call as
+   * `danglingLinks`. What must never happen is the gap being INVISIBLE, which
+   * is what it was.
+   */
+  undeclaredTerms: Array<{ term: string; onTypes: string[]; occurrences: number }>;
   /** Sources that could not be read. NEVER empty-by-omission — see module doc. */
   problems: string[];
   /**
@@ -434,7 +476,25 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
       try {
         const d = JSON.parse(readFileSync(join(abs, f), "utf-8")) as Record<string, unknown>;
         const id = String(d.id ?? d.name ?? f.slice(0, -5));
-        nodes.push({ "@id": makeIri(doc, type.toLowerCase(), id), "@type": `${FOLIO_NS}${type}`, ...d });
+
+        // The registry files carry `id` and `type` of their own, and spreading
+        // them verbatim put BOTH a keyword and its alias on 71 nodes: `id`
+        // against `@id`, `type` against `@type`. It read correctly as plain
+        // JSON, which is why it survived — the document is only wrong when
+        // something processes it as the JSON-LD it claims to be.
+        //
+        // Renamed rather than dropped. The local name and the person/system
+        // distinction are both real data a consumer wants, and recovering
+        // `localId` by splitting the `@id` fragment is exactly the string
+        // manipulation a consumer should never have to do.
+        const { id: localId, type: actorKind, ...rest } = d;
+        nodes.push({
+          "@id": makeIri(doc, type.toLowerCase(), id),
+          "@type": `${FOLIO_NS}${type}`,
+          ...(localId === undefined ? {} : { localId: String(localId) }),
+          ...(actorKind === undefined ? {} : { actorKind: String(actorKind) }),
+          ...rest,
+        });
       } catch (e) {
         problems.push(`unparseable ${group}/${f}: ${e instanceof Error ? e.message : String(e)}`);
       }
@@ -687,6 +747,53 @@ const LINK_TERMS = [
  * points at a graph-kind IRI in the namespace, which is a vocabulary term
  * rather than a node here, so it is excluded by the same rule.
  */
+function undeclaredTerms(
+  graph: Node[],
+  context: Record<string, unknown>,
+): Array<{ term: string; onTypes: string[]; occurrences: number }> {
+  const declared = new Set(Object.keys(context).filter((k) => !k.startsWith("@")));
+  const seen = new Map<string, { types: Set<string>; n: number }>();
+  for (const node of graph) {
+    const type = String(node["@type"] ?? "").split("#").pop() ?? "?";
+    for (const key of Object.keys(node)) {
+      if (key.startsWith("@") || declared.has(key)) continue;
+      const e = seen.get(key) ?? { types: new Set<string>(), n: 0 };
+      e.types.add(type);
+      e.n += 1;
+      seen.set(key, e);
+    }
+  }
+  return [...seen.entries()]
+    .map(([term, e]) => ({ term, onTypes: [...e.types].sort(), occurrences: e.n }))
+    .sort((a, b) => b.occurrences - a.occurrences || a.term.localeCompare(b.term));
+}
+
+/**
+ * A node carrying both a JSON-LD keyword and an alias of it.
+ *
+ * **Fatal, unlike `undeclaredTerms`**, and the difference is what is at stake.
+ * An undeclared term loses one property; a collision on `id` or `type` offers
+ * a processor two different answers for the node's own IDENTITY or CLASS, and
+ * a graph whose nodes cannot be identified is not a graph. Publishing that as
+ * a complete export is the failure this module's doc comment is about.
+ *
+ * Measured before the fix: 71 nodes — `Actor.id` (24), `Actor.type` (24),
+ * `Capability.id` (23) — all from `collectRegistryNodes` spreading a registry
+ * file's own fields into the node object verbatim.
+ */
+function keywordCollisions(graph: Node[]): string[] {
+  const aliases = keywordAliases();
+  const out: string[] = [];
+  for (const node of graph) {
+    for (const key of Object.keys(node)) {
+      if (!aliases.has(key)) continue;
+      const kw = `@${key === "graph" ? "graph" : key}`;
+      if (kw in node) out.push(`${String(node["@id"])} carries both \`${kw}\` and its alias \`${key}\``);
+    }
+  }
+  return out;
+}
+
 function findDanglingLinks(graph: Node[], docIri: string): Array<{ from: string; edge: string; to: string }> {
   const ids = new Set(graph.map((n) => String(n["@id"])));
   const out: Array<{ from: string; edge: string; to: string }> = [];
@@ -928,6 +1035,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...commitFields,
     counts,
     problems,
+    undeclaredTerms: undeclaredTerms(graph, buildContext()),
     "@graph": graph,
   };
 }
@@ -951,6 +1059,31 @@ if (import.meta.main) {
   console.log(`KG export → ${relative(ROOT, out)}\n  @id  ${data["@id"]}`);
   for (const [t, n] of Object.entries(data.counts).sort()) console.log(`  ${String(n).padStart(5)}  ${t}`);
   console.log(`  ${String(data["@graph"].length).padStart(5)}  total`);
+
+  // A keyword collision is a DOCUMENT-VALIDITY failure, not an unread source,
+  // so it is not in `problems` — but it is fatal for the same reason they are:
+  // a graph whose nodes offer two answers for their own identity must not be
+  // published as a whole one. Checked here against the assembled graph rather
+  // than trusted from the collectors.
+  const collisions = keywordCollisions(data["@graph"]);
+  if (collisions.length > 0) {
+    console.error(`\n${collisions.length} node(s) carry a JSON-LD keyword AND its alias:`);
+    for (const c of collisions.slice(0, 10)) console.error(`  \u2717 ${c}`);
+    if (collisions.length > 10) console.error(`  \u2026 and ${collisions.length - 10} more`);
+    process.exit(1);
+  }
+
+  if (data.undeclaredTerms.length > 0) {
+    const n = data.undeclaredTerms.reduce((a, t) => a + t.occurrences, 0);
+    console.warn(
+      `\n${data.undeclaredTerms.length} property name(s), ${n} occurrence(s), are NOT in the @context ` +
+        `\u2014 a JSON-LD processor drops every one:`,
+    );
+    for (const t of data.undeclaredTerms.slice(0, 8)) {
+      console.warn(`  \u00b7 ${t.term.padEnd(22)} ${String(t.occurrences).padStart(4)}\u00d7  on ${t.onTypes.join(", ")}`);
+    }
+    if (data.undeclaredTerms.length > 8) console.warn(`  \u00b7 \u2026 and ${data.undeclaredTerms.length - 8} more`);
+  }
 
   if (data.danglingLinks.length > 0) {
     console.warn(`\n${data.danglingLinks.length} dangling internal link(s) — reported, not fatal:`);

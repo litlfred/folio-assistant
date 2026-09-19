@@ -1,10 +1,11 @@
 ---
 # folio-assistant-1dfh
 title: Publish the harness knowledge graph as JSON to Pages, and a viewer over it
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-18T19:00:01Z
-updated_at: 2026-09-18T19:00:01Z
+updated_at: 2026-09-19T00:10:42Z
 ---
 
 
@@ -64,3 +65,5 @@ the exporter's view (every skill a diagram names must appear), and
 reverting the fix: that test fails and only that test.
 
 Any future node type added to this export inherits the same requirement.
+
+_2026-09-19T00:10:42Z_ — Viewer built on branch claude/kg-viewer, 2026-09-19. scripts/kg-viewer.ts emits a zero-dependency single-file page beside the graph document; skills/folio-core/kg-viewer.md is the skill; pages-publish is already the Tool. GENERATED rather than committed because the document is named after the repository, so a committed page would have to hardcode one instance's stub or compose the name at runtime — the two failures AGENTS.md catalogues. It fetches its SIBLING relative to its own location, so the same bytes work at the canonical base and under STAGING/<slug>/ with no configuration. NOT a force-directed graph: 1111 nodes and ~2000 edges render as a hairball that answers no question. Faceted index + detail panel + followable edges + back-links computed at load (a stored inverse is a second copy that can disagree) + a ONE-HOP neighbourhood diagram capped at 14. Verified in real Chromium, 9 e2e tests in tests/kg-viewer.e2e.ts, self-generating so they run from a clean checkout. NOTE e2e is NOT gated in CI — no workflow runs bunx playwright test, which is true of the three pre-existing e2e specs too. Wired into both publish paths: docs-site alongside the export; feature-staging BEFORE the banner injection so the find picks it up like every other page. Two things LOOKING at it caught that no test would have: a Tool's io rendered inline as ~900 chars of JSON pushed satisfies and the diagram off-screen (now behind a disclosure), and the 71-node keyword collision below. Outstanding item 3 of this bean (schemas/skills under-used) was addressed separately in #297. Item 4 (beans deliberately out of the graph) unchanged.
