@@ -267,6 +267,106 @@ function buildContext(): Record<string, unknown> {
     localId: `${FOLIO_NS}localId`,
     actorKind: `${FOLIO_NS}actorKind`,
 
+    // ---- BPMN, as it comes off a diagram -----------------------------------
+    //
+    // Literals, all of them. `bpmnType` is a QName in the BPMN namespace
+    // (`bpmn:UserTask`), NOT an IRI: coercing it to `@id` would resolve it
+    // against this document and mint `<base>/bpmn:UserTask`, which nothing
+    // serves. `nodeKind` was emitted as the bare term `kind`, which this
+    // document already uses in another sense -- a GraphKind is a "kind" too --
+    // so the term now says which one it is.
+    bpmnType: `${FOLIO_NS}bpmnType`,
+    nodeKind: `${FOLIO_NS}nodeKind`,
+    enforcement: `${FOLIO_NS}enforcement`,
+    workPlanOp: `${FOLIO_NS}workPlanOp`,
+    touchesWorkPlan: { "@id": `${FOLIO_NS}touchesWorkPlan`, "@type": `${XSD}boolean` },
+    relaxable: { "@id": `${FOLIO_NS}relaxable`, "@type": `${XSD}boolean` },
+    nodeCount: { "@id": `${FOLIO_NS}nodeCount`, "@type": `${XSD}integer` },
+    flowCount: { "@id": `${FOLIO_NS}flowCount`, "@type": `${XSD}integer` },
+    // A LITERAL, and the one term here whose call is expected to change. The
+    // value is a repo-relative DMN path plus the decision's own id
+    // (`decisions/draft-qa-gate.dmn#Decision_DraftQaGate`) and this graph emits
+    // no Decision nodes at all, so coercing it would mint four IRIs that
+    // resolve to nothing -- `makeIri`'s rule applied to a value rather than to
+    // an `@id`. It becomes a link on the day decision tables are nodes.
+    decisionRef: `${FOLIO_NS}decisionRef`,
+    // WHERE A NODE CAME FROM, and the two senses are not one term. A Process
+    // carries the `.bpmn` path it was loaded from; a lane-derived Role carries
+    // the string `bpmn-lane`, which is a provenance KIND and not a path. Both
+    // were emitted as `source`, so a single declaration would have asserted
+    // that `bpmn-lane` is a file. Literals, for `maintainsFrom`'s reason: a
+    // repo-relative path is not dereferenceable.
+    sourcePath: `${FOLIO_NS}sourcePath`,
+    sourceKind: `${FOLIO_NS}sourceKind`,
+
+    // ---- Skills, packages, directories -------------------------------------
+    //
+    // `instructionsPath` is a repo-relative path, so a LITERAL for exactly
+    // `maintainsFrom`'s reason. It was `instructions`, a name that promises the
+    // text itself and delivers a path.
+    instructionsPath: `${FOLIO_NS}instructionsPath`,
+    instructionLines: { "@id": `${FOLIO_NS}instructionLines`, "@type": `${XSD}integer` },
+    hasInstructions: { "@id": `${FOLIO_NS}hasInstructions`, "@type": `${XSD}boolean` },
+    hasIOContract: { "@id": `${FOLIO_NS}hasIOContract`, "@type": `${XSD}boolean` },
+    ambiguous: { "@id": `${FOLIO_NS}ambiguous`, "@type": `${XSD}boolean` },
+    hasManifest: { "@id": `${FOLIO_NS}hasManifest`, "@type": `${XSD}boolean` },
+    renderable: { "@id": `${FOLIO_NS}renderable`, "@type": `${XSD}boolean` },
+    // A repo-relative directory, on a Directory and on a SkillPackage. ONE term
+    // because it is one relation in both places -- unlike `source` above, which
+    // was one name over two relations.
+    path: `${FOLIO_NS}path`,
+    // `schema:` is declared as a prefix above and this is its first use: a
+    // package version is a software version and schema.org already has the
+    // predicate. Minting `folio:version` beside it would be a second name for
+    // a term the wider web already agrees on.
+    version: `${SCHEMA}softwareVersion`,
+
+    // ---- An actor's three lists, which answer three different questions ----
+    //
+    // `capabilities` becomes a LINK, because every value names a Capability
+    // node this document contains -- 20 of 20, measured 2026-09-19. The VALUES
+    // are minted as node IRIs in `collectRegistryNodes` rather than left as
+    // bare names: a bare name under `{"@type": "@id"}` resolves against the
+    // document base and yields `<base>/git-push`, which is the confidently
+    // wrong coercion this bean warns about, not an edge.
+    hasCapability: { "@id": `${FOLIO_NS}hasCapability`, ...link },
+    // Roles and permissions stay LITERALS, deliberately and provisionally. The
+    // role registry (`skills/roles/roles.json`) and the permission vocabulary
+    // (`skills/permissions/permissions.json`) are NOT exported, so this graph
+    // holds no node for any of them -- the Role nodes it does hold are BPMN
+    // LANES, a different identity scheme with different names. Coercing would
+    // mint 44 role and 21 permission IRIs resolving to nothing. They are names
+    // until those registries are nodes, and `roleName`/`permissionName` say so
+    // instead of implying an edge the graph cannot honour.
+    roleName: `${FOLIO_NS}roleName`,
+    permissionName: `${FOLIO_NS}permissionName`,
+
+    // ---- Structured values whose own vocabulary this graph does not model ---
+    //
+    // `{"@type": "@json"}` (JSON-LD 1.1, `rdf:JSON`) keeps the value verbatim.
+    // The alternative -- declaring the container term alone -- is WORSE than
+    // leaving it undeclared: the outer key survives, every inner key is
+    // dropped, and a consumer gets a well-formed EMPTY node where a Tool's I/O
+    // contract used to be, with nothing to say anything was lost. Modelling
+    // `io.inputs[].schema` as real edges is worth doing and is not this change.
+    io: { "@id": `${FOLIO_NS}io`, "@type": "@json" },
+    invoke: { "@id": `${FOLIO_NS}invoke`, "@type": "@json" },
+    // Heterogeneous by source, and that is the point: a Capability's `install`
+    // is a command string, a Tool's is a dispatch object. The RELATION is the
+    // same -- how do I get this -- so one term, with a range `@json` tolerates.
+    // Contrast `sourcePath`/`sourceKind`, where the two senses were different
+    // relations sharing a name and had to be split.
+    install: { "@id": `${FOLIO_NS}install`, "@type": "@json" },
+    detection: { "@id": `${FOLIO_NS}detection`, "@type": "@json" },
+    meta: { "@id": `${FOLIO_NS}meta`, "@type": "@json" },
+    assignments: { "@id": `${FOLIO_NS}assignments`, "@type": "@json" },
+    // A Tool's environment requirements -- `{ runtime: ["go"], network: true }`.
+    // NOT `requiresCapability`: `go` is not a capability id (0 of 1 runtime
+    // names match a Capability node), so these are two relations wearing one
+    // name. It was `requires`, which a Capability also carried in the other
+    // sense -- see `collectRegistryNodes`.
+    requirements: { "@id": `${FOLIO_NS}requirements`, "@type": "@json" },
+
     // Which build produced this document — see `scripts/staging-stamp.ts`.
     //
     // **Declared, because the stamp was being dropped.** Until 2026-09-19 the
@@ -391,12 +491,21 @@ interface Export {
    * plain JSON shows it, which is why this goes unnoticed — `inputSchema` was
    * published and invisible for exactly this reason until #297.
    *
-   * Reported, not fatal, and the distinction is deliberate. Declaring a term
-   * means choosing a predicate IRI and deciding whether it is a link or a
-   * literal, which is modelling work per property; blocking publication on the
-   * backlog would hold the graph hostage to it. The same call as
-   * `danglingLinks`. What must never happen is the gap being INVISIBLE, which
-   * is what it was.
+   * **Empty, and FATAL when it is not** — since bean `ovkk`, which closed the
+   * backlog this field was opened to report. It was reported-not-fatal while
+   * 34 names and 3583 occurrences were outstanding, because declaring a term
+   * is modelling work per property and blocking publication on a backlog holds
+   * the graph hostage to it. That backlog is gone, so the same reasoning now
+   * points the other way: with the count at zero, the only thing a new entry
+   * can mean is that somebody added a property and did not decide what it
+   * means. Deciding costs one line in `buildContext`; shipping it undecided
+   * costs a published graph that silently drops the property.
+   *
+   * This is NOT the call made for `danglingLinks`, and the difference is who
+   * can fix it. A dangling link is a DATA defect — a manifest naming a skill
+   * nobody wrote — which the exporter cannot resolve and must not hide. An
+   * undeclared term is an EXPORTER defect, fixable in the same change that
+   * introduced it.
    */
   undeclaredTerms: Array<{ term: string; onTypes: string[]; occurrences: number }>;
   /**
@@ -518,16 +627,83 @@ function collectSkills(doc: string, base: string, problems: string[]): Node[] {
     description: s.description,
     // A link per package, not a bare string: the skill's package is an edge.
     inPackage: s.packages.map((d) => makeIri(doc, "package", d.split("/").pop()!)),
-    packagePaths: s.packages,
-    instructions: s.instructions,
-    lines: s.lines,
+    // `packagePaths` was here, repeating each package's directory beside the
+    // link that already reaches it. REMOVED as denormalised: `inPackage` lands
+    // on a SkillPackage node carrying `path`, every one of those links resolves
+    // (0 dangling, measured 2026-09-19), and every value `packagePaths` held
+    // was one of those nodes' `path`. Reading a property off a link target is
+    // graph traversal; recovering a fact by SPLITTING AN IRI is the string
+    // surgery this document refuses to ask of a consumer, and neither was
+    // needed here.
+    instructionsPath: s.instructions,
+    instructionLines: s.lines,
     inputSchema: s.inputSchema,
     outputSchema: s.outputSchema,
     // The two facets, stated rather than left to be inferred from absence.
     hasInstructions: s.instructions !== undefined,
     hasIOContract: s.inputSchema !== undefined || s.outputSchema !== undefined,
-    ambiguous: s.packages.length > 1 ? s.packages : undefined,
+    // A FLAG now, not a second copy of the package list: which packages define
+    // the name is `inPackage`, and this says only that somebody has to resolve
+    // it. Emitted on every skill rather than only when true, for the reason
+    // `hasInstructions` is -- absence must not be the carrier of a fact.
+    ambiguous: s.packages.length > 1,
   }));
+}
+
+/**
+ * Registry fields that are REFERENCES, and what each one may honestly become.
+ *
+ * The rest of a registry file is spread verbatim, which is right for prose and
+ * wrong for a name that points at another node: a bare name is dropped by a
+ * JSON-LD processor when undeclared, and -- worse -- becomes a WRONG absolute
+ * IRI if the term is declared `{"@type": "@id"}` without minting the value,
+ * since `"git-push"` resolves against the document base. So the decision is
+ * made here, per field, against what this graph actually contains:
+ *
+ * - **`capabilities` -> `hasCapability`, a LINK.** All 20 references resolve to
+ *   a Capability node in this document (measured 2026-09-19), so the edge is
+ *   real and the value is minted as that node's IRI.
+ * - **`requires` on a Capability -> `requiresCapability`, a LINK.** Same test,
+ *   12 of 12. It reuses the term already declared for a package's requirements
+ *   rather than minting a second name for one relation. Note a TOOL's
+ *   `requires` is a different relation entirely -- see `collectTools`.
+ * - **`roles` and `permissions` -> `roleName`/`permissionName`, LITERALS.**
+ *   Neither registry is in this graph: `skills/roles/roles.json` and
+ *   `skills/permissions/permissions.json` are never collected, and the Role
+ *   nodes that do exist are BPMN lanes under different names. All 44 role and
+ *   21 permission references would dangle. A name is what these are until the
+ *   registries are nodes, and the term says so.
+ *
+ * Keyed by group, so a field a future registry adds is not silently caught by
+ * a rule written for another one.
+ */
+function registryFields(
+  group: string,
+  rest: Record<string, unknown>,
+  doc: string,
+): Record<string, unknown> {
+  const names = (v: unknown): string[] => (Array.isArray(v) ? v.map(String) : []);
+  if (group === "actors") {
+    const { capabilities, roles, permissions, ...other } = rest;
+    return {
+      ...other,
+      ...(capabilities === undefined
+        ? {}
+        : { hasCapability: names(capabilities).map((c) => makeIri(doc, "capability", c)) }),
+      ...(roles === undefined ? {} : { roleName: names(roles) }),
+      ...(permissions === undefined ? {} : { permissionName: names(permissions) }),
+    };
+  }
+  if (group === "capabilities") {
+    const { requires, ...other } = rest;
+    return {
+      ...other,
+      ...(requires === undefined
+        ? {}
+        : { requiresCapability: names(requires).map((c) => makeIri(doc, "capability", c)) }),
+    };
+  }
+  return rest;
 }
 
 function collectRegistryNodes(doc: string, problems: string[]): Node[] {
@@ -563,7 +739,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
           "@type": `${FOLIO_NS}${type}`,
           ...(localId === undefined ? {} : { localId: String(localId) }),
           ...(actorKind === undefined ? {} : { actorKind: String(actorKind) }),
-          ...rest,
+          ...registryFields(group, rest, doc),
         });
       } catch (e) {
         problems.push(`unparseable ${group}/${f}: ${e instanceof Error ? e.message : String(e)}`);
@@ -646,7 +822,7 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
         "@type": `${FOLIO_NS}Process`,
         name: m.name,
         enforcement: m.enforcement,
-        source: relative(ROOT, m.source),
+        sourcePath: relative(ROOT, m.source),
         startNode: m.startNodes.map((n) => makeIri(doc, "process", `${m.id}/node/${n}`)),
         nodeCount: m.nodes.size,
         flowCount: m.flows.size,
@@ -673,21 +849,29 @@ async function collectProcesses(doc: string, problems: string[]): Promise<Node[]
             "@id": makeIri(doc, "role", n.lane),
             "@type": `${FOLIO_NS}Role`,
             name: n.lane,
-            source: "bpmn-lane",
+            // NOT `source`: a Process's `source` is the file it was read from,
+            // and this is a provenance KIND. One term over both would assert
+            // that `bpmn-lane` is a path.
+            sourceKind: "bpmn-lane",
           });
         }
         nodes.push({
           "@id": makeIri(doc, "process", `${m.id}/node/${n.id}`),
           "@type": `${FOLIO_NS}ProcessNode`,
           name: n.name,
-          kind: n.kind,
+          nodeKind: n.kind,
           bpmnType: n.type,
           partOf: makeIri(doc, "process", m.id),
           // The edges nothing else surfaces — now genuine links.
+          //
+          // `laneName` and `implementsSkillNames` sat beside these two,
+          // repeating each target's name as a string. REMOVED as denormalised:
+          // the lane's Role node carries the lane name as its `name`, every
+          // named skill has a Skill node carrying its own, and neither link
+          // dangles (0 of 415 ProcessNode links, measured 2026-09-19). A name
+          // duplicated beside a link is a second answer that can go stale.
           performedBy: n.lane === undefined ? undefined : makeIri(doc, "role", n.lane),
-          laneName: n.lane,
           implementedBy: n.skills.map((k) => makeIri(doc, "skill", k)),
-          implementsSkillNames: n.skills,
           touchesWorkPlan: n.touchesWorkPlan,
           workPlanOp: n.workPlanOp,
           relaxable: n.relaxable,
@@ -745,9 +929,15 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
     install: t.install,
     invoke: t.invoke,
     io: t.io,
-    requires: t.requires,
+    // `requirements`, not `requires`: a Capability's `requires` names other
+    // CAPABILITIES and is emitted as `requiresCapability` links, while this is
+    // an environment descriptor (`{ runtime: ["go"], network: true }`) whose
+    // values are not capability ids. Two relations, two terms.
+    requirements: t.requires,
     satisfies: t.satisfies.map((k) => makeIri(doc, "skill", k)),
-    satisfiesSkillNames: t.satisfies,
+    // `satisfiesSkillNames` was here. REMOVED as denormalised: every
+    // `satisfies` link lands on a Skill node carrying that same name, and none
+    // of them dangles.
     // The artefacts this Tool is authoritative for, as the URLs they are
     // actually served at — `renderingPath`, not a composed string, so the
     // edge dereferences from the published document rather than looking as
@@ -857,7 +1047,9 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
         name: x.id,
         path: x.path,
         holdsGraph: kinds.map((k) => `${FOLIO_NS}graphKind/${k}`),
-        graphKinds: kinds,
+        // `graphKinds: kinds` was here. REMOVED as denormalised: `holdsGraph`
+        // lands on a GraphKind node whose `name` is the kind, and the export's
+        // own test already asserts every one of those links resolves.
         title: x.title,
         description: x.description,
       };
@@ -872,7 +1064,7 @@ function collectDeclaration(doc: string, problems: string[]): Node[] {
 const LINK_TERMS = [
   "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage",
   "providesCapability", "requiresCapability", "holdsGraph", "startNode",
-  "incoming", "outgoing", "from", "to", "satisfies",
+  "incoming", "outgoing", "from", "to", "satisfies", "hasCapability",
 ] as const;
 
 /**
@@ -1232,16 +1424,33 @@ if (import.meta.main) {
     console.warn("  Add `@graphNode schema` or `@graphNode none — <reason>` to the leading docblock.");
   }
 
+  // FATAL since bean `ovkk` drove the count to zero — see `undeclaredTerms`.
+  // Not reported-and-continued like `danglingLinks`, which are data defects
+  // this tool cannot fix; an undeclared term is a defect in this tool, and the
+  // decision it demands is one line away.
+  //
+  // Reported here but exited on BELOW, so a run that is also missing sources
+  // prints both rather than stopping at the first.
+  let undeclaredFatal = false;
   if (data.undeclaredTerms.length > 0) {
+    undeclaredFatal = true;
     const n = data.undeclaredTerms.reduce((a, t) => a + t.occurrences, 0);
-    console.warn(
+    console.error(
       `\n${data.undeclaredTerms.length} property name(s), ${n} occurrence(s), are NOT in the @context ` +
         `\u2014 a JSON-LD processor drops every one:`,
     );
     for (const t of data.undeclaredTerms.slice(0, 8)) {
-      console.warn(`  \u00b7 ${t.term.padEnd(22)} ${String(t.occurrences).padStart(4)}\u00d7  on ${t.onTypes.join(", ")}`);
+      console.error(`  \u2717 ${t.term.padEnd(22)} ${String(t.occurrences).padStart(4)}\u00d7  on ${t.onTypes.join(", ")}`);
     }
-    if (data.undeclaredTerms.length > 8) console.warn(`  \u00b7 \u2026 and ${data.undeclaredTerms.length - 8} more`);
+    if (data.undeclaredTerms.length > 8) console.error(`  \u2717 \u2026 and ${data.undeclaredTerms.length - 8} more`);
+    console.error(
+      "\nEach one needs a DECISION, not a line: does it deserve a predicate IRI,\n" +
+        "and is it a LINK (`{\"@type\": \"@id\"}`, value minted with `makeIri`) or a\n" +
+        "literal? A wrong coercion is worse than the gap -- a bare name under\n" +
+        "`@id` resolves against the document base and mints an IRI nobody chose.\n" +
+        "If a link already in the graph carries the same fact, REMOVE the property\n" +
+        "instead of declaring it. Add it to `buildContext()` when it stays.",
+    );
   }
 
   if (data.danglingLinks.length > 0) {
@@ -1255,4 +1464,6 @@ if (import.meta.main) {
     // Reported, and non-zero: a partial graph must not pass for a whole one.
     process.exit(1);
   }
+
+  if (undeclaredFatal) process.exit(1);
 }

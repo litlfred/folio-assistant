@@ -62,6 +62,45 @@ namespace IRI, so an undeclared key stays undeclared instead of silently
 minting an IRI nobody chose. The aliases keep the published JSON readable as
 ordinary records for someone who does not know JSON-LD.
 
+**5. Every property name in `@graph` is declared in `@context`, and the export
+FAILS if one is not.** A name that is neither declared nor an absolute IRI is
+not a property: a processor drops it. Measured before bean `ovkk`, 19 declared
+terms against 53 used — **34 names, 3583 occurrences**, every one of them
+visible when the file is read as plain JSON, which is why it went unnoticed for
+as long as the document had no consumer.
+
+## Declaring a term is a decision, not a line of context
+
+Four questions, in this order. The worked call for each term is in
+`buildContext()`, beside the term it justifies.
+
+1. **Does the fact belong in the graph at all?** Five of the thirty-four were
+   DENORMALISED copies of links already present — `implementsSkillNames`,
+   `satisfiesSkillNames`, `graphKinds`, `packagePaths`, `laneName`. Removed
+   rather than declared, once every one of those links was shown to resolve for
+   every node. A name beside the link that reaches it is a second answer that
+   can go stale; what a consumer must never have to do is recover a fact by
+   splitting an IRI.
+2. **Is it a LINK or a literal?** Wrong here is worse than undeclared —
+   confidently wrong rather than absent. Under `{"@type": "@id"}` the value
+   must already BE an IRI: a bare `git-push` resolves against the document base
+   to `<base>/git-push`, which nobody minted and nothing serves. So
+   `hasCapability` mints its values with `makeIri`, and a repo-relative path
+   (`instructionsPath`, `sourcePath`, `maintainsFrom`) stays a literal for the
+   reverse reason.
+3. **Does the referent exist in this graph?** `roleName`, `permissionName` and
+   `decisionRef` stayed names: the role registry, the permission vocabulary and
+   the DMN tables are not collected, so 69 coerced IRIs would have resolved to
+   nothing. Each becomes a link the day its referent becomes a node — residue
+   worth recording, not a reason to assert the edge early.
+4. **Is one name carrying two relations?** Then it is two terms: `source` was a
+   `.bpmn` path on a Process and `bpmn-lane` on a lane-derived Role, so it is
+   `sourcePath` and `sourceKind`. Heterogeneous SHAPE under one relation is a
+   different case — `install` is a command string from a Capability and a
+   dispatch object from a Tool, and stays one term typed `@json`, because
+   declaring a container term alone keeps the outer key and drops every inner
+   one.
+
 **No `canonicalUrl` and no `--base-url` → no absolute IRIs**, reported in
 `problems[]` rather than papered over. A fabricated absolute base is the same
 failure as a fabricated link.
