@@ -227,13 +227,13 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T10:10:10.359Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2bf3c6e0c5e960e58d4bf0e181b467b7e2c821b5",
-  "sourceCommitSha": "2bf3c6e0c5e960e58d4bf0e181b467b7e2c821b5",
-  "sourceCommitAt": "2026-09-19T12:08:50+02:00",
+  "generatedAt": "2026-09-19T10:24:41.824Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8bce2ae118b11d681cc64cfa5bd21902ccafb87e",
+  "sourceCommitSha": "8bce2ae118b11d681cc64cfa5bd21902ccafb87e",
+  "sourceCommitAt": "2026-09-19T12:23:13+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 152,
+    "Skill": 154,
     "Actor": 26,
     "Capability": 23,
     "Role": 64,
@@ -241,7 +241,7 @@
     "Process": 32,
     "SequenceFlow": 443,
     "ProcessNode": 414,
-    "Tool": 27,
+    "Tool": 28,
     "Schema": 40,
     "GraphKind": 15,
     "Directory": 10
@@ -1081,7 +1081,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 448,
+      "instructionLines": 463,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1201,7 +1201,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 121,
+      "instructionLines": 167,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true
@@ -1246,6 +1246,21 @@
       ],
       "instructionsPath": "skills/folio-core/decision-audit.md",
       "instructionLines": 85,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/opening-brief",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "opening-brief",
+      "title": "Opening brief — brief the topic before you touch anything",
+      "description": "Brief a bean or a topic BEFORE touching anything: what you are doing and why it is worth doing, what you already know and with what provenance, how you plan to do it and what would falsify the approach. Scales with irreversibility, not line count.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/opening-brief.md",
+      "instructionLines": 105,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1438,7 +1453,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/local"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 397,
+      "instructionLines": 198,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true
@@ -1511,7 +1526,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/serving-renderings.md",
-      "instructionLines": 118,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1586,6 +1601,21 @@
       ],
       "instructionsPath": "skills/folio-core/block-density.md",
       "instructionLines": 115,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/turn-reporting",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "turn-reporting",
+      "title": "Turn reporting — say which bean you are on, every turn",
+      "description": "Say which bean you are on, every turn — the opening and closing report formats, the rules that make a report worth reading (two sentences and a link per bean, every mention), and the STRICT rule that the \"next\" line is a question and must carry its own context.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/turn-reporting.md",
+      "instructionLines": 185,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3568,7 +3598,9 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/test-engineer",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ui-accessibility",
@@ -15887,6 +15919,57 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "serve-rendering",
+      "title": "Local rendering server",
+      "description": "Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run serve:rendering"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "directory",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Tree to serve; defaults to the built site when present.",
+            "required": false,
+            "arg": {
+              "flag": "--dir"
+            }
+          },
+          {
+            "name": "port",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Port",
+            "description": "0 binds a free port, which is what the tests use.",
+            "required": false,
+            "arg": {
+              "flag": "--port"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "description": "Where the tree is being served."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/serving-renderings"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/cat-harness-schema",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "cat-harness-schema",
@@ -17706,8 +17789,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "2bf3c6e0c5e960e58d4bf0e181b467b7e2c821b5",
+    "sha": "8bce2ae118b11d681cc64cfa5bd21902ccafb87e",
     "pr": "main",
-    "run": "35436602169"
+    "run": "35437259764"
   }
 }

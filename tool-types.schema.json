@@ -245,6 +245,13 @@
       "description": "Dots per inch for rendered formulae.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "Port": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535,
+      "description": "TCP port for a locally bound server; 0 asks the OS for a free one.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "DecisionFacts": {
       "type": "object",
       "additionalProperties": {
@@ -260,8 +267,8 @@
   },
   "staging": {
     "branch": "main",
-    "sha": "2bf3c6e0c5e960e58d4bf0e181b467b7e2c821b5",
+    "sha": "8bce2ae118b11d681cc64cfa5bd21902ccafb87e",
     "pr": "main",
-    "run": "35436602169"
+    "run": "35437259764"
   }
 }
