@@ -96,6 +96,65 @@ describe("kg export", () => {
     expect(ctx["@vocab"]).toBeUndefined();
   });
 
+  test("every property in the graph is declared — nothing is dropped on expansion", () => {
+    // Bean `ovkk`. A property name that is neither in the `@context` nor an
+    // absolute IRI is not a property at all: a JSON-LD processor DROPS it, and
+    // reading the file as plain JSON shows it, which is why 34 names and 3583
+    // occurrences survived unnoticed until the viewer became the first real
+    // consumer. Measured before the fix: 34 names on 8 of the 11 node types.
+    //
+    // The CLI exits non-zero on a non-empty list, so this is the same gate at
+    // a smaller unit. It fails with the OFFENDING NAMES rather than a count,
+    // because the work each one implies is a decision about that name.
+    expect(EXPORT.undeclaredTerms.map((t) => t.term)).toEqual([]);
+  });
+
+  test("no term is coerced to @id over values that are not IRIs", () => {
+    // The failure mode that is WORSE than an undeclared term, and the reason
+    // `ovkk` was modelling work rather than 34 lines of context. Under
+    // `{"@type": "@id"}` a bare name like `git-push` does not stay a name: it
+    // resolves against the document base and becomes `<base>/git-push`, an IRI
+    // nobody minted and nothing serves. Confidently wrong beats silently
+    // absent only in the sense that it is harder to notice.
+    //
+    // So: every value of every `@id`-coerced term must already BE an IRI.
+    // `hasCapability` is the live instance — actor registry files carry bare
+    // capability names, and the collector mints them.
+    const ctx = EXPORT["@context"] as Record<string, { "@type"?: string } | string>;
+    const coerced = Object.entries(ctx)
+      .filter(([, v]) => typeof v === "object" && v !== null && (v as { "@type"?: string })["@type"] === "@id")
+      .map(([k]) => k);
+    expect(coerced.length).toBeGreaterThan(10); // Guard the guard.
+    const offenders: string[] = [];
+    for (const n of EXPORT["@graph"]) {
+      for (const term of coerced) {
+        for (const v of ([] as unknown[]).concat((n[term] as unknown) ?? [])) {
+          if (typeof v !== "string" || /^[a-z][a-z0-9+.-]*:/i.test(v)) continue;
+          offenders.push(`${String(n["@id"])} ${term} → ${v}`);
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  test("a name is not carried beside the link that already reaches it", () => {
+    // The other half of `ovkk`: five properties were DENORMALISED copies of
+    // link data — `implementsSkillNames`, `satisfiesSkillNames`, `graphKinds`,
+    // `packagePaths`, `laneName` — and the right treatment of a redundant copy
+    // is removal, not a predicate IRI for a second answer that can go stale.
+    // Each was removed only after its link form was shown to resolve for every
+    // node; this pins that they do not come back.
+    const retired = ["implementsSkillNames", "satisfiesSkillNames", "graphKinds", "packagePaths", "laneName"];
+    const seen = new Set(EXPORT["@graph"].flatMap((n) => Object.keys(n)));
+    expect(retired.filter((k) => seen.has(k))).toEqual([]);
+    // And the facts they carried are still reachable, by link: a ProcessNode's
+    // lane is its Role node's label, and its skills are Skill nodes.
+    const byId = new Map(EXPORT["@graph"].map((n) => [n["@id"] as string, n]));
+    const withLane = typed("ProcessNode").filter((n) => n.performedBy !== undefined);
+    expect(withLane.length).toBeGreaterThan(100);
+    for (const n of withLane) expect(byId.get(n.performedBy as string)?.name).toBeTruthy();
+  });
+
   test("internal links resolve, bar the known data defects", () => {
     // 4 on this branch, every one a manifest naming something nobody wrote
     // (bean `nup0`) — data, not export failures, so they are reported in the

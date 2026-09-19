@@ -14,7 +14,7 @@
  * @module tests/kg-viewer.e2e
  */
 import { test, expect } from "@playwright/test";
-import { readFileSync, existsSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 
 // `_kg/` is gitignored — it is build output, not a fixture to commit. Generate
@@ -109,16 +109,61 @@ test.describe("kg viewer", () => {
     await expect(page.locator(".detail th", { hasText: /referenced by/ })).toHaveCount(1);
   });
 
-  test("properties missing from the @context are marked, not quietly shown", async ({ page }) => {
-    // The viewer's job includes reporting what the graph is missing — 34
-    // property names a JSON-LD processor drops. Displaying them unmarked would
-    // hide exactly what the first real consumer is for.
-    expect(KG.undeclaredTerms.length).toBeGreaterThan(0);
+  test("the published graph has no property a JSON-LD processor would drop", async ({ page }) => {
+    // This assertion USED to read `toBeGreaterThan(0)`: 34 property names and
+    // 3583 occurrences were undeclared, and the viewer's job was to make that
+    // impossible to miss. Bean `ovkk` closed the backlog, so the same fact is
+    // now asserted the other way round — and `kg-export` exits non-zero if a
+    // new one appears, which is what stops this quietly inverting again.
+    expect(KG.undeclaredTerms).toEqual([]);
     await page.goto(PAGE);
-    await page.locator(".facet", { hasText: /^ProcessNode\d+$/ }).click();
+    // Both the types that carried the worst of it. A mark HERE would mean the
+    // page and the document disagree about what the context declares.
+    for (const type of ["ProcessNode", "Skill"]) {
+      await page.locator(".facet", { hasText: new RegExp(`^${type}\\d+$`) }).click();
+      await page.locator("#list li button").first().click();
+      await expect(page.locator(".detail th.undeclared")).toHaveCount(0);
+      await expect(page.locator(".detail .note")).toHaveCount(0);
+    }
+  });
+
+  test("a property missing from the @context IS marked, when there is one", async ({ page }) => {
+    // The marking path has no real artefact to run against any more, and the
+    // wrong conclusion to draw from that is that it need not be tested: it is
+    // the guard that makes the next undeclared term visible rather than
+    // silently dropped. So it runs against a SYNTHETIC document — and against
+    // the REAL page bytes, copied rather than re-templated, so this cannot
+    // pass over a viewer that ships differently.
+    //
+    // The copy sits one directory deeper, which is also why it works at all:
+    // the page fetches `../<stub>.jsonld` RELATIVE to itself, the property the
+    // deployed layout depends on. A page that resolved its document any other
+    // way would read the real graph from here and fail.
+    const dir = "_kg/fixtures";
+    mkdirSync(`${dir}/folio-assistant`, { recursive: true });
+    copyFileSync("_kg/folio-assistant/index.html", `${dir}/folio-assistant/index.html`);
+    const NS = "https://litlfred.github.io/folio-assistant/ns#";
+    writeFileSync(
+      `${dir}/folio-assistant.jsonld`,
+      JSON.stringify({
+        "@context": { "@version": 1.1, id: "@id", type: "@type", name: "http://www.w3.org/2000/01/rdf-schema#label" },
+        "@id": "https://example.invalid/fixture.jsonld",
+        counts: { Tool: 1 },
+        undeclaredTerms: [{ term: "undeclaredProbe", onTypes: ["Tool"], occurrences: 1 }],
+        problems: [],
+        danglingLinks: [],
+        "@graph": [{ "@id": "https://example.invalid/fixture.jsonld#tool/probe", "@type": `${NS}Tool`, name: "probe", undeclaredProbe: "dropped on expansion" }],
+      }),
+    );
+
+    await page.goto(`/${dir}/folio-assistant/index.html`);
+    await expect(page.locator("#meta")).toContainText("1 nodes");
     await page.locator("#list li button").first().click();
     await expect(page.locator(".detail .note")).toContainText("not in the");
     await expect(page.locator(".detail th.undeclared").first()).toBeVisible();
+    // The DECLARED property beside it is not marked — otherwise the mark says
+    // nothing, and a page that flagged everything would pass the line above.
+    await expect(page.locator(".detail th", { hasText: /^name$/ })).not.toHaveClass(/undeclared/);
   });
 
   test("a one-hop neighbourhood is drawn, and is not the whole graph", async ({ page }) => {
