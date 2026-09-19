@@ -13,6 +13,9 @@
  * @module scripts/known-skills
  */
 import { existsSync, readdirSync } from "node:fs";
+import { join as joinPath } from "node:path";
+
+import { resolveDirectories } from "../schemas/cat-harness.js";
 import { join } from "node:path";
 
 /**
@@ -35,6 +38,44 @@ import { join } from "node:path";
  * and `session-start` appear as reachable skill names with nothing behind them.
  */
 export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hooks", "requirements"]);
+
+/** Does this directory hold at least one `.md` directly? */
+function holdsMarkdown(abs: string): boolean {
+  if (!existsSync(abs)) return false;
+  return readdirSync(abs).some((f) => f.endsWith(".md"));
+}
+
+/**
+ * The instance's declared `cat-harness` directories, or nothing it cannot read.
+ *
+ * A declaration that will not parse is the instance's problem to fix, not this
+ * function's to guess around — but skill discovery must not crash a tool that
+ * had nothing to do with the declaration, so an unreadable one yields an empty
+ * list and the explicit extras below still resolve.
+ */
+function kgDirectories(root: string): Array<{ path: string; absPath: string }> {
+  try {
+    return resolveDirectories([{ name: "(local)", root, own: true }])
+      // EXACTLY `cat-harness`, not merely including it.
+      //
+      // `schemas/` declares `["schemas", "cat-harness"]` — a schema IS a
+      // knowledge-graph node, which is why it carries the kind at all — but
+      // its `.md` files are READMEs and its nodes are `.ts`. Including it
+      // added `schemas/README.md` and `schemas/block-qa-schema/README.md` to
+      // the skill set: 150 where the corpus has 149.
+      //
+      // Requiring YAML front matter instead would have been the principled
+      // rule and is measurably wrong here: only 117 of 147 skill bodies carry
+      // any, so it would have dropped 30 real skills. A directory that holds
+      // one kind can be scanned for it; one that holds several has to say
+      // which file is which, and for `schemas/` that answer is `@graphNode`
+      // on the `.ts`, not a guess about the `.md`.
+      .filter((d) => d.graphs.length === 1 && d.graphs[0] === "cat-harness")
+      .filter((d) => existsSync(d.absPath));
+  } catch {
+    return [];
+  }
+}
 
 /**
  * Directories holding one `<skill>.md` per skill, DISCOVERED rather than listed.
@@ -70,12 +111,28 @@ export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hoo
  */
 export function skillMdDirs(root: string): string[][] {
   const dirs: string[][] = [];
-  const skillsRoot = join(root, "skills");
-  if (existsSync(skillsRoot)) {
-    for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-      if (!d.isDirectory()) continue;
-      const inner = join(skillsRoot, d.name);
-      if (readdirSync(inner).some((f) => f.endsWith(".md"))) dirs.push(["skills", d.name]);
+
+  // Every directory the instance DECLARES as holding a `cat-harness` graph —
+  // not the literal `skills/`.
+  //
+  // This is what lets a topical directory (`bootstrap/`, `crdm/`, …) cost a
+  // declaration line and no code change. The literal was the last thing
+  // standing between the layout and the declaration that is supposed to
+  // describe it: `cat-harness.json` said where the knowledge graph lives and
+  // this function did not read it.
+  //
+  // `resolveDirectories` supplies the defaults too, so an instance that
+  // follows the convention still resolves `skills/` without declaring it.
+  for (const d of kgDirectories(root)) {
+    // The directory itself, when it holds skills directly — the shape a
+    // topical directory has (`bootstrap/getting-started.md`).
+    if (holdsMarkdown(d.absPath)) dirs.push([d.path.replace(/\/+$/, "")]);
+    // ...and its immediate subdirectories, which is how `skills/` is laid out
+    // today: one package per subdirectory.
+    for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
+      if (!e.isDirectory()) continue;
+      const inner = join(d.absPath, e.name);
+      if (holdsMarkdown(inner)) dirs.push([d.path.replace(/\/+$/, ""), e.name]);
     }
   }
   // Not under `skills/`, so not reachable by the scan above.
@@ -153,4 +210,59 @@ export function knownSkills(root: string): Set<string> {
   }
 
   return names;
+}
+
+/**
+ * Where this instance's BPMN and DMN live, read from the declaration.
+ *
+ * ## The literal this replaces
+ *
+ * Nine production sites hardcoded `skills/workflows` — `src/tools/workflow.ts`,
+ * `src/impact/stakeholder-map.ts`, `src/workflow/corpus-gate.ts`,
+ * `scripts/kg-audit.ts`, `scripts/translate-bpmn.ts`, `scripts/render-bpmn.ts`,
+ * `scripts/xml-comment-check.ts` among them. Nine copies of one fact is the
+ * same defect `known-skills.ts` was extracted to fix for skills, one directory
+ * along, and it is what would have made a topical split a nine-file edit
+ * instead of a declaration.
+ *
+ * ## The shape
+ *
+ * A `cat-harness` directory's `workflows/` subdirectory, plus the directory
+ * itself when it holds diagrams directly. That covers today's
+ * `skills/workflows/` and a topical `bootstrap/workflows/` without either
+ * being written down.
+ *
+ * Returns ABSOLUTE paths, unlike {@link skillMdDirs}, because every caller
+ * reads files from them rather than composing repo-relative ids.
+ */
+export function workflowDirs(root: string): string[] {
+  const out: string[] = [];
+  for (const d of kgDirectories(root)) {
+    const wf = joinPath(d.absPath, "workflows");
+    if (existsSync(wf)) out.push(wf);
+    else if (readdirSync(d.absPath).some((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))) {
+      out.push(d.absPath);
+    }
+  }
+  return out;
+}
+
+/**
+ * Every `.bpmn` and `.dmn` this instance declares, as absolute paths.
+ *
+ * One call for the common case, so a caller that only wants the files does not
+ * have to re-derive "and their `decisions/` subdirectory too".
+ */
+export function workflowFiles(root: string): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    if (!existsSync(dir)) return;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = joinPath(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith(".bpmn") || e.name.endsWith(".dmn")) out.push(p);
+    }
+  };
+  for (const d of workflowDirs(root)) walk(d);
+  return out.sort();
 }
