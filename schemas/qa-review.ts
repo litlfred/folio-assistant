@@ -67,6 +67,7 @@
  * everywhere in this repo.
  *
  * @module schemas/qa-review
+ * @graphNode schema
  */
 
 import { z } from "zod";

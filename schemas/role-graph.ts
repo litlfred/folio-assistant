@@ -90,6 +90,7 @@
  * ignored.
  *
  * @module schemas/role-graph
+ * @graphNode schema
  */
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";

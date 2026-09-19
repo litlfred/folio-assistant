@@ -69,6 +69,7 @@
  * `workflow-state`.
  *
  * @module schemas/bean-graph
+ * @graphNode schema
  */
 
 import { z } from "zod";

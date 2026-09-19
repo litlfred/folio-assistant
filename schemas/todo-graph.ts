@@ -44,6 +44,7 @@
  *   every consumer guessing.
  * - **Unknown node kind** → rejected, never accepted and ignored. A node whose
  *   kind nothing understands is a store nothing will read.
+ * @graphNode schema
  */
 
 import { z } from "zod";

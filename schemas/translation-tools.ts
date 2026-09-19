@@ -31,6 +31,7 @@
  * | ig (WHO L3) | Markdown + FSH + FHIR JSON | inject_translations.py FHIR section |
  *
  * @module schemas/translation-tools
+ * @graphNode schema
  */
 
 import { z } from "zod";

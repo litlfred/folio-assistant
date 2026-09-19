@@ -208,6 +208,13 @@ const RULES: Rule[] = [
       // have anything to do — arrived from `main` and fell through every
       // prefix, which the tool reported as `unassigned` rather than guessing.
       "scripts/harness-dirs.ts",
+      // The `@graphNode` declarations under `schemas/` and the gate over them.
+      // Harness because the `schemas` GRAPH KIND is the harness's vocabulary —
+      // `cat-harness.json` declares it — even though the directory holds
+      // content-model schemas too. These read the declarations; they define no
+      // part of the content model.
+      "scripts/schema-nodes.ts",
+      "scripts/check-schema-nodes.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",

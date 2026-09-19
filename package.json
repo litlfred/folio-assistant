@@ -88,7 +88,8 @@
     "translation:block-qa": "bun run content/pipeline/translation-block-qa.ts",
     "translation:block-qa:check": "bun run content/pipeline/translation-block-qa.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "kg:schema:ids": "bun run scripts/harness-schema-export.ts --write-ids"
+    "kg:schema:ids": "bun run scripts/harness-schema-export.ts --write-ids",
+    "check:schema-nodes": "bun run scripts/check-schema-nodes.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

@@ -25,6 +25,7 @@
  * `content/pipeline/script-sidecars/`).
  *
  * @module schemas/script-qa
+ * @graphNode schema
  */
 
 import type {
