@@ -109,6 +109,24 @@
           "type": "string",
           "format": "uri"
         },
+        "publication": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "enum": [
+                "github-pages",
+                "local-server",
+                "jurisdiction-endpoint",
+                "none"
+              ]
+            }
+          },
+          "required": [
+            "host"
+          ],
+          "additionalProperties": false
+        },
         "directories": {
           "type": "array",
           "items": {
@@ -162,8 +180,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "c6c9f1d86e60722f0ad0dfca112c09d7db9756ca",
+    "sha": "112192f27e1f81cb6980e875e19e221d04212d73",
     "pr": "main",
-    "run": "35443331219"
+    "run": "35444140818"
   }
 }

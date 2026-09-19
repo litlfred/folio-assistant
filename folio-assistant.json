@@ -65,6 +65,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfies",
       "@type": "@id"
     },
+    "hasSkill": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasSkill",
+      "@type": "@id"
+    },
+    "bindsLane": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsLane",
+      "@type": "@id"
+    },
     "maintains": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#maintains",
       "@type": "@id"
@@ -122,6 +130,14 @@
     "localId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#localId",
     "actorKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKinds",
+    "actedUpon": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "judgementOnly": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#judgementOnly",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
     "bpmnType": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bpmnType",
     "nodeKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeKind",
     "enforcement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#enforcement",
@@ -227,22 +243,22 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T12:37:41.668Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c6c9f1d86e60722f0ad0dfca112c09d7db9756ca",
-  "sourceCommitSha": "c6c9f1d86e60722f0ad0dfca112c09d7db9756ca",
-  "sourceCommitAt": "2026-09-19T14:36:12+02:00",
+  "generatedAt": "2026-09-19T12:54:20.368Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/112192f27e1f81cb6980e875e19e221d04212d73",
+  "sourceCommitSha": "112192f27e1f81cb6980e875e19e221d04212d73",
+  "sourceCommitAt": "2026-09-19T14:53:01+02:00",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 164,
+    "Skill": 166,
     "Actor": 26,
     "Capability": 23,
-    "Role": 64,
+    "Role": 98,
     "SkillPackage": 8,
-    "Process": 32,
-    "SequenceFlow": 443,
-    "ProcessNode": 414,
+    "Process": 33,
+    "SequenceFlow": 459,
+    "ProcessNode": 429,
     "Tool": 28,
-    "Schema": 43,
+    "Schema": 45,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -909,6 +925,20 @@
       "ambiguous": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/where-a-proposal-goes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "where-a-proposal-goes",
+      "title": "Where a proposal goes — the issue, not the documentation",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/where-a-proposal-goes.md",
+      "instructionLines": 80,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-detect",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "crdm-detect",
@@ -1111,7 +1141,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 532,
+      "instructionLines": 533,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1497,7 +1527,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-export.md",
-      "instructionLines": 280,
+      "instructionLines": 336,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1637,6 +1667,20 @@
       "ambiguous": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "activity-log",
+      "title": "Activity log — what an agent did, kept out of the graph",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/activity-log.md",
+      "instructionLines": 230,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/editor",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "editor",
@@ -1763,7 +1807,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 164,
+      "instructionLines": 176,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3681,6 +3725,7 @@
       "path": "skills/folio-core",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/agent-memory",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-coordination",
@@ -3770,7 +3815,8 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-authoring-guidance",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-overlay-review",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/watch"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/where-a-proposal-goes"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/git-push",
@@ -4424,6 +4470,24 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Folio-Assistant%20Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Folio-Assistant Agent",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20Committee",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Review Committee",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "CI/CD Pipeline",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Author",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Author requests content change",
@@ -4552,12 +4616,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/f7"
       ],
       "outgoing": []
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Folio-Assistant%20Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Folio-Assistant Agent",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Agent",
@@ -4736,12 +4794,6 @@
       "outgoing": []
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20Committee",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Review Committee",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Reviewer",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "PR submitted for review",
@@ -4876,12 +4928,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/r7"
       ],
       "outgoing": []
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "CI/CD Pipeline",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Pipeline",
@@ -5203,6 +5249,18 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Reviewer / SME",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Publication manager",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/Start_Adopt",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Candidate version identified",
@@ -5322,12 +5380,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20/%20SME",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Reviewer / SME",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/R_Review",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Review the MVP against what we bind to",
@@ -5365,12 +5417,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_8",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/flow/SF_UA_9"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Publication manager",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamAdoption/node/PM_Decide",
@@ -5511,6 +5557,12 @@
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "BA / Feature Requestor",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Stakeholders",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Stakeholders",
@@ -5549,12 +5601,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_2"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "BA / Feature Requestor",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Close/node/BA_Confirm",
@@ -5734,6 +5780,30 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20—%20beans%20(shared%20by%20humans%20and%20agents)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Work plan — beans (shared by humans and agents)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent%20(system)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Authoring agent (system)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Lean%20toolchain%20(lean-mcp)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Lean toolchain (lean-mcp)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline%20—%20validate%20·%20render%20·%20publish",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Build pipeline — validate · render · publish",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/node/StartEvent_NewPaper",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "New paper",
@@ -5770,12 +5840,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20—%20beans%20(shared%20by%20humans%20and%20agents)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Work plan — beans (shared by humans and agents)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/node/Task_SeedPlan",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "2 · Seed the work plan",
@@ -5795,12 +5859,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/flow/A03"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent%20(system)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Authoring agent (system)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/node/Task_Scaffold",
@@ -5844,12 +5902,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Lean%20toolchain%20(lean-mcp)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Lean toolchain (lean-mcp)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/node/Task_Formalize",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "5 · Formalise in Lean",
@@ -5890,12 +5942,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/flow/A07",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/flow/A08"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline%20—%20validate%20·%20render%20·%20publish",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Build pipeline — validate · render · publish",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_PaperAuthoring/node/Task_Validate",
@@ -6169,9 +6215,33 @@
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Publication/node/EndEvent_Published"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Editors%20+%20authoring%20agents",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Editors + authoring agents",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Corpus%20+%20build%20pipeline%20(system)",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Corpus + build pipeline (system)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20team%20(content%20·%20QC%20·%20technical%20officer)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Review team (content · QC · technical officer)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Clinical%20/%20scientific%20SMEs",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Clinical / scientific SMEs",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Programme%20manager%20(release%20authority)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Programme manager (release authority)",
       "sourceKind": "bpmn-lane"
     },
     {
@@ -6292,12 +6362,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Editors%20+%20authoring%20agents",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Editors + authoring agents",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Publication/node/CallActivity_Editing",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Editing and HCI validation",
@@ -6359,12 +6423,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20team%20(content%20·%20QC%20·%20technical%20officer)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Review team (content · QC · technical officer)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Publication/node/Task_ReviewDraft",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Review the draft publication",
@@ -6383,12 +6441,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Publication/flow/G12"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Clinical%20/%20scientific%20SMEs",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Clinical / scientific SMEs",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Publication/node/Task_SmeSignoff",
@@ -6469,12 +6521,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Publication/flow/G17"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Programme%20manager%20(release%20authority)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Programme manager (release authority)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Publication/node/Task_AuthorizeRelease",
@@ -6889,6 +6935,12 @@
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BuildL1Kg/node/EndEvent_KgBuilt"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Corpus — L1 source knowledge graph",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BuildL1Kg/node/StartEvent_Derived2",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Derived content ready",
@@ -6983,12 +7035,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BuildL1Kg/flow/Flow_k5"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Corpus — L1 source knowledge graph",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BuildL1Kg/node/Task_Link",
@@ -7212,6 +7258,24 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20Translator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human Translator",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Subject-Matter%20Expert%20/%20Reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Subject-Matter Expert / Reviewer",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Automated%20Pipeline",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Automated Pipeline",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_HumanTranslation/node/Start_TranslationNeeded",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Translation needed for content node(s)",
@@ -7327,12 +7391,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20Translator",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Human Translator",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_HumanTranslation/node/Task_ReceiveAssignment",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Receive assignment and materials",
@@ -7397,12 +7455,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_HumanTranslation/flow/F08"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Subject-Matter%20Expert%20/%20Reviewer",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Subject-Matter Expert / Reviewer",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_HumanTranslation/node/Task_SMEReview",
@@ -7501,12 +7553,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_HumanTranslation/flow/F23"
       ],
       "outgoing": []
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Automated%20Pipeline",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Automated Pipeline",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_HumanTranslation/node/Task_ExtractPOT",
@@ -8193,6 +8239,24 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Onboarding%20agent%20(system)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Onboarding agent (system)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20(beans)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Work plan (beans)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publish%20—%20GitHub%20Pages",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Publish — GitHub Pages",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GettingStarted/node/StartEvent_AskToStart",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "\"create a folio\"",
@@ -8207,12 +8271,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GettingStarted/flow/Flow_1"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Onboarding%20agent%20(system)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Onboarding agent (system)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GettingStarted/node/Task_DetectModality",
@@ -8400,12 +8458,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20(beans)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Work plan (beans)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GettingStarted/node/Task_SeedPlan",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Seed the work plan",
@@ -8425,12 +8477,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GettingStarted/flow/Flow_pages"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publish%20—%20GitHub%20Pages",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Publish — GitHub Pages",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GettingStarted/node/Task_PagesBootstrap",
@@ -8746,6 +8792,443 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Agent activity log",
+      "enforcement": "advisory",
+      "sourcePath": "skills/workflows/activity-log.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Task",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Sweep",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Empty"
+      ],
+      "nodeCount": 15,
+      "flowCount": 16
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Task",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogStart"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogStart",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_DoWork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_DoWork",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogMessage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_3b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "more work",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogMessage",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_DoWork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "task complete",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_DoWork",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogEnd"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogEnd",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Gateway_Capture"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_On",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "on",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Gateway_Capture",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_PersistLog"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_OffOrUnknown",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "off or unknown",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Gateway_Capture",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_ReportCaptureState"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_PersistLog",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/End_Task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_ReportCaptureState",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/End_Task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Empty",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Gateway_EmptyScope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E_One",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "one",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Gateway_EmptyScope",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_EmptyOne"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E_All",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "all / periodic",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Gateway_EmptyScope",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_EmptyAll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_EmptyOne",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/End_Emptied"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_EmptyAll",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/End_Emptied"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_S1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Sweep",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_EmptyAll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Agent (this session)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Activity%20log",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Activity log",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Log operator (human)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Scheduled%20log%20sweep",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Scheduled log sweep",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Task",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A task begins",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogStart",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Log task-start",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_DoWork",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Do the work",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_2",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_3b"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_3",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogMessage",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Log a message or an error",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_3b"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_LogEnd",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Log task-end",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Gateway_Capture",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Capture enabled?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_On",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_OffOrUnknown"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_PersistLog",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Persist the log to the data store",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_On"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_6"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_ReportCaptureState",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Report the capture state",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_OffOrUnknown"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_7"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/End_Task",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Task logged",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_6",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_7"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Sweep",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "The periodic sweep fires",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Scheduled%20log%20sweep",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_S1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Start_Empty",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A person asks to empty the log",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/Gateway_EmptyScope",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "One entry or all?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E_One",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E_All"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_EmptyOne",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Discard one entry by id",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E_One"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/A_EmptyAll",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Discard all entries, or a whole session",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E_All",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_S1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E3"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/node/End_Emptied",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Log emptied",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E2",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActivityLog/flow/F_E3"
+      ],
+      "outgoing": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "L2 DAK authoring",
@@ -8913,6 +9396,24 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Business analyst",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Terminologist",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Terminologist",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Clinical%20SME",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Clinical SME",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "WHO guideline / recommendations",
@@ -8968,12 +9469,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak/flow/B03"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Business analyst",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
@@ -9118,12 +9613,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Terminologist",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Terminologist",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak/node/Task_Terminology",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Terminology bindings",
@@ -9165,12 +9654,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak/flow/B17"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Clinical%20SME",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Clinical SME",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
@@ -9379,9 +9862,9 @@
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BeanLifecycle/node/End_Recorded"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Sibling%20session%20or%20human%20(not%20yours%20to%20close)",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Agent (this session)",
+      "name": "Sibling session or human (not yours to close)",
       "sourceKind": "bpmn-lane"
     },
     {
@@ -9477,12 +9960,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BeanLifecycle/flow/BF_5",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BeanLifecycle/flow/BF_7"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Sibling%20session%20or%20human%20(not%20yours%20to%20close)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Sibling session or human (not yours to close)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BeanLifecycle/node/Task_LeaveAlone",
@@ -9800,6 +10277,18 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20/%20platform%20(automated)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Agent / platform (automated)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20reviewer%20/%20adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human reviewer / adjudicator",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Translation/node/Start_ContentAuthored",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Content authored (source locale)",
@@ -9814,12 +10303,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Translation/flow/Flow_Start"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20/%20platform%20(automated)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Agent / platform (automated)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Translation/node/Task_PotExtract",
@@ -9920,12 +10403,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Translation/flow/Flow_DriftYes",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Translation/flow/Flow_DriftNo"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20reviewer%20/%20adjudicator",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Human reviewer / adjudicator",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Translation/node/Task_Adjudicate",
@@ -11342,6 +11819,30 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/HCI%20validation%20pipeline%20(system)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "HCI validation pipeline (system)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Mechanical%20validation%20(system)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Mechanical validation (system)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Non-mechanical%20validation%20(review%20agent%20or%20SME)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Non-mechanical validation (review agent or SME)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Corpus%20(versioned%20store)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Corpus (versioned store)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/StartEvent_EditRequested",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Edit requested",
@@ -11454,12 +11955,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/HCI%20validation%20pipeline%20(system)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "HCI validation pipeline (system)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/Gateway_ValidationFork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Run HCI validation",
@@ -11479,12 +11974,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/flow/Flow_08",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/flow/Flow_09"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Mechanical%20validation%20(system)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Mechanical validation (system)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/Task_SchemaValidate",
@@ -11545,12 +12034,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/flow/Flow_16"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Non-mechanical%20validation%20(review%20agent%20or%20SME)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Non-mechanical validation (review agent or SME)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/Gateway_ReviewerKind",
@@ -11793,12 +12276,6 @@
       "outgoing": []
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Corpus%20(versioned%20store)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Corpus (versioned store)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/Task_Commit",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Commit into the corpus",
@@ -11967,6 +12444,18 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline%20—%20SUSHI%20·%20validator%20·%20IG%20Publisher",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Build pipeline — SUSHI · validator · IG Publisher",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/QC%20reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "QC reviewer",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L3Fhir/node/StartEvent_L2Ready",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "L2 DAK ready",
@@ -12023,12 +12512,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L3Fhir/flow/C03"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline%20—%20SUSHI%20·%20validator%20·%20IG%20Publisher",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Build pipeline — SUSHI · validator · IG Publisher",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L3Fhir/node/Task_Sushi",
@@ -12088,12 +12571,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L3Fhir/flow/C06",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L3Fhir/flow/C07"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/QC%20reviewer",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "QC reviewer",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L3Fhir/node/Task_QcGates",
@@ -12368,6 +12845,24 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Evidence%20agent%20(system)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Evidence agent (system)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Trusted%20registries%20and%20observatories%20(external)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Trusted registries and observatories (external)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20—%20beans%20(shared)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Work plan — beans (shared)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval/node/StartEvent_Recommendation",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "A recommendation is in play",
@@ -12422,12 +12917,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval/flow/Flow_03"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Evidence%20agent%20(system)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Evidence agent (system)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval/node/Gateway_RetrievalFork",
@@ -12534,12 +13023,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Trusted%20registries%20and%20observatories%20(external)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Trusted registries and observatories (external)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval/node/Task_VerifyAuthority",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Verify authority against the observatory / registry API",
@@ -12575,12 +13058,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval/flow/Flow_12",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval/flow/Flow_13"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20—%20beans%20(shared)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Work plan — beans (shared)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_EvidenceRetrieval/node/Task_RecordUnverified",
@@ -13126,6 +13603,18 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Validation and QA (mechanical + agents)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20team%20and%20SMEs",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Review team and SMEs",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Lifecycle/node/StartEvent_Initiative",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Folio initiative",
@@ -13206,12 +13695,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Validation and QA (mechanical + agents)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Lifecycle/node/Task_Test",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Integration test and QA sweep",
@@ -13251,12 +13734,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Lifecycle/flow/H06"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20team%20and%20SMEs",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Review team and SMEs",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Lifecycle/node/Task_Feedback",
@@ -13419,6 +13896,12 @@
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L1Gate/node/EndEvent_Verdict"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20(SME%20or%20editor)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Reviewer (SME or editor)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L1Gate/node/StartEvent_KgBuilt",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "L1 graph built",
@@ -13492,12 +13975,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L1Gate/flow/Flow_g4",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L1Gate/flow/Flow_g6"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20(SME%20or%20editor)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Reviewer (SME or editor)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L1Gate/node/Task_FlagDrift",
@@ -14083,6 +14560,12 @@
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_DocumentAuthoring/node/EndEvent_Published"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20/%20subject-matter%20expert",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Reviewer / subject-matter expert",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_DocumentAuthoring/node/StartEvent_NewDocument",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "New document",
@@ -14260,12 +14743,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_DocumentAuthoring/flow/D10"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20/%20subject-matter%20expert",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Reviewer / subject-matter expert",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_DocumentAuthoring/node/Task_Review",
@@ -15291,6 +15768,30 @@
       "sourceKind": "bpmn-lane"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Incremental%20build%20(system)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Incremental build (system)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publisher%20+%20validator%20services%20(JVM)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Publisher + validator services (JVM)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/PR%20reviewer%20/%20QC%20reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "PR reviewer / QC reviewer",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Publication manager — deploy and seed",
+      "sourceKind": "bpmn-lane"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/node/StartEvent_SourceChanged",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Source changed",
@@ -15305,12 +15806,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/flow/F01"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Incremental%20build%20(system)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Incremental build (system)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/node/Task_Restore",
@@ -15350,12 +15845,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/flow/F03",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/flow/F04"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publisher%20+%20validator%20services%20(JVM)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Publisher + validator services (JVM)",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/node/Task_FullBuild",
@@ -15398,12 +15887,6 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/flow/F05"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/PR%20reviewer%20/%20QC%20reviewer",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "PR reviewer / QC reviewer",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/node/Task_ConeReport",
@@ -15727,12 +16210,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/flow/F21"
       ],
       "outgoing": []
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Publication manager — deploy and seed",
-      "sourceKind": "bpmn-lane"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IgIncremental/node/Gateway_Path",
@@ -17545,6 +18022,13 @@
       "module": "schemas/formalization-types.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/front-matter",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "front-matter",
+      "title": "The one YAML front-matter reader for this repository's self-declaring files.",
+      "module": "schemas/front-matter.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/harness-config",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "harness-config",
@@ -17585,6 +18069,13 @@
       "name": "lean-packages",
       "title": "The `lean.ref` grammar and the package registry it resolves against.",
       "module": "schemas/lean-packages.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/log-entry",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "log-entry",
+      "title": "The agent activity log — what an agent did, when, and in which process.",
+      "module": "schemas/log-entry.ts"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/memory",
@@ -17875,6 +18366,647 @@
       "summary": "Authored content, rendered to a website by the just-the-docs pipeline."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/user",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "user",
+      "title": "User",
+      "description": "The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/dispatch-agent",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/repo-conversion"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/User%20(person)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Contributor%20(human%20or%20agent)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/author",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "author",
+      "title": "Author",
+      "description": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-plan",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-author",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-authoring-guidance"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Author%20(person)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Author%20(source%20content)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Author%20/%20guideline%20developer%20(person)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Content%20Author",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Editor%20/%20author%20(person)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/editor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "editor",
+      "title": "Editor",
+      "description": "Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-authoring-guidance"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Editors%20+%20authoring%20agents"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "reviewer",
+      "title": "Reviewer / SME",
+      "description": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-feedback",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/semantic-review-scoping",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20/%20SME",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20/%20subject-matter%20expert",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Reviewer%20(SME%20or%20editor)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20team%20and%20SMEs",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20team%20(content%20·%20QC%20·%20technical%20officer)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Review%20Committee",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Subject-Matter%20Expert%20/%20Reviewer",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Non-mechanical%20validation%20(review%20agent%20or%20SME)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/narrative-reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "narrative-reviewer",
+      "title": "Narrative reviewer",
+      "description": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-editorial-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/uses-editorial-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-feedback",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-overlay-review"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Narrative%20reviewer"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/code-reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "code-reviewer",
+      "title": "Code reviewer",
+      "description": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/skills-and-tools",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/test-engineer"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Code%20reviewer"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/qc-reviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "qc-reviewer",
+      "title": "QC reviewer",
+      "description": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/quality-control",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-publish"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/QC%20reviewer",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/PR%20reviewer%20/%20QC%20reviewer"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/clinical-sme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "clinical-sme",
+      "title": "Clinical / scientific SME",
+      "description": "Reviewer whose judgement is about the subject matter rather than the artefact.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Clinical%20SME",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Clinical%20/%20scientific%20SMEs"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/programme-manager",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "programme-manager",
+      "title": "Programme manager",
+      "description": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-plan",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-retire",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Programme%20manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Programme%20manager%20(release%20authority)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Programme%20manager%20/%20technical%20officer"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/publication-manager",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "publication-manager",
+      "title": "Publication manager",
+      "description": "Takes an authorised release to its published form and is accountable for what is live.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/business-analyst",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "business-analyst",
+      "title": "Business analyst",
+      "description": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/l2-dak-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Business%20analyst",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/terminologist",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "terminologist",
+      "title": "Terminologist",
+      "description": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/terminology-management"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Terminologist"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/fhir-modeller",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "fhir-modeller",
+      "title": "FHIR modeller",
+      "description": "Authors the L3 profiles, extensions and examples an IG is built from.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/l3-fhir-authoring"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/FHIR%20modeller",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/FHIR%20modeller%20/%20PR%20author%20(person%20+%20authoring%20agent)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/translation-coordinator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "translation-coordinator",
+      "title": "Translation coordinator",
+      "description": "Decides what is translated, into which languages, and when a translation is accepted.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Translation%20Coordinator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/translator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "translator",
+      "title": "Human translator",
+      "description": "Produces the target-language text. Distinct from the coordinator because accepting one's own translation is the gate this separation removes.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20Translator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/translation-adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "translation-adjudicator",
+      "title": "Translation adjudicator",
+      "description": "Reviewer who settles a disagreement between machine and human translation.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20reviewer%20/%20adjudicator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/stakeholder",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "stakeholder",
+      "title": "Stakeholder",
+      "description": "Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Stakeholders"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/authoring-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "authoring-agent",
+      "title": "Authoring agent",
+      "description": "The session agent doing the work. The broadest skill set here, and the one whose membership most needs auditing.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-coordination",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-author",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-graph",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-plan",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-detect",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/delivery-summary",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-structure",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/normative-statements",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/semantic-review-scoping",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/upstream-version-adoption",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-authoring-guidance"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent%20(system)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Folio-Assistant%20Agent",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20/%20platform%20(automated)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/onboarding-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "onboarding-agent",
+      "title": "Onboarding agent",
+      "description": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Onboarding%20agent%20(system)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/ingestion-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "ingestion-agent",
+      "title": "Ingestion engine",
+      "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/evidence-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "evidence-agent",
+      "title": "Evidence agent",
+      "description": "Retrieves and appraises external evidence for a guideline claim.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Evidence%20agent%20(system)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/sibling-session",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "sibling-session",
+      "title": "Sibling session",
+      "description": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-coordination"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Sibling%20session%20or%20human%20(not%20yours%20to%20close)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/build-pipeline",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "build-pipeline",
+      "title": "Build pipeline",
+      "description": "Validates, renders and publishes, and watches whether that actually worked. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane. It carries `todo-manager` for the two CI-watcher dispatch points in `content-change-review`, which `claim` and `note` a bean and never `resolve` one -- claim is idempotent and note appends, both fixed programs, while deciding that a publish SUCCEEDED is the judgement this lane must not make (bean xom7: docs-site.yml failed 30 times while reporting its own exit code).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-test",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-publishing",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/fhir-validation",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/l3-fhir-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/latex-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/quality-control",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/upstream-version-adoption",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/watch"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline%20—%20validate%20·%20render%20·%20publish",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline%20—%20SUSHI%20·%20validator%20·%20IG%20Publisher",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Corpus%20+%20build%20pipeline%20(system)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Incremental%20build%20(system)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Automated%20Pipeline",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Scheduled%20log%20sweep"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/validation-pipeline",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "validation-pipeline",
+      "title": "Validation pipeline",
+      "description": "The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-test",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-validate"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/HCI%20validation%20pipeline%20(system)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Mechanical%20validation%20(system)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/publish-target",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "publish-target",
+      "title": "Publish target",
+      "description": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/getting-started"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publish%20—%20GitHub%20Pages"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/lean-toolchain",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "lean-toolchain",
+      "title": "Lean toolchain",
+      "description": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/lean-formalization",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-verification"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Lean%20toolchain%20(lean-mcp)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/ig-publisher-service",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "ig-publisher-service",
+      "title": "IG publisher + validator",
+      "description": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/fhir-validation",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ig-publication"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publisher%20+%20validator%20services%20(JVM)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/work-plan",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "work-plan",
+      "title": "Work plan (beans)",
+      "description": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-feedback"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20—%20beans%20(shared%20by%20humans%20and%20agents)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20—%20beans%20(shared)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Work%20plan%20(beans)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/corpus",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "corpus",
+      "title": "Corpus",
+      "description": "The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Corpus%20(versioned%20store)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/external-registry",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "external-registry",
+      "title": "External registry",
+      "description": "Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "external"
+      ],
+      "actedUpon": true,
+      "hasSkill": [],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Trusted%20registries%20and%20observatories%20(external)"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/log",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "log",
+      "title": "Activity log",
+      "description": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/activity-log"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Activity%20log"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/tools",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "tools",
@@ -17988,8 +19120,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "c6c9f1d86e60722f0ad0dfca112c09d7db9756ca",
+    "sha": "112192f27e1f81cb6980e875e19e221d04212d73",
     "pr": "main",
-    "run": "35443331219"
+    "run": "35444140818"
   }
 }

@@ -1,0 +1,80 @@
+{
+  "@context": {
+    "bs": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
+    "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
+    "fac": "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#",
+    "name": "rdfs:label",
+    "description": "rdfs:comment",
+    "nodeKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeKind",
+    "sourcePath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourcePath",
+    "movedOn": "https://litlfred.github.io/folio-assistant/cat-harness/ns#movedOn",
+    "movedFrom": "https://litlfred.github.io/folio-assistant/cat-harness/ns#movedFrom",
+    "issue": "https://litlfred.github.io/folio-assistant/cat-harness/ns#issue",
+    "nodeCount": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeCount",
+    "scans": "https://litlfred.github.io/folio-assistant/cat-harness/ns#scans"
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld",
+  "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsGraph",
+  "name": "folio-assistant — fsh-guts",
+  "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
+  "nodeCount": 5,
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/proposals/agents-md-migration.md",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
+      "name": "Migrating AGENTS.md into skills",
+      "nodeKind": "proposal",
+      "sourcePath": "fsh-guts/proposals/agents-md-migration.md",
+      "movedOn": "2026-09-19",
+      "movedFrom": "docs/folio-assistant/proposals/agents-md-migration.md",
+      "issue": "223",
+      "description": "Survey of which AGENTS.md sections are bootstrap, pointers, or migration debt."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/proposals/bootstrap.md",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
+      "name": "The bootstrap graph",
+      "nodeKind": "proposal",
+      "sourcePath": "fsh-guts/proposals/bootstrap.md",
+      "movedOn": "2026-09-19",
+      "movedFrom": "docs/folio-assistant/proposals/bootstrap.md",
+      "description": "Design for `bootstrap/` — the graph an agent reads before it knows whether the repository is an instance, what kind, or what for. NOTHING HERE IS BUILT. Arrived on main in docs/ the same day proposals left the rendered site; moved here by the same rule, since a design a folio's readers do not need is not a page. Bean `x3bd`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/proposals/deployment-topologies.md",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
+      "name": "Deployment topologies and operating modes",
+      "nodeKind": "proposal",
+      "sourcePath": "fsh-guts/proposals/deployment-topologies.md",
+      "movedOn": "2026-09-19",
+      "movedFrom": "docs/folio-assistant/proposals/deployment-topologies.md",
+      "issue": "363",
+      "description": "Accepted 2026-09-19: ten topology axes x six operating modes. Moved out of the rendered site because a design proposal is not what a folio's readers need; the decision it records lives on issue #363."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/proposals/index.md",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
+      "name": "Proposals",
+      "nodeKind": "proposal",
+      "sourcePath": "fsh-guts/proposals/index.md",
+      "movedOn": "2026-09-19",
+      "movedFrom": "docs/folio-assistant/proposals/index.md",
+      "description": "Index of design proposals. Retained for its prose about what a proposal is for; the proposals themselves belong on their issues."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/proposals/workflow-state-in-beans.md",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
+      "name": "Workflow state in beans",
+      "nodeKind": "proposal",
+      "sourcePath": "fsh-guts/proposals/workflow-state-in-beans.md",
+      "movedOn": "2026-09-19",
+      "movedFrom": "docs/folio-assistant/proposals/workflow-state-in-beans.md",
+      "issue": "232",
+      "description": "Decided 2026-09-18: Option A, two stores with one link, both moved out from behind dotfiles."
+    }
+  ],
+  "skipped": [],
+  "scans": [
+    "fsh-guts"
+  ]
+}
