@@ -64,3 +64,25 @@ So `bootstrap/` is top-level for RESOLUTION and part of cat-harness for OWNERSHI
 (b) is the reading consistent with both statements, so it is what this bean assumes until told otherwise. Recorded rather than silently adopted because it moves two committed stores and every path that reads them, and being wrong about it is expensive.
 
 `fsh-guts/` from PR #403 is a third case the rule has to answer: a top-level directory that is neither a repository name nor bootstrap. Under (b) it is a second exception, which the rule as stated does not allow.
+
+## Answered — beans/ and todos/ stay top-level (reading (a))
+
+Owner, 2026-09-19: "beans/ todos/ stay top-level". This bean had recorded reading (b) as its working assumption and (b) is WRONG. Corrected here rather than edited away, because the next reader should see that the loose reading was tried and rejected.
+
+WHAT THE RULE ACTUALLY IS, restated so it covers every case now known:
+
+The top level holds three kinds of thing.
+
+1. INSTANCE STUBS, each named after the repository it becomes: `cat-harness/`, `f-a-core/`, `f-a-sci/`. This is the set separation walks.
+2. NON-INSTANCE STORES that are never overlaid and belong to no single instance: `beans/`, `todos/`, and `fsh-guts/` (PR #403). "Takes no stub pattern" means exactly this — not that they sit anywhere in particular, but that there is one of each and it is not composed from per-instance parts.
+3. `bootstrap/` — instance-SHAPED (it ships inside cat-harness) but not named after a repository. This is the one exception the owner named, and it is an exception within category 1, not against the whole top level.
+
+So "one exception for top-level vs repo name" is a claim about the INSTANCE-shaped directories: every one is named after its repository except bootstrap. It was never a claim that the top level contains nothing else.
+
+That reading makes all three owner statements consistent — beans takes no stub, bootstrap is the one exception, top level holds bootstrap/ cat-harness/ f-a-core/ — where (b) had to contradict the first to keep the second.
+
+## What this settles for the migration
+
+The directories that MOVE are exactly the per-instance parts of `docs/`, `tools/`, `skills/`, `schemas/`, `library/`, `voices/`, `translations/`. The stores that DO NOT move are `beans/`, `todos/`, `fsh-guts/`, and `bootstrap/` is already where it will stay.
+
+That is a smaller migration than the first framing implied, and it removes the expensive half: no committed work-plan store moves, so no path that reads a bean or a todo changes, and `.beans.yml` and `WORKFLOW_DIR` — the two duplicates `check:harness-dirs` gates because neither can be removed — are untouched.
