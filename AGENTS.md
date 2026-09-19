@@ -1,5 +1,10 @@
 # AGENTS.md — folio-assistant
 
+**Cold start — run this before any durable work:** `scripts/install-beans.sh &&
+export PATH="$HOME/.local/bin:$PATH" && beans prime`, then
+[§"At session start"](#at-session-start) for the rest; the session-start hook
+does it for you only where a hook runs.
+
 Cross-repository agent skills framework (unified skill management, RBAC, capability
 detection). This file is read natively by Claude Code, Gemini CLI, Antigravity,
 Cursor, Copilot and others, and tool-specific files (`CLAUDE.md`, `GEMINI.md`)

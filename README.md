@@ -1,5 +1,9 @@
 # folio-assistant
 
+🤖 **Agent cold start — run this before any durable work:**
+`scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH" && beans prime`,
+then [`AGENTS.md` §"At session start"](AGENTS.md#at-session-start) for the rest.
+
 **A content-agnostic agent skills framework.** Author rigorous content with an
 LLM — documents and policy guidance, scientific papers & books, WHO SMART
 Guidelines, and FHIR Implementation Guides — backed by an MCP server,
