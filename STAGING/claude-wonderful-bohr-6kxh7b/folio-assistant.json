@@ -231,10 +231,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T10:53:06.829Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ad6282137e6ff36ce792381e829920ee95861e68",
-  "sourceCommitSha": "ad6282137e6ff36ce792381e829920ee95861e68",
-  "sourceCommitAt": "2026-09-19T10:51:35Z",
+  "generatedAt": "2026-09-19T11:08:39.487Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3a03ecaf7e172c1335a4cba5c2f0f61adfee1484",
+  "sourceCommitSha": "3a03ecaf7e172c1335a4cba5c2f0f61adfee1484",
+  "sourceCommitAt": "2026-09-19T11:06:48Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 162,
@@ -246,7 +246,7 @@
     "SequenceFlow": 443,
     "ProcessNode": 414,
     "Tool": 28,
-    "Schema": 41,
+    "Schema": 43,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -18852,6 +18852,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/theme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "theme",
+      "title": "A sticky theme — named colour roles plus the three layouts, as a graph node.",
+      "module": "schemas/theme.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/themes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "themes",
+      "title": "The themes this instance ships, and the default.",
+      "module": "schemas/themes.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/themes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/todo-graph",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "todo-graph",
@@ -19198,8 +19214,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "f0809fdae98bab1ee670f38e54d2d05377e2cd77",
-    "pr": "385/merge",
-    "run": "35438542584"
+    "sha": "3e47590f56a395d087410f60f1dc9a6dc9a67401",
+    "pr": "405/merge",
+    "run": "35439232117"
   }
 }
