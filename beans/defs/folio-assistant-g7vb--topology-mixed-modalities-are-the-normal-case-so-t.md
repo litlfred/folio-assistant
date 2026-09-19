@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g7vb
 title: 'TOPOLOGY: mixed modalities are the normal case, so the axes must vary independently'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-19T08:55:37Z
-updated_at: 2026-09-19T09:56:19Z
+updated_at: 2026-09-19T15:59:30Z
 parent: folio-assistant-5a3l
 ---
 
