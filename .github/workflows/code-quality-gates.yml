@@ -297,6 +297,23 @@ jobs:
           bun run scripts/gen-schema-docs.ts --check
           bun run scripts/gen-skill-docs.ts --check
 
+      # The README's AUTHORED half. `readme-sections.ts` owns the marked
+      # regions; this owns every other link, and `AGENTS.md` claims that
+      # "between the two tools no link in a folio README is unaccounted for".
+      #
+      # It ran in NO workflow until 2026-09-19 (bean `t373`) -- a check that
+      # exists, works, and is wired to nothing. That is `xom7` (a workflow
+      # failing unseen) and `cnlf` (a workflow that never fires) in a third
+      # form, and it is why `main` carried eight dead README paths after the
+      # site root moved to `docs/<stub>/`.
+      #
+      # `readme:sync:check` is deliberately NOT added beside it: this README
+      # carries zero `<!-- folio:*:begin -->` markers, because generated
+      # sections belong to a folio and this repository is the platform. Wiring
+      # it here would pass over nothing and read as coverage.
+      - name: README links resolve
+        run: bun run readme:audit
+
       # Agent memory is authored under `skills/memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
       # harness injects. An entry edited and never assembled is a fact the

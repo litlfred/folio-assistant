@@ -18,7 +18,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { chmodSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -90,9 +90,40 @@ describe("claiming on the default branch", () => {
     // ready, which is the whole defect.
     const changed = git(work, "show", "--stat", "--format=", "origin/main").split("\n").filter((l) => l.includes("|"));
     expect(changed).toHaveLength(1);
-    // A session mid-edit cannot afford a checkout.
-    expect(git(work, "status", "--porcelain").trim()).toBe("");
+    // A session mid-edit cannot afford a CHECKOUT, and none happens — the commit
+    // is built in a temp worktree that is then removed.
+    //
+    // It does modify exactly ONE file in the caller's tree: the bean, mirroring
+    // the claim. That is a later correctness fix, not a relaxation of this
+    // assertion — without it the branch's stale `todo` reverts the claim at merge
+    // time. Asserting the exact file rather than a clean tree keeps the original
+    // guarantee: nothing ELSE is touched.
+    expect(git(work, "status", "--porcelain").trim().split("\n")).toEqual([
+      // `.trim()` above eats git's leading space in " M ".
+      "M beans/defs/folio-assistant-aaaa--b.md",
+    ]);
     expect(git(work, "worktree", "list").trim().split("\n")).toHaveLength(1);
+  });
+
+  test("the claim is mirrored into the caller's own tree, or the merge reverts it", () => {
+    // Found by USING the tool: after a successful claim, `origin/main` said
+    // `in-progress` and the working tree still said `todo`. Committing that
+    // stale copy on the feature branch and merging would have reverted the
+    // claim — the branch's older value wins as an ordinary content change, so
+    // the tool would quietly undo its own work at merge time.
+    const { work } = repoWith({ mmmm: bean("mmmm") });
+
+    const o = claimOnDefaultBranch("mmmm", "claude/feature", { repo: work });
+    expect(o.state).toBe("pushed");
+
+    const local = readFileSync(join(work, "beans", "defs", "folio-assistant-mmmm--b.md"), "utf-8");
+    expect(/^status:\s*in-progress\s*$/m.test(local)).toBe(true);
+    // Deliberately NOT committed: what to commit and when is the session's
+    // business, and a tool that commits to your branch behind your back is
+    // worse than the problem it solves.
+    expect(git(work, "status", "--porcelain").trim()).toBe(
+      "M beans/defs/folio-assistant-mmmm--b.md",
+    );
   });
 
   test("a bean another branch holds is REFUSED, by name, and nothing is written", () => {

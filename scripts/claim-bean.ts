@@ -280,7 +280,32 @@ export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: 
       }
       const target = absoluteRemote(repo, configured);
       const pushed = git(work, ["push", target, `HEAD:refs/heads/${def}`]);
-      if (pushed.code === 0) return { state: "pushed", attempts };
+      if (pushed.code === 0) {
+        // MIRROR IT LOCALLY, and this is a correctness fix rather than a
+        // convenience.
+        //
+        // The claim lands on the default branch; the caller's own checkout is
+        // untouched and still says `todo`. Measured by using the tool: after a
+        // successful claim of `t373`, `origin/main` said `in-progress` and the
+        // working tree said `todo`. Committing that stale copy on the feature
+        // branch and merging it would have **reverted the claim** — the branch's
+        // older value wins as an ordinary content change, so the tool would have
+        // quietly undone its own work at merge time.
+        //
+        // Writing the same status locally makes the two agree, so the merge is a
+        // no-op for this field instead of a regression. It is deliberately NOT
+        // committed here: what to commit and when is the session's business, and
+        // a tool that commits to your branch behind your back is worse than the
+        // problem.
+        try {
+          updateBean(repo, id, { status: "in-progress" });
+        } catch {
+          // The push already succeeded, which is the durable half. A local
+          // write failing is worth reporting, not worth undoing a landed claim.
+          return { state: "pushed", attempts, reason: "claimed on the default branch, but the local copy could not be updated — `git fetch` and check before committing this bean" };
+        }
+        return { state: "pushed", attempts };
+      }
 
       const why = `${pushed.err.trim()}\n${pushed.out.trim()}`.trim();
       lastReason = `git push ${target} HEAD:${def} exited ${pushed.code}: ${why}`;

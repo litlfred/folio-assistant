@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-19T11:00:23.386Z",
+  "updated_at": "2026-09-19T11:34:44.370Z",
   "verdict": "findings",
   "checks": [
     {
@@ -34,20 +34,20 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 394593563,
+          "value": 435893014,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 10,
+          "value": 11,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
         {
-          "summary": "10 staging preview(s) total 376.3 MB, over the 100 MB warning point.",
+          "summary": "11 staging preview(s) total 415.7 MB, over the 100 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
@@ -62,18 +62,28 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 5,
+          "value": 8,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 196034942,
+          "value": 316797866,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
+        {
+          "summary": "`STAGING/claude-4kiw-memory-pointer` (38.3 MB, 786 files) matches no open pull request.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-4kiw-memory-pointer` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/claude-consolidate-test-dir` (38.4 MB, 786 files) matches no open pull request.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-consolidate-test-dir` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+        },
         {
           "summary": "`STAGING/claude-d2kp-live-verdicts` (36.8 MB, 787 files) matches no open pull request.",
           "severity": "minor",
@@ -83,6 +93,11 @@
           "summary": "`STAGING/claude-ecstatic-goldberg-eroyaz` (37.5 MB, 778 files) matches no open pull request.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `claude-ecstatic-goldberg-eroyaz` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/claude-fervent-mccarthy-nw4olk` (38.5 MB, 786 files) matches no open pull request.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `claude-fervent-mccarthy-nw4olk` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
         },
         {
           "summary": "`STAGING/claude-health-checks` (37.1 MB, 781 files) matches no open pull request.",
@@ -95,7 +110,7 @@
           "action": "Ask the owner whether the review of `claude-placement-skill` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
         },
         {
-          "summary": "`STAGING/claude-wonderful-bohr-6kxh7b` (38.4 MB, 786 files) matches no open pull request.",
+          "summary": "`STAGING/claude-wonderful-bohr-6kxh7b` (38.5 MB, 787 files) matches no open pull request.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `claude-wonderful-bohr-6kxh7b` is finished. If it is, they add `staging:cleanup` to that PR and re-run `feature-staging.yml`. Leaving it is a valid answer."
         }
@@ -138,38 +153,38 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 35334900,
+          "value": 35528638,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 404500125,
+          "value": 386253214,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 380216320,
+          "value": 361859072,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 50,
+          "value": 30,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 11.45,
+          "value": 10.87,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 385.8 MB against 33.7 MB of tracked content — 11.4x, in 50 pack(s).",
+          "summary": "`.git` is 368.4 MB against 33.9 MB of tracked content — 10.9x, in 30 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -213,19 +228,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 271,
+          "value": 275,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 84,
+          "value": 85,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 187,
+          "value": 190,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -244,7 +259,7 @@
       ],
       "findings": [
         {
-          "summary": "187 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "190 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
