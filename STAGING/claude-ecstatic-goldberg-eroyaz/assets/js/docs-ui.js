@@ -754,6 +754,244 @@
     return wrap;
   }
 
+
+  /* ── The kind fan (bean `4kj4`) ────────────────────────────────────────
+   *
+   * Owner, 2026-09-19: *"each content type should have an avatar in and out
+   * of trash"*, *"if more than one kind then it fades through the avatars in
+   * a loop"*, *"openning fan is panel. shows the DECLared kinds for that
+   * instance, not inheritance"*, and — asked which of fan / autoplay-fade /
+   * hover-fade they wanted — **all three**.
+   *
+   * ## The three layer rather than conflict, and that is what makes it legal
+   *
+   *   the fan        every kind visible AT ONCE — the base presentation
+   *   the cycle      an emphasis moving through them, with a pause control
+   *   hover / focus  drives the same emphasis, user-initiated
+   *
+   * **Nothing is conveyed by the motion.** The fan is already complete when
+   * it is still: every avatar is present, and the accessible name lists
+   * every kind in one string. The cycle only moves a highlight over a
+   * display a reader can already read.
+   *
+   * That is what makes an autoplaying loop defensible here at all. WCAG
+   * 2.2.2 requires motion over five seconds to be pausable — hence the
+   * button — but the deeper requirement is that a reader who never sees the
+   * animation loses nothing, and a cycling BADGE (one slot, swapping) would
+   * have failed that no matter how many pause controls it carried.
+   *
+   * ## `prefers-reduced-motion` is checked in BOTH places
+   *
+   * The CSS suppresses the transition and the script never starts the timer.
+   * Either alone is a bug: CSS-only leaves a timer mutating the DOM for no
+   * visible reason, script-only leaves the transition running on whatever
+   * the script does change. The media query is also LIVE — a reader who
+   * turns the setting on mid-session has the loop stop, rather than having
+   * to reload.
+   */
+
+  var KIND_CYCLE_MS = 2200;
+
+  /** The kinds this instance declares, or [] when the page did not say. */
+  function declaredKinds() {
+    var node = document.getElementById("fa-declared-kinds");
+    if (!node) return [];
+    try {
+      var parsed = JSON.parse(node.textContent || "[]");
+      return Array.isArray(parsed) ? parsed.filter(function (k) { return typeof k === "string"; }) : [];
+    } catch (_e) {
+      console.warn("docs-ui: #fa-declared-kinds is not valid JSON; the kind fan was not mounted.");
+      return [];
+    }
+  }
+
+  function prefersReducedMotion() {
+    try {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch (_e) {
+      // No matchMedia is not "the reader wants motion". Unknown resolves to
+      // the safe answer, which is the same third-state rule as everywhere.
+      return true;
+    }
+  }
+
+  /**
+   * One avatar. `trash` gives the discarded treatment.
+   *
+   * `aria-hidden` on every tile: the NAME is on the group, listing every
+   * kind in one string. Sixteen focusable images would be sixteen stops for
+   * a screen-reader user to walk through to learn one fact.
+   */
+  function avatarTile(kind, trash) {
+    var a = el("span", { class: "fa-avatar", "data-fa-kind": kind, "aria-hidden": "true" });
+    if (trash) a.setAttribute("data-fa-trash", "true");
+    return a;
+  }
+
+  /**
+   * The fan: every declared kind, with a cycling emphasis and a pause.
+   *
+   * Returns null when there is nothing to show — a caller must not mount an
+   * empty control, and an instance that declares no kinds is a real state
+   * rather than an error.
+   */
+  function buildKindFan(kinds, opts) {
+    var list = (kinds || []).filter(Boolean);
+    if (list.length === 0) return null;
+    // Returns { fan, pause } rather than one element, and the caller places
+    // them. The pause CANNOT live inside the fan when the fan is the face of
+    // a button: a <button> inside a <button> is invalid, the parser closes
+    // the outer one, and the whole control is destroyed at parse time. A
+    // spec caught exactly that — after clicking pause, `.fa-kind-fan` was
+    // "element(s) not found", because it had never survived parsing.
+    //
+    // It is also an accessibility fault in its own right: nested interactive
+    // controls have no sane keyboard order and no agreed name computation.
+    var trash = Boolean(opts && opts.trash);
+
+    var wrap = el("div", {
+      class: "fa-kind-fan",
+      role: "img",
+      // EVERY kind, in one string. The cycle conveys nothing a reader with
+      // no sight of it would miss, because the name already said all of it.
+      "aria-label":
+        (trash ? "Discarded kinds: " : "Kinds this instance declares: ") + list.join(", "),
+    });
+
+    var strip = el("span", { class: "fa-kind-fan-strip" });
+    list.forEach(function (kind) {
+      var slot = el("span", { class: "fa-kind-fan-slot", "data-fa-kind-slot": kind });
+      slot.appendChild(avatarTile(kind, trash));
+      strip.appendChild(slot);
+    });
+    wrap.appendChild(strip);
+
+    var slots = strip.querySelectorAll(".fa-kind-fan-slot");
+    var at = 0;
+    var timer = null;
+
+    function paint(i) {
+      for (var n = 0; n < slots.length; n++) {
+        slots[n].setAttribute("data-fa-lit", n === i ? "true" : "false");
+      }
+    }
+
+    function step() {
+      at = (at + 1) % slots.length;
+      paint(at);
+    }
+
+    function stop() {
+      if (timer !== null) { clearInterval(timer); timer = null; }
+      wrap.setAttribute("data-fa-cycling", "false");
+    }
+
+    function start() {
+      // One kind has nothing to cycle THROUGH, and a "pause" on a still
+      // image is a control that does nothing.
+      if (slots.length < 2 || prefersReducedMotion() || timer !== null) return;
+      timer = setInterval(step, KIND_CYCLE_MS);
+      wrap.setAttribute("data-fa-cycling", "true");
+    }
+
+    paint(0);
+
+    // ── The pause control — WCAG 2.2.2 ──────────────────────────────
+    //
+    // Only when the loop can actually run. A button that says "pause" beside
+    // something already still is worse than no button: it tells a reader
+    // there is motion they cannot see.
+    var pause = null;
+    if (slots.length > 1 && !prefersReducedMotion()) {
+      pause = el("button", {
+        type: "button",
+        class: "fa-kind-fan-pause",
+        "aria-label": "Pause the cycling highlight",
+      }, "❙❙");
+      pause.addEventListener("click", function () {
+        if (timer === null) {
+          start();
+          pause.setAttribute("aria-label", "Pause the cycling highlight");
+          pause.textContent = "❙❙";
+        } else {
+          stop();
+          pause.setAttribute("aria-label", "Resume the cycling highlight");
+          pause.textContent = "▶";
+        }
+      });
+      start();
+    }
+
+    // ── Hover and focus drive it too ────────────────────────────────
+    //
+    // User-initiated, so it is outside 2.2.2 entirely — and it is why a
+    // reader who paused gets the emphasis back on demand without unpausing.
+    function nudge() {
+      if (prefersReducedMotion()) return;
+      step();
+    }
+    wrap.addEventListener("mouseenter", nudge);
+    strip.addEventListener("focusin", nudge);
+
+    // LIVE, not read once. A reader who turns reduced-motion on mid-session
+    // should have the loop stop, not have to reload the page to be heard.
+    try {
+      var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var onChange = function () {
+        if (mq.matches) {
+          stop();
+          if (pause) pause.remove();
+        }
+      };
+      if (mq.addEventListener) mq.addEventListener("change", onChange);
+      else if (mq.addListener) mq.addListener(onChange);
+    } catch (_e) {
+      // No matchMedia: `prefersReducedMotion` already returned true, so the
+      // loop never started and there is nothing to tear down.
+    }
+
+    return { fan: wrap, pause: pause, stop: stop };
+  }
+
+  /**
+   * The panel the fan opens: every declared kind, named.
+   *
+   * The fan says HOW MANY and gives them a face; this says WHICH, in words.
+   * A reader who cannot tell a spanner from a shield at 24px — which is
+   * most readers, most of the time — gets the answer here rather than by
+   * hovering each one.
+   *
+   * It states DECLARED vs INHERITED in the panel itself, because the
+   * distinction is the owner's and is invisible from the list: a reader
+   * seeing twelve kinds has no way to know the effective set is larger
+   * unless the panel says so.
+   */
+  function buildKindsPanel(kinds) {
+    var wrap = el("div", { class: "fa-kinds-panel fa-tile-content" });
+    wrap.appendChild(el("p", { class: "fa-kinds-note" },
+      "What this instance declares in its own harness. A dependency's kinds " +
+      "are inherited at resolve time and are deliberately not listed here."));
+
+    var ul = el("ul", { class: "fa-kinds-list" });
+    kinds.forEach(function (kind) {
+      var li = el("li", { class: "fa-kinds-row" });
+      li.appendChild(avatarTile(kind, false));
+      li.appendChild(el("span", { class: "fa-kinds-name" }, kind));
+      // The discarded treatment, beside the live one. The owner asked for
+      // an avatar "in and out of trash", and the pair is only legible as a
+      // pair — shown apart, nobody can tell muted from a different colour.
+      var t = avatarTile(kind, true);
+      t.classList.add("fa-kinds-trash");
+      li.appendChild(t);
+      ul.appendChild(li);
+    });
+    wrap.appendChild(ul);
+    wrap.appendChild(el("p", { class: "fa-kinds-legend" },
+      "Each kind is shown twice: as it appears normally, and as it appears " +
+      "once discarded to the trashcan."));
+    return wrap;
+  }
+
   /* ── Action tiles ────────────────────────────────────────────────────── */
 
   // A three-by-three of rounded squares: the launcher. It says "there are
@@ -1095,6 +1333,47 @@
       }
 
       paintDiscarded();
+
+      // ── The kind fan, and the panel it opens ──────────────────────
+      //
+      // Owner: *"openning fan is panel."* The fan is the CLOSED state and
+      // the panel is the open one — not a tooltip, and not a badge that
+      // cycles in place. So the fan is the face of a button, and pressing
+      // it shows the same kinds listed with their names.
+      //
+      // Under Settings for the same reason the discarded control is: it is
+      // something a reader consults once, not a thing they act on.
+      var kinds = declaredKinds();
+      if (kinds.length) {
+        var fanBtn = el("button", {
+          type: "button",
+          class: "fa-kind-fan-open",
+          // Names the COUNT and the fact, not the picture. A fan of glyphs
+          // is meaningless to a screen reader; the panel behind it is not.
+          "aria-label":
+            "What this instance declares \u2014 " +
+            (kinds.length === 1 ? "1 kind" : kinds.length + " kinds"),
+        });
+        // NOT `built` — that is `buildViews`'s memoisation flag, and a `var`
+        // of the same name inside this function hoists over it, so
+        // `if (built) return` would read `undefined` and rebuild every view
+        // on every launcher open. eslint caught it by reporting the OUTER
+        // one as unused, which is a subtler symptom than the cause.
+        var fanParts = buildKindFan(kinds);
+        if (fanParts) fanBtn.appendChild(fanParts.fan);
+        fanBtn.appendChild(el("span", { class: "fa-tile-caption" }, "Declared kinds"));
+        fanBtn.addEventListener("click", function () {
+          views.kinds = buildKindsPanel(kinds);
+          showView("kinds", "Declared kinds", fanBtn);
+        });
+
+        // A ROW, because the pause control must sit BESIDE the button and
+        // not inside it — see `buildKindFan`. Two siblings, one subject.
+        var row = el("div", { class: "fa-kind-fan-row" });
+        row.appendChild(fanBtn);
+        if (fanParts && fanParts.pause) row.appendChild(fanParts.pause);
+        settings.appendChild(row);
+      }
 
       views.settings = settings;
 
