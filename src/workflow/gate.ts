@@ -44,6 +44,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { findInModel, type ProcessModel } from "./process-model.js";
 import { enabled, resolveStep, type InstanceState } from "./instance.js";
+import { kgRoots } from "../../scripts/known-skills.js";
 
 export class PolicyError extends Error {}
 
@@ -69,7 +70,9 @@ const POLICY_FILE = "workflow-policy.json";
  * nothing, which is the correct default: silence means the base applies.
  */
 export function loadRelaxations(repoRoot: string): Relaxation[] {
-  const skillsDir = join(repoRoot, "skills");
+  // declared-path-literal: the convention fallback, at the call site so the
+  // choice is visible.
+  const skillsDir = kgRoots(repoRoot)[0] ?? join(repoRoot, "skills");
   if (!existsSync(skillsDir)) return [];
   const out: Relaxation[] = [];
 

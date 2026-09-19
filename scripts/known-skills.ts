@@ -86,6 +86,30 @@ function kgDirectories(root: string): Array<{ path: string; absPath: string }> {
 }
 
 /**
+ * Every directory the instance declares as holding ONLY its knowledge graph.
+ *
+ * Absolute paths. This is the answer to `join(root, "skills")` — the literal
+ * `check:declared-paths` found in a dozen consumers, each of which a topical
+ * layout (`bootstrap/`, `crdm/`) breaks silently.
+ *
+ * ## It is a LIST, and callers must not quietly take the first
+ *
+ * One root is today's shape, not the contract. A consumer that scans for
+ * role graphs, memory nodes or requirements has to look in every declared
+ * root or it reports a clean run over the ones it did not visit — the `dh4f`
+ * defect, arriving through a helper that was supposed to prevent it. Where a
+ * call site genuinely needs one directory (a WRITE target, a fallback), it
+ * says so and carries its reason.
+ *
+ * `schemas/` is excluded because it declares TWO graphs: it is a
+ * knowledge-graph node AND the schema definitions, and its `.md` files are
+ * READMEs. See {@link kgDirectories} for the measurement that established it.
+ */
+export function kgRoots(root: string): string[] {
+  return kgDirectories(root).map((d) => d.absPath);
+}
+
+/**
  * Is this `.md` a skill, or another node kind that happens to live here?
  *
  * **Declaration over location.** A markdown file whose front matter carries
@@ -252,15 +276,42 @@ export function skillMdDirs(root: string): string[][] {
  * module happened to scan a directory.
  */
 export function remotePackageSkills(root: string): Set<string> {
-  const out = new Set<string>();
+  // Derived from the per-declaration reader below rather than scanning the
+  // directory again: two readers of one directory is how they come to disagree,
+  // which is the defect this module's header is about.
+  return new Set(remotePackageDeclarations(root).map((d) => d.skill));
+}
+
+/** One declared skill, and which wrapper declared it. */
+export interface RemoteDeclaration {
+  /** The wrapper's filename, e.g. `smarter-fhir.json`. */
+  file: string;
+  /** A name from that wrapper's `wrapper.skills`. */
+  skill: string;
+  /** The wrapper's `sync` block, verbatim, or `undefined` when it declares none. */
+  sync?: unknown;
+}
+
+/**
+ * Every remote-package declaration, one row per skill, carrying its wrapper.
+ *
+ * `remotePackageSkills` flattens this to a name set, which is what a "is this a
+ * real skill somewhere" check wants. A check that has to REPORT a finding needs
+ * the wrapper too: the two files here have different maintainers and different
+ * remedies, so a finding that does not name which one declared the skill is one
+ * somebody has to measure again. Bean `wlqd`.
+ */
+export function remotePackageDeclarations(root: string): RemoteDeclaration[] {
+  const out: RemoteDeclaration[] = [];
   const dir = join(root, "skills", "remote-packages");
   if (!existsSync(dir)) return out;
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
+  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
     try {
       const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as {
         wrapper?: { skills?: string[] };
+        sync?: unknown;
       };
-      for (const s of p.wrapper?.skills ?? []) out.add(s);
+      for (const skill of p.wrapper?.skills ?? []) out.push({ file: f, skill, sync: p.sync });
     } catch {
       // A remote-package file that will not parse is validate-skills.ts's finding.
     }

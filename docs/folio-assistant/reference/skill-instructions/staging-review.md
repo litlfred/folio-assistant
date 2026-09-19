@@ -175,4 +175,16 @@ same question on demand, and the dispatch above runs it before removing.
   reference under `reference/`, French under `fr/` etc.
 - **Do not omit the comparison table.** Even for a single page change, show
   the before/after pair — it is the whole point of staging.
+
+## Before you report a staging URL as broken
+
+**Look at the publish ref, not the site.** A staging URL is LOOKED UP in
+`gh-pages` under `STAGING/<branch-slug>/`, never composed from the source
+path — `docs/<stub>/proposals/x.md` publishes to `/proposals/x.html`, and
+composing it from the source path yields a 404 for a page that is there. From
+an agent container a `curl` against a Pages URL fails on the proxy regardless,
+so a failed fetch is not evidence either way.
+
+Full rule and the measured failure:
+[`github-state-inspection`](github-state-inspection.md).
 {% endraw %}

@@ -33,14 +33,28 @@
  */
 
 import { existsSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { workflowFiles } from "../../scripts/known-skills.js";
+import { basename, resolve } from "node:path";
 import { loadProcessModel, type ProcessModel } from "./process-model.js";
 import { checkGate, loadRelaxations, validateRelaxations, type Relaxation } from "./gate.js";
 import { instanceId, loadInstance } from "./store.js";
 
 /** The step a corpus write must have been authorised by. */
 export const COMMIT_ACTIVITY = "Task_Commit";
-const EDITING_PROCESS = join("skills", "workflows", "editing-hci-validation.bpmn");
+/**
+ * The diagram this gate exists for, by NAME — not by path.
+ *
+ * Naming it is correct and stays: `editing-hci-validation` is one of the
+ * three STRICT base processes, and the gate's whole job is refusing a corpus
+ * write the editor did not authorise IN THAT process. A discovered "whatever
+ * process happens to be there" would be a different and much weaker check.
+ *
+ * What was wrong was looking for it at a fixed `skills/workflows/` — an
+ * instance that declares its knowledge graph elsewhere has the diagram and
+ * the gate cannot find it, so the gate throws rather than gating. The name is
+ * the base case; the LOCATION comes from the declaration.
+ */
+const EDITING_PROCESS_STEM = "editing-hci-validation";
 
 /** Extensions that are a block's own content. `.qa.json` is machine-written. */
 const CONTENT_SIBLINGS = [".ts", ".md", ".lean"];
@@ -109,10 +123,13 @@ export async function checkCorpusGate(
   repoRoot: string,
   opts: CorpusGateOptions,
 ): Promise<GateFinding[]> {
-  const bpmn = join(opts.platformRoot, EDITING_PROCESS);
-  if (!existsSync(bpmn)) {
+  const bpmn = workflowFiles(opts.platformRoot).find(
+    (f) => basename(f, ".bpmn") === EDITING_PROCESS_STEM,
+  );
+  if (!bpmn) {
     throw new Error(
-      `No editing process at ${bpmn}. Point --platform at the folio-assistant checkout.`,
+      `No ${EDITING_PROCESS_STEM}.bpmn in any knowledge-graph directory ` +
+        `declared by ${opts.platformRoot}. Point --platform at the folio-assistant checkout.`,
     );
   }
   const model: ProcessModel = await loadProcessModel(bpmn);

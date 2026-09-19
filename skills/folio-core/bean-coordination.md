@@ -88,6 +88,46 @@ Neither check closes the window. Both are cheap, and the second catches the case
 that matters most in practice — a sibling minutes ahead of you who already has a
 PR up.
 
+### `bun run beans:claim <id>` closes it — when the remote lets it
+
+**The window is closable and there is now a tool for it.** `scripts/claim-bean.ts`
+builds the status change as a commit of its OWN and pushes it to the default
+branch, so a sibling sees the claim immediately instead of when your PR opens.
+Chosen by the owner over the PR-list check above, on the stated cost: a session
+writes to the default branch for claims, which this repository otherwise routes
+through pull requests.
+
+```sh
+bun run beans:claim <bean-id>              # store defaults to the CURRENT directory
+bun run beans:claim <bean-id> --dry-run    # say what would happen
+```
+
+It is a **claim only** — never your work, which is the point: a claim bundled
+with work cannot be pushed until the work is ready. It builds the commit in a
+detached `git worktree`, so a session mid-edit is not asked to accept a checkout,
+and removes it on every path including failure.
+
+**Read the outcome, because three of the five are refusals:**
+
+| outcome | exit | what it means |
+|---|---|---|
+| `pushed` | 0 | on the default branch; every session sees it |
+| `already-claimed` | 0 | a sibling holds it, and is **named**. Nothing written — pick another item |
+| `already-closed` | 0 | it is `completed` or `scrapped` there. **Not claimed, deliberately** — reviving finished work, and especially a `scrapped` bean whose whole purpose is recording a rejected approach, is a decision rather than a side effect of asking to claim |
+| `new-on-branch` | 0 | the bean is not on the default branch yet, so nobody can see it and there is nothing to race over. Claim locally and open the PR early |
+| `fell-back` | **3** | the push was REJECTED. The bean is **not** claimed anywhere a sibling can see — claim on your branch and open the PR at your first commit |
+| `unknown` | **2** | the default branch could not be read. **Never** "the bean is free" |
+
+**`fell-back` is the case to expect, not an edge case.** Whether the default
+branch accepts a direct push cannot be determined from inside an agent session:
+`GET /branches/main/protection` answers 403 *"Resource not accessible by
+integration"*, and `git push --dry-run` does not run the receive hooks that
+enforce protection. So the tool attempts and handles the rejection rather than
+assuming, and a rejected claim is loud with the fallback spelled out. A
+non-fast-forward is different and is **retried** — another claim landed first,
+and the retry may discover the bean is now theirs, which is the correct answer
+rather than a conflict to force past.
+
 ### The measurement
 
 2026-09-19, bean `plj1` (`docs-site.yml`'s full-replace publish deleting every

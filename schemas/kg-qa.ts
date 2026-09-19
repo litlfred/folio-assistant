@@ -464,6 +464,28 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "false dangling entries (bean `nup0`).",
   },
   {
+    id: "remote-skill-is-servable",
+    applies: ["graph"],
+    // `major`, not `critical`: the reference is not broken, it points outside
+    // this repository on purpose. What is missing is the JOIN — nothing fetches
+    // the package, so a declared name has no body here. `critical` is reserved
+    // for a reference that resolves nowhere at all.
+    //
+    // **It still gates**, via `scripts/tests/remote-skill-servable.test.ts`,
+    // following the `activity-skill-coverage` precedent: switching CI to
+    // `kg:audit:strict` would promote every `major` criterion at once, which is
+    // a far larger commitment than the change that earned it.
+    severity: "major",
+    summary:
+      "A file under `skills/remote-packages/` declares a skill this instance cannot serve. Both wrappers " +
+      "carry `sync: { strategy: \"shallow-clone\", frequency: \"weekly\" }` and NOTHING performs it — " +
+      "`skill_fetch` does not read the directory and the generated registry does not carry it — so five " +
+      "names are published that a reader will try and cannot fetch (bean `wlqd`). The owner asked for this " +
+      "to be a todo that FAILS rather than prose explaining itself, because the previous fix made the " +
+      "documentation honest and left nothing that trips. Remedy: implement the sync (a platform capability " +
+      "change, so a GitHub issue and the CRDM workflow first), or drop the declaration.",
+  },
+  {
     id: "actor-roles-resolve",
     applies: ["graph"],
     severity: "critical",
