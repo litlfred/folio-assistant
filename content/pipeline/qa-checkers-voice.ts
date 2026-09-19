@@ -26,12 +26,6 @@
 
 import { readFileSync, existsSync } from "fs";
 import type { CheckerPaths } from "../../schemas/block-qa";
-import { EXTENDED_AUTOMATED_CHECKERS } from "./qa-checkers-extended";
-import { USES_AUTOMATED_CHECKERS } from "./qa-checkers-uses";
-import { COST_AUTOMATED_CHECKERS } from "./qa-checkers-cost";
-import { TRIVIALITY_AUTOMATED_CHECKERS } from "./qa-checkers-triviality";
-import { VACUITY_AUTOMATED_CHECKERS } from "./qa-checkers-vacuity";
-import { RENDER_AUTOMATED_CHECKERS } from "./qa-checkers-render";
 
 export interface CheckerHit {
   file: string;
@@ -1251,7 +1245,21 @@ export function checkStatusSectionHeader(mdPath: string): CheckerResult {
 
 // ── Dispatch table ──────────────────────────────────────────────
 
-export const AUTOMATED_CHECKERS: Record<
+/**
+ * This module's OWN checkers, keyed by the criterion each answers.
+ *
+ * It used to be `AUTOMATED_CHECKERS` and spread in five other modules' tables
+ * as well, so that `qa-sweep` could dispatch from one object. Nothing reads a
+ * merged table any more: the sweep resolves each criterion through
+ * `qa-checker-discovery`, which imports the module the registry NAMES and
+ * finds the entry there. The aggregation outlived its only caller and was
+ * kept alive by a test comparing against it.
+ *
+ * Dropping it matters beyond tidiness — the spreads made this file import
+ * `qa-checkers-cost.ts`, so the voice module (core) depended on the
+ * elaboration-cost module (science layer) for no reason but the merge.
+ */
+export const VOICE_AUTOMATED_CHECKERS: Record<
   string,
   (paths: CheckerPaths) => CheckerResult
 > = {
@@ -1287,24 +1295,4 @@ export const AUTOMATED_CHECKERS: Record<
     p.md ? checkFrameworkCanonical(p.md) : { result: "pass", hits: [] },
   "wall-side-correct": (p) => checkWallSide(p.md, p.lean, p.ts),
   "wall-base-ring-minimal": (p) => checkBaseRingMinimal(p.lean),
-  // Extended checkers for the non-voice integration axes
-  // (proof, canonical, compute, detangler, bibliography). The
-  // bodies live in `qa-checkers-extended.ts`; the spread below
-  // pulls them in as a single source of truth.
-  ...EXTENDED_AUTOMATED_CHECKERS,
-  // `uses` axis — editorial-relation hygiene + the advisory
-  // formal-coverage signal. Bodies in `qa-checkers-uses.ts`.
-  ...USES_AUTOMATED_CHECKERS,
-  // Elaboration-cost measurement + regression guard. Bodies in
-  // `qa-checkers-cost.ts`.
-  ...COST_AUTOMATED_CHECKERS,
-  // Machine-triviality oracle (scaffold; inert without a cache).
-  ...TRIVIALITY_AUTOMATED_CHECKERS,
-  // Vacuity-by-construction: degenerate instance data that makes a
-  // propositional field `rfl`, and docstrings that claim a `sorry` the
-  // body does not carry. Bodies in `qa-checkers-vacuity.ts`.
-  ...VACUITY_AUTOMATED_CHECKERS,
-  // Render integrity — source patterns that abort pdflatex. Bodies in
-  // `qa-checkers-render.ts`.
-  ...RENDER_AUTOMATED_CHECKERS,
 };

@@ -10,7 +10,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { existsSync, readFileSync } from "fs";
-import { join, extname } from "path";
+import { join, extname, resolve } from "path";
 
 import type { ContentAdapter } from "./types.js";
 import { FeedbackStore } from "./core/feedback.js";
@@ -21,10 +21,23 @@ import { handleFeedbackGet, handleFeedbackPost } from "./routes/feedback.js";
 import { handleChatPost } from "./routes/chat.js";
 import { handleGlossaryGet, handleGlossaryPost } from "./routes/glossary.js";
 import { handleRelevanceGet, handleRelevancePost } from "./routes/relevance.js";
-import { registerBeansTools } from "./tools/beans-prime.js";
-import { registerWorkflowTools } from "./tools/workflow.js";
-import { registerTranslationTools } from "./tools/translation.js";
-import { registerStakeholderTools } from "./tools/stakeholder-map.js";
+import { registerDeclaredToolGroups, type ToolGroupDeclaration } from "./tool-groups.js";
+
+/** Where this server's declared tool modules resolve from. */
+const PLATFORM_ROOT = resolve(import.meta.dir, "..");
+
+/**
+ * The tool groups the HTTP/stdio server serves.
+ *
+ * Three are the harness's own; `translation` is CORE's, and declaring it
+ * rather than importing it is what keeps the harness able to build alone.
+ */
+const SERVER_TOOL_GROUPS: readonly ToolGroupDeclaration[] = [
+  { id: "beans", module: "src/tools/beans-prime.ts", registrar: "registerBeansTools", layer: "harness" },
+  { id: "workflow", module: "src/tools/workflow.ts", registrar: "registerWorkflowTools", layer: "harness" },
+  { id: "stakeholder", module: "src/tools/stakeholder-map.ts", registrar: "registerStakeholderTools", layer: "harness" },
+  { id: "translation", module: "src/tools/translation.ts", registrar: "registerTranslationTools", layer: "core" },
+];
 
 // ── MIME types for static serving ────────────────────────────────
 
@@ -115,15 +128,16 @@ export class FolioServer {
       return origTool(...args);
     } as typeof origTool;
 
-    // Core, adapter-independent MCP tools (agent-generic work-plan priming).
-    registerBeansTools(this.mcpServer, config.repoRoot);
-    // Process state from skills/workflows/*.bpmn — what is enabled now, and why.
-    registerWorkflowTools(this.mcpServer, config.repoRoot);
-    // Translation lifecycle: extract, inject, status, signoff, validate.
-    registerTranslationTools(this.mcpServer, config.repoRoot);
-    // Who a proposed change reaches — skills, their roles, and the process
-    // lanes accountable for work that uses them (CRDM phase 1).
-    registerStakeholderTools(this.mcpServer, config.repoRoot);
+    // Declared rather than imported, for the same reason the MCP server's are:
+    // `translation` is CORE's, and the harness is the base repository — it may
+    // not import core.
+    //
+    // Started here and awaited by `startStdio`/`startHttp` rather than run in
+    // the constructor, because resolving a declared module is asynchronous and
+    // a constructor is not. Kicking it off here keeps it overlapping with the
+    // rest of construction; awaiting it before serving is what guarantees no
+    // request arrives before the tools are registered.
+    this.toolsReady = this.registerToolGroups(config.repoRoot);
 
     // Register adapter-specific MCP tools
     if (this.adapter.registerMcpTools) {
@@ -245,7 +259,27 @@ export class FolioServer {
 
   // ── Start methods ────────────────────────────────────────────
 
+  /** Resolves once every declared tool group has been registered or reported. */
+  private readonly toolsReady: Promise<void>;
+
+  private async registerToolGroups(repoRoot: string): Promise<void> {
+    for (const o of await registerDeclaredToolGroups(
+      this.mcpServer,
+      SERVER_TOOL_GROUPS,
+      PLATFORM_ROOT,
+      [repoRoot],
+    )) {
+      // An absent group is skipped and REPORTED: a server quietly starting
+      // without its translation tools looks identical to one where they are
+      // broken. A present-but-broken one is a different state again, because
+      // the remedy is opposite — fix the module, not install the layer.
+      if (o.state === "absent") log("init", `\u2212 ${o.id}`, `${o.layer} layer: ${o.detail}`);
+      else if (o.state === "failed") log("init", `\u2717 ${o.id}`, o.detail);
+    }
+  }
+
   async startStdio(): Promise<void> {
+    await this.toolsReady;
     const transport = new StdioServerTransport();
     await this.mcpServer.connect(transport);
 
@@ -260,6 +294,7 @@ export class FolioServer {
   }
 
   async startHttp(): Promise<void> {
+    await this.toolsReady;
     const port = parseInt(process.env.MCP_PORT || "8080", 10);
     // Use the Web-Standard transport (Request/Response), not the Node
     // Express/http one: Bun.serve's `fetch` speaks the fetch API, and this

@@ -16,11 +16,14 @@
  */
 import { describe, test, expect } from "bun:test";
 
+import { TOOL_GROUPS, registerMcpToolGroups } from "../../adapters/mcp-server/tool-groups.ts";
 import {
-  TOOL_GROUPS,
   registerDeclaredToolGroups,
   type ToolGroupDeclaration,
-} from "../../adapters/mcp-server/tool-groups.ts";
+} from "../../src/tool-groups.ts";
+
+/** The MCP server's own root, for the ad-hoc declarations below. */
+const MCP_ROOT = new URL("../..", import.meta.url).pathname;
 import {
   BUILTIN_ADAPTERS,
   resolveBuiltinAdapter,
@@ -31,7 +34,7 @@ describe("MCP tool groups", () => {
     // A recording server: the registrars only need something to hang tools on.
     const calls: string[] = [];
     const fake = { tool: (name: string) => calls.push(name), registerTool: (n: string) => calls.push(n) };
-    const outcomes = await registerDeclaredToolGroups(fake);
+    const outcomes = await registerMcpToolGroups(fake);
     expect(outcomes.filter((o) => o.state !== "registered")).toEqual([]);
     expect(outcomes).toHaveLength(TOOL_GROUPS.length);
   });
@@ -56,7 +59,7 @@ describe("MCP tool groups", () => {
     const missing: ToolGroupDeclaration[] = [
       { id: "ghost", module: "adapters/mcp-server/tools/not-here.ts", registrar: "registerGhostTools", layer: "sci", requires: "a Lean toolchain" },
     ];
-    const [o] = await registerDeclaredToolGroups({}, missing);
+    const [o] = await registerDeclaredToolGroups({}, missing, MCP_ROOT);
     expect(o.state).toBe("absent");
     if (o.state === "absent") {
       expect(o.layer).toBe("sci");
@@ -70,7 +73,7 @@ describe("MCP tool groups", () => {
     const broken: ToolGroupDeclaration[] = [
       { id: "wrong-export", module: "adapters/mcp-server/tools/render.ts", registrar: "registerNoSuchThing", layer: "sci" },
     ];
-    const [o] = await registerDeclaredToolGroups({}, broken);
+    const [o] = await registerDeclaredToolGroups({}, broken, MCP_ROOT);
     expect(o.state).toBe("failed");
     if (o.state === "failed") expect(o.detail).toContain("registerNoSuchThing");
   });
@@ -82,7 +85,7 @@ describe("MCP tool groups", () => {
       ...TOOL_GROUPS.filter((g) => g.id === "preferences"),
     ];
     const fake = { tool: (n: string) => calls.push(n), registerTool: (n: string) => calls.push(n) };
-    const out = await registerDeclaredToolGroups(fake, groups);
+    const out = await registerDeclaredToolGroups(fake, groups, MCP_ROOT);
     expect(out.map((o) => o.state)).toEqual(["failed", "registered"]);
   });
 });

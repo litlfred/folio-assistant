@@ -36,7 +36,7 @@ import {
 // `schemas/render-targets.ts`.
 import { resolveRenderTarget } from "../../content/pipeline/render-discovery.js";
 import { readDeclaredFolioProfile } from "../../content/pipeline/profile-check.js";
-import { registerDeclaredToolGroups } from "./tool-groups.js";
+import { registerMcpToolGroups } from "./tool-groups.js";
 import { leanStatusBucket } from "../../schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -3357,7 +3357,7 @@ server.tool = function (...args: Parameters<typeof origTool>) {
 // resolving once the repositories are separated. An absent layer is SKIPPED
 // AND REPORTED — a server that quietly starts without `paper_render_pdf` looks
 // identical to one where rendering is broken.
-for (const o of await registerDeclaredToolGroups(server)) {
+for (const o of await registerMcpToolGroups(server)) {
   if (o.state === "absent") log("mcp", `− ${o.id}`, `${o.layer} layer: ${o.detail}`);
   else if (o.state === "failed") log("mcp", `✗ ${o.id}`, o.detail);
 }
