@@ -1,10 +1,11 @@
 ---
 # folio-assistant-y8cm
 title: fa-node-edit fails WCAG contrast at 2.22:1 on every node of the docs site
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-19T06:10:27Z
-updated_at: 2026-09-19T06:10:27Z
+updated_at: 2026-09-19T08:54:16Z
 ---
 
 
