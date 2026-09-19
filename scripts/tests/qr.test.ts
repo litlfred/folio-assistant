@@ -26,6 +26,7 @@ import { readFileSync } from "node:fs";
 import { createContext, runInContext } from "node:vm";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 /** The slice of the vendored encoder's API this file uses. It attaches to the
  *  sandbox global rather than exporting, so the shape is declared here. */
@@ -41,10 +42,10 @@ type QrFactory = (typeNumber: number, errorCorrectionLevel: string) => QrModel;
 const here = dirname(fileURLToPath(import.meta.url));
 const ctx: { qrcode?: QrFactory } = {};
 createContext(ctx);
-runInContext(readFileSync(join(here, "../../docs/assets/js/vendor/qrcode.js"), "utf8"), ctx);
+runInContext(readFileSync(join(here, "../..", siteDirFor(join(here, "../..")), "assets/js/vendor/qrcode.js"), "utf8"), ctx);
 // The UTF-8 shim must load after the encoder; without it `stringToBytes` is
 // single-byte and any non-ASCII character in a URL encodes to mojibake.
-runInContext(readFileSync(join(here, "../../docs/assets/js/vendor/qrcode_UTF8.js"), "utf8"), ctx);
+runInContext(readFileSync(join(here, "../..", siteDirFor(join(here, "../..")), "assets/js/vendor/qrcode_UTF8.js"), "utf8"), ctx);
 const loaded = ctx.qrcode;
 // Not a formality: if the vendored file ever stops attaching to the global,
 // every test below would fail with a confusing TypeError instead of saying so.

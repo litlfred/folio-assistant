@@ -85,6 +85,7 @@ import { walkBlocks } from "./qa-utils";
 import { parseLeanRef, refToDecl } from "./content-graph";
 import { splitDeclarations, stripLeanComments } from "./lean-lexer";
 import { findContentRepoRoot } from "./repo-root";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 /** Cheapest-first. Position in this list becomes `steps`. */
 export const TACTIC_LADDER = ["trivial", "rfl", "simp", "decide", "omega", "aesop"];
@@ -296,7 +297,7 @@ if (import.meta.main) {
   const lakeRoot = arg("--lake-root");
   const limit = parseInt(arg("--limit") ?? "20", 10);
   const repoRoot = findContentRepoRoot();
-  const out = arg("--out") ?? join(repoRoot, "docs/audits/lean-triviality.json");
+  const out = arg("--out") ?? join(repoRoot, siteDirFor(repoRoot), "audits/lean-triviality.json");
   const leanBin = arg("--lean") ?? "lean";
 
   if (!lakeRoot) {

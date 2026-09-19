@@ -20,6 +20,7 @@
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve } from "path";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
 // Same pencil as gen-skill-docs.ts, and for the same reason: a text glyph
@@ -27,7 +28,7 @@ const REPO_ROOT = resolve(import.meta.dir, "..");
 const EDIT_GLYPH = "\u270E";
 
 const SKILLS_DIR = join(REPO_ROOT, "schemas", "skills");
-const OUT_DIR = join(REPO_ROOT, "docs", "reference", "skills");
+const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skills");
 
 /**
  * `--check`: verify the generated tree is current without writing to it.

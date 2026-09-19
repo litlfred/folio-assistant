@@ -27,15 +27,15 @@
  * once, rather than in the Liquid template where it would be invisible.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
-import { readDeclaration } from "../schemas/cat-harness.js";
+import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { siteLinks } from "./site-links.js";
 
 const ROOT = resolve(import.meta.dir, "..");
-const OUT = join(ROOT, "docs/_data/harness.json");
+const OUT = join(ROOT, siteDirFor(ROOT), "_data/harness.json");
 const check = process.argv.includes("--check");
 
 /** `docs/assets/x.svg` → `/assets/x.svg`; anything else is passed through. */
@@ -150,7 +150,7 @@ const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";
 
 if (check) {
   if (current === next) {
-    console.log("docs/_data/harness.json is up to date");
+    console.log(`${relative(ROOT, OUT)} is up to date`);
     process.exit(0);
   }
   console.error(
@@ -162,4 +162,4 @@ if (check) {
 
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, next);
-console.log(`Wrote docs/_data/harness.json — title "${payload.title}"`);
+console.log(`Wrote ${relative(ROOT, OUT)} — title "${payload.title}"`);

@@ -76,8 +76,16 @@ import { join, resolve, extname, sep } from "path";
 import { parseLeanRef, refToDecl } from "./content-graph";
 import { hashFile } from "./qa-utils";
 import { findContentRepoRoot } from "./repo-root";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
-const CACHE_REL = "docs/audits/lean-triviality.json";
+/**
+ * Relative to the instance root, and composed rather than written out: the
+ * site moved under its stub (`docs/<stub>/`) for the repo split, and a
+ * literal here read a path no instance has. It is a FUNCTION because the
+ * root varies — the checker runs against a fixture instance in tests and the
+ * real one in the sweep, and those have different stubs.
+ */
+const cacheRel = (root: string): string => join(siteDirFor(root), "audits/lean-triviality.json");
 
 /**
  * Atomic-tactic count at or below which a closed goal is considered
@@ -122,7 +130,7 @@ function cache(): { cache: TrivialityCache; root: string } | null {
     _tried = true;
     try {
       _root = findContentRepoRoot();
-      const p = join(_root, CACHE_REL);
+      const p = join(_root, cacheRel(_root));
       if (existsSync(p)) _cache = JSON.parse(readFileSync(p, "utf-8"));
     } catch {
       _cache = null;
@@ -160,7 +168,12 @@ export function checkProofNotMachineTrivial(tsPath?: string): CheckerResult {
     return {
       result: "n/a",
       hits: [],
-      notes: `no ${CACHE_REL} — triviality not measured (absence of data, not absence of triviality)`,
+      // `_root` is null when there is no instance to resolve against, and
+      // then the site root is genuinely unknown — so the note names the file
+      // rather than composing a path that would be wrong.
+      notes:
+        `no ${_root ? cacheRel(_root) : "audits/lean-triviality.json"} — ` +
+        `triviality not measured (absence of data, not absence of triviality)`,
     };
   }
   let decl: string | undefined;
