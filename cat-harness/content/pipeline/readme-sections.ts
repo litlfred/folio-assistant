@@ -54,7 +54,6 @@ import {
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
 import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
-import { repoRootFor } from "../../schemas/cat-harness.js";
 
 // ── Section contract ────────────────────────────────────────────────────────
 
@@ -346,7 +345,13 @@ const workflowsSection: ReadmeSection = {
   marker: "folio:workflows",
   summary: "GitHub Actions workflows, described by their own `name:` field.",
   render({ root }) {
-    const dir = join(repoRootFor(root), ".github", "workflows");
+    // `root` is the FOLIO's root, supplied by the caller — this module
+    // generates a folio's README, not this instance's. `.github/` sits at that
+    // root. The `repoRootFor` sweep of 2026-09-19 treated this like the ~57
+    // sites where `root` meant this instance, and sent it to the folio's
+    // PARENT. The platform assuming it is the folio is the boundary this
+    // repository exists to keep.
+    const dir = join(root, ".github", "workflows");
     if (!existsSync(dir)) return empty("`.github/workflows` directory");
     const files = readdirSync(dir)
       .filter((f) => f.endsWith(".yml") || f.endsWith(".yaml"))

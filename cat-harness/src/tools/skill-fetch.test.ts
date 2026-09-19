@@ -9,7 +9,6 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { LOCAL_PACKAGES, discoverLocalPackages } from "./skill-fetch.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -108,7 +107,9 @@ describe("a dependency's packages are served — the overlay", () => {
     const dep = instance({ shared: SKILL, "dep-only": SKILL });
     const root = instance({ shared: SKILL });
     writeFileSync(
-      join(repoRootFor(root), "harness.config.json"),
+      // `root` is a FIXTURE instance root; its config belongs IN it. The
+      // sweep sent this to the fixture's parent — `/tmp`.
+      join(root, "harness.config.json"),
       JSON.stringify({ dependencies: { folioAssistant: [{ name: "dep", path: dep }] } }),
     );
 

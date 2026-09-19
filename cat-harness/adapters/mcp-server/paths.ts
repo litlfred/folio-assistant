@@ -7,7 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { directoryForGraph, repoRootFor } from "../../schemas/cat-harness.js";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -78,7 +78,9 @@ export const PREFS_FILE = resolve(REPO_ROOT, ".folio-assistant-prefs.json");
 // declared-path-literal: as above, a write target.
 // The declared `todos` graph — a person's outstanding items, as against
 // `beans/`. Same write-target fallback as above.
-export const TODOS_DIR = directoryForGraph(REPO_ROOT, "todos") ?? resolve(repoRootFor(REPO_ROOT), "todos");
+// `REPO_ROOT` is `findContentRepoRoot()` — a FOLIO's root, not this instance's.
+// The `repoRootFor` sweep sent the fallback to that folio's PARENT.
+export const TODOS_DIR = directoryForGraph(REPO_ROOT, "todos") ?? resolve(REPO_ROOT, "todos");
 
 /** Feedback directory — committed to main via worktree.
  *  Structure: feedback/<paper-dir>/<rootName>.ts */
