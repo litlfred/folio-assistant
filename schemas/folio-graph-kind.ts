@@ -24,6 +24,7 @@
  * unregistered kind is a hard error naming what *is* known.
  *
  * @module schemas/folio-graph-kind
+ * @graphNode schema
  */
 
 import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./cat-harness";

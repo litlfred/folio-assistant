@@ -355,7 +355,7 @@ export function checkUnicodeCrash(mdPath: string): CheckerResult {
 // ── voice-editorializing ────────────────────────────────────────
 
 const EDITORIALIZING_RE =
-  /\b(surprisingly|remarkably|interestingly|notably|amazingly|fortunately|unfortunately|of course\b|clearly|obviously|trivially|naturally|simply|merely|just\s+(?:a|the)|easily|effortlessly|seamlessly|elegantly|beautifully|perhaps the most (?:surprising|important|significant|interesting|elegant)|it is (?:worth|important|interesting|notable|easy|clear|obvious) (?:to (?:note|see|observe|point\s+out)|noting|that)|the reader (?:will|may|can) (?:appreciate|note|see|enjoy|find)|it turns out that|one might (?:expect|hope|wonder|think|imagine|suspect)|a beautiful (?:result|theorem|proof|fact|observation)|an elegant (?:proof|argument|construction|formulation)|(?:a|the) (?:truly|particularly|especially)\s+(?:beautiful|elegant|striking|surprising|remarkable)|nicely|cleanly|crisply|tidily)\b/i;
+  /\b(surprisingly|remarkably|interestingly|notably|amazingly|fortunately|unfortunately|of course\b|clearly|obviously|trivially|naturally|simply|merely|just\s+(?:a|the)|easily|effortlessly|seamlessly|elegantly|beautifully|(?:perhaps )?the (?:single )?most (?:surprising|important|significant|interesting|elegant|striking|remarkable|beautiful|profound)|it is (?:worth|important|interesting|notable|easy|clear|obvious) (?:to (?:note|see|observe|point\s+out)|noting|that)|the reader (?:will|may|can) (?:appreciate|note|see|enjoy|find)|it turns out that|one might (?:expect|hope|wonder|think|imagine|suspect)|a beautiful (?:result|theorem|proof|fact|observation)|an elegant (?:proof|argument|construction|formulation)|(?:a|the) (?:truly|particularly|especially)\s+(?:beautiful|elegant|striking|surprising|remarkable)|nicely|cleanly|crisply|tidily)\b/i;
 
 // Math-idiom exemption: a flagged adverb that modifies a math object
 // is canonical mathematical language, not editorializing. Several
@@ -368,6 +368,79 @@ const EDITORIALIZING_RE =
 //   (d) "non-simply-laced", "tri-cleanly", etc. — adverb as part of
 //       a hyphenated compound math term
 //   (e) "contribute trivially" — verb + adverb at end of clause
+// Proof-economy exemption: an adverb routing the reader AWAY from a
+// verification that is routine, which is the opposite move from editorializing.
+// Editorializing spends the reader's attention on the author's opinion; this
+// spends none and saves some.
+//
+// Measured on `library/milnorlink/` — Milnor, "Link Groups", Annals of
+// Mathematics 59(2), 1954, the paper the `expo-milnor-clarity` strict gate is
+// named after — 2026-09-19: 26 hits across 11 of its 20 pages, of which about
+// twenty are this construction. Every one says "you can check this yourself,
+// and I am not going to write it out":
+//
+//   p177  Clearly the relation of homotopy is reflexive, symmetric and transitive.
+//   p179  The inclusion map (Z, hi(Y)) -> (Qi, Pi) is clearly a homotopy equivalence.
+//   p181  it is easy to see that ai is unique and well-defined
+//   p183  This is clear for the case n = 0.
+//   p188  The associative law for multiplication is clear.
+//   p193  The following set of relations is clearly equivalent
+//
+// Four forms, and the list is exhaustive over that corpus rather than guessed:
+// sentence-initial; predicative (`is/are/was clear(ly)`); the `it is easy to
+// see/verify/check` frame; and `easily` attached to a verification verb.
+//
+// NOT a licence for `clearly` everywhere. `clearly` before a claim the reader
+// CANNOT check in their head is the real defect — the author asserting where
+// they should be proving — and no phrase list separates the two. What keeps this
+// honest is that it is a STRIP rather than a whole-line skip, so a value
+// judgement in the same clause still fails: "Clearly this is the most important
+// result" loses the `Clearly` and fails on the superlative. Asserted by a test.
+const PROOF_ECONOMY_EXEMPT = new RegExp(
+  [
+    // sentence-initial, after a full stop, or opening a parenthesis
+    String.raw`(?:^|[.;:]\s+|\(\s*)(?:clearly|obviously|evidently)\b`,
+    // predicative: "is clear", "are clearly homotopic", "seems obvious"
+    String.raw`\b(?:is|are|was|were|seems?)\s+(?:clear|clearly|obvious|obviously|evident)\b`,
+    // the "it is easy to see / verify / check / that" frame
+    String.raw`\bit\s+is\s+(?:easy|easily|clear|obvious|straightforward)\s+(?:to\s+(?:see|verify|check|show|prove)|that)\b`,
+    // ADVERB then VERB, in either order, with any auxiliaries between. Both
+    // directions occur in the exemplar and neither is the author's opinion:
+    //   p184  "can clearly be represented by a loop"   (adverb, aux, participle)
+    //   p184  "it follows easily that L is trivial"    (verb, adverb)
+    //   p188  "It clearly maps JG onto S"              (adverb, verb)
+    String.raw`\b(?:clearly|obviously|easily|readily)\s+(?:(?:be|been|being|can|may|must|will|would|shall|should|is|are|was|were|has|have|had|not)\s+)*[a-z]+(?:s|ed|en)\b`,
+    String.raw`\b[a-z]+(?:s|ed|en)\s+(?:clearly|obviously|easily|readily|trivially)\b`,
+    // ...and the participles that take the adverb the other way round
+    String.raw`\b(?:easily|readily)\s+(?:verified|checked|shown|seen|given|proved|proven|follows|obtained)\b`,
+  ].join("|"),
+  "gi",
+);
+
+// THE WRAP CUTS THE CONSTRUCTION, AND IT CUTS BOTH WAYS. A line-based scan sees
+// only one half of a hard-wrapped idiom, and which half depends on where the
+// break fell. Measured on the exemplar:
+//
+//   p178  "…the subgroup E of G is just the"  / "commutator subgroup [A] of…"
+//   p193  "…as = a' and Wi = WiJ ... Wi,ri clearly"  / "represents the ith parallel…"
+//
+// In both, THIS line ends holding only the head of the construction and the rest
+// is on the next. The `COMPARATIVE_TAIL` lookback below handles the mirror case,
+// where the previous line held the head. Kept narrow: the line must END in it.
+const TRAILING_IDIOM_HEAD =
+  /\b(?:(?:just|simply|merely|naturally|trivially|easily|cleanly|nicely)\s+(?:an?|the)|clearly|obviously|evidently|easily|readily)\s*$/i;
+
+// Term-of-art exemption: an adverb bound into a standard mathematical name, so
+// that removing it changes the claim rather than tidying it. `MATH_IDIOM_EXEMPT`
+// below covers adverb + article + noun ("naturally an algebra"); this covers
+// adverb + ADJECTIVE, which it does not.
+//
+// `naturally isomorphic` is the measured case — four of the exemplar's 26 hits,
+// on pp. 178 and 186. A *natural* isomorphism is a specific thing in category
+// theory, not an isomorphism the author happens to admire.
+const MATH_TERM_OF_ART_EXEMPT =
+  /\b(?:naturally|canonically|trivially|freely|densely|properly|simply)\s+(?:isomorphic|equivalent|homeomorphic|homotopic|diffeomorphic|embedded|graded|ordered|generated|connected|discontinuous|transitive|bounded|closed|exact|split)\b/gi;
+
 const MATH_IDIOM_EXEMPT =
   /(?:naturally|trivially|easily|cleanly|simply|nicely|just)\s+(?:an?|the)\s+\S+|(?:decomposes|attaches|factors|contributes?|contribute|extends|embeds|maps|acts|commutes|generates|bar-classify|generate)\s+(?:naturally|trivially|easily|cleanly|nicely|simply)\b|(?:naturally|trivially|easily|cleanly|nicely|simply)\s+\$|(?:non|un|tri|semi|quasi|bi|sub|super|hyper|inter|intra|pre|post)-(?:simply|naturally|trivially|easily|cleanly|nicely)|(?:simply|naturally|trivially|easily|cleanly|nicely)-(?:laced|connected|graded|ordered)/i;
 
@@ -421,11 +494,16 @@ export function checkEditorializing(mdPath: string): CheckerResult {
     // WITHOUT masking other editorializing terms elsewhere on the line.
     let scan = l
       .replace(DOMAIN_PHRASE_EXEMPT, "")
-      .replace(COMPARATIVE_EXEMPT, "");
+      .replace(COMPARATIVE_EXEMPT, "")
+      .replace(MATH_TERM_OF_ART_EXEMPT, "")
+      .replace(PROOF_ECONOMY_EXEMPT, "");
     // Hard-wrapped comparative: the negator is on the line before.
     if (OPENS_COMPARATIVE.test(l) && COMPARATIVE_TAIL.test(lines[i - 1] ?? "")) {
       scan = scan.replace(OPENS_COMPARATIVE, "");
     }
+    // This line ends holding only the head of a wrapped idiom — the rest is on
+    // the next line, which will be scanned on its own iteration.
+    scan = scan.replace(TRAILING_IDIOM_HEAD, "");
     if (!EDITORIALIZING_RE.test(scan)) return;
     // Math-idiom exemption: if the editorial adverb is in a math
     // construction (e.g. "naturally an algebra", "non-simply-laced",

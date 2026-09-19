@@ -22,6 +22,7 @@
  *
  * Per workplan
  * `tools/hecke-engine/CLARABEL_PRECISION_PLAN.md` §S7.3.
+ * @graphNode schema
  */
 
 import { z } from "zod";

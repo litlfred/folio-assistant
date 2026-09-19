@@ -35,6 +35,7 @@
  * record carries an outcome and a digest; whoever needs the bytes keeps them.
  *
  * @module schemas/tool-invocation
+ * @graphNode schema
  */
 import { z } from "zod";
 

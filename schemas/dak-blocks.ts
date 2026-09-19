@@ -27,6 +27,7 @@
  * companion file is the content.
  *
  * @module schemas/dak-blocks
+ * @graphNode schema
  */
 
 import { z } from "zod";

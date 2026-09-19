@@ -46,6 +46,7 @@
  * the feedback that arrives from outside. `actor: undefined` means **not
  * linked**, which is a third state — never "anonymous", and never silently
  * resolved to a default actor.
+ * @graphNode schema
  */
 
 import { z } from "zod";

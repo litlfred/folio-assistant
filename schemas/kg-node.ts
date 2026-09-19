@@ -44,6 +44,7 @@
  * reference goes dangling — the same rule `bpmn-translate.ts` follows.
  *
  * @module schemas/kg-node
+ * @graphNode schema
  */
 
 import { z } from "zod";

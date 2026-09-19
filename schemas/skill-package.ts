@@ -29,6 +29,7 @@
  * none, importing only `zod`. `constraints.ts` re-exports everything here, so
  * existing importers are unaffected; new harness code should import this
  * module directly, which is what keeps the edge from coming back.
+ * @graphNode schema
  */
 
 import { z } from "zod";

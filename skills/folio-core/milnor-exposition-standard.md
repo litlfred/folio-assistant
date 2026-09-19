@@ -109,8 +109,13 @@ reader knows the destination before the first step, so no step is a surprise
 
 - **Do not score from a diff.** Every hallmark is a property of the block as a
   reader meets it, not of what changed.
-- **Do not fail a block for `clearly` before a routine verification.** See above;
-  the exemplar does it fourteen times.
+- **Do not fail a block for `clearly` before a routine verification.** The
+  checker no longer does either — bean `2t41` narrowed it, and the exemplar now
+  scores exactly one `voice-editorializing` finding (p194's *"Unfortunately these
+  invariants are not strong enough"*, which is real). What remains yours is the
+  distinction no regex makes: `clearly` before a check the reader can perform is
+  correct; `clearly` on a claim they cannot verify is the author asserting where
+  they should be proving.
 - **Do not fix H4 by renaming symbols across a chapter** without checking what
   else binds them. Notation is shared.
 - **Do not treat a 16 as a licence.** The gate is necessary, not sufficient: a

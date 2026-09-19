@@ -48,6 +48,7 @@ import { fileURLToPath } from "node:url";
 import { FOLIO_NS } from "../schemas/namespaces.js";
 import { artefactStub, defaultGraphKinds, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
 import { skillMdDirs as knownSkillDirs } from "./known-skills.js";
+import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
 import { skillIoIri } from "./harness-schema-export.js";
@@ -220,6 +221,12 @@ function buildContext(): Record<string, unknown> {
     // dereferenceable, and coercing it to `@id` would resolve it against the
     // document IRI and mint a URL that nothing serves.
     maintainsFrom: `${FOLIO_NS}maintainsFrom`,
+    // The inverse of `maintains`, on a Schema node. A LINK: it names a Tool
+    // node in this same document.
+    maintainedBy: { "@id": `${FOLIO_NS}maintainedBy`, ...link },
+    // A LITERAL: a repo-relative module path, for the same reason
+    // `maintainsFrom` is one.
+    module: `${FOLIO_NS}module`,
     holdsGraph: { "@id": `${FOLIO_NS}holdsGraph`, ...link },
     startNode: { "@id": `${FOLIO_NS}startNode`, ...link },
     incoming: { "@id": `${FOLIO_NS}incoming`, ...link },
@@ -365,6 +372,20 @@ interface Export {
    * is what it was.
    */
   undeclaredTerms: Array<{ term: string; onTypes: string[]; occurrences: number }>;
+  /**
+   * Modules in the declared `schemas/` directory that say nothing about
+   * themselves, and `@graphNode none` entries with no reason.
+   *
+   * **Its own field rather than `problems`.** That field's contract is
+   * "sources that could not be read", and an undeclared module is not an
+   * unreadable one — the export saw it perfectly well. Widening `problems` is
+   * the mistake `buildExport` already refuses to make for provenance, and it
+   * would make `problems: []` meaningless as a signal.
+   *
+   * Reported and non-fatal, like `undeclaredTerms`: what is at stake is a node
+   * missing from the graph, not a graph published as whole while partial.
+   */
+  undeclaredSchemaModules: Array<{ module: string; why: "no-tag" | "none-without-reason" }>;
   /** Sources that could not be read. NEVER empty-by-omission — see module doc. */
   problems: string[];
   /**
@@ -715,6 +736,60 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
   }));
 }
 
+/**
+ * The `schemas` graph: one node per module that declares itself a schema.
+ *
+ * ## Why this did not exist until 2026-09-19
+ *
+ * `cat-harness.json` has declared `schemas/` with `graphs: ["schemas", "kg"]`
+ * since Phase 0.3, and the export produced **zero** nodes of that kind —
+ * measured on `814b693e`, 11 node types and none a schema. So the instance's
+ * own declaration promised a graph nothing backed: a consumer resolving the
+ * `schemas` kind scanned, found nothing, and had no way to tell that from an
+ * instance that genuinely holds none.
+ *
+ * ## The membership test is the file's own declaration
+ *
+ * `@graphNode schema` in the leading docblock — see `scripts/schema-nodes.ts`
+ * for why a JSDoc tag and not an exported constant, and why an untagged file
+ * is `undeclared` rather than excluded. Nothing here infers membership from a
+ * filename, which is the coincidence-not-contract defect the bean graph was
+ * restructured to avoid.
+ *
+ * ## `maintainedBy` is the inverse of `Tool.maintains`
+ *
+ * Written out rather than left for a consumer to derive, on the owner's
+ * standing rule that a downstream consumer must never have to string-
+ * manipulate or infer a rule to follow a link. The forward direction says a
+ * Tool keeps an artefact true; this says which Tool keeps THIS module's
+ * artefact true, which is the question a reader of a schema node actually has.
+ */
+function collectSchemas(doc: string, base: string): Node[] {
+  const audit = auditSchemaNodes(ROOT);
+
+  // Tool → artefact, inverted once so each schema node can name its keeper.
+  const keeper = new Map<string, string[]>();
+  try {
+    for (const t of tools(base)) {
+      for (const m of t.maintains ?? []) {
+        keeper.set(m.source, (keeper.get(m.source) ?? []).concat(makeIri(doc, "tool", t.id)));
+      }
+    }
+  } catch {
+    // `collectTools` already records why the graph did not load; a second
+    // identical problem entry would read as two failures.
+  }
+
+  return audit.nodes.map((m) => ({
+    "@id": makeIri(doc, "schema", m.name),
+    "@type": `${FOLIO_NS}Schema`,
+    name: m.name,
+    title: m.summary,
+    module: m.module,
+    maintainedBy: keeper.get(m.module),
+  }));
+}
+
 function collectGraphKinds(): Node[] {
   return defaultGraphKinds.names().map((name) => {
     const def = defaultGraphKinds.get(name)!;
@@ -1019,12 +1094,14 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     );
   }
 
+  const schemaAudit = auditSchemaNodes(ROOT);
   const graph = [
     ...collectSkills(docIri, base, problems),
     ...collectRegistryNodes(docIri, problems),
     ...collectPackages(docIri, problems),
     ...(await collectProcesses(docIri, problems)),
     ...collectTools(docIri, base, problems),
+    ...collectSchemas(docIri, base),
     ...collectGraphKinds(),
     ...collectDeclaration(docIri, problems),
   ].map(compact);
@@ -1074,6 +1151,10 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     counts,
     problems,
     undeclaredTerms: undeclaredTerms(graph, buildContext()),
+    undeclaredSchemaModules: [
+      ...schemaAudit.undeclared.map((m) => ({ module: m.module, why: "no-tag" as const })),
+      ...schemaAudit.reasonless.map((m) => ({ module: m.module, why: "none-without-reason" as const })),
+    ],
     "@graph": graph,
   };
 }
@@ -1109,6 +1190,15 @@ if (import.meta.main) {
     for (const c of collisions.slice(0, 10)) console.error(`  \u2717 ${c}`);
     if (collisions.length > 10) console.error(`  \u2026 and ${collisions.length - 10} more`);
     process.exit(1);
+  }
+
+  if (data.undeclaredSchemaModules.length > 0) {
+    console.warn(
+      `\n${data.undeclaredSchemaModules.length} module(s) in the declared schemas/ directory ` +
+        `do not declare what they are — they are absent from the graph:`,
+    );
+    for (const m of data.undeclaredSchemaModules) console.warn(`  · ${m.module}  (${m.why})`);
+    console.warn("  Add `@graphNode schema` or `@graphNode none — <reason>` to the leading docblock.");
   }
 
   if (data.undeclaredTerms.length > 0) {

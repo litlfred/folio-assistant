@@ -37,6 +37,7 @@
  *     actively wrong.
  *   - a NAV SLOT. `nav_order` / `parent` are just-the-docs front matter and are
  *     not modelled anywhere in the schema today; they are hand-written.
+ * @graphNode schema
  */
 
 /** Which source file a node's edit link opens, and how it is embedded. */

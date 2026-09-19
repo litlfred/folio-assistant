@@ -43,6 +43,7 @@
  * cross-repository interoperability with WHO SMART Guidelines (smart-base).
  *
  * @module assistant-types
+ * @graphNode schema
  */
 
 // ---------------------------------------------------------------------------
