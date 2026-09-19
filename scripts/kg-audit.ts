@@ -48,6 +48,7 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
+  kgQaSidecarPath,
   KG_QA_MANIFEST_SCHEMA,
   KG_QA_MANIFEST_PATH,
   KG_CRITERIA_BY_ID,
@@ -1011,22 +1012,23 @@ function sidecarPath(r: KgQaReport): string {
   // same-named skills into one file.
   if (r.subject.kind === "skill" && r.subject.path) {
     const abs = join(root, r.subject.path);
-    return join(dirname(abs), KG_QA_DIRNAME, `${basename(abs, ".md")}.kg-qa.json`);
+    return kgQaSidecarPath(root, dirname(abs), basename(abs, ".md"));
   }
+  // The directory each subject kind LIVES in. The results tree mirrors it —
+  // see `kgQaSidecarPath` for why a flat one collides, measurably.
   const dirFor: Record<KgSubjectKind, string> = {
-    process: join(WORKFLOW_DIR, KG_QA_DIRNAME),
-    decision: join(DECISION_DIR, KG_QA_DIRNAME),
-    role: join(KG_ROOT, "roles", KG_QA_DIRNAME),
-    requirement: join(KG_ROOT, "requirements", KG_QA_DIRNAME),
-    // Fallback only: a skill's sidecar sits beside the skill itself, resolved
-    // above, because one shared directory would collide two packages' skills
-    // of the same name.
-    skill: join(KG_ROOT, KG_QA_DIRNAME),
-    graph: join(KG_ROOT, "roles", KG_QA_DIRNAME),
+    process: WORKFLOW_DIR,
+    decision: DECISION_DIR,
+    role: join(KG_ROOT, "roles"),
+    requirement: join(KG_ROOT, "requirements"),
+    // Fallback only: a skill's subject directory is resolved above, from its
+    // own path, so two packages' skills of the same name stay distinct.
+    skill: KG_ROOT,
+    graph: join(KG_ROOT, "roles"),
   };
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json)$/, "") : r.subject.id;
   const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
-  return join(dirFor[r.subject.kind], `${name}.kg-qa.json`);
+  return kgQaSidecarPath(root, dirFor[r.subject.kind], name);
 }
 
 function serialise(r: KgQaReport): string {

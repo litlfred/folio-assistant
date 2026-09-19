@@ -35,7 +35,7 @@ This is the distinction to hold on to, because getting it backwards is how a
 fix lands in the wrong place.
 
 The **verdict** is produced by a sweep and lives beside its subject —
-`*.qa.json` beside a content block, `kg-qa/*.kg-qa.json` beside a skill or a
+`*.qa.json` beside a content block, `test/results/kg-qa/**/*.kg-qa.json` for a skill or a
 diagram. The **witness** is the same verdict rendered for the web, flattened
 into the shape the panel draws and placed where the site can fetch it.
 
@@ -120,7 +120,7 @@ and render order coincide only while nothing sorts above it.
 | written by | `scripts/gen-docs-pages.ts` |
 | drawn by | `docs/assets/js/docs-ui.js` (`qaBuildPanel`) |
 | block verdicts | `content/**/*.qa.json` |
-| kg verdicts | `**/kg-qa/*.kg-qa.json`, auditor in `skills/kg-qa.manifest.json` |
+| kg verdicts | `test/results/kg-qa/<subject-dir>/<stem>.kg-qa.json` — the tree MIRRORS the subject's path, because four basenames already collide across packages. Path from `kgQaSidecarPath` in `schemas/kg-qa.ts`, never composed by hand. Auditor in `skills/kg-qa.manifest.json` |
 
 The schema lives in `content/pipeline/` rather than `schemas/` because it is
 the pipeline's own output shape. Worth knowing when you go looking for it in

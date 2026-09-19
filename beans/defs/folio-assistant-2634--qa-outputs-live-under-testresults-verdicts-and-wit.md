@@ -211,3 +211,65 @@ Worth its own bean.
 Verified: `bun test` 2175 pass / 0 fail, typecheck, `eslint .`,
 `kg:audit:check`, `check:workflows`, `check:harness-dirs`, `check:partition`,
 `agent-memory:check`, `gen-skill-docs --check`, `translate-kg-viewer:check`.
+
+---
+
+## PR 5 done, 2026-09-19 — the 227 KG verdicts
+
+All 227 `*.kg-qa.json` moved from `kg-qa/` directories beside their subjects to
+`test/results/kg-qa/`, in a tree that **mirrors each subject's path**.
+
+**The mirroring is not tidiness — flat would have destroyed four verdicts.**
+`kg-audit.ts` had recorded the risk in a comment ("one shared directory would
+collide two packages' skills of the same name") and kept the sidecars beside
+their subjects because of it. Measured before moving anything: **four sidecar
+basenames already occur twice** — `editor`, `getting-started`, `idle-backlog`,
+`l2-dak-authoring`. Flat, four verdicts would have silently overwritten four
+others. The move script asserted injectivity (227 sources → 227 distinct
+destinations) BEFORE touching a file.
+
+**This is the first PR in the sequence where the AUDITOR changed, not just the
+files** — and it turned up the defect worth the most here. The path was
+composed in TWO places: `kg-audit.ts` wrote it, and
+`content/pipeline/qa-witness.ts` read it, independently. Two spellings of one
+concept, agreeing only because neither had changed — and this move is exactly
+the change that would have made them disagree. A reader looking where nothing
+was written finds nothing and reports the subject as **unaudited**, which is a
+false pass, not an error. `kgQaSidecarPath` in `schemas/kg-qa.ts` is now the
+one answer, and both call it.
+
+`repoRoot` became a **required** parameter of `sidecarPaths` rather than
+defaulted: a default would let a caller that forgot it resolve to a plausible
+wrong tree, which is the same false pass by another route. The three families
+that do not need it pay one argument, which is the cheaper mistake.
+
+**Proof the writer agrees with the move:** after `git mv`, `bun run kg:audit`
+produced **zero untracked files**. Had the auditor's computed path differed
+from where I put them by even one segment, 227 new files would have appeared
+beside 227 orphans.
+
+### Found by the move, exactly as designed
+
+`schemas/kg-qa.test.ts` hardcoded three old roots with `.filter(existsSync)`,
+so the move emptied its file list — and its own `there are some` guard fired.
+That guard exists precisely to stop the suite reporting a clean run over
+nothing. It now walks the results tree recursively from `KG_QA_RESULTS_DIR`,
+so the roots cannot drift again.
+
+Four `qa-witness` fixtures built `kg-qa/` siblings by hand; they take the path
+from the shared function now, so a fixture cannot drift from what the auditor
+writes.
+
+**Docs moved with the wiring**, per this repo's own rule: `cat-harness.json`
+(both the `cat-harness` and `qa` entries), `skills/folio-core/qa-witness.md`
+plus its generated mirror and sidecar, and `AGENTS.md`. One `kg-qa/` mention
+stays in `AGENTS.md` and is correct — it is past tense, about 25 bogus sidecars
+that *were* written beside memory nodes.
+
+Verified: `bun test` 2175 pass / 0 fail, typecheck, `eslint .`,
+`kg:audit:check`, `check:workflows`, `check:harness-dirs`, `check:partition`,
+`agent-memory:check`, `gen-skill-docs --check`.
+
+## Remaining
+
+- the 122 block verdicts `*.qa.json`, which still sit beside their blocks
