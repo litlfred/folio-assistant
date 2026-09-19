@@ -231,10 +231,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T11:31:23.201Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0f3c633dd3a44e244c22c4087b642182d7abeed9",
-  "sourceCommitSha": "0f3c633dd3a44e244c22c4087b642182d7abeed9",
-  "sourceCommitAt": "2026-09-19T11:29:52Z",
+  "generatedAt": "2026-09-19T11:44:07.699Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0227127e6d5acb7eb6ac4a8d5c516981a89d4910",
+  "sourceCommitSha": "0227127e6d5acb7eb6ac4a8d5c516981a89d4910",
+  "sourceCommitAt": "2026-09-19T11:41:53Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 162,
@@ -246,7 +246,7 @@
     "SequenceFlow": 443,
     "ProcessNode": 414,
     "Tool": 28,
-    "Schema": 43,
+    "Schema": 44,
     "GraphKind": 16,
     "Directory": 11
   },
@@ -18788,6 +18788,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/memory"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/note-anchor",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "note-anchor",
+      "title": "Where a note is attached, as a three-state answer.",
+      "module": "schemas/note-anchor.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/note-anchor"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/precision-scalar",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "precision-scalar",
@@ -19214,8 +19222,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "b0b8be2c1579af54a243fb277383b0a617464efc",
-    "pr": "405/merge",
-    "run": "35440267094"
+    "sha": "872257a368e0ea5ae0c746d713383349a92e210d",
+    "pr": "408/merge",
+    "run": "35440843798"
   }
 }
