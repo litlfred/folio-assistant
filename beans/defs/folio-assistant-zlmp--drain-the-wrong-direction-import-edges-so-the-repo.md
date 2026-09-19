@@ -230,3 +230,43 @@ split cuts, and that is #223's owner's call. The counter exists to surface these
 decisions; driving it to zero by reclassifying modules until the number looks
 right would defeat it — as the disproved hypothesis above shows, a plausible
 reclassification can make things worse while looking like progress.
+
+## Edges 5 and 6 drained, 2026-09-19 — 6 -> 4
+
+Owner asked for the `corpus-gate` inversion. Done, and it took **both** halves;
+either alone does nothing.
+
+**The inversion.** `labelFor` was the only consumer of the two core imports, so
+it moved out of `src/workflow/corpus-gate.ts` and became a required
+`CorpusGateOptions.labelFor: LabelForPath`. Required rather than defaulted: a
+default would have to import the content pipeline in the gate, which is the
+dependency the parameter exists to remove. `scripts/check-corpus-gate.ts` and
+`scripts/tests/corpus-gate.test.ts` supply the real resolver — a stub in the
+test would have left the production path uncovered.
+
+**Measured after the inversion alone: still 6.** The two edges simply moved
+from `corpus-gate.ts` to `check-corpus-gate.ts`, both harness. This is the same
+trap as the disproved `contributions.ts` hypothesis above, and worth stating:
+**inverting a dependency does not remove a cross-layer edge if the new holder
+sits in the same layer.**
+
+**The classification.** `scripts/check-corpus-gate.ts` was triaged `harness` on
+"editing-process authorisation gate". `AGENTS.md` says it runs **in a folio
+repo**, from that repo's pre-commit hook or CI, and the triage question is
+whether a script reads PLATFORM or CONTENT — this one reads changed content
+blocks. Enforcing a harness-defined process does not make the enforcer harness,
+any more than a linter belongs to the language it checks. Re-triaged to core.
+
+**Together: 6 -> 4.** `agentic-harness -> folio-assist-core` fell 5 -> 3.
+
+Verified: `bun run check:partition` reports 4 with 0 unassigned; `bun test`
+2114 / 0 fail; tsc and eslint clean; `check-corpus-gate.ts` still runs.
+
+### Remaining 4
+
+| from | to | what it needs |
+|---|---|---|
+| `schemas/harness-config.ts` | `schemas/contributions.ts` | inversion — the registry is passed in, or the loader splits |
+| `schemas/index.ts` | `schemas/dak-blocks.ts` | barrel crossing a layer; drop the re-export or reclassify `dak-blocks` |
+| `scripts/check-workflow-refs.ts` | `schemas/translation-tools.ts` | already lazy; invert or reclassify the script |
+| `src/types.ts` | `schemas/types.ts` | `import type` only, and **this edge is the fix** for a drifted `FeedbackItem`; the answer is to move the type down, not delete the import |

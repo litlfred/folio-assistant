@@ -34,8 +34,6 @@
 
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { readBlockManifest } from "../../content/pipeline/qa-utils.js";
-import { loadBlockModuleSync } from "../../content/pipeline/block-module.js";
 import { loadProcessModel, type ProcessModel } from "./process-model.js";
 import { checkGate, loadRelaxations, validateRelaxations, type Relaxation } from "./gate.js";
 import { instanceId, loadInstance } from "./store.js";
@@ -74,28 +72,30 @@ function manifestFor(repoRoot: string, file: string): string | undefined {
  *
  * `undefined` means the file is not part of a block — a helper module, a
  * script, a chapter manifest. Those are not corpus writes and are not this
- * gate's business. A file that *is* a manifest but will not load throws,
+ * gate's business. A file that *is* a manifest but will not load must throw,
  * because "cannot tell" must not read as "fine".
+ *
+ * **Supplied by the caller, not imported here.** Reading a block manifest is
+ * the content pipeline's job, and this gate is harness-layer: importing
+ * `content/pipeline/` from `src/workflow/` was two of the six wrong-direction
+ * edges bean `zlmp` is draining, and after the five-repo split each is a
+ * circular dependency between repositories. The gate needs a label for a path;
+ * it does not need to know what a block manifest is.
  */
-function labelFor(tsPath: string): string | undefined {
-  // The cheap textual check first: it decides what may be executed, exactly as
-  // in walkBlocks. A script with a builder call in a template literal is not a
-  // block and must not be imported here either.
-  if (!readBlockManifest(tsPath)) return undefined;
-  const loaded = loadBlockModuleSync(tsPath);
-  if (!loaded) {
-    throw new Error(
-      `${tsPath} looks like a block manifest but its default export is not a labelled block`,
-    );
-  }
-  return loaded.label;
-}
+export type LabelForPath = (tsPath: string) => string | undefined;
 
 export interface CorpusGateOptions {
   /** Files changed in this commit, repo-relative. */
   files: string[];
   /** Where the folio's `skills/workflows/` lives — the platform checkout. */
   platformRoot: string;
+  /**
+   * Resolve a changed `.ts` path to the block label it declares.
+   *
+   * Required rather than defaulted: a default would have to import the content
+   * pipeline here, which is the dependency this parameter exists to remove.
+   */
+  labelFor: LabelForPath;
 }
 
 /**
@@ -134,7 +134,7 @@ export async function checkCorpusGate(
 
     let label: string | undefined;
     try {
-      label = labelFor(ts);
+      label = opts.labelFor(ts);
     } catch (e) {
       const finding: GateFinding = {
         file,
