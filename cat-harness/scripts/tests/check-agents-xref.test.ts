@@ -23,8 +23,18 @@ import {
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 function repo(agentsMd: string, skills: Record<string, string>): string {
+  // `root` IS the fixture's repository root, so `AGENTS.md` goes in it.
+  //
+  // A mechanical pass over `join(ROOT, "AGENTS.md")` call sites rewrote this
+  // to `repoRootFor(root)` on 2026-09-19 — correct for the ~57 real call sites
+  // it was drained for, wrong here, because a fixture's root has no enclosing
+  // instance. It wrote `/tmp/AGENTS.md` while `auditXrefs` looked in the temp
+  // directory, and three tests failed on a file the fixture had just written.
+  //
+  // The lesson is about the sweep rather than the line: `repoRootFor` means
+  // "up from an INSTANCE root", and a variable named `root` is not always one.
   const root = mkdtempSync(join(tmpdir(), "xref-"));
-  writeFileSync(join(repoRootFor(root), "AGENTS.md"), agentsMd);
+  writeFileSync(join(root, "AGENTS.md"), agentsMd);
   for (const [rel, body] of Object.entries(skills)) {
     const p = join(root, "skills", rel);
     mkdirSync(join(p, ".."), { recursive: true });
@@ -141,7 +151,12 @@ describe("the live corpus", () => {
     // the backlog was cleared and the corpus fell to 8. Second instance of the
     // same mistake in one session; the note below is why there will not be a
     // third. What is asserted is the property CI actually gates on.
-    const found = auditXrefs(join(import.meta.dir, "..", ".."), SKILL_ROOTS);
+    // THE REPOSITORY root: `AGENTS.md` is a repository artefact, and
+    // `"..", ".."` reaches this file's INSTANCE root since the move.
+    // Note the contrast with `repo()` above, which passes a fixture root
+    // PLAIN — three roots in one file, which is why a blunt sweep over
+    // `join(x, "AGENTS.md")` got one of them wrong.
+    const found = auditXrefs(repoRootFor(join(import.meta.dir, "..", "..")), SKILL_ROOTS);
     expect(found.filter((c) => !c.verdict)).toEqual([]);
     expect(found.filter((c) => c.verdict === "unresolved")).toEqual([]);
   });

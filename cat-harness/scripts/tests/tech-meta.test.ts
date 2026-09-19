@@ -24,7 +24,10 @@ afterEach(() => {
 function techMeta(file: string): Record<string, unknown> {
   const py =
     "import sys, json, importlib.util as u\n" +
-    "spec = u.spec_from_file_location('t', 'scripts/_tech_meta.py')\n" +
+    // Absolute, from this file's location. It was `'scripts/_tech_meta.py'`,
+    // relative to the CWD — a path inside a python string inside a test, which
+    // no scan here reaches. Fifth instance of this exact shape on this branch.
+    `spec = u.spec_from_file_location('t', ${JSON.stringify(join(import.meta.dir, "..", "_tech_meta.py"))})\n` +
     "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
     "print(json.dumps(m.tech_meta(sys.argv[1])))\n";
   const r = Bun.spawnSync(["python3", "-c", py, file], { cwd: ROOT });

@@ -353,7 +353,7 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
   // not a licence to reformat a file it did not write.
   const py =
     "import sys, json, importlib.util as u\n" +
-    "spec = u.spec_from_file_location('t', 'scripts/_tech_meta.py')\n" +
+    `spec = u.spec_from_file_location('t', ${JSON.stringify(pyHelper("_tech_meta.py"))})\n` +
     "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
     "p = sys.argv[2]\n" +
     "raw = open(p).read()\n" +
