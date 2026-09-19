@@ -203,6 +203,11 @@ const RULES: Rule[] = [
       // server actually serves, the other refuses a `.bpmn`/`.dmn` whose
       // comments are not well-formed XML.
       "scripts/capture-mcp-tools.ts",
+      // Materialises the directories this instance DECLARES, from
+      // `harness-config.ts`. It acts on the declaration and needs no folio to
+      // have anything to do — arrived from `main` and fell through every
+      // prefix, which the tool reported as `unassigned` rather than guessing.
+      "scripts/harness-dirs.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -457,7 +462,15 @@ const RULES: Rule[] = [
   {
     repo: "core",
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
-    exact: ["src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts", "src/tools/preview.ts", "src/qa-agent-write.ts"],
+    exact: [
+      "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts",
+      "src/tools/preview.ts", "src/qa-agent-write.ts",
+      // The voice-graph validator. It resolves each rule's citation into
+      // `library/` — a FOLIO's reference library — and `schemas/voices.ts`,
+      // which it reads, is core by the `schemas/` prefix. Arrived from `main`
+      // and fell through every prefix.
+      "scripts/check-voices.ts",
+    ],
   },
 ];
 
