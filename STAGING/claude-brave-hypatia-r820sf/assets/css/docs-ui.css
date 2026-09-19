@@ -893,7 +893,7 @@
  *
  * Its colours were inline style literals in `docs-ui.js` until 2026-09-19, and
  * two pairs were under the WCAG 1.4.3 floor of 4.5:1. Measured by axe-core in
- * `tests/a11y.e2e.ts`:
+ * `test/a11y.e2e.ts`:
  *
  *   - a not-yet-translated tab: #cbd1d9 on #f0f0f0 = **1.34:1**, five tabs.
  *   - the current tab: #ffffff on #3b82f6 = **3.67:1**, bold at 12.8px. Bold
@@ -1744,10 +1744,15 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * that is barely legal is a target that is hard to hit (bean `gjli`).
  */
 
+/* Themed: every colour here is a ROLE supplied by themes.css, which is
+ * generated from the theme nodes in `schemas/themes.ts`. The fallbacks after
+ * each `var()` are the pre-theme neutrals, so a board still renders if
+ * themes.css has not loaded — an unstyled sticky reads as broken, and "no
+ * theme yet" is a state rather than an error. */
 .fa-sticky-board {
   margin: 0 0 1.5em;
   padding: 1em 1.1em 1.2em;
-  border: 1px solid rgba(128, 128, 128, 0.4);
+  border: 1px solid var(--fa-sticky-edge, rgba(128, 128, 128, 0.4));
   border-radius: 8px;
   background: rgba(128, 128, 128, 0.06);
 }
@@ -1784,26 +1789,45 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  * breakpoint that the next layout change would invalidate. */
 .fa-sticky-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--fa-sticky-min-width, 17rem), 1fr));
   gap: 0.9em;
   align-items: start;
 }
 
 .fa-sticky {
-  padding: 0.7em 0.8em;
-  border: 1px solid rgba(128, 128, 128, 0.45);
+  padding: var(--fa-sticky-padding, 0.7em 0.8em);
+  font-size: calc(1em * var(--fa-sticky-font-scale, 1));
+  color: var(--fa-sticky-ink, inherit);
+  border: 1px solid var(--fa-sticky-edge, rgba(128, 128, 128, 0.45));
   /* The priority stripe is the only per-card differentiator, and it is a
    * WIDTH as well as an opacity — colour alone would carry the whole signal,
    * which SC 1.4.1 forbids and a monochrome reader cannot see at all. */
   border-left-width: 5px;
   border-radius: 6px;
-  background: rgba(128, 128, 128, 0.08);
+  /* A gradated theme supplies both stops or neither — the schema refuses one,
+   * because a gradient with a single stop is a flat fill claiming otherwise.
+   * So the linear-gradient falls back to the flat surface as a whole. */
+  background: var(
+    --fa-sticky-grad-from,
+    var(--fa-sticky-surface, rgba(128, 128, 128, 0.08))
+  );
+  background-image: linear-gradient(
+    var(--fa-sticky-grad-from, transparent),
+    var(--fa-sticky-grad-to, transparent)
+  );
 }
 
+/* PRIORITY STAYS LITERAL, DELIBERATELY. Critical is red and high is amber in
+ * every theme, because the stripe encodes PRIORITY and a theme that recoloured
+ * it would make the same urgency read differently on two boards. A theme
+ * supplies `--fa-sticky-accent` for its own chrome, not for this signal. */
 .fa-sticky-p-critical { border-left-color: rgba(200, 60, 60, 0.85); }
 .fa-sticky-p-high     { border-left-color: rgba(200, 120, 40, 0.8); }
-.fa-sticky-p-medium   { border-left-color: rgba(128, 128, 128, 0.7); }
-.fa-sticky-p-low      { border-left-color: rgba(128, 128, 128, 0.35); }
+/* The two neutral priorities DO take the theme's accent: they carry no hue of
+ * their own to preserve, and grey-on-sage is the case where an unthemed stripe
+ * reads as a rendering fault rather than as "medium". */
+.fa-sticky-p-medium   { border-left-color: var(--fa-sticky-accent, rgba(128, 128, 128, 0.7)); }
+.fa-sticky-p-low      { border-left-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.35)); }
 
 .fa-sticky-head {
   display: flex;
