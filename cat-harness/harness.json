@@ -141,6 +141,15 @@
       ]
     },
     {
+      "id": "kg-navigation",
+      "path": "../kg-navigation/skills/",
+      "scope": "repository",
+      "description": "The TOOLED knowledge-graph navigation skill, lifted out of the `folio-core` package on 2026-09-20 at the owner's direction: '(kg-navigation should be similar named subgraph)'. Repository-scoped and a SIBLING of `skills/`, not a child: `skills/` is already declared as this instance's `cat-harness` graph in full, so a nested entry would be a declaration inside a declaration -- #263's own defect, where a consumer beneath the outer path cannot tell which declaration owns what it finds. The name is shared with `bootstrap/skills/kg-navigation.md`, which stays where it is and must: that one assumes NOTHING is installed, and a bootstrap reaching into another instance for its first skill would fail in the cold-start case it exists for. Two bodies under one name, each addressable -- see kg-navigation/README.md.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
       "id": "cat-harness",
       "path": "skills/",
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",

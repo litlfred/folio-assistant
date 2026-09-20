@@ -1,0 +1,177 @@
+/**
+ * The invariants the three content-layer schemas exist to enforce.
+ *
+ * Every case here is drawn from the ONE measured record — the full item record
+ * for `wpr-rdo-2020-003-eng`, extracted with `pdftotext` on 2026-09-20 — rather
+ * than from a reading of the Dublin Core or DSpace specifications. A test
+ * written against a spec asserts what the spec says; a test written against the
+ * record asserts what actually arrived.
+ */
+import { describe, expect, it } from "bun:test";
+import {
+  DUBLIN_CORE_SCHEMA_TAG,
+  DublinCoreRecordSchema,
+  dcElement,
+  dcFieldName,
+  dcValues,
+} from "./dublin-core.js";
+import { MaterializationSchema, freshness, refusedGates, unansweredGates } from "./materialization.js";
+import { CATALOGUE_NODE_SCHEMA_TAG, CatalogueNodeSchema, materializationCensus } from "./catalogue.js";
+
+/** The measured record, trimmed to the fields that carry the three hard cases. */
+const RECORD = {
+  $schema: DUBLIN_CORE_SCHEMA_TAG,
+  id: "18892cf3-5a4f-42a4-923c-a93f4a594dec",
+  fields: [
+    {
+      schema: "dc",
+      element: "identifier",
+      qualifier: "uri",
+      values: [
+        { value: "https://iris.who.int/handle/10665/332098" },
+        { value: "http://iris.wpro.who.int/handle/10665.1/14518" },
+      ],
+    },
+    { schema: "dc", element: "identifier", qualifier: "govdoc", values: [{ value: "WPR/RDO/2020/003" }] },
+    {
+      schema: "dc",
+      element: "subject",
+      qualifier: "mesh",
+      values: [
+        { value: "Publishing", language: "en" },
+        { value: "Guidelines as Topic", language: "en" },
+      ],
+    },
+    { schema: "dc", element: "title", values: [{ value: "Publication and information products style guide", language: "en" }] },
+    { schema: "dc", element: "date", qualifier: "issued", values: [{ value: "2020-05-12" }] },
+  ],
+  provenance: {
+    source: "who-iris/uploads/wpr-rdo-2020-003-eng/iris-capture/…-info.pdf",
+    retrievedAt: "2026-09-20",
+    method: "pdftotext -layout",
+  },
+} as const;
+
+const GATES_OK = {
+  size: { verdict: "permitted", basis: "2.68 MB of a ~0.7 TB catalogue" },
+  restrictions: { verdict: "unknown", basis: "no restrictions stated on the item page" },
+  retention: { verdict: "permitted", basis: "kept until the next refresh" },
+  sourceLoss: { verdict: "permitted", basis: "bitstream held locally" },
+  copyright: { verdict: "unknown", basis: "no licence field in the record" },
+} as const;
+
+describe("Dublin Core — the three things a naive model loses", () => {
+  it("keeps BOTH identifier.uri values", () => {
+    // The second is a handle on iris.wpro.who.int, a regional instance merged
+    // into the global one. It is the only evidence this repository holds of a
+    // source host disappearing, so dropping it as a duplicate would discard
+    // the source-loss case the materialization gates exist for.
+    const uris = dcValues(DublinCoreRecordSchema.parse(RECORD), "identifier", "uri");
+    expect(uris.map((v) => v.value)).toEqual([
+      "https://iris.who.int/handle/10665/332098",
+      "http://iris.wpro.who.int/handle/10665.1/14518",
+    ]);
+  });
+
+  it("keeps BOTH subject.mesh values, with their language tags", () => {
+    const mesh = dcValues(DublinCoreRecordSchema.parse(RECORD), "subject", "mesh");
+    expect(mesh).toHaveLength(2);
+    expect(mesh.every((v) => v.language === "en")).toBe(true);
+  });
+
+  it("distinguishes an absent language from an asserted one", () => {
+    // The record tags the title `en` and leaves the date untagged. Absence is
+    // data: an untagged value is not an English value, it is a value whose
+    // language nobody asserted.
+    const rec = DublinCoreRecordSchema.parse(RECORD);
+    expect(dcValues(rec, "title")[0].language).toBe("en");
+    expect(dcValues(rec, "date", "issued")[0].language).toBeUndefined();
+  });
+
+  it("spans qualifiers when asked for an element", () => {
+    // "What identifiers does this item have" must reach `govdoc` as well as
+    // `uri` — a consumer enumerating the qualifiers it knew about would miss
+    // the one it did not.
+    const fields = dcElement(DublinCoreRecordSchema.parse(RECORD), "identifier");
+    expect(fields.map(dcFieldName).sort()).toEqual(["dc.identifier.govdoc", "dc.identifier.uri"]);
+  });
+});
+
+describe("materialization — the states and the gates", () => {
+  it("refuses `materialized` with no gates recorded", () => {
+    const r = MaterializationSchema.safeParse({ state: "materialized", of: "https://x", localPath: "library/x" });
+    expect(r.success).toBe(false);
+  });
+
+  it("refuses `materialized` with no local path", () => {
+    const r = MaterializationSchema.safeParse({ state: "materialized", of: "https://x", gates: GATES_OK });
+    expect(r.success).toBe(false);
+  });
+
+  it("refuses gates on a node that was never materialized", () => {
+    // A gate verdict on a `referenced` node claims a decision nobody had to make.
+    const r = MaterializationSchema.safeParse({ state: "referenced", of: "https://x", gates: GATES_OK });
+    expect(r.success).toBe(false);
+  });
+
+  it("separates `unknown` from `permitted`", () => {
+    // The whole reason GateVerdict is three-valued: "no restrictions known in
+    // context" is a state, not a green light.
+    expect(unansweredGates(GATES_OK as never).sort()).toEqual(["copyright", "restrictions"]);
+    expect(refusedGates(GATES_OK as never)).toEqual([]);
+  });
+
+  it("reports four freshness verdicts, not a boolean", () => {
+    const base = { of: "https://x", localPath: "library/x", gates: GATES_OK };
+    expect(freshness(MaterializationSchema.parse({ state: "referenced", of: "https://x" }))).toBe("not-materialized");
+    expect(freshness(MaterializationSchema.parse({ state: "materialized", ...base }))).toBe("no-expiry");
+    expect(
+      freshness(MaterializationSchema.parse({ state: "materialized", ...base, expiresAt: "2020-01-01" })),
+    ).toBe("expired");
+    expect(
+      freshness(MaterializationSchema.parse({ state: "materialized", ...base, expiresAt: "2999-01-01" })),
+    ).toBe("fresh");
+  });
+
+  it("has no default state — a node that does not say is invalid", () => {
+    expect(MaterializationSchema.safeParse({ of: "https://x" }).success).toBe(false);
+  });
+});
+
+describe("catalogue — the model must not disagree with the corpus", () => {
+  const node = (over: Record<string, unknown>) => ({
+    $schema: CATALOGUE_NODE_SCHEMA_TAG,
+    id: "n",
+    kind: "item",
+    title: "t",
+    ...over,
+  });
+
+  it("refuses a libraryId on a node that says it is not materialized", () => {
+    // A slug under library/ IS the bytes being here. Declaring otherwise makes
+    // corpus-grep and the catalogue disagree about what exists.
+    const r = CatalogueNodeSchema.safeParse(
+      node({ libraryId: "wpr-rdo-2020-003-eng", materialization: { state: "referenced", of: "https://x" } }),
+    );
+    expect(r.success).toBe(false);
+  });
+
+  it("refuses bitstreams on a container", () => {
+    const r = CatalogueNodeSchema.safeParse(
+      node({
+        kind: "container",
+        materialization: { state: "referenced", of: "https://x" },
+        bitstreams: [{ name: "a.pdf", materialization: { state: "referenced", of: "https://y" } }],
+      }),
+    );
+    expect(r.success).toBe(false);
+  });
+
+  it("counts the three states separately and never as a percentage", () => {
+    const nodes = [
+      CatalogueNodeSchema.parse(node({ id: "a", materialization: { state: "referenced", of: "https://a" } })),
+      CatalogueNodeSchema.parse(node({ id: "b", materialization: { state: "unknown", of: "https://b" } })),
+    ];
+    expect(materializationCensus(nodes)).toEqual({ unknown: 1, referenced: 1, materialized: 0 });
+  });
+});
