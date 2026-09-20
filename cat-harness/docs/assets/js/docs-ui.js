@@ -1886,10 +1886,24 @@
 
   function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
-    var card = el("article", {
+    var attrs = {
       class: "fa-sticky fa-sticky-p-" + (todo.priority || "medium"),
       "data-todo-id": todo.id,
-    });
+    };
+    // THE THEME IS A PROPERTY OF THE STICKY, NOT OF THE PINNED STATE.
+    //
+    // Bean `ivfw`, the owner: "when you unpin, sticky, it loses its theme".
+    // Read from `todo.theme` HERE, in the one function that builds a card,
+    // which is what makes the round-trip safe rather than the transitions
+    // being careful: `float` constructs a second card on the layer and `dock`
+    // destroys it, so any theme carried on the DOM node instead of on the todo
+    // would be dropped by construction. Neither transition needs to know the
+    // theme exists.
+    //
+    // The attribute is what `themes.css` selects on, so this is the same
+    // mechanism the landing stickies use rather than a second one.
+    if (todo.theme) attrs["data-fa-sticky-theme"] = todo.theme;
+    var card = el("article", attrs);
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {

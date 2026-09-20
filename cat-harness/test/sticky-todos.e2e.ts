@@ -57,6 +57,37 @@ const ITEMS = [
 
 const PAGE_URL = "http://todo.test/page.html";
 
+/**
+ * A SECOND fixture, for the themed sticky, on its own page and its own index.
+ *
+ * Not a third entry in `ITEMS`, and the reason is this file's own `d1r6`
+ * lesson one step earlier: the count assertions above are load-bearing — the
+ * discard test proves a slot disappeared by counting 2 then 1 — so widening
+ * the shared fixture would have rewritten six unrelated assertions to keep a
+ * new one passing. A separate page costs one route and touches nothing.
+ *
+ * `theme` is already on `ThemedTodoFieldsSchema`. What does not exist yet is
+ * the generator emitting it and the art behind it, which is `5y4b`. So this
+ * fixture is ahead of the pipeline by exactly one field, deliberately: the
+ * board's handling of a themed todo is testable now, and it is what `5y4b`
+ * will land on.
+ */
+const THEMED_PAGE_URL = "http://todo.test/themed.html";
+const THEMED_ITEMS = [
+  {
+    id: "themed-todo",
+    summary: "Ingest the sources",
+    comment: "A todo that has chosen a theme.",
+    status: "open",
+    priority: "medium",
+    origin: "agent",
+    createdAt: "2026-09-20",
+    theme: "library",
+    tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+    relations: [],
+  },
+];
+
 const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="fa-todo-src" content="/assets/todos/index.json">
 <style>${CSS}</style></head><body>
@@ -72,6 +103,18 @@ test.beforeEach(async ({ page }) => {
     const url = route.request().url();
     if (url.endsWith("/page.html")) {
       return route.fulfill({ contentType: "text/html", body: HARNESS });
+    }
+    if (url.endsWith("/themed.html")) {
+      return route.fulfill({
+        contentType: "text/html",
+        body: HARNESS.replace("/assets/todos/index.json", "/assets/todos/themed.json"),
+      });
+    }
+    if (url.endsWith("/assets/todos/themed.json")) {
+      return route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({ $schema: "folio-todo-index/v1", items: THEMED_ITEMS }),
+      });
     }
     if (url.endsWith("/assets/todos/index.json")) {
       return route.fulfill({
@@ -203,6 +246,56 @@ test("pin lifts a sticky onto the page and greys its board slot", async ({ page 
   const recall = slot.locator(".fa-sticky-recall");
   await expect(recall).toBeVisible();
   await expect(recall).not.toBeDisabled();
+});
+
+/**
+ * Bean `ivfw`, the owner: *"when you unpin, sticky, it loses its theme and you
+ * cant move around dispaly."*
+ *
+ * This is the THEME half. The move half is `6lb8`'s board model and is not
+ * here.
+ *
+ * Two things had to be true and neither was. The card is REBUILT on the float
+ * layer and DESTROYED on dock, so a theme carried on the DOM node is dropped by
+ * construction — `buildSticky` now reads it from the todo, which is the only
+ * place that survives both transitions. And `.fa-sticky-floating` set a flat
+ * `background` and `color` unconditionally, after `.fa-sticky` at equal
+ * specificity, so it painted over whatever the theme had chosen.
+ *
+ * Asserted against the ATTRIBUTE rather than the computed colour on purpose:
+ * `themes.css` is not loaded in this harness, so a colour assertion here would
+ * be testing the fixture. What the attribute cannot answer — that the override
+ * no longer wins — the CSS assertion below does, and
+ * `schemas/themes.test.ts` carries the premise that every theme surface is
+ * opaque.
+ */
+test("a themed sticky keeps its theme across pin AND dock", async ({ page }) => {
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const onBoard = page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"]');
+  await expect(onBoard).toHaveAttribute("data-fa-sticky-theme", "library");
+
+  await onBoard.locator(".fa-sticky-pin").click();
+  const floating = page.locator(".fa-sticky-layer .fa-sticky");
+  await expect(floating).toHaveCount(1);
+  await expect(floating).toHaveAttribute("data-fa-sticky-theme", "library");
+
+  // ...and back down. This is the direction the owner reported.
+  await page.locator(".fa-sticky-slot .fa-sticky-recall").click();
+  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
+  await expect(onBoard).toHaveAttribute("data-fa-sticky-theme", "library");
+});
+
+test("a todo with NO theme still gets the opaque floating treatment", () => {
+  // The other direction, and the reason the override was written: an unthemed
+  // sticky's surface is `rgba(128, 128, 128, 0.08)`, so lifted over page text
+  // it is see-through. Narrowing the rule must not have removed it.
+  expect(CSS).toContain(".fa-sticky-floating:not([data-fa-sticky-theme])");
+  // And it must no longer apply to a themed one — the bug, stated as the
+  // absence of the rule that caused it.
+  expect(CSS).not.toMatch(/^\.fa-sticky-floating \{[^}]*background:/m);
 });
 
 /**

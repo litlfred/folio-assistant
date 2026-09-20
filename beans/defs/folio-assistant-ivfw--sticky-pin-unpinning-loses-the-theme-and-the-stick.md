@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ivfw
 title: 'STICKY PIN: unpinning loses the theme and the sticky cannot be moved — it should stay visible and movable on the board'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-20T15:09:58Z
-updated_at: 2026-09-20T15:09:58Z
+updated_at: 2026-09-20T18:39:46Z
 parent: folio-assistant-o3xy
 ---
 
@@ -60,7 +61,74 @@ no Pin and no Close"*.
 
 ## Done when
 
-- [ ] Unpinning preserves the sticky's theme and art
+- [x] Unpinning preserves the sticky's theme (art is `5y4b`)
 - [ ] An unpinned sticky is visible and movable within the board frame
-- [ ] The keyboard path survives — no drag-only affordance
-- [ ] The inline-sticky case and its e2e test still hold
+- [x] The keyboard path survives — no drag-only affordance
+- [x] The inline-sticky case and its e2e test still hold
+
+
+---
+
+## Theme half done, 2026-09-20 — and the defect was the reverse of the report
+
+The owner reported the theme lost on UNPIN. Measured: `.fa-sticky-floating`
+set a flat `background` and `color` **unconditionally**, and it sits after
+`.fa-sticky` at equal specificity, so it won in BOTH directions — a themed
+sticky was a slab of `#27262b` while pinned and came back to whatever the
+board gave it. Which end a reader calls the loss depends on which end they
+were looking at. Either way the pin button was changing what the note IS,
+which is the sentence that matters and is the one in the bean.
+
+### Two fixes, and the first is why the second is enough
+
+**The theme is read from the TODO, in `buildSticky`.** That is the whole
+round-trip guarantee, and it is structural rather than careful: `float`
+CONSTRUCTS a second card on the layer and `dock` DESTROYS it, so a theme
+carried on the DOM node is dropped by construction. Reading it in the one
+function that builds a card means neither transition has to know the theme
+exists. `data-fa-sticky-theme` is the attribute `themes.css` already selects
+on, so this is the landing stickies' mechanism rather than a second one.
+
+**The opaque override is scoped to `:not([data-fa-sticky-theme])`.** The rule
+exists for a real reason — a sticky lifted onto the page sits over content and
+must not be see-through — and narrowing it keeps that reason while dropping
+the collateral. Sound because MEASURED: all 14 `--fa-sticky-surface` values in
+the generated `themes.css` are opaque hex. The one translucent surface in the
+system is `.fa-sticky`'s own `rgba(128, 128, 128, 0.08)` fallback, which
+applies exactly when no theme is selected — exactly what the narrowed rule now
+matches.
+
+**That premise is now GATED**, because it is not one the schema enforces:
+`ThemePaletteSchema.surface` is `z.string()`, so `rgba(…, 0.4)` parses.
+`themes.test.ts` refuses a translucent surface and a translucent gradient stop.
+Without it a theme added later reintroduces the bug on a page nobody
+re-checks, and the symptom (text over page content) looks nothing like the
+cause (one colour value in another file).
+
+### The button stayed a button
+
+The comment at `docs-ui.js` ~2006 was read first, as the bean says. Nothing
+here touches the gesture: Pin is still a button, the greyed slot is still a
+real recall control, and the keyboard test still passes. No drag was added.
+
+### Falsified, both directions
+
+31 e2e pass. The themed round-trip asserts the attribute on the board, on the
+float layer, and on the board again after recall. The unthemed direction
+asserts the narrowed rule is still present — and the CSS assertion was run
+against the PRE-FIX stylesheet and does fail on it, so it is a guard rather
+than a restatement.
+
+### Not done — the MOVE half
+
+*"you cant move around dispaly"* is untouched. An unpinned sticky still has
+nowhere to go. That is `6lb8`'s board model, and the two must agree rather
+than ship two notions of position — which is the open owner decision, since a
+note's position is STATE and two sessions moving one note is a merge conflict.
+
+### And `5y4b` is still the other half of "keeps its theme"
+
+`theme` is on `ThemedTodoFieldsSchema` already; what does not exist is the
+generator emitting it and the art behind it. The e2e fixture supplies the
+field directly and is ahead of the pipeline by exactly that one field,
+deliberately — it is what `5y4b` lands on.

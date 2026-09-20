@@ -2024,17 +2024,38 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-sticky-floating {
   margin-top: 0.6em;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* THE OPAQUE OVERRIDE IS FOR AN UNTHEMED STICKY, AND ONLY FOR ONE.
+ *
+ * Bean `ivfw`, the owner: "when you unpin, sticky, it loses its theme." The
+ * rules below set `background` and `color` flat, and they sit after `.fa-sticky`
+ * at equal specificity — so they won, and a themed sticky lifted onto the page
+ * came back as a slab of `#27262b`. The theme is a property of the sticky; the
+ * pin button was silently changing what the note IS.
+ *
+ * `:not([data-fa-sticky-theme])` keeps the reason the rules exist and drops the
+ * collateral, and it is sound rather than hopeful: MEASURED 2026-09-20, all 14
+ * `--fa-sticky-surface` values in the generated `themes.css` are opaque hex.
+ * The one translucent surface in the system is `.fa-sticky`'s own
+ * `rgba(128, 128, 128, 0.08)` fallback, which applies exactly when no theme is
+ * selected — which is exactly what this now matches. `themes.test.ts` gates it,
+ * because a theme added with an `rgba()` surface would reintroduce the bug
+ * silently and on a page nobody re-checks.
+ *
+ * The `Canvas` history below is unchanged and still applies to this case. */
+.fa-sticky-floating:not([data-fa-sticky-theme]) {
   background: var(--sidebar-color, #27262b);
   color: #f4f4f6;
 }
 
-:root[data-fa-scheme="light"] .fa-sticky-floating {
+:root[data-fa-scheme="light"] .fa-sticky-floating:not([data-fa-sticky-theme]) {
   background: #fff;
   color: #27262b;
 }
 
 @media (prefers-color-scheme: light) {
-  :root:not([data-fa-scheme="dark"]) .fa-sticky-floating {
+  :root:not([data-fa-scheme="dark"]) .fa-sticky-floating:not([data-fa-sticky-theme]) {
     background: #fff;
     color: #27262b;
   }

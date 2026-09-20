@@ -203,3 +203,52 @@ describe("every shipped backdrop resolves against THIS instance's declaration", 
     }
   });
 });
+
+describe("every surface is OPAQUE — the pin gesture depends on it", () => {
+  /**
+   * Bean `ivfw`. `.fa-sticky-floating` used to set a flat `background` and
+   * `color` unconditionally, because a sticky lifted onto the page sits over
+   * content and must not be see-through. It sits after `.fa-sticky` at equal
+   * specificity, so it won — and a themed sticky came back from the float
+   * layer as a slab of `#27262b`. The theme is a property of the sticky; the
+   * pin button was silently changing what the note is.
+   *
+   * The fix scopes that override to `:not([data-fa-sticky-theme])`, which is
+   * only sound while every theme's own surface is opaque. That is true of all
+   * of them today and it is NOT a property the schema enforces —
+   * `ThemePaletteSchema.surface` is `z.string()`, so `rgba(…, 0.4)` parses.
+   *
+   * So the CSS fix has a premise, and this is it. Without this test a theme
+   * added with a translucent surface reintroduces the bug on a page nobody
+   * re-checks, and the symptom (text over page content) looks nothing like
+   * the cause (one colour value in a different file).
+   */
+  const OPAQUE = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
+
+  test("no theme's surface can be seen through", () => {
+    const translucent = THEMES.filter((t) => !OPAQUE.test(t.palette.surface)).map(
+      (t) => `${t.id}: ${t.palette.surface}`,
+    );
+    expect(translucent).toEqual([]);
+    expect(THEMES.length).toBeGreaterThan(0); // not vacuous
+  });
+
+  test("the check CAN fire — an rgba() surface is caught", () => {
+    // Every assertion above passes equally for a regex that matches anything.
+    expect(OPAQUE.test("rgba(128, 128, 128, 0.08)")).toBe(false);
+    expect(OPAQUE.test("#e9efe6")).toBe(true);
+  });
+
+  test("a gradated theme's stops are opaque too", () => {
+    // `.fa-sticky` paints `--fa-sticky-grad-from` as the background and layers
+    // a gradient over it, so a translucent stop is see-through by the same
+    // route as a translucent surface — one field further along.
+    const bad = THEMES.flatMap((t) =>
+      [t.palette.gradientFrom, t.palette.gradientTo]
+        .filter((v): v is string => v !== undefined)
+        .filter((v) => !OPAQUE.test(v))
+        .map((v) => `${t.id}: ${v}`),
+    );
+    expect(bad).toEqual([]);
+  });
+});
