@@ -46,6 +46,7 @@
  * source of truth; this script verifies external correctness of every
  * entry beyond schema-shape validation.
  */
+import { folioDir } from "../../schemas/cat-harness.js";
 import { references } from "./references-registry-di";
 import { findContentRepoRoot } from "./repo-root";
 import * as fs from "fs";
@@ -74,8 +75,7 @@ if (MODES.size === 0) {
 // so the `**/*.lean` glob below had nothing to walk. Never noticed, because
 // this file threw `Cannot find module` at import and could not run at all.
 const REPO_ROOT = findContentRepoRoot();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_ROOT = path.join(REPO_ROOT, "folio");
+const CONTENT_ROOT = folioDir(REPO_ROOT);
 
 /**
  * The year from a CSL `issued` date, as a number.

@@ -20,6 +20,7 @@
  * @module content/pipeline/migrate-lean-refs
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join, relative } from "path";
 import { LEAN_PACKAGES } from "../../schemas/lean-packages";
@@ -30,8 +31,7 @@ import { findContentRepoRoot } from "./repo-root";
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_ROOT = join(REPO_ROOT, "folio");
+const CONTENT_ROOT = folioDir(REPO_ROOT);
 const WRITE = process.argv.includes("--write");
 
 /** Paper directory → Lake package short-name. */

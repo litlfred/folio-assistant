@@ -2572,6 +2572,86 @@ export function directoryForGraph(
   )?.absPath;
 }
 
+/**
+ * Where a folio's authored content lives — **asked, not assumed**.
+ *
+ * Bean `hs08`. The owner's ruling, 2026-09-20: *"content/ shouldnt be expected
+ * anymore. folio/ was renamed as default/convention"*, then *"no content/
+ * fallback. excise!!!!!"* — and then the part that makes this function
+ * necessary rather than tidy:
+ *
+ * > *"qou can declare a new folio at content/"*
+ *
+ * That is the whole point of a declaration. A folio is not obliged to put its
+ * content under `folio/`; it says where its `folio` graph is, and consumers
+ * read the declaration. `litlfred/qou` keeps `content/` and stays readable by
+ * declaring it — **but only if the platform asks.**
+ *
+ * It did not. After the excision, 162 sites spelled `join(root, "folio")` as a
+ * literal, so a declaration naming anything else was ignored and the folio was
+ * invisible. The rename was done; the *mechanism* the rename exists to serve
+ * was not wired up. This is that wiring, in one place.
+ *
+ * ## Why `"folio"` is named HERE, in the harness
+ *
+ * `ot9a` set the falsifier: *"if the harness still has to know the string
+ * `folio` anywhere for the declaration to validate, the re-siting is
+ * cosmetic."* The harness does still know it — this module is `harness` by
+ * `repo-partition`, as are `content/pipeline/repo-root.ts` and `scripts/`.
+ *
+ * That is not this function reintroducing the problem; it is this function
+ * CONCENTRATING it. The harness knew the string in 162 places before and knows
+ * it in one now, which is the difference between a fact you can audit and one
+ * you can only grep for. Only a `harness` module can serve every caller —
+ * `allowed` gives `core: ["core", "harness"]` and `harness: ["harness"]`, so
+ * a core home would be unreachable from the harness half.
+ *
+ * ## The fallback is the CONVENTION, not `content/`
+ *
+ * An instance that declares nothing gets `folio/`. It never gets `content/`:
+ * that root is excised, and a folio keeping it must SAY so. Silence means the
+ * convention, and the convention is `folio/`.
+ *
+ * @param root repository root to resolve against
+ * @returns the declared folio directory, else `<root>/folio`
+ */
+export function folioDir(root: string): string {
+  try {
+    // declared-path-literal: the base case. This IS where the convention is
+    // written down; resolving it through a declaration would be circular.
+    return directoryForGraph(root, "folio") ?? join(root, "folio");
+  } catch (e) {
+    // An instance whose declaration does not KNOW the `folio` kind — core
+    // registers it by load-time side effect (`schemas/folio-graph-kind.ts`)
+    // and a harness-only process may not have reached it. That is `ot9a`'s
+    // fragility, and the convention is the right answer for it.
+    //
+    // Narrow deliberately: any OTHER failure is a malformed declaration, and
+    // swallowing it would report a guess as an answer. "Could not determine"
+    // is never rendered as a clean result.
+    if (e instanceof Error && /unknown graph kind "folio"/.test(e.message)) {
+      // DO NOT fall back here. This was the first version and it was wrong in
+      // the one way that matters: with the kind unregistered, the declaration
+      // cannot be READ, so returning the convention answers a question nobody
+      // could answer. A folio declaring `content/` — which the owner has said
+      // qou will do — would be silently invisible, and the caller would get a
+      // plausible path instead of a fault.
+      //
+      // "Could not determine" is never rendered as a clean result. Fail, and
+      // say what to import.
+      throw new Error(
+        `folioDir(${root}): the \`folio\` graph kind is not registered, so the ` +
+          `instance's declaration cannot be read and its folio directory is ` +
+          `UNKNOWN — not "folio/". Import \`schemas/folio-graph-kind.js\` for ` +
+          `its load-time registration before calling this. Falling back to the ` +
+          `convention here would silently ignore a folio that declares another ` +
+          `path (bean hs08; the fragility is ot9a).`,
+      );
+    }
+    throw e;
+  }
+}
+
 // ── Graph projection ────────────────────────────────────────────
 
 /**

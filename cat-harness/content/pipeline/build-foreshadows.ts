@@ -40,6 +40,7 @@
  * `--check` regenerates in memory and exits 1 if the committed file differs,
  * naming the drifted blocks. That is the CI gate; it never rewrites.
  */
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import {
@@ -55,8 +56,7 @@ import { findContentRepoRoot } from "./repo-root";
 // artifact. That exact mistake once left the whole detangler axis reporting
 // `n/a` while looking healthy; see the note on CONTENT_DIR in
 // qa-checkers-extended.ts.
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_DIR = join(findContentRepoRoot(), "folio");
+const CONTENT_DIR = folioDir(findContentRepoRoot());
 
 interface BlockEntry {
   derived: string[];

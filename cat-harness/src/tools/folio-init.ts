@@ -17,6 +17,7 @@
  * @module folio-assistant/src/tools/folio-init
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { z } from "zod";
 import { existsSync, readdirSync } from "node:fs";
 import { resolve, basename } from "node:path";
@@ -43,8 +44,7 @@ import { resolveHarnessConfigPath } from "../../schemas/harness-config";
 function existingFolio(root: string): string | undefined {
   const cfg = resolveHarnessConfigPath(root);
   if (cfg) return basename(cfg.path);
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const contentDir = resolve(root, "folio");
+  const contentDir = folioDir(root);
   if (existsSync(contentDir)) {
     const docs = readdirSync(contentDir, { withFileTypes: true })
       .filter((d) => d.isDirectory() && existsSync(resolve(contentDir, d.name, `${d.name}.ts`)))

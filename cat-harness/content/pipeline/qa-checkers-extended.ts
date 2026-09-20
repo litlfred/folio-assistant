@@ -22,6 +22,7 @@
  * @module content/pipeline/qa-checkers-extended
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import type { CheckerPaths, CheckerHit, CheckerResult } from "../../schemas/block-qa";
 import { resolve, dirname, join, relative } from "path";
@@ -48,8 +49,7 @@ const REPO_ROOT = findContentRepoRoot();
 // references.ts, and the paper manifests. The paper lookup therefore always
 // missed and the ENTIRE detangler axis reported n/a on every folio,
 // silently, while looking healthy.
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_DIR = join(REPO_ROOT, "folio");
+const CONTENT_DIR = folioDir(REPO_ROOT);
 const COMPUTATIONS_DIR = join(REPO_ROOT, "computations");
 const BIB_QA_REPORT = join(CONTENT_DIR, "bib-qa.json");
 

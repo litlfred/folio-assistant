@@ -73,6 +73,7 @@
  * @module content/pipeline/content-graph
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { walkBlocks } from "./qa-utils";
@@ -549,8 +550,7 @@ if (import.meta.main) {
   const repoRoot = findContentRepoRoot();
   const rootDir = rootArg
     ? join(repoRoot, rootArg)
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    : join(repoRoot, "folio");
+    : folioDir(repoRoot);
 
   const g = buildContentGraph(rootDir, repoRoot);
   const editorial = g.edges.filter((e) => e.kind === "editorial").length;

@@ -10,6 +10,7 @@
  *   bun run content/pipeline/generate-index.ts [paper-name]
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { writeFileSync } from "fs";
 import { join} from "path";
 import { findContentRepoRoot } from "./repo-root";
@@ -22,8 +23,7 @@ import { paperArg } from "./cli-args";
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_ROOT = join(REPO_ROOT, "folio");
+const CONTENT_ROOT = folioDir(REPO_ROOT);
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
 // `--paper <name>`, falling back to a positional. The flag is the convention
 // this file's siblings use (`extract-status-sections.ts`), and four of them

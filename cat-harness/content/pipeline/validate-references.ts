@@ -19,6 +19,7 @@
  * @module content/pipeline/validate-references
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { references, referenceMap, CSLEntrySchema } from "./references-registry-di";
@@ -128,11 +129,9 @@ const leanCitations = new Set<string>();
 
 // Scan .lean files for -- Ref: [key] patterns
 const leanDir = join(REPO_ROOT, "lean");
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const contentDir = join(REPO_ROOT, "folio");
+const contentDir = folioDir(REPO_ROOT);
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const leanArchiveDir = join(REPO_ROOT, "folio", requirePaper(_paperArg), "lean");
+const leanArchiveDir = join(folioDir(REPO_ROOT),  requirePaper(_paperArg), "lean");
 
 function scanFilesRecursive(dir: string, ext: string): string[] {
   if (!existsSync(dir)) return [];

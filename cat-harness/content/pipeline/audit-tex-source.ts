@@ -30,6 +30,7 @@
  * @module content/pipeline/audit-tex-source
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from "fs";
 import { resolve, join, relative } from "path";
 import { findMathTextSeams } from "./render-latex";
@@ -238,8 +239,7 @@ function auditMathTextSeams(file: string) {
 // ── Run ──────────────────────────────────────────────────────────────────────
 console.log("Auditing TeX-source hazards...");
 auditReferencesTs();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const contentRoot = join(REPO_ROOT, "folio");
+const contentRoot = folioDir(REPO_ROOT);
 const mdFiles = walk(contentRoot, ".md");
 // Same rule: a report over zero files is not a clean result.
 if (mdFiles.length === 0) {

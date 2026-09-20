@@ -17,6 +17,7 @@
  *   bun run scripts/refresh-authors-note.ts --check     # exit 1 if stale
  */
 
+import { folioDir } from "../schemas/cat-harness.js";
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { computeStats } from "./lean-coverage";
@@ -34,8 +35,7 @@ import { paperArg } from "../content/pipeline/cli-args";
  */
 function statsTarget(): { paper: string; contentRoot: string } {
   const repoRoot = findContentRepoRoot();
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const contentRoot = join(repoRoot, "folio");
+  const contentRoot = folioDir(repoRoot);
   const paper = paperArg() ?? soleFolioPaper(repoRoot);
   if (!paper) {
     // Exit cleanly rather than throwing: this is a CLI entry point, and a raw
@@ -59,8 +59,7 @@ function statsTarget(): { paper: string; contentRoot: string } {
 // came from `statsTarget()` rather than being baked into the path.
 const REPO_ROOT = findContentRepoRoot();
 const notePathFor = (paper: string): string =>
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  join(REPO_ROOT, "folio", paper, "introduction", "authors-note.md");
+  join(folioDir(REPO_ROOT),  paper, "introduction", "authors-note.md");
 
 const PROVABLE_RE = /\*\*\d+\s+of\s+\d+\s+\([\d.]+%\)\s+provable\s+claims\*\*/;
 // The note's prose was rewritten to distinguish PRIMARY conjectures from the

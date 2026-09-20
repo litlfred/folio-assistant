@@ -19,6 +19,7 @@
  * Definitions are exempt — they name constructions, not logical
  * claims.
  */
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
@@ -44,8 +45,7 @@ const REPO_ROOT = findContentRepoRoot();
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const ROOT = join(REPO_ROOT, "folio", requirePaper(_paperArg));
+const ROOT = join(folioDir(REPO_ROOT),  requirePaper(_paperArg));
 // First non-flag argument. `process.argv[2]` alone would pick up `--paper`
 // (or its value), which is how this script came to write its witness to a
 // file literally named `--paper`.

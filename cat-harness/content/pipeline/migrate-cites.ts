@@ -12,6 +12,7 @@
  * @module content/pipeline/migrate-cites
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { join} from "path";
 import { extractCitations } from "./citations";
@@ -26,8 +27,7 @@ const BUILDER_RE = new RegExp(`(${BLOCK_KIND_ALT})\\(`);
 // it must not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_ROOT = join(REPO_ROOT, "folio");
+const CONTENT_ROOT = folioDir(REPO_ROOT);
 const args = process.argv.slice(2);
 const dryRun = !args.includes("--write");
 

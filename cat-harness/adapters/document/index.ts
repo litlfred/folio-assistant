@@ -73,7 +73,7 @@ import { log } from "../../src/core/logging.js";
 import { hasRole, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 /**
  * The declared `uploads` graph for a folio, or the convention.
@@ -141,8 +141,7 @@ export class DocumentContentAdapter implements ContentAdapter {
     this.gitHelper = gitHelper;
     this.feedbackStore = new FeedbackStore(feedbackDir);
     this.resolver = new PaperResolver(repoRoot, gitHelper, this.feedbackStore);
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    this.contentDir = resolve(repoRoot, "folio");
+    this.contentDir = folioDir(repoRoot);
     this.leanDir = resolve(repoRoot, "lean");
     this.buildDir = resolve(repoRoot, "build");
     this.mainTex = resolve(repoRoot, "main.tex");

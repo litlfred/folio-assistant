@@ -16,6 +16,7 @@
  * @module content/pipeline/export-json
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from "fs";
 import { join } from "path";
 import { createHash } from "crypto";
@@ -42,8 +43,7 @@ import { leanPackageByName, parseLeanRef } from "../../schemas/lean-packages";
 // lands in folio-assistant, which holds no papers — and the symlinked
 // embedding resolves there even when run from the content repo.
 const REPO_ROOT = findContentRepoRoot();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_ROOT = join(REPO_ROOT, "folio");
+const CONTENT_ROOT = folioDir(REPO_ROOT);
 
 const args = process.argv.slice(2);
 function argVal(name: string, fallback: string): string {

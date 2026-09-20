@@ -19,6 +19,7 @@
  * @module folio-assistant/adapters/document/tools/render
  */
 
+import { folioDir } from "../../../schemas/cat-harness.js";
 import { z } from "zod";
 import { execSync, spawnSync } from "child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
@@ -121,8 +122,7 @@ export function registerLatexRenderTools(server: McpServer): void {
           mkdirSync(blockPdfsDir, { recursive: true });
 
           // Find the block's .ts and .md in content/
-          // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-          const contentDir = join(REPO_ROOT, "folio");
+          const contentDir = folioDir(REPO_ROOT);
           const found = spawnSync("find", [contentDir, "-name", `${target}.ts`, "-not", "-path", "*/node_modules/*"], {
             stdio: "pipe",
           });
@@ -484,8 +484,7 @@ const HTML_PDF_ENGINES = ["weasyprint", "prince", "wkhtmltopdf"] as const;
  * plausible artifact, which is worse than an error.
  */
 function resolveDocumentManifest(name?: string): { path: string; slug: string } | string {
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const contentDir = join(REPO_ROOT, "folio");
+  const contentDir = folioDir(REPO_ROOT);
   if (!existsSync(contentDir)) {
     return `Error: no folio/ directory at ${REPO_ROOT}. Run folio_init first, or point --repo at your folio.`;
   }

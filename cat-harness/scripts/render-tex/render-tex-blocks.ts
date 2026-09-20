@@ -18,6 +18,7 @@
  * @module scripts/render-tex/render-tex-blocks
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import {
   readFileSync,
   writeFileSync,
@@ -31,8 +32,7 @@ import { Glob } from "bun";
 // ── Config ───────────────────────────────────────────────────────
 
 const REPO_ROOT = join(import.meta.dir, "../..");
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_ROOT = join(REPO_ROOT, "folio");
+const CONTENT_ROOT = folioDir(REPO_ROOT);
 const PREAMBLE_PATH = join(import.meta.dir, "preamble.tex");
 
 const args = process.argv.slice(2);

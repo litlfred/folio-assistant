@@ -12,6 +12,7 @@
  * @module content/pipeline/export-bibtex
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
@@ -22,8 +23,7 @@ import { findContentRepoRoot } from "./repo-root";
 // folio-assistant and made every content path below miss).
 const REPO_ROOT = findContentRepoRoot();
 // Content repo's content/, not folio-assistant's — see qa-checkers-extended.
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT_DIR = join(findContentRepoRoot(), "folio");
+const CONTENT_DIR = folioDir(findContentRepoRoot());
 const args = process.argv.slice(2);
 const outIdx = args.indexOf("--out");
 const outPath = outIdx >= 0 ? resolve(args[outIdx + 1]) : join(REPO_ROOT, "references.bib");
