@@ -1,6 +1,5 @@
 ---
 name: rendering-auditor
-roles: [reader, collaborator, owner]
 description: >
   Multi-pass rendering auditor for content blocks. Validates markdown+TeX syntax,
   notation consistency, compilation, layout, and visual output across both HTML

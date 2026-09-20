@@ -1,6 +1,5 @@
 ---
 name: voice-editorial-review
-roles: [collaborator, owner, editor]
 description: >
   Adjudicate a `voice-*` finding — read the flagged passage as a reader of
   THAT genre would and decide whether the register is wrong, the criterion is

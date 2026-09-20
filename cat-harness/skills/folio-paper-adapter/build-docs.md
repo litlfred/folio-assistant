@@ -1,6 +1,5 @@
 ---
 name: build-docs
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   Builds the Lean HTML documentation (doc-gen4) locally in the workspace,

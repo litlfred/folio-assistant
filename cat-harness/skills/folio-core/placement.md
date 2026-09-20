@@ -1,6 +1,5 @@
 ---
 name: placement
-roles: [authoring-agent, code-reviewer]
 description: >
   Establish where a new node belongs BEFORE you create it — which instance,
   which declared graph, which kind of node, and which of the two "stub"

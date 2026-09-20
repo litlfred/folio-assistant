@@ -34,9 +34,6 @@ export const contentGraph: SkillDefinition = {
     "merge.*section",
     "concrete.*reorg",
   ],
-  schemas: [
-    { module: "schemas/types", types: ["Block", "Chapter", "Section"], access: "read" },
-  ],
   scripts: [
     {
       path: "content/pipeline/content-graph-analysis.py",

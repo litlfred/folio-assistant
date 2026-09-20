@@ -1,7 +1,6 @@
 ---
 name: coordinate
 description: Coordinate work across multiple in-flight Claude PRs working toward a shared goal. Post intent + asks on related PRs, identify cherry-pickable work, respond to code-review comments on your own PR, periodically triage sibling PR activity (new comments, CI status, new commits), watch main + newly created branches/PRs, escalate inconsistent findings to the author, and keep a coordination ledger up to date.
-roles: [reader, collaborator, owner]
 user_invocable: true
 ---
 

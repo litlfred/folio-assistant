@@ -1,6 +1,5 @@
 ---
 name: integration-audit
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   Sidecar-invalidation utility for the integration-watcher pipeline.

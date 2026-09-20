@@ -1,6 +1,5 @@
 ---
 name: one-voice-audit
-roles: [collaborator, owner]
 ---
 
 

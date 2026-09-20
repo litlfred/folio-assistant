@@ -335,9 +335,24 @@ export interface SkillValidator {
 /**
  * Reference to a schema type that this skill operates on.
  *
- * Links a skill to the TypeScript/Zod schemas it reads or writes,
- * enabling auto-generated documentation to cross-reference skills
- * with their data models.
+ * **RETIRED 2026-09-20 — kept as a type, removed from `SkillDefinition`.**
+ *
+ * Its stated purpose was *"enabling auto-generated documentation to
+ * cross-reference skills with their data models"*. The generator that would
+ * have done the cross-referencing was `scripts/generate-docs.ts`, which had
+ * been in this repository since its ROOT COMMIT and **never ran once** —
+ * never in a `package.json` script, never in a workflow, its output directory
+ * never committed. It was retired to `fsh-guts/scripts/` (bean
+ * `folio-assistant-3w0i`), and with it went the only code that referenced
+ * this type.
+ *
+ * So 11 of 22 skill modules carried a declaration that reached no reader and
+ * no page. The declarations are removed (`folio-assistant-t2yg`); the type
+ * stays because a downstream instance may hold one and a removed export is a
+ * breaking change for a field that costs nothing to leave declarable.
+ *
+ * **Reinstating it means writing the consumer first.** A field whose only
+ * justification is a generator that does not run is how this one lasted.
  */
 import type { ActorKind, LifecycleStage, SkillPackageManifest } from "./skill-package.js";
 import type { NetworkReach } from "./cat-harness.js";
@@ -405,8 +420,10 @@ export interface SkillDefinition {
   tags?: string[];
   /** External package this skill belongs to (undefined = local). */
   package?: string;
-  /** Schema types this skill reads/writes — for doc cross-referencing. */
-  schemas?: SkillSchemaRef[];
+  // `schemas?: SkillSchemaRef[]` was here until 2026-09-20. Removed with the
+  // generator that was its only reader — see {@link SkillSchemaRef}. Not
+  // re-add without the consumer: the field existed for a page nobody ever
+  // built.
   /**
    * Lifecycle stages this skill participates in.
    *

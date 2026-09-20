@@ -1,6 +1,5 @@
 ---
 name: paper-importer
-roles: [collaborator, owner]
 description: >
   Import external papers from PDF, LaTeX, or arXiv into the content object system.
   Scans for theorems, definitions, propositions, lemmas, and other formal environments.

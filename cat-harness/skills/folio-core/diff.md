@@ -1,7 +1,6 @@
 ---
 name: diff
 description: Show per-block content changes with viewer links, changelog, and undo impact analysis
-roles: [reader, collaborator, owner]
 user_invocable: true
 ---
 

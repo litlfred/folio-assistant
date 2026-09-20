@@ -9,8 +9,5 @@ export const todoReview: SkillDefinition = {
     { capabilityId: "git-read", degradation: "fail" },
   ],
   routingPatterns: ["todo", "process\\s+feedback", "work.*item"],
-  schemas: [
-    { module: "schemas/types", types: ["TodoItem", "TodoStatus", "TodoPriority"], access: "read-write" },
-  ],
   tags: ["todos", "tracking"],
 };

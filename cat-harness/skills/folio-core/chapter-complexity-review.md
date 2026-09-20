@@ -1,6 +1,5 @@
 ---
 name: chapter-complexity-review
-roles: [reader, collaborator, owner]
 description: >
   Analyse a chapter's internal dependency graph to find backward edges
   (blocks that reference something defined later), compute graph energy,
