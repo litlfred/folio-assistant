@@ -298,6 +298,35 @@ type NamespaceLayerCovers = Exclude<TermLayer, (typeof NAMESPACE_LAYERS)[number]
 const _namespaceLayersAreExhaustive: NamespaceLayerCovers = true;
 void _namespaceLayersAreExhaustive;
 
+/**
+ * A `lake-cache` verb.
+ *
+ * ## Why an enum and not `Text`
+ *
+ * Same rule as `NamespaceLayer`: `check:tools` refuses free text on a flag or a
+ * positional, because an argv word that can hold arbitrary characters can hold a
+ * shell payload. A subcommand is enumerable, so the enum is the fix — and
+ * reaching for `Slug` because it happens to be injection-safe would type the
+ * input as something it is not.
+ *
+ * Read from the script's own usage block rather than guessed, which is why
+ * `contribute` and `doctor` are here: a list of the four obvious verbs would have
+ * refused two real ones and looked complete doing it.
+ */
+export const LakeCacheActionSchema = z
+  .enum([
+    "status",
+    "restore",
+    "restore-toolchain",
+    "install-toolchain",
+    "verify",
+    "seed",
+    "contribute",
+    "list",
+    "doctor",
+  ])
+  .describe("A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.");
+
 export const NamespaceLayerSchema = z
   .enum(NAMESPACE_LAYERS)
   .describe("A namespace layer: bootstrap resolves before anything else, then harness, then core.");
@@ -366,6 +395,7 @@ export const TOOL_TYPES = {
   Slug: SlugSchema,
   ContentType: ContentTypeSchema,
   LinkMode: LinkModeSchema,
+  LakeCacheAction: LakeCacheActionSchema,
   NamespaceLayer: NamespaceLayerSchema,
   PreferenceAction: PreferenceActionSchema,
   RenderFormat: RenderFormatSchema,
@@ -458,6 +488,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   // rejected, it is unrepresentable.
   "ContentType",
   "LinkMode",
+  "LakeCacheAction",
   "NamespaceLayer",
   "PreferenceAction",
   "RenderFormat",
