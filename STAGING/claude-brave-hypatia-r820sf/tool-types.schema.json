@@ -180,6 +180,23 @@
       "description": "Read, write or clear the stored preferences.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "CommitSha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$",
+      "description": "A git commit sha, full or abbreviated (7-40 hex digits).",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "RenderEvent": {
+      "type": "string",
+      "enum": [
+        "rendered",
+        "removed",
+        "restored",
+        "retained"
+      ],
+      "description": "A render-log event: rendered, removed, restored or retained.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "RenderFormat": {
       "type": "string",
       "enum": [
@@ -306,8 +323,8 @@
   },
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "7d3f78d69e59d20cbe266420131421e38c56924d",
+    "sha": "9afdba970f5520e289f5bf018a06385a69d13d30",
     "pr": "553/merge",
-    "run": "35522141774"
+    "run": "35522521635"
   }
 }
