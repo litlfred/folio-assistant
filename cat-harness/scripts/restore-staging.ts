@@ -150,8 +150,8 @@ export type RestoreOutcome =
   | { state: "unknown"; previews: []; carried: []; reason: string };
 
 export type VerifyOutcome =
-  | { state: "ok"; expected: string[]; present: string[] }
-  | { state: "lost"; expected: string[]; present: string[]; lost: string[] }
+  | { state: "ok"; expected: string[]; present: string[]; lostPrefixes?: string[] }
+  | { state: "lost"; expected: string[]; present: string[]; lost: string[]; lostPrefixes?: string[] }
   | { state: "unknown"; expected: string[]; reason: string };
 
 interface Ran {
@@ -298,12 +298,29 @@ export function restoreStaging(o: RestoreOptions): RestoreOutcome {
  * parent: a preview pushed after ours only adds to the branch, so this cannot
  * report one as lost, and it needs no assumption about which commit is HEAD.
  */
-export function verifyStaging(o: RestoreOptions, expected: string[]): VerifyOutcome {
+/**
+ * Did what the restore carried actually survive the deploy?
+ *
+ * Compares against what the restore RECORDED, not against the deploy commit's
+ * parent: a preview pushed after ours only adds to the branch, so this cannot
+ * report one as lost, and it needs no assumption about which commit is HEAD.
+ *
+ * `carried` names the {@link CARRIED_PREFIXES} entries the restore reported as
+ * `carried`, and they are checked too. **Measured 2026-09-20, which is why
+ * this argument is not hypothetical**: `gh-pages` commit `96926833b5`, a
+ * `docs(gh-pages)` full replace, deleted `_render-log/2026-09-20.jsonl` —
+ * present at its parent, `D` at the commit — and the deploy's own verify step
+ * passed, because it only ever looked at `STAGING/`. A verifier blind to half
+ * of what the restore carried reports a clean run over the loss it exists to
+ * catch.
+ */
+export function verifyStaging(o: RestoreOptions, expected: string[], carried: string[] = []): VerifyOutcome {
   const present = branchState(o);
   if (typeof present === "object") return { state: "unknown", expected, reason: present.reason };
   if (present === "absent") {
-    if (expected.length === 0) return { state: "ok", expected, present: [] };
-    return { state: "lost", expected, present: [], lost: [...expected] };
+    const lostPrefixes = [...carried];
+    if (expected.length === 0 && lostPrefixes.length === 0) return { state: "ok", expected, present: [] };
+    return { state: "lost", expected, present: [], lost: [...expected], lostPrefixes };
   }
 
   const fetched = git(o.repo, ["fetch", "--depth=1", "--no-tags", o.remote, o.branch]);
@@ -313,8 +330,19 @@ export function verifyStaging(o: RestoreOptions, expected: string[]): VerifyOutc
   const now = previewsAt(o.repo, "FETCH_HEAD", o.prefix);
   if (!Array.isArray(now)) return { state: "unknown", expected, reason: now.reason };
 
+  // A prefix whose presence cannot be READ is `unknown`, never "lost" and
+  // never "fine" — the same three states the restore itself keeps.
+  const lostPrefixes: string[] = [];
+  for (const prefix of carried) {
+    const still = prefixExists(o.repo, "FETCH_HEAD", prefix);
+    if (typeof still === "object") return { state: "unknown", expected, reason: still.reason };
+    if (!still) lostPrefixes.push(prefix);
+  }
+
   const lost = expected.filter((p) => !now.includes(p));
-  if (lost.length > 0) return { state: "lost", expected, present: now, lost };
+  if (lost.length > 0 || lostPrefixes.length > 0) {
+    return { state: "lost", expected, present: now, lost, lostPrefixes };
+  }
   return { state: "ok", expected, present: now };
 }
 
@@ -343,12 +371,31 @@ export function describe(outcome: RestoreOutcome | VerifyOutcome): string {
       return outcome.expected.length === 0
         ? "no previews were restored, so none could be lost"
         : `all ${outcome.expected.length} restored preview(s) survived the deploy: ${outcome.expected.join(", ")}`;
-    case "lost":
-      return (
-        `${outcome.lost.length} preview(s) did NOT survive the deploy: ${outcome.lost.join(", ")}. ` +
-        "The site itself deployed correctly; what was lost is a review preview that landed between this " +
-        "job's restore and the publish action's own re-clone. Re-run Feature Staging on the affected PR(s)."
-      );
+    // `ok` deliberately does not enumerate what ELSE it checked. The caller
+    // passes the carried prefixes; a pass over an empty list is a pass over
+    // nothing, and that is the state the deploy of 2026-09-20 was in.
+    case "lost": {
+      const parts: string[] = [];
+      if (outcome.lost.length > 0) {
+        parts.push(
+          `${outcome.lost.length} preview(s) did NOT survive the deploy: ${outcome.lost.join(", ")}. ` +
+            "The site itself deployed correctly; what was lost is a review preview that landed between " +
+            "this job's restore and the publish action's own re-clone. Re-run Feature Staging on the " +
+            "affected PR(s).",
+        );
+      }
+      if ((outcome.lostPrefixes ?? []).length > 0) {
+        // Worse than a lost preview, and said so: a preview can be rebuilt by
+        // re-running its workflow, and the branch's own record of itself
+        // cannot. Whatever it said about artefacts already gone is gone with it.
+        parts.push(
+          `${outcome.lostPrefixes?.length} carried director(ies) did NOT survive: ` +
+            `${outcome.lostPrefixes?.join(", ")}. This is NOT recoverable by re-running anything — a ` +
+            "preview can be rebuilt, a record of what was already removed cannot.",
+        );
+      }
+      return parts.join(" ");
+    }
     case "unknown":
       return `COULD NOT DETERMINE the state of the publish branch: ${outcome.reason}`;
   }
@@ -399,7 +446,25 @@ if (import.meta.main) {
       console.error(`✗ no restore state at ${statePath} — COULD NOT DETERMINE what to verify`);
       process.exit(2);
     }
-    const outcome = verifyStaging(opts, expected);
+    let carriedPrefixes: string[] = [];
+    if (statePath !== "" && existsSync(statePath)) {
+      try {
+        const parsed: unknown = JSON.parse(readFileSync(statePath, "utf-8"));
+        const c = (parsed as { carried?: { prefix?: unknown; state?: unknown }[] }).carried;
+        // Only the ones the restore said it CARRIED. A determined `absent` was
+        // never there to lose, and asserting on it would fail every deploy
+        // before the first entry is ever written.
+        if (Array.isArray(c)) {
+          carriedPrefixes = c
+            .filter((e) => e?.state === "carried" && typeof e.prefix === "string")
+            .map((e) => e.prefix as string);
+        }
+      } catch {
+        console.error("✗ the restore state file could not be read — COULD NOT DETERMINE what to verify");
+        process.exit(2);
+      }
+    }
+    const outcome = verifyStaging(opts, expected, carriedPrefixes);
     const code = exitCodeFor(outcome);
     (code === 0 ? console.log : console.error)(`${code === 0 ? "✓" : "✗"} ${describe(outcome)}`);
     process.exit(code);

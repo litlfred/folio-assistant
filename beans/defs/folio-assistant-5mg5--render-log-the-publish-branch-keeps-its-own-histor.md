@@ -82,6 +82,17 @@ pull requests — is how that gap looks from the far side.
       design turns on. A second deploy (run 35498171281, 07:57:32Z) left BOTH
       entries standing — two separate workflow runs pushing to the same branch,
       the first not overwritten. `--read` exit 0, 2 entries, 0 skipped.
+- [x] **the loss mechanism observed on this very log** — `gh-pages`
+      `96926833b5`, a `docs(gh-pages)` full replace at 08:16:37Z, shows
+      `D _render-log/2026-09-20.jsonl`: present at its parent, gone at the
+      commit, all three entries with it. `docs-site.yml` runs
+      `restore-staging.ts` FROM `main`, which does not carry `_render-log`
+      until this merges. The protection is real and not in force yet.
+- [x] **the verifier's blind spot, found by that incident** — that deploy's
+      `--verify` PASSED while the log went, because it only compared
+      `STAGING/`. `verifyStaging` now takes the carried prefixes and reports a
+      lost one as NOT recoverable by re-running. 5 tests, including a control
+      pinning the old blind spot so the fix cannot be quietly reverted.
 - [ ] merged
 - [ ] the agent-memory entry, once there is room — bean `lnpe`. A six-line
       node evicted a TRAP from BOTH `ci-health-watcher` and

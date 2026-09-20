@@ -90,6 +90,30 @@ what nothing would carry, and exactly what a reader needs most.
 A log a deploy truncates is worse than no log, because its whole value is that
 entries persist and a reader will believe they did.
 
+**This is measured, not predicted.** On 2026-09-20 this log lost its first
+three entries to exactly that mechanism: `gh-pages` commit `96926833b5`, a
+`docs(gh-pages)` full replace, shows `D _render-log/2026-09-20.jsonl` — present
+at its parent, absent at the commit. The carry was already written, on the
+branch that introduces it; `docs-site.yml` runs `restore-staging.ts` **from
+`main`**, which did not have it yet. So the protection is real and it is not in
+force until it merges.
+
+Two things follow, and the second is the one that was missing:
+
+1. The window is *"between writing the carry and merging it"*, and entries
+   written in it are not protected. Nothing to fix — it closes on merge.
+2. **`--verify` was blind to it.** That deploy's own verify step PASSED while
+   the log went, because it only ever compared `STAGING/`. A verifier blind to
+   half of what the restore carried reports a clean run over precisely the loss
+   it exists to catch — bean `plj1`'s shape, one level out. It now checks the
+   carried prefixes too, and a lost prefix is reported as **not recoverable by
+   re-running anything**: a preview can be rebuilt from its workflow, and a
+   record of what was already removed cannot.
+
+Only the prefixes the restore reported as `carried` are verified. A determined
+`absent` was never there to lose, and asserting on it would fail every deploy
+before the first entry is ever written.
+
 `CARRIED_PREFIXES` is where that is declared, and it is a **list** because
 this is the second tenant of one rule rather than a special case: bean `6pfo`'s
 retired-record store is the next, and adding it should be a row rather than a
