@@ -74,7 +74,7 @@ import { basename, join, relative } from "node:path";
 
 import ts from "typescript";
 
-import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE on import
 // (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
 // exists. This module resolves this instance's directories and the instance
@@ -83,15 +83,35 @@ import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 
 /**
- * The declared `schemas` graph, or the convention.
+ * EVERY declared `schemas` directory reachable from this root.
+ *
+ * ## Why plural, and why the singular version was a bug waiting for main
+ *
+ * The first version asked `directoryForGraph(root, "schemas")` for THE
+ * directory. That call throws by design when more than one directory declares
+ * a graph — the `wggr` guard, which exists because returning the first
+ * silently once resolved `cat-harness` to `schemas/` and wrote 37 sidecars
+ * against the wrong subjects on a run that exited 0.
+ *
+ * It threw the moment this branch met main. Four instances declare a
+ * `schemas` graph now — `schemas/`, `folio-assistant-core/schemas/`,
+ * `large-datasets/schemas/` and `detangle/schemas/` — so the singular question
+ * has no answer, and the guard said so rather than picking one. **The right
+ * fix is not to pick one.** The schema graph genuinely spans instances, a
+ * viewer that showed one of four would report a corpus that does not exist,
+ * and every id here is already repo-relative so four directories cannot
+ * collide.
  *
  * declared-path-literal: the fallback is at the call site so the choice is
- * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why `directoryForGraph` is asked for the
- * `schemas` one by name.
+ * visible. It applies only when NOTHING declares the graph — an unmigrated
+ * instance — and an absent conventional directory yields `[]` rather than a
+ * path nothing is at.
  */
-export function schemasRoot(root: string): string {
-  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+export function schemaRoots(root: string): string[] {
+  const declared = directoriesForGraph(root, "schemas");
+  if (declared.length > 0) return [...declared].sort();
+  const conventional = join(root, "schemas");
+  return existsSync(conventional) ? [conventional] : [];
 }
 
 /**
@@ -194,6 +214,14 @@ export interface SchemaEdge {
 export interface SchemaGraphModule {
   /** Repo-relative path. */
   module: string;
+  /**
+   * The instance whose `schemas/` directory this is.
+   *
+   * Four instances declare one now, and a viewer that merged them would
+   * report a corpus that does not exist — the same per-instance rule the
+   * uploads queues follow.
+   */
+  instance: string;
   /** Bare stem — the identifier a node IRI is minted from. */
   name: string;
   /** From the module's own `@graphNode` tag. */
@@ -209,8 +237,8 @@ export interface SchemaGraphModule {
 
 /** The whole reading. */
 export interface SchemaGraph {
-  /** Repo-relative path of the directory read. */
-  root: string;
+  /** Repo-relative paths of every directory read. */
+  roots: string[];
   modules: SchemaGraphModule[];
   decls: SchemaDecl[];
   edges: SchemaEdge[];
@@ -638,49 +666,67 @@ function readModule(
  * reports a clean run over a directory it never opened.
  */
 export function readSchemaGraph(root: string): SchemaGraph | null {
-  const dir = schemasRoot(root);
-  if (!existsSync(dir)) return null;
+  const dirs = schemaRoots(root);
+  if (dirs.length === 0) return null;
   const repoRoot = repoRootFor(root);
-  const dirRel = relative(repoRoot, dir).split("\\").join("/");
+  const rel = (p: string): string => relative(repoRoot, p).split("\\").join("/");
 
   const modules: SchemaGraphModule[] = [];
   const decls: SchemaDecl[] = [];
-  /** module stem → the names it exports, for cross-module resolution. */
-  const exportsByStem = new Map<string, Map<string, string>>();
+  /**
+   * Module stem → its exports, for cross-module resolution.
+   *
+   * Keyed by stem because a relative import names a FILE, not an instance —
+   * `import { X } from "./foo.js"` inside `detangle/schemas/` means
+   * `detangle/schemas/foo.ts`, and two instances may both have a `foo.ts`.
+   * So the key is scoped per directory, not global: a shared stem across
+   * instances would otherwise resolve one instance's import to another's
+   * export, which is the `wggr` failure in miniature.
+   */
+  const exportsByDirStem = new Map<string, Map<string, string>>();
   const bindingsByModule = new Map<string, Map<string, string | null>>();
+  /** Module path → the directory it was read from, for scoped resolution. */
+  const dirOfModule = new Map<string, string>();
 
-  for (const f of readdirSync(dir).sort()) {
-    if (!f.endsWith(".ts")) continue;
-    const moduleRel = `${dirRel}/${f}`;
-    const text = readFileSync(join(dir, f), "utf-8");
-    const block = /^\/\*\*[\s\S]*?^ \*\//m.exec(text)?.[0] ?? "";
-    const tag = TAG.exec(block);
-    const graphNode =
-      tag === null
-        ? "undeclared"
-        : tag[1] === "none"
-          ? "none"
-          : tag[1] === "schema"
-            ? "schema"
-            : "undeclared";
+  for (const dir of dirs) {
+    const dirRel = rel(dir);
+    const instance = dirRel.includes("/") ? dirRel.split("/")[0]! : basename(repoRoot);
+    for (const f of readdirSync(dir).sort()) {
+      if (!f.endsWith(".ts")) continue;
+      const moduleRel = `${dirRel}/${f}`;
+      const text = readFileSync(join(dir, f), "utf-8");
+      const block = /^\/\*\*[\s\S]*?^ \*\//m.exec(text)?.[0] ?? "";
+      const tag = TAG.exec(block);
+      const graphNode =
+        tag === null
+          ? "undeclared"
+          : tag[1] === "none"
+            ? "none"
+            : tag[1] === "schema"
+              ? "schema"
+              : "undeclared";
 
-    const { decls: got, bindings } = readModule(join(dir, f), moduleRel, text);
-    const stem = basename(f, ".ts");
-    bindingsByModule.set(moduleRel, bindings);
-    const exported = new Map<string, string>();
-    for (const d of got) exported.set(d.name, d.id);
-    exportsByStem.set(stem, exported);
+      const { decls: got, bindings } = readModule(join(dir, f), moduleRel, text);
+      const stem = basename(f, ".ts");
+      bindingsByModule.set(moduleRel, bindings);
+      dirOfModule.set(moduleRel, dirRel);
+      const key = `${dirRel}\u0000${stem}`;
+      const exported = exportsByDirStem.get(key) ?? new Map<string, string>();
+      for (const d of got) exported.set(d.name, d.id);
+      exportsByDirStem.set(key, exported);
 
-    modules.push({
-      module: moduleRel,
-      name: stem,
-      graphNode,
-      reason: tag?.[2]?.trim() || undefined,
-      summary: firstProse(block),
-      isTest: f.endsWith(".test.ts"),
-      decls: got.map((d) => d.id),
-    });
-    decls.push(...got);
+      modules.push({
+        module: moduleRel,
+        instance,
+        name: stem,
+        graphNode,
+        reason: tag?.[2]?.trim() || undefined,
+        summary: firstProse(block),
+        isTest: f.endsWith(".test.ts"),
+        decls: got.map((d) => d.id),
+      });
+      decls.push(...got);
+    }
   }
 
   // Resolution, second pass — every module's exports are known by now, so a
@@ -700,7 +746,8 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
   const resolve = (moduleRel: string, name: string): string | "external" | null => {
     const bindings = bindingsByModule.get(moduleRel);
     if (!bindings || !bindings.has(name)) return null; // not bound here: not a reference
-    const own = exportsByStem.get(basename(moduleRel, ".ts"));
+    const dirRel = dirOfModule.get(moduleRel) ?? "";
+    const own = exportsByDirStem.get(`${dirRel}\u0000${basename(moduleRel, ".ts")}`);
     const here = own?.get(name);
     if (here) return here;
     const stem = bindings.get(name);
@@ -708,7 +755,7 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
     // not a declaration of the graph (a helper function, a const array of
     // literals). Both resolved; neither is a node.
     if (stem === "" || stem === null || stem === undefined) return "external";
-    const target = exportsByStem.get(stem);
+    const target = exportsByDirStem.get(`${dirRel}\u0000${stem}`);
     // A relative import pointing OUT of `schemas/` is external too. Only a
     // module that is part of this graph and does not export the name is a
     // genuine miss — which is the narrow case worth reporting.
@@ -764,7 +811,7 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
   decls.sort((a, b) => a.id.localeCompare(b.id));
   modules.sort((a, b) => a.module.localeCompare(b.module));
 
-  return { root: dirRel, modules, decls, edges };
+  return { roots: dirs.map(rel), modules, decls, edges };
 }
 
 if (import.meta.main) {
@@ -775,7 +822,7 @@ if (import.meta.main) {
     process.exit(2);
   }
   const und = g.decls.filter((d) => d.kind === "undetermined");
-  console.log(`${g.root}/`);
+  console.log(g.roots.map((r) => `${r}/`).join("  "));
   console.log(`  modules      ${g.modules.length}`);
   console.log(`  declarations ${g.decls.length}`);
   console.log(`  edges        ${g.edges.length}`);

@@ -62,7 +62,7 @@ function projection(g: LibraryGraph): unknown {
   return { $schema: "folio-library-index/v1", ...g };
 }
 
-function viewerHtml(): string {
+export function viewerHtml(): string {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -253,11 +253,19 @@ function renderDesk(){
 }
 
 function renderQueue(){
-  var h = "<table><thead><tr><th>file</th><th>queue</th><th>type</th><th>size</th><th>state</th></tr></thead><tbody>";
+  var h = "<table><thead><tr><th>unit</th><th>queue</th><th>kind</th><th>size</th><th>state</th></tr></thead><tbody>";
   h += G.uploads.map(function(u){
-    return "<tr><td class=\\"slug\\">"+esc(u.file)+"</td><td><span class=\\"pill\\">"+esc(u.instance)+
-      "</span></td><td>"+esc(u.ext||"—")+"</td><td class=\\"num\\">"+kb(u.bytes)+"</td><td>" +
-      (u.ingestedBy ? '<span class="pill ok">ingested → '+esc(u.ingestedBy)+"</span>"
+    /* An intake is ONE queued document however many files it declares, and
+       the row says so — otherwise a four-file capture reads as four things
+       waiting. The count comes from the intake's own declared file list. */
+    var kind = u.kind === "intake"
+      ? '<span class="pill info">intake · ' + u.declaredFiles + " file" + (u.declaredFiles === 1 ? "" : "s") + "</span>"
+      : esc(u.ext || "—");
+    var label = esc(u.file) + (u.kind === "intake" && u.title
+      ? '<br><span style="font-family:inherit;color:var(--muted);font-size:.78rem">' + esc(u.title) + "</span>" : "");
+    return '<tr><td class="slug">' + label + '</td><td><span class="pill">' + esc(u.instance) +
+      "</span></td><td>" + kind + '</td><td class="num">' + kb(u.bytes) + "</td><td>" +
+      (u.ingestedBy ? '<span class="pill ok">ingested → ' + esc(u.ingestedBy) + "</span>"
                     : '<span class="pill warn">uningested</span>') + "</td></tr>";
   }).join("") || '<tr><td colspan="5"><p class="empty">No uploads queue.</p></td></tr>';
   $("queue").innerHTML = h + "</tbody></table>";

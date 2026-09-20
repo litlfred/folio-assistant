@@ -60,9 +60,9 @@
  *   bun run schema:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, sep } from "node:path";
 
-import { readSchemaGraph, schemasRoot, type SchemaGraph } from "./schema-graph.ts";
+import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 // The `folio` graph kind is registered by CORE on import; this module resolves
 // this instance's directories and the instance declares a folio graph.
@@ -84,9 +84,10 @@ const DOC_MAX = 400;
 function projection(g: SchemaGraph): unknown {
   return {
     $schema: "folio-schema-graph/v1",
-    root: g.root,
+    roots: g.roots,
     modules: g.modules.map((m) => ({
       module: m.module,
+      instance: m.instance,
       name: m.name,
       graphNode: m.graphNode,
       ...(m.reason ? { reason: m.reason } : {}),
@@ -132,7 +133,7 @@ function projection(g: SchemaGraph): unknown {
  * `<site>/assets/schemas/`, so the relative path is a property of the layout
  * rather than of the host.
  */
-function viewerHtml(): string {
+export function viewerHtml(): string {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -493,7 +494,29 @@ if (import.meta.main) {
    * literal anywhere. That is what `2krx` would need if all 19 unrendered
    * subgraphs get viewers.
    */
-  const seg = basename(schemasRoot(ROOT));
+  /**
+   * This instance's OWN schemas directory decides the segment.
+   *
+   * Four instances declare one, and `schemaRoots` returns all four — a
+   * dependency's directory must not name the URL this instance publishes at.
+   * So the one inside ROOT wins, and the first declared one is the fallback
+   * for an instance that declares none of its own.
+   *
+   * On the wider URL shape: the owner ruled on `o7eq` that a rendered asset's
+   * address is the instance's NAME plus the declared graph as a segment, with
+   * whether the ROOT instance elides its own name still open and recommended
+   * to elide. This publishes at `<site>/<graph>/`, which is that ruling with
+   * the root eliding — so it needs no change if the recommendation stands,
+   * and one segment if it does not. `8325` tracks it either way.
+   */
+  const ownPrefix = `${ROOT}${sep}`;
+  const roots = schemaRoots(ROOT);
+  const own = roots.find((d) => d.startsWith(ownPrefix)) ?? roots[0];
+  if (own === undefined) {
+    console.log("  · no schemas directory is declared — nothing to publish");
+    process.exit(0);
+  }
+  const seg = basename(own);
   const data = JSON.stringify(projection(g), null, 2) + "\n";
   // Indented for the reason the todo and bean indices both document: a
   // minified projection is one line, git merges by line, and two branches each

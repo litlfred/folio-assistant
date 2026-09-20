@@ -64,7 +64,7 @@
  * ship first, and this module is that half.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { basename, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
@@ -127,19 +127,48 @@ export interface LibraryEntry {
   uploadInstance: string;
 }
 
-/** One file sitting in an `uploads/` queue. */
+/**
+ * One QUEUED UNIT — a loose file, or a declared intake.
+ *
+ * ## Why a unit rather than a file, and why that is read rather than assumed
+ *
+ * A queue held loose files until the IRIS work landed. It now also holds
+ * per-document directories carrying an `intake.json` (`"$schema":
+ * "folio-intake/v1"`) whose `files[]` declares the capture — for the worked
+ * example, four files that are *three different kinds of thing that a single
+ * `uploads/` entry has never had to tell apart before*, in its own words.
+ *
+ * Counting those four as four queued documents would have made the badge say
+ * 4 where one document is waiting, and counting the `.extraction.json`
+ * sidecars beside them would have made it 7. Neither is a queue anybody has.
+ * **The intake declares which files are the capture, so the reader asks it**
+ * — the same principle `directory-conventions` states for every other graph
+ * here: a directory says what to expect and the files declare what they are.
+ */
 export interface UploadItem {
-  /** File name as dropped. */
+  /** File name, or the intake directory's name. */
   file: string;
+  /**
+   * `file` — a loose file dropped in the queue.
+   * `intake` — a directory whose `intake.json` declares a capture.
+   */
+  kind: "file" | "intake";
   /** The instance whose queue this is. */
   instance: string;
   /** Repo-relative path. */
   path: string;
+  /** Bytes: the file, or the whole intake directory. */
   bytes: number;
-  /** Lower-case extension without the dot, or `""`. */
+  /** Lower-case extension without the dot, or `""`. `""` for an intake. */
   ext: string;
-  /** The library slug that names this file, or `""` — the badge's basis. */
+  /** The library slug that names this unit, or `""` — the badge's basis. */
   ingestedBy: string;
+  /** Intake only: the `doc_id` it declares. */
+  docId: string;
+  /** Intake only: its declared title. */
+  title: string;
+  /** Intake only: how many files `files[]` declares. */
+  declaredFiles: number;
 }
 
 /** One declared `uploads/` queue, counted on its own. */
@@ -236,6 +265,16 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
     for (const d of directoriesForGraph(r, "library")) libDirs.add(d);
     for (const d of directoriesForGraph(r, "uploads")) upDirs.add(d);
   }
+  // An instance that declares a library declares its own queue, and that
+  // declaration does not always reach the roots passed in: measured
+  // 2026-09-20, `directoriesForGraph(cat-harness, "library")` resolves
+  // `who-iris/library` while `…(cat-harness, "uploads")` does NOT resolve
+  // `who-iris/uploads`. Reading the entries of a queue this reader then
+  // omitted would report an instance's corpus as though it arrived from
+  // nowhere. So each library's own instance root is asked for its queue.
+  for (const lib of [...libDirs]) {
+    for (const d of directoriesForGraph(dirname(lib), "uploads")) upDirs.add(d);
+  }
   if (libDirs.size === 0 && upDirs.size === 0) return null;
 
   // Entries first: the uploads pass needs to know which files are named.
@@ -306,8 +345,47 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
 
   for (const upDir of [...upDirs].sort()) {
     const instance = instanceOf(upDir, repoRoot);
-    const files = filesIn(upDir);
     let ingested = 0;
+
+    // Declared intakes first. A directory carrying `intake.json` is ONE
+    // queued document, whatever it holds — see the note on `UploadItem`.
+    for (const name of existsSync(upDir) ? readdirSync(upDir).sort() : []) {
+      const sub = join(upDir, name);
+      if (name.startsWith(".") || !statSync(sub).isDirectory()) continue;
+      const intake = readJson<{
+        doc_id?: string;
+        title?: string;
+        files?: unknown[];
+      }>(join(sub, "intake.json"));
+      // A subdirectory with no intake is not a queued unit and not an error
+      // either: it is something this reader does not model, and saying so is
+      // better than counting it as a document.
+      if (!intake) continue;
+      const docId = intake.doc_id ?? name;
+      const hit = byId.has(docId) ? docId : "";
+      if (hit) ingested++;
+      uploads.push({
+        file: name,
+        kind: "intake",
+        instance,
+        path: relative(repoRoot, sub).split("\\").join("/"),
+        bytes: treeBytes(sub),
+        ext: "",
+        ingestedBy: hit,
+        docId,
+        title: intake.title ?? "",
+        declaredFiles: intake.files?.length ?? 0,
+      });
+      const e = byId.get(docId);
+      // An intake IS the source, so an entry reached through one is linked
+      // even when no single `source_file` sits loose in the queue.
+      if (e && e.upload === "absent") {
+        e.upload = "match";
+        e.uploadInstance = instance;
+      }
+    }
+
+    const files = filesIn(upDir);
     for (const file of files) {
       const hit = named.get(file);
       if (hit) {
@@ -324,19 +402,25 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
       }
       uploads.push({
         file,
+        kind: "file",
         instance,
         path: relative(repoRoot, join(upDir, file)).split("\\").join("/"),
         bytes: statSync(join(upDir, file)).size,
         ext: (file.split(".").pop() ?? "").toLowerCase() === file ? "" : (file.split(".").pop() ?? "").toLowerCase(),
         ingestedBy: hit?.slug ?? "",
+        docId: "",
+        title: "",
+        declaredFiles: 0,
       });
     }
+    const dirRel = relative(repoRoot, upDir).split("\\").join("/");
+    const units = uploads.filter((u) => u.instance === instance && u.path.startsWith(`${dirRel}/`));
     queues.push({
       instance,
-      dir: relative(repoRoot, upDir).split("\\").join("/"),
-      total: files.length,
+      dir: dirRel,
+      total: units.length,
       ingested,
-      uningested: files.length - ingested,
+      uningested: units.length - ingested,
     });
   }
 
