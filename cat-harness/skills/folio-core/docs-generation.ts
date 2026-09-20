@@ -4,7 +4,6 @@ export const docsGeneration: SkillDefinition = {
   id: "docs-generation",
   name: "Docs Generation",
   description: "TypeDoc generation, schema docs, PDF/HTML paper builds, and dependency graph rendering.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

@@ -4,7 +4,6 @@ export const leanGeneration: SkillDefinition = {
   id: "lean-generation",
   name: "Lean Generation",
   description: "Stub extraction from LaTeX, cross-reference sync between content objects and Lean files.",
-  roles: ["collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "lean-toolchain", degradation: "fallback" },
   ],

@@ -35,10 +35,36 @@
  * incremental by design; the gate is on what a diagram CLAIMS, never on
  * how much it has claimed so far.
  *
+ * ## The rule is ALSO a kg-audit criterion, and that is not two implementations
+ *
+ * Bean `3kbd`. Until 2026-09-20 a breach was only ever PRINTED, and
+ * `kg-audit`'s own rationale says why that is not enough: a printed verdict
+ * is gone when the job ends, which makes *"unsound since the diagram was
+ * drawn"* and *"broken in the commit under review"* indistinguishable. The
+ * three rules below are now committed sidecar criteria too —
+ * `raci-role-resolves`, `raci-single-accountable` and
+ * `raci-accountable-not-consulted`.
+ *
+ * **`raciBreaches` stays the only implementation.** It tags each breach with
+ * its kind and `kg-audit` partitions on the tag; nothing re-derives the rule.
+ * A second copy would be a second answer to "is this chart sound", free to
+ * disagree with the first — the drift `85e8` and the retired `roles:` field
+ * both cost.
+ *
+ * **Why `check:raci` survives anyway.** Severity is a repo-wide policy:
+ * `kg:audit --check` fails on `critical`, and only `raci-role-resolves` is
+ * critical (it is a DANGLING REF — `role-ref-resolves` on another edge). The
+ * other two are `major`, which by that policy does not gate. But the owner
+ * asked for exactly one Accountable *enforced*, so dropping this gate would
+ * silently downgrade the one rule that was explicitly requested. It is kept
+ * as a DELIBERATE, documented exception to the severity policy rather than
+ * as a duplicate of it — one rule, two consumers, different gating.
+ *
  * Usage:
  *   bun run raci                     # the chart, every process
  *   bun run raci -- --process <id>   # one process
  *   bun run check:raci               # the rule only, exit non-zero on a breach
+ *   bun run kg:audit                 # the same rule, written to sidecars
  *
  * @module scripts/raci-chart
  */
@@ -47,7 +73,7 @@ import { resolve } from "node:path";
 import { workflowFiles, kgRoots } from "./known-skills.js";
 import { readRoleGraph } from "../schemas/role-graph.js";
 import { isActivity, loadProcessModel, RACI_INVOLVEMENTS } from "../src/workflow/process-model.js";
-import type { RaciInvolvement } from "../src/workflow/process-model.js";
+import type { ProcessNode, RaciInvolvement } from "../src/workflow/process-model.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -63,9 +89,21 @@ export interface RaciRow {
   informed: string[];
 }
 
+/**
+ * Which rule a breach broke.
+ *
+ * Tagged rather than flat so `kg-audit` can partition one implementation into
+ * three criteria with three severities. The registry grades every DANGLING
+ * reference `critical` and every structural gap `major`, and RACI has both:
+ * `role-undeclared` is `role-ref-resolves` on a different edge, while the
+ * other two are gaps between roles that all exist.
+ */
+export type RaciBreachKind = "accountable-count" | "role-undeclared" | "accountable-also-consulted";
+
 export interface RaciBreach {
   process: string;
   activity: string;
+  kind: RaciBreachKind;
   detail: string;
 }
 
@@ -78,25 +116,38 @@ export function declaredRoles(root: string): Set<string> {
   return out;
 }
 
-/** Build the chart. Activities with no RACI declaration are omitted. */
+/**
+ * One process's rows. Activities with no RACI declaration are omitted.
+ *
+ * Split out from `raciRows` so `kg-audit` can build them from the model it
+ * has ALREADY loaded. Re-reading the diagram there would be a second parse of
+ * the same file free to disagree with the first — and the sidecar records a
+ * content hash of that file, so the two answers would be filed under one hash.
+ */
+export function raciRowsOf(model: { id: string; nodes: Map<string, ProcessNode> }): RaciRow[] {
+  const rows: RaciRow[] = [];
+  for (const n of [...model.nodes.values()].filter(isActivity)) {
+    if (n.raci.length === 0) continue;
+    const of = (k: RaciInvolvement): string[] =>
+      n.raci.filter((r) => r.involvement === k).map((r) => r.role).sort();
+    rows.push({
+      process: model.id,
+      activity: n.id,
+      activityName: n.name,
+      responsible: n.roleRef,
+      accountable: of("accountable"),
+      consulted: of("consulted"),
+      informed: of("informed"),
+    });
+  }
+  return rows;
+}
+
+/** Build the chart across every diagram the declaration names. */
 export async function raciRows(root: string = ROOT): Promise<RaciRow[]> {
   const rows: RaciRow[] = [];
   for (const file of workflowFiles(root).filter((f) => f.endsWith(".bpmn"))) {
-    const model = await loadProcessModel(file);
-    for (const n of [...model.nodes.values()].filter(isActivity)) {
-      if (n.raci.length === 0) continue;
-      const of = (k: RaciInvolvement): string[] =>
-        n.raci.filter((r) => r.involvement === k).map((r) => r.role).sort();
-      rows.push({
-        process: model.id,
-        activity: n.id,
-        activityName: n.name,
-        responsible: n.roleRef,
-        accountable: of("accountable"),
-        consulted: of("consulted"),
-        informed: of("informed"),
-      });
-    }
+    rows.push(...raciRowsOf(await loadProcessModel(file)));
   }
   return rows;
 }
@@ -117,6 +168,7 @@ export function raciBreaches(rows: readonly RaciRow[], roles: ReadonlySet<string
       out.push({
         process: r.process,
         activity: r.activity,
+        kind: "accountable-count",
         detail:
           r.accountable.length === 0
             ? "declares RACI but no `accountable` — a half-annotated activity is worse than an unannotated one, because the chart looks complete"
@@ -133,6 +185,7 @@ export function raciBreaches(rows: readonly RaciRow[], roles: ReadonlySet<string
           out.push({
             process: r.process,
             activity: r.activity,
+            kind: "role-undeclared",
             detail: `${kind} names "${role}", which is in no role registry`,
           });
         }
@@ -143,6 +196,7 @@ export function raciBreaches(rows: readonly RaciRow[], roles: ReadonlySet<string
         out.push({
           process: r.process,
           activity: r.activity,
+          kind: "accountable-also-consulted",
           detail: `"${a}" is both accountable and consulted — asking yourself is not consultation`,
         });
       }
