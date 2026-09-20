@@ -119,6 +119,27 @@ export const KG_QA_RESULTS_DIR = join("test", "results", "kg-qa");
  * subjects because of it; mirroring keeps that guarantee while moving the
  * files, and keeps the package legible in the path.
  *
+ * ## A subject OUTSIDE the instance keeps its own segment, not `..`
+ *
+ * A repository-scoped directory can sit above the instance root — this
+ * repository declares `bootstrap/skills/` and `bootstrap/workflows/` that way,
+ * from `cat-harness/`. `relative` then answers `../bootstrap/workflows`, and
+ * joining that CLIMBS BACK OUT: the sidecars landed in
+ * `test/results/bootstrap/`, a sibling of `kg-qa/` rather than a subtree of
+ * it. Measured 2026-09-20 on bean `7u3g`, the moment those diagrams became
+ * visible at all.
+ *
+ * The damage is not cosmetic. `sweepOrphans` walks `KG_QA_RESULTS_DIR`, so an
+ * escaped sidecar is outside the only tree that would notice it going stale —
+ * the one mechanism written to stop a verdict outliving its subject, blind to
+ * the verdicts most likely to. And `kg:audit:check`'s staleness comparison
+ * reads the same tree.
+ *
+ * So an outside subject is re-rooted under `_external/` rather than allowed
+ * its `..`: still a mirror, still collision-free, and INSIDE the tree the
+ * sweep walks. `..` is dropped rather than encoded, because the segment that
+ * matters for collisions is the path below the escape.
+ *
  * @param repoRoot   absolute instance root
  * @param subjectDir absolute directory the subject itself lives in
  * @param stem       the subject's filename without extension, or its id
@@ -128,7 +149,14 @@ export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: stri
   // spelling of the same directory must land on the same results path, or the
   // writer and the reader disagree again by another route.
   const rel = relative(repoRoot, subjectDir);
-  return join(repoRoot, KG_QA_RESULTS_DIR, rel, `${stem}.kg-qa.json`);
+  const inside = rel.split(/[\\/]/).filter((seg) => seg !== "" && seg !== "..");
+  const escaped = rel.startsWith("..");
+  return join(
+    repoRoot,
+    KG_QA_RESULTS_DIR,
+    ...(escaped ? ["_external", ...inside] : inside),
+    `${stem}.kg-qa.json`,
+  );
 }
 
 /** An orphan sidecar, and what its own `subject.path` says about why. */
