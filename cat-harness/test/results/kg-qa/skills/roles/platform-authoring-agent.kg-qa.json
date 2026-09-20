@@ -2,7 +2,7 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "role",
-    "id": "editor",
+    "id": "platform-authoring-agent",
     "path": "skills/roles/roles.json"
   },
   "source_hash": "sha256:5199ef743d47b64a01c8875f9b8641b5f38fb9ed7a4875f1cbafc5ab54b948c1",
@@ -16,8 +16,13 @@
       "findings": []
     },
     "role-binds-a-lane": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "platform-authoring-agent",
+          "detail": "role \"platform-authoring-agent\" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead."
+        }
+      ]
     },
     "role-has-persona": {
       "result": "pass",
@@ -41,8 +46,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 7,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }
