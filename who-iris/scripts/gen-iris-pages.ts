@@ -44,7 +44,7 @@
  *   bun run who-iris/scripts/gen-iris-pages.ts
  *   bun run who-iris/scripts/gen-iris-pages.ts --check
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 
 import { whoThemeById } from "../themes/themes.js";
@@ -53,6 +53,17 @@ const INSTANCE = resolve(import.meta.dir, "..");
 const REPO = resolve(INSTANCE, "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
 const OUT = join(INSTANCE, "docs");
+
+/**
+ * The filenames this generator OWNS, and may therefore delete.
+ *
+ * Deliberately a pattern over its own naming rather than "everything in
+ * `docs/`". `deletion-requires-confirmation` is about durable artefacts an
+ * agent did not create; this prunes only what this file itself emits, which is
+ * the same licence `prunableStickies` operates under. A hand-authored page, an
+ * asset directory or a `.nojekyll` in the same directory is untouched.
+ */
+export const OWNED = /^(index|community-list|collection-.*|item-.*)\.html$/;
 
 /**
  * Where a committed file is actually served from.
@@ -832,16 +843,48 @@ function main(): number {
     writeFileSync(p, html);
   }
 
+  // ── ORPHANS ────────────────────────────────────────────────────────────
+  //
+  // **This generator wrote and never deleted, and that is a defect rather
+  // than a gap.** Re-keying two items from `item/local:<slug>` to their real
+  // DSpace UUIDs (2026-09-20) left `item-item-local-*.html` behind: nine files
+  // where seven were wanted, two of them serving the OLD record at a URL
+  // nothing links to any more. `--check` was blind to it, because it only ever
+  // inspected the files it was about to write — so it reported "up to date"
+  // over content the catalogue no longer describes.
+  //
+  // That is the `yl5w` shape pointed the other way. There, a claim resolved to
+  // no file; here, a file answers to no claim.
+  //
+  // Pruning is scoped to THIS GENERATOR'S OWN NAMING, never to the directory:
+  // a page somebody hand-added, a `.nojekyll`, an asset directory, all survive.
+  // Precedent is `prunableStickies` in `ensure-landing-sticky.ts`, which prunes
+  // its own output for the same reason.
+  const orphans = existsSync(OUT)
+    ? readdirSync(OUT)
+        .filter((f) => OWNED.test(f) && !files.has(f))
+        .sort()
+    : [];
+
   if (check) {
-    if (stale) {
-      console.error(`\n${stale} page(s) stale. Run: bun run who-iris/scripts/gen-iris-pages.ts`);
+    for (const o of orphans) console.error(`orphaned: who-iris/docs/${o}`);
+    if (stale || orphans.length) {
+      const bits = [
+        stale ? `${stale} page(s) stale` : "",
+        orphans.length ? `${orphans.length} orphaned` : "",
+      ].filter(Boolean).join(", ");
+      console.error(`\n${bits}. Run: bun run who-iris/scripts/gen-iris-pages.ts`);
       return 1;
     }
-    console.log(`gen-iris-pages --check: ${files.size} page(s) up to date.`);
+    console.log(`gen-iris-pages --check: ${files.size} page(s) up to date, no orphans.`);
     return 0;
   }
+
+  for (const o of orphans) rmSync(join(OUT, o));
+
   console.log(`wrote ${files.size} page(s) to who-iris/docs/`);
   for (const name of files.keys()) console.log(`  ${name}`);
+  for (const o of orphans) console.log(`  pruned ${o}`);
   return 0;
 }
 

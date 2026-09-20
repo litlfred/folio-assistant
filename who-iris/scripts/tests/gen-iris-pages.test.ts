@@ -19,6 +19,8 @@ import { describe, expect, it } from "bun:test";
 import { readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 
+import { OWNED } from "../gen-iris-pages.js";
+
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
 const DOCS = join(INSTANCE, "docs");
@@ -65,5 +67,39 @@ describe("rendered lists are in a deterministic order", () => {
 
   it("both pages agree with each other, not merely with the sort", () => {
     expect(itemOrderIn("index.html")).toEqual(itemOrderIn("community-list.html"));
+  });
+});
+
+describe("the generator owns its filenames, and prunes only those", () => {
+  it("every .html committed under docs/ is one the generator would write", () => {
+    // The orphan guard, asserted against the COMMITTED tree rather than a
+    // temp dir. Re-keying two items on 2026-09-20 left
+    // `item-item-local-*.html` behind — nine files where seven were wanted,
+    // two of them serving a record the catalogue no longer describes, and
+    // `--check` was blind because it only inspected what it was about to
+    // write. This fails if that recurs.
+    const html = readdirSync(DOCS).filter((f) => f.endsWith(".html"));
+    expect(html.length).toBeGreaterThan(3);
+    const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
+    const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
+    const wanted = new Set(["index.html", "community-list.html", ...items, ...colls]);
+    expect(html.filter((f) => !wanted.has(f))).toEqual([]);
+    expect([...wanted].filter((f) => !html.includes(f))).toEqual([]);
+  });
+
+  it("OWNED matches what the generator emits", () => {
+    for (const f of readdirSync(DOCS).filter((f) => f.endsWith(".html"))) {
+      expect(OWNED.test(f)).toBe(true);
+    }
+  });
+
+  it("OWNED spares what the generator did NOT write", () => {
+    // The other half, and the one that makes pruning safe to run at all:
+    // `deletion-requires-confirmation` is about artefacts an agent did not
+    // create, so the pattern must not reach them. Checked by name rather than
+    // by deleting anything.
+    for (const f of ["hand-authored.html", ".nojekyll", "README.md", "assets", "index.json"]) {
+      expect(OWNED.test(f)).toBe(false);
+    }
   });
 });

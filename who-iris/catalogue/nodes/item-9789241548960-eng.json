@@ -1,10 +1,15 @@
 {
   "$schema": "folio-catalogue-node/v1",
-  "id": "item/local:9789241548960-eng",
+  "id": "item/63e14c27-7448-41ec-be08-a96a25a47db6",
   "kind": "item",
   "flavour": "item",
-  "title": "WHO handbook for guideline development, 2nd ed.",
-  "parents": [],
+  "title": "WHO handbook for guideline development",
+  "parents": [
+    [
+      "community/5bff2c18-6c2b-4658-9087-93811d2399c0",
+      "collection/hq-publications"
+    ]
+  ],
   "libraryId": "9789241548960-eng",
   "bitstreams": [
     {
@@ -14,7 +19,7 @@
       "mediaType": "application/pdf",
       "materialization": {
         "state": "materialized",
-        "of": "local:9789241548960-eng",
+        "of": "https://iris.who.int/handle/10665/145714",
         "localPath": "uploads/9789241548960_eng.pdf",
         "purpose": "both",
         "bytes": 2136157,
@@ -43,7 +48,8 @@
             "verdict": "unknown",
             "basis": "no dc.rights field in the captured record"
           }
-        }
+        },
+        "note": "Re-keyed 2026-09-20 from the captured full item record. It was `item/local:<slug>` with `parents: []` -- an item this repository held and could not place -- because no record had been captured for it. One has, so the id is now the DSpace UUID from the captured page's own URL, the parents are the breadcrumb, and the bitstream's `of` is the Handle rather than a `local:` origin. The slug survives as `libraryId`, which is what the ingested text is filed under and what every existing reference resolves through."
       }
     }
   ],
