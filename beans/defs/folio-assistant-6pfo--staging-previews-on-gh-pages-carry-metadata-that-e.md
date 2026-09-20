@@ -267,3 +267,24 @@ Three shapes, put to the owner rather than guessed:
 3. A new scheduled workflow whose only job is to enrich. No principle broken, but a new writer committing per-preview records to `main`, and another thing to keep green.
 
 Leaving the wrong note above rather than editing it, so the correction is visible and the next reader does not re-derive it. What misled me: I counted `contents: write` and stopped, without asking what fires each workflow — the same shape as counting a thing and not checking it is reachable.
+
+_2026-09-20T06:52:59Z_ — OWNER CHOSE: retire into `gh-pages` OUTSIDE the deleted directory, **and never delete a retired record without explicit confirmation from the user**. That second half makes the retired store a durable artefact, so `deletion-requires-confirmation` governs it the same way it governs a bean or a preview.
+
+**MEASURED FIRST, and it changes what this costs.** There is NOWHERE on `gh-pages` a retired record survives today:
+
+- `docs-site.yml` is a FULL REPLACE — `git rm -r --ignore-unmatch '*'` over the whole branch, then copies `_site` in — and it is the only one of the repository's six `gh-pages` publishers without `keep_files: true`. It fires on every push to `main`.
+- The only reason `STAGING/<slug>/` survives is `restore-staging.ts`, which carries **the OPEN pull requests'** previews back into `_site` before the push (bean `plj1`).
+- A retired record belongs to a CLOSED pull request by definition. So it would be carried by nothing and wiped by the next deploy.
+
+So "retire it somewhere the cleanup does not touch" is necessary and not sufficient: the cleanup is not the only thing that deletes. `restore-staging.ts` has to carry the retired store too — and that is the RIGHT home rather than scope creep, because that script already is the single answer to "what survives a full replace".
+
+**A SECOND HAZARD, from the slug.** `STAGING/_retired/` is reachable by `rm -rf "STAGING/$SLUG"`: a branch named `_retired` slugifies to exactly `_retired`, and git permits that ref. Verified. So the store needs an explicit guard, not just a name nothing happens to collide with today.
+
+**AND A NEAR-MISS WORTH ITS OWN BEAN.** The slug sanitiser CAN emit `..` — input `..` gives output `..`, which as a path is `STAGING/..`, the checkout root, against an `rm -rf`. It is safe only because **git rejects every ref name containing `..`** (verified with `git check-ref-format` across eight candidates). The protection lives in git's ref rules, not in the `sed`, and that invariant is written down nowhere. A future change to the sanitiser, or a slug taken from something that is not a ref, loses it silently.
+
+So the design is four pieces, and the last two are what "never delete" actually costs:
+
+1. `stage` writes the live record into `_site/`, landing at `STAGING/<slug>/staging-preview.json`.
+2. `cleanup`, before `rm -rf`, retires it into the retired store.
+3. `restore-staging.ts` carries the retired store across a full replace — unconditionally, NOT gated on open pull requests, since a retired record's PR is closed.
+4. Every removal path is guarded: the slug-collision case refused outright, and any deliberate removal of a retired record requires the explicit confirmation input, the same shape `cleanup-dispatch` already uses.
