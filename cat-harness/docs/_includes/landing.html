@@ -59,11 +59,27 @@
            data-fa-sticky-theme="{{ st.theme }}"
            aria-labelledby="fa-sticky-{{ st.id }}-summary">
     {%- if has_art -%}
+    {%- comment -%}
+      The DEFAULT crop is the one this sticky's CONTENT wants — `st.shape`,
+      computed in the generator from how much text and how many links the card
+      carries. Until now the choice was viewport-only, so a two-line sticky and a
+      twelve-line one got the same landscape crop and neither fitted.
+
+      The narrow-viewport `<source>`s stay on top of it: a phone should not be
+      handed a landscape crop just because the text happened to be short. So
+      content decides the default and the viewport still overrides, which is the
+      right precedence — the viewport is a hard constraint and the content shape
+      is a preference.
+
+      `<source>` order is narrowest-first, because a `<picture>` takes the FIRST
+      matching source and `max-width: 48rem` matches a 20rem phone too.
+    {%- endcomment -%}
+    {%- assign chosen = st.art[st.shape] | default: st.art.laptop | default: st.art.mobile | default: st.art.card -%}
     <picture>
       {%- if st.art.card %}<source media="(max-width: 30rem)" srcset="{{ st.art.card.src | relative_url }}"{% if st.art.card.width %} width="{{ st.art.card.width }}" height="{{ st.art.card.height }}"{% endif %}>{% endif -%}
       {%- if st.art.mobile %}<source media="(max-width: 48rem)" srcset="{{ st.art.mobile.src | relative_url }}"{% if st.art.mobile.width %} width="{{ st.art.mobile.width }}" height="{{ st.art.mobile.height }}"{% endif %}>{% endif -%}
-      <img class="fa-sticky-art" src="{{ st.art.laptop.src | relative_url }}" alt="" aria-hidden="true"
-           {% if st.art.laptop.width %}width="{{ st.art.laptop.width }}" height="{{ st.art.laptop.height }}"{% endif %}
+      <img class="fa-sticky-art" src="{{ chosen.src | relative_url }}" alt="" aria-hidden="true"
+           {% if chosen.width %}width="{{ chosen.width }}" height="{{ chosen.height }}"{% endif %}
            decoding="async" loading="lazy">
     </picture>
     {%- endif -%}

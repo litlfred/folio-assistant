@@ -3,8 +3,9 @@
 title: 'INGESTION: a skill that takes 3 avatar/theme layouts, checks them, and says why it refused'
 status: todo
 type: feature
+priority: normal
 created_at: 2026-09-20T06:31:08Z
-updated_at: 2026-09-20T06:31:08Z
+updated_at: 2026-09-20T06:40:45Z
 parent: folio-assistant-o3xy
 blocking:
     - folio-assistant-d3yq
@@ -97,3 +98,15 @@ Derived from what actually went wrong, not invented:
 - [ ] it refuses every failure above, each proved by a test that can fire
 - [ ] avatars exist for testing, engineering and architecture
 - [ ] the board reflects which harnesses fired, each with its avatar
+
+
+
+_2026-09-20_ — SCOPING CORRECTION from the owner, verbatim: **"make as part of docuemtn ingestion skill...."**
+
+So this is **not a new standalone skill**. It belongs to the existing document-ingestion process, which already exists here — `adapters/document/`, and the committed witnesses under `test/results/witnesses/document-ingestion/` (`extract-structure`, `derive-content`, `the-pipeline`, `the-l1-completeness-gate`).
+
+That is the better home and it is worth saying why, because "ingestion" was about to be built twice. Document ingestion already answers the same question this bean poses — *something unstructured has arrived; is it acceptable, and if not, why not* — and it already has the shape of the answer: a pipeline with a completeness gate. An avatar/theme arriving as three PNGs is the same event with a different payload. A parallel "avatar ingestion" skill would be a second answer to one question, free to disagree with the first, which is the drift `AGENTS.md` opens by warning about.
+
+CONSEQUENCE: the constraint list in this bean becomes a set of checks WITHIN document ingestion keyed on the payload being theme art, not a new process. The `return success or explanation of failure` contract should be whatever that pipeline's gate already returns, rather than a new result type.
+
+STILL OPEN and unchanged by this: whether the third avatar in `1b62b57` is missing or the duplicate was an upload slip (two of the three files are byte-identical, sha256 `30dad51dfc691587`, both 1,606,269 bytes), and the constraint list itself.

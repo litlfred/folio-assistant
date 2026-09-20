@@ -105,11 +105,11 @@ const RAW = [
       // 0.86 is measured, not chosen by eye: `themes.test.ts` computes the
       // WORST-CASE contrast of `ink` over this scrim laid on pure black — the
       // darkest art any instance could declare — and requires it to clear WCAG
-      // AAA. It comes out at 9.95:1, against 14.03:1 on pure white — the dark
-      // end is the binding one. A thinner scrim is where that guarantee
+      // AAA. At 0.90 it is 10.94:1, against 13.93:1 on pure white — the dark end
+      // is the binding one. A thinner scrim is where that guarantee
       // goes, which is why the number has a test and not a comment saying it
       // looked fine.
-      scrim: "rgba(237, 234, 228, 0.86)",
+      scrim: "rgba(237, 234, 228, 0.90)",
       description:
         "The instance's declared landing art, behind the sticky's ink rather than composited with it.",
     },
@@ -131,11 +131,19 @@ const RAW = [
     },
     backdrop: {
       imageRole: "landing-engineer",
-      // Measured like grumpy-cat's, over PURE BLACK: 10.36:1 for this ink, and
+      // Measured like grumpy-cat's, over PURE BLACK: 11.41:1 for this ink, and
       // 14.35:1 over white. The art carries bright hi-vis orange and near-black
       // shadow in the same frame, so both ends are real here rather than
       // hypothetical.
-      scrim: "rgba(253, 251, 239, 0.86)",
+      //
+      // 0.90 after two looks at the rendered board: 0.86 left the logo too
+      // present ("should be fadded a lot ... logo faded especially"), 0.93 went
+      // past it ("a bit less faded"). Arrived at by rendering and looking, which
+      // is the only way this value was ever going to be settled. The scrim is the
+      // ONE fade knob: adding an `opacity` to the art would be a second control
+      // for one effect, and the two would have to be kept in step by whoever
+      // next changed either.
+      scrim: "rgba(253, 251, 239, 0.90)",
       description:
         "The instance's declared engineering landing art, behind the sticky's ink rather than composited with it.",
     },

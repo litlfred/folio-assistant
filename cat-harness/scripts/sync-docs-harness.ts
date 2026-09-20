@@ -159,6 +159,35 @@ if (!repoUrl && existsSync(OUT)) {
  * sticky cannot see, and `theme.ts` already says resolution happens at render
  * time "where a missing theme degrades rather than failing the page".
  */
+/**
+ * Which crop a sticky's art should be, chosen from the shape of its CONTENT.
+ *
+ * The owner: *"auto chose layout based on content shape."* The three crops are
+ * genuinely different shapes — landscape, portrait, square — and until now the
+ * choice was made by viewport alone, which meant a two-line sticky and a
+ * twelve-line one got the same wide crop on a laptop and neither fitted.
+ *
+ * Weight, not character count: a link costs far more vertical space than its
+ * own text, because it is a block with a note under it. The constant is a
+ * rough line-height's worth, which is what makes four links weigh more than the
+ * paragraph above them — as they should, since they are what makes that card
+ * tall.
+ *
+ * Thresholds are chosen against the three stickies that exist, which is honest
+ * rather than universal: a short note is square, a paragraph is wide, and
+ * anything that will run down the page takes the tall crop. They will need
+ * revisiting when a sticky lands between two of them, and a sticky can always
+ * override by declaring its own.
+ */
+function shapeFor(comment: string, links: readonly { label: string; note?: string }[]): string {
+  const weight =
+    comment.length +
+    links.reduce((n, l) => n + l.label.length + (l.note?.length ?? 0) + 40, 0);
+  if (weight < 250) return "card";
+  if (weight < 450) return "laptop";
+  return "mobile";
+}
+
 const stickies = readLandingStickies(ROOT).map((st) => {
   const theme = themeById(st.theme);
   const resolved = theme ? resolveThemeBackdrop(theme, decl.images) : undefined;
@@ -188,6 +217,11 @@ const stickies = readLandingStickies(ROOT).map((st) => {
       external: isExternalLink(l),
     })),
     art,
+    // The crop this sticky's CONTENT wants, as opposed to the one its viewport
+    // wants. The template uses it as the default and still lets a narrow screen
+    // override — a tall phone should not be handed a landscape crop just
+    // because the text is short.
+    shape: shapeFor(st.comment, st.links),
     // Emitted even when there is no art: the stylesheet composites it over
     // whatever is behind, and a sticky whose theme did not load still wants a
     // readable ground. Degrade toward legible.

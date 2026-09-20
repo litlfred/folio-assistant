@@ -1839,19 +1839,55 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-sticky--backdrop {
   position: relative;
   isolation: isolate;
+  /* REQUIRED, not tidiness. Without it the art escapes the card's rounded
+   * corners; and if any rule above ever fails to position it, an unclipped
+   * backdrop lays out at its INTRINSIC size — 1672px wide — and covers the
+   * page. That is not hypothetical: it is what this board did on its first
+   * render, and it was invisible in the HTML, which was correct throughout. */
+  overflow: hidden;
 }
 
-.fa-sticky--backdrop > .fa-sticky-art {
+/* THE POSITIONED LAYER IS THE `<picture>`, NOT THE `<img>`.
+ *
+ * This was `.fa-sticky--backdrop > .fa-sticky-art` and matched NOTHING: the
+ * `<img>` sits inside `<picture>`, so it is a grandchild and the child
+ * combinator failed silently. CSS has no error for a selector that matches
+ * nothing, so the page built clean, the markup was right, every request
+ * returned 200 — and the art rendered at full size in normal flow, pushing the
+ * text down and spilling across the whole viewport. Found by screenshotting the
+ * board, not by any gate.
+ *
+ * `<picture>` is the right element to position anyway: it is the box that
+ * represents the art, and the `<img>` inside it is the chosen crop. */
+.fa-sticky--backdrop > picture {
   position: absolute;
   inset: 0;
   z-index: -2;
+}
+
+/* Negative z-index puts this ABOVE the card's own background and below its
+ * content, which is what the painting order gives: an element's background
+ * paints first, then negative-z children, then in-flow content. `isolation`
+ * above keeps both layers inside the card rather than behind the page. */
+.fa-sticky--backdrop > picture > .fa-sticky-art {
+  display: block;
   width: 100%;
   height: 100%;
-  /* `cover` rather than `contain`: the card's aspect ratio is set by its text
-   * and will not match any crop, and letterboxing a backdrop reads as a broken
-   * image rather than as a deliberate frame. */
-  object-fit: cover;
-  border-radius: inherit;
+  /* `contain`, so the WHOLE artwork is visible rather than a crop of it.
+   *
+   * This was `cover`, on the reasoning that the card's aspect will not match the
+   * art's and letterboxing reads as a broken image. Both halves were wrong here.
+   * `cover` cut the cat's head off on a short card and showed a meaningless
+   * middle band on a tall one — the owner, looking at it: "show full sticky
+   * image, not cropped." And the letterboxing argument does not apply to a
+   * backdrop faded to a tenth of its strength: the bands are the card's own
+   * surface colour, which is what the rest of the card already is.
+   *
+   * `top` because the thought-cloud is at the top of every crop and the text is
+   * held to the top of the card. Centring the art vertically would slide the
+   * cloud down behind the second paragraph. */
+  object-fit: contain;
+  object-position: center top;
 }
 
 .fa-sticky--backdrop::before {
@@ -2484,6 +2520,20 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   padding: 1.1em 1.2em;
 }
 
+/* CENTRED, AND HELD TO THE TOP. The owner, looking at the first render: "text
+ * centered around cloud towards top." The cloud occupies the upper portion of
+ * every crop — that is what the three declared `textRegion`s were describing
+ * back when the text was composited into it — so text at the top of the card
+ * sits over the cloud rather than over the cat.
+ *
+ * This is NOT textRegion returning. A region is an absolute box in a fixed
+ * crop, which is what stopped the card growing with its content. Top-aligned
+ * and centred is a FLOW rule: the card still sizes to its text, and long text
+ * runs down past the cloud instead of being clipped by it. */
+.fa-landing-sticky__body {
+  text-align: center;
+}
+
 /* A markdown body sets its own margins on the first and last child, which
  * doubles the card's padding at top and bottom. */
 .fa-landing-sticky__body > :first-child { margin-top: 0; }
@@ -2501,6 +2551,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   list-style: none;
   display: grid;
   gap: 0.5em;
+  text-align: center;
 }
 
 /* The link inherits the theme's ink rather than the site's link colour: on a
