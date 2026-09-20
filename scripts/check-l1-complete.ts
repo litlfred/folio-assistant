@@ -51,6 +51,7 @@ import {
   isArchiveMimetype,
 } from "../schemas/archive-contents.ts";
 import { LIBRARY_BLOCK_ORIGIN, ProvenanceSchema, isIngested } from "../schemas/attribution.ts";
+import { NarrativeSchema } from "../schemas/narrative.ts";
 import {
   TABULAR_RECORDS_SCHEMA_ID,
   TabularRecordsSchema,
@@ -128,6 +129,48 @@ function derivableRequirements(dir: string): Requirement[] {
     });
   }
 
+  // Narrative review state (bean `ju0u`).
+  //
+  // Every narrative-bearing file in the entry must hold a VALID narrative
+  // record. The schema carries the rules that matter — text and state agree,
+  // anything written names its drafter, only a human confirms, a rejection
+  // keeps its reason — so this gate does not restate them and cannot drift
+  // from them.
+  //
+  // A `draft` is reported but is NOT a failure: it is work waiting on a
+  // person, and `bun run narratives` is where they see it. Calling it unmet
+  // would make an unreviewed queue indistinguishable from a broken arm.
+  {
+    const bearing = ["tabular.jsonld", "contents.jsonld", "manifest.jsonld"];
+    const bad: string[] = [];
+    const counts: Record<string, number> = {};
+    let looked = 0;
+    for (const name of bearing) {
+      if (!has(name)) continue;
+      let doc: Record<string, unknown>;
+      try {
+        doc = JSON.parse(readFileSync(join(dir, name), "utf-8")) as Record<string, unknown>;
+      } catch {
+        continue; // the owning requirement reports an unparseable file
+      }
+      if (!("narrative" in doc)) continue;
+      looked++;
+      const r = NarrativeSchema.safeParse(doc.narrative);
+      if (!r.success) bad.push(`${name}: ${r.error.issues[0]?.message ?? "invalid"}`);
+      else counts[r.data.state] = (counts[r.data.state] ?? 0) + 1;
+    }
+    const tally = Object.entries(counts).map(([k, v]) => `${v} ${k}`).join(", ");
+    out.push({
+      name: "narrative-review",
+      state: bad.length ? "unmet" : "met",
+      detail: bad.length
+        ? bad.slice(0, 2).join("; ")
+        : looked === 0
+          ? "no narrative-bearing file in this entry"
+          : tally,
+    });
+  }
+
   // Tabular records (bean `p67i`).
   //
   // Scoped the same way as `archive-contents`, and for the same reason: the
@@ -180,7 +223,7 @@ function derivableRequirements(dir: string): Requirement[] {
           name: "tabular-records",
           state: r.success ? "met" : "unmet",
           detail: r.success
-            ? `${r.data.n_sheets} sheet(s), ${r.data.header_vocabulary.length} header(s), narrative ${r.data.narrative_state}`
+            ? `${r.data.n_sheets} sheet(s), ${r.data.header_vocabulary.length} header(s), narrative ${r.data.narrative.state}`
             : `tabular.jsonld is not ${TABULAR_RECORDS_SCHEMA_ID}: ${r.error.issues[0]?.message ?? "invalid"}`,
         });
       }
