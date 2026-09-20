@@ -104,6 +104,50 @@ describe("reading a declaration", () => {
     expect(() => readDeclaration(BROKEN)).toThrow(/not valid JSON/);
   });
 
+  it("names the entries missing `dependents`, rather than dumping the Zod error", () => {
+    // THE REAL CASE, reproduced. `dependents` is required, so a branch that
+    // adds a directory entry without knowing the field exists produces a
+    // declaration that will not parse once the two meet. Main added
+    // `methodology-crdm` and `methodology-raci` while the field was in review,
+    // and CI on the merged tree reported 166 failures and 35 errors whose only
+    // visible cause was a raw Zod dump repeated across every test that reads a
+    // declaration. Nothing was wrong with either side.
+    const bad = join(TMP, "missing-dependents");
+    mkdirSync(bad, { recursive: true });
+    writeFileSync(
+      join(bad, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "x",
+        directories: [
+          { id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] },
+          { id: "methodology-raci", path: "methodologies/raci/", graphs: ["cat-harness"] },
+          { id: "methodology-crdm", path: "methodologies/crdm/", graphs: ["cat-harness"] },
+        ],
+      }),
+      "utf-8",
+    );
+    let err: unknown;
+    try {
+      readDeclaration(bad);
+    } catch (e) {
+      err = e;
+    }
+    const msg = (err as Error).message;
+    // It must name WHICH entries — the author's next action is editing those
+    // two lines, and a count alone does not point at them.
+    const named = msg.split("\n")[0]!;
+    expect(named).toContain("methodology-raci");
+    expect(named).toContain("methodology-crdm");
+    // ...and NOT the entry that is fine, or the reader edits the wrong line.
+    // Scoped to the first line on purpose: the guidance below it cites
+    // `uploads/` as an EXAMPLE of a `reproduce` directory, so asserting over
+    // the whole message would be asserting against the help text.
+    expect(named).not.toContain("uploads");
+    // Both values, because the whole difficulty is knowing which to write.
+    expect(msg).toContain('"dependents": "reproduce"');
+    expect(msg).toContain('"dependents": "skip"');
+  });
+
   it("rejects an unknown graph kind rather than accepting it", () => {
     const bad = join(TMP, "bad-kind");
     mkdirSync(bad, { recursive: true });

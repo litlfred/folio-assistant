@@ -2143,6 +2143,38 @@ export function readDeclaration(
   }
   const parsed = CatHarnessDeclarationSchema.safeParse(stripJsonLd(raw, registry));
   if (!parsed.success) {
+    // ── The one failure worth naming, because it is the one that arrives by
+    //    MERGE rather than by editing ───────────────────────────────────────
+    //
+    // `dependents` is required, so any branch that adds a directory entry
+    // while this field exists — and any branch cut before it existed —
+    // produces a declaration that will not parse the moment the two meet. That
+    // is not hypothetical: main added `methodology-crdm` and `methodology-raci`
+    // while the field was in review, and CI on the merged tree reported **166
+    // failures and 35 errors** whose only visible cause was a raw Zod dump
+    // repeated across every test that reads a declaration.
+    //
+    // Nothing was wrong with either side. The author of the other branch did
+    // not know the field existed, and 166 red tests are a terrible way to find
+    // out. So the missing-field case says which entries, and what to write.
+    const missing = parsed.error.issues
+      .filter((i) => i.path.length === 3 && i.path[0] === "directories" && i.path[2] === "dependents")
+      .map((i) => {
+        const dirs = (raw as { directories?: Array<{ id?: string }> })?.directories ?? [];
+        return dirs[i.path[1] as number]?.id ?? `#${String(i.path[1])}`;
+      });
+    if (missing.length > 0) {
+      throw new Error(
+        `${p}: ${missing.length} directory entr${missing.length === 1 ? "y is" : "ies are"} ` +
+          `missing the required \`dependents\` field: ${missing.join(", ")}.\n` +
+          `  Add \`"dependents": "reproduce"\` if an instance depending on this one should get its ` +
+          `OWN copy of the directory (\`uploads/\`, \`library/\`, \`folio/\`),\n` +
+          `  or \`"dependents": "skip"\` if it merely says where THIS instance's content lives ` +
+          `(\`schemas/\`, \`tools/\`, \`src/skills/\`).\n` +
+          `  It has no default on purpose: \`reproduce\` would ship empty directories into every ` +
+          `downstream folio, and \`skip\` would silently deny one its ingestion queue.`,
+      );
+    }
     throw new Error(`${p} is not a valid CatHarness declaration: ${parsed.error.message}`);
   }
   // Kind validation is here rather than in the Zod schema because the
