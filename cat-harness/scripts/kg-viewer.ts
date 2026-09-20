@@ -488,8 +488,13 @@ function setLocale(loc) {
 function renderAll() {
   applyChrome();
   drawLangs();
-  el("facets-h").textContent = T("Kind");
-  el("subs-h").textContent = T("Subgraph");
+  // renderMeta() is NOT optional and is NOT chrome. It was dropped from here
+  // when the Subgraph facet's heading was added, and the page then sat on
+  // "loading …" forever with the document loaded, 1687 nodes in hand, no
+  // console error and no failed request -- the provenance line simply never
+  // got its second call. Nine e2e tests said so; a local run that piped the
+  // suite through a pager hid the exit code and said nothing.
+  renderMeta();
   if (loadError !== null) { renderDetail(); return; }
   if (loaded === null) return;
   drawFacets();
@@ -508,6 +513,7 @@ function applyChrome() {
   document.title = heading;
   el("skip").textContent = T("Skip to results");
   el("facets-h").textContent = T("Kind");
+  el("subs-h").textContent = T("Subgraph");
   el("list-h").textContent = T("Nodes");
   el("q-label").textContent = T("Search nodes by name, id or description");
   el("q").setAttribute("placeholder", T("search name, id, title…"));
