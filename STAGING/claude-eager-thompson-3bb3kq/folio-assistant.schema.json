@@ -265,6 +265,46 @@
                   "reproduce",
                   "skip"
                 ]
+              },
+              "coverage": {
+                "type": "object",
+                "properties": {
+                  "visualiser": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "docs": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "skill": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "exempt": {
+                    "type": "object",
+                    "properties": {
+                      "visualiser": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "docs": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "skill": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "theme": {
+                "type": "string",
+                "minLength": 1
               }
             },
             "required": [
@@ -464,8 +504,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/eager-thompson-3bb3kq",
-    "sha": "19cf8b82c35f9ae88ea39ddcd0a352d96400041f",
+    "sha": "b8ad1ad9e27ac83045e2bcf3fa6b7c695d1422c9",
     "pr": "589/merge",
-    "run": "35530227006"
+    "run": "35532142425"
   }
 }

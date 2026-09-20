@@ -654,9 +654,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/theme-art-intake.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/theme-art-intake.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/theming/theme-art-intake.md"><code class="language-plaintext highlighter-rouge">skills/theming/theme-art-intake.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/theme-art-intake.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/theming/theme-art-intake.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
 <h1 id="theme-art-intake">
   
@@ -884,7 +884,70 @@ it, the check is not ready.</li>
   <li>Check it against <strong>art already shipped</strong>. The aspect bands are deliberately
 wide because the shipped laptop crops run 1.50–1.78; a tighter band would
 have looked rigorous and refused work that is fine.</li>
+</ol><hr />
+<h2 id="the-structure-this-grows-into">
+  
+  
+    <a href="#the-structure-this-grows-into" class="anchor-heading" aria-labelledby="the-structure-this-grows-into"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The structure this grows into
+  
+  
+</h2>
+    
+
+<p>The owner chose the axis on 2026-09-20, as <strong>“1 + 2, then specialized to 3”</strong> —
+three levels rather than a choice between three options:</p>
+
+<ol>
+  <li><strong>Pipeline stage</strong> is the primary division — <strong>intake → declaration →
+generation → contrast</strong>. This is how the failures actually arrived: each of
+the four rounds of <em>“still not image”</em> was one stage.</li>
+  <li><strong>Producer vs consumer</strong> cross-cuts it, saying which direction a stage
+faces. It is what makes <em>“a theme with no CSS rule falls back to an opaque
+surface and paints over its own art”</em> a <strong>consumer</strong> fact rather than a
+generation detail.</li>
+  <li><strong>Per artefact</strong> is the specialisation, last and narrowest — sticky, landing
+board, docs background, navbar avatar. Specialised rather than duplicated:
+the general rule lives in its stage and the artefact package carries only
+what differs.</li>
 </ol>
+
+<p><strong>The ordering matters more than the names.</strong> Artefact-first would duplicate
+intake and contrast into every artefact, which is the shape that put the scrim
+rule in one skill’s prose and let it be rediscovered rather than read.</p>
+<h2 id="why-this-is-one-package-today-and-not-four">
+  
+  
+    <a href="#why-this-is-one-package-today-and-not-four" class="anchor-heading" aria-labelledby="why-this-is-one-package-today-and-not-four"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this is one package today and not four
+  
+  
+</h2>
+    
+
+<p><strong>Measured before splitting: the corpus is three skills.</strong> Four stage packages
+over three skills would declare directories with nothing in them — the <code class="language-plaintext highlighter-rouge">dh4f</code>
+defect, where a consumer scans an empty tree and reports a clean run over it —
+and this repository’s own rule is to <strong>declare only what exists</strong>.</p>
+
+<p>So the axis above is written down and the split waits for the content to reach
+it. The move that <em>was</em> worth making now is the one that fixes findability: a
+theming skill is no longer one of 107 general ones. When the stage packages
+earn their own directories, the order is already decided and nobody has to
+re-litigate it.</p>
+<h2 id="what-is-not-here">
+  
+  
+    <a href="#what-is-not-here" class="anchor-heading" aria-labelledby="what-is-not-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is NOT here
+  
+  
+</h2>
+    
+
+<p>The theming <strong>code</strong> — <code class="language-plaintext highlighter-rouge">schemas/themes.ts</code>, <code class="language-plaintext highlighter-rouge">schemas/theme-art-intake.ts</code>,
+<code class="language-plaintext highlighter-rouge">scripts/check-theme-art.ts</code>, <code class="language-plaintext highlighter-rouge">scripts/gen-themes-css.ts</code>,
+<code class="language-plaintext highlighter-rouge">scripts/gen-avatars-css.ts</code> — stays where it is. This is the <code class="language-plaintext highlighter-rouge">kg</code> graph: the
+instructions an agent follows, not the implementation. A skill and the code it
+describes are different node kinds, and moving code to sit beside its
+documentation is how a partition stops meaning anything.</p>
 
           
 

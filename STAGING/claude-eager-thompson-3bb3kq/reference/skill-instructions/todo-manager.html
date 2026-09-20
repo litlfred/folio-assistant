@@ -899,7 +899,60 @@ to it. That is filing by SESSION; the repository is organised by SUBJECT, in
 thematic epics that outlive any session. <strong>Where they disagree, file by
 subject</strong> — a session bean is a useful record of what one sitting did, and it
 is not where the next person looks for the work. If you keep a session
-milestone, it is a sibling record, not the parent of topical work.</p><hr />
+milestone, it is a sibling record, not the parent of topical work.</p>
+<h2 id="a-goal-is-a-milestone-bean-and-an-epic-joins-one-by-parenting-to-it">
+  
+  
+    <a href="#a-goal-is-a-milestone-bean-and-an-epic-joins-one-by-parenting-to-it" class="anchor-heading" aria-labelledby="a-goal-is-a-milestone-bean-and-an-epic-joins-one-by-parenting-to-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A GOAL is a <code class="language-plaintext highlighter-rouge">milestone</code> bean, and an epic joins one by parenting to it
+  
+  
+</h2>
+    
+
+<p><strong>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">wqht</code>.</strong> The owner had stated three goals in chat.
+The store held <strong>13 in-progress epics and 0 milestones</strong>, with the <code class="language-plaintext highlighter-rouge">milestone</code>
+type configured and unused. No epic carried a goal’s words, so classifying 140
+open items against those goals was a judgement made from scratch — and it would
+have been made from scratch again at the next review, differently.</p>
+
+<p>Nothing in this skill or in <code class="language-plaintext highlighter-rouge">session-intent</code> said where a goal LIVES. Both
+describe a “goal-scoped” queue, and a queue scoped to an object that does not
+exist cannot be a query; it can only be a re-derivation. The owner chose,
+2026-09-20:</p>
+
+<blockquote>
+  <p><strong>A goal is a <code class="language-plaintext highlighter-rouge">milestone</code> bean, in the owner’s own words, and the epics
+serving it are parented to it.</strong></p>
+</blockquote>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans create <span class="s2">"&lt;the goal, verbatim&gt;"</span> <span class="nt">--type</span> milestone   <span class="c"># after the existence check above</span>
+beans update &lt;epic-id&gt; <span class="nt">--parent</span> &lt;milestone-id&gt;
+</code></pre></div></div>
+
+<p>Three properties make this the cheap answer rather than a new mechanism:</p>
+
+<ul>
+  <li><strong>The type already exists</strong> and <code class="language-plaintext highlighter-rouge">check-bean-parents</code> already permits an epic
+under a milestone, so nothing had to be built.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">beans roadmap</code> groups by <code class="language-plaintext highlighter-rouge">parent:</code></strong>, so the goals become the roadmap’s
+top level the moment the epics are parented — which is what a roadmap was
+always for.</li>
+  <li><strong>“Prioritise against the goals” becomes a query</strong>: walk down from the
+milestone. An item under no goal is then <em>visible</em> as such, which is itself
+the finding a review wants.</li>
+</ul>
+
+<p><strong>Verbatim, and this is not a style note.</strong> A goal is the owner’s sentence, and
+a tidied paraphrase is a different claim that nobody agreed to — the same rule
+<a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/confirmation-waiver.html"><code class="language-plaintext highlighter-rouge">confirmation-waiver</code></a> applies to a waiver’s <code class="language-plaintext highlighter-rouge">quote</code>,
+and for the same reason: the reader auditing the classification has only that
+string to check it against. <strong>If you do not have the owner’s words, you do not
+have the goal</strong> — record the paraphrase as a paraphrase, say so, and ask.</p>
+
+<p><strong>This does not conflict with filing by subject</strong> (§”WHICH parent”). A
+milestone sits ABOVE the epics; a bean is still parented to the epic whose
+subject it is, and the epic is parented to the goal it serves. Two levels, one
+criterion at each.</p><hr />
 <h2 id="after-you-create--parent-it-and-re-run-the-guard-before-you-push">
   
   

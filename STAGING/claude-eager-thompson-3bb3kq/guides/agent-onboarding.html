@@ -719,6 +719,7 @@ what to do first, and where to look things up.</p>
   </tbody>
 </table></div>
 
+<!-- command-path-ok: a PROBE — whether `content/` is here is the answer, so it must not be required to resolve -->
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls </span>content/          <span class="c"># pipeline/ only  ⇒ platform;  paper dirs ⇒ folio</span>
 </code></pre></div></div>
 
@@ -736,8 +737,8 @@ folio-supplied data. See §7.</p>
     
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans prime <span class="o">&amp;&amp;</span> beans list      <span class="c"># the work-plan — see §6</span>
-scripts/session-start-coord-sweep.sh   <span class="c"># CLI-independent equivalent</span>
-bun run src/index.ts <span class="nt">--check-deps</span>      <span class="c"># what this environment can do</span>
+cat-harness/scripts/session-start-coord-sweep.sh  <span class="c"># CLI-independent equivalent</span>
+bun run check-deps                     <span class="c"># what this environment can do</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">--check-deps</code> matters more than it looks. Many checks degrade to <code class="language-plaintext highlighter-rouge">n/a</code>
@@ -853,6 +854,7 @@ it never formally cites.</p>
 ordering metric is computed from. For impact questions (“what breaks if
 this changes?”) take the union:</p>
 
+<!-- command-path-ok: run IN A FOLIO — the platform carries no content/, which is this guide's own §1 -->
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/content-graph.ts content/&lt;paper&gt;
 </code></pre></div></div>
 
@@ -900,6 +902,7 @@ block is edited and must be re-adjudicated.</p>
 <p>Criteria are grouped into <strong>axes</strong> (<code class="language-plaintext highlighter-rouge">proof</code>, <code class="language-plaintext highlighter-rouge">voice</code>, <code class="language-plaintext highlighter-rouge">detangler</code>,
 <code class="language-plaintext highlighter-rouge">uses</code>, <code class="language-plaintext highlighter-rouge">canonical</code>, <code class="language-plaintext highlighter-rouge">compute</code>, <code class="language-plaintext highlighter-rouge">bibliography</code>, …). Run one:</p>
 
+<!-- command-path-ok: run IN A FOLIO — the platform carries no content/, which is this guide's own §1 -->
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run content/pipeline/qa-sweep.ts <span class="nt">--axis</span> uses content/&lt;paper&gt;
 bun run content/pipeline/qa-staleness.ts content/&lt;paper&gt;
 </code></pre></div></div>

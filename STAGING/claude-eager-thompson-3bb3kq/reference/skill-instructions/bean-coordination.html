@@ -1046,6 +1046,191 @@ which case the batch closes under that waiver and the turn report names it:
 <p><strong>It is not a parking space.</strong> <code class="language-plaintext highlighter-rouge">ready-to-close</code> says <em>re-derivation is beyond
 this session</em>; it never says <em>I would rather not</em>. Where you can run the check,
 run it and close the bean — that is still the rule this subsection sits under.</p>
+<h2 id="where-a-sibling-session-is-visible-from-strict">
+  
+  
+    <a href="#where-a-sibling-session-is-visible-from-strict" class="anchor-heading" aria-labelledby="where-a-sibling-session-is-visible-from-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a sibling session is visible from (STRICT)
+  
+  
+</h2>
+    
+
+<p><strong>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">ab3n</code>.</strong> Eight sibling sessions committed to this
+repository in one four-hour window. The session API returned <strong>not found</strong> for
+all eight lookups by id, and its listing showed only the asking session. So
+both of this skill’s central instructions — claim before you work, and watch
+the open PRs — assume a visibility that did not exist, and nothing said so.</p>
+
+<blockquote>
+  <p><strong>A session is an ephemeral container, and nothing about it survives the
+container except what it committed. The <code class="language-plaintext highlighter-rouge">Claude-Session:</code> trailer on a commit
+is therefore the ONLY durable session identity this repository has, and a
+branch tip is the only durable statement of where a session got to.</strong></p>
+</blockquote>
+<h3 id="a-siblings-state-is-inferred-and-the-inference-has-a-boundary">
+  
+  
+    <a href="#a-siblings-state-is-inferred-and-the-inference-has-a-boundary" class="anchor-heading" aria-labelledby="a-siblings-state-is-inferred-and-the-inference-has-a-boundary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A sibling’s state is INFERRED, and the inference has a boundary
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>what the trailer and the branches DO tell you</th>
+      <th>what they do NOT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>which commits a session authored</td>
+      <td>whether it is running now</td>
+    </tr>
+    <tr>
+      <td>when it started and stopped committing</td>
+      <td>whether it is blocked, thinking, or gone</td>
+    </tr>
+    <tr>
+      <td>which branches carry its work, and its latest subject</td>
+      <td>what it intends to do next</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>“Stopped committing” is not “finished”, and it is not “abandoned”.</strong> Those
+are three states and a checkout can distinguish only the first from the pair.
+Treat a recent tip as a live claim, treat silence as a question, and ask —
+never as licence.</p>
+<h3 id="one-command-not-a-procedure">
+  
+  
+    <a href="#one-command-not-a-procedure" class="anchor-heading" aria-labelledby="one-command-not-a-procedure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One command, not a procedure
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run sessions <span class="nt">--since</span> 4h
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">sibling-sessions</code> is a <strong>Tool node</strong> (<code class="language-plaintext highlighter-rouge">tools/sessions.ts</code>), which is what
+<code class="language-plaintext highlighter-rouge">ab3n</code> asked for and for a reason: prose describing how to grep a trailer is a
+procedure every session re-derives slightly differently, the counts then
+disagree, and nobody can tell which sweep was wrong. It reads <strong>all</strong> branches,
+because a sibling’s work is on ITS branch — precisely where the asking session
+cannot see it by looking at its own history. A window with no commits <strong>exits
+non-zero</strong> rather than reporting “no siblings”: a sweep over nothing has not
+found anything.</p>
+<h3 id="worked-example--the-session-that-built-this-tool-tripping-over-it">
+  
+  
+    <a href="#worked-example--the-session-that-built-this-tool-tripping-over-it" class="anchor-heading" aria-labelledby="worked-example--the-session-that-built-this-tool-tripping-over-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked example — the session that built this tool, tripping over it
+  
+  
+</h3>
+    
+
+<p><strong>2026-09-20, an hour after <code class="language-plaintext highlighter-rouge">ab3n</code> was written.</strong> This session created three
+<code class="language-plaintext highlighter-rouge">milestone</code> beans for the owner’s three goals, each carrying the <code class="language-plaintext highlighter-rouge">goal-review</code>
+sweep’s <strong>paraphrase</strong>, because the verbatim words were not written down
+anywhere it could see — it searched the issue, its comments, the pull request
+and the whole store.</p>
+
+<p>A sibling session had created the same three milestones <strong>with the owner’s
+verbatim words</strong> and merged them to <code class="language-plaintext highlighter-rouge">main</code> at 18:50, about an hour earlier. All
+three of this session’s beans were scrapped as duplicates.</p>
+
+<p>Two things were true at once and both matter:</p>
+
+<ul>
+  <li><strong>The checkout is a snapshot.</strong> A container fetched <code class="language-plaintext highlighter-rouge">main</code> when it started,
+and everything merged since is invisible until it fetches again. An hour is
+long enough here: 54 proposals merged in one four-hour window that same day.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent and dedupes on nothing</strong>, so the cost of
+not looking is paid in duplicates somebody scraps one at a time. The
+existence check in <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> §”Check before you
+create” reads the LOCAL store, so it cannot catch this case: the duplicate is
+not there yet.</li>
+</ul>
+
+<p><strong>So before creating a bean for a decision, or claiming one, do both:</strong></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin main
+bun run sessions <span class="nt">--since</span> 4h
+</code></pre></div></div>
+
+<p>The second is the one that gets skipped, and it is the one that answers <em>who
+else is on this right now</em>. It cost nothing and would have saved all three.</p>
+<h2 id="a-quiet-claim--what-in-progress-does-not-tell-you">
+  
+  
+    <a href="#a-quiet-claim--what-in-progress-does-not-tell-you" class="anchor-heading" aria-labelledby="a-quiet-claim--what-in-progress-does-not-tell-you"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A quiet claim — what <code class="language-plaintext highlighter-rouge">in-progress</code> does NOT tell you
+  
+  
+</h2>
+    
+
+<p><strong>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">fgnw</code>.</strong> 60 beans were <code class="language-plaintext highlighter-rouge">in-progress</code>; <strong>43 had no
+change in a four-hour window</strong>, and 38 of those were last touched by a single
+bulk move at 09:37. Eight sessions were active in that window. So at most 17 of
+the 60 claims corresponded to a session actually working the item — and the
+<code class="language-plaintext highlighter-rouge">status</code> field cannot tell a reviewer which 17.</p>
+
+<p>That is the cost of §”A claim is branch-local” landing without its complement.
+<code class="language-plaintext highlighter-rouge">blocked</code> has an expiry (<a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking.md</code></a>); <code class="language-plaintext highlighter-rouge">in-progress</code>
+has nothing, so it carries <strong>no information about activity</strong> and a reader cannot
+tell a stalled agent from a claim nobody has thought about since a bulk edit.</p>
+<h3 id="the-signal-is-liveness-not-elapsed-time">
+  
+  
+    <a href="#the-signal-is-liveness-not-elapsed-time" class="anchor-heading" aria-labelledby="the-signal-is-liveness-not-elapsed-time"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The signal is liveness, not elapsed time
+  
+  
+</h3>
+    
+
+<blockquote>
+  <p><strong>A claim is LIVE when something outside the bean says so: an open PR naming
+it, an unmerged branch touching it, or a note since. A claim with none of
+those has announced nothing to anybody — and a claim that announces nothing
+does not reserve anything.</strong></p>
+</blockquote>
+
+<p>That falls straight out of the rule above it. A claim becomes visible to a
+sibling when the PR opens, and this repository opens the PR at the first commit
+(<a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> invariant 1). So “claimed, with
+no PR and no branch” is not a claim a sibling could have seen even in
+principle.</p>
+
+<p><strong>Elapsed time is the fallback, not the rule</strong>, because it is what a tool can
+compute offline. <code class="language-plaintext highlighter-rouge">bun run health</code> reports <code class="language-plaintext highlighter-rouge">bean-quiet-claims</code> at <strong>72 hours</strong>
+since <code class="language-plaintext highlighter-rouge">updated_at</code>, alongside <code class="language-plaintext highlighter-rouge">bean-claimed</code> as the denominator — <em>12 of 60</em> and
+<em>12</em> are different findings. Its count is an <strong>upper bound</strong>: a bean it lists
+may have an open PR the sweep cannot see. Read it as “check these”, never as
+“take these”.</p>
+<h3 id="who-may-act">
+  
+  
+    <a href="#who-may-act" class="anchor-heading" aria-labelledby="who-may-act"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who may act
+  
+  
+</h3>
+    
+
+<ul>
+  <li><strong>Any session may TAKE a quiet claim</strong> — check for a liveness signal first;
+if there is none, work it, and say in the bean that you took it and what you
+found. This is the unclaimed case, reached by a different route.</li>
+  <li><strong>Nothing re-statuses it automatically.</strong> The check reports; a person or the
+session taking the work acts. A tool that flipped <code class="language-plaintext highlighter-rouge">in-progress</code> back to
+<code class="language-plaintext highlighter-rouge">todo</code> would be destroying the one record of who was where, which is the same
+argument that makes a bean <code class="language-plaintext highlighter-rouge">scrapped</code> rather than deleted.</li>
+  <li><strong>Quiet is not evidence of completion.</strong> Closing is governed by §”Closing a
+bean whose work has already landed”, and staleness is not evidence. A quiet
+claim on unfinished work goes back to the pool; it does not get closed.</li>
+</ul>
 <h2 id="the-store-on-main-is-the-one-every-sibling-reads-strict">
   
   

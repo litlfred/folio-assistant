@@ -740,6 +740,44 @@ something to act on rather than a bare step name.</p>
 changes who is accountable for the next step and which gates apply, and <strong>a
 reader who does not know you switched will assume the old lane’s rules still
 hold.</strong></p>
+<h3 id="naming-it-is-not-the-same-as-recording-it-strict">
+  
+  
+    <a href="#naming-it-is-not-the-same-as-recording-it-strict" class="anchor-heading" aria-labelledby="naming-it-is-not-the-same-as-recording-it-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Naming it is not the same as recording it (STRICT)
+  
+  
+</h3>
+    
+
+<p><strong>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">vlhk</code>.</strong> 54 proposals merged in one four-hour
+window, and <code class="language-plaintext highlighter-rouge">beans/workflows/</code> — the declared <code class="language-plaintext highlighter-rouge">workflow-state</code> graph — held
+only <code class="language-plaintext highlighter-rouge">.gitkeep</code>. <strong>Not one session recorded a running instance.</strong> A reviewer
+sweeping that window could not classify a single session by lane, which is the
+one thing this section exists to make possible. <code class="language-plaintext highlighter-rouge">supn</code> and <code class="language-plaintext highlighter-rouge">v49e</code> measured the
+same empty directory from other angles.</p>
+
+<p>There were two readings — the processes are not being run, or they are run and
+the state is not committed — and they call for opposite remedies. The owner
+settled it, 2026-09-20: <strong>the processes are real, and the instance is
+recorded.</strong> So:</p>
+
+<blockquote>
+  <p><strong>A turn that is in a process has an INSTANCE under the declared
+<code class="language-plaintext highlighter-rouge">workflow-state</code> graph. Naming the process in prose is the report; the
+committed instance is the evidence, and a report with no evidence behind it
+is what produced 54 merges and an empty directory.</strong></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">workflow_start</code> creates it, <code class="language-plaintext highlighter-rouge">workflow_next</code> and <code class="language-plaintext highlighter-rouge">workflow_complete</code> advance
+it, and the state is committed precisely so a sibling session reads the same
+position — <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/workflow-state.html"><code class="language-plaintext highlighter-rouge">workflow-state.md</code></a> §”Why the state is
+committed”.</p>
+
+<p><strong>The session-start sweep reports “no instance recorded” as a FINDING, not as
+silence.</strong> That is the half that makes the rule self-enforcing: a STRICT rule
+whose breach looks exactly like compliance is the <code class="language-plaintext highlighter-rouge">xom7</code> shape, and it is how
+this one went unobserved for 54 merges. A finding is not a failure — plenty of
+turns are legitimately outside any process — it is the prompt to say which.</p>
 <h2 id="how-to-tell-you-are-out-of-process">
   
   

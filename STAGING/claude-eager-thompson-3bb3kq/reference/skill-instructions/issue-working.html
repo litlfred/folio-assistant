@@ -774,12 +774,50 @@ had no standing to close:</p>
 
 <p><strong>Never close an issue without explicit authorisation from the analyst or
 stakeholder.</strong> Whether work is done is a judgement, and an agent must never
-assume completion on its own say-so — the same rule that stops you resolving a
-sibling’s work item.</p>
+assume completion on its own say-so — the same rule that stops you closing a
+work item a sibling is mid-flight on.</p>
+
+<p>That authorisation may be given <strong>in advance</strong>: an <code class="language-plaintext highlighter-rouge">issue-close</code> waiver, which
+names the issues it covers and expires. It is the stakeholder answering the
+same question earlier, which is the whole of what this rule asks for — never
+the agent supplying the judgement itself.
+<a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/confirmation-waiver.html"><code class="language-plaintext highlighter-rouge">confirmation-waiver.md</code></a>.</p>
 
 <p>After each round of implementation, post a summary on <strong>the issue</strong>, not only on
 the change proposal: what was accomplished, what remains, and links to the
 updated content for review.</p>
+<h2 id="when-the-work-has-a-bean-and-no-issue-strict">
+  
+  
+    <a href="#when-the-work-has-a-bean-and-no-issue-strict" class="anchor-heading" aria-labelledby="when-the-work-has-a-bean-and-no-issue-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the work has a BEAN and no issue (STRICT)
+  
+  
+</h2>
+    
+
+<p><strong>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">oh78</code>.</strong> 54 proposals merged in one four-hour
+window and <strong>2 issues changed</strong>, both newly opened. Most of that day’s work was
+bean-driven with no issue at all, so the rule above was not broken — it was
+<em>silently inapplicable</em>, which is worse, because a rule that quietly does not
+apply reads from the outside exactly like a rule being followed.</p>
+
+<blockquote>
+  <p><strong>A round summary is owed either way. With no issue, it goes on the change
+proposal AND into the bean — the bean is the durable artefact a sibling
+reads, and a summary that exists only in a PR thread is invisible to the work
+plan on <code class="language-plaintext highlighter-rouge">main</code>.</strong></p>
+</blockquote>
+
+<p><strong>And a bean that has an issue carries the link BOTH ways.</strong> Issue #558
+(<em>“Sticky pin: unpinning loses the theme”</em>) has no bean link although bean
+<code class="language-plaintext highlighter-rouge">ivfw</code> is its subject verbatim; issue #464 is open on a completed bean
+(<code class="language-plaintext highlighter-rouge">mggs</code>). One direction is not enough: a reader arriving at either object has
+to be able to reach the other, and a check reports the ones that cannot.</p>
+
+<p>When to open an issue at all is <a href="../../methodologies/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">crdm-detect</code></a>
+§”Issue association” — <strong>scan before creating one, and never create one without
+permission</strong>. This section is about what is owed once the work exists, not
+about manufacturing an issue for every bean.</p>
 
           
 

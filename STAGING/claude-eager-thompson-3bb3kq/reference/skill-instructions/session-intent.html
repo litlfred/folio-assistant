@@ -686,6 +686,43 @@ where the previous one left off.</p>
 </h2>
     
 
+<p><strong>The ledger half of this skill named two paths that do not exist here</strong>, and
+an agent following it stopped at step 1. Bean <code class="language-plaintext highlighter-rouge">z9eb</code>, measured 2026-09-20:
+<code class="language-plaintext highlighter-rouge">ls STATUS.md</code> and <code class="language-plaintext highlighter-rouge">ls docs/coordination/</code> both fail. The model came from
+another folio and was never re-homed when this instance moved its work plan
+into <code class="language-plaintext highlighter-rouge">beans/</code>. The queue half was right all along; only the ledger half
+pointed at nothing.</p>
+
+<p><strong>Where the ledger’s four jobs actually live now</strong>, each in the object that
+already owns it:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>the ledger’s job</th>
+      <th>here</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>goals, and what serves each</td>
+      <td>a <code class="language-plaintext highlighter-rouge">milestone</code> bean per goal, with the epics parented to it — <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> §”A GOAL is a <code class="language-plaintext highlighter-rouge">milestone</code> bean”; <code class="language-plaintext highlighter-rouge">beans roadmap</code> renders it</td>
+    </tr>
+    <tr>
+      <td>canonical status of an item</td>
+      <td>the bean itself. There is no second copy to disagree with it, which is what the “trust the ledger” rule existed to arbitrate</td>
+    </tr>
+    <tr>
+      <td>flip-flop history</td>
+      <td>a <code class="language-plaintext highlighter-rouge">scrapped</code> bean keeps the rejected approach <em>with its reasons</em>, and a <code class="language-plaintext highlighter-rouge">trap</code> node under the declared <code class="language-plaintext highlighter-rouge">memory</code> graph keeps the failure signature — <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/agent-memory.html"><code class="language-plaintext highlighter-rouge">agent-memory</code></a></td>
+    </tr>
+    <tr>
+      <td>session log</td>
+      <td>the bean’s body notes, plus the PR. Both are durable and both are read by the next session; a third place would be a third answer</td>
+    </tr>
+  </tbody>
+</table></div>
+
 <div class="table-wrapper"><table>
   <thead>
     <tr>
@@ -695,23 +732,48 @@ where the previous one left off.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">STATUS.md</code></td>
-      <td>Always-current root dashboard: goals → master ledgers → active PRs</td>
+      <td><code class="language-plaintext highlighter-rouge">beans/</code> (via the <code class="language-plaintext highlighter-rouge">beans</code> CLI)</td>
+      <td>the <strong>queue</strong> and the <strong>plan</strong>: goals as milestones, epics, tasks</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">docs/coordination/&lt;goal&gt;.md</code></td>
-      <td>Per-goal <strong>master ledger</strong>: status table, open tasks, flip-flop history, session log</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">beans/</code> (via <code class="language-plaintext highlighter-rouge">beans</code> CLI)</td>
-      <td>Machine-readable <strong>queue</strong> of tasks, managed as hierarchical issues (Beans).</td>
+      <td><code class="language-plaintext highlighter-rouge">memory/</code></td>
+      <td>established facts and TRAPs — what not to re-derive, and what not to repeat</td>
     </tr>
     <tr>
       <td>Per-PR body</td>
-      <td>Session intent at branch-open; EOS results appended</td>
+      <td>session intent at branch-open; EOS results appended</td>
+    </tr>
+    <tr>
+      <td>a root dashboard file</td>
+      <td><strong>optional, and this instance has none.</strong> See below</td>
     </tr>
   </tbody>
 </table></div>
+<h3 id="the-dashboard-is-optional-and-absent-is-not-undetermined">
+  
+  
+    <a href="#the-dashboard-is-optional-and-absent-is-not-undetermined" class="anchor-heading" aria-labelledby="the-dashboard-is-optional-and-absent-is-not-undetermined"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The dashboard is optional, and absent is not undetermined
+  
+  
+</h3>
+    
+
+<p>An instance MAY keep a <code class="language-plaintext highlighter-rouge">STATUS.md</code>-style dashboard, and some folios do. This
+one does not, and that is a <strong>determined absence</strong> rather than a gap: the
+milestones and <code class="language-plaintext highlighter-rouge">beans roadmap</code> answer the same question from the store, so a
+dashboard here would be a second copy free to drift from it.</p>
+
+<p>Three states, and the third is the one that gets collapsed:</p>
+
+<ol>
+  <li><strong>A dashboard exists</strong> → read it first, as step 1 below.</li>
+  <li><strong>No dashboard, and the work plan reads</strong> → skip to the roadmap. Nothing is
+missing.</li>
+  <li><strong>The work plan could not be read</strong> — no CLI, no store, an unreadable
+declaration → <strong>that is not an empty plan.</strong> Say so and fix it before
+declaring intent; <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> §”When the <code class="language-plaintext highlighter-rouge">beans</code> CLI
+is not there” has the fallback, which writes as well as reads.</li>
+</ol>
 <h2 id="session-start-protocol-5-steps">
   
   
@@ -724,38 +786,47 @@ where the previous one left off.</p>
 <blockquote>
   <p>Run these in order. Steps 1–3 are read-only; step 4 writes.</p>
 </blockquote>
-<h3 id="1-read-statusmd">
+<h3 id="1-read-the-goals">
   
   
-    <a href="#1-read-statusmd" class="anchor-heading" aria-labelledby="1-read-statusmd"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Read STATUS.md
-  
-  
-</h3>
-    
-
-<p>Open <code class="language-plaintext highlighter-rouge">STATUS.md</code>. Identify which goal row(s)
-the user’s current request touches. Note the active PRs column —
-those are your siblings.</p>
-<h3 id="2-read-the-goals-master-ledger">
-  
-  
-    <a href="#2-read-the-goals-master-ledger" class="anchor-heading" aria-labelledby="2-read-the-goals-master-ledger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Read the goal’s master ledger
+    <a href="#1-read-the-goals" class="anchor-heading" aria-labelledby="1-read-the-goals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Read the goals
   
   
 </h3>
     
 
-<p>Open <code class="language-plaintext highlighter-rouge">docs/coordination/&lt;goal&gt;.md</code>. Read:</p>
+<p><code class="language-plaintext highlighter-rouge">beans roadmap</code>, or <code class="language-plaintext highlighter-rouge">beans list</code> filtered to <code class="language-plaintext highlighter-rouge">--type milestone</code>. Identify which
+goal the user’s request serves. A request that serves none is not thereby
+illegitimate — it is a finding worth one line in the turn report, and possibly
+a new milestone.</p>
+
+<p>Then find your siblings: the open PRs, and the <code class="language-plaintext highlighter-rouge">Claude-Session:</code> trailer on
+recent commits. <strong>The session API cannot see sibling sessions</strong> — bean <code class="language-plaintext highlighter-rouge">ab3n</code> —
+so a branch and its PR are the only durable evidence that another session is
+working.</p>
+<h3 id="2-read-the-goals-epics-and-their-open-children">
+  
+  
+    <a href="#2-read-the-goals-epics-and-their-open-children" class="anchor-heading" aria-labelledby="2-read-the-goals-epics-and-their-open-children"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Read the goal’s epics and their open children
+  
+  
+</h3>
+    
+
+<p>Walk down from the milestone: <code class="language-plaintext highlighter-rouge">beans list</code> and read the epics parented to it,
+then their open children.</p>
 
 <ul>
-  <li><strong>Status table</strong> — current canonical status of each subgoal /
-item. If a recent commit “resolved” something
-but the ledger says NOT resolved, <strong>trust the ledger</strong>: it’s
-recording a retraction the commit doesn’t reflect.</li>
-  <li><strong>Flip-flop history</strong> — every previous retraction, with the
-failure-mode signature. <strong>Do not repeat any pattern listed here.</strong></li>
-  <li><strong>Open tasks</strong> — what’s already in flight.</li>
-  <li><strong>Session log</strong> — what previous sessions on this goal did.</li>
+  <li><strong>Status</strong> — the bean’s own <code class="language-plaintext highlighter-rouge">status</code> is canonical. There is no second copy,
+so there is nothing to arbitrate against it.</li>
+  <li><strong>What was rejected</strong> — read the <code class="language-plaintext highlighter-rouge">scrapped</code> beans in the archive before
+proposing an approach. That is what stops you re-entering a dead end, and it
+is why <code class="language-plaintext highlighter-rouge">AGENTS.md</code> forbids deleting one.</li>
+  <li><strong>Traps</strong> — the <code class="language-plaintext highlighter-rouge">memory</code> graph’s <code class="language-plaintext highlighter-rouge">trap</code> nodes carry failure signatures.
+<strong>Do not repeat any pattern recorded there.</strong></li>
+  <li><strong>What is in flight</strong> — an <code class="language-plaintext highlighter-rouge">in-progress</code> bean, with the caveat that a claim
+is branch-local and announces rather than reserves
+(<a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a>).</li>
 </ul>
 <h3 id="3-read-the-queue">
   
@@ -784,10 +855,15 @@ failure-mode signature. <strong>Do not repeat any pattern listed here.</strong><
 
 <p>Three places, all required:</p>
 
-<p><strong>a. Master ledger session log</strong> — append a row:</p>
+<p><strong>a. The bean, not a ledger</strong> — append your intent to the bean you are working,
+naming your branch:</p>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| 2026-01-01 | Claude / <span class="sb">`&lt;branch&gt;`</span> | INTENT: <span class="nt">&lt;which</span> <span class="na">task</span> <span class="na">IDs</span> <span class="na">from</span> <span class="na">queue</span> <span class="err">+</span> <span class="na">what</span> <span class="na">user</span> <span class="na">asked</span><span class="nt">&gt;</span> | (filled at EOS) |
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>
 </code></pre></div></div>
+
+<p>then append a note to its body saying what you intend and where you got to.
+The bean is the durable record a sibling reads; there is no separate session
+log to keep in step with it.</p>
 
 <p><strong>b. Beans CLI</strong> — Create a parent session bean and child tasks.</p>
 
@@ -862,22 +938,29 @@ visible from the push commit.</p>
   <li>If you discovered a NEW task: create a new bean via <code class="language-plaintext highlighter-rouge">beans create</code>.</li>
   <li>If you retract a previous claim: append the retraction to the ledger’s flip-flop history (Stop Repeating Yourself).</li>
 </ul>
-<h3 id="2-append-results-to-the-master-ledger">
+<h3 id="2-record-the-results-where-they-will-be-read">
   
   
-    <a href="#2-append-results-to-the-master-ledger" class="anchor-heading" aria-labelledby="2-append-results-to-the-master-ledger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Append results to the master ledger
+    <a href="#2-record-the-results-where-they-will-be-read" class="anchor-heading" aria-labelledby="2-record-the-results-where-they-will-be-read"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Record the results where they will be read
   
   
 </h3>
     
 
-<p>The session log row from step 4a now gets its “RESULTS” column filled:</p>
+<p>Append them to the <strong>bean</strong>, which is where step 4a put the intent — what was
+confirmed, what remains, and the PR. One object, opened and closed, rather than
+an intent in one place and a result in another.</p>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| 2026-01-01 | Claude / <span class="sb">`&lt;branch&gt;`</span> | INTENT: task-foo-stability | RESULTS: confirmed expected behavior at all 3 anchors; appended new task <span class="sb">`task-foo-followup`</span> for follow-up. PR #1581 opened. |
-</code></pre></div></div>
+<p>If the session <strong>retracted</strong> a prior claim, that is not a body note. Two
+objects carry it, and they answer different questions:</p>
 
-<p>If the session retracted a prior claim, add a row to the
-<strong>Flip-flop history</strong> table with the retraction reason.</p>
+<ul>
+  <li>the approach that was rejected becomes a <code class="language-plaintext highlighter-rouge">scrapped</code> bean <strong>with its
+reasons</strong>, so the next agent does not re-enter it;</li>
+  <li>the failure <em>signature</em> — what made the wrong answer look right — becomes a
+<code class="language-plaintext highlighter-rouge">trap</code> node in the <code class="language-plaintext highlighter-rouge">memory</code> graph (<a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/agent-memory.html"><code class="language-plaintext highlighter-rouge">agent-memory</code></a>), which
+is what a flip-flop history was for.</li>
+</ul>
 <h3 id="3-update-the-pr-body">
   
   

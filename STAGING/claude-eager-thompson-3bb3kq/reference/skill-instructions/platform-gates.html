@@ -905,6 +905,15 @@ change being pushed, and its “60 of 60” was quoted as though it did.</p>
 started is unverified, however green the run was.</p>
 </blockquote>
 
+<p><strong><code class="language-plaintext highlighter-rouge">bun run gates</code> reads the WORKING TREE, not the commit</strong>, which is the
+mechanism behind that sentence and worth knowing on its own. A third instance,
+2026-09-20: a splice script corrupted <code class="language-plaintext highlighter-rouge">harness.json</code> while a run was in
+flight, and <strong>40 of 61 gates failed reading a file that was invalid for about
+a minute</strong>. Every one of the five failures the summary named passed when
+re-run by hand. So a mid-run edit does not merely leave the change unverified
+— it can make the run report failures that were never in any commit, which
+costs more time than the run saved.</p>
+
 <p>This is the harder half to notice, because nothing looks wrong: the command
 really did pass, the output really does say 60 of 60, and the number is simply
 about a different tree than the one that got pushed. <strong>Run the gates after the
