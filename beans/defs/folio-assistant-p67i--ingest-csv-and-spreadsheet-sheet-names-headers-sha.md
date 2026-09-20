@@ -140,3 +140,55 @@ test, which fires on any edit to the file and proves nothing; an end-to-end
 
 No test CSV was left in `uploads/`: a dataset there is CONTENT, and this is
 the platform repository.
+
+*2026-09-20* — The manifest emitter, built to `jg8s`'s shape.
+
+`content/pipeline/tabular-nodes.ts`: `tabularShapeOf` + `buildTabularNodes`.
+A sheet node appears **iff the source has sheets** — not iff there are two or
+more. A one-sheet workbook still has a sheet; a CSV has none however many rows
+it holds.
+
+**Verified on real ingested output, not only fixtures.** A real CSV and a real
+two-sheet `.xlsx`, both through `tabular-records.py`:
+
+| source | emitted |
+|---|---|
+| `coverage.csv` | `manifest → blocks/table-001`, `tabular_depth: "table"` |
+| `book.xlsx` (Coverage, Notes) | `manifest → sheets/sheet-00{1,2} → blocks/table-00{1,2}`, `tabular_depth: "sheet"` |
+
+The `.xlsx` was built with stdlib `zipfile` — inline strings, two worksheets —
+because this repository declares no `openpyxl` and a fixture that needs an
+undeclared dependency is a fixture CI cannot build.
+
+## Two readers, and why that is not laziness
+
+There are two tabular records: `folio-tabular-records/v1` (`tabular.jsonld`,
+what `tabular-records.py` writes and the only one anything produces) and
+`folio-tabular-csvw/v1` (`tabular.csvw.jsonld`, from `eief`, whose extractors
+are stubbed on purpose so **nothing writes it yet**).
+
+Reading only CSVW would have made this emitter unable to fire — the vacuity
+this repository has spent a day removing. Reading only the old record would
+strand it when the extractors land. So `tabularShapeOf` has a named branch for
+each, per the owner's "special case of common scenarios ok"; when
+`folio-tabular-records/v1` retires, one branch goes.
+
+The two records disagree about how "has sheets" is known, and both are right
+for their model: the old one has `format: csv|xlsx|ods`, and CSVW has no such
+notion at all — in CSVW the table IS the file — so it is read from
+`fac:anchor.sheet`, which `eief` added for exactly this and sets to a
+determined `null` for a CSV.
+
+`tabular_depth` is recorded on the manifest so a consumer need not infer the
+depth from the shape it happens to receive; one that guesses breaks on the
+first source of the other kind.
+
+Eight mutations, each caught by a named test — including the two that encode
+the rule itself: emitting a sheet only at 2+ sheets, and giving a CSV a sheet
+node anyway.
+
+## Still open on this bean
+
+- **wiring** `buildTabularNodes` into `gen-library-jsonld.ts`'s entry walk;
+- the **narrative**, still blocked on there being a dataset — the corpus holds
+  no CSV or workbook, and the two used above were temporary.
