@@ -19,6 +19,7 @@ import {
   checkCommandPaths,
   FOLIO_OWNED,
   instanceRoots,
+  sourceFiles,
   shellBlocks,
   shellWords,
   skipCommand,
@@ -250,5 +251,28 @@ describe("the owner's verdict on the 237 — fail on scripts/, count content/", 
     // silently derives this from somewhere should update that note too.
     expect(FOLIO_OWNED.has("content")).toBe(true);
     expect(FOLIO_OWNED.has("scripts")).toBe(false);
+  });
+});
+
+describe("the corpus is DISCOVERED, not listed", () => {
+  test("a new instance's scripts/ is scanned without anyone editing this check", () => {
+    // The first draft listed `cat-harness/{scripts,src,...}`. A merge from
+    // `main` brought a `who-iris/` instance whose scripts/ the check then
+    // walked straight past — a hardcoded list going stale INSIDE the check
+    // whose whole subject is hardcoded paths going stale.
+    const root = fixture(
+      {
+        "cat-harness/harness.json": "{}",
+        "who-iris/harness.json": "{}",
+        "who-iris/scripts/a.ts": "// bun run scripts/gen-iris-pages.ts\n",
+        "who-iris/scripts/gen-iris-pages.ts": "",
+      },
+      ["cat-harness", "who-iris/scripts"],
+    );
+    const r = checkCommandPaths(root);
+    expect(sourceFiles(root)).toContain("who-iris/scripts/a.ts");
+    expect(r.dead.map((d) => d.token)).toEqual([
+      "scripts/gen-iris-pages.ts  →  who-iris/scripts/gen-iris-pages.ts",
+    ]);
   });
 });

@@ -7,7 +7,7 @@ priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T20:45:00Z
+updated_at: 2026-09-20T21:00:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -223,3 +223,18 @@ the path was therefore fine. An exemption suppresses the check, not the defect.
       that the correct depth is a fact about where the test file sits, so the
       check has to compare the resolved directory against what the fixture then
       assumes of it rather than against a literal.
+
+_2026-09-20T21:00Z_ — **The check had the defect it exists for, in its own
+corpus.** `sourceFiles` listed `cat-harness/{scripts,src,content,schemas}`. A
+merge from `main` brought a `who-iris/` instance with its own `scripts/`, and
+the check walked straight past it — a hardcoded list going stale *inside the
+check whose whole subject is hardcoded paths going stale*.
+
+Now derived from `instanceRoots()`, which the module already computes for the
+other half of its rule. **824 files instead of 811, and 0 new findings**, so
+the widening cost nothing and the other instances are clean. A test asserts a
+new instance is picked up without anyone editing this file.
+
+Noticed because the `stage` job went red on a stale base: the merge that fixed
+it is what brought the instance in. Worth recording that the finding came from
+handling an unrelated failure rather than from looking for it.

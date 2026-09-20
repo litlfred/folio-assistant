@@ -467,11 +467,18 @@ export function instanceRoots(repo: string): string[] {
 
 /** Every `.ts` and `.sh` file whose printed commands are read. */
 export function sourceFiles(repo: string): string[] {
-  const roots = ["cat-harness/scripts", "cat-harness/src", "cat-harness/content", "cat-harness/schemas"];
+  // DISCOVERED from the instance roots, not listed. The first draft named
+  // `cat-harness/{scripts,src,content,schemas}`, and a merge from `main`
+  // brought a `who-iris/` instance with its own `scripts/` that the check
+  // then walked straight past — a hardcoded list going stale inside the check
+  // whose whole subject is hardcoded paths going stale.
   const out: string[] = [];
-  for (const root of roots) {
-    if (!existsSync(join(repo, root))) continue;
-    for (const f of walkSource(join(repo, root))) out.push(f.slice(repo.length + 1));
+  for (const inst of instanceRoots(repo)) {
+    for (const sub of ["scripts", "src", "content", "schemas"]) {
+      const dir = join(repo, inst, sub);
+      if (!existsSync(dir)) continue;
+      for (const f of walkSource(dir)) out.push(f.slice(repo.length + 1));
+    }
   }
   return out;
 }
