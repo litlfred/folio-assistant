@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8325
 title: 'RENDERED-ASSET URLs: every instance''s rendered content is addressed at <base>/<instance>/<path>, registered and enabled-by-default'
-status: todo
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-09-20T18:29:51Z
-updated_at: 2026-09-20T18:29:51Z
+updated_at: 2026-09-20T19:05:32Z
 parent: folio-assistant-yj32
 ---
 
@@ -122,3 +122,53 @@ own argument applied to beans: a rule with no home is a rule free to drift.
       it has no visualiser (`hfkl`).
 - [ ] `check:instance-render` covers it, rather than a second check being
       written beside it.
+
+
+---
+
+## SCRAPPED as a duplicate of `o7eq` — 2026-09-20
+
+`o7eq` ("URL SPACE: rendered assets mirror the instantiation structure") was
+opened in a parallel session (`session_017PqeiS4JYySSWGAYLedmus`) from **the
+same owner statement, quoted verbatim in both**, and landed on `main` in
+ea22b5c7 before this branch merged. Two beans carrying one rule is two places
+for it to drift, and the one on `main` is the one with the owner's rulings
+already applied.
+
+**Scrapped rather than deleted**, per `deletion-requires-confirmation` and
+`bean-coordination`: a deleted bean leaves the next agent unable to tell
+abandonment from accident, and this one is referenced from PR #583 and from
+`xgd8`. It stays, marked, pointing at its replacement.
+
+### What `o7eq` already settled, that this bean had as open questions
+
+| this bean asked | `o7eq` answered |
+|---|---|
+| is cat-harness's `docs/` at `<base>/` case 1 or an exception? | **Case 1.** The root instance's just-the-docs site is `<baseurl>/`, and a registered rendered page of the root pipeline is `<baseurl>/<page>`. No move. |
+| where is "registered" declared? | still open there too |
+| what does `enabled: false` do? | **Enabled is a state whose default is enabled**, so "not rendered" must be a *declaration* rather than an absence — the three-state rule, stated |
+
+And two rulings this bean did not have: the segment is the instance's **name**
+(`cat-harness`), not its `stub` (`folio-assistant`); and the declared graph is
+a **path segment** rather than elided, because an instance may declare more
+than one renderable graph and they would otherwise collide on one URL.
+
+### What this bean contributed that `o7eq` should keep
+
+Two measurements made here, neither of them on `o7eq`:
+
+- **`siteDir()` and `artefactStub()` are the two resolvers the rule needs**,
+  and both already exist — `siteDir` returns `docs` relative to the instance
+  root, and got SHORTER when `wggr` gave each instance its own directory.
+- **`check:instance-render` is the conformance check this rule wants**, with
+  its three states and "undetermined is never a pass" already built.
+  Extending it is more likely right than writing a second.
+
+### The first two consumers exist, and they conform
+
+`schemas/` and `library/` now publish under this rule (PR #583). Both resolve
+the rendered-content root through `siteDirFor` and take the published segment
+from the DECLARED directory's own name, so neither writes an instance name or
+a graph name down. Under `o7eq`'s ruling they are "a registered rendered page
+of the root pipeline" at `<base>/schemas/` and `<base>/library/`, which is
+case 2 and needs no change.

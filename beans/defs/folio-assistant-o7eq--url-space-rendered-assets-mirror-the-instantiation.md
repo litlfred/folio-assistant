@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T18:30:55Z
-updated_at: 2026-09-20T18:50:40Z
+updated_at: 2026-09-20T19:05:32Z
 parent: folio-assistant-yj32
 ---
 
@@ -142,3 +142,27 @@ links:
 - [ ] `docs-site.yml` and `feature-staging.yml` publish each enabled instance
       under its own segment, with a test asserting the layout for at least two
 - [ ] The bootstrap `.jsonld` / `.json` resolves at its instance path
+
+
+
+---
+
+## Its first two consumers exist — 2026-09-20, PR #583
+
+`schemas/` and `library/` now publish under this rule. Both resolve the
+rendered-content root through `siteDirFor` and take the published segment from
+the **declared directory's own name**, so neither writes an instance name nor a
+graph name down anywhere — `check:declared-paths` caught the first draft doing
+exactly that and was right to.
+
+Under the ruling recorded above they are **case 2**, a registered rendered page
+of the root pipeline, at `<base>/schemas/` and `<base>/library/`. So they need
+no change while the root instance elides its own name; if that changes, the
+segment is composed in one place in each generator.
+
+Bean `8325` was opened in a parallel session from the same owner statement and
+is now **scrapped** as a duplicate of this one, carrying two measurements worth
+keeping: `siteDir()` + `artefactStub()` are the two resolvers this rule needs
+and both already exist, and `check:instance-render` is the conformance check it
+wants — three states, 'undetermined is never a pass' — so extending that is more
+likely right than writing a second.
