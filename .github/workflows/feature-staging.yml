@@ -498,7 +498,7 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
+          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
@@ -507,14 +507,14 @@ jobs:
           done
 
           # THE BOOTSTRAP GRAPH, with `--base-url` so the staged copy names
-          # ITSELF rather than the live document. `gen-bootstrap-graph.ts` took
+          # ITSELF rather than the live document. `gen-cat-bootstrap-graph.ts` took
           # no such flag until this change — it minted `@id` from the canonical
           # URL whatever tree it wrote into, so a staged copy would have
           # asserted it lives on the live site. That is worse than the 404 it
           # replaces: a reader following the `@id` lands on a different document
           # that looks correct.
-          bun run cat-harness/scripts/gen-bootstrap-graph.ts --base-url "$BASE" --out "./_site/bootstrap/bootstrap.jsonld"
-          cp "./_site/bootstrap/bootstrap.jsonld" "./_site/bootstrap/bootstrap.json"
+          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --base-url "$BASE" --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
+          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.
