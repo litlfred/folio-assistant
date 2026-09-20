@@ -161,6 +161,15 @@ After merge:
 ## Anti-patterns
 
 - Do NOT merge without resolving review comments (even if CI is green).
+- **Do NOT read "no checks" as "nothing red".** A PR with ZERO check runs
+  renders identically to one whose checks have not started. Match the PR's
+  `head_sha` against the branch's workflow-run list before calling it green,
+  and re-run the workflows by dispatch when no run exists for that sha.
+  Measured six times here (bean `3pqn`), twice on one PR in eight minutes.
+  Same rule, with the evidence and the procedure, in
+  [`prepare-merge.md`](prepare-merge.md) §Guardrails; change one and change
+  the other — that file records what happened the last time a rule lived in
+  only one of these two.
 - Do NOT squash unless the user explicitly says "squash".
 - Do NOT skip sibling coordination — it prevents post-merge conflicts.
 - Do NOT ask trivial questions in Phase 3 — only genuinely ambiguous
