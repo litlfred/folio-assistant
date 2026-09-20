@@ -251,10 +251,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T08:48:13.989Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8b43376041922850fa30cfcf419282b5c81de56f",
-  "sourceCommitSha": "8b43376041922850fa30cfcf419282b5c81de56f",
-  "sourceCommitAt": "2026-09-20T08:46:38Z",
+  "generatedAt": "2026-09-20T09:08:10.960Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/46a20d8cf5daa9c92c6475a5bfc037c3a4b57afd",
+  "sourceCommitSha": "46a20d8cf5daa9c92c6475a5bfc037c3a4b57afd",
+  "sourceCommitAt": "2026-09-20T09:03:05Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 179,
@@ -267,7 +267,7 @@
     "SequenceFlow": 531,
     "ProcessNode": 495,
     "Tool": 32,
-    "Schema": 61,
+    "Schema": 62,
     "GraphKind": 20,
     "Directory": 17
   },
@@ -22006,7 +22006,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/landing-sticky",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "landing-sticky",
-      "title": "The landing page, as a sticky note.",
+      "title": "The landing page, as a board of sticky notes.",
       "module": "schemas/landing-sticky.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/landing-sticky"
     },
@@ -22137,6 +22137,14 @@
       "title": "Staging comparison schema — before/after URL pairs for content review.",
       "module": "schemas/staging.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/sticky-contribution",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "sticky-contribution",
+      "title": "A sticky is a CONTRIBUTION from a layer, declared by that layer.",
+      "module": "schemas/sticky-contribution.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/sticky-contribution"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/tabular-records",
@@ -23433,8 +23441,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "3e8b50d7a50be35f26a4249493a8f034019d257e",
+    "sha": "24633590768562d410bfd26fe33da79e4d515221",
     "pr": "458/merge",
-    "run": "35500496579"
+    "run": "35501389826"
   }
 }
