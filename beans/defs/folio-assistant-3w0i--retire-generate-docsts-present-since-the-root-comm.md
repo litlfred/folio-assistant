@@ -1,10 +1,11 @@
 ---
 # folio-assistant-3w0i
 title: 'RETIRE: generate-docs.ts — present since the root commit, never wired, never run'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-20T06:24:17Z
-updated_at: 2026-09-20T06:24:17Z
+updated_at: 2026-09-20T06:43:48Z
 parent: folio-assistant-zzmr
 ---
 
