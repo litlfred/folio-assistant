@@ -277,6 +277,45 @@
           },
           "default": []
         },
+        "remoteGraphs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "graphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "url",
+              "graphs"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
         "stickies": {
           "type": "array",
           "items": {
@@ -425,8 +464,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "1cc7e3826f4fd01a0309f4f349813ae93252cf00",
+    "sha": "bd5879e015be82c2387799fc27ee0f3f9e931cf7",
     "pr": "574/merge",
-    "run": "35526569615"
+    "run": "35529125424"
   }
 }
