@@ -127,3 +127,43 @@ construction rather than by both being right.
 Note the dependency direction: (c) needs nothing from docs-auto and could ship
 first; (a) and (b) are what make docs-auto worth having, since an index with
 no authored summary around it is the thing §2 exists to forbid.
+
+## 5. The same shape for KG viewers, not just for docs
+
+Owner, 2026-09-20, same session:
+
+> similarly, for KG viewer like visualizers, you can see whats in everyhing, or
+> other harnesses that have registerd KGs.
+
+§4(c) indexes the harnesses with a populated `docs/`. This says the **same
+mechanism** serves a KG viewer: from one harness's viewer you can see what is
+in everything, and reach the other harnesses that have **registered** a KG.
+
+The word doing the work is *registered*. A harness's graphs are already
+declared — `harness.json` names each directory and the graph kinds it holds,
+and `resolveSkillDirs` already computes the cross-instance overlay. So the
+viewer's index is **read off the declarations**, exactly as the docs navbar is,
+rather than being a second list somebody maintains. Two indexes over one set of
+declarations would be free to disagree, and the one a reader happened to open
+would be the one they believed.
+
+Three consequences worth writing down before anything is built:
+
+- **`docs` is not special, it is the first case.** §4(c) says "every KG asset
+  that has a `docs/` with assets in it"; this says the general form is "every
+  graph kind a harness registered, wherever it is non-empty". The docs navbar
+  is that query with `kind = docs`.
+- **Non-empty is still the filter.** A registered-but-empty graph is the
+  `dh4f` defect — a consumer scans nothing and reports a clean run over it —
+  and as a nav entry it is a link that resolves to nothing while reading as a
+  section.
+- **Reachability is not the same as presence.** A dependency's graphs are
+  reachable through the overlay; a sibling repository's (`litlfred/qou`) are
+  not, unless it is a declared dependency of the instance being viewed. The
+  viewer must show the difference rather than omitting the second silently —
+  "not declared here" and "declared and empty" are different answers and
+  neither is "absent".
+
+Same home as §4: the harness layer, beside `mount-instance-docs.ts`, which
+already answers "which instance owns which route" and already refuses
+collisions.
