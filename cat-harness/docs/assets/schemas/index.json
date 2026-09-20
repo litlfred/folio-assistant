@@ -225,6 +225,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/decision-request.ts",
+      "instance": "cat-harness",
+      "name": "decision-request",
+      "graphNode": "schema",
+      "summary": "A decision handed to a person, as a shape rather than as a habit.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/document-image.ts",
       "instance": "cat-harness",
       "name": "document-image",
@@ -778,6 +786,14 @@
       "name": "voices",
       "graphNode": "schema",
       "summary": "Voices — named editorial profiles that overlay the base house voice.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/waiver.ts",
+      "instance": "cat-harness",
+      "name": "waiver",
+      "graphNode": "schema",
+      "summary": "A confirmation the owner has given **in advance**, scoped and dated.",
       "isTest": false
     },
     {
@@ -8533,6 +8549,173 @@
       "extendsNames": [],
       "values": [],
       "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/decision-request.ts#DecisionOption",
+      "name": "DecisionOption",
+      "module": "cat-harness/schemas/decision-request.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/decision-request.ts#DecisionOptionSchema",
+      "name": "DecisionOptionSchema",
+      "module": "cat-harness/schemas/decision-request.ts",
+      "kind": "zod-object",
+      "doc": "One option, with the five columns `decision-comparison` specifies.",
+      "fields": [
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the reader picks. Short, and a noun phrase rather than \"yes\"/\"no\"."
+        },
+        {
+          "name": "does",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The mechanism, in one line."
+        },
+        {
+          "name": "pro",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What it buys — a benefit, not the absence of a harm."
+        },
+        {
+          "name": "con",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What it costs to DO. Not what it costs later; that is `downstream`."
+        },
+        {
+          "name": "downstream",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What it changes for everything else, afterwards."
+        },
+        {
+          "name": "reversibility",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "How expensive it is to undo once taken."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/decision-request.ts#DecisionRequest",
+      "name": "DecisionRequest",
+      "module": "cat-harness/schemas/decision-request.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/decision-request.ts#DecisionRequestSchema",
+      "name": "DecisionRequestSchema",
+      "module": "cat-harness/schemas/decision-request.ts",
+      "kind": "zod-object",
+      "doc": "A decision, complete enough that the reader can answer without opening",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-decision/v1\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Tag identifying the file's contract, when one is written down."
+        },
+        {
+          "name": "decides",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What is being decided, as what will DIFFER depending on the answer."
+        },
+        {
+          "name": "glossary",
+          "type": "z.record(z.string(), z.string())",
+          "optional": false,
+          "array": false,
+          "doc": "Every identifier expanded: bean ids, paths, names coined elsewhere."
+        },
+        {
+          "name": "options",
+          "type": "z.array(DecisionOptionSchema).min(2).max(4)",
+          "optional": false,
+          "array": true,
+          "doc": "Two to four options, each fully compared."
+        },
+        {
+          "name": "recommends",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The `label` of the recommended option. Checked to be one of them."
+        },
+        {
+          "name": "because",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why that one, in the author's own reasoning."
+        },
+        {
+          "name": "ifSilent",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the author will do if the reader says nothing. Then they do that."
+        },
+        {
+          "name": "question",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The question itself, last."
+        },
+        {
+          "name": "othersPending",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "How many OTHER decisions are waiting."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/decision-request.ts#DecisionOptionSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -16744,10 +16927,12 @@
       "name": "HookEventSchema",
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "zod-enum",
+      "doc": "The lifecycle points a hook can bind to.",
       "fields": [],
       "extendsNames": [],
       "values": [
         "SessionStart",
+        "PreToolUse",
         "PostToolUse",
         "PreCommit",
         "PostCommit",
@@ -21601,6 +21786,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#TimeWindowSchema",
+      "name": "TimeWindowSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A time window for a history sweep — `4h`, `2d`, `1w`, or a calendar date.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#ToolTypeName",
       "name": "ToolTypeName",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -25701,6 +25900,129 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/waiver.ts#WaivableGate",
+      "name": "WaivableGate",
+      "module": "cat-harness/schemas/waiver.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/waiver.ts#WaiverNode",
+      "name": "WaiverNode",
+      "module": "cat-harness/schemas/waiver.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/waiver.ts#WaiverNodeSchema",
+      "name": "WaiverNodeSchema",
+      "module": "cat-harness/schemas/waiver.ts",
+      "kind": "zod-object",
+      "doc": "One waiver node, under the `memory/waivers/` part of the memory directory.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-waiver/v1\")",
+          "optional": false,
+          "array": false,
+          "doc": "Tag identifying the file's contract, per the directory conventions."
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1).regex(/^[a-z0-9][a-z0-9-]*$/, \"an id is lowercase alphanumerics and hyphens\")",
+          "optional": false,
+          "array": false,
+          "doc": "Node id — the file's basename."
+        },
+        {
+          "name": "grantedBy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The person granting it, by the identity this repository already knows them by."
+        },
+        {
+          "name": "quote",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The grantor's **own words**, verbatim."
+        },
+        {
+          "name": "gate",
+          "type": "z.enum(WAIVABLE_GATES)",
+          "optional": false,
+          "array": false,
+          "doc": "Which gate is waived. Never \"everything\" — see {@link WAIVABLE_GATES}."
+        },
+        {
+          "name": "scope",
+          "type": "WaiverScopeSchema",
+          "optional": false,
+          "array": false,
+          "doc": "How far it reaches."
+        },
+        {
+          "name": "grantedAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When it was granted (ISO 8601)."
+        },
+        {
+          "name": "expires",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When it stops applying (ISO 8601). Required — see the module note."
+        },
+        {
+          "name": "bounds",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "Anything the grant carried that the gate needs to check against — a swarm's"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/waiver.ts#WaiverScopeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "WAIVABLE_GATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/waiver.ts#WaiverScopeSchema",
+      "name": "WaiverScopeSchema",
+      "module": "cat-harness/schemas/waiver.ts",
+      "kind": "zod-scalar",
+      "doc": "How far a waiver reaches.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/webpage.ts#WebPage",
       "name": "WebPage",
       "module": "cat-harness/schemas/webpage.ts",
@@ -29153,6 +29475,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/decision-request.ts#DecisionRequestSchema",
+      "to": "cat-harness/schemas/decision-request.ts#DecisionOptionSchema",
+      "via": "options",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",
       "to": "cat-harness/schemas/document-image.ts#ImageBasisSchema",
       "via": "basis",
@@ -31566,6 +31896,14 @@
       "via": "successor",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/waiver.ts#WaiverNodeSchema",
+      "to": "cat-harness/schemas/waiver.ts#WaiverScopeSchema",
+      "via": "scope",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
