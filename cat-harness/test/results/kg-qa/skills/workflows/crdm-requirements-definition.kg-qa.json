@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Requirements",
     "path": "skills/workflows/crdm-requirements-definition.bpmn"
   },
-  "source_hash": "sha256:edf160f0bb4ab78ff9fd9640c9a53b30e998072540c0254ece7d569063c96ead",
+  "source_hash": "sha256:63aecb78b72c28588c7d9994396c7aaf61a35aba9c5fe193f5c8e4242b5ecea2",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -36,8 +36,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_CompareOptions",
+          "detail": "needs skill \"decision-comparison\", but its lane's role \"authoring-agent\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -53,8 +58,8 @@
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 6,
+    "fail": 1,
     "n/a": 4,
     "unknown": 0
   }

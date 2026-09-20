@@ -67,6 +67,120 @@
       "title": "Thinking about it — square",
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     }
+  ,
+    {
+      "id": "landing-engineer-laptop",
+      "src": "docs/assets/img/harness/landing-engineer-laptop.png",
+      "role": "landing-engineer",
+      "layout": "laptop",
+      "width": 1672,
+      "height": 941,
+      "title": "The engineer, wide",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    },
+    {
+      "id": "landing-engineer-mobile",
+      "src": "docs/assets/img/harness/landing-engineer-mobile.png",
+      "role": "landing-engineer",
+      "layout": "mobile",
+      "width": 942,
+      "height": 1670,
+      "title": "The engineer, tall",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    },
+    {
+      "id": "landing-engineer-card",
+      "src": "docs/assets/img/harness/landing-engineer-card.png",
+      "role": "landing-engineer",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The engineer, square",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    }
+  ,
+    {
+      "id": "landing-architecture-laptop",
+      "src": "docs/assets/img/harness/landing-architecture-laptop.png",
+      "role": "landing-architecture",
+      "layout": "laptop",
+      "width": 1671,
+      "height": 941,
+      "title": "The architect, wide",
+      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content."
+    },
+    {
+      "id": "landing-architecture-card",
+      "src": "docs/assets/img/harness/landing-architecture-card.png",
+      "role": "landing-architecture",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The architect, square",
+      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content."
+    }
+  ,
+    {
+      "id": "landing-library-laptop",
+      "src": "docs/assets/img/harness/landing-library-laptop.png",
+      "role": "landing-library",
+      "layout": "laptop",
+      "width": 1669,
+      "height": 942,
+      "title": "The librarian, wide",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    },
+    {
+      "id": "landing-library-mobile",
+      "src": "docs/assets/img/harness/landing-library-mobile.png",
+      "role": "landing-library",
+      "layout": "mobile",
+      "width": 1024,
+      "height": 1536,
+      "title": "The librarian, tall",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    },
+    {
+      "id": "landing-library-card",
+      "src": "docs/assets/img/harness/landing-library-card.png",
+      "role": "landing-library",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The librarian, square",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    }
+  ,
+    {
+      "id": "landing-analyst-laptop",
+      "src": "docs/assets/img/harness/landing-analyst-laptop.png",
+      "role": "landing-analyst",
+      "layout": "laptop",
+      "width": 1536,
+      "height": 1024,
+      "title": "The analyst, wide",
+      "description": "The grumpy cat as analyst: pinstripe suit, blue tie carrying the c@t mark, glasses, a tablet, printed bar and pie charts, books with chart devices on the spines, a marked mug. Backdrop for the `analyst` theme - SDLC, CRDM, business analysis and data engineering. Reached by ROLE rather than by path, so an instance declaring its own `landing-analyst` art gets its own. THE ONLY SUNNY ONE. Blue sky and flowering shrubs where grumpy-cat, engineer, architecture and library are all storm-grey, which is why its palette is warmer and brighter than theirs rather than a variation on one: the sampled cloud is #f0f0e4 over 28% of the frame, against #e4e4e4 for the librarian. The wide crop is 1536x1024 (aspect 1.50) where the other landscape crops are 1671x941 (1.78). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface instead of cropping the subject. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2 MB a crop; one is loaded per viewport, not all three. Conversion is bean ll11."
+    },
+    {
+      "id": "landing-analyst-mobile",
+      "src": "docs/assets/img/harness/landing-analyst-mobile.png",
+      "role": "landing-analyst",
+      "layout": "mobile",
+      "width": 941,
+      "height": 1672,
+      "title": "The analyst, tall",
+      "description": "The grumpy cat as analyst: pinstripe suit, blue tie carrying the c@t mark, glasses, a tablet, printed bar and pie charts, books with chart devices on the spines, a marked mug. Backdrop for the `analyst` theme - SDLC, CRDM, business analysis and data engineering. Reached by ROLE rather than by path, so an instance declaring its own `landing-analyst` art gets its own. THE ONLY SUNNY ONE. Blue sky and flowering shrubs where grumpy-cat, engineer, architecture and library are all storm-grey, which is why its palette is warmer and brighter than theirs rather than a variation on one: the sampled cloud is #f0f0e4 over 28% of the frame, against #e4e4e4 for the librarian. The wide crop is 1536x1024 (aspect 1.50) where the other landscape crops are 1671x941 (1.78). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface instead of cropping the subject. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2 MB a crop; one is loaded per viewport, not all three. Conversion is bean ll11."
+    },
+    {
+      "id": "landing-analyst-card",
+      "src": "docs/assets/img/harness/landing-analyst-card.png",
+      "role": "landing-analyst",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The analyst, square",
+      "description": "The grumpy cat as analyst: pinstripe suit, blue tie carrying the c@t mark, glasses, a tablet, printed bar and pie charts, books with chart devices on the spines, a marked mug. Backdrop for the `analyst` theme - SDLC, CRDM, business analysis and data engineering. Reached by ROLE rather than by path, so an instance declaring its own `landing-analyst` art gets its own. THE ONLY SUNNY ONE. Blue sky and flowering shrubs where grumpy-cat, engineer, architecture and library are all storm-grey, which is why its palette is warmer and brighter than theirs rather than a variation on one: the sampled cloud is #f0f0e4 over 28% of the frame, against #e4e4e4 for the librarian. The wide crop is 1536x1024 (aspect 1.50) where the other landscape crops are 1671x941 (1.78). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface instead of cropping the subject. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2 MB a crop; one is loaded per viewport, not all three. Conversion is bean ll11."
+    }
   ],
   "assets": [
     {
@@ -247,6 +361,14 @@
       "graphs": [
         "cat-harness"
       ]
+    },
+    {
+      "id": "folio",
+      "path": "folio/",
+      "graphs": [
+        "folio"
+      ],
+      "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky \u2014 the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop."
     }
   ]
 }

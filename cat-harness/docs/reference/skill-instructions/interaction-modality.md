@@ -129,7 +129,13 @@ Six parts, in order:
    coined, a field, a Lean declaration, a file path: all opaque without their
    gloss. An option name you invented three paragraphs ago in another document
    is the worst case, because it *feels* defined to you.
-3. **The options, each with what it costs** — not each with its name.
+3. **The options, compared** — what each does, its pro, its con, what it
+   changes **downstream**, and how reversible it is. Laid out here, in the
+   prose, where the rows can be read against each other; a selection tool shows
+   one option at a time, so trade-offs written into its labels are not a
+   comparison. [`decision-comparison`](decision-comparison.md) carries the
+   columns, why cost and downstream impact are different things, and when a
+   decision is too small to deserve a table.
 4. **Your recommendation, and why**, stated first and marked. See §4.2.
 5. **What happens if they say nothing.** Then do that.
 6. **The question itself**, last.
