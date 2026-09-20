@@ -94,6 +94,48 @@ conditional type catches a member added to the union and not here. An unavoidabl
 duplicate is fine; an unchecked one is not — see
 [`directory-conventions`](directory-conventions.md).
 
+## The third case: a mechanism with no skill at all
+
+The two questions above have a third behind them, and it is invisible to both
+instruments.
+
+| case | what exists | what is missing | what sees it |
+|---|---|---|---|
+| 1 | a skill | a Tool | `check:tools`, `tools:coverage` |
+| 2 | a skill **and** Tools for its neighbours | a Tool for the mechanism | nothing — this skill |
+| 3 | a mechanism | **any skill stating the capability** | nothing |
+
+Case 3 was met on 2026-09-20: `gen-themes-css` and `gen-avatars-css` render theme
+and avatar nodes into `assets/css/themes.css` and `assets/css/avatars.css`. Both
+are committed, published, single-file artefacts — a textbook `maintains` pair. And
+**no skill in the corpus states the capability.** `kg-export` serializes the graph
+to JSON; `rendering-auditor` audits a content block's visual output; neither is
+"render the graph's asset nodes into the site's stylesheets".
+
+`tools:coverage` cannot see this, and not by oversight: it enumerates **skills**
+and asks which lack Tools. A capability nobody has stated generically is absent
+from the list it walks — exactly as a command with no node was absent from what
+`check:tools` could report.
+
+### What to do, and what not to do
+
+`satisfies` requires at least one skill, so a node cannot be written without one.
+That constraint is load-bearing:
+
+- **Do not stretch a neighbouring skill to make the node validate.** That is the
+  same act this skill forbids above, committed from the other direction, and it
+  is worse here because the resulting `satisfies` edge is simply false.
+- **Do not write the skill as a wrapper for the command.** A skill states a
+  capability generically; one that exists to give a script somewhere to point is
+  a Tool with front matter.
+
+Authoring the skill is a **design act** — a claim about the platform's capability
+vocabulary — so it goes to the owner rather than being decided in passing. Bean
+`yean` carries the two candidates and the argument for each.
+
+Until it is settled, those scripts stay unreachable, and that is the honest state
+rather than a gap papered over with a false edge.
+
 ## Why this is its own skill
 
 It was written into [`skills-and-tools`](skills-and-tools.md) first, which took
