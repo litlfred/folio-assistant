@@ -128,7 +128,10 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "narratives": "bun run scripts/narratives.ts",
     "narratives:confirm": "bun run scripts/narratives.ts confirm",
-    "narratives:reject": "bun run scripts/narratives.ts reject"
+    "narratives:reject": "bun run scripts/narratives.ts reject",
+    "deps:python": "bun run scripts/gen-python-deps.ts",
+    "deps:python:check": "bun run scripts/gen-python-deps.ts --check",
+    "check:python-deps": "bun run scripts/check-python-deps.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
