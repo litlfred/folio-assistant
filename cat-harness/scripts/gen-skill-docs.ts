@@ -41,13 +41,13 @@ import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 // ones.
 import "../schemas/folio-graph-kind.js";
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 // A pencil, as a text glyph rather than an inline SVG. 130 generated pages
 // each carrying an SVG is 130 copies of the same markup in the repo and in
 // every reader's download; one character is not.
 const EDIT_GLYPH = "\u270E";
 
-const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skill-instructions");
+const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "reference", "skill-instructions");
 
 /**
  * `--check`: verify the generated tree is current without writing to it.
@@ -137,7 +137,7 @@ function reportDrift(): void {
   process.exit(1);
 }
 
-const SCHEMA_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skills");
+const SCHEMA_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "reference", "skills");
 
 interface Group {
   category: string;
@@ -365,9 +365,9 @@ function discoverGroups(): Group[] {
   // cat-bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
-  for (const decl of kgDirectories(REPO_ROOT)) {
+  for (const decl of kgDirectories(INSTANCE_ROOT)) {
     const skillsRoot = decl.absPath;
-    const rel = relative(REPO_ROOT, skillsRoot);
+    const rel = relative(INSTANCE_ROOT, skillsRoot);
     if (holdsSkill(skillsRoot)) {
       const direct = SKILLS_CATEGORIES[decl.id];
       if (direct === undefined) undeclared.push(decl.id);
@@ -422,7 +422,7 @@ const GROUPS: Group[] = [
   // agent-audit.md` is the real content this group exists to publish.
   {
     category: "Local skills (.claude/skills/local)",
-    dir: join(repoRootFor(REPO_ROOT), ".claude", "skills", "local"),
+    dir: join(repoRootFor(INSTANCE_ROOT), ".claude", "skills", "local"),
     repoPrefix: ".claude/skills/local",
     publishPrefix: "local-",
   },

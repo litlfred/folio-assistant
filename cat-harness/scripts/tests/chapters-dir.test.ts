@@ -2,7 +2,7 @@
  * `chapters/*.tex` is `content_build` output and lives in the FOLIO. The test
  * helper resolved it as `join(REPO_ROOT, "chapters")` where
  * `REPO_ROOT = resolve(import.meta.dir, "../..")` — this file's own location,
- * i.e. the PLATFORM checkout.
+ * i.e. the INSTANCE_ROOT checkout.
  *
  * So `findChapterFiles()` returned `[]` even with a folio attached, and
  * `latex-lean-coverage.test.ts` — every one of whose assertions needs those
@@ -25,7 +25,7 @@ import { join, resolve } from "path";
 import { tmpdir } from "os";
 import { spawnSync } from "child_process";
 
-const PLATFORM = resolve(import.meta.dir, "..", "..");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
 const DIR = mkdtempSync(join(tmpdir(), "chapters-dir-"));
 afterAll(() => {
   try {
@@ -52,7 +52,7 @@ function makeFolio(name: string, opts: { withChapter?: boolean } = {}): string {
     );
   }
   try {
-    symlinkSync(PLATFORM, join(root, "folio-assistant"));
+    symlinkSync(INSTANCE_ROOT, join(root, "folio-assistant"));
   } catch {
     /* already linked */
   }
@@ -65,7 +65,7 @@ function probe(cwd: string): { chaptersDir: string; hasFolio: boolean; chapterFi
   writeFileSync(
     script,
     `import { CHAPTERS_DIR, hasFolio, findChapterFiles } from ${JSON.stringify(
-      join(PLATFORM, "scripts", "tests", "helpers.ts"),
+      join(INSTANCE_ROOT, "scripts", "tests", "helpers.ts"),
     )};\n` +
       "console.log(JSON.stringify({ chaptersDir: CHAPTERS_DIR, hasFolio: hasFolio(), chapterFiles: findChapterFiles().length }));\n",
   );
@@ -85,7 +85,7 @@ describe("CHAPTERS_DIR resolves against the folio", () => {
     const folio = makeFolio("resolves");
     const { chaptersDir } = probe(folio);
     expect(chaptersDir).toBe(join(folio, "chapters"));
-    expect(chaptersDir.startsWith(PLATFORM)).toBe(false);
+    expect(chaptersDir.startsWith(INSTANCE_ROOT)).toBe(false);
   });
 
   test("findChapterFiles() actually finds the folio's chapters", () => {
@@ -97,9 +97,9 @@ describe("CHAPTERS_DIR resolves against the folio", () => {
   test("falls back to the platform when no folio is attached", () => {
     // A bare `bun test` in this repo must still resolve to something, and
     // report zero chapters rather than throwing.
-    const { hasFolio, chaptersDir, chapterFiles } = probe(PLATFORM);
+    const { hasFolio, chaptersDir, chapterFiles } = probe(INSTANCE_ROOT);
     expect(hasFolio).toBe(false);
-    expect(chaptersDir).toBe(join(PLATFORM, "chapters"));
+    expect(chaptersDir).toBe(join(INSTANCE_ROOT, "chapters"));
     expect(chapterFiles).toBe(0);
   });
 });

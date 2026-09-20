@@ -35,7 +35,7 @@ import { join, resolve } from "path";
 import { tmpdir } from "os";
 import { spawnSync } from "child_process";
 
-const PLATFORM = resolve(import.meta.dir, "..", "..");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
 const DIR = mkdtempSync(join(tmpdir(), "audit-empty-"));
 afterAll(() => {
   try {
@@ -44,7 +44,7 @@ afterAll(() => {
 });
 
 const run = (script: string, cwd: string, args: string[] = []) =>
-  spawnSync("bun", ["run", join(PLATFORM, script), ...args], {
+  spawnSync("bun", ["run", join(INSTANCE_ROOT, script), ...args], {
     cwd,
     encoding: "utf-8",
     timeout: 90_000,
@@ -71,7 +71,7 @@ function makeFolio(name: string): string {
   );
   writeFileSync(join(paper, "lean", "Demo", "Triv.lean"), "def oneDef : Nat := 1\n");
   try {
-    symlinkSync(PLATFORM, join(root, "folio-assistant"));
+    symlinkSync(INSTANCE_ROOT, join(root, "folio-assistant"));
   } catch {
     /* already linked */
   }
@@ -82,7 +82,7 @@ describe("qa-section-title-audit", () => {
   const SCRIPT = "content/pipeline/qa-section-title-audit.ts";
 
   test("refuses to report success over an empty corpus", () => {
-    const r = run(SCRIPT, PLATFORM);
+    const r = run(SCRIPT, INSTANCE_ROOT);
     expect(r.status).not.toBe(0);
     expect(`${r.stdout}${r.stderr}`).toContain("refusing to report success");
   });
@@ -90,7 +90,7 @@ describe("qa-section-title-audit", () => {
   test("does not print a clean bill of health when it read nothing", () => {
     // The exact regression: three ✓ lines over "0 titles across 0 chapters".
     const out = (() => {
-      const r = run(SCRIPT, PLATFORM);
+      const r = run(SCRIPT, INSTANCE_ROOT);
       return `${r.stdout}${r.stderr}`;
     })();
     expect(out).not.toContain("✓ no HARD defect(s)");
@@ -112,7 +112,7 @@ describe("trivial-skeleton-audit", () => {
   const SCRIPT = "content/pipeline/trivial-skeleton-audit.ts";
 
   test("refuses to report success over an empty corpus", () => {
-    const r = run(SCRIPT, PLATFORM);
+    const r = run(SCRIPT, INSTANCE_ROOT);
     expect(r.status).not.toBe(0);
     expect(`${r.stdout}${r.stderr}`).toContain("refusing to report success");
   });
@@ -120,7 +120,7 @@ describe("trivial-skeleton-audit", () => {
   test("a strict-gate budget cannot be satisfied by scanning nothing", () => {
     // The purest form of the defect: `0 > budget` is false for every budget,
     // so the gate passed for free. It must not even reach that comparison.
-    const r = run(SCRIPT, PLATFORM, ["--max-per-pattern", "one_def=0"]);
+    const r = run(SCRIPT, INSTANCE_ROOT, ["--max-per-pattern", "one_def=0"]);
     expect(r.status).not.toBe(0);
     expect(`${r.stdout}${r.stderr}`).not.toContain("budgets respected");
   });

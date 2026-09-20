@@ -44,7 +44,7 @@ import {
 } from "./cat-harness";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
-const REPO_ROOT = resolve(import.meta.dir, "..");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const HARNESS = join(TMP, "agentic-harness");
 /** This repository itself — the instance that declares all seven. */
 const ROOT = resolve(import.meta.dir, "..");
@@ -615,7 +615,7 @@ describe("materialiseDirectories", () => {
     // somebody chose; the graph is what the pipeline needs to find, and it
     // keeps being found however many instances declare one or whatever they
     // call their entries.
-    const dirs = resolveDirectories([{ name: "folio-assistant", root: REPO_ROOT, own: true }]);
+    const dirs = resolveDirectories([{ name: "folio-assistant", root: INSTANCE_ROOT, own: true }]);
     expect(dirs.map((d) => d.id)).toContain("uploads");
     const libraries = dirs.filter((d) => d.graphs.includes("library"));
     expect(libraries.length, "no library graph reachable from the platform root").toBeGreaterThan(0);

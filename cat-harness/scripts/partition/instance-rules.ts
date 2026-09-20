@@ -537,6 +537,7 @@ export const RULES: Rule[] = [
       "scripts/check-agents-claims.ts",
       "scripts/check-agent-entry-links.ts",
       "scripts/check-command-paths.ts",
+      "scripts/check-anchor-names.ts",
       // Who else is working THIS repository — a fact about the forge and this
       // checkout, not about any folio's material.
       "scripts/sibling-sessions.ts",

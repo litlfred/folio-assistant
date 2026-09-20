@@ -72,8 +72,31 @@ import { resolvePoSources } from "./po-resolve.ts";
 import { extractMarkdown } from "./pot-extract.ts";
 import { gitFileCommitSha, gitHeadSha, hashFile, walkBlocks } from "./qa-utils.ts";
 
-const REPO_ROOT = join(import.meta.dir, "..", "..");
+const INSTANCE_ROOT = join(import.meta.dir, "..", "..");
+/**
+ * This sweep's identity AS A REVIEWER, written into every sidecar it touches.
+ *
+ * Instance-relative on purpose: it is a stable id recorded in committed data,
+ * not a path anybody runs. Changing it would rewrite the `reviewer.id` of
+ * every sidecar in the corpus.
+ */
 const SELF = "content/pipeline/translation-block-qa.ts";
+
+/**
+ * How a PERSON re-runs this, which is a different fact from {@link SELF}.
+ *
+ * Bean `b963`. The stale-sidecar message printed `bun run ${SELF}` — and from
+ * the repository root, where a reader stands, `content/pipeline/…` does not
+ * resolve. The instruction telling somebody how to fix the failure named a
+ * path that does not exist, which is this bean's whole subject appearing in a
+ * shape none of its three readers can see: the verb and the path are separated
+ * by an interpolation, so no line carries both.
+ *
+ * A package script rather than a path, because a script name cannot rot when
+ * the file moves — the same reason `docs:harness` replaced a path in
+ * `sync-docs-harness.ts`.
+ */
+const RERUN_COMMAND = "bun run translation:block-qa";
 
 /** The criteria this sweep writes, and the one it deliberately leaves open. */
 export const TRANSLATION_CRITERIA = [
@@ -172,8 +195,8 @@ function reviewer(): QaReviewer {
     kind: "script",
     id: SELF,
     version: "v1",
-    script_hash: hashFile(join(REPO_ROOT, SELF)),
-    script_commit_sha: gitFileCommitSha(SELF, REPO_ROOT),
+    script_hash: hashFile(join(INSTANCE_ROOT, SELF)),
+    script_commit_sha: gitFileCommitSha(SELF, INSTANCE_ROOT),
   };
 }
 
@@ -187,7 +210,7 @@ function entry(
     result,
     reviewer: reviewer(),
     reviewed_at: new Date().toISOString(),
-    reviewed_sha: gitHeadSha(REPO_ROOT),
+    reviewed_sha: gitHeadSha(INSTANCE_ROOT),
     ...extra,
   };
 }
@@ -207,7 +230,7 @@ export function buildReport(
     for (const [k, v] of parsePo(readFileSync(p, "utf-8"))) merged.set(k, v);
   }
   const md = readFileSync(blockMd, "utf-8");
-  const rel = relative(REPO_ROOT, blockMd);
+  const rel = relative(INSTANCE_ROOT, blockMd);
   const m = measureBlock(md, rel, merged);
   // Nothing of this block is in the PO: it is untranslated, which is an absence
   // and not a failing translation. See the header.
@@ -215,7 +238,7 @@ export function buildReport(
 
   const stem = basename(blockMd).replace(/\.md$/, "");
   const tsPath = blockMd.replace(/\.md$/, ".ts");
-  const poRel = relative(REPO_ROOT, poPaths[poPaths.length - 1]!);
+  const poRel = relative(INSTANCE_ROOT, poPaths[poPaths.length - 1]!);
   const hashes: TranslationFieldHash = {
     md: hashFile(blockMd),
     ts: existsSync(tsPath) ? hashFile(tsPath) : undefined,
@@ -272,7 +295,7 @@ export function buildReport(
     label: `trans:${locale}/${stem}`,
     block: label || undefined,
     locale,
-    paths: { md: rel, ts: existsSync(tsPath) ? relative(REPO_ROOT, tsPath) : undefined },
+    paths: { md: rel, ts: existsSync(tsPath) ? relative(INSTANCE_ROOT, tsPath) : undefined },
     po: poRel,
     source_hashes: hashes,
     criteria,
@@ -360,7 +383,7 @@ function arg(name: string, fallback: string): string {
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const root = join(REPO_ROOT, arg("root", join("content", "docs")));
+  const root = join(INSTANCE_ROOT, arg("root", join("content", "docs")));
   const locales = arg("locales", "ar,zh,fr,ru,es")
     .split(",")
     .map((s) => s.trim())
@@ -376,7 +399,7 @@ if (import.meta.main) {
     const chapterSlug = basename(join(block.md, ".."));
     for (const locale of locales) {
       const sources = resolvePoSources({
-        folioRoot: REPO_ROOT,
+        folioRoot: INSTANCE_ROOT,
         locale,
         blockStem: stem,
         chapterSlug,
@@ -388,7 +411,7 @@ if (import.meta.main) {
         // silently deleted: a verdict about a PO nobody can find any more is a
         // thing a person should look at, not something a sweep decides.
         if (existsSync(out)) {
-          console.error(`  ! ${relative(REPO_ROOT, out)} has no PO source any more`);
+          console.error(`  ! ${relative(INSTANCE_ROOT, out)} has no PO source any more`);
           stale++;
         }
         skipped++;
@@ -401,20 +424,20 @@ if (import.meta.main) {
       const body = JSON.stringify(doc, null, 2) + "\n";
       if (current && substantive(current) === substantive(doc)) continue;
       if (check) {
-        console.error(`  ✗ ${relative(REPO_ROOT, out)} is stale`);
+        console.error(`  ✗ ${relative(INSTANCE_ROOT, out)} is stale`);
         stale++;
         continue;
       }
       writeFileSync(out, body);
       written++;
       const cov = doc.criteria["translation-coverage"]?.[0]?.metrics;
-      console.log(`  ✓ ${relative(REPO_ROOT, out)} (${cov?.translated}/${cov?.total} strings)`);
+      console.log(`  ✓ ${relative(INSTANCE_ROOT, out)} (${cov?.translated}/${cov?.total} strings)`);
     }
   }
 
   if (check && stale > 0) {
     console.error(
-      `\n${stale} sidecar(s) stale — run: bun run ${SELF}`,
+      `\n${stale} sidecar(s) stale — run: ${RERUN_COMMAND}`,
     );
     process.exit(1);
   }

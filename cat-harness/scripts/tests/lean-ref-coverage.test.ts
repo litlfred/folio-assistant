@@ -46,7 +46,7 @@ import { checkQUsageArchimedeanInCategoricalChapter } from "../../content/pipeli
 import { scanOrphanLeanFiles } from "../../content/pipeline/q-usage-audit.ts";
 import { configureLeanPackages } from "../../schemas/lean-packages.ts";
 
-const REPO_ROOT = resolve(import.meta.dir, "..", "..");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
 
 // ── Fixture helpers ─────────────────────────────────────────────
 
@@ -156,7 +156,7 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
     const { tmp, lake } = makeWorkspace();
     try {
       const abs = writeLake(lake, "QOU/FluidDynamics/qBkm.lean", GENERIC_R_BODY);
-      const got = resolveCanonicalLean("qou:QOU.FluidDynamics.qBkm", REPO_ROOT);
+      const got = resolveCanonicalLean("qou:QOU.FluidDynamics.qBkm", INSTANCE_ROOT);
       expect(got).toBe(abs);
     } finally {
       rmSync(tmp, { recursive: true, force: true });
@@ -204,7 +204,7 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
       );
       const got = resolveCanonicalLean(
         "qou:QOU.BraidKnot.binding_isovector_mirror_from_chiral",
-        REPO_ROOT,
+        INSTANCE_ROOT,
       );
       // Resolves to the decl-bearing leaf, not the aggregator.
       expect(got).toBe(leaf);
@@ -223,7 +223,7 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
         "import Mathlib\nnamespace QOU\ntheorem foo : True := trivial\nend QOU\n",
       );
       // `QOU/Basic.lean` genuinely declares `foo` → candidate (a) returns it.
-      expect(resolveCanonicalLean("qou:QOU.Basic.foo", REPO_ROOT)).toBe(modFile);
+      expect(resolveCanonicalLean("qou:QOU.Basic.foo", INSTANCE_ROOT)).toBe(modFile);
     } finally {
       rmSync(tmp, { recursive: true, force: true });
     }
@@ -240,11 +240,11 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
 
       // Must be undefined (-> honest n/a), never the aggregator: returning it
       // makes every checker pass vacuously on a list of imports (qou-cu0a).
-      expect(resolveCanonicalLean("qou:QOU.NoSuchDeclAnywhere", REPO_ROOT)).toBeUndefined();
+      expect(resolveCanonicalLean("qou:QOU.NoSuchDeclAnywhere", INSTANCE_ROOT)).toBeUndefined();
 
       // But a module-path file that DOES declare something still resolves —
       // the fallback is narrowed, not removed.
-      const real = resolveCanonicalLean("qou:QOU.Some.Module.genId", REPO_ROOT);
+      const real = resolveCanonicalLean("qou:QOU.Some.Module.genId", INSTANCE_ROOT);
       expect(real).toBeDefined();
       expect(real!.replace(/\\/g, "/")).toContain("/QOU/Some/Module.lean");
     } finally {
@@ -254,9 +254,9 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
 
   test("unknown package / malformed ref resolves to undefined", () => {
     makeWorkspace();
-    expect(resolveCanonicalLean("nope:QOU.X", REPO_ROOT)).toBeUndefined();
-    expect(resolveCanonicalLean("malformed-no-colon", REPO_ROOT)).toBeUndefined();
-    expect(resolveCanonicalLean(undefined, REPO_ROOT)).toBeUndefined();
+    expect(resolveCanonicalLean("nope:QOU.X", INSTANCE_ROOT)).toBeUndefined();
+    expect(resolveCanonicalLean("malformed-no-colon", INSTANCE_ROOT)).toBeUndefined();
+    expect(resolveCanonicalLean(undefined, INSTANCE_ROOT)).toBeUndefined();
   });
 });
 
@@ -304,7 +304,7 @@ describe("orphan library-tree coverage", () => {
     try {
       writeLake(lake, "QOU/A/One.lean", GENERIC_R_BODY);
       writeLake(lake, "QOU/B/Two.lean", GENERIC_R_BODY);
-      const files = listPackageLeanFiles(REPO_ROOT).map((f) => f.replace(/\\/g, "/"));
+      const files = listPackageLeanFiles(INSTANCE_ROOT).map((f) => f.replace(/\\/g, "/"));
       expect(files.some((f) => f.endsWith("/QOU/A/One.lean"))).toBe(true);
       expect(files.some((f) => f.endsWith("/QOU/B/Two.lean"))).toBe(true);
     } finally {
@@ -318,7 +318,7 @@ describe("orphan library-tree coverage", () => {
 describe("import + SSOT hygiene guards", () => {
   function tsFilesUnder(dir: string): string[] {
     const out: string[] = [];
-    const abs = join(REPO_ROOT, dir);
+    const abs = join(INSTANCE_ROOT, dir);
     const stack = [abs];
     while (stack.length) {
       const d = stack.pop()!;
@@ -350,7 +350,7 @@ describe("import + SSOT hygiene guards", () => {
               line,
             )
           ) {
-            offenders.push(`${relative(REPO_ROOT, f)}: ${line.trim()}`);
+            offenders.push(`${relative(INSTANCE_ROOT, f)}: ${line.trim()}`);
           }
         }
       }
@@ -360,7 +360,7 @@ describe("import + SSOT hygiene guards", () => {
 
   test("q-usage-audit carries no private resolver/walker (single source of truth)", () => {
     const src = readFileSync(
-      join(REPO_ROOT, "content/pipeline/q-usage-audit.ts"),
+      join(INSTANCE_ROOT, "content/pipeline/q-usage-audit.ts"),
       "utf-8",
     );
     expect(src).toContain('from "./qa-utils');
