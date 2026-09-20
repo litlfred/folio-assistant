@@ -732,9 +732,14 @@ call</em>. A configured endpoint on an air-gapped host is still uncallable.</p>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">fallbackRole</code> (bean <code class="language-plaintext highlighter-rouge">folio-assistant-85e8</code>) says <strong>which lane takes over</strong>
-when no capability can do it. It does not route anything: measured
-2026-09-20, the only reader of the degradation model is
-<code class="language-plaintext highlighter-rouge">scripts/generate-docs.ts</code>, which renders it. The gateway is what executes.</p>
+when no capability can do it. It does not route anything, and the first
+measurement of that was too generous: this said the only reader was
+<code class="language-plaintext highlighter-rouge">scripts/generate-docs.ts</code>, “which renders it”. Re-measured 2026-09-20 —
+<strong>nothing invokes that script</strong>, it is in no <code class="language-plaintext highlighter-rouge">package.json</code> entry and no
+workflow, and its output directory <code class="language-plaintext highlighter-rouge">schemas/generated/</code> does not exist. So
+the degradation model has <strong>zero</strong> effective readers, not one. The gateway is
+what executes. (<code class="language-plaintext highlighter-rouge">folio-assistant-3lbz</code>, and
+<code class="language-plaintext highlighter-rouge">fsh-guts/proposals/zod-schemas-as-tools.md</code>.)</p>
 
 <p>Both are worth having, and they must agree — the declaration is what a
 reader, a generated doc and <code class="language-plaintext highlighter-rouge">check:fallback-roles</code> can see without executing
@@ -768,7 +773,7 @@ holding release authority did.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35491977633"><code>ad3a429</code></a> &middot; 2026-09-20T05:34:18Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35492121245"><code>ece998d</code></a> &middot; 2026-09-20T05:37:38Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
