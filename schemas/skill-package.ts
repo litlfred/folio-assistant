@@ -119,6 +119,13 @@ export const SkillCapabilityRefSchema = z.object({
   capabilityId: z.string(),
   degradation: DegradationStrategySchema,
   fallbackCapabilityId: z.string().optional(),
+  /**
+   * The ROLE that performs this instead, when no capability can — the
+   * air-gapped case, where an API cannot be reached and a person signs.
+   * See {@link SkillCapabilityRef} for why a role rather than an actor,
+   * and why this is not modelled as a capability.
+   */
+  fallbackRole: z.string().min(1).optional(),
 });
 
 export const SkillDependencySchema = z.object({
