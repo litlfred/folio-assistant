@@ -247,10 +247,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T08:16:20.099Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a8e0cba968d43e5bb08e7aebc0780b9752d1264a",
-  "sourceCommitSha": "a8e0cba968d43e5bb08e7aebc0780b9752d1264a",
-  "sourceCommitAt": "2026-09-20T10:14:54+02:00",
+  "generatedAt": "2026-09-20T08:52:11.252Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fc199b39d72e9bff8e83d07530b4c74e998a65ad",
+  "sourceCommitSha": "fc199b39d72e9bff8e83d07530b4c74e998a65ad",
+  "sourceCommitAt": "2026-09-20T10:50:45+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 173,
@@ -263,7 +263,7 @@
     "SequenceFlow": 518,
     "ProcessNode": 484,
     "Tool": 31,
-    "Schema": 60,
+    "Schema": 61,
     "GraphKind": 16,
     "Directory": 14
   },
@@ -20047,7 +20047,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/landing-sticky",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "landing-sticky",
-      "title": "The landing page, as a sticky note.",
+      "title": "The landing page, as a board of sticky notes.",
       "module": "schemas/landing-sticky.ts"
     },
     {
@@ -20154,6 +20154,13 @@
       "name": "staging",
       "title": "Staging comparison schema — before/after URL pairs for content review.",
       "module": "schemas/staging.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/sticky-contribution",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "sticky-contribution",
+      "title": "A sticky is a CONTRIBUTION from a layer, declared by that layer.",
+      "module": "schemas/sticky-contribution.ts"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/tabular-records",
@@ -21279,8 +21286,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "a8e0cba968d43e5bb08e7aebc0780b9752d1264a",
+    "sha": "fc199b39d72e9bff8e83d07530b4c74e998a65ad",
     "pr": "main",
-    "run": "35499035712"
+    "run": "35500679563"
   }
 }
