@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lzbw
 title: 'IRIS/DSPACE skill: how IRIS uses DSpace and Dublin Core, and what later tools need from it'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T08:01:40Z
-updated_at: 2026-09-20T08:01:40Z
+updated_at: 2026-09-20T18:24:21Z
 parent: folio-assistant-kupb
 ---
 
@@ -20,3 +20,18 @@ WHAT THE RECORD SHOWS AND A GENERIC DC SCHEMA CANNOT SAY:
 
 ## Done when
 `who-iris/skills/` carries the skill, every claim cites the measured record rather than general knowledge about DSpace, and the 'what later tools need' section names each need as a REQUIREMENT a tool can be checked against.
+
+## Closed 2026-09-20 — verified, not assumed
+
+`who-iris/skills/iris-dspace.md` (7.6 KB) carries **R1–R9**, stated as a table
+of requirements a tool can be checked against rather than as prose. Each of the
+bean's five findings is present and cited to the measured record: three
+identifier systems with which is authoritative (R1), the legacy
+`10665.1/14518` handle and the never-deduplicate rule (R2), MeSH as a
+controlled vocabulary with its authority (R5), bitstreams per bundle (R6), and
+containment as paths rather than a parent (R7).
+
+Two requirements the bean did not anticipate, both read off the same record:
+R4 (an absent language tag is *unasserted*, never `en`) and R9 (record what the
+source says even when it contradicts the file — `dc.description` says `30 p.`,
+the PDF has 33 pages).

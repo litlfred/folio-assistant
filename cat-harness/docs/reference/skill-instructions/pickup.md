@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Pickup
+title: 'Pickup'
 parent: Skill instructions
 ---
 

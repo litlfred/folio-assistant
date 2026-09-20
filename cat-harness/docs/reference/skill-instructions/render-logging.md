@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Render logging
+title: 'Render logging'
 parent: Skill instructions
 ---
 

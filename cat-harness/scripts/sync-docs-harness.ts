@@ -8,7 +8,7 @@
  * declaration is the source; this copies the reader-facing part of it into
  * `docs/_data/harness.json`, which `docs/_includes/title.html` renders.
  *
- * Usage:  bun run scripts/sync-docs-harness.ts [--check]
+ * Usage:  bun run cat-harness/scripts/sync-docs-harness.ts [--check]
  *
  * `--check` writes nothing and exits 1 if the copy is stale, for CI.
  *
@@ -170,7 +170,7 @@ if (check) {
   }
   console.error(
     `docs/_data/harness.json is stale.\n` +
-      `Run \`bun run scripts/sync-docs-harness.ts\` and commit the result.`,
+      `Run \`bun run docs:harness\` and commit the result.`,
   );
   process.exit(1);
 }

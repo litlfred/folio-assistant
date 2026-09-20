@@ -39,7 +39,7 @@
  * so break the very gate that guards them.
  *
  * Usage:
- *   bun run scripts/bpmn-render.ts <file.bpmn|dir> -o OUTDIR
+ *   bun run cat-harness/scripts/bpmn-render.ts <file.bpmn|dir> -o OUTDIR
  *
  * @module scripts/bpmn-render
  */

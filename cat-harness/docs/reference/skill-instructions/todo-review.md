@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Todo Review
+title: 'Todo Review'
 parent: Skill instructions
 ---
 

@@ -67,6 +67,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [Code node review](code-node-review.html) | `code-node-review` | — |  |
 | [Compute Integration Watcher](compute-integration-watcher.html) | `compute-integration-watcher` | — |  |
+| [A confirmation can be waived](confirmation-waiver.html) | `confirmation-waiver` | — | Several rules here stop an agent and hand a decision back: merging to `main`, |
 | [Acquisition is the step before ingestion, and it had no home](content-acquisition.html) | `content-acquisition` | — | `document-ingestion.bpmn` begins at **`StartEvent_Dropped` — "a file lands in |
 | [Content, context and state graphs](content-context-and-state-graphs.html) | `content-context-and-state-graphs` | — | An instance declares directories, and each says what **kind** of graph it |
 | [Content Graph](content-graph.html) | `content-graph` | — | cd content && python3 pipeline/content-graph-analysis.py |
@@ -95,6 +96,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Capability: `review` · Package: `folio-core` |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
+| [Harness requirements](harness-requirements.html) | `harness-requirements` | — | **Declaring a directory is a promise.** It says this instance holds a graph of |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
 | [/integration-audit](integration-audit.html) | `integration-audit` | — | A maintenance command for the multi-axis QA-sidecar pipeline (`voice`, |
@@ -135,6 +137,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn), |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
+| [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
@@ -247,6 +250,11 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Create a sticky note](create-sticky-note.html) | `create-sticky-note` | — | A sticky note is a **carried note**: something a person or agent sticks onto the |
 | [Site presentation assets](site-presentation-assets.html) | `site-presentation-assets` | — | **A visual fact has one home, and it is a node in the knowledge graph.** A |
 | [Theme art intake](theme-art-intake.html) | `theme-art-intake` | — | Art arrives — three crops for a theme or an avatar — and the answer is either |
+| [Per-artefact specialisation](theme-artefacts.html) | `theme-artefacts` | — | **This is level 3 of the axis, and it is deliberately the narrowest.** The |
+| [Contrast: measured over the darkest thing that could be there](theme-contrast.html) | `theme-contrast` | — | **Consumer stage.** `generation` emits the ink; this says what the ink has to |
+| [Declaring a theme](theme-declaration.html) | `theme-declaration` | — | **Producer stage.** Intake decides whether art may enter; this decides what is |
+| [Generating a theme's CSS](theme-generation.html) | `theme-generation` | — | **Consumer stage.** `declaration` says what a theme is; this says what a |
+| [Theming, split on the stage it fails at](theming.html) | `theming` | — | **Every file here is named for the skill it declares, and that is load-bearing |
 
 ## Workflow & process (workflow)
 
@@ -269,6 +277,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Initiator.** You may narrow; only the Requestor may decide. |
 | [discussion](discussion.html) | `discussion` | — | An agent that has just read `cat-bootstrap/README.md` knows the shape of a |
 | [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
+
+## CatBootstrap rendering (cat-bootstrap/render)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Emitting cat-bootstrap's own graph](cat-bootstrap-graph-emission.html) | `cat-bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** cat-bootstrap |
+| [Publishing cat-bootstrap's graph](cat-bootstrap-graph-publication.html) | `cat-bootstrap-graph-publication` | — |  |
 
 ## RACI involvement model (methodologies/raci)
 

@@ -187,6 +187,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 292,
     reads: "a microphone — an editorial voice",
   },
+  themes: {
+    // A paint swatch with a corner turned: a theme is a palette APPLIED to a
+    // surface, not a palette on its own. Distinct from `voices`, which is also
+    // a derived rule set — a voice governs what is SAID, a theme what it is
+    // said ON.
+    glyph: "M12 3a9 9 0 000 18h2a2 2 0 002-2 2 2 0 012-2h1a4 4 0 004-4 9 9 0 00-11-10zM8 9h.01M7 13h.01M11 7h.01",
+    tone: 204,
+    reads: "a paint palette — a surface dressed, not the words on it",
+  },
   "translation-sources": {
     glyph: "M4 6h7M7 6v2c0 3-1 5-3 6M6 10c1 3 3 4 5 5M13 19l4-10 4 10M15 16h5",
     tone: 176,
@@ -237,6 +246,18 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 12h4m8 0h4M9.5 9.5a3 3 0 000 5M14.5 9.5a3 3 0 010 5M9.5 9.5c2 1 3 1 5 0M9.5 14.5c2-1 3-1 5 0",
     tone: 108,
     reads: "a knot in a thread — a fact tied down, read and not rewritten",
+  },
+  waiver: {
+    // A key handed over, not a key held: the bow is drawn toward the reader.
+    // Deliberately NOT a lock or a shield, which say "this is guarded" — a
+    // waiver is the opposite act, a gate's owner giving the gate away. The
+    // short tail says it opens ONE thing: the gate class it names, never
+    // everything. Hue sits beside `memory`, because it is declared over the
+    // same directory and a reader should see the kinship before the
+    // difference.
+    glyph: "M14 10a3 3 0 11-6 0 3 3 0 016 0M14 10h7M18 10v3M21 10v2",
+    tone: 132,
+    reads: "a key passed across — a confirmation given before it was asked for",
   },
   "fsh-guts": {
     // The trashcan itself is a kind. Distinct from the trash STATE below.

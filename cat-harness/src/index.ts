@@ -5,7 +5,7 @@
  * configuration. Currently supports the "paper" adapter.
  *
  * Usage:
- *   bun run src/index.ts [--stdio|--http] [--repo <path>] [--check-deps]
+ *   bun run cat-harness/src/index.ts [--stdio|--http] [--repo <path>] [--check-deps]
  *
  * @module folio-assistant/index
  */

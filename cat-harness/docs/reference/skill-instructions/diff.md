@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Diff
+title: 'Diff'
 parent: Skill instructions
 ---
 

@@ -21,6 +21,12 @@ on:
     branches: [main]
     paths:
       - 'cat-harness/docs/**'
+      # An instance's own rendered pages are mounted into the site by
+      # mount-instance-docs.ts, so a change to them must rebuild it. Without
+      # this the pages are committed, gated, and never redeployed.
+      - 'who-iris/docs/**'
+      - 'who-iris/catalogue/**'
+      - 'cat-harness/scripts/mount-instance-docs.ts'
       # The BPMN/DMN sources moved OUT of docs/ into the `kg` graph, where the
       # roles and skills they reference live. The SVGs the site embeds are
       # still rendered from them at deploy time, so without this path a diagram
@@ -30,6 +36,19 @@ on:
       - 'cat-harness/schemas/**'
       - 'cat-harness/scripts/gen-schema-docs.ts'
       - 'cat-harness/scripts/gen-docs-pages.ts'
+      # The schema viewer is generated, so a change to the generator or to the
+      # reader behind it changes the published page while touching nothing
+      # under `docs/` — without these paths the site would serve a stale one.
+      - 'cat-harness/scripts/gen-schema-viz.ts'
+      - 'cat-harness/scripts/schema-graph.ts'
+      # Same reasoning for the library viewer, plus the corpus itself: an
+      # entry added to `library/` or a file dropped in `uploads/` changes the
+      # published counts while touching nothing under `docs/`.
+      - 'cat-harness/scripts/gen-library-viz.ts'
+      - 'cat-harness/scripts/library-graph.ts'
+      - 'cat-harness/library/**'
+      - 'cat-harness/uploads/**'
+      - 'uploads/**'
       - 'cat-harness/content/docs/**'
       - 'cat-harness/scripts/render-bpmn.ts'
       # The navbar's locale filter reads `docs/_data/translations.json`, built
@@ -92,6 +111,24 @@ jobs:
       - name: Regenerate content-backed docs pages
         run: bun run cat-harness/scripts/gen-docs-pages.ts
 
+      # The schema graph's projection and its viewer. Same reasoning as the
+      # regenerations above: the committed copy is browsable on GitHub and the
+      # PUBLISHED one must never be the stale half of that pair. `schemas/` is
+      # a declared graph holding CONTENT, and until this step it was the
+      # largest declared subgraph in the instance with no way to look at it
+      # (bean `xgd8`).
+      - name: Regenerate the schema graph projection and viewer
+        run: bun run schema:viz
+
+      # The L1 corpus — `library/` entries and the `uploads/` queues feeding
+      # them. Same contract as the schema viewer above: the committed copy is
+      # browsable on GitHub and the published one must never be its stale
+      # half. `library/` is the subgraph every knowledge-graph reference to a
+      # source resolves THROUGH, and until this step nobody could look at it
+      # (bean `jbx2`).
+      - name: Regenerate the library projection and viewer
+        run: bun run library:viz
+
       # Same reasoning as the three regenerations above: the committed copy is
       # browsable on GitHub and the PUBLISHED one must never be the stale half
       # of that pair. A stale index here is not cosmetic — it is the navbar
@@ -145,6 +182,39 @@ jobs:
       - name: Take ownership of the Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
 
+      # Mount every OTHER instance's rendered content under the built site.
+      #
+      # Jekyll above builds ONE directory — `cat-harness/docs` — so an instance
+      # that publishes its own rendered pages was built by nothing and reachable
+      # at no URL. `who-iris/docs/` was in exactly that state: six committed,
+      # gated pages that no deployed site served.
+      #
+      # Owner's addressing rule, 2026-09-20: `<base-url>/<path-to-kind-or-node>`
+      # — a harness that instantiates a directory gets a visualiser for it,
+      # mounted under that directory's KIND. So `/docs/who-iris/`, and
+      # `/library/who-iris/` the day the library visualiser (bean jbx2) lands
+      # with a front door of its own. No change here when it does.
+      - name: Mount instance-rendered content
+        run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+
+      # The DIRECTORY, not a list of eight files.
+      #
+      # `schemas/` is a declared graph and every module in it carries a
+      # `@graphNode` tag saying whether it is a node — so membership is a
+      # property the directory already states, and an entry-point list is a
+      # second, hand-maintained answer to it. Measured 2026-09-20: the literal
+      # list produced **8** module pages out of **100** modules in the
+      # directory (72 of them declared KG nodes); expanding the directory
+      # produces **95**, with 0 errors. So 87 modules had no published
+      # reference at all, and nothing would ever have reported that — a file
+      # added to `schemas/` was silently absent from the API reference, which
+      # is the one failure a reader cannot distinguish from "this instance has
+      # none".
+      #
+      # `--entryPointStrategy expand` over a directory is what makes the list
+      # unnecessary: it walks what is there. Adding a schema now publishes its
+      # reference with no second edit, which is the same rule
+      # `check:schema-nodes` enforces for the graph itself.
       - name: Generate TypeScript API reference (TypeDoc)
         run: |
           npx --yes typedoc \
@@ -154,10 +224,7 @@ jobs:
             --hideGenerator \
             --skipErrorChecking \
             --name "folio-assistant API" \
-            cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
-            cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
-            cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \
-            cat-harness/schemas/lean-packages.ts 2>&1 | tail -20
+            cat-harness/schemas 2>&1 | tail -20
 
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).

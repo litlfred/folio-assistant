@@ -1,13 +1,13 @@
 ---
 # folio-assistant-cvab
 title: 'BRANCH-ONLY WORK PLAN: 12 of 13 IRIS beans live only on PR #477, so the store on main is blind to a whole goal'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T18:05:19Z
+updated_at: 2026-09-20T19:00:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -26,4 +26,16 @@ bean-coordination §"A claim is branch-local" states the fact; nothing says what
 
 ## Done when
 - [ ] The owner has chosen; bean-coordination says it
+- [ ] If 1: the beans on PR #477 land on main in their own change
+
+---
+
+_2026-09-20T19:00Z_ — **The owner chose BOTH remedies** (PR #589, issue #588),
+and `bean-coordination` §"The store on `main` is the one every sibling reads"
+now says so as a STRICT rule: land beans ahead of code, **and** a sweep reads
+the open branches' stores. The section states why they are not alternatives —
+(1) prevents the blindness, (2) catches the branches that were already open
+when (1) landed, #477 among them.
+
+- [x] The owner has chosen; bean-coordination says it
 - [ ] If 1: the beans on PR #477 land on main in their own change

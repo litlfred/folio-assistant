@@ -6,7 +6,7 @@
  * Outputs:
  *   - .claude/skills/registry.json
  *
- * Usage: npx ts-node scripts/generate-registry.ts
+ * Usage: npx ts-node cat-harness/scripts/generate-registry.ts
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "fs";

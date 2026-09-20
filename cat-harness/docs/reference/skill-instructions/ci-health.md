@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CI health
+title: 'CI health'
 parent: Skill instructions
 ---
 

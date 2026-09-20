@@ -62,6 +62,7 @@ import {
   readDeclaration,
   repoRootFor,
   instanceRootFor,
+  owesVisualiser,
   type CatHarnessDeclaration,
 } from "../schemas/cat-harness.js";
 // `folio` is registered by CORE as a load-time side effect, and this module
@@ -71,7 +72,22 @@ import {
 import "../schemas/folio-graph-kind.js";
 
 /** The three obligations, in the order the owner named them. */
-export const CRITERIA = ["visualiser", "docs", "skill"] as const;
+export const CRITERIA = ["visualiser", "docs", "skill", "serialisations"] as const;
+
+/**
+ * What each criterion is asking, in the words the finding prints.
+ *
+ * A LOOKUP rather than the ternary chain this replaced: that chain had one arm
+ * per criterion and no else, so a fourth criterion silently printed the third
+ * criterion's question. A map cannot do that — an entry is required by the
+ * type, and `tsc` says so at the point a criterion is added.
+ */
+const ASKS: Record<Criterion, string> = {
+  visualiser: "renders it",
+  docs: "documents it",
+  skill: "governs it",
+  serialisations: "serves its json, jsonld and schema.json",
+};
 export type Criterion = (typeof CRITERIA)[number];
 
 export type Severity = "major" | "minor";
@@ -261,7 +277,16 @@ export function auditInstance(root: string): InstanceCoverage {
     for (const criterion of CRITERIA) {
       if (criterion === "visualiser" && VISUALISER_EXEMPT_INSTANCES.has(instance)) continue;
 
-      const waiver = dir.coverage?.exempt?.[criterion];
+      // SERIALISATIONS take no waiver, and `tsc` is what says so: dropping
+      // the key from `exempt` in the schema turned this lookup into a type
+      // error the moment the criterion was added, rather than into a silent
+      // `undefined` that would have read as "not exempted" and worked by luck.
+      //
+      // The owner's ruling, 2026-09-20: *"harnesses cannot override there
+      // being in the KG."* Rendering, documenting and governing are choices
+      // about effort; addressability is the claim that the nodes are in the
+      // graph at all.
+      const waiver = criterion === "serialisations" ? undefined : dir.coverage?.exempt?.[criterion];
       if (waiver !== undefined) {
         exempted.push({ directory: dir.id, criterion, reason: waiver });
         continue;
@@ -269,12 +294,42 @@ export function auditInstance(root: string): InstanceCoverage {
 
       const declared = dir.coverage?.[criterion];
       if (declared === undefined) {
+        // An UNMET OBLIGATION outranks an unanswered question.
+        //
+        // The owner, 2026-09-20: a directory an instance declares or initiates
+        // and then writes to — `beans/`, `todos/`, `fsh-guts/` — owes a
+        // visualiser "as requiement of handler". So for those kinds a missing
+        // one is not "nobody has said yet", it is a thing the declaring
+        // instance promised and did not deliver.
+        //
+        // Ranked, not gated, and the axis stays advisory: 0 of 20 such
+        // directories have one today, and a hard gate on day one is the wall
+        // this file's own header says somebody switches off. What changes is
+        // that the 20 stop being indistinguishable from the kinds that never
+        // owed anything.
+        // SERIALISATIONS are owed by every declared directory, with no
+        // by-kind test — the owner's rule is "all dir urls". That is not the
+        // usual shape here and `hfkl` is the reason it is right: bootstrap is
+        // excused a VISUALISER precisely because its json/jsonld "is its
+        // existence", so the thing it is excused into cannot itself be
+        // excusable by kind. The visualiser is the courtesy; the serialisation
+        // is the existence claim.
+        const unmetObligation =
+          criterion === "serialisations" ||
+          (criterion === "visualiser" && dir.graphs.some((g) => owesVisualiser(g)));
         findings.push({
           instance,
           directory: dir.id,
           criterion,
-          severity: "minor",
-          detail: `no ${criterion} declared — nobody has said what ${criterion === "visualiser" ? "renders it" : criterion === "docs" ? "documents it" : "governs it"}`,
+          severity: unmetObligation ? "major" : "minor",
+          detail:
+            criterion === "serialisations"
+              ? `no serialisations declared — every declared directory owes json, jsonld and ` +
+                `schema.json at its own URL, and this one is excused nothing`
+              : unmetObligation
+                ? `no visualiser declared, and ${dir.graphs.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
+                  `an instance renders what it declares`
+                : `no ${criterion} declared — nobody has said what ${ASKS[criterion]}`,
         });
         continue;
       }
@@ -301,7 +356,7 @@ export function auditAll(repoRoot: string): InstanceCoverage[] {
 }
 
 export function formatReport(rs: InstanceCoverage[]): string {
-  const out: string[] = ["Subgraph coverage — visualiser, documentation, governing skill", ""];
+  const out: string[] = ["Subgraph coverage — visualiser, docs, governing skill, serialisations", ""];
   for (const r of rs) {
     if (r.verdict === "undetermined") {
       out.push(`  ? ${r.instance.padEnd(22)} undetermined — ${r.reason ?? "no reason given"}`);

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Logging what you are doing
+title: 'Logging what you are doing'
 parent: Skill instructions
 ---
 

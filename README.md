@@ -52,14 +52,14 @@ rename a directory and the links follow.
 | `cat-bootstrap` | cat-bootstrap | [AGENTS.md](./cat-bootstrap/AGENTS.md) | [README](./cat-bootstrap/README.md) |
 | `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
 | `detangle` | detangle | [AGENTS.md](./detangle/AGENTS.md) | [README](./detangle/README.md) |
-| `folio-assist-sci` | folio-assist-sci | [AGENTS.md](./folio-assist-sci/AGENTS.md) | [README](./folio-assist-sci/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
+| `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
 | `kg-navigation` | kg-navigation | [AGENTS.md](./kg-navigation/AGENTS.md) | [README](./kg-navigation/README.md) |
 | `large-datasets` | large-datasets | [AGENTS.md](./large-datasets/AGENTS.md) | [README](./large-datasets/README.md) |
-| `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) |
+| `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/docs/) |
 | `who-style-guide` | who-style-guide | [AGENTS.md](./who-style-guide/AGENTS.md) | [README](./who-style-guide/README.md) |
 
-> **10 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **9 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
@@ -202,6 +202,7 @@ repo to one where you can say *"add a chapter"* and have it work.
 
 In a new, empty repository:
 
+<!-- command-path-ok: run IN THE NEW FOLIO, where folio-assistant is the submodule just added -->
 ```sh
 # Get the platform. A submodule pins the exact revision your content is
 # authored against, so a fresh clone reproduces your build.
@@ -210,7 +211,7 @@ git submodule add https://github.com/litlfred/folio-assistant.git folio-assistan
 (cd folio-assistant && bun install)
 
 # Scaffold. --type document for prose; --type paper to add Lean + LaTeX.
-bun run folio-assistant/scripts/init-folio.ts \
+bun run folio-assistant/cat-harness/scripts/init-folio.ts \
     --type document \
     --title "My Guidance Note" \
     --author "Your Name"
@@ -299,7 +300,7 @@ bun install
 bun run check-deps
 
 # 4. Run the MCP server (point --repo at your content repo)
-bun run src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 ### Common commands

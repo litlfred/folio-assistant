@@ -1,4 +1,4 @@
-# AGENTS.md — folio-assist-sci
+# AGENTS.md — folio-assistant-sci
 
 What binds everywhere is the repository's [`AGENTS.md`](../AGENTS.md); what
 this layer *is* is [`README.md`](README.md). This layer is small, and what it

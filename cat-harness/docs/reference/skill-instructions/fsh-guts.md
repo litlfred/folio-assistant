@@ -1,6 +1,6 @@
 ---
 layout: default
-title: `fsh-guts/`
+title: '`fsh-guts/`'
 parent: Skill instructions
 ---
 

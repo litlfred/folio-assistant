@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Rendering the knowledge graph
+title: 'Rendering the knowledge graph'
 parent: Skill instructions
 ---
 

@@ -161,6 +161,13 @@ export const RULES: Rule[] = [
       // time it ran after the split, which is the behaviour worth keeping.
       "scripts/partition/engine.ts",         // the generic algorithm
       "scripts/partition/instance-rules.ts", // this file: the data it runs on
+      // HARNESS, and the reasoning is the same as `check-ci-health` above:
+      // it reasons about INSTANCES and their declarations — which harness
+      // instantiated which directory, and where that mounts on the published
+      // site. It never opens a content object. The owner's addressing rule
+      // (`<base-url>/<path-to-kind-or-node>`) is a statement about harnesses,
+      // not about what a folio holds.
+      "scripts/mount-instance-docs.ts",      // instance-rendered content -> /<kind>/<instance>/
       "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI
@@ -371,6 +378,15 @@ export const RULES: Rule[] = [
       // harness module. The pure check it drives, `schemas/theme-art-intake.ts`,
       // needs none of that and is left to the `schemas/` prefix.
       "scripts/check-theme-art.ts",          // theme/avatar art intake, run over what shipped
+      // The same shape as the entry above, arrived at independently: its
+      // subject is the avatar crop boxes (harness — site presentation), and
+      // its classification is decided by the import, because it reads THIS
+      // INSTANCE'S declaration and so must register core's `folio` kind.
+      "scripts/render-avatar-crops.ts",      // the declared avatarRegions, drawn so a person can look
+      // The theming subgraph's VISUALISER, and core for the same reason as the
+      // two above: it reads this instance's declaration to resolve each
+      // theme's backdrop, so it must register core's `folio` kind.
+      "scripts/render-theme-sheet.ts",       // every theme: palette, contrast, art, both regions
       // The reverse of `check-declared-assets` (declared -> disk): this walks
       // disk -> declared. Same reason it is core rather than harness — it reads
       // an instance's declaration, and this instance declares a `folio` graph,
@@ -378,6 +394,22 @@ export const RULES: Rule[] = [
       "scripts/check-undeclared-files.ts",   // present-but-undeclared, the dh4f shape inverted
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
+      // The schema and library visualisers, and the two readers behind them.
+      //
+      // CORE rather than harness for the reason every entry above shares: each
+      // reads THIS INSTANCE'S declaration, and this instance declares a `folio`
+      // graph, so each must import `schemas/folio-graph-kind.ts` for the kind
+      // to be registered — and that module is core's by the argument written on
+      // it ("a layer that cannot render must not own the renderable kind").
+      //
+      // The generators are core on a second count as well, and it is the
+      // stronger one: they WRITE INTO THE RENDERED SITE. `cat-harness-minimum`
+      // carries "if it produces something a human looks at, it is not the
+      // harness", and a page under `docs/` is exactly that.
+      "scripts/schema-graph.ts",             // schemas/*.ts → declarations + edges
+      "scripts/gen-schema-viz.ts",           // that graph → projection + viewer
+      "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
+      "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
@@ -504,8 +536,29 @@ export const RULES: Rule[] = [
       "scripts/check-head-has-run.ts",
       "scripts/check-agents-claims.ts",
       "scripts/check-agent-entry-links.ts",
+      "scripts/check-command-paths.ts",
+      // Who else is working THIS repository — a fact about the forge and this
+      // checkout, not about any folio's material.
+      "scripts/sibling-sessions.ts",
       "scripts/check-agents-xref.ts",
+      // The bean reader — HARNESS by subject as well as by dependency. It
+      // reads the agent work plan, which `AGENTS.md` places in the
+      // agent-actor half of its 2x2 and a folio has no content stake in. Its
+      // consumers are `check-bean-parents.ts` here and `gen-docs-pages.ts` in
+      // core, and core reading harness is downward.
+      "scripts/beans.ts",
       "scripts/check-bean-parents.ts",
+      // The work plan's own readers. Harness by subject and by dependency:
+      // `beans/` is the AGENT's work plan, declared by the harness, and a
+      // folio's content has no bean store. `bean-store-read.ts` is the shared
+      // file reader the three import; `check-waivers.ts` reads the `waiver`
+      // graph, which is the harness's confirmation model and nothing a folio
+      // authors.
+      "scripts/bean-store-read.ts",
+      "scripts/check-bean-bodies.ts",
+      "scripts/check-bean-issue-links.ts",
+      "scripts/check-ready-to-close.ts",
+      "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",
       // The external-specification registry — which edition of BPMN, DD or
       // DCMI Terms this repository conforms to, reconciled against the
@@ -639,6 +692,18 @@ export const RULES: Rule[] = [
       //    survives the "describes a process" test.
       "schemas/memory.ts",
       "schemas/carried-note.ts",
+      // Same argument as `memory.ts`, one step along: a waiver is a permission
+      // a PERSON gives an AGENT about a gate in this repository's process. It
+      // is declared over the same directory as agent memory and it fails the
+      // "describes a folio's material" test just as plainly. Keyword triage
+      // put it in core on the word "confirmation"; the import direction is
+      // what settles it — `scripts/check-waivers.ts` is harness and may not
+      // reach into core.
+      "schemas/waiver.ts",
+      // How a DECISION is handed to a person. Harness by the same test again:
+      // it is about the agent-human interaction this platform defines, and a
+      // folio authors no decision requests.
+      "schemas/decision-request.ts",
       // Translation is cat-harness's, stated directly: "ui stuff like
       // translations (skills, tooling) are not in cat-bootstrap, it is in
       // cat-harness/". These three are the gettext machinery and the registry
@@ -926,12 +991,29 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
-      // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else,
-      // and its only consumer is `scripts/gen-docs-pages.ts`, which is core.
+      // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
-      // exclusively on core data for a core caller, and calling it harness
-      // bought two wrong-direction edges for nothing.
+      // exclusively on core data, and calling it harness bought two
+      // wrong-direction edges for nothing.
+      //
+      // This note said "its ONLY consumer is `scripts/gen-docs-pages.ts`"
+      // until 2026-09-20. That premise is gone — `state-visualizer.ts` is a
+      // second consumer — and the conclusion survives it because BOTH callers
+      // are core. A reason left standing on a fact that has changed is a
+      // reason nobody can re-check, which is why this says so rather than
+      // quietly keeping the old sentence.
       "scripts/todos.ts",
+      // The state visualiser, and it is core for the reason `gen-landing-data.ts`
+      // records about itself: it is a RENDERER, and rendering is core's.
+      //
+      // Its subject is mixed — it reads instance declarations and the bean
+      // store, both harness — and that is exactly why the direction settles
+      // it. Core reading harness is downward and costs nothing; harness
+      // reading `scripts/todos.ts` is upward, and `adapter-layering.test.ts`
+      // reported that edge on the first draft, where this sat beside
+      // `beans.ts` in the harness block. The fix is not an exemption, it is
+      // the right owner — the same sentence `gen-landing-data.ts` opens with.
+      "scripts/state-visualizer.ts",
       // Three of the 19 unassigned that are CONTENT-side, by the same test
       // read the other way: each operates on a folio's own material, not on
       // the machinery that runs a process. Classifying them harness alongside

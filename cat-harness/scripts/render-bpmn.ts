@@ -6,7 +6,7 @@
  * Modeler, or any other BPMN tool. This script rasterises them to SVG for the
  * docs site and for GitHub's Markdown renderer, which cannot draw BPMN itself.
  *
- * Usage:  bun run scripts/render-bpmn.ts [--check]
+ * Usage:  bun run cat-harness/scripts/render-bpmn.ts [--check]
  *
  * `--check` renders to memory and fails if a committed SVG is stale, so CI can
  * catch a `.bpmn` edit that never had its SVG regenerated.

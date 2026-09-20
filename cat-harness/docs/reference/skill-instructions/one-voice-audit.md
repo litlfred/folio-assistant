@@ -1,6 +1,6 @@
 ---
 layout: default
-title: One-Voice Audit
+title: 'One-Voice Audit'
 parent: Skill instructions
 ---
 

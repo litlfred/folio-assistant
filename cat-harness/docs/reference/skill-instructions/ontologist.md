@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Semantic Ontologist (Ambiguity Detection & Glossary)
+title: 'Semantic Ontologist (Ambiguity Detection & Glossary)'
 parent: Skill instructions
 ---
 

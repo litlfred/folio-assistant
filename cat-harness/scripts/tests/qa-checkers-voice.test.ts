@@ -525,7 +525,7 @@ describe("checkEditorializing — proof economy is not an opinion (bean 2t41)", 
     // have meant over-correcting. A criterion that never fires on its own
     // exemplar has stopped measuring anything; the survivor is p194's
     // "Unfortunately", which is a real finding.
-    // READ from the declaration. `milnorlink` went to `folio-assist-sci/` in
+    // READ from the declaration. `milnorlink` went to `folio-assistant-sci/` in
     // bean `frs5` — it is not an IRIS item — and `readdirSync` on the old path
     // throws, which is at least loud; a checker counting zero hits over a
     // directory that is not there would have been worse, because the

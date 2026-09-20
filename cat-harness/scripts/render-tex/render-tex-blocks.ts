@@ -7,10 +7,10 @@
  * manifest with `rendered` asset references.
  *
  * Usage:
- *   bun run scripts/render-tex/render-tex-blocks.ts
- *   bun run scripts/render-tex/render-tex-blocks.ts --paper quantum-observable-universe
- *   bun run scripts/render-tex/render-tex-blocks.ts --force   # re-render even if SVG exists
- *   bun run scripts/render-tex/render-tex-blocks.ts --dry-run # show what would be rendered
+ *   bun run cat-harness/scripts/render-tex/render-tex-blocks.ts
+ *   bun run cat-harness/scripts/render-tex/render-tex-blocks.ts --paper quantum-observable-universe
+ *   bun run cat-harness/scripts/render-tex/render-tex-blocks.ts --force   # re-render even if SVG exists
+ *   bun run cat-harness/scripts/render-tex/render-tex-blocks.ts --dry-run # show what would be rendered
  *
  * Output:
  *   content/<paper>/<chapter>/rendered/<block>-<index>.svg

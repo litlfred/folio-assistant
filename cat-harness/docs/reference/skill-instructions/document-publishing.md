@@ -1,6 +1,6 @@
 ---
 layout: default
-title: document-publishing
+title: 'document-publishing'
 parent: Skill instructions
 ---
 

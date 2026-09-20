@@ -708,6 +708,31 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
   },
+  // Themes an instance DERIVED from a source it holds — a served stylesheet or
+  // a style guide's stated rules. A separate kind from `folio` because a theme
+  // is not read: it dresses what is. Separate from `kg` for the reason `voices`
+  // is, one step further along — a voice is opt-in per folio, and a theme is
+  // opt-in per SURFACE, so neither belongs in the graph of things simply
+  // available.
+  //
+  // The platform's own twelve themes are NOT this graph. They are furniture in
+  // `cat-harness/schemas/themes.ts`, and the root AGENTS.md draws the line they
+  // would cross: a palette read off a WHO style guide is subject matter, and
+  // subject matter does not live in the platform. This kind is what gives it
+  // somewhere else to live that a declaration-driven consumer can still find.
+  themes: {
+    type: termIri("ThemeGraph"),
+    renderable: false,
+    // Authored-from-a-source, like `voices` and for the same reason: a theme is
+    // true whether or not anything has been rendered with it. The DERIVATION
+    // does not make it state — `catalogue` settles that argument two entries
+    // up, and the same answer holds here.
+    holds: "content",
+    summary:
+      "Themes derived from an instance's own sources — one Theme node each, carrying " +
+      "`kind: sticky | webpage | publication`. The palette vocabulary is shared across " +
+      "every kind and only the geometry varies; every value cites where it was measured.",
+  },
   "todo-feedback": {
     type: termIri("TodoFeedbackGraph"),
     renderable: false,
@@ -833,6 +858,38 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     holds: "context",
     summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
+  },
+
+  // A confirmation the owner gave IN ADVANCE — `skills/folio-core/confirmation-waiver.md`.
+  //
+  // Owner, 2026-09-20: "human can waive confirmation rights (e.g. for session,
+  // for process run)", and "context dependent, should be in memories".
+  //
+  // `context` by exactly the test that settled `memory` above — a running
+  // process READS a waiver before a gate fires and no step writes one; it
+  // changes when a person grants or withdraws permission, which is an act
+  // OUTSIDE any instance. That is why it is declared over the SAME directory:
+  // `memory/` holds both, and the two are told apart by the `$schema` tag
+  // inside each file rather than by where it sits. A directory is a place to
+  // look and may hold more than one part of a graph.
+  //
+  // A kind of its own rather than a fourth memory label, and the reason is
+  // structural: `MemoryNodeSchema` carries NO status by design — "a TRAP is
+  // not open, and marking one done would assert that the failure it records
+  // has stopped being possible". A waiver's whole content is that it EXPIRES.
+  // Labelling one `stable` would assert the opposite of what the node says.
+  waiver: {
+    type: termIri("WaiverGraph"),
+    renderable: false,
+    holds: "context",
+    skill: "confirmation-waiver",
+    schema: "schemas/waiver.ts",
+    // declared-path-literal: as on `health` and `translation-sources` — this
+    // table IS the declaration, so resolving `validator` through one would be
+    // reading it from here. `check:kind-validators` proves it still loads.
+    validator: "schemas/waiver.ts#WaiverNodeSchema",
+    summary:
+      "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
   },
 
   "fsh-guts": {
@@ -1330,6 +1387,15 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * would hand one back.
    */
   stickies?: StickyContribution[];
+  /**
+   * What this instance is excused from rendering, and what it carries instead.
+   *
+   * See {@link RenderExemption}. **Absent is the normal case** — every
+   * instance owes a visualiser per declared subgraph, which is the `2krx` QA
+   * axis. Present means a layer has traded that obligation for another one it
+   * names, and it is refused without a `reason` and an `owes`.
+   */
+  renderExemption?: RenderExemption;
 }
 
 /**
@@ -1445,11 +1511,46 @@ export const SubgraphCoverageSchema = z.object({
   visualiser: z.string().min(1).optional(),
   docs: z.string().min(1).optional(),
   skill: z.string().min(1).optional(),
+  /**
+   * What produces this directory's SERIALISATIONS — `json`, `jsonld` and
+   * `schema.json` at the directory's own URL.
+   *
+   * The owner, 2026-09-20: *"all dir urls should have json, jsonld,
+   * schema.json like `<base-url>/beans.jsonld`"*.
+   *
+   * **This is the one obligation with no by-kind exemption, and `hfkl` is why.**
+   * `cat-bootstrap` is excused a visualiser — *"it is exception to
+   * harness/layer not having visualtion/workflow visualizer. but it must have
+   * its json/jsonld… that is its existence."* The thing it is excused INTO is
+   * this. So a directory may be exempt from being LOOKED at and is never
+   * exempt from being READABLE BY A MACHINE: the visualiser is the courtesy,
+   * the serialisation is the existence claim.
+   *
+   * ## It is NOT WAIVABLE, and that is the one asymmetry in this object
+   *
+   * Every other criterion here takes an `exempt.<criterion>` reason, because a
+   * waiver with a reason is how this repository records a considered exception
+   * rather than a silence. This one does not, on the owner's ruling,
+   * 2026-09-20: *"harnesses cannot override there being in the KG."*
+   *
+   * An instance may decide nothing renders a directory, nothing documents it
+   * and nothing governs it — those are choices about EFFORT. Whether its nodes
+   * are addressable is not a choice about effort, it is the claim that they
+   * are in the graph at all. A harness that could waive it could declare a
+   * directory into the knowledge graph and then make its contents
+   * unreachable, which is the `dh4f` defect with a signature on it.
+   *
+   * So `exempt` below carries three keys and not four, deliberately. If this
+   * ever grows a fourth, that ruling has been reversed and the reversal
+   * belongs here.
+   */
+  serialisations: z.string().min(1).optional(),
   exempt: z
     .object({
       visualiser: z.string().min(1).optional(),
       docs: z.string().min(1).optional(),
       skill: z.string().min(1).optional(),
+      // NO `serialisations` — see the field above. Not an omission.
     })
     .optional(),
 });
@@ -1884,6 +1985,135 @@ export const RemoteGraphSchema = z
  * then has to guess which it got.
  */
 
+/**
+ * What a {@link RenderExemption} may excuse an instance from.
+ *
+ * Two entries, because the owner named two and they fail differently: a
+ * subgraph nobody can look at, and a process nobody can look at. Closed, so a
+ * declaration cannot excuse itself from an obligation nobody has defined.
+ */
+export const RENDER_OBLIGATIONS = ["visualiser", "workflow-visualiser"] as const;
+export type RenderObligation = (typeof RENDER_OBLIGATIONS)[number];
+
+/**
+ * An instance's declared exemption from the rendering obligations, with a
+ * reason and a substitute.
+ *
+ * ## The rule this encodes is a FLOOR THAT RISES, not a flat requirement
+ *
+ * [`cat-harness-minimum`](../docs/architecture/cat-harness-minimum.md) carries
+ * *"if it produces something a human looks at, it is not the harness"*, and
+ * the same architecture states that an instance renders by default. Read
+ * flatly the two cannot both hold. The owner settled it on 2026-09-20: the
+ * requirement **starts** at `cat-harness` rather than applying uniformly.
+ *
+ * | layer | visualiser | its own `.json` / `.jsonld` |
+ * |---|---|---|
+ * | `cat-bootstrap` | **exempt** — it is the navbar FOOTER | **required** |
+ * | `cat-harness` | required | required |
+ * | everything above | required | required |
+ *
+ * `cat-harness` is where the rest begins to apply for an obligation rather
+ * than a convention: it is what supplies the layers above with `folio/`, and a
+ * layer that hands its dependents a folio and renders nothing itself is asking
+ * of them what it did not do.
+ *
+ * ## Why `owes` is REQUIRED, when it could have been prose in a doc
+ *
+ * Because an exemption with no substitute is a hole, and a list of holes with
+ * no substitutes is a silence list — which is exactly what `2krx` says an
+ * opt-out must not become: *"an opt-out needs a REASON per entry … or it
+ * becomes a silence list."* cat-bootstrap does not simply drop out of the
+ * requirement; in the owner's words its `.json`/`.jsonld` *"is its
+ * existence"*, so it trades a criterion it could fail quietly for one it
+ * cannot. `owes` is where that trade is written down, and
+ * {@link renderExemptionProblems} refuses an empty one.
+ *
+ * ## Declared locally, validated globally
+ *
+ * The declaration is local because only the instance knows why. The guard
+ * against the exemption SPREADING is not — {@link renderExemptionProblems}
+ * takes the count of claimants across the repository, because "only the bottom
+ * layer may claim this" is a fact about the stack and cannot be seen from one
+ * file. A second claimant is a finding rather than a silent widening: that is
+ * the failure mode a self-declared exemption otherwise has, and it is the
+ * reason this is not simply a boolean.
+ */
+export interface RenderExemption {
+  /** Which obligations are excused. Non-empty. */
+  of: RenderObligation[];
+  /** Why this layer is the exception. Prose, and required. */
+  reason: string;
+  /**
+   * What it carries INSTEAD — the criterion it cannot fail quietly.
+   *
+   * Required. An exemption whose substitute is unstated is indistinguishable
+   * from a layer that simply never got round to rendering.
+   */
+  owes: string;
+}
+
+export const RenderExemptionSchema = z.object({
+  of: z.array(z.enum(RENDER_OBLIGATIONS)).min(1),
+  reason: z.string().min(1),
+  owes: z.string().min(1),
+});
+
+/**
+ * Is this instance excused from `obligation`?
+ *
+ * The predicate the `2krx` axis calls before raising a no-visualiser finding,
+ * so the exemption is read from the declaration rather than from a hardcoded
+ * instance name in the checker. A name literal would make the rule true only
+ * for the one instance somebody remembered.
+ */
+export function isExemptFrom(
+  d: Pick<CatHarnessDeclaration, "renderExemption">,
+  obligation: RenderObligation,
+): boolean {
+  return d.renderExemption?.of.includes(obligation) ?? false;
+}
+
+/**
+ * Everything wrong with the exemptions declared across a repository.
+ *
+ * Empty means every claim is well-formed AND there is at most one claimant.
+ * Takes the whole set rather than one declaration for the reason
+ * {@link RenderExemption} gives: the shape being guarded is a stack, and a
+ * second claimant cannot be seen from the first one's file.
+ *
+ * **At most one, not exactly one.** A repository that vendors no cat-bootstrap
+ * has nothing to exempt, and failing it for that would be asking it to declare
+ * something to stay green — which is how a declaration stops meaning anything.
+ */
+export function renderExemptionProblems(
+  claimants: ReadonlyArray<{ name: string; renderExemption?: RenderExemption }>,
+): string[] {
+  const problems: string[] = [];
+  const claiming = claimants.filter((c) => c.renderExemption !== undefined);
+  for (const c of claiming) {
+    const parsed = RenderExemptionSchema.safeParse(c.renderExemption);
+    if (!parsed.success) {
+      problems.push(
+        `${c.name}: renderExemption is malformed — ${parsed.error.issues
+          .map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`)
+          .join("; ")}`,
+      );
+    }
+  }
+  if (claiming.length > 1) {
+    problems.push(
+      `${claiming.length} instances claim a renderExemption (${claiming
+        .map((c) => c.name)
+        .sort()
+        .join(", ")}) — the exemption is the BOTTOM of the stack and there is ` +
+        `one bottom. A second claimant is the requirement spreading upward, ` +
+        `which is what this refuses to do quietly.`,
+    );
+  }
+  return problems;
+}
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -1910,6 +2140,7 @@ export const CatHarnessDeclarationSchema = z.object({
    */
   remoteGraphs: z.array(RemoteGraphSchema).default([]),
   stickies: z.array(StickyContributionSchema).optional(),
+  renderExemption: RenderExemptionSchema.optional(),
 });
 
 /**
@@ -2249,6 +2480,84 @@ export function siteDirFor(root: string): string {
 }
 
 /**
+ * A declared asset's path, as the PUBLISHED site serves it.
+ *
+ * `docs/assets/img/x.webp` → `/assets/img/x.webp`. An instance declares an
+ * image by its repo-relative path, and the site build copies the site
+ * directory's CONTENTS to the site root — so the declared prefix is exactly
+ * what a published URL does not carry.
+ *
+ * **Derived from {@link siteDirFor}, never from the literal `docs/`.** Two
+ * consumers needed this and the first wrote the literal; the second would have
+ * copied it, and an instance that moves its site directory would then serve
+ * two different answers — one correct, one a 404 that looks like a missing
+ * image. `site-dir-single-answer.test.ts` exists for exactly this class of
+ * duplicate.
+ *
+ * A path that does not start with the site directory is **passed through
+ * unchanged**: it is either already site-relative or points somewhere this
+ * function has no business rewriting, and guessing would turn a working
+ * external URL into a broken local one.
+ */
+export function publishedAssetPath(root: string, src: string): string {
+  const prefix = `${siteDirFor(root)}/`;
+  return src.startsWith(prefix) ? `/${src.slice(prefix.length)}` : src;
+}
+
+/**
+ * Where this sticky's declaration can be read and edited, on the forge.
+ *
+ * ## Both, because they are different acts
+ *
+ * The owner: *"edit tool = link to github pages edit directrly ... rendeding
+ * shows edit src icon (and also need view icon)"*. `/blob/` is reading and
+ * `/edit/` opens the editor; a reader who wants to check what a card says
+ * should not be taken to a text box, and one who wants to fix it should not
+ * have to find the button themselves.
+ *
+ * ## Absent, not broken, when there is no forge
+ *
+ * *"if github tools avaialable in rendering pipeline"* — so this is a real
+ * probe rather than a hardcoded address. `detectRepoUrl` reads `origin` and
+ * `upload-url.ts` already refuses a non-github.com remote for the same reason:
+ * the `/edit/<branch>/<path>` form is GitHub's, and emitting it for another
+ * forge is a guess wearing a URL's clothes.
+ *
+ * Returning `undefined` is what makes the control ABSENT rather than dead. A
+ * link that 404s is worse than no link: it invites a click, and on a private
+ * repository it 404s for exactly the reader who cannot edit, which reads as
+ * "this page is broken" rather than "you cannot do this".
+ *
+ * `declaredIn` is repo-relative and comes from the SUBJECT itself, so a card
+ * contributed by `cat-bootstrap` links to `cat-bootstrap/harness.json` rather
+ * than to whichever declaration happened to be read first — and a todo links
+ * to its own file.
+ *
+ * ## It lives HERE, below both callers
+ *
+ * It was in `landing-sticky.ts` until bean `pb04` gave the todo index the
+ * same two controls. The owner, 2026-09-20: *"notes exist lower down than
+ * folio. make sure arrows correct."* This is not about stickies — it is
+ * "where is this file on the forge" — and leaving it up there made a
+ * note-layer generator reach sideways into the folio-facing module.
+ * `repo-partition` allowed it, because both are `core`; the layer arrow was
+ * still wrong. Beside {@link publishedAssetPath}, which is the same shape of
+ * transform, both callers point DOWN at one answer instead of at each other.
+ */
+export function sourceLinks(
+  repoUrl: string | undefined,
+  declaredIn: string,
+  branch: string,
+): { viewHref: string; editHref: string } | undefined {
+  if (repoUrl === undefined) return undefined;
+  const path = declaredIn.split("/").map(encodeURIComponent).join("/");
+  return {
+    viewHref: `${repoUrl}/blob/${branch}/${path}`,
+    editHref: `${repoUrl}/edit/${branch}/${path}`,
+  };
+}
+
+/**
  * Where an instance's renderings are published, given the site they are
  * published to.
  *
@@ -2311,6 +2620,74 @@ export const UNPUBLISHED_GRAPH_KINDS: readonly string[] = ["fsh-guts"] as const;
 /** Is this graph kind allowed into a published graph? */
 export function isPublishedGraphKind(name: string): boolean {
   return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+}
+
+/**
+ * Does an instance declaring a directory of this kind owe a **visualiser**?
+ *
+ * The owner, 2026-09-20: *"if there is active state directory in repo root/
+ * (**not part of the static KG**) like `beans/`, `todos/`, `fsh-guts/` those
+ * have their vuisalizers too as requiement of handler.... needs to render
+ * sometihng for each 'state' dir it declares/inits."*
+ *
+ * So the discriminator is the owner's own parenthetical: **is this the static
+ * knowledge graph, or is it active material about the work?** Authored
+ * subject matter you can read as itself; a record of where something got to
+ * you cannot, which is why it needs something that renders it.
+ *
+ * That is exactly `holds !== "content"`, and the phrasing is not a
+ * coincidence — `content` is defined on {@link GraphLayer} as *"authored
+ * nodes a reader or a tool consumes as the subject matter… It stands on its
+ * own"*. A graph that stands on its own does not need a viewer to be
+ * legible. Everything else does.
+ *
+ * ## The rule this is NOT, and why that matters
+ *
+ * The first derivation was `holds === "state"`, and it was falsified inside
+ * ten minutes: it covers `beans` and `todos` and **misses `fsh-guts`**, which
+ * the owner names in the same sentence. `mhh9` reclassified `fsh-guts` from
+ * `state` to `context` earlier the SAME DAY, on the ground that no running
+ * step writes it — relocating something there is a human-directed act.
+ *
+ * `holds !== "content"` survives that move, because both `state` and
+ * `context` are on the same side of it. That is the test a rule over this
+ * axis has to pass: a kind changing category within the non-content layers
+ * must not silently change what it owes.
+ *
+ * ## `renderable` is the one structural exemption
+ *
+ * A `renderable` kind is its own view — `docs` and `folio` render to pages,
+ * so demanding a separate viewer would be asking for a second rendering of
+ * the same thing. Both are already `holds: "content"`, so this is belt and
+ * braces rather than a second rule; it is stated because a future renderable
+ * kind that is not content would otherwise acquire an obligation it meets by
+ * construction.
+ *
+ * ## Bootstrap is exempt by INSTANCE, not by kind
+ *
+ * `hfkl` carries the owner's ruling that `cat-bootstrap` has no visualiser
+ * *"but it must have its json/jsonld... that is its existence"*. That
+ * exemption lives in the checker as `VISUALISER_EXEMPT_INSTANCES`, keyed on
+ * the instance name, so every other instance declaring the same kind keeps
+ * the obligation. An axis that dropped bootstrap by KIND would stop checking
+ * the one thing bootstrap must have.
+ */
+export function owesVisualiser(
+  kind: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): boolean {
+  const def = registry.get(kind);
+  // An UNKNOWN kind owes one, and that is deliberate rather than a fallback.
+  //
+  // `graphLayer` returns `undefined` here and its doc comment is explicit
+  // that callers must not collapse that into `content`. This one does not:
+  // it collapses the unknown into OWING, which is the opposite direction and
+  // the safe one. A kind nobody has classified must not escape an obligation
+  // by being unmentioned — the same reason `DOCUMENT_BLOCK_KINDS` is a
+  // derived complement rather than a list.
+  if (!def) return true;
+  if (def.renderable) return false;
+  return def.holds !== "content";
 }
 
 /**
@@ -3362,7 +3739,7 @@ export function renderableDirectories(
  * who had not been written yet, which is the one `wggr` was.
  *
  * **That caller arrived the same day.** Bean `frs5` moved the corpus out of
- * the platform into `who-iris/library/` and `folio-assist-sci/library/`, so
+ * the platform into `who-iris/library/` and `folio-assistant-sci/library/`, so
  * `library` has TWO homes and `schemas` has FOUR (`cat-harness/`,
  * `folio-assistant-core/`, `large-datasets/`, `detangle/`). The paragraph
  * above is kept as written and corrected here rather than edited, because

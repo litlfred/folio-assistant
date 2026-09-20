@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /devils-advocate-watcher
+title: '/devils-advocate-watcher'
 parent: Skill instructions
 ---
 

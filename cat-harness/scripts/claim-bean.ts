@@ -56,8 +56,8 @@
  *
  * Usage:
  * ```sh
- * bun run scripts/claim-bean.ts <bean-id>            # claim on the default branch
- * bun run scripts/claim-bean.ts <bean-id> --dry-run  # say what would happen
+ * bun run cat-harness/scripts/claim-bean.ts <bean-id>            # claim on the default branch
+ * bun run cat-harness/scripts/claim-bean.ts <bean-id> --dry-run  # say what would happen
  * ```
  *
  * @module scripts/claim-bean

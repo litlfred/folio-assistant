@@ -558,7 +558,32 @@ jobs:
           bun run landing:sticky:check
           bun run landing:data:check
           bun run check:agents-xref
+          # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
+          # symbol claim and not a literal in a .ts file, so all three
+          # neighbouring checks miss it by design. The cold-start line every
+          # agent runs first rotted in exactly that gap.
+          bun run check:command-paths
           bun run check:bean-parents
+          # Bean `sfhr`: three store defects `beans check` cannot see, because
+          # none of them is a link -- an empty body on an open bean, a `title:`
+          # block scalar that swallowed the body's first lines, and a prose
+          # blocker naming a bean that is `completed` or `scrapped`. Baselined
+          # at the eight the store had, so a NEW one fails and the backlog is
+          # listed rather than demanded.
+          bun run check:bean-bodies
+          # Bean `bbbl`: a bean tagged `ready-to-close` carries the evidence its
+          # session did find. Fails only on a tag with no `## Evidence` -- the
+          # parking space the skill forbids. Closing them stays the owner's.
+          bun run check:ready-to-close
+          # Bean `bbbl` / the owner's waiver rule: a malformed waiver reads as
+          # permission and carries none, so it fails here rather than at the
+          # gate it claims to have opened.
+          bun run check:waivers
+          # Bean `oh78`: a bean and its issue must reach each other. The
+          # bean -> issue direction and the tracked-issue reverse are checked
+          # here; the general reverse needs the API and prints as undetermined
+          # rather than as clean.
+          bun run check:bean-issue-links
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
@@ -594,6 +619,11 @@ jobs:
           # (2026-09-20). It reads them out of the YAML rather than
           # listing them, so a new one is covered the day it is added.
           bun run check:ci-invocations
+          # The per-kind state dashboards under `<base>/<graph>/dashboard/`.
+          # COMMITTED pages, so a difference is somebody who changed the
+          # generator, the renderer it inlines, or the declaration, and did
+          # not regenerate — the same contract `schema:viz:check` uses.
+          bun run state:visualizer:check
           bun run harness:dirs:check
           bun run check:schema-nodes
           bun run check:retired-front-matter
@@ -619,6 +649,11 @@ jobs:
           bun run readme:sync:check
           bun run avatars:css:check
           bun run themes:css:check
+          # The ingested-IRIS replica pages, generated from who-iris/catalogue/.
+          # A generated page nobody gates drifts from the graph it claims to
+          # render, and this one carries byte counts and download links -- the
+          # two things a reader would take on trust.
+          bun run iris:pages:check
           bun run translation:block-qa:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
@@ -654,6 +689,33 @@ jobs:
       # omission, every time.
       - name: generated docs pages are current
         run: bun run cat-harness/scripts/gen-docs-pages.ts --check
+
+      # NOT GATED: the schema and library projections.
+      #
+      # `schema:viz:check` and `library:viz:check` exist and are worth running
+      # locally, but they are deliberately NOT in this gate set. Owner's call,
+      # 2026-09-20, after the gate went red twice on PR #583 for a reason that
+      # was never the author's doing.
+      #
+      # Both projections are derived from the WHOLE repository, so any branch
+      # alive for more than a few minutes finds them stale against the merge
+      # ref. Measured across one session: `main` moved four times — 120, 2, 2
+      # and 11 commits — and twice that was enough to redden this gate on a
+      # branch whose own tree was correct. A red that means "somebody else
+      # merged while you worked" is not an omission by whoever sees it, and it
+      # fails the standard stated eight lines above: "a real omission, every
+      # time."
+      #
+      # Nothing published goes stale. `docs-site.yml` runs the WRITERS at
+      # deploy, so the page a reader opens is regenerated from the tree being
+      # published. What can lag is the committed copy on `main`, which exists
+      # to be browsable on GitHub — and a browsable copy one merge behind is a
+      # far smaller cost than a gate contributors learn to re-run without
+      # reading.
+      #
+      # The other `--check` gates here stay, and the difference is their
+      # INPUTS: each derives from a narrow set of files, so its red really does
+      # mean the author of the diff forgot to regenerate.
 
       # The translation index is what the navbar's locale filter reads. It is
       # derived from what each page DECLARES — `lang`, and `translation_source`

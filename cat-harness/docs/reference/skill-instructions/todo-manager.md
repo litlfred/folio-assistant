@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Session Task Manager (`beans`)
+title: 'Session Task Manager (`beans`)'
 parent: Skill instructions
 ---
 
@@ -185,6 +185,50 @@ thematic epics that outlive any session. **Where they disagree, file by
 subject** — a session bean is a useful record of what one sitting did, and it
 is not where the next person looks for the work. If you keep a session
 milestone, it is a sibling record, not the parent of topical work.
+
+## A GOAL is a `milestone` bean, and an epic joins one by parenting to it
+
+**Measured 2026-09-20, bean `wqht`.** The owner had stated three goals in chat.
+The store held **13 in-progress epics and 0 milestones**, with the `milestone`
+type configured and unused. No epic carried a goal's words, so classifying 140
+open items against those goals was a judgement made from scratch — and it would
+have been made from scratch again at the next review, differently.
+
+Nothing in this skill or in `session-intent` said where a goal LIVES. Both
+describe a "goal-scoped" queue, and a queue scoped to an object that does not
+exist cannot be a query; it can only be a re-derivation. The owner chose,
+2026-09-20:
+
+> **A goal is a `milestone` bean, in the owner's own words, and the epics
+> serving it are parented to it.**
+
+```sh
+beans create "<the goal, verbatim>" --type milestone   # after the existence check above
+beans update <epic-id> --parent <milestone-id>
+```
+
+Three properties make this the cheap answer rather than a new mechanism:
+
+- **The type already exists** and `check-bean-parents` already permits an epic
+  under a milestone, so nothing had to be built.
+- **`beans roadmap` groups by `parent:`**, so the goals become the roadmap's
+  top level the moment the epics are parented — which is what a roadmap was
+  always for.
+- **"Prioritise against the goals" becomes a query**: walk down from the
+  milestone. An item under no goal is then *visible* as such, which is itself
+  the finding a review wants.
+
+**Verbatim, and this is not a style note.** A goal is the owner's sentence, and
+a tidied paraphrase is a different claim that nobody agreed to — the same rule
+[`confirmation-waiver`](confirmation-waiver.md) applies to a waiver's `quote`,
+and for the same reason: the reader auditing the classification has only that
+string to check it against. **If you do not have the owner's words, you do not
+have the goal** — record the paraphrase as a paraphrase, say so, and ask.
+
+**This does not conflict with filing by subject** (§"WHICH parent"). A
+milestone sits ABOVE the epics; a bean is still parented to the epic whose
+subject it is, and the epic is parented to the goal it serves. Two levels, one
+criterion at each.
 
 ---
 

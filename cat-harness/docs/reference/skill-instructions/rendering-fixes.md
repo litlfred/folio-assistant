@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Rendering Fixes
+title: 'Rendering Fixes'
 parent: Skill instructions
 ---
 

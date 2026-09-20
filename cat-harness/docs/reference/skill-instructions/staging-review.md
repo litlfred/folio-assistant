@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Staging review
+title: 'Staging review'
 parent: Skill instructions
 ---
 

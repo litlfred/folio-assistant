@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Subagent memory
+title: 'Subagent memory'
 parent: Skill instructions
 ---
 

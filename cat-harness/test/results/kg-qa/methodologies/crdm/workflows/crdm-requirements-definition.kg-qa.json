@@ -28,17 +28,8 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_DefineReqs",
-          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "BA_ReviewReqs",
-          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -79,8 +70,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 2,
+    "pass": 6,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

@@ -26,6 +26,21 @@ not authorise the next one. When you ask, give the author the three numbers
 they need to answer: **how many agents, at which model level, and roughly what
 it will cost** relative to doing it serially.
 
+**"Not standing" is the agent's constraint, not the owner's.** An agent may
+never treat one permission as covering the next swarm. The *owner* may
+nevertheless decide in advance that a session or a process run has this gate,
+and that decision is theirs to make — it is the same person answering the same
+question, earlier. That is a `swarm-spawn` **waiver**, and it is bounded on
+exactly the three numbers you would otherwise have asked for: a grant for three
+Haiku agents is not a grant for thirty Opus ones, and a scope that does not
+plainly cover the swarm in front of you does not cover it.
+
+Acting under one, name it in the turn report and quote its words — a waived
+swarm is an announced swarm. And a waiver removes the **asking**, never the
+sizing, the decomposition or the stopping condition below.
+[`confirmation-waiver.md`](confirmation-waiver.md).
+
+
 ## First ask whether you need one
 
 | situation | do this instead |

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /session-intent
+title: '/session-intent'
 parent: Skill instructions
 ---
 
@@ -25,35 +25,78 @@ where the previous one left off.
 
 ## Where state lives
 
+**The ledger half of this skill named two paths that do not exist here**, and
+an agent following it stopped at step 1. Bean `z9eb`, measured 2026-09-20:
+`ls STATUS.md` and `ls docs/coordination/` both fail. The model came from
+another folio and was never re-homed when this instance moved its work plan
+into `beans/`. The queue half was right all along; only the ledger half
+pointed at nothing.
+
+**Where the ledger's four jobs actually live now**, each in the object that
+already owns it:
+
+| the ledger's job | here |
+|---|---|
+| goals, and what serves each | a `milestone` bean per goal, with the epics parented to it — [`todo-manager`](todo-manager.md) §"A GOAL is a `milestone` bean"; `beans roadmap` renders it |
+| canonical status of an item | the bean itself. There is no second copy to disagree with it, which is what the "trust the ledger" rule existed to arbitrate |
+| flip-flop history | a `scrapped` bean keeps the rejected approach *with its reasons*, and a `trap` node under the declared `memory` graph keeps the failure signature — [`agent-memory`](agent-memory.md) |
+| session log | the bean's body notes, plus the PR. Both are durable and both are read by the next session; a third place would be a third answer |
+
 | Artifact | Purpose |
 |---|---|
-| `STATUS.md` | Always-current root dashboard: goals → master ledgers → active PRs |
-| `docs/coordination/<goal>.md` | Per-goal **master ledger**: status table, open tasks, flip-flop history, session log |
-| `beans/` (via `beans` CLI) | Machine-readable **queue** of tasks, managed as hierarchical issues (Beans). |
-| Per-PR body | Session intent at branch-open; EOS results appended |
+| `beans/` (via the `beans` CLI) | the **queue** and the **plan**: goals as milestones, epics, tasks |
+| `memory/` | established facts and TRAPs — what not to re-derive, and what not to repeat |
+| Per-PR body | session intent at branch-open; EOS results appended |
+| a root dashboard file | **optional, and this instance has none.** See below |
+
+### The dashboard is optional, and absent is not undetermined
+
+An instance MAY keep a `STATUS.md`-style dashboard, and some folios do. This
+one does not, and that is a **determined absence** rather than a gap: the
+milestones and `beans roadmap` answer the same question from the store, so a
+dashboard here would be a second copy free to drift from it.
+
+Three states, and the third is the one that gets collapsed:
+
+1. **A dashboard exists** → read it first, as step 1 below.
+2. **No dashboard, and the work plan reads** → skip to the roadmap. Nothing is
+   missing.
+3. **The work plan could not be read** — no CLI, no store, an unreadable
+   declaration → **that is not an empty plan.** Say so and fix it before
+   declaring intent; [`todo-manager`](todo-manager.md) §"When the `beans` CLI
+   is not there" has the fallback, which writes as well as reads.
 
 ## Session-start protocol (5 steps)
 
 > Run these in order. Steps 1–3 are read-only; step 4 writes.
 
-### 1. Read STATUS.md
+### 1. Read the goals
 
-Open `STATUS.md`. Identify which goal row(s)
-the user's current request touches. Note the active PRs column —
-those are your siblings.
+`beans roadmap`, or `beans list` filtered to `--type milestone`. Identify which
+goal the user's request serves. A request that serves none is not thereby
+illegitimate — it is a finding worth one line in the turn report, and possibly
+a new milestone.
 
-### 2. Read the goal's master ledger
+Then find your siblings: the open PRs, and the `Claude-Session:` trailer on
+recent commits. **The session API cannot see sibling sessions** — bean `ab3n` —
+so a branch and its PR are the only durable evidence that another session is
+working.
 
-Open `docs/coordination/<goal>.md`. Read:
+### 2. Read the goal's epics and their open children
 
-- **Status table** — current canonical status of each subgoal /
-  item. If a recent commit "resolved" something
-  but the ledger says NOT resolved, **trust the ledger**: it's
-  recording a retraction the commit doesn't reflect.
-- **Flip-flop history** — every previous retraction, with the
-  failure-mode signature. **Do not repeat any pattern listed here.**
-- **Open tasks** — what's already in flight.
-- **Session log** — what previous sessions on this goal did.
+Walk down from the milestone: `beans list` and read the epics parented to it,
+then their open children.
+
+- **Status** — the bean's own `status` is canonical. There is no second copy,
+  so there is nothing to arbitrate against it.
+- **What was rejected** — read the `scrapped` beans in the archive before
+  proposing an approach. That is what stops you re-entering a dead end, and it
+  is why `AGENTS.md` forbids deleting one.
+- **Traps** — the `memory` graph's `trap` nodes carry failure signatures.
+  **Do not repeat any pattern recorded there.**
+- **What is in flight** — an `in-progress` bean, with the caveat that a claim
+  is branch-local and announces rather than reserves
+  ([`bean-coordination`](bean-coordination.md)).
 
 ### 3. Read the queue
 
@@ -67,11 +110,16 @@ Use the `beans` CLI to list current tasks. Run `beans list` to find:
 
 Three places, all required:
 
-**a. Master ledger session log** — append a row:
+**a. The bean, not a ledger** — append your intent to the bean you are working,
+naming your branch:
 
-```markdown
-| 2026-01-01 | Claude / `<branch>` | INTENT: <which task IDs from queue + what user asked> | (filled at EOS) |
+```sh
+beans update <id> --status in-progress
 ```
+
+then append a note to its body saying what you intend and where you got to.
+The bean is the durable record a sibling reads; there is no separate session
+log to keep in step with it.
 
 **b. Beans CLI** — Create a parent session bean and child tasks.
 
@@ -120,16 +168,20 @@ For each task you worked, use the `beans` CLI:
 - If you discovered a NEW task: create a new bean via `beans create`.
 - If you retract a previous claim: append the retraction to the ledger's flip-flop history (Stop Repeating Yourself).
 
-### 2. Append results to the master ledger
+### 2. Record the results where they will be read
 
-The session log row from step 4a now gets its "RESULTS" column filled:
+Append them to the **bean**, which is where step 4a put the intent — what was
+confirmed, what remains, and the PR. One object, opened and closed, rather than
+an intent in one place and a result in another.
 
-```markdown
-| 2026-01-01 | Claude / `<branch>` | INTENT: task-foo-stability | RESULTS: confirmed expected behavior at all 3 anchors; appended new task `task-foo-followup` for follow-up. PR #1581 opened. |
-```
+If the session **retracted** a prior claim, that is not a body note. Two
+objects carry it, and they answer different questions:
 
-If the session retracted a prior claim, add a row to the
-**Flip-flop history** table with the retraction reason.
+- the approach that was rejected becomes a `scrapped` bean **with its
+  reasons**, so the next agent does not re-enter it;
+- the failure *signature* — what made the wrong answer look right — becomes a
+  `trap` node in the `memory` graph ([`agent-memory`](agent-memory.md)), which
+  is what a flip-flop history was for.
 
 ### 3. Update the PR body
 

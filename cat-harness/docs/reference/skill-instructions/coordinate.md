@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /coordinate
+title: '/coordinate'
 parent: Skill instructions
 ---
 

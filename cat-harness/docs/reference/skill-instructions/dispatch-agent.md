@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /dispatch-agent
+title: '/dispatch-agent'
 parent: Skill instructions
 ---
 

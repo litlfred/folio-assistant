@@ -10,11 +10,11 @@
  * matches, Lean validation can be skipped.
  *
  * Usage:
- *   bun run scripts/lean-witness.ts check <lean-file>   # check if witnessed
- *   bun run scripts/lean-witness.ts stamp <lean-file>    # create witness after build
- *   bun run scripts/lean-witness.ts dump                 # delete all witness files
- *   bun run scripts/lean-witness.ts status               # show witness status for all .lean files
- *   bun run scripts/lean-witness.ts hash <lean-file>     # print hash of .lean file
+ *   bun run cat-harness/scripts/lean-witness.ts check <lean-file>   # check if witnessed
+ *   bun run cat-harness/scripts/lean-witness.ts stamp <lean-file>    # create witness after build
+ *   bun run cat-harness/scripts/lean-witness.ts dump                 # delete all witness files
+ *   bun run cat-harness/scripts/lean-witness.ts status               # show witness status for all .lean files
+ *   bun run cat-harness/scripts/lean-witness.ts hash <lean-file>     # print hash of .lean file
  *
  * @module scripts/lean-witness
  */

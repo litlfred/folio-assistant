@@ -19,7 +19,12 @@
       "path": "schemas/",
       "dependents": "skip",
       "description": "`source-descriptor` — how to enumerate a corpus and ask it for a subset. `artifact-store` — where an artifact too large for the site tree goes, as a DECLARATION rather than a hardcoded host, per the owner's 'make tool that can be done another way potentially if not github cdn'.",
-      "graphs": ["schemas", "cat-harness"]
+      "graphs": ["schemas", "cat-harness"],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html",
+        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "skill": "schema-management"
+      }
     },
     {
       "id": "large-datasets-sources",

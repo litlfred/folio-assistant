@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Code node review
+title: 'Code node review'
 parent: Skill instructions
 ---
 

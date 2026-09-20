@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Acquisition is the step before ingestion, and it had no home
+title: 'Acquisition is the step before ingestion, and it had no home'
 parent: Skill instructions
 ---
 

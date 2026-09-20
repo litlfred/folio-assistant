@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Which harness, and where
+title: 'Which harness, and where'
 parent: Skill instructions
 ---
 

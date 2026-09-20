@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Working an issue
+title: 'Working an issue'
 parent: Skill instructions
 ---
 
@@ -76,10 +76,40 @@ had no standing to close:
 
 **Never close an issue without explicit authorisation from the analyst or
 stakeholder.** Whether work is done is a judgement, and an agent must never
-assume completion on its own say-so — the same rule that stops you resolving a
-sibling's work item.
+assume completion on its own say-so — the same rule that stops you closing a
+work item a sibling is mid-flight on.
+
+That authorisation may be given **in advance**: an `issue-close` waiver, which
+names the issues it covers and expires. It is the stakeholder answering the
+same question earlier, which is the whole of what this rule asks for — never
+the agent supplying the judgement itself.
+[`confirmation-waiver.md`](confirmation-waiver.md).
 
 After each round of implementation, post a summary on **the issue**, not only on
 the change proposal: what was accomplished, what remains, and links to the
 updated content for review.
+
+## When the work has a BEAN and no issue (STRICT)
+
+**Measured 2026-09-20, bean `oh78`.** 54 proposals merged in one four-hour
+window and **2 issues changed**, both newly opened. Most of that day's work was
+bean-driven with no issue at all, so the rule above was not broken — it was
+*silently inapplicable*, which is worse, because a rule that quietly does not
+apply reads from the outside exactly like a rule being followed.
+
+> **A round summary is owed either way. With no issue, it goes on the change
+> proposal AND into the bean — the bean is the durable artefact a sibling
+> reads, and a summary that exists only in a PR thread is invisible to the work
+> plan on `main`.**
+
+**And a bean that has an issue carries the link BOTH ways.** Issue #558
+(*"Sticky pin: unpinning loses the theme"*) has no bean link although bean
+`ivfw` is its subject verbatim; issue #464 is open on a completed bean
+(`mggs`). One direction is not enough: a reader arriving at either object has
+to be able to reach the other, and a check reports the ones that cannot.
+
+When to open an issue at all is [`crdm-detect`](../../methodologies/crdm/crdm-detect.md)
+§"Issue association" — **scan before creating one, and never create one without
+permission**. This section is about what is owed once the work exists, not
+about manufacturing an issue for every bean.
 {% endraw %}

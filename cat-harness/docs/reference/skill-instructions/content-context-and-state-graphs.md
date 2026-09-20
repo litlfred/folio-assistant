@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content, context and state graphs
+title: 'Content, context and state graphs'
 parent: Skill instructions
 ---
 

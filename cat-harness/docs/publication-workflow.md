@@ -141,7 +141,9 @@ which is true of ingestion and silent on everything before it:
 | `content-acquisition.bpmn` | Something is offered unprompted, or is needed and has to be asked for — and through which channel: `uploads/` is one, the conversation is another, and the set is open |
 
 **Ingestion** — turning an uploaded source document into corpus. The first is
-the outer process; the rest are its call activities:
+the outer process; the rest are its call activities — except
+`ingest-theme.bpmn`, which is conditional and not yet wired in, for the reason
+given under the table:
 
 | Diagram | Answers |
 |---------|---------|
@@ -150,6 +152,17 @@ the outer process; the rest are its call activities:
 | `ingest-derive-content.bpmn` | Archive, technical metadata, images, audio, tabular data, provenance |
 | `ingest-build-l1-kg.bpmn` | Dublin Core, manifest, assets, binding, linking |
 | `ingest-l1-completeness-gate.bpmn` | Is the derived content complete enough to promote, and who says so? |
+| `ingest-theme.bpmn` | Does this artefact carry a theme, and what are its palette roles and layouts? |
+
+`ingest-theme.bpmn` is **not** a call activity of `document-ingestion.bpmn`
+today, and that is a stated gap rather than an oversight (bean `j66n`, whose
+"Done when" asks for the link). Most ingested documents carry no theme. Making
+theme ingestion an unconditional step in the chain would assert that every one
+does, and a step that no-ops for almost every document is a step a reader stops
+believing. The honest wiring is a gateway — *is this artefact a theme source?* —
+and which artefacts answer yes is a judgement nobody has made yet: a captured
+site obviously qualifies, a style guide qualifies because it **states** rules,
+and whether an arbitrary branded PDF does is exactly the open question.
 
 **Remote content** — landing something that lives somewhere else, and keeping it
 current. Named on 2026-09-20 after this repository had been running the process

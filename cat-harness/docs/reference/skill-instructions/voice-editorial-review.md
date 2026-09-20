@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Voice editorial review
+title: 'Voice editorial review'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Review
+title: 'Content Review'
 parent: Skill instructions
 ---
 

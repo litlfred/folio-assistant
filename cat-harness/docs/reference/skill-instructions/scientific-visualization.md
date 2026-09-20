@@ -1,6 +1,6 @@
 ---
 layout: default
-title: scientific-visualization
+title: 'scientific-visualization'
 parent: Skill instructions
 ---
 

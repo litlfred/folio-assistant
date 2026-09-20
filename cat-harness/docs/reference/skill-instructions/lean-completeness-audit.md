@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lean Completeness Audit
+title: 'Lean Completeness Audit'
 parent: Skill instructions
 ---
 

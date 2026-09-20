@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /lean-substantive-pass
+title: '/lean-substantive-pass'
 parent: Skill instructions
 ---
 

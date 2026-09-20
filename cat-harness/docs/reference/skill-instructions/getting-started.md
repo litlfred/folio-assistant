@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /getting-started
+title: '/getting-started'
 parent: Skill instructions
 ---
 

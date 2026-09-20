@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Skills and Tools
+title: 'Skills and Tools'
 parent: Skill instructions
 ---
 

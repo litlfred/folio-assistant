@@ -171,6 +171,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="themes"] {
+  /* a paint palette — a surface dressed, not the words on it */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3a9 9 0 000 18h2a2 2 0 002-2 2 2 0 012-2h1a4 4 0 004-4 9 9 0 00-11-10zM8 9h.01M7 13h.01M11 7h.01' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="translation-sources"] {
   /* a glyph and an A — one language against another */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6h7M7 6v2c0 3-1 5-3 6M6 10c1 3 3 4 5 5M13 19l4-10 4 10M15 16h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -213,6 +220,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="waiver"] {
+  /* a key passed across — a confirmation given before it was asked for */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 10a3 3 0 11-6 0 3 3 0 016 0M14 10h7M18 10v3M21 10v2' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="fsh-guts"] {
   /* a bin — the trashcan that is kept, as a kind in its own right */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13M11 11v6M14 11v6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -248,12 +262,14 @@
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
   .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 46% 34%); }
   .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 46% 34%); }
+  .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 46% 34%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
   .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 46% 34%); }
   .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
   .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
   .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
   .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 46% 34%); }
+  .fa-avatar[data-fa-kind="waiver"] { background-color: hsl(132 46% 34%); }
   .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 46% 34%); }
   .fa-avatar { background-color: hsl(0 46% 34%); }
 }
@@ -279,12 +295,14 @@
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
     .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 46% 34%); }
     .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 46% 34%); }
+    .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 46% 34%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
     .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 46% 34%); }
     .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
     .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
     .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
     .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 46% 34%); }
+    .fa-avatar[data-fa-kind="waiver"] { background-color: hsl(132 46% 34%); }
     .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 46% 34%); }
     .fa-avatar { background-color: hsl(0 46% 34%); }
   }
@@ -311,12 +329,14 @@
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
   .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 42% 72%); }
   .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 42% 72%); }
+  .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 42% 72%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
   .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 42% 72%); }
   .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
   .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
   .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
   .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 42% 72%); }
+  .fa-avatar[data-fa-kind="waiver"] { background-color: hsl(132 42% 72%); }
   .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 42% 72%); }
   .fa-avatar { background-color: hsl(0 42% 72%); }
 }
@@ -342,12 +362,14 @@
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
     .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 42% 72%); }
     .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 42% 72%); }
+    .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 42% 72%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
     .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 42% 72%); }
     .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
     .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
     .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
     .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 42% 72%); }
+    .fa-avatar[data-fa-kind="waiver"] { background-color: hsl(132 42% 72%); }
     .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 42% 72%); }
     .fa-avatar { background-color: hsl(0 42% 72%); }
   }
@@ -376,12 +398,14 @@
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
   .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 16% 52%); }
   .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
+  .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 16% 52%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
   .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
   .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
   .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
   .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
   .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 16% 52%); }
+  .fa-avatar[data-fa-kind="waiver"][data-fa-trash="true"] { background-color: hsl(132 16% 52%); }
   .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 16% 52%); }
 }
 
@@ -406,12 +430,14 @@
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
     .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 16% 52%); }
     .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
+    .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 16% 52%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
     .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
     .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
     .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
     .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
     .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 16% 52%); }
+    .fa-avatar[data-fa-kind="waiver"][data-fa-trash="true"] { background-color: hsl(132 16% 52%); }
     .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 16% 52%); }
   }
 }
@@ -436,12 +462,14 @@
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
   .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 14% 56%); }
   .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
+  .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 14% 56%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
   .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
   .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
   .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
   .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
   .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 14% 56%); }
+  .fa-avatar[data-fa-kind="waiver"][data-fa-trash="true"] { background-color: hsl(132 14% 56%); }
   .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 14% 56%); }
 }
 
@@ -466,12 +494,14 @@
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
     .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 14% 56%); }
     .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
+    .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 14% 56%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
     .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
     .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
     .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
     .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
     .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 14% 56%); }
+    .fa-avatar[data-fa-kind="waiver"][data-fa-trash="true"] { background-color: hsl(132 14% 56%); }
     .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 14% 56%); }
   }
 }

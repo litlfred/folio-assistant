@@ -26,13 +26,13 @@
  *      hand-edited; a link inviting someone to do so would be worse than none.
  *
  * Usage:
- *   bun run scripts/gen-docs-pages.ts            # write
- *   bun run scripts/gen-docs-pages.ts --check    # fail if any page is stale
+ *   bun run cat-harness/scripts/gen-docs-pages.ts            # write
+ *   bun run cat-harness/scripts/gen-docs-pages.ts --check    # fail if any page is stale
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
 import { workflowFiles } from "./known-skills.js";
-import { join, dirname } from "node:path";
+import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
@@ -43,8 +43,18 @@ import {
   type QaFamily,
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
-import { readTodoFiles } from "./todos.js";
-import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+import { readTodoFiles, todoDefaultTheme } from "./todos.js";
+import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
+import { detectRepoUrl } from "../src/core/git-refs.js";
+import { resolveThemeBackdrop } from "../schemas/theme.js";
+import { THEMES, themeById } from "../schemas/themes.js";
+import {
+  publishedAssetPath,
+  readDeclaration,
+  siteDirFor,
+  sourceLinks,
+  repoRootFor,
+} from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -60,8 +70,57 @@ const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // `content/` — without tripping the folio-emptiness gate.
 const SRC_DIR = join(REPO_ROOT, "content", "docs");
 const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
-const REPO_WEB = "https://github.com/litlfred/folio-assistant";
+/**
+ * The forge this checkout points at.
+ *
+ * DETECTED, not written down. This was the literal
+ * `https://github.com/litlfred/folio-assistant` until 2026-09-20 — one
+ * instance's address inside a generator every instance runs, which is exactly
+ * the genericity failure `AGENTS.md` catalogues (a platform script carrying
+ * `quantum-observable-universe`). Every edit link, every bean link and every
+ * QA link this file emits was composed from it, so a fork's published docs
+ * would have pointed at this repository.
+ *
+ * `gen-landing-data.ts` already resolved it this way; the two now agree.
+ * The fallback keeps the links working where there is no `origin` to ask —
+ * a sandbox, a tarball — rather than emitting hrefs that go nowhere.
+ */
+const REPO_WEB = detectRepoUrl(repoRootFor(REPO_ROOT)) ?? "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
+
+/**
+ * The forge this checkout actually has, and the branch its links point at.
+ *
+ * RESOLVED from `origin`, never composed from a literal — bean `pb04`. The
+ * `REPO_WEB` constant above still serves the page-node links that predate
+ * this; the todo board's own controls go through `sourceLinks`, which returns
+ * `undefined` for a non-github.com remote and so makes the control absent
+ * rather than dead.
+ *
+ * `main` rather than the checked-out branch, for the reason
+ * `gen-landing-data.ts` gives: this data is generated into a PUBLISHED site,
+ * and a link to a feature branch dies when that branch does.
+ */
+/**
+ * A path `readTodoFiles` reports, as the REPOSITORY sees it.
+ *
+ * `todos/` sits at the repository root while this generator's `REPO_ROOT` is
+ * the cat-harness instance, so `readTodoFiles` returns `../todos/items/x.md`.
+ *
+ * **The old edit link shipped that verbatim**, as
+ * `https://github.com/.../edit/main/../todos/items/x.md`. A browser normalises
+ * the `..` away before the request is sent, so what GitHub received was
+ * `/edit/todos/items/x.md` — the branch segment eaten, a path that has never
+ * existed. Every todo sticky's pencil was dead, and it looked entirely correct
+ * in the generated JSON. Bean `pb04`; found by resolving the link rather than
+ * by reading it.
+ */
+function repoRelative(p: string): string {
+  return relative(repoRootFor(REPO_ROOT), resolve(REPO_ROOT, p));
+}
+
+const REPO_URL = detectRepoUrl(repoRootFor(REPO_ROOT));
+const SOURCE_BRANCH = "main";
 /** Matches gen-skill-docs.ts / gen-schema-docs.ts — one glyph, no inline SVG. */
 const EDIT_GLYPH = "✎";
 
@@ -189,6 +248,33 @@ const QA_ASSET_DIR = join(REPO_ROOT, "test", "results", "witnesses");
  * number.
  */
 const TODO_ASSET = join(OUT_DIR, "assets", "todos", "index.json");
+
+/**
+ * The bean board's data — the AGENT work plan, published the same way.
+ *
+ * Same argument as `TODO_ASSET` one file rather than N: the badge needs a
+ * COUNT before anybody opens anything. The difference is scale, and it is two
+ * orders of magnitude — 239 beans against 3 todos on 2026-09-20 — which is
+ * why the projection carries a TRIMMED body rather than the whole of one.
+ * Every bean here runs to hundreds of lines of prose; shipping all of it would
+ * put roughly a megabyte on the page to render a status column.
+ */
+const BEANS_ASSET = join(OUT_DIR, "assets", "beans", "index.json");
+
+/**
+ * How much of a bean's body the projection carries.
+ *
+ * Enough for a sticky's preview and no more. A reader who wants the argument
+ * follows `editHref` to the file, which is the same affordance every other
+ * node gets.
+ *
+ * **Measured at this length, 2026-09-20:** 239 beans project to 235 KB raw and
+ * **62 KB gzipped** — 0.26 KB per bean against the todo index's 1.5 KB per
+ * todo, so the per-item cost is already the lower of the two. The number is
+ * recorded because the next person to change this constant should be changing
+ * a measurement rather than a guess.
+ */
+const BEAN_BODY_PREVIEW = 400;
 const emittedQa = new Set<string>();
 
 /** Every published witness JSON currently on disk, for orphan detection. */
@@ -678,16 +764,24 @@ function todoRelations(tags: {
   return out;
 }
 
-/** The bean's file, or `undefined` when nothing on disk carries that id. */
+/**
+ * The bean's file, or `undefined` when nothing on disk carries that id.
+ *
+ * The directory is RESOLVED from `beans/beans.json` rather than composed. It
+ * was `join(repoRootFor(REPO_ROOT), "beans", "defs")` until 2026-09-20 — a
+ * second answer to a question the graph already answers, which would have gone
+ * on resolving to nothing the moment the store moved, and reported every bean
+ * reference as unlinkable while looking correct.
+ */
 function beanFile(id: string): string | undefined {
-  const dir = join(repoRootFor(REPO_ROOT), "beans", "defs");
-  if (!existsSync(dir)) return undefined;
+  const dir = beanDefsDir(repoRootFor(REPO_ROOT));
+  if (dir === null || !existsSync(dir)) return undefined;
   // Sorted for the same reason `processHierarchy` sorts: raw directory order
   // is filesystem state, and `find` over it makes the FIRST match a property of
   // where the file landed on disk. Two beans sharing a prefix would resolve to
   // different files on two machines.
   const hit = readdirSync(dir).sort().find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
-  return hit ? `beans/defs/${hit}` : undefined;
+  return hit ? relative(repoRootFor(REPO_ROOT), join(dir, hit)) : undefined;
 }
 
 /**
@@ -774,6 +868,21 @@ function processHierarchy(): Record<string, string[]> {
 // is: the client would otherwise need the repo's web URL, and a literal in
 // `docs-ui.js` is a folio's own address inside shared client code.
 {
+  // THE THEME, resolved HERE rather than in the client or at parse time.
+  //
+  // Bean `5y4b`, the owner: "todos need grump cat themeing based on content
+  // too. used jugement". Three things follow, and this line is where the first
+  // two meet:
+  //
+  //  - the theme is DATA on the todo, never a keyword match on the summary in
+  //    `docs-ui.js` — a rule nobody can see, review or override, which changes
+  //    silently when somebody rewords a todo;
+  //  - the DEFAULT is the graph's (`todos.json`), so a folio chooses its own
+  //    and a literal here is not this repository's answer imposed downstream;
+  //  - the todo's OWN value is preserved unresolved upstream of this, so
+  //    "the author chose grumpy-cat" and "nobody chose" stay distinguishable
+  //    to a reviewer reading the file.
+  const fallbackTheme = todoDefaultTheme();
   const items = readTodoFiles().map(({ todo, path }) => ({
     id: todo.id,
     summary: todo.summary,
@@ -783,13 +892,34 @@ function processHierarchy(): Record<string, string[]> {
     origin: todo.origin,
     createdAt: todo.createdAt,
     targetLabel: todo.targetLabel,
+    theme: todo.theme ?? fallbackTheme,
     tags: todo.tags,
     // The edges, already resolved. A sticky that showed only status and
     // priority would waste a six-axis relationship model on two enums.
     relations: todoRelations(todo.tags),
-    // The SAME affordance every node already gets, pointed at this todo's own
-    // file. A sticky is a content object; it does not need an editor of its own.
-    editHref: `${EDIT_BASE}/${path}`,
+    // VIEW *AND* EDIT, both resolved through the same seam the landing
+    // stickies use, and both ABSENT when there is no github.com `origin`.
+    //
+    // Bean `pb04`, the owner: *"rendeding shows edit src icon (and also need
+    // view icon) if github tools avaialable in rendering pipeline"*. Three
+    // things were wrong here and each is a different failure:
+    //
+    //  - only EDIT existed. `/blob/` is reading and `/edit/` opens the editor:
+    //    a reader checking what a card says should not land in a text box, and
+    //    one who wants to fix it should not have to find the button;
+    //  - the address was a LITERAL (`EDIT_BASE`), so a fork or a rename
+    //    published links to this repository — and the comment beside it
+    //    already argued that a folio's own address does not belong in shared
+    //    code, then wrote one down one layer up;
+    //  - there was NO CAPABILITY GATE, so the icon appeared whether or not the
+    //    pipeline had a forge behind it. A dead edit link is worse than no
+    //    link: it invites a click, and on a private repository it 404s for
+    //    exactly the reader who cannot edit, which reads as "this page is
+    //    broken" rather than "you cannot do this".
+    //
+    // Spread, so an absent link is an ABSENT KEY rather than `null` — a
+    // consumer testing truthiness and one testing presence should agree.
+    ...(sourceLinks(REPO_URL, repoRelative(path), SOURCE_BRANCH) ?? {}),
   }));
   mkdirSync(dirname(TODO_ASSET), { recursive: true });
   const processes = processHierarchy();
@@ -826,12 +956,146 @@ function processHierarchy(): Record<string, string[]> {
   //
   // The cost is 11,963 -> 14,144 bytes on a static asset gzip mostly removes.
   // `docs-ui.js` calls `JSON.parse`; it never sees the whitespace.
+  // THE ART, per theme, published beside the items rather than on each of them.
+  //
+  // One entry per theme actually used, not per todo: fifty todos sharing a
+  // theme would otherwise carry fifty copies of the same three paths. The
+  // client joins on the theme id it already has.
+  //
+  // `resolveThemeBackdrop` is what decides, so this cannot ship a partial set:
+  // it returns art or NOTHING, never some layouts, because a phone handed the
+  // laptop crop shows the art's quiet area in the wrong place and nothing
+  // reports it. A theme with no backdrop — `pale-sage`, the high-contrast pair
+  // — is simply absent here, and the client renders a flat themed card, which
+  // is correct rather than degraded.
+  //
+  // THE SCRIM IS NOT HERE, deliberately: `themes.css` already emits
+  // `--fa-sticky-scrim` per theme, so a copy in this file would be a second
+  // answer free to disagree with the stylesheet that actually paints it. The
+  // contrast guarantee — AAA over pure black — is a property of that value and
+  // travels with it.
+  const declaration = readDeclaration(REPO_ROOT);
+  const themeArt: Record<string, Record<string, string>> = {};
+  for (const id of new Set(items.map((i) => i.theme).filter((t): t is string => t !== undefined))) {
+    const theme = themeById(id);
+    if (theme === undefined) {
+      // A todo naming a theme nothing declares is a FINDING, not a silent flat
+      // card: the author asked for something and got nothing, and the failure
+      // is invisible on the page.
+      throw new Error(
+        `a todo declares theme "${id}", which no theme in schemas/themes.ts defines. ` +
+          `Declared themes: ${THEMES.map((t) => t.id).join(", ")}`,
+      );
+    }
+    const art = resolveThemeBackdrop(theme, declaration?.images);
+    if (art.art.size === 0) continue;
+    // PUBLISHED paths, not declared ones: the client fetches this file from the
+    // site, where the site directory's contents sit at the root. A declared
+    // `docs/assets/...` would 404 for every reader and look like missing art.
+    themeArt[id] = Object.fromEntries(
+      [...art.art].map(([layout, img]) => [layout, publishedAssetPath(REPO_ROOT, img.src)]),
+    );
+  }
+
   emit(
     TODO_ASSET,
-    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }, null, 2) + "\n",
+    JSON.stringify(
+      { $schema: "folio-todo-index/v1", repoWeb: REPO_WEB, items, processes, themeArt },
+      null,
+      2,
+    ) + "\n",
     "data",
   );
-  console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
+  const themed = items.filter((i) => i.theme !== undefined).length;
+  console.log(
+    `  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s), ` +
+      `${themed} themed, ${Object.keys(themeArt).length} theme(s) with art)`,
+  );
+}
+
+// The bean board's data. Sibling of the todo block above, and deliberately the
+// same shape: one indented JSON file, emitted through the same `--check`
+// contract, with `editHref` composed HERE for the same reason — the client
+// would otherwise need the repository's web address, and a literal in
+// `docs-ui.js` is one folio's own address inside shared client code.
+{
+  const beans = readBeans(repoRootFor(REPO_ROOT));
+  // `null` is "no bean store", which is NOT the same as a store with nothing
+  // in it, and rendering them alike is how a consumer reports a clean run over
+  // a repository it never looked at. A folio with no work plan simply gets no
+  // projection; the board reads the absent file as "no store" rather than as
+  // an empty one.
+  if (beans === null) {
+    console.log(`  · assets/beans/index.json — no bean store`);
+  } else {
+    const blockers = blockedBy(beans);
+    const items = beans.map((b) => ({
+      id: b.id,
+      title: b.title,
+      status: b.status,
+      type: b.type,
+      priority: b.priority,
+      parent: b.parent,
+      // Both directions, resolved once. A client given only `blocking` would
+      // have to invert the whole set to answer "what is holding THIS bean up",
+      // which is the question a board is actually asked.
+      blocking: b.blocking,
+      blockedBy: blockers.get(b.id) ?? [],
+      createdAt: b.createdAt,
+      // Published as a FACT, with no age computed from it. See `beanFindings`.
+      updatedAt: b.updatedAt,
+      preview: b.body.trim().slice(0, BEAN_BODY_PREVIEW),
+      // Repo-relative, and the renderer derives BOTH a view and an edit URL
+      // from it. Shipping two absolute URLs per bean would put the forge's URL
+      // shape in the data 283 times over, and they would then have to agree.
+      file: b.file,
+    }));
+    mkdirSync(dirname(BEANS_ASSET), { recursive: true });
+    // Indented for the merge reason the todo index documents at length: a
+    // minified projection is one line, git merges by line, and two branches
+    // each adding a bean would conflict on the whole file every time. At 239
+    // beans that argument is stronger here than it was there.
+    emit(
+      BEANS_ASSET,
+      JSON.stringify(
+        {
+        $schema: "folio-bean-index/v1",
+        // The forge, so `work-plan.js` composes its links from DATA rather
+        // than carrying one instance's address in shared client code. Same
+        // reason `editHref` is composed here, one level further on.
+        repoWeb: REPO_WEB,
+        items,
+        findings: beanFindings(beans),
+      },
+        null,
+        2,
+      ) + "\n",
+      // EXISTENCE-gated, not content-gated, and the asymmetry with the todo
+      // index above is the whole point.
+      //
+      // `emit`'s own note says a `data` projection is gated on exact content
+      // because it projects files a human authored, so a difference is
+      // somebody who forgot to regenerate. That holds for three todos. It does
+      // not hold for the bean store: EVERY agent session writes to `beans/`,
+      // so the projection moves whenever anybody works — which nobody forgot
+      // to do.
+      //
+      // Measured, 2026-09-20, and this is why the gating changed: this branch
+      // carried 296 bean files while `main` carried 522, four hours apart.
+      // CI tests the MERGE ref, so a content gate went red on a projection
+      // that was fresh on the branch and fresh on main and stale only against
+      // their union. Every open PR would have to regenerate on every merge, to
+      // fix nothing a reader could see.
+      //
+      // That is exactly the shape bean `d2kp` exists to stop: "gating them
+      // could only ever fire on a graph that changed". A missing file is still
+      // an omission — the board would fetch a 404 forever — so existence is
+      // gated and contents are not, and `docs-site.yml` regenerates before
+      // publishing so what a reader fetches is current regardless.
+      "verdict",
+    );
+    console.log(`  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s))`);
+  }
 }
 
 // A subject that loses its sidecar — or a page that loses a node — must lose its
@@ -860,7 +1124,7 @@ if (check && refreshed > 0) {
   );
 }
 if (check && stale > 0) {
-  console.error(`\n${stale} generated file(s) stale or missing — run: bun run scripts/gen-docs-pages.ts`);
+  console.error(`\n${stale} generated file(s) stale or missing — run: bun run cat-harness/scripts/gen-docs-pages.ts`);
   process.exit(1);
 }
 console.log(

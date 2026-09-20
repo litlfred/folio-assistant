@@ -30,11 +30,28 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - 'cat-harness/docs/**'
+      # An instance's own rendered pages are mounted into the site by
+      # mount-instance-docs.ts, so a change to them must rebuild it. Without
+      # this the pages are committed, gated, and never redeployed.
+      - 'who-iris/docs/**'
+      - 'who-iris/catalogue/**'
+      - 'cat-harness/scripts/mount-instance-docs.ts'
       - 'cat-harness/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
       - 'cat-harness/scripts/gen-schema-docs.ts'
       - 'cat-harness/scripts/gen-docs-pages.ts'
+      # The state-dashboard generator and the bean reader behind it.
+      #
+      # Their OUTPUT is committed under `cat-harness/docs/`, which the first
+      # entry in this list already matches, so a correct change trips the
+      # preview through the pages alone. These two are named for the incorrect
+      # case: a commit that edits the generator and forgets to regenerate
+      # touches no `docs/` path, gets no preview, and the reviewer sees a green
+      # PR with nothing to look at. `state:visualizer:check` then fails in the
+      # gates — this makes the preview available while that is diagnosed.
+      - 'cat-harness/scripts/state-visualizer.ts'
+      - 'cat-harness/scripts/beans.ts'
       - '.github/workflows/feature-staging.yml'
   pull_request_target:
     types: [closed]
@@ -269,6 +286,21 @@ jobs:
 
       - name: Take ownership of Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
+      # Mount every OTHER instance's rendered content under the built site.
+      #
+      # Jekyll above builds ONE directory — `cat-harness/docs` — so an instance
+      # that publishes its own rendered pages was built by nothing and reachable
+      # at no URL. `who-iris/docs/` was in exactly that state: six committed,
+      # gated pages that no deployed site served.
+      #
+      # Owner's addressing rule, 2026-09-20: `<base-url>/<path-to-kind-or-node>`
+      # — a harness that instantiates a directory gets a visualiser for it,
+      # mounted under that directory's KIND. So `/docs/who-iris/`, and
+      # `/library/who-iris/` the day the library visualiser (bean jbx2) lands
+      # with a front door of its own. No change here when it does.
+      - name: Mount instance-rendered content
+        run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
 
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
       #
@@ -613,7 +645,7 @@ jobs:
       # rise in write volume, after which attempt 2 started losing the race".
       # Halving this workflow's writes attacks that cause rather than
       # absorbing it. The three-attempt rebase loop is kept regardless: the
-      # contention BETWEEN sessions is untouched, and is `6pfo`'s ground.
+      # contention BETWEEN sessions is untouched, and is `yzsj`'s ground.
       - name: Check out the publish branch
         uses: actions/checkout@v4
         with:

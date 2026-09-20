@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Content Block Review
+title: 'Content Block Review'
 parent: Skill instructions
 ---
 

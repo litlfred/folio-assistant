@@ -9,7 +9,7 @@
  * Output: build/schema-manifest.json
  *
  * Usage:
- *   bun run scripts/generate-schema-manifest.ts
+ *   bun run cat-harness/scripts/generate-schema-manifest.ts
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
