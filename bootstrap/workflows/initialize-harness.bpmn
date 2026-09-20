@@ -11,7 +11,7 @@
     <bpmn:participant id="Participant_Process_InitializeHarness" name="Initialize a harness" processRef="Process_InitializeHarness"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_InitializeHarness" name="Initialize a harness" isExecutable="false">
-    <bpmn:documentation>THE ONLY PROCESS IN BOOTSTRAP. An Initiator that has read bootstrap/README.md is at its start event and has nowhere else to go, which is the point: one diagram cannot be confused with another.
+    <bpmn:documentation>ONE OF TWO PROCESSES IN BOOTSTRAP, and the one an Initiator enters. It was the only one until `discussion.bpmn` was added, which is an exception argued in that diagram: WHICH harness and WHICH repositories are judgements no file holds, so an Initiator that cannot obtain them cannot take this process's first step. The two do not compete for an entry point — this is where an Initiator starts, and it delegates to the other when it needs a fact nobody has written down.
 
 PRECONDITION: the Initiator understands tasks, roles, processes, actors and skills, has been told it is an Initiator, and is at the start of this process. BPMN has no precondition element and this schema adds none yet, so it is stated here in the documentation and tracked as bean `lv3j`.
 
@@ -61,13 +61,13 @@ and where">
     <bpmn:task id="A_ReadDeclaration" name="Read the harness's
 declaration and instructions">
       <bpmn:documentation>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `&lt;stub&gt;/docs/bootstrap/initialization.md`, the same for every harness, which is what lets an Initiator be pointed at one nobody has written yet.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="A_ReadInstructions" name="Log the start
 of the install">
       <bpmn:documentation>Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_InstructionsFound" name="Instructions there?"/>
@@ -75,7 +75,7 @@ of the install">
     <bpmn:task id="A_Install" name="Follow them, at
 each location">
       <bpmn:documentation>The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what f-a-sci or smart-guidelines requires, and does not need to.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-navigation"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_Installed" name="Harness installed"/>

@@ -63,7 +63,7 @@ import {
   readdirSync,
   writeFileSync,
 } from "node:fs";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 
 import {
@@ -2172,4 +2172,57 @@ export function toJsonLd(
       };
     }),
   };
+}
+
+/**
+ * The graph kinds an instance DECLARES — its own, not the universal registry's.
+ *
+ * Moved here from `scripts/check-instance-render.ts` (bean `3jj9`) so the two
+ * exporters can read one fact. `kg-export` needs it to stop emitting every
+ * kind any layer defines into every instance's graph: `bootstrap` published
+ * 16 GraphKind nodes while declaring exactly one. The render check already
+ * imports `kg-export`, so importing back would have been a cycle — and a
+ * declaration's own contents belong beside the declaration reader anyway.
+ *
+ * Follows NESTED declarations, which is the part a plain read of
+ * `directories[].graphs` misses: `beans/beans.json` is what says `bean-defs`
+ * and `workflow-state` exist, and an instance that owns them would otherwise
+ * be reported as not owning them.
+ */
+export function declaredKinds(root: string, decl: CatHarnessDeclaration): Set<string> {
+  const kinds = new Set<string>();
+  for (const d of decl.directories ?? []) {
+    for (const g of d.graphs ?? []) kinds.add(g);
+    // The nested declaration, if the directory carries one. Its filename is
+    // the directory's own name by convention (`beans/beans.json`), which is
+    // how `beans/` says what its inner nodes are without `harness.json`
+    // restating them.
+    const dirName = basename(d.path.replace(/\/+$/, ""));
+    for (const candidate of [`${dirName}.json`, "graph.json"]) {
+      const p = join(declaredKindsEntryRoot(root, d), candidate);
+      if (!existsSync(p)) continue;
+      try {
+        const nested = JSON.parse(readFileSync(p, "utf-8")) as {
+          directories?: Array<{ graphs?: string[]; kinds?: string[] }>;
+        };
+        for (const nd of nested.directories ?? []) {
+          for (const g of [...(nd.graphs ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
+        }
+      } catch {
+        // A nested file that will not parse is not this check's finding to
+        // make — `check:harness-dirs` owns that and says so loudly. Skipping
+        // here would understate `declared` and manufacture an `undeclared`,
+        // so the kinds it would have contributed are simply not added and the
+        // reason is recorded by the caller if it matters.
+      }
+    }
+  }
+  return kinds;
+}
+
+
+/** Where a declared directory actually is, honouring `scope`. */
+function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
+  const base = d.scope === "repository" ? repoRootFor(root) : root;
+  return resolve(base, d.path);
 }

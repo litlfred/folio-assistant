@@ -1,11 +1,15 @@
 ---
-name: kg-navigation
-description: >
-  Read and navigate a knowledge graph with nothing installed — no MCP server,
-  no tools, no harness. The first skill bootstrap hands you, because the second
-  step of the handoff cannot be followed without it.
+layout: default
+title: Reading a knowledge graph before you have anything
+parent: Skill instructions
 ---
 
+{: .note }
+> Generated from [`../bootstrap/skills/bootstrap-kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/../bootstrap/skills/bootstrap-kg-navigation.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../bootstrap/skills/bootstrap-kg-navigation.md){: .fa-edit-source }
+
+{% raw %}
 # Reading a knowledge graph before you have anything
 
 **This skill assumes a text editor and nothing else.** No MCP server, no
@@ -70,3 +74,4 @@ description of them here would be a second one, free to disagree with the first.
 If you find yourself needing one of them to finish bootstrap, **that is a sign
 the boundary is in the wrong place** — say so rather than importing the
 definition.
+{% endraw %}

@@ -47,7 +47,7 @@ import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
-import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
+import { BASE_GRAPH_KINDS, declaredKinds, repoRootFor } from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
@@ -1263,13 +1263,41 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   }));
 }
 
-function collectGraphKinds(): Node[] {
+function collectGraphKinds(root: string = ROOT): Node[] {
   // `fsh-guts` and anything else in UNPUBLISHED_GRAPH_KINDS never reaches a
   // published graph. Filtered HERE, where the document is built, rather than
   // at upload: a strip that runs only on the happy path leaves a graph that
   // LOOKS clean and is not. Bean `folio-assistant-uv09`.
   const published = defaultGraphKinds.names().filter(isPublishedGraphKind);
-  return published.map((name) => {
+
+  // ── EMIT ONLY WHAT THIS INSTANCE DECLARES.
+  //
+  // `defaultGraphKinds` is the UNIVERSAL registry — every kind any layer
+  // defines. Emitting all of it into every instance's graph made `bootstrap`,
+  // whose whole premise is that it knows nothing yet, publish 16 GraphKind
+  // nodes when its declaration names exactly ONE (`cat-harness`, across both
+  // its directories). It advertised `folio`, `voices` and `library` — core's —
+  // and `beans` and `todos` — cat-harness's — none of which it can reach.
+  //
+  // The comment below already recorded the layering ("`voices` and `library`
+  // are core's") without acting on it; this is the missing half. A bootstrap
+  // that names a vocabulary it cannot resolve is the same defect as a `@type`
+  // that does not dereference (`blv9`), one level up: the node is there, and
+  // nothing behind it is.
+  //
+  // Reuses `declaredKinds` rather than re-deriving: it already follows the
+  // NESTED declarations (`beans/beans.json` naming `bean-defs` and
+  // `workflow-state`), which a plain read of `directories[].graphs` misses —
+  // and missing them here would drop kinds the instance really does own.
+  //
+  // Falls back to the full set when there is no declaration, because an
+  // undeclared instance has said nothing about what it owns, and reporting
+  // that as "owns nothing" would be a clean run over an empty set.
+  const decl = readDeclaration(root);
+  const owned = decl ? declaredKinds(root, decl) : undefined;
+  const emitted = owned ? published.filter((n) => owned.has(n)) : published;
+
+  return emitted.map((name) => {
     const def = defaultGraphKinds.get(name)!;
     return {
       // The instance sits in the SAME namespace as the class it instantiates,
@@ -1402,7 +1430,7 @@ export async function collectInstanceNodes(
   const nodes = [
     ...collectSkills(doc, base, problems, root),
     ...(await collectProcesses(doc, problems, root)),
-    ...collectGraphKinds(),
+    ...collectGraphKinds(root),
     ...collectDeclaredRoles(doc, root),
     ...collectDeclaration(doc, problems, root),
   ];

@@ -221,8 +221,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Reading a knowledge graph before you have anything](bootstrap-kg-navigation.html) | `bootstrap-kg-navigation` | — | **This skill assumes a text editor and nothing else.** No MCP server, no |
 | [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Initiator.** You may narrow; only the Requestor may decide. |
-| [kg-navigation](kg-navigation.html) | `kg-navigation` | — | _also in Platform core (folio-core) (same page)_ |
+| [discussion](discussion.html) | `discussion` | — | An agent that has just read `bootstrap/README.md` knows the shape of a |
 
 ## Agent skills
 

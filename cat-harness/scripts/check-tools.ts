@@ -28,13 +28,13 @@
  *
  * @module scripts/check-tools
  */
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import {existsSync, readFileSync} from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
-import { kgRoots } from "./known-skills.js";
+import { knownSkills } from "./known-skills.js";
 import { directoryForGraph } from "../schemas/cat-harness.js";
 
 /**
@@ -52,30 +52,26 @@ function schemasRoot(root: string): string {
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-/** Skill names, discovered — never a hardcoded list. See kg-export's note. */
-export function knownSkills(): Set<string> {
-  const names = new Set<string>();
-  const dirs: string[] = [];
-  // declared-path-literal: the convention fallback. Every declared root is
-  // scanned below; this names one for the message when none is declared.
-  const skillsRoot = kgRoots(ROOT)[0] ?? join(ROOT, "skills");
-  if (existsSync(skillsRoot)) {
-    for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-      if (d.isDirectory()) dirs.push(join(skillsRoot, d.name));
-    }
-  }
-  for (const extra of ["src/skills", ".claude/skills/local"]) {
-    if (existsSync(join(ROOT, extra))) dirs.push(join(ROOT, extra));
-  }
-  for (const dir of dirs) {
-    for (const f of readdirSync(dir)) if (f.endsWith(".md")) names.add(f.slice(0, -3));
-  }
-  const io = join(ROOT, "schemas", "skills");
-  if (existsSync(io)) {
-    for (const e of readdirSync(io, { withFileTypes: true })) if (e.isDirectory()) names.add(e.name);
-  }
-  return names;
-}
+/**
+ * Skill names, from the SHARED discoverer.
+ *
+ * This file carried its own copy, and the copy was wrong in the way
+ * `AGENTS.md` names explicitly: it scanned `kgRoots(ROOT)[0]` — the FIRST
+ * declared root — while overlay order is deepest-dependency-first. So every
+ * skill outside that one root was invisible, and a Tool claiming to exercise
+ * one was reported as a dangling `satisfies`.
+ *
+ * Measured, bean `3jj9`: the shared `known-skills.ts` finds 176 skills here,
+ * including `bootstrap/skills/`; this copy found none of them. The `discuss`
+ * Tool's `satisfies: ["discussion"]` was flagged as naming no skill, and the
+ * skill was there the whole time.
+ *
+ * Two discoverers for one fact is the defect, not the arithmetic between
+ * them. `known-skills.ts` is the one with the tests and the dot-prefix guard,
+ * so this reads it rather than keeping a second opinion — the same move as
+ * `REGISTRY_GROUPS` (bean `jcmx`) one layer down.
+ */
+export { knownSkills };
 
 /**
  * What a skill's input contract requires, by property name.
@@ -138,7 +134,7 @@ export interface ToolCheck {
 }
 
 export function checkTools(): ToolCheck {
-  const skills = knownSkills();
+  const skills = knownSkills(ROOT);
   const typeNames = new Set(Object.keys(TOOL_TYPES));
   const dangling: Array<{ tool: string; skill: string }> = [];
   const unknownTypes: Array<{ tool: string; port: string; ref: string }> = [];

@@ -67,6 +67,58 @@ export function tools(baseUrl?: string): ToolDefinition[] {
   const t = (n: Parameters<typeof toolTypeIri>[1]): string => toolTypeIri(B, n);
 
   return [
+    // ── The one tool an agent has before it has any tooling.
+    //
+    // Bean `3jj9`, and the owner's ruling that human/agent and agent/agent
+    // interaction is documented as a skill plus a tool. The SKILL lives in
+    // `bootstrap/skills/discussion.md`, because an Initiator must be able to
+    // READ it with nothing installed; the typed node lives here, because a
+    // Tool is cat-harness's vocabulary and bootstrap may not import it.
+    //
+    // `invoke: { manual: true }` — "performed by a person following the
+    // skill, with no command", and the `beans-manual` precedent is explicit
+    // that this has equal standing to a CLI rather than marking an
+    // unfinished record. It is the honest declaration: there is no binary and
+    // no endpoint, the mechanism is putting a question to a participant and
+    // receiving an answer. Declaring a shell or an MCP name would assert
+    // machinery that is not there, and an Initiator that trusted it would be
+    // stuck at the first step of `initialize-harness` — the step this exists
+    // to unblock. (`conversation: true` was the first draft; `tsc` refused it,
+    // correctly — a new invoke kind for one tool is a vocabulary change, and
+    // `manual` already means this.)
+    //
+    // It DOES NOT DECIDE. It carries a question out and an answer back; the
+    // skill's judgement chooses what to ask and rules on when the answer
+    // settles the matter. The output is a document conforming to
+    // `discussion.output.schema.json`, which is what makes the task checkable
+    // rather than "we discussed it".
+    defineTool({
+      id: "discuss",
+      title: "discussion",
+      description:
+        "Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "question", schema: t("Text"), required: true, description: "The question as put, with its candidates named. One question where one will do." },
+          { name: "askedOf", schema: t("Text"), required: true, description: "`person` or `agent` — symmetric participants, recorded because the answers are evidence of different weight." },
+        ],
+        outputs: [
+          { name: "answer", schema: t("Text"), description: "The reply as received. Absent is a real result: it routes to `outcome: unsettled`, never to a guess." },
+        ],
+      },
+      satisfies: ["discussion"],
+      selection: {
+        when:
+          "A fact is needed that no file in reach holds — which harness, or which repositories. Narrow the candidates from context first; a repository already carrying `cat-harness/harness.json` is not a blank slate, and a question the agent could have answered itself wastes the one it is entitled to.",
+        limits:
+          "It cannot manufacture an answer. A participant may decline, and that is `outcome: unsettled` with what is still open — not an error and not a default. An agent that reaches for a documented default because nobody replied has produced a guess.",
+        cost: "One round trip through a person's attention, which is the most expensive input in the system and the reason the skill's rule is to ask once.",
+      },
+      requires: {},
+    }),
+
     defineTool({
       id: "beans-cli",
       title: "beans CLI",

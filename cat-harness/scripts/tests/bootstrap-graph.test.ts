@@ -58,9 +58,33 @@ describe("pure, because committed-and-gated demands it", () => {
 });
 
 describe("what it contains, and what it admits it did not look at", () => {
-  test("bootstrap's two skills are in the graph", async () => {
+  test("bootstrap's skills are in the graph, BY NAME", async () => {
+    // Was `toBe(2)`. A bare count is a claim that goes stale the moment the
+    // instance grows a skill — which is exactly what this file's note below
+    // says about pinning a property of a subject still being built. `3jj9`
+    // added `discussion` and the count broke while nothing was wrong.
+    //
+    // Names are the durable assertion: they fail when a skill GOES MISSING,
+    // which is the defect worth catching, and not when one is added.
     const doc = await buildBootstrapDocument();
-    expect((doc["counts"] as Record<string, number>)["Skill"]).toBe(2);
+    const names = (doc["@graph"] as Array<Record<string, unknown>>)
+      .filter((n) => String(n["@type"]).endsWith("#Skill"))
+      .map((n) => String(n["name"]))
+      .sort();
+    expect(names).toEqual(["bootstrap-kg-navigation", "confirm-harness", "discussion"]);
+  });
+
+  test("bootstrap publishes only the graph kinds it DECLARES", async () => {
+    // Bean `3jj9`. `collectGraphKinds` emitted the universal registry into
+    // every instance, so bootstrap — whose premise is that it knows nothing
+    // yet — published 16 GraphKind nodes while its declaration names one.
+    // It advertised `folio`, `voices` and `library` (core's) and `beans` and
+    // `todos` (cat-harness's), none of which it can reach.
+    const doc = await buildBootstrapDocument();
+    const kinds = (doc["@graph"] as Array<Record<string, unknown>>)
+      .filter((n) => String(n["@type"]).endsWith("#GraphKind"))
+      .map((n) => String(n["name"]));
+    expect(kinds).toEqual(["cat-harness"]);
   });
 
   test("the instance-bound collectors are named as NOT looked for", async () => {
@@ -96,7 +120,11 @@ describe("what it contains, and what it admits it did not look at", () => {
       hasNodes: (counts["ProcessNode"] ?? 0) > 0,
       hasFlows: (counts["SequenceFlow"] ?? 0) > 0,
       hasRoles: (counts["Role"] ?? 0) > 0,
-    }).toEqual({ Process: 1, hasNodes: true, hasFlows: true, hasRoles: true });
+      // TWO processes since `3jj9`: `initialize-harness`, which an Initiator
+      // enters, and `discussion`, the argued exception — which harness and
+      // which repositories are judgements no file holds, so an Initiator that
+      // cannot obtain them cannot take the first process's first step.
+    }).toEqual({ Process: 2, hasNodes: true, hasFlows: true, hasRoles: true });
     // And nothing about the diagram is reported as a problem.
     expect((doc["problems"] as string[]).filter((p) => p.includes("bpmn"))).toEqual([]);
   });
