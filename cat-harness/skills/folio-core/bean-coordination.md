@@ -179,8 +179,62 @@ what makes them the shared substrate.
    started.
 
 An **unclaimed** bean is fair game for any session; a claimed one is not.
-Respect sibling claims. Agents create and set `in-progress`; they do not resolve
-another session's items.
+Respect sibling claims. Agents create and set `in-progress`; they do not take
+over the work another session is mid-flight on.
+
+## Closing a bean whose work has already landed (STRICT)
+
+The sentence above used to end *"they do not resolve another session's
+items"*, full stop, and it produced the opposite of the care it intended.
+
+**Measured 2026-09-20, bean `0pes`.** Six beans carried the same sentence,
+verbatim in shape:
+
+> *"Verified resolved, `<date>` on main at `<sha>`. … This bean's defect is
+> closed. **NOT closing it — not my bean to resolve.**"*
+
+`1dfh`, `ckpe`, `dzl3`, `g4dv`, `lx2s`, `xd1s`. Every one `in-progress`. And
+the number that made it a defect rather than a habit: **zero** beans carrying
+that phrase had ever reached `completed`. The rule named who may **not** close
+a bean and never named who **may**, so nothing ever discharged it. It also
+contradicted §"A claim is branch-local" one screen up, which says an unclaimed
+bean is fair game — none of the six carried a claim.
+
+The cost is the failure this section already warns about, reached from the
+other side. *"A bean abandoned silently is indistinguishable from one nobody
+started"* — and so is a bean **verified done** and left open. Worse, in fact:
+an agent that picks one up re-derives work already on `main`. Paid twice in one
+session, on `r1lz` and again while sweeping for others.
+
+**So: a bean closes on EVIDENCE, not on authorship.**
+
+> **You may close any bean — whoever opened it — when you have re-run the
+> measurement yourself and it passes.** You may not close one because a note in
+> it says somebody else measured it.
+
+Three obligations come with that, and they are what stop it becoming a licence:
+
+1. **Re-derive, never quote.** The note claiming resolution is the thing under
+   suspicion; reading it is not verification. Run the check, then record the
+   command and its result in the bean. Where a note gives a line number, verify
+   the *fact* — line numbers rot. `xd1s`'s note said "seven workflows" and named
+   six; four files actually carry the group, and the invariant holds by
+   *group **or** retry*, which is what its gate asserts. Discharged on the gate,
+   not on the count.
+2. **A Done-when only a person can satisfy is not yours to discharge.**
+   `lx2s`'s is *"Issue #215 can be closed by its author"*, and an agent never
+   closes an issue on its own say-so. It stayed open, and its own note had
+   already walked its resolution back. **Two of seven candidates in that sweep
+   failed re-verification**, which is the whole reason the obligation is
+   re-measurement rather than trust.
+3. **Mid-flight is still off limits.** This governs work that has *landed*. A
+   bean a sibling is actively working — a claim naming a branch, a recent note,
+   an open PR — is theirs, finished or not.
+
+**Verified-done and still not closable? Say why, with an expiry.** Same shape
+[`bean-blocking.md`](bean-blocking.md) requires of a block, and for the same
+reason: an exception that carries no way to re-derive it is indistinguishable
+from an oversight, which is precisely how six of these accumulated.
 
 Stopping because you are *blocked* is a different state with its own
 requirements — what it waits on, since when, an expiry and a handoff:

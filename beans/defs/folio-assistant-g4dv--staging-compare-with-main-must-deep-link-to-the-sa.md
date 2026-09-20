@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g4dv
 title: 'STAGING: ''compare with main'' must deep-link to the same page, not the site root (issue #248)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T17:04:31Z
-updated_at: 2026-09-19T00:41:01Z
+updated_at: 2026-09-20T14:37:12Z
 parent: folio-assistant-o3xy
 ---
 
@@ -108,3 +108,16 @@ the page is new — is implementable rather than speculative.
 Still unclaimed, still not started.
 
 _2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. feature-staging.yml:314 renders the compare link as ${MAIN_SITE}/${REL} — the same page on main, not the site root. The third state this bean said 'needs deciding, not just coding' is handled and was resolved as its own option 1: when the page has no counterpart on main, line 316 renders 'main ↗ (new page)' against the root instead of a link to a 404, and counts it into NEW_PAGES. NOT closing it — not my bean to resolve.
+
+
+## 2026-09-20 — closed on re-measurement (`0pes`)
+
+Re-derived. `feature-staging.yml:439` renders the compare link as
+`${MAIN_SITE}/${REL}` — the same page on main, not the site root.
+
+The third state this bean said *"needs deciding, not just coding"* is handled
+and is the reason it closes: line 441 renders `main ↗ (new page)` against the
+root when a page has no counterpart on main, rather than linking to a 404, and
+line 442 counts it into `NEW_PAGES`, which line 451 reports. A page that does
+not exist on main and a page that does are told apart, rather than both being
+offered a link.
