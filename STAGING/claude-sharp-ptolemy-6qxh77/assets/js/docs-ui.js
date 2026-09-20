@@ -1693,7 +1693,7 @@
     'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
-  var todoState = { items: [], floating: {}, processes: {} };
+  var todoState = { items: [], floating: {}, processes: {}, themeArt: {} };
 
   /** The published index, or `null` when it could not be read. */
   function fetchTodoIndex(done) {
@@ -1708,6 +1708,11 @@
       .then(function (doc) {
         if (!doc || !Array.isArray(doc.items)) return done(null);
         todoState.processes = doc.processes || {};
+        // The art, per THEME rather than per todo — fifty todos sharing a
+        // theme would otherwise carry fifty copies of the same three paths.
+        // Absent is a real state: a theme with no backdrop renders a flat
+        // themed card, which is correct rather than degraded.
+        todoState.themeArt = doc.themeArt || {};
         done(doc.items);
       })
       .catch(function (e) {
@@ -1884,12 +1889,78 @@
     document.dispatchEvent(new CustomEvent("fa:todos-discarded", { detail: { id: id } }));
   }
 
+  /**
+   * The `<picture>` a themed sticky renders its art in.
+   *
+   * MARKUP, not a CSS background, and the reason is recorded on the stylesheet
+   * rule this feeds: `<picture>` swaps the FILE at a breakpoint and
+   * `background-image: url(...)` can only name one crop. Serving the wide crop
+   * to a phone is a bug this repository has already shipped once.
+   *
+   * TWO sources, not three. The `card` crop is the default because a todo
+   * sticky IS a board card — dense, roughly square — and `mobile` takes over
+   * below 30rem where a square card has the least room on the tallest screen.
+   * The `laptop` crop is deliberately unused here: it is composed for a
+   * page-width surface, and handing it to a card would show the art's quiet
+   * area in the wrong place. The landing sticky still uses all three, because
+   * it really is a page-width surface at the top end.
+   *
+   * `alt=""` and `aria-hidden`: this is decoration behind text that already
+   * says everything. A description of the cat would be read out before every
+   * todo on the board.
+   */
+  function buildBackdrop(art) {
+    var pic = el("picture", { "aria-hidden": "true" });
+    if (art.mobile) {
+      var src = el("source", { media: "(max-width: 30rem)", srcset: art.mobile });
+      pic.appendChild(src);
+    }
+    // `card` when there is one, else whatever the theme did supply — the
+    // generator only publishes complete sets, so this fallback is reached only
+    // by a hand-written index.
+    var chosen = art.card || art.mobile || art.laptop;
+    pic.appendChild(el("img", { class: "fa-sticky-art", src: chosen, alt: "", loading: "lazy" }));
+    return pic;
+  }
+
   function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
     var compact = opts && opts.compact;
-    var card = el("article", {
+    var attrs = {
       class: "fa-sticky fa-sticky-p-" + (todo.priority || "medium"),
       "data-todo-id": todo.id,
-    });
+    };
+    // THE THEME IS A PROPERTY OF THE STICKY, NOT OF THE PINNED STATE.
+    //
+    // Bean `ivfw`, the owner: "when you unpin, sticky, it loses its theme".
+    // Read from `todo.theme` HERE, in the one function that builds a card,
+    // which is what makes the round-trip safe rather than the transitions
+    // being careful: `float` constructs a second card on the layer and `dock`
+    // destroys it, so any theme carried on the DOM node instead of on the todo
+    // would be dropped by construction. Neither transition needs to know the
+    // theme exists.
+    //
+    // The attribute is what `themes.css` selects on, so this is the same
+    // mechanism the landing stickies use rather than a second one.
+    if (todo.theme) attrs["data-fa-sticky-theme"] = todo.theme;
+    // THE BACKDROP, when this todo's theme has art. Bean `5y4b`, the owner:
+    // "todos need grump cat themeing based on content too."
+    //
+    // Until now the landing board carried two kinds of sticky side by side —
+    // a harness card with per-theme art, a measured text region and a scrim,
+    // and a todo that was a flat card with a coloured left border. On one page
+    // they read as two systems, which is why this looked wrong rather than
+    // merely plain.
+    //
+    // `fa-sticky--backdrop` is the SAME class the landing sticky uses, so the
+    // art positioning, the clipping, the `isolation` stacking context and the
+    // scrim all come from rules that already exist and are already measured.
+    // Nothing here re-implements them, and nothing here sets a colour: the
+    // scrim is `--fa-sticky-scrim` from `themes.css`, whose AAA-over-pure-black
+    // guarantee travels with the value rather than being restated.
+    var art = todo.theme && todoState.themeArt[todo.theme];
+    if (art) attrs.class += " fa-sticky--backdrop";
+    var card = el("article", attrs);
+    if (art) card.appendChild(buildBackdrop(art));
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {
@@ -1937,16 +2008,34 @@
     }
 
     var tools = el("div", { class: "fa-sticky-tools" });
-    // The SAME affordance every node on this site already has, pointed at this
-    // todo's own file. `editHref` is composed at build time.
+    // VIEW *AND* EDIT — two controls, because they are two acts. Bean `pb04`,
+    // the owner: *"rendeding shows edit src icon (and also need view icon)"*.
+    // `/blob/` is reading and `/edit/` opens GitHub's editor: a reader
+    // checking what a card says should not land in a text box, and one who
+    // wants to fix it should not have to find the button.
+    //
+    // BOTH ARE ABSENT, NOT BROKEN, when the rendering pipeline has no forge.
+    // The keys are simply missing from the published index — `sourceLinks`
+    // returns `undefined` for anything that is not a github.com `origin` — so
+    // the test here is presence, and there is nothing to disable or grey out.
+    // A dead link is worse than no link: it invites a click, and on a private
+    // repository it 404s for exactly the reader who cannot edit, which reads
+    // as "this page is broken" rather than "you cannot do this".
+    if (todo.viewHref) {
+      tools.appendChild(el("a", {
+        class: "fa-node-edit fa-sticky-view",
+        href: todo.viewHref,
+        title: "View this todo's source on GitHub",
+        "aria-label": "View the source of " + todo.summary,
+      }, "⎘ View"));
+    }
     if (todo.editHref) {
-      var pencil = el("a", {
+      tools.appendChild(el("a", {
         class: "fa-node-edit fa-sticky-edit",
         href: todo.editHref,
-        title: "Edit this todo's markdown",
+        title: "Edit this todo's markdown on GitHub",
         "aria-label": "Edit " + todo.summary,
-      }, "✎ Edit");
-      tools.appendChild(pencil);
+      }, "✎ Edit"));
     }
     // An INLINE sticky is already beside the content it is about, so Pin and
     // Close have nothing to do: pinning it would move it AWAY from the thing
@@ -3414,6 +3503,8 @@
       if (badge) qaToggle(badge);
     });
   }
+
+
 
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which

@@ -260,25 +260,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T20:17:18.248Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0cbffcaa6927655db55c9c2912dc6a973a012695",
-  "sourceCommitSha": "0cbffcaa6927655db55c9c2912dc6a973a012695",
-  "sourceCommitAt": "2026-09-20T20:15:41Z",
+  "generatedAt": "2026-09-20T21:12:27.104Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/683b845bd4d085e4b6593d07042f93befa0f7644",
+  "sourceCommitSha": "683b845bd4d085e4b6593d07042f93befa0f7644",
+  "sourceCommitAt": "2026-09-20T21:10:52Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 207,
+    "Skill": 217,
     "Actor": 27,
     "Capability": 28,
     "Role": 124,
     "Convention": 2,
-    "SkillPackage": 17,
-    "Process": 53,
-    "SequenceFlow": 687,
-    "ProcessNode": 652,
-    "Tool": 67,
-    "Schema": 77,
-    "GraphKind": 21,
-    "Directory": 31,
+    "SkillPackage": 18,
+    "Process": 54,
+    "SequenceFlow": 697,
+    "ProcessNode": 662,
+    "Tool": 68,
+    "Schema": 79,
+    "GraphKind": 22,
+    "Directory": 32,
     "Asset": 3
   },
   "@graph": [
@@ -628,7 +628,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/process-state.md",
-      "instructionLines": 179,
+      "instructionLines": 209,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -880,6 +880,40 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/domain-fencing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-artefacts",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-artefacts",
+      "title": "Per-artefact specialisation",
+      "description": "The per-surface SPECIALISATION layer — sticky, landing board, docs background, navbar avatar. Only what DIFFERS lives here; the general rule lives in its stage. Read this last, after the stage that owns your question.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-artefacts.md",
+      "instructionLines": 101,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-artefacts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theming",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theming",
+      "title": "Theming, split on the stage it fails at",
+      "description": "The map of this subgraph: theming is split on PIPELINE STAGE first — intake, declaration, generation, contrast — with producer/consumer as the direction each stage faces, and per-artefact specialisation last. Read this to find which stage owns the fact you need; read the stage for the fact.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theming.md",
+      "instructionLines": 100,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theming"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/site-presentation-assets",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "site-presentation-assets",
@@ -914,6 +948,40 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-generation",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-generation",
+      "title": "Generating a theme's CSS",
+      "description": "Turning a declared theme into CSS — `bun run themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of \"still not image\" had that one cause.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-generation.md",
+      "instructionLines": 75,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-generation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-declaration",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-declaration",
+      "title": "Declaring a theme",
+      "description": "What a theme IS as data — the palette, the three required layouts, and the per-image regions (`textRegion`, `avatarRegion`). The PRODUCER stage: this is where a number is written down, and the rule is that geometry over art is declared rather than derived, because no amount of arithmetic on an aspect ratio can see where a picture is quiet.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-declaration.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-declaration"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-art-intake",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "theme-art-intake",
@@ -929,6 +997,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-contrast",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-contrast",
+      "title": "Contrast: measured over the darkest thing that could be there",
+      "description": "Why every scrim is measured over PURE BLACK rather than over the art actually in use, what the AAA floor is, and why the high-contrast pair declares no backdrop at all. The CONSUMER stage that says what the ink must survive.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-contrast.md",
+      "instructionLines": 75,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-contrast"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/scientific-visualization",
@@ -1075,7 +1160,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/swarm-management.md",
-      "instructionLines": 85,
+      "instructionLines": 100,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1667,7 +1752,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 728,
+      "instructionLines": 730,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1768,7 +1853,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 320,
+      "instructionLines": 384,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1810,6 +1895,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/delivery-summary"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/harness-requirements",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "harness-requirements",
+      "title": "Harness requirements — what an instance owes for what it declares",
+      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/harness-requirements.md",
+      "instructionLines": 253,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/harness-requirements"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/bean-coordination",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "bean-coordination",
@@ -1819,7 +1921,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 264,
+      "instructionLines": 469,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1836,7 +1938,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/issue-working.md",
-      "instructionLines": 84,
+      "instructionLines": 114,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2154,7 +2256,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 423,
+      "instructionLines": 467,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2312,6 +2414,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-contribution-offer"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/confirmation-waiver",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "confirmation-waiver",
+      "title": "A confirmation can be waived — by the person who is owed it",
+      "description": "A human may waive a confirmation they are owed — for a session, for a process run, or until a stated time. Covers what a waiver is made of, where it is recorded (the context graph, never the work plan), the gates that can be waived and the rules that cannot, why every waiver carries an expiry, and the one thing an agent may never do: grant itself one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/confirmation-waiver.md",
+      "instructionLines": 131,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/confirmation-waiver"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/bib-qa",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "bib-qa",
@@ -2376,6 +2495,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ci-health"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/schema-management",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "schema-management",
+      "title": "Managing a schema — the graph, the viewer, and the three answers that are not \"fine\"",
+      "description": "Manage a schema over its life — add one, change one, read the schema graph and its viewer, and act on what the reader could not determine. The layout rule lives in `directory-conventions`; the entity question lives in `data-modelling`; this is the work in between.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/schema-management.md",
+      "instructionLines": 258,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/schema-management"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/symbiotic-interaction",
@@ -2606,7 +2742,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 231,
+      "instructionLines": 248,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2793,7 +2929,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/session-intent.md",
-      "instructionLines": 205,
+      "instructionLines": 257,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3661,6 +3797,40 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-bootstrap",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/log-message"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/cat-bootstrap-graph-emission",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "cat-bootstrap-graph-emission",
+      "title": "Emitting cat-bootstrap's own graph",
+      "description": "How cat-bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that emission is the one obligation the layer cannot trade away. cat-bootstrap is exempt from the visualiser requirement every layer above it carries; what it owes instead is this document — in the owner's words, its `.json`/`.jsonld` *\"is its existence\"*. A layer that cannot emit its own graph has not shown it is a graph.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/cat-bootstrap-render"
+      ],
+      "instructionsPath": "../cat-bootstrap/render/cat-bootstrap-graph-emission.md",
+      "instructionLines": 89,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-bootstrap-render",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/cat-bootstrap-graph-emission"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/cat-bootstrap-graph-publication",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "cat-bootstrap-graph-publication",
+      "title": "Publishing cat-bootstrap's graph",
+      "description": "Where cat-bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more. The failure this skill exists to stop is `blv9` — a self-describing artefact whose own `@id` dereferenced to nothing, for months, while the generator worked perfectly.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/cat-bootstrap-render"
+      ],
+      "instructionsPath": "../cat-bootstrap/render/cat-bootstrap-graph-publication.md",
+      "instructionLines": 103,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-bootstrap-render",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/cat-bootstrap-graph-publication"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/raci",
@@ -4809,6 +4979,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/cat-bootstrap-render",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "cat-bootstrap-render",
+      "path": "../cat-bootstrap/render",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-bootstrap-render",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap-render"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/raci",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "raci",
@@ -5023,13 +5202,18 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "theming",
       "version": "0.1.0",
-      "description": "How a theme is made, declared, generated and checked for contrast. Split out of folio-core, where three theming skills sat among 107 and were found by knowing they existed rather than by looking.",
+      "description": "Theming, split on PIPELINE STAGE first (intake -> declaration -> generation -> contrast), with producer/consumer as the direction each stage faces and per-artefact specialisation last. The owner chose that axis on 2026-09-20 — \"1 + 2, then specialized to 3\" — and the ordering matters more than the names: going artefact-first would duplicate intake and contrast into every surface, which is the shape that put the scrim rule in one skill's prose and let it be rediscovered rather than read. TWO SESSIONS BUILT THIS PACKAGE INDEPENDENTLY and the merge kept both halves: this LOCATION and the relocation of `create-sticky-note`, `site-presentation-assets` and `theme-art-intake` out of folio-core came from one; the stage split, the `theme:sheet` visualiser and the documentation entry came from the other, which had put them in a top-level `cat-harness/theming/`. The location here won on evidence rather than on arriving first — bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so a top-level topical directory silently drops its skills out of skill QA, and `theme-art-intake` would have lost the sidecar it has here. Beans `1hvo`, `lps0`.",
       "path": "skills/theming",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theming",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-declaration",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-generation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-contrast",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-artefacts",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/create-sticky-note",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/site-presentation-assets",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-art-intake"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/site-presentation-assets"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -5079,6 +5263,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/code-node-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/compute-integration-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/confirmation-waiver",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/content-acquisition",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/content-context-and-state-graphs",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/content-graph",
@@ -5106,6 +5291,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/goal-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/harness-requirements",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/integration-audit",
@@ -5133,7 +5319,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/placement",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/prepare-merge-auto",
@@ -5145,7 +5330,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/render-logging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/render-order",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/schema-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/session-intent",
@@ -11733,6 +11920,321 @@
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/H_Confirm"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Process",
+      "name": "Ingestion subprocess — ingest a theme",
+      "enforcement": "advisory",
+      "sourcePath": "skills/workflows/ingest-theme.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/StartEvent_Source"
+      ],
+      "nodeCount": 10,
+      "flowCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/StartEvent_Source",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Kind",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "served — a deployment",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Kind",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_ReadStylesheet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t3",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "stated — a style guide",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Kind",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_ReadGuide",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t4",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_ReadStylesheet",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_MapRoles",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t5",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_ReadGuide",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_MapRoles",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t6",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_MapRoles",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_Contradictions",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t7",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_Contradictions",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Layouts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t8",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Layouts",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t9",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Layouts",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/EndEvent_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t10",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_Review",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/EndEvent_Theme",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/StartEvent_Source",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Theme source in hand",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/StartEvent_Source"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Kind",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Served, or stated?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Kind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_ReadStylesheet",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Read the served stylesheet's declarations",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-art-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_ReadStylesheet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_ReadGuide",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Read the guide's own stated rules",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-art-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_ReadGuide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_MapRoles",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Map values onto the shared palette ROLES",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-art-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_MapRoles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_Contradictions",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Record contradictions IN the source",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-art-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_Contradictions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Layouts",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Every layout present?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/Gateway_Layouts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/EndEvent_Refused",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Refused — incomplete",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t9"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/EndEvent_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_Review",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Review contrast and non-colour signal",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/theme-ui-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/node/EndEvent_Theme",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#ProcessNode",
+      "name": "Theme node",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_IngestTheme/flow/Flow_t10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_IngestTheme/node/EndEvent_Theme"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#process/Process_ActivityLog",
@@ -29177,6 +29679,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/tabular-xlsx"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#tool/sibling-sessions",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "sibling-sessions",
+      "title": "Sibling sessions in a window",
+      "description": "List the Claude Code sessions that have committed to this repository in a time window, from the `Claude-Session:` trailer on commits across ALL branches — with each one's commit count, first and last commit, latest subject, and the branches containing its tip. The session API cannot see a sibling session, so the trailer is the only durable session identity here and a session's state is INFERRED from its branch; whether a session is still running is not knowable from a checkout and is deliberately not reported.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run sessions",
+        "inProcess": {
+          "module": "scripts/sibling-sessions.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "since",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/tool-types.schema.json#/$defs/TimeWindow",
+            "description": "The window: `4h`, `2d`, `1w`, or an ISO date. Defaults to one day.",
+            "required": false,
+            "arg": {
+              "flag": "--since"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/tool-types.schema.json#/$defs/Flag",
+            "description": "Emit the sweep as JSON rather than the report.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/tool-types.schema.json#/$defs/Markdown",
+            "description": "One entry per session, most recently active first, plus the number of commits examined and how many carried no trailer. A window with NO commits exits non-zero rather than reporting 'no siblings' — a sweep over nothing has not found anything."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/bean-coordination"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/sibling-sessions"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#tool/check-dependencies",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-dependencies",
@@ -30623,6 +31177,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/dak"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#schema/decision-request",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "decision-request",
+      "title": "A decision handed to a person, as a shape rather than as a habit.",
+      "module": "schemas/decision-request.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/decision-request"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -31052,6 +31615,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/voices"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#schema/waiver",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "waiver",
+      "title": "A confirmation the owner has given **in advance**, scoped and dated.",
+      "module": "schemas/waiver.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/waiver"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#schema/webpage",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "webpage",
@@ -31294,6 +31866,14 @@
       "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/waiver",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
+      "name": "waiver",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#WaiverGraph",
+      "renderable": false,
+      "summary": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#GraphKind",
       "name": "translation-sources",
@@ -31517,7 +32097,8 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/role-model",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/deletion-requires-confirmation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/confirmation-waiver"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#role/Administrator"
@@ -31727,6 +32308,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/deletion-requires-confirmation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/confirmation-waiver",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/document-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/document-structure",
@@ -32376,6 +32958,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-bootstrap-render",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
+      "name": "cat-bootstrap-render",
+      "path": "cat-bootstrap/render/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/cat-bootstrap-render"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
       "name": "cat-harness",
@@ -32475,7 +33067,8 @@
       "name": "memory",
       "path": "memory/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory",
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/waiver"
       ],
       "description": "Agent memory — durable facts an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md`. `context` by the axis bean `mhh9` settled: read during a process, never written by one; it changes when a human directs an authoring agent. It sat in `skills/memory/` until 2026-09-20 — inside the `cat-harness` directory, which is `content` — so the CONTAINING kind and the contents were on opposite layers, and a nested declaration is the defect #263 names. Moving it was held back from the classification change on purpose (#395's rule, and bean `auap`'s precedent: a relocation is its own change) and is bean `07xs`. SCOPE IS `repository`, like `beans/`: these are facts about this REPOSITORY carried by the agents working in it, and `.claude/agents/` — the consumers — sit at the repository root too.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/memory"
@@ -32522,7 +33115,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library"
       ],
-      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assist-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
+      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assistant-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/library",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/library"
     },
@@ -32545,19 +33138,19 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library"
       ],
-      "description": "The agent-skill literature instance's library -- published guidance on authoring and operating agent skills, vendor documentation and arXiv papers alike. Same staging arrangement and same reason as `who-iris-library` and `folio-assist-sci-library` below: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect). It is NOT in cat-harness/library/ although its subject is this harness's own: `AGENTS.md` opens by saying the platform holds no content, and these are other publishers' documents.",
+      "description": "The agent-skill literature instance's library -- published guidance on authoring and operating agent skills, vendor documentation and arXiv papers alike. Same staging arrangement and same reason as `who-iris-library` and `folio-assistant-sci-library` below: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect). It is NOT in cat-harness/library/ although its subject is this harness's own: `AGENTS.md` opens by saying the platform holds no content, and these are other publishers' documents.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/agent-skills-library"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/folio-assist-sci-library",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/folio-assistant-sci-library",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Directory",
-      "name": "folio-assist-sci-library",
-      "path": "folio-assist-sci/library/",
+      "name": "folio-assistant-sci-library",
+      "path": "folio-assistant-sci/library/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library"
       ],
       "description": "The science instance's library -- `milnorlink`, and nothing else. Same staging arrangement and same reason as `who-iris-library` above. Bean r1lz sent it here rather than to who-iris: it is not an IRIS item and never was.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/folio-assist-sci-library"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/folio-assistant-sci-library"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/voices",
@@ -32733,8 +33326,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-ptolemy-6qxh77",
-    "sha": "e653ddaa1f8ed1807d2075ae4fac095f217adb57",
+    "sha": "302d4435bd9cf879153913b9726b3077258f378d",
     "pr": "593/merge",
-    "run": "35534974867"
+    "run": "35537897229"
   }
 }

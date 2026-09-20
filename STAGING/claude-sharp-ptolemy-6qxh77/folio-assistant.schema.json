@@ -77,6 +77,38 @@
                 ],
                 "additionalProperties": false
               },
+              "avatarRegion": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "w",
+                  "h"
+                ],
+                "additionalProperties": false
+              },
               "title": {
                 "type": "string",
                 "minLength": 1
@@ -278,6 +310,10 @@
                     "minLength": 1
                   },
                   "skill": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "serialisations": {
                     "type": "string",
                     "minLength": 1
                   },
@@ -489,6 +525,36 @@
             ],
             "additionalProperties": false
           }
+        },
+        "renderExemption": {
+          "type": "object",
+          "properties": {
+            "of": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "visualiser",
+                  "workflow-visualiser"
+                ]
+              },
+              "minItems": 1
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owes": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "of",
+            "reason",
+            "owes"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -504,8 +570,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/sharp-ptolemy-6qxh77",
-    "sha": "e653ddaa1f8ed1807d2075ae4fac095f217adb57",
+    "sha": "302d4435bd9cf879153913b9726b3077258f378d",
     "pr": "593/merge",
-    "run": "35534974867"
+    "run": "35537897229"
   }
 }

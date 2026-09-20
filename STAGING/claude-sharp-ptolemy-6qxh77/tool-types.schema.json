@@ -58,6 +58,12 @@
       "description": "An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "TimeWindow": {
+      "type": "string",
+      "pattern": "^(\\d{1,4}[hdw]|\\d{4}-\\d{2}-\\d{2})$",
+      "description": "A history window: a count with a unit (4h, 2d, 1w) or an ISO date.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "Flag": {
       "type": "boolean",
       "description": "A boolean switch — projects to a bare flag, with no value word",
@@ -323,8 +329,8 @@
   },
   "staging": {
     "branch": "claude/sharp-ptolemy-6qxh77",
-    "sha": "e653ddaa1f8ed1807d2075ae4fac095f217adb57",
+    "sha": "302d4435bd9cf879153913b9726b3077258f378d",
     "pr": "593/merge",
-    "run": "35534974867"
+    "run": "35537897229"
   }
 }

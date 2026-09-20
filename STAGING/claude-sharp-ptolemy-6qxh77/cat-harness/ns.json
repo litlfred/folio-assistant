@@ -222,6 +222,14 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:ThemeGraph",
+      "@type": "rdfs:Class",
+      "label": "ThemeGraph",
+      "comment": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:ToolGraph",
       "@type": "rdfs:Class",
       "label": "ToolGraph",
@@ -234,6 +242,14 @@
       "@type": "rdfs:Class",
       "label": "TranslationSourceGraph",
       "comment": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:WaiverGraph",
+      "@type": "rdfs:Class",
+      "label": "WaiverGraph",
+      "comment": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
     },
