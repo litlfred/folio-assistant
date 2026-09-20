@@ -255,15 +255,15 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T10:34:23.483Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/09b80558592995d534cf5d28d2cf000fb5615bb9",
-  "sourceCommitSha": "09b80558592995d534cf5d28d2cf000fb5615bb9",
-  "sourceCommitAt": "2026-09-20T10:29:59Z",
+  "generatedAt": "2026-09-20T10:42:07.531Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/97e28c98ce638371e07d71db5787f28fb959e2e1",
+  "sourceCommitSha": "97e28c98ce638371e07d71db5787f28fb959e2e1",
+  "sourceCommitAt": "2026-09-20T10:37:34Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 190,
     "Actor": 27,
-    "Capability": 24,
+    "Capability": 25,
     "Role": 116,
     "Convention": 2,
     "SkillPackage": 9,
@@ -3915,15 +3915,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
       "localId": "lean-mcp",
       "name": "Lean MCP Server",
-      "description": "MCP server providing Lean 4 diagnostics, proof state, and goal information.",
+      "description": "MCP server providing Lean 4 diagnostics, proof state, and goal information. It does NOT require a local lean-toolchain: the Lean runs server-side and detection is an mcp-probe against the endpoint. It used to declare that requirement, which made it unavailable on any machine without a local Lean even when the server was reachable — and, because `lean-toolchain.fallbackTo` names this capability, made that fallback unable to fire at all (it was absent in exactly the case it existed for). Removed 2026-09-20, bean folio-assistant-sym3.",
       "detection": {
         "method": "mcp-probe",
         "endpoint": "lean-mcp",
         "healthPath": "/health"
       },
-      "requiresCapability": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#capability/lean-toolchain"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/lean-mcp"
     },
     {
@@ -3982,6 +3979,18 @@
         "command": "docker info"
       },
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/docker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#capability/git-read",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "git-read",
+      "name": "Git Read",
+      "description": "Ability to read the Git repository — history, refs and working tree. Required by every skill that reasons about what changed. It was referenced by 17 skills and declared by NO capability until 2026-09-20, when executing the degradation model found it on the first run (bean folio-assistant-ahvw): a reference-shaped value resolving to nothing, so those skills could not be shown to run at all.",
+      "detection": {
+        "method": "command",
+        "command": "git rev-parse --git-dir"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/git-read"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#capability/node-runtime",
@@ -25249,8 +25258,8 @@
   ],
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "a0d6078c768b53c2284648e28090d0258d869f6c",
+    "sha": "195c376c7ff1c8df445c46b5420deb0dc38503fa",
     "pr": "485/merge",
-    "run": "35505368053"
+    "run": "35505737751"
   }
 }
