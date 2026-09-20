@@ -258,12 +258,20 @@
               "description": {
                 "type": "string",
                 "minLength": 1
+              },
+              "dependents": {
+                "type": "string",
+                "enum": [
+                  "reproduce",
+                  "skip"
+                ]
               }
             },
             "required": [
               "id",
               "path",
-              "graphs"
+              "graphs",
+              "dependents"
             ],
             "additionalProperties": false
           },
@@ -456,8 +464,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/sleepy-rubin-mr6kdu",
-    "sha": "238f5a85e0317e23fc78571f09431e305eb36160",
+    "sha": "cb932317e49abfeb496519c7043eb0562381fa5e",
     "pr": "477/merge",
-    "run": "35513386707"
+    "run": "35518397589"
   }
 }
