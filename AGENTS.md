@@ -207,8 +207,10 @@ open a topic with and the turn-report formats with their seven rules.
 [`skills/folio-core/bean-coordination.md`](cat-harness/skills/folio-core/bean-coordination.md)
 carries the cross-session half: **claim before you work** — and §"A claim is
 branch-local" for why a claim **announces rather than reserves** until your PR
-exists, with the two checks to run first — never resolve a sibling's bean, and
-**never delete ANY bean**. Unwanted work is `scrapped`, with its reasons,
+exists, with the two checks to run first; §"Closing a bean whose work has
+already landed" for who may close one — **evidence, not authorship**, with
+`ready-to-close` for the case you cannot re-derive; and **never delete ANY
+bean**. Unwanted work is `scrapped`, with its reasons,
 because a scrapped bean stops the next agent re-entering a dead end while a
 deleted one leaves a sibling unable to tell abandonment from accident.
 

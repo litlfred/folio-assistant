@@ -4,8 +4,10 @@ title: 'LOGGING: agents log task start/end to fsh-guts/logs/, off by default, as
 status: in-progress
 type: feature
 priority: high
+tags:
+    - ready-to-close
 created_at: 2026-09-19T11:23:31Z
-updated_at: 2026-09-19T12:24:54Z
+updated_at: 2026-09-20T18:45:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -266,3 +268,26 @@ any KG node — which is structurally what a log entry with `references[]` is.
 capture is declared on a BPMN process and the producer is called by
 `workflow_start` / `workflow_complete`. Recorded so a later agent can move it
 cheaply rather than re-deriving the argument: this is a judgement, not a fact.
+
+## Evidence
+
+Tagged `ready-to-close` by the `bbbl` sweep, 2026-09-20. **Not closed** — the
+owner confirms the batch (`bun run check:ready-to-close`).
+
+**What the bean itself records as done**, under its own heading *"Everything on
+this bean is now done"*: schema · role · skill · BPMN · producer · rich
+references · `<folio:log>` capture on three processes · emptying. It carries
+*"13 tests, both guards proven load-bearing by disabling them"* — a falsifier
+that was actually run, which is the strongest evidence in the four.
+
+**Its own words on why it stayed open**: *"Ready to resolve once the owner
+confirms; not resolving unilaterally."* That is the collision `bbbl` names, not
+an outstanding task.
+
+**What this session could NOT re-derive**: the 13 tests were not re-run here,
+and 0 of the bean's 7 Done-when boxes are ticked, so the mapping from "done" to
+each box is the author's claim rather than a re-measurement. The open design
+question the bean raises at the end — nothing outside `workflow_start` /
+`workflow_complete` calls the producer — is explicitly *"a real design
+question, not an oversight"*, and belongs in its own bean rather than holding
+this one open.

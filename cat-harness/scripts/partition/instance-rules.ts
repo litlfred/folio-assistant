@@ -506,6 +506,16 @@ export const RULES: Rule[] = [
       "scripts/check-agent-entry-links.ts",
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
+      // The work plan's own readers. Harness by subject and by dependency:
+      // `beans/` is the AGENT's work plan, declared by the harness, and a
+      // folio's content has no bean store. `bean-store-read.ts` is the shared
+      // file reader the three import; `check-waivers.ts` reads the `waiver`
+      // graph, which is the harness's confirmation model and nothing a folio
+      // authors.
+      "scripts/bean-store-read.ts",
+      "scripts/check-bean-bodies.ts",
+      "scripts/check-ready-to-close.ts",
+      "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",
       // The external-specification registry — which edition of BPMN, DD or
       // DCMI Terms this repository conforms to, reconciled against the
@@ -639,6 +649,14 @@ export const RULES: Rule[] = [
       //    survives the "describes a process" test.
       "schemas/memory.ts",
       "schemas/carried-note.ts",
+      // Same argument as `memory.ts`, one step along: a waiver is a permission
+      // a PERSON gives an AGENT about a gate in this repository's process. It
+      // is declared over the same directory as agent memory and it fails the
+      // "describes a folio's material" test just as plainly. Keyword triage
+      // put it in core on the word "confirmation"; the import direction is
+      // what settles it — `scripts/check-waivers.ts` is harness and may not
+      // reach into core.
+      "schemas/waiver.ts",
       // Translation is cat-harness's, stated directly: "ui stuff like
       // translations (skills, tooling) are not in cat-bootstrap, it is in
       // cat-harness/". These three are the gettext machinery and the registry

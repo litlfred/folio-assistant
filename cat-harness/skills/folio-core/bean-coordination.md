@@ -30,9 +30,19 @@ unable to tell abandonment from accident.
 
 **Claiming and closing are separately scoped.** Claim before you work, so two
 sessions do not pick the same item — with the limit in the next section, because
-a claim is not a lock. Never *resolve* a bean another session or a human owns —
-closing someone else's is how one of them loses work it had not finished
-reporting.
+a claim is not a lock.
+
+**Closing is governed by evidence, not by authorship**, and this paragraph used
+to say the opposite. It read *"Never resolve a bean another session or a human
+owns"*, full stop, which contradicted §"Closing a bean whose work has already
+landed" three screens down and produced the failure that section measures: six
+beans verified done on `main` and left `in-progress` because the rule named who
+may **not** close one and never named who **may**. Read that section before you
+close anything — it carries the three obligations, and the `ready-to-close` tag
+for the case where you cannot re-derive the measurement yourself. What stays
+off limits is a bean a sibling is **mid-flight** on: a claim naming a branch, a
+recent note, an open PR. Closing that is how a session loses work it had not
+finished reporting.
 
 Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
 
@@ -239,6 +249,81 @@ from an oversight, which is precisely how six of these accumulated.
 Stopping because you are *blocked* is a different state with its own
 requirements — what it waits on, since when, an expiry and a handoff:
 [`bean-blocking.md`](bean-blocking.md).
+
+### When you cannot re-derive it yourself — `ready-to-close`
+
+Obligation 1 is the expensive one, and it is where the rule above stalls.
+
+**Measured 2026-09-20, bean `bbbl`.** Four beans read as finished in their own
+bodies and sat `in-progress`: `7uff` (*"Everything on this bean is now done …
+Ready to resolve once the owner confirms; not resolving unilaterally"*, 0 of 7
+boxes ticked), `t0i3` (its one open box done in the body at commit `8d1c8f27`),
+`y8as` (both halves merged, the platform copy sha256-verified and deleted),
+`d1r6` (a full `## Implemented` section, 0 of 5 ticked). Every session that met
+one discharged it the same way — by leaving it open — so the cost is a session
+of confusion per bean, paid again on every sweep.
+
+Re-derivation is not always available. The measurement may need a running
+deployment, a branch this container does not have, or a judgement the owner
+reserved. The rule as written then has **no exit**, and *leave it open* is what
+an agent picks, every time.
+
+> **The third state: tag the bean `ready-to-close`, quote under a `## Evidence`
+> heading what you DID verify, and say in one line what you could not re-derive
+> and why. The owner confirms the batch.**
+
+It is a **tag, not a status**, and the reason is mechanical rather than
+stylistic. The status vocabulary belongs to the third-party CLI:
+
+```
+$ beans update <id> --status ready-to-close
+Error: invalid status: ready-to-close (must be in-progress, todo, draft, completed, scrapped)
+$ beans update <id> --tag ready-to-close
+Updated <id>
+```
+
+and `BeanStatusSchema` in `schemas/tool-types.ts` is defined as *"exactly what
+`beans update --status` accepts"*. A sixth status here would desync the schema
+from the tool it documents on the next `beans` release.
+
+`bun run check:ready-to-close` lists every tagged bean with its evidence, so the
+confirmation is one read rather than four. **It reports and never acts** —
+[`deletion-requires-confirmation.md`](deletion-requires-confirmation.md) — unless
+the owner has waived the `bean-close` gate for this session or process run, in
+which case the batch closes under that waiver and the turn report names it:
+[`confirmation-waiver.md`](confirmation-waiver.md).
+
+**It is not a parking space.** `ready-to-close` says *re-derivation is beyond
+this session*; it never says *I would rather not*. Where you can run the check,
+run it and close the bean — that is still the rule this subsection sits under.
+
+## The store on `main` is the one every sibling reads (STRICT)
+
+§"A claim is branch-local" states the fact. This says what to do about it.
+
+**Measured 2026-09-20, bean `cvab`.** Branch `claude/sleepy-rubin-mr6kdu`
+(PR #477, 65 commits ahead, 1,937 files) carried the `kupb` epic and **12 of its
+13 children**. None existed on `main`. A review of the store on `main` therefore
+saw **0 %** of the IRIS work plan, and a whole goal's workstream was invisible
+until somebody swept the branch by hand.
+
+The owner chose both remedies, 2026-09-20:
+
+1. **Land beans ahead of code.** A bean-only change — the epic, its children,
+   their Done-whens — opens its own PR and merges **as soon as the plan
+   exists**. The code branch that follows carries only status updates. A
+   bean-only diff has nothing to review but the plan, so it does not wait on
+   the code's review, and the store on `main` is never blind to a goal that has
+   been decided.
+2. **A sweep reads the open branches' stores too.** [`goal-review`](goal-review.md)
+   already does; the todo-manager fallback does not, and the fallback is what a
+   container without the CLI falls back to. Until it does, a sweep run from the
+   fallback is reporting over `main` only, and must say so rather than present
+   its count as the work plan.
+
+The two are not alternatives. (1) prevents the blindness; (2) catches the
+branches that were already open when (1) landed — including #477, whose 12
+beans are still branch-only today.
 
 ## Which copy is canonical — `skills/folio-core/`
 

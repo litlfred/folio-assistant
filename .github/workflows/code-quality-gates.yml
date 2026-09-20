@@ -543,6 +543,21 @@ jobs:
           bun run landing:data:check
           bun run check:agents-xref
           bun run check:bean-parents
+          # Bean `sfhr`: three store defects `beans check` cannot see, because
+          # none of them is a link -- an empty body on an open bean, a `title:`
+          # block scalar that swallowed the body's first lines, and a prose
+          # blocker naming a bean that is `completed` or `scrapped`. Baselined
+          # at the eight the store had, so a NEW one fails and the backlog is
+          # listed rather than demanded.
+          bun run check:bean-bodies
+          # Bean `bbbl`: a bean tagged `ready-to-close` carries the evidence its
+          # session did find. Fails only on a tag with no `## Evidence` -- the
+          # parking space the skill forbids. Closing them stays the owner's.
+          bun run check:ready-to-close
+          # Bean `bbbl` / the owner's waiver rule: a malformed waiver reads as
+          # permission and carries none, so it fails here rather than at the
+          # gate it claims to have opened.
+          bun run check:waivers
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
