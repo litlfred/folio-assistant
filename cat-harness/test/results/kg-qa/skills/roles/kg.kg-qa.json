@@ -8,21 +8,8 @@
   "source_hash": null,
   "criteria": {
     "skill-has-entry-point": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "bootstrap-kg-navigation",
-          "detail": "skill \"bootstrap-kg-navigation\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "discussion",
-          "detail": "skill \"discussion\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "log-message",
-          "detail": "skill \"log-message\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "skill-in-role-or-process": {
       "result": "fail",
@@ -532,8 +519,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 3,
+    "pass": 7,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }

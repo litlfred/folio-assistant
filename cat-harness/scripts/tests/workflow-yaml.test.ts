@@ -95,7 +95,7 @@ describe("GitHub Actions workflows", () => {
     // what #300 did, and worse than the race it replaced. They get a retry,
     // safe here because the three write to different directories under one
     // root with `keep_files: true`.
-    const text = readFileSync(".github/workflows/discoverability-docs.yml", "utf-8");
+    const text = readFileSync(join(WORKFLOW_DIR, "discoverability-docs.yml"), "utf-8");
     expect(text).not.toContain("group: gh-pages-push");
     // Two push sites per job — the attempt and the retry — for three jobs.
     // Counted the way the checker counts: a COMMENT naming the action is not a
