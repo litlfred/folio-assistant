@@ -1,7 +1,7 @@
 ---
 # folio-assistant-fuzm
 title: The staging slug sanitiser can emit '..' — safety rests on git's ref rules, written down nowhere
-status: todo
+status: completed
 type: task
 parent: folio-assistant-1xhc
 created_at: 2026-09-20T06:53:04Z
@@ -52,3 +52,60 @@ The job's own comment already marks it **"THE SERIOUS ONE"** for a different rea
 ## Not in scope
 
 Rewriting the sanitiser. It is correct for the input it actually gets; the defect is that nothing says why, and nothing would notice if that stopped being true.
+
+_2026-09-20T10:45Z_ — Done, and **two of this bean's own claims were revised by
+measuring them.**
+
+## The severity was overstated, and the reason is worth keeping
+
+This bean reads as though `rm -rf "STAGING/.."` would delete the checkout root.
+It would not. **`rm` refuses `.` and `..` operands outright** — POSIX-mandated,
+and GNU `rm` implements it:
+
+```
+$ rm -rf "STAGING/.."
+rm: refusing to remove '.' or '..' directory: skipping 'STAGING/..'
+exit=1
+```
+
+Nothing is deleted. So there were already TWO independent guards, not one: git
+rejecting `..` in ref names, and `rm` refusing the operand.
+
+## And the real residual is somewhere the bean did not look
+
+**`git add -A "STAGING/.."` does NOT refuse.** It stages the whole tree above
+the previews — measured in a scratch repository, `rootfile` staged from a
+`STAGING/..` pathspec. So the reachable consequence is a job that deletes
+nothing and then commits unrelated changes: a wrong commit, not data loss.
+
+That is what justifies the guard being on the VALUE rather than on provenance,
+which is what this bean asked for all along — just for a better reason than
+the one it gave.
+
+## Also narrower than stated
+
+`/` is not in the permitted class, so the sanitiser's output is ALWAYS a single
+path segment. Every escape that needs a separator is already impossible:
+`../..` becomes `..-..`, `feat/../x` becomes `feat-..-x`. The entire hazard is
+the two spellings `.` and `..`.
+
+## What landed
+
+- The invariant written where the sanitiser is, in BOTH slug steps, naming
+  each guard and the one they do not cover.
+- `case "$SLUG" in ""|.|..)` in `stage` and `cleanup`. `cleanup-dispatch`
+  already had it — found while writing the test, which expected two guards and
+  got three.
+- `scripts/tests/staging-slug.test.ts`, 17 tests that RUN the real things
+  rather than asserting about them: the sed pipeline lifted from the workflow,
+  `git check-ref-format`, `rm`, `git add`. Including a positive control — git
+  ACCEPTS `main` and `claude/...` — so the refusal tests would fail against a
+  broken git rather than passing for the wrong reason.
+- A test that fails if the workflow's sed pipeline stops matching the one
+  under test, so this file cannot quietly start measuring something else.
+
+## Done when — all three met
+
+- [x] the invariant is written where the sanitiser is
+- [x] a test pins it, independent of the input happening to be a ref
+- [x] every `rm -rf` built from a slug is in a job that refused an unsafe one
