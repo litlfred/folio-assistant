@@ -198,6 +198,37 @@
           },
           "minItems": 1
         },
+        "alternativeTo": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        },
+        "selection": {
+          "type": "object",
+          "properties": {
+            "when": {
+              "type": "string",
+              "minLength": 1
+            },
+            "limits": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cost": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "when",
+            "limits",
+            "cost"
+          ],
+          "additionalProperties": false
+        },
         "requires": {
           "type": "object",
           "properties": {
@@ -263,8 +294,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "d4b952de5829ff7eed3330e21e593c22cf1bd64d",
+    "sha": "58dc0275459feaedf023c8a31ed6acc7890a9c18",
     "pr": "437/merge",
-    "run": "35470059451"
+    "run": "35491255359"
   }
 }

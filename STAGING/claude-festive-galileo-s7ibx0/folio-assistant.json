@@ -130,6 +130,7 @@
     "localId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#localId",
     "actorKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKinds",
+    "reach": "https://litlfred.github.io/folio-assistant/cat-harness/ns#reach",
     "actedUpon": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -247,22 +248,22 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-19T21:20:55.298Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9f3acf7113e543b04c8d879759b3227d0317fb88",
-  "sourceCommitSha": "9f3acf7113e543b04c8d879759b3227d0317fb88",
-  "sourceCommitAt": "2026-09-19T21:17:03Z",
+  "generatedAt": "2026-09-20T05:18:05.473Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/016400c7d4da5466dc2011d57455486167669b3d",
+  "sourceCommitSha": "016400c7d4da5466dc2011d57455486167669b3d",
+  "sourceCommitAt": "2026-09-20T05:15:42Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 167,
-    "Actor": 26,
-    "Capability": 23,
-    "Role": 100,
+    "Skill": 169,
+    "Actor": 27,
+    "Capability": 24,
+    "Role": 109,
     "SkillPackage": 7,
-    "Process": 34,
-    "SequenceFlow": 475,
-    "ProcessNode": 444,
-    "Tool": 28,
-    "Schema": 51,
+    "Process": 36,
+    "SequenceFlow": 498,
+    "ProcessNode": 464,
+    "Tool": 30,
+    "Schema": 55,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -934,7 +935,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 271,
+      "instructionLines": 337,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1263,13 +1264,14 @@
       "title": "Reading the knowledge graph — how to find the skill you need",
       "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/folio-core"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/folio-core",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/skills"
       ],
       "instructionsPath": "skills/folio-core/kg-navigation.md",
       "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
-      "ambiguous": false,
+      "ambiguous": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation"
     },
     {
@@ -1282,7 +1284,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 491,
+      "instructionLines": 536,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1666,6 +1668,21 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "qa-report-signing",
+      "title": "QA report signing — two routes, chosen by the performer's reach",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/qa-report-signing.md",
+      "instructionLines": 105,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/mcp-assembly",
@@ -2135,7 +2152,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 275,
+      "instructionLines": 314,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2883,7 +2900,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/rendering-fixes.md",
-      "instructionLines": 437,
+      "instructionLines": 442,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2920,6 +2937,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/proof-simplifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/confirm-harness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "confirm-harness",
+      "title": "Which harness, and where",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/skills"
+      ],
+      "instructionsPath": "../bootstrap/skills/confirm-harness.md",
+      "instructionLines": 59,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/confirm-harness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/corpus-grep",
@@ -3049,6 +3082,22 @@
         "translation"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#actor/attestation-service",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "attestation-service",
+      "actorKind": "system",
+      "title": "Attestation service",
+      "description": "The signing endpoint. Declares `reach: \"internet\"` because an API signer that cannot reach out is not a signer — this is the one actor whose reach is part of what it IS, rather than a fact about where it happens to run.",
+      "reach": "internet",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#capability/signing-api"
+      ],
+      "roleName": [
+        "attestation-service"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/attestation-service"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#actor/ci-pipeline",
@@ -3416,6 +3465,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#capability/git-push"
       ],
       "roleName": [
+        "administrator",
         "programme-manager",
         "publication-manager",
         "editor",
@@ -3750,6 +3800,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/git-push"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#capability/signing-api",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "signing-api",
+      "name": "Signing API",
+      "description": "An attestation endpoint that will sign a QA report's run hashes. Probed by configuration, not by calling it: a probe that made a live request would be indistinguishable from an outage on the one machine this matters for, and would call an external service just to answer a question about setup.",
+      "detection": {
+        "method": "env-var",
+        "variable": "FOLIO_SIGNING_ENDPOINT"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/signing-api"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#capability/html-pdf-engine",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
       "localId": "html-pdf-engine",
@@ -3832,7 +3894,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/skills",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "skills",
-      "path": "src/skills",
+      "path": "../bootstrap/skills",
       "hasManifest": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
     },
@@ -4026,6 +4088,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/production-vs-exploratory-discipline",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/readme-sections",
@@ -10437,6 +10500,378 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Actor and role administration",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/actor-role-administration.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Start_AdminRequest"
+      ],
+      "nodeCount": 11,
+      "flowCount": 14,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A01",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Start_AdminRequest",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A02",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "add actor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AddActor",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A03",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "assign roles",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AssignRoles",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A04",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "permission",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A05",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "retire",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RetireActor",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A06",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AddActor",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A07",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AssignRoles",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A08",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A09",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RetireActor",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/End_Administered",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Administrator",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Graph%20audit%20(system)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Graph audit (system)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Graph%20audit%20(system)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Start_AdminRequest",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A change to who can do what",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A01"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Start_AdminRequest"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which administration change?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A01",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A02",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A03",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A04",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A05"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AddActor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Add an actor, and declare its kind",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A06"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AddActor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AssignRoles",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Open or close a role to an actor",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A07"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AssignRoles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Grant or revoke a permission",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A08"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RetireActor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Retire an actor — never delete one",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/deletion-requires-confirmation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A09"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RetireActor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Declaration edited",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A06",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A07",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A08",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A10"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Branch, gates, PR and review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/prepare-merge",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/continual-progress"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A11"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Audit the graph [kg:audit]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Graph%20audit%20(system)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A12"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RunKgAudit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Audit clean?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A13",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A14"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/End_Administered",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Graph changed and audited",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A14"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/End_Administered"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_BeanLifecycle",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Agent bean lifecycle",
@@ -11711,6 +12146,296 @@
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_VoiceReview/node/End_VoiceReviewed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "QA report signing",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/qa-report-signing.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "api",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "human",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Validation and QA (mechanical + agents)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Attestation%20service%20(API)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Attestation service (API)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20service%20(API)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Human%20signer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human signer",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20signer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "QA report ready to attest",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Build the test run [folio-test-run/v1]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/content-test"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Resolve the performer's reach [effectiveReach + signing-api probe]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which signing route?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/signing-route.dmn#Decision_SigningRoute",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Sign over the API",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Attestation%20service%20(API)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Sign as release authority",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Human%20signer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Signed",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record which route signed it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Report attested",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/End_Signed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#process/Process_CRDM_Signoff",
@@ -14619,13 +15344,6 @@
       "name": "Programme manager",
       "sourceKind": "bpmn-lane",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Programme%20manager"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Validation and QA (mechanical + agents)",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Review%20team%20and%20SMEs",
@@ -18140,6 +18858,128 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/beans-manual"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#tool/ingest-stdlib",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-stdlib",
+      "title": "Ingest, standard library only",
+      "description": "Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The upload to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Library root; defaults to the declared `library` graph.",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/Flag",
+            "description": "Report the chosen rung and stop.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-stdlib"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#tool/ingest-extended",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ingest-extended",
+      "title": "Ingest, with PDF and image extensions",
+      "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
+      "install": {
+        "cli": "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils"
+      },
+      "invoke": {
+        "shell": "bun run scripts/ingest-document.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF to ingest, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outdir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/RepoPath",
+            "required": false,
+            "arg": {
+              "flag": "--outdir"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/tool-types.schema.json#/$defs/Slug",
+            "description": "The library entry written."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "pymupdf",
+          "tesseract"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ingest-extended"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#tool/github",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "github",
@@ -19632,6 +20472,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/workflow-complete"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/actor-reach",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "actor-reach",
+      "title": "**Network reach is a property of an ACTOR**, and how it composes with the",
+      "module": "schemas/actor-reach.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/actor-reach"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/archive-contents",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "archive-contents",
@@ -19851,6 +20699,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/memory"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/narrative",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "narrative",
+      "title": "A generated narrative, and who stands behind it — bean `ju0u`.",
+      "module": "schemas/narrative.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/narrative"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/note-anchor",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "note-anchor",
@@ -19865,6 +20721,14 @@
       "title": "§S7 — `PrecisionScalar` envelope for round-tripping high-precision",
       "module": "schemas/precision-scalar.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/precision-scalar"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/python-deps",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "python-deps",
+      "title": "The Python packages this repository's scripts need — declared once.",
+      "module": "schemas/python-deps.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/python-deps"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/qa-review",
@@ -19913,6 +20777,14 @@
       "title": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
       "module": "schemas/skill-package.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/skill-package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/staging-preview",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "staging-preview",
+      "title": "`staging-preview` — a node of the trashcan that describes one review preview.",
+      "module": "schemas/staging-preview.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/staging-preview"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/staging",
@@ -20366,6 +21238,25 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/clinical-sme"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/administrator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "administrator",
+      "title": "Administrator",
+      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Administrator"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/administrator"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/programme-manager",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "programme-manager",
@@ -20402,11 +21293,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/ig-publication",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/decision-audit"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Publication%20manager",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Human%20signer"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/publication-manager"
     },
@@ -20783,6 +21676,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/ig-publisher-service"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/attestation-service",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "attestation-service",
+      "title": "Attestation service",
+      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Attestation%20service%20(API)"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/attestation-service"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/work-plan",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "work-plan",
@@ -20859,6 +21770,53 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/Activity%20log"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/log"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/initiator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "initiator",
+      "title": "Initiator",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/kg-navigation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#skill/confirm-harness"
+      ],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/initiator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/knowledge-graph-data-store",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "knowledge-graph-data-store",
+      "title": "Knowledge Graph Data Store",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/knowledge-graph-data-store"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#role/requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "requestor",
+      "title": "Requestor",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "bindsLane": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/requestor"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#directory/tools",
@@ -21007,8 +21965,8 @@
   ],
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "d4b952de5829ff7eed3330e21e593c22cf1bd64d",
+    "sha": "58dc0275459feaedf023c8a31ed6acc7890a9c18",
     "pr": "437/merge",
-    "run": "35470059451"
+    "run": "35491255359"
   }
 }
