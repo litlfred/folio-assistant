@@ -1,0 +1,184 @@
+#!/usr/bin/env bun
+/**
+ * Run the detangle criterion over this repository's knowledge graph.
+ *
+ * Usage:
+ *   bun run detangle/scripts/kg-detangle.ts            # every candidate group
+ *   bun run detangle/scripts/kg-detangle.ts --group X  # one group, with its worklist
+ *   bun run detangle/scripts/kg-detangle.ts --json
+ *
+ * ## What counts as an edge, and why the list is short on purpose
+ *
+ * Four extractors, each of which reads a declaration the repository already
+ * makes rather than guessing at meaning:
+ *
+ *   - `md-link`       a relative markdown link between two graph files
+ *   - `bpmn-skill`    `<folio:skill ref="…">` on an activity
+ *   - `json-skill`    a skill name in `roles.json`, a package manifest, or a
+ *                     requirement's `satisfiedBy`
+ *   - `ts-import`     a relative import between schema modules
+ *
+ * There is deliberately NO full-text extractor. A skill that merely MENTIONS
+ * another by name in prose is not depending on it, and counting prose
+ * mentions would make every package that cites `AGENTS.md`'s examples look
+ * tangled into all of them. Under-counting shows up as a group that looks
+ * cleaner than it is; the adjudicator is told which extractors ran, so that
+ * limit is visible rather than silent.
+ *
+ * A reference to a node outside the scanned set is a DANGLING reference, and
+ * it is reported separately. It is not an outbound edge: counting it as one
+ * would make a group with a broken link look entangled, which is a different
+ * finding calling for a different fix.
+ *
+ * @module detangle/scripts/kg-detangle
+ */
+import { readdirSync, readFileSync, statSync, existsSync } from "fs";
+import { join, relative, resolve, dirname } from "path";
+import {
+  DEFAULT_THRESHOLDS,
+  measure,
+  failingClauses,
+  type DetangleEdge,
+  type DetangleNode,
+} from "../schemas/detangle.js";
+
+const ROOT = resolve(import.meta.dir, "../..");
+
+/** Directories scanned, each mapped to the depth at which a candidate group is named. */
+const SCAN: Array<{ path: string; groupDepth: number }> = [
+  { path: "cat-harness/skills", groupDepth: 3 },
+  { path: "cat-harness/schemas", groupDepth: 2 },
+  { path: "cat-harness/tools", groupDepth: 2 },
+  { path: "cat-harness/src/skills", groupDepth: 3 },
+  { path: "folio-assistant-core/schemas", groupDepth: 2 },
+  { path: "kg-navigation/skills", groupDepth: 2 },
+  { path: "bootstrap/skills", groupDepth: 2 },
+  { path: "bootstrap/workflows", groupDepth: 2 },
+  { path: "detangle/schemas", groupDepth: 2 },
+];
+
+const EXT = /\.(md|bpmn|dmn|json|ts)$/;
+
+function walk(dir: string, out: string[] = []): string[] {
+  if (!existsSync(dir)) return out;
+  for (const e of readdirSync(dir)) {
+    if (e.startsWith(".")) continue;
+    const p = join(dir, e);
+    if (statSync(p).isDirectory()) walk(p, out);
+    else if (EXT.test(e)) out.push(p);
+  }
+  return out;
+}
+
+const nodes: DetangleNode[] = [];
+const byId = new Map<string, string>(); // id -> absolute path
+/** Skill name (front-matter `name:` or basename) -> node id. A name may be carried by two bodies; both are kept. */
+const byName = new Map<string, string[]>();
+
+for (const { path, groupDepth } of SCAN) {
+  for (const abs of walk(join(ROOT, path))) {
+    const id = relative(ROOT, abs);
+    const group = id.split("/").slice(0, groupDepth).join("/");
+    nodes.push({ id, group });
+    byId.set(id, abs);
+    const base = id.split("/").pop()!.replace(EXT, "");
+    const fm = /^---\n[\s\S]*?\bname:\s*([A-Za-z0-9._-]+)/m.exec(readFileSync(abs, "utf8"));
+    for (const n of new Set([base, fm?.[1]].filter(Boolean) as string[])) {
+      byName.set(n, [...(byName.get(n) ?? []), id]);
+    }
+  }
+}
+
+const edges: DetangleEdge[] = [];
+const dangling: Array<{ from: string; ref: string; via: string }> = [];
+
+function link(from: string, toId: string | undefined, ref: string, via: string) {
+  if (toId && byId.has(toId)) edges.push({ from, to: toId, via });
+  else dangling.push({ from, ref, via });
+}
+
+/** Resolve a name to a node, preferring one in the SAME group — a package's own copy wins over a sibling instance's. */
+function byNameNear(from: string, name: string): string | undefined {
+  const hits = byName.get(name);
+  if (!hits?.length) return undefined;
+  const g = from.split("/").slice(0, 3).join("/");
+  return hits.find((h) => h.startsWith(g)) ?? hits[0];
+}
+
+for (const n of nodes) {
+  const abs = byId.get(n.id)!;
+  const text = readFileSync(abs, "utf8");
+
+  if (n.id.endsWith(".md")) {
+    for (const m of text.matchAll(/\]\((\.\.?\/[^)\s#]+\.md)[^)]*\)/g)) {
+      link(n.id, relative(ROOT, resolve(dirname(abs), m[1])), m[1], "md-link");
+    }
+  }
+  if (n.id.endsWith(".bpmn") || n.id.endsWith(".dmn")) {
+    for (const m of text.matchAll(/folio:skill\s+ref="([^"]+)"/g)) {
+      link(n.id, byNameNear(n.id, m[1]), m[1], "bpmn-skill");
+    }
+  }
+  if (n.id.endsWith(".json")) {
+    // Only string ARRAY members are read as references. A free-form description
+    // mentioning a skill is prose, and prose is not a dependency.
+    for (const m of text.matchAll(/"([a-z][a-z0-9-]{3,})"(?=\s*[,\]])/g)) {
+      const t = byNameNear(n.id, m[1]);
+      if (t && t !== n.id) edges.push({ from: n.id, to: t, via: "json-skill" });
+    }
+  }
+  if (n.id.endsWith(".ts")) {
+    for (const m of text.matchAll(/from\s+"(\.\.?\/[^"]+)"/g)) {
+      const p = resolve(dirname(abs), m[1].replace(/\.js$/, ".ts"));
+      link(n.id, relative(ROOT, p), m[1], "ts-import");
+    }
+  }
+}
+
+const groups = [...new Set(nodes.map((n) => n.group))].sort();
+const only = process.argv.includes("--group")
+  ? process.argv[process.argv.indexOf("--group") + 1]
+  : undefined;
+
+const results = groups.map((g) => {
+  const m = measure(g, nodes, edges);
+  return { ...m, clauses: failingClauses(m, DEFAULT_THRESHOLDS) };
+});
+
+if (process.argv.includes("--json")) {
+  console.log(JSON.stringify({ thresholds: DEFAULT_THRESHOLDS, results, dangling }, null, 2));
+} else {
+  console.log(`\nDetangle — ${nodes.length} nodes, ${edges.length} edges, ${dangling.length} dangling\n`);
+  console.log(
+    "  " +
+      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(5), "1-way".padStart(6), "verdict"].join(" "),
+  );
+  console.log("  " + "-".repeat(95));
+  for (const r of results) {
+    if (only && r.group !== only) continue;
+    const v = r.clauses.length === 0 ? "CANDIDATE" : `${r.clauses.length} clause(s) fail`;
+    console.log(
+      "  " +
+        [
+          r.group.padEnd(40),
+          String(r.size).padStart(5),
+          r.cohesion.toFixed(2).padStart(6),
+          String(r.inbound).padStart(5),
+          String(r.outbound).padStart(5),
+          r.oneWayness.toFixed(2).padStart(6),
+          v,
+        ].join(" "),
+    );
+    if (only) {
+      for (const c of r.clauses) console.log(`      · ${c}`);
+      if (r.worklist.length) {
+        console.log(`\n      Detangling worklist — every outbound edge:`);
+        for (const e of r.worklist) console.log(`      → ${e.to}   [${e.via}]   from ${e.from}`);
+      }
+    }
+  }
+  console.log(
+    `\n  Nothing here decides anything. A failing clause is a reason to LOOK.\n` +
+      `  The carve is an adjudication — see detangle/schemas/detangle.ts, "taste is a declared step".\n`,
+  );
+}
