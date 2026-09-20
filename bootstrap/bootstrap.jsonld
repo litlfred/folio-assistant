@@ -247,8 +247,8 @@
     "Skill": 2,
     "Process": 1,
     "SequenceFlow": 11,
-    "Role": 2,
-    "ProcessNode": 10,
+    "Role": 6,
+    "ProcessNode": 11,
     "GraphKind": 16,
     "Directory": 2
   },
@@ -276,312 +276,335 @@
       "ambiguous": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/determine-intent",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "determine-intent",
-      "title": "What is this repository supposed to be?",
-      "description": "Turn what a person wants this repository to become into ONE instance reference. The only step of bootstrap that requires user input, and it asks a single question rather than three.",
+      "name": "confirm-harness",
+      "title": "Which harness, and where",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#package/skills"
       ],
-      "instructionsPath": "skills/determine-intent.md",
-      "instructionLines": 89,
+      "instructionsPath": "skills/confirm-harness.md",
+      "instructionLines": 59,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
-      "name": "Bootstrap an instance",
+      "name": "Initialize a harness",
       "enforcement": "strict",
-      "sourcePath": "workflows/bootstrap.bpmn",
+      "sourcePath": "workflows/initialize-harness.bpmn",
       "startNode": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/Start_Pointed"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
       ],
-      "nodeCount": 10,
+      "nodeCount": 11,
       "flowCount": 11
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_start",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/Start_Pointed",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_ReadDeclaration"
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toGate",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_ReadDeclaration",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/Gate_IsInstance"
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_yes",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "yes — load",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/Gate_IsInstance",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_LoadInstance"
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_no",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "no — initialize",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/Gate_IsInstance",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_DetermineIntent"
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_loaded",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_LoadInstance",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/End_Ready"
+      "name": "none",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_ask",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_DetermineIntent",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/H_NameInstance"
+      "name": "one",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_answered",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/H_NameInstance",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_DetermineIntent"
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_ask2",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_DetermineIntent",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_ReadUpstream"
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toWrite",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_ReadUpstream",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_WriteDeclaration"
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadInstructions"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toCache",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_WriteDeclaration",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_Cache"
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadInstructions",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_cached",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_Cache",
-      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/End_Ready"
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "to": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Bootstrapping agent",
+      "name": "Initiator",
       "sourceKind": "bpmn-lane"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Person%20asking%20(judgement%20only)",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Person asking (judgement only)",
+      "name": "Requestor",
       "sourceKind": "bpmn-lane"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/Start_Pointed",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Knowledge Graph Data Store",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Pointed at a repository",
+      "name": "Asked to initialize a harness",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_start"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_ReadDeclaration",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Read this repository's declaration, if it has one",
+      "name": "List the harnesses this could be",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/kg-navigation"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_start"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toGate"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/Gate_IsInstance",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Already an instance?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toGate"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_yes",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_no"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_LoadInstance",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Load the declared graphs and stop",
+      "name": "List the locations this could install to",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/kg-navigation"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_yes"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_loaded"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_DetermineIntent",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Determine intent — an INSTANCE REFERENCE, not a content type",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/determine-intent"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_no",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_answered"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_ask",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_ask2"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/H_NameInstance",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Name the instance this repository should be an instance of",
+      "name": "Confirm WHICH harness, and where",
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Person%20asking%20(judgement%20only)",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "One harness?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_ask"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_answered"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_ReadUpstream",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Read the named instance's declaration",
+      "name": "Read the harness's declaration and instructions",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/kg-navigation"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_ask2"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toWrite"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_WriteDeclaration",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadInstructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Write this repository's declaration from what that said",
+      "name": "Log the start of the install",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/kg-navigation"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toWrite"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toCache"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/A_Cache",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Cache what the declaration needs under bootstrap/<instance>/",
+      "name": "Instructions there?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Follow them, at each location",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/kg-navigation"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_toCache"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_cached"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/node/End_Ready",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "This repository is an instance",
+      "name": "Harness installed",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap",
-      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_loaded",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Bootstrap/flow/F_cached"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Logged as failed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
       ],
       "outgoing": []
     },
@@ -712,6 +735,50 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#FolioGraph",
       "renderable": true,
       "summary": "Authored content, rendered to a website by the just-the-docs pipeline."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/initiator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "initiator",
+      "title": "Initiator",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/kg-navigation",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+      ],
+      "bindsLane": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "knowledge-graph-data-store",
+      "title": "Knowledge Graph Data Store",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [],
+      "bindsLane": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "requestor",
+      "title": "Requestor",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "bindsLane": []
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/cat-harness",
