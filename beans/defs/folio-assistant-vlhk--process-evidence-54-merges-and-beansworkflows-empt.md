@@ -1,13 +1,13 @@
 ---
 # folio-assistant-vlhk
 title: 'PROCESS EVIDENCE: 54 merges and beans/workflows/ empty — "say which process you are in" leaves no trail'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T19:00:00Z
+updated_at: 2026-09-20T21:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -20,8 +20,8 @@ Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS
 Either the processes are not being run (and the rule is aspirational, which should be said), or they are run and the state is not committed (which `workflow-state` says it must be). `supn` and `v49e` both measured the same empty directory from other angles. The review could not classify a single session by lane.
 
 ## Done when
-- [ ] The owner says which it is; the rule's text matches the answer
-- [ ] If instances are expected: the session-start sweep reports "no instance recorded" as a finding, not silence
+- [x] The owner says which it is; the rule's text matches the answer
+- [x] If instances are expected: the session-start sweep reports "no instance recorded" as a finding, not silence
 
 ---
 
@@ -40,5 +40,13 @@ processes** section that prints "**No instance recorded**" as a finding, with
 so rather than reading as zero. Deliberately not a failure: plenty of turns are
 legitimately outside any process, and the point is that the sweep asks.
 
-- [x] The owner says which it is; the rule's text matches the answer
-- [x] If instances are expected: the session-start sweep reports "no instance recorded" as a finding, not silence
+_2026-09-20T21:15Z_ — **Closed.** Both Done-when boxes above are ticked against
+the work recorded in this bean, and the status now says so.
+
+**It should have said so an hour ago.** This bean was finished, its evidence
+written into its own body, and left `in-progress` — while the session that left
+it there was closing `bbbl`, whose entire subject is *a bean finished in its
+body and left open*. Worse, the ticks were appended as a SECOND copy of the
+checklist at the foot of the file, so the canonical `## Done when` still read
+0 of 2 and any reader or tool consulting it saw an untouched bean.
+
