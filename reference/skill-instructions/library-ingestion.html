@@ -930,21 +930,65 @@ Python dependencies — no <code class="language-plaintext highlighter-rouge">re
 tool needing openpyxl would pass locally and fail there. Everything this arm
 needs is in <code class="language-plaintext highlighter-rouge">xl/workbook.xml</code> and each sheet’s <code class="language-plaintext highlighter-rouge">&lt;dimension&gt;</code>. Verified by
 reading back a workbook openpyxl itself wrote, <strong>with openpyxl uninstalled</strong>.</p>
-<h3 id="the-narrative-is-declared-empty-never-fabricated">
+<h3 id="the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person">
   
   
-    <a href="#the-narrative-is-declared-empty-never-fabricated" class="anchor-heading" aria-labelledby="the-narrative-is-declared-empty-never-fabricated"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The narrative is declared empty, never fabricated
+    <a href="#the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person" class="anchor-heading" aria-labelledby="the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The narrative is a state machine — drafted by an agent, confirmed by a person
   
   
 </h3>
     
 
-<p><code class="language-plaintext highlighter-rouge">narrative: null</code>, <code class="language-plaintext highlighter-rouge">narrative_state: "not-authored"</code>. A description of what a
-dataset is <em>about</em> is somebody’s account and needs an author; the headers are
-right there and a plausible summary could be assembled from them, and that is
-exactly why it isn’t. When one is written it carries an <code class="language-plaintext highlighter-rouge">Attribution</code>
-(<a href="#provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible">above</a>).
-The schema refuses a record that says both things at once.</p>
+<p><code class="language-plaintext highlighter-rouge">schemas/narrative.ts</code>: <code class="language-plaintext highlighter-rouge">not-authored</code> → <code class="language-plaintext highlighter-rouge">draft</code> → <code class="language-plaintext highlighter-rouge">confirmed</code>, with <code class="language-plaintext highlighter-rouge">rejected</code>
+as a real fourth state. The owner chose this (2026-09-19) over plain agent
+attribution and over writing every narrative by hand.</p>
+
+<p><strong>Two attributions, because they are two acts.</strong> <code class="language-plaintext highlighter-rouge">drafted_by</code> is who wrote the
+words; <code class="language-plaintext highlighter-rouge">confirmed_by</code> is who accepted them. The question a reader most wants
+answered is not “did a machine touch this” but “has a person agreed to it”.</p>
+
+<p><strong>An agent cannot confirm its own draft</strong> — <code class="language-plaintext highlighter-rouge">confirmed_by.kind</code> must be
+<code class="language-plaintext highlighter-rouge">"human"</code>, structurally. That one refinement is the entire difference between
+the chosen design and the one it replaced: without it, <code class="language-plaintext highlighter-rouge">confirmed</code> degrades
+into “an agent said so twice”.</p>
+
+<p><strong>But a rule about who may act cannot be enforced by a rule about what is
+written.</strong> Driving the CLI in an agent container wrote
+<code class="language-plaintext highlighter-rouge">"rejected_by": {"kind": "human", "id": "Claude"}</code> — <code class="language-plaintext highlighter-rouge">git config user.name</code> is
+the agent’s, so it recorded <em>itself</em> as the reviewer, and the schema could not
+see it. <code class="language-plaintext highlighter-rouge">reviewer()</code> therefore refuses outside a terminal: a person confirming
+at a prompt has one, an agent’s subprocess and CI do not. <strong>This stops accident,
+not fraud</strong> — an agent that set out to forge a confirmation could allocate a pty
+— but it makes it impossible to confirm a narrative <em>while going about other
+work</em>, which is the failure that would actually have happened.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">rejected</code> keeps its reasons.</strong> A rejected draft silently re-offered wastes
+the reviewer’s time; one that vanishes lets the next agent redraft the identical
+thing — the argument <code class="language-plaintext highlighter-rouge">scrapped</code> wins on for beans, and the one
+<code class="language-plaintext highlighter-rouge">qa-review.ts</code>’s <code class="language-plaintext highlighter-rouge">Decision</code> makes by requiring a note saying why this outcome
+and not another.</p>
+<h3 id="reviewing-bun-run-narratives">
+  
+  
+    <a href="#reviewing-bun-run-narratives" class="anchor-heading" aria-labelledby="reviewing-bun-run-narratives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reviewing: <code class="language-plaintext highlighter-rouge">bun run narratives</code>
+  
+  
+</h3>
+    
+
+<p>Numbered list, numbered reasons, because the owner has very limited hand
+function and a review step that demands a typed sentence is one that will not
+happen — at which point <code class="language-plaintext highlighter-rouge">confirmed</code> means “nobody got round to objecting”,
+which is worse than not having the state.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run narratives                     <span class="c"># what is waiting on you</span>
+bun run narratives:confirm 1
+bun run narratives:reject 1 <span class="nt">--why</span> 2    <span class="c"># or --why-text "..."</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">check:l1-complete</code>’s <code class="language-plaintext highlighter-rouge">narrative-review</code> validates every narrative-bearing file.
+A <code class="language-plaintext highlighter-rouge">draft</code> is <strong>reported, not failed</strong>: it is work waiting on a person, and
+failing it would make an unreviewed queue indistinguishable from a broken arm.</p>
 
 <p>A null <code class="language-plaintext highlighter-rouge">rows</code>/<code class="language-plaintext highlighter-rouge">columns</code> is likewise not an empty sheet: <code class="language-plaintext highlighter-rouge">shape_source</code> says
 whether the shape was read, counted, or <code class="language-plaintext highlighter-rouge">undetermined</code>.</p>
@@ -1022,7 +1066,7 @@ only from a layer above it: a wrong-direction dependency, and after the split
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35485865399"><code>1a466c6</code></a> &middot; 2026-09-20T03:11:01Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35486138198"><code>8e7cc55</code></a> &middot; 2026-09-20T03:17:02Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
