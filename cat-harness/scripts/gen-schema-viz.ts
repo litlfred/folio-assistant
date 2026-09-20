@@ -425,9 +425,17 @@ fetch("../assets/schemas/index.json").then(function (r) {
   });
   var withDecls = {};
   G.decls.forEach(function (d) { withDecls[d.module] = true; });
+  /* Labelled with the instance, because four of them declare a schemas graph
+     and module names repeat across them — two entries both reading "types"
+     are indistinguishable in the list even though their values differ. */
+  var nameCount = {};
+  G.modules.forEach(function (m) { nameCount[m.name] = (nameCount[m.name] || 0) + 1; });
   G.modules.forEach(function (m) {
     if (!withDecls[m.module]) return;
-    var o = document.createElement("option"); o.value = m.module; o.textContent = m.name; $("mod").appendChild(o);
+    var o = document.createElement("option");
+    o.value = m.module;
+    o.textContent = nameCount[m.name] > 1 ? m.instance + " / " + m.name : m.name;
+    $("mod").appendChild(o);
   });
   $("q").addEventListener("input", render);
   $("kind").addEventListener("change", render);
