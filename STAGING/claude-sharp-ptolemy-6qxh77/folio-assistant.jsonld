@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T19:52:39.384Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bf98f77e270c1d31b2d2e71e21ac7870d5afa49c",
-  "sourceCommitSha": "bf98f77e270c1d31b2d2e71e21ac7870d5afa49c",
-  "sourceCommitAt": "2026-09-20T19:50:57Z",
+  "generatedAt": "2026-09-20T20:17:18.248Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0cbffcaa6927655db55c9c2912dc6a973a012695",
+  "sourceCommitSha": "0cbffcaa6927655db55c9c2912dc6a973a012695",
+  "sourceCommitAt": "2026-09-20T20:15:41Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 206,
+    "Skill": 207,
     "Actor": 27,
     "Capability": 28,
     "Role": 124,
@@ -275,7 +275,7 @@
     "Process": 53,
     "SequenceFlow": 687,
     "ProcessNode": 652,
-    "Tool": 66,
+    "Tool": 67,
     "Schema": 77,
     "GraphKind": 21,
     "Directory": 31,
@@ -1025,7 +1025,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/readme-sections.md",
-      "instructionLines": 98,
+      "instructionLines": 163,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1667,7 +1667,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 669,
+      "instructionLines": 728,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2042,6 +2042,22 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-overlay-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/render-order",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "render-order",
+      "title": "Render order — flattening a dependency hierarchy, and the two stages",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/render-order.md",
+      "instructionLines": 116,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-order"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/translation-manager",
@@ -2422,7 +2438,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/agent-memory.md",
-      "instructionLines": 125,
+      "instructionLines": 166,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5127,6 +5143,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/render-logging",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/render-order",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/scientific-accuracy",
@@ -29548,6 +29565,52 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/readme-audit"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#tool/render-order",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "render-order",
+      "title": "The render pipeline, in dependency order",
+      "description": "Flatten the repository's renders into the order their `needs` imply, and optionally run them. Two stages: the current declared state as json/jsonld and the README derived from it are FATAL; the dynamic renderers (viewers, visualisers, doc pages, diagrams) skip and log; the dynamic-state export closes it. A cycle or a missing dependency yields NO order rather than a partial one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run render",
+        "mcp": {
+          "tool": "render_order"
+        },
+        "inProcess": {
+          "module": "src/tools/render-order.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dry_run",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/tool-types.schema.json#/$defs/Flag",
+            "description": "Print the flattened order and each step's failure policy without running anything.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/tool-types.schema.json#/$defs/Markdown",
+            "description": "Per step: ran, failed, skipped, or PENDING — declared with no implementation yet, which is never rendered as a pass."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/render-order"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-ptolemy-6qxh77/folio-assistant.jsonld#tool/readme-sync",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "readme-sync",
@@ -32670,8 +32733,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-ptolemy-6qxh77",
-    "sha": "5bd48eb933e6988d4749626481eda3fd8c9b8252",
+    "sha": "e653ddaa1f8ed1807d2075ae4fac095f217adb57",
     "pr": "593/merge",
-    "run": "35533645870"
+    "run": "35534974867"
   }
 }
