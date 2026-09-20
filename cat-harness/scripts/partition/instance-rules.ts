@@ -662,6 +662,10 @@ export const RULES: Rule[] = [
       // what settles it — `scripts/check-waivers.ts` is harness and may not
       // reach into core.
       "schemas/waiver.ts",
+      // How a DECISION is handed to a person. Harness by the same test again:
+      // it is about the agent-human interaction this platform defines, and a
+      // folio authors no decision requests.
+      "schemas/decision-request.ts",
       // Translation is cat-harness's, stated directly: "ui stuff like
       // translations (skills, tooling) are not in cat-bootstrap, it is in
       // cat-harness/". These three are the gettext machinery and the registry

@@ -271,7 +271,72 @@ export function checkFile(repo: string, rel: string, report: CommandPathReport, 
 export function checkCommandPaths(repo: string = repoRootFor(INSTANCE_ROOT)): CommandPathReport {
   const report: CommandPathReport = { filesRead: 0, checked: 0, declined: 0, folioRelative: 0, exempt: 0, dead: [] };
   for (const { file, corpus: c } of corpus(repo)) checkFile(repo, file, report, c);
+  checkHooks(repo, report);
   return report;
+}
+
+/**
+ * The commands in `.claude/settings.json` — the ones nobody types.
+ *
+ * **This is the `b963` class at its most consequential, and it was found by
+ * this check's own corpus NOT covering it.** On 2026-09-20 the `SessionStart`
+ * hook read:
+ *
+ * ```
+ * bash "$CLAUDE_PROJECT_DIR/scripts/session-start-coord-sweep.sh"
+ * ```
+ *
+ * There is no root `scripts/`. So the hook that installs the `beans` CLI and
+ * prints the work-plan sweep had been a **silent no-op for every session since
+ * the split** — and a hook that fails is indistinguishable from a hook that ran
+ * and found nothing to say, which is the `xom7` shape exactly.
+ *
+ * It needs its own reader because a hook command is not in a fenced block and
+ * not in markdown: it is a JSON string field, so the whole corpus above walks
+ * straight past it. `$CLAUDE_PROJECT_DIR` is the repository root, so the path
+ * after it is repository-relative and judged as one — the expansion is
+ * stripped by {@link shellWords} like any other, which is why it is put back
+ * here rather than left for the tokenizer to guess at.
+ */
+export function checkHooks(repo: string, report: CommandPathReport): void {
+  const file = join(".claude", "settings.json");
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(readFileSync(join(repo, file), "utf8"));
+  } catch {
+    return; // No settings file is a determined absence: this instance has no hooks.
+  }
+  report.filesRead++;
+  const commands: string[] = [];
+  const walk = (v: unknown): void => {
+    if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === "object") {
+      for (const [k, val] of Object.entries(v as Record<string, unknown>)) {
+        if (k === "command" && typeof val === "string") commands.push(val);
+        else walk(val);
+      }
+    }
+  };
+  walk(parsed);
+  for (const cmd of commands) {
+    if (skipCommand(cmd) !== undefined) {
+      report.declined++;
+      continue;
+    }
+    // Put the project root back before the expansion is stripped: it IS the
+    // repository root, so what follows it is a repository-relative path.
+    for (const word of shellWords(cmd.replace(/\$\{?CLAUDE_PROJECT_DIR\}?\//g, ""))) {
+      const tok = word.replace(/[.,:)\]}]+$/, "");
+      if (!tok || skipReason(tok) !== undefined) {
+        report.declined++;
+        continue;
+      }
+      report.checked++;
+      if (!existsSync(join(repo, tok))) {
+        report.dead.push({ file, line: 0, token: tok, command: cmd });
+      }
+    }
+  }
 }
 
 /**
