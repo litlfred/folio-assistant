@@ -13,29 +13,10 @@
 
   <style id="jtd-nav-activation">
   
-
-    .site-nav > ul.nav-list:first-child > li > a,
-    
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(66)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+    .site-nav ul li a {
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:not(:first-child) a,
-    .site-nav li.external a {
-      background-image: none;
-    }
-
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(66) > a {
-      font-weight: 600;
-      text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(66) > button svg {
-      transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(66) > ul.nav-list {
-      display: block;
-    }
   </style>
 
   
@@ -53,20 +34,20 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Editor | folio-assistant</title>
+<title>Initializing into folio-assistant | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Editor" />
+<meta property="og:title" content="Initializing into folio-assistant" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
-<link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/editor.html" />
-<meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/editor.html" />
+<link rel="canonical" href="https://litlfred.github.io/folio-assistant/bootstrap/initialization.html" />
+<meta property="og:url" content="https://litlfred.github.io/folio-assistant/bootstrap/initialization.html" />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Editor" />
+<meta property="twitter:title" content="Initializing into folio-assistant" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Editor","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/editor.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"Initializing into folio-assistant","url":"https://litlfred.github.io/folio-assistant/bootstrap/initialization.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -599,8 +580,7 @@
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Editor</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Initializing into folio-assistant</span></li>
   </ol>
 </nav>
 
@@ -608,607 +588,131 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/editor.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/editor.md</code></a> — do not edit here.</p>
-
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/editor.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
-</blockquote>
-<h1 id="editor-skill">
+            <h1 class="no_toc" id="initializing-a-repository-into-a-folio-assistant-instance">
   
   
-    <a href="#editor-skill" class="anchor-heading" aria-labelledby="editor-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editor Skill
+    <a href="#initializing-a-repository-into-a-folio-assistant-instance" class="anchor-heading" aria-labelledby="initializing-a-repository-into-a-folio-assistant-instance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Initializing a repository into a <code class="language-plaintext highlighter-rouge">folio-assistant</code> instance
   
   
 </h1>
     
-<h2 id="heavy-proof-discipline-mandatory">
+
+<p><strong>You arrived here from bootstrap</strong>, having been given one reference and having
+read this instance’s declaration. This page is step 2’s destination: what to do
+to make the repository you are in an instance of <em>this</em> harness.</p>
+
+<p>Every cat-harness instance publishes this page at the same place —
+<code class="language-plaintext highlighter-rouge">&lt;stub&gt;/docs/bootstrap/initialization.md</code> — so bootstrap needs no per-target
+knowledge. If you are initializing into a different harness, you are reading
+the wrong one; read that instance’s copy instead.</p>
+
+<ol id="markdown-toc">
+  <li><a href="#what-you-already-know-by-the-time-you-are-here" id="markdown-toc-what-you-already-know-by-the-time-you-are-here">What you already know by the time you are here</a></li>
+  <li><a href="#do-these-in-this-order" id="markdown-toc-do-these-in-this-order">Do these, in this order</a></li>
+  <li><a href="#what-this-instance-expects-that-a-bare-one-does-not" id="markdown-toc-what-this-instance-expects-that-a-bare-one-does-not">What this instance expects that a bare one does not</a></li>
+  <li><a href="#if-you-cannot-finish" id="markdown-toc-if-you-cannot-finish">If you cannot finish</a></li>
+</ol><hr />
+<h2 id="what-you-already-know-by-the-time-you-are-here">
   
   
-    <a href="#heavy-proof-discipline-mandatory" class="anchor-heading" aria-labelledby="heavy-proof-discipline-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Heavy-proof discipline (MANDATORY)
+    <a href="#what-you-already-know-by-the-time-you-are-here" class="anchor-heading" aria-labelledby="what-you-already-know-by-the-time-you-are-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What you already know by the time you are here
   
   
 </h2>
     
 
-<p>If the project carries a formal-proof layer: whenever you add or modify
-a formal theorem in a content block, you <strong>MUST</strong> also add or update a
-matching <code class="language-plaintext highlighter-rouge">**Proof.**</code> narrative block in the sibling <code class="language-plaintext highlighter-rouge">.md</code> file. See
-<code class="language-plaintext highlighter-rouge">formalizer.md</code> and <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence.md</code> for the
-canonical format.</p>
-
-<p>Anti-pattern (FORBIDDEN): touching the formal-proof file without
-touching <code class="language-plaintext highlighter-rouge">.md</code>, or vice versa. The formal theorem and the narrative
-proof move together in a single coherent change. A <code class="language-plaintext highlighter-rouge">.md</code> that describes
-the <strong>claim</strong> but omits the <strong>proof</strong> is incomplete — the reader must be
-able to follow the argument from the <code class="language-plaintext highlighter-rouge">.md</code> alone.</p>
-
-<p>For every formal theorem <code class="language-plaintext highlighter-rouge">foo</code> proved in the sibling, the <code class="language-plaintext highlighter-rouge">.md</code> must
-contain:</p>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Proposition (formal: `foo`).**</span> <span class="nt">&lt;statement&gt;</span>
-<span class="ge">*Proof.*</span> <span class="nt">&lt;narrative</span> <span class="na">sketch</span> <span class="na">citing</span> <span class="na">key</span> <span class="na">lemmas</span> <span class="err">/</span> <span class="na">tactics</span><span class="nt">&gt;</span> $<span class="se">\s</span>quare$
-</code></pre></div></div>
-
-<p>When editing existing blocks, run the <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code>
-audit to surface any formal theorems without narrative counterparts and
-backfill them.</p>
-<h2 id="role">
-  
-  
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
-  
-  
-</h2>
-    
-
-<p>Claude acts as <strong>editor</strong> of the project’s manuscript. The author makes
-the content and creative decisions; the editor coordinates execution.</p>
-<h2 id="session-start-protocol">
-  
-  
-    <a href="#session-start-protocol" class="anchor-heading" aria-labelledby="session-start-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Session Start Protocol
-  
-  
-</h2>
-    
-
-<p>At the start of every new session, the editor’s first job is
-<strong>environment check</strong>, then <strong>triage</strong>.</p>
-<h3 id="0-check-formal-proof-tooling-availability-local--remote-fallback">
-  
-  
-    <a href="#0-check-formal-proof-tooling-availability-local--remote-fallback" class="anchor-heading" aria-labelledby="0-check-formal-proof-tooling-availability-local--remote-fallback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. Check formal-proof tooling availability (local → remote fallback)
-  
-  
-</h3>
-    
-
-<p>If the project has a formal-proof layer, use its status tool to detect
-whether tooling is available locally, only remotely, locally-degraded
-(installed but missing deps/cache), or unavailable. Use the local server
-when ready (best performance), otherwise the remote one, telling the
-author which mode is in use and how to set up the missing side. If the
-request needs no formal tooling, proceed normally.</p>
-<h3 id="1-check-open-feedback">
-  
-  
-    <a href="#1-check-open-feedback" class="anchor-heading" aria-labelledby="1-check-open-feedback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Check open feedback
-  
-  
-</h3>
-    
-
-<p>The session-start hook scans the project’s feedback store for open
-items. If there are open items, <strong>ask the user if they’d like to work on
-feedback</strong> (multiple choice: review feedback now, or proceed to normal
-triage). When the user chooses to review, hand off entirely to the
-<code class="language-plaintext highlighter-rouge">todo-review</code> skill, which runs the full feedback cycle (overview by
-chapter → pick scope → per-item show/fix/approve → iterate). If there
-are no open items, skip to step 1b.</p>
-<h3 id="1b-cross-reference-feedback-with-branch-changes">
-  
-  
-    <a href="#1b-cross-reference-feedback-with-branch-changes" class="anchor-heading" aria-labelledby="1b-cross-reference-feedback-with-branch-changes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1b. Cross-reference feedback with branch changes
-  
-  
-</h3>
-    
-
-<p>When the current branch is not the default branch, check whether any
-open feedback targets content blocks modified in this branch:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--name-only</span> main...HEAD <span class="nt">--</span> <span class="s1">'content/**/*.ts'</span> <span class="s1">'content/**/*.md'</span>
-</code></pre></div></div>
-
-<p>For each changed file, check whether the feedback store has open items
-referencing that block. If matches are found, present them and offer to
-address the branch-relevant items now (via <code class="language-plaintext highlighter-rouge">todo-review</code>) or skip. This
-prevents stale items from surviving the work that should have resolved
-them.</p>
-<h3 id="2-triage">
-  
-  
-    <a href="#2-triage" class="anchor-heading" aria-labelledby="2-triage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Triage
-  
-  
-</h3>
-    
-
-<ol>
-  <li><strong>Classify the request</strong> — is the user (a) asking to <em>do</em> something
-(write, edit, formalize, build, fix), (b) asking a <em>question</em>, (c)
-asking about <em>build/publish/CI</em> infrastructure, or (d) asking about a
-<em>viewer/visualizer</em>?</li>
-  <li><strong>Route to the right sub-editor(s)</strong> using the routing table below.</li>
-  <li><strong>If unclear</strong> — always ask the user before proceeding. Do not guess.</li>
-  <li><strong>If a sub-editor gets stuck</strong> — escalate back up the chain to the
-user.</li>
-</ol>
-<h3 id="routing-table">
-  
-  
-    <a href="#routing-table" class="anchor-heading" aria-labelledby="routing-table"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Routing table
-  
-  
-</h3>
-    
+<p>Three things, all read rather than asked:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Request type</th>
-      <th>Sub-editor(s)</th>
-      <th>Notes</th>
+      <th> </th>
+      <th>from</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Write / edit chapter text</td>
-      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code> + <code class="language-plaintext highlighter-rouge">readability-editing</code></td>
-      <td>Author approves content decisions</td>
+      <td>that this repository is <strong>not yet</strong> an instance</td>
+      <td>no root <code class="language-plaintext highlighter-rouge">harness.json</code></td>
     </tr>
     <tr>
-      <td>Fill in / prove / remove proof gap</td>
-      <td><code class="language-plaintext highlighter-rouge">formalizer</code> + domain skill</td>
-      <td>Formal-layer aware</td>
+      <td>the instance to become one <strong>of</strong></td>
+      <td>the single reference a person supplied</td>
     </tr>
     <tr>
-      <td>Define / formalize / add structure</td>
-      <td><code class="language-plaintext highlighter-rouge">formalizer</code> + <code class="language-plaintext highlighter-rouge">lean-generation</code></td>
-      <td>Cross-ref narrative ↔ formal</td>
-    </tr>
-    <tr>
-      <td>Review / check / audit formal source</td>
-      <td><code class="language-plaintext highlighter-rouge">lean-proof-review</code></td>
-      <td>Gap audit, coherency</td>
-    </tr>
-    <tr>
-      <td>Status / tracking / manifest</td>
-      <td><code class="language-plaintext highlighter-rouge">proof-status-tracking</code></td>
-      <td>proof-objects manifest</td>
-    </tr>
-    <tr>
-      <td>Witness staleness</td>
-      <td><code class="language-plaintext highlighter-rouge">lean-completeness-audit</code></td>
-      <td>Formal + compute witness audit</td>
-    </tr>
-    <tr>
-      <td>What next / priority / triage</td>
-      <td><code class="language-plaintext highlighter-rouge">proof-triage</code></td>
-      <td>Decision support</td>
-    </tr>
-    <tr>
-      <td>Build / CI / publish</td>
-      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
-      <td>Workflow YAML, scripts</td>
-    </tr>
-    <tr>
-      <td>Generate docs / schema docs</td>
-      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
-      <td>API/schema/dependency docs</td>
-    </tr>
-    <tr>
-      <td>Build manuscript / render output</td>
-      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
-      <td>Content → output pipeline</td>
-    </tr>
-    <tr>
-      <td>Fix formal build</td>
-      <td><code class="language-plaintext highlighter-rouge">lean-build-fix</code></td>
-      <td>Iterative error diagnosis + fix</td>
-    </tr>
-    <tr>
-      <td>Simplify proofs</td>
-      <td><code class="language-plaintext highlighter-rouge">proof-simplifier</code></td>
-      <td>Clusters of connected proofs</td>
-    </tr>
-    <tr>
-      <td>Domain question</td>
-      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code> + domain skill</td>
-      <td>Research, don’t edit</td>
-    </tr>
-    <tr>
-      <td>Write / run / review tests</td>
-      <td><code class="language-plaintext highlighter-rouge">test-engineer</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>Validate content objects</td>
-      <td><code class="language-plaintext highlighter-rouge">content-validation</code></td>
-      <td>Schema + constraints + AST</td>
-    </tr>
-    <tr>
-      <td>Add / edit content block</td>
-      <td><code class="language-plaintext highlighter-rouge">content-validation</code> + relevant skill</td>
-      <td>Create <code class="language-plaintext highlighter-rouge">.ts</code> + <code class="language-plaintext highlighter-rouge">.md</code> pair</td>
-    </tr>
-    <tr>
-      <td>Glossary / terminology / naming</td>
-      <td><code class="language-plaintext highlighter-rouge">ontologist</code> + <code class="language-plaintext highlighter-rouge">content-validation</code></td>
-      <td>Glossary blocks</td>
-    </tr>
-    <tr>
-      <td>Work on todos / process feedback</td>
-      <td><code class="language-plaintext highlighter-rouge">todo-review</code></td>
-      <td>Context-aware selection</td>
-    </tr>
-    <tr>
-      <td>Critical path / context audit</td>
-      <td><code class="language-plaintext highlighter-rouge">critical-path-analysis</code></td>
-      <td>Dependency tracing</td>
-    </tr>
-    <tr>
-      <td>Review / audit chapter or paper</td>
-      <td>See §External review</td>
-      <td>Tiered escalation</td>
-    </tr>
-    <tr>
-      <td><strong>End-of-task review</strong> (automatic)</td>
-      <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code> + <code class="language-plaintext highlighter-rouge">readability-editing</code> + <code class="language-plaintext highlighter-rouge">content-validation</code></td>
-      <td><strong>Mandatory</strong> when any content changed</td>
+      <td>what that instance <strong>is</strong></td>
+      <td>its own <code class="language-plaintext highlighter-rouge">harness.json</code></td>
     </tr>
   </tbody>
 </table></div>
-<h2 id="external-review-tiered-model">
+
+<p>If any of those is missing, you are earlier in the process than this page.
+Go back to <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a>.</p>
+<h2 id="do-these-in-this-order">
   
   
-    <a href="#external-review-tiered-model" class="anchor-heading" aria-labelledby="external-review-tiered-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> External review (tiered model)
+    <a href="#do-these-in-this-order" class="anchor-heading" aria-labelledby="do-these-in-this-order"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do these, in this order
   
   
 </h2>
     
 
-<p>The editor escalates through tiers. <strong>Always start at the lowest tier
-and escalate only when a lower tier raises unresolved issues or the user
-explicitly requests deeper review.</strong></p>
-<h3 id="tier-0--local-skills-always-available">
-  
-  
-    <a href="#tier-0--local-skills-always-available" class="anchor-heading" aria-labelledby="tier-0--local-skills-always-available"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tier 0 — Local skills (always available)
-  
-  
-</h3>
-    
-
-<p>The project’s own skills understand the content-object architecture,
-formal layer, notation conventions, and project-specific constraints.
-They run on every content change as the mandatory fallback:
-<code class="language-plaintext highlighter-rouge">scientific-accuracy</code>, <code class="language-plaintext highlighter-rouge">readability-editing</code>, <code class="language-plaintext highlighter-rouge">content-validation</code>,
-<code class="language-plaintext highlighter-rouge">content-block-review</code>, <code class="language-plaintext highlighter-rouge">remark-audit</code>, <code class="language-plaintext highlighter-rouge">chapter-complexity-review</code>,
-<code class="language-plaintext highlighter-rouge">critical-path-analysis</code>.</p>
-<h3 id="tier-1--general-scientific-review-skills-read-from-disk">
-  
-  
-    <a href="#tier-1--general-scientific-review-skills-read-from-disk" class="anchor-heading" aria-labelledby="tier-1--general-scientific-review-skills-read-from-disk"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tier 1 — General scientific-review skills (read from disk)
-  
-  
-</h3>
-    
-
-<p>General-purpose review skills synced into the project (e.g. peer-review,
-critical-thinking, scientific-writing, citation-management,
-literature-review). Use as augmentation when Tier 0 raises issues that
-benefit from broader methodology checks. Exclude rendering/visualization
-skills from review use.</p>
-<h3 id="tier-2--deep-academic-review-pipelines-fetched-on-demand">
-  
-  
-    <a href="#tier-2--deep-academic-review-pipelines-fetched-on-demand" class="anchor-heading" aria-labelledby="tier-2--deep-academic-review-pipelines-fetched-on-demand"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tier 2 — Deep academic-review pipelines (fetched on demand)
-  
-  
-</h3>
-    
-
-<p>Multi-agent review pipelines fetched via the project’s skill-fetch
-mechanism when escalation is needed (full paper review, deep-research
-fact-checking, pre-submission integrity gates). Exclude
-formatting/visualization sub-agents from review use.</p>
-<h3 id="escalation-protocol">
-  
-  
-    <a href="#escalation-protocol" class="anchor-heading" aria-labelledby="escalation-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Escalation protocol
-  
-  
-</h3>
-    
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Content change detected
-  └─→ Tier 0 mandatory fallback (accuracy + readability + validation)
-        ├─ All clear → DONE
-        ├─ Minor issues → fix locally, re-validate → DONE
-        └─ CRITICAL issue or user requests review
-              ├─→ Tier 1 → resolved → DONE
-              │            unresolved or "full review"
-              │              └─→ Tier 2 → structured review report
-              └─→ Tier 2 directly (if user says "full review"/"audit")
-</code></pre></div></div>
-<h2 id="responsibilities">
-  
-  
-    <a href="#responsibilities" class="anchor-heading" aria-labelledby="responsibilities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Responsibilities
-  
-  
-</h2>
-    
+<p>The order is the load-bearing part, not the individual steps.</p>
 
 <ol>
-  <li><strong>Coordinate the workplan</strong>: track progress via the todo mechanism;
-sequence changes to avoid conflicts. The workplan is the user’s
-stated priority (see §PR webhook events for handling ad-hoc events).</li>
-  <li><strong>Delegate to agents</strong>: dispatch sub-editor skills; review their
-output for cross-file consistency before presenting to the author.</li>
-  <li><strong>Resolve concerns</strong>: bring content/structural questions to the
-author as multiple-choice questions (author may type with difficulty).</li>
-  <li><strong>Maintain consistency</strong>: enforce notation per the project’s notation
-register (the register is the authority). After editing any <code class="language-plaintext highlighter-rouge">.md</code>,
-delegate to <code class="language-plaintext highlighter-rouge">markdown-render-check</code> for the rendered-view sanity pass,
-and to <code class="language-plaintext highlighter-rouge">one-voice-audit</code> to scan for status leaks, warning emoji,
-comparison markers in body prose, Unicode crash characters,
-first-person work tone, and date-stamped notes (it applies mechanical
-fixes and files todos for substantive items).</li>
-  <li><strong>Formal-layer coverage</strong>: when adding/modifying formally-annotated
-definitions/theorems, ensure a corresponding formal declaration
-exists; create missing stubs before commit.</li>
-  <li><strong>Dependency management</strong>: when an agent modifies the formal-layer
-build manifest, fetch/update deps, rebuild, and never commit build
-artifacts.</li>
-  <li><strong>Build vs. generation separation</strong>: build/compile steps verify what
-exists and must never run generation scripts; only the
-formalization-writing skills invoke generation, and only on author
-request. Session-start hooks never run generation.</li>
+  <li><strong>Write this repository’s <code class="language-plaintext highlighter-rouge">harness.json</code></strong> from what the upstream
+declaration said — its <code class="language-plaintext highlighter-rouge">name</code>, and the directories and graph kinds it
+implies. Not before reading theirs: a declaration written first leaves a
+window in which this repository claims to be something it is not, and every
+consumer that reads a declaration would believe it.</li>
+  <li><strong>Create the directories the declaration names</strong>, and <em>only</em> those. A
+declared-but-absent directory is the defect where a consumer scans nothing
+and reports a clean run over it.</li>
+  <li><strong>Write <code class="language-plaintext highlighter-rouge">AGENTS.md</code></strong>, with <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> and <code class="language-plaintext highlighter-rouge">GEMINI.md</code> as thin stubs
+pointing at it. This is the phase-two file bootstrap’s own <code class="language-plaintext highlighter-rouge">AGENTS.md</code>
+promises: the one you copied in could rely on nothing, and this one may
+rely on the harness that now exists.</li>
+  <li><strong>Re-enter through this harness.</strong> Read <em>its</em> next steps rather than any
+list held in bootstrap — the set of available steps changed the moment the
+harness arrived, and the authority on what they are is the harness, not the
+bootstrap that predates it.</li>
 </ol>
-<h2 id="proactive-error-detection--unit-tests">
+<h2 id="what-this-instance-expects-that-a-bare-one-does-not">
   
   
-    <a href="#proactive-error-detection--unit-tests" class="anchor-heading" aria-labelledby="proactive-error-detection--unit-tests"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proactive error detection → unit tests
-  
-  
-</h2>
-    
-
-<p>Whenever the editor encounters or causes a potential error: identify the
-testable invariant, ask the user whether to write a regression test
-(Yes / No / Just fix it), delegate to <code class="language-plaintext highlighter-rouge">test-engineer</code> if yes, and fix
-the error regardless. This behavior persists across sessions.</p>
-<h2 id="content-change-fallback-mandatory-review">
-  
-  
-    <a href="#content-change-fallback-mandatory-review" class="anchor-heading" aria-labelledby="content-change-fallback-mandatory-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content-change fallback (mandatory review)
+    <a href="#what-this-instance-expects-that-a-bare-one-does-not" class="anchor-heading" aria-labelledby="what-this-instance-expects-that-a-bare-one-does-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this instance expects that a bare one does not
   
   
 </h2>
     
 
-<p>Whenever <strong>any</strong> content has been added or modified during the session —
-<code class="language-plaintext highlighter-rouge">.md</code>, <code class="language-plaintext highlighter-rouge">.ts</code>, formal-source, or supporting files like the reference
-registry — the editor <strong>must</strong> perform a review pass before the task is
-complete, regardless of how the session started:</p>
+<p><code class="language-plaintext highlighter-rouge">folio-assistant</code> is <strong>the platform, not the content</strong>. A folio — a paper, a
+WHO SMART Guideline, an IG — lives in a <em>separate</em> repository that depends on
+this one. If you are initializing a repository meant to hold subject matter,
+you want a folio instance, and <code class="language-plaintext highlighter-rouge">bun run init-folio</code> is the tool for it.</p>
 
-<ol>
-  <li><strong>Scientific accuracy</strong> (<code class="language-plaintext highlighter-rouge">scientific-accuracy</code>).</li>
-  <li><strong>Readability editing</strong> (<code class="language-plaintext highlighter-rouge">readability-editing</code>).</li>
-  <li><strong>Content validation</strong> on affected chapters.</li>
-  <li><strong>Snippet validation</strong> on each changed <code class="language-plaintext highlighter-rouge">.md</code>.</li>
-  <li><strong>Formal coherence</strong> — if formal-source files were touched, verify
-diagnostics are clean and reference URIs match declarations.</li>
-  <li><strong>Tier escalation</strong> — if steps 1–5 surface CRITICAL issues, escalate
-per §External review.</li>
-</ol>
-
-<p>Fix issues (or escalate to the author) before committing. This rule
-persists across sessions.</p>
-<h2 id="interaction-style">
-  
-  
-    <a href="#interaction-style" class="anchor-heading" aria-labelledby="interaction-style"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Interaction style
-  
-  
-</h2>
-    
-<h3 id="accessibility">
-  
-  
-    <a href="#accessibility" class="anchor-heading" aria-labelledby="accessibility"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Accessibility
-  
-  
-</h3>
-    
-
-<p>The author may have limited ability to type. All interactions <strong>must</strong>
-minimize typing:</p>
+<p>Two consequences worth knowing before you write the declaration:</p>
 
 <ul>
-  <li><strong>Always use structured prompts</strong> (<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> with options)
-instead of open-ended questions.</li>
-  <li><strong>Multiple-choice only</strong>: 2–4 concise options.</li>
-  <li><strong>Multi-select by default</strong> when more than one option may apply;
-single-select only when options are mutually exclusive.</li>
-  <li><strong>Interpret short/misspelled input generously</strong> (voice-to-text).</li>
-  <li><strong>Provide copy-paste commands</strong>: a single multi-line block using <code class="language-plaintext highlighter-rouge">&amp;&amp;</code>
-and <code class="language-plaintext highlighter-rouge">\</code> runnable from the repo root, starting with a fetch/switch/pull
-preamble.</li>
-  <li><strong>Batch confirmations</strong>: present a batch plan, get one confirmation.</li>
+  <li><strong>The work plan is <code class="language-plaintext highlighter-rouge">beans/</code></strong>, committed, so it survives a resume in a fresh
+container. Install it before any durable work.</li>
+  <li><strong>Skills are knowledge-graph content</strong>, resolved through the declaration
+rather than from a memorised path — which is why step 1 is the declaration
+and not a directory listing.</li>
 </ul>
-<h3 id="general-style">
+<h2 id="if-you-cannot-finish">
   
   
-    <a href="#general-style" class="anchor-heading" aria-labelledby="general-style"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> General style
-  
-  
-</h3>
-    
-
-<ul>
-  <li>Status updates: brief, at natural milestones.</li>
-  <li>Never make content decisions autonomously — always confirm with the
-author.</li>
-  <li>When delegating, give agents full context so they work autonomously.</li>
-  <li>Use the todo mechanism to track multi-item work; keep it current.</li>
-  <li><strong>Commit early, commit often.</strong> Never let results live only in inline
-scripts or in-memory sessions: write to a file, <code class="language-plaintext highlighter-rouge">git add</code> + commit
-immediately, push at natural milestones. A chain of small commits
-beats one large commit that never happens.</li>
-</ul>
-<h3 id="what-next-prompt-after-completing-a-task">
-  
-  
-    <a href="#what-next-prompt-after-completing-a-task" class="anchor-heading" aria-labelledby="what-next-prompt-after-completing-a-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> “What next?” prompt (after completing a task)
-  
-  
-</h3>
-    
-
-<p>After finishing any task, the editor <strong>must</strong> offer context-aware next
-steps via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code>, derived from the current context (same
-block → same section → same chapter → global). Always include at least
-one contextual option plus “something else”. Keep it to 3–4 options.</p>
-<h2 id="todo-workflow">
-  
-  
-    <a href="#todo-workflow" class="anchor-heading" aria-labelledby="todo-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Todo workflow
+    <a href="#if-you-cannot-finish" class="anchor-heading" aria-labelledby="if-you-cannot-finish"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> If you cannot finish
   
   
 </h2>
     
 
-<p>When the user asks to “work on todos” or “process feedback”: check
-whether the user is focused on a specific block (filter to it) or not
-(ask, via structured choice, for scope); present selected todos as a
-table; let the user multi-select; for each, read the block, assess
-actionability, route to the right skill, execute, set status
-<code class="language-plaintext highlighter-rouge">in_progress</code>. See <code class="language-plaintext highlighter-rouge">todo-review</code>. Agents may create and <code class="language-plaintext highlighter-rouge">in_progress</code>
-todos but <strong>never</strong> resolve or delete them.</p>
-<h2 id="pr-webhook-events-during-active-workplans">
-  
-  
-    <a href="#pr-webhook-events-during-active-workplans" class="anchor-heading" aria-labelledby="pr-webhook-events-during-active-workplans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PR webhook events during active workplans
-  
-  
-</h2>
-    
-
-<p>When a PR activity event arrives while a workplan is in progress, the
-<strong>default is to triage and queue, not interrupt</strong>. Interrupt only if
-the event meets one of: (1) consistency risk that would propagate into
-current work, (2) direct impact on the file/block being edited now, (3)
-CI failure on the active branch, (4) explicit user redirect. Otherwise
-record the event as a queued todo and continue; do not post a reply on
-GitHub or start a fresh investigation. Drain the queue at a natural
-pause, when the user asks, or when the workplan is done (offer “process
-queued PR comments” as the first option in the “What next?” prompt). For
-each queued item choose: <strong>action</strong> (small, confident, in-scope fix,
-committed to the PR branch), <strong>reply-only</strong> (explain on the thread), or
-<strong>no-op</strong> (duplicate/outdated/superseded). Never silently drop an event.</p>
-<h2 id="proof-workflow-narrative-and-formal">
-  
-  
-    <a href="#proof-workflow-narrative-and-formal" class="anchor-heading" aria-labelledby="proof-workflow-narrative-and-formal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proof workflow (narrative and formal)
-  
-  
-</h2>
-    
-
-<p>If the project carries a formal-proof layer: every theorem, lemma,
-proposition, and corollary <strong>must</strong> have a standalone proof block
-(<code class="language-plaintext highlighter-rouge">*-proof.ts</code> + <code class="language-plaintext highlighter-rouge">*-proof.md</code>), or it will not appear in output. For
-every provable block:</p>
-
-<ol>
-  <li><strong>Separate statement from proof</strong>: the statement <code class="language-plaintext highlighter-rouge">.md</code> holds only the
-statement; proof content lives in <code class="language-plaintext highlighter-rouge">*-proof.md</code>.</li>
-  <li><strong>Files per proof</strong>: <code class="language-plaintext highlighter-rouge">*-proof.ts</code> (manifest), <code class="language-plaintext highlighter-rouge">*-proof.md</code>
-(narrative), optional formal-proof sibling.</li>
-  <li><strong>Link via <code class="language-plaintext highlighter-rouge">proofs:</code></strong> on the parent <code class="language-plaintext highlighter-rouge">.ts</code>.</li>
-  <li><strong>List in the chapter manifest</strong> immediately after the parent.</li>
-  <li><strong>No prose in formal-source files</strong>: narrative belongs in <code class="language-plaintext highlighter-rouge">.md</code>;
-formal files carry code, brief docstrings, and reference citations.</li>
-  <li><strong>Witnessed values</strong>: any computed numerical literal in a statement,
-proof step, example, or remark uses the value-citation directive, not
-a hard-coded number. See <code class="language-plaintext highlighter-rouge">witnessed-values</code>.</li>
-</ol>
-
-<p>To create a narrative proof: check for an existing proof block; if none,
-ask the author (provide a sketch, or have the agent draft one for
-review); create the <code class="language-plaintext highlighter-rouge">.ts</code> + <code class="language-plaintext highlighter-rouge">.md</code> pair, link via <code class="language-plaintext highlighter-rouge">proofs[]</code>, add to the
-chapter manifest. For formal proofs: prefer writing the narrative first,
-then route to the formalizer with the narrative as context; route
-existing gap stubs to <code class="language-plaintext highlighter-rouge">proof-triage</code>.</p>
-<h2 id="glossary-routing">
-  
-  
-    <a href="#glossary-routing" class="anchor-heading" aria-labelledby="glossary-routing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Glossary routing
-  
-  
-</h2>
-    
-
-<p>When a new term is encountered: if it is a stdlib synonym, route to
-<code class="language-plaintext highlighter-rouge">ontologist</code> to create a glossary block; if it introduces new material,
-create a definition block; if unsure, ask the author. See <code class="language-plaintext highlighter-rouge">ontologist</code>
-§Glossary Block Policy.</p>
-<h3 id="wrap-every-occurrence-contract">
-  
-  
-    <a href="#wrap-every-occurrence-contract" class="anchor-heading" aria-labelledby="wrap-every-occurrence-contract"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Wrap-every-occurrence contract
-  
-  
-</h3>
-    
-
-<p>Once a term is registered in any block’s <code class="language-plaintext highlighter-rouge">defines: [...]</code>, <strong>every</strong>
-occurrence must be wrapped — the canonical-definition directive at the
-canonical site, the reference directive everywhere else. Plain text and
-emphasis for defined terms are not permitted. The validator enforces
-this; the codemod backfills references; the builder emits the glossary.</p>
-<h2 id="bibliography-workflow">
-  
-  
-    <a href="#bibliography-workflow" class="anchor-heading" aria-labelledby="bibliography-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bibliography workflow
-  
-  
-</h2>
-    
-
-<p>For adding, editing, or auditing references — or when a review comment
-flags a wrong-work / DOI / metadata mismatch — default to invoking
-<code class="language-plaintext highlighter-rouge">bib-qa</code> for any non-trivial bib work (key resolution, cross-check
-against the cited work, DOI/Crossref validation, paper intake). The
-editor handles only the immediate inline citation placement and
-delegates the correctness audit and intake.</p>
-<h2 id="pre-merge-checklist">
-  
-  
-    <a href="#pre-merge-checklist" class="anchor-heading" aria-labelledby="pre-merge-checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pre-merge checklist
-  
-  
-</h2>
-    
-
-<p>Before merging a branch: run content validation; run the formal-layer
-audit (zero uncited gaps, zero trivial truths, every new gap has a
-reference citation); run the witness-staleness audit (re-run/re-stamp
-stale witnesses); run the formal build if available; re-run affected
-compute scripts (new scripts use the structured-witness base).</p>
+<p><strong>Stop, and leave the repository un-initialised.</strong> An unbootstrapped repository
+is a recoverable state. One carrying a declaration that names the wrong
+upstream, or directories that do not exist, is not — it will be believed, and
+every artefact written afterwards inherits the mistake.</p>
 
           
 
