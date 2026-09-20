@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T22:57:06.350Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1594d6aa8dadd62f0e017e6ab714e8781bb1bfd5",
-  "sourceCommitSha": "1594d6aa8dadd62f0e017e6ab714e8781bb1bfd5",
-  "sourceCommitAt": "2026-09-20T22:55:25Z",
+  "generatedAt": "2026-09-20T23:29:58.997Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bd46bb9a6b9d15c1484740a3a962fc11c12169ea",
+  "sourceCommitSha": "bd46bb9a6b9d15c1484740a3a962fc11c12169ea",
+  "sourceCommitAt": "2026-09-20T23:28:18Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 218,
+    "Skill": 219,
     "Actor": 27,
     "Capability": 28,
     "Role": 130,
@@ -1859,6 +1859,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/getting-started"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/docs-auto",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "docs-auto",
+      "title": "docs-auto — the index is generated, the meaning is authored",
+      "description": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/docs-auto.md",
+      "instructionLines": 127,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/docs-auto"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/interaction-modality",
@@ -5319,6 +5336,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-contribution-offer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/docs-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/library-ingestion",
@@ -34014,8 +34032,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "f55d0f27451b2d41f441116daaa8bc29feb5319c",
+    "sha": "eefd679dcae3cda0e90ba33afca01d3223270ad4",
     "pr": "607/merge",
-    "run": "35543107953"
+    "run": "35544747408"
   }
 }
