@@ -45,7 +45,7 @@ const scaffoldConfigIn = (dir: string): string => join(dir, SCAFFOLD_CONFIG);
  * folio-assistant`, so the linked directory is the repository root and the
  * platform's code is under `cat-harness/` inside it.
  */
-const PLATFORM = resolve(import.meta.dir, "../../..");
+const REPO_ROOT = resolve(import.meta.dir, "../../..");
 const dirs: string[] = [];
 
 function tmp(): string {
@@ -236,7 +236,7 @@ describe("the scaffolded folio actually builds", () => {
     initFolio(opts(d));
     // Link the platform where harness.config.json says it is. Everything below
     // then resolves exactly as it would in a real folio.
-    symlinkSync(PLATFORM, join(d, "folio-assistant"));
+    symlinkSync(REPO_ROOT, join(d, "folio-assistant"));
 
     const { buildDocumentMarkdown } = await import("../../content/pipeline/render-markdown");
     const result = await buildDocumentMarkdown(
@@ -259,7 +259,7 @@ describe("the scaffolded folio actually builds", () => {
   test("the scaffolded document folio conforms to its own declared profile", async () => {
     const d = tmp();
     initFolio(opts(d));
-    symlinkSync(PLATFORM, join(d, "folio-assistant"));
+    symlinkSync(REPO_ROOT, join(d, "folio-assistant"));
 
     const { checkFolioProfile } = await import("../../content/pipeline/profile-check");
     const r = checkFolioProfile(d);

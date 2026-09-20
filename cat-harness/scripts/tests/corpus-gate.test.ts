@@ -40,8 +40,8 @@ import { instanceId, saveInstance } from "../../src/workflow/store";
  * looking.
  */
 
-const PLATFORM = resolve(import.meta.dir, "../..");
-const BUILDERS = JSON.stringify(join(PLATFORM, "schemas/builders.ts"));
+const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
+const BUILDERS = JSON.stringify(join(INSTANCE_ROOT, "schemas/builders.ts"));
 
 let repo: string;
 
@@ -60,7 +60,7 @@ const block = (slug: string, label: string): string => {
 
 /** Drive a real instance to the point where the commit step is enabled. */
 const authorise = async (label: string, decision = "accept"): Promise<void> => {
-  const model = await loadProcessModel(join(PLATFORM, "skills/workflows/editing-hci-validation.bpmn"));
+  const model = await loadProcessModel(join(INSTANCE_ROOT, "skills/workflows/editing-hci-validation.bpmn"));
   const state = startInstance(model, { id: instanceId(model.id, label), subject: label });
   // CallActivity_Evidence sits between claiming the bean and drafting: a
   // recommendation gathers its evidence BEFORE the change is written. It is a
@@ -92,7 +92,7 @@ beforeEach(() => {
 });
 afterEach(() => rmSync(repo, { recursive: true, force: true }));
 
-const check = (files: string[]) => checkCorpusGate(repo, { files, platformRoot: PLATFORM, labelFor });
+const check = (files: string[]) => checkCorpusGate(repo, { files, platformRoot: INSTANCE_ROOT, labelFor });
 
 describe("what the gate ignores", () => {
   test("non-content files are not its business", async () => {
@@ -126,7 +126,7 @@ describe("refusing by default", () => {
   test("an instance that has not reached the editor's decision is refused", async () => {
     const f = block("carbon", "prop:carbon");
     const model = await loadProcessModel(
-      join(PLATFORM, "skills/workflows/editing-hci-validation.bpmn"),
+      join(INSTANCE_ROOT, "skills/workflows/editing-hci-validation.bpmn"),
     );
     const state = startInstance(model, {
       id: instanceId(model.id, "prop:carbon"),
@@ -162,7 +162,7 @@ describe("allowing what the process authorised", () => {
   test("a block already committed in an earlier round stays allowed", async () => {
     const f = block("carbon", "prop:carbon");
     const model = await loadProcessModel(
-      join(PLATFORM, "skills/workflows/editing-hci-validation.bpmn"),
+      join(INSTANCE_ROOT, "skills/workflows/editing-hci-validation.bpmn"),
     );
     await authorise("prop:carbon");
     const state = (await import("../../src/workflow/store")).loadInstance(
@@ -209,7 +209,7 @@ describe("it does not fail open", () => {
     mkdirSync(join(platform, "skills", "pkg"), { recursive: true });
     writeFileSync(
       join(platform, "skills/workflows/editing-hci-validation.bpmn"),
-      await Bun.file(join(PLATFORM, "skills/workflows/editing-hci-validation.bpmn")).text(),
+      await Bun.file(join(INSTANCE_ROOT, "skills/workflows/editing-hci-validation.bpmn")).text(),
     );
     writeFileSync(join(platform, "skills/pkg/workflow-policy.json"), "{ not json");
 
