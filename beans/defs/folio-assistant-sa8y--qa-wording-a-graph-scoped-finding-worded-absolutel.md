@@ -133,7 +133,14 @@ compose", applied to a diagnostic rather than to a link.
 - [ ] a gate that runs the audits **per declared instance**, or the root's silence
       about a nested one reported as its own finding. This is the real fix; the
       wording change only stops the finding being MISread.
-- [ ] `bootstrap/skills/` package manifest, so `confirm-harness` is servable
+- [x] `bootstrap/skills/` package manifest — **and the manifest was not the
+      blocker.** `manifestSkills()` hardcoded `join(root, "skills")` and scanned
+      only one level of subdirectories, so a manifest AT a declared directory was
+      invisible however correctly written. `gen-skill-docs` already documents that
+      `bootstrap` and `cat-harness-src` hold their skills DIRECTLY. Both that
+      function and `manifestEntries()` now derive from `kgDirectories` and accept
+      either shape, through one shared walk so they cannot drift apart again.
+      `skill-has-entry-point` went 1 → 0
 - [ ] the three unbound lanes in `initialize-harness.bpmn`
 - [ ] that diagram has no `BPMNDiagram`, so `render:bpmn` cannot draw it
 - [ ] the stale `bootstrap.bpmn` sidecar — owner's call, still untouched

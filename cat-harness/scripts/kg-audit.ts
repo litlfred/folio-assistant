@@ -822,24 +822,58 @@ function auditRequirements(
 
 // ── Graph roll-up ───────────────────────────────────────────────
 
-function manifestSkills(): Set<string> {
-  const out = new Set<string>();
-  const skillsRoot = join(root, "skills");
-  if (!existsSync(skillsRoot)) return out;
-  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const mp = join(skillsRoot, d.name, "package-manifest.json");
-    if (!existsSync(mp)) continue;
+/**
+ * Every package manifest this instance declares, with the package it names.
+ *
+ * ## Two defects this replaces, and both were the same shape
+ *
+ * `manifestSkills` and `manifestEntries` each walked `join(root, "skills")` and
+ * each scanned exactly one level of subdirectories. So:
+ *
+ * 1. **The path was hardcoded**, not read from the declaration. That is the
+ *    defect `harness.json` exists to remove, and the third instance of it found
+ *    in two days — `KG_ROOT` here and `SKILLS_CATEGORIES` in `gen-skill-docs`
+ *    were the others. A hardcoded root scans the wrong tree the moment the
+ *    layout moves, which it did on 2026-09-20.
+ * 2. **A manifest AT a declared directory was invisible**, because the walk only
+ *    looked inside subdirectories. `gen-skill-docs` already documents that two
+ *    declared directories — `bootstrap` and `cat-harness-src` — "hold their
+ *    skills DIRECTLY rather than in package subdirectories". So a manifest for
+ *    those could not be found however correctly it was written, which is why
+ *    `confirm-harness` reported as listed by no package manifest while being
+ *    perfectly declarable.
+ *
+ * One walk now, returning both shapes the callers wanted, so the two cannot
+ * drift apart again.
+ */
+function manifestPackages(): { pkg: string; skill: string }[] {
+  const out: { pkg: string; skill: string }[] = [];
+  const read = (mp: string, pkg: string): void => {
+    if (!existsSync(mp)) return;
     try {
       const m = JSON.parse(readFileSync(mp, "utf-8")) as { skills?: string[] };
-      for (const s of m.skills ?? []) out.add(s);
+      for (const s of m.skills ?? []) out.push({ pkg, skill: s });
     } catch {
       // A manifest that will not parse is `validate-skills.ts`'s finding, not
       // this one's. Treating it as "declares nothing" here would turn one
       // defect into a hundred unrelated orphan reports.
     }
+  };
+  for (const d of kgDirectories(root)) {
+    // A manifest at the declared directory itself: the shape `bootstrap` and
+    // `cat-harness-src` use.
+    read(join(d.absPath, "package-manifest.json"), d.id);
+    if (!existsSync(d.absPath)) continue;
+    // ...and one per package subdirectory: the shape `skills/` uses.
+    for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
+      if (e.isDirectory()) read(join(d.absPath, e.name, "package-manifest.json"), e.name);
+    }
   }
   return out;
+}
+
+function manifestSkills(): Set<string> {
+  return new Set(manifestPackages().map((m) => m.skill));
 }
 
 /**
@@ -879,21 +913,7 @@ function localHarnessSkills(): Set<string> {
 
 /** Manifest entries, with the package each came from, for the reverse check. */
 function manifestEntries(): { pkg: string; skill: string }[] {
-  const out: { pkg: string; skill: string }[] = [];
-  const skillsRoot = join(root, "skills");
-  if (!existsSync(skillsRoot)) return out;
-  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const mp = join(skillsRoot, d.name, "package-manifest.json");
-    if (!existsSync(mp)) continue;
-    try {
-      const m = JSON.parse(readFileSync(mp, "utf-8")) as { skills?: string[] };
-      for (const s of m.skills ?? []) out.push({ pkg: d.name, skill: s });
-    } catch {
-      // `validate-skills.ts`'s finding, not this one's.
-    }
-  }
-  return out;
+  return manifestPackages();
 }
 
 /**
