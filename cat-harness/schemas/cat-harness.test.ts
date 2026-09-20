@@ -11,6 +11,8 @@ import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
 import { registerFolioGraphKind } from "./folio-graph-kind";
+import { BEAN_GRAPH_FILE } from "./bean-graph";
+import { TODO_GRAPH_FILE } from "./todo-graph";
 import {
   defaultGraphKinds,
   GraphKindRegistry,
@@ -29,6 +31,9 @@ import {
   materialiseDirectories,
   renderableDirectories,
   DEFAULT_DIRECTORIES,
+  declaredKinds,
+  directoryForGraph,
+  directoriesForGraph,
   resolveDirectories,
   resolveGraphKind,
   toJsonLd,
@@ -654,5 +659,208 @@ describe("the scope trap", () => {
     } finally {
       rmSync(repo, { recursive: true, force: true });
     }
+  });
+});
+
+describe("directoryForGraph refuses an ambiguous kind rather than picking one", () => {
+  /**
+   * Bean `wggr`, as a guard rather than as a story.
+   *
+   * `directoryForGraph` returned the FIRST directory declaring a kind, under a
+   * doc comment calling itself "the accessor for the single-home case". The
+   * precondition was stated and enforced by nothing — this repository's own
+   * rule broken in one line: an unavoidable duplicate is fine, an UNCHECKED
+   * one is not.
+   *
+   * What it cost: a by-graph lookup for `cat-harness` resolves to `schemas/`
+   * rather than `skills/`, because `schemas/` declares
+   * `["schemas", "cat-harness"]` and comes first. An audit walked `schemas/`,
+   * wrote 37 sidecars against the wrong subjects, and exited 0.
+   *
+   * Fixtures rather than the real tree, deliberately. Asserting that THIS
+   * repository has an ambiguous `cat-harness` pins today's declaration: the
+   * test would go green the day somebody removed `cat-harness` from
+   * `schemas/`, which is a change to the subject rather than to the code.
+   */
+  function twoHomes(): string {
+    const root = mkdtempSync(join(tmpdir(), "amb-"));
+    mkdirSync(join(root, "a"), { recursive: true });
+    mkdirSync(join(root, "b"), { recursive: true });
+    writeFileSync(
+      join(root, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "amb",
+        directories: [
+          { id: "first", path: "a/", graphs: ["schemas", "cat-harness"] },
+          { id: "second", path: "b/", graphs: ["cat-harness"] },
+        ],
+      }),
+    );
+    return root;
+  }
+
+  test("two homes → it throws, and the message names both", () => {
+    const root = twoHomes();
+    try {
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/declared by 2 directories/);
+      // Naming the candidates is what makes the throw actionable rather than
+      // merely loud: the caller has to pick one, and cannot without knowing
+      // what there is to pick from.
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/first \(a\/\)/);
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/second \(b\/\)/);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("...and it does NOT silently return the first, which is the whole defect", () => {
+    // Stated as its own assertion because a throw and a wrong answer are the
+    // same shape to a caller that does not check: the old behaviour returned
+    // `a/` here and nothing anywhere said so.
+    const root = twoHomes();
+    try {
+      let returned: string | undefined | symbol = Symbol("not reached");
+      try {
+        returned = directoryForGraph(root, "cat-harness");
+      } catch {
+        returned = Symbol("threw");
+      }
+      expect(returned).not.toBe(join(root, "a"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a single-homed kind in the SAME declaration still resolves", () => {
+    // The throw must be scoped to the ambiguous kind, not to a declaration
+    // that happens to contain one. `schemas` lives only in `a/` here.
+    const root = twoHomes();
+    try {
+      expect(directoryForGraph(root, "schemas")).toBe(join(root, "a"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("directoriesForGraph returns every home, in declaration order", () => {
+    const root = twoHomes();
+    try {
+      expect(directoriesForGraph(root, "cat-harness")).toEqual([join(root, "a"), join(root, "b")]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a kind the instance declares nowhere is empty, not a throw", () => {
+    // The third state its sibling already documents: undeclared is not the
+    // same as declared-at-the-convention, and defaulting here would hand a
+    // caller a path to a directory that is not there.
+    const root = twoHomes();
+    try {
+      expect(directoriesForGraph(root, "voices")).toEqual([]);
+      expect(directoryForGraph(root, "voices")).toBeUndefined();
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("a nested declaration is named by its KIND, not by its directory", () => {
+  /**
+   * The disagreement this closes was live and silent.
+   *
+   * `declaredKinds` computed the nested filename as `${basename(path)}.json`.
+   * `bean-graph.ts` holds the opposite, and holds it as a design property:
+   * *"moving `beans/` to `work/` requires editing nothing inside it."* Both
+   * statements were true of today's layout and contradict each other on the
+   * first relocation — the walk looks for `work/work.json`, the file is still
+   * `work/beans.json`, and the nested kinds drop out of `declared` with
+   * nothing said. An under-count, which then manufactures an `undeclared`
+   * finding somewhere else.
+   *
+   * The owner settled the general rule on 2026-09-20 — each type declares its
+   * own filename — and `GraphKindDef.declarationFile` is that rule at the
+   * graph-kind level.
+   */
+  function withNested(dirPath: string, fileName: string): string {
+    const root = mkdtempSync(join(tmpdir(), "nested-"));
+    const dir = join(root, dirPath);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(
+      join(dir, fileName),
+      JSON.stringify({
+        name: "n",
+        directories: [{ id: "defs", path: "defs", graphs: ["bean-defs"] }],
+      }),
+    );
+    writeFileSync(
+      join(root, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "n",
+        directories: [{ id: "beans", path: `${dirPath}/`, graphs: ["beans"] }],
+      }),
+    );
+    return root;
+  }
+
+  test("at the conventional path, the nested kinds are found", () => {
+    const root = withNested("beans", "beans.json");
+    try {
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["bean-defs", "beans"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("RELOCATED to `work/`, the file keeps its name and the kinds are STILL found", () => {
+    // The case the two readers disagreed about, and the reason for the field.
+    // Before this, `declaredKinds` looked for `work/work.json`, found nothing,
+    // and returned `beans` alone — silently dropping `bean-defs`.
+    const root = withNested("work", "beans.json");
+    try {
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["bean-defs", "beans"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the directory-name convention still works for a kind declaring no filename", () => {
+    // Unmigrated is not broken. A graph whose kind names no declaration file
+    // falls back to `${dirName}.json`, so an instance that never relocates
+    // behaves exactly as it did.
+    const root = mkdtempSync(join(tmpdir(), "nested-conv-"));
+    try {
+      mkdirSync(join(root, "qa"), { recursive: true });
+      writeFileSync(
+        join(root, "qa", "qa.json"),
+        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", graphs: ["health"] }] }),
+      );
+      writeFileSync(
+        join(root, DECLARATION_FILENAME),
+        JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", graphs: ["qa"] }] }),
+      );
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["health", "qa"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the two modules' constants agree with the kinds, because they are derived", () => {
+    // The duplicate is removed rather than merely checked — but assert it, so
+    // reintroducing a literal in either module fails here rather than on
+    // somebody's relocation.
+    // Compared as a pair rather than with `?.` on each side: an accessor that
+    // returned `undefined` for both would otherwise make this pass over
+    // nothing, which is the vacuous-assertion shape this repository keeps
+    // paying for.
+    expect({
+      beans: defaultGraphKinds.get("beans")?.declarationFile,
+      todos: defaultGraphKinds.get("todos")?.declarationFile,
+    }).toEqual({ beans: BEAN_GRAPH_FILE, todos: TODO_GRAPH_FILE });
+    expect(BEAN_GRAPH_FILE).toBe("beans.json");
+    expect(TODO_GRAPH_FILE).toBe("todos.json");
   });
 });

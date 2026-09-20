@@ -261,6 +261,35 @@ export interface GraphKindDef {
    * graph here.
    */
   validator?: string;
+  /**
+   * The NESTED DECLARATION a directory of this kind carries, by filename.
+   *
+   * A graph directory may declare its own inner structure one level down:
+   * `beans/beans.json` says the `beans` graph holds `bean-defs` and
+   * `workflow-state`, so the root `harness.json` does not restate them. One
+   * fact, one place, at each level.
+   *
+   * ## Why the KIND names the file, and not the directory
+   *
+   * `declaredKinds` computed it as `${basename(path)}.json` — a filename
+   * derived from wherever the directory happened to sit. `bean-graph.ts`
+   * states the opposite rule, and states it as a design property: *moving
+   * `beans/` to `work/` requires editing nothing inside it.* Both were true
+   * of today's layout and they disagree the moment anybody relocates:
+   * the walker looks for `work/work.json`, the file is still `work/beans.json`,
+   * and the nested kinds vanish from `declared` with nothing said. A silent
+   * under-count, which manufactures an `undeclared` finding somewhere else.
+   *
+   * The owner settled the general rule on 2026-09-20 — **each type declares
+   * its own filename** — and this is that rule at the graph-kind level. The
+   * kind knows what its declaration is called; a directory name is a
+   * filesystem accident.
+   *
+   * Absent means the kind has no nested declaration, and `declaredKinds`
+   * falls back to the directory-name convention plus `graph.json` so an
+   * unmigrated graph keeps working.
+   */
+  declarationFile?: string;
 }
 
 /**
@@ -473,6 +502,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "The work plan — what is being worked on, and where each running BPMN instance got to. " +
       "Its inner directories are declared by `beans/beans.json`.",
+    // Named here rather than derived from the directory: `bean-graph.ts` holds
+    // that moving `beans/` to `work/` must rename nothing inside it, and a
+    // computed `${dirName}.json` would contradict that on the first relocation.
+    declarationFile: "beans.json",
   },
   // The two parts of the bean graph. They are BASE kinds rather than
   // something `bean-graph.ts` registers separately, because a directory and
@@ -523,6 +556,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Human actors' outstanding work — content, owned by the folio, tagged by role, " +
       "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
+    declarationFile: "todos.json",
   },
   "todo-items": {
     type: termIri("TodoItemsGraph"),
@@ -2557,19 +2591,79 @@ export function renderableDirectories(
  * convention as a fallback say so at their own call site, where the choice
  * is visible.
  *
- * Returns the FIRST declaration carrying the graph. A graph declared by two
- * directories is legal — `cat-harness` is, by `schemas/` and `skills/` — so a
- * caller wanting all of them resolves the list itself; this is the accessor
- * for the single-home case, which is every other graph kind here.
+ * ## Ambiguity REFUSES rather than picking, and that is the point
+ *
+ * A graph declared by two directories is legal — `cat-harness` is declared by
+ * four (`schemas/`, `skills/`, `bootstrap/skills/`, `src/skills/`) and
+ * `methodology` by two. This used to return the FIRST of them, under a comment
+ * saying it was "the accessor for the single-home case". That precondition was
+ * stated and enforced by nothing, which is this repository's own rule broken
+ * in one line: an unavoidable duplicate is fine, an UNCHECKED one is not.
+ *
+ * The cost is on the record. Bean `wggr`: a by-graph lookup for `cat-harness`
+ * resolves to `schemas/`, not `skills/`, because `schemas/` declares
+ * `["schemas", "cat-harness"]` and comes first. An audit walked `schemas/`,
+ * wrote **37** sidecars against the wrong subjects, and exited **0**. Nothing
+ * threw, because the wrong answer is indistinguishable from the right one at
+ * the call site — *"a by-graph lookup is not a weaker version of a by-id
+ * lookup; for `cat-harness` it resolves to a DIFFERENT DIRECTORY."*
+ *
+ * So an ambiguous kind now throws, naming every candidate. Measured before the
+ * change: **none of the 34 call sites in this repository asks for either
+ * ambiguous kind** — every one passes `library`, `translation-sources`,
+ * `uploads`, `schemas`, `fsh-guts`, `todos` or `memory`, all single-homed. The
+ * throw is therefore unreachable today and exists for the caller who has not
+ * been written yet, which is the one `wggr` was.
+ *
+ * {@link directoriesForGraph} is the honest accessor when several homes are
+ * what you want; a by-ID lookup through {@link resolveDirectories} is the
+ * answer when you want a particular one.
  */
 export function directoryForGraph(
   root: string,
   graph: string,
   registry: GraphKindRegistry = defaultGraphKinds,
 ): string | undefined {
-  return resolveDirectories([{ name: "(local)", root, own: true }], registry).find((d) =>
+  const all = matchingDirectories(root, graph, registry);
+  if (all.length > 1) {
+    throw new Error(
+      `graph "${graph}" is declared by ${all.length} directories, so there is no single ` +
+        `directory for it: ${all.map((d) => `${d.id} (${d.path})`).join(", ")}. ` +
+        `Returning the first silently is bean \`wggr\` — it resolved \`cat-harness\` to ` +
+        `\`schemas/\` and wrote 37 sidecars against the wrong subjects on a run that exited 0. ` +
+        `Use \`directoriesForGraph\` if you want all of them, or look the directory up by its ` +
+        `\`id\` through \`resolveDirectories\` if you want a particular one.`,
+    );
+  }
+  return all[0]?.absPath;
+}
+
+/** Every directory this instance declares as holding `graph`, in declaration order. */
+function matchingDirectories(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry,
+): ResolvedDirectory[] {
+  return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
     d.graphs.includes(graph as GraphKind),
-  )?.absPath;
+  );
+}
+
+/**
+ * Every directory holding `graph`, for the callers {@link directoryForGraph}
+ * now refuses.
+ *
+ * Empty means the instance declares the graph nowhere — the same third state
+ * its sibling documents, and for the same reason: a caller that wants the
+ * convention as a fallback says so at its own call site, where the choice is
+ * visible, rather than being handed a path to a directory that is not there.
+ */
+export function directoriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string[] {
+  return matchingDirectories(root, graph, registry).map((d) => d.absPath);
 }
 
 /**
@@ -2715,16 +2809,35 @@ export function toJsonLd(
  * and `workflow-state` exist, and an instance that owns them would otherwise
  * be reported as not owning them.
  */
-export function declaredKinds(root: string, decl: CatHarnessDeclaration): Set<string> {
+export function declaredKinds(
+  root: string,
+  decl: CatHarnessDeclaration,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Set<string> {
   const kinds = new Set<string>();
   for (const d of decl.directories ?? []) {
     for (const g of d.graphs ?? []) kinds.add(g);
-    // The nested declaration, if the directory carries one. Its filename is
-    // the directory's own name by convention (`beans/beans.json`), which is
-    // how `beans/` says what its inner nodes are without `harness.json`
-    // restating them.
+    // The nested declaration, if the directory carries one — how `beans/` says
+    // what its inner nodes are without `harness.json` restating them.
+    //
+    // ASKED OF THE KIND FIRST, and that is the fix rather than the tidy-up.
+    // This computed `${basename(path)}.json` and nothing else, while
+    // `bean-graph.ts` held that moving `beans/` to `work/` must rename nothing
+    // inside it. Both true of today's layout, contradictory on the first
+    // relocation: the walk would look for `work/work.json`, the file would
+    // still be `work/beans.json`, and the nested kinds would drop out of
+    // `declared` silently — under-counting, which manufactures an `undeclared`
+    // finding somewhere else. `declarationFile` on the kind is where that fact
+    // now lives, once.
+    //
+    // The directory-name convention stays as a FALLBACK, after it: a graph
+    // whose kind declares no filename is unmigrated, not broken, and an
+    // instance that never relocates behaves exactly as before.
     const dirName = basename(d.path.replace(/\/+$/, ""));
-    for (const candidate of [`${dirName}.json`, "graph.json"]) {
+    const declared = (d.graphs ?? [])
+      .map((g) => registry.get(g)?.declarationFile)
+      .filter((f): f is string => typeof f === "string");
+    for (const candidate of [...declared, `${dirName}.json`, "graph.json"]) {
       const p = join(declaredKindsEntryRoot(root, d), candidate);
       if (!existsSync(p)) continue;
       try {

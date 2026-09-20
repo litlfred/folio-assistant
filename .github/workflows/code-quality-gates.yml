@@ -262,6 +262,21 @@ jobs:
       - name: declared assets exist and resolve
         run: bun run check:declared-assets
 
+      # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
+      # declared -> disk; this walks disk -> declared, over the repository ROOT,
+      # which every other sweep skips because the root is deliberately not an
+      # instance. That is exactly where an undeclared file survives: commit
+      # `0301fbd2` put three 1.6-1.8 MB PNGs there with spaces and commas in
+      # their names and no gate noticed, and an automated pass then misread them
+      # as a regeneration of the existing art. A file nothing declares is a file
+      # nothing reasons about.
+      #
+      # Gating from the first commit, like its sibling and for the same reason:
+      # the root is clean as of this change, so it starts at zero findings
+      # rather than measuring a backlog.
+      - name: no undeclared files at the repository root
+        run: bun run check:undeclared-files:check
+
       # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
       # committed. It no longer is — it is built at render time into the
       # published site by `docs-site.yml` — so there is no committed copy to
@@ -286,6 +301,31 @@ jobs:
       # fake ref onto a real step.
       - name: workflow skill refs
         run: bun run check:workflow-refs
+
+      # Every link OUT of the files an agent reads first — bean `v8gh`.
+      # `AGENTS.md` carried seven dead links, five broken by one directory
+      # move, including the onboarding guide its own banner calls the place to
+      # start. `readme:audit` covers README.md only and `check:agents-xref`
+      # covers citations INTO AGENTS.md, so a directory move could silently
+      # break the one file every agent opens first.
+      - name: agent entry links
+        run: bun run check:agent-entry-links
+
+      # What `AGENTS.md` ASSERTS about the code — bean `77ex`. The two checks
+      # above bracket it without covering it: `agents-xref` verifies citations
+      # INTO the file, `agent-entry-links` verifies links OUT of it, and
+      # neither reads what the prose says is true.
+      #
+      # Gating from the first commit, because it starts at zero findings:
+      # every claim on the current file holds. The two it was written for are
+      # both historical, and the second is why the ABSENCE half exists — at
+      # `08f43c55b2` the file placed `resolveSkillDirs` in a module that DID
+      # declare it, so the location claim was true and only "has no caller"
+      # was false. `AGENTS.md` states the cost in its own voice: a stale gap
+      # notice is worse than none, because an agent that believes it either
+      # avoids the feature or rebuilds it.
+      - name: AGENTS.md claims about code
+        run: bun run check:agents-claims
 
       # Which `.github/workflows/*.yml` are documented as BPMN — bean `7yvd`,
       # owner: "make sure all workflows documented as bpmn".

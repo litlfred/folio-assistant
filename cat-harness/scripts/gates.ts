@@ -177,6 +177,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "(exit 2 for could-not-determine, never folded into a pass) is covered by " +
       "`check-maintained-artefacts.test.ts` in `bun test`, which is in the gate set",
   },
+  {
+    match: "check:escaped-markup",
+    kind: "ci-only",
+    reason:
+      "reads the ASSEMBLED `_site/` for the same reason, and the reason is sharper here: what " +
+      "it looks for exists ONLY after the markdown conversion. The template that shipped the " +
+      "defect was valid HTML — a Liquid whitespace strip welded two attributes together, " +
+      "Kramdown refused the block and escaped it, and the landing page published " +
+      "`&lt;article class=\"fa-sticky …\"` as visible text. Nothing readable from a checkout " +
+      "could have seen that, which is why every source-level gate passed over it. Its three " +
+      "states and the `<code>`/`<pre>` exclusion that keeps it off legitimate documentation " +
+      "are covered by `check-escaped-markup.test.ts` in `bun test`, which is in the gate set",
+  },
   // ── Generators whose `--check` twin is gated ────────────────────────
   {
     match: "scripts/gen-schema-docs.ts",
@@ -553,6 +566,34 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     script: "check:partition:edges",
     kind: "report",
     reason: "prints the edge list; `check:partition` is the gate and is wired",
+  },
+  {
+    script: "check:theme-art",
+    kind: "report",
+    reason:
+      "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
+  },
+  {
+    script: "check:theme-art:check",
+    kind: "report",
+    // NOT a permanent exemption, and the unblocking condition is exact rather
+    // than "when somebody gets round to it": it refuses `landing-architecture`,
+    // which is declared with laptop and card and NO mobile crop.
+    // `resolveThemeBackdrop` refuses an incomplete backdrop wholesale, so that
+    // theme would render with no art at all — a real finding, not a false one.
+    //
+    // Gating on it today would make CI red over art that is MISSING rather than
+    // over a regression somebody introduced, which is the one thing a ratchet
+    // must not do. Wire it the moment the architecture mobile crop lands, or
+    // the incomplete declaration is withdrawn.
+    reason:
+      "refuses `landing-architecture`, whose mobile crop has never been supplied; gating would make CI red over missing art rather than over a regression. Wire it when that crop lands",
+  },
+  {
+    script: "check:undeclared-files",
+    kind: "report",
+    reason:
+      "prints the unaccounted paths with their sizes; `check:undeclared-files:check` is the gating form and is wired",
   },
   {
     script: "health:check",

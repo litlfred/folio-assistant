@@ -102,6 +102,55 @@ cost a minute; the second cost a bean, a wrong diagnosis, and very nearly a
 the output and the verdict, run it twice or capture the status first. Reading a
 verdict off prose you piped is the same error as quoting a count from prose.
 
+### A template is not a page — verify the BUILD, not the source of it
+
+The invariant above says a **human** cannot assess a rendered artefact from a
+description of it. This is its twin, and it is the one an agent breaks:
+
+> **An agent cannot assess a rendered artefact from the template that generates
+> it.** A correct template and a correct page are different claims, and only the
+> second is what a reader loads.
+
+Measured, 2026-09-20, and it is worth the detail because every safeguard fired
+green. `docs/_includes/landing.html` builds a sticky's `<article>` opening tag
+across many lines. One Liquid `{% endif -%}` right-stripped the newline before
+the next attribute, so the tag emitted as
+
+```
+…--fa-text-scale:0.74;"aria-labelledby="fa-sticky-cat-harness-summary"
+```
+
+Two attributes with no separator is an unparseable tag. `index.md` is
+**markdown**, so Kramdown stopped recognising the block as HTML and escaped all
+of it. The published landing page — the live site and every staging preview —
+carried `&lt;article class="fa-sticky …"` as **visible words**, with
+`&lt;/article&gt;` to match: 3 escaped, 0 real. Every `.fa-landing-sticky--fixed`
+rule was dead, which was the whole feature.
+
+What passed over it: 3517 unit tests, `eslint`, `tsc`, twelve gates, the e2e
+suite **and** the accessibility suite. Not one of them was wrong. Every one reads
+a **source**, and the source was valid HTML — the defect exists only in the
+output of the markdown converter. The agent had rendered and screenshotted the
+template through a scratch harness and called the round verified.
+
+So the rule is mechanical, not a matter of diligence:
+
+- **When the artefact is a built page, the evidence is the built page.** Build
+  the site and read the output. Reading the template proves the template.
+- **A screenshot of a scratch render is not a screenshot of the build.** If the
+  real build cannot run locally (here the `just-the-docs` remote theme 403s
+  through the agent proxy), stub the *theme* and build anyway — a pass-through
+  `_layouts/default.html` is enough to see what Kramdown did. Stub the part that
+  cannot run; never substitute the part under test.
+- **State which one you looked at.** "Rendered and checked" is ambiguous between
+  the two, and the ambiguity is where this hid.
+
+The general form of the gap now has a check — `check:escaped-markup`, run in
+`docs-site.yml` against the assembled `_site/`, because that is the only place
+the answer exists. But a check written after the fact does not retire the rule:
+the next defect of this shape will be in whatever the build does that no source
+gate can see.
+
 ### The exceptions, and none of them is "I am unsure"
 
 - **Never merge red.** A failing or unrun required check is a real blocker.
