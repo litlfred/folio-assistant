@@ -626,10 +626,10 @@
   <p><strong>Bib human-review integration.</strong> When importing a paper whose
 results back a <code class="language-plaintext highlighter-rouge">references.ts</code> entry, place the formalisation in a <strong>per-paper
 Lean package</strong> (wrap, don’t duplicate, any overlap with the main paper’s results)
-and drive the ref’s status through <a href="/folio-assistant/reference/skill-instructions/bib-human-review.html"><code class="language-plaintext highlighter-rouge">bib-human-review</code></a>
+and drive the ref’s status through <a href="../folio-core/bib-human-review.md"><code class="language-plaintext highlighter-rouge">bib-human-review</code></a>
 (<code class="language-plaintext highlighter-rouge">source-in-repo</code> once the cited passage is identified → <code class="language-plaintext highlighter-rouge">validated</code> after
 source-match + bib validation). The on-photo automation lives in
-<a href="/folio-assistant/reference/skill-instructions/bib-photo-ingestion-watcher.html"><code class="language-plaintext highlighter-rouge">bib-photo-ingestion-watcher</code></a>.</p>
+<a href="../folio-core/bib-photo-ingestion-watcher.md"><code class="language-plaintext highlighter-rouge">bib-photo-ingestion-watcher</code></a>.</p>
 </blockquote>
 <h2 id="overview">
   
@@ -742,7 +742,7 @@ allowlist) cannot reach <code class="language-plaintext highlighter-rouge">arxiv
 servers stay configured but fail soft. In those sessions, queue
 the actual fetch onto <code class="language-plaintext highlighter-rouge">scripts/upload-bib-papers.sh</code> running on a
 normal-network machine (handoff documented in
-<a href="/folio-assistant/reference/skill-instructions/bib-qa.html#batch-intake-pipeline"><code class="language-plaintext highlighter-rouge">bib-qa.md §Batch intake pipeline</code></a>).</p>
+<a href="../folio-core/bib-qa.md#batch-intake-pipeline"><code class="language-plaintext highlighter-rouge">bib-qa.md §Batch intake pipeline</code></a>).</p>
 
 <p>All uploads are committed to the repo under <code class="language-plaintext highlighter-rouge">uploads/</code> for reprocessing.
 Metadata is stored in <code class="language-plaintext highlighter-rouge">uploads/&lt;paper-id&gt;/import-meta.json</code>:</p>
@@ -1154,7 +1154,7 @@ content/
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35522229608"><code>f11efe2</code></a> &middot; 2026-09-20T16:17:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35522644138"><code>9f5652b</code></a> &middot; 2026-09-20T16:26:11Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

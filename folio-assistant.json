@@ -252,10 +252,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T16:18:26.688Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f11efe2d05c41109ff7aaca94adfaabd8ac54f4e",
-  "sourceCommitSha": "f11efe2d05c41109ff7aaca94adfaabd8ac54f4e",
-  "sourceCommitAt": "2026-09-20T18:17:05+02:00",
+  "generatedAt": "2026-09-20T16:26:47.790Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9f5652b21851faff52cb3fceb344efe01a73ca78",
+  "sourceCommitSha": "9f5652b21851faff52cb3fceb344efe01a73ca78",
+  "sourceCommitAt": "2026-09-20T18:25:01+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 202,
@@ -1165,13 +1165,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/unverified-constraints",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "unverified-constraints",
-      "title": "Never encode a constraint you have not verified",
+      "title": "consulted: reference material nobody performs — a DISCIPLINE. \"Never encode a constraint you have not verified\" is a rule that governs other work; its headings are the argument and the worked case. Nobody performs it as a task.",
       "description": "Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something \"is not supported\".",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/unverified-constraints.md",
-      "instructionLines": 75,
+      "instructionLines": 77,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1254,13 +1254,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/mcp-projection",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "mcp-projection",
-      "title": "MCP projection — turning a Tool node into an MCP service",
+      "title": "consulted: reference material nobody performs — EXPLAINS a mapping — Tool node to MCP service — and instructs nobody. Classified the same way in the y1w9 sample of 15, by reading it, before this pass.",
       "description": "Generate an MCP server from Tool nodes — the mapping from this harness's skill/Tool vocabulary onto the current MCP standard. Read before exposing a CLI tool over MCP, or when asked how an agent stands a service up.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/mcp-projection.md",
-      "instructionLines": 150,
+      "instructionLines": 152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1773,13 +1773,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/retry-backoff",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "retry-backoff",
-      "title": "A falling-off retry rate, on every error",
+      "title": "consulted: reference material nobody performs — a PRINCIPLE, not a procedure: every heading is an argument (\"Retrying a definitive answer is not caution\", \"Jitter is not decoration here\"), and it names no actor and no trigger. It is read when writing retry code, never performed as a step.",
       "description": "Every error gets a falling-off retry rate — each wait doubles, with jitter. Read before writing any call that can fail transiently, and before deciding that a failure is worth retrying at all. Exhausting the retries does not change the verdict.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/retry-backoff.md",
-      "instructionLines": 84,
+      "instructionLines": 86,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -27727,8 +27727,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f11efe2d05c41109ff7aaca94adfaabd8ac54f4e",
+    "sha": "9f5652b21851faff52cb3fceb344efe01a73ca78",
     "pr": "main",
-    "run": "35522229608"
+    "run": "35522644138"
   }
 }

@@ -636,7 +636,7 @@ watcher has nothing to run. See <code class="language-plaintext highlighter-roug
 <code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code>.</p>
 </blockquote>
 
-<p>A concrete instance of <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">local/integration-watcher</code></a>.
+<p>A concrete instance of <a href="../folio-core/integration-watcher.md"><code class="language-plaintext highlighter-rouge">local/integration-watcher</code></a>.
 The parent encodes the shared mechanics; this file fills the nine
 domain-specific slots A–I and documents the q-regime taxonomy.</p>
 
@@ -649,9 +649,9 @@ and <code class="language-plaintext highlighter-rouge">beans/q-usage-watcher-led
 <ul>
   <li><a href="../../../AGENTS.md">AGENTS.md §7c — base-ring convention</a> (generic
 <code class="language-plaintext highlighter-rouge">R</code> vs archimedean <code class="language-plaintext highlighter-rouge">ℝ</code>).</li>
-  <li><a href="../../../content/quantum-observable-universe/notation/notation-collisions.md"><code class="language-plaintext highlighter-rouge">notation-collisions.md</code></a>
+  <li><code class="language-plaintext highlighter-rouge">notation-collisions.md</code> (in the FOLIO, not the platform)
 — base-ring convention notation row.</li>
-  <li><a href="../../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code></a>
+  <li><a href="../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code></a>
 — the checker implementation, with the chapter → expected-regime
 registry.</li>
 </ul>
@@ -780,7 +780,7 @@ documented in <code class="language-plaintext highlighter-rouge">CHAPTER_EXPECTE
 </ul>
 
 <p>The complete per-chapter map is in
-<a href="../../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code></a>
+<a href="../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">qa-checkers-q-usage.ts</code></a>
 under <code class="language-plaintext highlighter-rouge">CHAPTER_EXPECTED_REGIMES</code>. To update a chapter’s expected set,
 edit that registry — the watcher reads it directly, no extra wiring
 required.</p>
@@ -1199,18 +1199,18 @@ bun run content/pipeline/q-usage-audit.ts <span class="nt">--no-write</span> <sp
     
 
 <ul>
-  <li>Parent: <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">local/integration-watcher</code></a></li>
-  <li>Sibling watchers: <a href="/folio-assistant/reference/skill-instructions/canonical-watcher.html"><code class="language-plaintext highlighter-rouge">canonical-watcher</code></a>,
+  <li>Parent: <a href="../folio-core/integration-watcher.md"><code class="language-plaintext highlighter-rouge">local/integration-watcher</code></a></li>
+  <li>Sibling watchers: <a href="../folio-core/canonical-watcher.md"><code class="language-plaintext highlighter-rouge">canonical-watcher</code></a>,
 <a href="/folio-assistant/reference/skill-instructions/proof-integration-watcher.html"><code class="language-plaintext highlighter-rouge">proof-integration-watcher</code></a>,
-<a href="/folio-assistant/reference/skill-instructions/compute-integration-watcher.html"><code class="language-plaintext highlighter-rouge">compute-integration-watcher</code></a>,
-<a href="/folio-assistant/reference/skill-instructions/detangler-integration-watcher.html"><code class="language-plaintext highlighter-rouge">detangler-integration-watcher</code></a>,
-<a href="/folio-assistant/reference/skill-instructions/one-voice-integration-watcher.html"><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></a>.</li>
+<a href="../folio-core/compute-integration-watcher.md"><code class="language-plaintext highlighter-rouge">compute-integration-watcher</code></a>,
+<a href="../folio-core/detangler-integration-watcher.md"><code class="language-plaintext highlighter-rouge">detangler-integration-watcher</code></a>,
+<a href="../folio-core/one-voice-integration-watcher.md"><code class="language-plaintext highlighter-rouge">one-voice-integration-watcher</code></a>.</li>
   <li>Skill for placement decisions:
-<a href="/folio-assistant/reference/skill-instructions/production-vs-exploratory-discipline.html"><code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline</code></a>.</li>
-  <li>Checker source: <a href="../../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/qa-checkers-q-usage.ts</code></a>.</li>
-  <li>CLI runner: <a href="../../../content/pipeline/q-usage-audit.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/q-usage-audit.ts</code></a>.</li>
+<a href="../folio-core/production-vs-exploratory-discipline.md"><code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline</code></a>.</li>
+  <li>Checker source: <a href="../../content/pipeline/qa-checkers-q-usage.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/qa-checkers-q-usage.ts</code></a>.</li>
+  <li>CLI runner: <a href="../../content/pipeline/q-usage-audit.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/q-usage-audit.ts</code></a>.</li>
   <li>Criterion registry entries:
-<a href="../../../content/pipeline/qa-criteria-registry.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code></a>
+<a href="../../content/pipeline/qa-criteria-registry.ts"><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code></a>
 (search for the <code class="language-plaintext highlighter-rouge">Q_USAGE</code> const array).</li>
 </ul>
 
@@ -1227,7 +1227,7 @@ bun run content/pipeline/q-usage-audit.ts <span class="nt">--no-write</span> <sp
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35522229608"><code>f11efe2</code></a> &middot; 2026-09-20T16:17:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35522644138"><code>9f5652b</code></a> &middot; 2026-09-20T16:26:11Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

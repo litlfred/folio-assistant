@@ -674,7 +674,20 @@ throughout the docs are generated from these files by <code class="language-plai
 never hand-edit an SVG.</p>
 
 <p><strong>Before any of the rest</strong> — the process a person meets first, and the only one
-that runs when there is no folio yet:</p>
+that runs when there is no folio yet.</p>
+
+<p>This table named <code class="language-plaintext highlighter-rouge">bootstrap/workflows/bootstrap.bpmn</code> until 2026-09-20 — <strong>a
+file that does not exist</strong>, renamed to <code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code> long before —
+while all three real diagrams went unnamed. A dangling reference hiding behind a
+directory nothing scanned, which is exactly what the not-indexed check exists to
+catch and could not, because it could not see the directory either (bean <code class="language-plaintext highlighter-rouge">7u3g</code>).</p>
+
+<p>The rows are correct now. <strong>The diagrams are still invisible to the tooling</strong>,
+and deliberately so pending a decision: <code class="language-plaintext highlighter-rouge">bootstrap/workflows/</code> is declared by
+<code class="language-plaintext highlighter-rouge">bootstrap/harness.json</code> but not by the root, and declaring it there re-carries
+bootstrap’s process into the root’s published graph — which <code class="language-plaintext highlighter-rouge">#432</code> removed on
+purpose and a test still guards. Bean <code class="language-plaintext highlighter-rouge">pve3</code> holds that choice: <strong>both halves of
+bootstrap, or neither.</strong></p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -685,8 +698,16 @@ that runs when there is no folio yet:</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/bootstrap.bpmn</code></td>
-      <td>An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an <strong>instance reference</strong>; the harness type, the knowledge graph and the voice are read from <em>that</em> instance’s declaration. See <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> and the <a href="../proposals/bootstrap.html">proposal</a></td>
+      <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/initialize-harness.bpmn</code></td>
+      <td>An agent has been pointed at a repository and knows nothing. <strong>The only process in bootstrap an actor STARTS</strong> — an Initiator that has read <code class="language-plaintext highlighter-rouge">bootstrap/README.md</code> is at its start event and has nowhere else to begin. Three lanes: Initiator, Requestor, and the Knowledge Graph Data Store. See <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> and the <a href="../proposals/bootstrap.html">proposal</a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/discussion.bpmn</code></td>
+      <td>Two facts have <strong>no answer in any file an Initiator can reach</strong> — which harness this repository should become, and which repositories are read from and written to. They are judgements held by whoever asked for the harness, so no instruction body produces them. Entered from within <code class="language-plaintext highlighter-rouge">initialize-harness</code> when such a fact is needed, which is why bootstrap holds a second process at all: it is <em>presupposed</em> by every task rather than indicated by one</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/log-message.bpmn</code></td>
+      <td><strong>A sub-process, never an entry point</strong> — reached by a call activity, never started, which is why bootstrap’s README can still say there is one process you begin. Callable optionally from any task (an actor logging what it is doing needs no permission) or required by a diagram that draws the call explicitly; same sub-process either way, and the difference is whether the caller drew it. It lives in bootstrap rather than the harness because bootstrap may not import the harness, so a logger defined upstream would be unusable by the actor with the most need to say what it is doing</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></td>
@@ -1856,7 +1877,7 @@ it belongs in <code class="language-plaintext highlighter-rouge">skills/workflow
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35522229608"><code>f11efe2</code></a> &middot; 2026-09-20T16:17:53Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35522644138"><code>9f5652b</code></a> &middot; 2026-09-20T16:26:11Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
