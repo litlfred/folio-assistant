@@ -252,10 +252,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T16:57:06.031Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c455c984f8be24071abdeaf59a17631e64a10dce",
-  "sourceCommitSha": "c455c984f8be24071abdeaf59a17631e64a10dce",
-  "sourceCommitAt": "2026-09-20T18:55:38+02:00",
+  "generatedAt": "2026-09-20T17:18:37.888Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2133f720eb32bbf3ae76da407fb1c3e27e48e4c4",
+  "sourceCommitSha": "2133f720eb32bbf3ae76da407fb1c3e27e48e4c4",
+  "sourceCommitAt": "2026-09-20T19:17:11+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 202,
@@ -267,7 +267,7 @@
     "Process": 51,
     "SequenceFlow": 665,
     "ProcessNode": 630,
-    "Tool": 65,
+    "Tool": 66,
     "Schema": 68,
     "GraphKind": 20,
     "Directory": 21,
@@ -24082,6 +24082,38 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/narrative-queue",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "narrative-queue",
+      "title": "What narratives are waiting on a person",
+      "description": "List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run narratives"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "queue",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "Every narrative awaiting a person, NUMBERED, with its subject, its text and its file — then the two commands that act on a number, then the rejection reasons, also numbered. Numbered throughout because the person this is for has very limited hand function and every action must be a selection rather than a typed sentence; `interaction-modality`'s `low-dexterity` profile is the general rule."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/library-ingestion"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/check-tools",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-tools",
@@ -28041,8 +28073,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "c455c984f8be24071abdeaf59a17631e64a10dce",
+    "sha": "2133f720eb32bbf3ae76da407fb1c3e27e48e4c4",
     "pr": "main",
-    "run": "35524237641"
+    "run": "35525379850"
   }
 }
