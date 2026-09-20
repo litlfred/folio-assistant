@@ -841,6 +841,54 @@ to say when it was unsure.</p>
 <p><strong>Record the geometry.</strong> <code class="language-plaintext highlighter-rouge">Bitstream.pixelWidth</code>/<code class="language-plaintext highlighter-rouge">pixelHeight</code> exist so a
 listing reserves the box before the bytes arrive. Absent is <em>unmeasured</em>, not
 square: any default would be wrong about two of those three.</p>
+
+<p><strong>Check the claim where the check can actually run.</strong> A gate that re-renders a
+derived artefact needs the backend that produced it — and the CI job that runs
+this repository’s gates installs <code class="language-plaintext highlighter-rouge">ruff</code> and nothing else, which is stated on
+<code class="language-plaintext highlighter-rouge">ingest-stdlib</code>’s own Tool node and was walked into anyway: <code class="language-plaintext highlighter-rouge">iris:covers:check</code>
+threw <code class="language-plaintext highlighter-rouge">pymupdf is not installed</code> on every run and turned a branch red three
+times.</p>
+
+<p>The fix is not to install a backend in the gate job, and <strong>not</strong> to degrade to
+could-not-determine — that would report <code class="language-plaintext highlighter-rouge">unknown</code> on every CI run, which is a
+check nobody can read. Split the claim instead. Of the five things a node
+asserts about a derived image, four need no decoder at all:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>claim</th>
+      <th>needs the backend?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>the bytes exist</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td>their sha256 is the declared one</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td>their length is the declared one</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td>their pixel dimensions are the declared ones</td>
+      <td><strong>no</strong> — a PNG’s <code class="language-plaintext highlighter-rouge">IHDR</code> puts width and height at bytes 16..24, big-endian</td>
+    </tr>
+    <tr>
+      <td>these bytes are what that source renders to</td>
+      <td><strong>yes</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>So the gate keeps its teeth everywhere and gains the last row where the
+backend happens to be present — and it <strong>says in its own output which of the
+two it ran</strong>, because “3 covers verified” would read identically either way
+and the two are different assurances.</p>
 <h2 id="where-the-record-lives">
   
   
