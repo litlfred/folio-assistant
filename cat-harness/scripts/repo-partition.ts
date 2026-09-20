@@ -330,6 +330,17 @@ const RULES: Rule[] = [
       // `sync-docs-harness.ts` (agentic-harness) until `--edges` reported that
       // as two wrong-direction edges — the harness reaching up into core.
       "scripts/gen-landing-data.ts",         // folio stickies -> docs/_data/stickies.json
+      // Same reason as the two above, and it is the import that decides rather
+      // than the subject. Its subject is theme art, which is harness
+      // (`schemas/theme.ts` is classified so, nine entries down: site
+      // presentation belongs to the platform that publishes the site). But it
+      // reads THIS INSTANCE'S declaration, and this instance declares a `folio`
+      // graph — so it must import `schemas/folio-graph-kind.ts` for the kind to
+      // be registered, and that module is core's by the argument written on it.
+      // Classifying it harness would put core's own kind registration behind a
+      // harness module. The pure check it drives, `schemas/theme-art-intake.ts`,
+      // needs none of that and is left to the `schemas/` prefix.
+      "scripts/check-theme-art.ts",          // theme/avatar art intake, run over what shipped
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
