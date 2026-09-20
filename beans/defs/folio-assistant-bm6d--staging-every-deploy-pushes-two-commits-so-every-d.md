@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-20T11:44:36Z
-updated_at: 2026-09-20T16:13:05Z
+updated_at: 2026-09-20T16:19:24Z
 parent: folio-assistant-1xhc
 ---
 
@@ -172,3 +172,50 @@ invisible stays open and the bean closes on a property rather than an outcome.
 My recommendation: close on the property (one commit, tested) and open a
 separate item for *"nothing here can see `gh-pages` build outcomes at all"* —
 which is `xom7` one ref over, and bigger than this bean.
+
+
+## MEASURED ON THE REAL REF, 2026-09-20 16:14–16:17Z — with three live controls
+
+The change was dispatched against this branch and the result read off
+`gh-pages` directly. Three sibling sessions deployed in the same two minutes
+**still running the old code**, which makes this a natural experiment rather
+than a single observation:
+
+```
+d1840f2eaf  16:17:27  staging(cleanup): remove STAGING/claude-fervent-mccarthy-nw4olk (PR #547 closed)
+2e240eeb14  16:17:14  render-log: rendered STAGING/claude-brave-hypatia-r820sf      ← control, 2nd
+2ee65a5434  16:17:04  staging(claude-brave-hypatia-r820sf): from 7d3f78d6…          ← control, 1st
+617cfefb06  16:16:24  staging(claude-ecstatic-goldberg-eroyaz): from ee90b3cb19…    ← THIS BRANCH
+f8c754a78f  16:15:54  render-log: rendered STAGING/claude-fervent-mccarthy-nw4olk   ← control, 2nd
+af5d5e1912  16:15:44  staging(claude-fervent-mccarthy-nw4olk): from 407c506c…       ← control, 1st
+747f16955c  16:15:05  render-log: rendered STAGING/claude-wonderful-gauss-7frcrw    ← control, 2nd
+4dfe0e6959  16:14:56  staging(claude-wonderful-gauss-7frcrw): from aa59ca8a…        ← control, 1st
+```
+
+**Three branches, two commits each, ten seconds apart. This branch: one, with
+no `render-log:` commit following it.**
+
+And the record is intact rather than dropped — the single commit carries both:
+
+```
+$ git show --stat 617cfefb06
+ STAGING/claude-ecstatic-goldberg-eroyaz/…            716 files
+ _render-log/2026-09-20.jsonl                           1 +
+
+{"$schema":"folio-render-log/v1","event":"rendered",
+ "subject":{"kind":"staging-preview","path":"STAGING/claude-ecstatic-goldberg-eroyaz",…},
+ "branch":"claude/ecstatic-goldberg-eroyaz",
+ "commit":"ee90b3cb19bbfce9b6ee7e5aed3ee4afec54348a",
+ "run":"https://github.com/litlfred/folio-assistant/actions/runs/35522103984"}
+```
+
+`_render-log/` is at the **root**, not under `STAGING/<slug>/` — which was the
+constraint that forced the split in the first place, and is the one thing a
+cleanup must not remove along with the preview.
+
+So Done-when #1 is measured on the ref rather than argued from the file, and
+Done-when #2's sibling property — the record surviving — is measured too.
+
+**Still open, unchanged:** Done-when #3 needs `pages build and deployment`
+outcomes over a window, which nothing in this repository can see. The question
+for the author stands.
