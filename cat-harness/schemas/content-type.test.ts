@@ -29,6 +29,7 @@ import {
 } from "./content-type";
 import { registerBaseContentTypes } from "./content-types-base";
 import { registerDakContentTypes } from "./dak-content-type";
+import { describeRepositoryClosure } from "./harness-config";
 
 const roots: string[] = [];
 afterEach(() => {
@@ -196,7 +197,15 @@ describe("the registry refuses a conflicting redefinition and tolerates a diamon
     const r = base();
     expect(() => registerBaseContentTypes(r)).not.toThrow();
     expect(() => registerDakContentTypes(r)).not.toThrow();
-    expect(r.ids().sort()).toEqual(["dak", "harness", "sushi"]);
+    // Derived from what the two registrars actually register, not pinned: a
+    // literal list makes "a type was added" and "registration broke"
+    // indistinguishable, and the failure lands on the change that was correct.
+    // What is defended is that re-registering adds nothing.
+    const before = r.ids().sort();
+    registerBaseContentTypes(r);
+    registerDakContentTypes(r);
+    expect(r.ids().sort()).toEqual(before);
+    expect(before.length).toBeGreaterThan(0); // not vacuous
   });
 
   test("re-registering a DIFFERENT definition throws, naming the id", () => {
@@ -204,5 +213,109 @@ describe("the registry refuses a conflicting redefinition and tolerates a diamon
     expect(() =>
       r.register("dak", { filename: "elsewhere.json", type: "http://x/", summary: "no" }),
     ).toThrow(ContentTypeConflictError);
+  });
+});
+
+describe("the set is closed under the dependency tree", () => {
+  /**
+   * `79t3`: *"declaring `folio-assistant` implies `cat-harness`, because
+   * folio-assistant depends on it."*
+   *
+   * `describeRepositoryClosure` lives in `harness-config.ts` rather than
+   * beside `describeRepository`, because the dependency resolver is there and
+   * importing it into the type registry would make the registry depend on the
+   * thing that should depend on it. Tested from here anyway — the behaviour is
+   * about content types, and splitting the test from its subject to mirror a
+   * module boundary helps nobody.
+   */
+  function instance(name: string, markers: Record<string, string>): string {
+    const root = mkdtempSync(join(tmpdir(), `closure-${name}-`));
+    roots.push(root);
+    for (const [f, body] of Object.entries(markers)) writeFileSync(join(root, f), body);
+    return root;
+  }
+
+  function dependsOn(root: string, depName: string, depPath: string): void {
+    writeFileSync(
+      join(root, "harness.config.json"),
+      JSON.stringify({
+        contentType: "paper",
+        dependencies: { folioAssistant: [{ name: depName, path: depPath }] },
+      }),
+    );
+  }
+
+  test("a dependency's types are in the closure, ATTRIBUTED to it", () => {
+    const dep = instance("dep", { "dak.json": '{"name":"who"}' });
+    const root = instance("root", { "harness.json": '{"name":"mine"}' });
+    dependsOn(root, "who-adapter", dep);
+
+    const c = describeRepositoryClosure(root, base());
+    expect(c.types.map((t) => ({ id: t.id, by: t.by, own: t.own }))).toEqual([
+      { id: "dak", by: "who-adapter", own: false },
+      // The root carries `harness.json` AND the `harness.config.json` that
+      // `dependsOn` just wrote, so it is a harness and a folio.
+      { id: "harness", by: "(root)", own: true },
+      { id: "folio", by: "(root)", own: true },
+    ]);
+  });
+
+  test("`own` separates 'this repo IS a DAK' from 'something it depends on is'", () => {
+    // The distinction a flattened set destroys, and the case the bean cites:
+    // a folio depending on a WHO adapter is not itself a DAK.
+    const dep = instance("dep2", { "dak.json": '{"name":"who"}' });
+    const root = instance("root2", { "harness.json": '{"name":"mine"}' });
+    dependsOn(root, "who-adapter", dep);
+
+    const c = describeRepositoryClosure(root, base());
+    expect(c.types.filter((t) => t.own).map((t) => t.id).sort()).toEqual(["folio", "harness"]);
+    expect(c.types.some((t) => t.id === "dak" && t.own)).toBe(false);
+  });
+
+  test("a type asserted by BOTH appears twice — not a duplicate to collapse", () => {
+    // Two repositories each making the claim is what the tree says. Merging
+    // them would answer "is this tree a DAK" and lose "which of them is".
+    const dep = instance("dep3", { "dak.json": '{"name":"who"}' });
+    const root = instance("root3", { "dak.json": '{"name":"mine"}' });
+    dependsOn(root, "who-adapter", dep);
+
+    const c = describeRepositoryClosure(root, base());
+    expect(c.types.filter((t) => t.id === "dak").map((t) => t.by)).toEqual([
+      "who-adapter",
+      "(root)",
+    ]);
+  });
+
+  test("no dependencies → the closure is just the root", () => {
+    const root = instance("solo", { "harness.json": '{"name":"mine"}' });
+    const c = describeRepositoryClosure(root, base());
+    expect(c.types.map((t) => ({ id: t.id, by: t.by }))).toEqual([
+      { id: "harness", by: "(root)" },
+    ]);
+  });
+
+  test("two repos naming different canonicalUrls is NOT a disagreement", () => {
+    // They are two repositories. Reporting it as a conflict would make every
+    // non-trivial dependency tree look broken, which is the false positive
+    // that gets a check switched off within a week.
+    const dep = instance("dep4", { "dak.json": '{"canonicalUrl":"http://theirs/"}' });
+    const root = instance("root4", { "harness.json": '{"canonicalUrl":"http://ours/"}' });
+    dependsOn(root, "who-adapter", dep);
+
+    expect(describeRepositoryClosure(root, base()).disagreements).toEqual([]);
+  });
+
+  test("...but a disagreement WITHIN one instance is reported, tagged with it", () => {
+    const dep = instance("dep5", {
+      "harness.json": '{"canonicalUrl":"http://a/"}',
+      "dak.json": '{"canonicalUrl":"http://b/"}',
+    });
+    const root = instance("root5", { "harness.json": '{"name":"mine"}' });
+    dependsOn(root, "who-adapter", dep);
+
+    const c = describeRepositoryClosure(root, base());
+    expect(c.disagreements.map((d) => ({ fact: d.fact, instance: d.instance }))).toEqual([
+      { fact: "canonicalUrl", instance: "who-adapter" },
+    ]);
   });
 });

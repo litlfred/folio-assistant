@@ -219,6 +219,12 @@ export const HarnessConfigSchema = z.object({
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import {
+  describeRepository,
+  type ContentTypeDisagreement,
+  type ContentTypeMembership,
+  type ContentTypeRegistry,
+} from "./content-type";
+import {
   isKgOnlyDirectory,
   materialiseDirectories,
   ownDirectories,
@@ -618,4 +624,91 @@ export async function loadContributions<C extends { name: string }, S extends Co
   }
 
   return registry;
+}
+
+// ── What a repository IS, closed under the dependency tree ──────────
+
+/**
+ * One type asserted somewhere in the dependency closure, and by whom.
+ *
+ * `by` is the dependency NAME that carried the marker, or `"(root)"`. It is
+ * the field that makes the closure honest: "this repository is a DAK" and
+ * "something this repository depends on is a DAK" are different claims, and a
+ * flattened set cannot tell them apart.
+ */
+export interface ClosedContentType extends ContentTypeMembership {
+  by: string;
+  /** `true` when the marker is on the root itself rather than a dependency. */
+  own: boolean;
+}
+
+export interface ClosedRepositoryDescription {
+  types: ClosedContentType[];
+  /**
+   * Disagreements WITHIN one instance, each tagged with the instance.
+   *
+   * Deliberately not computed ACROSS instances. Two repositories naming
+   * different `canonicalUrl`s is not a disagreement — it is two repositories,
+   * and reporting it as a conflict would make every dependency tree look
+   * broken. See {@link describeRepositoryClosure}.
+   */
+  disagreements: Array<ContentTypeDisagreement & { instance: string }>;
+}
+
+/**
+ * Ask a repository what it is, INCLUDING what its dependencies are.
+ *
+ * `79t3`: *"The set is closed under the dependency tree. Resolving
+ * dependencies yields a set of overlaying instances: declaring
+ * `folio-assistant` implies `cat-harness`, because folio-assistant depends on
+ * it."*
+ *
+ * ## Why it lives here and not beside `describeRepository`
+ *
+ * `schemas/content-type.ts` reads a root and nothing else, on purpose: the
+ * dependency resolver lives in THIS module, and importing it there would make
+ * the type registry depend on the thing that should depend on it. So closure
+ * is composed at the layer that already owns the walk — `resolveDependencyTree`
+ * is three functions up — rather than the walk being pushed down.
+ *
+ * ## Membership is ATTRIBUTED, never merged
+ *
+ * The result is a list rather than a set, and every entry says which instance
+ * carried the marker. A union would answer "is this tree a DAK?" and lose "is
+ * THIS repository a DAK?", and those differ in the case the bean cites: a
+ * folio depending on a WHO adapter is not itself a DAK.
+ *
+ * A type asserted by both the root and a dependency appears TWICE, with
+ * different `by`. That is not a duplicate to collapse — it is two repositories
+ * each making the claim, which is what the tree actually says.
+ *
+ * ## Disagreements stay INSIDE an instance
+ *
+ * Cross-instance facts are not compared. Two repositories declaring different
+ * `canonicalUrl`s are two repositories, not a conflict, and reporting it as
+ * one would make every non-trivial dependency tree look broken — the false
+ * positive that would get the check switched off within a week.
+ */
+export function describeRepositoryClosure(
+  folioRoot: string,
+  registry?: ContentTypeRegistry,
+): ClosedRepositoryDescription {
+  const types: ClosedContentType[] = [];
+  const disagreements: ClosedRepositoryDescription["disagreements"] = [];
+
+  const visit = (root: string, by: string, own: boolean): void => {
+    const d = describeRepository(root, registry);
+    for (const t of d.types) types.push({ ...t, by, own });
+    for (const x of d.disagreements) disagreements.push({ ...x, instance: by });
+  };
+
+  // Dependencies first, root last — the same depth-first order
+  // `resolveSkillDirs` uses, so a reader comparing the two sees one traversal
+  // rather than two conventions.
+  for (const dep of flattenDependencies(resolveDependencyTree(folioRoot))) {
+    visit(dep.rootPath, dep.dependency.name, false);
+  }
+  visit(resolve(folioRoot), "(root)", true);
+
+  return { types, disagreements };
 }
