@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uiw6
 title: 'KG AUDIT: 12 STALE sidecars whose subjects are no longer subjects — my discovery diagnosis was wrong'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T10:58:07Z
-updated_at: 2026-09-20T11:57:34Z
+updated_at: 2026-09-20T12:42:53Z
 parent: folio-assistant-d308
 ---
 
@@ -185,3 +185,71 @@ eight, and `ls` for a sidecar at the new path — and it reversed the finding.
 - [ ] the twelve stale sidecars removed, on the owner's authorisation
 - [ ] `kg:audit` exits non-zero on this finding, AFTER they are gone
 - [ ] ~~subject discovery reaches nested files~~ — it already does; there was nothing wrong
+
+
+---
+
+## DONE 2026-09-20 — deleted on authorisation, and the finding now fails the check
+
+Owner authorised **"Delete, then make it fail"**, on the corrected premise (there
+was no discovery to fix).
+
+### Main had already improved the diagnosis, independently
+
+By the time this was actioned, `kg:audit` split the finding into three labelled
+groups with distinct advice — and reached the same conclusion this bean's
+correction did, in its own words:
+
+> **SUBJECT PRESENT, NOT AUDITED** … *"Either discovery is wrong, or it is excluded
+> on purpose — `isPartOfASkill` excludes a fragment that declares `part-of:`, and a
+> sidecar predating that exclusion is stale, not evidence."*
+
+Plus a **SUBJECT UNREADABLE** group for the case where which branch applies cannot
+be determined: *"That is not a pass for it."* Somebody else worked the same ground
+and got there without the wrong turn.
+
+### Deleted: 12 files, 9,734 bytes
+
+Four under SUBJECT GONE (the `skills/workflow/` moves, whose sidecars named the old
+paths) and eight under SUBJECT PRESENT, NOT AUDITED (the `part-of:` fragments).
+
+**The list was extracted twice.** The first attempt used `grep -A 14` and returned
+**9 of 12** — the same truncation that once made "13 stale library outputs" out of
+22. A partial delete would have left three behind and looked finished. Re-extracted
+by pattern over the whole output, cross-checked to 12, sized, then removed.
+
+### The gate: orphans now fail `kg:audit:check`
+
+They were computed OUTSIDE `reports`, so the severity gate structurally could not
+see them — which is why twelve accumulated while `gates --all` announced 53 passing.
+Now `process.exit(stale.length || orphans.length || tripped ? 1 : 0)`.
+
+Three decisions inside that one line, each recorded at the call site:
+
+- **Beside `stale`, because the parallel is exact.** Both say the committed sidecars
+  disagree with what this run produced — one is a verdict that has not caught up,
+  the other a verdict about something this run did not judge.
+- **All three groups count, the unreadable one included.** `AGENTS.md` on this
+  repository's own sweeps: could-not-determine "is never rendered as clean" and it
+  "outranks a finding". Excluding it would put the third state back on the pass side.
+- **Only `--check` gates.** Bare `kg:audit` is the WRITER and still exits 0 —
+  otherwise regenerating after a rename would fail the very command you run to fix
+  it.
+
+And the report now says so, because a gate that fails without saying why sends a
+reader to the wrong remedy: *"It fails `kg:audit:check`; removing a dead sidecar is
+still yours to authorise."* Failing does not delete; the confirmation rule still
+holds. What changed is that the remedy can no longer be deferred in silence.
+
+### Falsifier, both directions
+
+Replanted one orphan → **exit 1**, with the finding and the remedy printed. Removed
+it → **exit 0**. Also checked that the first exit 1 was not mine: it was one
+genuinely stale sidecar, cleared by regenerating.
+
+## Done when
+
+- [x] which branch of the diagnosis applies — the first, not the second
+- [x] the twelve stale sidecars removed, on the owner's authorisation
+- [x] `kg:audit` exits non-zero on this finding, AFTER they were gone
+- [x] ~~subject discovery reaches nested files~~ — it already did

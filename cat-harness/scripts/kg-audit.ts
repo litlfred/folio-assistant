@@ -1399,6 +1399,15 @@ if (orphans.length > 0) {
       "    not be determined. That is not a pass for it.",
   );
   console.error("\n  Reported, never deleted — `deletion-requires-confirmation`.");
+  // And, since 2026-09-20, this FAILS `kg:audit:check`. Reporting without
+  // failing is what let twelve of these accumulate: the finding printed `✗` on
+  // every run while the gate set announced "53 gates pass", so the only reader
+  // who would ever act on it was one already reading the log for another reason.
+  //
+  // Failing the check does NOT delete anything — the line above still holds, and
+  // the remedy is still a person's. What changes is that the remedy cannot be
+  // indefinitely deferred in silence.
+  console.error("  It fails `kg:audit:check`; removing a dead sidecar is still yours to authorise.");
 }
 
 if (asJson) {
@@ -1444,6 +1453,21 @@ if (check) {
     const w = worstSeverity(r);
     return w !== undefined && gate.includes(w);
   });
-  process.exit(stale.length || tripped ? 1 : 0);
+  // ORPHANS FAIL, beside `stale`, and the parallel is exact: both say the
+  // committed sidecars disagree with what this run produced. A stale one is a
+  // verdict that has not caught up; an orphaned one is a verdict about something
+  // this run did not judge. Neither is a finding ABOUT a subject, which is why
+  // the severity gate above cannot see them — they are computed outside
+  // `reports` — and why twelve accumulated while `gates --all` stayed green.
+  //
+  // All three orphan groups count, the unreadable one included. `AGENTS.md` on
+  // this repository's own health sweeps: could-not-determine "is never rendered
+  // as clean" and it "outranks a finding" — a sweep blind on one check has not
+  // cleared the others. A sidecar whose subject cannot be resolved is exactly
+  // that case, so excluding it would put the third state back on the pass side.
+  //
+  // Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0, or
+  // regenerating after a rename would fail the command you run to fix it.
+  process.exit(stale.length || orphans.length || tripped ? 1 : 0);
 }
 process.exit(0);
