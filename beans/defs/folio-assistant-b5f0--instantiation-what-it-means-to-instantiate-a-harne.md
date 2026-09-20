@@ -238,3 +238,33 @@ health report that goes quiet.
 six sections end in an owner question precisely because the answers change the
 code, and `b5f0` §1 in particular cannot be implemented in either direction
 without a ruling that does not yet exist.
+
+## CORRECTION to §4, 2026-09-20 — the missing `<folio:bean>` is deliberate and right
+
+§4 said `initialize-harness.bpmn` is *"under-documented by this repo's own
+rule"* on the strength of a count: 3 activities, 8 `<folio:skill>`, 0
+`<folio:bean>`. **The count was right and the conclusion was wrong.** The file
+says so in its own documentation:
+
+> NO folio:bean on any activity: a bean is work-plan machinery and an Initiator
+> runs before the harness that carries it. isExecutable is false because the
+> engine that runs a diagram is harness machinery too — this is data an
+> Initiator reads, not a process bootstrap can drive.
+
+That is correct, and it follows from bootstrap's founding constraint — nothing
+in bootstrap may import the layer above. `bpmn-processes.md` requires
+`<folio:bean>` *"where it touches the work plan"*, and a process that runs
+before the work plan exists does not touch it. The rule already permits this;
+my reading was too literal.
+
+**§3 also overstated.** It said the process "cannot be started". Making it
+*listable* was real and is now fixed — but `isExecutable="false"` means
+`workflow_start` was never going to drive it either way. The right statement is
+narrower: the three diagrams were invisible to `kg:audit`, `render:bpmn`,
+`translate-bpmn` and thirteen other consumers, which is why a diagram with no
+renderable layout at all sat undetected. That is what the fix bought.
+
+The lesson is the one this bean's own method section states and I did not apply
+to myself: **a count is evidence, and the artefact's own words are the check on
+what it means.** I grepped for the marker and not for the paragraph explaining
+its absence.

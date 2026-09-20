@@ -1,0 +1,82 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_LogMessage",
+    "path": "../bootstrap/workflows/log-message.bpmn"
+  },
+  "source_hash": "sha256:0df4ff631ec160a7f3c7e6b6c6cfd730189a36994770e0a14a89e907b330aad8",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Lane_Actor",
+          "detail": "lane \"Actor\" matches no declared role. Add the name to a role's `lanes` in skills/roles/roles.json, or bind it with <folio:role ref=\"…\"/>."
+        },
+        {
+          "where": "Lane_Logger",
+          "detail": "lane \"Logger\" matches no declared role. Add the name to a role's `lanes` in skills/roles/roles.json, or bind it with <folio:role ref=\"…\"/>."
+        }
+      ]
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 1,
+    "n/a": 7,
+    "unknown": 0
+  }
+}

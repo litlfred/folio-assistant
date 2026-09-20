@@ -359,6 +359,16 @@
       ]
     },
     {
+      "id": "bootstrap-workflows",
+      "path": "bootstrap/workflows/",
+      "dependents": "skip",
+      "scope": "repository",
+      "description": "The bootstrap PROCESSES, and a SECOND entry rather than a wider path on `bootstrap` above. Bean `7u3g` recorded the SYMPTOM — `workflowDirs` composes `<kgdir>/workflows`, so the entry above pointing at `bootstrap/skills/` made it look for `bootstrap/skills/workflows/`, which does not exist — but the CAUSE is here: this file declared one of bootstrap's two directories. `bootstrap/harness.json` declares both, and `kgDirectories` resolves the LOCAL declaration only. That is root-only ON PURPOSE, per `resolveSkillDirs`: a dependency's directory would mint skill ids resolving into another checkout. So bootstrap's own declaration of its processes is never read from here, and the diagrams were always declared — just not by the instance doing the scanning. MEASURED 2026-09-20 before and after: `workflowFiles(cat-harness)` 58 → 61, and `workflowFiles(bootstrap)` returned exactly the three all along. Sixteen modules consume `workflowDirs`/`workflowFiles`, so those three were invisible to `workflow_list`, `workflow_start`, `kg:audit`, `render:bpmn`, `translate-bpmn` and the rest — including `initialize-harness.bpmn`, which bootstrap declares as its single ENTRY POINT. A process an engine cannot list is executable in principle and unreachable in practice. WHY NOT widen the entry above to `bootstrap/`, which is what `methodology-crdm` does — that one points at `methodologies/crdm/` and lets `workflowDirs` compose the subdirectory. It is right to, because crdm has no assets at its root. Bootstrap does, and its own declaration states the constraint: `isSkillMd` is declaration-over-location, so a graph rooted at `bootstrap/` counts README.md and AGENTS.md — that instance's two DECLARED ASSETS — as skill nodes, and the scan contradicts a declaration that has already answered the question. One level matters, so the processes get their own entry. THE ID IS NOT `bootstrap`: overrides match on id, so reusing it would REPLACE bootstrap's skills with its workflows rather than add them — the trap `cat-harness-src` records one entry along. REPOSITORY-scoped for the same reason as the entry above: it sits at the top of the checkout, not inside this instance, and is deliberately never overlaid by a dependency.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
       "id": "cat-harness",
       "path": "skills/",
       "dependents": "skip",
