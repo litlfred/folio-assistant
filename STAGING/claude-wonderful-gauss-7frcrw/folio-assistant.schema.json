@@ -328,6 +328,65 @@
               "onboardingLinks": {
                 "type": "boolean"
               },
+              "shape": {
+                "type": "string",
+                "enum": [
+                  "laptop",
+                  "mobile",
+                  "card"
+                ]
+              },
+              "text": {
+                "type": "object",
+                "properties": {
+                  "box": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "w": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "h": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "w",
+                      "h"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "scale": {
+                    "type": "number",
+                    "minimum": 0.6,
+                    "maximum": 2
+                  },
+                  "align": {
+                    "type": "string",
+                    "enum": [
+                      "start",
+                      "center",
+                      "end"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
               "_comment": {
                 "type": "string"
               }
@@ -354,8 +413,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/wonderful-gauss-7frcrw",
-    "sha": "20c228b6b8fb771bbd867523f6f7dcbef3a079aa",
+    "sha": "cc3559f056a58bfea5b85dc1736bb168ac00483b",
     "pr": "481/merge",
-    "run": "35502301228"
+    "run": "35504550835"
   }
 }
