@@ -100,7 +100,7 @@ function skillIndex(root: string): Map<string, string> {
     if (!existsSync(abs)) continue;
     for (const f of readdirSync(abs)) {
       // Per FILE, not per directory: a declared directory holds skills, never
-      // only skills — `skills/memory/`'s 25 agent-memory nodes are `.md` in
+      // only skills — the 25 agent-memory nodes then in `skills/memory/` were `.md` in
       // one, and a role's `roles:` front matter is not theirs to carry.
       if (f.endsWith(".md") && isSkillMd(join(abs, f))) index.set(`${dir}/${f}`, f.slice(0, -3));
     }

@@ -27,8 +27,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [bpmn-authoring](bpmn-authoring.html) | `bpmn-authoring` | [schema](../skills/bpmn-authoring.html) | > Skill id: `bpmn-authoring` · Package: `authoring-who-smart-guidelines` · |
-| [dmn-authoring](dmn-authoring.html) | `dmn-authoring` | [schema](../skills/dmn-authoring.html) | > Skill id: `dmn-authoring` · Package: `authoring-who-smart-guidelines` · |
 | [fhir-validation](fhir-validation.html) | `fhir-validation` | [schema](../skills/fhir-validation.html) | > Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` · |
 | [ig-publication](ig-publication.html) | `ig-publication` | [schema](../skills/ig-publication.html) | > Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` · |
 | [l2-dak-authoring](l2-dak-authoring.html) | `l2-dak-authoring` | [schema](../skills/l2-dak-authoring.html) | > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` · |
@@ -63,13 +61,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [bib-photo-ingestion-watcher](bib-photo-ingestion-watcher.html) | `bib-photo-ingestion-watcher` | — | The automation half of the [`bib-human-review`](bib-human-review.md) workflow. |
 | [Bibliography QA](bib-qa.html) | `bib-qa` | — | cd content && bun run pipeline/bib-qa.ts --check-urls |
 | [Block Density](block-density.html) | `block-density` | — |  |
-| [Processes are BPMN, and the diagrams are executable](bpmn-processes.html) | `bpmn-processes` | — | **The `.bpmn` file is the source of truth.** The rendered SVGs are generated — |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [Code node review](code-node-review.html) | `code-node-review` | — |  |
 | [Compute Integration Watcher](compute-integration-watcher.html) | `compute-integration-watcher` | — |  |
 | [Acquisition is the step before ingestion, and it had no home](content-acquisition.html) | `content-acquisition` | — | `document-ingestion.bpmn` begins at **`StartEvent_Dropped` — "a file lands in |
+| [Content, context and state graphs](content-context-and-state-graphs.html) | `content-context-and-state-graphs` | — | An instance declares directories, and each says what **kind** of graph it |
 | [Content Graph](content-graph.html) | `content-graph` | — | cd content && python3 pipeline/content-graph-analysis.py |
 | [Content types](content-profiles.html) | `content-profiles` | — | A **document** folio is structured prose: policy guidance, a standard, a report. |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
@@ -124,7 +122,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [The platform's own gates](platform-gates.html) | `platform-gates` | — | **One command:** |
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
 | [Prepare-merge](prepare-merge.html) | `prepare-merge` | — | Canonical, repo-agnostic skill for taking a `claude/*` (or any feature) branch |
-| [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
 | [Production vs exploratory vs numerology](production-vs-exploratory-discipline.html) | `production-vs-exploratory-discipline` | — | N_TRUNCATION = 5 |
 | [QA report signing](qa-report-signing.html) | `qa-report-signing` | — | A QA report becomes **evidence** when a third party can establish what was |
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
@@ -217,12 +214,26 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
 | [Witnessed Values](witnessed-values.html) | `witnessed-values` | — |  |
 
+## Workflow & process (workflow)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [bpmn-authoring](bpmn-authoring.html) | `bpmn-authoring` | [schema](../skills/bpmn-authoring.html) | > Skill id: `bpmn-authoring` · Package: `workflow` · |
+| [Processes are BPMN, and the diagrams are executable](bpmn-processes.html) | `bpmn-processes` | — | **The `.bpmn` file is the source of truth.** The rendered SVGs are generated — |
+| [The deterministic-to-agentic spectrum](deterministic-and-agentic.html) | `deterministic-and-agentic` | — | > **A spectrum of deterministic vs agentic BPMN state management / workflow |
+| [dmn-authoring](dmn-authoring.html) | `dmn-authoring` | [schema](../skills/dmn-authoring.html) | > Skill id: `dmn-authoring` · Package: `workflow` · |
+| [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
+| [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
+| [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
+| [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
+
 ## Bootstrap (read before anything else is known)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Initiator.** You may narrow; only the Requestor may decide. |
 | [kg-navigation](kg-navigation.html) | `kg-navigation` | — | _also in Platform core (folio-core) (same page)_ |
+| [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
 
 ## Agent skills
 
