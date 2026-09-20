@@ -197,6 +197,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `SKILLS_CATEGORIES[decl.id]` branch — the same one `bootstrap` uses
   // below. Keyed on `crdm` it threw, naming the id it actually wanted.
   "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
+  "methodology-raci": "RACI involvement model (methodologies/raci)",
   "remote-stubs": "Declared but not implemented here (stubs)",
   // The two entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the

@@ -263,6 +263,11 @@ const RULES: Rule[] = [
       // is, and the keys it retires are the harness's own vocabulary. It
       // needs no folio to have anything to do.
       "scripts/check-retired-front-matter.ts",
+      // RACI over the BPMN corpus and the role registry. Harness for the
+      // same reason as the rest of this block: it reads the declaration
+      // for where diagrams and roles live, and needs no folio to have
+      // anything to do.
+      "scripts/raci-chart.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",

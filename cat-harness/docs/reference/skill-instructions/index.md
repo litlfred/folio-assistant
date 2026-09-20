@@ -251,6 +251,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [discussion](discussion.html) | `discussion` | — | An agent that has just read `bootstrap/README.md` knows the shape of a |
 | [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
 
+## RACI involvement model (methodologies/raci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [RACI](raci.html) | `raci` | — | **R is already declared.** A BPMN lane says who performs an activity; that |
+
 ## CRDM requirements methodology (methodologies/crdm)
 
 | Skill | Id | Schema | Summary |
