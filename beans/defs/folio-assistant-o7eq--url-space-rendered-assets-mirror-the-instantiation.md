@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T18:30:55Z
-updated_at: 2026-09-20T18:50:40Z
+updated_at: 2026-09-20T19:01:56Z
 parent: folio-assistant-yj32
 ---
 
@@ -142,3 +142,38 @@ links:
 - [ ] `docs-site.yml` and `feature-staging.yml` publish each enabled instance
       under its own segment, with a test asserting the layout for at least two
 - [ ] The bootstrap `.jsonld` / `.json` resolves at its instance path
+
+
+## OWNER, 2026-09-20 — question 3 answered: the root's docs are INSTALLED
+
+> root should have docs/ installed by cat-harness.
+
+So the root does not need a segment of its own, and the apparent exception is
+not one. Its `docs/` is not the root's own content — cat-harness installs it,
+the same mechanism by which a dependent folio gets `uploads/` and `library/`.
+The root is where an installed `docs/` is SERVED from, which is why it sits at
+`<baseurl>/` with no segment.
+
+That is now bean `n0nf`, with the measurement: the root has no `docs/` today,
+the site builds from `cat-harness/docs`, and the `docs` entry declares
+`dependents: "skip"` — which is precisely what stops a dependent, the root
+included, from getting one.
+
+### All three questions are now settled
+
+| | ruling |
+|---|---|
+| name or stub | the instance's **`name`** |
+| is the declared graph a path segment | **yes**, because an instance may declare more than one renderable graph |
+| does the root get a segment | **no** — its `docs/` is installed by cat-harness and served at `<baseurl>/` |
+
+### One consequence still open, and it is now sharper
+
+The root's `name` is `folio-assistant` and cat-harness's `stub` is also
+`folio-assistant`. Under this rule the root is addressed by that name, while
+cat-harness publishes its graph at `<base>/folio-assistant.jsonld` from the
+stub. Two different things now occupy one path space, and `n0nf` adds a third
+question to it: if the root's `docs/` is installed from `cat-harness/docs/`,
+the same page may be reachable at `<baseurl>/` and at
+`<baseurl>/cat-harness/docs/`, and one of them has to be canonical.
+Carried on `8xtj` with the other name mismatches.
