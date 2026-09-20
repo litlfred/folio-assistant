@@ -79,3 +79,59 @@ a staging area. The queue is an implementation detail from this view.
 The ingest it starts is also what makes the uningested badge on `v1hw` tick
 down, which is the other reason these two are one design: the action here
 changes the number there.
+
+## Coordination note, 2026-09-20 — NOT a claim
+
+Left by the session that built `who-iris/docs/` (PR #584). This bean stays
+`todo` and unclaimed: the owner said *"library is another agent"*, so the note
+is here to save that agent a discovery, not to reserve the work.
+
+**Two things already exist that this viewer should consume rather than rebuild.**
+
+### 1. Where it mounts is already decided and already wired
+
+Owner's addressing rule, same session: `<base-url>/<path-to-kind-or-node>`,
+worked example `<base-url>/library/who-iris`. That is implemented in
+`cat-harness/scripts/mount-instance-docs.ts` and runs in both `docs-site.yml`
+and `feature-staging.yml`.
+
+**So this viewer needs no deployment work.** Emit into a directory the instance
+declares with the `library` graph, give it an `index.html` at that directory's
+root, and it appears at `/library/<instance>/`. The `index.html` is the actual
+trigger — the mount floor is "has a front door", which is what distinguishes a
+built visualiser from a directory of source files served under a URL promising
+one. An earlier floor of "any .html beneath" mounted `who-iris/uploads/`,
+because the IRIS capture contains a saved DSpace page.
+
+Collisions are resolved and will refuse loudly: walk from the root, outermost
+handler wins, walk stops, losing claim reported with its owner and a non-zero
+exit. `resolve_` in that file, 8 tests in
+`cat-harness/scripts/tests/mount-instance-docs.test.ts`.
+
+### 2. The themes exist — owner: *"libray/ vislaused needs to pick up themes"*
+
+`who-iris/themes/themes.ts` (bean `j66n`) exports `WHO_THEMES` and
+`whoThemeById`, resolved through the platform's `resolveTheme`. Two of them:
+
+| id | kind | use |
+|---|---|---|
+| `iris-web` | `webpage` | the screen theme, read off the captured DSpace stylesheet |
+| `who-wpro-publication` | `publication` | print geometry, read off the style guide's pages 6/7/12/14/18 |
+
+`iris-web` is the one a library viewer wants. Palette roles are
+`surface / ink / edge / accent`; geometry is `laptop / mobile / card`. Take the
+values from the theme rather than the CSS — `gen-iris-pages.ts` shows the
+pattern, emitting them as `--iris-*` custom properties named after the ROLES.
+
+**Do not eyedropper the screenshots.** `accent` is `--primary: #008dc9` and NOT
+the more brand-looking `--blue: #2B4E72`; that distinction is tested, and it is
+the hardcoding `schemas/theme.ts` exists to end.
+
+### 3. One thing to know before trusting `materialization`
+
+Bean `yl5w`: every `localPath` in `who-iris/catalogue/nodes/` points at
+`who-iris/uploads/<name>.pdf` and **all three are missing** — the bytes are in
+`cat-harness/uploads/`. `check:catalogue` does not verify `localPath`, so it
+reports a clean run over three `materialized` claims that resolve to nothing. A
+library viewer that resolves bytes by `localPath` will render three broken
+links and no error.
