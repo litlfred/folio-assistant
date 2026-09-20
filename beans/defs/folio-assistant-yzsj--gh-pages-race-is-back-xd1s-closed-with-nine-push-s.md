@@ -244,13 +244,61 @@ re-triggered `stage` on `a3b9a0c28d`, all 8 checks green. So the failure was
 contention, not #612's comment-only diff — which could not touch
 `_render-log/` at all.
 
+## The `merge=union` half, measured — and the carrier that would have failed
+
+Scoped 2026-09-20 so the ruling needs no investigation.
+
+**The risk is smaller than it looks.** A union merge can corrupt a file that
+is not append-only, so the question is how many `.jsonl` files it would reach:
+
+| | |
+|---|---|
+| `.jsonl` tracked on `main` | **0** |
+| `.jsonl` on `gh-pages` | **1** — `_render-log/2026-09-20.jsonl` |
+
+It would apply to exactly the one append-only file it is meant for. Nothing
+else can be affected, which removes the only real objection.
+
+**But a committed `.gitattributes` is the WRONG carrier, and it would fail
+silently.** The rebase happens in `feature-staging`'s `pages/` checkout of
+`gh-pages`, so the attribute has to be in effect on that branch — and
+`gh-pages` is the one branch that cannot hold it. `docs-site` publishes with
+`peaceiris` as a **full replace**, and `restore-staging.ts:311` already records
+that exact mechanism deleting exactly this file:
+
+> `docs(gh-pages)` full replace, deleted `_render-log/2026-09-20.jsonl`
+
+So a committed `.gitattributes` on `gh-pages` would be removed by the next full
+replace and quietly stop applying — and the conflict would return looking like
+a NEW defect rather than a regression. **A fix that disappears is worse than
+none**, which is this bean's own theme one turn later.
+
+**The carrier that survives** is `$GIT_DIR/info/attributes`, written into the
+`pages/` checkout by the workflow immediately before the rebase:
+
+```
+*.jsonl merge=union
+```
+
+Local to that checkout, never committed, nothing for a full replace to delete,
+and re-established every run by construction rather than by anybody
+remembering. `merge=union` is a built-in driver, so nothing joins the trust
+boundary.
+
+That makes this half **one line written in one workflow step** — no deploy
+logic touched, no committed state, and no file but the render log reachable.
+
+Still not done. Cheaper than first thought is not the same as ruled on.
+
 ## Done when
 
 - [ ] A ruling on ONE shared publishing step vs four copies (see the
       correction above — `06kg` is the precedent against copying)
-- [ ] `*.jsonl merge=union` in `.gitattributes`, so a same-day render-log
-      append stops turning `feature-staging`'s retry into a hard failure —
-      separable from the `peaceiris` question and much smaller
+- [ ] `*.jsonl merge=union` via `$GIT_DIR/info/attributes` in the `pages/`
+      checkout — NOT a committed `.gitattributes`, which a full replace
+      deletes — so a same-day render-log append stops turning
+      `feature-staging`'s retry into a hard failure. Separable from the
+      `peaceiris` question and much smaller
 - [ ] `docs-site.yml`'s publish survives a losing race, with the failure
       reproduced before the fix and the fix shown to pass — **and the same for
       `blueprint.yml` and `lean_ci.yml`, which are equally exposed**
