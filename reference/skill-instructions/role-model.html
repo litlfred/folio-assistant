@@ -675,58 +675,66 @@
 <p>Schema: <a href="../../schemas/role-graph.ts"><code class="language-plaintext highlighter-rouge">schemas/role-graph.ts</code></a>. Audit:
 <a href="../../scripts/kg-audit.ts"><code class="language-plaintext highlighter-rouge">scripts/kg-audit.ts</code></a>, sidecar schema
 <a href="../../schemas/kg-qa.ts"><code class="language-plaintext highlighter-rouge">schemas/kg-qa.ts</code></a>.</p>
-<h3 id="a-skills-own-roles-front-matter-is-not-this-tables-role">
+<h3 id="a-skills-roles-front-matter-is-gone--do-not-bring-it-back">
   
   
-    <a href="#a-skills-own-roles-front-matter-is-not-this-tables-role" class="anchor-heading" aria-labelledby="a-skills-own-roles-front-matter-is-not-this-tables-role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A skill’s own <code class="language-plaintext highlighter-rouge">roles:</code> front matter is NOT this table’s Role
+    <a href="#a-skills-roles-front-matter-is-gone--do-not-bring-it-back" class="anchor-heading" aria-labelledby="a-skills-roles-front-matter-is-gone--do-not-bring-it-back"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A skill’s <code class="language-plaintext highlighter-rouge">roles:</code> front matter is GONE — do not bring it back
   
   
 </h3>
     
 
-<p>Measured 2026-09-19, bean <code class="language-plaintext highlighter-rouge">folio-assistant-qif9</code>. <strong>Look at the top of this
-file</strong>: it declares <code class="language-plaintext highlighter-rouge">roles: [reader, collaborator, owner]</code>. None of those
-three is a Role in the sense the table above defines, and none is a
-Permission either — they are in neither registry.</p>
+<p><strong>Removed 2026-09-20</strong>, bean <code class="language-plaintext highlighter-rouge">folio-assistant-qif9</code>, on the owner’s
+instruction. 114 skill files lost it; the full record, with every value every
+file carried, is <code class="language-plaintext highlighter-rouge">fsh-guts/retired/skill-roles-front-matter.md</code> — a path
+rather than a link, because the trashcan is not published and a link from
+here would break on the site.</p>
 
-<p>Across 178 skill files, 133 carry <code class="language-plaintext highlighter-rouge">roles:</code>, and the field holds <strong>two
-vocabularies at once</strong>:</p>
+<p>The note here used to say the field was <em>inert but present</em> and to be read
+past. It is now absent, and this entry exists for one reason: <strong>the corpus is
+what taught agents to write it.</strong> Copy an adjacent skill’s front matter and
+the field comes back — which is exactly how it reached 140 files, six from the
+qou migration and the rest copy-paste, never a decision.
+<code class="language-plaintext highlighter-rouge">bun run check:retired-front-matter</code> fails if it reappears.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>uses</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">reader</code> / <code class="language-plaintext highlighter-rouge">collaborator</code> / <code class="language-plaintext highlighter-rouge">owner</code> / <code class="language-plaintext highlighter-rouge">admin</code> / <code class="language-plaintext highlighter-rouge">auditor</code> — <strong>in no registry</strong></td>
-      <td>254</td>
-    </tr>
-    <tr>
-      <td>real swimlane roles (<code class="language-plaintext highlighter-rouge">code-reviewer</code>, <code class="language-plaintext highlighter-rouge">build-pipeline</code>, …)</td>
-      <td>52</td>
-    </tr>
-  </tbody>
-</table></div>
+<p>Three facts, in case the question comes up again:</p>
 
-<p>They mix inside single files: <code class="language-plaintext highlighter-rouge">library-ingestion.md</code> declares
-<code class="language-plaintext highlighter-rouge">roles: [ingestion-agent, authoring-agent, collaborator, owner]</code>.</p>
+<ul>
+  <li><strong>Nothing read it — with one instructive exception.</strong> 0 of 180 Skill nodes
+in the exported graph carried any role-ish key; the only 27 carriers were
+<code class="language-plaintext highlighter-rouge">Actor</code> nodes, from actor JSON, and <code class="language-plaintext highlighter-rouge">gen-skill-docs</code> dropped it. The
+exception was <code class="language-plaintext highlighter-rouge">src/impact/stakeholder-map.ts</code>, which printed it as
+<em>“Roles reached”</em> — beside real lane-derived roles, with nothing marking
+which was which. It now derives roles from the <strong>lanes</strong> it already
+computes, resolved through <code class="language-plaintext highlighter-rouge">roleForLane</code>, so every value it prints
+resolves.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">roles:</code> in a <code class="language-plaintext highlighter-rouge">folio-memory/v1</code> entry is a DIFFERENT field and stays.</strong>
+<code class="language-plaintext highlighter-rouge">memoryForRoles</code> filters on <code class="language-plaintext highlighter-rouge">tags.roles</code>; the 26 memory entries keep it.
+The first pass of the excision took all 140 files and <code class="language-plaintext highlighter-rouge">agent-memory.test.ts</code>
+caught it — every entry untagged means every lane sees everything. Sharing
+a key name across graph kinds is not sharing a field, and
+<code class="language-plaintext highlighter-rouge">check:retired-front-matter</code> keys its exemption on <code class="language-plaintext highlighter-rouge">$schema</code>, never on the
+directory.</li>
+  <li><strong>It was dangling from its first commit, not from a later rename.</strong> At
+migration (<code class="language-plaintext highlighter-rouge">2734a70f</code>, 2026-06-15) the contract read <em>“Actor IDs (roles)
+that may invoke this skill”</em>, pointing at <code class="language-plaintext highlighter-rouge">ActorDefinition.id</code>. No
+<code class="language-plaintext highlighter-rouge">reader.json</code>, <code class="language-plaintext highlighter-rouge">collaborator.json</code> or <code class="language-plaintext highlighter-rouge">owner.json</code> has ever been added to
+<code class="language-plaintext highlighter-rouge">.claude/skills/actors/</code>, in any commit in the repository’s history.</li>
+  <li><strong>The second vocabulary was a collision.</strong> <code class="language-plaintext highlighter-rouge">Role</code> was later given to the
+BPMN swimlane, and authors reading the field by its new name wrote
+swimlane roles into it. At removal, across the 114 skill files: 288
+annotations, <strong>260 of them — 90 % — resolving to nothing.</strong></li>
+</ul>
 
-<p><strong>And nothing reads the field.</strong> All 168 Skill nodes in the exported graph
-carry zero role-ish keys; <code class="language-plaintext highlighter-rouge">gen-skill-docs</code> drops it; no check resolves it.
-<code class="language-plaintext highlighter-rouge">SkillDefinitionSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/skill-package.ts</code> does require <code class="language-plaintext highlighter-rouge">roles</code>,
-but that describes a skill <em>definition object</em> and nothing parses front
-matter against it.</p>
+<p>To learn who performs a skill, read <code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code>. The registry is
+the only answer that resolves.</p>
 
-<p>So: <strong>do not read a skill’s <code class="language-plaintext highlighter-rouge">roles:</code> as saying who performs it, and do not
-add a binding on its authority.</strong> To learn who performs a skill, read
-<code class="language-plaintext highlighter-rouge">skills/roles/roles.json</code> — the registry is the only answer that resolves.</p>
-
-<p>This is recorded rather than fixed because fixing it means deciding what
-the tier words MEAN, and if they are forge permission tiers that is a
-deployment fact belonging to the topology axes rather than to a skill.
+<p><strong>What the removal did not decide.</strong> Whether a skill <em>should</em> declare its
+performer (bean <code class="language-plaintext highlighter-rouge">y1w9</code>), and what the tier words mean — if
+<code class="language-plaintext highlighter-rouge">reader</code>/<code class="language-plaintext highlighter-rouge">collaborator</code>/<code class="language-plaintext highlighter-rouge">owner</code> are forge permission tiers, that is a
+deployment fact belonging to the topology axes rather than to a skill. Either
+way the field gets <strong>declared before it is written</strong>, which is the step the
+original skipped.
 <code class="language-plaintext highlighter-rouge">qif9</code> carries the four options; <code class="language-plaintext highlighter-rouge">folio-assistant-y1w9</code> (110 skills bound
 to no role or process) is blocked on the answer, because the obvious
 evidence for that triage is exactly this field.</p>
@@ -1422,7 +1430,7 @@ either a lane name has drifted, or the role is dead.</p>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35501498221"><code>e3bbd54</code></a> &middot; 2026-09-20T09:09:50Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35502432965"><code>8852b2f</code></a> &middot; 2026-09-20T09:29:57Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
