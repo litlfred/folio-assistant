@@ -365,7 +365,7 @@
         "cat-harness"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/schemas/index.html",
+        "visualiser": "cat-harness/docs/cat-harness/schemas/index.html",
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "schema-management"
       }
@@ -527,7 +527,7 @@
       "coverage": {
         "docs": "cat-harness/docs/document-ingestion.md",
         "skill": "library-ingestion",
-        "visualiser": "cat-harness/docs/library/index.html"
+        "visualiser": "cat-harness/docs/cat-harness/library/index.html"
       },
       "description": "The incoming queue of the document-ingestion pipeline \u2014 raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
       "graphs": [
@@ -541,7 +541,7 @@
       "coverage": {
         "docs": "cat-harness/docs/document-ingestion.md",
         "skill": "library-ingestion",
-        "visualiser": "cat-harness/docs/library/index.html"
+        "visualiser": "cat-harness/docs/cat-harness/library/index.html"
       },
       "description": "L1 source content \u2014 one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assist-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention \u2014 an id and a relative path \u2014 from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded \u2014 the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation \u2014 `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" \u2014 after which a dependent inherits them from the layer that owns content and this entry goes for good.",
       "graphs": [

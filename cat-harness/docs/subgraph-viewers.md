@@ -38,7 +38,7 @@ it is the navbar footer, and what it owes instead is its own `.json`/`.jsonld`
 
 ## The schema graph
 
-**[`/schemas/`]({{ '/schemas/' | relative_url }})** — every declaration in
+**[`/cat-harness/schemas/`]({{ '/cat-harness/schemas/' | relative_url }})** — every declaration in
 every declared `schemas` directory, with the edges between them.
 
 - A **faceted index**: search, filter by kind, filter by module.
@@ -87,7 +87,7 @@ reads; anything else may draw it.
 
 ## The library — the L1 corpus
 
-**[`/library/`]({{ '/library/' | relative_url }})** — every entry, and the
+**[`/cat-harness/library/`]({{ '/cat-harness/library/' | relative_url }})** — every entry, and the
 `uploads/` queues feeding them.
 
 Two views over one projection, because they answer different questions:
@@ -134,14 +134,29 @@ ingest from the corpus view, and materialising an entry into a folio of choice
 — are open work, because the write path is a decision the repository owner has
 not yet made.
 
-## Where they are published
+## Where they are published — the URL is the directory's path
 
-Under the rule that the published URL space **mirrors the instantiation
-structure**: the root instance's site at `/`, a registered rendered page of the
-root pipeline at `/<page>`, and any other instantiated, enabled harness at
-`/<instance>/<path>`. These two are registered pages of the root pipeline.
+Owner, 2026-09-20:
 
-Neither generator writes an instance name or a graph name down: the
-rendered-content root is resolved from the declaration, and the published
-segment is the declared directory's own name. Rename the directory and the
-source and the URL move together.
+> it `<baseurl>/<path to kind in knowledge graph>` or
+> `<path to dir handled>/<optional subject>`
+
+So a viewer's address **is the repo-relative path of the directory it
+handles**, and `<subject>` is optional — a viewer with no subject is the view
+over all of them. These two handle `cat-harness/schemas/` and
+`cat-harness/library/`, so they sit at `/cat-harness/schemas/` and
+`/cat-harness/library/`.
+
+**That is a resolution, not a composition, and the difference is not
+cosmetic.** An earlier draft composed the address from the rendering
+instance's name plus the graph kind. It gives the right answer for
+`cat-harness/schemas/` by coincidence — that directory happens to sit at
+owner/kind — and the wrong one for every directory that does not:
+`who-iris/library/` would have been addressed as `cat-harness/library`, naming
+the machinery where the rule names the data. Taking the path means the two can
+never disagree, because there is only one of them.
+
+Neither generator writes a path down. The rendered-content root is resolved
+from the declaration, the segment is the handled directory's resolved path,
+and the page's link back to its projection is computed from its own depth — so
+moving a directory moves its source, its URL and its data link together.

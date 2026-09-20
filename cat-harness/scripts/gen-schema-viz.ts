@@ -60,10 +60,10 @@
  *   bun run schema:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, sep } from "node:path";
+import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
-import { siteDirFor } from "../schemas/cat-harness.ts";
+import { repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 // The `folio` graph kind is registered by CORE on import; this module resolves
 // this instance's directories and the instance declares a folio graph.
 import "../schemas/folio-graph-kind.js";
@@ -149,12 +149,59 @@ function projection(g: SchemaGraph): unknown {
 /**
  * The viewer page.
  *
- * One file, no data. It reads `../assets/schemas/index.json` relative to its
+ * One file, no data. It reads its projection relative to its
  * own URL — the page sits at `<site>/schemas/` and the projection at
  * `<site>/assets/schemas/`, so the relative path is a property of the layout
  * rather than of the host.
  */
-export function viewerHtml(): string {
+
+/**
+ * Where a viewer of a declared directory is published, and the relative path
+ * from it back to its data.
+ *
+ * ## The rule — the URL IS the directory's path in the knowledge graph
+ *
+ * Owner, 2026-09-20, settling bean `o7eq`'s third case:
+ *
+ * > it `<baseurl>/<path to kind in knowledge graph>` or
+ * > `<path to dir handled>/<optional subject>`
+ *
+ * So the segment is **the declared directory's own repo-relative path**, and
+ * `<subject>` is optional — a viewer with no subject is the view over all of
+ * them.
+ *
+ * **This is a resolution, not a composition, and the difference is not
+ * cosmetic.** The first draft of this function composed `<owner>/<kind>` from
+ * the rendering instance's name and the graph kind. That gives the right
+ * answer for `cat-harness/schemas/` by coincidence — the directory happens to
+ * sit at owner/kind — and the WRONG one for every directory that does not:
+ * `who-iris/library/` would have been addressed as `cat-harness/library`,
+ * naming the machinery where the rule names the data. Taking the path means
+ * the two can never disagree, because there is only one of them.
+ *
+ * ## Why the data path is computed rather than written
+ *
+ * The projection stays at `<site>/assets/<kind>/`, and the page fetches it
+ * RELATIVE to its own location so the same bytes are correct at the canonical
+ * base and at a staging slug. A page at `cat-harness/schemas/` is two levels
+ * down rather than one, and a literal `../assets/...` would have kept parsing
+ * and fetched nothing. Deriving it means the layout can move again without a
+ * silent 404.
+ */
+export function viewerPlacement(
+  site: string,
+  /** The handled directory's repo-relative path, e.g. `cat-harness/schemas`. */
+  dirPath: string,
+  /** The graph kind, which names the projection's own directory. */
+  kind: string,
+): { pageDir: string; dataDir: string; dataHref: string } {
+  const pageDir = join(site, ...dirPath.split("/"));
+  const dataDir = join(site, "assets", kind);
+  const dataHref = relative(pageDir, join(dataDir, "index.json")).split(sep).join("/");
+  return { pageDir, dataDir, dataHref };
+}
+
+export function viewerHtml(dataHref: string): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
   //
   // The whole page is one template literal, so a backtick anywhere inside it
@@ -268,6 +315,7 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 <script>
 "use strict";
 var G = null, SEL = null;
+var DATA_HREF = "${dataHref}";
 var $ = function (id) { return document.getElementById(id); };
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -458,7 +506,7 @@ function select(id) {
   detail(d);
 }
 
-fetch("../assets/schemas/index.json").then(function (r) {
+fetch(DATA_HREF).then(function (r) {
   if (!r.ok) throw new Error(String(r.status));
   return r.json();
 }).then(function (data) {
@@ -498,7 +546,7 @@ fetch("../assets/schemas/index.json").then(function (r) {
   if (location.hash.length > 1) select(decodeURIComponent(location.hash.slice(1)));
 }).catch(function (e) {
   $("counts").textContent = "could not load the projection: " + e.message;
-  $("detail").innerHTML = '<p class="empty">The projection at <code>../assets/schemas/index.json</code> could not be read. ' +
+  $("detail").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) + '</code> could not be read. ' +
     "That is not an empty graph \\u2014 it is a graph that could not be loaded, and the page says so rather than showing nothing.</p>";
 });
 </script>
@@ -575,8 +623,12 @@ if (import.meta.main) {
   // Indented for the reason the todo and bean indices both document: a
   // minified projection is one line, git merges by line, and two branches each
   // adding a schema would conflict on the whole file every time.
-  emit(join(site, "assets", seg, "index.json"), data);
-  emit(join(site, seg, "index.html"), viewerHtml());
+  // The handled directory's own path, READ from where it resolved to. Not
+  // composed from an instance name and a kind — see `viewerPlacement`.
+  const dirPath = relative(repoRootFor(ROOT), own).split(sep).join("/");
+  const { pageDir, dataDir, dataHref } = viewerPlacement(site, dirPath, seg);
+  emit(join(dataDir, "index.json"), data);
+  emit(join(pageDir, "index.html"), viewerHtml(dataHref));
   if (!check) {
     console.log(
       `  ${g.modules.length} module(s), ${g.decls.length} declaration(s), ${g.edges.length} edge(s), ` +

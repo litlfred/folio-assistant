@@ -21,7 +21,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { basename, join } from "node:path";
 
-import { viewerHtml as schemaViewer } from "../scripts/gen-schema-viz.ts";
+import { viewerHtml as schemaViewer, viewerPlacement } from "../scripts/gen-schema-viz.ts";
 import { viewerHtml as libraryViewer } from "../scripts/gen-library-viz.ts";
 import { readSchemaGraph } from "../scripts/schema-graph.ts";
 import { readLibraryGraph } from "../scripts/library-graph.ts";
@@ -29,10 +29,15 @@ import { directoriesForGraph, repoRootFor, siteDirFor } from "./cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
 
+/** The href a page two levels down uses — what `viewerPlacement` computes. */
+const DATA = "../../assets/schemas/index.json";
+
 describe.each([
-  ["schema", schemaViewer, "../assets/schemas/index.json"],
-  ["library", libraryViewer, "../assets/library/index.json"],
-])("the %s viewer", (_name, html, dataPath) => {
+  ["schema", (h: string) => schemaViewer(h)],
+  ["library", (h: string) => libraryViewer(h)],
+])("the %s viewer", (_name, viewer) => {
+  const html = (): string => viewer(DATA);
+  const dataPath = DATA;
   test("is a complete HTML document", () => {
     const page = html();
     expect(page.startsWith("<!doctype html>")).toBe(true);
@@ -61,6 +66,32 @@ describe.each([
     // repository's rule is that rendering them alike reports a clean run over
     // something never looked at.
     expect(html()).toContain("could not");
+  });
+});
+
+describe("viewerPlacement — the URL is the directory's path, not a composition", () => {
+  // Owner, 2026-09-20: "<baseurl>/<path to kind in knowledge graph>" or
+  // "<path to dir handled>/<optional subject>".
+  test("a directory publishes at its own repo-relative path", () => {
+    const { pageDir } = viewerPlacement("/site", "cat-harness/schemas", "schemas");
+    expect(pageDir).toBe(join("/site", "cat-harness", "schemas"));
+  });
+
+  test("a directory NOT at owner/kind is addressed by its path, not by the renderer", () => {
+    // The composition this replaced would have said `cat-harness/library` for
+    // this one — naming the machinery where the rule names the data.
+    const { pageDir } = viewerPlacement("/site", "who-iris/library", "library");
+    expect(pageDir).toBe(join("/site", "who-iris", "library"));
+    expect(pageDir).not.toContain("cat-harness");
+  });
+
+  test("the data href is relative to the page's own depth", () => {
+    // A literal `../assets/...` kept parsing and fetched nothing once the page
+    // moved two levels down.
+    expect(viewerPlacement("/site", "cat-harness/schemas", "schemas").dataHref)
+      .toBe("../../assets/schemas/index.json");
+    expect(viewerPlacement("/site", "deep/er/still", "schemas").dataHref)
+      .toBe("../../../assets/schemas/index.json");
   });
 });
 
