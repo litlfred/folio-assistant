@@ -9,7 +9,6 @@
  * region the folio explicitly marked.
  */
 import { describe, test, expect, afterEach } from "bun:test";
-import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
@@ -22,6 +21,7 @@ import {
   type SectionContext,
 } from "../../content/pipeline/readme-sections";
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc";
+import { FIXTURE_CONFIG, FIXTURE_INSTANCE, declareInstance } from "../../test/support/instance-fixture.js";
 
 const dirs: string[] = [];
 
@@ -33,6 +33,11 @@ afterEach(() => {
 function folio(files: Record<string, string> = {}): string {
   const root = mkdtempSync(join(tmpdir(), "folio-sec-"));
   dirs.push(root);
+  // A config filename is composed from the instance's NAME, so a fixture that
+  // hands `folio()` a `FIXTURE_CONFIG` entry has to be an instance called
+  // `fixture` for that name to be the one anything looks for. Pinned rather
+  // than taken from the mkdtemp basename, which is random per run.
+  declareInstance(root, FIXTURE_INSTANCE);
   mkdirSync(join(root, "folio", "solo", "intro"), { recursive: true });
   writeFileSync(
     join(root, "folio", "solo", "solo.ts"),
@@ -160,7 +165,7 @@ describe("simulators section", () => {
     // which exists only once the platform submodule is checked out. A clone
     // without it replaced a correct nine-row table with "no simulators".
     const root = folio({
-      [HARNESS_CONFIG]: JSON.stringify({ simulators: { dir: "not-checked-out" } }),
+      [FIXTURE_CONFIG]: JSON.stringify({ simulators: { dir: "not-checked-out" } }),
       "README.md": `# F\n\n<!-- folio:simulators:begin -->\n\n| Simulator | File |\n|---|---|\n| Kept | \`x.html\` |\n\n<!-- folio:simulators:end -->\n`,
     });
     const out = SECTIONS.find((s) => s.marker === "folio:simulators")!.render(ctx(root));
@@ -174,7 +179,7 @@ describe("simulators section", () => {
   });
 
   test("a directory that exists but holds nothing is a determined empty", async () => {
-    const root = folio({ [HARNESS_CONFIG]: JSON.stringify({ simulators: { dir: "sims" } }) });
+    const root = folio({ [FIXTURE_CONFIG]: JSON.stringify({ simulators: { dir: "sims" } }) });
     mkdirSync(join(root, "sims"), { recursive: true });
     const out = SECTIONS.find((s) => s.marker === "folio:simulators")!.render(ctx(root));
 
@@ -184,7 +189,7 @@ describe("simulators section", () => {
 
   test("the directory comes from harness.config.json, not a fixed path", async () => {
     const root = folio({
-      [HARNESS_CONFIG]: JSON.stringify({ simulators: { dir: "sims" } }),
+      [FIXTURE_CONFIG]: JSON.stringify({ simulators: { dir: "sims" } }),
       "sims/bring_surface.html": "<html></html>",
     });
     const md = SECTIONS.find((s) => s.marker === "folio:simulators")!.render(ctx(root)).markdown;

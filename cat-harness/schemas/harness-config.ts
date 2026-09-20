@@ -225,9 +225,11 @@ import {
   type ContentTypeRegistry,
 } from "./content-type";
 import {
+  findInstanceRoot,
   isKgOnlyDirectory,
   materialiseDirectories,
   ownDirectories,
+  readDeclaration,
   resolveDirectories,
   type MaterialisedDirectory,
 } from "./cat-harness";
@@ -258,15 +260,71 @@ export interface ResolvedDependency {
 }
 
 /**
- * The harness config file, and the name it used to have.
+ * The names this file has had, and why it is now one PER INSTANCE.
  *
- * Renamed from `harness.config.json` on 2026-09-18: the file configures the
- * HARNESS — adapter selection, the skills directory, the viewer, simulators,
- * translation, and the two work-plan stores — not the folio's content. The old
- * name described the wrong thing and invited people to look for content
- * settings in it.
+ * `folio.config.json` (to 2026-09-18) described the wrong thing: the file
+ * configures the HARNESS — adapter selection, the skills directory, the
+ * viewer, simulators, translation, the two work-plan stores — not the folio's
+ * content. `harness.config.json` (to 2026-09-20) fixed the noun and kept a
+ * flaw the split exposed: **one global filename in a checkout that holds
+ * several instances.**
+ *
+ * The owner's ruling, 2026-09-20:
+ *
+ * > "mv to root at `cat-harness.config.json` as will all instantiated
+ * > instances (not just materialized KGs). `root/` is where instantiation is
+ * > tracked."
+ *
+ * So the file stays at the INSTANTIATION ROOT — the checkout, where instances
+ * are tracked — and takes the instance's own name. This checkout already
+ * holds `cat-harness` and `bootstrap`, with `folio-assist-core` arriving; one
+ * filename between them could only ever configure one.
+ *
+ * ## Two roots, and they were never the same question (bean `zkgs`)
+ *
+ * | question | root |
+ * |---|---|
+ * | where is the folio's CONTENT | nearest declared folio directory — `findContentRepoRoot()` |
+ * | where is this instance INSTANTIATED | the checkout root, holding `<name>.config.json` |
+ *
+ * `zkgs` is what happens when one walk answers both: `findContentRepoRoot()`
+ * stopped at `cat-harness/` while the config sat one level up, so nothing
+ * read it. `readDeclaredFolioProfile()` returned the THIRD state on a
+ * repository that had declared `document`, which the config's own comment
+ * says "runs every criterion, and the paper adapter's LaTeX-shaped axes fire
+ * `critical` on prose that never reaches pdflatex" — and the sidecars proved
+ * it was happening.
  */
-export const HARNESS_CONFIG = "harness.config.json";
+export function instanceConfigFilename(name: string): string {
+  return `${name}.config.json`;
+}
+
+/**
+ * The retired global name. Kept as a constant so `check:instance-config` can
+ * FIND it, never so a reader can fall back to it.
+ *
+ * The hard break is the owner's instruction from the previous rename (bean
+ * `6nfy`, "no longer read at all"), and `9ici` is why it is paired with a
+ * gate this time rather than left to be discovered: a silent break left one
+ * reader still honouring the dead name, which gave an old-name instance a
+ * DETERMINED answer for one setting while fifteen others vanished. A break
+ * nothing announces is the expensive kind.
+ */
+export const LEGACY_HARNESS_CONFIG = "harness.config.json";
+
+/**
+ * The instance owning `dir`, and the config filename it would use.
+ *
+ * `undefined` when nothing declares — a THIRD state, not "no config": a
+ * directory that declares no instance has no name to compose one from, and
+ * guessing would put the old global filename back under a new spelling.
+ */
+export function instanceConfigFor(dir: string): { root: string; name: string } | undefined {
+  const root = findInstanceRoot(dir);
+  if (root === undefined) return undefined;
+  const name = readDeclaration(root)?.name;
+  return name === undefined ? undefined : { root, name };
+}
 
 /**
  * Find the harness config in `dir`.
@@ -289,8 +347,55 @@ export const HARNESS_CONFIG = "harness.config.json";
  * half-configured by a path nothing else agrees about. Rename the file.
  */
 export function resolveHarnessConfigPath(dir: string): { path: string } | undefined {
-  const p = join(dir, HARNESS_CONFIG);
-  return existsSync(p) ? { path: p } : undefined;
+  const inst = instanceConfigFor(dir);
+  if (inst === undefined) return undefined;
+  const file = instanceConfigFilename(inst.name);
+
+  // From the instance root OUTWARD. The instance's own directory is tried
+  // first so a standalone instance — a folio, where the instance root and the
+  // checkout root are the same directory — needs no special case; then each
+  // ancestor, because a checkout holding several instances tracks them at its
+  // own root, which is the whole point of naming the file after the instance.
+  //
+  // BOUNDED at 12. An unbounded walk ends at `/`, where a stray
+  // `cat-harness.config.json` in somebody's home directory would configure
+  // this repository. The same bound `findContentRepoRoot` uses.
+  let d = resolve(inst.root);
+  for (let i = 0; i < 12; i++) {
+    const p = join(d, file);
+    if (existsSync(p)) return { path: p };
+    const up = resolve(d, "..");
+    if (up === d) break;
+    d = up;
+  }
+  return undefined;
+}
+
+/**
+ * Where the config IS, or where it would go.
+ *
+ * Every caller that wanted a path rather than a hit wrote
+ * `resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG)` —
+ * seven of them. That tail is the eleventh hardcoded literal growing back,
+ * in the callers of the function written to retire the first ten, and with
+ * a per-instance filename it would now compose a name no instance uses.
+ *
+ * `undefined` when nothing declares, which is the same third state
+ * {@link instanceConfigFor} reports and for the same reason: a directory with
+ * no instance has no name to compose a filename from, and the honest answer
+ * to "where would it go" is that nobody can say.
+ *
+ * The intended location is the INSTANCE ROOT rather than the checkout root.
+ * A config that does not exist yet belongs to one instance and nothing else,
+ * and writing it beside the declaration that names it is the placement a
+ * reader can follow; the outward walk in {@link resolveHarnessConfigPath}
+ * then finds it wherever a multi-instance checkout has chosen to keep it.
+ */
+export function expectedInstanceConfigPath(dir: string): string | undefined {
+  const found = resolveHarnessConfigPath(dir);
+  if (found) return found.path;
+  const inst = instanceConfigFor(dir);
+  return inst === undefined ? undefined : join(inst.root, instanceConfigFilename(inst.name));
 }
 
 /**

@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T13:19:51Z
-updated_at: 2026-09-20T16:55:45Z
+updated_at: 2026-09-20T17:03:08Z
 parent: folio-assistant-1xhc
 ---
 
@@ -174,3 +174,33 @@ Nothing was deleted from `gh-pages` by hand. The stale pages this bean
 measured will go on the branch's next deploy, by the mechanism rather than by
 an agent's initiative — which is what `deletion-requires-confirmation` asks
 for, and what `plj1` is the worked example of getting wrong.
+
+
+## 2026-09-20 — a NEAR MISS by a sibling session, recorded because the rule did not prevent it
+
+`claude/ecstatic-goldberg-eroyaz` set this bean back to `in-progress` **after
+it was completed**, and appended a claim note to it. Nothing was pushed, and
+the status is restored to `completed` here.
+
+**How it happened, since the mechanism matters more than the slip.** That
+session picked this bean off a listing, then ran `git merge origin/main`
+and `beans update --status in-progress` in the same breath. The merge brought
+in the completion; the claim overwrote it **without re-reading the bean**.
+`bean-coordination` §"Closing a bean whose work has already landed" tells an
+agent to re-derive before it *closes* a bean — it says nothing about
+re-reading before it *claims* one, and a claim is equally destructive in the
+other direction.
+
+Claiming is a WRITE to a shared store, and the same obligation applies:
+**re-read the bean after syncing and before claiming it**, because a sibling
+may have finished it in the window. The window here was under a minute.
+
+Caught by comparing `git show origin/main:<bean>` against the working tree
+before committing. Had that comparison not been made, a completed bean would
+have been reopened with a claim from a session that did none of the work.
+
+**Nothing else from that session's plan applied here** — the `rm -rf`, the
+slug re-check and the tests were all already yours. The one item it carried
+that this bean does not cover is an **empty-build guard**, approved by the
+owner in the same breath as the `rm -rf`; it is a risk this fix introduces
+rather than part of its Done-when, so it is filed separately.

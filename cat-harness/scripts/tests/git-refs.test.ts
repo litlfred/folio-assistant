@@ -14,19 +14,20 @@
  * spreads `publishTargets` and the same file's own block, in that order.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { DEFAULT_PUBLISH_REF, ownerRepo, publishTargets, publishedPaths } from "../../src/core/git-refs.js";
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const REPO = repoRootFor(resolve(import.meta.dir, "..", ".."));
 
 const withConfig = (readme: Record<string, unknown>): string => {
   const root = mkdtempSync(join(tmpdir(), "targets-"));
-  writeFileSync(join(root, "harness.config.json"), JSON.stringify({ readme }));
+  writeInstanceConfig(root, JSON.stringify({ readme }));
   return root;
 };
 
@@ -62,7 +63,7 @@ describe("one reader, so the two cannot drift", () => {
 
   test("a config that will not parse falls back rather than throwing", () => {
     const root = mkdtempSync(join(tmpdir(), "bad-"));
-    writeFileSync(join(root, "harness.config.json"), "{ not json");
+    writeInstanceConfig(root, "{ not json");
     expect(publishTargets(root).publishRef).toBe(DEFAULT_PUBLISH_REF);
   });
 });

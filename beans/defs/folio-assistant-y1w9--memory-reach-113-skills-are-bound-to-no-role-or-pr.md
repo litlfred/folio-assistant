@@ -541,3 +541,105 @@ one, or split. Answer that and the 41 are mechanical.
 - [ ] the six clusters are bound to roles
 - [ ] `skill-in-role-or-process` reports only skills that are genuinely
       reference, each carrying `consulted: true` with its reason
+
+---
+
+## 101 → 9, and every one of the 9 is unbound for a STATED reason
+
+The residue is now fully explained, which is the state this bean was actually
+after. Nobody should try to "fix" these:
+
+| skill | why it is unbound, and correctly so |
+|---|---|
+| `confirm-harness`, `discussion`, `log-message` | bootstrap's, and the audit does not read a nested instance's graph **by design** — `instance-graph-isolation.test.ts` guards an 88-reference leak. Declaring `bootstrap/workflows/` at the root re-introduces it; that is bean `7u3g`, **scrapped** for exactly that |
+| `fhir-client-operations`, `hypothesis-generation`, `scientific-critical-thinking`, `scientific-visualization`, `smart-launch` | `remote-stubs`, whose manifest says the quiet part outright: *"every one is reported by kg:audit under `skill-is-a-stub` so filling the gap does not hide it"*. The remedy is upstream (bean `wlqd`) |
+| `fsh-guts` | **structurally unbindable.** `isPublishedSkill` strips any skill NAMED `fsh-guts`, so a published role carrying it emits a dangling `hasSkill` edge — the leak the owner's "never let fsh-guts reach the KG" rule exists to prevent |
+
+### The five stubs are the case I nearly got wrong
+
+They look like obvious `consulted: true` candidates — declared, not
+implemented, nobody performs them. **That would have been a silent
+exemption of the worst kind:** `consulted` means reference material nobody
+performs, while a stub is a skill that *would* be performed once vendored.
+Marking them would have hidden a gap the package deliberately keeps visible,
+and the package manifest says so in its own description. I read it before
+acting, and did nothing, which was the work.
+
+### `fsh-guts` is a real structural question, not a defect
+
+The strip is name-based, so this skill can never be carried by a published
+role. That is right for the KG and means `skill-in-role-or-process` will
+report it forever. Worth deciding whether the criterion should exempt a skill
+`isPublishedSkill` excludes — **but that is a change to what the criterion
+MEANS**, not a cleanup, so it is left for the owner.
+
+### The last five bound
+
+`corpus-grep` and `process-state` → `session-coordinator`; `domain-fencing` →
+`platform-authoring-agent`; `smart-base-tools` → `build-pipeline` (which
+already carries four WHO-guideline skills); and
+`edge-kinds-and-blast-radius` declared `consulted: true` — zero imperative
+markers and every heading a claim.
+
+Verification: `bun run gates` **58/58**; `bun test` **4033 pass, 0 fail**;
+`consulted-skill-not-performed` pass, 0 findings.
+
+---
+
+## `fsh-guts` exempted, and the strip now reads a DECLARATION
+
+Owner, 2026-09-20: *"yes exempt. can we model the other way?"*
+
+### The code had already asked the same question
+
+`isPublishedSkill` strips a skill whose NAME is an unpublished graph kind,
+and its own note says where that stops:
+
+> *"Same list, because the skill and the kind share a name by construction.
+> **If that ever stops being true this needs its own list, not a cleverer
+> derivation.**"*
+
+So this is that list — and a **declaration** rather than a list in code, which
+is the same "a directory is a place to look and the file says what it is" rule
+the repository applies to `isSkillMd`, to bean front matter and to a workflow
+instance's `$schema`. A skill that must not be published says so, in the place
+its author is already looking.
+
+### It EXTENDS the name rule rather than replacing it
+
+Both inputs are checked. They answer different questions — *is it named after
+the trashcan* and *did it say not to publish it* — and the second was
+previously unexpressible: a skill whose subject is an unpublished graph but
+whose name is something else had no way to opt out.
+
+Two inputs to one predicate is a duplicate, and the rule is that an
+**unchecked** duplicate is the problem. The blanket test asserts the OUTCOME
+over the built document at any depth, so neither input can quietly stop
+working.
+
+### Why the exemption is narrow
+
+`skill-in-role-or-process` now skips a skill that declares `published: false`
+— **not** one that merely happens to be unbound. The reason is structural, and
+measured: a published role carrying `fsh-guts` emits a dangling `hasSkill`
+edge, because every emitter strips the node while the edge keeps the name.
+Adding it to `docs-authoring-agent` earlier the same day broke
+`kg-export.test.ts` on exactly that. So the criterion would have reported it
+forever, and the only available "fix" would re-introduce the leak.
+
+### Guarding the input, because the outcome test cannot
+
+Three tests pin the declared half. The blanket test is what makes the
+mechanism safe to change — but an outcome test cannot say WHY it passed: if
+`published: false` silently vanished, the name rule would carry it and nobody
+would learn the declared half had stopped working. So one test asserts the
+declaration exists, one asserts both inputs independently, and one is a
+vacuity check — an ordinary skill is neither declared nor name-matched, and
+the declared set stays small, because a predicate that matched everything
+would pass the first two while stripping the corpus.
+
+`skill-in-role-or-process`: **9 → 8**, and the 8 remaining are the three
+bootstrap skills and the five `remote-stubs`, both deliberate.
+
+Verification: export still contains **zero** occurrences of `fsh-guts`;
+`bun run gates` **58/58**; `bun test` **4051 pass, 0 fail**.
