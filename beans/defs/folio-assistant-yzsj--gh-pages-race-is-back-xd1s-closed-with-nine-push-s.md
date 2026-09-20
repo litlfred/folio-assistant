@@ -290,6 +290,63 @@ logic touched, no committed state, and no file but the render log reachable.
 
 Still not done. Cheaper than first thought is not the same as ruled on.
 
+## CORRECTION, 2026-09-20 — a sibling shipped the same fix, and the convergence
+
+**Everything in the section below happened and is accurate. It is no longer
+what is in the tree.** `scripts/git-union-attr.sh` was removed and its work
+handed to `scripts/render-log-union-attr.sh` (bean `pb4n`, PR #625), which a
+sibling session merged into `main` **six minutes after** PR #624 landed this
+one. Two sessions solved one problem twice, neither able to see the other's
+branch, and `main` briefly carried both.
+
+**Kept theirs, not mine, and the reason is a measurement rather than courtesy.**
+Mine wrote `*.jsonl merge=union`; theirs writes `_render-log/*.jsonl`. Probed
+on a scratch checkout carrying only the narrow rule:
+
+```
+_render-log/probe.jsonl : merge: union
+some/other/data.jsonl   : merge: unspecified
+```
+
+A conflict on a `.jsonl` that is **not** append-only is real information, and
+mine would have unioned it away silently. Their scope is correct and mine was
+over-broad; their tests also reproduce the CI conflict end to end and assert
+**both** sides' lines survive, where mine only asserted `check-attr`.
+
+**Two of my script's properties were better, so they were ported in rather than
+lost with the file**: the `check-attr` self-verification that exits 1 on a
+silent no-op, and `grep -x` so a longer line containing the rule is not
+mistaken for it. Plus `--absolute-git-dir`, which replaced a four-line `case`
+block. The header argument below — that a committed `.gitattributes` on
+`gh-pages` is **deleted by the next full replace** and so stops applying — is
+the decisive reason for the carrier and was only on mine, so it moved across
+too. Both beans reached `info/attributes`; only this one recorded why a
+committed file would *stop working* rather than merely be ugly.
+
+### And the sibling's calls carried the defect #624 had just fixed
+
+Two of their four call sites read `bash cat-harness/scripts/render-log-union-attr.sh`
+inside the `cleanup` job, which checks the platform out at `source/`. Measured,
+not inferred:
+
+```
+broken literal  -> rc=127   bash: cat-harness/...: No such file or directory
+correct literal -> rc=0
+```
+
+Under `bash -e` that **aborts the step**, so the retry those calls exist to
+protect would have died at the first rejection — the retry present, and not
+running. That is `7iog` for the second time in one evening, in the same file,
+from a different session. A rule nobody can see does not stop at one author.
+
+`render-log-union-attr.test.ts` now resolves **every** call against its job's
+checkout layout and `working-directory:`, then maps it back into the
+repository — a miniature `7iog`, scoped to this one script. Falsified by
+reverting one site: it fails with
+`cleanup: cat-harness/scripts/render-log-union-attr.sh -> outside the platform checkout`.
+The test that shipped alongside the defect matched the call as a **substring**,
+which is why it passed over both.
+
 ## SHIPPED, 2026-09-20 — the `merge=union` half, on the owner's ruling ("605b - go")
 
 `scripts/git-union-attr.sh`, called once per `gh-pages` checkout in all three
