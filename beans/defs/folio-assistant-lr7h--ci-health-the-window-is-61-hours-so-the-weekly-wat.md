@@ -105,3 +105,38 @@ this module documents as costing a report its credibility.
       fails 5, collapsing the probe states fails 1)
 - [ ] **owner:** `upstream-pins.yml` has never run on `main`. Its cron is
       `43 9 * * 2`. Is it expected to run, or is it another `5rfy` neutering?
+
+## Addendum, same session: the workflow-path checks are NOT duplicates
+
+Carried into this bean because it was raised as an open question against the
+same subsystem — *"the overlap between `check:workflow-paths` and main's
+`workflow-paths-resolve.test.ts`, two checks for one property"*.
+
+**That framing was wrong, and it was measured wrong rather than argued wrong.**
+Each was broken in turn and both were run:
+
+| probe | `workflow-paths-resolve.test.ts` | `check:workflow-paths` |
+|---|---|---|
+| `cp -rT test/results/nonexistent-dir` in `docs-site.yml` (allowlisted) | **caught**, 1 fail | missed, exit 0 |
+| `bun run scripts/does-not-exist.ts` in `publish.yml` (not allowlisted) | missed, 4 pass | **caught**, named the step |
+
+Complementary on two orthogonal axes:
+
+* **which workflows** — the test covers 4 allowlisted; the check covers all 38.
+* **which lines** — the test matches EVERY path-shaped token on a line (a `cp`
+  argument, a `paths:` filter entry, a typedoc entry list, a `bun -e` string),
+  which is where four of the five `wggr` failures lived; the check reads only
+  script invocations, but models the cwd (job defaults, `working-directory`,
+  `cd`, `--cwd`, checkout `path:`) so it can tell a working workflow from a
+  broken spelling.
+
+Neither subsumes the other, so there is nothing to consolidate. Both files now
+carry a cross-reference to the other with this table, because the next reader
+will see two checks over `.github/workflows/` and reach for the merge — and
+the first probe above is the defect class that merge would silently drop.
+
+One methodological note, since it nearly produced a wrong answer: the first
+run of probe A appended the line as a `#` comment, which the test skips **by
+design** (comments explain history and necessarily name old paths). Both
+checks reported clean and the conclusion "neither catches it" was one keystroke
+from being recorded as fact.

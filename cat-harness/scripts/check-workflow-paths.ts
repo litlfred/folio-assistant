@@ -59,6 +59,21 @@
  *   bun run check:workflow-paths          # report and exit non-zero on a finding
  *   bun run check:workflow-paths --list   # print every invocation and its verdict
  *
+ * ## Its sibling, `scripts/tests/workflow-paths-resolve.test.ts`
+ *
+ * Not a duplicate, and the two must not be consolidated. That test covers
+ * **4 allowlisted workflows** but **every path-shaped token on a line** (a
+ * `cp` argument, a `paths:` filter entry, a typedoc entry list, a `bun -e`
+ * string). This covers **all workflows** but only **script invocations**,
+ * with a cwd model.
+ *
+ * Measured 2026-09-20 by breaking each in turn and running both: a `cp`
+ * argument naming a missing directory in `docs-site.yml` is caught by the
+ * test and missed here; `bun run scripts/does-not-exist.ts` in `publish.yml`
+ * is caught here and missed by the test. Neither subsumes the other, and
+ * deleting either loses a class of defect nothing else in this repository
+ * would see.
+ *
  * @module scripts/check-workflow-paths
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
