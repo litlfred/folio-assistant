@@ -255,10 +255,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T11:22:51.720Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c65dd5de0fa1d7724e6b7c8ce2c7fbc93156a269",
-  "sourceCommitSha": "c65dd5de0fa1d7724e6b7c8ce2c7fbc93156a269",
-  "sourceCommitAt": "2026-09-20T11:21:16Z",
+  "generatedAt": "2026-09-20T11:30:09.880Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f52c0cbfa7d7ac9cbf62a53d0e76eee9d64529a4",
+  "sourceCommitSha": "f52c0cbfa7d7ac9cbf62a53d0e76eee9d64529a4",
+  "sourceCommitAt": "2026-09-20T11:28:34Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 192,
@@ -270,7 +270,7 @@
     "Process": 42,
     "SequenceFlow": 558,
     "ProcessNode": 521,
-    "Tool": 54,
+    "Tool": 55,
     "Schema": 63,
     "GraphKind": 20,
     "Directory": 19
@@ -22810,6 +22810,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/glossary-build"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/fsh-cone",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "fsh-cone",
+      "title": "FSH dependency cone",
+      "description": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/fsh-cone.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "igRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "csv",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Write the report as CSV to this path instead of printing it.",
+            "required": false,
+            "arg": {
+              "flag": "--csv"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "cone",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Text",
+            "description": "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/fhir-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/fsh-cone"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/check-dependencies",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-dependencies",
@@ -25727,8 +25779,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "27cc27369321bfaa72f60b2eca65061ebf74b58f",
+    "sha": "76806c5f422d07f4f72ec77d892a9610ed0d1077",
     "pr": "494/merge",
-    "run": "35507599167"
+    "run": "35507942456"
   }
 }
