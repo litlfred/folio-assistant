@@ -248,10 +248,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:25:45.048Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/55f1e70b6026182f4915227813a476adf6277a5c",
-  "sourceCommitSha": "55f1e70b6026182f4915227813a476adf6277a5c",
-  "sourceCommitAt": "2026-09-20T04:23:49Z",
+  "generatedAt": "2026-09-20T05:26:22.405Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4682e8d86f994872efe6613bf68c69f7f545455d",
+  "sourceCommitSha": "4682e8d86f994872efe6613bf68c69f7f545455d",
+  "sourceCommitAt": "2026-09-20T05:24:28Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 170,
@@ -263,7 +263,7 @@
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 30,
-    "Schema": 54,
+    "Schema": 55,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -1680,7 +1680,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/qa-report-signing.md",
-      "instructionLines": 105,
+      "instructionLines": 110,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -18951,7 +18951,7 @@
       "title": "Ingest, with PDF and image extensions",
       "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
       "install": {
-        "cli": "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils"
+        "cli": "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils"
       },
       "invoke": {
         "shell": "bun run scripts/ingest-document.ts"
@@ -20749,6 +20749,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/precision-scalar"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/python-deps",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "python-deps",
+      "title": "The Python packages this repository's scripts need — declared once.",
+      "module": "schemas/python-deps.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/python-deps"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#schema/qa-review",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "qa-review",
@@ -21983,8 +21991,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "d20aa2879c442580017520dfba02bd2762c061f0",
-    "pr": "456/merge",
-    "run": "35489050818"
+    "sha": "014a4558b3e6dffc0def1cd87c136b7be541bd69",
+    "pr": "461/merge",
+    "run": "35491614779"
   }
 }
