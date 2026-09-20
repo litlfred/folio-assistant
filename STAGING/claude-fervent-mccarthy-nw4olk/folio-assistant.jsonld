@@ -255,18 +255,18 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T14:18:38.276Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b5ff39d19dcfe7eb7bd44d2f11ab43f59f32b795",
-  "sourceCommitSha": "b5ff39d19dcfe7eb7bd44d2f11ab43f59f32b795",
-  "sourceCommitAt": "2026-09-20T14:16:58Z",
+  "generatedAt": "2026-09-20T14:53:39.522Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d921428483d14a4563ddde3bdac3789e8160a9bc",
+  "sourceCommitSha": "d921428483d14a4563ddde3bdac3789e8160a9bc",
+  "sourceCommitAt": "2026-09-20T14:52:06Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 198,
+    "Skill": 201,
     "Actor": 27,
     "Capability": 26,
     "Role": 116,
     "Convention": 2,
-    "SkillPackage": 11,
+    "SkillPackage": 12,
     "Process": 49,
     "SequenceFlow": 632,
     "ProcessNode": 599,
@@ -792,6 +792,54 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-publishing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/graph-detanglement",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "graph-detanglement",
+      "title": "Graph detanglement — the practice, not the migration",
+      "description": "Drive a tangled graph toward a clean partition, so a sub-graph can be split off when it grows too large or when a business reason separates it. The staged practice — declare in place, detangle, isolate, extract — with the seventeen moves that were measured rather than argued, and the failures each one cost.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/graph-management"
+      ],
+      "instructionsPath": "skills/graph-management/graph-detanglement.md",
+      "instructionLines": 284,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/graph-detanglement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/edge-kinds-and-blast-radius",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "edge-kinds-and-blast-radius",
+      "title": "Edge kinds and blast radius",
+      "description": "A graph has more than one kind of edge, and conflating them corrupts both the ordering and the impact answer. Interface edges versus implementation edges, the union rule for blast radius, and the split/merge signals — generalized out of the formal-math skills that first stated them.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/graph-management"
+      ],
+      "instructionsPath": "skills/graph-management/edge-kinds-and-blast-radius.md",
+      "instructionLines": 170,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/edge-kinds-and-blast-radius"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/domain-fencing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "domain-fencing",
+      "title": "Domain fencing — keeping one folio's rules out of everybody's platform",
+      "description": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, the one criterion that should use it and does not, and the test for whether a rule generalizes at all.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/graph-management"
+      ],
+      "instructionsPath": "skills/graph-management/domain-fencing.md",
+      "instructionLines": 147,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/domain-fencing"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/scientific-visualization",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "scientific-visualization",
@@ -1039,7 +1087,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/tabular-metadata.md",
-      "instructionLines": 163,
+      "instructionLines": 169,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1501,7 +1549,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 604,
+      "instructionLines": 660,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1596,7 +1644,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/getting-started.md",
-      "instructionLines": 205,
+      "instructionLines": 214,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1660,7 +1708,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 210,
+      "instructionLines": 264,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4567,6 +4615,23 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#capability/git-push"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-document-adapter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/graph-management",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "graph-management",
+      "version": "0.1.0",
+      "description": "How a graph is RESTRUCTURED — detanglement, sub-graph declaration in place, and extraction when a part of it should leave. The complement of kg-navigation, which answers how a graph is READ and has no write, restructure, split or extract operation in it. Split out rather than added to folio-core for the reason the `workflow` package was: folio-core holds 97 skills, and a package that holds everything is one nobody can be pointed at.",
+      "path": "skills/graph-management",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/domain-fencing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/edge-kinds-and-blast-radius",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/graph-management"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/remote-stubs",
@@ -24720,7 +24785,7 @@
           {
             "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Text",
-            "description": "One line per gate, then a pass count or the failures. Exit non-zero on any failure."
+            "description": "One line per gate, then a pass count or the failures. Three exit codes, because two cannot carry the distinction: 0 every gate passed, 1 a gate failed, 2 the gate set could NOT BE DERIVED — the workflow it reads is absent or yields nothing. A caller must not read 2 as either verdict; it matters most downstream, where this Tool is inherited and `.github/workflows/` is not."
           }
         ]
       },
@@ -28346,8 +28411,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "7eae630dcf858d6e89706f14c0f9b377ae2070c4",
+    "sha": "fc9d73e84d3977c0d65cd62c9bcff108dee8c84e",
     "pr": "525/merge",
-    "run": "35516009855"
+    "run": "35517804544"
   }
 }
