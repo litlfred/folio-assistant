@@ -54,11 +54,12 @@
  * @module scripts/check-instance-render
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 import {
   instanceRootFor,
+  declaredKinds,
   readDeclaration,
   repoRootFor,
   type CatHarnessDeclaration,
@@ -119,42 +120,6 @@ export interface InstanceRender {
  * more, and those are equally the instance's. Reading only `harness.json`
  * makes `bean-defs` look like something bootstrap smuggled in.
  */
-export function declaredKinds(root: string, decl: CatHarnessDeclaration): Set<string> {
-  const kinds = new Set<string>();
-  for (const d of decl.directories ?? []) {
-    for (const g of d.graphs ?? []) kinds.add(g);
-    // The nested declaration, if the directory carries one. Its filename is
-    // the directory's own name by convention (`beans/beans.json`), which is
-    // how `beans/` says what its inner nodes are without `harness.json`
-    // restating them.
-    const dirName = basename(d.path.replace(/\/+$/, ""));
-    for (const candidate of [`${dirName}.json`, "graph.json"]) {
-      const p = join(rootForEntry(root, d), candidate);
-      if (!existsSync(p)) continue;
-      try {
-        const nested = JSON.parse(readFileSync(p, "utf-8")) as {
-          directories?: Array<{ graphs?: string[]; kinds?: string[] }>;
-        };
-        for (const nd of nested.directories ?? []) {
-          for (const g of [...(nd.graphs ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
-        }
-      } catch {
-        // A nested file that will not parse is not this check's finding to
-        // make — `check:harness-dirs` owns that and says so loudly. Skipping
-        // here would understate `declared` and manufacture an `undeclared`,
-        // so the kinds it would have contributed are simply not added and the
-        // reason is recorded by the caller if it matters.
-      }
-    }
-  }
-  return kinds;
-}
-
-/** Where a declared directory actually is, honouring `scope`. */
-function rootForEntry(root: string, d: { path: string; scope?: string }): string {
-  const base = d.scope === "repository" ? repoRootFor(root) : root;
-  return resolve(base, d.path);
-}
 
 /**
  * Render one instance and judge it.
@@ -264,7 +229,7 @@ export function formatReport(rs: InstanceRender[]): string {
     for (const why of r.reasons) out.push(`      ${why}`);
     if (r.undeclared.length) {
       out.push(
-        `      finding (not fatal): publishes ${r.undeclared.length} kind(s) it does not declare — ` +
+        `      \u2717 publishes ${r.undeclared.length} kind(s) it does not declare — ` +
           `${r.undeclared.join(", ")}`,
       );
     }
@@ -276,9 +241,19 @@ export function formatReport(rs: InstanceRender[]): string {
   const findings = rs.reduce((n, r) => n + r.undeclared.length, 0);
   out.push(`${rs.length - failed - undet} rendered, ${failed} failed, ${undet} undetermined.`);
   if (findings) {
+    // FATAL since bean `3jj9`. The line here used to read "reported and not
+    // fatal … they become fatal when collectGraphKinds() is instance-scoped
+    // and the count reaches zero — bean z4mq". Both halves have happened:
+    // `collectGraphKinds` takes a root and filters by `declaredKinds`, and
+    // the count is zero across every instance in this repository.
+    //
+    // The repository's standing rule is that a check is an error only once
+    // its count is zero, and the corollary is that it should become one THEN
+    // rather than later — a finding left advisory after it is clearable is
+    // how the next instance quietly reacquires it.
     out.push(
-      `${findings} undeclared-kind finding(s), reported and not fatal. They become fatal when ` +
-        `collectGraphKinds() is instance-scoped and the count reaches zero — bean z4mq.`,
+      `${findings} instance(s) publish a graph kind they do not declare. An instance that ` +
+        `advertises a vocabulary it cannot reach is a type that does not dereference.`,
     );
   }
   if (undet) out.push("undetermined is NOT a pass — an unreadable instance has not been shown to render.");
@@ -295,6 +270,14 @@ if (import.meta.main) {
   const reports = await Promise.all(roots.map((r) => renderInstance(r)));
   console.log(process.argv.includes("--json") ? JSON.stringify(reports, null, 2) : formatReport(reports));
   if (reports.some((r) => r.verdict === "failed")) process.exit(1);
+  // Bean `3jj9`: fatal now that the count is zero. See the report text above
+  // for why it was advisory until this change, and why leaving it advisory
+  // after it became clearable is how the defect returns.
+  if (reports.some((r) => r.undeclared.length > 0)) process.exit(1);
   if (reports.some((r) => r.verdict === "undetermined")) process.exit(2);
   process.exit(0);
 }
+
+// Re-exported for callers that already import it from here (bean `3jj9`
+// moved the implementation to the declaration reader to break a cycle).
+export { declaredKinds };
