@@ -5699,19 +5699,22 @@
           "name": "visualiser",
           "type": "z.string().min(1).optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "The page that renders this subgraph, **relative to the REPOSITORY root**"
         },
         {
           "name": "docs",
           "type": "z.string().min(1).optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}."
         },
         {
           "name": "skill",
           "type": "z.string().min(1).optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "The skill that governs it, by NAME rather than by path, so no base applies."
         },
         {
           "name": "serialisations",

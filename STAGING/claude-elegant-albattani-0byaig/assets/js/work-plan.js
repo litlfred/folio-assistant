@@ -251,6 +251,75 @@
     return rows;
   }
 
+  /**
+   * The epic the dashboard is currently scoped to, or "" for everything.
+   *
+   * Module state rather than a parameter threaded through six functions,
+   * because every panel has to agree on it: the dataviz rule is that filters
+   * scope EVERYTHING below them, so a panel that kept its own copy is a panel
+   * free to disagree with the chart above it.
+   */
+  var SCOPE = "";
+  /** Every bean, so an expanded epic can list its children without refetching. */
+  var ALL_BEANS = [];
+  /** Re-render inputs, kept so a scope change does not refetch. */
+  var BOARD = null;
+
+  /** The OPEN, non-epic beans belonging to one epic. */
+  function beansOfEpic(beans, epicId) {
+    var out = [];
+    for (var i = 0; i < beans.length; i++) {
+      var b = beans[i];
+      if (b.parent !== epicId || b.type === "epic") continue;
+      if (!WORKPLAN_OPEN[b.status]) continue;
+      out.push(b);
+    }
+    // In-progress first — it is what somebody is actually holding — then by
+    // id, which is stable. Sorting by title would reorder on a rename.
+    out.sort(function (x, y) {
+      if ((x.status === "in-progress") !== (y.status === "in-progress")) {
+        return x.status === "in-progress" ? -1 : 1;
+      }
+      return x.id < y.id ? -1 : x.id > y.id ? 1 : 0;
+    });
+    return out;
+  }
+
+  /**
+   * The beans a scoped view is about: the epic itself plus its children.
+   *
+   * The epic is INCLUDED, so the counts under a scope add up to something a
+   * reader can reconcile with the bar they clicked plus the epic row itself.
+   */
+  function inScope(beans) {
+    if (!SCOPE) return beans;
+    var out = [];
+    for (var i = 0; i < beans.length; i++) {
+      if (beans[i].id === SCOPE || beans[i].parent === SCOPE) out.push(beans[i]);
+    }
+    return out;
+  }
+
+  /** One bean, as a row inside an expanded epic. */
+  function beanRow(b) {
+    var li = el("li", { class: "fa-workplan-bean-row" });
+    var href = viewHref(b.file);
+    var name = href
+      ? el("a", { class: "fa-workplan-bean-link", href: href }, b.title)
+      : el("span", { class: "fa-workplan-bean-link" }, b.title);
+    li.appendChild(el("span", {
+      class: "fa-workplan-bean-status is-" + b.status,
+    }, b.status === "in-progress" ? "in progress" : b.status));
+    li.appendChild(name);
+    // A blocked bean says so here rather than only in the findings panel: the
+    // reader who opened this epic is asking what is in it, and "blocked" is
+    // the first thing that changes what they do about it.
+    if (b.blockedBy && b.blockedBy.length) {
+      li.appendChild(el("span", { class: "fa-workplan-bean-blocked" }, "blocked"));
+    }
+    return li;
+  }
+
   /** The bar chart: one row per epic, label and value as text on every row. */
   function epicChart(rows) {
     var fig = el("figure", { class: "fa-workplan-chart" });
@@ -266,27 +335,74 @@
     for (var i = 0; i < rows.length; i++) {
       var row = rows[i];
       var li = el("li", { class: "fa-workplan-bar-row" });
-      // The epic's own title, in full, in the `title` attribute: the visible
-      // label is clamped to two lines and these run long.
+      var panelId = "fa-wp-epic-" + row.id;
+
+      // THE WHOLE BAR IS THE CONTROL, and it is a <button>.
       //
-      // A LINK when the epic's file is known. A bar chart whose rows name
-      // something you cannot open is a picture of a work plan rather than a
-      // way into one — and the epic is the row a reader most wants to follow,
-      // because it is where the 19 beans behind the bar actually are.
-      var href = viewHref(row.file);
-      var label = href
-        ? el("a", { class: "fa-workplan-bar-label", href: href, title: row.title }, row.title)
-        : el("span", { class: "fa-workplan-bar-label", title: row.title }, row.title);
+      // It used to be an <a> on the title alone, underlined only on :hover —
+      // so the one control on this chart was invisible until a pointer landed
+      // on it, on an instance that declares a low-dexterity interaction
+      // profile. A button also gives the row keyboard focus and a hit target
+      // the width of the panel, which `interaction.md` asks for ("the hit
+      // target is bigger than the mark").
+      //
+      // The epic's link moves INTO the disclosure below rather than nesting an
+      // <a> inside a <button>, which is invalid and which no browser agrees
+      // how to focus.
+      var toggle = el("button", {
+        type: "button",
+        class: "fa-workplan-bar-toggle",
+        "aria-expanded": "false",
+        "aria-controls": panelId,
+        title: row.title,
+      });
+      toggle.appendChild(el("span", { class: "fa-workplan-bar-label" }, row.title));
       var track = el("span", { class: "fa-workplan-bar-track" });
       var fill = el("span", { class: "fa-workplan-bar-fill" });
       // Percent of the LARGEST bar, not of the total: this is a magnitude
       // comparison between epics, not a part-to-whole.
       fill.style.width = Math.max(2, Math.round((row.count / max) * 100)) + "%";
       track.appendChild(fill);
-      var value = el("span", { class: "fa-workplan-bar-value" }, String(row.count));
-      li.appendChild(label);
-      li.appendChild(track);
-      li.appendChild(value);
+      toggle.appendChild(track);
+      toggle.appendChild(el("span", { class: "fa-workplan-bar-value" }, String(row.count)));
+
+      var panel = el("div", { class: "fa-workplan-bar-detail", id: panelId });
+      panel.hidden = true;
+      var actions = el("div", { class: "fa-workplan-bar-actions" });
+      var epicHref = viewHref(row.file);
+      if (epicHref) {
+        actions.appendChild(el("a", { class: "fa-workplan-action", href: epicHref },
+                               "Open the epic"));
+      }
+      // The filter, reached from inside the thing it filters. Offering it as a
+      // second control ON the bar would make one row two targets that look
+      // alike; here the reader has already said which epic they mean.
+      var scopeBtn = el("button", { type: "button", class: "fa-workplan-action" },
+                        "Show only this epic");
+      scopeBtn.setAttribute("data-scope", row.id);
+      actions.appendChild(scopeBtn);
+      panel.appendChild(actions);
+
+      var kids = beansOfEpic(ALL_BEANS, row.id);
+      if (kids.length) {
+        var ul = el("ul", { class: "fa-workplan-bean-list" });
+        for (var k = 0; k < kids.length; k++) ul.appendChild(beanRow(kids[k]));
+        panel.appendChild(ul);
+      } else {
+        // Not zeros: an epic whose bar has a count but no listable children
+        // would be a contradiction, so say which it is.
+        panel.appendChild(el("p", { class: "fa-workplan-bean-empty" },
+                              "No open beans name this epic as their parent."));
+      }
+
+      if (SCOPE === row.id) {
+        li.className += " is-scoped";
+        // Announced, not only painted: a reader who cannot see the accent
+        // rule still gets told which bar the board is scoped to.
+        toggle.setAttribute("aria-current", "true");
+      }
+      li.appendChild(toggle);
+      li.appendChild(panel);
       list.appendChild(li);
     }
     fig.appendChild(list);
@@ -465,6 +581,102 @@
    * projection is missing, still gets a working link to the file rather than
    * an empty box.
    */
+  /**
+   * The filter row: what the board is scoped to, and the way out of it.
+   *
+   * ONE ROW, ABOVE THE PANELS — `interaction.md`: filters sit above the
+   * content they scope, never inside a chart card. Absent entirely when
+   * nothing is scoped, because a control reading "all" is a permanent row of
+   * chrome saying nothing happened.
+   */
+  function filterRow(epic) {
+    var row = el("div", { class: "fa-workplan-filter" });
+    row.appendChild(el("span", { class: "fa-workplan-filter-label" }, "Showing only"));
+    row.appendChild(el("span", { class: "fa-workplan-filter-value" },
+                       epic ? epic.title : SCOPE));
+    var clear = el("button", { type: "button", class: "fa-workplan-action" },
+                   "Show everything");
+    clear.setAttribute("data-scope", "");
+    row.appendChild(clear);
+    return row;
+  }
+
+  /**
+   * Build the board for the current SCOPE. Re-entrant: a scope change calls
+   * this again over the same data rather than refetching.
+   */
+  function buildBoard() {
+    var beans = BOARD.beans;
+    var board = el("div", { class: "fa-workplan-board" });
+
+    if (beans) {
+      var scoped = inScope(beans);
+      if (SCOPE) {
+        var epic = null;
+        for (var i = 0; i < beans.length; i++) if (beans[i].id === SCOPE) epic = beans[i];
+        board.appendChild(filterRow(epic));
+      }
+      // Counts and findings take the SCOPED set so every number on the page
+      // answers the same question. `findingsPanel` still gets the full bean
+      // array for its id lookup — `linkify` has to resolve a blocker that
+      // lives outside the scope, or the sentence loses its link.
+      board.appendChild(countsPanel(scoped, SCOPE ? undefined : BOARD.todos));
+      var findings = BOARD.findings;
+      if (SCOPE) {
+        findings = findings.filter(function (f) {
+          for (var j = 0; j < scoped.length; j++) if (scoped[j].id === f.bean) return true;
+          return false;
+        });
+      }
+      board.appendChild(findingsPanel(beans, findings));
+      // The chart keeps EVERY bar under a scope rather than collapsing to the
+      // one selected. `color-formula.md`: a filter that changes the series
+      // count must not repaint the survivors — and a one-bar chart would also
+      // remove the way back to the others.
+      var chartPanel = el("section", { class: "fa-workplan-panel fa-workplan-panel--wide" });
+      chartPanel.appendChild(epicChart(epicDistribution(beans)));
+      board.appendChild(chartPanel);
+    } else {
+      board.appendChild(todoOnlyPanel(BOARD.todos));
+    }
+    return board;
+  }
+
+  /** Swap the board in place, preserving nothing but the scope. */
+  function renderBoard(host) {
+    host.textContent = "";
+    host.appendChild(buildBoard());
+  }
+
+  /**
+   * One delegated listener for the whole board, because the board is replaced
+   * wholesale on every scope change and per-node listeners would be re-bound
+   * each time — or, worse, leak against nodes that are gone.
+   */
+  function wireBoard(host) {
+    host.addEventListener("click", function (ev) {
+      var scoper = ev.target.closest ? ev.target.closest("[data-scope]") : null;
+      if (scoper) {
+        SCOPE = scoper.getAttribute("data-scope");
+        renderBoard(host);
+        // Focus lands where the reader was looking. Without this, replacing
+        // the board drops focus to <body> and a keyboard user restarts at the
+        // top of the document.
+        var back = host.querySelector(SCOPE
+          ? ".fa-workplan-filter .fa-workplan-action"
+          : ".fa-workplan-bar-toggle");
+        if (back) back.focus();
+        return;
+      }
+      var toggle = ev.target.closest ? ev.target.closest(".fa-workplan-bar-toggle") : null;
+      if (!toggle) return;
+      var open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", open ? "false" : "true");
+      var panel = document.getElementById(toggle.getAttribute("aria-controls"));
+      if (panel) panel.hidden = open;
+    });
+  }
+
   function mountWorkPlan() {
     var host = document.querySelector("[data-fa-workplan]");
     if (!host) return;
@@ -481,24 +693,19 @@
         repoWeb = (beanDoc && beanDoc.repoWeb) || (todoDoc && todoDoc.repoWeb) || "";
 
         var todoItems = todoDoc === undefined ? undefined : (todoDoc ? todoDoc.items : null);
-        var board = el("div", { class: "fa-workplan-board" });
 
-        if (beanDoc) {
-          var beans = beanDoc.items;
-          var findings = Array.isArray(beanDoc.findings) ? beanDoc.findings : [];
-          board.appendChild(countsPanel(beans, todoItems));
-          board.appendChild(findingsPanel(beans, findings));
-          var chartPanel = el("section", { class: "fa-workplan-panel fa-workplan-panel--wide" });
-          chartPanel.appendChild(epicChart(epicDistribution(beans)));
-          board.appendChild(chartPanel);
-        } else {
-          // A todos-only page. The bean panels are not stubbed out with zeros:
-          // this page was never asked about beans, and a zero is an answer.
-          board.appendChild(todoOnlyPanel(todoItems));
-        }
+        // A todos-only page keeps `beans` null, and `buildBoard` renders the
+        // todo panel alone. The bean panels are NOT stubbed out with zeros:
+        // this page was never asked about beans, and a zero is an answer.
+        ALL_BEANS = beanDoc ? beanDoc.items : [];
+        BOARD = {
+          beans: beanDoc ? beanDoc.items : null,
+          todos: todoItems,
+          findings: beanDoc && Array.isArray(beanDoc.findings) ? beanDoc.findings : [],
+        };
 
-        host.textContent = "";
-        host.appendChild(board);
+        renderBoard(host);
+        wireBoard(host);
       });
     });
   }
