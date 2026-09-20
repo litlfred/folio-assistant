@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/skills/content-author/output.schema.json",
+  "title": "Content Author Output",
+  "description": "Output schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "artifacts"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "ready-for-validation"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/sleepy-babbage-ls90iz",
+    "sha": "f137d51fe1bd188b130f5cd8f795d223c225b84a",
+    "pr": "514/merge",
+    "run": "35512095210"
+  }
+}
