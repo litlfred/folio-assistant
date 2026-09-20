@@ -146,3 +146,22 @@ them I tried to resolve by measurement and could not:
 
 Not guessed at, because each changes what gets built. Asked as one question
 with the other two counted, per `interaction-modality` §4.1.
+
+_2026-09-20_ — **The implementation half is MERGED** in [#481](https://github.com/litlfred/folio-assistant/pull/481)
+(`5fe9b498`): the four tests pinning the inheritance, and the contrast proving
+they discriminate.
+
+**Kept open because a question is still the owner's, not because work remains.**
+Two, and the first has been measured:
+
+1. **"as state" vs "not as state"** — my reading was *committed vs gitignored*,
+   and that is **falsified**: both are fully tracked. Nothing in
+   `ContentDirectory` or `GraphKindDef` carries the notion. Also *"KG-Content"*,
+   which appears nowhere in the repository.
+2. **Where `uploads/` lives** turned out to be a live question and is now
+   answered, but NOT by this bean and not by changing its scope. Measured
+   2026-09-20: giving `uploads` `scope: "repository"` turns **6 tests red**,
+   three of them this bean's own inheritance guarantee. The root got its own
+   `harness.json` instead (`889e003012`), which leaves every property here
+   intact. `qmjh` carries the schema distinction that would let a declaration
+   say this directly.
