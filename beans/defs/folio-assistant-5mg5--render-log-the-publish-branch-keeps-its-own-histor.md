@@ -78,6 +78,10 @@ pull requests — is how that gap looks from the far side.
       `rendered STAGING/claude-sleepy-babbage-ls90iz`, read back with
       `render-log.ts --read` (exit 0, 1 entry, 0 skipped). The wiring is not
       inferred from tests; it ran.
+- [x] **append-only observed in production**, which is the property the whole
+      design turns on. A second deploy (run 35498171281, 07:57:32Z) left BOTH
+      entries standing — two separate workflow runs pushing to the same branch,
+      the first not overwritten. `--read` exit 0, 2 entries, 0 skipped.
 - [ ] merged
 - [ ] the agent-memory entry, once there is room — bean `lnpe`. A six-line
       node evicted a TRAP from BOTH `ci-health-watcher` and
