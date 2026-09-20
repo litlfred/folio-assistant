@@ -185,6 +185,12 @@ const RULES: Rule[] = [
       // claim is in the published tree. Harness-level for the same reason — a
       // Tool node and a built site, no folio needed to have anything to do.
       "scripts/check-maintained-artefacts.ts", // every `maintains` claim is actually published
+      // Third question about the same built tree, and harness-level for the same
+      // reason: it asks whether the markdown converter refused a block of HTML
+      // and escaped it, which is a property of the RENDER PIPELINE, not of any
+      // folio's subject matter. It imports nothing but `node:fs` — a folio could
+      // not make it answer differently.
+      "scripts/check-escaped-markup.ts",     // no page publishes a block tag as visible text
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file

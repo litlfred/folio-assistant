@@ -126,7 +126,25 @@
              {%- endif -%}
              {%- if st.text.scale %}--fa-text-scale:{{ st.text.scale }};{% endif -%}
              {%- if st.text.align %}--fa-text-align:{{ st.text.align }};{% endif -%}
-           "{% endif -%}
+           {%- comment -%}
+             NO `-%}` HERE. The right-strip eats this newline and its indent, so
+             the `style` attribute's closing quote lands directly against the
+             next attribute: `--fa-text-scale:0.74;"aria-labelledby=`. That is
+             not a cosmetic slip — an opening tag with no whitespace between two
+             attributes is unparseable, and `index.md` is MARKDOWN, so Kramdown
+             stops recognising the block as HTML and escapes the whole of it.
+             The published page carried `&lt;article class="fa-sticky …"` as
+             visible text with `&lt;/article&gt;` to match: 3 escaped, 0 real,
+             every `.fa-landing-sticky--fixed` rule dead and the raw tag printed
+             on screen. Measured on the built site, not argued from the template
+             — which is how it shipped, because the template IS correct HTML and
+             only the build shows what Kramdown did to it.
+
+             The `has_art == false` branch has the same hazard: with the strip,
+             `data-fa-sticky-theme="…"` welds to `aria-labelledby` just as
+             readily. One `endif` without the dash fixes both.
+           {%- endcomment -%}
+           "{% endif %}
            aria-labelledby="fa-sticky-{{ st.id }}-summary">
     {%- if has_art -%}
     {%- comment -%}
