@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T06:52:21Z
-updated_at: 2026-09-20T12:46:32Z
+updated_at: 2026-09-20T13:06:15Z
 parent: folio-assistant-ahvw
 ---
 
@@ -76,6 +76,26 @@ Both existing diagrams now declare their jobs (`feature-staging` 3,
 `upstream-pin-watch` 1), so coverage here is 2/2 verified rather than 2/2
 asserted. 41 tests in `workflow-coverage.test.ts`.
 
+## The six, classified before drawing — four carry information, two carry drift detection
+
+Read all six first, because a diagram is only worth having if it says
+something the YAML does not:
+
+| workflow | shape | why a diagram |
+|---|---|---|
+| `docs-site` (432 ln) | regenerate ×5 → build → verify tree → **restore open PRs' previews** → publish → **verify they survived** | the `plj1` shape, invisible without reading all 432 lines |
+| `ci-health` (164 ln) | three-state verdict → 4 exclusive branches, incl. *refuse to report success on an unchecked repo* | a real gateway |
+| `health-check` (209 ln) | same three-state shape, plus `if: always()` artefact upload | gateway + compensation |
+| `code-quality-gates` (686 ln) | 5 **independent parallel** jobs, one holding ~30 sequential gates | the parallelism is not otherwise visible |
+| `jsonld-gen-check` (102 ln) | one job, 5 sequential `--check` steps | **no exposition** — see below |
+| `atomic-mass-gen-check` (47 ln) | one job: regenerate, diff | **no exposition** — see below |
+
+The last two would be a box with an arrow, and padding them out would be the
+drift cost with none of the benefit. **They earn a diagram for a different
+reason**: without one they carry no `<folio:job>`, so if either gains a job
+nobody is told. That is drift detection rather than exposition, and each says
+so in its own documentation rather than pretending otherwise.
+
 ## Still open — the six diagrams
 
 `atomic-mass-gen-check`, `ci-health`, `code-quality-gates`, `docs-site`,
@@ -92,3 +112,4 @@ A person can see the shape of every workflow that runs here without reading its 
 
 - [x] a workflow that changes shape without its diagram changing fails
 - [ ] the six uncovered auto-triggering workflows carry a diagram
+      (1/6: `docs-site-publish.bpmn`)

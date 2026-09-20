@@ -1,0 +1,79 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_DocsSite",
+    "path": "skills/workflows/docs-site-publish.bpmn"
+  },
+  "source_hash": "sha256:f2fac50efaa1387e69f1ef6eb9fd700729065c32ead8053a3e8aa1f05f13ccbe",
+  "criteria": {
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Regenerate",
+          "detail": "needs skill \"placement\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Build",
+          "detail": "\"Build the Jekyll site&#10;and the API reference\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
+        },
+        {
+          "where": "Task_Export",
+          "detail": "\"Export the knowledge graph&#10;and its schema\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
+        },
+        {
+          "where": "Task_Publish",
+          "detail": "\"Publish to gh-pages&#10;(FULL REPLACE)\" names no skill. Give it <folio:skill ref=\"…\"/>, or, if none could exist, declare <folio:no-skill reason=\"…\"/> saying why."
+        }
+      ]
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 2,
+    "n/a": 4,
+    "unknown": 0
+  }
+}

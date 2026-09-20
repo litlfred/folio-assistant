@@ -175,6 +175,7 @@ workflow's jobs and reading as complete.
 |---------|---------|
 | `feature-staging.bpmn` | The lifecycle of a review preview: staged on a push, taken down on a close, or removed by an explicit dispatch. **Both gateways are three-state** — a merge confirms a removal on its own while a close without one still needs the label (bean `1feu`), and the dispatch preflight refuses on a live signal AND on could-not-tell. Every path that changes `STAGING/` writes to the render log, and the two removal paths write the record in the SAME commit as the removal |
 | `upstream-pin-watch.bpmn` | Also `upstream-pins.yml` — see **Upstream dependencies** below. The declaration was added when the coverage check was written; the diagram already documented that workflow step for step |
+| `docs-site-publish.bpmn` | Publishing `gh-pages` is a **full replace**, so anything on that branch this build did not produce is gone unless something puts it back — bean `plj1`, every open PR's preview deleted by an unrelated merge, silently, for months. The restore and the after-the-fact verification are a **pair**: a restore nobody checks is one that can quietly stop working, which is how the original defect lasted. Both gateways refuse rather than warn, and the second is three-state |
 
 **The publish branch** — what is on `gh-pages`, and what happened to it. The
 branch has six publishers and one of them is a full replace, so "the preview
