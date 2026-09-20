@@ -20,8 +20,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { ENTRY_NAMES, findEntryFiles } from "../check-agent-entry-links.js";
-import { parseLinks } from "../../content/pipeline/readme-links.js";
-import { runReadmeAudit } from "../../content/pipeline/readme-links.js";
+import { auditMarkdownFile, parseLinks } from "../../src/core/markdown-links.js";
+import { publishTargets } from "../../src/core/git-refs.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const REPO = repoRootFor(resolve(import.meta.dir, "..", ".."));
@@ -51,7 +51,7 @@ describe("`@path` is a link — the stub's only reference", () => {
   test("a BROKEN @import is reported dead, with the path named", () => {
     const root = mkdtempSync(join(tmpdir(), "entry-"));
     writeFileSync(join(root, "stub.md"), "# X\n\n@MISSING.md\n");
-    const r = runReadmeAudit({ root, file: join(root, "stub.md") });
+    const r = auditMarkdownFile({ root, file: join(root, "stub.md"), publishRef: "gh-pages" });
     expect(r.exitCode).toBe(1);
     expect(r.text).toContain("MISSING.md");
   });
@@ -60,7 +60,7 @@ describe("`@path` is a link — the stub's only reference", () => {
     const root = mkdtempSync(join(tmpdir(), "entry-ok-"));
     writeFileSync(join(root, "AGENTS.md"), "# A\n");
     writeFileSync(join(root, "stub.md"), "# X\n\n@AGENTS.md\n");
-    expect(runReadmeAudit({ root, file: join(root, "stub.md") }).exitCode).toBe(0);
+    expect(auditMarkdownFile({ root, file: join(root, "stub.md"), publishRef: "gh-pages" }).exitCode).toBe(0);
   });
 });
 
@@ -106,7 +106,7 @@ describe("this repository, right now", () => {
 
   test.each(ENTRY_NAMES.map((n) => [n]))("%s at the root has no dead links", (name) => {
     const file = join(REPO, name as string);
-    const r = runReadmeAudit({ file });
+    const r = auditMarkdownFile({ root: REPO, file, ...publishTargets(REPO) });
     // exit 2 is "no such file", which is fine for a stub a folio may not have;
     // what must never happen is a dead link in one that exists.
     expect(r.exitCode === 0 || r.exitCode === 2).toBe(true);

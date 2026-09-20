@@ -484,6 +484,7 @@ const RULES: Rule[] = [
       // as well as by dependency: it reads THIS repository's `AGENTS.md`
       // against THIS repository's source, and a folio has neither as content.
       "scripts/check-agents-claims.ts",
+      "scripts/check-agent-entry-links.ts",
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
       "scripts/check-declared-paths.ts",
@@ -724,16 +725,6 @@ const RULES: Rule[] = [
     repo: "core",
     triaged: true,
     exact: [
-      // A thin wrapper over `content/pipeline/readme-links.ts`, and classified
-      // WITH IT rather than by its own subject — which is `AGENTS.md`, and so
-      // harness. The edge the partition caught is real and is not this
-      // script's: a generic markdown-link auditor lives wholly in core, so ANY
-      // harness-level link check inherits a wrong-direction edge from it.
-      // Lifting the generic half of that auditor is a re-layering of somebody
-      // else's module and a larger change than the bean that found it
-      // (`v8gh`); recorded as bean `cp3l`. Until then this ships where its
-      // dependency ships.
-      "scripts/check-agent-entry-links.ts",
       "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
       // Statement-level hashing for `.lean` files, by the same test: the
       // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in
