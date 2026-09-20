@@ -1083,6 +1083,16 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * `dependents` did the day it landed. See {@link SubgraphCoverageSchema}.
    */
   coverage?: SubgraphCoverage;
+
+  /**
+   * Which theme this subgraph renders on — one answer for every surface that
+   * renders it (navbar section, board panel, sticky).
+   *
+   * Absent means the instance's own theme. See {@link ContentDirectorySchema}
+   * for why it lives on the directory and why the methodologies take
+   * `analyst`.
+   */
+  theme?: string;
 }
 
 /** An instance's root declaration. */
@@ -1323,6 +1333,42 @@ export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
+  /**
+   * Which theme this subgraph renders on.
+   *
+   * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies
+   * (CRDM, MADR, SDLC, etc.)"*, with *"use judgement"* on how.
+   *
+   * ## Why the DIRECTORY carries it
+   *
+   * A theme was previously declarable in two places — a sticky
+   * (`StickyContribution.theme`) and, since bean `5y4b`, a todo. Neither
+   * answers "what does this SUBGRAPH look like", which is the question a
+   * per-instance navbar section and a board panel both ask (`603s`, `6lb8`).
+   * Putting it on the directory means one methodology declares its theme once
+   * and every surface that renders the methodology agrees, instead of each
+   * surface deciding separately and drifting.
+   *
+   * ## Judgement applied: the methodologies take `analyst`, and nothing else does
+   *
+   * `methodologies`, `methodology-crdm`, `methodology-raci` and
+   * `smart-kg-methodologies` — the four directories that hold or index a
+   * methodology. MADR and SDLC are named in the instruction and do not exist
+   * yet; they inherit the answer when they are declared, which is the point of
+   * writing it on the directory rather than per page.
+   *
+   * Not applied to the rest. A theme on every directory would make the field
+   * mean nothing, and this repository's own rule is that a distinction which
+   * fires on every subject is not a distinction.
+   *
+   * ## Open string, like every other theme reference here
+   *
+   * Closing the enum means importing the theme table into the declaration
+   * reader, and that reader is what the site build, the gates and every
+   * consumer of a `harness.json` go through. An unknown theme is a rendering
+   * finding, not a parse error.
+   */
+  theme: z.string().min(1).optional(),
 });
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
