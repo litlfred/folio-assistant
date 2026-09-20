@@ -238,14 +238,39 @@ describe("every path that publishes or removes a preview also LOGS it", () => {
     },
   );
 
-  test("the removal and its record are ONE commit, in both removal paths", () => {
+  test("the change and its record are ONE commit, on EVERY path", () => {
     // A separate log push can fail on its own and leave a preview that
-    // vanished with nothing saying why — the exact state bean `plj1` left the
-    // branch in. Staging them together is what makes that impossible.
-    for (const job of ["cleanup", "cleanup-dispatch"]) {
+    // vanished — or appeared — with nothing saying why, the exact state bean
+    // `plj1` left the branch in. Staging them together is what makes that
+    // impossible.
+    //
+    // `stage` joined this list on 2026-09-20 (beans `85im` + `bm6d`). It used
+    // to deploy with `peaceiris/actions-gh-pages` and then push the log in a
+    // SECOND commit ten seconds later, which cancelled Pages' own build on 6
+    // of the last 10 measured deploys. The reason it could not be one commit
+    // was `85im`: the action copies `publish_dir` over a fresh clone, so an
+    // entry read at checkout time and written at deploy time overwrites
+    // whatever landed in between — and `render-log.ts` appends, never
+    // read-modify-writes, for exactly that reason.
+    for (const job of ["stage", "cleanup", "cleanup-dispatch"]) {
       const runs = runsOf(job);
       expect(runs).toMatch(/git (?:-C pages )?add -A "STAGING\/\$\w+" _render-log/);
     }
+  });
+
+  test("`stage` clears the slug's directory — a preview can show a REMOVAL", () => {
+    // Bean `85im`. `keep_files: true` was REQUIRED to stop a deploy wiping
+    // every sibling branch's preview (`plj1`), and the same flag protected
+    // this branch's dead files, so a preview was structurally incapable of
+    // answering "did my deletion take effect?". The action offers no
+    // path-scoped clear: `keep_files`, `force_orphan` and `exclude_assets`
+    // are all branch-wide. `rm -rf` on one slug is the thing it cannot say.
+    const runs = runsOf("stage");
+    expect(runs).toMatch(/rm -rf "pages\/STAGING\/\$SLUG"/);
+    expect(runs).toContain('cp -rT ./_site "pages/STAGING/$SLUG"');
+    // And the guard, because this is now a job that runs `rm -rf` on a
+    // branch-derived value.
+    expect(runs).toContain('case "$SLUG" in');
   });
 
   test("a removal names a reason — the tool refuses without one", () => {

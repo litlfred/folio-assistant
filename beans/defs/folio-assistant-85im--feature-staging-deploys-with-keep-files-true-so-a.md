@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-19T13:19:51Z
-updated_at: 2026-09-20T16:11:38Z
+updated_at: 2026-09-20T16:19:31Z
 parent: folio-assistant-1xhc
 ---
 
@@ -51,9 +51,9 @@ Nothing was deleted from `gh-pages`. `deletion-requires-confirmation` applies, a
 
 ## Done when
 
-- [ ] A staging deploy for a branch reflects **deletions** as well as additions, without touching any other branch's `STAGING/<slug>/`.
-- [ ] Whatever mechanism is chosen is path-scoped by construction rather than by a flag the action does not offer — the likely shape is an explicit clone + `rm -rf STAGING/<slug>` + copy + push, which `feature-staging.yml` already does in its cleanup job (lines ~583, ~763), so the primitive exists in this file.
-- [ ] The tradeoff is written down where the next person meets it: `docs-site.yml`'s comment states one end, this states the other, and neither currently points at the other.
+- [x] A staging deploy for a branch reflects **deletions** as well as additions, without touching any other branch's `STAGING/<slug>/`.
+- [x] Whatever mechanism is chosen is path-scoped by construction rather than by a flag the action does not offer — the likely shape is an explicit clone + `rm -rf STAGING/<slug>` + copy + push, which `feature-staging.yml` already does in its cleanup job (lines ~583, ~763), so the primitive exists in this file.
+- [x] The tradeoff is written down where the next person meets it: `docs-site.yml`'s comment states one end, this states the other, and neither currently points at the other.
 - [ ] Something notices. A green deploy that serves a removed page is the `xom7` shape; a check that the staged tree matches the built `_site` tree would close it, and is cheap because both are available in the same job.
 
 ---
@@ -109,3 +109,71 @@ every deletion. That is worth more than a wasted Pages build.
 The cost is unchanged and still real: hand-rolled git in the deploy path of
 every session's preview, **untestable from a checkout**. That is a decision for
 the author, not for me, and it is the question being brought back.
+
+---
+
+## Fixed 2026-09-20 — `feature-staging.yml`'s `stage` job, with `bm6d`, in one change
+
+The author authorised shipping it **untested against a live deploy**, with the
+cost named: hand-rolled git in the deploy path of every session's preview, and
+the first real exercise of it is the PR that carries it.
+
+What the three `peaceiris/actions-gh-pages` steps (attempt + two retries) and
+the separate render-log commit became, in `stage`:
+
+```
+checkout gh-pages -> pages/
+for attempt in 1..5:
+  fetch --depth=1 origin gh-pages; reset --hard FETCH_HEAD; clean -fd
+  rm -rf   pages/STAGING/$SLUG          <- ALL of 85im
+  mkdir -p pages/STAGING/$SLUG
+  cp -rT ./_site pages/STAGING/$SLUG
+  render-log.ts --dir pages --event rendered ...
+  git add -A "STAGING/$SLUG" _render-log
+  git commit                             <- ONE commit; all of bm6d
+  git push || backoff(2**attempt, jittered) and REBUILD
+```
+
+Three properties the shape buys, each of which was a defect:
+
+- **Path-scoped by construction.** `rm -rf` on one slug is precisely what
+  `keep_files` / `force_orphan` / `exclude_assets` cannot express, all three
+  being branch-wide. No sibling `STAGING/` directory is touched, because the
+  loop only ever writes two paths.
+- **The loop REBUILDS rather than rebases.** Each attempt resets to the current
+  remote and redoes both the copy and the append, so the entry is appended to
+  the log as it stands *now*. A rebase would replay a stale append and can
+  conflict; this cannot. This is why "stage both and keep the action" was
+  rejected: the action copies `publish_dir` over a fresh clone, so an entry
+  read at checkout time and written at deploy time overwrites whatever landed
+  in between — `render-log.ts` appends and never read-modify-writes for exactly
+  that reason, and trading a wasted build for a lost record of a deleted
+  preview is `plj1` a second time.
+- **Backoff doubles with jitter**, per the owner's rule of 2026-09-20 and
+  `cat-harness/skills/folio-core/retry-backoff.md`. Five other workflows push
+  this ref; the jitter is the part that matters, not the doubling.
+
+**One behaviour deliberately changed.** The log step used to be
+`continue-on-error: true`, on the reasoning that a preview whose entry did not
+land was a gap in the record rather than a failed deploy. They are one commit
+now, so that state cannot occur, and the flag is gone. The cost is that a fault
+in the logging fails the deploy — which is the right way round: `plj1` is what
+an unlogged change to this branch costs.
+
+### What now notices — the fourth `Done when`, which stays open
+
+- `workflow-yaml.test.ts` gained `stage` to the ONE-commit ratchet (was
+  `cleanup` + `cleanup-dispatch`) and a new test asserting the `rm -rf` +
+  `cp -rT` + slug guard. Both are in `bun run gates`.
+- `check-workflows.ts` reads the loop as a retry structurally
+  (`for attempt` + `fetch`), so the `gh-pages-ungrouped` check still covers
+  `stage` after the action left. Verified, not assumed: the check runs clean.
+
+- [ ] **Still open, and the honest state**: the fourth box asked for a check
+      that the STAGED TREE MATCHES the built `_site`. Nothing does that. The
+      tests above assert the workflow's *shape*, which is a weaker claim —
+      they would pass if `cp -rT` silently copied nothing. The reason to leave
+      it open rather than close it: this bean's own history is a mechanism
+      verified structurally and an example that washed out, and a shape test
+      is the same kind of evidence.
+

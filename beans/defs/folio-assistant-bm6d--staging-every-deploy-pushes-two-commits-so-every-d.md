@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-20T11:44:36Z
-updated_at: 2026-09-20T16:00:26Z
+updated_at: 2026-09-20T16:19:31Z
 parent: folio-assistant-1xhc
 ---
 
@@ -62,8 +62,8 @@ workflow pushing twice.
 
 ## Done when
 
-- [ ] A staging deploy produces ONE commit on `gh-pages`.
-- [ ] The cleanup path still records a removal with its reason (it has no
+- [x] A staging deploy produces ONE commit on `gh-pages`.
+- [x] The cleanup path still records a removal with its reason (it has no
       payload to coalesce with, so it must keep working).
 - [ ] Measured after: `cancelled` runs over a comparable window are not caused by
       a repository's own consecutive pushes. Other sessions still contend, so
@@ -183,3 +183,44 @@ every deletion. That is worth more than a wasted Pages build.
 The cost is unchanged and still real: hand-rolled git in the deploy path of
 every session's preview, **untestable from a checkout**. That is a decision for
 the author, not for me, and it is the question being brought back.
+
+---
+
+## Fixed 2026-09-20 — together with `85im`, because they were one defect
+
+The full design, the rejected alternative and the three properties it buys are
+recorded on **`85im`**; this is the half that concerns the double push.
+
+`stage`'s three `peaceiris/actions-gh-pages` attempts and its separate
+`render-log:` commit are gone. The payload and the log entry are staged in the
+same index (`git add -A "STAGING/$SLUG" _render-log`) and land in one commit,
+`staging($SLUG): from $GITHUB_SHA`. One deploy is now one push and one Pages
+build, so the *self*-cancellation this bean measured cannot occur.
+
+**The "check why they are separate" instruction above was the right one and its
+answer was not what it guessed.** The split was not load-bearing for the
+cleanup path — `cleanup` and `cleanup-dispatch` were ALREADY one commit, and
+`workflow-yaml.test.ts` already asserted it. It was load-bearing for the
+*deploy*: the action copies `publish_dir` over a fresh clone, so an entry read
+at checkout time and written at deploy time would overwrite whatever landed in
+between, which `render-log.ts` avoids by appending and never read-modify-writing.
+Coalescing was therefore impossible **while the action stayed**. That is why
+this could only be fixed with `85im` and not before it.
+
+### Ratchets
+
+- `workflow-yaml.test.ts` — `stage` joined the ONE-commit assertion, so a
+  future edit that splits the two steps again fails `bun run gates` rather than
+  quietly halving the deployment rate for another two months.
+
+### The third box stays open, deliberately
+
+- [ ] **Measured after.** Nothing has been measured after; this has not
+      deployed yet. The target stated above still stands and still matters —
+      *zero SELF-cancellations*, not zero cancellations, because four sessions
+      contend on this ref and a bean claiming the latter reads as failed
+      forever. The window to measure is after this merges and a few staging
+      deploys have run: compare consecutive `gh-pages` commits from one
+      `feature-staging` run — there should no longer be a
+      `staging(...)` / `render-log: ...` pair ten seconds apart.
+

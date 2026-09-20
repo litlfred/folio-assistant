@@ -132,10 +132,26 @@ describe("GUARD 3 — the workflow checks the VALUE, in every job that builds a 
     // Three, not two. A first draft expected two — `stage` and `cleanup` —
     // and `cleanup-dispatch` turned out to already carry the same guard on its
     // dispatch input, which is the case where guard 1 (git's ref rules) does
-    // not hold at all. The count is asserted exactly so that removing one is a
-    // failure rather than a silent narrowing.
-    const guards = yml.match(/case "\$SLUG" in\s*\n\s*""\|\.\|\.\.\)/g) ?? [];
-    expect(guards.length).toBe(3);
+    // not hold at all.
+    //
+    // Asserted PER JOB, not as a count of occurrences. It was a count of
+    // occurrences until 2026-09-20 (`expect(guards.length).toBe(3)`), and
+    // beans `85im` + `bm6d` broke it by ADDING a guard: `stage` grew a second
+    // one in the step that now runs `rm -rf`, so the file carried four and the
+    // test read that as a defect. The exactness was there to catch a guard
+    // being REMOVED, and a job-shaped assertion still catches that while
+    // letting a job carry the guard more than once — which is the safe
+    // direction. A count is a proxy for the property; this is the property.
+    const jobs = (
+      Bun.YAML.parse(yml) as { jobs?: Record<string, { steps?: { run?: string }[] }> }
+    ).jobs ?? {};
+    const guarded = Object.entries(jobs)
+      .filter(([, j]) =>
+        (j.steps ?? []).some((s) => /case "\$SLUG" in\s*\n\s*""\|\.\|\.\.\)/.test(s.run ?? "")),
+      )
+      .map(([n]) => n)
+      .sort();
+    expect(guarded).toEqual(["cleanup", "cleanup-dispatch", "stage"]);
   });
 
   test("every `rm -rf` on a slug is in a job whose slug was checked", () => {
