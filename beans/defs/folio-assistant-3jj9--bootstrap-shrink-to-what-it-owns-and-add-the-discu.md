@@ -55,6 +55,33 @@ whose subject files DO exist but which the audit's 256 subjects no longer
 discover. Those eight are reported, not deleted: their verdicts are real and
 the cause is discovery, not staleness.
 
+**AMENDED 2026-09-20 — the last sentence above is WRONG, and the correction is
+the useful part.** Neither half held. The cause is not discovery: all eight
+declare `part-of:` in their front matter and are excluded by `isPartOfASkill`
+**deliberately and correctly**, a predicate added 2026-09-19 (`179f1f0998`)
+because splitting five over-length skills had turned 5 findings into 4 new ones
+measured against their own fragments. And their verdicts are not real: the
+sidecars were written 2026-09-18, BEFORE that predicate existed, so each one
+measures a fragment against thresholds meant for a whole skill. They are stale
+residue, not evidence. There is no discovery bug among them, and "fixing
+discovery" on the strength of the original sentence would re-admit eight
+fragments and re-introduce the findings `179f1f0998` removed.
+
+**The count is also no longer nine.** It is twelve: the `bootstrap/workflows/`
+one is gone, and four new dead sidecars arrived from two skill-package moves on
+2026-09-20 (`790ec2fe48`, `2fe43d5bb2`), each with a live replacement under
+`skills/workflow/` carrying identical totals.
+
+**How the wrong diagnosis happened, since that is the reusable part.** The
+sweep asked ONE question — is this path in `written`? — and then offered the
+reader a guess between two causes in its own output: *"Either the subject moved
+and the sidecar should go, or it is no longer discovered from this root and the
+DECLARATION is what is wrong."* I wrote that guess down here as a finding. The
+sidecar already records `subject.path`; the sweep read only the filename and
+threw it away. One `existsSync` splits "the file is gone" from "the file is
+there and was not audited" mechanically — opposite responses — and the sweep
+now does that, with a test.
+
 **The sweep itself shipped broken first.** It walked `KG_QA_DIRNAME`
 (`"kg-qa"`) instead of `KG_QA_RESULTS_DIR`, so `readdirSync` threw, the catch
 returned, and it reported a clean sweep over nothing. Caught only by putting

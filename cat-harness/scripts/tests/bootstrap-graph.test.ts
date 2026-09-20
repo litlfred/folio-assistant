@@ -4,7 +4,8 @@
  * @module scripts/tests/bootstrap-graph.test
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join, resolve } from "node:path";
 
 import { buildBootstrapDocument } from "../gen-bootstrap-graph.js";
@@ -15,21 +16,59 @@ const ROOT = resolve(import.meta.dir, "../..");
 // `bootstrap/` is at the REPOSITORY root, not inside this instance — it is
 // the graph read before anything knows which instance it is looking at.
 const BOOTSTRAP = join(repoRootFor(ROOT), "bootstrap");
-const OUT = join(BOOTSTRAP, "bootstrap.jsonld");
 
-describe("the file a cold agent is told to load exists", () => {
-  test("`bootstrap/bootstrap.jsonld` is committed, not a build artefact", () => {
-    // `_kg/<stub>.jsonld` is gitignored because nothing needs it in a fresh
-    // clone. This one is the opposite case: its reader has nothing installed
-    // and cannot run a build, and `bootstrap/README.md` step 2 says to load
-    // it. For that instruction to be true in a fresh clone, it must be IN the
-    // clone.
-    expect(existsSync(OUT)).toBe(true);
+describe("the document is published where it says it is", () => {
+  /**
+   * These two replaced "`bootstrap.jsonld` is committed" and "it is current",
+   * which went with the committed file on 2026-09-20.
+   *
+   * Their premise was that a cold reader is told to load the file from a fresh
+   * clone. **No prose file under `bootstrap/` mentions this document** — the
+   * README sends that reader to `workflows/initialize-harness.bpmn` and
+   * `skills/bootstrap-kg-navigation.md`. So the pair defended an instruction
+   * that does not exist, while the thing worth defending went unguarded: the
+   * `@id` resolved to nothing, because the site build published
+   * `bootstrap/ns.jsonld` — the NAMESPACE document — and never this one.
+   *
+   * That is `blv9` in the artefact whose whole purpose is being dereferenced,
+   * and it is what these assert instead.
+   */
+  test("its `@id` is the URL the site build writes it to", async () => {
+    const doc = await buildBootstrapDocument();
+    const id = String(doc["@id"]);
+    // The build writes `./_site/bootstrap/bootstrap.jsonld`, and `_site/` is
+    // served at the site base. So the path the IRI carries must be exactly
+    // the path under `_site/` — anything else is a link that 404s.
+    expect(id.endsWith("/bootstrap/bootstrap.jsonld")).toBe(true);
   });
 
-  test("it is current", async () => {
-    const doc = await buildBootstrapDocument();
-    expect(readFileSync(OUT, "utf-8")).toBe(JSON.stringify(doc, null, 2) + "\n");
+  test("the site build actually writes it, at that path", () => {
+    // The assertion is against the WORKFLOW, because the failure being
+    // guarded is a publication gap rather than a generator bug: the generator
+    // worked perfectly for months while nothing published what it produced.
+    //
+    // Matched on the `--out` path rather than on the script name: a build that
+    // runs the generator and writes it somewhere else leaves the `@id` dead
+    // just as surely as one that never runs it, and the script name alone
+    // cannot tell the two apart.
+    const wf = readFileSync(
+      join(repoRootFor(ROOT), ".github", "workflows", "docs-site.yml"),
+      "utf-8",
+    );
+    expect(wf).toContain("gen-bootstrap-graph.ts --out \"./_site/bootstrap/bootstrap.jsonld\"");
+  });
+
+  test("it is NOT committed — it is a build artefact now", () => {
+    // The inverse of the test this replaces, and it earns its place: an
+    // ignored path is easy to re-add with `git add -f`, and a re-added copy
+    // silently goes stale with no gate left to catch it. The file may exist
+    // locally, since `bun run bootstrap:graph` writes it; what must not
+    // exist is a TRACKED copy.
+    const tracked = execFileSync("git", ["ls-files", "--", "bootstrap/bootstrap.jsonld"], {
+      cwd: repoRootFor(ROOT),
+      encoding: "utf-8",
+    }).trim();
+    expect(tracked).toBe("");
   });
 });
 

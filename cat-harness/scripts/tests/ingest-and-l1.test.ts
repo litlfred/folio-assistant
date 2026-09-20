@@ -15,11 +15,16 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import {
+  KIND_SIDECAR,
   NOT_DERIVABLE,
+  PAGED_ONLY,
+  appliesTo,
   checkAll,
   checkEntry,
+  entryKind,
   expiredExceptions,
   sidecarDocument,
+  sourceBlockOf,
   staleSidecars,
 } from "../check-l1-complete.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
@@ -389,7 +394,7 @@ describe("the third state has to EXPIRE — bean `pn6j`", () => {
     // complete `images.json` — 2, 20, 121 and 21 images, every one with a
     // role and a basis. The gate reported "no arm builds this yet" and
     // checked none of it.
-    const found = expiredExceptions(["/x", "/y"], (d, f) => d === "/y" && f === "transcript.json");
+    const found = expiredExceptions(["/x", "/y"], (d, f) => d === "/y" && f === "transcript");
     expect(found.map((e) => e.name)).toEqual(["audio-transcripts"]);
     expect(found[0].bean).toBe("1r0p");
     expect(found[0].found).toBe("/y");
@@ -408,6 +413,30 @@ describe("the third state has to EXPIRE — bean `pn6j`", () => {
     const dirs = readdirSync(lib).map((d) => join(lib, d)).filter((d) => statSync(d).isDirectory());
     expect(dirs.length).toBeGreaterThan(0);
     expect(expiredExceptions(dirs, (d, f) => existsSync(join(d, f)))).toEqual([]);
+  });
+
+  test("the probe matches what the BEAN says its arm will write", () => {
+    // `1r0p`: "library/<slug>/transcript/ holds the source-language
+    // transcript and each translation" — a DIRECTORY. The first version of
+    // this probe guessed `transcript.json` and would never have fired, so the
+    // ratchet could not ratchet. A probe is a claim about another arm's
+    // output and has to be read from that arm's own statement.
+    const audio = NOT_DERIVABLE.find((nd) => nd.name === "audio-transcripts");
+    expect(audio?.probe).toBe("transcript");
+    expect(audio?.probe).not.toContain(".");
+  });
+
+  test("a DIRECTORY probe fires — existsSync is not file-only", () => {
+    // The mechanism the correction depends on: the probe is checked with
+    // `existsSync`, which is true for a directory. Asserted rather than
+    // assumed, because the whole fix rests on it.
+    const root = mkdtempSync(join(tmpdir(), "probe-"));
+    made.push(root);
+    const entry = join(root, "doc");
+    mkdirSync(join(entry, "transcript"), { recursive: true });
+    expect(expiredExceptions([entry], (d, f) => existsSync(join(d, f))).map((e) => e.name)).toEqual([
+      "audio-transcripts",
+    ]);
   });
 
   test("every remaining entry carries a PROBE, so it can expire at all", () => {
@@ -550,8 +579,18 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // handed the library again, the document is filed before anything can
     // refuse it and this gate becomes decoration.
     const src = readFileSync(new URL("../ingest-document.ts", import.meta.url).pathname, "utf-8");
-    expect(src).toContain('planFor(pdf, undefined, staging)');
+    // The staging LIBRARY ROOT, not the entry directory. `planFor`'s third
+    // argument is what `libraryRoot()` returns, and every arm creates
+    // `<lib>/<slug>/` beneath it. Passing the entry directory produced
+    // `ingest-staging/<slug>/<slug>/`, so `checkEntry` read an empty parent
+    // and reported EVERY requirement unmet — a refusal indistinguishable from
+    // a correct one. Shipped in #495; caught by running a CSV through the
+    // live pipeline, because the milnorlink checks passed over it (the
+    // incomplete case refuses either way, and the complete case was staged by
+    // hand straight into the entry directory).
+    expect(src).toContain("planFor(pdf, undefined, stagingRoot)");
     expect(src).not.toContain("const plan = planFor(pdf);");
+    expect(src).toContain('const staging = join(stagingRoot, slug);');
   });
 
   test("staging is NOT dot-prefixed", () => {
@@ -622,5 +661,116 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // `library/milnorlink/` into staging and promoting it was a byte-identical
     // no-op, exit 0.
     expect(checkEntry(entry()).requirements.filter((r) => r.state === "unmet")).toEqual([]);
+  });
+});
+
+describe("the L1 gate stopped assuming every document is a PDF", () => {
+  /**
+   * Found by running a real CSV through the LIVE pipeline, not by reading the
+   * code. It routed correctly to the tabular rung, `tabular-records.py`
+   * extracted one sheet and six headers — and the gate then demanded
+   * `structure.json`, `sections/`, `blocks/` and an `images.json`, with
+   * `image-descriptions` advising a reader to "run scripts/pdf-images.py" on
+   * a spreadsheet.
+   *
+   * Cosmetic until `pn6j` gated promotion on it. After that it was a
+   * PERMANENT BLOCKER: a CSV cannot have a chapter tree, so it could never be
+   * promoted, and the gate added one PR earlier made every non-paged document
+   * un-ingestable.
+   */
+  test("a sidecar names the shape — and absence is UNDETERMINED, not paged", () => {
+    expect(entryKind((f) => f === "structure.json")).toBe("paged");
+    expect(entryKind((f) => f === "tabular.jsonld")).toBe("tabular");
+    expect(entryKind((f) => f === "contents.jsonld")).toBe("archive");
+    // The third state, and it must not be "assume paged": an entry no rung
+    // has run on has nothing DERIVED, which is a different fact from a paged
+    // document missing its chapter tree.
+    expect(entryKind(() => false)).toBe("undetermined");
+  });
+
+  test("a tabular entry is not asked for a chapter tree", () => {
+    for (const r of PAGED_ONLY) expect(appliesTo(r, "tabular")).toBe(false);
+    expect(appliesTo("manifest", "tabular")).toBe(true);
+    expect(appliesTo("technical-metadata", "tabular")).toBe(true);
+    expect(appliesTo("tabular-records", "tabular")).toBe(true);
+  });
+
+  test("a paged entry still faces every requirement", () => {
+    for (const r of PAGED_ONLY) expect(appliesTo(r, "paged")).toBe(true);
+  });
+
+  test("UNDETERMINED keeps every requirement — the vacuity this guards", () => {
+    // An entry nothing has run on must not satisfy the gate by having no
+    // applicable requirements. That would let an empty directory promote,
+    // which is the exact failure `mayPromote`'s `every` would wave through.
+    for (const r of PAGED_ONLY) expect(appliesTo(r, "undetermined")).toBe(true);
+  });
+
+  test("`image-descriptions` is not demanded of a spreadsheet", () => {
+    // The line that made the defect obvious when read aloud:
+    //   image-descriptions  no images.json — run scripts/pdf-images.py
+    expect(appliesTo("image-descriptions", "tabular")).toBe(false);
+    expect(appliesTo("image-descriptions", "archive")).toBe(false);
+    expect(appliesTo("image-descriptions", "paged")).toBe(true);
+  });
+
+  test("the source block is read from whichever sidecar the entry HAS", () => {
+    // Three requirements each rolled their own reader, all reading
+    // `structure.json` only. A CSV's `tabular.jsonld` carries a complete
+    // source block, and they reported "no `source` block — re-run the ingest
+    // rung": advice that was wrong, and that re-running would not have fixed.
+    const dir = mkdtempSync(join(tmpdir(), "src-"));
+    made.push(dir);
+    expect(sourceBlockOf(dir)).toBeUndefined();
+    writeFileSync(
+      join(dir, "tabular.jsonld"),
+      JSON.stringify({ source: { file: "x.csv", sha256: "a".repeat(64), mimetype_source: "unrecognised" } }),
+    );
+    expect(sourceBlockOf(dir)?.file).toBe("x.csv");
+  });
+
+  test("checkEntry on a REAL tabular entry emits no paged requirement", () => {
+    // The end-to-end assertion, not a predicate one. `appliesTo` can be
+    // perfect while nothing calls it — the filter being dropped was caught
+    // only by the sidecar-staleness test, which fires on any edit to this
+    // file and so proves nothing about the behaviour.
+    //
+    // Shaped like what `tabular-records.py` actually writes: measured on a
+    // real CSV, 1 sheet, 6 headers, `mimetype_sniffed: null` because a CSV
+    // has no magic bytes.
+    const dir = mkdtempSync(join(tmpdir(), "tab-entry-"));
+    made.push(dir);
+    writeFileSync(
+      join(dir, "tabular.jsonld"),
+      JSON.stringify({
+        $schema: "folio-tabular-records/v1",
+        "@id": "who-measles-coverage",
+        source: {
+          file: "who-measles-coverage.csv",
+          sha256: "7".repeat(64),
+          bytes: 323,
+          mtime: "2026-09-20T11:33:50Z",
+          mimetype_sniffed: null,
+          mimetype_source: "unrecognised",
+        },
+        format: "csv",
+        sheets: [{ name: "who-measles-coverage", headers: ["country", "iso3"], rows: 8, columns: 6 }],
+        n_sheets: 1,
+        narrative: { text: null, state: "not-authored" },
+      }),
+    );
+    const names = checkEntry(dir).requirements.map((r) => r.name);
+    for (const paged of PAGED_ONLY) expect(names).not.toContain(paged);
+    // And it is not empty: an entry with NO applicable requirements would
+    // promote over anything.
+    expect(names.length).toBeGreaterThan(0);
+    expect(names).toContain("manifest");
+  });
+
+  test("every sidecar in KIND_SIDECAR names a kind that is not `undetermined`", () => {
+    // A row mapping to `undetermined` would make the third state reachable by
+    // PRESENCE, which is the opposite of what it means.
+    for (const [kind] of KIND_SIDECAR) expect(kind).not.toBe("undetermined");
+    expect(KIND_SIDECAR.length).toBeGreaterThan(1);
   });
 });
