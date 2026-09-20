@@ -2018,7 +2018,21 @@
    * is a real button that docks it again.
    */
   function mountTodoBoard(items) {
-    var main = firstMatch(["#main-content", ".main-content", "main"]);
+    // THE LANDING FOLIO BOARD FIRST, when the page has one. The owner, 2026-09-20:
+    // "i want todo board inside of the landing folio/board."
+    //
+    // The landing page is itself a board of sticky notes -- one card per
+    // harness, each an initiation receipt -- so a second board floating above
+    // it, hidden behind a launcher, put two boards of the same thing on one
+    // page and made the todos the one you could not see. Mounted into the
+    // landing board they are the same surface: the harness cards say what ran,
+    // the todo stickies say what is outstanding, and both are stickies.
+    //
+    // Everywhere else the old target and the old behaviour are unchanged: the
+    // board goes to the top of the main region and starts hidden, opened by its
+    // launcher.
+    var landing = firstMatch([".fa-landing-board"]);
+    var main = landing || firstMatch(["#main-content", ".main-content", "main"]);
     if (!main) {
       console.warn("docs-ui: no main content region found; the todo board was not mounted.");
       return null;
@@ -2027,13 +2041,18 @@
     var layer = el("div", { class: "fa-sticky-layer", "aria-live": "polite" });
     document.body.appendChild(layer);
 
-    var board = el("section", {
-      class: "fa-sticky-board",
-      hidden: "hidden",
+    // VISIBLE on the landing board, hidden everywhere else. On a page whose
+    // whole content is a board of stickies, a hidden board of stickies is the
+    // one thing a reader cannot find; anywhere else it is an overlay and must
+    // not cover the page it was opened from.
+    var boardAttrs = {
+      class: "fa-sticky-board" + (landing ? " fa-sticky-board--inline" : ""),
       tabindex: "-1",
       role: "region",
       "aria-label": "Todos",
-    });
+    };
+    if (!landing) boardAttrs.hidden = "hidden";
+    var board = el("section", boardAttrs);
     var head = el("div", { class: "fa-sticky-board-head" });
     var heading = el("h2", { class: "fa-sticky-board-title", tabindex: "-1" }, "Todos");
     head.appendChild(heading);
@@ -2047,7 +2066,12 @@
 
     var grid = el("div", { class: "fa-sticky-grid" });
     board.appendChild(grid);
-    main.insertBefore(board, main.firstChild);
+    // APPEND on the landing board, insert-first everywhere else. The harness
+    // cards are the page's first statement -- what this repository is, and
+    // which layers initiated -- and putting the todos above them would answer
+    // "what is outstanding" before "what is this".
+    if (landing) main.appendChild(board);
+    else main.insertBefore(board, main.firstChild);
 
     var slots = {};
 

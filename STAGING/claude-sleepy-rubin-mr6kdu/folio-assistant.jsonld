@@ -3,7 +3,7 @@
     "@version": 1.1,
     "bs": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
     "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "fac": "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#",
+    "fac": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
     "prov": "http://www.w3.org/ns/prov#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "schema": "https://schema.org/",
@@ -255,17 +255,17 @@
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld",
   "@type": [
     "http://www.w3.org/ns/prov#Entity",
-    "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#PreviewGraph"
+    "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#PreviewGraph"
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T12:34:58.385Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4028807cf94e8aa6155ed391a3af1b632c168033",
-  "sourceCommitSha": "4028807cf94e8aa6155ed391a3af1b632c168033",
-  "sourceCommitAt": "2026-09-20T12:31:48Z",
+  "generatedAt": "2026-09-20T13:08:11.141Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0162ec710d330397fc4b1e8bd011ab69f6aab073",
+  "sourceCommitSha": "0162ec710d330397fc4b1e8bd011ab69f6aab073",
+  "sourceCommitAt": "2026-09-20T13:06:30Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 196,
+    "Skill": 198,
     "Actor": 27,
     "Capability": 26,
     "Role": 116,
@@ -275,9 +275,9 @@
     "SequenceFlow": 604,
     "ProcessNode": 569,
     "Tool": 51,
-    "Schema": 70,
+    "Schema": 71,
     "GraphKind": 21,
-    "Directory": 27
+    "Directory": 28
   },
   "@graph": [
     {
@@ -1451,6 +1451,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/diff"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/create-sticky-note",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note",
+      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/create-sticky-note.md",
+      "instructionLines": 154,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/continual-progress",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "continual-progress",
@@ -1460,7 +1477,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 151,
+      "instructionLines": 200,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1562,7 +1579,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 148,
+      "instructionLines": 187,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1578,7 +1595,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 569,
+      "instructionLines": 609,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2165,7 +2182,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/github-state-inspection.md",
-      "instructionLines": 128,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2439,6 +2456,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "theme-art-intake",
+      "title": "Theme art intake",
+      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/theme-art-intake.md",
+      "instructionLines": 131,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/integration-backlog",
@@ -4770,6 +4804,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/crdm-data-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/create-sticky-note",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/decision-comparison",
@@ -4836,6 +4871,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/test-engineer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/theme-art-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/todo-review",
@@ -27181,6 +27217,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/test-run"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "theme-art-intake",
+      "title": "Theme art arriving as three files — accepted, or refused with a reason.",
+      "module": "schemas/theme-art-intake.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme-art-intake"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "theme",
@@ -27529,7 +27574,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/folio",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "folio",
-      "typeIri": "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#FolioGraph",
+      "typeIri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#FolioGraph",
       "renderable": true,
       "summary": "Authored content, rendered to a website by the just-the-docs pipeline."
     },
@@ -28503,6 +28548,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/uploads"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/library",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "library",
+      "path": "library/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library"
+      ],
+      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assist-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/library",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/library"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/who-iris-library",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "who-iris-library",
@@ -28667,8 +28724,8 @@
   ],
   "staging": {
     "branch": "claude/sleepy-rubin-mr6kdu",
-    "sha": "8d01b767b4a9bc1e785a71fefede410986abe56d",
+    "sha": "0cb627b997a811be6e29f16386e5556a96908f27",
     "pr": "477/merge",
-    "run": "35510946724"
+    "run": "35512546275"
   }
 }

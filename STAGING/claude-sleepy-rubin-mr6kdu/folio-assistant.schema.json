@@ -338,6 +338,10 @@
                   "description"
                 ]
               },
+              "bodyAppend": {
+                "type": "string",
+                "minLength": 1
+              },
               "links": {
                 "type": "array",
                 "items": {
@@ -367,6 +371,65 @@
               "onboardingLinks": {
                 "type": "boolean"
               },
+              "shape": {
+                "type": "string",
+                "enum": [
+                  "laptop",
+                  "mobile",
+                  "card"
+                ]
+              },
+              "text": {
+                "type": "object",
+                "properties": {
+                  "box": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "w": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "h": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "w",
+                      "h"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "scale": {
+                    "type": "number",
+                    "minimum": 0.6,
+                    "maximum": 2
+                  },
+                  "align": {
+                    "type": "string",
+                    "enum": [
+                      "start",
+                      "center",
+                      "end"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
               "_comment": {
                 "type": "string"
               }
@@ -393,8 +456,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/sleepy-rubin-mr6kdu",
-    "sha": "8d01b767b4a9bc1e785a71fefede410986abe56d",
+    "sha": "0cb627b997a811be6e29f16386e5556a96908f27",
     "pr": "477/merge",
-    "run": "35510946724"
+    "run": "35512546275"
   }
 }
