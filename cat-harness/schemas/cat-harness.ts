@@ -131,7 +131,7 @@ export const DECLARATION_FILENAME = "harness.json";
  *
  * See `skills/folio-core/content-context-and-state-graphs.md`.
  */
-export type GraphLayer = "content" | "context" | "state";
+export type GraphLayer = "content" | "context" | "state" | "derived";
 
 /** What a declared directory's graph kind means. */
 export interface GraphKindDef {
@@ -590,9 +590,21 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   library: {
     type: termIri("LibraryGraph"),
     renderable: false,
-    // L1 source content. Every knowledge-graph reference to a source resolves
-    // through here, which is only possible because it stands on its own.
-    holds: "content",
+    // DERIVED, not content — bean `hqku`, and the owner's ruling of
+    // 2026-09-20: *"library is static (only if we materialize assets or
+    // not)"*, *"can duplicate asset into a folio and work there"*.
+    //
+    // It still stands on its own — a library section reads without anything
+    // else, which is why this was `content` until now and why the skill used
+    // it as the example. What changed is the OTHER question: a section is
+    // produced from an ingested source and regenerated, never re-authored in
+    // place, so a QA finding against one is a finding against the ingestion
+    // that made it. `qa-sweep` skips it for exactly that reason.
+    //
+    // NOT `context`, and that was ruled out by a rule rather than by taste:
+    // `context` means a step writing to it is a defect, and
+    // `document-ingestion.bpmn` writes `library/`.
+    holds: "derived",
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
       "`structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every " +
@@ -983,6 +995,35 @@ export function isContextGraph(kind: string, registry: GraphKindRegistry = defau
  */
 export function isStateGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
   return graphLayer(kind, registry) === "state";
+}
+
+/**
+ * Is this DERIVED material — produced from a source, regenerable, and not the
+ * working corpus?
+ *
+ * Owner, 2026-09-20: *"library is static (only if we materialize assets or
+ * not)"* and *"can duplicate asset into a folio and work there"*. Bean `hqku`.
+ *
+ * **Why `context` was the wrong answer, and it was ruled out by a rule rather
+ * than by taste.** `library/` is static for authoring — nobody edits a section
+ * in place; the asset is duplicated into the folio and worked on there. That
+ * sounds exactly like `context`. But `context` carries *"a step that writes to
+ * it is a defect, not an update"*, and `document-ingestion.bpmn` WRITES
+ * `library/`. Declaring it `context` would have made a declared process a
+ * defect by the axis's own rule.
+ *
+ * **And `content` was wrong in the other direction.** The sweep rule is *"only
+ * on active/working content"* (owner, 2026-09-20): a QA finding against a
+ * derived section is a finding against its GENERATOR, not against the corpus,
+ * and it sends a reviewer to fix the wrong file.
+ *
+ * The skill's two supporting questions disagree here — *"does it stand on its
+ * own?"* says content (a library section still reads), *"would you regenerate
+ * it or re-author it?"* says regenerate — and the skill's instruction for that
+ * case is to **say so rather than picking**. This layer is saying so.
+ */
+export function isDerivedGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "derived";
 }
 
 /**

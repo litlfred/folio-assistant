@@ -1,10 +1,11 @@
 ---
 # folio-assistant-hqku
 title: 'SWEEP SCOPE: is library/ active content? The declaration and the owner''s model disagree'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-20T16:15:13Z
-updated_at: 2026-09-20T16:15:13Z
+updated_at: 2026-09-20T17:34:44Z
 parent: folio-assistant-zzmr
 ---
 
@@ -63,3 +64,72 @@ layer is a schema change touching every graph kind.
       material it should skip?
 - [ ] if skip: is that a new `derived` layer (`b5f0` §5), or a re-declaration
       of `library` as `context`?
+
+
+---
+
+*2026-09-20* — **Answered and implemented. The owner's two sentences settled
+both rows, and the second answer was forced rather than chosen.**
+
+## The ruling
+
+> *"library is static (only if we materialize assets or not)"*
+> *"can duplicate asset into a folio and work there"*
+
+So: `library/` is read, never worked in place. To change an asset you
+**duplicate it into the folio** and work there. A sweep must skip it.
+
+## Why NOT `context`, which is what "static" sounds like
+
+`context` carries *"a step that writes to it is a defect, not an update"* —
+and **`document-ingestion.bpmn` writes `library/`**. Declaring it `context`
+would have made a declared process a defect by the axis's own rule. Checked
+against the diagram, not assumed, and the test asserts it against the file.
+
+## Why NOT `content`, which is what it was
+
+The sweep rule, same day: *"qasweep is only on active/working content."* A QA
+finding against a derived section is a finding against its **generator**, so a
+sweep that judges `library/` sends a reviewer to fix the wrong file.
+
+## So: a fourth layer, which is the skill's own instruction
+
+This bean argued `holds` could not express the middle row, and it was right.
+The skill's two supporting questions **disagree** here — *"does it stand on
+its own?"* says content (a section still reads), *"regenerate or re-author?"*
+says regenerate — and its instruction for that case is to **say so rather than
+picking**. `derived` is saying so.
+
+`GraphLayer` gains `"derived"`; `library.holds` becomes it; `isDerivedGraph`
+joins its three siblings. **The bean over-estimated the cost**: it feared "a
+schema change touching every graph kind", and the change is additive — only
+the kind that wants the new value moves. `graphLayer`'s own docstring had
+already anticipated it: *"so that adding a fourth value later is one edit here
+rather than a search for every `=== \"state\"`"*.
+
+## Measured before changing, because the bean warned this reached wider
+
+It does not. The layer predicates `isContentGraph` / `isContextGraph` /
+`isStateGraph` are referenced **only from tests**; the single behavioural
+consumer of `holds` is the sweep walk in `qa-utils.ts`. And `library` is
+already `renderable: false`, so the rendered/derived story the bean worried
+about is untouched. One behavioural effect, and it is the intended one.
+
+## What it buys, and what it does not mean
+
+`library/` leaves the sweep **with no directory name written down anywhere** —
+the same way `fsh-guts/` did. A hardcoded skip was the alternative, and a
+hardcoded path is what the declaration exists to remove.
+
+`derived` is **not** "unimportant" and **not** "uncommitted". `library/` is L1
+corpus, committed and greppable, and every KG reference to a source still
+resolves through it. The layer says where a *finding* belongs, not what the
+material is worth — recorded in the skill, because that is the reading a later
+agent will get wrong.
+
+## Ratcheted
+
+Reverting `library` to `content` fails 2 tests; setting it to `context` fails
+2, one of them the elimination asserted against `document-ingestion.bpmn`. The
+skill's `content` example was **"a library section"** and is now a folio
+chapter, with the correction stated rather than silently swapped.
