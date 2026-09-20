@@ -61,6 +61,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#requiresCapability",
       "@type": "@id"
     },
+    "fallbackToCapability": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#fallbackToCapability",
+      "@type": "@id"
+    },
     "satisfies": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfies",
       "@type": "@id"
@@ -251,10 +255,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T10:16:43.179Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/54e4ae786b2ee78136277a1b00fb792364903176",
-  "sourceCommitSha": "54e4ae786b2ee78136277a1b00fb792364903176",
-  "sourceCommitAt": "2026-09-20T10:15:02Z",
+  "generatedAt": "2026-09-20T10:25:10.436Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8fb87e0e44f07136b960e680a3e9de58fe7c802f",
+  "sourceCommitSha": "8fb87e0e44f07136b960e680a3e9de58fe7c802f",
+  "sourceCommitAt": "2026-09-20T10:20:51Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 182,
@@ -3916,6 +3920,7 @@
         "method": "command",
         "command": "lean --version"
       },
+      "fallbackToCapability": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#capability/lean-mcp",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/lean-toolchain"
     },
     {
@@ -23902,8 +23907,8 @@
   ],
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "eccf6e757a50a14d69af4f54d1e07df517a08643",
+    "sha": "fa03930b8cecae2d1c971f92b6b2ed648a017caa",
     "pr": "485/merge",
-    "run": "35504535527"
+    "run": "35504944557"
   }
 }
