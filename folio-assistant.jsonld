@@ -252,10 +252,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T16:34:05.252Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/92e83dbcb1f693113928bcf71751c8a6c38351db",
-  "sourceCommitSha": "92e83dbcb1f693113928bcf71751c8a6c38351db",
-  "sourceCommitAt": "2026-09-20T18:32:40+02:00",
+  "generatedAt": "2026-09-20T16:39:56.575Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e8a4e377feceaecfd362368e33ca6d047e0d50fa",
+  "sourceCommitSha": "e8a4e377feceaecfd362368e33ca6d047e0d50fa",
+  "sourceCommitAt": "2026-09-20T18:37:55+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 202,
@@ -22768,7 +22768,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run scripts/ingest-document.ts"
+        "shell": "bun run cat-harness/scripts/ingest-document.ts"
       },
       "io": {
         "inputs": [
@@ -22828,7 +22828,7 @@
         "cli": "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils"
       },
       "invoke": {
-        "shell": "bun run scripts/ingest-document.ts"
+        "shell": "bun run cat-harness/scripts/ingest-document.ts"
       },
       "io": {
         "inputs": [
@@ -23346,7 +23346,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "scripts/lean-build-all.sh"
+        "shell": "cat-harness/scripts/lean-build-all.sh"
       },
       "io": {
         "inputs": [
@@ -23417,7 +23417,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "scripts/lake-cache.sh"
+        "shell": "cat-harness/scripts/lake-cache.sh"
       },
       "io": {
         "inputs": [
@@ -23478,7 +23478,7 @@
         "cli": "scripts/setup-lean-toolchain.sh"
       },
       "invoke": {
-        "shell": "scripts/setup-lean-toolchain.sh"
+        "shell": "cat-harness/scripts/setup-lean-toolchain.sh"
       },
       "io": {
         "inputs": [],
@@ -23841,7 +23841,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run scripts/gen-schema-docs.ts"
+        "shell": "bun run cat-harness/scripts/gen-schema-docs.ts"
       },
       "io": {
         "inputs": [
@@ -23883,7 +23883,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run scripts/gen-skill-docs.ts"
+        "shell": "bun run cat-harness/scripts/gen-skill-docs.ts"
       },
       "io": {
         "inputs": [
@@ -23982,7 +23982,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run scripts/gen-jsonld-context.ts"
+        "shell": "bun run cat-harness/scripts/gen-jsonld-context.ts"
       },
       "io": {
         "inputs": [
@@ -24980,7 +24980,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run src/index.ts --check-deps",
+        "shell": "bun run cat-harness/src/index.ts --check-deps",
         "mcp": {
           "tool": "check_dependencies"
         },
@@ -27833,8 +27833,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "92e83dbcb1f693113928bcf71751c8a6c38351db",
+    "sha": "e8a4e377feceaecfd362368e33ca6d047e0d50fa",
     "pr": "main",
-    "run": "35523051113"
+    "run": "35523321379"
   }
 }
