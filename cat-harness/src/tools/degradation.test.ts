@@ -156,18 +156,20 @@ describe("over the real corpus", () => {
   });
 
   test("every capability a skill requires is DECLARED", async () => {
-    // The finding this join was written to make possible. `git-read` was
-    // referenced by 17 skills and declared by no capability; it is declared
-    // now. `deploy-access` is still undeclared and is listed here so the
-    // gap is named rather than passing — remove it from the list when it
-    // gains a declaration, and never widen the list to make this green.
+    // The finding this join was written to make possible, now closed.
+    // `git-read` was referenced by 17 skills and declared by nothing;
+    // `deploy-access` by `deployment-auth` and nothing. Both are declared.
+    //
+    // The list is EMPTY and stays empty: a new undeclared id fails here,
+    // which is the point. Never widen it to make this green — that turns
+    // the check back into the thing it was written to catch.
     const { kgRoots } = await import("../../scripts/known-skills.ts");
     const { loadCapabilities } = await import("./capabilities.ts");
     const { repoRootFor } = await import("../../schemas/cat-harness.ts");
     const { skills } = await loadSkillNeeds(kgRoots(INSTANCE));
     const declared = new Set(loadCapabilities(repoRootFor(INSTANCE)).map((c) => c.id));
     expect(declared.size).toBeGreaterThan(5);
-    const KNOWN_UNDECLARED = ["deploy-access"];
+    const KNOWN_UNDECLARED: string[] = [];
     const missing = [
       ...new Set(
         skills

@@ -58,6 +58,7 @@ These run alongside the content processes rather than inside them:
 | `crdm-issue-linking.bpmn` | Scan for a matching issue, then link or ask — an issue is never created without the BA's permission |
 | `crdm-needs.bpmn` | Phase 1: identify stakeholders, synthesise the needs statement, loop until it is recognised |
 | `crdm-requirements-definition.bpmn` | Phases 2–4: map the current workflow, define requirements and their impact, loop until approved |
+| `crdm-data-model.bpmn` | Between requirements and sign-off: entities from the BPA and the requirements, cardinalities stated both ways, looping until the BA recognises the entities AND the stakeholders have answered every cardinality |
 | `crdm-signoff.bpmn` | Phase 5: requirements become beans, the BA signs off, the branch is announced on the issue |
 | `crdm-deliver.bpmn` | Phase 6: implement, review the increment, share the MVP, take stakeholder findings. One phase, because all three loops route back into implementation |
 | `crdm-close.bpmn` | Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion |
