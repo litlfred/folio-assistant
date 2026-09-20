@@ -66,24 +66,33 @@ Mutation-checked: removing the guard fails that test by name.
 
 ## What is still open
 
-The catalogues on main really are stale — ~190 `#:` line references pointing at
-an older `agent-onboarding.md` — and **nothing compares them**. Regenerating no
-longer happens by accident, so the staleness is now quiet rather than noisy,
-which is worse: the only signal it ever had was the dirty tree, and that signal
-has just been removed. A `:check` is what it needed all along.
+**Main committed the regeneration** in the nine commits it moved while #483 was
+open, so the ~190 stale `#:` references are gone and `agent-onboarding.md` and
+`status.json` are now tracked. That closes today's instance and none of the
+mechanism: nothing compares the catalogues, so they go stale again the next
+time that source file gains a line.
+
+And the regeneration no longer happens by accident, which makes the staleness
+QUIET rather than noisy. That is worse, not better. The only signal this defect
+ever had was a dirty working tree, and both halves of it have now been removed
+— one by committing the output, one by guarding the writer. A `:check` in the
+gate set is what it needed all along, and it is the only thing left that can
+fail.
 
 ## Also: two generated files are neither tracked nor ignored
 
-`translations/fr/agent-onboarding.md` and `translations/fr/status.json` are
-written by the sweep, appear as untracked, and `git check-ignore` matches
-neither. Either they are outputs (ignore them) or they are artefacts (commit
-them) — today they are a third thing that makes every tree dirty.
+`translations/fr/agent-onboarding.md` and `translations/fr/status.json` were
+written by the sweep, appeared as untracked, and `git check-ignore` matched
+neither — a third thing that was neither output nor artefact. **Main settled
+this by committing them**, so they are artefacts now. Recorded because the
+decision was made by a commit rather than stated anywhere, and the next
+generated file lands in the same gap.
 
 ## Done when
 
 - [x] the sweep stops writing them by accident — `simulate-translation.ts`
       guarded, with a regression test (#483)
-- [ ] the `fr/agent-onboarding` catalogues are regenerated and committed
+- [x] the `fr/agent-onboarding` catalogues are regenerated and committed (on main, 2026-09-20)
 - [ ] a `:check` exists that fails on a stale catalogue, and it is in the
       gate set — the point is a gate that can FAIL, not a regeneration
 - [ ] `agent-onboarding.md` and `status.json` are tracked or ignored, decided
