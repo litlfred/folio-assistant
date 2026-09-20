@@ -54,6 +54,8 @@
     "check:agents-xref:strict": "bun run cat-harness/scripts/check-agents-xref.ts --strict",
     "check:bean-parents": "bun run cat-harness/scripts/check-bean-parents.ts",
     "check:catalogue": "bun run who-iris/scripts/check-catalogue.ts",
+    "iris:pages": "bun run who-iris/scripts/gen-iris-pages.ts",
+    "iris:pages:check": "bun run who-iris/scripts/gen-iris-pages.ts --check",
     "check:ci-health": "bun run cat-harness/scripts/check-ci-health.ts",
     "check:ci-invocations": "bun run cat-harness/scripts/check-ci-invocations.ts",
     "check:corpus-gate": "bun run cat-harness/scripts/check-corpus-gate.ts",

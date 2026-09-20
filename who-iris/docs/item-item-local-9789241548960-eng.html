@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WHO handbook for guideline development, 2nd ed. — ingested IRIS replica</title>
+<meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
+<style>
+  :root {
+    /* Measured in who-iris/themes/themes.ts from the captured client-theme.css. */
+    --iris-accent: #008dc9;
+    --iris-ink: #212529;
+    --iris-edge: #ced4da;
+    --iris-surface: #ffffff;
+    --iris-dark: #005072;          /* --dark */
+    --iris-deep: #2B4E72;          /* --blue */
+    --iris-breadcrumb-bg: #e9ecef; /* --ds-breadcrumb-bg */
+    --iris-wash: #FAFAFA;          /* --ds-almost-white */
+    --iris-current: #d86422;       /* --warning */
+    --iris-muted: #6c757d;         /* --gray */
+    --iris-ingested: #006666;      /* --info */
+    --iris-col: 1140px;
+    --iris-pad: 1.5rem;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    /* The stack the captured stylesheet declares, verbatim. */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    font-size: 1rem; font-weight: 400; line-height: 1.5;
+    color: var(--iris-ink); background: var(--iris-surface);
+  }
+  .wrap { max-width: var(--iris-col); margin: 0 auto; padding: 0 var(--iris-pad); }
+  a { color: var(--iris-accent); text-decoration: none; }
+  a:hover, a:focus { text-decoration: underline; }
+
+  /* ── The banner. Not decoration: it is requirement 1. ───────────────── */
+  .ingested {
+    background: var(--iris-ingested); color: #fff;
+    padding: 0.7rem var(--iris-pad); font-size: 0.95rem;
+  }
+  .ingested strong { letter-spacing: 0.02em; }
+  .ingested .wrap { padding: 0; }
+  .ingested a { color: #fff; text-decoration: underline; }
+
+  /* ── Masthead. NO WHO logo, by instruction — a wordmark in type. ────── */
+  header.mast { background: #fff; border-bottom: 1px solid var(--iris-edge); }
+  .mast .wrap { display: flex; align-items: center; gap: 1rem; padding-top: 1.1rem; padding-bottom: 1.1rem; }
+  .wordmark { display: flex; align-items: baseline; gap: 0.55rem; }
+  .wordmark .org {
+    font-size: 1.05rem; font-weight: 700; line-height: 1.15;
+    color: var(--iris-accent); max-width: 11rem;
+  }
+  .wordmark .bar { width: 1px; align-self: stretch; background: var(--iris-edge); }
+  .wordmark .stack { display: flex; flex-direction: column; }
+  .wordmark .iris { font-size: 2.1rem; font-weight: 700; color: var(--iris-accent); letter-spacing: -0.02em; line-height: 1; }
+  .wordmark .iris .dot { color: var(--iris-current); }
+  .wordmark .sub { font-size: 0.78rem; color: var(--iris-accent); line-height: 1.2; }
+  .none { color: var(--iris-muted); font-style: italic; }
+  .nologo {
+    margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
+    text-align: right; max-width: 16rem;
+  }
+
+  /* ── Navbar. Solid accent, white links, as the source page. ─────────── */
+  nav.main { background: var(--iris-accent); }
+  nav.main .wrap { display: flex; flex-wrap: wrap; gap: 1.6rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  nav.main a, nav.main span { color: #fff; font-weight: 700; font-size: 0.98rem; }
+  nav.main span { opacity: 0.75; font-weight: 400; }
+
+  .crumbs { background: var(--iris-breadcrumb-bg); }
+  .crumbs .wrap { padding-top: 0.8rem; padding-bottom: 0.8rem; font-size: 0.98rem; }
+  .crumbs .sep { color: var(--iris-muted); margin: 0 0.55rem; }
+  .crumbs .here { color: var(--iris-current); }
+
+  main.wrap { padding-top: 2rem; padding-bottom: 3rem; }
+  h1 { font-size: 2.6rem; font-weight: 500; line-height: 1.2; margin: 0 0 1.6rem; }
+  h2 { font-size: 1.85rem; font-weight: 500; line-height: 1.2; margin: 2.4rem 0 0.9rem; }
+  h3 { font-size: 1.15rem; font-weight: 600; margin: 1.6rem 0 0.5rem; }
+
+  ul.communities { list-style: none; margin: 0; padding: 0; }
+  ul.communities > li { padding: 0.55rem 0; }
+  .row { display: flex; align-items: baseline; gap: 0.7rem; }
+  .chev { color: var(--iris-ink); font-size: 1.05rem; line-height: 1; }
+  .row .title { font-size: 1.32rem; }
+  .note { color: var(--iris-muted); font-size: 0.95rem; margin: 0.2rem 0 0 1.9rem; }
+  .kids { margin: 0.35rem 0 0.5rem 1.9rem; padding: 0; list-style: none; }
+  .kids li { padding: 0.3rem 0; }
+
+  /* ── Materialisation state. A WORD, never a colour alone (SC 1.4.1). ── */
+  .state {
+    display: inline-block; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 0.12rem 0.45rem; border-radius: 3px; border: 1px solid;
+    vertical-align: 0.12em;
+  }
+  .state.materialized { color: #1d5c1d; border-color: #94BA65; background: #f0f6e9; }
+  .state.referenced   { color: var(--iris-dark); border-color: var(--iris-edge); background: var(--iris-wash); }
+  .state.unknown      { color: #7a4a10; border-color: #ec9433; background: #fdf4e8; }
+
+  table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
+  table.items th, table.items td {
+    text-align: left; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--iris-edge);
+    vertical-align: top;
+  }
+  table.items th { font-weight: 700; background: var(--iris-wash); }
+  table.items code { font-size: 0.86rem; color: var(--iris-muted); }
+  .dl { white-space: nowrap; }
+
+  .caveat {
+    border-left: 4px solid var(--iris-current); background: var(--iris-wash);
+    padding: 0.9rem 1.1rem; margin: 1.6rem 0; font-size: 0.95rem;
+  }
+  .caveat p { margin: 0.4rem 0; }
+  .caveat p:first-child { margin-top: 0; }
+  .caveat p:last-child { margin-bottom: 0; }
+
+  footer.mast { background: var(--iris-accent); color: #fff; margin-top: 3rem; }
+  footer.mast .wrap { padding-top: 1.8rem; padding-bottom: 1.8rem; font-size: 0.93rem; }
+  footer.mast a { color: #fff; text-decoration: underline; }
+  footer.mast .rule { height: 1px; background: rgba(255,255,255,0.35); margin: 1rem 0; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 1.9rem; }
+    .none { color: var(--iris-muted); font-style: italic; }
+  .nologo { display: none; }
+    .wordmark .iris { font-size: 1.7rem; }
+    table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
+    table.items thead { display: none; }
+    table.items td { border-bottom: none; padding: 0.25rem 0; }
+    table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ingested"><div class="wrap">
+  <strong>INGESTED COPY — not WHO, and not live.</strong>
+  This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
+  from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
+  <em>by reference</em>: 12 nodes of a 361.55&nbsp;GiB repository, of which
+  <strong>3 items</strong> are held here. The WHO logo is deliberately omitted.
+</div></div>
+
+<header class="mast"><div class="wrap">
+  <div class="wordmark">
+    <span class="org">World Health<br>Organization</span>
+    <span class="bar"></span>
+    <span class="stack">
+      <span class="iris">iris<span class="dot">.</span></span>
+      <span class="sub">Institutional Repository<br>for Information Sharing</span>
+    </span>
+  </div>
+  <div class="nologo">Logo omitted — replica, not published under WHO</div>
+</div></header>
+
+<nav class="main"><div class="wrap">
+  <a href="community-list.html">Communities &amp; Collections</a>
+  <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
+</div></nav>
+
+<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">WHO handbook for guideline development, 2nd ed.</span></div></div>
+
+<main class="wrap">
+<h1>WHO handbook for guideline development, 2nd ed.</h1>
+<p>Permanent URI for this item
+  <span class="none">none recorded — ingested from a local copy, not resolved from IRIS</span>
+  <span class="state materialized">materialized</span></p>
+
+
+
+<h2>Files</h2>
+<table class="items">
+<thead><tr><th>Name</th><th>Bundle</th><th>Size</th><th>State</th></tr></thead>
+<tbody>
+<tr>
+  <td><code>9789241548960_eng.pdf</code></td>
+  <td>ORIGINAL</td>
+  <td>2.04 MB</td>
+  <td><span class="state materialized">materialized</span></td>
+</tr>
+</tbody>
+</table>
+
+<h3>Both links, as asked for</h3>
+<table class="items">
+<thead><tr><th>Where</th><th>Link</th></tr></thead>
+<tbody>
+<tr><td>Upstream, at WHO</td><td>none recorded</td></tr>
+<tr><td>Held here, in folio-assistant</td>
+    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/9789241548960_eng.pdf">9789241548960_eng.pdf</a></td></tr>
+<tr><td>Ingested text (L1)</td>
+    <td><code>who-iris/library/9789241548960-eng/sections/</code></td></tr>
+<tr><td>Dublin Core record</td>
+    <td><code>who-iris/catalogue/records/9789241548960-eng.dc.json</code></td></tr>
+</tbody>
+</table>
+
+
+
+</main>
+
+<footer class="mast"><div class="wrap">
+  <p><strong>Ingested replica.</strong> Rendered from
+  <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>.
+  Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every
+  figure on this page is read out of the catalogue, not copied from a screenshot.</p>
+  <div class="rule"></div>
+  <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
+  This copy asserts no endorsement and carries no WHO mark.</p>
+</div></footer>
+
+</body>
+</html>

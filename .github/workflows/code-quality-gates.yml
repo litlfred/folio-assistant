@@ -593,6 +593,11 @@ jobs:
           bun run readme:sync:check
           bun run avatars:css:check
           bun run themes:css:check
+          # The ingested-IRIS replica pages, generated from who-iris/catalogue/.
+          # A generated page nobody gates drifts from the graph it claims to
+          # render, and this one carries byte counts and download links -- the
+          # two things a reader would take on trust.
+          bun run iris:pages:check
           bun run translation:block-qa:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
