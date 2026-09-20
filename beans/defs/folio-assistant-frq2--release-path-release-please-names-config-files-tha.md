@@ -87,8 +87,12 @@ both of which would surface on the first real attempt.
 ## Done when
 
 [ ] `release-please` either has its two config files or stops naming them
-[ ] The install URL in `release-folio-assistant.yml` names this repository —
-    line 86 first, because it is the one a user is told to run
+[x] The install URL in `release-folio-assistant.yml` names this repository.
+    **Done 2026-09-20** (`90ebd7c5`): the release body now interpolates
+    `${{ github.repository }}` rather than a corrected literal — the workflow
+    creates the release in the repository it runs in, so deriving it cannot
+    drift, whereas hardcoding `litlfred/folio-assistant` would reproduce this
+    exact defect one rename later. The header comment's copy is fixed too.
 [ ] Each header describes THIS repository, with the corrections moved above
     the prose they correct rather than below it
 [ ] One release cut end to end, or a recorded decision that neither path is
