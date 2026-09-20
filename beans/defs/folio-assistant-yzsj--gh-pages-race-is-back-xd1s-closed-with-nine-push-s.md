@@ -4,9 +4,9 @@ title: 'gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three a
 status: todo
 type: task
 priority: normal
-parent: folio-assistant-1xhc
 created_at: 2026-09-20T20:02:00Z
-updated_at: 2026-09-20T20:02:00Z
+updated_at: 2026-09-20T20:33:25Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) after merging #589, whose
@@ -116,3 +116,32 @@ bean's to reopen; this is the residue after it, not a claim that it was wrong.
 Related: `xd1s` (completed, the group), `eoix` and `pdxk` (archived, the
 pending-cancellation measurement), `bm6d` (self-inflicted double-push), `6pfo`
 (mis-cited here), `1xhc` (parent).
+
+
+
+---
+
+## The retry's own failure mode is `pb4n`, not covered here — 2026-09-20
+
+Opened from PR #603, whose `stage` job failed differently from the runs above:
+the push was rejected as expected, the retry rebased as designed, and then
+
+```
+CONFLICT (content): Merge conflict in _render-log/2026-09-20.jsonl
+error: could not apply e415631... staging(claude-elegant-albattani-0byaig)
+```
+
+**This bean is about preventing the race; `pb4n` is about the retry surviving
+it.** The retry handles a REJECTION and cannot handle a CONTENT CONFLICT, and
+every run appends to the same day's `_render-log/<date>.jsonl`, so two
+interleaved runs on one day conflict by construction rather than by luck.
+
+That matters for scoping the fix here: the table above records
+`feature-staging.yml` as outside `gh-pages-push` **deliberately, with a
+measurement**, so the retry is load-bearing by design and cannot be assumed
+away. Restoring the concurrency invariant makes the collision rarer, not
+impossible.
+
+Proposed there: `.gitattributes` on `gh-pages` scoping `merge=union` to
+`_render-log/*.jsonl` — correct semantics for an append-only log, and narrow
+on purpose.
