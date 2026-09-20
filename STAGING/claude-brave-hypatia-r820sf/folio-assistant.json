@@ -251,10 +251,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T08:42:13.860Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fe94f2b1f7549b1678e3cb449ec0de1516c474ec",
-  "sourceCommitSha": "fe94f2b1f7549b1678e3cb449ec0de1516c474ec",
-  "sourceCommitAt": "2026-09-20T08:40:41Z",
+  "generatedAt": "2026-09-20T08:53:37.286Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/91fbcfd0ed40e562ff37482eb3867e86827c4f4d",
+  "sourceCommitSha": "91fbcfd0ed40e562ff37482eb3867e86827c4f4d",
+  "sourceCommitAt": "2026-09-20T08:52:03Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 173,
@@ -266,7 +266,7 @@
     "Process": 38,
     "SequenceFlow": 518,
     "ProcessNode": 484,
-    "Tool": 31,
+    "Tool": 32,
     "Schema": 60,
     "GraphKind": 16,
     "Directory": 14
@@ -19846,6 +19846,60 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/serve-rendering"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/gates",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "gates",
+      "title": "The platform's quality gates",
+      "description": "Run the checks CI runs, derived from the workflow rather than listed here. One Tool for all of them, not one per gate: the list is computed from `.github/workflows/code-quality-gates.yml` at call time, so it cannot drift from what CI actually enforces.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run gates"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "all",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Flag",
+            "description": "Add the jobs that need a browser; the default is the fast set.",
+            "required": false,
+            "arg": {
+              "flag": "--all"
+            }
+          },
+          {
+            "name": "list",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Flag",
+            "description": "Print the derived gates and exit, running none.",
+            "required": false,
+            "arg": {
+              "flag": "--list"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/tool-types.schema.json#/$defs/Text",
+            "description": "One line per gate, then a pass count or the failures. Exit non-zero on any failure."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/platform-gates",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/prepare-merge",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#skill/continual-progress"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/gates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld#tool/kg-validate",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "kg-validate",
@@ -22772,8 +22826,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "c5f0d9b80dc5520950e02d64df1737cb731fcc6a",
+    "sha": "86dbaf2fa20f450e9a005cbdbebd4cef6170f313",
     "pr": "479/merge",
-    "run": "35500218210"
+    "run": "35500745251"
   }
 }
