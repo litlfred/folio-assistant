@@ -270,6 +270,13 @@
       "description": "What a translation sign-off covers.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "Count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000,
+      "description": "A non-negative count — how many of something, or how many to show. Zero is a real answer.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "Dpi": {
       "type": "integer",
       "minimum": 24,
@@ -299,8 +306,8 @@
   },
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "87704124a1a32ffa9eecc579a95421a95aa11196",
+    "sha": "de60aad07101295946ec67dfedb50f7caf362e3f",
     "pr": "524/merge",
-    "run": "35515571897"
+    "run": "35515999864"
   }
 }
