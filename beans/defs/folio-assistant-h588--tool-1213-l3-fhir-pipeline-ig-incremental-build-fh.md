@@ -31,3 +31,21 @@ its verification happens downstream.
 - [ ] `satisfies` names `l3-fhir-authoring`, `fhir-validation`, `ig-publication`
 - [ ] the node states that it cannot be exercised in the platform repo, and why
 - [ ] not "verified" on the strength of a dispatch that fails by design
+
+---
+
+## 2026-09-20: this bean's "cannot be exercised here" is not special to FHIR
+
+`d308`'s CORRECTION established it for **six of the thirteen groups**: Lean
+(0 files this repo can run), LaTeX (0), Bibliography (0), FHIR (0), and
+effectively QA sweep (2 of 27) and Content graph (1 of 19).
+
+So the posture this bean recorded first — *author here, verify in a folio, and
+say so on the node* — is the general case rather than this group's quirk. Worth
+promoting into whatever skill covers Tool authoring, so the next twelve nodes do
+not each rediscover it.
+
+What stays specific to this bean: `qa-sweep` and `witness-refresh` do not merely
+lack a folio here, they **fail by design** — the first preflights on
+`content/package.json`, the second needs `folio-assistant/computations/`. A green
+dispatch of either in this repo would be the anomaly, not the goal.
