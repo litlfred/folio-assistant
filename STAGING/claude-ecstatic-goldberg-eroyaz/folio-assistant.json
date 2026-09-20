@@ -248,17 +248,17 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T05:11:01.955Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9bc6ea36bbb58379a6db1fc75b3e191f5ce23e60",
-  "sourceCommitSha": "9bc6ea36bbb58379a6db1fc75b3e191f5ce23e60",
-  "sourceCommitAt": "2026-09-20T05:09:23Z",
+  "generatedAt": "2026-09-20T05:59:00.369Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/70c748cd9eaa6810361773e59db1d5200828d3d1",
+  "sourceCommitSha": "70c748cd9eaa6810361773e59db1d5200828d3d1",
+  "sourceCommitAt": "2026-09-20T05:56:53Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 170,
+    "Skill": 169,
     "Actor": 27,
     "Capability": 24,
     "Role": 109,
-    "SkillPackage": 8,
+    "SkillPackage": 7,
     "Process": 36,
     "SequenceFlow": 498,
     "ProcessNode": 464,
@@ -1376,14 +1376,13 @@
       "title": "Bean Coordination",
       "description": "Pointer to the bean-based session work-plan system (the `beans` CLI flat-file issue tracker, data under `beans/`). Operational usage lives in todo-manager.md / session-intent.md; the generic coordinator/orchestrator logic is owned by the folio-assistant platform.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/local"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
       "instructionLines": 211,
       "hasInstructions": true,
       "hasIOContract": false,
-      "ambiguous": true,
+      "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bean-coordination"
     },
     {
@@ -1661,14 +1660,13 @@
       "title": "Session Task Manager (`beans`)",
       "description": "Maintain and display work-in-progress task lists using the `beans` CLI issue tracker. Track implementation progress, open tasks, missing artifacts, and blocked items across a session.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/local"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
       "instructionLines": 231,
       "hasInstructions": true,
       "hasIOContract": false,
-      "ambiguous": true,
+      "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager"
     },
     {
@@ -1680,7 +1678,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/qa-report-signing.md",
-      "instructionLines": 105,
+      "instructionLines": 110,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2949,7 +2947,7 @@
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/skills"
       ],
-      "instructionsPath": "bootstrap/skills/confirm-harness.md",
+      "instructionsPath": "../bootstrap/skills/confirm-harness.md",
       "instructionLines": 59,
       "hasInstructions": true,
       "hasIOContract": false,
@@ -2972,22 +2970,6 @@
       "hasIOContract": false,
       "ambiguous": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/corpus-grep"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/language-trap-agent-audit",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "language-trap-agent-audit",
-      "title": "/language-trap-agent-audit — per-block agentic trap audit",
-      "description": "Thorough per-block agentic audit of the ten language-trap categories (owner spec 2026-08-15) — full-context judgement over every prose-bearing content block, agent reviewer entries in the QA sidecar, small fixes applied inline, structural fixes flagged.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/local"
-      ],
-      "instructionsPath": ".claude/skills/local/language-trap-agent-audit.md",
-      "instructionLines": 120,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/language-trap-agent-audit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#actor/review-agent",
@@ -3912,17 +3894,9 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/skills",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "skills",
-      "path": "bootstrap/skills",
+      "path": "../bootstrap/skills",
       "hasManifest": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/local",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "local",
-      "path": ".claude/skills/local",
-      "hasManifest": false,
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/local"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/authoring-who-smart-guidelines",
@@ -21883,7 +21857,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
       ],
-      "description": "The bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `bootstrap/skills/`, NOT `bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `bootstrap/README.md` and `bootstrap/AGENTS.md` declare neither, and they are the bootstrap instance's two DECLARED ASSETS — so a graph rooted at `bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `bootstrap/harness.json`; this entry is the same fact at the root, and it has to be stated twice only because `resolveSkillDirs` has no caller, so a nested instance's directories are not yet reachable from here. When that is wired, THIS entry is the one to delete.",
+      "description": "The bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `bootstrap/skills/`, NOT `bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `bootstrap/README.md` and `bootstrap/AGENTS.md` declare neither, and they are the bootstrap instance's two DECLARED ASSETS — so a graph rooted at `bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `bootstrap/harness.json`; this entry is the same fact at the root, and it has to be stated twice only because `resolveSkillDirs` has no caller, so a nested instance's directories are not yet reachable from here. When that is wired, THIS entry is the one to delete. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/bootstrap"
     },
     {
@@ -21927,7 +21901,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/beans"
       ],
-      "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state).",
+      "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/beans"
     },
     {
@@ -21938,7 +21912,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/todos"
       ],
-      "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`.",
+      "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/todos"
     },
     {
@@ -21967,7 +21941,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#directory/voices",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "voices",
-      "path": "folio-assistant/voices/",
+      "path": "voices/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/voices"
       ],
@@ -21978,7 +21952,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#directory/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "translation-sources",
-      "path": "folio-assistant/translations/",
+      "path": "translations/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources"
       ],
@@ -21999,8 +21973,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "d92550c6a1743378cf29651a46fd5044b8e727bb",
+    "sha": "da8f4335dea6cfd8c99006d79b9c119dab9dba7d",
     "pr": "460/merge",
-    "run": "35490958908"
+    "run": "35492971162"
   }
 }
