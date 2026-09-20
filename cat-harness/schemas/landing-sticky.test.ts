@@ -56,8 +56,18 @@ function contributionsOf(rel: string): DeclaredContribution[] {
   }));
 }
 
+// ONE CARD PER HARNESS, which is the shape the owner asked for: "not all
+// stickies should be cat harness they should be outputs (as if) each init
+// harness ran ... each own intiaization sticky note to show sucess".
+//
+// The ids were `landing`, `cat-harness` and `subgraphs`, all three of them this
+// one harness talking about itself. They are now one card each for three
+// harnesses, and these fixtures name them that way so a reader of the tests
+// sees the structure rather than a list of historical ids.
 const CAT = contributionsOf("cat-harness");
+const CORE = contributionsOf("folio-assist-core");
 const BOOT = contributionsOf("bootstrap");
+const ALL = [...CAT, ...CORE, ...BOOT];
 
 function built(declared: DeclaredContribution[]): LandingSticky[] {
   return composeContributions(declared).map((d) => stickyFromContribution(d, { createdAt: NOW }));
@@ -81,7 +91,7 @@ describe("a sticky is a CONTRIBUTION from a layer, not an entry in one list", ()
 
   test("the built sticky records which layer contributed it", () => {
     expect(sticky(BOOT, "bootstrap").contributedBy).toBe("bootstrap");
-    expect(sticky(CAT, "landing").contributedBy).toBe("folio-assistant");
+    expect(sticky(CAT, "cat-harness").contributedBy).toBe("folio-assistant");
   });
 
   test("no layer's declaration names another layer's sticky", () => {
@@ -90,48 +100,57 @@ describe("a sticky is a CONTRIBUTION from a layer, not an entry in one list", ()
   });
 });
 
-describe("a bare bootstrap instance gets NO CAT — structurally, not by convention", () => {
-  test("every theme bootstrap declares resolves to no backdrop at all", () => {
-    // The owner's ruling: "i want the grumpy cat moved out of bootstrap and into
-    // cat harness". This is what makes it true rather than remembered — the
-    // themes bootstrap chooses carry no `imageRole`, so there is no art to
-    // resolve, whatever images the composing instance happens to declare.
+describe("bootstrap has its OWN cat, not cat-harness's", () => {
+  // SUPERSEDED, and the supersession is the point. This block asserted that
+  // every theme bootstrap declared resolved to NO backdrop at all — which was
+  // how the ruling *"i want the grumpy cat moved out of bootstrap and into cat
+  // harness"* was satisfied while bootstrap had no art of its own: by having no
+  // cat.
+  //
+  // The owner supplied bootstrap art on 2026-09-20, so the ruling is now
+  // satisfied the better way. What must hold is not "no cat" but "not
+  // cat-harness's cat", and that is what these check.
+  test("bootstrap declares a theme, and it is not the one cat-harness uses", () => {
     expect(BOOT.length).toBeGreaterThan(0);
+    const catThemes = new Set(CAT.map((c) => c.contribution.theme));
+    for (const b of BOOT) {
+      expect(catThemes.has(b.contribution.theme)).toBe(false);
+    }
+  });
+
+  test("its theme resolves to its OWN art, not the default cloud's", () => {
+    const images = decl("cat-harness").images ?? [];
     for (const b of BOOT) {
       const theme = THEMES.find((t) => t.id === b.contribution.theme);
-      expect(theme).toBeDefined();
-      expect(theme!.backdrop).toBeUndefined();
+      expect(theme, `no theme "${b.contribution.theme}"`).toBeDefined();
+      const resolved = resolveThemeBackdrop(theme!, images);
+      expect(resolved.none).toBe(false);
+      expect(resolved.art.size).toBe(3);
+      // The role is bootstrap's, so a reader can tell whose cat it is.
+      for (const [, img] of resolved.art) expect(img.src).toContain("bootstrap");
     }
-  });
-
-  test("resolving one of bootstrap's themes against THIS instance reports `none`", () => {
-    // Composed inside folio-assistant, which DOES declare cat art. The sticky
-    // still gets none, because the theme asks for no image role. `none: true` is
-    // the third outcome `resolveThemeBackdrop` exists to distinguish — "declares
-    // no backdrop", as against "declares one whose art is missing".
-    const images = decl("cat-harness").images ?? [];
-    for (const b of BOOT) {
-      const theme = THEMES.find((t) => t.id === b.contribution.theme)!;
-      const resolved = resolveThemeBackdrop(theme, images);
-      expect(resolved.none).toBe(true);
-      expect(resolved.art.size).toBe(0);
-    }
-  });
-
-  test("that check CAN fire — this instance's own engineer theme resolves to art", () => {
-    // Without this, `none: true` would also be what a typo in the theme id
-    // produced, and the test above would pass for the wrong reason.
-    const images = decl("cat-harness").images ?? [];
-    const engineer = THEMES.find((t) => t.id === "engineer")!;
-    const resolved = resolveThemeBackdrop(engineer, images);
-    expect(resolved.none).toBe(false);
-    expect(resolved.art.size).toBeGreaterThan(0);
   });
 
   test("the schema gives `theme` no default, so a layer cannot inherit a cat by silence", () => {
+    // Unchanged, and still the mechanism: a default here is how a layer that
+    // said nothing would end up wearing somebody else's theme.
     expect(() =>
       StickyContributionSchema.parse({ id: "x", order: 1, body: "words" }),
     ).toThrow();
+  });
+
+  test("every backdrop role a theme names has all three crops, or it serves none", () => {
+    // The falsifier for the check above: `resolveThemeBackdrop` refuses an
+    // incomplete backdrop WHOLESALE, so "resolved 3 layouts" is the only state
+    // that renders art at all.
+    const images = decl("cat-harness").images ?? [];
+    const used = new Set(ALL.map((c) => c.contribution.theme));
+    for (const id of used) {
+      const theme = THEMES.find((t) => t.id === id)!;
+      if (!theme.backdrop) continue;
+      const r = resolveThemeBackdrop(theme, images);
+      expect(r.missing, `${id} has a partial backdrop`).toEqual([]);
+    }
   });
 });
 
@@ -140,14 +159,14 @@ describe("order is DECLARED, not inherited from dependency resolution", () => {
     // The cost the work-plan item named before any of this was written: a
     // composed set with no declared order renders deepest-dependency-first,
     // which would put bootstrap above the instance's own description.
-    const ids = built([...BOOT, ...CAT]).map((s) => s.id);
-    expect(ids[0]).toBe("landing");
+    const ids = built([...BOOT, ...CORE, ...CAT]).map((s) => s.id);
+    expect(ids[0]).toBe("cat-harness");
     expect(ids.at(-1)).toBe("bootstrap");
   });
 
   test("the order survives the layers being read in the other sequence", () => {
-    expect(built([...CAT, ...BOOT]).map((s) => s.id)).toEqual(
-      built([...BOOT, ...CAT]).map((s) => s.id),
+    expect(built(ALL).map((s) => s.id)).toEqual(
+      built([...BOOT, ...CORE, ...CAT]).map((s) => s.id),
     );
   });
 
@@ -206,7 +225,7 @@ describe("two layers cannot claim one sticky id", () => {
   });
 
   test("the live board has no duplicate", () => {
-    expect(() => composeContributions([...CAT, ...BOOT])).not.toThrow();
+    expect(() => composeContributions(ALL)).not.toThrow();
   });
 });
 
@@ -247,17 +266,27 @@ describe("`bodyFrom: description` reads the DECLARING layer's description", () =
     // The defect that would make the seam pointless: a board of one sentence
     // repeated.
     const boot = sticky(BOOT, "bootstrap");
-    expect(boot.comment).toBe(decl("bootstrap").description!);
-    expect(boot.comment).not.toBe(decl("cat-harness").description!);
+    // `startsWith` rather than equality: a card may APPEND to its description
+    // (`bodyAppend`), which is how the scope line is added without copying the
+    // sentence above it. What must hold is that the description is read from
+    // the DECLARING instance and comes first, verbatim.
+    expect(boot.comment.startsWith(decl("bootstrap").description!)).toBe(true);
+    expect(boot.comment.startsWith(decl("cat-harness").description!)).toBe(false);
   });
 
   test("this instance's card carries its own description, markdown and verbatim", () => {
-    const landing = sticky(CAT, "landing");
-    expect(landing.comment).toBe(decl("cat-harness").description!);
-    // Markdown, not an image: the c@t-harness derivation chain is several lines,
-    // and rendering it as real text is what keeps it selectable and readable by a
+    const card = sticky(CAT, "cat-harness");
+    // THE ACRONYM CHAIN, and the owner's instruction was explicit: "dont lose
+    // acronym definitions". It is read from the declaration rather than copied,
+    // so it cannot drift from the one place it is written.
+    expect(card.comment.startsWith(decl("cat-harness").description!)).toBe(true);
+    for (const form of ["caaat-harness", "ca&at-harness", "c@t-harness"]) {
+      expect(card.comment).toContain(form);
+    }
+    // Markdown, not an image: the derivation chain is several lines, and
+    // rendering it as real text is what keeps it selectable and readable by a
     // screen reader.
-    expect(landing.comment).toContain("\n");
+    expect(card.comment).toContain("\n");
   });
 
   test("an instance with no description falls back to its NAME rather than failing", () => {
@@ -298,7 +327,7 @@ describe("`bodyFrom: description` reads the DECLARING layer's description", () =
 });
 
 describe("it is page-global BY TYPE, not by convention", () => {
-  const one = () => sticky(CAT, "landing");
+  const one = () => sticky(CAT, "cat-harness");
 
   test("the built sticky carries a page anchor", () => {
     expect(one().anchor).toEqual({ kind: "page", page: LANDING_STICKY_PAGE });
@@ -322,16 +351,16 @@ describe("it is page-global BY TYPE, not by convention", () => {
 
 describe("building it twice produces the same node — the idempotency key", () => {
   test("two calls with the same input are identical", () => {
-    expect(built([...CAT, ...BOOT])).toEqual(built([...CAT, ...BOOT]));
+    expect(built(ALL)).toEqual(built(ALL));
   });
 
   test("the id is declared, not derived from the description", () => {
-    const d = CAT.find((c) => c.contribution.id === "landing")!;
+    const d = CAT.find((c) => c.contribution.id === "cat-harness")!;
     const other = stickyFromContribution(
       { ...d, description: "something else entirely" },
       { createdAt: NOW },
     );
-    expect(other.id).toBe("landing");
+    expect(other.id).toBe("cat-harness");
   });
 
   test("`createdAt` is an argument, so the node does not move on its own", () => {
@@ -364,7 +393,7 @@ describe("an href may not resolve by luck — bean blv9", () => {
     // The declarations are now where links are authored, so this is the check
     // that matters. A bare-relative href in `harness.json` would otherwise reach
     // the page and resolve against whatever rendered it.
-    const links = [...CAT, ...BOOT].flatMap((c) => c.contribution.links);
+    const links = ALL.flatMap((c) => c.contribution.links);
     expect(links.length).toBeGreaterThan(0);
     for (const link of links) expect(() => LandingLinkSchema.parse(link)).not.toThrow();
   });
@@ -407,27 +436,69 @@ describe("the four default links point at pages that EXIST", () => {
   });
 });
 
-describe("`onboardingLinks` asks for the SET rather than copying it", () => {
-  test("the flag appends all four, after the layer's own links", () => {
-    const landing = sticky(CAT, "landing");
-    expect(landing.links).toEqual([...DEFAULT_ONBOARDING_LINKS]);
+describe("EVERY declared link resolves to a page that exists", () => {
+  // The onboarding four were already checked. This is the rest, and it is the
+  // check the sub-graphs card needed: the owner asked for links, and a link
+  // that 404s is worse than the naming-without-linking it replaced. Site-root
+  // paths are resolved against the docs tree; absolute URLs are not fetched
+  // (this suite does no network), so they are checked for shape only.
+  const DOCS = join(INSTANCE, siteDirFor(INSTANCE));
+  const siteLinks = ALL
+    .flatMap((c) => c.contribution.links)
+    .filter((l) => !isExternalLink(l));
+
+  test("there are site links to check", () => {
+    expect(siteLinks.length).toBeGreaterThan(3);
   });
 
-  test("no declaration copies an onboarding href, which would be the BLOCK_KINDS shape", () => {
+  test.each(siteLinks.map((l) => [l.label, l.href] as const))(
+    "%s -> %s resolves to a source page",
+    (_label, href) => {
+      const stem = href.replace(/^\//, "").replace(/\.html$/, "");
+      const candidates = [`${stem}.md`, join(stem, "index.md"), `${stem}.html`];
+      expect(candidates.some((c) => existsSyncSafe(join(DOCS, c)))).toBe(true);
+    },
+  );
+
+  test("every absolute link is https, not a bare host or http", () => {
+    const abs = ALL.flatMap((c) => c.contribution.links).filter(isExternalLink);
+    expect(abs.length).toBeGreaterThan(0);
+    for (const l of abs) expect(l.href.startsWith("https://")).toBe(true);
+  });
+});
+
+describe("`onboardingLinks` asks for the SET rather than copying it", () => {
+  test("the flag appends all four, AFTER the layer's own links", () => {
+    const card = sticky(CAT, "cat-harness");
+    const own = CAT.find((c) => c.contribution.id === "cat-harness")!.contribution.links;
+    expect(own.length).toBeGreaterThan(0);
+    expect(card.links).toEqual([...own, ...DEFAULT_ONBOARDING_LINKS]);
+  });
+
+  test("no declaration copies the onboarding SET, which would be the BLOCK_KINDS shape", () => {
+    // Relaxed from "no declaration reuses an onboarding href", which was too
+    // strict and fired on something legitimate: the sub-graphs card links to
+    // `/content-types.html` under the label "Content", and two cards pointing
+    // at one page is normal. The failure this guards is a layer hand-COPYING
+    // the set instead of asking for it with the flag — one enumeration in
+    // several places, one of which goes short.
     const onboarding = new Set(DEFAULT_ONBOARDING_LINKS.map((l) => l.href));
-    for (const c of [...CAT, ...BOOT]) {
-      for (const link of c.contribution.links) expect(onboarding.has(link.href)).toBe(false);
+    for (const c of ALL) {
+      const copied = c.contribution.links.filter((l) => onboarding.has(l.href)).length;
+      expect(copied).toBeLessThan(onboarding.size);
     }
   });
 
-  test("without the flag a sticky carries only what it declared", () => {
-    expect(sticky(CAT, "subgraphs").links).toEqual([]);
+  test("without the flag a sticky carries exactly its declared links and no more", () => {
+    const declared = CORE.find((c) => c.contribution.id === "folio-assist-core")!.contribution;
+    expect(declared.onboardingLinks ?? false).toBe(false);
+    expect(sticky(CORE, "folio-assist-core").links).toEqual([...declared.links]);
   });
 });
 
 describe("it is recognised by its declared tag, not by its shape", () => {
   test("the built sticky is recognised", () => {
-    expect(isLandingSticky(sticky(CAT, "landing"))).toBe(true);
+    expect(isLandingSticky(sticky(CAT, "cat-harness"))).toBe(true);
   });
 
   test("a note that merely has the id is NOT", () => {
@@ -440,66 +511,101 @@ describe("it is recognised by its declared tag, not by its shape", () => {
   });
 
   test("the tag is what the schema requires", () => {
-    expect(sticky(CAT, "landing").$schema).toBe(LANDING_STICKY_SCHEMA_TAG);
+    expect(sticky(CAT, "cat-harness").$schema).toBe(LANDING_STICKY_SCHEMA_TAG);
   });
 });
 
 describe("the summary is derived, not a second field to keep in step", () => {
   test("it is the body's first non-blank line when none is declared", () => {
-    const landing = sticky(CAT, "landing");
+    const landing = sticky(CAT, "cat-harness");
     const first = landing.comment.split("\n").find((l) => l.trim().length > 0)!.trim();
     expect(landing.summary).toBe(first);
   });
 
   test("a declared summary wins", () => {
-    expect(sticky(CAT, "subgraphs").summary).toBe("The knowledge sub-graphs");
+    expect(sticky(CORE, "folio-assist-core").summary).toBe("What a folio is");
   });
 });
 
 describe("the sub-graphs card says what the owner asked for", () => {
-  const body = () => sticky(CAT, "subgraphs").comment;
+  const body = () => sticky(CORE, "folio-assist-core").comment;
+  const links = () => sticky(CORE, "folio-assist-core").links;
 
-  test("it is two sentences, because that is what was asked for", () => {
-    const sentences = body()
-      .split(/(?<=\.)\s+/)
-      .filter((s) => s.trim().length > 0);
-    expect(sentences).toHaveLength(2);
-  });
-
-  test("it names all four sub-graphs the owner listed", () => {
-    for (const word of ["Content", "acquisition", "tools", "skills"]) {
+  // It WAS two sentences with no links, on the owner's first instruction. The
+  // second: "knwoedege graph (content, skills, process, tools) could be a but
+  // more informative. needs links." Naming four things and giving a reader no
+  // way to reach any of them is the state that was corrected, so the tests
+  // check reachability now rather than brevity.
+  test("it names all four sub-graphs, including `process`", () => {
+    for (const word of ["Content", "Skills", "Processes", "Tools"]) {
       expect(body()).toContain(word);
     }
   });
 
-  test("it does NOT claim `acquisition` is a graph kind", () => {
+  test("each of the four is LINKED, not merely named", () => {
+    const labels = links().map((l) => l.label);
+    for (const label of ["Content", "Skills", "Processes", "Tools"]) {
+      expect(labels).toContain(label);
+    }
+  });
+
+  test("acquisition is described as a STEP, not a fifth graph kind", () => {
     // `readDeclaration` throws on an unknown kind, so prose naming a fifth one
-    // would send the next agent looking for something the registry rejects.
-    expect(body()).not.toMatch(/acquisition[^.]*\bgraph kind\b/i);
-    expect(body()).not.toMatch(/\bkinds?\b/i);
+    // would send the next agent looking for a directory that is not there. The
+    // card now says so outright instead of merely avoiding the word.
+    expect(body()).toContain("acquisition");
+    expect(body()).toMatch(/step rather than a graph kind/i);
+  });
+
+  test("it says where acquisition's two ends are, since they are real directories", () => {
+    expect(body()).toContain("uploads/");
+    expect(body()).toContain("library/");
   });
 });
 
 describe("the cat's introduction keeps the owner's own words", () => {
   test("verbatim, down to the shape of the sentence", () => {
-    expect(sticky(CAT, "cat-harness").comment).toBe(
+    // APPENDED to this harness's card now rather than being a card of its own
+    // — one card per harness — so containment rather than equality. The words
+    // are unchanged, which is the point: the joke carries a real gloss on
+    // "computable adjudication and agentic test harness".
+    expect(sticky(CAT, "cat-harness").comment).toContain(
       "Please be introduced to a cat who acquires things, for whatever purpose — maybe somebody knows.",
     );
   });
 
-  test("it takes plain grumpy cat while the description card takes the engineer", () => {
-    // The two differing is the point, and the owner said so directly.
-    expect(sticky(CAT, "cat-harness").theme).toBe("grumpy-cat");
-    expect(sticky(CAT, "landing").theme).toBe("engineer");
+  test("every card of this harness takes ONE theme — the convention", () => {
+    // SUPERSEDES the earlier expectation that the description card took the
+    // engineer theme while this one took plain grumpy cat. The owner set a
+    // convention over that: "each harness hould have its own unique theme (by
+    // convention)", and assigned it — "cat-harness=gumpy hoddie. test=engineer."
+    //
+    // So the two differing is no longer the point; the harness having one look
+    // is. `engineer` is reserved for testing surfaces and is deliberately used
+    // by nothing here.
+    const themes = new Set(CAT.map((c) => c.contribution.theme));
+    expect([...themes]).toEqual(["grumpy-cat"]);
   });
 
-  test("its one link is absolute and points at the source, not at this site", () => {
+  test("bootstrap does NOT share it, which is what makes the theme the harness's own", () => {
+    const boot = new Set(BOOT.map((c) => c.contribution.theme));
+    for (const t of boot) expect(t).not.toBe("grumpy-cat");
+  });
+
+  test("its source link is absolute and does not point at this site", () => {
     const links = sticky(CAT, "cat-harness").links;
-    expect(links).toHaveLength(1);
-    expect(isExternalLink(links[0]!)).toBe(true);
+    const source = links.find((l) => isExternalLink(l))!;
+    expect(source).toBeDefined();
     // A sticky on the landing page linking to the landing page is a link to
     // itself: cat-harness has no site of its own yet (issue #223).
-    expect(links[0]!.href).not.toBe(decl("cat-harness").canonicalUrl);
+    expect(source.href).not.toBe(decl("cat-harness").canonicalUrl);
+  });
+
+  test("it also carries an RTFM link to this harness's own docs", () => {
+    // The owner: "all sticky notes should be ... provife links to that
+    // harness's docs (RTFM=...)".
+    const links = sticky(CAT, "cat-harness").links;
+    expect(links.some((l) => /RTFM/i.test(l.label))).toBe(true);
   });
 });
 

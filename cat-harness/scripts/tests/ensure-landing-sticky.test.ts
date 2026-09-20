@@ -20,7 +20,8 @@ import {
   toAsciiJson,
 } from "../ensure-landing-sticky.js";
 import { LandingStickySchema } from "../../schemas/landing-sticky.js";
-import { contributingRoots, declaredContributions } from "../ensure-landing-sticky.js";
+import { contributingRoots, declaredContributions, initiationFromArgv } from "../ensure-landing-sticky.js";
+import { InitiationSchema } from "../../schemas/sticky-contribution.js";
 
 /**
  * The ids this fixture's declaration contributes.
@@ -387,5 +388,137 @@ describe("a nested instance contributes its own stickies", () => {
     );
     expect(declaredContributions(root)).toEqual([]);
     expect(ensureLandingSticky(root, "2026-09-20T00:00:00.000Z").stickies).toEqual([]);
+  });
+});
+
+describe("a sticky is an initiation RECEIPT", () => {
+  /**
+   * The owner, 2026-09-20: *"it is skill/tool to add sticky note at end of
+   * harnes sinitialziation. (maybe create it a the beingnngin, update when
+   * done, to show some status)"*.
+   *
+   * The pair is the design. Writing the card only at the END makes a crashed
+   * initiation indistinguishable from one that never started — both are a card
+   * that is simply absent, and "missing" is the least informative thing a
+   * status board can say.
+   */
+  function instanceWithSticky(): string {
+    const root = mkdtempSync(join(tmpdir(), "receipt-"));
+    writeFileSync(
+      join(root, "harness.json"),
+      JSON.stringify(
+        {
+          name: "a-folio",
+          description: "one line",
+          stickies: [
+            { id: "landing", order: 10, theme: "engineer", bodyFrom: "description" },
+            { id: "other", order: 20, theme: "engineer", body: "another card" },
+          ],
+          directories: [],
+        },
+        null,
+        2,
+      ),
+    );
+    return root;
+  }
+
+  const read = (root: string, id: string) =>
+    LandingStickySchema.parse(
+      JSON.parse(
+        readFileSync(
+          join(root, folioDirPath(JSON.parse(readFileSync(join(root, "harness.json"), "utf8"))), stickyFile(id)),
+          "utf8",
+        ),
+      ),
+    );
+
+  test("absent is NOT ok — a card nothing reported on carries no status", () => {
+    // The third state, and the one that must never render green.
+    const root = instanceWithSticky();
+    ensureLandingSticky(root, "2026-09-20T00:00:00.000Z");
+    expect(read(root, "landing").initiation).toBeUndefined();
+  });
+
+  test("`--begin` marks it running, with a start time and no completion", () => {
+    const root = instanceWithSticky();
+    ensureLandingSticky(root, "2026-09-20T01:00:00.000Z", {
+      initiation: { harness: "a-folio", phase: "begin" },
+    });
+    const i = read(root, "landing").initiation!;
+    expect(i.status).toBe("running");
+    expect(i.startedAt).toBe("2026-09-20T01:00:00.000Z");
+    expect(i.completedAt).toBeUndefined();
+  });
+
+  test("`--complete` PRESERVES the start time rather than overwriting it", () => {
+    // Otherwise the pair becomes two readings of the same instant, and "how
+    // long did initiation take" stops being answerable.
+    const root = instanceWithSticky();
+    ensureLandingSticky(root, "2026-09-20T01:00:00.000Z", {
+      initiation: { harness: "a-folio", phase: "begin" },
+    });
+    ensureLandingSticky(root, "2026-09-20T01:05:00.000Z", {
+      initiation: { harness: "a-folio", phase: "complete" },
+    });
+    const i = read(root, "landing").initiation!;
+    expect(i.status).toBe("ok");
+    expect(i.startedAt).toBe("2026-09-20T01:00:00.000Z");
+    expect(i.completedAt).toBe("2026-09-20T01:05:00.000Z");
+  });
+
+  test("a completion with no begin is recorded, not refused", () => {
+    // An initiation that was never announced still finished, and losing that is
+    // worse than a startedAt only as precise as the completion.
+    const root = instanceWithSticky();
+    ensureLandingSticky(root, "2026-09-20T02:00:00.000Z", {
+      initiation: { harness: "a-folio", phase: "complete" },
+    });
+    expect(read(root, "landing").initiation?.status).toBe("ok");
+  });
+
+  test("a failure carries what failed — the schema refuses one that does not", () => {
+    const root = instanceWithSticky();
+    ensureLandingSticky(root, "2026-09-20T03:00:00.000Z", {
+      initiation: { harness: "a-folio", phase: "complete", status: "failed", detail: "skills/ did not resolve" },
+    });
+    expect(read(root, "landing").initiation?.detail).toContain("skills/");
+    expect(() =>
+      InitiationSchema.parse({ status: "failed", startedAt: "x", completedAt: "y" }),
+    ).toThrow();
+  });
+
+  test("a finished initiation must carry completedAt; only `running` may omit it", () => {
+    expect(() => InitiationSchema.parse({ status: "ok", startedAt: "x" })).toThrow();
+    expect(() => InitiationSchema.parse({ status: "running", startedAt: "x" })).not.toThrow();
+  });
+
+  test("EVERY card of that harness gets the status — one initiation, one harness", () => {
+    const root = instanceWithSticky();
+    ensureLandingSticky(root, "2026-09-20T04:00:00.000Z", {
+      initiation: { harness: "a-folio", phase: "complete" },
+    });
+    for (const id of ["landing", "other"]) expect(read(root, id).initiation?.status).toBe("ok");
+  });
+
+  test("a status survives a plain rebuild rather than being reset", () => {
+    // The builder runs on every initiation and every --check. Dropping the
+    // status would make a finished harness read as "never reported" the next
+    // time anything touched the board.
+    const root = instanceWithSticky();
+    ensureLandingSticky(root, "2026-09-20T05:00:00.000Z", {
+      initiation: { harness: "a-folio", phase: "complete" },
+    });
+    ensureLandingSticky(root, "2026-09-20T06:00:00.000Z");
+    expect(read(root, "landing").initiation?.status).toBe("ok");
+  });
+
+  test("argv parsing: begin, complete, failure with a detail", () => {
+    expect(initiationFromArgv(["--begin", "boot"])).toEqual({ harness: "boot", phase: "begin" });
+    expect(initiationFromArgv(["--complete", "boot"])).toEqual({ harness: "boot", phase: "complete", status: "ok" });
+    expect(initiationFromArgv(["--complete", "boot", "--failed", "--detail", "why"])).toEqual({
+      harness: "boot", phase: "complete", status: "failed", detail: "why",
+    });
+    expect(initiationFromArgv(["--check"])).toBeUndefined();
   });
 });
