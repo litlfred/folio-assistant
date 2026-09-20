@@ -559,7 +559,7 @@ export function syncAll(write: boolean): SyncResult[] {
 // ── CLI ─────────────────────────────────────────────────────────
 
 /**
- * `bun run scripts/agent-memory.ts [--check]`
+ * `bun run cat-harness/scripts/agent-memory.ts [--check]`
  *
  * `--check` writes nothing and exits non-zero when a file is stale, so CI
  * catches an entry edited in `memory/` and never assembled.

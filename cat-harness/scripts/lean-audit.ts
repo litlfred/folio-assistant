@@ -10,11 +10,11 @@
  *   - missing .lean files for blocks that require them
  *
  * Usage:
- *   bun run scripts/lean-audit.ts                    # full audit, console output
- *   bun run scripts/lean-audit.ts --json             # JSON output
- *   bun run scripts/lean-audit.ts --chapter ch5      # filter to one chapter
- *   bun run scripts/lean-audit.ts --strict           # exit 1 on uncited sorries
- *   bun run scripts/lean-audit.ts --strict --check-axioms  # also fail on axioms
+ *   bun run cat-harness/scripts/lean-audit.ts                    # full audit, console output
+ *   bun run cat-harness/scripts/lean-audit.ts --json             # JSON output
+ *   bun run cat-harness/scripts/lean-audit.ts --chapter ch5      # filter to one chapter
+ *   bun run cat-harness/scripts/lean-audit.ts --strict           # exit 1 on uncited sorries
+ *   bun run cat-harness/scripts/lean-audit.ts --strict --check-axioms  # also fail on axioms
  *
  * @module scripts/lean-audit
  */
@@ -567,7 +567,7 @@ function printReport(report: AuditReport) {
 // ── CLI ──────────────────────────────────────────────────────────
 
 const HELP_TEXT = `
-Usage: bun run scripts/lean-audit.ts [options]
+Usage: bun run cat-harness/scripts/lean-audit.ts [options]
 
 Options:
   --json              Emit the audit report as JSON instead of pretty text.

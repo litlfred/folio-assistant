@@ -50,10 +50,10 @@
  *
  * Usage
  * -----
- *   bun run scripts/check-duplicate-decls.ts
- *   bun run scripts/check-duplicate-decls.ts --package qou --baseline 65
- *   bun run scripts/check-duplicate-decls.ts --json
- *   bun run scripts/check-duplicate-decls.ts --tsv dups.tsv
+ *   bun run cat-harness/scripts/check-duplicate-decls.ts
+ *   bun run cat-harness/scripts/check-duplicate-decls.ts --package qou --baseline 65
+ *   bun run cat-harness/scripts/check-duplicate-decls.ts --json
+ *   bun run cat-harness/scripts/check-duplicate-decls.ts --tsv dups.tsv
  *
  * ## Scope and limits
  *
