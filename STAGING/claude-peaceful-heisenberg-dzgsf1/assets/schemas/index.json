@@ -5269,6 +5269,13 @@
           "array": false
         },
         {
+          "name": "serialisations",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What produces this directory's SERIALISATIONS — `json`, `jsonld` and"
+        },
+        {
           "name": "exempt",
           "type": "z .object({ visualiser: z.string().min(1).optional(), docs: z.string().min(1).optional(), skill: z.string().min(1).opti…",
           "optional": true,
