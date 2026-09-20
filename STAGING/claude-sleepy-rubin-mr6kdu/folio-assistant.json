@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T15:43:22.408Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63e940c5c04550a6d49c274951bf5c2070fa9cc4",
-  "sourceCommitSha": "63e940c5c04550a6d49c274951bf5c2070fa9cc4",
-  "sourceCommitAt": "2026-09-20T15:41:54Z",
+  "generatedAt": "2026-09-20T16:03:55.636Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/36c52c4ba242bdd7fc2043efee1cc1dbbfac43c1",
+  "sourceCommitSha": "36c52c4ba242bdd7fc2043efee1cc1dbbfac43c1",
+  "sourceCommitAt": "2026-09-20T16:01:55Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 204,
@@ -273,9 +273,9 @@
     "Convention": 2,
     "SkillPackage": 12,
     "Process": 52,
-    "SequenceFlow": 672,
-    "ProcessNode": 636,
-    "Tool": 59,
+    "SequenceFlow": 677,
+    "ProcessNode": 641,
+    "Tool": 61,
     "Schema": 77,
     "GraphKind": 21,
     "Directory": 31,
@@ -2454,7 +2454,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 176,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2556,7 +2556,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
-      "instructionLines": 199,
+      "instructionLines": 261,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5480,8 +5480,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Reviewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Pipeline"
       ],
-      "nodeCount": 33,
-      "flowCount": 35,
+      "nodeCount": 34,
+      "flowCount": 36,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview"
     },
@@ -5553,9 +5553,18 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_AssessImpact",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_CommitPush",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Call_OptionsAnalysis",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Call_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_CommitPush",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a7",
@@ -6109,6 +6118,26 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_AssessImpact"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Call_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Options analysis how to absorb the impact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#role/Folio-Assistant%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Call_OptionsAnalysis"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_CommitPush",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Commit, push, update PR",
@@ -6122,7 +6151,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a7"
@@ -6897,9 +6926,7 @@
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_UpstreamAdoption",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#role/Agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/methodology-adoption"
-      ],
+      "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -16650,8 +16677,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/node/StartEvent_EditRequested"
       ],
-      "nodeCount": 25,
-      "flowCount": 29,
+      "nodeCount": 26,
+      "flowCount": 30,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing"
     },
@@ -16853,9 +16880,18 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/node/Task_ReviewFindings",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/node/Call_OptionsAnalysis",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21a",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/node/Call_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21b",
@@ -17353,6 +17389,26 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/Task_ReviewFindings"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/node/Call_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Options analysis accept · revise · discard",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#role/Authoring%20agent%20(system)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21a"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/Call_OptionsAnalysis"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Record the decision and its audit note",
@@ -17366,7 +17422,7 @@
       "touchesWorkPlan": false,
       "relaxable": false,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21a"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21b"
@@ -18901,8 +18957,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis"
       ],
-      "nodeCount": 6,
-      "flowCount": 5,
+      "nodeCount": 8,
+      "flowCount": 7,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis"
     },
@@ -18920,9 +18976,29 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Frame",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2c",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_TriggerNotMet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2c"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_3",
@@ -18992,6 +19068,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Frame"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Irreversible or surprising?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2b",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2c"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Select the methodology by context",
@@ -19005,7 +19102,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_3"
@@ -19075,6 +19172,24 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_TriggerNotMet",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Trigger not met — the caller decides without an analysis",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2c"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_TriggerNotMet"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_Ingestion",
@@ -24047,8 +24162,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver"
       ],
-      "nodeCount": 14,
-      "flowCount": 16,
+      "nodeCount": 15,
+      "flowCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/methodology-crdm",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver"
     },
@@ -24057,9 +24172,18 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/A_Implement",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_OptionsAnalysis",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/methodology-crdm",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/A_Implement",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/methodology-crdm",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_2",
@@ -24221,6 +24345,26 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Options analysis how to implement",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/methodology-crdm",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_OptionsAnalysis"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/A_Implement",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Phase 6: Implement (feature branch + PR)",
@@ -24235,7 +24379,7 @@
       "workPlanOp": "claim",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1b",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_5",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_7",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_12"
@@ -24467,9 +24611,7 @@
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#process/Process_CRDM_Deliver",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#role/Agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/theme-ui-review"
-      ],
+      "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -26512,6 +26654,64 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/pages-publish"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/feature-staging",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "feature-staging",
+      "title": "Stage a branch's preview",
+      "description": "Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": ".github/workflows/feature-staging.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch to stage; blank stages the current one. On a pull request the workflow fires by itself and needs none of these.",
+            "required": false,
+            "arg": {
+              "flag": "--branch"
+            }
+          },
+          {
+            "name": "cleanup_slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Slug",
+            "description": "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. It exists because the label path cannot reach the previews the health sweep reports — being findable as an orphan REQUIRES the pull request to be closed, so the close event has already fired with no label (bean `w2g5`).",
+            "required": false,
+            "arg": {
+              "flag": "--cleanup-slug"
+            }
+          },
+          {
+            "name": "cleanup_confirm",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Slug",
+            "description": "The slug again, exactly. Anything else refuses. A confirmation therefore cannot be carried over from a previous run against a DIFFERENT preview, which a boolean would have allowed.",
+            "required": false,
+            "arg": {
+              "flag": "--cleanup-confirm"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "preview",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Url",
+            "description": "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/feature-staging"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/serve-rendering",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "serve-rendering",
@@ -27543,7 +27743,7 @@
           {
             "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Text",
-            "description": "One line per gate, then a pass count or the failures. Exit non-zero on any failure."
+            "description": "One line per gate, then a pass count or the failures. Three exit codes, because two cannot carry the distinction: 0 every gate passed, 1 a gate failed, 2 the gate set could NOT BE DERIVED — the workflow it reads is absent or yields nothing. A caller must not read 2 as either verdict; it matters most downstream, where this Tool is inherited and `.github/workflows/` is not."
           }
         ]
       },
@@ -27559,6 +27759,67 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/continual-progress"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/gates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/ci-health",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ci-health",
+      "title": "Is CI passing on the default branch?",
+      "description": "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run check:ci-health"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "markdown",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Flag",
+            "description": "Emit the block the session-start sweep prints. ALWAYS exits 0, deliberately: the sweep runs it as `if ! …; then` and would otherwise print the report AND declare it unchecked every time CI is red.",
+            "required": false,
+            "arg": {
+              "flag": "--markdown"
+            }
+          },
+          {
+            "name": "warn",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Flag",
+            "description": "Report only, never fail. For a caller that wants the state without a verdict.",
+            "required": false,
+            "arg": {
+              "flag": "--warn"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. The notifier gets its own flag rather than one API call being spent twice.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Markdown",
+            "description": "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/ci-health"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ci-health"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/kg-validate",
@@ -31491,8 +31752,8 @@
   ],
   "staging": {
     "branch": "claude/sleepy-rubin-mr6kdu",
-    "sha": "f18a2f18a5e2c4e40114c0072ceb15f6c329771b",
+    "sha": "ad69a556f2e41438a2cb711c35e9414b1d975bef",
     "pr": "477/merge",
-    "run": "35520402194"
+    "run": "35521419346"
   }
 }
