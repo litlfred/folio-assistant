@@ -1,11 +1,11 @@
 ---
 # folio-assistant-koth
 title: check:undeclared-files reports a gitignored directory, so stale __pycache__ reds the gate forever
-status: todo
+status: completed
 type: bug
 priority: low
 created_at: 2026-09-20T12:56:15Z
-updated_at: 2026-09-20T12:56:31Z
+updated_at: 2026-09-20T13:56:15Z
 parent: folio-assistant-o3xy
 ---
 
@@ -51,9 +51,40 @@ an ignored path in a **separate, non-failing** section rather than to drop it
 and reported rather than removed, even though it is regenerable bytecode.
 Nothing was deleted to make a gate green.
 
+## CLOSED by a sibling, 2026-09-20 — and my diagnosis here was WRONG
+
+`0f3dec084a` on `main`: *"check-undeclared-files: a directory holding only
+ignored files is not a finding"*. Not my work; recorded here so this bean does
+not sit open over a fixed defect.
+
+**The correction matters more than the closure.** This bean says the sweep
+"reports a GITIGNORED directory". That is not what was happening —
+`gitIgnored()` already asks git, and `_kg/` is the case it was written for.
+The real gap is narrower:
+
+```
+git check-ignore scripts             -> NOT ignored
+git check-ignore scripts/__pycache__ -> ignored (.gitignore:31)
+```
+
+`.gitignore` names `__pycache__/`, not `scripts/`. So the **husk** — a
+directory that exists only because something wrote ignored files into it —
+was not itself ignored, and got reported. Their `holdsOnlyIgnored()` asks both
+`ls-files` and `status --untracked-files=all`, because each covers the other's
+blind spot, and returns false when git is unavailable so the sweep REPORTS
+rather than skips.
+
+**The second done-when is withdrawn rather than left unmet.** It asked that a
+path the sweep declines to fail on still be SHOWN, on the grounds that "a
+silent drop is how the `mggs` PNGs got in". Their falsification answers it:
+*cache only → skipped; cache + one real untracked file → REPORTED*. The skip
+is provably narrow, so in the case it covers there is nothing being dropped to
+show. Inventing display work to satisfy a checkbox I wrote would be worse than
+withdrawing it.
+
 ## Done when
 
-- [ ] a gitignored path at the root does not red the gate for one contributor
-      while a clean checkout is green
-- [ ] whatever the answer, a path the sweep declines to fail on is still
-      SHOWN — a silent drop is how the `mggs` PNGs got in
+- [x] a gitignored path at the root does not red the gate for one contributor
+      while a clean checkout is green — `0f3dec084a`, a sibling's
+- [~] a path the sweep declines to fail on is still SHOWN — **withdrawn**, see
+      above: the skip is narrow enough that nothing is dropped to show
