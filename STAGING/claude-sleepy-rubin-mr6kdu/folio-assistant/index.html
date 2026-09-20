@@ -111,7 +111,7 @@
    * 32px, not the 24px WCAG 2.2 SC 2.5.8 floor.
    *
    * The floor is a floor. This instance's declared interaction profile is
-   * low-dexterity (.harness/interaction.json), so a target that is *barely*
+   * low-dexterity (interaction/interaction.json), so a target that is *barely*
    * legal is a target that is hard to hit. 32px costs eight pixels of density
    * in a column that has room for it.
    */
@@ -172,7 +172,7 @@
         border-radius: 5px; overflow-x: auto; font-size: 12px; line-height: 1.45; max-height: 300px; }
 </style>
 </head>
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-rubin-mr6kdu" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/sleepy-rubin-mr6kdu</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">dbc405c</span> · built 2026-09-20T08:13:27Z · <a href="https://github.com/litlfred/folio-assistant/pull/477" style="color:#fff;text-decoration:underline">PR #477</a> · <a href="https://github.com/litlfred/folio-assistant/issues/476" style="color:#fff;text-decoration:underline">issue #476</a> · <a href="https://litlfred.github.io/folio-assistant/folio-assistant/index.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35498910028" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/sleepy-rubin-mr6kdu" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/sleepy-rubin-mr6kdu</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">7a527d6</span> · built 2026-09-20T11:12:40Z · <a href="https://github.com/litlfred/folio-assistant/pull/477" style="color:#fff;text-decoration:underline">PR #477</a> · <a href="https://github.com/litlfred/folio-assistant/issues/476" style="color:#fff;text-decoration:underline">issue #476</a> · <a href="https://litlfred.github.io/folio-assistant/folio-assistant/index.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35507123150" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
 <!-- A keyboard user lands on the facet column first and would otherwise tab
      through a dozen filters to reach the results. -->
 <a class="skip" id="skip" href="#list">Skip to results</a>
@@ -191,6 +191,8 @@
   <nav class="facets" aria-labelledby="facets-h">
     <h2 id="facets-h">Kind</h2>
     <div id="facets" role="group" aria-labelledby="facets-h"></div>
+    <h2 id="subs-h" style="margin-top:18px">Subgraph</h2>
+    <div id="subs" role="group" aria-labelledby="subs-h"></div>
   </nav>
   <div class="list">
     <h2 id="list-h">Nodes</h2>
@@ -230,7 +232,7 @@ const STUB = "folio-assistant";
  * half written shows the half it has.
  */
 const STRINGS = {};
-const LOCALES = [{"locale":"en","name":"English","dir":"ltr","official":true,"translated":39,"total":39}];
+const LOCALES = [{"locale":"en","name":"English","dir":"ltr","official":true,"translated":40,"total":40}];
 // The SAME key the docs site writes (docs/assets/js/docs-ui.js), so a reader
 // who chose a language there arrives here in it. A second key would be a
 // second answer to one question.
@@ -238,11 +240,27 @@ const LOCALE_KEY = "fa-locale";
 
 const el = (id) => document.getElementById(id);
 let G = [], byId = new Map(), backlinks = new Map(), declared = new Set(),
-    linkTerms = new Set(), kind = null, sel = null, undeclared = null,
+    linkTerms = new Set(), kind = null, sub = null, sel = null, undeclared = null,
     counts = {}, loaded = null, loadError = null, preview = false, LOC = "en";
 
 const short = (iri) => String(iri).includes("#") ? String(iri).split("#").pop() : String(iri);
 const typeOf = (n) => short(n["@type"] ?? "").split("/").pop();
+/**
+ * Which DECLARED SUBGRAPH a node belongs to, as the id a reader filters by.
+ *
+ * 'inSubgraph' is a link to a Directory node, so the readable id is its
+ * fragment. A node with no stamp answers UNSTAMPED rather than being folded
+ * into a default: vocabulary nodes are minted from the namespace rather than
+ * from any file, so they genuinely belong to no directory, and showing that as
+ * its own facet keeps the gap visible instead of absorbing it into whichever
+ * subgraph happened to be first.
+ */
+const UNSTAMPED = "(no declared subgraph)";
+const subOf = (n) => {
+  const v = n.inSubgraph;
+  if (typeof v !== "string" || v.length === 0) return UNSTAMPED;
+  return String(v).split("/").pop();
+};
 const label = (n) => n.title ?? n.name ?? n.localId ?? short(n["@id"]);
 
 const localeMeta = (loc) => LOCALES.filter((l) => l.locale === loc)[0] ?? LOCALES[0];
@@ -324,10 +342,11 @@ function setLocale(loc) {
 function renderAll() {
   applyChrome();
   drawLangs();
-  renderMeta();
+  el("facets-h").textContent = T("Kind");
+  el("subs-h").textContent = T("Subgraph");
   if (loadError !== null) { renderDetail(); return; }
   if (loaded === null) return;
-  drawFacets(counts);
+  drawFacets();
   drawList();
   renderDetail();
 }
@@ -538,14 +557,27 @@ function renderMeta() {
   }
 }
 
-function drawFacets(counts) {
-  const f = el("facets");
+/**
+ * One facet group. Two of them now — Kind and Subgraph — and the second is the
+ * owner's ask of 2026-09-20: *"should show hierarchy of named subgraphs in the
+ * harness instance(s) ... ability to filter by bootstrap/ cat-harness/
+ * f-a-core/ f-a/"*.
+ *
+ * The two are INDEPENDENT filters, deliberately, not a nested tree: a reader
+ * asking "every Skill" and a reader asking "everything in bootstrap" are both
+ * common, and nesting one inside the other would make the second a walk. The
+ * counts shown on each group are computed against the OTHER group's current
+ * selection, so a count is always what clicking it would actually give — a
+ * count that lies is worse than no count.
+ */
+function drawGroup(elementId, counts, selected, onPick) {
+  const f = el(elementId);
   f.innerHTML = "";
   const add = (name, n, value) => {
     const b = document.createElement("button");
     b.className = "facet";
     b.type = "button";
-    b.setAttribute("aria-pressed", String(kind === value));
+    b.setAttribute("aria-pressed", String(selected === value));
     // Name first, count second — in the DOM, not just visually.
     //
     // float:right used to place the count regardless of source order; flex
@@ -553,18 +585,35 @@ function drawFacets(counts) {
     // order would have left the ACCESSIBLE reading as "1112 All" too, which
     // is the wrong sentence. A screen reader follows the DOM.
     b.innerHTML = escape(name) + '<span class="n">' + n + "</span>";
-    b.onclick = () => { kind = kind === value ? null : value; drawFacets(counts); drawList(); };
+    b.onclick = () => { onPick(selected === value ? null : value); };
     f.appendChild(b);
   };
   // "All" is the page's own word and is translated. The kinds beside it are
   // the graph's own vocabulary and are not: they are the values a reader
   // types into a query, and a translated type name resolves to nothing.
-  add(T("All"), G.length, null);
+  add(T("All"), Object.values(counts).reduce((a, b) => a + b, 0), null);
   for (const [t, n] of Object.entries(counts).sort((a, b) => b[1] - a[1])) add(t, n, t);
+}
+
+/** Count a facet dimension over the nodes the OTHER dimension currently admits. */
+function tally(of, admits) {
+  const c = {};
+  for (const n of G) if (admits(n)) c[of(n)] = (c[of(n)] ?? 0) + 1;
+  return c;
+}
+
+function drawFacets() {
+  drawGroup("facets", tally(typeOf, (n) => sub === null || subOf(n) === sub), kind, (v) => {
+    kind = v; drawFacets(); drawList();
+  });
+  drawGroup("subs", tally(subOf, (n) => kind === null || typeOf(n) === kind), sub, (v) => {
+    sub = v; drawFacets(); drawList();
+  });
 }
 
 function matches(n, q) {
   if (kind !== null && typeOf(n) !== kind) return false;
+  if (sub !== null && subOf(n) !== sub) return false;
   if (!q) return true;
   return (label(n) + " " + short(n["@id"]) + " " + (n.description ?? "")).toLowerCase().includes(q);
 }

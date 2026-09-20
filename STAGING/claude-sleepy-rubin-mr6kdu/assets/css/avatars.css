@@ -129,6 +129,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="methodology"] {
+  /* a fork in a path — parallel ways to a judgement, one chosen by context */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20V12m0 0L6 6m6 6l6-6M4 4h4m8 0h4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="health"] {
   /* a trace — the repository's own vital signs, over time */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 13h4l2-5 3 10 2-6 2 3h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -139,6 +146,13 @@
 .fa-avatar[data-fa-kind="uploads"] {
   /* an arrow onto a line — something arriving */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 17V5m0 0l-4 4m4-4l4 4M5 19h14' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="catalogue"] {
+  /* a card index — what is known to exist, mostly not held */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6h16v12H4zM4 10h16M10 6v12M13 13h4M13 15h3' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
   mask-image: var(--fa-avatar-glyph);
 }
@@ -160,6 +174,41 @@
 .fa-avatar[data-fa-kind="translation-sources"] {
   /* a glyph and an A — one language against another */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6h7M7 6v2c0 3-1 5-3 6M6 10c1 3 3 4 5 5M13 19l4-10 4 10M15 16h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="docs"] {
+  /* a page with a folded corner — documentation about the graph itself */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="interaction"] {
+  /* a spoken preference, already recorded — do not ask again */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H9l-4 4v-4a2 2 0 01-1-2zM8.5 10l2 2 4-4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="issue-marks"] {
+  /* a bookmark beside a list — how far an agent has read */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4h10v16l-5-4-5 4zM4 8h2M4 12h2' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="session-state"] {
+  /* a marker on a continuing line — where an actor is now */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12h18M14 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0M18 9l3 3-3 3' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="memory"] {
+  /* a knot in a thread — a fact tied down, read and not rewritten */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h4m8 0h4M9.5 9.5a3 3 0 000 5M14.5 9.5a3 3 0 010 5M9.5 9.5c2 1 3 1 5 0M9.5 14.5c2-1 3-1 5 0' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
   mask-image: var(--fa-avatar-glyph);
 }
@@ -193,11 +242,18 @@
   .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 46% 34%); }
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
+  .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 46% 34%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
   .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 46% 34%); }
+  .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
   .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 46% 34%); }
   .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 46% 34%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
+  .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 46% 34%); }
+  .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
+  .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
+  .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
+  .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 46% 34%); }
   .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 46% 34%); }
   .fa-avatar { background-color: hsl(0 46% 34%); }
 }
@@ -217,11 +273,18 @@
     .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 46% 34%); }
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
+    .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 46% 34%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
     .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 46% 34%); }
+    .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
     .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 46% 34%); }
     .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 46% 34%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
+    .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 46% 34%); }
+    .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
+    .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
+    .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
+    .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 46% 34%); }
     .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 46% 34%); }
     .fa-avatar { background-color: hsl(0 46% 34%); }
   }
@@ -242,11 +305,18 @@
   .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 42% 72%); }
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
+  .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 42% 72%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
   .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 42% 72%); }
+  .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
   .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 42% 72%); }
   .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 42% 72%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
+  .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 42% 72%); }
+  .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
+  .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
+  .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
+  .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 42% 72%); }
   .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 42% 72%); }
   .fa-avatar { background-color: hsl(0 42% 72%); }
 }
@@ -266,11 +336,18 @@
     .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 42% 72%); }
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
+    .fa-avatar[data-fa-kind="methodology"] { background-color: hsl(268 42% 72%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
     .fa-avatar[data-fa-kind="uploads"] { background-color: hsl(200 42% 72%); }
+    .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
     .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 42% 72%); }
     .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 42% 72%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
+    .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 42% 72%); }
+    .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
+    .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
+    .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
+    .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 42% 72%); }
     .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 42% 72%); }
     .fa-avatar { background-color: hsl(0 42% 72%); }
   }
@@ -293,11 +370,18 @@
   .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 16% 52%); }
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
+  .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
   .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
+  .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
   .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 16% 52%); }
   .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
+  .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
+  .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
+  .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
+  .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
+  .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 16% 52%); }
   .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 16% 52%); }
 }
 
@@ -316,11 +400,18 @@
     .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 16% 52%); }
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
+    .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
     .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
+    .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
     .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 16% 52%); }
     .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
+    .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
+    .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
+    .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
+    .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
+    .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 16% 52%); }
     .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 16% 52%); }
   }
 }
@@ -339,11 +430,18 @@
   .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 14% 56%); }
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
+  .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
   .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
+  .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
   .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 14% 56%); }
   .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
+  .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
+  .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
+  .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
+  .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
+  .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 14% 56%); }
   .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 14% 56%); }
 }
 
@@ -362,11 +460,18 @@
     .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 14% 56%); }
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
+    .fa-avatar[data-fa-kind="methodology"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
     .fa-avatar[data-fa-kind="uploads"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
+    .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
     .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 14% 56%); }
     .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
+    .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
+    .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
+    .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
+    .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
+    .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 14% 56%); }
     .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 14% 56%); }
   }
 }
