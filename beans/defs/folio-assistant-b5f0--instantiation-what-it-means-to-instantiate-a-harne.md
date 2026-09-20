@@ -298,3 +298,47 @@ file it does not scan. **No SVG was committed**, for that reason.
 
 > **Do not "fix" the missing SVG by declaring the directory.** That is the dead
 > end three sessions have now walked into.
+
+## RULED, owner, 2026-09-20 — §1: REPLACE
+
+> "1 REPLACE"
+
+`cat-harness.config.json` **replaces** `harness.json`. One file per instance at
+the instantiation root, carrying both what the instance IS and where its
+directories are — not two files side by side.
+
+That settles the question `zkgs`'s ruling did not reach. `zkgs` named the
+convention `<declared instance name>.config.json` while ruling on the CONFIG
+(`harness.config.json`); this says the DECLARATION (`harness.json`) folds into
+the same file rather than sitting beside it.
+
+### What this costs, so the implementer is not surprised
+
+The two files have different schemas and different readers:
+
+    harness.json          schemas/cat-harness.ts      directories, graphs,
+                          readDeclaration()           dependents, assets, stickies
+    harness.config.json   schemas/harness-config.ts   contentType, adapter,
+                          readHarnessConfig()         feedbackDir, viewer, readme
+
+Merging them means one schema and one reader, and every consumer of either
+moves. Measured constraints already known:
+
+* **`dependents` is REQUIRED on every directory entry** and `readDeclaration`
+  THROWS without it — not a warning. qou hit this on 2026-09-20: every pipeline
+  entry point died at module load and `run-validate` reported nothing rather
+  than a problem. A merged schema must keep that loudness.
+* **Both halves are load-bearing at once.** qou needs the declaration to say
+  its folio tree is at `content/` AND the config to say the folio is a `paper`.
+  A merge must not make either optional.
+* **`zkgs` blocks on #477**, which renames the instance to `cat-harness` — the
+  filename derives from the declared `name`, so this lands after it.
+* Bootstrap's file becomes `bootstrap.config.json` by the same derivation. It
+  already declares itself in `bootstrap/harness.json`, so this is a rename
+  plus a merge, not new content.
+
+### Still open under this ruling
+
+Whether the merged file is process-WRITTEN at initialization (§2). If it is, a
+`.config.json` is `state` wearing a config's name, and the convention spreads
+that naming to every instance at once. The ruling does not decide it.

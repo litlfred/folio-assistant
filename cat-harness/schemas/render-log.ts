@@ -106,6 +106,31 @@ export type RenderEvent = (typeof RENDER_EVENTS)[number];
 export const RENDER_SUBJECT_KINDS = ["staging-preview", "site", "export"] as const;
 export type RenderSubjectKind = (typeof RENDER_SUBJECT_KINDS)[number] | (string & {});
 
+/**
+ * How to READ this entry's prose — declared, never sniffed.
+ *
+ * Owner, 2026-09-20: *"keep ingestion schema general. log is string of text,
+ * optional markdown. string by convention may have formatting declared on it."*
+ *
+ * So the prose fields stay plain `string` and are NOT narrowed; what was missing
+ * is the second half of that sentence. A string carries its formatting as a
+ * DECLARATION beside it, and absent means plain text.
+ *
+ * Why declared rather than detected: a reason like `"refused because the *only*
+ * liveness signal was stale"` contains markdown emphasis it does not mean, and a
+ * sniffer would render `*only*` as italics in a log entry nobody wrote as
+ * markdown. Every other store here makes the same call — `beans`, the workflow
+ * instances and `fsh-guts` all identify themselves from inside the file rather
+ * than being guessed at. "Extension is a coincidence; a declaration inside the
+ * file is the contract."
+ *
+ * OPEN like {@link RENDER_SUBJECT_KINDS}, not closed like {@link RENDER_EVENTS}:
+ * a renderer this log does not know about should not need a schema change before
+ * anybody can log what they published.
+ */
+export const RENDER_TEXT_FORMATS = ["text", "markdown"] as const;
+export type RenderTextFormat = (typeof RENDER_TEXT_FORMATS)[number] | (string & {});
+
 /** The artefact an entry is about. */
 export const RenderSubjectSchema = z.object({
   kind: z.string().min(1),
@@ -150,6 +175,21 @@ export const RenderLogEntrySchema = z.object({
   /** One line, so a long log stays skimmable. Detail goes in `detail`. */
   summary: z.string().min(1),
   detail: z.string().optional(),
+
+  /**
+   * The declared format of `summary`, `detail` and `reason` — see
+   * {@link RENDER_TEXT_FORMATS}.
+   *
+   * ONE declaration for all three rather than one each, because they are one
+   * author's prose about one event: a summary in markdown with a plain-text
+   * reason beside it is a distinction nobody writing a log entry wants to make,
+   * and three fields would invite two of them to disagree.
+   *
+   * Optional, and absent means `text`. A reader must not treat absence as
+   * unknown-and-therefore-markdown: an entry written before this field existed is
+   * plain text, which is what it was.
+   */
+  format: z.string().min(1).optional(),
 
   /**
    * WHY, for the events where a reason is the whole content.

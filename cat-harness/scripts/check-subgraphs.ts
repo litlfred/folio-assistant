@@ -73,8 +73,40 @@ export interface SubgraphReport {
   scanned: number;
 }
 
+/**
+ * Blank out code — a link inside an EXAMPLE is not a link.
+ *
+ * Added 2026-09-20 after the first real triage of this check's findings
+ * (bean `rl3h`): of 18 targets it reported as naming nothing, most were
+ * illustrations rather than references —
+ *
+ *  - ``[`prop:Y`](Y.md)`` inside an inline code span in
+ *    `proposition-consolidation-audit.md`, showing what a cross-reference
+ *    LOOKS like;
+ *  - `` `[audit](../../../docs/audits/...)` `` in a `one-voice-audit.md`
+ *    table cell, quoting a pattern the audit tells you to search FOR and
+ *    remove;
+ *  - two invented bean ids in a blockquoted specimen turn report.
+ *
+ * Counting them is the wolf-crying this file's header already refuses once,
+ * and it is worse here than a plain false positive: the remedy a reader
+ * infers is to "fix" prose that is correct, and in the third case to invent
+ * two beans to satisfy a link in an example.
+ *
+ * Same rule and same reason as `check-declared-paths`'s `stripComments`,
+ * which exists because its scanner matched its own documentation. Replaces
+ * with spaces rather than deleting, so offsets survive.
+ */
+function stripCode(text: string): string {
+  let out = text.replace(/^(\s*)(```|~~~)[\s\S]*?^\s*\2\s*$/gm, (m) => " ".repeat(m.length));
+  // Inline spans, longest fence first so ``a `b` c`` is one span.
+  out = out.replace(/(`+)(?:(?!\1)[\s\S])*?\1/g, (m) => " ".repeat(m.length));
+  return out;
+}
+
 /** Markdown link targets that look like a path into this repository. */
-function linkTargets(text: string): string[] {
+function linkTargets(raw: string): string[] {
+  const text = stripCode(raw);
   const out: string[] = [];
   for (const m of text.matchAll(/\]\(([^)\s#]+)(?:#[^)]*)?\)/g)) {
     const t = m[1]!;
@@ -119,7 +151,19 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         continue;
       }
       for (const target of linkTargets(text)) {
-        const resolved = resolve(dirname(file), target);
+        let resolved = resolve(dirname(file), target);
+        // A `.html` target is a RENDERED PAGE, not a file in the tree:
+        // jekyll builds `docs/skills.html` from `docs/skills.md`. Testing the
+        // `.html` on disk reports every correct site link as broken, and the
+        // first triage (bean `rl3h`) hit exactly that — `../skills.html`
+        // flagged beside `../proposals/llm-authoring-tool-integration.html`,
+        // where the first has a source and the second genuinely does not.
+        // Resolving to the source tells those two apart; skipping `.html`
+        // outright would hide the second.
+        if (!existsSync(resolved) && resolved.endsWith(".html")) {
+          const asSource = `${resolved.slice(0, -".html".length)}.md`;
+          if (existsSync(asSource)) resolved = asSource;
+        }
         if (!existsSync(resolved)) {
           dangling.push({ from: relative(root, file), fromDir: owner.id, target });
           continue;

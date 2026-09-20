@@ -36,6 +36,7 @@
  */
 
 import { existsSync, readFileSync } from "fs";
+import { stripLeanComments } from "./lean-lexer.js";
 import { sep } from "path";
 
 // Chapter profiles are FOLIO content and now arrive through a registry, the
@@ -135,11 +136,7 @@ function readMaybe(path: string | undefined): string {
  * The tactic scan below already skipped comment lines; the `Real.*` scan
  * beside it did not.
  */
-function stripLeanComments(lean: string): string {
-  return lean
-    .replace(/\/-[\s\S]*?-\//g, (m) => "\n".repeat((m.match(/\n/g) ?? []).length))
-    .replace(/--[^\n]*/g, "");
-}
+
 
 function stripFraming(md: string): string {
   let out = md;
