@@ -54,11 +54,11 @@
  * @module scripts/check-instance-render
  */
 
-import { existsSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, resolve } from "node:path";
 
 import {
   instanceRootFor,
+  instanceRootsIn,
   declaredKinds,
   readDeclaration,
   repoRootFor,
@@ -208,14 +208,22 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
   };
 }
 
-/** Every instance this repository owns — the root, and any beside it. */
+/**
+ * Every instance this repository owns — the root, and any beside it.
+ *
+ * The docstring above is unchanged and was FALSE in both halves until
+ * 2026-09-20: this listed `["cat-harness", "bootstrap"]`, so the root was not
+ * in it and two instances beside it were missing. There are four —
+ * `folio-assist-core` and the repository root are the two that were going
+ * unchecked, and `check-declared-assets` carried the same literal and the same
+ * blind spot (bean `6tkl`).
+ *
+ * Now it asks the filesystem. A list that must be edited when a directory is
+ * added is a list that will be wrong, and this one had already been wrong once
+ * before — the sibling gate's own docstring recorded that.
+ */
 export function instancesIn(repoRoot: string): string[] {
-  const out: string[] = [];
-  for (const d of ["cat-harness", "bootstrap"]) {
-    const p = join(repoRoot, d);
-    if (existsSync(join(p, "harness.json"))) out.push(p);
-  }
-  return out;
+  return instanceRootsIn(repoRoot);
 }
 
 export function formatReport(rs: InstanceRender[]): string {

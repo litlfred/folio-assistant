@@ -66,3 +66,28 @@ findings rather than one:
 - [ ] `library/` and `uploads/` are either covered or opted out with reasons.
 - [ ] Falsified in both directions: a subgraph WITH all three is not reported,
       and removing any one of them makes it appear.
+
+## BOOTSTRAP IS EXEMPT — owner, 2026-09-20
+
+> it is exception to harness/layer not having visualtion/workflow visualizer.
+> but it must have its json/jsonld... that is its existence.
+
+So this axis must NOT raise a finding against `bootstrap` for having no
+visualiser. The requirement is not flat across layers — it starts at
+`cat-harness` and applies upward, because cat-harness is what supplies the
+layers above with folio:
+
+| layer | visualiser | own `.json`/`.jsonld` |
+|---|---|---|
+| `bootstrap` | **exempt** (it is the navbar footer) | **required — that is its existence** |
+| `cat-harness` and above | required | required |
+
+**The exemption is not a hole in the axis, it is a second criterion.** What
+bootstrap owes instead is its own graph artefact, and an axis that dropped
+bootstrap entirely would stop checking the one thing bootstrap must have. A
+layer that cannot emit its own graph has not shown it is a graph.
+
+Recorded on `hfkl`, which also carries a contradiction to resolve first:
+`kg-export` WRITES `_kg/<stub>.jsonld` while a comment in the same file calls
+`bootstrap/bootstrap.jsonld` "a COMMITTED artefact". Which is true decides
+whether this criterion is checkable from a checkout or only after a build.

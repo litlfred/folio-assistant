@@ -361,6 +361,34 @@ const FRAMEWORK: QaCriterionDefinition[] = [
 
 // ── Domain: wall ────────────────────────────────────────────────
 
+// ── Folio-optional: the archimedean wall ────────────────────────
+//
+// The SAME axis as `detangler-archimedean-wall`, and the same folio's
+// mathematics: the substrate-to-archimedean wall, its two sides, and the
+// chapter names on each. These four cite that folio's `CLAUDE.md §7c` by
+// section number and name its chapters — `braids-and-knots`,
+// `quantum-observable-universes`, `models-of-qous`, `lifting-and-descent`,
+// `q-geometric-langlands`, `brings-surface`, `observations`,
+// `descartes-universe` — in criterion DESCRIPTIONS the platform ships to
+// every folio.
+//
+// `profiles: ["paper"]` is on two of them and fences nothing, for the reason
+// `domain-fencing.md` now states: a profile says what KIND of folio can
+// answer the question, not WHOSE question it is. Every paper folio has a
+// `.lean` to read and none of the others has these chapters.
+//
+// One opt-in covers both, because it is one wall:
+//
+//   // harness.config.json
+//   { "qaAxes": ["archimedean-wall"] }
+//
+// `q-usage-audit.ts` calls `checkWallSide` and `checkBaseRingMinimal`
+// DIRECTLY, not through the registry, so that script keeps working when the
+// axis is closed — it is a folio-run audit and its caller has already decided
+// the wall applies. Fencing the registry entries is about what the PLATFORM
+// asserts every folio should be measured against, which is a different
+// question from what a folio's own audit may compute.
+
 const WALL: QaCriterionDefinition[] = [
   {
     id: "wall-side-correct",
@@ -1579,13 +1607,19 @@ const DETANGLER: QaCriterionDefinition[] = [
 // folio-supplied `topic-keywords.json`) would let the shell return to the
 // unconditional `detangler` axis. Until then, fenced.
 //
-// Scope note, recorded rather than silently acted on: the whole `wall`
-// domain (`wall-side-correct`, `wall-base-ring-minimal`, `wall-side-statement`,
-// `wall-side-proof`) is the same folio's mathematics by the same argument,
-// and cites that folio's `CLAUDE.md §7c` and chapter names directly. It is
-// NOT fenced here — its checkers are called directly from `q-usage-audit.ts`
-// and pinned by two tests, so moving it is its own change with its own
-// measurement.
+// SAME AXIS as the `wall` domain above, and deliberately so: it is one wall,
+// so a folio opens both with one key and cannot end up half-fenced. A second
+// axis name would have made that state reachable.
+//
+// The `wall` domain was recorded here as "not fenced — its checkers are
+// called directly from `q-usage-audit.ts` and pinned by two tests, so it is
+// its own change with its own measurement." It got that measurement and both
+// halves of the caution were non-blocking: discovery is registry-driven, so a
+// fenced axis's checkers are simply not surfaced (verified against `q-usage`,
+// already fenced, BEFORE changing anything), and the direct callers in
+// `q-usage-audit.ts` are untouched by design — a folio's own audit deciding
+// the wall applies is a different question from what the platform asserts
+// every folio must be measured against.
 
 export const DETANGLER_ARCHIMEDEAN_WALL: QaCriterionDefinition[] = [
   {
@@ -2416,7 +2450,10 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...FIT,
   ...FRAMEWORK,
   ...RENDER,
-  ...WALL,
+  // Folio-optional — see `WALL` above. One folio's wall and one folio's
+  // chapter names; the same `archimedean-wall` axis as the detangler
+  // criterion below, because it is the same wall.
+  ...(folioOptionalAxes().includes("archimedean-wall") ? WALL : []),
   // Q_USAGE is FOLIO-OPTIONAL — see `folioOptionalAxes()` below. It
   // encodes one folio's mathematics (a substrate deformation parameter
   // `q` and its regimes), so it is registered only when the folio opts
@@ -2470,7 +2507,12 @@ export const ONE_VOICE_WATCHER_CRITERIA: string[] = [
   ...VOICE.map((c) => c.id),
   ...FIT.map((c) => c.id),
   ...FRAMEWORK.map((c) => c.id),
-  ...WALL.map((c) => c.id),
+  // Gated with the registry, never apart from it: a bucket naming a
+  // criterion the registry never registered is a watcher axis reporting on
+  // nothing and looking clean doing it (bean `dh4f`).
+  ...(folioOptionalAxes().includes("archimedean-wall")
+    ? WALL.map((c) => c.id)
+    : []),
 ];
 
 export const PROOF_WATCHER_CRITERIA: string[] = PROOF.map((c) => c.id);

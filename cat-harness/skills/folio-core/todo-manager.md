@@ -139,6 +139,47 @@ just clutter:
 The runaway loop is not something a doc can prevent; an unguarded `create` is.
 This rule is platform-level so every folio inherits it.
 
+## WHICH parent — the criterion nobody wrote down
+
+**A bean's parent is the epic whose SUBJECT it is, not the epic you happen to
+be working in.** That sentence was missing from this skill until 2026-09-20,
+and its absence is measurable: in one session six new beans were all filed
+under `yj32`, the epic that session was working in, while their subjects
+belonged to four different epics. The owner spotted it — *"beans misfiled...
+wrong skills guidance? tools guidance?"* — and the answer was yes, this file.
+
+**Nothing catches a wrong parent.** `check-bean-parents` tests exactly two
+things: that an open bean HAS a `parent`, and that the parent NAMES A BEAN
+THAT EXISTS. A bean filed under the wrong epic satisfies both, so it is
+textually clean, the guard is green, and it is only findable by a person
+reading the roadmap. **The check cannot distinguish a right parent from a
+wrong one, so the criterion has to live here or nowhere.**
+
+### How to choose
+
+1. **`beans list` and read the EPICS first** — there are many, each with a
+   thematic scope in its title. Do this BEFORE `beans create`, at the same time
+   as §"Check before you create"; both are questions about where a bean
+   belongs, and both are cheaper before the file exists.
+2. **Ask what the bean is ABOUT, not what you were doing when you wrote it.**
+   A visualiser whose blocker is an unrecorded ingest relation is an ingest
+   bean. A sticky's art is a rendering bean. The topic that makes the work hard
+   is usually the right epic.
+3. **When two epics both fit, pick the one whose OTHER children you would want
+   read alongside it**, and say in the body why the other was not chosen — a
+   parent is a claim about where somebody should go looking.
+
+### This conflicts with "every session is a Bean", and the conflict is real
+
+Core Directive 1 above says to create a session milestone and parent children
+to it. That is filing by SESSION; the repository is organised by SUBJECT, in
+thematic epics that outlive any session. **Where they disagree, file by
+subject** — a session bean is a useful record of what one sitting did, and it
+is not where the next person looks for the work. If you keep a session
+milestone, it is a sibling record, not the parent of topical work.
+
+---
+
 ## After you create — parent it, and re-run the guard before you push
 
 `check-bean-parents` fails on an **open bean with no `parent`**, because such a
@@ -193,6 +234,69 @@ Its `create` **refuses an exact duplicate title** and names the bean to claim
 instead. The CLI's `create` does not, and that is the mechanism behind the
 14,688 duplicates in `qou`. `--force` exists for a genuinely intended duplicate
 and has to be typed.
+
+## Check before you WORK — a checkbox is a claim, not a measurement (STRICT)
+
+`beans create` is not idempotent, and §"Check before you create" above is the
+guard. This is its twin at the other end: **a bean's stated state is a claim
+somebody wrote down once, and the code has moved since.**
+
+> **Re-measure a bean's open items against the code before you act on them.**
+
+The cost is not wasted effort. It is *acting on a stale claim*, and twice in
+one session (2026-09-20) that came within a single edit of re-introducing a
+defect a test had been written to catch.
+
+### Measured, one session, four beans
+
+| bean | what the file said | what was true |
+|---|---|---|
+| `sa8y` | four items open | one open; two done, one a **deliberate** decision |
+| `vo9d` | five items open | one open; four done by siblings |
+| `30hn` | 16 of 33 undeclared | 14 of 41 — and the mover was **this session** |
+| `koth` / `b11x` | two beans | one defect, filed **3m53s apart** |
+
+### The two failures this prevents, and they are different
+
+**1. Doing work that exists.** The cheap one. `vo9d`'s four items were done by
+`11d43ce4fb` and `ca5ec3e373`, neither of which ticked a box.
+
+**2. Undoing a decision that was recorded elsewhere.** The expensive one.
+`sa8y`'s *"the three unbound lanes get roles"* reads like a gap. The roles
+exist; what is missing is `lanes`, and its absence is deliberate —
+`bootstrap/skills/roles/roles.json` carries a `_lanes_comment` explaining that
+binding them mints three dangling links in the root's graph, with bean `pve3`
+owning the question. **Doing the obvious thing would have re-created the exact
+shape of the wrong fix `sa8y` exists to record.**
+
+The decision was never in the bean. It was in the file the bean is about.
+
+### What "re-measure" means, concretely
+
+- **Run the thing.** `sa8y`'s headline finding was fixed hours earlier;
+  `kg:audit` says so in one command.
+- **Read the body, not just the boxes.** `vo9d` describes a Tool node its own
+  checkbox still shows unticked.
+- **Date it.** `git log -S` on the symbol or the file against the bean's
+  `created_at` separates *fixed since* from *wrong when written* — and `vo9d`
+  was the second: it listed `check-l1-complete.ts` as having no callers when
+  `ingest-document.ts` had imported from it 32 minutes earlier.
+- **Read the file the bean is about**, for a comment saying why it is the way
+  it is. That is where a deliberate absence lives.
+
+### And a bean you re-measure, you record
+
+Leave what you found in the bean, with the commits and the times — a stale
+checkbox you silently worked around is one the next agent meets unchanged.
+Tick what is done and name who did it; withdraw a done-when you no longer
+believe, with reasons, rather than leaving it unmet. Where the bean and the
+code disagree, **the code is what is true and the bean is what is wrong** —
+the same rule [`AGENTS.md`'s banner](../../../AGENTS.md) states for a skill
+against that file.
+
+This is the work-plan half. The cross-session half — why two sessions can file
+one defect four minutes apart — is
+[`bean-coordination`](bean-coordination.md) §"A claim is branch-local".
 
 ## Working with Beans
 

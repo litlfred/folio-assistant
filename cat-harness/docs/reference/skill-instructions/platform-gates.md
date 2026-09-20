@@ -131,6 +131,91 @@ tooling itself.
 
 ---
 
+## Running "the gates that relate to my change" is not running the gates
+
+**Pick the gate set by JOB MEMBERSHIP, never by which gates you judge
+relevant.** `bun run gates --all` is the whole point of there being a command;
+choosing a subset re-introduces exactly the gap the command closes.
+
+**Measured 2026-09-20, PR #526.** A change added two collectors to
+`kg-export.ts`. Before pushing, the author ran `bun test` (3902 pass), `tsc`,
+`eslint`, and then four gates chosen by hand as the ones the change touched —
+`check:instance-render`, `check:declared-assets`, `kg:audit:check`,
+`check:harness-dirs`. All green. **CI failed on `ns:check`**, a gate not in
+that list, and the failure was a direct consequence of the change:
+
+```
+2 minted term(s) have no definition:
+  · Asset
+  · assetRole
+```
+
+The reasoning that produced the subset was sound and that is the trap: every
+gate in it really was related, and the one that failed was related in a way the
+author had not thought of. **A subset chosen by an author tests the author's
+model of the change, and CI tests the change.** Those differ precisely where
+the bug is.
+
+The cost is asymmetric and small. `gates --all` takes minutes on one machine;
+a red CI run costs a push cycle, the reviewer's trust, and an event that wakes
+somebody.
+
+### And the follow-up push failed too, for the adjacent reason
+
+The fix for the above ran `gates --all` and reported **60 of 60**. CI then
+failed again, on `kg:audit:check`:
+
+```
+1 sidecar(s) are stale. Run `bun run kg:audit` and commit:
+  · test/results/kg-qa/skills/folio-core/platform-gates.kg-qa.json
+```
+
+The gates run was launched, and *while it ran* this very file was edited to
+record the first lesson. So the run verified a tree that did not contain the
+change being pushed, and its "60 of 60" was quoted as though it did.
+
+> **A verification names a TREE, not a branch.** Anything edited after the run
+> started is unverified, however green the run was.
+
+This is the harder half to notice, because nothing looks wrong: the command
+really did pass, the output really does say 60 of 60, and the number is simply
+about a different tree than the one that got pushed. **Run the gates after the
+last edit, not alongside it** — and if you must edit while they run, the run is
+spent and needs doing again.
+
+Editing a SKILL is the case most likely to produce this, because a skill body
+has **two** committed artefacts generated from it, and both go stale the moment
+the body changes. **A skill edit is three files:**
+
+| file | regenerate with |
+|---|---|
+| the body, `skills/<pkg>/<name>.md` | — you edit it |
+| `test/results/kg-qa/.../<name>.kg-qa.json` | `bun run kg:audit` |
+| `docs/reference/skill-instructions/<name>.md` | `bun run cat-harness/scripts/gen-skill-docs.ts` |
+
+**This paragraph said "at least two files" and was wrong on its first
+commit** — it named the sidecar and missed the generated docs, and
+`gen-skill-docs --check` duly failed, 1 of 60. Which is the lesson about
+incomplete regeneration being itself incompletely regenerated, so it is left
+recorded rather than tidied away: **"at least"** is what a writer reaches for
+when they have not counted, and a gate counts.
+
+### The specific rule that was missed
+
+**`termIri("X")` MINTS a term, and a minted term needs a gloss.** Adding a new
+`@type` or a new property in `kg-export.ts` is therefore a TWO-file change:
+the emitter, and `schemas/vocabulary.ts` (`CLASS_GLOSSES` for a type,
+`PROPERTY_GLOSSES` for a property). `ns:check` is what refuses the half of it
+that was done alone, and it says so in one line.
+
+Note this is a *different* gate from the export's own undeclared-term report,
+which the same change had already satisfied. Getting past that one reads like
+having satisfied the vocabulary, and does not: **one checks that the JSON-LD
+`@context` binds the term, the other checks that the namespace DEFINES it.**
+Both must pass, and passing the first is not evidence about the second.
+
+---
+
 ## What a `*:check` failure is telling you
 
 Most of these gates compare a **committed artefact** against what its

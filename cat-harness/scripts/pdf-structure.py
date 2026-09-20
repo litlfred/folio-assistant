@@ -411,6 +411,85 @@ def sha256_of(path: str) -> str:
 # `TocEntry` values. `infer_headings` is the fallback used only when a
 # document carries no embedded outline.
 
+# The fraction at which "most of them" stops being a coincidence and becomes a
+# finding. Used by BOTH table-of-contents judgements — the per-page pre-filter
+# inside `infer_headings` and the post-hoc `inferred_toc_verdict` below — because
+# they are the same judgement asked at two scopes, and two spellings of one
+# threshold is two numbers to keep in agreement. Bean `6xaz`.
+TOC_MAJORITY = 0.6
+
+# Below this, concentration is not evidence: two of three entries on one page is
+# 67% and says nothing about the document. At five, a majority means at least
+# three entries agreeing.
+TOC_MIN_ENTRIES_FOR_VERDICT = 5
+
+# How many source pages an inferred table of contents may concentrate on before
+# it stops being a document's structure. Two, not one, because a contents
+# section routinely runs to a second page — which is exactly the shape
+# `WHO_PUB_TPS_93.1` failed in.
+TOC_MAX_CONCENTRATED_PAGES = 2
+
+
+def toc_concentration(toc: list["TocEntry"]) -> tuple[float, list[int]]:
+    """
+    What fraction of entries claim to start on the {TOC_MAX_CONCENTRATED_PAGES}
+    commonest source pages, and which pages those are.
+
+    A real document's headings are spread through its body. A list SCRAPED FROM
+    a page — a contents page, or a sample table reproduced as an example — has
+    every entry stamped with the page the list was found on, because that is
+    where the text was.
+    """
+    pages = [e.page for e in toc if e.page is not None]
+    if not pages:
+        return 0.0, []
+    counts = Counter(pages)
+    top = counts.most_common(TOC_MAX_CONCENTRATED_PAGES)
+    return sum(n for _, n in top) / len(pages), sorted(p for p, _ in top)
+
+
+def inferred_toc_verdict(toc: list["TocEntry"], n_pages: int) -> str | None:
+    """
+    `None` when an inferred table of contents may be trusted; otherwise the
+    reason it may not, for the record — bean `6xaz`.
+
+    **This is only ever asked of an INFERRED table of contents.** One read from
+    a PDF's embedded outline is the document's own answer and is never second-
+    guessed here; `9789241548960_eng.pdf`'s 250 outline-derived sections must
+    come out identical whatever this function does.
+
+    The two failures that motivated it share a root cause and no symptom, which
+    is why the measure is concentration rather than spread:
+
+    - `WPR-RDO-2020-003-eng.pdf` — 11 of 13 entries read off **a sample table**
+      the style guide reproduces as a design example, every one stamped page 22.
+      The other two were real, so the page SPREAD was 3 and a spread test would
+      have passed it.
+    - `WHO_PUB_TPS_93.1.pdf` — titles correct, but every page number taken from
+      the contents page it was found on, so 42 sections claimed pages 2 and 4.
+      26 of them came out under 500 characters while 37,923 landed in one.
+
+    Emitting either is worse than emitting nothing: a misnamed section is
+    greppable, sits in `library/`, and answers a question wrongly with
+    authority. `split_sections` on an empty TOC yields one `sec-000-document`
+    holding the whole text — a determined division, and still greppable.
+    """
+    if len(toc) < TOC_MIN_ENTRIES_FOR_VERDICT:
+        return None
+    # A document with no more pages than the window cannot fail this test: its
+    # entries have nowhere else to be, so concentration carries no information.
+    if n_pages <= TOC_MAX_CONCENTRATED_PAGES:
+        return None
+    frac, pages = toc_concentration(toc)
+    if frac >= TOC_MAJORITY:
+        return (
+            f"{len(toc)} inferred entries, {frac:.0%} of them starting on "
+            f"page(s) {', '.join(str(p) for p in pages)} of {n_pages} — a list "
+            f"found ON a page, not the document's structure"
+        )
+    return None
+
+
 def infer_headings(pages: list[str]) -> list[TocEntry]:
     """Heading detection for documents with no outline (43% of the corpus)."""
     entries: list[TocEntry] = []
@@ -429,7 +508,7 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
             trailing_page_no = sum(
                 1 for l in heading_ish if re.search(r"(?:\.\s*){2,}\d{1,4}\s*$|\s\d{1,4}\s*$", l)
             )
-            if trailing_page_no >= 0.6 * len(heading_ish):
+            if trailing_page_no >= TOC_MAJORITY * len(heading_ish):
                 continue
 
         for line in lines_:
@@ -1136,7 +1215,14 @@ def process(path: str, outdir: str | None = None, use_ocr: bool = False,
             pages, ocr_used = cached, True
 
     outline = _toc_entries(reader.raw_toc())
-    toc = outline or infer_headings(pages)
+    # An inferred table of contents is asked to justify itself; an outline is
+    # the document's own answer and is not second-guessed (bean `6xaz`).
+    inferred = [] if outline else infer_headings(pages)
+    n_inferred = len(inferred)
+    toc_undetermined = inferred_toc_verdict(inferred, len(pages)) if inferred else None
+    if toc_undetermined:
+        inferred = []
+    toc = outline or inferred
     meta = parse_front_matter(pages)
     sections = split_sections(pages, toc)
 
@@ -1176,7 +1262,19 @@ def process(path: str, outdir: str | None = None, use_ocr: bool = False,
         },
         "metadata": meta | {"docinfo": docinfo},
         "toc": [asdict(e) for e in toc],
-        "toc_source": "outline" if outline else ("inferred" if toc else "none"),
+        # FOUR states, not three. `none` is a DETERMINED "this document has no
+        # discoverable table of contents"; `undetermined` is "one was inferred
+        # and could not be trusted", and they point at different fixes. Folding
+        # the second into the first is the failure `6xaz` records.
+        "toc_source": (
+            "outline" if outline
+            else "inferred" if toc
+            else "undetermined" if toc_undetermined
+            else "none"
+        ),
+        # Why, in a sentence a person can check, rather than a bare flag. Absent
+        # when the TOC was trusted.
+        "toc_undetermined_reason": toc_undetermined,
         "sections": [
             {k: v for k, v in asdict(s).items() if k != "text"} for s in sections
         ],
@@ -1184,6 +1282,11 @@ def process(path: str, outdir: str | None = None, use_ocr: bool = False,
             "pages_without_text": empty,
             "likely_scanned": empty > len(pages) * 0.5,
             "toc_entries": len(toc),
+            # What the verdict was computed FROM, so the threshold can be
+            # re-derived from the artefact rather than taken on trust. Reported
+            # for every inferred TOC, trusted or not — a number that only
+            # appears on failures cannot show you a near miss.
+            "toc_inferred_entries": n_inferred,
             "sections": len(sections),
             "chars_total": sum(s.n_chars for s in sections),
         },
@@ -1211,6 +1314,12 @@ def write_sections(outdir: str, artefact: dict[str, Any], sections: list[Section
             f"pages: {s.page_start}-{s.page_end}",
             f"source_pdf: {artefact['source']['file']}",
             f"source_sha256: {artefact['source']['sha256'][:16]}",
+            # Bean `6xaz`: a consumer reading `sections/` could not tell an
+            # inferred tree from an outline-derived one without going back to
+            # `structure.json`, and the two are not comparable in
+            # trustworthiness. Restated here because this file is what gets
+            # read, quoted and cited.
+            f"toc_source: {artefact['toc_source']}",
             "---",
             "",
         ]
