@@ -16,45 +16,8 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Purpose",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Size",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Restrictions",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Copyright",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Retention",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_SourceLoss",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Fetch",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Declare",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_StayRef",
-          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -107,8 +70,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 2,
+    "pass": 7,
+    "fail": 1,
     "n/a": 3,
     "unknown": 0
   }
