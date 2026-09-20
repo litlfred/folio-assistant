@@ -274,9 +274,9 @@ describe("figures reach the manifest as blocks", () => {
 describe("a judgement is not a measurement", () => {
   // Bean `d5f1`, 2026-09-20. Geometry gives ONE bit: is this the page, or
   // something on it. Of the 24 images it called `figure` across this corpus,
-  // 2 were real figures, 13 were organisation logos, 7 were the same
-  // photograph at seven sizes and 2 were unreplaced template text. No
-  // measurement of a placed rectangle separates those.
+  // 2 were real figures, 12 were organisation logos, 8 were photographs (7
+  // of them the same picture at seven sizes) and 2 were unreplaced template
+  // text. No measurement of a placed rectangle separates those.
   const INSPECTED = {
     method: "inspection" as const,
     by: { kind: "agent" as const, id: "claude", model: "claude-opus-5" },

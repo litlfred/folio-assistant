@@ -229,7 +229,7 @@ Read as one contact sheet rather than 24 files. The classification is
 | photographs — 7 of them the same children-on-a-road picture, plus one of a health worker | **8** |
 | unreplaced template text: "WPRO PUBLICATION / **SAMPLE TITLE** IN THE WESTERN PACIFIC" | **2** |
 
-Describing "every figure" would therefore produce **13 logo descriptions and
+Describing "every figure" would therefore produce **12 logo descriptions and
 seven descriptions of one photograph** against two that are actually about the
 document's content.
 

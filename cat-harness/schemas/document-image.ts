@@ -62,7 +62,7 @@ import { NarrativeSchema, NOT_AUTHORED, type Narrative } from "./narrative.ts";
  * | photographs — 7 of them the same picture at seven sizes | **8** |
  * | unreplaced template text reading "SAMPLE TITLE" | **2** |
  *
- * Describing "every figure" would have produced thirteen logo captions and
+ * Describing "every figure" would have produced twelve logo captions and
  * seven descriptions of one picture, against two about the document. No
  * measurement of the placed rectangle can tell a WHO emblem from a chart —
  * only looking can, which is why {@link InspectionBasisSchema} exists.
