@@ -1,0 +1,88 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>schemas/content-types-base | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="" aria-current="page">schemas/content-types-base</a></li></ul>
+<h1>Module schemas/content-types-base</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>The content types this layer owns, registered at load time.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-graphNode">
+<h4 class="tsd-anchor-link" id="graph-node">Graph Node<a href="#graph-node" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>schema</p>
+<p>Separate from <code>content-type.ts</code> for the reason <code>folio-graph-kind.ts</code> is
+separate from <code>cat-harness.ts</code>: the registry is a mechanism and the entries
+are a layer's opinion. A layer that does not own a type must not be the
+place it is declared, and the split is what makes that enforceable rather
+than merely stated.</p>
+<p>Two are registered here — <code>harness</code> and <code>folio</code> — because they are the two
+this layer owns.</p>
+<h2 id="they-are-not-the-same-type-and-this-repository-is-the-proof" class="tsd-anchor-link">They are NOT the same type, and this repository is the proof<a href="#they-are-not-the-same-type-and-this-repository-is-the-proof" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>harness.json</code> says <em>this is an instance</em>: a name, a stub, the directories
+it holds. <code>harness.config.json</code> says <em>this authors folio content</em>: it
+carries <code>contentType</code>, and <code>folio_init</code> writes it.</p>
+<pre><code><span class="hl-0">                    </span><span class="hl-7">harness</span><span class="hl-0">.</span><span class="hl-7">json</span><span class="hl-0">   </span><span class="hl-7">harness</span><span class="hl-0">.</span><span class="hl-7">config</span><span class="hl-0">.</span><span class="hl-7">json</span><br/><span class="hl-0">  </span><span class="hl-7">cat</span><span class="hl-0">-</span><span class="hl-7">harness</span><span class="hl-0">/           </span><span class="hl-7">yes</span><span class="hl-0">              </span><span class="hl-5">NO</span><br/><span class="hl-0">  </span><span class="hl-7">the</span><span class="hl-0"> </span><span class="hl-7">repository</span><span class="hl-0"> </span><span class="hl-7">root</span><span class="hl-0">    </span><span class="hl-7">yes</span><span class="hl-0">              </span><span class="hl-7">yes</span>
+</code><button>Copy</button></pre>
+
+<p>So <code>cat-harness/</code> is a harness and is <strong>not</strong> a folio — which is exactly
+right, and is the platform-not-content rule <code>AGENTS.md</code> opens with, showing
+up as a measurable fact about two files rather than as a slogan.</p>
+<p>This is also what <code>isFolio</code> in <code>folio-intent.dmn</code> has always meant. That
+input is documented as <em>&quot;harness.config.json exists in the working
+directory&quot;</em> — so it was never &quot;is this an instance&quot;, it is one membership of
+the set, and <code>getting-started.md</code> now says so.</p>
+<h2 id="and-are-not-here-and-the-partition-gate-is-why" class="tsd-anchor-link"><code>dak</code> and <code>sushi</code> are NOT here, and the partition gate is why<a href="#and-are-not-here-and-the-partition-gate-is-why" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>They were, for about ten minutes, under a comment saying <em>&quot;registering a
+type is not claiming it … when a WHO adapter becomes its own layer, those
+two entries move there.&quot;</em> <code>check:partition:edges</code> disagreed, immediately and
+correctly:</p>
+<pre><code><span class="hl-7">schemas</span><span class="hl-0">/</span><span class="hl-7">content</span><span class="hl-0">-</span><span class="hl-7">types</span><span class="hl-0">-</span><span class="hl-7">base</span><span class="hl-0">.</span><span class="hl-7">ts</span><span class="hl-0"> [</span><span class="hl-7">folio</span><span class="hl-0">-</span><span class="hl-7">assist</span><span class="hl-0">-</span><span class="hl-7">core</span><span class="hl-0">] -&gt; </span><span class="hl-7">schemas</span><span class="hl-0">/</span><span class="hl-7">dak</span><span class="hl-0">.</span><span class="hl-7">ts</span><span class="hl-0"> [</span><span class="hl-7">smart</span><span class="hl-0">-</span><span class="hl-7">base</span><span class="hl-0">]</span><br/><span class="hl-5">A</span><span class="hl-0"> </span><span class="hl-7">repo</span><span class="hl-0"> </span><span class="hl-7">may</span><span class="hl-0"> </span><span class="hl-7">not</span><span class="hl-0"> </span><span class="hl-1">import</span><span class="hl-0"> </span><span class="hl-7">one</span><span class="hl-0"> </span><span class="hl-7">that</span><span class="hl-0"> </span><span class="hl-7">depends</span><span class="hl-0"> </span><span class="hl-7">on</span><span class="hl-0"> </span><span class="hl-7">it</span><span class="hl-0">.</span>
+</code><button>Copy</button></pre>
+
+<p><code>smart-base</code> depends on core, so core recognising a DAK means core importing
+downstream. The comment was right about the destination and wrong that it
+could wait: recognising <code>dak.json</code> needs <code>DAK_TYPE</code>, and reaching for it is
+the edge. They live in module:schemas/dak-content-type, registered by
+the layer that owns the model — exactly as <code>folio-graph-kind.ts</code> registers
+<code>folio</code> rather than the harness declaring a kind it cannot serve.</p>
+<p><code>ig</code> is registered nowhere, and that is also deliberate. <code>79t3</code> records it as
+half-formalised — <code>l3-fhir</code> exists as a translation content type with <code>fsh</code>
+and <code>fhir-json</code> formats, but <strong>nothing declares an IG instance</strong>, so there is
+no marker file to recognise. An entry for it would mint a type whose
+membership can never be asserted: something that looks like coverage and
+detects nothing.</p>
+</div></div></section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="variables">Variables<a href="#variables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="harness_type"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><a href="../variables/schemas_content-types-base.HARNESS_TYPE.html">HARNESS_TYPE</a><a href="#harness_type" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="functions">Functions<a href="#functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="registerbasecontenttypes"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><a href="../functions/schemas_content-types-base.registerBaseContentTypes.html">registerBaseContentTypes</a><a href="#registerbasecontenttypes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#they-are-not-the-same-type-and-this-repository-is-the-proof"><span>They are <wbr/>NOT the same type, and this repository is the proof</span></a><a href="#and-are-not-here-and-the-partition-gate-is-why"><span> and  are <wbr/>NOT here, and the partition gate is why</span></a>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Variables"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Variables</summary>
+<div><a href="#harness_type"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Variable"><use href="../assets/icons.svg#icon-32"></use></svg><span>HARNESS_<wbr/>TYPE</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Functions"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Functions</summary>
+<div><a href="#registerbasecontenttypes"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Function"><use href="../assets/icons.svg#icon-64"></use></svg><span>register<wbr/>Base<wbr/>Content<wbr/>Types</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

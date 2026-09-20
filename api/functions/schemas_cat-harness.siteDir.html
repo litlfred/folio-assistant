@@ -1,0 +1,65 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>siteDir | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
+<li><a href="" aria-current="page">siteDir</a></li></ul>
+<h1>Function siteDir</h1></div>
+<section class="tsd-panel">
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="sitedir"><span class="tsd-kind-call-signature">siteDir</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">_d</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/schemas_cat-harness.CatHarnessDeclaration.html" class="tsd-signature-type tsd-kind-interface">CatHarnessDeclaration</a><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">&quot;name&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;stub&quot;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#sitedir" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Where this instance's renderable site lives in the working tree:
+<code>docs/&lt;stub&gt;/</code>.</p>
+<p><strong>The stub segment is the packaging for the repo split (issue #223).</strong> Every
+layer's pages sit under their own instance's stub, so splitting a layer out
+is a directory move rather than a sift through a shared tree — and two
+layers' docs can be checked out side by side without colliding, which is the
+same job the stub already does for <code>&lt;base&gt;/&lt;stub&gt;.jsonld</code> and
+<code>&lt;base&gt;/&lt;stub&gt;/</code> in <code>publishedAt</code> below.</p>
+<p><strong>It does not change a single published URL.</strong> Jekyll is pointed at this
+directory as its source root (<code>docs-site.yml</code>, <code>feature-staging.yml</code>), so
+the site's internal layout is untouched and every
+<code>litlfred.github.io/folio-assistant/...</code> link resolves exactly as before.</p>
+<p><strong>This is NOT the <code>folio</code> graph-kind declaration</strong>, and it deliberately
+stops short of it. <code>docs/</code> cannot be declared a directory of this instance
+yet: <code>folio</code> is registered by CORE, and re-measured 2026-09-19 with the
+entry added, <code>harness:dirs</code>, <code>kg:schema:check</code> and <code>docs:harness:check</code> all
+throw <code>unknown graph kind &quot;folio&quot;</code> and 5 tests fail. What this function does
+fix is the OTHER half of bean <code>x4a6</code> — the site root was spelled out
+separately in <code>translation-index.ts</code>, <code>gen-docs-pages.ts</code>,
+<code>gen-skill-docs.ts</code>, <code>gen-schema-docs.ts</code> and <code>translation-qa-sweep.ts</code>,
+five copies free to disagree. Now one, and when the split lands it becomes
+one line reading the declared directory instead of composing it.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">_d</span>: <span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/schemas_cat-harness.CatHarnessDeclaration.html" class="tsd-signature-type tsd-kind-interface">CatHarnessDeclaration</a><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">&quot;name&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;stub&quot;</span><span class="tsd-signature-symbol">&gt;</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/cat-harness.ts#L1986">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:1986</a></li></ul></aside></div></li></ul></section></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

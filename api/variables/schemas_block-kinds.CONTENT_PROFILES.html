@@ -1,0 +1,98 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>CONTENT_PROFILES | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/schemas_block-kinds.html">schemas/block-kinds</a></li>
+<li><a href="" aria-current="page">CONTENT_PROFILES</a></li></ul>
+<h1>Variable CONTENT_PROFILES<code class="tsd-tag">Const</code></h1></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">CONTENT_PROFILES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;document&quot;</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">&quot;paper&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>The <strong>profiles</strong> of the <code>paper</code> adapter's vocabulary.</p>
+<p>A profile is a <em>restriction</em> of one adapter's kind set, and is a different
+axis from <a href="schemas_block-kinds.CONTENT_ADAPTERS.html" class="tsd-kind-variable">CONTENT_ADAPTERS</a> — which is a disjoint partition of
+namespaces. Getting those two confused is easy and costly, so the
+distinction is worth stating plainly:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>adapter</th>
+<th>profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>relation between members</td>
+<td>disjoint</td>
+<td>nested</td>
+</tr>
+<tr>
+<td>a kind belongs to</td>
+<td>exactly one</td>
+<td>one or more</td>
+</tr>
+<tr>
+<td>answers</td>
+<td>&quot;whose vocabulary is this word from?&quot;</td>
+<td>&quot;may <em>this</em> folio use it?&quot;</td>
+</tr>
+<tr>
+<td>consumed by</td>
+<td>QA criterion scoping (<a href="../functions/schemas_block-kinds.adapterForKind.html" class="tsd-kind-function">adapterForKind</a>)</td>
+<td>folio validation (<a href="../functions/schemas_block-kinds.kindsOutsideProfile.html" class="tsd-kind-function">kindsOutsideProfile</a>)</td>
+</tr>
+</tbody>
+</table>
+<p><code>adapterForKind</code> therefore stays total and unambiguous: every kind below is
+still a <code>paper</code> kind, and no QA criterion's scope changes because a profile
+exists. A DAK kind is in no profile at all — it is a different adapter, not
+a narrower paper.</p>
+<h2 id="why-the-split-is-where-it-is" class="tsd-anchor-link">Why the split is where it is<a href="#why-the-split-is-where-it-is" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>A <em>document</em> is the general case: policy guidance, a report, a standard, a
+chapter of prose with tables and figures. A <em>paper</em> is that plus blocks
+whose assertion is a formal mathematical claim, carried by a <code>.lean</code>
+sibling. That is the whole difference — the tree of chapters and sections,
+the <code>uses[]</code> editorial graph, QA sidecars, the HCI validation gate and the
+publication pipeline are common to both, which is why they are one adapter
+with two profiles rather than two adapters.</p>
+<p>The dividing line is machine-checkable at its sharpest point: <code>definition</code>
+is the one kind whose <code>lean</code> field is <strong>required</strong> rather than optional
+(<code>DefinitionBlock.lean: LeanRef</code> in <code>types.ts</code>), so a document folio cannot
+contain one without failing schema validation. A test pins that, so the
+partition cannot drift away from the type that motivates it.</p>
+<p>The theorem-like kinds join it for a reason that is editorial rather than
+structural: their <code>lean</code> is optional, so a document <em>could</em> hold a
+<code>theorem</code> with no formalization — but a theorem whose proof nothing checks
+is the failure mode the paper profile exists to prevent, and offering the
+kind in a folio with no Lean toolchain invites exactly that. <code>example</code>,
+<code>remark</code>, <code>algorithm</code> and <code>proof</code>-free prose keep their optional <code>lean</code> and
+stay in the document profile; a document folio simply never populates it,
+which <a href="schemas_block-kinds.DOCUMENT_FORBIDS_LEAN.html" class="tsd-kind-variable">DOCUMENT_FORBIDS_LEAN</a> states and validation enforces.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-kinds.ts#L145">work/folio-assistant/folio-assistant/cat-harness/schemas/block-kinds.ts:145</a></li></ul></aside></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#why-the-split-is-where-it-is"><span>Why the split is where it is</span></a></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>BASE_GRAPH_KINDS | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
+<li><a href="" aria-current="page">BASE_GRAPH_KINDS</a></li></ul>
+<h1>Variable BASE_GRAPH_KINDS<code class="tsd-tag">Const</code></h1></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">BASE_GRAPH_KINDS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <a href="../interfaces/schemas_cat-harness.GraphKindDef.html" class="tsd-signature-type tsd-kind-interface">GraphKindDef</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-comment tsd-typography"><p>The graph kinds the <strong>harness itself</strong> defines.</p>
+<p><strong>The map below is the only answer to how many, and this sentence deliberately
+does not give one.</strong> It read &quot;Four, and deliberately none of them renderable&quot;
+over a map of fourteen — and the version before that read &quot;Five&quot; over a map of
+four, which bean <code>5o3a</code> records #269 correcting. A count in prose is a claim
+that has to be maintained, it was maintained wrongly twice, and nothing checks
+it. <code>Object.keys(BASE_GRAPH_KINDS).length</code> is checkable and free.</p>
+<p>What IS stable and worth saying: <strong>none of them is renderable.</strong> Everything
+here is a graph a tool reads — how work is done (<code>tools</code>), what an actor knows
+and which process governs it (<code>cat-harness</code>), the shapes both are typed against
+(<code>schemas</code>), the work plan with its running-process state (<code>beans</code>), and the
+ingestion, voice and translation inputs. Rendering belongs to <code>folio</code>, which
+the layer above registers.</p>
+<h2 id="why-the-work-plan-is-the-harnesss-and-not-cores" class="tsd-anchor-link">Why the work plan is the harness's and not core's<a href="#why-the-work-plan-is-the-harnesss-and-not-cores" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>folio</code> is registered by <code>folio-assist-core</code> because only core can render.
+The work plan has no such constraint in either direction: an instance has
+work whether or not it has content, and <code>agentic-harness</code> itself carries a
+<code>beans/</code> store for its own. A Tool repo and a Test repo have work plans too.
+So it is declared here — the test for &quot;does this belong to the harness&quot; is
+whether the harness has one, and it does.</p>
+<h2 id="one-kind-and-where-the-distinction-it-carried-went" class="tsd-anchor-link">One <code>beans</code> kind, and where the distinction it carried went<a href="#one-kind-and-where-the-distinction-it-carried-went" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>This map used to hold five kinds, splitting the work plan in two: <code>workplan</code>
+at <code>beans/</code> and <code>process-state</code> at <code>beans/workflow/</code>. The reasoning was that
+WHAT IS BEING WORKED ON is human- and agent-authored and carries judgement,
+while WHERE A RUNNING PROCESS GOT TO is a token the interpreter owns and no
+human is invited to edit — and that a consumer asking for the work plan must
+not be handed BPMN instance state.</p>
+<p>That reasoning holds; the mechanism was wrong. The second directory sat
+INSIDE the first, so a consumer scanning a declared directory could not
+assume it owned what lay beneath it, and the two were distinguishable only by
+file extension — which the declaring comment itself called &quot;a coincidence of
+the current layout, not a contract&quot;. Two sibling entries in a flat list
+misrepresented a containment relation.</p>
+<p><code>beans/</code> is now a graph with named nodes (<code>beans/beans.json</code>,
+<code>schemas/bean-graph.ts</code>), so the distinction lives INSIDE the graph that
+declares it rather than out here where it had to be inferred. The harness
+says which directories exist and what kind of graph each holds; the bean
+graph says what its own nodes are. One fact, one place, at each level — and
+the consumer that must not be handed instance state asks for a node by name.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/cat-harness.ts#L345">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:345</a></li></ul></aside></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#why-the-work-plan-is-the-harnesss-and-not-cores"><span>Why the work plan is the harness&#39;s and not core&#39;s</span></a><a href="#one-kind-and-where-the-distinction-it-carried-went"><span>One  kind, and where the distinction it carried went</span></a></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

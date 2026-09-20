@@ -1,0 +1,106 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>directoryForGraph | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
+<li><a href="" aria-current="page">directoryForGraph</a></li></ul>
+<h1>Function directoryForGraph</h1></div>
+<section class="tsd-panel">
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="directoryforgraph"><span class="tsd-kind-call-signature">directoryForGraph</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">root</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">graph</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">registry</span><span class="tsd-signature-symbol">?:</span> <a href="../classes/schemas_cat-harness.GraphKindRegistry.html" class="tsd-signature-type tsd-kind-class">GraphKindRegistry</a><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><a href="#directoryforgraph" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>The absolute path of the directory holding a given graph, read from the
+instance's declaration.</p>
+<h2 id="the-literal-this-exists-to-replace" class="tsd-anchor-link">The literal this exists to replace<a href="#the-literal-this-exists-to-replace" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>check:declared-paths</code> found <strong>114</strong> places where a directory
+<code>harness.json</code> already declares is written out in code instead —
+<code>join(root, &quot;skills&quot;)</code>, <code>join(root, &quot;translations&quot;, loc)</code>,
+<code>join(root, &quot;uploads&quot;)</code>. Every one of them is a place a topical or
+relocated layout breaks silently, which is the whole defect the
+declaration exists to remove.</p>
+<p><code>resolveDirectories</code> already answered this; what was missing was a call
+short enough that nobody reaches for the literal instead. One line, one
+argument, and the caller does not have to build a chain.</p>
+<h2 id="three-states-and-the-third-is-why-this-returns" class="tsd-anchor-link">Three states, and the third is why this returns <code>undefined</code><a href="#three-states-and-the-third-is-why-this-returns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>A graph the instance does not declare is NOT the same as one declared at
+the conventional path. <code>DEFAULT_DIRECTORIES</code> is existence-filtered, so an
+instance with no <code>uploads/</code> genuinely has no <code>uploads</code> graph — and
+defaulting here would hand a caller a path to a directory that is not
+there, which is precisely the <code>dh4f</code> defect (a consumer scans nothing and
+reports a clean run over it). Callers that legitimately want the
+convention as a fallback say so at their own call site, where the choice
+is visible.</p>
+<h2 id="ambiguity-refuses-rather-than-picking-and-that-is-the-point" class="tsd-anchor-link">Ambiguity REFUSES rather than picking, and that is the point<a href="#ambiguity-refuses-rather-than-picking-and-that-is-the-point" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>A graph declared by two directories is legal — <code>cat-harness</code> is declared by
+four (<code>schemas/</code>, <code>skills/</code>, <code>cat-bootstrap/skills/</code>, <code>src/skills/</code>) and
+<code>methodology</code> by two. This used to return the FIRST of them, under a comment
+saying it was &quot;the accessor for the single-home case&quot;. That precondition was
+stated and enforced by nothing, which is this repository's own rule broken
+in one line: an unavoidable duplicate is fine, an UNCHECKED one is not.</p>
+<p>The cost is on the record. Bean <code>wggr</code>: a by-graph lookup for <code>cat-harness</code>
+resolves to <code>schemas/</code>, not <code>skills/</code>, because <code>schemas/</code> declares
+<code>[&quot;schemas&quot;, &quot;cat-harness&quot;]</code> and comes first. An audit walked <code>schemas/</code>,
+wrote <strong>37</strong> sidecars against the wrong subjects, and exited <strong>0</strong>. Nothing
+threw, because the wrong answer is indistinguishable from the right one at
+the call site — <em>&quot;a by-graph lookup is not a weaker version of a by-id
+lookup; for <code>cat-harness</code> it resolves to a DIFFERENT DIRECTORY.&quot;</em></p>
+<p>So an ambiguous kind now throws, naming every candidate. Measured before the
+change: <strong>none of the 34 call sites in this repository asks for either
+ambiguous kind</strong> — every one passed <code>library</code>, <code>translation-sources</code>,
+<code>uploads</code>, <code>schemas</code>, <code>fsh-guts</code>, <code>todos</code> or <code>memory</code>, all single-homed at
+the time. The throw was therefore unreachable, and existed for the caller
+who had not been written yet, which is the one <code>wggr</code> was.</p>
+<p><strong>That caller arrived the same day.</strong> Bean <code>frs5</code> moved the corpus out of
+the platform into <code>who-iris/library/</code> and <code>folio-assist-sci/library/</code>, so
+<code>library</code> has TWO homes and <code>schemas</code> has FOUR (<code>cat-harness/</code>,
+<code>folio-assistant-core/</code>, <code>large-datasets/</code>, <code>detangle/</code>). The paragraph
+above is kept as written and corrected here rather than edited, because
+what it records — a throw added for a caller nobody had written — is worth
+more beside the date it stopped being true than it is silently updated.</p>
+<p>Every site that wanted one was migrated: scanners fan out through
+<a href="schemas_cat-harness.directoriesForGraph.html" class="tsd-kind-function">directoriesForGraph</a>, write targets refuse through this, and the four
+that wanted THEIR OWN instance's directory ask
+<a href="schemas_cat-harness.instanceDirectoryForGraph.html" class="tsd-kind-function">instanceDirectoryForGraph</a>, which is a third question neither of the
+other two answers. <code>scripts/tests/no-silent-first-directory.test.ts</code> fails
+on a new <code>directoriesForGraph(…)[0]</code>, since the last fix of this shape was
+one site at a time and left thirty-one.</p>
+<p><a href="schemas_cat-harness.directoriesForGraph.html" class="tsd-kind-function">directoriesForGraph</a> is the honest accessor when several homes are
+what you want; a by-ID lookup through <a href="schemas_cat-harness.resolveDirectories.html" class="tsd-kind-function">resolveDirectories</a> is the
+answer when you want a particular one.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">root</span>: <span class="tsd-signature-type">string</span></span></li>
+<li><span><span class="tsd-kind-parameter">graph</span>: <span class="tsd-signature-type">string</span></span></li>
+<li><span><span class="tsd-kind-parameter">registry</span>: <a href="../classes/schemas_cat-harness.GraphKindRegistry.html" class="tsd-signature-type tsd-kind-class">GraphKindRegistry</a><span class="tsd-signature-symbol"> = defaultGraphKinds</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/cat-harness.ts#L3427">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:3427</a></li></ul></aside></div></li></ul></section></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#the-literal-this-exists-to-replace"><span>The literal this exists to replace</span></a><a href="#three-states-and-the-third-is-why-this-returns"><span>Three states, and the third is why this returns </span></a><a href="#ambiguity-refuses-rather-than-picking-and-that-is-the-point"><span>Ambiguity <wbr/>REFUSES rather than picking, and that is the point</span></a></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

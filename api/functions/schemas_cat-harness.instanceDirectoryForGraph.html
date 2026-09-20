@@ -1,0 +1,79 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>instanceDirectoryForGraph | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/schemas_cat-harness.html">schemas/cat-harness</a></li>
+<li><a href="" aria-current="page">instanceDirectoryForGraph</a></li></ul>
+<h1>Function instanceDirectoryForGraph</h1></div>
+<section class="tsd-panel">
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="instancedirectoryforgraph"><span class="tsd-kind-call-signature">instanceDirectoryForGraph</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">root</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">graph</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">registry</span><span class="tsd-signature-symbol">?:</span> <a href="../classes/schemas_cat-harness.GraphKindRegistry.html" class="tsd-signature-type tsd-kind-class">GraphKindRegistry</a><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><a href="#instancedirectoryforgraph" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>The directory a graph has AT THIS INSTANCE'S OWN ROOT — repository-scoped
+entries pointing at sibling instances excluded.</p>
+<h2 id="a-third-question-found-by-reading-the-callers-rather-than-by-design" class="tsd-anchor-link">A third question, found by reading the callers rather than by design<a href="#a-third-question-found-by-reading-the-callers-rather-than-by-design" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>a02m</code> began with two shapes in mind: scan every home, or expect exactly
+one (<code>directoryForGraph</code>, reinstated on <code>main</code> the same day with the
+refusing semantics this branch had built separately as
+<code>directoryForGraph</code> — two names for one question, resolved in favour of
+main's). Both were wrong for the four <code>schemas</code> call sites, which is how this
+one was found. <code>check-tools</code>, <code>harness-schema-export</code>, <code>gen-schema-docs</code> and
+<code>fsh-guts/generate-docs</code> all compose <code>join(schemasRoot(root), &quot;skills&quot;)</code> or
+<code>&quot;generated&quot;</code> — a path INSIDE the directory. They are not asking &quot;who
+declares schemas&quot;, they are asking &quot;where is MY schemas directory&quot;.</p>
+<h2 id="is-not-the-discriminator-and-assuming-it-was-is-a-correction" class="tsd-anchor-link"><code>own</code> is NOT the discriminator, and assuming it was is a correction<a href="#is-not-the-discriminator-and-assuming-it-was-is-a-correction" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>The first version of this filtered on <code>ResolvedDirectory.own</code>. Measured:
+from the <code>cat-harness</code> root all FOUR <code>schemas</code> directories are <code>own</code> —
+<code>cat-harness/schemas</code> plus <code>folio-assistant-core/</code>, <code>large-datasets/</code> and
+<code>detangle/</code>, each declared by cat-harness's own <code>harness.json</code> with
+<code>scope: &quot;repository&quot;</code> because this repository stages three future instances
+as sibling top-level directories. <code>own</code> distinguishes the root from a
+DEPENDENCY, which is a different question and not the one being asked.</p>
+<p>The discriminator is <code>scope</code>, and <code>rootForScope</code> above is where it already
+means exactly this: a repository-scoped entry resolves against the
+REPOSITORY root, everything else against the instance root. So this asks for
+the entries that resolve against <code>root</code> itself — the directory that is
+genuinely this instance's, not one it points at from across the repository.</p>
+<h2 id="why-was-not-already-wrong-here" class="tsd-anchor-link">Why <code>[0]</code> was not already wrong here<a href="#why-was-not-already-wrong-here" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><code>resolveDirectories</code> happens to order the root's instance-scoped
+declarations first, so <code>[0]</code> landed on the intended one. A reordering, or a
+staged sibling declared earlier, would have moved it silently — and the
+symptom would be a generator writing its output into another instance's
+tree, with a clean exit code.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">root</span>: <span class="tsd-signature-type">string</span></span></li>
+<li><span><span class="tsd-kind-parameter">graph</span>: <span class="tsd-signature-type">string</span></span></li>
+<li><span><span class="tsd-kind-parameter">registry</span>: <a href="../classes/schemas_cat-harness.GraphKindRegistry.html" class="tsd-signature-type tsd-kind-class">GraphKindRegistry</a><span class="tsd-signature-symbol"> = defaultGraphKinds</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/cat-harness.ts#L3594">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:3594</a></li></ul></aside></div></li></ul></section></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#a-third-question-found-by-reading-the-callers-rather-than-by-design"><span>A third question, found by reading the callers rather than by design</span></a><a href="#is-not-the-discriminator-and-assuming-it-was-is-a-correction"><span> is <wbr/>NOT the discriminator, and assuming it was is a correction</span></a><a href="#why-was-not-already-wrong-here"><span>Why  was not already wrong here</span></a></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

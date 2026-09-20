@@ -1,0 +1,305 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>QaCriterionDefinition | folio-assistant API</title><meta name="description" content="Documentation for folio-assistant API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/schemas_block-qa.html">schemas/block-qa</a></li>
+<li><a href="" aria-current="page">QaCriterionDefinition</a></li></ul>
+<h1>Interface QaCriterionDefinition</h1></div>
+<div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">QaCriterionDefinition</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#adapters">adapters</a><span class="tsd-signature-symbol">?:</span> (<span class="tsd-signature-type">&quot;paper&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;dak&quot;</span>)<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#also_invalidated_by">also_invalidated_by</a><span class="tsd-signature-symbol">?:</span> (<br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;md&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;ts&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;lean&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;bpmn&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;dmn&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;xlsx&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;fsh&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;cql&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;feature&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;graph&quot;</span><br/>    )<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#applies_to">applies_to</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#automated">automated</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#default_severity">default_severity</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;critical&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;major&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;minor&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#depends_on">depends_on</a><span class="tsd-signature-symbol">:</span> (<br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;md&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;ts&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;lean&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;bpmn&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;dmn&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;xlsx&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;fsh&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;cql&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;feature&quot;</span><br/>    )<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#description">description</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#domain">domain</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#extra_inputs">extra_inputs</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#id">id</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#lean_granularity">lean_granularity</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;file&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;statement&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#profiles">profiles</a><span class="tsd-signature-symbol">?:</span> (<span class="tsd-signature-type">&quot;document&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;paper&quot;</span>)<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#source_file">source_file</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#subject">subject</a><span class="tsd-signature-symbol">?:</span> <a href="../types/schemas_block-qa.QaCriterionSubject.html" class="tsd-signature-type tsd-kind-type-alias">QaCriterionSubject</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#voices">voices</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L521">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:521</a></li></ul></aside>
+<section class="tsd-panel-group tsd-index-group">
+<section class="tsd-panel tsd-index-panel">
+<details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h5 class="tsd-index-heading uppercase">Index</h5></summary>
+<div class="tsd-accordion-details">
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading tsd-anchor-link" id="properties">Properties<a href="#properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-index-list"><a href="#adapters" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>adapters?</span></a>
+<a href="#also_invalidated_by" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>also_<wbr/>invalidated_<wbr/>by?</span></a>
+<a href="#applies_to" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>applies_<wbr/>to?</span></a>
+<a href="#automated" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>automated</span></a>
+<a href="#default_severity" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>default_<wbr/>severity</span></a>
+<a href="#depends_on" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>depends_<wbr/>on</span></a>
+<a href="#description" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>description</span></a>
+<a href="#domain" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>domain</span></a>
+<a href="#extra_inputs" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>extra_<wbr/>inputs?</span></a>
+<a href="#id" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>id</span></a>
+<a href="#lean_granularity" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>lean_<wbr/>granularity?</span></a>
+<a href="#profiles" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>profiles?</span></a>
+<a href="#source_file" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>source_<wbr/>file?</span></a>
+<a href="#subject" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>subject?</span></a>
+<a href="#voices" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>voices?</span></a>
+</div></section></div></details></section></section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="properties-1">Properties<a href="#properties-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
+<section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="adapters"><code class="tsd-tag">Optional</code><span>adapters</span><a href="#adapters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">adapters</span><span class="tsd-signature-symbol">?:</span> (<span class="tsd-signature-type">&quot;paper&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;dak&quot;</span>)<span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Which content adapters this criterion applies to.</p>
+<p><strong>Absent means <code>[&quot;paper&quot;]</code></strong>, not &quot;all&quot;. Every criterion in the registry
+today was written for the paper adapter — its axes are about scholarly
+voice, proof structure, Lean formalisation and reading order — so an
+absent field must not silently widen them over WHO L2/L3 blocks. A
+<code>voice-scholarly-default</code> verdict on a FHIR ValueSet is not a finding,
+it is a category error, and one that would arrive as a <code>fail</code> rather
+than as an obviously wrong <code>n/a</code>.</p>
+<p>Defaulting to <code>all</code> was the alternative, and it is the trap: it needs
+every one of the ~47 existing criteria edited to stay correct, and any
+that were missed would misfire silently. Defaulting to the adapter they
+were all written for needs none, and a new DAK criterion opts in by
+saying so.</p>
+<p>Resolve with <code>criterionAdapters()</code> rather than reading this directly.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L565">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:565</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="also_invalidated_by"><code class="tsd-tag">Optional</code><span>also_<wbr/>invalidated_<wbr/>by</span><a href="#also_invalidated_by" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">also_invalidated_by</span><span class="tsd-signature-symbol">?:</span> (<br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;md&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;ts&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;lean&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;bpmn&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;dmn&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;xlsx&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;fsh&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;cql&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;feature&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;graph&quot;</span><br/>)<span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Extra files that invalidate a cached verdict WITHOUT gating
+applicability — the freshness half of <code>depends_on</code> on its own.</p>
+<p>Exists because the two meanings above genuinely come apart.
+<code>voice-scholarly-default</code> is the motivating case: it scans Lean
+docstrings as well as <code>.md</code>, but must keep running on prose-only
+blocks that have no <code>.lean</code> sibling at all. Listing <code>&quot;lean&quot;</code> in
+<code>depends_on</code> would <code>n/a</code> every such block; omitting it entirely
+meant a Lean-only edit could neither raise a finding nor CLEAR one,
+so a fixed docstring kept serving a stale <code>fail</code> until the sidecar
+entry was deleted by hand.</p>
+<p>Consulted by <code>entryIsFresh</code> via <code>freshnessKeys()</code>; ignored by the
+applicability gates.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L651">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:651</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="applies_to"><code class="tsd-tag">Optional</code><span>applies_<wbr/>to</span><a href="#applies_to" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">applies_to</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Optional gating: block kinds the criterion applies to.
+Empty / undefined means &quot;all kinds&quot;.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L698">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:698</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="automated"><span>automated</span><a href="#automated" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">automated</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+<div class="tsd-comment tsd-typography"><p>Whether a deterministic script can run this criterion (true) or
+it requires agent / human adjudication (false).</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L656">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:656</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="default_severity"><span>default_<wbr/>severity</span><a href="#default_severity" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">default_severity</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;critical&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;major&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;minor&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Default severity when the criterion fails.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L529">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:529</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="depends_on"><span>depends_<wbr/>on</span><a href="#depends_on" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">depends_on</span><span class="tsd-signature-symbol">:</span> (<br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;md&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;ts&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;lean&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;bpmn&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;dmn&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;xlsx&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;fsh&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;cql&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;feature&quot;</span><br/>)<span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L634">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:634</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="description"><span>description</span><a href="#description" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Human-readable one-liner.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L527">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:527</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="domain"><span>domain</span><a href="#domain" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">domain</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Domain bucket — <code>voice</code>, <code>fit</code>, <code>framework</code>, <code>wall</code>, etc.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L525">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:525</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="extra_inputs"><code class="tsd-tag">Optional</code><span>extra_<wbr/>inputs</span><a href="#extra_inputs" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">extra_inputs</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Repo-relative paths to extra inputs the checker consults beyond
+the block under audit — for example, cached audit witnesses
+(<code>docs/audits/*.json</code>), the bibliography database
+(<code>content/schema/references.ts</code>), or cross-block manifests.
+Concatenated content of these files is hashed into <code>deps_hash</code>
+on the entry. Changes invalidate the entry.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L718">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:718</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="id"><span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Stable identifier (e.g. <code>voice-status-leak</code>).</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L523">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:523</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="lean_granularity"><code class="tsd-tag">Optional</code><span>lean_<wbr/>granularity</span><a href="#lean_granularity" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">lean_granularity</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;file&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;statement&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>How finely this criterion depends on its <code>.lean</code> file.</p>
+<ul>
+<li>omitted / <code>&quot;file&quot;</code> — any byte change invalidates. The default,
+and correct for anything that reads the proof.</li>
+<li><code>&quot;statement&quot;</code> — only the declaration SIGNATURES matter, so a
+proof-body rewrite leaves the verdict fresh. Set this only when
+the criterion genuinely cannot be affected by a proof body;
+getting it wrong presents a stale verdict as current.</li>
+</ul>
+<p>Ignored unless <code>depends_on</code> includes <code>&quot;lean&quot;</code>.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L693">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:693</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="profiles"><code class="tsd-tag">Optional</code><span>profiles</span><a href="#profiles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">profiles</span><span class="tsd-signature-symbol">?:</span> (<span class="tsd-signature-type">&quot;document&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;paper&quot;</span>)<span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Which content <strong>profiles</strong> this criterion applies to.</p>
+<p><strong>Absent means every profile</strong>, not one of them — the exact opposite of
+<code>adapters</code> directly above, and deliberately so. The two fields look alike
+and read alike, so the reason they default in opposite directions is
+worth stating rather than inferring:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>adapters</code></th>
+<th><code>profiles</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>members are</td>
+<td>disjoint namespaces</td>
+<td>nested restrictions</td>
+</tr>
+<tr>
+<td>absent means</td>
+<td><code>[&quot;paper&quot;]</code> — narrow</td>
+<td>all of them — wide</td>
+</tr>
+<tr>
+<td>a wrong default produces</td>
+<td>a criterion that never runs</td>
+<td>a criterion that misfires</td>
+</tr>
+</tbody>
+</table>
+<p>Adapters partition. A criterion written for the paper vocabulary has
+<em>nothing</em> to say about a FHIR ValueSet, so widening by default would have
+pointed ~47 existing criteria at a corpus none of them was written for.</p>
+<p>Profiles nest: every <code>document</code> kind is also a <code>paper</code> kind, and every
+criterion in the registry predating this field was written against
+<code>prose</code>, <code>remark</code>, <code>example</code> and the rest — which is to say, against the
+document vocabulary — with the paper-only kinds as an <em>addition</em>.
+Narrowing by default would therefore stop those criteria running on
+document folios and report the result as a clean sweep. That is a <strong>false
+pass</strong>, and a false pass is strictly worse than a false fail here: a
+wrong <code>fail</code> is read by a reviewer and argued with, while a wrong <code>pass</code>
+is read by nobody and silently becomes the folio's QA record.</p>
+<p>So the field is an <strong>opt-out for the genuinely paper-only</strong>, declared one
+criterion at a time with its reason written beside it: a criterion whose
+verdict rests on a TeX toolchain the document render path does not have
+(<code>document_render_*</code> goes through pandoc and never falls back to
+<code>latexmk</code>), or on Lean formalization that DOCUMENT_FORBIDS_LEAN
+bars a document folio from carrying at all.</p>
+<p>Two things this field is <strong>not</strong> for, because both are easy to mistake
+for it:</p>
+<ul>
+<li><strong>Folio-specific axes.</strong> A criterion that assumes one folio's subject
+matter — CODATA calibration anchors, a q-deformation regime, a named
+chapter directory — is not paper-only, it is <em>that folio</em>-only, and a
+paper folio about anything else is equally miscategorised by it. That
+is what <code>folioOptionalAxes()</code> in the registry exists for.</li>
+<li><strong>Kind scoping.</strong> A criterion that only makes sense on a <code>theorem</code>
+already says so in <code>applies_to</code>, and a document folio cannot hold one.
+Restating it here adds a second answer to the same question.</li>
+</ul>
+<p>Resolve with <code>criterionProfiles()</code> rather than reading this directly.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L615">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:615</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="source_file"><code class="tsd-tag">Optional</code><span>source_<wbr/>file</span><a href="#source_file" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">source_file</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Path (repo-relative) to the source file containing this
+criterion's checker function. Required for <code>automated: true</code>
+criteria; ignored otherwise. Used to compute the entry's
+<code>script_hash</code> so a checker-logic change auto-invalidates
+downstream sidecar entries.</p>
+<p>If omitted, the registry's <code>getCriterionSourceFile()</code> helper
+resolves a default based on the criterion id prefix.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L709">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:709</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="subject"><code class="tsd-tag">Optional</code><span>subject</span><a href="#subject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">subject</span><span class="tsd-signature-symbol">?:</span> <a href="../types/schemas_block-qa.QaCriterionSubject.html" class="tsd-signature-type tsd-kind-type-alias">QaCriterionSubject</a></div>
+<div class="tsd-comment tsd-typography"><p>What the criterion is evaluated <strong>against</strong> — and therefore what shape
+its checker takes.</p>
+<ul>
+<li>omitted / <code>&quot;block&quot;</code> — a content block. The checker takes
+<a href="../types/schemas_block-qa.CheckerPaths.html" class="tsd-kind-type-alias">CheckerPaths</a>. This is every criterion on the block sweep.</li>
+<li><code>&quot;script&quot;</code> — a source script. The checker takes its path as a string,
+and the criterion belongs to <code>script-sweep</code>, not <code>qa-sweep</code>.</li>
+</ul>
+<p><strong>This exists so discovery does not have to guess from the domain name.</strong>
+The two subjects were told apart by <code>domain === &quot;script-quality&quot;</code>, which
+is a bucket label rather than a contract: a second script axis under any
+other name would have been handed to the block sweep, where its checker
+would receive a <code>CheckerPaths</code> object as its <code>scriptPath</code> and read
+<code>[object Object]</code> off disk. <code>content/pipeline/qa-checker-discovery.ts</code>
+partitions on this field, so the mismatch is impossible rather than
+merely unlikely.</p>
+<p>Absent means <code>&quot;block&quot;</code> because every criterion predating the field was
+one, and a wrong default here is a checker invoked with the wrong
+argument type — which fails loudly, unlike the silent misfires the
+<code>adapters</code> / <code>profiles</code> defaults above are guarding.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L680">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:680</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="voices"><code class="tsd-tag">Optional</code><span>voices</span><a href="#voices" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">voices</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Named editorial voices this criterion belongs to.</p>
+<p>Absent means the criterion is part of the base house standard and always
+applies. Present means it applies only while one of those voices is
+ACTIVATED in <code>harness.config.json</code> — the opposite default from <code>profiles</code>,
+and for the opposite reason. Narrowing a profile silently stops a check
+running, so <code>profiles</code> defaults open; applying an editorial register nobody
+asked for produces confident findings against prose written to a different
+standard, so a voice defaults closed. Issue #208: &quot;we shouldnt autmoatically
+apply voices. not all authors will want to use the who voice (e.g. a
+mministry of health)&quot;.</p>
+<p>Resolve with <code>voiceExcludesCriterion()</code> rather than reading this directly:
+a folio whose configuration could not be READ is a third state and must not
+be granted the skip.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cdbde30b3fc0cfb10f235407adada954e550fb67/cat-harness/schemas/block-qa.ts#L633">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:633</a></li></ul></aside></section></section></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details">
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Properties</summary>
+<div><a href="#adapters"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>adapters</span></a><a href="#also_invalidated_by"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>also_<wbr/>invalidated_<wbr/>by</span></a><a href="#applies_to"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>applies_<wbr/>to</span></a><a href="#automated"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>automated</span></a><a href="#default_severity"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>default_<wbr/>severity</span></a><a href="#depends_on"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>depends_<wbr/>on</span></a><a href="#description"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>description</span></a><a href="#domain"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>domain</span></a><a href="#extra_inputs"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>extra_<wbr/>inputs</span></a><a href="#id"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>id</span></a><a href="#lean_granularity"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>lean_<wbr/>granularity</span></a><a href="#profiles"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>profiles</span></a><a href="#source_file"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>source_<wbr/>file</span></a><a href="#subject"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>subject</span></a><a href="#voices"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>voices</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>
