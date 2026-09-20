@@ -180,6 +180,23 @@
       "description": "Read, write or clear the stored preferences.",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "CommitSha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$",
+      "description": "A git commit sha, full or abbreviated (7-40 hex digits).",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "RenderEvent": {
+      "type": "string",
+      "enum": [
+        "rendered",
+        "removed",
+        "restored",
+        "retained"
+      ],
+      "description": "A render-log event: rendered, removed, restored or retained.",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "RenderFormat": {
       "type": "string",
       "enum": [
@@ -306,8 +323,8 @@
   },
   "staging": {
     "branch": "claude/cat-bootstrap-rename",
-    "sha": "27c7896130b01fc23ed4b816043a4544729c445f",
+    "sha": "9a6bbab6ffe85b3ef43bcdac05fc158fd38144d8",
     "pr": "550/merge",
-    "run": "35522564232"
+    "run": "35522905497"
   }
 }
