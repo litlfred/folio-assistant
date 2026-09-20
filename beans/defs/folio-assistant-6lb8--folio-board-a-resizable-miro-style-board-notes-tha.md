@@ -499,3 +499,55 @@ MAY be an accelerator and SHALL NOT be the only way in — the reasoning
 R5 is the `> 1` threshold the badge does not honour. R6 is the badge/panel
 identity, which is ALREADY TRUE and currently unguarded — so it is a
 regression requirement needing a test rather than an implementation.
+
+## Phase 4 posted — and measuring the impact found a defect under the defect
+
+`A_DefineReqs` and `A_CompareOptions` complete; the process now stops at
+`BA_ReviewReqs`, the requestor's lane.
+
+**Correction to this bean's Phase 3 note.** It said `A_DefineReqs` would close
+on the requestor's reply. That was written before Phase 4 ran and was wrong:
+the step is the AGENT's and covers both phases, so once both were posted its
+work was done. Holding it open would have misreported where the process is.
+
+### The finding: `folio-todo-index/v1` HAS NO SCHEMA
+
+Measured: the string `folio-todo-index` appears in exactly two places in the
+repository — a literal in `gen-docs-pages.ts:951` and four fixtures in
+`sticky-todos.e2e.ts`. **No Zod type, no published JSON Schema, no module.** A
+consumer reading `"$schema": "folio-todo-index/v1"` and going looking finds
+nothing.
+
+**And the version has not moved while the shape has.** This session alone:
+`b7b87fdd` (pb04) added `viewHref` and `editHref`; `e7690f0a` (5y4b) added
+`theme` and a top-level `themeArt`. Still `v1`. **Two of those are mine and I
+did not notice** — which is the argument, not an aside: the convention is
+unenforced, so nothing could have told me. Same class as R3 one level up.
+
+### Impact, briefly
+
+- **Schema**: a `board` type and a declared zoom threshold are new; the index
+  document changes; **no note schema changes**, because the positions ruling
+  already holds and the board JOINS rather than annotates.
+- **Pipeline**: `gen-docs-pages.ts` is the only writer, `docs-ui.js` the only
+  reader. The `d2kp` reproducibility constraint is load-bearing and nearly
+  invisible — this file was once UNREPRODUCIBLE because `readdirSync` under Bun
+  returns raw directory order, so any added field must keep the emitted key
+  order fixed.
+- **Adapter**: a MEASURED nil. Notes are not block kinds, so nothing reaches
+  `adapterForKind`, `BLOCK_KINDS` or the profile check.
+- **Folio**: none here; **downstream is could-not-determine rather than none**,
+  because `litlfred/qou` is not in this checkout and this repository's own rule
+  refuses to render that as clean.
+- **Consumer**: `target` added, nothing removed, no IRI moves, and a convention
+  **removed** (the `sec:<page>-<node>` parse). One convention REMAINS — the
+  `$schema` naming a schema that does not exist — and R3 does not fix it.
+
+### The decision handed over
+
+Three options for the missing schema, compared per `decision-comparison` with
+Pro, Con, **Downstream impact** and Reversibility per row rather than three
+linked analyses. Recommendation **C** — define `v1` as what is actually
+published — because exactly one reader exists and it is ours, so the usual cost
+of defining a version late is not being paid. **Stated default: silence means
+C.**

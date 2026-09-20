@@ -49,7 +49,7 @@
   ],
   "status": "running",
   "startedAt": "2026-09-20T20:25:49.818Z",
-  "updatedAt": "2026-09-20T20:47:40.481Z",
+  "updatedAt": "2026-09-20T20:56:52.579Z",
   "children": {
     "Call_Issue": {
       "id": "crdm--folio-assistant-6lb8/Call_Issue",
@@ -156,7 +156,7 @@
       "subject": "folio-assistant-6lb8",
       "bean": "folio-assistant-6lb8",
       "tokens": [
-        "A_DefineReqs"
+        "BA_ReviewReqs"
       ],
       "arrivals": {},
       "history": [
@@ -170,11 +170,23 @@
           "node": "A_MapWorkflow",
           "actor": "claude",
           "note": "Mapped against the real corpus, not assumed. The affected area is note-against-content, and it is covered by ONE documented flow plus two rendering paths. The flow: skills/folio-core/todo-review.md section 'Session Start: Todo Workflow' — offer, scope selection, then a TABLE grouped by chapter, then a flat list by priority. It is entirely list-shaped. The renderings: mountTodoBoard (a grid of stickies, mounted inside .fa-landing-board) and mountPageStickies (a badge beside each block heading, opening that block's list). No .bpmn covers it: the twenty diagrams mentioning note/sticky/todo do so incidentally (bean-lifecycle, review-task, content-change-review). So the as-is is documented in prose and in two client functions, and Phase 2 step 3 applies — document the as-is rather than pretend a diagram exists."
+        },
+        {
+          "at": "2026-09-20T20:56:42.895Z",
+          "node": "A_DefineReqs",
+          "actor": "claude",
+          "note": "Phases 3 and 4 both posted to issue #602. Phase 3: seven requirements with acceptance criteria and consumer burden, of which exactly ONE (semantic zoom) is a new mechanism; R3 turned out to be a live defect in a published artefact rather than a new feature. Phase 4: schema/pipeline/adapter/QA/folio/consumer impact, a test plan whose first item asserts the EMITTED artefact rather than the function that built it, and a migration plan that is trivial because R3 is additive. Adapter impact is a MEASURED nil. Folio impact downstream is could-not-determine rather than none, because litlfred/qou is not in this checkout. The phase ends in a DECISION per decision-comparison — three options for the missing folio-todo-index schema, with pro/con/downstream/reversibility per row, a recommendation (C) and a stated default. Earlier I said this step would close on the requestor's reply; that was written before Phase 4 ran and was wrong — the step is the agent's and its work is done, so holding it open would have misreported where the process is."
+        },
+        {
+          "at": "2026-09-20T20:56:52.579Z",
+          "node": "A_CompareOptions",
+          "actor": "claude",
+          "note": "Comparison posted in the Phase 4 comment on #602, in the shape decision-comparison requires: one row per option with What it does, Pro, Con, Downstream impact and Reversibility, laid out so the rows read against each other rather than as three linked analyses. The decision is what to do about folio-todo-index/v1 having no schema — A additive and leave the version, B define it and bump to v2, C define v1 as what is actually published. Recommendation C with the reason stated (exactly one reader exists and it is ours, so the usual cost of defining a version late is not being paid), and a STATED DEFAULT: silence means C. The Downstream column is filled per row rather than left empty, which is the column this phase is recorded as most often dropping — and the material for it came from Phase 4 items 1-6, already done."
         }
       ],
       "status": "running",
       "startedAt": "2026-09-20T20:46:47.858Z",
-      "updatedAt": "2026-09-20T20:47:40.481Z"
+      "updatedAt": "2026-09-20T20:56:52.579Z"
     }
   }
 }
