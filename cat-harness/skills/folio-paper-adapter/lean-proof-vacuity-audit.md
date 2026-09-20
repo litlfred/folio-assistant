@@ -11,7 +11,6 @@ description: >-
   proof-statement-integrity normalization (the batch "wrap the conclusion in a
   structure field and project it" fix produces these), or when a "theorem" looks
   too easy. Emits per-block QA sidecar params under the `proof-no-*` criteria.
-roles: [collaborator]
 ---
 
 # lean-proof-vacuity-audit

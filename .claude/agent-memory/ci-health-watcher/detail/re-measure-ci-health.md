@@ -1,4 +1,4 @@
-<!-- Generated from skills/memory/re-measure-ci-health.md by `bun run agent-memory`. -->
+<!-- Generated from memory/re-measure-ci-health.md by `bun run agent-memory`. -->
 <!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
 > Relabelled from BASELINE to STABLE, 2026-09-19. `AGENTS.md` defines a

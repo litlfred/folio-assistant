@@ -1,6 +1,5 @@
 ---
 name: proof-narrative-lean-equivalence
-roles: [collaborator, owner]
 description: >
   For each content block with both a narrative proof (.md) and a
   Lean sibling (.lean), verify the two prove the same thing. Detect

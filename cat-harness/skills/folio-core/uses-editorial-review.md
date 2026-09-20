@@ -1,6 +1,5 @@
 ---
 name: uses-editorial-review
-roles: [collaborator, owner]
 description: >
   Adjudicate `uses-editorial-completeness` — read a block as a reader
   would and judge whether its `uses[]` is complete and genuinely

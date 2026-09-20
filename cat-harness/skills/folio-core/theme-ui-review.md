@@ -1,6 +1,5 @@
 ---
 name: theme-ui-review
-roles: [reviewer, authoring-agent, narrative-reviewer, owner]
 description: >
   Review what the MVP actually renders — accessibility, branding, languages —
   once stakeholders have accepted it. Post-MVP by design: there is no

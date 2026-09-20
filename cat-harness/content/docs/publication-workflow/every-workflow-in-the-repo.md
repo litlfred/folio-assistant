@@ -60,6 +60,7 @@ These run alongside the content processes rather than inside them:
 | `crdm-deliver.bpmn` | Phase 6: implement, review the increment, share the MVP, take stakeholder findings. One phase, because all three loops route back into implementation |
 | `crdm-close.bpmn` | Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion |
 | `bean-lifecycle.bpmn` | When does an agent create, edit or scrap a bean — and why is one never deleted? See [Beans and todos](beans-and-todos.html) |
+| `session-state-machine.bpmn` | An agent **playing** a state machine, keeping a session's context current across a discussion. The shape is strict — the interpreter supports nine element types and throws on the rest — and what varies is **which enabled branch the agent takes**. Both gateways carry `folio:judgement`, the marker added with this diagram so that "no table because this is somebody's call" stops being indistinguishable from "no table yet". The machine **records** that a bean was claimed; it never claims one |
 | `activity-log.bpmn` | When does an agent write a log entry, and when is one kept? Persistence is **off by default**, and the gateway reads a three-valued setting — `off`, `on`, `unknown` — rather than assuming. Emptying the log is the one exception to the never-delete rule that governs the rest of `fsh-guts/` |
 | `content-change-review.bpmn` | One author's change, from description through staging to review-committee approval |
 | `code-change-review.bpmn` | The same loop for a change to the **platform** rather than to content: claim, branch, run the gates, open the PR at the first commit, drive CI green, answer review, merge. Drawn for bean `haya` after an audit found INTEGRATION and VERIFICATION unowned — not for want of vocabulary, but because the diagram above takes a *content* change as its subject. **No deployment lane**: that is the one part whose activities differ per topology |
@@ -114,6 +115,14 @@ new tenant is a row in `upstream-pins.json` rather than a third diagram:
 |---------|---------|
 | `upstream-pin-watch.bpmn` | Has a pinned dependency fallen behind a release, and what happens when the check cannot tell? Mechanical throughout, and it maintains ONE tracking issue rather than sending mail nobody reads |
 | `upstream-version-adoption.bpmn` | A candidate version exists. What of ours binds it, what does the MVP build prove, and who is allowed to say yes? The accept is a `userTask` in a person-only lane, and no package may relax it |
+
+**The publish branch** — what is on `gh-pages`, and what happened to it. The
+branch has six publishers and one of them is a full replace, so "the preview
+is gone" has never had an answer a reader could look up:
+
+| Diagram | Answers |
+|---------|---------|
+| `staging-render-log.bpmn` | A preview was published, removed, carried across a full-replace deploy, or **considered for removal and kept** — which of those happened, and why? Append-only: a `removed` entry never erases the `rendered` one before it, and `retained` exists so a preview still standing because a liveness signal fired leaves a trace. Bean `plj1` is the case it answers — every open PR's preview deleted by an unrelated merge, silently, for months |
 
 **Translation and evidence**:
 

@@ -1,6 +1,5 @@
 ---
 name: proposition-consolidation-audit
-roles: [reader, collaborator, owner]
 user_invocable: true
 description: >
   Scan a chapter (or the whole paper) for propositions/theorems/lemmas

@@ -8,8 +8,13 @@
   "source_hash": null,
   "criteria": {
     "skill-has-entry-point": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "log-message",
+          "detail": "skill \"log-message\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        }
+      ]
     },
     "skill-in-role-or-process": {
       "result": "fail",
@@ -87,6 +92,10 @@
           "detail": "no role carries \"content-block-review\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
+          "where": "content-context-and-state-graphs",
+          "detail": "no role carries \"content-context-and-state-graphs\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
           "where": "content-profiles",
           "detail": "no role carries \"content-profiles\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -117,6 +126,10 @@
         {
           "where": "detangler-integration-watcher",
           "detail": "no role carries \"detangler-integration-watcher\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "deterministic-and-agentic",
+          "detail": "no role carries \"deterministic-and-agentic\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "devils-advocate-watcher",
@@ -261,6 +274,10 @@
         {
           "where": "lean-witness-audit",
           "detail": "no role carries \"lean-witness-audit\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "log-message",
+          "detail": "no role carries \"log-message\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `cat-harness` at `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at `src/skills/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "markdown-render-check",
@@ -489,14 +506,14 @@
       "findings": [
         {
           "where": "bootstrap/harness.json",
-          "detail": "nested instance \"bootstrap\" declares its own graph, and this audit does not read it — 1 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+          "detail": "nested instance \"bootstrap\" declares its own graph, and this audit does not read it — 2 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         }
       ]
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 2,
+    "pass": 6,
+    "fail": 3,
     "n/a": 0,
     "unknown": 0
   }

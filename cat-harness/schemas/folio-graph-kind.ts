@@ -36,6 +36,11 @@ import { termIri } from "./namespaces";
 export const FOLIO_GRAPH_KIND: GraphKindDef = {
   type: termIri("FolioGraph"),
   renderable: true,
+  // The subject matter itself — a folio IS the thing a reader came for, which
+  // is also why it is the only renderable kind. The two axes are independent
+  // in principle and coincide here: everything renderable so far is content,
+  // and nothing about `state` forbids a future kind being rendered.
+  holds: "content",
   summary: "Authored content, rendered to a website by the just-the-docs pipeline.",
 };
 

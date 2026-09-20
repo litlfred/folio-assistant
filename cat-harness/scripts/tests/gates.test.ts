@@ -12,12 +12,22 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { GATES_WORKFLOW, NoGatesFound, gatesFrom, loadGates } from "../gates.ts";
+import {
+  GATES_WORKFLOW,
+  NoGatesFound,
+  STEP_EXEMPTIONS,
+  gatesFrom,
+  loadGates,
+  otherWorkflowSteps,
+  unclassifiedSteps,
+} from "../gates.ts";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 // THE REPOSITORY root — `GATES_WORKFLOW` is `.github/workflows/…`. See the
 // same constant in `gates.ts`.
 const ROOT = repoRootFor(resolve(import.meta.dir, "../.."));
+/** The REPOSITORY root — where `.github/workflows/` lives. */
+const REPO = ROOT;
 
 describe("the gates come from the workflow, not from a list", () => {
   test("the real workflow yields a substantial set", () => {
@@ -181,5 +191,41 @@ describe("a strict reader and a loose one agree", () => {
     // And the guard is not vacuous — a loose scan that matched nothing would
     // pass the filter above while proving nothing at all.
     expect(loose.length).toBeGreaterThan(30);
+  });
+});
+
+describe("every workflow step is accounted for", () => {
+  test("the foreign-step reader finds steps — an empty read is not a clean one", () => {
+    // `unclassifiedSteps` filters this list, so a reader that returns nothing
+    // reports nothing unclassified: a clean run over a directory it could not
+    // read. The property is asserted here rather than inferred from silence.
+    expect(otherWorkflowSteps(REPO).length).toBeGreaterThan(20);
+  });
+
+  test("no step CI runs is unclassified", () => {
+    // THE RATCHET, and the reason the table exists. A new workflow step lands
+    // in the gate set or in STEP_EXEMPTIONS with a reason, and never in the
+    // gap between them — which is where `gen-site-jsonld --check` sat while
+    // `bun run gates --all` passed 46 gates on a tree CI then rejected.
+    const missing = unclassifiedSteps(REPO).map((u) => `${u.file}: ${u.step.command}`);
+    expect(missing).toEqual([]);
+  });
+
+  test("every exemption states a reason", () => {
+    // Same rule `folio:no-skill` and `workflow-policy.json` follow: an
+    // exemption whose justification is "" is one somebody added to get to
+    // green, and nobody can review it afterwards.
+    const reasonless = STEP_EXEMPTIONS.filter((e) => !e.reason.trim()).map((e) => e.match);
+    expect(reasonless).toEqual([]);
+  });
+
+  test("every exemption still matches something CI runs", () => {
+    // The other direction, and the one that rots silently: a workflow step is
+    // deleted or reworded, its exemption stays, and the table slowly becomes
+    // a list of claims about a CI that no longer exists. Each entry must earn
+    // its place on every run.
+    const commands = otherWorkflowSteps(REPO).map((u) => u.step.command);
+    const stale = STEP_EXEMPTIONS.filter((e) => !commands.some((c) => c.includes(e.match)));
+    expect(stale.map((e) => e.match)).toEqual([]);
   });
 });

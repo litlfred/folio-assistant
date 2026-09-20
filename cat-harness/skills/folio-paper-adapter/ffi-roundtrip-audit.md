@@ -1,6 +1,5 @@
 ---
 name: ffi-roundtrip-audit
-roles: [collaborator, owner]
 description: >
   Audit compute scripts for script ↔ native ping-pong patterns — loops
   that cross the FFI / subprocess boundary per iteration, instead of one

@@ -392,7 +392,7 @@ jobs:
       - name: README links resolve
         run: bun run readme:audit
 
-      # Agent memory is authored under `skills/memory/` and ASSEMBLED into
+      # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
       # harness injects. An entry edited and never assembled is a fact the
       # author believes an agent has and the agent has never seen -- invisible,
@@ -451,6 +451,7 @@ jobs:
           bun run check:instance-render
           bun run harness:dirs:check
           bun run check:schema-nodes
+          bun run check:retired-front-matter
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition

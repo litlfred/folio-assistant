@@ -1,6 +1,5 @@
 ---
 name: rendering-fixes
-roles: [reader, collaborator, owner]
 description: >
   Quick-fix reference for common rendering errors found by the rendering-auditor.
   Agents should consult this when editing content blocks to avoid introducing

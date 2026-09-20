@@ -1,6 +1,5 @@
 ---
 name: qa-report-signing
-roles: [validation-pipeline, attestation-service, publication-manager]
 ---
 
 # QA report signing — two routes, chosen by the performer's reach

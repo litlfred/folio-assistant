@@ -12,7 +12,7 @@
  * as knowledge-graph nodes is what lets one fact reach two agents.
  *
  * The relation is the one `docs/reference/skill-instructions/` already has to
- * `skills/`: entries are authored under `skills/memory/`, scoped, and
+ * `memory/`: entries are authored there, scoped, and
  * **assembled** into the injected file.
  *
  * ## The generated REGION, not the generated file
@@ -32,15 +32,24 @@
  *
  * ## Telling a memory node from a skill
  *
- * `skills/memory/*.md` sits inside the declared `kg` directory, whose path is
- * `skills/`, and `skillFiles()` in `kg-audit.ts` walks that tree recursively.
- * So a memory entry would be audited as a skill — the same defect that made
- * five split-skill siblings appear as skills until `part-of:` was read.
+ * Memory nodes lived in `skills/memory/` until 2026-09-20 — INSIDE the
+ * declared `cat-harness` directory, whose path is `skills/`, and
+ * `skillFiles()` in `kg-audit.ts` walks that tree recursively. So a memory
+ * entry would have been audited as a skill, the same defect that made five
+ * split-skill siblings appear as skills until `part-of:` was read.
  *
- * The fix is the same and it is the repo's rule: **declaration over location**.
- * A file carrying `$schema: folio-memory/v1` is a memory node whatever
- * directory it is in. #263: telling parts of a graph apart by where they sit is
- * "a coincidence of the current layout, not a contract".
+ * The fix was, and remains, the repo's rule: **declaration over location**. A
+ * file carrying `$schema: folio-memory/v1` is a memory node whatever directory
+ * it is in. #263: telling parts of a graph apart by where they sit is "a
+ * coincidence of the current layout, not a contract".
+ *
+ * **They now have a directory of their own** — `memory/`, declared, holding the
+ * `memory` graph, which is `context` by the axis bean `mhh9` settled. The
+ * file-level predicate is what still does the work and is why the move was
+ * safe rather than urgent: nothing depended on the directory to tell them
+ * apart. What the move fixes is the OTHER direction — the containing kind was
+ * `content` while its contents were `context`, and a nested declaration is the
+ * defect #263 names. Bean `07xs`.
  */
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
@@ -48,7 +57,6 @@ import { basename, dirname, join, resolve } from "node:path";
 
 import { EMPTY_NOTE_TAGS, type KgRef, type NoteTags } from "../schemas/carried-note.js";
 import { parseFrontMatter } from "../schemas/front-matter.js";
-import { kgRoots } from "./known-skills.js";
 import {
   AGENT_REF_KIND,
   MEMORY_LABELS,
@@ -58,18 +66,41 @@ import {
   type MemoryLabel,
   type MemoryNode,
 } from "../schemas/memory.js";
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
+// The `folio` graph kind is registered by CORE as a load-time side effect
+// (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
+// renderable kind"), and `directoryForGraph` reads the WHOLE declaration,
+// which refuses an unregistered kind. Needed here the moment this module
+// started asking the declaration a question rather than composing a path —
+// and it surfaced the same hour, when `main` declared a `folio` directory.
+//
+// The old `kgRoots` path swallowed it: `kgDirectories` wraps the read in
+// try/catch and returns [] on a throw, so an unreadable declaration produced
+// "no memory directories" rather than an error. That is the quieter bug of
+// the two, and worth naming: this import is not a workaround for a stricter
+// reader, it is what the reader was always entitled to expect.
+import "../schemas/folio-graph-kind.js";
 
 export const ROOT = resolve(import.meta.dir, "..");
-/** Authored entries. Inside the declared `kg` directory, which is `skills/`. */
-// Every declared knowledge-graph root's `memory/`, not the literal
-// `skills/memory`. A topical layout puts memory nodes wherever the instance
-// declares its graph, and a generator that looks in one place would assemble
-// a MEMORY.md missing whatever it did not visit.
-export const MEMORY_DIRS = kgRoots(ROOT).map((d) => join(d, "memory")).filter((d) => existsSync(d));
+/**
+ * Authored entries — the directory declaring the `memory` graph.
+ *
+ * Asked BY GRAPH KIND rather than composed from a path. It was
+ * `kgRoots(ROOT).map((d) => join(d, "memory"))` — every knowledge-graph root's
+ * `memory/` subdirectory — which was the right answer while the nodes lived
+ * under `skills/`, and stopped finding anything the moment they moved out:
+ * `kgRoots` filters to exactly-`cat-harness`, and `memory` is its own kind now.
+ *
+ * `directoryForGraph` is the question actually being asked — "where does this
+ * instance keep its memory graph" — and it survives the next relocation
+ * without an edit, which composing a path does not.
+ */
+export const MEMORY_DIRS = [directoryForGraph(ROOT, "memory")].filter(
+  (d): d is string => d !== undefined && existsSync(d),
+);
 // declared-path-literal: the convention fallback, so a generator in an
 // instance that declares nothing still has a directory to report on.
-export const MEMORY_DIR = MEMORY_DIRS[0] ?? join(ROOT, "skills", "memory");
+export const MEMORY_DIR = MEMORY_DIRS[0] ?? join(repoRootFor(ROOT), "memory");
 /** Where the HARNESS looks. Not ours to move. */
 export const AGENT_MEMORY_DIR = join(repoRootFor(ROOT), ".claude", "agent-memory");
 
@@ -474,7 +505,7 @@ function writeDetail(dir: string, entries: readonly MemoryNode[]): void {
   for (const [name, body] of wanted) {
     writeFileSync(
       join(detailDir, name),
-      `<!-- Generated from skills/memory/${name} by \`bun run agent-memory\`. -->\n` +
+      `<!-- Generated from memory/${name} by \`bun run agent-memory\`. -->\n` +
         `<!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->\n\n` +
         body.trimEnd() +
         "\n",
@@ -500,13 +531,26 @@ export function syncAll(write: boolean): SyncResult[] {
     }
     const lines = next.split("\n").length;
     const overflowEntries = entriesPastBudget(next);
+
+    // The sidecars are written whether or not MEMORY.md moved, and that is a
+    // FIX rather than tidiness. `writeDetail` used to sit after the
+    // `unchanged` early return, so a detail block could change — or a
+    // generated header could go stale — while the INJECTED comment did not,
+    // and the generator reported "unchanged" over a sidecar that was not.
+    // Two things an entry says, one of them checked.
+    //
+    // Found 2026-09-20 by the memory nodes moving (bean `07xs`): every
+    // sidecar still named `skills/memory/` in its generated header, through
+    // two clean runs, because both agents' MEMORY.md happened to be
+    // unchanged. Exactly the case the bug hides in.
+    if (write) writeDetail(dirname(path), entries);
+
     if (next === current) {
       return { agent, state: "unchanged", entries: entries.length, lines, overflowEntries };
     }
     if (write) {
       mkdirSync(dirname(path), { recursive: true });
       writeFileSync(path, next);
-      writeDetail(dirname(path), entries);
     }
     return { agent, state: "written", entries: entries.length, lines, overflowEntries };
   });
@@ -518,7 +562,7 @@ export function syncAll(write: boolean): SyncResult[] {
  * `bun run scripts/agent-memory.ts [--check]`
  *
  * `--check` writes nothing and exits non-zero when a file is stale, so CI
- * catches an entry edited in `skills/memory/` and never assembled.
+ * catches an entry edited in `memory/` and never assembled.
  *
  * **`no-markers` and `missing` are not failures and not passes.** A file the
  * author has not opted in is left exactly as it is and reported as such — the

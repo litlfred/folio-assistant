@@ -1,6 +1,5 @@
 ---
 name: bib-qa
-roles: [reader, collaborator, owner]
 description: >
   Bibliography quality-assurance agent — validates every reference in
   content/schema/references.ts against several QA checks: URL availability,

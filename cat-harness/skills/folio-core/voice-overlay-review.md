@@ -1,6 +1,5 @@
 ---
 name: voice-overlay-review
-roles: [reviewer, narrative-reviewer, editor, qc-reviewer]
 description: >
   Review a block against the active voices' rules and record the verdict on its
   QA sidecar. The human/agent half of the voice overlay; the mechanical half is

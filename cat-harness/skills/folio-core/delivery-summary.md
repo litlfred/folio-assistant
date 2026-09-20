@@ -1,7 +1,6 @@
 ---
 name: delivery-summary
 description: Post-delivery summary with server restart command and viewer links
-roles: [reader, collaborator, owner]
 user_invocable: true
 ---
 
