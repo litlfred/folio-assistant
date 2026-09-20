@@ -187,6 +187,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 292,
     reads: "a microphone — an editorial voice",
   },
+  themes: {
+    // A paint swatch with a corner turned: a theme is a palette APPLIED to a
+    // surface, not a palette on its own. Distinct from `voices`, which is also
+    // a derived rule set — a voice governs what is SAID, a theme what it is
+    // said ON.
+    glyph: "M12 3a9 9 0 000 18h2a2 2 0 002-2 2 2 0 012-2h1a4 4 0 004-4 9 9 0 00-11-10zM8 9h.01M7 13h.01M11 7h.01",
+    tone: 204,
+    reads: "a paint palette — a surface dressed, not the words on it",
+  },
   "translation-sources": {
     glyph: "M4 6h7M7 6v2c0 3-1 5-3 6M6 10c1 3 3 4 5 5M13 19l4-10 4 10M15 16h5",
     tone: 176,

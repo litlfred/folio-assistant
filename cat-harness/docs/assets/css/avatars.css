@@ -171,6 +171,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="themes"] {
+  /* a paint palette — a surface dressed, not the words on it */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3a9 9 0 000 18h2a2 2 0 002-2 2 2 0 012-2h1a4 4 0 004-4 9 9 0 00-11-10zM8 9h.01M7 13h.01M11 7h.01' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="translation-sources"] {
   /* a glyph and an A — one language against another */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6h7M7 6v2c0 3-1 5-3 6M6 10c1 3 3 4 5 5M13 19l4-10 4 10M15 16h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -248,6 +255,7 @@
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
   .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 46% 34%); }
   .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 46% 34%); }
+  .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 46% 34%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
   .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 46% 34%); }
   .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
@@ -279,6 +287,7 @@
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
     .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 46% 34%); }
     .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 46% 34%); }
+    .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 46% 34%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
     .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 46% 34%); }
     .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
@@ -311,6 +320,7 @@
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
   .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 42% 72%); }
   .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 42% 72%); }
+  .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 42% 72%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
   .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 42% 72%); }
   .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
@@ -342,6 +352,7 @@
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
     .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 42% 72%); }
     .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 42% 72%); }
+    .fa-avatar[data-fa-kind="themes"] { background-color: hsl(204 42% 72%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
     .fa-avatar[data-fa-kind="docs"] { background-color: hsl(212 42% 72%); }
     .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
@@ -376,6 +387,7 @@
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
   .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 16% 52%); }
   .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
+  .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 16% 52%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
   .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
   .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
@@ -406,6 +418,7 @@
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
     .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 16% 52%); }
     .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
+    .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 16% 52%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
     .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
     .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
@@ -436,6 +449,7 @@
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
   .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 14% 56%); }
   .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
+  .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 14% 56%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
   .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
   .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
@@ -466,6 +480,7 @@
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
     .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 14% 56%); }
     .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
+    .fa-avatar[data-fa-kind="themes"][data-fa-trash="true"] { background-color: hsl(204 14% 56%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
     .fa-avatar[data-fa-kind="docs"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
     .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }

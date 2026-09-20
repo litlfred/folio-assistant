@@ -47,6 +47,14 @@
       "graphs": [
         "cat-harness"
       ]
+    },
+    {
+      "_comment": "Themes this instance DERIVED from sources it holds, bean j66n. `iris-web` is read off the compiled stylesheet DSpace served with the captured item page; `who-wpro-publication` is read off the style guide's own pages 6, 7, 12, 14 and 18. Declared rather than left implicit because an undeclared directory is the dh4f defect -- every declaration-driven consumer scans nothing and reports a clean run over it, which is exactly what `docs/` did with 241 files until 2026-09-20. These are NOT the platform's twelve themes: those are cat-harness's own furniture, and a palette read off a WHO style guide is subject matter, which the root AGENTS.md keeps out of the platform.",
+      "id": "who-iris-themes",
+      "path": "themes/",
+      "graphs": ["themes"],
+      "_dependents_comment": "skip, not reproduce. This entry says where THIS instance's themes live; it is not a workspace every downstream folio needs. `uploads/` and `library/` are reproduce because a dependent folio ingests its OWN sources into its own copies. A folio with no themes of its own needs no themes/ directory, and reproduce would ship an empty one into every downstream instance -- which is the dh4f shape arriving by inheritance rather than by declaration.",
+      "dependents": "skip"
     }
   ]
 }
