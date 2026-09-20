@@ -1029,6 +1029,20 @@
       "file": "beans/defs/folio-assistant-7deg--librarian-an-avatar-for-knowledge-content-and-dubl.md"
     },
     {
+      "id": "folio-assistant-7iog",
+      "title": "COMMAND PATHS ARE CHECKED AGAINST THE REPO, NOT THE RUN: three of four backoff calls in feature-staging resolved at check time and not at run time",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:55:16Z",
+      "updatedAt": "2026-09-20T21:55:16Z",
+      "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while implementing #605's\n`merge=union` half, in the very loops that fix was going into.\n\n## The defect, measured\n\n`feature-staging.yml` has four retry loops. Each calls `backoff-sleep.ts` —\nthe ONE shared implementation bean `06kg` established. **Three of the four\nname a path that does not exist at run time:**\n\n| loop | job | `working-directory`",
+      "file": "beans/defs/folio-assistant-7iog--command-paths-are-checked-against-the-repo-not-the.md"
+    },
+    {
       "id": "folio-assistant-7o7i",
       "title": "RACI: declare involvement (A, C, I) over the roles and activities that already exist",
       "status": "completed",
@@ -1463,6 +1477,20 @@
       "file": "beans/defs/folio-assistant-amom--mode-testswarm-a-stack-of-models-over-shared-or-in.md"
     },
     {
+      "id": "folio-assistant-ankg",
+      "title": "Subgraph viewer generators write but never prune — an orphan page answers to no declaration",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:02:36Z",
+      "updatedAt": "2026-09-20T21:02:36Z",
+      "preview": "Found live during #603's merge of main, not hypothesised.\n\n## What happened\n\n#604 renamed `folio-assist-sci/` to `folio-assistant-sci/`. Subject slugs in\nthe schema and library viewers are derived from the entry's PATH, so\nregeneration correctly produced the new page:\n\n    /cat-harness/library/folio-assistant-sci/\n\nIt did NOT remove the page it replaced. `folio-assist-sci/index.html` survived\nas a",
+      "file": "beans/defs/folio-assistant-ankg--subgraph-viewer-generators-write-but-never-prune-a.md"
+    },
+    {
       "id": "folio-assistant-apui",
       "title": "INGEST: one pipeline entry point — uploads/ to library/ through a single documented path",
       "status": "in-progress",
@@ -1528,7 +1556,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T21:00:00Z",
+      "updatedAt": "2026-09-20T21:55:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`AGENTS.md` line 3 (the cold-start line every agent runs first), lines 192 and 351, `README.md` lines 4 and 371, and `cat-harness/docs/guides/",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
@@ -2047,7 +2075,7 @@
     {
       "id": "folio-assistant-flh4",
       "title": "STATE PAGES: a graph whose declaration names a visualiser is reported as having none — the missing third state",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-yj32",
@@ -2649,6 +2677,20 @@
       "updatedAt": "2026-09-20T08:27:47Z",
       "preview": "Owner, 2026-09-20, one question: 'are arrows in wrong direction somewhere?' Yes. Measured the same hour. Parent is the epic because a bug may not hang off a task; the topic bean is `j79e` (detangle).\n\n| extractor | cross-group edges | direction is |\n|---|---|---|\n| `bpmn-skill` | 340 | RECORDED |\n| `json-skill` | 125 | RECORDED |\n| `ts-import` | 28 | ENFORCED |\n| `md-link` | 5 | RECORDED |\n\n**470 ",
       "file": "beans/defs/folio-assistant-kvsx--arrow-direction-94-of-kg-edges-point-where-the-aut.md"
+    },
+    {
+      "id": "folio-assistant-lcwz",
+      "title": "WORK-PLAN CHART: the epic bars are a picture, not a way in — 21 beans behind a bar with no route to them",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:15:12Z",
+      "updatedAt": "2026-09-20T22:15:12Z",
+      "preview": "The beans dashboard answers \"how much is open and where\" and then dead-ends. Measured 2026-09-20 on the live page:\n\n- The epic LABEL is already a link to the epic's bean file, but `work-plan.css:274` sets `text-decoration: none` with the underline only on `:hover`. So the one control on the chart is invisible until a pointer lands on it — which fails this instance's declared low-dexterity interact",
+      "file": "beans/defs/folio-assistant-lcwz--work-plan-chart-the-epic-bars-are-a-picture-not-a.md"
     },
     {
       "id": "folio-assistant-lfxa",
@@ -3947,6 +3989,20 @@
       "file": "beans/defs/folio-assistant-wggr--split-invert-the-stub-pattern-stubdocs-not-docsstu.md"
     },
     {
+      "id": "folio-assistant-whbf",
+      "title": "Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:10:28Z",
+      "updatedAt": "2026-09-20T21:10:28Z",
+      "preview": "Owner, 2026-09-20, splitting the work explicitly:\n\n| dynamic stuff is bean for later.  but static visualiztion overview is needed.\n| panel at top (colassibkle)\n\nThe static half shipped: a collapsible `<details>` panel at the top of the\nschema viewer holding a deterministic SVG of the whole graph. See\n`schema-management` §\"The overview panel\".\n\n## What is NOT there, and is this bean\n\n- Dragging a n",
+      "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
+    },
+    {
       "id": "folio-assistant-wlqd",
       "title": "skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package",
       "status": "in-progress",
@@ -4315,14 +4371,14 @@
     {
       "id": "folio-assistant-yzsj",
       "title": "gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:02:00Z",
-      "updatedAt": "2026-09-20T20:33:25Z",
+      "updatedAt": "2026-09-20T21:48:19Z",
       "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) after merging #589, whose\n`Docs site (GitHub Pages)` run **failed on `main`**. The failure is not #589's\ncontent — it is the publish-ref race, and it is the one `xd1s` closed.\n\n## What actually failed\n\nRun 308, `4af80f84cf`, 19:53:01Z:\n\n```\n[command]/usr/bin/git push origin gh-pages\n ! [rejected]        gh-pages -> gh-pages (fetch first)\nerror: f",
       "file": "beans/defs/folio-assistant-yzsj--gh-pages-race-is-back-xd1s-closed-with-nine-push-s.md"
     },
