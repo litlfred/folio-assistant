@@ -868,11 +868,28 @@ export interface TopologyConflict {
  * `visibility` is not even declared, so there is nothing to trip over.
  *
  * **`air-gapped` with `modelProvenance: "mixed"` is NOT refused**, although
- * `hosted` is. The same entailment appears to apply — but only if `mixed`
- * necessarily includes a live hosted component, and a deployment could
- * reasonably mean "local models, with a hosted path that is configured and
- * disabled here". A counter-example is conceivable, so by the bar above the
- * rule does not go in. Raised for the owner rather than decided quietly.
+ * `hosted` is. **Settled by the owner 2026-09-20**, and for a better reason
+ * than the one this comment used to give:
+ *
+ * > "no air-gapped-mixed. that is mixed already. its a spectrum, based on
+ * > the deployment archicutectur of each machine actor."
+ *
+ * At deployment level `mixed` MEANS THE ACTORS DIFFER FROM EACH OTHER.
+ * Refusing it would refuse the normal case — a site where some machine
+ * actors reach out and some do not. There is no contradiction to catch,
+ * because the deployment value is an aggregate over participants that are
+ * individually consistent.
+ *
+ * That also says what this axis is and is not. Reach is a property of each
+ * MACHINE ACTOR; the deployment value describes the population. So a rule
+ * pairing `network` with `modelProvenance` can only be sound where the
+ * deployment value is UNIFORM — `air-gapped` × `hosted` is refused because
+ * `hosted` admits no local participant, and `mixed` is refused by nothing
+ * because it asserts variety.
+ *
+ * The earlier reasoning here — "a counter-example is conceivable" — reached
+ * the right answer by a weaker route, and is kept only in the test that
+ * records the decision. See `folio-assistant-r0rq` for the per-actor model.
  */
 export function topologyConflicts(
   topology: Topology | undefined,

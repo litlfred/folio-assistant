@@ -71,6 +71,18 @@ the actor property says what *this* participant can do within it. An
 air-gapped deployment forces every actor air-gapped; a connected deployment
 does not make every actor connected.
 
+**Confirmed by the owner 2026-09-20**, deciding the `air-gapped` × `mixed`
+question left open by `g7vb`:
+
+> "no air-gapped-mixed. that is mixed already. its a spectrum, based on the
+> deployment archicutectur of each machine actor."
+
+That settles what the deployment value *is*: **an aggregate over the
+participants.** `mixed` asserts variety among actors, so there is no
+contradiction in it to catch. The corollary is the rule this proposal turns
+on — reach is per machine actor, and the deployment axis describes the
+population rather than any participant.
+
 ### 2.2 Most of it fits machinery that already exists
 
 `CapabilityDefinition` already carries

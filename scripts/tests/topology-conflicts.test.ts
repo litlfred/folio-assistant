@@ -152,14 +152,34 @@ describe("what is deliberately NOT a conflict", () => {
     expect(topologyConflicts({ forge: "github" }, "github-pages")).toEqual([]);
   });
 
-  test("air-gapped with MIXED provenance", () => {
-    // `hosted` is refused; `mixed` is not, although the same entailment looks
-    // as though it should apply. A deployment could reasonably mean "local
-    // models, with a hosted path configured and disabled here" — and the
-    // proposal's bar is whether a counter-example is CONCEIVABLE, not how
-    // certain the rule feels. Raised for the owner rather than decided here.
+  test("air-gapped with MIXED provenance — settled, and not by the original reason", () => {
+    // SETTLED by the owner 2026-09-20: "that is mixed already. its a
+    // spectrum, based on the deployment archicutectur of each machine actor."
+    //
+    // At deployment level `mixed` MEANS THE ACTORS DIFFER. Refusing it would
+    // refuse the normal case — a site where some machine actors reach out and
+    // some do not — so there is no contradiction to catch. The deployment
+    // value is an aggregate over participants that are each consistent.
+    //
+    // This test predates that and argued only "a counter-example is
+    // conceivable". Right answer, weaker route. Kept as the record of both,
+    // because the weaker argument is what a reader would otherwise
+    // reconstruct and then talk themselves out of.
     expect(
       topologyConflicts({ network: "air-gapped", modelProvenance: "mixed" }, undefined),
+    ).toEqual([]);
+  });
+
+  test("the refusals that DO hold are the uniform ones", () => {
+    // The corollary of the settlement: a network x provenance rule is sound
+    // only where the provenance value admits no local participant. `hosted`
+    // is such a value, `mixed` is not — which is why one is refused and the
+    // other cannot be, rather than the two being a close call.
+    expect(
+      topologyConflicts({ network: "air-gapped", modelProvenance: "hosted" }, undefined),
+    ).toHaveLength(1);
+    expect(
+      topologyConflicts({ network: "air-gapped", modelProvenance: "open-weight-local" }, undefined),
     ).toEqual([]);
   });
 });
