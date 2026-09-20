@@ -2,13 +2,13 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "d8c95d3b0a3a"
+    "script_hash": "d657bf2bd2c3"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-19T12:01:31.466Z",
+  "updated_at": "2026-09-20T06:52:51.584Z",
   "verdict": "findings",
   "checks": [
     {
@@ -20,7 +20,7 @@
           "metric": "staging-total-bytes",
           "value": 104857600,
           "unit": "bytes",
-          "basis": "The owner's explicit instruction, 2026-09-19 (\"issue warning to user when exceeds > 100mb\"). It is also a tenth of GitHub's documented 1 GB limit for a published Pages site, which the previews share with the main site — an early-warning point that leaves room to act rather than a limit in itself. One preview measured 36.7–37.6 MB on 2026-09-19, so the third concurrent review breaches it.",
+          "basis": "The owner's explicit instruction, 2026-09-19 (\"issue warning to user when exceeds > 100mb\"). It is also a tenth of GitHub's documented 1 GB limit for a published Pages site, which the previews share with the main site — an early-warning point that leaves room to act rather than a limit in itself. One preview measured 37.5–39.0 MB on 2026-09-19, so the third concurrent review breaches it. THE FLOOR IS ABOVE THE THRESHOLD AND THAT IS DELIBERATE: a live branch's preview must not be pruned, so N concurrent reviews floor the total at N x ~38 MB, and on 2026-09-19 only 2 of 9 previews were prunable orphans (76.7 MB, leaving 269 MB). The action this finding names is therefore never \"prune more\" but preview SIZE: 27.5 MB of each preview is HTML that shares ZERO blobs with any other preview, because the build timestamp and the slug appear on every page. See STAGING_WARN_BYTES for the four sources and bean `xxku` for the arithmetic.",
           "severity": "major"
         },
         {
@@ -34,20 +34,20 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 361040543,
+          "value": 471242997,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 9,
+          "value": 11,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
         {
-          "summary": "9 staging preview(s) total 344.3 MB, over the 100 MB warning point.",
+          "summary": "11 staging preview(s) total 449.4 MB, over the 100 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
@@ -70,39 +70,44 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 2,
+          "value": 3,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 80372574,
+          "value": 124513442,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-live-count",
-          "value": 7,
+          "value": 8,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
       ],
       "findings": [
         {
-          "summary": "`STAGING/claude-4kiw-memory-pointer` (38.3 MB, 786 files) — no open pull request; `claude/4kiw-memory-pointer` is already in `main`, tip 64 min old.",
+          "summary": "`STAGING/claude-4kiw-box3` (38.2 MB, 790 files) — no open pull request; `claude/4kiw-box3` is already in `main`, tip 18.2 h old.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-4kiw-memory-pointer` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-4kiw-memory-pointer` and `cleanup_confirm: claude-4kiw-memory-pointer`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `claude-4kiw-box3` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-4kiw-box3` and `cleanup_confirm: claude-4kiw-box3`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         },
         {
-          "summary": "`STAGING/claude-consolidate-test-dir` (38.4 MB, 786 files) — no open pull request; `claude/consolidate-test-dir` is already in `main`, tip 59 min old.",
+          "summary": "`STAGING/dependabot-bundler-docs-folio-assistant-bundler-3567caad51` (38.9 MB, 776 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-consolidate-test-dir` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-consolidate-test-dir` and `cleanup_confirm: claude-consolidate-test-dir`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `dependabot-bundler-docs-folio-assistant-bundler-3567caad51` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: dependabot-bundler-docs-folio-assistant-bundler-3567caad51` and `cleanup_confirm: dependabot-bundler-docs-folio-assistant-bundler-3567caad51`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/dependabot-bundler-folio-assistant-docs-bundler-3567caad51` (41.7 MB, 795 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `dependabot-bundler-folio-assistant-docs-bundler-3567caad51` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: dependabot-bundler-folio-assistant-docs-bundler-3567caad51` and `cleanup_confirm: dependabot-bundler-folio-assistant-docs-bundler-3567caad51`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
         }
       ]
     },
     {
       "id": "repository-size",
-      "state": "finding",
+      "state": "ok",
       "summary": "The repository's tracked content, and what a full-history clone of it costs. Two different questions, reported separately.",
       "thresholds": [
         {
@@ -137,43 +142,36 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 35780071,
+          "value": 53534400,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 453966732,
+          "value": 82510427,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 428227584,
+          "value": 68501504,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 61,
+          "value": 24,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 12.69,
+          "value": 1.54,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
-      "findings": [
-        {
-          "summary": "`.git` is 432.9 MB against 34.1 MB of tracked content — 12.7x, in 61 pack(s).",
-          "metric": "git-dir-to-tree-ratio",
-          "severity": "minor",
-          "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "bean-store",
@@ -212,19 +210,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 286,
+          "value": 324,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 94,
+          "value": 109,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 192,
+          "value": 215,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -243,7 +241,7 @@
       ],
       "findings": [
         {
-          "summary": "192 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "215 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."

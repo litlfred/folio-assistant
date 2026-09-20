@@ -33,6 +33,7 @@ import type {
   EquationBlock,
   DiagramBlock,
   TableBlock,
+  FigureBlock,
   Chapter,
   ChapterRef,
   Section,
@@ -69,6 +70,7 @@ import {
   EquationSchema,
   DiagramSchema,
   TableSchema,
+  FigureSchema,
   ChapterSchema,
   ChapterRefSchema,
   SectionRefSchema,
@@ -206,6 +208,17 @@ export function diagram(data: Omit<DiagramBlock, "kind">): DiagramBlock {
 
 export function table(data: Omit<TableBlock, "kind">): TableBlock {
   return validated(TableSchema, { kind: "table" as const, ...data });
+}
+
+/**
+ * A figure lifted out of a source document — bean `d5f1`.
+ *
+ * Distinct from {@link diagram}, which is authored tikzcd. This one has a
+ * `file` and no `tex`: a figure block with no file is a claim about an image
+ * nobody can look at, so the schema requires it.
+ */
+export function figure(data: Omit<FigureBlock, "kind">): FigureBlock {
+  return validated(FigureSchema, { kind: "figure" as const, ...data });
 }
 
 // ── Structure builders ───────────────────────────────────────────

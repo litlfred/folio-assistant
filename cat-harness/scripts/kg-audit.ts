@@ -80,6 +80,7 @@ import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-ta
 import { isSkillMd, knownSkills, remotePackageDeclarations, remotePackageSkills } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { CONVENTION_GROUP } from "../schemas/convention.js";
 
 const ENGINE_VERSION = "1";
 
@@ -378,7 +379,33 @@ async function auditProcess(
     }
   }
 
+  // CONVENTION REFS. The dangling direction only — see the criterion's note
+  // in `kg-qa.ts` for why absence is deliberately not a finding.
+  const conventionDir = join(repoRootFor(root), ".claude", "skills", CONVENTION_GROUP);
+  const knownConventions = existsSync(conventionDir)
+    ? new Set(readdirSync(conventionDir).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)))
+    : undefined;
+  const danglingConvention: KgFinding[] = [];
+  let conventionRefs = 0;
+  if (knownConventions) {
+    for (const n of m.nodes.values()) {
+      for (const c of n.conventions ?? []) {
+        conventionRefs += 1;
+        if (!knownConventions.has(c.ref)) {
+          danglingConvention.push({
+            where: n.id,
+            detail: `names convention \`${c.ref}\` (${c.scope} scope), which is not in ${CONVENTION_GROUP}/`,
+          });
+        }
+      }
+    }
+  }
+
   const criteria: Record<string, KgCriterionEntry> = {
+    // `n/a` when the diagram binds none, which is most of them — distinct
+    // from `pass`, because a process with nothing to resolve has not been
+    // shown to resolve anything.
+    "convention-ref-resolves": entry(danglingConvention, conventionRefs > 0),
     "skill-ref-resolves": entry(danglingSkill),
     "skill-servable": entry(unservable),
     "decision-ref-resolves": entry(danglingDecision, decisionRefs.length > 0),
@@ -1130,6 +1157,9 @@ function auditGraph(
       // contain no mention of `remote-packages/` at all, and the single consumer —
       // `scripts/generate-docs.ts` — reads those files solely for Docker
       // requirements, which is what `schemas/skill-package.ts` documents them as.
+      // (That consumer was retired to `fsh-guts/scripts/` on 2026-09-20,
+      // having never been invoked in any commit since the root commit — bean
+      // `folio-assistant-3w0i`. The reading below only gets stronger.)
       //
       // So an entry resolvable only that way publishes a registry name that
       // `skill_fetch` answers "not found" for, which is exactly the defect this

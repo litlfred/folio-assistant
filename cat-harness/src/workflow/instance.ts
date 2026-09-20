@@ -32,6 +32,7 @@
 import { isActivity, type ProcessModel, type ProcessNode } from "./process-model.js";
 import { evaluate } from "./decision-table.js";
 import { roleForLane, resolveRoleSkills, type RoleGraph } from "../../schemas/role-graph.js";
+import type { ConventionScope } from "../../schemas/convention.js";
 
 export interface HistoryEntry {
   at: string;
@@ -125,6 +126,18 @@ export interface EnabledActivity {
    */
   roleSkills?: string[];
   skills: string[];
+  /**
+   * The conventions in force at this step, with where each was bound.
+   *
+   * Bean `3190`. A skill is what you need to PERFORM the step; a convention is
+   * how the output must look while you are inside this process. Reported here
+   * so an agent asking "what is enabled now" is told both, rather than being
+   * expected to have read prose that applies everywhere and therefore nowhere
+   * in particular.
+   *
+   * **Empty when nothing binds** — see `conventionsInForce`.
+   */
+  conventions: Array<{ ref: string; scope: ConventionScope }>;
   touchesWorkPlan: boolean;
   documentation?: string;
   calledElement?: string;
@@ -421,6 +434,7 @@ export function enabled(model: ProcessModel, state: InstanceState, roles?: RoleG
       role: roleId,
       roleSkills: roleId && roles ? resolveRoleSkills(roles, roleId).map((s) => s.skill) : undefined,
       skills: node.skills,
+      conventions: node.conventions,
       touchesWorkPlan: node.touchesWorkPlan,
       documentation: node.documentation,
       calledElement: node.calledElement,
@@ -624,6 +638,12 @@ export function describe(model: ProcessModel, state: InstanceState, roles?: Role
           ...(e.skills.length ? [`        skill: ${e.skills.join(", ")}`] : []),
           ...(e.role && e.roleSkills?.length
             ? [`        that role also carries: ${e.roleSkills.filter((s) => !e.skills.includes(s)).join(", ") || "nothing further"}`]
+            : []),
+          // Named with their scope, because "every step in this process" and
+          // "this step only" are different claims and an agent that cannot
+          // tell them apart cannot say why a rule applies to it.
+          ...(e.conventions.length
+            ? [`        conventions: ${e.conventions.map((c) => `${c.ref} (${c.scope})`).join(", ")}`]
             : []),
           ...(e.touchesWorkPlan ? [`        touches the work plan (beans/)`] : []),
           ...(e.calledElement ? [`        expands into: ${e.calledElement}`] : []),
