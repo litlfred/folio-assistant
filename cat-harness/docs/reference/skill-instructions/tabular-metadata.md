@@ -160,6 +160,12 @@ exception must carry something a test can re-derive.**
   `p67i` stopped there deliberately, and the headers being right there is
   exactly why assembling one from them would be fabrication.
 - **Migrating `folio-tabular-records/v1`.** Bean `eief` carries it.
-- **Emitting the manifest.** The SHAPE is settled above; `gen-library-jsonld.ts`
-  growing the tabular branch is `p67i`'s remaining Done-when.
+- **Emitting the manifest.** Done — `content/pipeline/tabular-nodes.ts` builds
+  the nodes and `gen-library-jsonld.ts` calls it from `buildEntryNodes`. What
+  the wiring cost is worth knowing, because all three defects were invisible
+  while nothing called the emitter: the nodes carried no `@context`;
+  `orphanedBlocks` scanned `sections/` alone, so every table block of a
+  tabular entry read as orphaned and `--prune` would have deleted them; and a
+  fully-ingested tabular entry was reported *"no structure.json — not
+  ingested"*. **A tested function nothing calls is not a tested function.**
 {% endraw %}

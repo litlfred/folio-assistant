@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-19T15:54:15Z
+updated_at: 2026-09-20T14:08:26Z
 parent: folio-assistant-slw1
 ---
 
@@ -192,3 +192,33 @@ node anyway.
 - **wiring** `buildTabularNodes` into `gen-library-jsonld.ts`'s entry walk;
 - the **narrative**, still blocked on there being a dataset — the corpus holds
   no CSV or workbook, and the two used above were temporary.
+
+
+## 2026-09-20 — the wiring, and the three defects that hid behind it
+
+`buildTabularNodes` (#520) was tested and **unreachable**. #524 calls it from
+`gen-library-jsonld`'s walk, and **all three defects it exposed existed only
+because nothing called it**: no `@context` on any node; `orphanedBlocks`
+scanning `sections/` alone, so every table block of a tabular entry read as
+orphaned and `--prune` would have deleted them plus their `.md` siblings; and
+a fully ingested tabular entry reported *"no structure.json — not ingested"*.
+
+`buildEntryNodes` is extracted from the walk so the BRANCH is testable, not
+only its callees. Before, the only way to exercise the tabular rung was a
+dataset in `library/` — content, in the platform repo — so there was none, so
+CI could not reach it. **A tested function nothing calls and an untestable
+caller are the same defect from two sides.**
+
+Three outcomes: `built`; a determined `no-input`, which passes; and
+`unreadable` — an input that is THERE and did not parse — which exits 1 on the
+write run and `--check` alike.
+
+Measured on a real CSV + two-sheet .xlsx, then removed: 4 docs / 426 blocks →
+6 / 429; `tabular_depth` `table` and `sheet`; 0 orphans on re-run; and a grep
+for `mcv1_pct` finds the dataset, which is this bean's Done-when. Falsifier
+held: the 4 existing paged entries came out byte-identical. 13 mutations, each
+caught by a named test.
+
+**Remaining:** the narrative, still blocked on there being a dataset. The
+manifest does not surface it yet — adding that path with nothing in the corpus
+to exercise it would be a second unreached branch, which is the defect above.
