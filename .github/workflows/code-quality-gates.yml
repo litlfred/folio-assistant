@@ -561,6 +561,13 @@ jobs:
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render
+          # The generators THIS FILE invokes directly, run as a set.
+          # Seven `--check` invocations live in workflow YAML and in no
+          # `package.json` script, so a local sweep of `check:*` came
+          # back clean while `gen-skill-docs --check` was red here
+          # (2026-09-20). It reads them out of the YAML rather than
+          # listing them, so a new one is covered the day it is added.
+          bun run check:ci-invocations
           bun run harness:dirs:check
           bun run check:schema-nodes
           bun run check:retired-front-matter

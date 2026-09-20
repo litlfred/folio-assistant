@@ -513,6 +513,10 @@ export const RULES: Rule[] = [
       // its subject: the things it reconciles are this repository's
       // knowledge graph and CI processes, not a folio's material.
       "scripts/external-schemas.ts",
+      // Runs the generators CI invokes from workflow YAML. Harness by
+      // its subject twice over: it reads THIS repository's workflows,
+      // and what it runs are the harness's own generators.
+      "scripts/check-ci-invocations.ts",
       // Which `.github/workflows/*.yml` carry a BPMN diagram — bean `7yvd`.
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
