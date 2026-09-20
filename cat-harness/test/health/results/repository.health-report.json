@@ -8,8 +8,8 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T08:38:07.646Z",
-  "verdict": "clean",
+  "updated_at": "2026-09-20T13:17:05.717Z",
+  "verdict": "findings",
   "checks": [
     {
       "id": "staging-preview-size",
@@ -34,13 +34,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 283378491,
+          "value": 431937826,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 6,
+          "value": 7,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
@@ -75,7 +75,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 6,
+          "value": 7,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -119,31 +119,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 67137324,
+          "value": 69316469,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 145172627,
+          "value": 129356635,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 116746240,
+          "value": 121091072,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 35,
+          "value": 21,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 2.16,
+          "value": 1.87,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
@@ -152,7 +152,7 @@
     },
     {
       "id": "bean-store",
-      "state": "ok",
+      "state": "finding",
       "summary": "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, and the size of the open backlog.",
       "thresholds": [
         {
@@ -187,19 +187,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 120,
+          "value": 209,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 116,
+          "value": 158,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 4,
+          "value": 51,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -216,7 +216,14 @@
           "command": "beans/defs/*.md front matter"
         }
       ],
-      "findings": []
+      "findings": [
+        {
+          "summary": "158 open beans (todo + in-progress), past the 150 calibration point.",
+          "metric": "bean-open",
+          "severity": "minor",
+          "action": "Read `beans roadmap` rather than `beans list` and check the backlog still has a shape. This is a fact about the plan, not about any one item."
+        }
+      ]
     },
     {
       "id": "todo-store",
