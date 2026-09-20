@@ -180,6 +180,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
   "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
+  // Stubs for skills a remote package DECLARES and this instance does not
+  // vendor. The heading says "not implemented" in the reader's own words,
+  // because the published page is where somebody meets one of these first and
+  // the worst outcome is following it as guidance. `kg:audit` carries the same
+  // fact for machines, under `skill-is-a-stub`.
+  "remote-stubs": "Declared but not implemented here (stubs)",
   // The two entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
   // directory's DECLARED ID — `bootstrap` and `cat-harness-src`, not

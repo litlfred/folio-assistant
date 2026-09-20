@@ -342,6 +342,52 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
   },
+  // ── Judgement methodologies, one sub-graph each ───────────────────────
+  //
+  // A methodology is a NAMED, EXTERNAL way of reaching a judgement — Kepner-Tregoe
+  // for a decision, MADR for its record, DMN for the computable case, GRADE for
+  // certainty of evidence. They are **parallel, not composable**: which one applies
+  // is contextual, and blending them produces a house method that cites nobody.
+  //
+  // ## Why its own kind rather than skills
+  //
+  // Three properties a skill does not have:
+  //
+  // 1. **Extractable.** A methodology is somebody else's work, adopted. If the
+  //    field moves on, or an instance needs a different one, the directory lifts
+  //    out and its declaration goes with it. A skill that had inlined the method
+  //    could not be lifted — it would have to be rewritten.
+  // 2. **Referenced, never inlined.** A skill names the methodology it follows;
+  //    the method's own text lives here once. Two skills quoting the same method
+  //    is two copies free to drift, which is the duplicate `directory-conventions`
+  //    calls unchecked.
+  // 3. **Not subject to skill criteria.** `skill-is-brief` caps a skill near 280
+  //    lines because a skill is an instruction. A methodology is a FAITHFUL
+  //    RENDERING of an external standard, and truncating it to fit a house limit
+  //    would misrepresent the standard.
+  //
+  // Any layer may declare a directory of this kind: the harness carries the
+  // domain-neutral ones, `smart-kg` carries GRADE, because certainty-of-evidence
+  // grading belongs to WHO L1 guideline development rather than to the harness.
+  methodology: {
+    type: termIri("MethodologyGraph"),
+    renderable: false,
+    // `context`, by the axis's own criterion and not by resemblance: read
+    // during a process, never written by one. A methodology here is somebody
+    // else's standard ADOPTED — Kepner-Tregoe, MADR, DMN, GRADE — so a step
+    // that decided to amend one would be rewriting the standard rather than
+    // recording anything, and the ingestion that brings a new one in is a
+    // human-directed act (`methodology-adoption`), exactly as relocating
+    // something into `fsh-guts` is.
+    //
+    // NOT `content`, though the files are prose a reader can follow: what
+    // makes `content` is being the folio's SUBJECT MATTER, and a methodology is
+    // how a decision about the subject gets made. `renderable: false` above
+    // follows from the same fact — nothing here is published as a page.
+    holds: "context",
+    summary:
+      "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
+  },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,

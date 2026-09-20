@@ -135,6 +135,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "are covered by `render-log.test.ts` in `bun test`, and the WIRING by " +
       "`workflow-yaml.test.ts`, both of which are in the gate set",
   },
+  {
+    match: "check:maintained-artefacts",
+    kind: "ci-only",
+    reason:
+      "reads the ASSEMBLED `_site/`, which exists only after the site build has run — the " +
+      "whole point of the check is that a `maintains` claim is verified against what actually " +
+      "shipped, not against the source it was generated from, so there is nothing for a " +
+      "contributor to run locally and no `--check` twin to gate. Its three-state behaviour " +
+      "(exit 2 for could-not-determine, never folded into a pass) is covered by " +
+      "`check-maintained-artefacts.test.ts` in `bun test`, which is in the gate set",
+  },
   // ── Generators whose `--check` twin is gated ────────────────────────
   {
     match: "scripts/gen-schema-docs.ts",
