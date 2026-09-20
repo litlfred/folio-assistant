@@ -48,9 +48,10 @@
  *   bun run library:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
+import { viewerPlacement } from "./gen-schema-viz.ts";
 import { directoriesForGraph, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import "../schemas/folio-graph-kind.js";
 
@@ -62,7 +63,7 @@ function projection(g: LibraryGraph): unknown {
   return { $schema: "folio-library-index/v1", ...g };
 }
 
-export function viewerHtml(): string {
+export function viewerHtml(dataHref: string): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
   //
   // The whole page is one template literal, so a backtick anywhere inside it
@@ -171,6 +172,7 @@ p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
 <script>
 "use strict";
 var G = null, SORT = { key: "id", dir: 1 }, VIEW = "list";
+var DATA_HREF = "${dataHref}";
 function $(i){ return document.getElementById(i); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
@@ -290,7 +292,7 @@ function setView(v){
   render();
 }
 
-fetch("../assets/library/index.json").then(function(r){
+fetch(DATA_HREF).then(function(r){
   if (!r.ok) throw new Error(String(r.status));
   return r.json();
 }).then(function(data){
@@ -316,7 +318,7 @@ fetch("../assets/library/index.json").then(function(r){
   renderQueue();
 }).catch(function(e){
   $("status").textContent = "could not load the projection: " + e.message;
-  $("listing").innerHTML = '<p class="empty">The projection at <code>../assets/library/index.json</code> could not be read. ' +
+  $("listing").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) + '</code> could not be read. ' +
     "That is not an empty corpus \\u2014 it is a corpus that could not be loaded, and the page says so rather than showing nothing.</p>";
 });
 </script>
@@ -360,8 +362,14 @@ if (import.meta.main) {
     console.log("  · no library directory declared by this instance — nothing to publish");
     process.exit(0);
   }
-  emit(join(site, "assets", seg, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
-  emit(join(site, seg, "index.html"), viewerHtml());
+  // The handled directory's own repo-relative path is the URL — owner,
+  // 2026-09-20: "<baseurl>/<path to kind in knowledge graph>". Shared with the
+  // schema viewer through `viewerPlacement` rather than restated, because two
+  // statements of one placement rule are two answers the moment either moves.
+  const dirPath = relative(repoRootFor(ROOT), libDirs[0]!).split(sep).join("/");
+  const { pageDir, dataDir, dataHref } = viewerPlacement(site, dirPath, seg);
+  emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
+  emit(join(pageDir, "index.html"), viewerHtml(dataHref));
   if (!check) {
     console.log(
       `  ${g.entries.length} entr(ies), ${g.queues.length} queue(s), ` +

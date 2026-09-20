@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T18:30:55Z
-updated_at: 2026-09-20T19:30:46Z
+updated_at: 2026-09-20T20:03:22Z
 parent: folio-assistant-yj32
 ---
 
@@ -291,3 +291,65 @@ keeping: `siteDir()` + `artefactStub()` are the two resolvers this rule needs
 and both already exist, and `check:instance-render` is the conformance check it
 wants — three states, 'undetermined is never a pass' — so extending that is more
 likely right than writing a second.
+
+
+---
+
+## OWNER, 2026-09-20 — `<subject>` is optional, and the segment is the PATH
+
+Two statements, and the second corrects the shape the first was read into:
+
+> `<base>/<owner>/<kind>/<subject>/`,,.. `<subject>` is not required behaviour.
+
+> it `<baseurl>/<path to kind in knowledge graph>` or
+> `<path to dir handled>/<optional subject>`
+
+### What this settles
+
+**A viewer's address is the repo-relative path of the directory it handles**,
+with an optional `<subject>` below it. A viewer with no subject is the view
+over ALL subjects.
+
+So the three-case table above reads, for case 3:
+
+| | |
+|---|---|
+| the handled directory | `cat-harness/schemas/` |
+| its URL | `<base>/cat-harness/schemas/` |
+| a per-subject page, if ever wanted | `<base>/cat-harness/schemas/<subject>/` |
+
+### The correction inside the correction, and it is the part worth keeping
+
+The first implementation **composed** the address from the rendering
+instance's `name` plus the graph kind — `<owner>/<kind>`. That was written,
+and it was wrong, and it passed its own test:
+
+`cat-harness/schemas/` happens to SIT at owner/kind, so composition and
+resolution give the same string for the one directory that was checked. They
+diverge for every directory that does not: `who-iris/library/` would have been
+published at `cat-harness/library` — **naming the machinery where the rule
+names the data**, and silently, because the page would have rendered fine.
+
+Taking the directory's path means the two can never disagree, because there is
+only one of them. `viewerPlacement` is that single implementation, shared
+between both viewers, with a test asserting the `who-iris/library` case
+specifically — the case the composition got wrong.
+
+### Applied
+
+`schemas/` and `library/` moved from `<base>/schemas/` and `<base>/library/`
+to `<base>/cat-harness/schemas/` and `<base>/cat-harness/library/`. Verified
+by rendering both at the new URLs: zero console errors.
+
+The page's link back to its projection is now **computed from the page's own
+depth** rather than written. It had been a literal `../assets/…`, which keeps
+parsing and fetches nothing the moment the page moves a level down — the exact
+failure this move would have caused.
+
+### Still open on this bean
+
+Cases 1 and 2 are untouched here. `<base>/who-iris/` "mocking WHO's web
+interface" (case 2) is a different artefact from `<base>/who-iris/library/`
+(case 3, the viewer over who-iris's library) — and the two now share a prefix.
+Whether that is a collision or a hierarchy is not settled by anything the
+owner has said, and nothing in this work depends on it.
