@@ -7,7 +7,8 @@ import { HARNESS_CONFIG } from "./harness-config";
 // registered by a load-time side effect in core. Without this, reading the
 // declaration under test throws `unknown graph kind "folio"`.
 import "./folio-graph-kind";
-import { mkdirSync, writeFileSync, rmSync, readFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync, rmSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
   FolioAssistantDependencySchema,
@@ -255,7 +256,15 @@ describe("resolveTranslationDirs", () => {
  * file. Nothing would fail. This is what makes that loud.
  */
 describe("a dependent instance inherits the ingestion directories", () => {
-  const DOWN = join(TMP, "downstream");
+  // Its OWN temporary root, deliberately NOT under `TMP`. `TMP` already holds a
+  // `translations/` for the tests above, and `materialiseDirectories` now
+  // refuses a declared directory that is empty at its resolved path while a
+  // twin at the other scope holds content — *"that is what a missing or wrong
+  // `scope` looks like"*. A downstream folio nested inside `TMP` inherits
+  // `translations/` instance-scoped, finds it empty, sees `TMP/translations`
+  // full, and trips that guard. The guard is right; the nesting was the
+  // mistake.
+  const DOWN = mkdtempSync(join(tmpdir(), "downstream-folio-"));
 
   beforeAll(() => {
     mkdirSync(DOWN, { recursive: true });
