@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-20T05:11:45Z
-updated_at: 2026-09-20T05:35:24Z
+updated_at: 2026-09-20T06:51:47Z
 parent: folio-assistant-o3xy
 ---
 
@@ -174,3 +174,22 @@ SECOND CONSEQUENCE: `alox`'s open item (b) — *"THE ONBOARDING BLOCK IS ON docs
 `alox` records that all four are emitted through `relative_url` rather than written relative, because the site is a PROJECT Pages site with `baseurl: /folio-assistant` and link-shaped values that resolve by luck are the whole of bean `blv9`. Whatever emits them from the sticky must keep that.
 
 Still English-only, which is `alox`'s open item (c) and NOT a defect yet — but the sticky is a new surface and this is the moment the strings could be extracted rather than silently never picked up.
+
+
+
+_2026-09-20_ — A COVERAGE GAP I AM RECORDING RATHER THAN LETTING 'TESTS GREEN' COVER.
+
+**Nothing automated exercises the rendered landing page.** Measured: `test/a11y.e2e.ts` targets `/_kg/folio-assistant/index.html` and `/_kg/folio-assistant-i18n-fixture/index.html` — the **KG viewer**, not the Jekyll docs site. `grep -rn 'folio-landing|fa-landing|landing.html|jekyll' test/*.e2e.ts playwright.config.ts` returns **nothing**. So the include this bean rewrote has no e2e test, no axe pass, and no snapshot.
+
+That cuts both ways and both matter:
+
+- The rewrite could not have broken the e2e suite, so its green says nothing about this work.
+- A new user-facing surface shipped with **no automated coverage**, and the only thing standing behind it is that I built the page and looked at it.
+
+**And looking is what caught everything.** Three defects were invisible to a clean build, 3198 passing tests and every gate: a child combinator that matched nothing (`.fa-sticky--backdrop > .fa-sticky-art`, with the `<img>` a grandchild inside `<picture>`) so the art laid out at 1672px across the page; `object-fit: cover` cutting the cat's head off; and a scrim value that took three renders and two owner corrections to settle. CSS raises no error for a selector that matches nothing, which is precisely why no gate could have found the first.
+
+**What coverage would actually catch.** Not the fade — that is a judgement call and was settled by the owner looking. But the selector bug is mechanical and cheap to catch: a built page plus an assertion that the art element's rendered box is no wider than its card. The rig already exists in this session's scratch work — a minimal Jekyll build over the real `_data/harness.json`, served over HTTP, driven by Playwright with `executablePath: '/opt/pw-browsers/chromium'` because the pinned build is not installed here.
+
+**NOT done in this bean**, deliberately: the folio's e2e config, its fixtures and its CI job are their own change, and bolting a Jekyll build into the existing Playwright project mid-PR would widen a change that is already large. Needs its own bean if it is to be done.
+
+Related: the a11y suite not reaching the docs site at all is bigger than this one page and is worth checking against `alox`, whose open item (a) is that nobody had visually verified the landing fade either.
