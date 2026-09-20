@@ -104,6 +104,20 @@ instruments.
 | 1 | a skill | a Tool | `check:tools`, `tools:coverage` |
 | 2 | a skill **and** Tools for its neighbours | a Tool for the mechanism | nothing — this skill |
 | 3 | a mechanism | **any skill stating the capability** | nothing |
+| 4 | a skill, a mechanism, a Tool | **a command** — it runs in-process only | nothing |
+| 5 | a skill, a mechanism, **a command** | anything that *invokes* it | nothing |
+
+**Case 5 is case 4's inverse** — the entry point is present and the callers are
+absent — and it is discussed under [§Reachability is PLURAL](#reachability-is-plural--which-caller-should-this-have-presumes-one)
+below, because the useful question there is not *what is missing* but *how many
+dispatch points this should have*. Worked example: `translation-roundtrip.ts`,
+bean `vo9d`, which was **born** callerless in commit `4997840` — its only
+references at birth were its own usage string and a line of skill prose telling a
+human what to type. That is this skill's own "mechanism inlined in prose"
+failure, and the bean's standing hypothesis — that a caller was *lost* when the
+translation simulation was removed — is **struck**: `simulate-translation.ts` had
+its own private `roundTripQA()` over a hand-written map and never called the
+script. A path cannot lose a caller it never had.
 
 Case 3 was met on 2026-09-20: `gen-themes-css` and `gen-avatars-css` render theme
 and avatar nodes into `assets/css/themes.css` and `assets/css/avatars.css`. Both
@@ -130,11 +144,59 @@ That constraint is load-bearing:
   a Tool with front matter.
 
 Authoring the skill is a **design act** — a claim about the platform's capability
-vocabulary — so it goes to the owner rather than being decided in passing. Bean
-`yean` carries the two candidates and the argument for each.
+vocabulary, inherited by every dependent instance — so it goes to the owner rather
+than being decided in passing. Bean `yean` carried the two candidates.
 
-Until it is settled, those scripts stay unreachable, and that is the honest state
-rather than a gap papered over with a false edge.
+**Settled 2026-09-20:** [`site-presentation-assets`](site-presentation-assets.md)
+was authored, and `themes-css` / `avatars-css` are in the graph satisfying it. The
+resolution is recorded here because the alternative — leaving the gap notice
+standing — is worse than never having written one: an agent that believes a stale
+gap either avoids the capability or rebuilds it.
+
+Note which came first. **The skill was written before the nodes, and names no
+script**, which is the second bullet above honoured rather than merely stated.
+
+## The fourth case: a mechanism with no command, reachable in-process only
+
+Cases 1–3 are about a missing *node* or a missing *skill*. This one has both, and
+is still unaskable: **the mechanism has no command, so no CI job and no person can
+run it.**
+
+Met on 2026-09-20 (bean `0bzg`). `checkFolioProfile` in
+`content/pipeline/profile-check.ts` catches what schema validation **structurally
+cannot** — a block valid against its own schema but wrong for the folio's content
+profile, because adapters partition disjointly while profiles nest. Its only caller
+registered MCP tools. So the check was reachable by an MCP-connected agent and by
+**nothing else**: not a gate, not a sweep, not a person at a shell.
+
+This is the hardest of the four to notice, because the mechanism *is* reachable —
+to one caller class — so every instrument that asks "can this be reached" answers
+yes.
+
+> **Ask which callers, not whether.** "Reachable from MCP" and "reachable from CI"
+> are different claims, and a durable verdict needs the second.
+
+### Giving a library function its first command
+
+The remedy was a `qa-sweep` axis rather than a `check:profile` script, chosen
+because **a sweep verdict is durable where a printed one is not** — a printed
+verdict cannot distinguish "wrong since it was written" from "broken in the commit
+under review".
+
+And the first version of that axis reported **`pass` on a folio that declares no
+content type at all** — the laundering it exists to prevent. It guarded on
+`ProfileCheckResult.profile === undefined`, and that field is *never* `undefined`:
+`checkFolioProfile` resolves through `readFolioProfile`, which turns an undeclared
+profile into `"paper"`. That default is **correct for a validator** — the wider
+vocabulary is the safe thing to validate against — and wrong for a reporter, which
+needs `readDeclaredFolioProfile` instead.
+
+So the general rule, which is where the cost of this case actually lands:
+
+> **A library's defaulting is usually what erases the third state.** When you give
+> a library function its first entry point, the value it resolves for its own use
+> is not the value a verdict may report. Check which of the two you are reading —
+> by running it, not by reading it, which is how this one was caught.
 
 ## Reachability is PLURAL — "which caller should this have?" presumes one
 

@@ -147,6 +147,9 @@ describe("the HCI validation gate holds", () => {
       step("Task_CollateFindings");
       step("Task_LogFindings");
       step("Task_ReviewFindings");
+      // `u4hs`: the options analysis is interposed here. Ordinary edits take
+      // `GW_Trigger`'s "no", the early exit the subprocess documents.
+      drainSubprocess(model, state, "Call_OptionsAnalysis", { GW_Trigger: "no" });
       step("Task_RecordDecision");
       step("Gateway_EditorDecision", decision);
       return { model, state };
@@ -180,6 +183,9 @@ describe("the HCI validation gate holds", () => {
     step("Task_CollateFindings");
     step("Task_LogFindings");
     step("Task_ReviewFindings");
+    // `u4hs`: the options analysis is interposed here. Ordinary edits take
+    // `GW_Trigger`'s "no", the early exit the subprocess documents.
+    drainSubprocess(model, state, "Call_OptionsAnalysis", { GW_Trigger: "no" });
     step("Task_RecordDecision");
     step("Gateway_EditorDecision", "revise");
 

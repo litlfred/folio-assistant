@@ -313,6 +313,45 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { network: true },
     }),
 
+    // ── The preview host: one STAGING/<slug> per open pull request ─────────
+    //
+    // Tier A of `tools:coverage` on the strength of a `serviceTask` naming the
+    // skill, and the workflow IS the whole of what `feature-staging.md` claims —
+    // "branch creation, staging deployment, commit SHA stamping, and cleanup".
+    // So `satisfies` is one skill and nothing is stretched to fit.
+    //
+    // A node over a workflow rather than a script, on the `pages-publish`
+    // precedent: the mechanism genuinely is the workflow. It holds the gh-pages
+    // checkout, the retry and the concurrency group, and a second pusher racing
+    // those is how a deploy gets lost.
+    defineTool({
+      id: "feature-staging",
+      title: "Stage a branch's preview",
+      description:
+        "Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
+      install: { none: true },
+      invoke: { shell: ".github/workflows/feature-staging.yml" },
+      io: {
+        inputs: [
+          { name: "branch", schema: t("Branch"), required: false, arg: { flag: "--branch" }, description: "The branch to stage; blank stages the current one. On a pull request the workflow fires by itself and needs none of these." },
+          // The two below are a DELETION trigger, and the node says so where a
+          // caller reads it rather than only in the workflow's comments.
+          { name: "cleanup_slug", schema: t("Slug"), required: false, arg: { flag: "--cleanup-slug" }, description: "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. It exists because the label path cannot reach the previews the health sweep reports — being findable as an orphan REQUIRES the pull request to be closed, so the close event has already fired with no label (bean `w2g5`)." },
+          { name: "cleanup_confirm", schema: t("Slug"), required: false, arg: { flag: "--cleanup-confirm" }, description: "The slug again, exactly. Anything else refuses. A confirmation therefore cannot be carried over from a previous run against a DIFFERENT preview, which a boolean would have allowed." },
+        ],
+        outputs: [{ name: "preview", schema: t("Url"), description: "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for." }],
+      },
+      satisfies: ["feature-staging"],
+      requires: { network: true },
+      selection: {
+        when:
+          "On a pull request touching the docs, schemas, content or skills it fires on its own — reach for the dispatch arm only to stage a branch that has no open pull request, or to remove a preview the close event could not reach.",
+        limits:
+          "The removal arm is guarded THREE ways, and the guards are the point rather than ceremony: `workflow_dispatch` is available only to an actor with write access; `cleanup_confirm` must repeat the slug exactly; and the removal is preflighted at removal time against the same liveness signals the health sweep uses. That is `deletion-requires-confirmation` applied to the tool most able to break it — bean `plj1` is a workflow whose shape deleted every open pull request's preview without anybody deciding it. This node does not claim that skill, because implementing the discipline once is not the same as stating it.",
+        cost: "A full site build plus a push to the publish branch. Concurrency is keyed on the branch or the cleanup slug, NOT the shared ref, so two cleanups of different previews no longer cancel each other (bean `xd1s`).",
+      },
+    }),
+
     // ── The other publication host ────────────────────────────────────────
     //
     // `pages-publish` above is one value of the `publication host` axis in
@@ -949,7 +988,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "all", schema: t("Flag"), required: false, arg: { flag: "--all" }, description: "Add the jobs that need a browser; the default is the fast set." },
           { name: "list", schema: t("Flag"), required: false, arg: { flag: "--list" }, description: "Print the derived gates and exit, running none." },
         ],
-        outputs: [{ name: "report", schema: t("Text"), description: "One line per gate, then a pass count or the failures. Exit non-zero on any failure." }],
+        outputs: [{ name: "report", schema: t("Text"), description: "One line per gate, then a pass count or the failures. Three exit codes, because two cannot carry the distinction: 0 every gate passed, 1 a gate failed, 2 the gate set could NOT BE DERIVED — the workflow it reads is absent or yields nothing. A caller must not read 2 as either verdict; it matters most downstream, where this Tool is inherited and `.github/workflows/` is not." }],
       },
       // ONE node, and that is the design rather than a shortcut — bean
       // `folio-assistant-ppkm`, route B of `folio-assistant-3lbz`.
@@ -980,6 +1019,51 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "It runs what the workflow declares, so a check CI does not run is a check this does not run — that is the point, not a gap. The default omits the browser jobs; `--all` adds them, and `render:bpmn:check` needs Chromium.",
         cost: "The fast set is about a minute, dominated by `bun test`. `--all` adds a browser render.",
+      },
+    }),
+
+    // ── Is CI actually passing? A different question from "do the gates pass" ──
+    //
+    // Bean `6qaq`, found while working `6366`, whose criterion asked the `gates`
+    // node to satisfy `ci-health`. It must not, and `1xhc` had already recorded
+    // why in the list of scripts deliberately left OUT of the gate set:
+    // "check:ci-health (a report, reads the default branch, so on a PR it
+    // describes main not the diff)". `gates` RUNS the checks; this REPORTS
+    // whether the workflows passed. Two capabilities, two nodes.
+    //
+    // It had no node at all, and was invisible with it: `tools:coverage` triaged
+    // `ci-health` into tier D — "no evidence. Almost certainly judgement." —
+    // because that triage tests the SKILL's markdown for a fenced shell block
+    // and `ci-health.md` states its three reading rules without ever showing the
+    // command. A real command, documented in AGENTS.md, and an empty evidence
+    // list. Fixed under `6366` by counting a declared script as evidence too.
+    defineTool({
+      id: "ci-health",
+      title: "Is CI passing on the default branch?",
+      description:
+        "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start.",
+      install: { none: true },
+      invoke: { shell: "bun run check:ci-health" },
+      io: {
+        inputs: [
+          { name: "markdown", schema: t("Flag"), required: false, arg: { flag: "--markdown" }, description: "Emit the block the session-start sweep prints. ALWAYS exits 0, deliberately: the sweep runs it as `if ! …; then` and would otherwise print the report AND declare it unchecked every time CI is red." },
+          { name: "warn", schema: t("Flag"), required: false, arg: { flag: "--warn" }, description: "Report only, never fail. For a caller that wants the state without a verdict." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. The notifier gets its own flag rather than one API call being spent twice." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Markdown"), description: "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither."},
+        ],
+      },
+      satisfies: ["ci-health"],
+      // `network: true` is the unusual part, and it is what makes the third
+      // state load-bearing rather than decorative — see `selection.limits`.
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when:
+          "Before trusting ANY workflow's outcome, and at session start. A workflow's result is invisible from a checkout, which is how `docs-site.yml` failed 30 consecutive runs over two months with nothing in the repository saying so (bean `xom7`).",
+        limits:
+          "It reads the DEFAULT BRANCH, so on a PR it describes `main` and not the diff — which is why it is deliberately not one of the `gates`. `GITHUB_TOKEN`/`GH_TOKEN` is used when present; without one a public repo still works and a private one fails. A REFUSED OR FAILING API CALL EXITS 2 AND IS NEVER GREEN: could-not-look must stay distinguishable from looked-and-it-was-fine, and bean `1xhc` has a case where this printed green while `main` was red because an unsettled newest run was dropped.",
+        cost: "One HTTP request. Fast enough for the session-start sweep, which is the constraint the single-call design exists for.",
       },
     }),
 

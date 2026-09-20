@@ -92,7 +92,7 @@ directory to notice the subject is gone.
 - [x] graph-ranging findings name their graph — `skill-has-entry-point` and
       `skill-in-role-or-process` now append the scope, built from the DECLARED
       path strings rather than computed relative ones (computing them printed
-      `../bootstrap/skills` once the tree moved into `cat-harness/`, which is
+      `../cat-bootstrap/skills` once the tree moved into `cat-harness/`, which is
       accurate and reads like a bug)
 - [ ] a gate runs the audits per declared instance, or the root's silence about a
       nested one is itself reported
@@ -100,7 +100,9 @@ directory to notice the subject is gone.
 - [ ] the three unbound lanes get roles, or the lanes are renamed to declared ones
 - [ ] `initialize-harness.bpmn` gets a `BPMNDiagram`, or its absence is a recorded
       criterion rather than a hard renderer failure
-- [ ] the stale sidecar: owner decides
+- [x] the stale sidecar: **owner decided — "Delete it"**, and it is gone. Done in
+      `30f5057`, reported before acting: 2409 bytes, last touched 2026-09-19,
+      subject `bootstrap.bpmn` removed on `main` 2026-09-19
 
 ---
 
@@ -122,7 +124,7 @@ meets the reason where they meet the code.
 ### One thing the fix surfaced on the way
 
 Computing the paths relative to the audit's root printed
-`` `bootstrap` at `../bootstrap/skills` ``, because the script now runs from
+`` `bootstrap` at `../cat-bootstrap/skills` ``, because the script now runs from
 `cat-harness/` and `bootstrap/` is its sibling. Accurate, and it reads like a
 defect. Switched to the declared `path` string: it is what a reader would go and
 edit, and it cannot acquire a `../` when the tree moves again. "Resolve, do not
@@ -175,3 +177,35 @@ compose", applied to a diagnostic rather than to a link.
       `--all` browser jobs and is not installed in this container — so that
       half is stated as unverified rather than claimed.
 - [ ] the stale `bootstrap.bpmn` sidecar — owner's call, still untouched
+
+
+---
+
+## 2026-09-20 — the sidecar item was already closed; four remain
+
+Re-checked rather than re-asked. `find` for `bootstrap*.kg-qa.json` returns
+**nothing**, and `git log --diff-filter=D` names the commit that removed it:
+`30f5057`, *"options-analysis.bpmn, and the two deletions the owner authorised"*.
+Its message records the figures that were reported **before** acting — 2409 bytes,
+last touched 2026-09-19, subject gone — which is what
+`deletion-requires-confirmation` asks for.
+
+So this bean was carrying an open question the owner had already answered. Ticked
+rather than re-raised: asking twice is its own failure, and it spends the one thing
+the owner's accessibility constraints make expensive.
+
+### The four that are genuinely open, and none of them is a decision
+
+- a gate runs the audits **per declared instance**, or the root's silence about a
+  nested one is itself reported. `kg:audit` currently reports
+  `graph:kg nested-instance-audited (2)`, so the finding exists and the **gate**
+  does not
+- `cat-bootstrap/skills/` gets a package manifest, so `confirm-harness` is servable
+- the three unbound lanes get roles, or are renamed to declared ones
+- `initialize-harness.bpmn` gets a `BPMNDiagram`, or its absence becomes a recorded
+  criterion rather than a hard renderer failure
+
+Each is work, not a judgement for the owner. Left for a session that can take the
+nested-instance question whole, because the first item changes what the audit
+**ranges over** and the other three are findings inside that range — doing them in
+the other order means auditing them twice.

@@ -38,12 +38,30 @@
  *   `schemas/skills/`. Somebody modelled it as a thing that runs. A Tool is
  *   warranted; this is the list to act on.
  * - **B** — a `userTask` only. Judgement exercised inside a process.
- * - **C** — a shell block, no process edge. **This is where a human read
- *   goes** — the evidence is genuinely ambiguous.
+ * - **C** — a shell block **or a declared `package.json` script**, and no
+ *   process edge. **This is where a human read goes** — the evidence is
+ *   genuinely ambiguous.
  * - **D** — nothing. Almost certainly judgement.
  *
  * The point is not that A and D are certain. It is that C is the only tier
  * needing a read, which is the difference between an afternoon and a week.
+ *
+ * ## `D` meant "no evidence IN THE BODY", and that is not the same thing
+ *
+ * The fenced-block test reads the skill's own prose, so a skill that states its
+ * rules without ever SHOWING its command landed in D — the tier whose label
+ * tells you not to look. `ci-health` was the case that proved it: a real
+ * command (`check:ci-health`, declared in `package.json`), documented in
+ * `AGENTS.md`, no Tool node, and **tier D with an empty evidence list**, because
+ * its own markdown never puts the command in a fence.
+ *
+ * So a declared script counts as evidence too, matched strictly — a colon
+ * segment of the script's key equals the skill name, or the command runs a file
+ * literally called `<skill>.ts`. Loose substring matching was tried first and
+ * rejected: a short skill name matches unrelated keys. Measured: the strict rule
+ * moves **6** skills from D to C (`agent-memory`, `ci-health`, `crdm-detect`,
+ * `kg-viewer`, `raci`, `readme-sections`) and reclassifies **nothing** already in
+ * A or B.
  *
  * @module scripts/tool-coverage
  */
@@ -56,6 +74,43 @@ import { loadProcessModel } from "../src/workflow/process-model.js";
 import { isSkillMd, kgRoots } from "./known-skills.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+/**
+ * Every `scripts` key declared by this instance, from whichever `package.json`
+ * carries them.
+ *
+ * Both are read and merged rather than one being hardcoded: after the
+ * `cat-harness/` inversion the scripts live in the ROOT manifest while this
+ * file sits one level down, and a single hardcoded path is what breaks silently
+ * the next time the tree moves — yielding an empty index, which reads as "no
+ * skill has a command" rather than as a failure to look.
+ */
+export function declaredScripts(): [string, string][] {
+  const out: [string, string][] = [];
+  for (const rel of ["package.json", "../package.json"]) {
+    const f = join(ROOT, rel);
+    if (!existsSync(f)) continue;
+    try {
+      const scripts = JSON.parse(readFileSync(f, "utf-8")).scripts as Record<string, string> | undefined;
+      if (scripts) out.push(...Object.entries(scripts));
+    } catch {
+      // A manifest that will not parse is another gate's problem; skipping it
+      // must not be silent, because a shrunken index reads as a clean triage.
+      console.warn(`  ⚠ could not parse ${rel}; its scripts are missing from this triage`);
+    }
+  }
+  return out;
+}
+
+/**
+ * The script that runs a skill, if one is declared.
+ *
+ * STRICT on purpose — see the module docstring. A colon segment of the key, or a
+ * command naming `<skill>.ts`. Never a substring of the key.
+ */
+export function scriptFor(skill: string, scripts: [string, string][]): string | undefined {
+  return scripts.find(([k, v]) => k.split(":").includes(skill) || v.includes(`/${skill}.ts`))?.[0];
+}
 
 export type Tier = "A" | "B" | "C" | "D";
 
@@ -127,6 +182,8 @@ export async function triage(): Promise<SkillTriage[]> {
     }
   }
 
+  const scripts = declaredScripts();
+
   const io = new Set<string>();
   const ioRoot = join(ROOT, "schemas", "skills");
   if (existsSync(ioRoot)) for (const e of readdirSync(ioRoot, { withFileTypes: true })) if (e.isDirectory()) io.add(e.name);
@@ -161,13 +218,18 @@ export async function triage(): Promise<SkillTriage[]> {
     const isAuto = auto.has(skill);
     const isHuman = human.has(skill);
     const hasIo = io.has(skill);
-    const shell = /```(sh|bash|console)\n/.test(body);
+    const fenced = /```(sh|bash|console)\n/.test(body);
+    const script = scriptFor(skill, scripts);
+    const shell = fenced || script !== undefined;
 
     const evidence: string[] = [];
     if (isAuto) evidence.push("serviceTask");
     if (hasIo) evidence.push("io-contract");
     if (isHuman) evidence.push("userTask");
-    if (shell) evidence.push("shell-block");
+    if (fenced) evidence.push("shell-block");
+    // Named, so the read that tier C asks for starts from the command rather
+    // than from a hunt through 114 scripts.
+    if (script) evidence.push(`script:${script}`);
 
     const tier: Tier = isAuto || hasIo ? "A" : isHuman ? "B" : shell ? "C" : "D";
     out.push({ skill, tier, evidence });
@@ -182,15 +244,25 @@ if (import.meta.main) {
   const LABEL: Record<Tier, string> = {
     A: "A — a serviceTask names it, or it has an I/O contract. A Tool is warranted.",
     B: "B — a userTask only. Judgement exercised inside a process.",
-    C: "C — a shell block, no process edge. THE READ GOES HERE; evidence is ambiguous.",
+    C: "C — a shell block or a declared script, no process edge. THE READ GOES HERE; evidence is ambiguous.",
     D: "D — no evidence. Almost certainly judgement.",
   };
 
   for (const t of ["A", "B", "C", "D"] as Tier[]) {
     const list = by(t);
     console.log(`\n${LABEL[t]}  (${list.length})`);
-    // C and D are long and are a count, not a reading list; A and B are lists.
-    if (t === "A" || t === "B") for (const r of list) console.log(`  ${r.skill.padEnd(32)} ${r.evidence.join(", ")}`);
+    // C IS PRINTED, and that is the fix rather than an inconsistency: this
+    // report's own label for it is "THE READ GOES HERE" and its closing line
+    // says "only tier C needs reading". Printing a bare count under both
+    // sentences told the reader to go and read a list it declined to name, so
+    // the read could only be done by re-running the triage by hand.
+    //
+    // D stays a count. Its label is "no evidence, almost certainly judgement",
+    // so 80 names under a heading that says not to read them is noise that
+    // pushes C off the screen. That is also why the D→C rule above matters more
+    // than this printing change: a skill in D is not merely unprinted, it is
+    // labelled as not worth reading.
+    if (t !== "D") for (const r of list) console.log(`  ${r.skill.padEnd(32)} ${r.evidence.join(", ")}`);
   }
 
   const both = by("A").filter((r) => r.evidence.includes("userTask"));

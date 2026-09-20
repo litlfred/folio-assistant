@@ -5,7 +5,7 @@
     "id": "Process_UpstreamAdoption",
     "path": "skills/workflows/upstream-version-adoption.bpmn"
   },
-  "source_hash": "sha256:2b8257b532c68082063ab6e3a6a894200ea09005537531ff7e1b2c6b73321eb2",
+  "source_hash": "sha256:ac3c24a9f676b5a9473a4ee4fb7ba29539860ad2b2dfa52f93edc7d46d7b840e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -48,13 +48,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Call_OptionsAnalysis",
-          "detail": "needs skill \"methodology-adoption\", but its lane's role \"authoring-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -70,8 +65,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 1,
+    "pass": 9,
+    "fail": 0,
     "n/a": 5,
     "unknown": 0
   }

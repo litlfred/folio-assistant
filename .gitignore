@@ -107,29 +107,40 @@ _kg/
 # by line count. Regenerate locally with `bun run cat-bootstrap:graph`.
 cat-bootstrap/cat-bootstrap.jsonld
 
-# Playwright failure artefacts. `.last-run.json` is tracked (bb28f8e) and
-# deliberately restored on main after a sibling session deleted it, so it stays
-# tracked here — ignoring the whole directory was this branch's first answer and
-# main's reason is the better one. The per-test directories are snapshots of a
-# failing run: one reproduce-then-fix cycle wrote 3,040 lines of them into a
-# commit on 2026-09-19.
+# Playwright artefacts — the WHOLE directory, including `.last-run.json`.
 #
-# Note for whoever hits it next: a tracked `.last-run.json` is rewritten by
-# every `bunx playwright test`, so it dirties the tree mid-run and a `git stash`
-# taken then will carry it. That is a cost of tracking it, not an argument
-# against — but it is what made this branch untrack it in the first place.
+# `.last-run.json` was tracked from 2026-09-18 (bb28f8e) and untracked on
+# 2026-09-20 by owner ruling. The note here previously said it was "deliberately
+# restored on main after a sibling session deleted it, so it stays tracked —
+# main's reason is the better one". Measured before reversing that:
 #
-# `git stash` is not the only way to be bitten, and the second way is worse
-# because it commits. On 2026-09-20 a `git add -A` run WHILE `gates --all` had
-# Playwright in flight staged this file's transient DELETION, and the merge
-# commit that followed removed a file both of its parents carried. Nothing
-# failed; it was found by a stop hook noticing the untracked file that the
-# next run recreated.
+#   git log -- test-results/.last-run.json   ->  ONE commit, bb28f8e
 #
-# So: do not `git add -A` while the e2e gates are running. Stage paths you
-# mean, or wait for the run to finish. The window is small and it is committed
-# history when you land in it.
-test-results/*/
+# bb28f8e is `fix(test): name Playwright specs .e2e.ts`. The file came along
+# with a rename; nothing decided it. There is no restoration commit on this
+# path, and the "better reason" was never written down anywhere — which is the
+# shape AGENTS.md names: a rule whose justification has no home.
+#
+# What tracking it cost, measured on 2026-09-20 alone: two accidental deletions
+# on one branch (a `git add -A` mid-`gates` staged the transient removal, and a
+# hand `mv` to unblock `git revert` did it again), one earlier sibling deletion
+# recorded in the note this replaces, and three stop-hook alarms on a file that
+# the next e2e run recreated by itself.
+#
+# The rule that was supposed to prevent this — "do not `git add -A` while the
+# e2e gates are running" — depends on remembering, and it has now failed at
+# least three times. This repository turns rules that need remembering into
+# checks; ignoring the path is the cheapest version of that.
+#
+# The per-test directories are snapshots of a failing run: one
+# reproduce-then-fix cycle wrote 3,040 lines of them into a commit on
+# 2026-09-19. That is why the directory was partly ignored already — the old
+# pattern `test-results/*/` matched only SUBDIRECTORIES, so a file sitting
+# directly in `test-results/` slipped through it.
+#
+# If someone does have the reason for tracking it, write it here and revert
+# this — an unstated reason is not one this can be weighed against.
+test-results/
 playwright-report/
 
 # Bundler's local gem tree and config, written by `bundle install --path vendor`
