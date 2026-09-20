@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T19:17:41.321Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e2c62fb4d34667d3523502153feb7310022c8074",
-  "sourceCommitSha": "e2c62fb4d34667d3523502153feb7310022c8074",
-  "sourceCommitAt": "2026-09-20T19:15:58Z",
+  "generatedAt": "2026-09-20T19:23:08.158Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/facf4d6770a585a5ada34937d9c9ac47710e8eac",
+  "sourceCommitSha": "facf4d6770a585a5ada34937d9c9ac47710e8eac",
+  "sourceCommitAt": "2026-09-20T19:21:39Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 206,
+    "Skill": 207,
     "Actor": 27,
     "Capability": 28,
     "Role": 124,
@@ -2360,6 +2360,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ci-health"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/schema-management",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "schema-management",
+      "title": "Managing a schema — the graph, the viewer, and the three answers that are not \"fine\"",
+      "description": "Manage a schema over its life — add one, change one, read the schema graph and its viewer, and act on what the reader could not determine. The layout rule lives in `directory-conventions`; the entity question lives in `data-modelling`; this is the work in between.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/schema-management.md",
+      "instructionLines": 146,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/schema-management"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/symbiotic-interaction",
@@ -5117,7 +5134,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/placement",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/prepare-merge-auto",
@@ -5128,7 +5144,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/render-logging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/schema-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/session-intent",
@@ -32670,8 +32688,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-albattani-0byaig",
-    "sha": "68080db32c64d66da01ed0c431f26795cca2e399",
+    "sha": "96920f002efc94ece14681325df6de913e989a8f",
     "pr": "583/merge",
-    "run": "35531741525"
+    "run": "35532050258"
   }
 }

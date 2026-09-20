@@ -14,10 +14,9 @@
   <style id="jtd-nav-activation">
   
 
-    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(81)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(20)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
       background-image: none;
     }
 
@@ -26,14 +25,12 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(81) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(20) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(81) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(20) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(81) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(20) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +50,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Feature-request detection (CRDM trigger) | folio-assistant</title>
+<title>Subgraph viewers | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Feature-request detection (CRDM trigger)" />
-<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Subgraph viewers" />
+<meta property="og:locale" content="en" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Feature-request detection (CRDM trigger)" />
+<meta property="twitter:title" content="Subgraph viewers" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -642,237 +639,222 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
     <div class="main-content-wrap">
-      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
-  <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Feature-request detection (CRDM trigger)</span></li>
-  </ol>
-</nav>
-
-
+      
       <div id="main-content" class="main-content">
         <main>
           
-            <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">methodologies/crdm/crdm-detect.md</code></a> — do not edit here.</p>
-
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/methodologies/crdm/crdm-detect.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
-</blockquote>
-<h1 id="feature-request-detection-crdm-trigger">
+            <h1 class="no_toc" id="subgraph-viewers">
   
   
-    <a href="#feature-request-detection-crdm-trigger" class="anchor-heading" aria-labelledby="feature-request-detection-crdm-trigger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Feature-request detection (CRDM trigger)
+    <a href="#subgraph-viewers" class="anchor-heading" aria-labelledby="subgraph-viewers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Subgraph viewers
   
   
 </h1>
     
 
-<p>Detect when a user request is a <strong>feature request</strong> (platform capability change)
-rather than a <strong>content request</strong> (writing, editing, reviewing folio content).
-When a feature request is detected, the agent enters the CRDM requirements
-workflow rather than implementing directly.</p>
-<h2 id="detection-signals">
-  
-  
-    <a href="#detection-signals" class="anchor-heading" aria-labelledby="detection-signals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Detection signals
-  
-  
-</h2>
-    
+<p>A harness instance declares the directories it holds and the <strong>kind of graph</strong>
+in each. Two of those graphs now have a page you can open.</p>
 
-<p>Scan every user request for these categories of phrasing. A single match is
-enough to flag; two or more from different categories is high confidence.</p>
-<h3 id="direct-capability-requests">
-  
-  
-    <a href="#direct-capability-requests" class="anchor-heading" aria-labelledby="direct-capability-requests"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Direct capability requests
-  
-  
-</h3>
-    
-
-<p>Phrases where the user explicitly asks for new functionality:</p>
-
-<ul>
-  <li>“I need a way to …”, “can you add …”, “we need a tool that …”</li>
-  <li>“there should be a skill for …”, “add a QA check for …”</li>
-  <li>“the renderer should support …”, “make the pipeline do …”</li>
-  <li>“can we add a new block kind for …”, “we need a content type for …”</li>
-  <li>“it would be great if the agent could …”</li>
-  <li>“build me …”, “create a tool …”, “develop a feature …”</li>
-</ul>
-<h3 id="workflow-gap-descriptions">
-  
-  
-    <a href="#workflow-gap-descriptions" class="anchor-heading" aria-labelledby="workflow-gap-descriptions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow gap descriptions
-  
-  
-</h3>
-    
-
-<p>Phrases where the user describes a process that does not work today:</p>
-
-<ul>
-  <li>“right now I have to manually …”, “there is no way to …”</li>
-  <li>“the current process for … is broken”, “this workflow doesn’t handle …”</li>
-  <li>“we can’t do … yet”, “it’s missing …”, “it doesn’t support …”</li>
-  <li>“every time I need to …, I have to …” (manual workaround pattern)</li>
-  <li>“other people need to be able to …”</li>
-</ul>
-<h3 id="platform-level-change-requests">
-  
-  
-    <a href="#platform-level-change-requests" class="anchor-heading" aria-labelledby="platform-level-change-requests"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Platform-level change requests
-  
-  
-</h3>
-    
-
-<p>Phrases that imply changes to folio-assistant itself (not folio content):</p>
-
-<ul>
-  <li>“change the schema to …”, “modify the pipeline …”</li>
-  <li>“add a new adapter …”, “the constraint should …”</li>
-  <li>“update the CI to …”, “the workflow should fire when …”</li>
-  <li>“the MCP tool needs to …”, “register a new tool for …”</li>
-  <li>References to files under <code class="language-plaintext highlighter-rouge">schemas/</code>, <code class="language-plaintext highlighter-rouge">content/pipeline/</code>, <code class="language-plaintext highlighter-rouge">adapters/</code>,
-<code class="language-plaintext highlighter-rouge">src/</code>, <code class="language-plaintext highlighter-rouge">scripts/</code>, <code class="language-plaintext highlighter-rouge">.github/workflows/</code></li>
-</ul>
-<h3 id="cross-cutting-concerns">
-  
-  
-    <a href="#cross-cutting-concerns" class="anchor-heading" aria-labelledby="cross-cutting-concerns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-cutting concerns
-  
-  
-</h3>
-    
-
-<p>Phrases that affect multiple folios or content types:</p>
-
-<ul>
-  <li>“for all papers …”, “every folio should …”, “across all content types …”</li>
-  <li>“when any user …”, “the platform should …”</li>
-  <li>“this needs to work for both document and paper folios”</li>
-</ul>
-<h3 id="review-surfaced-needs">
-  
-  
-    <a href="#review-surfaced-needs" class="anchor-heading" aria-labelledby="review-surfaced-needs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Review-surfaced needs
-  
-  
-</h3>
-    
-
-<p>Phrases that emerge during content review:</p>
-
-<ul>
-  <li>“this review process would be easier if …”</li>
-  <li>“we need a way to triage these comments …”</li>
-  <li>“the feedback workflow should …”</li>
-  <li>“stakeholders need to be able to see …”</li>
-  <li>“can we make the review process more …”</li>
-</ul>
-<h2 id="what-is-not-a-feature-request">
-  
-  
-    <a href="#what-is-not-a-feature-request" class="anchor-heading" aria-labelledby="what-is-not-a-feature-request"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is NOT a feature request
-  
-  
-</h2>
-    
-
-<p>Do not trigger CRDM for:</p>
-
-<ul>
-  <li>“Write the next section of chapter 3” — content authoring</li>
-  <li>“Fix the typo in the overview” — content editing</li>
-  <li>“Run content_validate” — tool invocation</li>
-  <li>“What does this block kind mean?” — information request</li>
-  <li>“Review chapter 5” — content review within existing workflow</li>
-  <li>“Create a bean for …” — work-plan management</li>
-  <li>Bug reports about existing features (unless they imply a redesign)</li>
-</ul>
-<h2 id="on-detection--what-to-do">
-  
-  
-    <a href="#on-detection--what-to-do" class="anchor-heading" aria-labelledby="on-detection--what-to-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> On detection — what to do
-  
-  
-</h2>
-    
-
-<p>Do NOT use the term “CRDM” with the user. It is internal methodology jargon.</p>
-
-<p><strong>If new session</strong> and the first request is a feature:</p>
-<ol>
-  <li>Acknowledge the request as a feature/capability change</li>
-  <li>Explain that you will help them work through the requirements before building</li>
-  <li>Start Phase 1 (needs assessment)</li>
-</ol>
-
-<p><strong>If existing session</strong> and the user is already in a CRDM cycle:</p>
-<ol>
-  <li>Incorporate the new request into the current requirements document</li>
-  <li>Continue with the current phase</li>
-</ol>
-
-<p><strong>If existing session</strong> and the user is doing content work (not in CRDM):</p>
-<ol>
-  <li>Synthesise what you have heard as a feature need</li>
-  <li>Ask the user:
-    <ul>
-      <li>“This sounds like a platform change rather than content work. Would you
-like to pause and work through the requirements now, or should I note it
-for later?”</li>
-      <li>If <strong>pause</strong>: enter CRDM Phase 1, return to content work when done</li>
-      <li>If <strong>later</strong>: create a bean with as much context as possible, linking to
-any relevant GitHub issue</li>
-    </ul>
+<ol id="markdown-toc">
+  <li><a href="#why-these-pages-exist" id="markdown-toc-why-these-pages-exist">Why these pages exist</a></li>
+  <li><a href="#the-schema-graph" id="markdown-toc-the-schema-graph">The schema graph</a>    <ol>
+      <li><a href="#reading-it" id="markdown-toc-reading-it">Reading it</a></li>
+    </ol>
   </li>
-</ol>
-<h2 id="issue-association">
+  <li><a href="#the-library--the-l1-corpus" id="markdown-toc-the-library--the-l1-corpus">The library — the L1 corpus</a>    <ol>
+      <li><a href="#ingestion-state-is-three-states-and-none-of-them-is-an-error" id="markdown-toc-ingestion-state-is-three-states-and-none-of-them-is-an-error">Ingestion state is three states, and none of them is an error</a></li>
+      <li><a href="#the-uningested-badge-and-what-it-is-computed-from" id="markdown-toc-the-uningested-badge-and-what-it-is-computed-from">The uningested badge, and what it is computed from</a></li>
+      <li><a href="#it-is-read-only" id="markdown-toc-it-is-read-only">It is read-only</a></li>
+    </ol>
+  </li>
+  <li><a href="#where-they-are-published" id="markdown-toc-where-they-are-published">Where they are published</a></li>
+</ol><hr />
+<h2 id="why-these-pages-exist">
   
   
-    <a href="#issue-association" class="anchor-heading" aria-labelledby="issue-association"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Issue association
-  
-  
-</h2>
-    
-
-<p>Feature work should be linked to a GitHub issue:</p>
-
-<ol>
-  <li><strong>Scan open issues</strong> for a match — search by title/body keywords</li>
-  <li><strong>If match found</strong> — ask user: “This looks related to #NNN — should I add
-your requirements there?”</li>
-  <li><strong>If no match in open issues</strong> — scan recently closed issues</li>
-  <li><strong>If no match at all</strong> — ask the user to create an issue (do NOT create
-without permission)</li>
-  <li><strong>Do not proceed without an issue link</strong> — the issue is where stakeholders
-do feature sign-off; without it, there is no review surface</li>
-</ol>
-
-<p>Requirements may span multiple issues. The agent should link to all relevant
-ones and note the relationship.</p>
-<h2 id="after-implementation">
-  
-  
-    <a href="#after-implementation" class="anchor-heading" aria-labelledby="after-implementation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> After implementation
+    <a href="#why-these-pages-exist" class="anchor-heading" aria-labelledby="why-these-pages-exist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why these pages exist
   
   
 </h2>
     
 
-<p>When a PR is merged that addresses a feature from this process:</p>
+<p>A directory nobody can see is one nobody checks. Measured on this instance,
+2026-09-20: <strong>19 declared subgraphs had no way to look at them</strong>, and the two
+most depended on were among them — <code class="language-plaintext highlighter-rouge">schemas/</code>, whose shapes everything else is
+validated against, and <code class="language-plaintext highlighter-rouge">library/</code>, which every knowledge-graph reference to a
+source resolves <em>through</em>.</p>
 
-<ol>
-  <li><strong>Post a summary comment</strong> on the linked GitHub issue describing what the
-PR accomplished</li>
-  <li><strong>PRs are for code review</strong> (agent and human coders, code reviewers)</li>
-  <li><strong>Issues are for CRDM stakeholders</strong> — the requestor, the BA, and updates
-from the coding team for feature sign-off</li>
-  <li>Many beans per issue — they are not synonymous</li>
-</ol>
+<p>Bean <code class="language-plaintext highlighter-rouge">2krx</code> states the rule this is the first half of: <strong>every directory an
+instance names as a subgraph needs a visualiser, a documentation entry, and a
+governing skill.</strong> Three separate requirements, because they fail differently
+— nothing renders it, nothing says what it is for, and nothing an agent can
+invoke against it. This page is the second of the three for these two graphs;
+<a href="reference/skill-instructions/schema-management.html"><code class="language-plaintext highlighter-rouge">schema-management</code></a> and
+the library-ingestion skills are the third.</p>
+
+<p><code class="language-plaintext highlighter-rouge">bootstrap</code> is exempt from the visualiser requirement and not from the others:
+it is the navbar footer, and what it owes instead is its own <code class="language-plaintext highlighter-rouge">.json</code>/<code class="language-plaintext highlighter-rouge">.jsonld</code>
+— <em>“that is its existence”</em>.</p>
+<h2 id="the-schema-graph">
+  
+  
+    <a href="#the-schema-graph" class="anchor-heading" aria-labelledby="the-schema-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The schema graph
+  
+  
+</h2>
+    
+
+<p><strong><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/schemas/"><code class="language-plaintext highlighter-rouge">/schemas/</code></a></strong> — every declaration in
+every declared <code class="language-plaintext highlighter-rouge">schemas</code> directory, with the edges between them.</p>
+
+<ul>
+  <li>A <strong>faceted index</strong>: search, filter by kind, filter by module.</li>
+  <li>A <strong>detail panel</strong>: fields with their types, optionality and doc comments;
+what the declaration references and what references it.</li>
+  <li>A <strong>per-type UML neighbourhood</strong>, drawn as a class box with its
+generalisations above it and its field references below, each labelled with
+the field it goes through.</li>
+</ul>
+
+<p>There is deliberately <strong>no whole-corpus class diagram</strong>. Hundreds of
+declarations and hundreds of edges render as a wall that looks like a data
+model and answers no question about one — the same argument the knowledge-graph
+viewer already made and won. The diagram is a <em>view over the projection</em>, so
+the projection carries every edge and another view costs nothing to add.</p>
+<h3 id="reading-it">
+  
+  
+    <a href="#reading-it" class="anchor-heading" aria-labelledby="reading-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading it
+  
+  
+</h3>
+    
+
+<p>Three of the states it shows are easy to mistake for noise:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">undetermined</code></strong> — the reader saw an expression it does not model, and
+<strong>says what it saw</strong>. This is never rendered as a type with no fields,
+because “no fields” and “could not be read” are different answers.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">unresolved</code></strong> — a name the module binds, from a module inside this graph,
+that resolves to no declaration. A real finding, usually a vocabulary
+constant.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">external</code></strong> — bound to something outside this graph. Resolved correctly;
+nothing to do.</li>
+</ul>
+
+<p>The data is at <code class="language-plaintext highlighter-rouge">assets/schemas/index.json</code> and is the same file the page
+reads; anything else may draw it.</p>
+<h2 id="the-library--the-l1-corpus">
+  
+  
+    <a href="#the-library--the-l1-corpus" class="anchor-heading" aria-labelledby="the-library--the-l1-corpus"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The library — the L1 corpus
+  
+  
+</h2>
+    
+
+<p><strong><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/library/"><code class="language-plaintext highlighter-rouge">/library/</code></a></strong> — every entry, and the
+<code class="language-plaintext highlighter-rouge">uploads/</code> queues feeding them.</p>
+
+<p>Two views over one projection, because they answer different questions:</p>
+
+<ul>
+  <li><strong>Listing</strong> — every column sortable, every metadatum visible. <em>Which is
+biggest? Which has no OCR? Which came from which upload?</em></li>
+  <li><strong>Desktop</strong> — the corpus as tiles. <em>What is in here</em>, before you know what
+you are looking for.</li>
+</ul>
+<h3 id="ingestion-state-is-three-states-and-none-of-them-is-an-error">
+  
+  
+    <a href="#ingestion-state-is-three-states-and-none-of-them-is-an-error" class="anchor-heading" aria-labelledby="ingestion-state-is-three-states-and-none-of-them-is-an-error"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Ingestion state is three states, and none of them is an error
+  
+  
+</h3>
+    
+
+<p>OCR is the case that forces it:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>shown</th>
+      <th>means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">not scanned</code></td>
+      <td>no <code class="language-plaintext highlighter-rouge">ocr/</code> directory at all — a <strong>determined</strong> answer, not a failure</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">N OCR pages</code></td>
+      <td>scanned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ocr/ present, empty</code></td>
+      <td>a third answer again, and the one worth looking at</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Rendering the first as “0” would say OCR <em>failed</em> on a document that was never
+scanned.</p>
+<h3 id="the-uningested-badge-and-what-it-is-computed-from">
+  
+  
+    <a href="#the-uningested-badge-and-what-it-is-computed-from" class="anchor-heading" aria-labelledby="the-uningested-badge-and-what-it-is-computed-from"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The uningested badge, and what it is computed from
+  
+  
+</h3>
+    
+
+<p>Each queue carries a count of how many units are still waiting, <strong>per
+declaring instance and never merged</strong> — two instances’ queues shown as one
+would report a set that does not exist.</p>
+
+<p>The relation behind it is not a guess. Each <code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/manifest.jsonld</code>
+carries <code class="language-plaintext highlighter-rouge">meta.source_file</code> and <code class="language-plaintext highlighter-rouge">meta.source_sha256</code>, and the reader
+<strong>recomputes the hash</strong> rather than trusting it — so an entry’s source is
+<em>content-verified</em>, and a file replaced in the queue shows as <code class="language-plaintext highlighter-rouge">differs</code> rather
+than passing as the same document.</p>
+
+<p>A queued unit is a loose file, <strong>or</strong> a directory whose <code class="language-plaintext highlighter-rouge">intake.json</code> declares
+a capture. An intake is <strong>one</strong> queued document however many files it declares:
+counting a four-file capture as four would say four documents are waiting when
+one is.</p>
+<h3 id="it-is-read-only">
+  
+  
+    <a href="#it-is-read-only" class="anchor-heading" aria-labelledby="it-is-read-only"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It is read-only
+  
+  
+</h3>
+    
+
+<p>Nothing on this page edits an asset. The actions that would write — starting an
+ingest from the corpus view, and materialising an entry into a folio of choice
+— are open work, because the write path is a decision the repository owner has
+not yet made.</p>
+<h2 id="where-they-are-published">
+  
+  
+    <a href="#where-they-are-published" class="anchor-heading" aria-labelledby="where-they-are-published"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where they are published
+  
+  
+</h2>
+    
+
+<p>Under the rule that the published URL space <strong>mirrors the instantiation
+structure</strong>: the root instance’s site at <code class="language-plaintext highlighter-rouge">/</code>, a registered rendered page of the
+root pipeline at <code class="language-plaintext highlighter-rouge">/&lt;page&gt;</code>, and any other instantiated, enabled harness at
+<code class="language-plaintext highlighter-rouge">/&lt;instance&gt;/&lt;path&gt;</code>. These two are registered pages of the root pipeline.</p>
+
+<p>Neither generator writes an instance name or a graph name down: the
+rendered-content root is resolved from the declaration, and the published
+segment is the declared directory’s own name. Rename the directory and the
+source and the URL move together.</p>
 
           
 

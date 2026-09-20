@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(81)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(105)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(81) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(105) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(81) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(105) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(81) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(105) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Feature-request detection (CRDM trigger) | folio-assistant</title>
+<title>Managing a schema | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Feature-request detection (CRDM trigger)" />
+<meta property="og:title" content="Managing a schema" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Feature-request detection (CRDM trigger)" />
+<meta property="twitter:title" content="Managing a schema" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -645,7 +645,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Feature-request detection (CRDM trigger)</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Managing a schema</span></li>
   </ol>
 </nav>
 
@@ -654,225 +654,217 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">methodologies/crdm/crdm-detect.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/schema-management.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/schema-management.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/methodologies/crdm/crdm-detect.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/schema-management.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="feature-request-detection-crdm-trigger">
+<h1 id="managing-a-schema--the-graph-the-viewer-and-the-three-answers-that-are-not-fine">
   
   
-    <a href="#feature-request-detection-crdm-trigger" class="anchor-heading" aria-labelledby="feature-request-detection-crdm-trigger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Feature-request detection (CRDM trigger)
+    <a href="#managing-a-schema--the-graph-the-viewer-and-the-three-answers-that-are-not-fine" class="anchor-heading" aria-labelledby="managing-a-schema--the-graph-the-viewer-and-the-three-answers-that-are-not-fine"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Managing a schema — the graph, the viewer, and the three answers that are not “fine”
   
   
 </h1>
     
 
-<p>Detect when a user request is a <strong>feature request</strong> (platform capability change)
-rather than a <strong>content request</strong> (writing, editing, reviewing folio content).
-When a feature request is detected, the agent enters the CRDM requirements
-workflow rather than implementing directly.</p>
-<h2 id="detection-signals">
+<p><strong>This skill does not restate where schemas live or how they are laid out.</strong>
+<a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> §”What lives in the
+<code class="language-plaintext highlighter-rouge">schemas</code> graph” owns that — the Zod <code class="language-plaintext highlighter-rouge">.ts</code> is authoritative, every other form
+is generated, and a rendering is never where a fix lands. A rule stated twice
+is a rule free to drift, and the copy a reader finds first is the one with no
+test behind it.</p>
+
+<p>Nor does it restate how to <em>model</em>. <a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/data-modelling.html"><code class="language-plaintext highlighter-rouge">data-modelling</code></a> owns
+the question that matters before any of this — <strong>what are the things, and what
+is true of each of them exactly once?</strong> — with three worked failures from this
+repository where a fact sat on the wrong entity.</p>
+
+<p>What is here is the work between those two: reading the graph the schemas
+form, and keeping it readable.</p>
+<h2 id="the-schema-graph-is-a-graph-and-it-is-published">
   
   
-    <a href="#detection-signals" class="anchor-heading" aria-labelledby="detection-signals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Detection signals
+    <a href="#the-schema-graph-is-a-graph-and-it-is-published" class="anchor-heading" aria-labelledby="the-schema-graph-is-a-graph-and-it-is-published"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The schema graph is a graph, and it is published
   
   
 </h2>
     
 
-<p>Scan every user request for these categories of phrasing. A single match is
-enough to flag; two or more from different categories is high confidence.</p>
-<h3 id="direct-capability-requests">
-  
-  
-    <a href="#direct-capability-requests" class="anchor-heading" aria-labelledby="direct-capability-requests"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Direct capability requests
-  
-  
-</h3>
-    
+<p><code class="language-plaintext highlighter-rouge">scripts/schema-graph.ts</code> reads every <strong>declared</strong> <code class="language-plaintext highlighter-rouge">schemas</code> directory and
+returns declarations plus the edges between them.
+<code class="language-plaintext highlighter-rouge">scripts/gen-schema-viz.ts</code> publishes that as a projection and a viewer.
+<code class="language-plaintext highlighter-rouge">bun run schema:graph</code> prints the counts; <code class="language-plaintext highlighter-rouge">schema:viz</code> writes; <code class="language-plaintext highlighter-rouge">schema:viz:check</code>
+is the gate.</p>
 
-<p>Phrases where the user explicitly asks for new functionality:</p>
+<p><strong>It reads every declared directory, not one</strong>, and that is not a convenience.
+<code class="language-plaintext highlighter-rouge">directoryForGraph</code> throws when several directories declare a graph — the
+<code class="language-plaintext highlighter-rouge">wggr</code> guard, which exists because returning the first silently once resolved
+<code class="language-plaintext highlighter-rouge">cat-harness</code> to <code class="language-plaintext highlighter-rouge">schemas/</code> and wrote 37 sidecars against the wrong subjects on
+a run that exited 0. Several instances declare a <code class="language-plaintext highlighter-rouge">schemas</code> graph, so the
+singular question has no answer, and <strong>the fix is never to pick one.</strong> A view
+of one of several reports a corpus that does not exist.</p>
 
-<ul>
-  <li>“I need a way to …”, “can you add …”, “we need a tool that …”</li>
-  <li>“there should be a skill for …”, “add a QA check for …”</li>
-  <li>“the renderer should support …”, “make the pipeline do …”</li>
-  <li>“can we add a new block kind for …”, “we need a content type for …”</li>
-  <li>“it would be great if the agent could …”</li>
-  <li>“build me …”, “create a tool …”, “develop a feature …”</li>
-</ul>
-<h3 id="workflow-gap-descriptions">
+<p>Resolution is scoped <strong>per directory</strong> for the same reason one level down: two
+instances may each have a <code class="language-plaintext highlighter-rouge">foo.ts</code>, and a global index by module stem would
+resolve one instance’s import to another instance’s export — the same failure,
+silently, with every edge still computing.</p>
+<h2 id="why-the-ast-and-not-the-two-things-that-look-easier">
   
   
-    <a href="#workflow-gap-descriptions" class="anchor-heading" aria-labelledby="workflow-gap-descriptions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow gap descriptions
-  
-  
-</h3>
-    
-
-<p>Phrases where the user describes a process that does not work today:</p>
-
-<ul>
-  <li>“right now I have to manually …”, “there is no way to …”</li>
-  <li>“the current process for … is broken”, “this workflow doesn’t handle …”</li>
-  <li>“we can’t do … yet”, “it’s missing …”, “it doesn’t support …”</li>
-  <li>“every time I need to …, I have to …” (manual workaround pattern)</li>
-  <li>“other people need to be able to …”</li>
-</ul>
-<h3 id="platform-level-change-requests">
-  
-  
-    <a href="#platform-level-change-requests" class="anchor-heading" aria-labelledby="platform-level-change-requests"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Platform-level change requests
-  
-  
-</h3>
-    
-
-<p>Phrases that imply changes to folio-assistant itself (not folio content):</p>
-
-<ul>
-  <li>“change the schema to …”, “modify the pipeline …”</li>
-  <li>“add a new adapter …”, “the constraint should …”</li>
-  <li>“update the CI to …”, “the workflow should fire when …”</li>
-  <li>“the MCP tool needs to …”, “register a new tool for …”</li>
-  <li>References to files under <code class="language-plaintext highlighter-rouge">schemas/</code>, <code class="language-plaintext highlighter-rouge">content/pipeline/</code>, <code class="language-plaintext highlighter-rouge">adapters/</code>,
-<code class="language-plaintext highlighter-rouge">src/</code>, <code class="language-plaintext highlighter-rouge">scripts/</code>, <code class="language-plaintext highlighter-rouge">.github/workflows/</code></li>
-</ul>
-<h3 id="cross-cutting-concerns">
-  
-  
-    <a href="#cross-cutting-concerns" class="anchor-heading" aria-labelledby="cross-cutting-concerns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-cutting concerns
-  
-  
-</h3>
-    
-
-<p>Phrases that affect multiple folios or content types:</p>
-
-<ul>
-  <li>“for all papers …”, “every folio should …”, “across all content types …”</li>
-  <li>“when any user …”, “the platform should …”</li>
-  <li>“this needs to work for both document and paper folios”</li>
-</ul>
-<h3 id="review-surfaced-needs">
-  
-  
-    <a href="#review-surfaced-needs" class="anchor-heading" aria-labelledby="review-surfaced-needs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Review-surfaced needs
-  
-  
-</h3>
-    
-
-<p>Phrases that emerge during content review:</p>
-
-<ul>
-  <li>“this review process would be easier if …”</li>
-  <li>“we need a way to triage these comments …”</li>
-  <li>“the feedback workflow should …”</li>
-  <li>“stakeholders need to be able to see …”</li>
-  <li>“can we make the review process more …”</li>
-</ul>
-<h2 id="what-is-not-a-feature-request">
-  
-  
-    <a href="#what-is-not-a-feature-request" class="anchor-heading" aria-labelledby="what-is-not-a-feature-request"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is NOT a feature request
+    <a href="#why-the-ast-and-not-the-two-things-that-look-easier" class="anchor-heading" aria-labelledby="why-the-ast-and-not-the-two-things-that-look-easier"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why the AST, and not the two things that look easier
   
   
 </h2>
     
 
-<p>Do not trigger CRDM for:</p>
+<p>Both obvious alternatives <strong>erase the edges a schema graph is made of</strong>, and it
+is the same erasure at two levels. Know this before proposing either again:</p>
 
 <ul>
-  <li>“Write the next section of chapter 3” — content authoring</li>
-  <li>“Fix the typo in the overview” — content editing</li>
-  <li>“Run content_validate” — tool invocation</li>
-  <li>“What does this block kind mean?” — information request</li>
-  <li>“Review chapter 5” — content review within existing workflow</li>
-  <li>“Create a bean for …” — work-plan management</li>
-  <li>Bug reports about existing features (unless they imply a redesign)</li>
+  <li><strong>The published JSON Schema.</strong> <code class="language-plaintext highlighter-rouge">harness-schema-export</code> renders with
+<code class="language-plaintext highlighter-rouge">$refStrategy: "none"</code>, which is correct for a dereferenceable document — a
+consumer following an <code class="language-plaintext highlighter-rouge">$id</code> gets something self-contained. The cost is that
+a referenced type is not a named thing in the output at all; it is an
+anonymous object repeated at each use site. A diagram drawn from it is
+disconnected boxes.</li>
+  <li><strong>The TypeScript type checker.</strong> <code class="language-plaintext highlighter-rouge">z.infer&lt;typeof FooSchema&gt;</code> resolves to a
+deeply expanded structural type, so asking what <code class="language-plaintext highlighter-rouge">Foo.bar</code> is returns the
+whole of <code class="language-plaintext highlighter-rouge">Bar</code> inlined rather than a reference to it.</li>
 </ul>
-<h2 id="on-detection--what-to-do">
+
+<p>So the <strong>syntactic</strong> form is not the compromise. It is the only one of the
+three that still holds <code class="language-plaintext highlighter-rouge">bar: BarSchema</code> as a reference to a named thing.</p>
+<h2 id="the-three-answers-that-are-not-fine-and-what-each-one-means">
   
   
-    <a href="#on-detection--what-to-do" class="anchor-heading" aria-labelledby="on-detection--what-to-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> On detection — what to do
+    <a href="#the-three-answers-that-are-not-fine-and-what-each-one-means" class="anchor-heading" aria-labelledby="the-three-answers-that-are-not-fine-and-what-each-one-means"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The three answers that are not “fine”, and what each one means
   
   
 </h2>
     
 
-<p>Do NOT use the term “CRDM” with the user. It is internal methodology jargon.</p>
+<p>The reader reports three things that are easy to read as noise and are not.
+<strong>Check them when you add or change a schema</strong> — the viewer surfaces all three.</p>
 
-<p><strong>If new session</strong> and the first request is a feature:</p>
-<ol>
-  <li>Acknowledge the request as a feature/capability change</li>
-  <li>Explain that you will help them work through the requirements before building</li>
-  <li>Start Phase 1 (needs assessment)</li>
-</ol>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>answer</th>
+      <th>what it means</th>
+      <th>what to do</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">undetermined</code></strong></td>
+      <td>the walker saw an expression it does not model, and says what it saw</td>
+      <td>usually correct and nothing to do — a bare object literal is not a Zod call. If it is a shape you expect to be modelled, the walker is missing a case.</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">unresolved</code></strong></td>
+      <td>a name the module BINDS, imported from a module inside this graph, that resolves to no declaration</td>
+      <td>a real finding. Usually a <code class="language-plaintext highlighter-rouge">const</code> array of literals imported as a vocabulary. Ask whether it wants to be a schema.</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">external</code></strong></td>
+      <td>a name bound to a non-relative import, or to something in this module that is not a declaration</td>
+      <td>resolved correctly, outside this graph. Nothing to do.</td>
+    </tr>
+  </tbody>
+</table></div>
 
-<p><strong>If existing session</strong> and the user is already in a CRDM cycle:</p>
-<ol>
-  <li>Incorporate the new request into the current requirements document</li>
-  <li>Continue with the current phase</li>
-</ol>
+<p><strong><code class="language-plaintext highlighter-rouge">undetermined</code> is never rendered as an empty type</strong>, and that is the whole
+reason it exists as a state: a declaration with no fields and a declaration
+whose expression could not be read are different answers, and rendering them
+alike reports a clean run over something never looked at.</p>
 
-<p><strong>If existing session</strong> and the user is doing content work (not in CRDM):</p>
-<ol>
-  <li>Synthesise what you have heard as a feature need</li>
-  <li>Ask the user:
-    <ul>
-      <li>“This sounds like a platform change rather than content work. Would you
-like to pause and work through the requirements now, or should I note it
-for later?”</li>
-      <li>If <strong>pause</strong>: enter CRDM Phase 1, return to content work when done</li>
-      <li>If <strong>later</strong>: create a bean with as much context as possible, linking to
-any relevant GitHub issue</li>
-    </ul>
-  </li>
-</ol>
-<h2 id="issue-association">
+<p><strong>The fix for noise is never a deny-list.</strong> The first version of the reader
+collected every identifier and reported <code class="language-plaintext highlighter-rouge">z</code> as the graph’s most-referenced
+missing declaration, 175 times. A list of names to ignore would have been a
+second, drifting statement of this graph’s vocabulary. The fix was to ask what
+the module BINDS: <code class="language-plaintext highlighter-rouge">z</code> is bound, to <code class="language-plaintext highlighter-rouge">zod</code>, which is not a relative import and
+therefore not part of this graph. Distinct unresolved names fell from 150 to 6,
+and the 6 are real.</p>
+<h2 id="adding-or-changing-a-schema--the-loop">
   
   
-    <a href="#issue-association" class="anchor-heading" aria-labelledby="issue-association"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Issue association
-  
-  
-</h2>
-    
-
-<p>Feature work should be linked to a GitHub issue:</p>
-
-<ol>
-  <li><strong>Scan open issues</strong> for a match — search by title/body keywords</li>
-  <li><strong>If match found</strong> — ask user: “This looks related to #NNN — should I add
-your requirements there?”</li>
-  <li><strong>If no match in open issues</strong> — scan recently closed issues</li>
-  <li><strong>If no match at all</strong> — ask the user to create an issue (do NOT create
-without permission)</li>
-  <li><strong>Do not proceed without an issue link</strong> — the issue is where stakeholders
-do feature sign-off; without it, there is no review surface</li>
-</ol>
-
-<p>Requirements may span multiple issues. The agent should link to all relevant
-ones and note the relationship.</p>
-<h2 id="after-implementation">
-  
-  
-    <a href="#after-implementation" class="anchor-heading" aria-labelledby="after-implementation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> After implementation
+    <a href="#adding-or-changing-a-schema--the-loop" class="anchor-heading" aria-labelledby="adding-or-changing-a-schema--the-loop"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding or changing a schema — the loop
   
   
 </h2>
     
 
-<p>When a PR is merged that addresses a feature from this process:</p>
-
 <ol>
-  <li><strong>Post a summary comment</strong> on the linked GitHub issue describing what the
-PR accomplished</li>
-  <li><strong>PRs are for code review</strong> (agent and human coders, code reviewers)</li>
-  <li><strong>Issues are for CRDM stakeholders</strong> — the requestor, the BA, and updates
-from the coding team for feature sign-off</li>
-  <li>Many beans per issue — they are not synonymous</li>
+  <li><strong>Model first</strong> — <a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/data-modelling.html"><code class="language-plaintext highlighter-rouge">data-modelling</code></a>. A field on the
+wrong entity is the error no schema check can catch.</li>
+  <li>Write the Zod schema in <code class="language-plaintext highlighter-rouge">.ts</code>. The type is <code class="language-plaintext highlighter-rouge">z.infer&lt;typeof Schema&gt;</code>, never
+declared alongside it.</li>
+  <li><strong>Tag the module</strong> — <code class="language-plaintext highlighter-rouge">@graphNode schema</code>, or <code class="language-plaintext highlighter-rouge">@graphNode none — &lt;reason&gt;</code>
+with a reason. <code class="language-plaintext highlighter-rouge">check:schema-nodes</code> fails an untagged module, because an
+untagged one is silently absent from the published graph and absence is the
+one failure a consumer cannot tell apart from “this instance has none”.</li>
+  <li><code class="language-plaintext highlighter-rouge">bun run schema:viz</code> and look at your declaration in the viewer. Its kind,
+its fields, its generalisation, and what it references — and the three
+answers above.</li>
+  <li>Run the gates: <code class="language-plaintext highlighter-rouge">check:schema-nodes</code>, <code class="language-plaintext highlighter-rouge">schema:viz:check</code>, <code class="language-plaintext highlighter-rouge">typecheck</code>,
+<code class="language-plaintext highlighter-rouge">bun test</code>.</li>
 </ol>
+<h2 id="keeping-the-projections-gate-honest">
+  
+  
+    <a href="#keeping-the-projections-gate-honest" class="anchor-heading" aria-labelledby="keeping-the-projections-gate-honest"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Keeping the projection’s gate honest
+  
+  
+</h2>
+    
+
+<p>The projection is committed, so it has a staleness gate — and <strong>a staleness
+gate is only worth having if its red means an omission.</strong></p>
+
+<p>This one nearly failed that test. The projection carried each declaration’s
+line number, so any edit <em>above</em> a declaration made it stale: a merge that
+shifted two declarations by 36 lines went red with nothing else in 895 KB
+different. A red meaning “somebody added a blank line” teaches contributors to
+regenerate reflexively rather than to read the finding, which is the opposite
+of what a gate is for.</p>
+
+<p><strong>A line number is an editor coordinate, not a property of a declaration.</strong> It
+is kept on the reader and dropped from the projection. The general rule, worth
+applying to any generated artefact you gate:</p>
+
+<blockquote>
+  <p>If a red can be caused by a change that alters nothing the artefact
+describes, the artefact is carrying something it should not.</p>
+</blockquote>
+
+<p>The same reasoning removed the per-module declaration list: a declaration
+already names its module, so the list was one fact written twice.</p>
+<h2 id="where-the-boundaries-are">
+  
+  
+    <a href="#where-the-boundaries-are" class="anchor-heading" aria-labelledby="where-the-boundaries-are"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the boundaries are
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">schemas/</code> holds content.</strong> <code class="language-plaintext highlighter-rouge">BASE_GRAPH_KINDS.schemas</code> carries
+<code class="language-plaintext highlighter-rouge">holds: "content"</code> — a shape is the subject matter of the schema graph, and
+it is true before anything is validated against it. See
+<a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a>.</li>
+  <li><strong>Adding a graph KIND is a different job</strong> —
+<a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> §”Adding a graph kind”,
+and decide which layer owns it first: if it renders, it is not the harness’s.</li>
+  <li><strong>Publishing a schema at a dereferenceable <code class="language-plaintext highlighter-rouge">$id</code></strong> is
+<code class="language-plaintext highlighter-rouge">harness-schema-export</code>, a separate rendering with a separate consumer.
+Generate as many renderings as have a consumer, and no more.</li>
+  <li><strong>An unwired generator is worse than none.</strong> Three schema generators were
+written here before the current one and all three rotted, because nothing
+ever asked whether their output still matched their input. If you add a
+fourth rendering, it ships with a <code class="language-plaintext highlighter-rouge">--check</code> twin in the gate set or it does
+not ship.</li>
+</ul>
 
           
 
