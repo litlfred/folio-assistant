@@ -1,10 +1,11 @@
 ---
 # folio-assistant-qmjh
 title: 'SCHEMA: a ContentDirectory cannot say whether it is a LAYOUT dependents reproduce or where THIS instance''s content lives'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T12:32:20Z
-updated_at: 2026-09-20T12:32:20Z
+updated_at: 2026-09-20T12:44:54Z
 parent: folio-assistant-zzmr
 ---
 

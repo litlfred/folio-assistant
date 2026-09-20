@@ -28,7 +28,7 @@ function instance(name: string, kgPath: string): string {
     join(root, "harness.json"),
     JSON.stringify({
       name,
-      directories: [{ id: "cat-harness", path: kgPath, graphs: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"] }],
     }),
   );
   return root;
@@ -98,7 +98,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
       join(root, "harness.json"),
       JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "nope", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "nope", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
     );
     expect(resolveSkillDirs(root)).toEqual([]);
@@ -138,7 +138,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
       join(root, "harness.json"),
       JSON.stringify({
         name: "mixed",
-        directories: [{ id: "schemas", path: "schemas", graphs: ["schemas", "cat-harness"] }],
+        directories: [{ id: "schemas", path: "schemas", dependents: "reproduce", graphs: ["schemas", "cat-harness"] }],
       }),
     );
     expect(resolveSkillDirs(root)).toEqual([]);
@@ -163,7 +163,7 @@ describe("a REPOSITORY-scoped directory resolves against the repository", () => 
       join(inst, "harness.json"),
       JSON.stringify({
         name: "inst",
-        directories: [{ id: "cat-harness", path: kgPath, graphs: ["cat-harness"], ...(scope ? { scope } : {}) }],
+        directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphs: ["cat-harness"], ...(scope ? { scope } : {}) }],
       }),
     );
     return { repo, inst };

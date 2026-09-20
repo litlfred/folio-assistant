@@ -57,7 +57,7 @@ describe("discovery reads the declaration rather than the tree", () => {
       join(root, "harness.json"),
       JSON.stringify({
         name: "iso",
-        directories: [{ id: "cat-harness", path: "skills/", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
     );
     const problems: string[] = [];
@@ -79,7 +79,7 @@ describe("discovery reads the declaration rather than the tree", () => {
       join(root, "harness.json"),
       JSON.stringify({
         name: "iso2",
-        directories: [{ id: "cat-harness-wf", path: "wf/", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness-wf", path: "wf/", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
     );
     const problems: string[] = [];

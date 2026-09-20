@@ -75,9 +75,9 @@
 import { z } from "zod";
 
 import {
-  ContentDirectorySchema,
+  GraphNodeDirectorySchema,
   defaultGraphKinds,
-  type ContentDirectory,
+  type GraphNodeDirectory,
   type GraphKindRegistry,
 } from "./cat-harness";
 
@@ -116,9 +116,9 @@ export type BeanNodeKind = (typeof BEAN_NODE_KINDS)[number];
  * A bean carries its id, `title`, `status` and `type` in front matter; a
  * workflow instance carries `"$schema": "folio-workflow-instance/v1"`.
  */
-export const BeanGraphNodeSchema = ContentDirectorySchema;
+export const BeanGraphNodeSchema = GraphNodeDirectorySchema;
 
-export type BeanGraphNode = ContentDirectory;
+export type BeanGraphNode = GraphNodeDirectory;
 
 export const BeanGraphSchema = z.object({
   /** Display name — which instance's work plan this is. */

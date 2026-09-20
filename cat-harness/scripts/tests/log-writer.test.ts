@@ -26,8 +26,8 @@ import { describeCapture, writeLogEntry } from "../../src/logging/log-writer.ts"
 function instance(declareFshGuts = true): string {
   const root = mkdtempSync(join(tmpdir(), "log-writer-"));
   const directories = declareFshGuts
-    ? [{ id: "fsh-guts", path: "fsh-guts/", description: "trashcan", graphs: ["fsh-guts"] }]
-    : [{ id: "schemas", path: "schemas/", description: "schemas", graphs: ["schemas"] }];
+    ? [{ id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", description: "trashcan", graphs: ["fsh-guts"] }]
+    : [{ id: "schemas", path: "schemas/", dependents: "reproduce", description: "schemas", graphs: ["schemas"] }];
   for (const d of directories) mkdirSync(join(root, d.path), { recursive: true });
   writeFileSync(
     join(root, "harness.json"),

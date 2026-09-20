@@ -230,6 +230,12 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   holdsGraph: { gloss: "A graph kind found in this directory." },
   renderable: { gloss: "Whether a directory's contents are published as a website." },
   scans: { gloss: "A directory an instance will look in." },
+  scope: { gloss: "Which root a declared path resolves against — the instance's or the repository's." },
+  dependents: {
+    gloss:
+      "Whether an instance depending on this one materialises its own copy of a declared directory. " +
+      "Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+  },
 
   // ── The trashcan ─────────────────────────────────────────────────────
   // `movedFrom` is the one that earns its keep: without it a node in

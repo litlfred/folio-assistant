@@ -56,9 +56,9 @@ beforeAll(() => {
     JSON.stringify({
       name: "agentic-harness",
       directories: [
-        { id: "tools", path: "tools/", graphs: ["tools"] },
-        { id: "kg", path: "kg/", graphs: ["kg"] },
-        { id: "schemas", path: "schemas/", graphs: ["schemas"] },
+        { id: "tools", path: "tools/", dependents: "reproduce", graphs: ["tools"] },
+        { id: "kg", path: "kg/", dependents: "reproduce", graphs: ["kg"] },
+        { id: "schemas", path: "schemas/", dependents: "reproduce", graphs: ["schemas"] },
       ],
     }),
     "utf-8",
@@ -68,7 +68,7 @@ beforeAll(() => {
   mkdirSync(CORE, { recursive: true });
   writeFileSync(
     join(CORE, DECLARATION_FILENAME),
-    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", graphs: ["folio"] }] }),
+    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }),
     "utf-8",
   );
 
@@ -76,7 +76,7 @@ beforeAll(() => {
   mkdirSync(RELOCATED, { recursive: true });
   writeFileSync(
     join(RELOCATED, DECLARATION_FILENAME),
-    JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", graphs: ["kg"] }] }),
+    JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", dependents: "reproduce", graphs: ["kg"] }] }),
     "utf-8",
   );
 
@@ -109,7 +109,7 @@ describe("reading a declaration", () => {
     mkdirSync(bad, { recursive: true });
     writeFileSync(
       join(bad, DECLARATION_FILENAME),
-      JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graphs: ["wishful"] }] }),
+      JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", dependents: "reproduce", graphs: ["wishful"] }] }),
       "utf-8",
     );
     // The message must name the offending kind AND what is known, so the
@@ -388,6 +388,9 @@ describe("materialiseDirectories", () => {
     id,
     path,
     graphs: ["kg"],
+    // The fixture default. A case that is ABOUT `dependents` overrides it
+    // through `extra`; every other case should not have to mention it.
+    dependents: "reproduce",
     declaredBy: "test",
     absPath: path,
     own: true,
@@ -399,6 +402,56 @@ describe("materialiseDirectories", () => {
     const out = materialiseDirectories([resolved("library", "library/")], root);
     expect(existsSync(join(root, "library"))).toBe(true);
     expect(out[0]!.created).toBe(true);
+  });
+
+  describe("`dependents` decides what an INHERITED entry does here", () => {
+    // The whole point, and both directions are needed: a test that only checks
+    // the `skip` case passes equally well for a change that materialises
+    // nothing at all.
+    test("an inherited `skip` entry is not created", () => {
+      const root = tmpRoot();
+      const out = materialiseDirectories(
+        [resolved("schemas", "schemas/", { own: false, dependents: "skip" })],
+        root,
+      );
+      expect(existsSync(join(root, "schemas"))).toBe(false);
+      expect(out).toEqual([]);
+    });
+
+    test("an inherited `reproduce` entry IS created", () => {
+      const root = tmpRoot();
+      const out = materialiseDirectories(
+        [resolved("uploads", "uploads/", { own: false, dependents: "reproduce" })],
+        root,
+      );
+      expect(existsSync(join(root, "uploads"))).toBe(true);
+      expect(out[0]!.created).toBe(true);
+    });
+
+    test("an instance's OWN `skip` entry is still created — it declared it", () => {
+      // `dependents` says what a DEPENDENT does, never what the declaring
+      // instance does about its own directory. Without this, marking
+      // `schemas/` as `skip` would stop the platform creating its own.
+      const root = tmpRoot();
+      const out = materialiseDirectories(
+        [resolved("schemas", "schemas/", { own: true, dependents: "skip" })],
+        root,
+      );
+      expect(existsSync(join(root, "schemas"))).toBe(true);
+      expect(out[0]!.created).toBe(true);
+    });
+
+    test("a `skip` entry is still RESOLVED — only materialisation is suppressed", () => {
+      // The overlay reads a dependency's skills through the resolved list, so
+      // suppressing resolution instead of creation would break `skill_fetch`
+      // to fix a directory-creation problem.
+      const dirs = [
+        resolved("schemas", "schemas/", { own: false, dependents: "skip" }),
+        resolved("uploads", "uploads/", { own: false, dependents: "reproduce" }),
+      ];
+      expect(dirs.map((d) => d.id)).toEqual(["schemas", "uploads"]);
+      expect(materialiseDirectories(dirs, tmpRoot()).map((m) => m.id)).toEqual(["uploads"]);
+    });
   });
 
   test("is a no-op on the second run", () => {
@@ -528,7 +581,7 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
     mkdirSync(join(old, "skills"), { recursive: true });
     writeFileSync(
       join(old, DECLARATION_FILENAME),
-      JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", graphs: ["kg"] }] }),
+      JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", dependents: "reproduce", graphs: ["kg"] }] }),
       "utf-8",
     );
     const d = readDeclaration(old);
@@ -584,7 +637,7 @@ describe("default directories — inherit the convention, declare only the devia
       join(moved, DECLARATION_FILENAME),
       JSON.stringify({
         name: "relocated",
-        directories: [{ id: "cat-harness", path: "graph/knowledge/", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "graph/knowledge/", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
       "utf-8",
     );
@@ -633,7 +686,7 @@ describe("the scope trap", () => {
     try {
       // The content is at the REPOSITORY root; the entry omits `scope`.
       const dirs = [
-        { id: "shared", path: "shared/", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+        { id: "shared", path: "shared/", dependents: "reproduce", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
       ] as unknown as Parameters<typeof materialiseDirectories>[0];
       expect(() => materialiseDirectories(dirs, instance)).toThrow(/scope/);
       // ...and it did not create the twin on the way to throwing.
@@ -651,7 +704,7 @@ describe("the scope trap", () => {
     mkdirSync(instance, { recursive: true });
     try {
       const dirs = [
-        { id: "own", path: "own/", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+        { id: "own", path: "own/", dependents: "reproduce", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
       ] as unknown as Parameters<typeof materialiseDirectories>[0];
       const out = materialiseDirectories(dirs, instance);
       expect(out[0]?.created).toBe(true);
@@ -691,8 +744,8 @@ describe("directoryForGraph refuses an ambiguous kind rather than picking one", 
       JSON.stringify({
         name: "amb",
         directories: [
-          { id: "first", path: "a/", graphs: ["schemas", "cat-harness"] },
-          { id: "second", path: "b/", graphs: ["cat-harness"] },
+          { id: "first", path: "a/", dependents: "reproduce", graphs: ["schemas", "cat-harness"] },
+          { id: "second", path: "b/", dependents: "reproduce", graphs: ["cat-harness"] },
         ],
       }),
     );
@@ -790,14 +843,14 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
       join(dir, fileName),
       JSON.stringify({
         name: "n",
-        directories: [{ id: "defs", path: "defs", graphs: ["bean-defs"] }],
+        directories: [{ id: "defs", path: "defs", dependents: "reproduce", graphs: ["bean-defs"] }],
       }),
     );
     writeFileSync(
       join(root, DECLARATION_FILENAME),
       JSON.stringify({
         name: "n",
-        directories: [{ id: "beans", path: `${dirPath}/`, graphs: ["beans"] }],
+        directories: [{ id: "beans", path: `${dirPath}/`, dependents: "reproduce", graphs: ["beans"] }],
       }),
     );
     return root;
@@ -835,11 +888,11 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
       mkdirSync(join(root, "qa"), { recursive: true });
       writeFileSync(
         join(root, "qa", "qa.json"),
-        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", graphs: ["health"] }] }),
+        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", dependents: "reproduce", graphs: ["health"] }] }),
       );
       writeFileSync(
         join(root, DECLARATION_FILENAME),
-        JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", graphs: ["qa"] }] }),
+        JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", dependents: "reproduce", graphs: ["qa"] }] }),
       );
       const decl = readDeclaration(root)!;
       expect([...declaredKinds(root, decl)].sort()).toEqual(["health", "qa"]);
