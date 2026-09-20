@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T12:43:19.606Z",
+  "updated_at": "2026-09-20T12:53:41.241Z",
   "verdict": "clean",
   "checks": [
     {
@@ -34,13 +34,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 456989264,
+          "value": 388349594,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 7,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
@@ -75,7 +75,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 7,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -119,31 +119,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 86560197,
+          "value": 86555452,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 681903474,
+          "value": 689643252,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 642640896,
+          "value": 649943040,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 87,
+          "value": 88,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 7.88,
+          "value": 7.97,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }

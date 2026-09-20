@@ -1157,13 +1157,16 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
         ],
         outputs: [
-          // ONE `Text` port, not two typed counts, and the reason is the type
-          // vocabulary rather than the script: `tool-types.ts` publishes no
-          // numeric type at all, and a shell arm returns a printed report — so
-          // declaring `editorialEdges: Count` would both invent a type to fit
-          // this node and overstate what the invoke arm hands back. The gap is
-          // real and deliberately not filled here; adding a published type to
-          // suit one output is how the vocabulary stops meaning anything.
+          // STILL one `Text` port, and `Count` existing does not change that —
+          // which is worth saying, because the obvious move once the type landed
+          // would be to split this into two numbers.
+          //
+          // The reason was never only the missing type. A SHELL arm returns a
+          // printed report, so `editorialEdges: Count` would overstate what the
+          // invoke arm hands a caller: it would promise a parsed number where the
+          // mechanism emits text. A node whose ports describe an API it does not
+          // have is the same defect as a `satisfies` edge whose contract it
+          // cannot receive.
           //
           // The EDITORIAL / FORMAL split survives in the description instead,
           // and it is the fact that matters: `uses[]` and `interprets` are what
@@ -1287,21 +1290,18 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "igRoot", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone." },
           { name: "csv", schema: t("RepoPath"), required: false, arg: { flag: "--csv" }, description: "Write the report as CSV to this path instead of printing it." },
-          // `--changed f1,f2,…`, `--top N` and `--history N` are DELIBERATELY not
-          // declared, for the two reasons already recorded on `qa-sweep` and
-          // `content-graph-build` rather than a new one:
-          //
-          //   · `--changed` is a comma-separated list inside ONE argv word, and
-          //     the vocabulary has no honest shape for that — `Slug` forbids the
-          //     comma, `repeated` would claim the flag may be given more than
-          //     once, and `Text` is refused on argv.
-          //   · `--top` and `--history` are COUNTS, and `tool-types.ts` publishes
-          //     no numeric type at all. `Dpi` and `Port` are the only numeric-ish
-          //     entries and both mean something specific.
-          //
-          // Second node to hit the numeric gap; it is a vocabulary question, not
-          // a per-node one, so it stays undeclared and documented rather than
-          // mistyped to fit.
+          // `--top` and `--history` are now DECLARED: `Count` was added to the
+          // vocabulary on 2026-09-20, once this node and `content-graph-build`
+          // had met the same gap from two directions. Two independent needs is
+          // the bar; one flag wanting a bespoke type is not.
+          { name: "top", schema: t("Count"), required: false, arg: { flag: "--top" }, description: "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero." },
+          { name: "history", schema: t("Count"), required: false, arg: { flag: "--history" }, description: "Report the blast radius over the last N commits instead of a static cone." },
+          // `--changed f1,f2,…` stays UNDECLARED, and for a reason the new type
+          // does not touch: it is a comma-separated list inside ONE argv word.
+          // `Slug` forbids the comma, `repeated` would claim the flag may be
+          // given more than once when the script parses a single list, and `Text`
+          // is refused on argv by the injection rule. That gap is about
+          // list-in-one-word, not about numbers.
         ],
         outputs: [
           { name: "cone", schema: t("Text"), description: "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead." },
@@ -1364,6 +1364,65 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // against one: the clean run does not mean the edge was tested, and saying
       // so here is cheaper than somebody later reading agreement into silence.
       satisfies: ["translation-manager"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The L1 completeness gate, reachable at last ───────────────────────
+    //
+    // Bean `vo9d`, and the owner's answer: a **Tool node**, no npm script. This
+    // is the dispatch-points rule applied — `covered-is-not-reachable`
+    // §"Reachability is PLURAL": the question is not which caller a mechanism
+    // should have but what should be able to start it, and each of those is a
+    // trigger or a Tool.
+    //
+    // A Tool and NOT a script here, because the thing it reads is a FOLIO's
+    // `library/` tree and this repository carries no folio. A `check:l1-complete`
+    // script would land in `SCRIPT_EXEMPTIONS` as `no-folio` and never run — an
+    // entry point added and still unexercised, which is the cost I argued against
+    // for `0bzg`'s first option. A Tool node reaches downstream, where the tree
+    // exists.
+    //
+    // It had NO caller at all before this: an `import.meta.main`, and its only
+    // occurrence outside itself was a string literal in `repo-partition.ts`'s
+    // classification table.
+      //
+      // **Verified by running it, and one claim had to be walked back.** The first
+      // draft of the output description below said exit 2 was what a folio-less
+      // run gives. It is not: `instanceRootFor` tries the cwd's instance and then
+      // FALLS BACK to the script's own, and `cat-harness` declares a `library`
+      // graph of its own — so invoked from `/tmp` it still finds this instance's
+      // one entry and exits 0. The exit-2 path is real and correctly written
+      // (`checkAll` returns `undefined` for "no declaration anywhere", distinct
+      // from `[]` for "declared and empty"), but it cannot be reached while the
+      // script lives beside a declared library. What was measured here is the
+      // exit-0 path over one real entry — 11 requirements, all met.
+    defineTool({
+      id: "l1-complete-check",
+      title: "L1 source completeness",
+      description:
+        "Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/check-l1-complete.ts" },
+      io: {
+        inputs: [
+          // Optional: with no argument it walks every entry in the declared
+          // `library` graph, which is the sweep a folio wants. Naming one entry
+          // is the narrow case, not the default.
+          { name: "targetPath", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "One `library/<bib-slug>/` entry. Absent, every entry the declared `library` graph holds." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Per requirement: met, unmet, or `not-derivable` — the third distinguishes a document that CANNOT yield an artefact from one that simply has not. Exit 2 means no `library` graph is declared anywhere, which the script states as \"This is NOT a pass. Treat it as unknown.\"" },
+        ],
+      },
+      // `library-ingestion`, whose other two Tools INGEST. This one gates what
+      // they produced, so `alternativeTo` stays EMPTY: `ingest-stdlib` and
+      // `ingest-extended` are substitutable with each other — the one genuinely
+      // substitutable pair in this instance alongside `beans-cli`/`beans-manual` —
+      // and a completeness check is not a third way to ingest.
+      //
+      // The skill carries no input contract, so `check-tools` cannot verify this
+      // edge against one. The clean run does not mean the edge was tested.
+      satisfies: ["library-ingestion"],
       requires: { runtime: ["bun"], network: false },
     }),
 

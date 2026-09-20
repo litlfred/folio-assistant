@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-20T11:31:09Z
-updated_at: 2026-09-20T12:28:26Z
+updated_at: 2026-09-20T12:58:35Z
 parent: folio-assistant-d308
 ---
 
@@ -277,3 +277,83 @@ and this bean as the worked example — three proposals, two already done or wro
 one action. Plus the failure underneath: describing a mechanism from its name and
 its position in a diagram, then reasoning about what it needs, when the usage string
 settles it in one line.
+
+
+---
+
+## 2026-09-20: `check-l1-complete` gets its Tool node — and the round-trip axis is REFUSED, a third time
+
+### `l1-complete-check`, per the owner's answer (a Tool node, no script)
+
+`satisfies: ["library-ingestion"]`, optional positional entry, `alternativeTo`
+empty. A Tool and **not** a script because the thing it reads is a FOLIO's
+`library/` tree: a `check:l1-complete` here would sit in `SCRIPT_EXEMPTIONS` as
+`no-folio` and never run, which is the cost I argued against for `0bzg`'s first
+option. A Tool node reaches downstream, where the tree exists.
+
+`alternativeTo` empty against its two siblings: `ingest-stdlib` and
+`ingest-extended` INGEST and are substitutable with each other — the one
+genuinely substitutable pair here alongside `beans-cli`/`beans-manual` — and a
+completeness check is not a third way to ingest.
+
+**One claim had to be walked back, found by running it.** The output description
+first said exit 2 is what a folio-less run gives. It is not: `instanceRootFor`
+tries the cwd's instance and then FALLS BACK to the script's own, and
+`cat-harness` declares a `library` graph — so invoked from `/tmp` it still finds
+this instance's one entry and exits 0. The exit-2 path is real and correctly
+written (`checkAll` returns `undefined` for "no declaration anywhere", distinct
+from `[]` for "declared and empty") but unreachable while the script sits beside a
+declared library. What was measured is the exit-0 path over one real entry: 11
+requirements, all met.
+
+### The sweep-side round-trip criterion: NOT built, and the premise was wrong
+
+I proposed it on the claim that *nothing asks whether a block has a round-trip
+verdict*. Four measurements say do not build it:
+
+1. **`translation-block-qa.ts` already declares the criterion**, deliberately
+   empty, and its header gives the reason: the only offline back-translation is
+   the PO's `msgid→msgstr` map read backwards, which returns the source exactly,
+   always — *"a verdict with a script's name on it and no content, which is worse
+   than the gap: a reader who sees a green round-trip stops asking."*
+2. **The capability is LIVE.** The one translation sidecar in the corpus carries
+   **two real entries** from 2026-09-18, written by `roundtrip-adjudicator` and
+   `roundtrip-back-translator` subagents, with model provenance, the reviewed sha,
+   and pages of notes distinguishing real drift from acceptable rewording.
+3. **It is documented**, at `translation-manager` §"The agentic round trip — a PAIR
+   of agents, and the separation is the measurement". The sidecar's
+   `agent_skill: "translation-manager/agentic-round-trip"` is a skill/SECTION
+   reference to it, not a dangling one — I checked for a missing file before
+   assuming.
+4. **One subject.** There is exactly **1** translation sidecar corpus-wide and it
+   carries a verdict, so the criterion would have a single subject, already
+   passing. A criterion that cannot discriminate is the zero-subject trap with the
+   count changed.
+
+So the question is already answered by the sidecar's own structure: key present
+and non-empty means judged, key present and empty means nobody has. Adding a
+per-block finding for the empty case would report an expected state as a defect —
+and the skill's own argument is that a round-trip tick nobody should trust is
+worse than a gap that says it is a gap.
+
+**Also checked and NOT a finding:** the skill says the criterion is *"written with
+no entry"*, which reads as contradicting a sidecar that has two. It does not — it
+means the SCRIPT writes it empty, and the next section is how agents fill it.
+
+### Three corrections on one bean
+
+This bean has now been wrong three times, each time because a mechanism was
+described from its name and position rather than read: it does not perform the
+round trip (it records one); the BPMN trigger already existed; and the capability
+is live and exercised rather than orphaned. The pattern is written up in
+`covered-is-not-reachable` §"Reachability is PLURAL", whose closing line is the
+lesson: **a name says what something is for; an argument list says what it does.**
+
+## Done when
+
+- [x] a Tool node over the recorder
+- [x] `check-l1-complete` given a Tool node, per "triggers or tools as appropriate"
+- [x] ~~a sweep-side criterion for the round-trip verdict~~ — **refused**: already
+      answered structurally, capability live, one subject, and the skill argues
+      against exactly this
+- [x] the one-mechanism-many-dispatch-points pattern written into a skill
