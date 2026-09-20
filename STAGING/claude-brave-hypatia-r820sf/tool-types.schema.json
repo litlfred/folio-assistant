@@ -52,6 +52,12 @@
       "description": "A BCP-47 language tag, e.g. en or fr-CA",
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$",
+      "description": "An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z",
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "Flag": {
       "type": "boolean",
       "description": "A boolean switch — projects to a bare flag, with no value word",
@@ -267,8 +273,8 @@
   },
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "86dbaf2fa20f450e9a005cbdbebd4cef6170f313",
+    "sha": "6e5a47da1061ac8e31b25b75405e430bb7028e5e",
     "pr": "479/merge",
-    "run": "35500745251"
+    "run": "35502295462"
   }
 }

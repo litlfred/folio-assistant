@@ -268,6 +268,77 @@
             "additionalProperties": false
           },
           "default": []
+        },
+        "stickies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "order": {
+                "type": "integer"
+              },
+              "theme": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "body": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bodyFrom": {
+                "type": "string",
+                "enum": [
+                  "description"
+                ]
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
+              },
+              "onboardingLinks": {
+                "type": "boolean"
+              },
+              "_comment": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "order",
+              "theme"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
@@ -283,8 +354,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "86dbaf2fa20f450e9a005cbdbebd4cef6170f313",
+    "sha": "6e5a47da1061ac8e31b25b75405e430bb7028e5e",
     "pr": "479/merge",
-    "run": "35500745251"
+    "run": "35502295462"
   }
 }
