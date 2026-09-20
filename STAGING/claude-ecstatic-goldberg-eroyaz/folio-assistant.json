@@ -140,6 +140,9 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "bpmnType": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bpmnType",
+    "statement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#statement",
+    "rationale": "https://litlfred.github.io/folio-assistant/cat-harness/ns#rationale",
+    "applies": "https://litlfred.github.io/folio-assistant/cat-harness/ns#applies",
     "nodeKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeKind",
     "enforcement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#enforcement",
     "workPlanOp": "https://litlfred.github.io/folio-assistant/cat-harness/ns#workPlanOp",
@@ -248,22 +251,23 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T06:12:45.702Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1728726d9cf0cb59335399b38dc82d4bf4448c95",
-  "sourceCommitSha": "1728726d9cf0cb59335399b38dc82d4bf4448c95",
-  "sourceCommitAt": "2026-09-20T06:09:05Z",
+  "generatedAt": "2026-09-20T06:58:41.213Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6a797ab713a3e5a29ae6ab6d24274339dd7dcf1b",
+  "sourceCommitSha": "6a797ab713a3e5a29ae6ab6d24274339dd7dcf1b",
+  "sourceCommitAt": "2026-09-20T06:56:35Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
     "Actor": 27,
     "Capability": 24,
     "Role": 109,
+    "Convention": 2,
     "SkillPackage": 7,
     "Process": 36,
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 31,
-    "Schema": 57,
+    "Schema": 58,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -3889,6 +3893,35 @@
         }
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/role-assignments"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#convention/no-clean-run-over-an-empty-set",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Convention",
+      "localId": "no-clean-run-over-an-empty-set",
+      "title": "A check that examined nothing does not report a pass",
+      "description": "Every scan, filter or audit states what it looked at, so an empty result can be told from an empty subject.",
+      "statement": "A check that found no files, no nodes or no candidates must say so and exit non-zero or `undetermined` — never 0 with a clean report. Assert a non-vacuity floor alongside the property itself.",
+      "rationale": "Measured repeatedly in this repository: `check-declared-assets` reported 0 findings over 45 dead links; `check-agents-xref` printed a census of 0 where it had been 8, at exit 0; `bean-store-hygiene` asserted over an empty list; ruff reported a clean baseline over missing paths. The verified count of this defect in one session was eight.",
+      "applies": [
+        "typescript",
+        "python",
+        "workflow-yaml"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#convention/no-clean-run-over-an-empty-set"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#convention/comment-why-not-what",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Convention",
+      "localId": "comment-why-not-what",
+      "title": "A comment says WHY, and names the measurement",
+      "description": "The convention this repository actually follows in code it keeps: a comment records the defect the line prevents and what was measured, not a restatement of the line.",
+      "statement": "A comment explains why the code is as it is — the defect it prevents, the alternative that was tried, the number that was measured. Never a paraphrase of what the line already says.",
+      "rationale": "This repository's own modules are unusually heavily commented and the comments earn it: `ci-gates.ts` records the 27-of-33 miscount that produced it, `known-skills.ts` records the silent drop. A comment restating the code goes stale invisibly, because nothing contradicts it; a comment naming a measurement can be checked and can be wrong out loud.",
+      "applies": [
+        "typescript",
+        "python"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#convention/comment-why-not-what"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/skills",
@@ -20647,6 +20680,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/contributions"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/convention",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "convention",
+      "title": "A coding convention — context attached to a PROCESS, not loaded everywhere.",
+      "module": "schemas/convention.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/convention"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/dak-blocks",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "dak-blocks",
@@ -22033,8 +22074,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "9c7bb355113c7436e6c123b654c6210444a8efd0",
-    "pr": "460/merge",
-    "run": "35493572839"
+    "sha": "0000af536e47ec5c0d5798752846a9f6c022c3df",
+    "pr": "471/merge",
+    "run": "35495565175"
   }
 }
