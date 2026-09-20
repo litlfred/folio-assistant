@@ -24,6 +24,8 @@ parent: folio-assistant-o3xy
 > stickies are icon on content (or its avatars) with badge of # if > 1. can
 > click to open sticky/sticky panel
 
+> sticky panel is to see all the stickes attached to the content node....
+
 Kept verbatim because the layering instruction is precise and a paraphrase
 would lose it. Three of these sentences are constraints, not preferences.
 
@@ -42,6 +44,11 @@ would lose it. Three of these sentences are constraints, not preferences.
 5. **Stickies collapse onto their subject.** A note attached to content renders
    as an **icon on that content (or on its avatar)**, badged with a count when
    more than one, and clicking opens the sticky or a sticky panel.
+6. **The sticky panel is per-content-node**: it shows **every** sticky attached
+   to that node. So the badge count and the panel are two readings of one query
+   — *what is attached here* — and the badge is that query's cardinality rather
+   than a separate number somebody maintains. A badge that could disagree with
+   its own panel is the defect to design out.
 
 ## The layering, which the owner stated and which is the hard part
 
