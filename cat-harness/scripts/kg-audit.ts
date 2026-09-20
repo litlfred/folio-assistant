@@ -81,7 +81,13 @@ import {
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
-import { isSkillMd, knownSkills, remotePackageDeclarations, remotePackageSkills } from "./known-skills.js";
+import {
+  consultedSkills,
+  isSkillMd,
+  knownSkills,
+  remotePackageDeclarations,
+  remotePackageSkills,
+} from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
@@ -1083,13 +1089,35 @@ function auditGraph(
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) for (const s of n.skills) modelled.add(s);
   }
+  // `consulted: true` is skipped, and that is the criterion becoming
+  // MEANINGFUL rather than being relaxed. A skill that is reference material
+  // belongs in no lane by its nature — `directory-conventions` is what a
+  // performer reads, not a step anybody takes — so counting it as unbound
+  // measured the criterion rather than the corpus. Bean `y1w9`.
+  const consulted = consultedSkills(root);
   const unmodelled = [...skills]
-    .filter((s) => !modelled.has(s))
+    .filter((s) => !modelled.has(s) && !consulted.has(s))
     .sort()
     .map((s) => ({
       where: s,
       detail:
         `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.` +
+        scopedToThisGraph(),
+    }));
+
+  // The OTHER direction, and the reason the exemption is safe to grant. A
+  // skill cannot be reference material AND a step somebody performs: if a
+  // lane or a role claims it, either the annotation is wrong or the binding
+  // is. Without this, `consulted: true` would be an unfalsifiable opt-out of
+  // the criterion, which is a worse field than the one `qif9` removed.
+  const consultedButPerformed = [...consulted]
+    .filter((s) => modelled.has(s))
+    .sort()
+    .map((s) => ({
+      where: s,
+      detail:
+        `"${s}" declares \`consulted: true\` — reference material nobody performs — ` +
+        `but a role carries it or an activity names it. One of the two is wrong.` +
         scopedToThisGraph(),
     }));
 
@@ -1147,6 +1175,7 @@ function auditGraph(
       // skill looks unmodelled and the count would be the whole corpus — a
       // number that says nothing about the corpus and everything about the
       // missing file. Reporting it as a finding would be a wall of noise.
+      "consulted-skill-not-performed": entry(consultedButPerformed, consulted.size > 0),
       "skill-in-role-or-process": graph
         ? entry(unmodelled)
         : { result: "unknown" as KgResult, findings: [{ where: "—", detail: "no role graph declared." }] },

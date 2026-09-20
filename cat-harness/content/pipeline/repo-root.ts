@@ -17,6 +17,18 @@
  * @module content/pipeline/repo-root
  */
 
+// `folioDir` reads the instance's declaration, and the `folio` graph kind is
+// registered by CORE as a load-time side effect. Without this, `folioDir`
+// THROWS here rather than quietly returning the convention — which is the
+// contract it was given deliberately, and which this import satisfies.
+//
+// `schemas/cat-harness.ts` cannot carry the import itself: `folio-graph-kind`
+// imports IT, so the dependency is a cycle. Same pattern as
+// `schemas/harness-config.ts` and `src/tools/skill-fetch.ts`, which already
+// do this. That it must be repeated per entry point is `ot9a`'s fragility,
+// not a new one (bean `hs08`).
+import "../../schemas/folio-graph-kind.js";
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readdirSync, statSync } from "fs";
 import { dirname, join, resolve } from "path";
 
@@ -46,12 +58,10 @@ export function findContentRepoRoot(): string {
     dir = dirname(dir);
   }
   for (const d of ancestors) {
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    if (existsSync(join(d, "computations")) && existsSync(join(d, "folio"))) return d;
+    if (existsSync(join(d, "computations")) && existsSync(folioDir(d))) return d;
   }
   for (const d of ancestors) {
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    if (existsSync(join(d, "folio"))) return d;
+    if (existsSync(folioDir(d))) return d;
   }
   // Fallback: import-relative heuristic (two levels up from
   // content/pipeline/). Preserves behaviour when the walk-up finds nothing.
@@ -71,13 +81,12 @@ export function findContentRepoRoot(): string {
  */
 export function findPapers(repoRoot?: string): string[] {
   const root = repoRoot ?? findContentRepoRoot();
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const contentDir = join(root, "folio");
-  if (!existsSync(contentDir)) return [];
+  const folioRoot = folioDir(root);
+  if (!existsSync(folioRoot)) return [];
   const out: string[] = [];
-  for (const entry of readdirSync(contentDir)) {
+  for (const entry of readdirSync(folioRoot)) {
     if (entry.startsWith(".")) continue;
-    const d = join(contentDir, entry);
+    const d = join(folioRoot, entry);
     try {
       if (!statSync(d).isDirectory()) continue;
     } catch {
@@ -120,8 +129,7 @@ export function requirePaper(explicit?: string, repoRoot?: string): string {
   const papers = findPapers(root);
   throw new Error(
     papers.length === 0
-      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-      ? `No paper found under ${join(root, "folio")}. folio-assistant is the ` +
+      ? `No paper found under ${folioDir(root)}. folio-assistant is the ` +
         `PLATFORM; papers live in a folio. Run this from the content repo, or ` +
         `name a paper explicitly.`
       : `${papers.length} papers found (${papers.join(", ")}) — name one explicitly.`,

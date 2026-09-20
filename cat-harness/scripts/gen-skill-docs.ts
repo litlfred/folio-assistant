@@ -185,6 +185,19 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // because the published page is where somebody meets one of these first and
   // the worst outcome is following it as guidance. `kg:audit` carries the same
   // fact for machines, under `skill-is-a-stub`.
+  // Each methodology under `workflow-methodologies/` is its own declared
+  // subgraph and gets its own heading — the point of the layout is that a
+  // reader meets CRDM as a THING rather than as three skills scattered
+  // through folio-core with a filename prefix relating them. Owner,
+  // 2026-09-20: RACI, SDLC and MADR join it, each with a heading of its own
+  // when it exists. Nothing is declared before it has content — a
+  // declared-but-absent directory is the `dh4f` defect.
+  // Keyed on the DECLARATION'S id, not the directory basename: this root
+  // holds its skills directly, so `discoverGroups` takes the
+  // `SKILLS_CATEGORIES[decl.id]` branch — the same one `bootstrap` uses
+  // below. Keyed on `crdm` it threw, naming the id it actually wanted.
+  "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
+  "methodology-raci": "RACI involvement model (methodologies/raci)",
   "remote-stubs": "Declared but not implemented here (stubs)",
   // The two entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the

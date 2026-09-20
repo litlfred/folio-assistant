@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM_Close",
-    "path": "skills/workflows/crdm-close.bpmn"
+    "id": "Process_CRDM_Issue",
+    "path": "methodologies/crdm/workflows/crdm-issue-linking.bpmn"
   },
-  "source_hash": "sha256:844ae5b38bef16dc02095b3616d9578d7833e65033adaca0e69a9624fed47bd0",
+  "source_hash": "sha256:dbac0504cc87ec6f7b479a4406d695ae1869c88dd382a7ebf83b9d12cd6c0dba",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -16,8 +16,21 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_ScanIssues",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "A_AskCreate",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "A_LinkIssue",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -53,8 +66,8 @@
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 6,
+    "fail": 1,
     "n/a": 4,
     "unknown": 0
   }

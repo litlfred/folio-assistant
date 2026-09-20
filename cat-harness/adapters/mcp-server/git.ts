@@ -8,6 +8,7 @@
  * @module scripts/mcp-server/git
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { REPO_ROOT } from "./paths.js";
 import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync, symlinkSync, readdirSync } from "fs";
 import { join, resolve } from "path";
@@ -223,13 +224,10 @@ export async function gitImportTs(branch: string, relPath: string): Promise<unkn
     // Also need to ensure imported relative deps are on disk.
     // For content .ts files, they import from schema/ which lives on disk
     // and is the same across branches. We symlink content/schema → real schema.
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    const schemaLink = join(branchTmpDir, "folio", "schema");
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    const realSchema = resolve(REPO_ROOT, "folio", "schema");
+    const schemaLink = join(folioDir(branchTmpDir),  "schema");
+    const realSchema = join(folioDir(REPO_ROOT),  "schema");
     if (!existsSync(schemaLink) && existsSync(realSchema)) {
-      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-      mkdirSync(join(branchTmpDir, "folio"), { recursive: true });
+      mkdirSync(folioDir(branchTmpDir), { recursive: true });
       try {
         symlinkSync(realSchema, schemaLink, "dir");
       } catch {}

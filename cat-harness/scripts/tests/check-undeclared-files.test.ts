@@ -6,18 +6,18 @@
  * whatever that tree happens to contain. The live assertions at the end are the
  * second half, not the whole test.
  */
-import { afterAll, describe, expect, it, test } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import {
   ROOT_INFRASTRUCTURE,
   accountedRootPaths,
+  holdsOnlyIgnored,
   humanBytes,
   undeclaredAtRoot,
-  whollyIgnored,
 } from "../check-undeclared-files.js";
 import "../../schemas/folio-graph-kind.js";
 
@@ -221,71 +221,6 @@ describe("what is deliberately NOT reported", () => {
   });
 });
 
-/**
- * A git repository whose `.gitignore` ignores a CHILD directory, not its parent.
- *
- * `git init` really runs, because `whollyIgnored` asks git rather than parsing
- * `.gitignore` itself — a second reader of those patterns would be a second
- * answer free to disagree with the first.
- */
-function ignoredChildRepo(extra?: { rel: string; body: string }): string {
-  const root = mkdtempSync(join(tmpdir(), "wholly-"));
-  wholly.push(root);
-  spawnSync("git", ["init", "-q", "."], { cwd: root });
-  writeFileSync(join(root, ".gitignore"), "outer/inner/\n");
-  mkdirSync(join(root, "outer", "inner"), { recursive: true });
-  writeFileSync(join(root, "outer", "inner", "build.txt"), "x");
-  if (extra) writeFileSync(join(root, extra.rel), extra.body);
-  return root;
-}
-
-const wholly: string[] = [];
-afterAll(() => {
-  for (const d of wholly.splice(0)) rmSync(d, { recursive: true, force: true });
-});
-
-describe("a directory holding only ignored output", () => {
-  // `.gitignore` here carries `schemas/generated/` and `__pycache__/` — patterns
-  // that ignore the CHILD, not the parent. So on any working checkout `schemas/`
-  // and `scripts/` exist to hold nothing but ignored build output, while
-  // `git check-ignore` correctly says the directories themselves are not ignored.
-  //
-  // The root sweep reported both. In CI it passed, and PASSED BY ACCIDENT OF
-  // ENVIRONMENT: a fresh clone has no build output, so the directories are not
-  // there. They appear the moment somebody runs the generators or any Python
-  // script. A check green only on a tree nobody works in is the `xom7` shape
-  // pointed the other way.
-
-  it("is wholly ignored when every entry is, recursively", () => {
-    // `outer/` is not ignored by git; `outer/inner/` is. The directory exists
-    // only to hold it, so it is ignored in substance.
-    expect(whollyIgnored(ignoredChildRepo(), "outer")).toBe(true);
-  });
-
-  it("is NOT wholly ignored when one entry survives, however deep", () => {
-    // The direction that matters: a single unignored file anywhere below makes
-    // the directory real, so a genuine stray cannot hide under an ignored
-    // sibling.
-    const root = ignoredChildRepo({ rel: "outer/real.txt", body: "content" });
-    expect(whollyIgnored(root, "outer")).toBe(false);
-  });
-
-  it("an EMPTY directory is not wholly ignored — there is nothing ignored in it", () => {
-    // Deliberately `false`, not `true`. An undeclared empty directory is a real
-    // if minor finding, and calling it ignored would hide it. The same
-    // distinction `readme-sections` draws: a determined empty is still determined.
-    const root = ignoredChildRepo();
-    mkdirSync(join(root, "empty"));
-    expect(whollyIgnored(root, "empty")).toBe(false);
-  });
-
-  it("an unreadable directory is `undefined`, so the caller reports rather than skips", () => {
-    // The third state. Unreadable is neither empty nor ignored: `false` would
-    // make it a finding with the wrong reason, `true` would hide it.
-    expect(whollyIgnored(ignoredChildRepo(), "does-not-exist")).toBeUndefined();
-  });
-});
-
 describe("this repository, as it stands", () => {
   // Resolved from THIS FILE'S OWN LOCATION, not by walking up for a
   // `harness.json`. `instanceRootFor` walks up until it finds one, and this
@@ -398,5 +333,52 @@ describe("an instance's own declaration outranks another instance naming it", ()
     // scope, so this is the pair above, with real names.
     const REPO = resolve(import.meta.dir, "..", "..", "..");
     expect(accountedRootPaths(REPO).get("bootstrap")).toContain("declares itself");
+  });
+});
+
+describe("a directory that only HOLDS ignored files", () => {
+  // `scripts/` with nothing but a `__pycache__` in it. `gitIgnored` says no —
+  // `.gitignore` names `__pycache__/`, not `scripts/` — so the husk was
+  // reported. CI stayed green (a clean checkout has no bytecode) while every
+  // contributor who ran the Python tests went red locally: the gate failing
+  // for the people doing the work and passing for the machine that was not.
+  function repoWithCacheHusk(): string {
+    const root = repo();
+    spawnSync("git", ["init", "-q"], { cwd: root });
+    writeFileSync(join(root, ".gitignore"), "__pycache__/\n");
+    mkdirSync(join(root, "scripts", "__pycache__"), { recursive: true });
+    writeFileSync(join(root, "scripts", "__pycache__", "x.pyc"), "x");
+    return root;
+  }
+
+  test("is not reported — it is git's business, not a finding", () => {
+    expect(undeclaredAtRoot(repoWithCacheHusk()).map((e) => e.path)).not.toContain("scripts");
+  });
+
+  test("...and the skip is NARROW: one real file in it and it IS reported", () => {
+    // The falsifier that matters. A skip wide enough to hide a genuine
+    // undeclared file would be worse than the false positive it replaced,
+    // because this sweep exists to catch exactly that.
+    const root = repoWithCacheHusk();
+    writeFileSync(join(root, "scripts", "genuinely-undeclared.ts"), "export {};");
+    expect(undeclaredAtRoot(root).map((e) => e.path)).toContain("scripts");
+  });
+
+  test("a directory of TRACKED files is not mistaken for empty", () => {
+    // `git status` alone reports nothing for tracked, unmodified files, so a
+    // status-only check would call this directory empty and skip it.
+    const root = repo();
+    spawnSync("git", ["init", "-q"], { cwd: root });
+    mkdirSync(join(root, "kept"), { recursive: true });
+    writeFileSync(join(root, "kept", "a.ts"), "export {};");
+    spawnSync("git", ["add", "-A"], { cwd: root });
+    spawnSync("git", ["-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "x"], { cwd: root });
+    expect(holdsOnlyIgnored(root, "kept")).toBe(false);
+  });
+
+  test("git unavailable means REPORT, never skip", () => {
+    // Over-reporting is the safe direction: the failure guarded against is a
+    // file going unseen. Same stance as `gitIgnored`.
+    expect(holdsOnlyIgnored("/tmp", "no-such-directory-anywhere")).toBe(false);
   });
 });

@@ -1,12 +1,12 @@
 ---
 # folio-assistant-hs08
 title: 'MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio'
-status: todo
+status: in-progress
 type: task
 priority: high
-parent: folio-assistant-zzmr
 created_at: 2026-09-20T10:02:53Z
-updated_at: 2026-09-20T10:03:14Z
+updated_at: 2026-09-20T12:09:49Z
+parent: folio-assistant-zzmr
 ---
 
 Owner, 2026-09-20: *"content/ shouldnt be expected anymore. folio/ was
@@ -91,3 +91,96 @@ the platform can absorb.
 - [ ] a ratchet so `content/` as a folio root cannot come back — the literal
       count goes to zero and stays there
 - [ ] `qou` renamed in coordination, since nothing catches it here
+
+---
+
+## 2026-09-20, resolved — the owner's one line settled the design
+
+> *"qou can declare a new folio at content/"*
+
+That is what a declaration is FOR, and it reframed the remaining work from
+cleanup into the enabling step. Measured immediately afterwards: **zero** sites
+resolved the folio root through the declaration. All 162 were literals, so a
+folio declaring `content/` would have been ignored and stayed invisible. The
+rename had landed; the mechanism it exists to serve had not.
+
+### `folioDir(root)` — one resolution point
+
+`schemas/cat-harness.ts`, beside `directoryForGraph`. Three answers:
+
+- a declared folio graph -> that path (`content/`, or anything else)
+- no declaration -> the CONVENTION, `folio/`, never `content/`
+- the kind unregistered -> **throws**, naming the import to add
+
+### The first version was wrong, in the way that mattered
+
+It fell back to the convention when the `folio` kind was unregistered. Probed
+it and got `/probe/folio` for a folio declaring `content/` — the declaration
+silently ignored, a plausible path returned instead of a fault. That is
+"could not determine" rendered as an answer, and it would have made qou
+invisible in exactly the processes that matter. Replaced with a loud failure.
+
+### Why the registration import cannot live with the helper
+
+`schemas/folio-graph-kind.ts` imports `cat-harness.ts`, so the reverse import
+is a CYCLE. It goes at the entry point instead — `content/pipeline/repo-root.ts`
+now carries it, the same pattern `schemas/harness-config.ts` and
+`src/tools/skill-fetch.ts` already use. That it must be repeated per entry
+point is `ot9a`'s fragility, unchanged and not made worse.
+
+### Layering: the assumption was backwards
+
+`repo-partition` says `schemas/cat-harness.ts` and `content/pipeline/` are
+**harness**, while `src/routes/relevance.ts` and `adapters/` are **core**.
+Layer is not by directory. Since `core` may import `harness` but not the
+reverse, a HARNESS home is the only one every caller can reach — so the helper
+sits where it had to.
+
+On `ot9a`'s falsifier (*"if the harness still has to know the string `folio`
+anywhere, the re-siting is cosmetic"*): the harness does still know it. But it
+knew it in 162 places and now knows it in ONE, which is the difference between
+a fact you can audit and one you can only grep for.
+
+### Done
+
+- [x] 91 non-test sites across 58 files now call `folioDir`
+- [x] 89 `declared-path-literal` markers removed — they claimed a literal was
+      being counted above lines that now read the declaration
+- [x] 7 tests, including **end to end**: `findPapers` finds a paper in a folio
+      whose declaration names `content/`
+- [x] 55 gates, 3533 tests, tsc and eslint clean
+- [ ] **qou declares its folio at `content/`** — coordinated, in that repo
+- [ ] the eight vendored workflows' `cd content`: they move after the folios do
+
+## 2026-09-20 — the coordinated half is open: litlfred/qou#7445
+
+qou had **no declaration at all**, so it fell back to the convention and
+resolved to a `folio/` that does not exist. Measured against the platform at
+`e1cd7877`, by moving the file aside and back rather than inferring:
+
+    without harness.json:  folioDir -> /home/user/qou/folio   findPapers -> []
+    with    harness.json:  folioDir -> /home/user/qou/content findPapers -> 5 folios
+
+`bach2013-double-slit`, `fred2005-formal-groups`,
+`quantum-observable-universe`, `unital-groebner-bases`, `visualizer`.
+
+**One entry, not six.** A `directories` array MERGES with the conventions
+rather than replacing them — verified directly: with only `folio` declared,
+`library` and `uploads` still resolved. Declaring qou's `library/`, `uploads/`
+and `todos/` would restate defaults that already work, and a
+declared-but-absent directory is the `dh4f` defect.
+
+**Declare rather than rename**, per the owner: moving `content/` -> `folio/`
+in qou would touch five folio trees, the bun workspace, the CI paths and every
+cross-reference in the corpus. The declaration is four lines.
+
+## Done
+
+- [x] 91 non-test sites call `folioDir`
+- [x] `folioDir` reads the declaration, falls back to the CONVENTION (never
+      `content/`), and throws rather than guessing when the kind is unregistered
+- [x] a ratchet — `scripts/tests/folio-root-is-asked.test.ts` — falsified both
+      ways, and already clean against 37 commits of concurrent work
+- [x] 27 identifiers renamed off `CONTENT_*`
+- [x] qou declares its folio at `content/` (litlfred/qou#7445, OPEN)
+- [ ] the eight vendored workflows' `cd content` — after the folios move

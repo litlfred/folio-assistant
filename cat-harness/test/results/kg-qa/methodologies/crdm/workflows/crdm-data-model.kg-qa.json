@@ -3,9 +3,9 @@
   "subject": {
     "kind": "process",
     "id": "Process_CRDM_DataModel",
-    "path": "skills/workflows/crdm-data-model.bpmn"
+    "path": "methodologies/crdm/workflows/crdm-data-model.bpmn"
   },
-  "source_hash": "sha256:7baa9715c4cbb22ec82efe381fdd84e6cf9876ea351cf81caf06169dd3caae99",
+  "source_hash": "sha256:baae1466c71e5b8fe3bcd6c1f4b322b22f746a13b93edc299ce49353b1d16645",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -16,8 +16,29 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Entities",
+          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "A_Relations",
+          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "BA_ConfirmEntities",
+          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "S_ConfirmCardinality",
+          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "A_Declare",
+          "detail": "names skill \"crdm-data-model\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -74,8 +95,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 5,
+    "fail": 2,
     "n/a": 4,
     "unknown": 0
   }

@@ -7,6 +7,7 @@ description: >
   limit, and select to prune. What "flush" means, and which end of the order is
   expendable, are declared per container and differ.
 allowed-tools: Read Grep Glob Bash AskUserQuestion
+consulted: true
 ---
 
 # Flushable containers
