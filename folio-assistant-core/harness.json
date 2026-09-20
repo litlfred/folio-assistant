@@ -1,8 +1,68 @@
 {
-  "_comment": "folio-assist-core, staged as a top-level directory ahead of the repository split (#223). The owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' That correction is a layering call, not a filing preference, and BASE_GRAPH_KINDS already records the rule it applies: 'skills/ schemas beans all in cat-harness, voices, uploads library in folio-asst-core.' Dublin Core, a catalogue and a materialisation are all about CONTENT the instance holds or points at — the same side of the line as library/ and uploads/ — so they are core's, not the harness's. The harness layer must not own a vocabulary describing content it cannot render; that is the same argument schemas/folio-graph-kind.ts makes for `folio` itself.",
-  "name": "folio-assist-core",
-  "description": "The content layer — what a folio holds, where it came from, and how much of it is actually here.",
-  "_directories_comment": "One entry today, and it is a NAMED SUBGRAPH rather than a second `schemas` pile: the id is `core-schemas`, distinct from cat-harness's `schemas`, because overrides match on the entry's id and reusing that id would REPLACE the harness's schema graph rather than add to it. That is the same trap the `cat-harness-src` entry in cat-harness/harness.json documents. Declaring only what exists, per the dh4f rule: there is no library/, voices/ or uploads/ here yet, and a declared-but-absent directory makes every consumer scan nothing and report a clean run over it.",
+  "_comment": "folio-assist-core — THE CONTENT LAYER, in folio-assistant-core/ per the owner (2026-09-20: \"use folio-assistant-core/\") — the DIRECTORY is spelled out while the declared NAME stays folio-assist-core, which is the whole reason a declaration carries a name at all. Main created a folio-assistant-core/ stub the same day; the two were one instance under two paths, and instanceRoots is keyed on the declared name, so the stub and the populated one collided on one key and the stub won. Consolidated here, declared as a real instance on the owner's ruling of 2026-09-20 (\"Create f-a-core/ as a real instance now\"). It declared NO directories when it was created, deliberately, because the modules it would own were still interleaved under cat-harness/ and declaring a directory that is not there is the dh4f defect. They are NOT interleaved any more: bean frs5's branch wrote `schemas/` (dublin-core, catalogue, materialization, library-ref) and `folios/`, and they moved in here rather than staying under a SECOND directory declaring this same name. Two instances with one declared name is not a layout question: `instanceRoots` is keyed on the declared name, so the stub and the populated one were one key and the stub won. The original note read: the modules it will own are still interleaved with the harness's under cat-harness/, and declaring a directory that is not there is the dh4f defect — every consumer then scans nothing and reports a clean run over it. An instance that declares only what it has is honest; one that declares its target layout is a lie a gate cannot catch. scripts/repo-partition.ts is the machine-readable statement of what will move here.",
+  "name": "folio-assistant-core",
+  "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
+  "assets": [
+    {
+      "id": "readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "folio-assist-core",
+      "description": "The layer's scope, stated as a table of what is in and out, so the boundary is checkable rather than remembered. Self-documenting on the forge: a person landing on the directory reads the thing itself."
+    }
+  ],
+  "_stickies_comment": "ONE card, because the owner's ruling is one card per harness: \"not all stickies should be cat harness they should be outputs (as if) each init harness ran ... each own intiaization sticky note to show sucess\". This layer takes the knowledge-graph overview, which was cat-harness's third card — content is this layer's subject, so the card that explains the sub-graphs belongs to it rather than to the platform that operates on them.",
+  "stickies": [
+    {
+      "_comment": "THEME: `library`, its own, per \"each harness hould have its own unique theme (by convention)\". The librarian reads: this layer is about what content IS and how it is organised. It is not cat-harness's hoodie and not bootstrap's cowboy. SCOPE is stated in the body rather than left to the reader, per \"also some guidance what is its scope\".",
+      "id": "folio-assist-core",
+      "order": 20,
+      "theme": "library",
+      "summary": "What a folio is",
+      "body": "The knowledge graph is four sub-graphs, and an instance declares which of them it holds.\n\n**Content** is what somebody authors and a reader reads — this layer's subject. **Skills** are the instructions an agent follows to do the work. **Processes** are the BPMN diagrams that say who does what, in which order, and where the gates are — they are executable, not illustrations. **Tools** are what an agent can call.\n\nGetting anything in is **acquisition**: unstructured and semi-structured sources arrive through `uploads/` or through the conversation, and are ingested into `library/`. It is a step rather than a graph kind of its own — there is no fifth directory to look for.\n\n**Scope:** the content model — what a folio IS. Not the skills and tools that operate on it, and not any particular folio's chapters.",
+      "links": [
+        {
+          "label": "Content",
+          "href": "/content-types.html",
+          "note": "A document is structured prose; a paper adds the block kinds whose assertion is a formal claim."
+        },
+        {
+          "label": "Skills",
+          "href": "/skills.html",
+          "note": "Every skill and role, and how they fit together."
+        },
+        {
+          "label": "Processes",
+          "href": "/publication-workflow.html",
+          "note": "The BPMN diagrams, which are the source of truth rather than a picture of it."
+        },
+        {
+          "label": "Tools",
+          "href": "/architecture.html",
+          "note": "What an agent can call, served over MCP."
+        },
+        {
+          "label": "Acquisition",
+          "href": "/document-ingestion.html",
+          "note": "How a source gets from uploads/ into library/."
+        },
+        {
+          "label": "RTFM — folio-assist-core",
+          "href": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/README.md",
+          "note": "Its scope, in and out, and why it declares no directories yet."
+        }
+      ],
+      "text": {
+        "box": {
+          "x": 0.07,
+          "y": 0.06,
+          "w": 0.86,
+          "h": 0.88
+        },
+        "scale": 0.74
+      }
+    }
+  ],
   "directories": [
     {
       "id": "core-schemas",

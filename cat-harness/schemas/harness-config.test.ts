@@ -290,7 +290,7 @@ describe("a dependent instance inherits the ingestion directories", () => {
       const dir = made.find((d) => d.id === id);
       expect(dir, `no "${id}" among ${made.map((d) => d.id).join(", ")}`).toBeDefined();
       expect(dir!.absPath.startsWith(DOWN)).toBe(true);
-      expect(dir!.declaredBy).toBe("folio-assistant");
+      expect(dir!.declaredBy).toBe("cat-harness");
     }
   });
 

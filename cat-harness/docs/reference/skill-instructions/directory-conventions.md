@@ -316,7 +316,7 @@ a person looks for first were the two hardest to find.
 ## The conventional layout
 
 ```
-agentic-harness/          folio-assist-core/
+agentic-harness/          folio-assistant-core/
   harness.json        harness.json
   tools/     → tools        folio/     → folio
   kg/        → kg           (inherits tools/, kg/, schemas/)

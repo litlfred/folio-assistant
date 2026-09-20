@@ -621,7 +621,7 @@ describe("default directories — inherit the convention, declare only the devia
     // quietly replace an explicit declaration.
     const mine = resolveDirectories([{ name: "folio-assistant", root: ROOT, own: true }]);
     expect(mine.length).toBeGreaterThan(0);
-    expect(mine.every((x) => x.declaredBy === "folio-assistant")).toBe(true);
+    expect(mine.every((x) => x.declaredBy === "cat-harness")).toBe(true);
   });
 
   it("no default claims a kind the harness registry does not know", () => {

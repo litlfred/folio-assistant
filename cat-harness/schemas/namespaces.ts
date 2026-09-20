@@ -83,7 +83,7 @@ export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
  */
 export const BOOTSTRAP_NS = "https://litlfred.github.io/folio-assistant/bootstrap/ns#";
 export const CAT_HARNESS_NS = "https://litlfred.github.io/folio-assistant/cat-harness/ns#";
-export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#";
+export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#";
 
 /** The prefixes those namespaces bind to in a `@context`. */
 export const NS_PREFIXES = {

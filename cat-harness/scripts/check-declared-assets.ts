@@ -60,7 +60,7 @@ import "../schemas/folio-graph-kind.js";
  * one check whose whole subject is a file nobody was looking at.
  *
  * That was fixed by writing down a list of two. The list then stayed at two
- * while the repository grew to SEVEN declarations — `folio-assistant-core`,
+ * while the repository grew to SEVEN declarations — `folio-assist-core`,
  * `who-iris`, `detangle`, `kg-navigation` and `large-datasets` all arrived and
  * none was added — and the gate went on reporting a clean run, in the same
  * words, over five instances it had never opened. Measured 2026-09-20, adding

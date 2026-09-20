@@ -27,17 +27,44 @@ const PLATFORM = resolve(REPO, "cat-harness");
 const WHO_IRIS = resolve(REPO, "who-iris");
 
 describe("instance discovery", () => {
-  it("finds instances by their DECLARED name, not by directory name", () => {
+  it("finds instances by their DECLARED name, not by their published stub", () => {
     const roots = instanceRoots(REPO);
-    // `folio-assist-core` is the declared name; the directory is
-    // `folio-assistant-core`. They differ, and that is the whole point of
-    // citing a name rather than a path.
-    expect(roots.has("folio-assist-core")).toBe(true);
-    expect(roots.get("folio-assist-core")).toBe(resolve(REPO, "folio-assistant-core"));
+    // This used to read "not by DIRECTORY name", witnessed by a declared
+    // `folio-assist-core` in a directory called `folio-assistant-core`. After
+    // the owner's 2026-09-20 ruling — `cat-harness`, `folio-assistant-core`
+    // and `folio-assistant` are distinct instances — every name agrees with
+    // its directory, so that witness is gone and a test asserting it would be
+    // asserting a coincidence.
+    //
+    // The distinction that IS still live is name vs STUB. `cat-harness`
+    // declares `stub: "folio-assistant"` — the stub names the published
+    // artefact (`docs/folio-assistant/`, `_kg/folio-assistant.jsonld`) while
+    // the name names the instance. A consumer reaching for an instance by its
+    // stub gets the REPOSITORY, which is a different instance entirely.
+    expect(roots.get("cat-harness")).toBe(PLATFORM);
+    expect(roots.get("folio-assistant")).not.toBe(PLATFORM);
+    expect(roots.has("folio-assistant-core")).toBe(true);
+    expect(roots.get("folio-assistant-core")).toBe(resolve(REPO, "folio-assistant-core"));
   });
 
   it("finds the platform instance, whose directory is `cat-harness`", () => {
-    expect(instanceRoots(REPO).get("folio-assistant")).toBe(PLATFORM);
+    expect(instanceRoots(REPO).get("cat-harness")).toBe(PLATFORM);
+  });
+
+  it("the REPOSITORY is its own instance, and not the harness layer", () => {
+    // Three distinct instances, per the owner 2026-09-20. They were not
+    // distinct for a few hours: the repository root gained a `harness.json`
+    // and declared `folio-assistant`, which `cat-harness/harness.json`
+    // already carried. `instanceRoots` is keyed on the declared name, so the
+    // two were ONE key and the root won — `folio-assistant` resolved to the
+    // checkout and the harness layer became unreachable by name, silently.
+    //
+    // Asserting they are DIFFERENT is the check that cannot pass by accident;
+    // asserting each resolves somewhere would have passed throughout.
+    const roots = instanceRoots(REPO);
+    expect(roots.get("folio-assistant")).toBe(REPO);
+    expect(roots.get("cat-harness")).toBe(PLATFORM);
+    expect(roots.get("folio-assistant")).not.toBe(roots.get("cat-harness"));
   });
 });
 

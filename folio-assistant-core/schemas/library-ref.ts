@@ -1,7 +1,7 @@
 /**
  * A reference to an L1 source — in this instance, or in another one.
  *
- * @module folio-assist-core/schemas/library-ref
+ * @module folio-assistant-core/schemas/library-ref
  * @graphNode schema
  *
  * ## The problem this exists for was predicted before it happened

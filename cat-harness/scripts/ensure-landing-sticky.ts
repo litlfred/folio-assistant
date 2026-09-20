@@ -351,14 +351,14 @@ export function contributingRoots(root: string): string[] {
   //
   // The walk above finds a layer only when THIS instance declares a directory
   // inside it — which is how `bootstrap/` is found, since cat-harness declares
-  // `bootstrap/skills/`. `folio-assist-core/` is declared by nobody: it is a
+  // `bootstrap/skills/`. `folio-assistant-core/` is declared by nobody: it is a
   // sibling directory that declares itself, and under the rule everywhere else
   // here — an instance is a directory holding its own `harness.json` — it is an
   // instance the moment it exists.
   //
   // Without this, adding a layer meant ALSO editing the layer above to mention
   // it, which is the ownership inversion the whole contribution design undoes.
-  // Measured: `folio-assist-core/` declared its card and the board did not show
+  // Measured: `folio-assistant-core/` declared its card and the board did not show
   // it.
   // GUARDED ON `.git`, and the guard is not belt-and-braces — without it this
   // scan is actively wrong. `repoRootFor` is just `instanceRoot/..`, so for a
