@@ -49,6 +49,7 @@ import {
 } from "../../schemas/health-report.ts";
 import { HEALTH_CHECKS, formatBytes, runHealthChecks, type HealthContext } from "./checks.ts";
 import { gatherContext } from "./probes.ts";
+import { repoRootFor } from "../../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -173,7 +174,22 @@ if (import.meta.main) {
     process.exit(2);
   }
 
-  const ctx = await gatherContext({ repoRoot: ROOT });
+  // `repoRootFor`, not ROOT. `ROOT` is the INSTANCE root — this file sits at
+  // `<instance>/test/health/` — and two probes resolve their store from a
+  // declaration whose entry is `scope: "repository"`: `beans/` and `todos/`
+  // are at the repository root, not inside the instance.
+  //
+  // Passing the instance root sent them to `cat-harness/beans/defs` and
+  // `cat-harness/todos/items`, neither of which exists, from the moment #437
+  // moved the instance. They reported UNKNOWN rather than clean, which is the
+  // whole point of the three-state rule — the sweep said "could not be
+  // evaluated" and refused to call itself clean for six hours — but blind is
+  // not the state a check is for.
+  //
+  // Every other consumer runs `git(repoRoot, …)`, which resolves the
+  // repository from any directory inside it, so the true root is correct for
+  // them too rather than merely tolerated.
+  const ctx = await gatherContext({ repoRoot: repoRootFor(ROOT) });
   const results = runHealthChecks(ctx);
   const report = buildReport(ctx, results, {
     hash: checkerHash(),

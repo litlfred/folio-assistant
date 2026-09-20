@@ -298,6 +298,13 @@ export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkou
  * own doc comment names. So `frequency` and `autoUpdate` are fields no code
  * consults.
  *
+ * **Stronger since 2026-09-20**: that "only substantive reader" was itself
+ * never invoked — no package.json entry and no workflow, in any commit since
+ * the root commit — and is retired to `fsh-guts/scripts/` (bean
+ * `folio-assistant-3w0i`). The directory now has no substantive reader at
+ * all, which does not change the conclusion below; it removes the last
+ * reason to soften it.
+ *
  * It is documented rather than deleted because the intent is real information
  * about two real external dependencies — a maintainer chose `shallow-clone` over
  * `subtree` — and losing that costs the next reader the same decision. What was
