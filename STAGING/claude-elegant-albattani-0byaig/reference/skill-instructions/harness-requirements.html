@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(18)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(88)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(12) > ul > li:nth-child(18) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(88) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(12) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(12) > ul > li:nth-child(18) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(88) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(12) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(12) > ul.nav-list > li.nav-list-item:nth-child(18) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(88) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Lean Formalization | folio-assistant</title>
+<title>Harness requirements | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Lean Formalization" />
+<meta property="og:title" content="Harness requirements" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Lean Formalization" />
+<meta property="twitter:title" content="Harness requirements" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -644,8 +644,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skills/">Skill schema reference</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Lean Formalization</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Harness requirements</span></li>
   </ol>
 </nav>
 
@@ -653,196 +653,298 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 id="lean-formalization">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/harness-requirements.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/harness-requirements.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/harness-requirements.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="harness-requirements--what-an-instance-owes-for-what-it-declares">
   
   
-    <a href="#lean-formalization" class="anchor-heading" aria-labelledby="lean-formalization"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean Formalization
+    <a href="#harness-requirements--what-an-instance-owes-for-what-it-declares" class="anchor-heading" aria-labelledby="harness-requirements--what-an-instance-owes-for-what-it-declares"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Harness requirements — what an instance owes for what it declares
   
   
 </h1>
     
 
+<p><strong>Declaring a directory is a promise.</strong> It says this instance holds a graph of
+that kind, and a consumer may scan it. The obligations below are what makes
+that promise keepable: a reader can look at it, a reader can read about it, and
+an agent is handed something that governs it.</p>
+
+<p>The axis that measures them is <code class="language-plaintext highlighter-rouge">bun run check:subgraph-coverage</code>. This skill is
+how to read it and what to do before adding to it.</p>
+<h2 id="the-four-obligations">
+  
+  
+    <a href="#the-four-obligations" class="anchor-heading" aria-labelledby="the-four-obligations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four obligations
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>obligation</th>
+      <th>declared as</th>
+      <th>the question it answers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>visualiser</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">coverage.visualiser</code> on the directory entry</td>
+      <td>can a person LOOK at this?</td>
+    </tr>
+    <tr>
+      <td><strong>docs</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">coverage.docs</code></td>
+      <td>can a person READ ABOUT this?</td>
+    </tr>
+    <tr>
+      <td><strong>skill</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">coverage.skill</code></td>
+      <td>is an agent handed something that GOVERNS this?</td>
+    </tr>
+    <tr>
+      <td><strong>README</strong></td>
+      <td>an <code class="language-plaintext highlighter-rouge">instance-readme</code> asset, inside the instance</td>
+      <td>can a reader ENTER this instance at all?</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The first three are per declared directory. The fourth is per instance, and it
+is ranked harder: an instance with no starting README of its own is not a gap
+somebody has not filled, it is an instance a reader cannot enter.</p>
+<h2 id="an-unmet-obligation-is-not-an-unanswered-question">
+  
+  
+    <a href="#an-unmet-obligation-is-not-an-unanswered-question" class="anchor-heading" aria-labelledby="an-unmet-obligation-is-not-an-unanswered-question"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An unmet obligation is not an unanswered question
+  
+  
+</h2>
+    
+
+<p>The axis ranks two things apart, and the distinction is the whole point of
+having severities at all:</p>
+
+<ul>
+  <li><strong>major</strong> — an obligation this kind OWES and the instance has not met, or a
+target declared and not resolving. Somebody promised something.</li>
+  <li><strong>minor</strong> — nobody has said yet, for a kind that never owed one.</li>
+</ul>
+
+<p>Merging them would rank <code class="language-plaintext highlighter-rouge">beans/</code> having no viewer alongside a kind that was
+never going to need one, and an axis that cannot tell those apart is an axis
+whose count means nothing.</p>
+<h3 id="which-kinds-owe-a-visualiser">
+  
+  
+    <a href="#which-kinds-owe-a-visualiser" class="anchor-heading" aria-labelledby="which-kinds-owe-a-visualiser"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which kinds owe a visualiser
+  
+  
+</h3>
+    
+
+<p>The owner, 2026-09-20:</p>
+
 <blockquote>
-  <p>Skill id: <code class="language-plaintext highlighter-rouge">lean-formalization</code></p>
+  <p>if there is active state directory in repo root/ (<strong>not part of the static
+KG</strong>) like <code class="language-plaintext highlighter-rouge">beans/</code>, <code class="language-plaintext highlighter-rouge">todos/</code>, <code class="language-plaintext highlighter-rouge">fsh-guts/</code> those have their vuisalizers too
+as requiement of handler…. needs to render sometihng for each “state” dir
+it declares/inits</p>
 </blockquote>
 
-<p><em>Generated from JSON Schema — do not edit by hand. Run <code class="language-plaintext highlighter-rouge">bun run scripts/gen-schema-docs.ts</code>.</em></p>
-<h2 id="input">
-  
-  
-    <a href="#input" class="anchor-heading" aria-labelledby="input"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input
-  
-  
-</h2>
-    
+<p><strong>The discriminator is the parenthetical: is this the static knowledge graph,
+or is it active material about the work?</strong> Authored subject matter you can read
+as itself. A record of where something got to, you cannot — which is why it
+needs something that renders it.</p>
 
-<p>Input schema for the lean-formalization skill. Describes source material to be formalized in Lean 4.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">sourceFile</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td>Path to the source material (LaTeX, markdown, or existing Lean file) to formalize.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">targetModule</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td>Lean module path for the output (e.g. ‘Qou.CategoryTheory.Functors’).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">proofStrategy</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"tactic"</code> | <code class="language-plaintext highlighter-rouge">"term"</code> | <code class="language-plaintext highlighter-rouge">"mixed"</code></td>
-      <td>no</td>
-      <td>Preferred proof style. (default: <code class="language-plaintext highlighter-rouge">"tactic"</code>)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">dependencies</code></td>
-      <td>array<string></string></td>
-      <td>no</td>
-      <td>Lean package dependencies (lake packages).</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><a href="https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/lean-formalization/input.schema.json">Raw schema</a> · <a href="https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/lean-formalization/input.schema.json" class="fa-edit-source">✎ Edit</a></p>
-<h2 id="output">
+<p>That is <code class="language-plaintext highlighter-rouge">holds !== "content"</code>, and the wording is not a coincidence: <code class="language-plaintext highlighter-rouge">content</code>
+is defined as <em>“authored nodes a reader or a tool consumes as the subject
+matter… It stands on its own”</em>. A graph that stands on its own needs no viewer
+to be legible. Everything else does. <code class="language-plaintext highlighter-rouge">owesVisualiser()</code> in
+<code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> is that sentence as code.</p>
+<h3 id="the-rule-this-is-not-and-the-ten-minutes-that-proved-it">
   
   
-    <a href="#output" class="anchor-heading" aria-labelledby="output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Output
-  
-  
-</h2>
-    
-
-<p>Output schema for the lean-formalization skill.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">leanFiles</code></td>
-      <td>array<object></object></td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">buildStatus</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"success"</code> | <code class="language-plaintext highlighter-rouge">"warnings"</code> | <code class="language-plaintext highlighter-rouge">"errors"</code></td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">diagnostics</code></td>
-      <td>array<object></object></td>
-      <td>no</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="leanfiles">
-  
-  
-    <a href="#leanfiles" class="anchor-heading" aria-labelledby="leanfiles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">leanFiles[]</code>
+    <a href="#the-rule-this-is-not-and-the-ten-minutes-that-proved-it" class="anchor-heading" aria-labelledby="the-rule-this-is-not-and-the-ten-minutes-that-proved-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule this is NOT, and the ten minutes that proved it
   
   
 </h3>
     
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">path</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">module</code></td>
-      <td>string</td>
-      <td><strong>yes</strong></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">sorryCount</code></td>
-      <td>integer</td>
-      <td>no</td>
-      <td>min: 0</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="diagnostics">
+<p>The first derivation was <strong><code class="language-plaintext highlighter-rouge">holds === "state"</code></strong>. It is wrong, and the way it
+failed is the reason this section exists.</p>
+
+<p>It covers <code class="language-plaintext highlighter-rouge">beans</code> and <code class="language-plaintext highlighter-rouge">todos</code> and <strong>misses <code class="language-plaintext highlighter-rouge">fsh-guts</code></strong>, which the owner names
+in the same sentence — because bean <code class="language-plaintext highlighter-rouge">mhh9</code> reclassified <code class="language-plaintext highlighter-rouge">fsh-guts</code> from <code class="language-plaintext highlighter-rouge">state</code>
+to <code class="language-plaintext highlighter-rouge">context</code> <em>earlier the same day</em>, on the ground that no running step writes
+it: relocating something there is a human-directed act.</p>
+
+<p>So a rule keyed on <code class="language-plaintext highlighter-rouge">state</code> would have silently stopped requiring a visualiser
+for a directory the owner had just named, at the moment an unrelated
+classification changed. <strong>That is the worst failure available here</strong> — the
+obligation disappears and nothing reports that it did.</p>
+
+<p><code class="language-plaintext highlighter-rouge">holds !== "content"</code> survives that move, because <code class="language-plaintext highlighter-rouge">state</code> and <code class="language-plaintext highlighter-rouge">context</code> are on
+the same side of it. <strong>The test any rule over this axis must pass: a kind
+changing category within the non-content layers must not change what it owes.</strong></p>
+<h3 id="two-exemptions-and-they-are-different-shapes">
   
   
-    <a href="#diagnostics" class="anchor-heading" aria-labelledby="diagnostics"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">diagnostics[]</code>
+    <a href="#two-exemptions-and-they-are-different-shapes" class="anchor-heading" aria-labelledby="two-exemptions-and-they-are-different-shapes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two exemptions, and they are different shapes
   
   
 </h3>
     
 
+<p><strong><code class="language-plaintext highlighter-rouge">renderable</code> kinds are exempt by construction.</strong> <code class="language-plaintext highlighter-rouge">docs</code> and <code class="language-plaintext highlighter-rouge">folio</code> render to
+pages, so the pages ARE the view and a separate viewer would be a second
+rendering of the same thing.</p>
+
+<p><strong>Bootstrap is exempt by INSTANCE, not by kind.</strong> <code class="language-plaintext highlighter-rouge">hfkl</code> carries the ruling
+that <code class="language-plaintext highlighter-rouge">cat-bootstrap</code> has no visualiser <em>“but it must have its json/jsonld…
+that is its existence”</em>. Keyed on the instance name, so every other instance
+declaring the same kind keeps the obligation — and it is a <strong>second criterion,
+not a hole</strong>: an axis that dropped bootstrap by kind would stop checking the
+one thing bootstrap must have.</p>
+
+<p><strong>An unknown kind owes one.</strong> The default is the strict side, for the reason
+<code class="language-plaintext highlighter-rouge">DOCUMENT_BLOCK_KINDS</code> is a derived complement rather than a list: a kind
+nobody has classified must not escape an obligation by being unmentioned.
+Note this is the opposite collapse from <code class="language-plaintext highlighter-rouge">graphLayer()</code>, whose <code class="language-plaintext highlighter-rouge">undefined</code>
+callers must <em>not</em> read as <code class="language-plaintext highlighter-rouge">content</code> — there the unknown must stay unknown,
+here it resolves to the obligation. Both choose the direction that fails safe.</p>
+<h2 id="where-a-visualiser-is-published">
+  
+  
+    <a href="#where-a-visualiser-is-published" class="anchor-heading" aria-labelledby="where-a-visualiser-is-published"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a visualiser is published
+  
+  
+</h2>
+    
+
+<p>Rendered content is addressed by the three cases on bean <code class="language-plaintext highlighter-rouge">o7eq</code>:</p>
+
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
+      <th>#</th>
+      <th>URL</th>
+      <th>what it is</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">file</code></td>
-      <td>string</td>
-      <td>no</td>
-      <td> </td>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/</code></td>
+      <td>the ROOT’s rendering — its <code class="language-plaintext highlighter-rouge">docs/</code> is installed by cat-harness, so no segment</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">line</code></td>
-      <td>integer</td>
-      <td>no</td>
-      <td> </td>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;instance&gt;/</code></td>
+      <td>the instance presented <strong>as itself</strong>, on its own theme</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">severity</code></td>
-      <td><code class="language-plaintext highlighter-rouge">"error"</code> | <code class="language-plaintext highlighter-rouge">"warning"</code> | <code class="language-plaintext highlighter-rouge">"info"</code></td>
-      <td>no</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">message</code></td>
-      <td>string</td>
-      <td>no</td>
-      <td> </td>
+      <td>3</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;owner&gt;/&lt;kind&gt;/&lt;subject&gt;/</code></td>
+      <td>a viewer of one instance’s assets, rendered by another’s machinery</td>
     </tr>
   </tbody>
 </table></div>
 
-<p><a href="https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/lean-formalization/output.schema.json">Raw schema</a> · <a href="https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/lean-formalization/output.schema.json" class="fa-edit-source">✎ Edit</a></p>
+<p>Case 3 is why <code class="language-plaintext highlighter-rouge">docs/</code> has two roles at once — the owner, asked which it was,
+answered <strong>“both are right”</strong>. It is a directory cat-harness instantiates AND a
+namespace under which the docs-kind assets of another subgraph are rendered:
+<code class="language-plaintext highlighter-rouge">&lt;base&gt;/cat-harness/docs/who-iris/</code>.</p>
+
+<p>So “which directory holds it” and “which URL serves it” are different
+questions, and a visualiser’s declaration answers the first. Do not compose the
+second by hand — that is what produced four incompatible URL shapes across four
+open branches on 2026-09-20.</p>
+<h2 id="before-you-declare-a-directory">
+  
+  
+    <a href="#before-you-declare-a-directory" class="anchor-heading" aria-labelledby="before-you-declare-a-directory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you declare a directory
+  
+  
+</h2>
+    
+
+<ol>
+  <li><strong>Say what renders it, documents it and governs it</strong>, or say why it needs
+none — <code class="language-plaintext highlighter-rouge">coverage.exempt.&lt;criterion&gt;</code> takes a reason, and a waiver with no
+reason is a silence list.</li>
+  <li><strong>Declare only what exists.</strong> A declared-but-absent directory is the <code class="language-plaintext highlighter-rouge">dh4f</code>
+defect: a consumer scans nothing and reports a clean run over it.</li>
+  <li><strong>Check the kind’s layer.</strong> If it is not <code class="language-plaintext highlighter-rouge">content</code>, you are promising a
+visualiser, so know who is building it before the declaration lands.</li>
+</ol>
+<h2 id="before-you-add-a-graph-kind">
+  
+  
+    <a href="#before-you-add-a-graph-kind" class="anchor-heading" aria-labelledby="before-you-add-a-graph-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you add a graph kind
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">GraphKindDef</code> requires <code class="language-plaintext highlighter-rouge">renderable</code> and <code class="language-plaintext highlighter-rouge">holds</code>, so a kind cannot go
+unclassified — that is deliberate and <code class="language-plaintext highlighter-rouge">tsc</code> enforces it. What it does <strong>not</strong>
+carry is the visualiser obligation, because that is derived rather than
+declared, for the <code class="language-plaintext highlighter-rouge">fsh-guts</code> reason above.</p>
+
+<p>So: set <code class="language-plaintext highlighter-rouge">holds</code> on what a running process DOES with the graph, never on what
+you would like the obligation to be. Getting <code class="language-plaintext highlighter-rouge">holds</code> right is what makes the
+obligation right.</p>
+<h2 id="reading-the-axis">
+  
+  
+    <a href="#reading-the-axis" class="anchor-heading" aria-labelledby="reading-the-axis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading the axis
+  
+  
+</h2>
+    
+
+<p>It is <strong>advisory</strong> — it reports, ranks and exits 0. That is not softness:
+0 of 20 non-content directories have a declared visualiser today, and a hard
+gate on day one is a wall somebody switches off. It becomes fatal when the
+count is low enough to mean something, the same path <code class="language-plaintext highlighter-rouge">undeclared</code> took in
+<code class="language-plaintext highlighter-rouge">check-instance-render</code>.</p>
+
+<p>Three rules for reading it, the same three every sweep here follows:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">undetermined</code> is never a clean run.</strong> An unreadable declaration is
+reported as such; a sweep blind on one instance has not cleared the others.</li>
+  <li><strong>Never quote a count from prose.</strong> The numbers in this file are from
+2026-09-20 and are provenance for the rules, not a description of today.
+Run it.</li>
+  <li><strong>A finding is not a task list.</strong> The four obligations belong to whoever
+declared the directory, and <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code> applies to every
+remedy that removes something.</li>
+</ul>
+<h2 id="see-also">
+  
+  
+    <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — the declaration schema
+and every graph kind</li>
+  <li><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a> —
+what <code class="language-plaintext highlighter-rouge">holds</code> means, and the one question that settles a kind</li>
+  <li><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/kg-viewer.html"><code class="language-plaintext highlighter-rouge">kg-viewer</code></a> — the viewer this repository already ships</li>
+  <li><code class="language-plaintext highlighter-rouge">bun run check:subgraph-coverage</code> — the axis; <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>
+<code class="language-plaintext highlighter-rouge">owesVisualiser()</code> — the obligation</li>
+</ul>
 
           
 

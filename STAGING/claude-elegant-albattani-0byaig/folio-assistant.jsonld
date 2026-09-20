@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T19:33:12.094Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6db339529883de8e15837019a869cb63086ea6a7",
-  "sourceCommitSha": "6db339529883de8e15837019a869cb63086ea6a7",
-  "sourceCommitAt": "2026-09-20T19:31:22Z",
+  "generatedAt": "2026-09-20T19:52:49.031Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ddbd36228dc81edd511b8ce6688ea12e323b4918",
+  "sourceCommitSha": "ddbd36228dc81edd511b8ce6688ea12e323b4918",
+  "sourceCommitAt": "2026-09-20T19:51:15Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 207,
+    "Skill": 208,
     "Actor": 27,
     "Capability": 28,
     "Role": 124,
@@ -1808,6 +1808,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/delivery-summary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/harness-requirements",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "harness-requirements",
+      "title": "Harness requirements — what an instance owes for what it declares",
+      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, and why the discriminator is \"is this the static knowledge graph\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/harness-requirements.md",
+      "instructionLines": 178,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/harness-requirements"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/bean-coordination",
@@ -5107,6 +5124,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/goal-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/harness-requirements",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#skill/integration-audit",
@@ -32688,8 +32706,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-albattani-0byaig",
-    "sha": "ad5d25959624f9b68709dd390adb20b620c24845",
+    "sha": "192ed552da74a733695bf99fa718ccc7eacaac61",
     "pr": "583/merge",
-    "run": "35532576656"
+    "run": "35533660071"
   }
 }
