@@ -1,11 +1,11 @@
 ---
 # folio-assistant-u4hs
 title: 'METHODOLOGY: the BPMN half — an executable options-analysis subprocess'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T08:49:49Z
-updated_at: 2026-09-20T08:55:16Z
+updated_at: 2026-09-20T14:16:40Z
 parent: folio-assistant-d308
 ---
 
@@ -46,12 +46,17 @@ The lane is `business-analyst`, which now carries `methodology-adoption`.
 
 ## Done when
 
-- [ ] the trigger is settled, with the owner
-- [ ] `options-analysis.bpmn` with a `business-analyst` lane, whose first activity
+- [x] the trigger is settled, with the owner
+- [x] `options-analysis.bpmn` with a `business-analyst` lane, whose first activity
       is the selection question and whose branch is the chosen methodology
-- [ ] called from the four points above, rather than copied into them
-- [ ] a QA criterion for a decision recorded with **fewer than two real options** —
-      one option is not a choice, which is MADR's own refusal made checkable
+- [~] called from the four points above, rather than copied into them — **1 of 4,
+      and that is the owner's scope decision, not a shortfall.** Asked which call
+      sites to wire, they chose *"Only `upstream-version-adoption` first"*. The
+      subprocess is called, never copied, so the remaining three are additions to
+      a working call rather than a different design
+- [x] a QA criterion for a decision recorded with **fewer than two real options** —
+      bean `brv6`, now in the `bean-store` health check as *"decision records with
+      fewer than two options"*
 
 ---
 
@@ -208,3 +213,28 @@ That is the fourth obligation an added graph kind has turned out to carry here �
 an avatar, a `directory-conventions` table row, the pinned literal lists (now
 derived, so retired), and a layer. None is discoverable from the schema alone;
 each was found by a test failing.
+
+
+---
+
+## STATE 2026-09-20 — built and called once, by the owner's choice of scope
+
+Measured rather than assumed: `grep` for `calledElement="Process_OptionsAnalysis"`
+across `skills/workflows/` and `methodologies/` returns **exactly one** hit,
+`upstream-version-adoption.bpmn:85`, which is the site the owner authorised.
+
+Placement inside that diagram, recorded because it was a judgement: the call sits
+after the MVP build and the gates, because those are **how an option's costs are
+measured**, and before `PM_Decide` — a `userTask` admitting `person` only with
+`relaxable="false"`. So the subprocess informs a decision it cannot make.
+
+### What is left, and it is additive
+
+The other three call sites. Each is a `callActivity` pointing at the same
+`Process_OptionsAnalysis`, so none of them re-opens the design; the reason to do
+them one at a time is that each needs its own placement argument of the kind above,
+and a placement argument is worth more than a wired edge.
+
+**This bean stays open for those three.** Closing it on one call site would make
+the work plan assert a coverage it does not have — and the three are exactly the
+kind of thing that becomes invisible once the epic above it is resolved.
