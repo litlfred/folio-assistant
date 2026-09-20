@@ -1,148 +1,94 @@
 #!/usr/bin/env bun
 /**
- * A browsable view of what each instantiated harness's STATE graphs hold.
+ * A dashboard per declared STATE graph, at the path this instance uses for it.
  *
  * @module scripts/state-visualizer
  *
- * Owner, 2026-09-20:
+ * Owner, 2026-09-20, settling the route after two earlier attempts:
  *
- * > should be able to browse at `<base-url>/state-visualizer/` or so … for
- * > instantiated harness
+ * > i think policy in `<base-url>/<cat-harness-path-to-kind>/dashboard`
  *
- * and, settling the layout:
- *
- * > The state dashboard at `/<stub>/state/dashboard/`, `state/beans/`,
- * > `state/todos/` etc. make clickable. also links to edit (using
- * > tools/github). if linked to issue, pr etc make clickable
- *
- * > actually `<base-url>/<path-to-harness-declaring-functionality>/dashboard`,
- * > `<base-url>/<path-to-harness-declaring-functionality>/beans`, etc… these
- * > are all registered sub visualisations of one (sub)harness
- *
- * and, on where a rendered asset belongs:
- *
- * > rendered assets should be available at toplevel like `<baseURL>/` for main
- * > just-the-docs pipeline, or `<baseurl>/<page>` where is registered rendered
- * > page from a harness that was instantiated and enabled (by default enabled)
- * > relative to their url, so `<baseurl>/<instantiated harness>/<path_to_rendered_content>`
- *
- * ## The route — a registry of sub-visualisations, under the harness that declares it
+ * ## The route, and it is a POLICY rather than this generator's choice
  *
  * ```
- * <base>/<stub>/            the knowledge-graph viewer  (already there, untouched)
- * <base>/<stub>/dashboard/  the work plan: both live stores, and the registry
- * <base>/<stub>/beans/      one visualisation
- * <base>/<stub>/todos/      another
- * <base>/<stub>/<id>.json   their data
+ * <base>/<graph>/dashboard/   the dashboard for one declared state graph
+ * <base>/assets/<graph>/index.json   its data, published by gen-docs-pages.ts
  * ```
  *
- * **There is no `state/` segment**, and its absence is the design rather than
- * a shortening. A visualisation is registered against the harness that
- * DECLARES the functionality, so the harness's own path is the namespace and
- * every visualisation is a sibling under it. Interposing `state/` would have
- * said these are a kind apart, when the knowledge-graph viewer already sitting
- * at `<base>/<stub>/` is a sub-visualisation of exactly the same harness.
+ * Bean `o7eq` carries the owner's three rulings on the published URL space,
+ * and all three bind here:
  *
- * A page and a data file are siblings without colliding, because one is a
- * directory and the other a file: `beans/` and `beans.json` resolve
- * differently. The real collisions are ids the layout has already spent —
- * see {@link RESERVED_SEGMENTS}.
+ * 1. **The segment is the instance's `name`, never its `stub`.** Two earlier
+ *    drafts of this file published under `artefactStub(decl)` —
+ *    `folio-assistant` — which is the name of the published GRAPH DOCUMENT,
+ *    not of the instance. #477 recorded that split deliberately.
+ * 2. **The declared graph IS a path segment**, not elided, because an instance
+ *    may declare more than one renderable graph and they would otherwise
+ *    collide on one URL.
+ * 3. **The root instance elides its own name**, because its `docs/` is
+ *    installed by cat-harness rather than its own (bean `n0nf`). This
+ *    instance's site dir IS the published root, so `<site>/<graph>/` already
+ *    is `<base>/<graph>/` — ruling 2 with ruling 3 applied, and the same
+ *    address `gen-schema-viz.ts` publishes at.
  *
- * ## The route was already half-built, and this finishes the half
+ * ## The segment is the declared entry's `id`, and NOT its basename
  *
- * `docs-site.yml` publishes `<base>/<stub>.jsonld` as an instance's graph and
- * `<base>/<stub>/index.html` as the viewer that makes it legible. The instance
- * SEGMENT is therefore not new — it is the thing that already "separates one
- * instance's renderings from another's in a tree that overlays several", and
- * that viewer is the first registered sub-visualisation. This registers more
- * beside it rather than adding a second convention.
+ * `gen-schema-viz.ts` takes `basename(declaredDirectory)`, which is right for
+ * `schemas/` and `library/` and would be wrong here. Measured on this
+ * instance's declaration: `qa` is `test/results/` and `health` is
+ * `test/health/results/`, so **both basename to `results`** and one dashboard
+ * would silently overwrite the other. All 32 declared ids are unique, because
+ * the id is the thing `harness.json` declares and the thing an override
+ * matches on.
  *
- * ## Which graphs it shows is DECLARED, never listed here
+ * Read from the declaration either way — never written down here. That is what
+ * `check:declared-paths` exists to catch, and it caught the literal in an
+ * earlier draft of this file.
  *
- * `harness.json` gives every graph kind a `holds` layer — `content`, `context`
- * or `state` — and a state graph is one a running process WRITES as it runs.
- * Five kinds carry it: `beans`, `todos`, `qa`, `health` and `uploads`. This
- * generator asks the registry rather than carrying a list, so a kind added
- * with `holds: "state"` appears here without anybody remembering to come back,
- * and a kind whose layer changes stops appearing for the same reason.
+ * ## Committed, not written into `_site`
  *
- * That is the point of it being generic: an instantiated harness gets a
- * visualiser over ITS OWN declaration, not over this repository's.
+ * The first two drafts generated into `_site` at build time and argued that a
+ * `--check` was therefore impossible. Both the argument and the premise were
+ * wrong: the house pattern for a visualiser here is a COMMITTED page under the
+ * instance's site dir, gated on exact content, which is what
+ * `schema:viz:check` and `library:viz:check` do. A reviewer can then see the
+ * page in the diff, and the gate fires when somebody changes the generator and
+ * does not regenerate.
  *
- * ## Declared-with-no-renderer is a STATE, not an omission to hide
+ * ## It reuses the projection; it does not publish a second one
  *
- * `beans` and `todos` have readers, so their pages carry live data. `qa`,
- * `health` and `uploads` are declared state graphs with no renderer yet — bean
- * `2krx`, which measured 19 of this instance's 22 declared subgraphs as having
- * no way to look at them. Their pages say exactly that and link the directory.
- * Leaving them off the index would make the visualiser agree with itself while
- * disagreeing with the declaration, which is the failure the whole `2krx`
- * family is about.
+ * `gen-docs-pages.ts` already writes `<site>/assets/beans/index.json` and
+ * `<site>/assets/todos/index.json`. This reads those. Writing its own copy
+ * would be two answers to "what does the work plan hold", free to disagree
+ * while both look right.
  *
  * ## No CDN, no framework, no build step
  *
- * `kg-viewer.ts` states the rule and it holds here: a view of this
- * repository's own data must be reviewable offline and must not add a third
- * party to its own trust boundary. The renderer and its stylesheet are INLINED
- * from `docs/assets/{js,css}/work-plan.*`, the same bytes the docs site
- * serves, so the two surfaces cannot drift.
+ * `kg-viewer.ts` states the rule: a view of this repository's own data must be
+ * reviewable offline and must not add a third party to its own trust boundary.
+ * The renderer and its stylesheet are INLINED from
+ * `docs/assets/{js,css}/work-plan.*`, the same bytes the docs site serves, so
+ * the two surfaces cannot drift.
  *
- * **It does NOT open from `file://`, and that is a browser rule rather than a
- * choice here.** The CODE is inlined, but the DATA is fetched, and Chromium
- * blocks `fetch` from a `file://` origin as cross-origin — measured, not
- * assumed. Over any HTTP root, including a bare `python3 -m http.server`, the
- * page works with no configuration. Inlining the data too would fix that and
- * cost the property below.
- *
- * ## Data is fetched RELATIVE to the page
- *
- * A page at `<base>/<stub>/<id>/` reads `../<id>.json`. Nothing composes a
- * base URL, so the same bytes work at the canonical base, at a staging
- * preview, and under any HTTP root.
- *
- * ## Every identifier on the page is a link, and they are composed HERE
- *
- * A bean id, an epic's bar, an issue or PR number in a finding — each resolves
- * to somewhere on the forge. The repository's web URL is `detectRepoUrl`'s
- * answer and travels in the projection as `repoWeb`, so the renderer builds
- * hrefs from DATA rather than carrying one instance's address in shared client
- * code. That is the rule `editHref` already follows in `gen-docs-pages.ts`.
- *
- * ## It has NO `--check`, and every sibling generator has one
- *
- * `gen-docs-pages.ts`, `gen-landing-data.ts` and the CSS generators all gate
- * on exact content, because each writes a file that is COMMITTED — so "the
- * committed copy disagrees with the source" is a real thing that happens and
- * a reviewer needs told.
- *
- * This one writes into `_site`, a build output that is not committed and does
- * not exist in a fresh checkout. A staleness gate over it could only ever
- * report every file missing, which is a check that fires on all of its
- * subjects — the shape this repository already calls a check that is wrong.
- * `gates.test.ts` caught the `state:visualizer:check` script it was shipped
- * with for exactly that reason: no workflow ran it, and none could have
- * usefully.
- *
- * The gate that does exist is the site build itself, which runs this
- * generator in `docs-site.yml`: a generator that throws turns the publish red,
- * and `tests/state-visualizer.test.ts` pins the output shape.
+ * It does NOT open from `file://` — the code is inlined but the data is
+ * fetched, and Chromium blocks that as cross-origin. Measured, not assumed.
+ * Over any HTTP root, including a staging preview under `STAGING/<slug>/`, it
+ * works with no configuration, because every path is relative to the page.
  *
  * Usage:
- *   bun run state:visualizer                # writes into ./_site
- *   bun run state:visualizer -- --out-dir X
+ *   bun run state:visualizer
+ *   bun run state:visualizer -- --check    # fail if a page is stale or missing
  *
- * Exit: 0 written, non-zero on an unreadable source.
+ * Exit: 0 written or up to date, 1 stale under `--check`.
  */
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, relative } from "node:path";
 
 import {
-  artefactStub,
   graphKindsOfLayer,
-  instanceRootsIn,
+  instanceRootFor,
   isStateGraph,
   readDeclaration,
-  repoRootFor,
   siteDirFor,
   type CatHarnessDeclaration,
 } from "../schemas/cat-harness.js";
@@ -150,75 +96,44 @@ import {
 // a folio graph, so `readDeclaration` throws on a valid declaration without it.
 // The same line `print-stub.ts` carries, for the same reason.
 import "../schemas/folio-graph-kind.js";
-import { beanFindings, readBeans } from "./beans.js";
-import { readTodoFiles } from "./todos.js";
-import { detectRepoUrl } from "../src/core/git-refs.js";
 
-const HERE = dirname(new URL(import.meta.url).pathname);
-const INSTANCE_ROOT = resolve(HERE, "..");
-const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
+const ROOT = instanceRootFor(import.meta.dir);
+const SITE = join(ROOT, siteDirFor(ROOT));
 
-const args = process.argv.slice(2);
-const outArg = args.indexOf("--out-dir");
-const OUT_DIR = resolve(outArg >= 0 && args[outArg + 1] ? args[outArg + 1]! : "_site");
+const check = process.argv.slice(2).includes("--check");
 
-/**
- * The renderer and its styles, read from the files the docs site also serves.
- *
- * `siteDirFor` rather than the literal `docs`: the site root is one answer,
- * read from the declaration, and `site-dir-single-answer.test.ts` is the gate
- * that caught the literal in the first draft of this file.
- */
-const ASSET_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "assets");
-const WORK_PLAN_JS = readFileSync(join(ASSET_DIR, "js", "work-plan.js"), "utf-8");
-const WORK_PLAN_CSS = readFileSync(join(ASSET_DIR, "css", "work-plan.css"), "utf-8");
+/** The renderer and its styles, read from the files the docs site also serves. */
+const WORK_PLAN_JS = readFileSync(join(SITE, "assets", "js", "work-plan.js"), "utf-8");
+const WORK_PLAN_CSS = readFileSync(join(SITE, "assets", "css", "work-plan.css"), "utf-8");
 
 /** Every graph kind whose `holds` is `state`, asked of the registry. */
 const STATE_KINDS = new Set(graphKindsOfLayer("state"));
 
 /**
- * The forge this checkout points at, or `undefined` when it has none.
+ * Declared ids this generator will not publish under.
  *
- * DETECTED, not written down. It travels in each projection as `repoWeb` so
- * the renderer composes its links from data — the rule `editHref` follows in
- * `gen-docs-pages.ts`, and the reason is the same: one instance's address
- * does not belong inside shared client code.
- *
- * `undefined` is a real answer, not a failure. A checkout with no `origin`
- * still gets every page; the identifiers on it simply render as text, which
- * is what an unresolvable reference should look like.
+ * `assets` is where every projection and stylesheet lives, and a leading
+ * underscore is Jekyll's own namespace (`_data`, `_includes`, `_layouts`).
+ * Writing a dashboard into either would put a page inside machinery that is
+ * not expecting one. Refused loudly: a route collision is a DECLARATION
+ * problem, and guessing which of the two the reader meant is not this
+ * generator's call.
  */
-const REPO_WEB = detectRepoUrl(REPO_ROOT);
+const RESERVED_IDS = new Set(["assets"]);
 
 /**
- * Segments under `<stub>/` that a graph id may not take, because the layout
- * has already spent them.
+ * What a graph's dashboard can show.
  *
- * `dashboard` is this generator's own entry point. `index` and `assets` belong
- * to the knowledge-graph viewer `docs-site.yml` writes at `<base>/<stub>/`.
- * A declared directory with one of these ids would silently overwrite a page
- * it does not own, or be overwritten by one, and a reader would then be shown
- * one thing under another thing's name.
- *
- * Refused loudly instead. A route collision is a DECLARATION problem, and
- * guessing which of the two the reader meant is not this generator's call —
- * the same posture every "could not determine" in this repository takes.
- */
-const RESERVED_SEGMENTS = new Set(["dashboard", "index", "assets"]);
-
-/**
- * What a state graph's page can show.
- *
- * `live` graphs have a reader here and get data; `declared` ones are in the
- * declaration with nothing able to read them yet. The third value a reader
- * might expect — "not declared" — is absent on purpose: an undeclared graph
- * does not reach this generator at all, and inventing a row for it would be
- * this visualiser asserting something the declaration does not say.
+ * `live` graphs have a published projection; `declared` ones are in the
+ * declaration with nothing able to read them yet. The value a reader might
+ * expect third — "not declared" — is absent on purpose: an undeclared graph
+ * does not reach this generator, and inventing a row for it would be this
+ * page asserting something the declaration does not say.
  */
 type GraphState = "live" | "declared";
 
 interface StateGraph {
-  /** The declared directory's id — the URL segment. */
+  /** The declared entry's id — the URL segment. See the module note. */
   id: string;
   /** Its path, relative to the instance root, as declared. */
   path: string;
@@ -238,11 +153,25 @@ function esc(s: string): string {
 }
 
 /**
- * The state graphs an instance declares.
+ * Whether a graph's projection is actually published.
  *
- * Reads the instance's OWN declaration. An instance declaring none gets an
- * index that says so — which is a true statement about that instance, and the
- * reason this does not skip it silently.
+ * ASKED OF THE DISK rather than listed here. `gen-docs-pages.ts` publishes
+ * `beans` and `todos` today; naming those two as a literal would mean a third
+ * projection appearing and this generator still calling its graph unrendered —
+ * the stale-gap-notice failure `AGENTS.md` describes, where an agent that
+ * believes the notice either avoids the feature or rebuilds it.
+ */
+function projectionFor(id: string): string | null {
+  const p = join(SITE, "assets", id, "index.json");
+  return existsSync(p) ? p : null;
+}
+
+/**
+ * The state graphs this instance declares.
+ *
+ * Its OWN declaration, not a dependency's: a dependency's directory must not
+ * name the URL this instance publishes at, which is the same trap
+ * `gen-schema-viz.ts` documents on `schemaRoots`.
  */
 function stateGraphsOf(decl: CatHarnessDeclaration): StateGraph[] {
   const out: StateGraph[] = [];
@@ -253,38 +182,46 @@ function stateGraphsOf(decl: CatHarnessDeclaration): StateGraph[] {
       id: d.id,
       path: d.path,
       kinds,
-      state: d.id === "beans" || d.id === "todos" ? "live" : "declared",
-      // The declaration's own words, clipped. Restating what a directory is
-      // for, here, would be a second description free to contradict the first.
+      state: projectionFor(d.id) === null ? "declared" : "live",
+      // The declaration's own words, clipped to its first sentence. Restating
+      // what a directory is for, here, would be a second description free to
+      // contradict the first.
       description: (d.description ?? "").split(/(?<=\.)\s/)[0]?.slice(0, 260) ?? "",
     });
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }
 
-/** One generated file. */
+let stale = 0;
 let wrote = 0;
+
+/** One generated file, with the `--check` contract every generator here uses. */
 function emit(path: string, content: string): void {
+  const rel = relative(ROOT, path);
+  if (check) {
+    if (!existsSync(path)) {
+      console.error(`  ✗ ${rel} is missing`);
+      stale++;
+    } else if (readFileSync(path, "utf-8") !== content) {
+      console.error(`  ✗ ${rel} is stale`);
+      stale++;
+    }
+    return;
+  }
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, content);
   wrote++;
+  console.log(`  ✓ ${rel}`);
 }
 
 /**
  * The page shell.
  *
- * It takes no base URL and composes none. Each caller writes its own metas
- * with a path relative to where that page sits — `../state/x.json` from the
- * index, `../../state/x.json` from a graph page — so the depth is expressed
- * once, at the only place that knows it, rather than threaded through here as
- * a number two callers have to agree about.
+ * It takes no base URL and composes none. The data path is written by the
+ * caller, relative to where that page sits, so the depth is expressed once at
+ * the only place that knows it.
  */
-function page(opts: {
-  title: string;
-  stub: string;
-  metas: string[];
-  body: string;
-}): string {
+function page(opts: { title: string; metas: string[]; body: string }): string {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -293,8 +230,8 @@ function page(opts: {
 <title>${esc(opts.title)}</title>
 <!--
   Generated by scripts/state-visualizer.ts. Do not hand-edit: the next run
-  overwrites it, and a hand-edit here is a change nothing else in the tree
-  knows about.
+  overwrites it, \`state:visualizer:check\` fails on the difference, and a
+  hand-edit here is a change nothing else in the tree knows about.
 -->
 ${opts.metas.join("\n")}
 <style>
@@ -315,15 +252,20 @@ h1 { font-size: 1.5rem; margin: 0 0 0.25rem; }
    survives forced-colors and greyscale print, which a hue does not. */
 a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
 a:hover { text-decoration-thickness: 2px; }
-.sv-back { display: inline-block; margin-bottom: 1rem; color: var(--sv-ink-2); font-size: 0.85rem; }
+.sv-h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
+  text-transform: uppercase; color: var(--sv-ink-2); margin: 2rem 0 0.7rem; }
 .sv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
 .sv-item {
   border: 1px solid rgba(255,255,255,0.10); border-radius: 8px;
   padding: 0.8rem 1rem;
 }
 :root[data-fa-scheme="light"] .sv-item { border-color: rgba(11,11,11,0.10); }
+.sv-item.is-here { border-color: currentColor; }
 .sv-item h2 { font-size: 1rem; margin: 0 0 0.2rem; }
 .sv-item p { margin: 0; color: var(--sv-ink-2); font-size: 0.85rem; }
+/* The page you are already on is not a link. A link to here is a control that
+   does nothing, and a reader who clicks it learns only that it did nothing. */
+.sv-here { font-weight: 600; }
 .sv-tag {
   font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em;
   font-weight: 600; margin-left: 0.5rem;
@@ -332,12 +274,6 @@ a:hover { text-decoration-thickness: 2px; }
    answer about the graph, and painting it amber would rank it as a fault. */
 .sv-tag.is-declared { color: #898781; }
 .sv-tag.is-live { color: #0ca30c; }
-.sv-h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
-  text-transform: uppercase; color: var(--sv-ink-2); margin: 2rem 0 0.7rem; }
-/* The page you are already on is not a link. A link to here is a control that
-   does nothing, and a reader who clicks it learns only that it did nothing. */
-.sv-here { font-weight: 600; }
-.sv-item.is-here { border-color: currentColor; }
 ${WORK_PLAN_CSS}
 </style>
 </head>
@@ -353,228 +289,106 @@ ${WORK_PLAN_JS}
 `;
 }
 
-/** The per-graph data file, or `null` when nothing here can read that graph. */
-function dataFor(id: string, instanceRoot: string): string | null {
-  if (id === "beans") {
-    const beans = readBeans(repoRootFor(instanceRoot));
-    if (beans === null) return null;
-    return JSON.stringify(
-      {
-        $schema: "folio-bean-index/v1",
-        repoWeb: REPO_WEB,
-        items: beans.map((b) => ({
-          id: b.id, title: b.title, status: b.status, type: b.type,
-          priority: b.priority, parent: b.parent, blocking: b.blocking,
-          createdAt: b.createdAt, updatedAt: b.updatedAt,
-          // Repo-relative, so the renderer can build BOTH a view and an edit
-          // link from one field. Composing two absolute URLs per bean here
-          // would put the forge's URL shape in the data 283 times over.
-          file: b.file,
-        })),
-        findings: beanFindings(beans),
-      },
-      null,
-      2,
-    ) + "\n";
-  }
-  if (id === "todos") {
-    const todos = readTodoFiles();
-    return JSON.stringify(
-      {
-        $schema: "folio-todo-index/v1",
-        repoWeb: REPO_WEB,
-        items: todos.map(({ todo, path }) => ({
-          id: todo.id, summary: todo.summary, status: todo.status,
-          priority: todo.priority, origin: todo.origin, createdAt: todo.createdAt,
-          file: path,
-        })),
-      },
-      null,
-      2,
-    ) + "\n";
-  }
-  return null;
-}
-
 /**
- * One registered sub-visualisation of a harness.
+ * The sibling dashboards, listed on every page.
  *
- * The registry is what the owner's instruction names: *"these are all
- * registered sub visualisations of one (sub)harness"*. `dashboard` is
- * registered unconditionally where anything is readable; every state graph the
- * instance declares registers one of its own. Adding a visualisation is adding
- * an entry, not adding a branch to the emit loop.
+ * There is no cross-kind index, because the policy gives a path per kind and
+ * none above them — `<base>/` is the documentation site's. So each dashboard
+ * carries the way across instead, which is what makes them *registered*
+ * sub-visualisations rather than six unrelated pages.
  */
-interface Visualisation {
-  /** The URL segment under `<stub>/`, and the data file's basename. */
-  id: string;
-  /** What the listing calls it. */
-  title: string;
-  /** One line under the title. */
-  blurb: string;
-  /** `live` carries data; `declared` says so and shows none. */
-  state: GraphState;
-  html: () => string;
-}
-
-/** The registry rows, rendered as the dashboard's way into each sibling. */
-function registryRows(vis: Visualisation[], current?: string): string {
-  return vis.map((v) => {
-    const here = v.id === current;
+function registry(graphs: StateGraph[], current: string): string {
+  const rows = graphs.map((g) => {
+    const here = g.id === current;
     const name = here
-      ? `<span class="sv-here">${esc(v.title)}</span>`
-      : `<a href="../${esc(v.id)}/">${esc(v.title)}</a>`;
+      ? `<span class="sv-here">${esc(g.id)}</span>`
+      : `<a href="../../${esc(g.id)}/dashboard/">${esc(g.id)}</a>`;
     return `  <li class="sv-item${here ? " is-here" : ""}">
-    <h2>${name}<span class="sv-tag is-${v.state}">${v.state}</span></h2>
-    <p>${esc(v.blurb)}</p>
+    <h2>${name}<span class="sv-tag is-${g.state}">${g.state}</span></h2>
+    <p>${esc(g.description || g.path)}</p>
   </li>`;
   }).join("\n");
+  return `<h2 class="sv-h2">State graphs this harness declares</h2>
+<ul class="sv-list">
+${rows}
+</ul>`;
 }
 
-/** Every page's way back to the harness it is a visualisation OF. */
-function crumb(stub: string): string {
-  return `<a class="sv-back" href="../">\u2190 ${esc(stub)}</a>`;
-}
-
-/** `<stub>/<graph>/` — one state graph. */
-function graphPage(g: StateGraph, stub: string): string {
-  const nav =
-    crumb(stub) +
+/** `<base>/<graph>/dashboard/` — one declared state graph. */
+function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
+  const head =
     `<h1>${esc(g.id)}</h1>` +
-    `<p class="sv-sub">${esc(g.path)} \u00b7 ${esc(g.kinds.join(", "))}</p>`;
+    `<p class="sv-sub">${esc(g.path)} · ${esc(g.kinds.join(", "))}</p>`;
 
   if (g.state === "declared") {
-    // No data, so no dashboard — and the page says which of the two it is.
+    // No projection, so no dashboard — and the page says which of the two it
+    // is rather than rendering zeros for a graph nothing read.
     return page({
-      title: `${g.id} — ${stub}`,
-      stub, metas: [],
+      title: `${g.id} — state`,
+      metas: [],
       body:
-        nav +
-        `<p class="sv-sub">This graph is <strong>declared</strong> and nothing renders it yet. ` +
-        `That is bean <code>2krx</code>: a declared subgraph with no visualiser is ` +
-        `unreachable, and 19 of this instance's 22 were in that state when this ` +
-        `was written. The directory is <code>${esc(g.path)}</code>.</p>`,
+        head +
+        `<p class="sv-sub">This graph is <strong>declared</strong> and nothing publishes a ` +
+        `projection for it yet, so there is nothing to draw. That is bean <code>2krx</code>: ` +
+        `a declared subgraph with no visualiser is unreachable, and 19 of this instance's 22 ` +
+        `were in that state when this was written. The directory is <code>${esc(g.path)}</code>.</p>` +
+        registry(graphs, g.id),
     });
   }
 
   // ONE graph per page, so one meta: the renderer tells an absent meta from a
   // failed fetch, and a second meta here would quietly make this the combined
   // view under a single graph's name.
+  //
+  // `../../assets/<id>/index.json` — the projection `gen-docs-pages.ts`
+  // already publishes, read relative to this page rather than composed.
+  const src = `../../assets/${esc(g.id)}/index.json`;
   const metas = [
     g.id === "beans"
-      ? `<meta name="fa-beans-src" content="../${esc(g.id)}.json">`
-      : `<meta name="fa-todo-src" content="../${esc(g.id)}.json">`,
+      ? `<meta name="fa-beans-src" content="${src}">`
+      : `<meta name="fa-todo-src" content="${src}">`,
   ];
   return page({
-    title: `${g.id} — ${stub}`,
-    stub, metas,
-    body: nav + `<div class="fa-workplan" data-fa-workplan>
+    title: `${g.id} — state`,
+    metas,
+    body: head + `<div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">This view needs JavaScript. The data is
-  <a href="../${esc(g.id)}.json">a plain JSON file</a>.</p>
-</div>`,
+  <a href="${src}">a plain JSON file</a>.</p>
+</div>` + registry(graphs, g.id),
   });
 }
 
-/**
- * `<stub>/dashboard/` — the work plan, and the registry beside it.
- *
- * The entry point, and the only page that carries both live metas. It lists
- * its siblings because `<base>/<stub>/` is the knowledge-graph viewer's and
- * this generator does not get to take it.
- */
-function dashboardPage(vis: Visualisation[], stub: string): string {
-  const live = vis.filter((v) => v.state === "live" && v.id !== "dashboard");
-  const metas = live.map((v) =>
-    v.id === "beans"
-      ? `<meta name="fa-beans-src" content="../${esc(v.id)}.json">`
-      : `<meta name="fa-todo-src" content="../${esc(v.id)}.json">`);
-  const data = live.length
-    ? live.map((v) => `<a href="../${esc(v.id)}.json">${esc(v.id)}.json</a>`).join(" and ")
-    : "nothing this instance can read yet";
-  return page({
-    title: `dashboard — ${stub}`,
-    stub, metas,
-    body:
-      crumb(stub) +
-      `<h1>Work plan</h1>` +
-      `<p class="sv-sub">${esc(stub)} \u2014 what its state graphs hold right now.</p>` +
-      `<div class="fa-workplan" data-fa-workplan>
-  <p class="fa-workplan-fallback">This view needs JavaScript. The data is published as
-  ${data}.</p>
-</div>` +
-      `<h2 class="sv-h2">Visualisations of this harness</h2>
-<ul class="sv-list">
-${registryRows(vis, "dashboard")}
-</ul>`,
-  });
+const decl = readDeclaration(ROOT);
+if (!decl) {
+  // "Could not determine", and this generator does not get to decide it means
+  // "no state". Exit 2 is never rendered as a pass, the same rule
+  // `check-harness-dirs.ts` and `check-ci-health.ts` follow.
+  console.error(`state-visualizer: no readable declaration at ${ROOT}`);
+  console.error("This is NOT a pass. Treat it as unknown.");
+  process.exit(2);
 }
 
-let instances = 0;
-let collisions = 0;
-for (const root of instanceRootsIn(REPO_ROOT)) {
-  const decl = readDeclaration(root);
-  // An unreadable declaration is "could not determine", and this generator
-  // does not get to decide it means "no state". It is skipped loudly.
-  if (!decl) {
-    console.error(`  ! ${root}: no readable declaration — skipped, not treated as empty`);
-    continue;
-  }
-  const stub = artefactStub(decl);
-  const graphs = stateGraphsOf(decl);
-  const base = join(OUT_DIR, stub);
-  instances++;
+const all = stateGraphsOf(decl);
+const taken = all.filter((g) => RESERVED_IDS.has(g.id) || g.id.startsWith("_"));
+for (const g of taken) {
+  console.error(
+    `  ! declared directory \`${g.id}\` collides with a route this site already uses — ` +
+      `not rendered. Rename the directory's id in harness.json.`,
+  );
+}
+const graphs = all.filter((g) => !taken.includes(g));
 
-  // A declared id that has already been spent by the layout. Reported and
-  // skipped rather than written: overwriting the viewer's own page, or being
-  // overwritten by it, would show a reader one thing under another's name.
-  const taken = graphs.filter((g) => RESERVED_SEGMENTS.has(g.id));
-  for (const g of taken) {
-    console.error(
-      `  ! ${stub}: declared directory \`${g.id}\` collides with a route this layout ` +
-      `already uses — not rendered. Rename the directory's id in harness.json.`,
-    );
-    collisions++;
-  }
-  const routable = graphs.filter((g) => !RESERVED_SEGMENTS.has(g.id));
-
-  if (routable.length === 0) {
-    // A true statement about this instance, not a skipped page. An instance
-    // that declares no state graph has nothing running that writes state, and
-    // saying so is more useful than a 404.
-    emit(join(base, "dashboard", "index.html"), page({
-      title: `dashboard — ${stub}`, stub, metas: [],
-      body: crumb(stub) + `<h1>Work plan</h1>
-<p class="sv-sub">This instance declares no state graph, so there is nothing here to watch.</p>`,
-    }));
-    console.log(`  \u2713 ${stub}/dashboard/ (no state graph)`);
-    continue;
-  }
-
-  const vis: Visualisation[] = routable.map((g) => ({
-    id: g.id,
-    title: g.id,
-    blurb: g.description || g.path,
-    state: g.state,
-    html: () => graphPage(g, stub),
-  }));
-  vis.unshift({
-    id: "dashboard",
-    title: "dashboard",
-    blurb: "Every readable state graph at once — counts, what is stuck, and where the work sits.",
-    state: vis.some((v) => v.state === "live") ? "live" : "declared",
-    html: () => dashboardPage(vis, stub),
-  });
-
-  for (const g of routable) {
-    if (g.state !== "live") continue;
-    const data = dataFor(g.id, root);
-    if (data !== null) emit(join(base, `${g.id}.json`), data);
-  }
-  for (const v of vis) emit(join(base, v.id, "index.html"), v.html());
-  console.log(`  \u2713 ${stub}/ (${vis.length} visualisation(s))`);
+for (const g of graphs) {
+  emit(join(SITE, g.id, "dashboard", "index.html"), dashboardPage(g, graphs));
 }
 
-if (collisions > 0) {
-  console.error(`\n${collisions} declared id(s) collide with a reserved route and were not rendered.`);
+if (check) {
+  if (stale > 0 || taken.length > 0) {
+    console.error(`\n${stale} dashboard(s) stale or missing — run \`bun run state:visualizer\`.`);
+    process.exit(1);
+  }
+  console.log(`state visualiser: ${graphs.length} dashboard(s) up to date`);
+} else {
+  console.log(`\nWrote ${wrote} dashboard(s) under ${relative(ROOT, SITE)}/`);
+  if (taken.length > 0) process.exit(1);
 }
-console.log(`\nWrote ${wrote} file(s) for ${instances} instance(s) under ${OUT_DIR}`);

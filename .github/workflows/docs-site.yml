@@ -213,23 +213,6 @@ jobs:
           bun run cat-harness/scripts/fsh-guts-export.ts --out "./_site/fsh-guts.jsonld"
           cp "./_site/fsh-guts.jsonld" "./_site/fsh-guts.json"
 
-          # THE REGISTERED SUB-VISUALISATIONS, per instantiated harness.
-          #
-          # `<base>/<stub>/dashboard/`, one page per declared state graph
-          # beside it, and `<base>/<stub>/<graph>.json` as their data. NO
-          # intervening segment: a visualisation is registered against the
-          # harness that declares the functionality, so the harness's own path
-          # is the namespace — and the kg-viewer written at
-          # `<base>/<stub>/index.html` three lines up is the first of them.
-          #
-          # It never writes `<stub>/index.html`, and refuses a declared
-          # directory whose id collides with a route the layout has spent.
-          #
-          # It enumerates instances itself and reads each one's own
-          # declaration, so a new instance appears here without this workflow
-          # being edited. That is the whole point of it being generic.
-          bun run cat-harness/scripts/state-visualizer.ts --out-dir ./_site
-
           # THE VOCABULARY — one document per namespace, plus the union.
           #
           # Every term now hangs off its declaring layer's namespace: bs: for

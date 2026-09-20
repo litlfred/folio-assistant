@@ -35,15 +35,17 @@ on:
       - 'cat-harness/skills/**'
       - 'cat-harness/scripts/gen-schema-docs.ts'
       - 'cat-harness/scripts/gen-docs-pages.ts'
-      # The state visualiser and the renderer it INLINES. Without these three a
-      # change to the dashboard produced no preview, so the one artefact a
-      # reviewer has to look at to judge it was the one the PR did not build.
-      # (`cat-harness/docs/**` already covers the two assets; they are named
-      # anyway because the path they live at is not the reason they matter.)
+      # The state-dashboard generator and the bean reader behind it.
+      #
+      # Their OUTPUT is committed under `cat-harness/docs/`, which the first
+      # entry in this list already matches, so a correct change trips the
+      # preview through the pages alone. These two are named for the incorrect
+      # case: a commit that edits the generator and forgets to regenerate
+      # touches no `docs/` path, gets no preview, and the reviewer sees a green
+      # PR with nothing to look at. `state:visualizer:check` then fails in the
+      # gates — this makes the preview available while that is diagnosed.
       - 'cat-harness/scripts/state-visualizer.ts'
       - 'cat-harness/scripts/beans.ts'
-      - 'cat-harness/docs/assets/js/work-plan.js'
-      - 'cat-harness/docs/assets/css/work-plan.css'
       - '.github/workflows/feature-staging.yml'
   pull_request_target:
     types: [closed]
@@ -504,16 +506,6 @@ jobs:
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json" 
 
-          # THE REGISTERED SUB-VISUALISATIONS, the same ones `docs-site.yml`
-          # publishes: `<stub>/dashboard/`, one page per declared state graph
-          # beside it, and `<stub>/<graph>.json` as their data.
-          #
-          # NO `--base-url`, and that is a property rather than an omission.
-          # Every page fetches its data relative to its own location, so the
-          # same bytes are correct at the canonical base and under
-          # `STAGING/<slug>/`. The two lines above need `$BASE` because a
-          # JSON-LD `@id` is an absolute IRI and has nowhere relative to be.
-          bun run cat-harness/scripts/state-visualizer.ts --out-dir ./_site
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.

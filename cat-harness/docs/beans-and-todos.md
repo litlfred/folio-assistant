@@ -199,13 +199,23 @@ fires forever. So the projection publishes each bean's `updated_at` as a fact
 and the page computes age when you open it. Age therefore moves without the
 file moving, which is the right way round.
 
-**There is a fuller view, and it is browsable.** Every harness instance
-publishes its own registered sub-visualisations under its own path — the
-dashboard at `<base>/<stub>/dashboard/`, and one page per state graph beside
-it at `<base>/<stub>/beans/`, `<base>/<stub>/todos/` and so on. There is no
-intervening segment, because a visualisation is registered against the harness
-that declares the functionality, and the knowledge-graph viewer already sitting
-at `<base>/<stub>/` is a sub-visualisation of exactly the same harness.
+**There is a fuller view, and it is browsable.** Every declared state graph
+gets its own dashboard at the path this instance already uses for that graph —
+`/beans/dashboard/`, `/todos/dashboard/`, and one for each of the others. The
+route is not this page's invention: bean `o7eq` carries the owner's ruling that
+a rendered asset is addressed by its instance's **name** with the **declared
+graph as a path segment**, and that this instance elides its own name because
+its `docs/` is what the site serves. There is no index above them, because
+`/` is the documentation site's — so each dashboard lists its siblings, which
+is what makes them registered sub-visualisations rather than six unrelated
+pages.
+
+**A graph with no projection says so.** `qa`, `health`, `issue-marks` and
+`uploads` are declared state graphs that nothing publishes a projection for
+yet. Their dashboards say exactly that and name bean `2krx`, rather than
+rendering zeros for a store nobody read — a dashboard that opens at zero is
+indistinguishable from a store with nothing in it, and those are opposite
+facts.
 
 **Every identifier on those pages is a link.** A bean id resolves to the bean's
 file, an issue or pull-request number to the forge, and each finding carries a
