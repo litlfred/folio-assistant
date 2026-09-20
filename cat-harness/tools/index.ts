@@ -1426,6 +1426,53 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── Tabular extraction: DECLARED, and deliberately not built ─────────
+    //
+    // Bean `eief`, the owner: "no tooling needed, stub out, make QA to catch
+    // absence." So both tools exist as nodes — a reader can see what the
+    // capability WILL be, and `satisfies` binds them to the skill — while
+    // neither has an implementation.
+    //
+    // `install: { none: true }` is not a placeholder here, it is the honest
+    // value: there is nothing to install because there is nothing to run.
+    // `bun run check:tabular-stubs` is what stops that reading as "works".
+    defineTool({
+      id: "tabular-csv",
+      title: "CSV tabular metadata (STUB)",
+      description:
+        "STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`).",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "file", schema: t("Text"), required: true, description: "Path to the delimited text file." },
+        ],
+        outputs: [
+          { name: "record", schema: t("Text"), description: "A `folio-tabular-csvw/v1` document. While stubbed, one table carrying `fac:stub` and NO columns — a half-stub is refused by the schema because it reads as a working extraction." },
+        ],
+      },
+      satisfies: ["tabular-metadata"],
+      requires: { network: false },
+    }),
+    defineTool({
+      id: "tabular-xlsx",
+      title: "Spreadsheet tabular metadata (STUB)",
+      description:
+        "STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (`fac:anchor`, `fac:headerRow`, `fac:extent`) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "file", schema: t("Text"), required: true, description: "Path to the workbook." },
+        ],
+        outputs: [
+          { name: "record", schema: t("Text"), description: "A `folio-tabular-csvw/v1` document, one table per sheet. While stubbed, every table carries `fac:stub` and no columns." },
+        ],
+      },
+      satisfies: ["tabular-metadata"],
+      requires: { network: false },
+    }),
+
     // The twenty tools this instance already serves over MCP. Kept in a sibling
     // module because they are a MIGRATION of an existing surface rather than
     // hand-authored nodes: they are regenerable from `bun run mcp:capture`, and

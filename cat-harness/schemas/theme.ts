@@ -43,6 +43,39 @@
  * second is noticed. Same reason `resolveGraphKind` refuses an unknown kind
  * rather than guessing.
  *
+ * ## One EXCEPTION, and it is a convention rather than a derivation
+ *
+ * The owner, 2026-09-20: *"each harness hould have its own unique theme (by
+ * convention)"*, and then the assignment itself: *"cat-harness=gumpy hoddie.
+ * test=engineer. bootstrap coming."*
+ *
+ * That does not reopen what the section below closes, and the difference is
+ * exact:
+ *
+ * | | |
+ * |---|---|
+ * | **refused** | deriving a theme from a ROLE, process, skill or graph kind — a note's appearance would depend on which lane happened to be reading it |
+ * | **this** | a HARNESS picking one theme and keeping it, written in that harness's own declaration |
+ *
+ * A harness is a fixed thing that owns its declaration, not a lane an actor
+ * steps into, so "this harness looks like this" is a choice made once by an
+ * author and recorded — which is what the rule below asks for. **Nothing
+ * computes it**: `harness.json` still names an id, and no code maps a harness to
+ * a theme. The convention lives in the declarations and in this comment.
+ *
+ * **A THEME IS REQUIRED; ART IS NOT.** The owner, 2026-09-20: *"who-voice-styess
+ * and iris, will have its own theme (eaech harness gets one, but maybe not
+ * avatar)"*. `backdrop` is already optional, so a palette-only theme is a
+ * COMPLETE theme rather than an unfinished one — it names the harness's colours
+ * and carries no cat. That is the right default for a layer whose art has not
+ * been drawn, and it is not the same state as a theme whose backdrop is
+ * declared but whose crops are missing, which `resolveThemeBackdrop` refuses
+ * wholesale.
+ *
+ * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `bootstrap` (the
+ * cowboy in the desert) is bootstrap's, `library` is folio-assist-core's, and
+ * `engineer` is reserved for testing surfaces.
+ *
  * ## Choosing a theme is an AUTHORING judgement — there is no mapping
  *
  * The owner, 2026-09-20: *"no formal role/theme mapping per se. that is
@@ -331,6 +364,19 @@ export interface DeclaredImage {
   src: string;
   width?: number | undefined;
   height?: number | undefined;
+  /**
+   * The quiet interior a sticky's words sit in, in fractions of this image.
+   *
+   * Declared per LAYOUT, because the cloud is in a different place in each crop
+   * — that is what the three regions on the `landing` role record, and why the
+   * owner's instruction names *"the various clouds positions … across three
+   * layouts"* rather than one.
+   *
+   * Structural here, like the rest of this interface, so `KgImage` satisfies it
+   * without this module importing `kg-node.ts` and risking the cycle the doc
+   * above describes.
+   */
+  textRegion?: { x: number; y: number; w: number; h: number } | undefined;
 }
 
 /** What {@link resolveThemeBackdrop} found, so a caller can REPORT a gap. */

@@ -1,0 +1,368 @@
+#!/usr/bin/env bun
+/**
+ * The reverse sweep: files on disk that no declaration names.
+ *
+ * @module scripts/check-undeclared-files
+ *
+ * `check-declared-assets.ts` walks **declared → disk**: it reports a declared
+ * asset that is missing, a dead link, or one it could not check. Nothing walked
+ * the other way, and the gap is not symmetric with it — it is the `dh4f` shape
+ * INVERTED:
+ *
+ * | | |
+ * |---|---|
+ * | `dh4f` | declared but absent, so a consumer scans nothing and **reports a clean run** |
+ * | this | present but undeclared, so **no consumer ever sees it at all** |
+ *
+ * ## The measured cost
+ *
+ * Commit `0301fbd2` added three 1.6–1.8 MB PNGs at the repository root, with
+ * spaces and commas in their filenames, and **no gate noticed**. They sat
+ * outside every instance, undeclared and invisible; they were found only
+ * because somebody went looking by hand. An automated pass then misread them as
+ * a regeneration of the existing landing art and recommended overwriting three
+ * declared `.webp` files — opening the image showed a completely different
+ * costume. Both halves of that near-miss trace to one absence: **a file nothing
+ * declares is a file nothing reasons about.**
+ *
+ * ## Why the repository root is swept EXPLICITLY
+ *
+ * `check-declared-assets.ts` carries `DECLARED_INSTANCES = ["cat-harness",
+ * "bootstrap"]`, and since the instance moved under `cat-harness/` the
+ * repository root is deliberately **not an instance**. That is correct and it is
+ * also exactly why the root is where an undeclared file survives: every sweep is
+ * scoped to an instance, and the root is in none of them.
+ *
+ * So the root is named here as its own subject rather than reached by accident.
+ * A sweep that covered it only as a side effect of some other rule would stop
+ * covering it the first time that rule changed.
+ *
+ * ## What counts as accounted for
+ *
+ * A root entry is accounted for when it is one of:
+ *
+ * 1. **an instance** — a directory holding its own `harness.json`;
+ * 2. **a declared directory** of any instance, resolved at repository scope
+ *    (`beans/`, `todos/` and friends live at the root by declaration);
+ * 3. **repository infrastructure** — {@link ROOT_INFRASTRUCTURE}, which is a
+ *    list with a reason per entry rather than a pile of extensions;
+ * 4. **git's own business** — dotfiles, `node_modules/`, ignored paths.
+ *
+ * Anything else is reported. The report is a **finding, not an action**:
+ * `deletion-requires-confirmation` governs what happens next, and four of this
+ * sweep's five current findings are somebody's uploaded documents.
+ *
+ * Exit codes: 0 report only, or `--check` with nothing unaccounted · 1 `--check`
+ * with findings.
+ */
+import { spawnSync } from "node:child_process";
+import { existsSync, readdirSync, statSync, type Dirent } from "node:fs";
+import { join } from "node:path";
+
+import {
+  instanceRootFor,
+  readDeclaration,
+  repoRootFor,
+  rootForScope,
+} from "../schemas/cat-harness.js";
+// REQUIRED: an instance here declares a `folio` graph, whose kind is registered
+// by a load-time side effect in core.
+import "../schemas/folio-graph-kind.js";
+
+/**
+ * Repository-level files that belong at the root, each with why.
+ *
+ * **A list with reasons, not a pattern.** `*.json` would account for
+ * `harness.config.json` and also for any JSON anybody ever drops here, which is
+ * the failure this sweep exists to catch. Every entry below is a file whose
+ * location is fixed by a tool that looks for it there.
+ */
+export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
+  "package.json": "bun/npm reads it from the repository root",
+  "bun.lock": "the lockfile beside package.json",
+  "bunfig.toml": "bun's own config, root-only",
+  "tsconfig.json": "tsc's project root",
+  "eslint.config.mjs": "eslint flat config, root-only",
+  "playwright.config.ts": "playwright's project root",
+  "test-server.mjs": "the e2e test server playwright.config.ts starts",
+  Dockerfile: "the image build context is the repository",
+  "harness.config.json": "this repository's own folio configuration",
+  "harness.config.example.json": "the worked example beside it",
+  "upstream-pins.json": "the pinned upstream revisions check-upstream-pins.ts reads",
+  "requirements.txt": "the Python toolchain, read from the root",
+  "requirements-extended.txt": "the optional half of the same",
+  "AGENTS.md": "the agent-generic instructions every tool looks for at the root",
+  "CLAUDE.md": "the tool-specific stub pointing at AGENTS.md",
+  "GEMINI.md": "the same, for another tool",
+  "README.md": "what a person landing on the repository reads",
+  LICENSE: "the repository's licence",
+  "LICENSE-CONTENT.md": "the separate licence for content",
+  NOTICE: "attribution required by the licence",
+  "THIRD-PARTY-NOTICES.md": "the dependency attributions",
+  // The one root-level entry that is neither config nor prose. Tool definitions
+  // live at `<stub>/tools/*.ts` so a composed instance can contribute its own
+  // without colliding on a filename — but FIVE modules import `../tools/index.js`,
+  // and had the move stopped at relocating the files, each would now name this
+  // instance's stub. That is the defect the stub pattern exists to remove,
+  // reintroduced one directory along. The barrel stays at the top on purpose.
+  tools: "the merged Tool barrel five modules import as `../tools/index.js`",
+  // Playwright's `outputDir`, created by a run rather than authored. Accounted
+  // for here rather than left to `gitIgnored`, and the difference is worth
+  // noticing: `_kg/` IS in `.gitignore` and this is not, so a run leaves an
+  // untracked directory at the root that git will keep offering. Nothing is
+  // committed from it today — it holds one dotfile — so this is an
+  // inconsistency to raise, not a defect to fix inside a sweep.
+  "test-results": "playwright's outputDir, created by a run (note: not gitignored, unlike _kg/)",
+};
+
+/**
+ * Paths git itself ignores — asked of git rather than listed here.
+ *
+ * `_kg/` is the case that forced this: a repository build output, gitignored at
+ * the root, which a hand-kept exclusion list would have had to learn about. Git
+ * already knows, and a second list of ignored paths is a second answer free to
+ * disagree with `.gitignore`.
+ *
+ * Returns an empty set when git is unavailable rather than throwing: a sweep
+ * that cannot consult git over-reports, which is the safe direction — the
+ * failure being guarded against is a file going UNSEEN.
+ */
+export function gitIgnored(repoRoot: string, names: readonly string[]): Set<string> {
+  if (names.length === 0) return new Set();
+  const r = spawnSync("git", ["check-ignore", "--stdin"], {
+    cwd: repoRoot,
+    input: `${names.join("\n")}\n`,
+    encoding: "utf8",
+  });
+  if (r.error) return new Set();
+  return new Set(
+    r.stdout
+      .split("\n")
+      .map((l) => l.trim().replace(/\/$/, ""))
+      .filter((l) => l.length > 0),
+  );
+}
+
+/**
+ * Is every single thing inside this directory ignored by git?
+ *
+ * The case that forced it: `.gitignore` carries `schemas/generated/` and
+ * `__pycache__/`, which ignore the CHILD and not the parent. So `schemas/` and
+ * `scripts/` — directories that exist on a working checkout for no other reason
+ * than to hold that ignored output — were reported as undeclared, while
+ * `git check-ignore schemas` correctly says they are not ignored.
+ *
+ * **In CI this passed by accident of environment, not because the check was
+ * right.** A fresh clone has no build output, so the directories do not exist at
+ * all; they appear the moment a contributor runs the generators or any Python
+ * script, which is most contributors. A check that is green only on a tree
+ * nobody works in is the `xom7` shape pointed the other way.
+ *
+ * Recursive, because the nesting can be deeper than one level and a single
+ * unignored file anywhere below is enough to make the directory real.
+ * `undefined` for a directory that cannot be read — the caller reports it rather
+ * than swallowing it, since unreadable is not empty and not ignored.
+ */
+export function whollyIgnored(repoRoot: string, rel: string): boolean | undefined {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(join(repoRoot, rel), { withFileTypes: true });
+  } catch {
+    return undefined;
+  }
+  // An EMPTY directory is not wholly ignored — there is nothing ignored in it.
+  // It is an undeclared empty directory, which is a real if minor finding, and
+  // reporting it is what `readme-sections` calls a determined empty.
+  if (entries.length === 0) return false;
+  const ignored = gitIgnored(
+    repoRoot,
+    entries.map((e) => `${rel}/${e.name}`),
+  );
+  for (const e of entries) {
+    const childRel = `${rel}/${e.name}`;
+    if (ignored.has(childRel)) continue;
+    if (!e.isDirectory()) return false;
+    if (whollyIgnored(repoRoot, childRel) !== true) return false;
+  }
+  return true;
+}
+
+/** Directories no sweep should walk, whatever git says. */
+export const IGNORED_ROOT_DIRS = ["node_modules", ".git"] as const;
+
+/** One thing on disk that no declaration accounts for. */
+export interface UndeclaredEntry {
+  path: string;
+  kind: "file" | "directory";
+  bytes: number;
+}
+
+/** Every root-level path that IS accounted for, and by what. */
+export function accountedRootPaths(repoRoot: string): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const [name, why] of Object.entries(ROOT_INFRASTRUCTURE)) out.set(name, `infrastructure: ${why}`);
+  for (const d of IGNORED_ROOT_DIRS) out.set(d, "not this sweep's business");
+
+  // TWO PASSES, and the order is the whole correctness argument.
+  //
+  // A single pass got this wrong in a way that only CI could see. It marked a
+  // directory "an instance", then walked that instance's declared directories
+  // and OVERWROTE entries — and `cat-harness` declares `bootstrap/skills/` at
+  // repository scope, whose first segment is `bootstrap`. So whether
+  // `bootstrap` ended up reading "an instance: it declares itself" or "declared
+  // by folio-assistant" depended on which `readdirSync` returned first. Locally
+  // that is bootstrap; on the CI runner it is not, and the test failed there and
+  // nowhere else.
+  //
+  // Being an instance is the stronger fact and must win: an instance is
+  // accounted for BY ITSELF, and another instance happening to declare a
+  // directory inside it does not change that. So instances are marked first and
+  // the declared-directory pass never replaces one.
+  const instances: string[] = [];
+  for (const entry of readdirSync(repoRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    // An instance declares itself. That is the contract everywhere else here,
+    // and it means a new instance is accounted for the moment it exists rather
+    // than when somebody remembers to add it to a list.
+    if (existsSync(join(repoRoot, entry.name, "harness.json"))) {
+      out.set(entry.name, "an instance: it declares itself");
+      instances.push(entry.name);
+    }
+  }
+
+  // THE ROOT MAY ITSELF BE AN INSTANCE, and since 2026-09-20 it is.
+  //
+  // Owner: *"only uploads/ on this repo's root b/c acting as if it was
+  // intialized"*. A `harness.json` at the repository root declares the checkout
+  // as an initialized instance, so the directories IT names sit at the root
+  // legitimately — `uploads/` is the worked example, and it is a DIFFERENT
+  // queue from `cat-harness/uploads/`: same id, different instance, not one
+  // directory declared twice.
+  //
+  // This sweep was written when the root was deliberately not an instance, and
+  // said so; that premise changed and the sweep reported 19.4 MB of correctly
+  // declared content as unaccounted. A sweep whose model of the repository has
+  // gone stale reports exactly like one finding a real defect, which is why
+  // this reads the declaration rather than gaining two `ROOT_INFRASTRUCTURE`
+  // entries — the entries would still be there after the next instance is
+  // declared, and would account for anything sharing those names.
+  //
+  // `rootForScope` is deliberately NOT used here. For the root instance both
+  // scopes land at the root, and `repoRootFor` would resolve a
+  // repository-scoped entry to the checkout's PARENT — outside the repository
+  // entirely. A root instance declaring repository scope is a contradiction in
+  // terms; it is not special-cased because nothing should write one.
+  if (existsSync(join(repoRoot, "harness.json"))) {
+    out.set("harness.json", "the repository's own declaration: it acts as an initialized instance");
+    const rootDecl = readDeclaration(repoRoot);
+    for (const dir of rootDecl?.directories ?? []) {
+      const top = dir.path.replace(/^\.\//, "").split("/")[0];
+      // Same `!out.has` guard and the same reason: being an instance is the
+      // stronger fact, and the root claiming a name does not unmake one.
+      if (top && !out.has(top)) {
+        out.set(top, `declared by ${rootDecl?.name ?? "the repository"} as "${dir.id}"`);
+      }
+    }
+  }
+
+  for (const name of instances) {
+    const abs = join(repoRoot, name);
+    const decl = readDeclaration(abs);
+    for (const dir of decl?.directories ?? []) {
+      // A repository-scoped entry resolves against the ROOT, which is how
+      // `beans/` and `todos/` legitimately live there.
+      const base = rootForScope(abs, dir.scope);
+      if (base !== abs) {
+        const top = dir.path.replace(/^\.\//, "").split("/")[0];
+        // `!out.has(top)` is what makes this order-independent: an entry
+        // already marked an instance keeps that, and so does one already
+        // claimed by an earlier instance's declaration.
+        if (top && !out.has(top)) out.set(top, `declared by ${decl?.name ?? name} as "${dir.id}"`);
+      }
+    }
+  }
+  return out;
+}
+
+/** Root-level entries nothing accounts for, largest first. */
+export function undeclaredAtRoot(repoRoot: string): UndeclaredEntry[] {
+  const accounted = accountedRootPaths(repoRoot);
+  const names = readdirSync(repoRoot, { withFileTypes: true })
+    .filter((e) => !e.name.startsWith("."))
+    .map((e) => e.name);
+  const ignored = gitIgnored(repoRoot, names);
+  const out: UndeclaredEntry[] = [];
+  for (const entry of readdirSync(repoRoot, { withFileTypes: true })) {
+    if (ignored.has(entry.name)) continue;
+    // A directory holding nothing BUT ignored output is ignored in substance,
+    // even though git says the directory itself is not — see `whollyIgnored`.
+    // `undefined` means it could not be read, and that is reported rather than
+    // skipped: unreadable is neither empty nor ignored.
+    if (entry.isDirectory() && whollyIgnored(repoRoot, entry.name) === true) continue;
+    // Dotfiles are git's and the tooling's; sweeping them would report
+    // `.gitignore` as a finding on every run, and a report whose first five
+    // lines are always the same is a report nobody reads.
+    if (entry.name.startsWith(".")) continue;
+    if (accounted.has(entry.name)) continue;
+    const abs = join(repoRoot, entry.name);
+    const st = statSync(abs);
+    out.push({
+      path: entry.name,
+      kind: entry.isDirectory() ? "directory" : "file",
+      bytes: entry.isDirectory() ? dirBytes(abs) : st.size,
+    });
+  }
+  return out.sort((a, b) => b.bytes - a.bytes);
+}
+
+function dirBytes(dir: string): number {
+  let total = 0;
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const abs = join(dir, e.name);
+    try {
+      total += e.isDirectory() ? dirBytes(abs) : statSync(abs).size;
+    } catch {
+      // A path that vanished mid-walk contributes nothing rather than throwing:
+      // a size report is not worth failing a sweep over.
+    }
+  }
+  return total;
+}
+
+/** Human-readable size, for a report a person reads rather than a machine parses. */
+export function humanBytes(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)} MB`;
+  if (n >= 1_000) return `${Math.round(n / 1_000)} KB`;
+  return `${n} B`;
+}
+
+if (import.meta.main) {
+  const check = process.argv.includes("--check");
+  const repoRoot = repoRootFor(instanceRootFor(import.meta.dir));
+  const findings = undeclaredAtRoot(repoRoot);
+
+  if (findings.length === 0) {
+    console.log("✓ nothing at the repository root is unaccounted for");
+    process.exit(0);
+  }
+
+  console.log(`${findings.length} path(s) at the repository root that no declaration names:\n`);
+  let total = 0;
+  for (const f of findings) {
+    total += f.bytes;
+    console.log(`  · ${humanBytes(f.bytes).padStart(8)}  ${f.path}${f.kind === "directory" ? "/" : ""}`);
+  }
+  console.log(`\n  ${humanBytes(total)} in total.`);
+  // Sizes and the remedy, never the removal. Four of the five findings today
+  // are somebody's uploaded documents, and an agent does not relocate or delete
+  // a durable artefact on its own initiative — it reports what would go, with
+  // sizes, and waits to be told.
+  console.log(
+    `\nEach is either something that belongs in a declared directory (uploads/ is the\n` +
+      `ingestion queue) or something the repository root genuinely owns, in which case\n` +
+      `add it to ROOT_INFRASTRUCTURE with the reason. This sweep REPORTS; it never moves\n` +
+      `or deletes anything.`,
+  );
+
+  if (check) process.exit(1);
+}

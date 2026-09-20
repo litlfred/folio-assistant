@@ -129,7 +129,7 @@
   --fa-sticky-ink: #221f1b;
   --fa-sticky-edge: #cbc5bb;
   --fa-sticky-accent: #7d8a6e;
-  --fa-sticky-scrim: rgba(237, 234, 228, 0.90);
+  --fa-sticky-scrim: rgba(237, 234, 228, 0.82);
   --fa-sticky-min-width: 17rem;
   --fa-sticky-padding: 0.7em 0.8em;
   --fa-sticky-font-scale: 1;
@@ -151,13 +151,41 @@
   --fa-sticky-font-scale: 0.95;
 }
 
+/* Bootstrap — Desert sand and sienna — the frontier at the start of the trail. */
+[data-fa-sticky-theme="bootstrap"] {
+  --fa-sticky-surface: #f4f0e6;
+  --fa-sticky-ink: #26211a;
+  --fa-sticky-edge: #d8cdb6;
+  --fa-sticky-accent: #b1683c;
+  --fa-sticky-scrim: rgba(244, 240, 230, 0.82);
+  --fa-sticky-min-width: 17rem;
+  --fa-sticky-padding: 0.7em 0.8em;
+  --fa-sticky-font-scale: 1;
+}
+
+/* Bootstrap — mobile layout. A phone sticky is not a laptop one scaled down. */
+@media (max-width: 40rem) {
+  [data-fa-sticky-theme="bootstrap"] {
+    --fa-sticky-min-width: 100%;
+    --fa-sticky-padding: 0.8em 0.9em;
+    --fa-sticky-font-scale: 1.05;
+  }
+}
+
+/* Bootstrap — card layout, for a dense board. */
+[data-fa-sticky-theme="bootstrap"][data-fa-sticky-layout="card"] {
+  --fa-sticky-min-width: 13rem;
+  --fa-sticky-padding: 0.6em 0.7em;
+  --fa-sticky-font-scale: 0.95;
+}
+
 /* Grumpy cat, engineering — The cloud cream and a working green, behind the cat in a hi-vis vest. */
 [data-fa-sticky-theme="engineer"] {
   --fa-sticky-surface: #fdfbef;
   --fa-sticky-ink: #1f2a24;
   --fa-sticky-edge: #c9cfc4;
   --fa-sticky-accent: #5a6b5c;
-  --fa-sticky-scrim: rgba(253, 251, 239, 0.90);
+  --fa-sticky-scrim: rgba(253, 251, 239, 0.82);
   --fa-sticky-min-width: 17rem;
   --fa-sticky-padding: 0.7em 0.8em;
   --fa-sticky-font-scale: 1;
@@ -185,7 +213,7 @@
   --fa-sticky-ink: #1c2630;
   --fa-sticky-edge: #c2ccd4;
   --fa-sticky-accent: #5c7484;
-  --fa-sticky-scrim: rgba(232, 232, 224, 0.90);
+  --fa-sticky-scrim: rgba(232, 232, 224, 0.82);
   --fa-sticky-min-width: 17rem;
   --fa-sticky-padding: 0.7em 0.8em;
   --fa-sticky-font-scale: 1;
@@ -213,7 +241,7 @@
   --fa-sticky-ink: #1e2a3a;
   --fa-sticky-edge: #cbd6e2;
   --fa-sticky-accent: #2f6ea8;
-  --fa-sticky-scrim: rgba(242, 242, 232, 0.90);
+  --fa-sticky-scrim: rgba(242, 242, 232, 0.82);
   --fa-sticky-min-width: 17rem;
   --fa-sticky-padding: 0.7em 0.8em;
   --fa-sticky-font-scale: 1;

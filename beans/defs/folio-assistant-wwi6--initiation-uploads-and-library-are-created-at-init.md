@@ -1,10 +1,11 @@
 ---
 # folio-assistant-wwi6
 title: 'INITIATION: uploads/ and library/ are created at initiation, one as state and one not'
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-20T06:19:54Z
-updated_at: 2026-09-20T06:19:54Z
+updated_at: 2026-09-20T08:48:44Z
 parent: folio-assistant-o3xy
 ---
 
@@ -78,3 +79,70 @@ are about WHICH properties each entry carries, not about how to write it.
       convention, since a convention is what `harness.json` exists to replace
 - [ ] idempotent, and covered by the same `--check` gate as the folio step
 - [ ] a test that the two are distinguishable, and that it can fail
+
+
+_2026-09-20_ — **MEASURED, and the creation half is already true.**
+
+## A newly initiated instance already gets both — proved, not argued
+
+Built a throwaway folio whose `harness.config.json` depends on this instance,
+and ran the one answer for "which directories does an instance have":
+
+```
+CREATED  uploads    uploads/    by=folio-assistant
+CREATED  library    library/    by=folio-assistant
+CREATED  folio      folio/      by=folio-assistant
+   (+ tools, schemas, cat-harness, qa, health, voices, translation-sources, cat-harness-src)
+```
+
+The chain, all four links of which already existed:
+
+1. `cat-harness/harness.json` declares `uploads` and `library`,
+   **instance-scoped** (no `scope` key — absent means instance);
+2. `resolveDirectories` hands an instance-scoped entry to every dependent,
+   resolving `absPath` against the DEPENDENT's root, not the declarer's;
+3. `materialiseDeclaredDirectories` — *"THE ONE ANSWER … called by every
+   getting-started / instantiation path so there is not a second one free to
+   disagree"* — creates them, idempotently;
+4. `scripts/init-folio.ts:598` calls it.
+
+So **nothing needed building** for "created at initiation". Recording it rather
+than writing a second creation path beside the one that works, which is how a
+repository ends up with two answers.
+
+## What I DID add, and why it is not nothing
+
+That property holds by a chain of four facts, **none of them stated anywhere**,
+and one of them is a single absent JSON key. Adding `"scope": "repository"` to
+the `uploads` entry is a plausible-looking edit that silently stops every
+downstream folio getting an ingestion queue — `resolveDirectories` skips a
+repository-scoped entry for a dependency *on purpose* — and the folio would
+simply have nowhere to drop a file. Nothing would fail.
+
+Four tests in `schemas/harness-config.test.ts` pin it: both are materialised in
+the dependent's OWN root, they are inherited rather than `(default)`, the work
+plan (`beans/`, `todos/`) is NOT inherited — the contrast that shows the test
+can tell the two apart — and the two are distinct declarations rather than one
+directory twice.
+
+**Falsified before being trusted:** patching `uploads` to `scope: repository`
+turns 3 of the 4 red. A guard that cannot fire is worse than none.
+
+## Still BLOCKED, and all three are the owner's
+
+The three questions this bean raised before any work are unchanged, and one of
+them I tried to resolve by measurement and could not:
+
+1. **"as state" vs "not as state"** — my plausible reading was *committed vs
+   gitignored*. **Measured and falsified:** both are fully tracked in this
+   checkout (`uploads/` 5 files, `library/` **1455**), and their keep-markers
+   ignore nothing on purpose. So "state" is not that, and nothing in
+   `ContentDirectory` (`id`, `path`, `graphs`, `scope`, `description`) or
+   `GraphKindDef` (`type`, `renderable`, `summary`) carries it. It needs either
+   a new declared property or a name for an existing one.
+2. **"initiation skill of folio-asst-core/"** — that layer does not exist as a
+   directory yet (#223); the roots today are `bootstrap/` and `cat-harness/`.
+3. **"by KG-Content"** — appears nowhere in the repository.
+
+Not guessed at, because each changes what gets built. Asked as one question
+with the other two counted, per `interaction-modality` §4.1.

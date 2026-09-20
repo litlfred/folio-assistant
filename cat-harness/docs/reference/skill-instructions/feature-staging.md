@@ -118,6 +118,23 @@ An author needs to change the immunization schedule:
 6. Committee compares `main` vs `STAGING/feature-update-immunization-schedule/`
 7. Committee approves → merge → staging cleaned up → main site updated
 
+## Before you hand a staging URL to a person
+
+**Check the ref, then say how long and come back.** A preview push is not a
+served page, and the bot's *"Staging preview deployed"* comment reports the
+first, not the second. List `STAGING/<slug>/` on `refs/heads/gh-pages` before
+relaying the URL; say the `stage` job takes ~2 minutes and Pages adds up to ten
+on top; schedule the re-check rather than promising it.
+
+The reason it is a rule: an agent relayed one preview URL to the owner **five
+times in a session** without checking anything, each time straight off the
+bot's comment. Whether the site served it was never established in either
+direction.
+
+The three states, and why the third is not yours to assert, are in
+[`staging-review`](staging-review.md) §"Before you hand a staging URL to a
+person (STRICT)". It is the same rule and it is written once, there.
+
 ## Before you report a staging URL as broken
 
 **Look at the publish ref, not the site.** A staging URL is LOOKED UP in

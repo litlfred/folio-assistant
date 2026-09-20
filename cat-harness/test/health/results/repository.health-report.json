@@ -8,8 +8,8 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T12:53:41.241Z",
-  "verdict": "clean",
+  "updated_at": "2026-09-20T13:11:17.401Z",
+  "verdict": "findings",
   "checks": [
     {
       "id": "staging-preview-size",
@@ -34,7 +34,7 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 388349594,
+          "value": 376954021,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
@@ -84,7 +84,7 @@
     },
     {
       "id": "repository-size",
-      "state": "ok",
+      "state": "finding",
       "summary": "The repository's tracked content, and what a full-history clone of it costs. Two different questions, reported separately.",
       "thresholds": [
         {
@@ -119,36 +119,43 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 86555452,
+          "value": 86566337,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 689643252,
+          "value": 704336102,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 649943040,
+          "value": 663438336,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 88,
+          "value": 92,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 7.97,
+          "value": 8.14,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
-      "findings": []
+      "findings": [
+        {
+          "summary": "`.git` is 671.7 MB against 82.6 MB of tracked content — 8.1x, in 92 pack(s).",
+          "metric": "git-dir-to-tree-ratio",
+          "severity": "minor",
+          "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
+        }
+      ]
     },
     {
       "id": "bean-store",
@@ -194,19 +201,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 187,
+          "value": 193,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 134,
+          "value": 138,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 53,
+          "value": 55,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },

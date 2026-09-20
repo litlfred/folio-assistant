@@ -1453,21 +1453,39 @@ if (check) {
     const w = worstSeverity(r);
     return w !== undefined && gate.includes(w);
   });
-  // ORPHANS FAIL, beside `stale`, and the parallel is exact: both say the
-  // committed sidecars disagree with what this run produced. A stale one is a
-  // verdict that has not caught up; an orphaned one is a verdict about something
-  // this run did not judge. Neither is a finding ABOUT a subject, which is why
-  // the severity gate above cannot see them — they are computed outside
-  // `reports` — and why twelve accumulated while `gates --all` stayed green.
+  // ORPHANS FAIL, and they did not until the count reached zero.
   //
-  // All three orphan groups count, the unreadable one included. `AGENTS.md` on
-  // this repository's own health sweeps: could-not-determine "is never rendered
-  // as clean" and it "outranks a finding" — a sweep blind on one check has not
-  // cleared the others. A sidecar whose subject cannot be resolved is exactly
-  // that case, so excluding it would put the third state back on the pass side.
+  // The sweep printed its findings to stderr and `orphans` appeared nowhere in
+  // this expression, so `kg:audit:check` reported twelve and exited 0 — a
+  // report nobody fails on, which is `xom7`: from inside a checkout that looks
+  // exactly like a clean run. CI ran this command and was green over all of
+  // them.
   //
-  // Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0, or
-  // regenerating after a rename would fail the command you run to fix it.
-  process.exit(stale.length || orphans.length || tripped ? 1 : 0);
+  // Gating earlier would have been gating a backlog, which is how a check gets
+  // switched off within a week. The repository's own precedent is the ruff
+  // comment in `code-quality-gates.yml`: **a check is an error only once its
+  // count is zero.** The twelve were cleared in the commit that added this
+  // line — four whose subject had moved, eight written before
+  // `isPartOfASkill` existed — so it starts at zero and any new one is a
+  // regression rather than debt.
+  //
+  // Three further points, from a second session that reached this same change
+  // independently and whose merge is where these were folded in:
+  //
+  //   · WHY the severity gate could not already see them: orphans are computed
+  //     outside `reports`, so `worstSeverity` has nothing to rank. They are not
+  //     findings ABOUT a subject — a stale sidecar is a verdict that has not
+  //     caught up, an orphaned one a verdict about something this run did not
+  //     judge — which is why they sit beside `stale` rather than inside the
+  //     severity ladder.
+  //   · ALL THREE orphan groups count, the UNREADABLE one included. `AGENTS.md`
+  //     on this repository's own sweeps: could-not-determine "is never rendered
+  //     as clean" and it "outranks a finding" — a sweep blind on one check has
+  //     not cleared the others. Excluding the unresolvable case would put the
+  //     third state back on the pass side.
+  //   · Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0,
+  //     or regenerating after a rename would fail the very command you run to
+  //     fix it.
+  process.exit(stale.length || tripped || orphans.length > 0 ? 1 : 0);
 }
 process.exit(0);
