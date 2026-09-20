@@ -191,11 +191,29 @@ facts nothing backs). `sushi-config.yaml` is in that state permanently for now:
 it is YAML, `describeRepository` parses JSON, and its MEMBERSHIP is still real
 because the file's presence is the assertion.
 
-**Still open, and each said rather than left to look finished:**
+**CLOSURE SHIPPED, same day.** `describeRepositoryClosure()` in
+`schemas/harness-config.ts` — at the layer that already owns
+`resolveDependencyTree`, rather than pushing the walk down into the registry.
+Membership is ATTRIBUTED (`by`, `own`), never merged: "this repository is a
+DAK" and "something it depends on is a DAK" are different claims and a
+flattened set cannot tell them apart, which is the case this bean cites. A
+type asserted by both the root and a dependency appears twice — two
+repositories each making the claim, not a duplicate. Cross-instance facts are
+NOT compared: two repositories naming different `canonicalUrl`s is two
+repositories, and reporting that as a conflict would make every non-trivial
+tree look broken.
 
-- **Closure under the dependency tree.** `describeRepository` reads the ROOT
-  only. The resolver lives a layer up and importing it here would invert the
-  dependency.
+**AND `folio` IS NOT `harness` — the distinction was missed the first time.**
+`harness.json` says *this is an instance*; `harness.config.json` says *this
+authors folio content*. Measured: `cat-harness/` carries the first and NOT the
+second, so it is a harness and is not a folio — the platform-not-content rule
+showing up as a fact about two files. `isFolio` in `folio-intent.dmn` is
+exactly membership of `folio`, which is what its own input documentation
+always said (*"harness.config.json exists in the working directory"*), so the
+five branches are unperturbed by a repository being several things at once:
+they key on folio-ness alone.
+
+**Still open, and each said rather than left to look finished:**
 - **`ig` is not registered.** Nothing declares an IG instance, so there is no
   marker to recognise; registering it would mint a type whose membership can
   never be asserted — an entry that looks like coverage and detects nothing.

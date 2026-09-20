@@ -10,8 +10,29 @@
  * place it is declared, and the split is what makes that enforceable rather
  * than merely stated.
  *
- * ONE type is registered here — `harness`, on `harness.json` — because it is
- * the only one this layer owns.
+ * Two are registered here — `harness` and `folio` — because they are the two
+ * this layer owns.
+ *
+ * ## They are NOT the same type, and this repository is the proof
+ *
+ * `harness.json` says *this is an instance*: a name, a stub, the directories
+ * it holds. `harness.config.json` says *this authors folio content*: it
+ * carries `contentType`, and `folio_init` writes it.
+ *
+ * ```
+ *                     harness.json   harness.config.json
+ *   cat-harness/           yes              NO
+ *   the repository root    yes              yes
+ * ```
+ *
+ * So `cat-harness/` is a harness and is **not** a folio — which is exactly
+ * right, and is the platform-not-content rule `AGENTS.md` opens with, showing
+ * up as a measurable fact about two files rather than as a slogan.
+ *
+ * This is also what `isFolio` in `folio-intent.dmn` has always meant. That
+ * input is documented as *"harness.config.json exists in the working
+ * directory"* — so it was never "is this an instance", it is one membership of
+ * the set, and `getting-started.md` now says so.
  *
  * ## `dak` and `sushi` are NOT here, and the partition gate is why
  *
@@ -41,6 +62,7 @@
  */
 import { defaultContentTypes, type ContentTypeRegistry } from "./content-type";
 import { DECLARATION_FILENAME } from "./cat-harness";
+import { HARNESS_CONFIG } from "./harness-config";
 import { termIri } from "./namespaces";
 
 /** The `@type` a harness declaration projects to. */
@@ -62,6 +84,24 @@ export function registerBaseContentTypes(registry: ContentTypeRegistry = default
     },
   });
 
+  registry.register("folio", {
+    filename: HARNESS_CONFIG,
+    type: termIri("Folio"),
+    summary:
+      "A repository that authors folio content — it declares a content type, and `folio_init` wrote this file.",
+    facts: (d) => {
+      const doc = d as { contentType?: unknown };
+      return {
+        // NOT cross-checked against anything today, and that is the honest
+        // state: no other marker here states a content type, so this fact has
+        // nobody to disagree with. It is carried because a consumer asking
+        // "what are you?" wants `paper` or `document`, not just `folio` — and
+        // because the day a second marker states it, the cross-check is
+        // already wired.
+        contentType: typeof doc.contentType === "string" ? doc.contentType : undefined,
+      };
+    },
+  });
 }
 
 registerBaseContentTypes();
