@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/skills/dmn-authoring/output.schema.json",
+  "title": "DMN Authoring Output",
+  "description": "Output schema for DMN decision table authoring.",
+  "type": "object",
+  "required": [
+    "dmnFile"
+  ],
+  "properties": {
+    "dmnFile": {
+      "type": "string"
+    },
+    "decisionTableCount": {
+      "type": "integer"
+    },
+    "ruleCount": {
+      "type": "integer"
+    },
+    "hitPolicy": {
+      "type": "string",
+      "enum": [
+        "UNIQUE",
+        "FIRST",
+        "PRIORITY",
+        "ANY",
+        "COLLECT",
+        "RULE ORDER"
+      ]
+    }
+  },
+  "staging": {
+    "branch": "claude/festive-galileo-s7ibx0",
+    "sha": "971b34d983f53a17349501d2bdd682858d88f8b1",
+    "pr": "540/merge",
+    "run": "35519627939"
+  }
+}
