@@ -34,10 +34,6 @@ import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { siteLinks } from "./site-links.js";
 
-import { readLandingStickies } from "./ensure-landing-sticky.js";
-import { isExternalLink } from "../schemas/landing-sticky.js";
-import { resolveThemeBackdrop } from "../schemas/theme.js";
-import { themeById } from "../schemas/themes.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const OUT = join(ROOT, siteDirFor(ROOT), "_data/harness.json");
@@ -138,97 +134,6 @@ if (!repoUrl && existsSync(OUT)) {
   }
 }
 
-/**
- * The landing stickies, each with its theme's art already resolved.
- *
- * ## Resolved HERE, not in Liquid
- *
- * A sticky names a theme by id; the theme names an image ROLE; the instance's
- * `images[]` answers what that role's three crops are. Following that chain in
- * a template would mean a Liquid `where` over two collections per sticky per
- * layout, and Liquid has no way to REPORT that a link in the chain is missing —
- * it renders empty. `resolveThemeBackdrop` returns the three-state answer
- * (`none` / `missing` / complete), and a partial resolution is refused
- * wholesale rather than serving a wide crop to a phone.
- *
- * So the template gets a flat, already-decided structure and the decisions stay
- * where they can be tested.
- *
- * An unknown theme id degrades to no art rather than failing the build: whether
- * a theme is installed is a question about the instance's theme set, which a
- * sticky cannot see, and `theme.ts` already says resolution happens at render
- * time "where a missing theme degrades rather than failing the page".
- */
-/**
- * Which crop a sticky's art should be, chosen from the shape of its CONTENT.
- *
- * The owner: *"auto chose layout based on content shape."* The three crops are
- * genuinely different shapes — landscape, portrait, square — and until now the
- * choice was made by viewport alone, which meant a two-line sticky and a
- * twelve-line one got the same wide crop on a laptop and neither fitted.
- *
- * Weight, not character count: a link costs far more vertical space than its
- * own text, because it is a block with a note under it. The constant is a
- * rough line-height's worth, which is what makes four links weigh more than the
- * paragraph above them — as they should, since they are what makes that card
- * tall.
- *
- * Thresholds are chosen against the three stickies that exist, which is honest
- * rather than universal: a short note is square, a paragraph is wide, and
- * anything that will run down the page takes the tall crop. They will need
- * revisiting when a sticky lands between two of them, and a sticky can always
- * override by declaring its own.
- */
-function shapeFor(comment: string, links: readonly { label: string; note?: string }[]): string {
-  const weight =
-    comment.length +
-    links.reduce((n, l) => n + l.label.length + (l.note?.length ?? 0) + 40, 0);
-  if (weight < 250) return "card";
-  if (weight < 450) return "laptop";
-  return "mobile";
-}
-
-const stickies = readLandingStickies(ROOT).map((st) => {
-  const theme = themeById(st.theme);
-  const resolved = theme ? resolveThemeBackdrop(theme, decl.images) : undefined;
-  const art: Record<string, unknown> = {};
-  if (resolved && resolved.art.size > 0) {
-    for (const [layout, img] of resolved.art) {
-      art[layout] = {
-        src: siteRelative(img.src),
-        width: img.width ?? null,
-        height: img.height ?? null,
-      };
-    }
-  }
-  return {
-    id: st.id,
-    summary: st.summary,
-    comment: st.comment,
-    theme: st.theme,
-    // Split so the template never has to ask whether to apply `relative_url`:
-    // doing so to an absolute URL breaks it, and omitting it on a site path
-    // drops the baseurl. `isExternalLink` reads it off the URL scheme, which
-    // cannot disagree with the value the way a hand-set flag can.
-    links: st.links.map((l) => ({
-      label: l.label,
-      href: l.href,
-      note: l.note ?? "",
-      external: isExternalLink(l),
-    })),
-    art,
-    // The crop this sticky's CONTENT wants, as opposed to the one its viewport
-    // wants. The template uses it as the default and still lets a narrow screen
-    // override — a tall phone should not be handed a landscape crop just
-    // because the text is short.
-    shape: shapeFor(st.comment, st.links),
-    // Emitted even when there is no art: the stylesheet composites it over
-    // whatever is behind, and a sticky whose theme did not load still wants a
-    // readable ground. Degrade toward legible.
-    scrim: theme?.backdrop?.scrim ?? null,
-  };
-});
-
 const payload = {
   _generated: "scripts/sync-docs-harness.ts — do not hand-edit; edit harness.json",
   name: decl.name,
@@ -239,7 +144,6 @@ const payload = {
     ? { src: siteRelative(smallIcon.src), title: smallIcon.title ?? "", description: smallIcon.description ?? "" }
     : null,
   landing,
-  stickies,
   // THE KINDS THIS INSTANCE DECLARES — for the avatar fan (bean `4kj4`).
   //
   // Owner: *"shows the DECLared kinds for that instance, not inheritance."*

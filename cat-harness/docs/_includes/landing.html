@@ -48,11 +48,19 @@
   `title.html` shipped once.
 {%- endcomment -%}
 
+{%- comment -%}
+  TWO data files, and the split is a layering one rather than a convenience.
+  `harness` is the INSTANCE's own declaration, written by the harness layer;
+  `stickies` is folio CONTENT, written by core. They were one file until
+  `repo-partition --edges` reported the harness reaching up into core's content
+  nodes to build it.
+{%- endcomment -%}
 {%- assign h = site.data.harness -%}
+{%- assign stickies = site.data.stickies.stickies -%}
 
-{%- if h.stickies and h.stickies.size > 0 -%}
+{%- if stickies and stickies.size > 0 -%}
 <div class="fa-sticky-board fa-landing-board">
-  {%- for st in h.stickies -%}
+  {%- for st in stickies -%}
   {%- assign has_art = false -%}
   {%- if st.art.laptop -%}{%- assign has_art = true -%}{%- endif -%}
   <article class="fa-sticky fa-landing-sticky{% if has_art %} fa-sticky--backdrop{% endif %}"
