@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-20T18:30:22Z
-updated_at: 2026-09-20T18:33:23Z
+updated_at: 2026-09-20T18:50:40Z
 parent: folio-assistant-zzmr
 ---
 
@@ -120,3 +120,48 @@ honest answer for that one — is not pre-empted by this.
 **The throwaway branch was discarded; nothing is pushed.** This records that
 the recommended option works, so choosing it is a small edit rather than an
 experiment.
+
+
+## OWNER: **"nlvl - yes"**, 2026-09-20 — option 1 applied
+
+Three manifests written, each naming its package after its instance, following
+`cat-bootstrap/skills`'s precedent:
+
+| file | `name` | skills |
+|---|---|---|
+| `kg-navigation/skills/package-manifest.json` | `kg-navigation` | `kg-navigation` |
+| `large-datasets/skills/package-manifest.json` | `large-datasets` | `materialize-remote` |
+| `who-iris/skills/package-manifest.json` | `who-iris` | `iris-dspace` |
+
+`cat-harness/src/skills` is untouched and remains the sole claimant of the id
+`skills`, so the question #576 deferred about that one is not pre-empted.
+
+### Measured: this is a NO-OP on main today, and that is the point
+
+The obvious worry is that adding a manifest changes how a directory is
+treated — a `kg` directory holding skills directly is folded into the
+instance's own package, and a manifest could promote it. Measured rather than
+assumed, by exporting the graph with and without the three files:
+
+| | packages | total nodes |
+|---|---|---|
+| without the manifests | 12 | 1987 |
+| with the manifests | 12 | 1987 |
+
+Identical. Main does not read a manifest's `name` yet — `packageIdFor` arrives
+with #576 — so these files change nothing until the fix that needs them lands,
+which is what a prerequisite should do. With #576's branch merged on top they
+take the export from rc=1 to rc=0 at 16 packages, measured earlier on this
+bean.
+
+### Still open on this bean
+
+- [x] The owner has chosen a naming
+- [x] Each affected `skills/` directory declares a manifest `name`
+- [x] `bun run kg:export` exits 0 with #576's branch merged onto main
+- [ ] **A gate runs `kg-export` (or its collision check) in
+      `code-quality-gates.yml`.** Still true and still a gap: `kg-export` runs
+      only in `docs-site.yml` and `feature-staging.yml`, so this class of
+      failure is reachable only at publish time. Not folded in here — it needs
+      a `--check` mode or a drift gate rather than a writer in the gate set,
+      which is its own change.
