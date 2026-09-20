@@ -180,6 +180,11 @@ const RULES: Rule[] = [
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
+      // Same relation as the line above, checked from the other end: that one
+      // WRITES the maintained artefacts, this one asks whether every `maintains`
+      // claim is in the published tree. Harness-level for the same reason — a
+      // Tool node and a built site, no folio needed to have anything to do.
+      "scripts/check-maintained-artefacts.ts", // every `maintains` claim is actually published
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file

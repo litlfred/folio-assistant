@@ -407,6 +407,44 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   // rather than instructions. `minor` at 280 is roughly p75. Neither is a
   // style opinion; both say "this is longer than three quarters of its peers".
   {
+    id: "nested-instance-audited",
+    applies: ["graph"],
+    // `minor`, because the SILENCE is correct and only its invisibility is the
+    // defect. One instance's graph must not carry another's nodes — that is
+    // `instance-graph-isolation.test.ts`, guarding a live 2026-09-19 leak of 88
+    // references. So this audit rightly does not read a nested instance, and
+    // rightly must not be made to.
+    //
+    // What was wrong is that nothing said so. On 2026-09-20 a session read
+    // "named by no activity" as absolute, concluded the audit had a blind spot,
+    // declared the nested directory at the root and re-introduced the leak the
+    // test exists to prevent. Scoping the wording stopped that MISreading; this
+    // criterion is the other half — it names the unread instance outright, so
+    // the gap is a reported number rather than something to be deduced and
+    // mis-deduced. Bean `sa8y`.
+    severity: "minor",
+    summary:
+      "This tree holds a nested instance whose graph this audit does not read — correctly, but the unread corpus should be counted rather than silent.",
+  },
+  {
+    id: "skill-is-a-stub",
+    applies: ["skill"],
+    // `minor`, and the severity is the whole point. A stub is INTENDED
+    // work-in-progress, not a defect: it exists so the graph traverses and
+    // `skill_fetch` answers instead of failing mid-task. It must be VISIBLE —
+    // otherwise stubbing a gap hides it, which is strictly worse than leaving the
+    // gap open — and it must not gate, or the act of stubbing would turn CI red.
+    //
+    // `minor` gives exactly that: `kg:audit` prints it, `kg:audit:check` passes,
+    // and `kg:audit:strict` does not promote it either. The owner's principle,
+    // 2026-09-20: "stub things out knowing its not working. make sure QA checks
+    // pickup so we can fix later. principle: KG is always a work in progress. QA
+    // helps show where to work on it next, close gaps."
+    severity: "minor",
+    summary:
+      "A skill is a declared stub: it exists so the graph traverses and skill_fetch answers, and its content is not here yet.",
+  },
+  {
     id: "skill-is-brief",
     applies: ["skill"],
     severity: "minor",
