@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T18:21:04Z
-updated_at: 2026-09-20T18:21:35Z
+updated_at: 2026-09-20T18:29:15Z
 parent: folio-assistant-yj32
 ---
 
@@ -226,3 +226,84 @@ disagrees with the graph kind it renders is a second name for one thing.
 ---
 
 Tracked on [issue #582](https://github.com/litlfred/folio-assistant/issues/582).
+
+
+---
+
+## ANSWERED by the owner, 2026-09-20 — all three questions
+
+### 1. Which option — **C, with D as a view inside it, and A widened alongside**
+
+So the build is the compiler-API reader over the authoritative `.ts`, feeding
+one projection, feeding a zero-dependency browsable viewer, **and** per-type
+UML diagrams rendered as a view within that viewer rather than as a wall-sized
+class diagram. Widening the existing TypeDoc run is taken as a separate,
+independent win and must not be entangled with the rest.
+
+**What this decides, and why it matters more than "pick one":** the diagram is
+a VIEW over a projection, not an output format. That is what keeps D's
+hairball problem from returning — the projection carries every type and every
+edge, and each rendered diagram is a neighbourhood of one type, the same
+argument `kg-viewer.ts` already made and won for 1111 KG nodes.
+
+### 2. Ingesting schemas into the KG library — **BOTH (1) and (3)**
+
+The owner picked two of the three readings together:
+
+- **(1) External schemas become library sources.** Upstream FHIR
+  StructureDefinitions, JSON Schema from other projects and the like are
+  ingested into `library/` as real bibliographic sources, so a KG node can
+  CITE them.
+- **(3) Our own `schemas/*.ts` also become library entries**, with bib-slugs,
+  like any other source.
+
+**Taken together these are stronger than either alone, and the combination is
+the point.** If only external schemas were sources, "cite the schema you
+conform to" would work for someone else's schema and not for ours, and the
+asymmetry would show up as a dangling reference the first time one of our own
+schemas needed citing. Both in, and `library/` is then uniformly the place a
+schema reference resolves through — which is the property `jbx2` is about
+demonstrating rather than asserting.
+
+**What it does NOT decide, and must not be guessed:** what a schema's
+`sections/`, `structure.json` and OCR-state mean for an entry that was never a
+scanned document. `library/<slug>/` has a shape built for a scanned source, and
+a schema has no pages. The three-state ingestion display `jbx2` requires will
+report *something* for a schema entry, and inventing what that is here would be
+the third answer to a question `slw1` owns. **Raise it against `slw1` before
+building the ingestion half.**
+
+### 3. The URL — **NOT a new `schema/` top-level segment.** Owner, verbatim:
+
+> rendered assets should be available at toplevel like `<baseULR>/` for main
+> jsut the docs pipleline, or `<baseurl>/<page>` where is registered rendered
+> page from a harness that was instantiated and enabled (by default enabled)
+> realtivg to their url, so `<baseurl>cat-harness/docs` or so...
+> `<baseurl>/<insantiated harness>/<path_to_rendered_conentent>`, bootstrap
+> jsonld/json is example
+
+**This is a general rule about the rendering pipeline, not an answer about
+schemas**, and it is bigger than this bean — it says how EVERY instance's
+rendered content is addressed, with the bootstrap `.jsonld`/`.json` as the
+worked example. It is beaned separately rather than buried here, because a
+rule that governs every rendered artefact should not live in the bean of the
+first artefact to need it. Both options offered — `schema/` and `schemas/` —
+were the wrong question: neither is a top-level segment at all.
+
+**What it settles for THIS bean:** the visualisers are published under the
+instance's own rendered-content root, **resolved** from the declaration and
+never composed as a literal. `siteDir` already returns `docs` relative to the
+instance root and `artefactStub` already names the instance, so both halves of
+`<instance>/<path>` exist as resolvers today. Nothing here writes a
+`schema/` or `schemas/` path segment at the top level.
+
+## Scope, now that the answers are in
+
+| piece | option | state |
+|---|---|---|
+| widen TypeDoc over all of `schemas/` | A | independent, first |
+| compiler-API reader over `schemas/*.ts` | C | the core |
+| published projection, gated | C | follows the reader |
+| browsable viewer over the projection | C | follows the projection |
+| per-type UML as a VIEW in that viewer | D-in-C | last |
+| schemas into `library/`, both directions | — | blocked on `slw1`, see above |
