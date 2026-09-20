@@ -45,6 +45,33 @@ a generated file nobody can tell is wrong.
 it checks the kg-viewer strings, not the docs catalogues. Two different
 artefacts; the gate for the second does not exist.
 
+## The churn half is FIXED — and it was mine
+
+Measured after filing this: the writer is `scripts/translation/simulate-translation.ts`,
+which ended in a bare `main();` rather than the `if (import.meta.main) main();`
+that 61 other entry points here use. So **importing** it ran the whole
+simulation and wrote four files.
+
+What imports it is `scripts/tests/declared-directory-resolves.test.ts` — a test
+I added in #482, which imports every module that calls `directoryForGraph` in a
+fresh subprocess to prove each can resolve one. From that commit, a plain
+`bun test` mutated the working tree, and whoever ran the suite reverted the
+result as somebody else's churn. I did, four times, before measuring where it
+came from rather than reverting a fifth.
+
+Guarded in #483, with a regression test in that same file asserting the import
+loop leaves `git status --porcelain` unchanged — compared before against after,
+not asserted clean, since a tree that was already dirty is not its business.
+Mutation-checked: removing the guard fails that test by name.
+
+## What is still open
+
+The catalogues on main really are stale — ~190 `#:` line references pointing at
+an older `agent-onboarding.md` — and **nothing compares them**. Regenerating no
+longer happens by accident, so the staleness is now quiet rather than noisy,
+which is worse: the only signal it ever had was the dirty tree, and that signal
+has just been removed. A `:check` is what it needed all along.
+
 ## Also: two generated files are neither tracked nor ignored
 
 `translations/fr/agent-onboarding.md` and `translations/fr/status.json` are
@@ -54,6 +81,8 @@ them) — today they are a third thing that makes every tree dirty.
 
 ## Done when
 
+- [x] the sweep stops writing them by accident — `simulate-translation.ts`
+      guarded, with a regression test (#483)
 - [ ] the `fr/agent-onboarding` catalogues are regenerated and committed
 - [ ] a `:check` exists that fails on a stale catalogue, and it is in the
       gate set — the point is a gate that can FAIL, not a regeneration
