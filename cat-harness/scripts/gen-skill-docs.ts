@@ -206,6 +206,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // it is resolved the same way.
   "kg-navigation": "Knowledge-graph navigation (tooled)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
+  "who-iris-skills": "WHO IRIS (catalogue instance)",
 };
 
 /**

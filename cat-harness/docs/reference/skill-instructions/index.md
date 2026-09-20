@@ -231,6 +231,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
 
+## WHO IRIS (catalogue instance)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
+
 ## Agent skills
 
 | Skill | Id | Schema | Summary |

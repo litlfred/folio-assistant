@@ -134,7 +134,8 @@
     "narratives:reject": "bun run cat-harness/scripts/narratives.ts reject",
     "deps:python": "bun run cat-harness/scripts/gen-python-deps.ts",
     "deps:python:check": "bun run cat-harness/scripts/gen-python-deps.ts --check",
-    "check:python-deps": "bun run cat-harness/scripts/check-python-deps.ts"
+    "check:python-deps": "bun run cat-harness/scripts/check-python-deps.ts",
+    "check:catalogue": "bun run who-iris/scripts/check-catalogue.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
