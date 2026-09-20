@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v7bg
 title: 'TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T04:34:11Z
-updated_at: 2026-09-20T04:34:11Z
+updated_at: 2026-09-20T16:39:06Z
 parent: folio-assistant-d308
 ---
 
@@ -122,3 +122,74 @@ assumptions have taken.
 
 That is an argument for continuing one node at a time with the full gate set
 between, rather than batching the remaining eleven. Each node is a probe.
+
+
+---
+
+## MEASURED 2026-09-20 — two capabilities share the word "publish", and each is broken the opposite way  ⟵ BLOCKER
+
+Read `content-publish`'s declaration and every publishing mechanism in the repo,
+rather than reasoning from the bean's title.
+
+### `content-publish` has a contract and no mechanism here
+
+Its declared contract requires **`versionIncrement`**, with `releaseNotes` and
+`target` optional. Its prose is about a **folio's** content reaching the world:
+
+> Update version numbers (semantic versioning) · Create publication metadata
+> (`publication-request.json` for FHIR IGs) · Build final artifacts (IG Publisher
+> build, LaTeX compilation) · Create release branches and tags · Create GitHub
+> releases with release notes · Deploy to publication platform (smart.who.int,
+> arXiv, etc.)
+
+Measured: **nothing here produces `publication-request.json`** (zero references),
+and the platform carries no folio. `publish.yml` is *"Build & Publish"* but its
+inputs are `source_branch` / `feature_branch` / `publish_branch` — it builds a
+content pipeline and pushes artefacts. It does no version increment and cuts no
+release.
+
+So a node over `publish.yml` claiming this skill would **fail `check:tools`**, and
+rightly: the contract requires a `versionIncrement` port the mechanism has no
+notion of. That makes this the **third unsatisfiable contract** after
+`latex-authoring` (`jh2j`).
+
+### `release-please.yml` is a mechanism with no skill
+
+It *does* cut releases — semver + CHANGELOG + GitHub release + tag — but for **the
+7 published packages under `tools/`**, and it **derives** the bump from
+conventional-commit types rather than taking one:
+
+> feat: minor bump · fix: patch · feat!: major · Owner reviews the cut release on
+> GitHub, then triggers the publish workflow with `target=pypi`.
+
+And **no skill in the corpus mentions `release-please`, semver or CHANGELOG.** The
+only release-adjacent skill is `upstream-version-adoption`, which is about
+*consuming* an upstream release, not cutting one. That is the `yean` shape exactly.
+
+### Why this is the owner's and not mine
+
+Three readings, and they are different designs rather than degrees of the same one:
+
+1. **`content-publish` is folio-side and stays unsatisfiable here** — record it
+   beside `latex-authoring`, and its mechanism lives in a folio repo this
+   measurement cannot see (`d308`'s own correction).
+2. **Its contract is wrong** — `versionIncrement` as a required *input* describes a
+   manual flow, and this platform derives the increment. If the contract should
+   describe the derived form, that is a change to a published contract.
+3. **`release-please` wants its own skill** — "cut a release of the platform's own
+   packages" is a capability nobody has stated, and authoring it is a claim about
+   the capability vocabulary that every dependent instance inherits. `yean`
+   established that call is the owner's.
+
+They are not exclusive — 1 and 3 can both be true — but each is a design act, and
+none is a Tool node I can write honestly today.
+
+### Done when
+
+- [ ] **which of the three readings** — the owner's call
+- [ ] if 3: a skill for cutting the platform's own package releases, then a node
+      over `release-please.yml`
+- [ ] if 2: `content-publish`'s contract revised, and the `versionIncrement`
+      required-input decision recorded
+- [ ] if 1: recorded as the third unsatisfiable contract, and tier A's count says
+      why

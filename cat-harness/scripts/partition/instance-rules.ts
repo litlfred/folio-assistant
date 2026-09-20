@@ -757,6 +757,23 @@ export const RULES: Rule[] = [
     repo: "core",
     triaged: true,
     exact: [
+      // The simulator-asset validator (bean `023p`). It falls to `sci` on the
+      // keyword rule further down, which matches the WORD `simulator` — and
+      // that is the CLASSIFICATION being wrong rather than the import, exactly
+      // as `schemas/dak-blocks.ts` was in the `smart-base` block.
+      //
+      // MEASURED: `simulator` is in core's own `DOCUMENT_BLOCK_KINDS` and NOT
+      // in `MATH_BLOCK_KINDS`. A simulator block is part of the generic
+      // document model, so a check on its declared asset path belongs to the
+      // layer that declares the kind. The module carries no Lean, no TeX and
+      // no science — it asks whether a declared file is on disk.
+      //
+      // It sits in THIS rule rather than the core block below because first
+      // match wins and the sci keyword rule comes first: an `exact` after it
+      // never runs. The keyword rule itself stays — `simulators/` as CONTENT
+      // is subject matter, which is what its own comment says. This is one
+      // module whose NAME collides with it.
+      "content/pipeline/validate-simulator.ts",
       "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
       // Statement-level hashing for `.lean` files, by the same test: the
       // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in
