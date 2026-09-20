@@ -124,6 +124,30 @@ if (import.meta.main) {
   let declared = 0;
 
   const instances = declaredInstances(root);
+
+  // Zero instances is a BROKEN DISCOVERY, never a clean repository.
+  //
+  // Bean `6tkl`, and it is the second time this exact shape has bitten this
+  // one gate. The first: `DECLARED_INSTANCES` was a hand-kept list that, after
+  // the `wggr` move, named a root carrying no `harness.json` — so
+  // `declaredAssets` returned `[]` and this printed *"1 declared asset across
+  // 2 instances, 0 findings"* over a file it had never opened. A clean run
+  // across an empty set, in the one check whose whole subject is a file nobody
+  // was looking at.
+  //
+  // Discovery fixed the list. It did NOT fix the failure mode: a discovery
+  // that finds nothing still reported success until this guard. Every
+  // repository that runs this gate has at least its own root declaration, so
+  // zero means the walk is broken, not that there is nothing to check.
+  if (instances.length === 0) {
+    console.error(
+      `  ✗ no instances discovered under ${root} — expected at least the ` +
+        `root's own \`harness.json\`. Reporting a clean run here would be a ` +
+        `pass over an empty set (bean \`6tkl\`), so this is a failure.`,
+    );
+    process.exit(2);
+  }
+
   for (const abs of instances) {
     declared += declaredAssets(abs).length;
     const r = auditInstance(abs);
