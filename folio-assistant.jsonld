@@ -252,10 +252,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T16:00:46.398Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/77bb07df98383f5c2e93b004dcdbf15aa328d893",
-  "sourceCommitSha": "77bb07df98383f5c2e93b004dcdbf15aa328d893",
-  "sourceCommitAt": "2026-09-20T17:59:19+02:00",
+  "generatedAt": "2026-09-20T16:18:26.688Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f11efe2d05c41109ff7aaca94adfaabd8ac54f4e",
+  "sourceCommitSha": "f11efe2d05c41109ff7aaca94adfaabd8ac54f4e",
+  "sourceCommitAt": "2026-09-20T18:17:05+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 202,
@@ -267,7 +267,7 @@
     "Process": 51,
     "SequenceFlow": 665,
     "ProcessNode": 630,
-    "Tool": 61,
+    "Tool": 62,
     "Schema": 68,
     "GraphKind": 20,
     "Directory": 21,
@@ -24074,6 +24074,121 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/render-log",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "render-log",
+      "title": "Record what the publish branch served",
+      "description": "Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/render-log.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dir",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A checkout of the publish branch, or a publish directory about to become one. This tool NEVER fetches, commits or pushes: the workflows that call it already hold the checkout with their own retry and concurrency handling, and a second pusher racing those is a new way to lose a deploy.",
+            "required": true,
+            "arg": {
+              "flag": "--dir"
+            }
+          },
+          {
+            "name": "event",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RenderEvent",
+            "description": "`rendered`, `removed`, `restored` or `retained`. `retained` is the one that makes the log worth reading — a removal CONSIDERED and refused, which otherwise leaves no trace at all.",
+            "required": true,
+            "arg": {
+              "flag": "--event"
+            }
+          },
+          {
+            "name": "kind",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "What was rendered — `staging-preview`, `site`, `export`. Open on purpose: the publish branch carries more than previews, and a closed enum would put a schema change between somebody and logging what they published.",
+            "required": true,
+            "arg": {
+              "flag": "--kind"
+            }
+          },
+          {
+            "name": "path",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The path on the publish branch. Checked as a VALUE, never trusted by provenance: the slug sanitiser can emit `..`, and that is only safe for a slug taken from a git ref — a dispatch input is not one (bean `fuzm`).",
+            "required": true,
+            "arg": {
+              "flag": "--path"
+            }
+          },
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The staging slug, where the subject has one.",
+            "required": false,
+            "arg": {
+              "flag": "--slug"
+            }
+          },
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch the render came from.",
+            "required": false,
+            "arg": {
+              "flag": "--branch"
+            }
+          },
+          {
+            "name": "commit",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/CommitSha",
+            "description": "The commit the artefact was built from.",
+            "required": false,
+            "arg": {
+              "flag": "--commit"
+            }
+          },
+          {
+            "name": "run",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "description": "The workflow run that wrote this, so a reader can open the log.",
+            "required": false,
+            "arg": {
+              "flag": "--run"
+            }
+          },
+          {
+            "name": "prose",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Markdown",
+            "description": "One JSON object on STDIN: `{summary, reason?, detail?, format?}`. `summary` is required and one line. `reason` is required by the SCRIPT for `removed` and `retained` — an entry saying an artefact went and not why is the ambiguity the log exists to prevent. `format` declares how the prose reads (absent means plain text, never sniffed). Build it with `jq -n --arg`, never by concatenation.",
+            "required": true,
+            "arg": {
+              "stdin": true
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "entry",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The day's JSONL the entry was APPENDED to. Append is the only verb: there is no `--remove`, no `--edit` and no `--id`, so a takedown is a `removed` ENTRY rather than the erasure of the `rendered` one before it — the never-delete rule made structural instead of a guard three cleanup paths have to remember."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "jq"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ci-health",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "ci-health",
@@ -27612,8 +27727,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "77bb07df98383f5c2e93b004dcdbf15aa328d893",
+    "sha": "f11efe2d05c41109ff7aaca94adfaabd8ac54f4e",
     "pr": "main",
-    "run": "35521273035"
+    "run": "35522229608"
   }
 }
