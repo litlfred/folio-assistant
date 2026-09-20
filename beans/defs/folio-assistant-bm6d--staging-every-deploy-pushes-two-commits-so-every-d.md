@@ -1,10 +1,11 @@
 ---
 # folio-assistant-bm6d
 title: 'STAGING: every deploy pushes TWO commits, so every deploy cancels its own Pages build'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-20T11:44:36Z
-updated_at: 2026-09-20T11:44:36Z
+updated_at: 2026-09-20T16:00:26Z
 parent: folio-assistant-1xhc
 ---
 
@@ -73,3 +74,58 @@ workflow pushing twice.
 
 The cross-session contention on `gh-pages`, and the `docs-site.yml` full-replace
 question. Different causes, and `6pfo` / `1feu` hold that ground.
+
+---
+
+## The obvious fix is WRONG, and the reason is in `render-log.ts` itself
+
+Analysed 2026-09-20 by the session that caused this — the second commit is the
+render log (bean `5mg5`), and `feature-staging.yml:551` carries that session's
+own count: *"14 render-log: … added by the log, where there were none"*.
+
+The tempting collapse is to stage one tree containing both
+`STAGING/<slug>/` and `_render-log/`, publish it at the branch root with
+`keep_files: true`, and get one commit. **It would lose log entries.**
+
+`peaceiris/actions-gh-pages` copies `publish_dir` over a fresh clone. The
+staged `_render-log/<date>.jsonl` would be read at checkout time and written at
+deploy time, so anything a concurrent session appended in between is
+**overwritten**. That property is not incidental — `render-log.ts:108`:
+
+> `appendFileSync`, never read-modify-write: six workflows publish to this
+
+and [`render-logging`](../../cat-harness/skills/folio-core/render-logging.md):
+*"whatever landed in between, and the tool appends a line rather than
+rewriting."*
+
+**So the collapse trades a wasted Pages build for a silently lost record of a
+deleted preview** — which is bean `plj1`'s shape, the thing the log was built
+to end. A worse bug than this one.
+
+## The safe design, and it is bigger than this bean assumes
+
+Do the whole deploy in one git operation with the rebase-and-retry loop the
+log push already uses:
+
+1. check out `gh-pages`
+2. copy `_site` into `STAGING/<slug>/` (no delete — what `keep_files: true` means)
+3. append the log entry with `render-log.ts --dir <checkout>`
+4. **one** commit, pushed with the existing rebase-retry loop
+
+A real `git rebase` replays the append onto whatever landed in between, so
+append-only survives — which the action's copy-over-clone cannot do. One
+commit, one Pages build, record intact.
+
+**The cost is replacing a well-tested third-party action with hand-rolled git
+in the deploy path of every session's review preview.** The pattern is already
+proven in this file (the log push uses exactly that loop), but it cannot be
+tested from a checkout: a mistake here loses review surfaces for everybody.
+
+## What this bean is actually worth
+
+Re-read before recommending: this bean says the 404 that prompted the look was
+**not** explained by it. The harm is waste and latency — a cancelled build
+restarts, so the preview appears later — not a lost preview. Weigh that
+against rewriting the deploy path untested.
+
+Left as analysis, not a change. The next session has the trap written down.

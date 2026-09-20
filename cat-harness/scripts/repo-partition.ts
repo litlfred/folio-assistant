@@ -506,6 +506,9 @@ const RULES: Rule[] = [
       // Harness by subject too: whether a commit got a CI run is a fact about
       // the forge and the pipeline, and a folio has neither as content.
       "scripts/check-head-has-run.ts",
+      // The unattended half of the same question, and harness for the same
+      // reasons: it reads the forge's view of this repository's pull requests.
+      "scripts/check-prs-have-runs.ts",
       "scripts/check-agents-claims.ts",
       "scripts/check-agent-entry-links.ts",
       "scripts/check-agents-xref.ts",
