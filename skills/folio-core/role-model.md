@@ -473,13 +473,58 @@ It is a **deny-list of groups known not to hold skills**, not an allow-list of
 `local/`, so a new group of real skills is picked up automatically and a new
 group of something else is a one-line addition.
 
+## Administration IS a swimlane — settled 2026-09-20
+
+The role graph is the substrate every diagram's lanes bind to. Changing it —
+adding an actor, opening a role, granting a permission, retiring a
+participant — is therefore a process like any other, and it is drawn:
+[`actor-role-administration.bpmn`](../workflows/actor-role-administration.bpmn),
+in the `administrator` lane.
+
+**That was a question, not a deduction.** Until the owner answered it, there
+was an `admin` ACTOR and no `administrator` ROLE, and the honest alternative
+was live: administration could have been recorded as *a reviewed filesystem
+edit* with no lane of its own. The bean (`folio-assistant-hb2o`) was blocked
+on exactly that, and blocked on purpose — **do not invent a role to make a
+diagram drawable.** That is the closure-widening failure this skill records
+in §"Two compositions", arrived at from the other end: a role minted for a
+picture is a role no audit can fail, because nothing was ever true of it.
+
+What the answer settles, and what it does not:
+
+| | |
+|---|---|
+| administration is a lane | so `role-management` is exercised somewhere a reader can find |
+| the lane is `person`-only | a permission grant is a standing decision, not a task; the agentic/mechanical line is judgement, and this one is **authority** |
+| the mechanics are NOT re-drawn | the diagram **calls** `code-change-review`; a second description of branch-gates-review is a second thing free to disagree with the first |
+| the audit runs **after** | every criterion is a join, so what an administrative edit breaks is never in the file it edited |
+
+The measurement that made this a *missing process* rather than a broken
+reference, 2026-09-20 across 26 actors, 31 roles and 34 diagrams: 31 of 31
+roles bound a lane, no actor named a role that did not exist, no lane bound
+nothing. One actor had no roles — `viewer`, a **determined** empty, stated
+in its own description. Nothing was dangling. `admin` simply appeared in
+seventeen diagrams as something else every time, and the one thing it
+uniquely was had no picture.
+
 ## Adding a role
 
-1. Add it to `skills/roles/roles.json` with a `summary` that says what the
-   **position** is, not what it is called. `actorKind` is `person`, `agent`,
-   `system` or `external` — human, agentic, mechanical, or outside this
-   instance. It is what `activity-fulfilment-kind` checks the lane's steps
-   against, so it is a claim about who can actually stand there, not a label.
+1. Add it to `skills/roles/roles.json` with a **`description`** that says what
+   the **position** is, not what it is called. **`actorKinds` is a SET** drawn
+   from `person`, `agent`, `system` and `external` — human, agentic,
+   mechanical, or outside this instance. It is what `activity-fulfilment-kind`
+   checks the lane's steps against, so it is a claim about who can actually
+   stand there, not a label.
+
+   > **This step said `summary` and `actorKind` until 2026-09-20, and both
+   > were wrong in the way that costs something.** `title`/`description` are
+   > the two labels EVERY knowledge-graph node carries — the reason is on
+   > `RoleDef.title` — and `actorKinds` is plural because the corpus settled
+   > it (see §"An actor is one of three kinds"). Neither is a spelling
+   > preference: **Zod strips an unknown key**, so a role written to this
+   > instruction type-checks, parses, and silently loses the field. That is
+   > bean `zdrf`'s failure class, and it happened — the three roles added in
+   > #453 each carry a `summary` that reaches no graph.
 2. Bind its lanes — `<folio:role ref>` in new diagrams, `lanes[]` for an
    existing name you are not renaming.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
