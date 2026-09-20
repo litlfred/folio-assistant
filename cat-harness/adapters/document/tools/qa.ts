@@ -30,7 +30,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { get } from "../paths.js";
 import { runPipeline, asToolText, autoPaper, tryParseJson } from "./_pipeline.js";
 
-const paperArg = (p?: string) => (p ? `content/${p}` : undefined);
+const paperArg = (p?: string) => (p ? `folio/${p}` : undefined);
 
 /** The QA tools that mean something on a prose folio. Registered by both adapters. */
 export function registerQaTools(server: McpServer): void {
@@ -90,7 +90,7 @@ export function registerQaTools(server: McpServer): void {
       if (!pp) {
         return asToolText("glossary_check", {
           ok: false, script: "build-glossary", exitCode: null, stdout: "", stderr: "",
-          error: "specify a paper (could not auto-detect a single paper under content/)",
+          error: "specify a paper (could not auto-detect a single paper under folio/)",
         });
       }
       return asToolText("glossary_check", runPipeline("build-glossary", [pp, "--check"]));

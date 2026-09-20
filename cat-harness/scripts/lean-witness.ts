@@ -190,12 +190,14 @@ export function clearWitnesses(leanFile: string): number {
 
 /** Find all .lean files in content directories. */
 export function findContentLeanFiles(): string[] {
-  return globSync("content/**/*.lean", { cwd: REPO_ROOT, absolute: true });
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  return globSync("folio/**/*.lean", { cwd: REPO_ROOT, absolute: true });
 }
 
 /** Find all witness files in the repo. */
 export function findAllWitnesses(): string[] {
-  return globSync("content/**/*.witness", { cwd: REPO_ROOT, absolute: true });
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  return globSync("folio/**/*.witness", { cwd: REPO_ROOT, absolute: true });
 }
 
 // ── CLI ──────────────────────────────────────────────────────────

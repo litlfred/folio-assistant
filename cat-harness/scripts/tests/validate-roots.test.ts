@@ -15,7 +15,7 @@
  * threw `ReferenceError: dir is not defined`. It could not be reached, because
  * the empty-corpus path returned first.
  *
- * Neither was visible to `tsc`: `content/**` is outside the tsconfig program
+ * Neither was visible to `tsc`: `folio/**` is outside the tsconfig program
  * (bean `folio-assistant-tsca`).
  *
  * These pin the invariant that survives both: validating nothing is a

@@ -1,7 +1,7 @@
 /**
  * Six pipeline entry points imported the bibliography as
  * `../../schemas/references` — a path that does not exist in this repo. The
- * reference database is CONTENT (in qou it is `content/schema/references.ts`,
+ * reference database is CONTENT (in qou it is `folio/schema/references.ts`,
  * ~7900 lines of CSL-JSON), so it belongs to the folio the same way the values
  * registry and the Lake package list do.
  *
@@ -9,7 +9,7 @@
  * module` at import**, so `validate-bib`, `bib-qa`, `export-bibtex`,
  * `export-json`, `validate-references` and `validate-references-human-review`
  * could not run at all. The whole bibliography subsystem was dead, and nothing
- * reported it: `content/**` was outside the tsconfig program, and nothing else
+ * reported it: `folio/**` was outside the tsconfig program, and nothing else
  * imports these entry points.
  *
  * Downstream cost, measured: qou's committed `references.bib` carries 372

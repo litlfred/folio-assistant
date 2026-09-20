@@ -89,13 +89,13 @@ beforeAll(() => {
   git(["config", "user.email", "t@t"], work);
   git(["config", "user.name", "t"], work);
   git(["remote", "add", "origin", bare], work);
-  mkdirSync(join(work, "content"), { recursive: true });
+  mkdirSync(join(work, "folio"), { recursive: true });
   writeFileSync(join(work, "README.md"), "x");
   git(["add", "-A"], work);
   git(["commit", "-qm", "init"], work);
   git(["push", "-q", "origin", "main"], work);
 
-  lakeRoot = join(work, "content", "pkg", "lean");
+  lakeRoot = join(work, "folio", "pkg", "lean");
   mkdirSync(lakeRoot, { recursive: true });
   writeFileSync(join(lakeRoot, "lakefile.toml"), `name = "${PKG}"\n`);
   writeFileSync(join(lakeRoot, "lean-toolchain"), "leanprover/lean4:v4.24.0\n");
@@ -183,7 +183,7 @@ describe("lake-cache.sh — restore", () => {
     // `restore` correctly no-ops (exit 0) before it ever consults the
     // branch — so testing this against the restored root would assert
     // the wrong thing.
-    const fresh = join(root, "fresh", "content", "pkg", "lean");
+    const fresh = join(root, "fresh", "folio", "pkg", "lean");
     mkdirSync(fresh, { recursive: true });
     writeFileSync(join(fresh, "lakefile.toml"), `name = "${PKG}"\n`);
     writeFileSync(join(fresh, "lean-toolchain"), "leanprover/lean4:v4.24.0\n");

@@ -121,7 +121,8 @@ function resolveBlockRoot(input: string): string {
     resolve(input),
     resolve(root, input),
     resolve(input.replace(/^content\//, "")),
-    resolve("content", input),
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    resolve("folio", input),
   ];
   for (const c of candidates) {
     if (existsSync(c + ".ts")) return c;

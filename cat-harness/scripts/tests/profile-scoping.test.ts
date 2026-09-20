@@ -195,7 +195,7 @@ function scaffoldFolio(contentType: "paper" | "document"): {
   });
   return {
     root: d,
-    blockRoot: join(d, "content", "cold-chain-guidance", "introduction", "overview"),
+    blockRoot: join(d, "folio", "cold-chain-guidance", "introduction", "overview"),
   };
 }
 

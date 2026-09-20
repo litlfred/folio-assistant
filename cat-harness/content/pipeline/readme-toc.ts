@@ -201,7 +201,7 @@ export function publishedPaths(
 // ── Folio structure ─────────────────────────────────────────────────────────
 
 export interface PaperInfo {
-  /** Directory under `content/`. */
+  /** Directory under `folio/`. */
   dir: string;
   /** Title from the paper manifest, falling back to the folio entry, then the dir. */
   title: string;
@@ -231,7 +231,8 @@ function matchTitle(src: string): string | undefined {
  * folio almost always is.
  */
 export function discoverPapers(root: string): PaperInfo[] {
-  const contentDir = join(root, "content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const contentDir = join(root, "folio");
   const folioPath = join(contentDir, "folio.ts");
   let entries: { dir: string; folioTitle?: string }[] = [];
 
@@ -263,13 +264,15 @@ export function discoverPapers(root: string): PaperInfo[] {
  * numbered nor an appendix.
  */
 export function chaptersOf(root: string, paper: string): ChapterInfo[] {
-  const manifest = join(root, "content", paper, `${paper}.ts`);
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const manifest = join(root, "folio", paper, `${paper}.ts`);
   if (!existsSync(manifest)) return [];
   const src = readFileSync(manifest, "utf-8");
   const dirs = [...src.matchAll(/chapterRef\(\s*\{\s*dir:\s*["']([^"']+)["']/g)].map((m) => m[1]);
 
   return dirs.map((dir) => {
-    const chapterTs = join(root, "content", paper, dir, `${dir}.ts`);
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const chapterTs = join(root, "folio", paper, dir, `${dir}.ts`);
     let title = dir;
     if (existsSync(chapterTs)) title = matchTitle(readFileSync(chapterTs, "utf-8")) ?? dir;
     const kind = dir.startsWith("appendix-")
@@ -341,7 +344,7 @@ export function renderToc(root: string, cfg: ReadmeTocConfig, fetch = false): To
 
     const paperPdf = firstPublished(cfg.paperPdfPathPatterns, { paper: paper.dir }, published);
     const paperPdfUrl = paperPdf && urlFor(paperPdf, cfg, repoUrl);
-    const source = `[\`content/${paper.dir}/\`](content/${paper.dir}/)`;
+    const source = `[\`folio/${paper.dir}/\`](folio/${paper.dir}/)`;
     out.push(
       paperPdfUrl
         ? `${source} · [full PDF](${paperPdfUrl})`
@@ -370,7 +373,7 @@ export function renderToc(root: string, cfg: ReadmeTocConfig, fetch = false): To
       if (!pdfPath && published) missingPdfs.push({ paper: paper.dir, chapter: ch.dir });
       const pdfCell = pdfUrl ? `[${ch.dir}.pdf](${pdfUrl})` : "—";
       out.push(
-        `| ${label} | ${cell(ch.title)} | [\`${ch.dir}/\`](content/${paper.dir}/${ch.dir}/) | ${pdfCell} |`,
+        `| ${label} | ${cell(ch.title)} | [\`${ch.dir}/\`](folio/${paper.dir}/${ch.dir}/) | ${pdfCell} |`,
       );
     }
     out.push("");

@@ -49,7 +49,8 @@ const _positional = (() => {
   }
   return undefined;
 })();
-const root = _positional ?? join("content", requirePaper(_paperArg));
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const root = _positional ?? join("folio", requirePaper(_paperArg));
 const bsIdx = process.argv.indexOf("--batch-size");
 const bsVal =
   bsIdx >= 0 && bsIdx + 1 < process.argv.length

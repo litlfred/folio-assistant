@@ -126,7 +126,8 @@ function main() {
   const paper = requirePaper(paperArg(args));
   const out =
     args.includes("--out") ? args[args.indexOf("--out") + 1] : "build/status-section-audit.json";
-  const root = join("content", paper);
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const root = join("folio", paper);
 
   const mds = walkMd(root);
   const byChapter = new Map<string, BlockRec[]>();

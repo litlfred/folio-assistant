@@ -53,7 +53,8 @@ import type {
 } from "../../schemas/bib-verification";
 
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
-const LEDGER_PATH = join(REPO_ROOT, "content", "bib-qa-verifications.json");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const LEDGER_PATH = join(REPO_ROOT, "folio", "bib-qa-verifications.json");
 
 /** Model identifier recorded as the assessing agent. */
 const AGENT_MODEL = process.env.FOLIO_AGENT_MODEL ?? "unknown-agent";
@@ -131,7 +132,7 @@ function beanBody(
     `Relevance: **${relevance.verdict}** — agent assessment, not yet adjudicated.`,
     "",
     "Raised by `local/paper-relevance-triage`; the ledger row is in " +
-      "`content/bib-qa-verifications.json`.",
+      "`folio/bib-qa-verifications.json`.",
   );
   return lines.join("\n");
 }

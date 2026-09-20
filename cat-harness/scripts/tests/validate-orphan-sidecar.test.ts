@@ -62,7 +62,7 @@ describe("no-orphan-sidecar", () => {
   });
 
   test("does not flag a paper-level audit artefact that shares the extension", async () => {
-    // `qa-section-title-audit.ts` writes `content/<paper>/section-title-audit.qa.json`,
+    // `qa-section-title-audit.ts` writes `folio/<paper>/section-title-audit.qa.json`,
     // keyed by paper and chapter rather than by block. It has no `.ts` by
     // design, and four live in the qou corpus. Bean `qou-efzm` had them
     // recorded as orphans left behind by a deleted block; the file shape says
@@ -189,7 +189,7 @@ describe("no-orphan-sidecar in chapter mode", () => {
  */
 describe("no-orphan-sidecar in the results tree", () => {
   /**
-   * A folio root holding `content/demo/<chapter>/` block directories and a
+   * A folio root holding `folio/demo/<chapter>/` block directories and a
    * mirrored `test/results/block-qa/content/demo/<chapter>/` verdict tree.
    *
    * @param chapters block stems per chapter — each gets a `.ts` and a `.md`
@@ -201,7 +201,7 @@ describe("no-orphan-sidecar in the results tree", () => {
   ): string {
     const root = mkdtempSync(join(tmpdir(), "orphan-folio-"));
     for (const [ch, blocks] of Object.entries(chapters)) {
-      const dir = join(root, "content", "demo", ch);
+      const dir = join(root, "folio", "demo", ch);
       mkdirSync(dir, { recursive: true });
       for (const b of blocks) {
         writeFileSync(
@@ -216,7 +216,7 @@ describe("no-orphan-sidecar in the results tree", () => {
       );
     }
     for (const [ch, stems] of Object.entries(verdicts)) {
-      const mirror = join(root, "test", "results", "block-qa", "content", "demo", ch);
+      const mirror = join(root, "test", "results", "block-qa", "folio", "demo", ch);
       mkdirSync(mirror, { recursive: true });
       for (const s of stems) {
         writeFileSync(
@@ -230,7 +230,7 @@ describe("no-orphan-sidecar in the results tree", () => {
 
   /** The mirror directory for a chapter of the fixture folio. */
   const mirrorOf = (root: string, ch: string) =>
-    join(root, "test", "results", "block-qa", "content", "demo", ch);
+    join(root, "test", "results", "block-qa", "folio", "demo", ch);
 
   /**
    * Run with the cwd inside the fixture folio, because that is the only input
@@ -259,7 +259,7 @@ describe("no-orphan-sidecar in the results tree", () => {
       { "ch-a": ["stays", "moved"], "ch-b": ["moved"] },
     );
     const found = orphanIssues(
-      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+      (await validateInFolio(root, join(root, "folio", "demo", "ch-a"))).issues,
     );
     expect(found.length).toBe(1);
     expect(found[0].message).toContain("moved.qa.json");
@@ -278,7 +278,7 @@ describe("no-orphan-sidecar in the results tree", () => {
       { "ch-a": ["stays", "moved"], "ch-b": ["moved"] },
     );
     const found = orphanIssues(
-      (await validateInFolio(root, join(root, "content", "demo", "ch-b"))).issues,
+      (await validateInFolio(root, join(root, "folio", "demo", "ch-b"))).issues,
     );
     expect(found.length).toBe(0);
     rmSync(root, { recursive: true, force: true });
@@ -287,7 +287,7 @@ describe("no-orphan-sidecar in the results tree", () => {
   test("a verdict in the results tree whose block exists is not an orphan", async () => {
     const root = folio({ "ch-a": ["alpha"] }, { "ch-a": ["alpha"] });
     const found = orphanIssues(
-      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+      (await validateInFolio(root, join(root, "folio", "demo", "ch-a"))).issues,
     );
     expect(found.length).toBe(0);
     rmSync(root, { recursive: true, force: true });
@@ -299,7 +299,7 @@ describe("no-orphan-sidecar in the results tree", () => {
     // absent results directory is not one of its instances: nothing has been
     // written there, so nothing is orphaned there.
     const root = folio({ "ch-a": ["alpha"] }, {});
-    const { issues } = await validateInFolio(root, join(root, "content", "demo", "ch-a"));
+    const { issues } = await validateInFolio(root, join(root, "folio", "demo", "ch-a"));
     expect(orphanIssues(issues).length).toBe(0);
     expect(issues.some((i) => i.message.includes("could not read the results tree"))).toBe(false);
     rmSync(root, { recursive: true, force: true });
@@ -311,11 +311,11 @@ describe("no-orphan-sidecar in the results tree", () => {
     // of them on the day it upgraded, which is worse than the gap.
     const root = folio({ "ch-a": ["alpha"] }, {});
     writeFileSync(
-      join(root, "content", "demo", "ch-a", "alpha.qa.json"),
+      join(root, "folio", "demo", "ch-a", "alpha.qa.json"),
       JSON.stringify({ $schema: "block-qa/v1", label: "rem:alpha", criteria: {} }),
     );
     const found = orphanIssues(
-      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+      (await validateInFolio(root, join(root, "folio", "demo", "ch-a"))).issues,
     );
     expect(found.length).toBe(0);
     rmSync(root, { recursive: true, force: true });
@@ -326,11 +326,11 @@ describe("no-orphan-sidecar in the results tree", () => {
     // An unmigrated folio must keep exactly the protection it had.
     const root = folio({ "ch-a": ["alpha"] }, {});
     writeFileSync(
-      join(root, "content", "demo", "ch-a", "ghost.qa.json"),
+      join(root, "folio", "demo", "ch-a", "ghost.qa.json"),
       JSON.stringify({ $schema: "block-qa/v1", label: "rem:ghost", criteria: {} }),
     );
     const found = orphanIssues(
-      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+      (await validateInFolio(root, join(root, "folio", "demo", "ch-a"))).issues,
     );
     expect(found.length).toBe(1);
     expect(found[0].message).toContain("ghost.qa.json");
@@ -349,7 +349,7 @@ describe("no-orphan-sidecar in the results tree", () => {
       JSON.stringify({ criterion: "voice-section-title-coherence", paper: "p", chapters: {} }),
     );
     const found = orphanIssues(
-      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+      (await validateInFolio(root, join(root, "folio", "demo", "ch-a"))).issues,
     );
     expect(found.length).toBe(0);
     rmSync(root, { recursive: true, force: true });
@@ -359,7 +359,7 @@ describe("no-orphan-sidecar in the results tree", () => {
     const root = folio({ "ch-a": ["alpha"] }, { "ch-a": ["alpha"] });
     writeFileSync(join(mirrorOf(root, "ch-a"), "corrupt.qa.json"), "{ this is not json");
     const found = orphanIssues(
-      (await validateInFolio(root, join(root, "content", "demo", "ch-a"))).issues,
+      (await validateInFolio(root, join(root, "folio", "demo", "ch-a"))).issues,
     );
     expect(found.length).toBe(1);
     expect(found[0].message).toContain("corrupt.qa.json");

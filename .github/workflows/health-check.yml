@@ -93,7 +93,7 @@ jobs:
         id: check
         run: |
           set +e
-          bun run test/health/run.ts --out "$RUNNER_TEMP/health.md"
+          bun run health --out "$RUNNER_TEMP/health.md"
           status=$?
           set -e
           echo "status=$status" >> "$GITHUB_OUTPUT"

@@ -57,7 +57,8 @@ interface RefFacts {
 }
 
 function ledgerPath(repoRoot: string): string {
-  return join(repoRoot, "content", "bib-qa-verifications.json");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  return join(repoRoot, "folio", "bib-qa-verifications.json");
 }
 
 function readLedger(repoRoot: string): SourceLedger {
@@ -74,7 +75,8 @@ function readLedger(repoRoot: string): SourceLedger {
  * validated CSL objects.  It is also never executed this way.
  */
 function readRefFacts(repoRoot: string): Map<string, RefFacts> {
-  const p = join(repoRoot, "content", "schema", "references.ts");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const p = join(repoRoot, "folio", "schema", "references.ts");
   const out = new Map<string, RefFacts>();
   if (!existsSync(p)) return out;
   const src = readFileSync(p, "utf-8");

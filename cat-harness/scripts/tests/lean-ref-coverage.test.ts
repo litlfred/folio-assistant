@@ -50,10 +50,10 @@ const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 
 // ── Fixture helpers ─────────────────────────────────────────────
 
-/** Create a throwaway workspace with a `content/<paper>` tree + a `lean/` Lake tree. */
+/** Create a throwaway workspace with a `folio/<paper>` tree + a `lean/` Lake tree. */
 function makeWorkspace(): { tmp: string; content: string; lake: string } {
   const tmp = mkdtempSync(join(tmpdir(), "leancov-"));
-  const content = join(tmp, "content", "quantum-observable-universe");
+  const content = join(tmp, "folio", "quantum-observable-universe");
   const lake = join(tmp, "lean");
   mkdirSync(content, { recursive: true });
   mkdirSync(lake, { recursive: true });
@@ -128,7 +128,7 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
         md: "The bar-even identity holds over any commutative ring.\n",
       });
 
-      const blocks = [...walkBlocks(join(tmp, "content"))];
+      const blocks = [...walkBlocks(join(tmp, "folio"))];
       const blk = blocks.find((b) => b.ts === ts);
       expect(blk).toBeDefined();
       // Resolved to the library tree — NOT a chapter-dir sibling (none exists).
@@ -171,7 +171,7 @@ describe("lean.ref candidate-2 (library tree) resolution", () => {
         ref: "qou:QOU.BraidKnot.Dup",
         sibling: GENERIC_R_BODY, // co-located sibling present
       });
-      const blk = [...walkBlocks(join(tmp, "content"))].find((b) => b.ts === ts);
+      const blk = [...walkBlocks(join(tmp, "folio"))].find((b) => b.ts === ts);
       expect(blk!.lean!.replace(/\\/g, "/")).toContain("/braids-and-knots/dup.lean");
       expect(blk!.lean!.replace(/\\/g, "/")).not.toContain("/lean/QOU/");
     } finally {

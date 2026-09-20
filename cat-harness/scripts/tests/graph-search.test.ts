@@ -28,7 +28,7 @@ function node(dir: string, name: string, doc: Record<string, unknown>): void {
 
 beforeAll(() => {
   ROOT = mkdtempSync(join(tmpdir(), "graph-search-"));
-  const CONTENT = join(ROOT, "content", "qou", "ch01");
+  const CONTENT = join(ROOT, "folio", "qou", "ch01");
   const LIBRARY = join(ROOT, "library", "src-1", "nodes");
   mkdirSync(CONTENT, { recursive: true });
   mkdirSync(LIBRARY, { recursive: true });
@@ -138,14 +138,14 @@ describe("graphSearch", () => {
 
   test("a present-but-empty root is reported, not silently zero", () => {
     const empty = mkdtempSync(join(tmpdir(), "graph-search-empty-"));
-    mkdirSync(join(empty, "content"), { recursive: true });
+    mkdirSync(join(empty, "folio"), { recursive: true });
     mkdirSync(join(empty, "library"), { recursive: true });
     try {
       const idx = loadGraphIndex(defaultRoots(empty));
       const r = graphSearch(idx, "anything");
       expect(r.hits).toHaveLength(0);
       // The distinction that matters: nothing MATCHED vs nothing was SEARCHED.
-      expect(r.emptyRoots.map((e) => e.name).sort()).toEqual(["content", "library"]);
+      expect(r.emptyRoots.map((e) => e.name).sort()).toEqual(["folio", "library"]);
     } finally {
       rmSync(empty, { recursive: true, force: true });
     }

@@ -13,7 +13,7 @@ import { siteDirFor } from "../../schemas/cat-harness.ts";
 // builds a throwaway repo-shaped tree and runs inside it.
 function makeRepo(entries?: Record<string, unknown>) {
   const root = mkdtempSync(join(tmpdir(), "triv-"));
-  mkdirSync(join(root, "content", "p", "ch"), { recursive: true });
+  mkdirSync(join(root, "folio", "p", "ch"), { recursive: true });
   mkdirSync(join(root, "computations"), { recursive: true });
   // A temp instance needs its declaration: the probe resolves its output
   // through `siteDirFor`, so a fixture without one is not an instance at all
@@ -22,9 +22,9 @@ function makeRepo(entries?: Record<string, unknown>) {
   const site = siteDirFor(root);
   mkdirSync(join(root, site, "audits"), { recursive: true });
 
-  const leanRel = "content/p/ch/b.lean";
+  const leanRel = "folio/p/ch/b.lean";
   writeFileSync(join(root, leanRel), "theorem foo : True := by trivial\n");
-  const tsPath = join(root, "content", "p", "ch", "b.ts");
+  const tsPath = join(root, "folio", "p", "ch", "b.ts");
   writeFileSync(
     tsPath,
     'export default theorem({ label: "thm:b", lean: { ref: "p:P.foo" } });\n',
@@ -111,7 +111,7 @@ describe("proof-not-machine-trivial", () => {
       "P.foo": {
         closed: true,
         steps: 1,
-        lean_path: "content/p/ch/b.lean",
+        lean_path: "folio/p/ch/b.lean",
         lean_sha: "deadbeef1234", // deliberately not the real hash
       },
     });

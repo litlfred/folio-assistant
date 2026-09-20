@@ -57,7 +57,8 @@ interface ReviewSidecar {
 // `import.meta.dir` pointed at `<folio-assistant>/schemas/` — a path that does
 // not exist, and one the folio's symlinked embedding resolves to even when the
 // pipeline is run from the content repo.
-const SIDECAR_PATH = join(findContentRepoRoot(), "content", "schema", "references.review.json");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const SIDECAR_PATH = join(findContentRepoRoot(), "folio", "schema", "references.review.json");
 
 /** Recursively key-sorted JSON, so the hash is independent of source key order.
  *  Mimics `JSON.stringify` semantics for the non-JSON values that can appear in a

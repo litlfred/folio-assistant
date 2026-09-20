@@ -33,7 +33,7 @@ import {
 import { assertEdgeTermsAreIdTyped, GRAPH_EDGE_TERMS } from "../../schemas/jsonld";
 
 const ROOT = mkdtempSync(join(tmpdir(), "graph-index-"));
-const CONTENT = join(ROOT, "content", "qou", "ch01");
+const CONTENT = join(ROOT, "folio", "qou", "ch01");
 const LIBRARY = join(ROOT, "library", "who-anc-2016", "nodes");
 
 let index: GraphIndex;
@@ -140,7 +140,7 @@ describe("loading both populations", () => {
 describe("honest emptiness", () => {
   test("an absent root is reported as absent, not as empty", () => {
     const idx = loadGraphIndex([
-      { name: "content", dir: join(ROOT, "content") },
+      { name: "folio", dir: join(ROOT, "folio") },
       { name: "library", dir: join(ROOT, "nope") },
     ]);
     const lib = idx.roots.find((r) => r.name === "library")!;
@@ -150,10 +150,10 @@ describe("honest emptiness", () => {
 
   test("a colliding @id is recorded rather than silently overwritten", () => {
     const dup = mkdtempSync(join(tmpdir(), "graph-dup-"));
-    mkdirSync(join(dup, "content"), { recursive: true });
-    node(join(dup, "content"), "a", { "@id": "same/id", title: "first" });
-    node(join(dup, "content"), "b", { "@id": "same/id", title: "second" });
-    const idx = loadGraphIndex([{ name: "content", dir: join(dup, "content") }]);
+    mkdirSync(join(dup, "folio"), { recursive: true });
+    node(join(dup, "folio"), "a", { "@id": "same/id", title: "first" });
+    node(join(dup, "folio"), "b", { "@id": "same/id", title: "second" });
+    const idx = loadGraphIndex([{ name: "folio", dir: join(dup, "folio") }]);
     expect(idx.nodes.size).toBe(1);
     expect(idx.malformed).toHaveLength(1);
     expect(idx.malformed[0]!.error).toContain("already claimed");

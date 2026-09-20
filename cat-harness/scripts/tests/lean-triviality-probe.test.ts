@@ -262,7 +262,7 @@ describe("leanPathFor", () => {
     beforeEach(() => {
       tmp = mkdtempSync(join(tmpdir(), "leanpath-"));
       workspace = join(tmp, "ws");
-      paper = join(workspace, "content", "paper", "lean");
+      paper = join(workspace, "folio", "paper", "lean");
       // The asymmetry this fix exists for: the paper root carries its own
       // modules, the workspace root carries the dependencies — and the
       // paper root ALSO holds near-empty stub copies of those same
