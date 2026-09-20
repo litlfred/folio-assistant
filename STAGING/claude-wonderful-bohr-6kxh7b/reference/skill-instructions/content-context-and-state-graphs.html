@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(52)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(57)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(52) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(57) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(52) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(57) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(52) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(57) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Content Review | folio-assistant</title>
+<title>Content, context and state graphs | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Content Review" />
+<meta property="og:title" content="Content, context and state graphs" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Content Review" />
+<meta property="twitter:title" content="Content, context and state graphs" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -266,7 +266,7 @@
   those are opposite facts.
 
   `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
-  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">6df51f4</span> · built 2026-09-20T05:52:54Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/200" style="color:#fff;text-decoration:underline">issue #200</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-review.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35492739327" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
+  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">6df51f4</span> · built 2026-09-20T05:52:54Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/200" style="color:#fff;text-decoration:underline">issue #200</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35492739327" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/todos/index.json">
@@ -469,7 +469,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">6df51f4</span> · built 2026-09-20T05:52:54Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/200" style="color:#fff;text-decoration:underline">issue #200</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/content-review.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35492739327" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">6df51f4</span> · built 2026-09-20T05:52:54Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/200" style="color:#fff;text-decoration:underline">issue #200</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35492739327" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -596,7 +596,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Content Review</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Content, context and state graphs</span></li>
   </ol>
 </nav>
 
@@ -605,85 +605,276 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-review.md"><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/content-review.md</code></a> — do not edit here. Typed contract: <a href="../skills/content-review.html">schema reference</a>.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/content-context-and-state-graphs.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/content-context-and-state-graphs.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-review.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/content-context-and-state-graphs.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="content-review">
+<h1 id="content-context-and-state-graphs">
   
   
-    <a href="#content-review" class="anchor-heading" aria-labelledby="content-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content Review
+    <a href="#content-context-and-state-graphs" class="anchor-heading" aria-labelledby="content-context-and-state-graphs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content, context and state graphs
   
   
 </h1>
     
 
-<p>Formal review and approval of validated content before publication.</p>
-<h2 id="responsibilities">
+<p>An instance declares directories, and each says what <strong>kind</strong> of graph it
+holds. Until 2026-09-20 a kind answered one question — does this render as a
+website — and a consumer had no way to tell the subject matter from a record
+about it, or a record it may write from one it may not.</p>
+<h2 id="one-question-settles-every-kind">
   
   
-    <a href="#responsibilities" class="anchor-heading" aria-labelledby="responsibilities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Responsibilities
-  
-  
-</h2>
-    
-<ul>
-  <li>Review L2 content before L3 begins (phase gate)</li>
-  <li>Review L3 content before publication (phase gate)</li>
-  <li>Assess breaking vs. non-breaking changes</li>
-  <li>Ensure alignment with source guidelines</li>
-  <li>Approve draft publications for stakeholder circulation</li>
-  <li>Provide final publication release sign-off</li>
-</ul>
-<h2 id="actors">
-  
-  
-    <a href="#actors" class="anchor-heading" aria-labelledby="actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Actors
+    <a href="#one-question-settles-every-kind" class="anchor-heading" aria-labelledby="one-question-settles-every-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One question settles every kind
   
   
 </h2>
     
-<ul>
-  <li>Content Reviewer (lead, approval authority)</li>
-  <li>Technical Officer (first-pass review)</li>
-  <li>Clinical SME (clinical sign-off)</li>
-  <li>Programme Manager (governance oversight)</li>
-</ul>
-<h2 id="inputs">
+
+<blockquote>
+  <p><strong>Does a running process WRITE it, READ it, or is it the SUBJECT?</strong></p>
+</blockquote>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>layer</th>
+      <th>the process…</th>
+      <th>example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">content</code></strong></td>
+      <td>produces it — that is usually the point</td>
+      <td>a skill, a schema, a library section</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">context</code></strong></td>
+      <td><strong>reads it and never writes it</strong>. Static for the duration of an instance; it changes only when a human directs an authoring act, outside any process</td>
+      <td>an agent-memory entry</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">state</code></strong></td>
+      <td><strong>writes it as it runs</strong> — a bean’s status changes because a step completed</td>
+      <td>a bean, a workflow instance, a QA verdict</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>It is <code class="language-plaintext highlighter-rouge">holds</code> on <code class="language-plaintext highlighter-rouge">GraphKindDef</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>, and it is
+<strong>required</strong>: <code class="language-plaintext highlighter-rouge">tsc</code> refuses a kind that has not said.</p>
+
+<p><strong>A step that writes to a <code class="language-plaintext highlighter-rouge">context</code> graph is a defect, not an update.</strong> That is
+the whole reason the layer exists, and it is what a consumer could not
+previously ask.</p>
+<h2 id="two-supporting-questions-for-a-hard-case">
   
   
-    <a href="#inputs" class="anchor-heading" aria-labelledby="inputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs
+    <a href="#two-supporting-questions-for-a-hard-case" class="anchor-heading" aria-labelledby="two-supporting-questions-for-a-hard-case"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two supporting questions, for a hard case
   
   
 </h2>
     
-<ul>
-  <li>Validated content artifacts</li>
-  <li>Validation reports</li>
-  <li>Change log / diff from previous version</li>
-</ul>
-<h2 id="outputs">
+
+<p>The one above decides almost everything. When it does not, these two do, and
+they have agreed with each other in every case here.</p>
+
+<p><strong>Does it stand on its own?</strong> Detach a node from everything else. A skill still
+instructs, a schema still constrains, a library section still reads. A bean
+names work on something that is no longer there; a QA verdict judges an absent
+subject. <strong>If detaching it empties it, it is not content.</strong></p>
+
+<p><strong>Would you regenerate it or re-author it?</strong> Content and context are <em>written</em>
+by somebody with an intention. Live state is <em>arrived at</em> — re-running is how
+you would get it back. A <code class="language-plaintext highlighter-rouge">.po</code> catalogue is authored; a health report is
+arrived at.</p>
+
+<p>Where they disagree with each other, <strong>say so rather than picking</strong>: a shape
+this axis has not met is how a vocabulary acquires a category nobody can use.</p>
+<h2 id="the-classification">
   
   
-    <a href="#outputs" class="anchor-heading" aria-labelledby="outputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Outputs
+    <a href="#the-classification" class="anchor-heading" aria-labelledby="the-classification"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The classification
   
   
 </h2>
     
-<p>Findings and a decision — two things, not one. See
-<a href="../folio-core/decision-audit.md"><code class="language-plaintext highlighter-rouge">decision-audit</code></a> and
-<a href="../../schemas/qa-review.ts"><code class="language-plaintext highlighter-rouge">schemas/qa-review.ts</code></a>.</p>
+
+<p>Ask the code, not this page — <code class="language-plaintext highlighter-rouge">graphKindsOfLayer("context")</code> returns the live
+answer. <strong>No count appears here on purpose</strong>: a count in prose is a claim
+nothing checks, and this repository has corrected two of them.</p>
+
+<p>What is worth writing down is the reasoning for the kinds that are <strong>not
+obvious from their name</strong>.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">memory</code> is <code class="language-plaintext highlighter-rouge">context</code>, and it is the kind the third layer was added for.</strong>
+The owner, settling bean <code class="language-plaintext highlighter-rouge">mhh9</code>, 2026-09-20:</p>
+
+<blockquote>
+  <p><em>put memory under state/context as static, during a process. it does not
+change. agents dont work on it (except when an authoring agent is directed by
+human). todos, beans are not static</em></p>
+</blockquote>
+
+<p>Every clause of that is the definition. A process <strong>reads</strong> memory; no step
+writes it. It changes when a human directs an authoring agent, which is an act
+<strong>outside</strong> any instance.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">todos</code> is <code class="language-plaintext highlighter-rouge">state</code>, and that is the pair worth understanding.</strong>
+<code class="language-plaintext highlighter-rouge">todos/todos.json</code> states a 2×2 — memory vs workflow management, human vs agent
+— and puts <code class="language-plaintext highlighter-rouge">todos/</code> and agent memory in the same <em>memory</em> row. <strong>This axis cuts
+across that row.</strong> A todo is an <strong>outstanding item</strong> a process closes; a memory
+entry is an <strong>established fact</strong> nothing mid-process revises. Same row of that
+2×2, opposite sides of this line. Neither model is wrong; they are asking
+different questions, and a reader who assumes they align will expect memory to
+behave like a todo.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">fsh-guts</code> is <code class="language-plaintext highlighter-rouge">context</code>, and it is the one that reads like content.</strong> It
+holds structured material that <em>could</em> be rendered — which is what makes it
+hard — and the fact it carries is <em>where something got to</em>: abandoned,
+superseded, decided against. But <strong>no running step writes it</strong>. Relocating
+something there is a human-directed act, and
+<a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a> is the
+skill that says so in as many words. Read, never written by a process. It was
+<code class="language-plaintext highlighter-rouge">state</code> for the few hours between the axis landing and <code class="language-plaintext highlighter-rouge">mhh9</code> being settled,
+and the refinement moved it by the same criterion that moved memory.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">qa</code> and <code class="language-plaintext highlighter-rouge">health</code> are <code class="language-plaintext highlighter-rouge">state</code>.</strong> A verdict is where a <em>review</em> got to, and
+the sweep that produced it writes it. <code class="language-plaintext highlighter-rouge">health</code> is the same shape one level
+out — about the repository rather than its artefacts. Both fail the
+stand-alone question outright: detached from what they judge, they assert
+nothing. This is also why the <code class="language-plaintext highlighter-rouge">kg-qa/</code> tree <strong>mirrors</strong> each subject’s path
+rather than being flat — a verdict’s identity is partly the thing it is about.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">uploads</code> is <code class="language-plaintext highlighter-rouge">state</code> and <code class="language-plaintext highlighter-rouge">library</code> is <code class="language-plaintext highlighter-rouge">content</code>.</strong> The clearest proof the
+axis is not about file type: the same PDF is state in one directory and content
+in the other. <code class="language-plaintext highlighter-rouge">uploads/</code> is a queue, and ingestion writes and drains it; the
+declaration already says these files are not L1 and read as absent to every
+corpus consumer. <code class="language-plaintext highlighter-rouge">library/</code> is what ingestion produced.</p>
+<h2 id="what-a-consumer-may-assume">
+  
+  
+    <a href="#what-a-consumer-may-assume" class="anchor-heading" aria-labelledby="what-a-consumer-may-assume"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a consumer may assume
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>content</th>
+      <th>context</th>
+      <th>state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>means what it says without resolving a reference</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td>a step may write it</td>
+      <td>no — authoring writes content, and that is the subject of a governed process, not bookkeeping</td>
+      <td><strong>no — a write is a defect</strong></td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td>can be stale</td>
+      <td>it is wrong or right</td>
+      <td>yes — against a codebase that moved on</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td>same node in two instances is the same thing</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Of an unregistered kind, nothing.</strong> <code class="language-plaintext highlighter-rouge">graphLayer()</code> returns <code class="language-plaintext highlighter-rouge">undefined</code>, and
+the three predicates are deliberately <strong>not</strong> each other’s negations. Reading
+an absence as <code class="language-plaintext highlighter-rouge">content</code> is how somebody asking for a skill gets handed a QA
+verdict.</p>
+
+<p><strong>Use <code class="language-plaintext highlighter-rouge">processMayWrite()</code> rather than <code class="language-plaintext highlighter-rouge">=== "state"</code>.</strong> It is the question
+<code class="language-plaintext highlighter-rouge">isStateGraph</code> is usually being asked in service of, and naming it means a
+fourth layer is one edit rather than a search.</p>
+<h2 id="adding-a-kind">
+  
+  
+    <a href="#adding-a-kind" class="anchor-heading" aria-labelledby="adding-a-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a kind
+  
+  
+</h2>
+    
+
+<p>Answer the question and write the answer in <code class="language-plaintext highlighter-rouge">holds</code>, with the reason beside it
+as a comment. Three rules about how:</p>
+
+<p><strong>Do not add a value without a case that needs it.</strong> <code class="language-plaintext highlighter-rouge">context</code> arrived because
+<code class="language-plaintext highlighter-rouge">content</code> and <code class="language-plaintext highlighter-rouge">state</code> alone forced two unlike things together — a bean, which a
+step rewrites, and a memory entry, which no step may touch — and a consumer
+told only “this is state” could not tell whether writing to it was normal or a
+bug. That is the bar: a real consumer that cannot answer a real question.</p>
+
+<p><strong>There is no “could not determine”.</strong> A third state is right when a <em>check</em>
+looked and could not tell, and wrong when an <em>author</em> is registering a kind
+they are defining. Declining to say moves the burden to every consumer, which
+is the position this axis exists to end.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">holds</code> is part of a kind’s identity.</strong> <code class="language-plaintext highlighter-rouge">sameKind</code> compares <code class="language-plaintext highlighter-rouge">type</code>,
+<code class="language-plaintext highlighter-rouge">renderable</code> and <code class="language-plaintext highlighter-rouge">holds</code>, so two layers registering one name on different
+layers is a conflict that throws rather than a diamond where the first silently
+wins. <code class="language-plaintext highlighter-rouge">summary</code>, <code class="language-plaintext highlighter-rouge">skill</code> and <code class="language-plaintext highlighter-rouge">schema</code> are descriptive and are not compared.</p>
+<h2 id="classifying-a-kind-is-not-a-ruling-on-a-directorys-contents">
+  
+  
+    <a href="#classifying-a-kind-is-not-a-ruling-on-a-directorys-contents" class="anchor-heading" aria-labelledby="classifying-a-kind-is-not-a-ruling-on-a-directorys-contents"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Classifying a kind is not a ruling on a directory’s contents
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">cat-harness</code> is correctly <code class="language-plaintext highlighter-rouge">content</code>. <code class="language-plaintext highlighter-rouge">skills/memory/</code> sits inside a
+<code class="language-plaintext highlighter-rouge">cat-harness</code> directory and holds <code class="language-plaintext highlighter-rouge">context</code>. <strong>Both are true</strong>, and this is the
+case that shows why the two questions are separate.</p>
+
+<p>The nodes have not moved yet. <code class="language-plaintext highlighter-rouge">skills/memory/</code> is inside <code class="language-plaintext highlighter-rouge">skills/</code>, which is
+declared <code class="language-plaintext highlighter-rouge">cat-harness</code>, and a nested declaration is the defect #263 names — so
+the fix is a relocation to a declared <code class="language-plaintext highlighter-rouge">memory/</code>, not a second declaration
+inside the first. That is <strong>bean <code class="language-plaintext highlighter-rouge">07xs</code></strong>, deliberately its own change:
+relocating a directory as a side effect of adding a classification is the shape
+#395 refused and bean <code class="language-plaintext highlighter-rouge">auap</code> did separately. The <code class="language-plaintext highlighter-rouge">memory</code> kind is registered
+ahead of the directory, which is the <code class="language-plaintext highlighter-rouge">folio</code> situation rather than the <code class="language-plaintext highlighter-rouge">dh4f</code>
+one — <code class="language-plaintext highlighter-rouge">dh4f</code> is a directory <em>declared and absent</em>, where a consumer scans
+nothing and reports clean. Nothing scans a kind.</p>
+<h2 id="see-also">
+  
+  
+    <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
+  
+  
+</h2>
+    
 
 <ul>
-  <li><strong>Findings</strong> — one per observation, each carrying the axis this reviewer can
-speak on: <code class="language-plaintext highlighter-rouge">blocking | suggestion | praise</code> for a person, <code class="language-plaintext highlighter-rouge">critical | major |
-minor</code> for a checker. Neither defaults into the other, and <code class="language-plaintext highlighter-rouge">praise</code> has no
-machine equivalent.</li>
-  <li><strong>A decision</strong> — <code class="language-plaintext highlighter-rouge">approve | request-changes | reject</code>, naming every finding it
-weighed and every one it overruled. An overruled finding stays on the record.</li>
-  <li><strong>Audit notes</strong> — why this outcome, and why each overruled finding was left.
-At least one per decision, each citing corpus evidence. Approving over an open
-<code class="language-plaintext highlighter-rouge">critical</code> or <code class="language-plaintext highlighter-rouge">blocking</code> finding without overruling it is a reported problem.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — what a declaration is
+and how a path resolves. This page is the axis; that one is the mechanism.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/agent-memory.html"><code class="language-plaintext highlighter-rouge">agent-memory</code></a> — what a memory entry promises, and the
+injection budget. This page says what layer it is on.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/process-state.html"><code class="language-plaintext highlighter-rouge">process-state</code></a>, <a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/bpmn-processes.html"><code class="language-plaintext highlighter-rouge">bpmn-processes</code></a> —
+the largest writer of a live-state graph: a workflow instance is a token’s
+position in a diagram that lives in a content graph.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>, <a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a>
+— the work plan, and why a bean is never deleted. A state record that
+vanishes leaves a sibling unable to tell abandonment from accident.</li>
 </ul>
 
           
