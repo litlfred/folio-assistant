@@ -26,13 +26,21 @@
  *
  * It does not fetch. An agent reads comments through its own GitHub tooling;
  * this records what was read so the NEXT session, in a fresh container, can
- * tell new from already-handled. State lives under `.harness/`, committed, for
- * the same reason workflow state does: a sibling session must see it.
+ * tell new from already-handled. State lives in the declared `issue-marks/`
+ * graph, committed, for the same reason workflow state does: a sibling session
+ * must see it.
+ *
+ * It was `.harness/issue-comments/` until 2026-09-20, and both halves of that
+ * name were wrong. A dot-prefixed directory is the one thing this repository's
+ * own guard rejects — `.beans/` and `.harness/workflow/` moved out on
+ * 2026-09-18 for the same reason — and these files are MARKS, not comments:
+ * they carry an id and two timestamps, never a body. A directory named for the
+ * comments promises a reader something it does not hold.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-export const SEEN_DIR = ".harness/issue-comments";
+export const SEEN_DIR = "issue-marks";
 
 export interface SeenState {
   /** `owner/repo#number`, for readability when someone opens the file. */
@@ -57,7 +65,7 @@ export interface CommentLike {
   created_at?: string;
 }
 
-/** `.harness/issue-comments/<owner>-<repo>-<number>.json` */
+/** `issue-marks/<owner>-<repo>-<number>.json` */
 export function seenPath(root: string, owner: string, repo: string, issue: number): string {
   return join(root, SEEN_DIR, `${owner}-${repo}-${issue}.json`);
 }

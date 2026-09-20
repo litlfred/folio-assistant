@@ -1,4 +1,4 @@
-<!-- Generated from skills/memory/never-assert-on-a-qa-verdict-from-the-published-corpus.md by `bun run agent-memory`. -->
+<!-- Generated from memory/never-assert-on-a-qa-verdict-from-the-published-corpus.md by `bun run agent-memory`. -->
 <!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
 Measured 2026-09-19 (bean `tywj`): `test/qa-panel.e2e.ts` pinned the first row

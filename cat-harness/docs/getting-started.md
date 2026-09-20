@@ -116,7 +116,7 @@ two cannot drift apart. Nothing in `src/` needs to change.
 
 **The form of the question comes before its content.** The agent establishes how
 you would like to be asked — selectable options, ordinary chat, read aloud,
-large type — and records it in `.harness/interaction.json` so no future session
+large type — and records it in `interaction/interaction.json` so no future session
 asks you again. See [Accessibility](accessibility.html).
 
 Then, when the answer is genuinely ambiguous:

@@ -8,7 +8,6 @@
  */
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { FeedbackItem, PaperMacro } from "../schemas/types.js";
 
 // ── Role-based access control ────────────────────────────────────
 
@@ -20,30 +19,94 @@ export const ROLE_LEVELS: Record<UserRole, number> = {
   owner: 3,
 };
 
-// ── Feedback types ───────────────────────────────────────────────
+// ── What a harness signature needs of the content it carries ─────
 
 /**
- * Re-exported, not redeclared.
+ * The minimum a HARNESS signature needs of a feedback item, and the macro
+ * shape a document may carry.
  *
- * This was a second, hand-written `FeedbackItem` that had drifted from the one
- * in `schemas/types.ts` — the one `FeedbackItemSchema` validates against and
- * the one every feedback file on disk is written as (`satisfies
- * FeedbackItem[]`). The copy narrowed `origin` to `"human" | "agent"`, so a
- * `"qc"`-origin item (the validation pipeline's own output, and a documented
- * `TodoOrigin`) was a type error to pass through this layer; it also made
- * `comment` optional and `author`/`authorEmail`/`assignee` required, both the
- * opposite of the schema, and omitted `targetLabel`, `updatedAt`, `updatedBy`,
- * `data` and `related` entirely. Nothing caught the divergence because every
- * call site in between was typed `any`.
+ * ## Why these are declared here rather than imported
+ *
+ * `src/types.ts` imported `FeedbackItem` and `PaperMacro` from
+ * `schemas/types.ts`. That was the LAST wrong-direction edge in the
+ * repository's partition (`bun run check:partition`): core may import the
+ * harness, the harness may not import core, and this file is the harness's
+ * plug-in contract. Bean `jcmx`.
+ *
+ * ## Why NOT a copy of the core types, and why not generics
+ *
+ * A copy is how this file was wrong before. The note below records a
+ * hand-written second `FeedbackItem` that drifted from the schema's — it
+ * narrowed `origin`, flipped three fields' optionality and omitted five
+ * more, and nothing caught it because every call site in between was typed
+ * `any`. Duplicating a model is the defect, not the fix.
+ *
+ * Generics were the first design and were dropped on a measurement: NOTHING
+ * reads a field off `.todos` or `.macros` through these shapes anywhere in
+ * the repository. They are CARRIED, not inspected. A type parameter that no
+ * consumer instantiates differently is ceremony that still has to be
+ * threaded through five interfaces and six files.
+ *
+ * So each declares only what a harness signature genuinely needs, and
+ * TypeScript's structural typing does the rest: `FeedbackItem` satisfies
+ * `TodoRef`, `PaperMacro` satisfies `MacroDef`, and an adapter returning the
+ * richer core types still type-checks. No `unknown`, no `any`, no field a
+ * caller loses — measured, not assumed.
+ *
+ * This is the typed form of the pattern `getFeedbackStore?()` already
+ * states below: *declare the slot, name the type where it is owned.*
  */
-export type { FeedbackItem };
-
-export interface NewFeedback {
+export interface TodoRef {
+  /** Unique id. Enough to reference one; not enough to re-implement one. */
+  id: string;
+  /** One-line summary — the only field a harness-side log or error names. */
   summary: string;
-  comment?: string;
-  priority?: string;
-  assignee?: string;
+  /**
+   * Lifecycle status, as a plain string.
+   *
+   * Core narrows this to the `TodoStatus` union, and a union of string
+   * literals is assignable to `string`, so the narrower type satisfies this
+   * one. Restating the union here would be the copy this whole comment
+   * exists to refuse.
+   */
+  status: string;
 }
+
+/**
+ * A macro definition: `{ tex, unicode? }` — structurally identical to the
+ * core `PaperMacro`, so nothing is lost by naming it here.
+ *
+ * It also fixes a CONTENT-PROFILE leak that predates the edge. `macros` sits
+ * on the GENERIC `ResolvedDocument`, and a `document` folio has no macros at
+ * all — `PaperMacro` is the paper adapter's vocabulary. Typing the generic
+ * slot with a paper-specific name said the platform knew about papers.
+ */
+export interface MacroDef {
+  /** LaTeX expansion (e.g. `"\\mathfrak{p}"`). Used by KaTeX and LaTeX. */
+  tex: string;
+  /** UTF-8 display string for plain-text contexts (e.g. `"\u{1D52D}"`). */
+  unicode?: string;
+}
+
+/**
+ * The correction this file already paid for once, kept because the hazard is
+ * permanent: there was a second, hand-written `FeedbackItem` here that had
+ * drifted from the one in `schemas/types.ts` — the one `FeedbackItemSchema`
+ * validates against and the one every feedback file on disk is written as
+ * (`satisfies FeedbackItem[]`). The copy narrowed `origin` to
+ * `"human" | "agent"`, so a `"qc"`-origin item (the validation pipeline's own
+ * output, and a documented `TodoOrigin`) was a type error to pass through
+ * this layer; it also made `comment` optional and `author`/`authorEmail`/
+ * `assignee` required, both the opposite of the schema, and omitted
+ * `targetLabel`, `updatedAt`, `updatedBy`, `data` and `related` entirely.
+ * Nothing caught the divergence because every call site in between was typed
+ * `any`.
+ *
+ * It was then fixed by RE-EXPORTING the core type, which is what created the
+ * wrong-direction edge. `TodoRef` above is the third answer and the first one
+ * that is neither a copy nor an import. The re-export had no consumers when
+ * it was removed, so nothing downstream changed.
+ */
 
 // ── Content adapter interface ────────────────────────────────────
 
@@ -97,7 +160,7 @@ export interface ResolvedBlock {
   tags?: string[];
   rendered?: Array<{ mime: string; url: string; blockIndex: number; hash?: string }>;
   md: string;
-  todos?: FeedbackItem[];
+  todos?: TodoRef[];
 }
 
 export interface ResolvedSection {
@@ -113,7 +176,7 @@ export interface ResolvedChapter {
   title: string;
   label?: string;
   sections: ResolvedSection[];
-  todos?: FeedbackItem[];
+  todos?: TodoRef[];
 }
 
 export interface ResolvedDocument {
@@ -129,9 +192,9 @@ export interface ResolvedDocument {
    *  any consumer doing string work on them would get "[object Object]". Same
    *  correction as `PaperOutline` in the MCP resolver; surfaced here once the
    *  paper import stopped being `as any`. */
-  macros?: Record<string, PaperMacro>;
+  macros?: Record<string, MacroDef>;
   chapters: ResolvedChapter[];
-  todos?: FeedbackItem[];
+  todos?: TodoRef[];
   branch: string;
   /** Flattened O(1) lookup: rootName → block. */
   blocksByName?: Map<string, ResolvedBlock>;
@@ -146,7 +209,7 @@ export interface BlockDiff {
   mdDiff?: { base: string; head: string };
   leanDiff?: { base: string; head: string };
   statusDiff?: { base: string; head: string };
-  todos?: FeedbackItem[];
+  todos?: TodoRef[];
 }
 
 export interface DocumentDiff {
@@ -200,7 +263,7 @@ export interface ChapterDetail {
   label?: string;
   dir: string;
   sections: SectionStub[];
-  todos?: FeedbackItem[];
+  todos?: TodoRef[];
 }
 
 /**
@@ -257,7 +320,7 @@ export interface ContentAdapter {
 
   /** AI triage of feedback on a block. */
   triageFeedback(
-    todo: FeedbackItem,
+    todo: TodoRef,
     blockContent: string,
     blockKind: string,
     itemId: string,

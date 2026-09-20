@@ -109,6 +109,36 @@ export interface ProcessNode {
    */
   noSkillReason?: string;
   /**
+   * `<folio:judgement reason="…"/>` — this gateway's branch is a JUDGEMENT
+   * call, on purpose, and this is why.
+   *
+   * ## The third state the vocabulary was missing
+   *
+   * An exclusive gateway either carries `folio:decision` and is computed, or
+   * it does not and the caller supplies the outcome. But "no table because
+   * this is somebody's call" and "no table because nobody has written one
+   * yet" were **indistinguishable from the outside** — exactly the gap
+   * {@link noSkillReason} closed for activities, one element type along.
+   *
+   * It is not hypothetical. Issue #200 §6 classifies all ten of this
+   * repository's decision points: four mechanical, six judgement, with
+   * reasons. That classification lives in an ISSUE, where nothing reads it
+   * and nothing checks it — a claim in prose, which is the failure this
+   * repository keeps writing down.
+   *
+   * ## Why it matters more than the activity case
+   *
+   * A step with no skill is a documentation gap. A gateway with no table is a
+   * point where an LLM decides the branch, and **how many of those there are,
+   * and which**, is the question the deterministic-vs-agentic spectrum is
+   * about (bean `q0tc`). A mechanism that cannot enumerate its own judgement
+   * points cannot answer it.
+   *
+   * The reason is REQUIRED, the same rule `no-skill` follows: an exemption
+   * whose justification is "" is one somebody adds to get to green.
+   */
+  judgementReason?: string;
+  /**
    * `<folio:fulfilment kinds="person agent" reason="…"/>` — which actor kinds
    * may perform this activity, said explicitly.
    *
@@ -288,6 +318,49 @@ function noSkillReasonOf(
     throw new Error(
       `${id}: <folio:no-skill/> carries no reason. An exemption with no stated ` +
         `justification cannot be reviewed — say why this step has no implementing skill.`,
+    );
+  }
+  return reason;
+}
+
+/**
+ * `<folio:judgement reason="…"/>`, with the reason enforced at LOAD time.
+ *
+ * Refused at load rather than recorded as a finding, for the reason
+ * {@link noSkillReasonOf} gives: a declaration that silences a question must
+ * not be able to arrive half-formed.
+ *
+ * **Refused on anything but an exclusive gateway**, and refused ALONGSIDE
+ * `folio:decision`. A judgement marker on a computed gateway is a node
+ * claiming both that a table decides it and that a person does, and a reader
+ * has no way to tell which the author meant — so it is a conflict rather than
+ * a preference.
+ */
+function judgementReasonOf(
+  ext: { $type: string; reason?: string }[],
+  el: { id: string; $type: string },
+): string | undefined {
+  const decl = ext.find((v) => v.$type === "folio:judgement");
+  if (!decl) return undefined;
+  if (el.$type !== "bpmn:ExclusiveGateway") {
+    throw new Error(
+      `${el.id}: <folio:judgement/> is only meaningful on an exclusive gateway — ` +
+        `it says who chooses the branch, and ${el.$type} has no branch to choose.`,
+    );
+  }
+  if (ext.some((v) => v.$type === "folio:decision")) {
+    throw new Error(
+      `${el.id}: carries both <folio:decision/> and <folio:judgement/>. A gateway ` +
+        `is computed or it is somebody's call; declaring both leaves a reader ` +
+        `unable to tell which the author meant.`,
+    );
+  }
+  const reason = decl.reason?.trim();
+  if (!reason) {
+    throw new Error(
+      `${el.id}: <folio:judgement/> carries no reason. Say WHOSE call this is and ` +
+        `why no table can make it — an exemption nobody can review is one ` +
+        `somebody added to get to green.`,
     );
   }
   return reason;
@@ -492,6 +565,7 @@ export async function loadProcessModel(
         activity: ext.filter((v) => v.$type === CONVENTION_EXT && v.ref).map((v) => v.ref!),
       }),
       noSkillReason: noSkillReasonOf(ext, el.id),
+      judgementReason: judgementReasonOf(ext, el),
       fulfilment: fulfilmentOf(ext, el.id),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),

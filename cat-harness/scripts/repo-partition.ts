@@ -1063,42 +1063,50 @@ function main(): void {
   console.log("These are not cross-edges — they are edges this tool declined to judge.");
   console.log("Classify the endpoints, then re-run; do not read them as clean.");
 
-  // ── What this gate ENFORCES, against what it merely reports.
+  // ── What this gate ENFORCES. Both axes, as of 2026-09-20.
   //
-  // `check:partition` runs in CI without `--strict`, so until 2026-09-20 the
-  // only failing path was one nothing invoked: it reported 8 wrong-direction
-  // edges and exited 0, and three of those edges had been introduced that
-  // morning by a PR whose board was green 43/43. A gate that CANNOT fail is
-  // indistinguishable, from the outside, from one that passed — bean `xom7`,
-  // one level up from the workflow it was written about.
+  // `check:partition` ran in CI WITHOUT `--strict`, so its only failing path
+  // was one nothing invoked: it reported 8 wrong-direction edges and exited 0
+  // while the board read 43/43, and three of those edges had been introduced
+  // that morning. A gate that CANNOT fail is indistinguishable, from the
+  // outside, from one that passed — bean `xom7`, one level up from the
+  // workflow it was written about.
   //
-  // The repository's own precedent for switching a reporter into an enforcer
-  // is the ruff comment in `code-quality-gates.yml`: **a check is an error
-  // only once its count is zero.** Turning a red gate on just teaches the
-  // next agent to append `|| true`.
+  // The repository's precedent for switching a reporter into an enforcer is
+  // the ruff comment in `code-quality-gates.yml`: **a check is an error only
+  // once its count is zero.** Turning a red gate on just teaches the next
+  // agent to append `|| true`.
   //
-  // So it is applied PER AXIS, because the axes reached zero at different
-  // times. An UNASSIGNED module is now always an error: the count is 0, and
-  // the report already refuses to call the edges touching one clean ("edges
-  // this tool declined to judge"). A module that falls through every rule is
-  // a module nobody has decided about, and it is cheap to decide — this is
-  // the one failure mode a contributor adding a file can cause by accident.
+  // So it was applied per axis as each reached zero. Unassigned reached zero
+  // first (bean `4j3h`) and was enforced then; the comment there said to
+  // delete the distinction once the edges followed. They have — `jcmx`
+  // retired the last one, `src/types.ts -> schemas/types.ts`, by declaring
+  // the structural minimum a harness signature needs instead of importing
+  // the content model. Both axes are now zero and both are enforced.
   //
-  // Wrong-direction edges stay REPORTED, because the count is 1, not 0. The
-  // residue is `src/types.ts -> schemas/types.ts`, analysed in this file
-  // above and deliberately left: `ContentAdapter` is defined entirely in
-  // content terms, so splitting it moves the edge rather than removing it.
-  // That is an adapter-contract redesign, and it wants deciding, not
-  // smuggling into a partition pass. When it reaches 0, delete the
-  // distinction below and let `strict` govern both.
+  // `--strict` is kept as an accepted no-op so existing invocations do not
+  // break; there is no longer a laxer mode for it to select.
   const unassigned = [...modules].filter(([, a]) => a.repo === "unassigned").map(([m]) => m);
+  let failed = false;
   if (unassigned.length > 0) {
+    failed = true;
     console.error(`\n\u2717 ${unassigned.length} module(s) fell through every rule:`);
     for (const m of unassigned.sort()) console.error(`    ${m}`);
     console.error("    Classify each in REPO_RULES. An unassigned module is not a clean result.");
-    process.exit(1);
   }
-  if (strict && crossEdges.length > 0) process.exit(1);
+  if (crossEdges.length > 0) {
+    failed = true;
+    console.error(`\n\u2717 ${crossEdges.length} wrong-direction edge(s):`);
+    for (const e of crossEdges) {
+      console.error(`    ${e.from} [${repoName(e.fromRepo)}] -> ${e.to} [${repoName(e.toRepo)}]`);
+    }
+    console.error(
+      "    A repo may not import one that depends on it. Either the CLASSIFICATION is wrong —" +
+        "\n    check the target's layer before the importer's — or the import is.",
+    );
+  }
+  if (failed) process.exit(1);
+  void strict;
 }
 
 if (import.meta.main) main();

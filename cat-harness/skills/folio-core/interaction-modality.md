@@ -9,7 +9,7 @@ user_invocable: true
 
 Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn),
 `Task_DetectModality` and `Task_AskIntent`.
-Preferences: `.harness/interaction.json` (committed, read at session start).
+Preferences: `interaction/interaction.json` (committed, read at session start).
 
 ## 0. The failure this prevents
 
@@ -50,7 +50,7 @@ it costs nothing to the user who would rather type.
 
 The detection must not itself be an unusable question. So:
 
-1. **Read `.harness/interaction.json` first.** If it says, you are done. Never
+1. **Read `interaction/interaction.json` first.** If it says, you are done. Never
    re-ask what is recorded.
 2. **Read the channel.** A voice session is `audio` without asking. A terminal
    session is not.
@@ -73,7 +73,7 @@ to take. The profile is about the interface, not about them.
 
 ## 3. Where the preference lives
 
-`.harness/interaction.json`, committed, beside `beans/workflows/` and for the same
+`interaction/interaction.json`, committed, beside `beans/workflows/` and for the same
 reason: a preference that lives in one agent's context is re-learned by every
 sibling session, and re-learning it means asking again.
 
@@ -295,7 +295,7 @@ than taken on trust:
 The published site carries a settings control (gear, top right) writing the same
 four profiles to `localStorage`, so a reader who is not the author still gets
 large type or reduced motion. It is per-viewer and per-browser by construction —
-it never reaches an agent. `.harness/interaction.json` is the agent-facing record
+it never reaches an agent. `interaction/interaction.json` is the agent-facing record
 and the site control is the reader-facing one; conflating them would mean a
 reader's font choice silently reconfiguring how an agent talks to the author.
 
@@ -308,7 +308,7 @@ reader's font choice silently reconfiguring how an agent talks to the author.
    "Happy to explain if useful" does not repair it — it moves the work back onto
    the person the question is for.
 1. **Asking someone to describe their disability.** Ask about the interface.
-2. **Re-asking what `.harness/interaction.json` records.** That is WCAG 3.3.7
+2. **Re-asking what `interaction/interaction.json` records.** That is WCAG 3.3.7
    violated in the least excusable way, since the file is right there.
 3. **A "quick open question" because the option list felt like overkill.** The
    list is cheaper for the person answering, which is the only budget that
