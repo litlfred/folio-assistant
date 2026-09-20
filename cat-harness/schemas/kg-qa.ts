@@ -204,6 +204,27 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "in no local package. `workflow_next` hands the agent a name, and fetching it returns \"package not found\".",
   },
   {
+    id: "convention-ref-resolves",
+    applies: ["process"],
+    // `critical`, and the severity is the whole point of this one.
+    //
+    // It is the DANGLING direction, not the absence direction. A diagram
+    // naming a convention nobody wrote hands an agent a rule it cannot read —
+    // the `blv9` shape, a link-shaped value that does not dereference.
+    //
+    // THERE IS DELIBERATELY NO CRITERION FOR ABSENCE. Bean `3190`: "absent
+    // binding means no conventions, not all of them". Most steps legitimately
+    // carry none, so a criterion that fired on an unbound activity would be
+    // red across every diagram on the day it shipped and would train a reader
+    // to ignore it — and worse, the only way to clear it would be to bind
+    // conventions everywhere, which is the unconditional prose the bean
+    // exists to replace. The check is that what IS bound resolves.
+    severity: "critical",
+    summary:
+      "A `<folio:convention ref>` on a process, lane or activity names a convention that is not in " +
+      "`.claude/skills/conventions/`. The agent is told a rule applies and cannot read it.",
+  },
+  {
     id: "activity-names-skill",
     applies: ["process"],
     // `major`, not `minor`, SINCE the exemptions became declarations.

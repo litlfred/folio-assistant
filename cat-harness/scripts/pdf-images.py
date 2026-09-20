@@ -1,0 +1,220 @@
+#!/usr/bin/env python3
+"""Extract placed images from a PDF, and say which of them are FIGURES.
+
+Bean `d5f1`. Stage A of the image path: this writes facts, and
+`content/pipeline/gen-library-jsonld.ts` turns them into nodes. The same split
+`pdf-structure.py` / `pdf-tables.py` already use.
+
+Why the classification is here rather than left to a consumer
+------------------------------------------------------------
+`d5f1` asks for a narrative description of every image. Measured on this corpus
+2026-09-20, doing that literally would be wrong six times in seven: of 164
+placed images, 140 are PAGE SCANS -- one near-full-bleed image per page, which
+is the page itself and not a figure on it -- against 24 candidate figures.
+
+    WHO_PUB_TPS_93.1        121 pages  121 images  coverage 0.998, one per page
+    milnorlink               20 pages   20 images  19 full-bleed
+    9789241548960_eng       179 pages    2 images  coverage ~0.50
+    WPR-RDO-2020-003-eng     33 pages   21 images  median coverage 0.013
+
+The two clusters do not overlap -- nothing in the corpus sits between 0.50 and
+0.99 -- so no content heuristic is needed, and none is used. The rule is
+geometric and stated once, in `schemas/document-image.ts` (`roleFor`); this
+script computes the same thing from the same two numbers and
+`scripts/tests/pdf-images.test.py` pins the two against shared cases.
+
+Coverage is measured on the PLACED RECTANGLE (`page.get_image_rects`), not on
+the image's own pixel dimensions. A 4000px scan placed into a thumbnail box is
+a thumbnail to a reader, and it is the reader's view this bean is about.
+
+Never claims absence it did not establish
+-----------------------------------------
+No backend, or a page whose geometry cannot be read, yields `images: null` with
+a reason -- NOT an empty list. An empty list is the determined finding that the
+document places no images. Filing an unread image as a page scan would drop it
+silently from every later description pass, which is the expensive direction.
+
+    python3 scripts/pdf-images.py -o library uploads/paper.pdf
+    python3 scripts/pdf-images.py -o library --dry-run uploads/paper.pdf
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+if HERE not in sys.path:
+    sys.path.insert(0, HERE)
+
+from _pdf_doc_id import slugify as _slugify  # noqa: E402
+
+# Kept in step with PAGE_COVERAGE_THRESHOLD in schemas/document-image.ts by
+# scripts/tests/pdf-images.test.py, which reads both rather than restating either.
+PAGE_COVERAGE_THRESHOLD = 0.8
+
+SCHEMA = "folio-document-images/v1"
+
+
+def role_for(coverage: float, images_on_page: int) -> str:
+    """The role geometry implies. Mirrors `roleFor` in document-image.ts."""
+    if coverage >= PAGE_COVERAGE_THRESHOLD and images_on_page == 1:
+        return "page-scan"
+    return "figure"
+
+
+def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
+    """The sidecar body. Returns `images: None` rather than lying about absence."""
+    try:
+        import pymupdf
+    except ImportError:
+        return {
+            "$schema": SCHEMA,
+            "doc_id": _slugify(pdf.stem),
+            "images": None,
+            "undetermined_reason": (
+                "pymupdf is not installed, so no page geometry could be read. "
+                "This is NOT 'the document has no images': install it "
+                "(pip install -r requirements.txt) and re-run."
+            ),
+        }
+
+    doc_id = _slugify(pdf.stem)
+    try:
+        doc = pymupdf.open(pdf)
+    except Exception as exc:  # noqa: BLE001 -- any open failure is undetermined
+        return {
+            "$schema": SCHEMA,
+            "doc_id": doc_id,
+            "images": None,
+            "undetermined_reason": f"could not open {pdf.name}: {exc}",
+        }
+
+    images: list[dict] = []
+    for index in range(doc.page_count):
+        page = doc[index]
+        page_area = abs(page.rect.width * page.rect.height)
+        if page_area <= 0:
+            # A zero-area page cannot yield a coverage, so it cannot yield a
+            # role. Recorded as undetermined rather than skipped: a skipped
+            # image is absent, and absence is a claim this cannot make.
+            for ordinal, info in enumerate(page.get_images(full=True), start=1):
+                images.append({
+                    "id": f"img-p{index + 1:03d}-{ordinal}",
+                    "file": f"images/img-p{index + 1:03d}-{ordinal}.png",
+                    "role": "undetermined",
+                })
+            continue
+
+        placed: list[tuple[int, float]] = []
+        for info in page.get_images(full=True):
+            xref = info[0]
+            try:
+                rects = page.get_image_rects(xref)
+            except Exception:  # noqa: BLE001
+                rects = []
+            for rect in rects:
+                placed.append((xref, abs(rect.width * rect.height) / page_area))
+
+        for ordinal, (xref, coverage) in enumerate(placed, start=1):
+            image_id = f"img-p{index + 1:03d}-{ordinal}"
+            rel = f"images/{image_id}.png"
+            entry = {
+                "id": image_id,
+                "file": rel,
+                "role": role_for(coverage, len(placed)),
+                "basis": {
+                    "coverage": round(coverage, 6),
+                    "imagesOnPage": len(placed),
+                    "page": index + 1,
+                },
+            }
+            # Only a figure gets a narrative slot. The 140 scans get none --
+            # that is the measurement, enforced in the schema and applied here.
+            if entry["role"] == "figure":
+                entry["narrative"] = {"text": None, "state": "not-authored"}
+            images.append(entry)
+
+            # Only a FIGURE gets its pixels written. A page scan IS the page:
+            # its content already reaches the library through the page tree
+            # that `pdf-pages.py` / `pdf-ocr.py` build, so a copy under
+            # `images/` is duplication a clone pays for forever. Measured
+            # 2026-09-20 on WHO_PUB_TPS_93.1: ~6 MB for its 121 page scans --
+            # not ruinous, which is why this is a design choice rather than an
+            # emergency, but nothing in `d5f1` reads those bytes.
+            #
+            # The ENTRY is still recorded for every image, scan included. The
+            # classification is the finding; suppressing the entry would make
+            # "not a figure" indistinguishable from "not seen".
+            if not dry_run and entry["role"] == "figure":
+                target = outdir / doc_id / rel
+                target.parent.mkdir(parents=True, exist_ok=True)
+                try:
+                    pix = pymupdf.Pixmap(doc, xref)
+                    if pix.n - pix.alpha >= 4:      # CMYK has no PNG encoding
+                        pix = pymupdf.Pixmap(pymupdf.csRGB, pix)
+                    pix.save(target)
+                except Exception as exc:  # noqa: BLE001
+                    # The ENTRY stands; only the file is missing. Reporting the
+                    # image as absent because its bytes would not decode would
+                    # lose a figure the document demonstrably contains.
+                    print(f"  ! {image_id}: could not write {rel}: {exc}", file=sys.stderr)
+
+    return {"$schema": SCHEMA, "doc_id": doc_id, "images": images}
+
+
+def summarise(sidecar: dict) -> str:
+    images = sidecar.get("images")
+    if images is None:
+        return f"UNDETERMINED — {sidecar.get('undetermined_reason', 'no reason given')}"
+    if not images:
+        return "0 placed images (determined: this document places none)"
+    counts: dict[str, int] = {}
+    for i in images:
+        counts[i["role"]] = counts.get(i["role"], 0) + 1
+    parts = ", ".join(f"{n} {role}" for role, n in sorted(counts.items()))
+    return f"{len(images)} placed image(s): {parts}"
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("pdf", type=Path)
+    ap.add_argument("-o", "--out", type=Path, default=Path("library"),
+                    help="library root; the sidecar lands in <out>/<doc-id>/")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="classify and report, writing nothing")
+    ap.add_argument("--json", action="store_true",
+                    help="emit the sidecar to stdout, for a consumer to validate")
+    args = ap.parse_args()
+
+    if not args.pdf.exists():
+        print(f"{args.pdf}: no such file", file=sys.stderr)
+        return 1
+
+    sidecar = extract(args.pdf, args.out, args.dry_run)
+    # The human line goes to stderr when `--json` is on, so stdout carries the
+    # payload and nothing else. Mixing the two is how a deprecation warning
+    # from `fitz` once broke `ingest-document.ts`'s probe (bean 68dt): a tool
+    # that prints prose onto its own data stream cannot be parsed safely.
+    print(f"{args.pdf.name}: {summarise(sidecar)}", file=sys.stderr if args.json else sys.stdout)
+    if args.json:
+        print(json.dumps(sidecar, ensure_ascii=False))
+
+    if args.dry_run:
+        return 0 if sidecar["images"] is not None else 2
+
+    target = args.out / sidecar["doc_id"] / "images.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with open(target, "w", encoding="utf-8") as f:
+        json.dump(sidecar, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+    print(f"  wrote {target}")
+    # An undetermined run is not a successful one. Exiting 0 here would let a
+    # pipeline record "images: none" and carry on.
+    return 0 if sidecar["images"] is not None else 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
