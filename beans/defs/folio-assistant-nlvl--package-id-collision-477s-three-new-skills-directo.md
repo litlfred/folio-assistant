@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nlvl
 title: 'PACKAGE ID COLLISION: #477''s three new skills/ directories declare no name, so four claim the id ''skills'' — and #576 turns that from silent into a broken site publish'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T18:30:22Z
-updated_at: 2026-09-20T18:50:40Z
+updated_at: 2026-09-20T19:09:24Z
 parent: folio-assistant-zzmr
 ---
 
@@ -165,3 +165,41 @@ bean.
       failure is reachable only at publish time. Not folded in here — it needs
       a `--check` mode or a drift gate rather than a writer in the gate set,
       which is its own change.
+
+
+## Closed 2026-09-20 — the last row was satisfied by #576 itself
+
+The remaining item was *"a gate runs `kg-export` (or its collision check) in
+`code-quality-gates.yml`, so this class of failure is not reachable only
+through the publish workflow."* It is, and no new gate was needed.
+
+`kg-export.test.ts:60` asserts `expect(EXPORT.problems).toEqual([])`, and
+`bun test` is a **hard** job in `code-quality-gates.yml`. What changed is not
+the gate but what reaches it: before #576 a collision was a silent `seen`-Set
+drop and never entered `problems`, so the assertion passed over it. #576 made
+a second claimant a `problems[]` entry, and the existing assertion picked it
+up for free.
+
+**Measured, not reasoned about.** On main at `887ef8b2ff`, removing
+`who-iris/skills/package-manifest.json`:
+
+| | kg-export.test.ts |
+|---|---|
+| with all three manifests | 40 pass / 0 fail |
+| one removed | 39 pass / **1 fail** |
+
+and the failure names it exactly: *"two skill directories claim package id
+`skills`: src/skills and ../who-iris/skills."* Restored, 40 pass again, tree
+clean.
+
+So the sequence that made this invisible is closed at both ends: the naming
+removes the collision, and the gate would now catch it returning. The publish
+workflow is no longer the first place it would be seen.
+
+### Note on the node-id uniqueness test, which does NOT cover this
+
+`kg-export.test.ts:262` asserts `@id`s are unique, and it is tempting to read
+that as the guard. It is not: the collision emits **one** node for the shared
+id (dropping it would dangle every `inPackage` edge pointing at it), so the
+ids stay unique while two directories mean one node. `problems` is the only
+signal, which is why the row is discharged by that assertion and not this one.
