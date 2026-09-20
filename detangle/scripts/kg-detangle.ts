@@ -97,10 +97,24 @@ function link(from: string, toId: string | undefined, ref: string, via: string) 
   else dangling.push({ from, ref, via });
 }
 
-/** Resolve a name to a node, preferring one in the SAME group — a package's own copy wins over a sibling instance's. */
-function byNameNear(from: string, name: string): string | undefined {
-  const hits = byName.get(name);
-  if (!hits?.length) return undefined;
+/**
+ * Resolve a name to a node.
+ *
+ * `kinds` is NOT optional and that is the fix for a measured defect. A first
+ * cut preferred a hit in the SAME group, on the reasoning that a package's own
+ * copy should win over a sibling instance's. Five `<folio:skill ref>` values —
+ * `activity-log`, `getting-started`, `l2-dak-authoring`, `qa-report-signing`,
+ * `upstream-version-adoption` — are ALSO the basenames of diagrams sitting in
+ * the same directory, so every one of them resolved to the .bpmn referring to
+ * it rather than to the skill body. That produced 31 phantom internal edges in
+ * `skills/workflows` and was the whole of its reported cohesion of 0.09.
+ *
+ * A skill ref names a SKILL. Restricting the candidate set by extension is what
+ * makes the name collision harmless instead of silently self-referential.
+ */
+function byNameOfKind(from: string, name: string, kinds: string[]): string | undefined {
+  const hits = (byName.get(name) ?? []).filter((h) => kinds.some((k) => h.endsWith(k)));
+  if (!hits.length) return undefined;
   const g = from.split("/").slice(0, 3).join("/");
   return hits.find((h) => h.startsWith(g)) ?? hits[0];
 }
@@ -116,14 +130,35 @@ for (const n of nodes) {
   }
   if (n.id.endsWith(".bpmn") || n.id.endsWith(".dmn")) {
     for (const m of text.matchAll(/folio:skill\s+ref="([^"]+)"/g)) {
-      link(n.id, byNameNear(n.id, m[1]), m[1], "bpmn-skill");
+      link(n.id, byNameOfKind(n.id, m[1], [".md"]), m[1], "bpmn-skill");
+    }
+    // A diagram calling another diagram, and a diagram importing one. These
+    // are the INTERNAL edges of a workflow graph and the first cut extracted
+    // neither, which understated cohesion for exactly the group whose carve
+    // was under discussion.
+    for (const m of text.matchAll(/<bpmn:import[^>]*location="([^"]+)"/g)) {
+      link(n.id, relative(ROOT, resolve(dirname(abs), m[1])), m[1], "bpmn-import");
+    }
+    for (const m of text.matchAll(/calledElement="([^"]+)"/g)) {
+      // calledElement names a PROCESS id (`Process_DeriveContent`), not a file.
+      // Resolve through the file that declares that id.
+      const owner = nodes.find(
+        (o) =>
+          (o.id.endsWith(".bpmn") || o.id.endsWith(".dmn")) &&
+          new RegExp(`<bpmn:process[^>]*id="${m[1]}"`).test(readFileSync(byId.get(o.id)!, "utf8")),
+      );
+      link(n.id, owner?.id, m[1], "bpmn-call");
+    }
+    for (const m of text.matchAll(/decisionRef="([^"]+)"|([A-Za-z0-9_-]+\.dmn)/g)) {
+      const ref = m[1] ?? m[2];
+      link(n.id, byNameOfKind(n.id, ref.replace(/\.dmn$/, ""), [".dmn"]), ref, "bpmn-decision");
     }
   }
   if (n.id.endsWith(".json")) {
     // Only string ARRAY members are read as references. A free-form description
     // mentioning a skill is prose, and prose is not a dependency.
     for (const m of text.matchAll(/"([a-z][a-z0-9-]{3,})"(?=\s*[,\]])/g)) {
-      const t = byNameNear(n.id, m[1]);
+      const t = byNameOfKind(n.id, m[1], [".md"]);
       if (t && t !== n.id) edges.push({ from: n.id, to: t, via: "json-skill" });
     }
   }
@@ -151,9 +186,9 @@ if (process.argv.includes("--json")) {
   console.log(`\nDetangle — ${nodes.length} nodes, ${edges.length} edges, ${dangling.length} dangling\n`);
   console.log(
     "  " +
-      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(5), "1-way".padStart(6), "verdict"].join(" "),
+      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "role".padEnd(9), "verdict"].join(" "),
   );
-  console.log("  " + "-".repeat(95));
+  console.log("  " + "-".repeat(112));
   for (const r of results) {
     if (only && r.group !== only) continue;
     const v = r.clauses.length === 0 ? "CANDIDATE" : `${r.clauses.length} clause(s) fail`;
@@ -164,8 +199,10 @@ if (process.argv.includes("--json")) {
           String(r.size).padStart(5),
           r.cohesion.toFixed(2).padStart(6),
           String(r.inbound).padStart(5),
-          String(r.outbound).padStart(5),
-          r.oneWayness.toFixed(2).padStart(6),
+          String(r.outbound).padStart(6),
+          String(r.distinctTargetGroups).padStart(5),
+          r.directionality.toFixed(2).padStart(6),
+          r.role.padEnd(9),
           v,
         ].join(" "),
     );

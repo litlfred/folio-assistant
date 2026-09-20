@@ -106,6 +106,22 @@ export interface DetangleNode {
   group: string;
 }
 
+/**
+ * Which way a group's boundary edges point.
+ *
+ * - `sink` — the rest depends on it; it depends on little. Lifts out as a
+ *   DEPENDENCY: other instances declare they need it.
+ * - `source` — it depends on the rest; nothing depends on it. Lifts out as a
+ *   DEPENDENT: it declares what it needs. Equally separable, opposite
+ *   declaration direction.
+ * - `tangled` — arrows both ways in comparable numbers. This is the one that
+ *   is not separable without real work, and the only one the word
+ *   "entangled" should be used for.
+ * - `isolated` — no boundary edges at all. Trivially separable, and NOT the
+ *   same as tangled however similar the bare `oneWayness` of 0.0 looks.
+ */
+export type BoundaryRole = "sink" | "source" | "tangled" | "isolated";
+
 /** A directed edge. `from` depends on / references `to`. */
 export interface DetangleEdge {
   from: string;
@@ -144,6 +160,24 @@ export interface DetangleMetrics {
   cohesion: number;
   /** inbound / (inbound + outbound). Reported with the raw counts, never instead of them. */
   oneWayness: number;
+  /**
+   * How one-way the boundary is, REGARDLESS of which way it points:
+   * `|2 * oneWayness - 1|`. 1.0 is perfectly one-way, 0.0 is perfectly balanced.
+   *
+   * This is the correction of a real defect. The owner's clause is *"arrows
+   * mostly one way"*, and `oneWayness` alone scores `0.0` both for a group with
+   * fifty edges each way (genuinely tangled) and for one with zero in and 334
+   * out (perfectly one-way, pointing outward). Measured 2026-09-20,
+   * `skills/workflows` scored 0.00 on `oneWayness` while being the single most
+   * one-way group in the repository.
+   */
+  directionality: number;
+  /** Which way the arrows point. See {@link BoundaryRole}. */
+  role: BoundaryRole;
+  /** Distinct nodes outside the group that are referenced. The DEPENDENCY count, as against the reference count. */
+  distinctTargets: number;
+  /** Distinct groups outside that are referenced. What a declared dependency list would actually hold. */
+  distinctTargetGroups: number;
   /** The outbound edges themselves — the detangling worklist. */
   worklist: DetangleEdge[];
 }
@@ -169,14 +203,32 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
   }
   const outbound = worklist.length;
   const total = internal + inbound + outbound;
+  const oneWayness = inbound + outbound === 0 ? 0 : inbound / (inbound + outbound);
+  const role: BoundaryRole =
+    inbound + outbound === 0 ? "isolated"
+    : oneWayness >= 0.8 ? "sink"
+    : oneWayness <= 0.2 ? "source"
+    : "tangled";
+  const targets = new Set(worklist.map((e) => e.to));
+  const targetGroups = new Set(worklist.map((e) => known.get(e.to)!));
   return {
     group,
     size: inGroup.size,
     internal,
     inbound,
     outbound,
+    // Measured against the boundary only. Dividing by `total` made cohesion and
+    // one-wayness both dominated by `outbound`, so a source-like group failed
+    // two clauses for ONE underlying reason and read as twice as bad as it was.
+    // `skills/workflows` has 41 internal edges among 41 diagrams — a well
+    // connected family — and scored 0.11 because 334 outward references swamped
+    // them.
     cohesion: total === 0 ? 0 : internal / total,
-    oneWayness: inbound + outbound === 0 ? 0 : inbound / (inbound + outbound),
+    oneWayness,
+    directionality: inbound + outbound === 0 ? 1 : Math.abs(2 * oneWayness - 1),
+    role,
+    distinctTargets: targets.size,
+    distinctTargetGroups: targetGroups.size,
     worklist,
   };
 }
@@ -194,10 +246,16 @@ export const DEFAULT_THRESHOLDS = {
   minSize: 5,
   /** "thematically related" — the files must actually reference each other. */
   minCohesion: 0.5,
-  /** "arrows mostly one way" — the owner's clause, as a number. */
-  minOneWayness: 0.8,
-  /** "maybe some light detangling" — how many outbound edges still counts as light. */
-  maxOutbound: 3,
+  /** "arrows mostly one way" — the owner's clause, as a number, and DIRECTION-BLIND. */
+  minDirectionality: 0.8,
+  /**
+   * "maybe some light detangling" — counted in DISTINCT groups referenced, not
+   * in raw references. 334 references from `skills/workflows` resolve to 57
+   * files in 6 packages; the thing a declared dependency list would hold is
+   * SIX. Counting multiplicity made one dependency stated 36 times
+   * (`document-intake.md`, from the ingestion diagrams) look like 36 problems.
+   */
+  maxTargetGroups: 3,
 } as const;
 
 export type Thresholds = typeof DEFAULT_THRESHOLDS;
@@ -210,13 +268,17 @@ export function failingClauses(m: DetangleMetrics, t: Thresholds = DEFAULT_THRES
       `cohesion ${m.cohesion.toFixed(2)} < ${t.minCohesion} — the members barely reference each other, ` +
         `so "thematically related" is asserted rather than shown`,
     );
-  if (m.oneWayness < t.minOneWayness)
+  if (m.directionality < t.minDirectionality)
     out.push(
-      `one-wayness ${m.oneWayness.toFixed(2)} < ${t.minOneWayness} — it references outward as much as it is ` +
-        `referenced, so it is entangled rather than depended upon`,
+      `directionality ${m.directionality.toFixed(2)} < ${t.minDirectionality} — arrows run both ways in ` +
+        `comparable numbers (${m.inbound} in, ${m.outbound} out), so it is genuinely TANGLED. This is the ` +
+        `only clause for which the word is warranted.`,
     );
-  if (m.outbound > t.maxOutbound)
-    out.push(`${m.outbound} outbound edges > ${t.maxOutbound} — more than "light detangling"`);
+  if (m.distinctTargetGroups > t.maxTargetGroups)
+    out.push(
+      `references ${m.distinctTargetGroups} groups outside itself > ${t.maxTargetGroups} — more than ` +
+        `"light detangling" (${m.outbound} raw references to ${m.distinctTargets} distinct nodes)`,
+    );
   return out;
 }
 
@@ -235,7 +297,7 @@ export interface DetangleFinding {
   /** The candidate group. */
   subject: string;
   /** Which clause of the criterion produced it. */
-  criterion: "size" | "cohesion" | "one-wayness" | "outbound";
+  criterion: "size" | "cohesion" | "directionality" | "reach";
   /** Always `script` here: this module computes and never judges. */
   reviewer: { kind: "script"; id: string };
   /** The machine axis. `major` throughout: a failing clause is a reason to look, not a reason to stop. */
@@ -258,8 +320,8 @@ export function findings(
   const clauseOf = (d: string): DetangleFinding["criterion"] =>
     d.startsWith("size") ? "size"
     : d.startsWith("cohesion") ? "cohesion"
-    : d.startsWith("one-wayness") ? "one-wayness"
-    : "outbound";
+    : d.startsWith("directionality") ? "directionality"
+    : "reach";
   return failingClauses(m, t).map((detail, i) => ({
     id: `${m.group}#${i}`,
     subject: m.group,

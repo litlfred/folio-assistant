@@ -38,42 +38,71 @@ bun run detangle/scripts/kg-detangle.ts --group cat-harness/skills/workflows
 bun run detangle/scripts/kg-detangle.ts --json
 ```
 
-## The finding that overturned a plan
+## Four roles, because "one way" does not mean "inward"
 
-Measured 2026-09-20 over 443 nodes and 719 edges, **after** four carves had been
-agreed and **before** any of them was made:
+`oneWayness` (inbound share) scores **0.0** both for a group with fifty edges
+each way — genuinely tangled — and for one with **zero in and 334 out**, which
+is as one-way as a boundary can be. The owner's clause is *"arrows mostly one
+way"*, so the measure must be direction-blind:
 
-| group | size | cohesion | in | out | one-way |
-|---|---|---|---|---|---|
-| `cat-harness/schemas` | 132 | 0.86 | 6 | 1 | **0.86** |
-| `cat-harness/skills/folio-core` | 108 | 0.30 | 218 | 10 | 0.96 |
-| `cat-harness/skills/workflows` | 41 | 0.09 | 8 | **303** | **0.03** |
-| `cat-harness/skills/roles` | 1 | 0.00 | 0 | **122** | 0.00 |
-| `cat-harness/skills/memory` | 37 | 0.00 | 0 | 0 | 0.00 |
+```
+directionality = |2 · oneWayness − 1|
+```
 
-`workflows` was the carve with the strongest argument behind it — 41 files, and
-`bootstrap/harness.json` already declares its own workflows separately. It is
-**the worst near-sink in the repository**: 303 arrows out, 8 in. Every activity
-carries `<folio:skill ref>`, so the diagrams depend on the skills and the skills
-do not depend back.
+| role | arrows | how it separates |
+|---|---|---|
+| **sink** | in ≫ out | lifts out as a **dependency** — others declare they need it |
+| **source** | out ≫ in | lifts out as a **dependent** — it declares what it needs |
+| **tangled** | both, comparably | not separable without real work. The only role the word fits. |
+| **isolated** | none | trivially separable, and *not* the same as tangled however alike a bare `oneWayness` of 0.0 looks |
 
-`roles` is the same shape in miniature — one file, 122 arrows out.
+## What the graph actually looks like
 
-**That does not settle it**, and the direction of the arrows is why. A near-sink
-lifts out as a **dependency** (others declare they need it). A near-source lifts
-out as a **dependent** (it declares it needs others), and this repository
-already supports that: an instance inherits its dependencies' skills through its
-`harness.json`. So `workflows` is still carvable — the 303 edges become one
-declared dependency rather than 303 problems — but it is a *different kind* of
-carve from the one the criterion describes, and calling them the same would hide
-which direction the declaration has to run.
+Measured 2026-09-20, 443 nodes and 758 edges:
 
-`memory` is the case the thresholds score wrongly, and it is recorded rather
-than tuned away: 37 nodes, **zero** edges in either direction. It fails
-`cohesion` — the entries do not reference each other — while being the most
-liftable directory measured. "Disconnected from the rest" and "connected to each
-other" are two clauses, and a set can satisfy the first completely while failing
-the second. The thresholds are a lens, not a verdict.
+| group | size | in | out | groups | dir | role |
+|---|---|---|---|---|---|---|
+| `skills/folio-core` | 108 | **254** | 10 | 3 | 0.92 | sink |
+| `skills/content-lifecycle` | 10 | 88 | 1 | 1 | 0.98 | sink |
+| `skills/authoring-who-smart-guidelines` | 11 | 60 | 0 | 0 | 1.00 | sink |
+| `cat-harness/schemas` | 132 | 5 | 1 | 1 | 0.67 | sink |
+| `skills/workflows` | 41 | **0** | **334** | 6 | 1.00 | **source** |
+| `skills/roles` | 1 | 0 | 122 | 6 | 1.00 | source |
+| `skills/memory` | 37 | 0 | 0 | 0 | 1.00 | isolated |
+| `skills/folio-paper-adapter` | 66 | 47 | 16 | 2 | **0.49** | **tangled** |
+
+**Two tangled groups out of twenty-two.** This is a well-layered graph, and the
+layering is the one the architecture describes: skill packages are leaves,
+orchestration (`workflows`, `roles`, `tools`) is the root. Only
+`folio-paper-adapter` and `bootstrap/skills` are genuinely entangled.
+
+## Reach is counted in groups, not references
+
+334 raw references out of `skills/workflows` resolve to **57 distinct files in
+6 packages**. `document-intake.md` alone accounts for 36 of them, from the
+ingestion diagrams. That is **one dependency stated 36 times**, not 36
+problems — so the "light detangling" clause counts distinct target *groups*,
+which is what a declared dependency list would actually hold.
+
+## Two defects this found in its own first cut
+
+Both were in the measurement, not the graph, and both are recorded because a
+number nobody can re-derive is a number nobody can argue with.
+
+1. **Name collision in resolution.** Five `<folio:skill ref>` values —
+   `activity-log`, `getting-started`, `l2-dak-authoring`, `qa-report-signing`,
+   `upstream-version-adoption` — are *also* basenames of diagrams in the same
+   directory. Preferring a same-group hit resolved every one to the diagram
+   referring to it. That manufactured **31 phantom internal edges and all 8
+   reported inbound edges** for `skills/workflows`. A skill ref names a skill;
+   the resolver is now restricted by extension.
+2. **Missing call edges.** `<bpmn:import>`, `calledElement` and `decisionRef`
+   were not extracted at all — 39 edges, and they are precisely the *internal*
+   edges of a workflow graph. Cohesion for the group under discussion was
+   understated for the whole time its carve was being argued.
+
+After both fixes `skills/workflows` reads **0 in / 334 out**, not 8 / 303. The
+conclusion held; the evidence for it did not.
 
 ## Known limits, stated rather than discovered later
 
