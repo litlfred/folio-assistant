@@ -199,3 +199,83 @@ this branch set it to `cat-harness`, which renames every published `@id` while
 the site still builds green. Verified on the publish ref afterwards: 1349 nodes,
 **0** minted against `cat-harness`. The directory is a filesystem fact; the stub
 is a published name, and they are now allowed to differ.
+
+## Owner rulings, 2026-09-20 — two corrections to what this bean records
+
+### 1. The exception list is THREE, and `fsh-guts/` is not one of them
+
+Owner: *"intent is to have, with exception of bootstrap/ beans/ and todos/, all
+other directories are to be the contents of repos"*.
+
+This bean's §"What this settles" puts `fsh-guts/` in category 2 — "NON-INSTANCE
+STORES that are never overlaid: `beans/`, `todos/`, and `fsh-guts/`". **That is
+wrong.** The exceptions are `bootstrap/`, `beans/`, `todos/`. Everything else at
+the top level is the contents of a repository, `fsh-guts/` included, so it
+belongs at `cat-harness/fsh-guts/`.
+
+Recorded as a correction rather than edited away, because a sibling reading the
+old category 2 would leave it where it is and believe that settled.
+
+**It sharpens `scope: "repository"` rather than complicating it.** That field
+(PR #437) was written to mean "never overlaid", which is a judgement. Under this
+ruling it means exactly the three exceptions — `bootstrap/skills/`, `beans/`,
+`todos/` — and `fsh-guts/` stops carrying it. A closed list beats a criterion
+each reader applies for themselves.
+
+Measured 2026-09-20 against the rule, counting tracked directories only:
+
+| tree | non-conforming top-level dirs |
+|---|---|
+| `origin/main` | **22** — adapters, blueprint, computations, content, deploy, home_page, latex, library, ns, schemas, scripts, skills, src, test, types, ui, uploads, viewer, tools, fsh-guts, test-results, + `folio-assistant/` |
+| PR #437 | **3** — `fsh-guts/` (7 files), `tools/` (1 file), `test-results/` (1 file, build residue) |
+
+Still unruled, and inferred rather than stated: the dot-directories
+(`.github/`, `.claude/`, `.gemini/`, `.harness/`) and the root files
+(`package.json`, `tsconfig.json`, `AGENTS.md`, licences). `.github/` must be at
+the repository root because GitHub requires it there, so the rule is read as
+covering content directories, not repository infrastructure. Asked, not assumed.
+
+### 2. Beans and todos are introduced by cat-harness, NOT by bootstrap
+
+Owner: *"beans and todos as tools only introduced in cat-harness, not in
+bootstrap"*.
+
+**Bootstrap violates this today, and by more than beans and todos.** Measured on
+`77bb22d697`:
+
+- `bootstrap/harness.json` declares **two** directories, `skills/` and
+  `workflows/`, both holding one graph kind: `cat-harness`.
+- `bootstrap/bootstrap.jsonld` publishes **18** `graphKind` nodes — `beans`,
+  `bean-defs`, `workflow-state`, `todos`, `todo-items`, `todo-feedback`,
+  `folio`, `library`, `qa`, `health`, `voices`, `uploads`, `tools`, `schemas`,
+  `translation-sources`, `cat-harness` and the rest.
+
+So bootstrap introduces **17 kinds it does not declare**, including every
+bean/todo kind — while `bootstrap/AGENTS.md`, `bootstrap/harness.json` and
+`bootstrap/skills/kg-navigation.md` all state in prose that bootstrap has *"no
+`beans`"*. The prose is right and the generated graph contradicts it.
+
+**Root cause, and it is a classification rather than a bug.** `COLLECTOR_SCOPE`
+in `scripts/kg-export.ts` files `graphKinds` as **`universal`** — "Reads nothing
+instance-specific at all — the global graph-kind registry" — so
+`collectGraphKinds()` emits every registered kind into whichever instance is
+exporting. That classification is what needs revisiting: a graph kind is
+CONTRIBUTED BY A LAYER, so the registry is global in storage and not in
+ownership.
+
+`collectGraphKinds`' own comment already says as much — *"`cat-harness` and
+`schemas` are bootstrap's kinds, `voices` and `library` are core's"* — but
+`graphKindNamespace()` currently resolves **all 16** registered kinds to the
+cat-harness namespace, so the comment describes an intent the code does not
+implement. Either the namespaces are wrong or the comment is; they disagree
+today and nothing checks it.
+
+Shape of the fix, not yet implemented and not yet authorised: an instance's
+export carries the kinds that instance INTRODUCES, so bootstrap's document
+carries `cat-harness` alone. That is one node where there are now 18, and it
+makes `bootstrap/AGENTS.md`'s "no beans" true of the graph and not only of the
+prose.
+
+Related: `z4mq` item 3 (session todo #8) — the conformance check that any
+instance can render its JSON-LD. A check that bootstrap publishes only what it
+declares belongs with it.
