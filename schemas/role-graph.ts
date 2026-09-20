@@ -100,6 +100,7 @@ import { z } from "zod";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
+import { NETWORK_REACHES, type NetworkReach } from "./cat-harness";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
 export const ROLE_GRAPH_DIR = "roles";
@@ -383,7 +384,28 @@ export const RoleDefSchema = z.object({
   inherits: z.array(z.string()).optional(),
   actedUpon: z.boolean().optional(),
   judgementOnly: z.boolean().optional(),
-});
+  // STRICT: an unknown key is an ERROR, not something to drop quietly.
+  //
+  // `readRoleGraph` already refuses a bad `actorKinds` and a dangling
+  // `inherits` — rejected at read, not accepted and reported later — and this
+  // is the case it was missing. A plain `z.object` STRIPS what it does not
+  // recognise, so a field an author wrote parses, type-checks, and reaches no
+  // graph. That is bean `zdrf`'s failure class, and the comment above is the
+  // half of it that was already known; this is the other half.
+  //
+  // It is not hypothetical. `role-model.md` §"Adding a role" said to write a
+  // `summary` — not a field: `title`/`description` are the two labels every
+  // kg node carries. PR #453 followed the instruction, and all three
+  // bootstrap roles carried a `summary` that reached nothing. Measured
+  // 2026-09-20: 0 of 33 root roles, 3 of 3 bootstrap roles. The instruction
+  // was corrected in #452; this is what stops the next one.
+  //
+  // `_`-prefixed documentation keys stay legal — see `withoutComments`. A
+  // downstream instance carrying some OTHER extra key will now fail at read
+  // where it used to load, and that is the trade taken deliberately: a
+  // declaration that silently means less than it says is worse than one that
+  // refuses to load and names the key.
+}).strict();
 
 export const RoleGraphSchema = z.object({
   name: z.string().min(1),
@@ -402,6 +424,34 @@ export const RoleGraphSchema = z.object({
  * otherwise silently return a short skill set, and a *quietly* incomplete
  * answer is the failure mode this repository keeps paying for.
  */
+/**
+ * Strip `_`-prefixed documentation keys, at the graph level and on each role.
+ *
+ * This instance writes rationale into the JSON it declares — `_comment` here,
+ * `_comment`/`_title` in `harness.json`, `_lanes_comment` in bootstrap's
+ * graph — so the convention is established rather than invented here. It is
+ * what makes {@link RoleDefSchema}'s `.strict()` affordable: an unknown key
+ * can be an error precisely because there is a spelling for a key that is
+ * MEANT not to be read.
+ *
+ * Generalised from a hardcoded `delete raw._comment`, which honoured the
+ * convention for exactly one name — `_lanes_comment` was already being
+ * stripped by the schema instead, which is the silence this change exists to
+ * remove.
+ */
+function withoutComments(raw: unknown): unknown {
+  if (typeof raw !== "object" || raw === null) return raw;
+  const drop = (o: Record<string, unknown>): Record<string, unknown> =>
+    Object.fromEntries(Object.entries(o).filter(([k]) => !k.startsWith("_")));
+  const top = drop(raw as Record<string, unknown>);
+  if (Array.isArray(top.roles)) {
+    top.roles = top.roles.map((r) =>
+      typeof r === "object" && r !== null ? drop(r as Record<string, unknown>) : r,
+    );
+  }
+  return top;
+}
+
 export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
   const p = join(kgRoot, ROLE_GRAPH_DIR, ROLE_GRAPH_FILENAME);
   if (!existsSync(p)) return undefined;
@@ -411,8 +461,7 @@ export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
-  if (typeof raw === "object" && raw !== null) delete (raw as Record<string, unknown>)._comment;
-  const parsed = RoleGraphSchema.safeParse(raw);
+  const parsed = RoleGraphSchema.safeParse(withoutComments(raw));
   if (!parsed.success) throw new Error(`${p} is not a valid role graph: ${parsed.error.message}`);
 
   const graph = parsed.data as RoleGraph;
@@ -479,6 +528,21 @@ export interface LoadedActor extends ActorDef {
   capabilities?: string[];
   /** Permission ids — what it may do. See {@link readPermissions}. */
   permissions?: string[];
+  /**
+   * What this participant can reach off its own machine.
+   *
+   * Carried on `LoadedActor` rather than on the thin {@link ActorDef} on
+   * purpose. That interface is identity only — *"everything about what it
+   * can do belongs to the role it takes on"* — and reach is not what the
+   * actor **does**; it is a fact about **where it sits**, exactly like the
+   * `capabilities` its machine has. Putting it on `ActorDef` would recreate
+   * the confusion that module exists to end; putting it beside
+   * `capabilities` is where the environment facts already live.
+   *
+   * Absent means UNDECLARED, which is not `internet`. See
+   * `schemas/actor-reach.ts` for how it composes with the deployment's.
+   */
+  reach?: NetworkReach;
   /** The file it came from, so a finding can name it. */
   path: string;
   /** Carries `inherits` — i.e. it is modelling a role, not an actor. */
@@ -505,6 +569,25 @@ function actorKindOf(raw: Record<string, unknown>, path: string): ActorKind {
   return raw.type === "person" ? "person" : "system";
 }
 
+/**
+ * An actor's declared reach, or `undefined` when it declares none.
+ *
+ * An unrecognised value throws, for the reason {@link actorKindOf} throws:
+ * a typo read permissively would route a signing task to an API the machine
+ * cannot call, and the failure would surface as a network error rather than
+ * as the declaration mistake it is.
+ */
+function actorReachOf(raw: Record<string, unknown>, path: string): NetworkReach | undefined {
+  if (raw.reach === undefined) return undefined;
+  if (typeof raw.reach !== "string" || !(NETWORK_REACHES as readonly string[]).includes(raw.reach)) {
+    throw new Error(
+      `${path}: reach ${JSON.stringify(raw.reach)} is not a network reach. ` +
+        `One of: ${NETWORK_REACHES.join(", ")}.`,
+    );
+  }
+  return raw.reach as NetworkReach;
+}
+
 export function readActors(actorsDir: string): LoadedActor[] {
   if (!existsSync(actorsDir)) return [];
   const out: LoadedActor[] = [];
@@ -524,6 +607,7 @@ export function readActors(actorsDir: string): LoadedActor[] {
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
       capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,
       permissions: Array.isArray(raw.permissions) ? (raw.permissions as string[]) : undefined,
+      reach: actorReachOf(raw, p),
       path: p,
       looksLikeRole: Array.isArray(raw.inherits) && raw.inherits.length > 0,
     });

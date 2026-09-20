@@ -59,6 +59,9 @@ const base = {
   ],
 };
 
+/** The minimal valid role, spread by the fixtures that vary one key. */
+const ROLE_A = { id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [] };
+
 describe("readRoleGraph", () => {
   test("absent declaration is undefined, not an error", () => {
     const root = mkdtempSync(join(tmpdir(), "role-graph-"));
@@ -80,6 +83,41 @@ describe("readRoleGraph", () => {
       roles: [{ id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["ghost"] }],
     });
     expect(() => readRoleGraph(root)).toThrow(/inherits "ghost"/);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("an unknown key on a ROLE is refused, not stripped", () => {
+    // Bean `ghx3`. A plain `z.object` drops what it does not recognise, so a
+    // field an author wrote parses, type-checks, and reaches no graph — bean
+    // `zdrf`'s class, of which the `persona`/`voice`/`useCases` comment on
+    // the schema was only the half already known.
+    //
+    // It is not hypothetical. `role-model.md` said to write a `summary` —
+    // not a field, since `title`/`description` are the two labels every kg
+    // node carries — and PR #453 gave all three bootstrap roles one.
+    const root = withKg({
+      name: "t",
+      roles: [{ ...ROLE_A, summary: "a field that does not exist" }],
+    });
+    expect(() => readRoleGraph(root)).toThrow(/summary|not a valid role graph/);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a `_`-prefixed documentation key is legal, on a role and above it", () => {
+    // What makes `.strict()` affordable: there is a spelling for a key MEANT
+    // not to be read. The convention is established rather than invented for
+    // this test — `_comment` in this graph, `_comment`/`_title` in
+    // harness.json, `_lanes_comment` in bootstrap's graph.
+    const root = withKg({
+      _comment: "why this graph exists",
+      _lanes_comment: "why no lanes",
+      name: "t",
+      roles: [{ ...ROLE_A, _comment: "why this role exists" }],
+    });
+    const g = readRoleGraph(root);
+    expect(g?.roles.map((r) => r.id)).toEqual(["a"]);
+    // Stripped from the parsed value, not carried through as data.
+    expect((g?.roles[0] as unknown as Record<string, unknown>)._comment).toBeUndefined();
     rmSync(root, { recursive: true, force: true });
   });
 
@@ -321,8 +359,13 @@ describe("the actor kind is three-way: human, agentic, mechanical", () => {
     // registry schema, which — unlike `readActors` — has no fallback. Its own
     // description settles the classification: "a mechanical participant … it
     // runs a fixed program and exercises no judgement".
+    // `attestation-service` (bean `folio-assistant-r0rq`) is mechanical for
+    // the same reason: it holds a key and signs what it is given. The lane
+    // that exercises judgement about whether a report SHOULD be signed is the
+    // human one, and the two are separate lanes precisely so that is visible.
     expect(by("system")).toEqual([
-      "ci-health-watcher", "ci-pipeline", "ig-publisher-service", "lean-mcp",
+      "attestation-service", "ci-health-watcher", "ci-pipeline",
+      "ig-publisher-service", "lean-mcp",
     ]);
   });
 

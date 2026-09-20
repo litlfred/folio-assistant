@@ -423,6 +423,7 @@ jobs:
           bun run check:l1-complete -- --check
           bun run check:declared-paths
           bun run check:fallback-roles
+          bun run check:actor-reach
           bun run check:harness-dirs
           bun run harness:dirs:check
           bun run check:schema-nodes
