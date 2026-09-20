@@ -42,6 +42,7 @@ import { dirname, join, resolve } from "node:path";
 
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
 import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer } from "../schemas/namespaces.js";
+import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import { CLASS_GLOSSES, PROPERTY_GLOSSES, type TermGloss, type TermLayer } from "../schemas/vocabulary.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -219,7 +220,21 @@ export function buildVocabulary(
     ...kinds.keys(),
     ...Object.keys(PROPERTY_GLOSSES),
   ]);
-  const minted = mintedTermsFromSource(root);
+  // THE UNION THIS FILE HAS DOCUMENTED SINCE IT WAS WRITTEN, now performed.
+  //
+  // `mintedTermsFromSource` scans for `termIri("Name")` literals, and says in
+  // its own doc comment that it "is not complete on its own" because
+  // `kg-export` mints `` `${FOLIO_NS}${type}` `` from a registry group name —
+  // so those classes appear in the exported graph and in NO literal anywhere.
+  // It names `Actor` and `Capability` as the cases. Both happened to be
+  // defined, so the gap never showed, and the caller was written to filter the
+  // scan ALONE. A promise kept only in prose is not kept.
+  //
+  // Bean `3190` collected the bill: `Convention` was projected onto two real
+  // nodes whose `@type` dereferenced to nothing while this check reported
+  // `0 undefined` — a clean run over a set it never looked at. `Requirement`
+  // was in the same state and had been for longer.
+  const minted = new Set<string>([...mintedTermsFromSource(root), ...Object.values(REGISTRY_GROUPS)]);
   const undefinedTerms = layer === undefined ? [...minted].filter((t) => !everything.has(t)).sort() : [];
 
   const doc = {

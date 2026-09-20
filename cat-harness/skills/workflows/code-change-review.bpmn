@@ -49,6 +49,14 @@
            before that write is exactly the audit question. Same reasoning
            as `content-lifecycle`. -->
       <folio:log capture="on" />
+      <!-- PROCESS-SCOPED CONVENTION (bean `3190`). Every step in this diagram
+           writes or reviews code, so the comment convention holds throughout
+           and is bound once here rather than restated on nine activities.
+           Bound at the PROCESS rather than globally on purpose: an agent
+           adjudicating a translation is not in this diagram and does not get
+           it, which is the whole distinction — "absent binding means NO
+           conventions, not all of them". -->
+      <folio:convention ref="comment-why-not-what" />
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_CodeChangeReview">
@@ -60,7 +68,16 @@
              diagram's own near-miss makes the case: "CI/CD pipeline" below
              differs from the declared "CI/CD Pipeline" by one capital letter,
              which no reader would catch and the audit did. -->
-        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements>
+          <folio:role ref="authoring-agent"/>
+          <!-- LANE-SCOPED (bean `3190`), and the scope is the point. This lane
+               writes the checks; the reviewer and the pipeline lanes below do
+               not, so binding it here rather than on the process says who the
+               rule is for. `workflow_next` reports the scope beside the ref so
+               an agent can tell "every step in this process" from "this lane
+               only" — two different claims that a flat list would merge. -->
+          <folio:convention ref="no-clean-run-over-an-empty-set"/>
+        </bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ClaimBean</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_BranchAndAnnounce</bpmn:flowNodeRef>
