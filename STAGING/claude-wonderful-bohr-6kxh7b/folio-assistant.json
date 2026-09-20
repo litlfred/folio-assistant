@@ -251,13 +251,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T07:23:39.311Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c4ed79ad46ee8c1da995eebbdeed1e44ebad80a",
-  "sourceCommitSha": "3c4ed79ad46ee8c1da995eebbdeed1e44ebad80a",
-  "sourceCommitAt": "2026-09-20T07:22:10Z",
+  "generatedAt": "2026-09-20T07:28:27.093Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6c9675c51b580ba8a654ca4d2f42626562c714ac",
+  "sourceCommitSha": "6c9675c51b580ba8a654ca4d2f42626562c714ac",
+  "sourceCommitAt": "2026-09-20T07:26:41Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 174,
+    "Skill": 175,
     "Actor": 27,
     "Capability": 24,
     "Role": 114,
@@ -702,6 +702,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/workflow-state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/deterministic-and-agentic",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "deterministic-and-agentic",
+      "title": "The deterministic-to-agentic spectrum",
+      "description": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, what is measured today, and the three research questions — which are open, and marked as open.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/deterministic-and-agentic.md",
+      "instructionLines": 151,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deterministic-and-agentic"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/document-authoring",
@@ -4108,6 +4124,7 @@
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/deterministic-and-agentic",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-state-machine",
@@ -22707,8 +22724,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "97104845fbcac522c9c97fab89690186a2bfcbf4",
+    "sha": "7508acfcb0fea60c3901ec0a99d81fc3c92b7247",
     "pr": "458/merge",
-    "run": "35496684109"
+    "run": "35496892286"
   }
 }
