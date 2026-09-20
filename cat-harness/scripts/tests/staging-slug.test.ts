@@ -132,10 +132,39 @@ describe("GUARD 3 — the workflow checks the VALUE, in every job that builds a 
     // Three, not two. A first draft expected two — `stage` and `cleanup` —
     // and `cleanup-dispatch` turned out to already carry the same guard on its
     // dispatch input, which is the case where guard 1 (git's ref rules) does
-    // not hold at all. The count is asserted exactly so that removing one is a
-    // failure rather than a silent narrowing.
-    const guards = yml.match(/case "\$SLUG" in\s*\n\s*""\|\.\|\.\.\)/g) ?? [];
-    expect(guards.length).toBe(3);
+    // not hold at all.
+    //
+    // Asserted PER JOB, not as a count of occurrences
+    // (`expect(guards.length).toBe(3)`, until 2026-09-20). Both forms pass
+    // today, so this is not a bug fix; it is the weaker claim replaced by the
+    // one the test's own NAME makes. A count cannot tell whether the guard
+    // sits in the job that builds a path from the slug or in some other job
+    // entirely, and three jobs now do — `stage` joined them once the deploy
+    // moved off `peaceiris` and gained an `rm -rf` of its own slug.
+    //
+    // The exactness was there to catch a guard being REMOVED. A job-shaped
+    // assertion still catches that, and additionally lets a job carry the
+    // guard more than once — which the file now does. PR #563 added a SECOND
+    // guard inside `stage`'s deploy step, re-checking the slug by value after
+    // it crosses a job boundary as an output, immediately before the line
+    // that deletes a directory.
+    //
+    // The count survived that only because the two are spelled differently
+    // (`$STAGING_SLUG` and `""|.|..|*/*` against `$SLUG` and `""|.|..`), so
+    // the regex misses the new one. That is luck, not coverage: normalising
+    // the two spellings — an ordinary tidy-up — would take the count to four
+    // and fail a test that is measuring nothing wrong. A guard added is not a
+    // defect.
+    const jobs = (
+      Bun.YAML.parse(yml) as { jobs?: Record<string, { steps?: { run?: string }[] }> }
+    ).jobs ?? {};
+    const guarded = Object.entries(jobs)
+      .filter(([, j]) =>
+        (j.steps ?? []).some((s) => /case "\$SLUG" in\s*\n\s*""\|\.\|\.\.\)/.test(s.run ?? "")),
+      )
+      .map(([n]) => n)
+      .sort();
+    expect(guarded).toEqual(["cleanup", "cleanup-dispatch", "stage"]);
   });
 
   test("every `rm -rf` on a slug is in a job whose slug was checked", () => {
