@@ -177,3 +177,33 @@ Two remain genuinely open and are the owner's to rule on:
 - [ ] The standards choice above is recorded as a decision (or overturned with reasons) — and either way `skos:` stops being a bound prefix that nothing emits
 
 Related: `0lmb` (content model), `zzmr` (KG structure and publication), `bzyu` (translation pipeline), the who-iris catalogue work on PR #477, the existing `glossary-build` skill (folio-core) — check what it already does before adding a second mechanism.
+
+## `docs-auto` — the owner's framing for where this lands, 2026-09-20
+
+Owner (this session), reframing the ask as a HANDLER rather than a one-off page:
+
+> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`
+> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.
+> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could clarify
+> it lives at `cat-harness/docs-auto/glossary/<path>`
+
+So piece 1 of this bean (*"a defined-terms index in the docs/ rendering"*) is not
+its own renderer: it is **one `auto-doc-type` among several**, served by a single
+handler that takes a sub-graph path and emits derived documentation for it. The
+glossary index for a sub-graph lives at `cat-harness/docs-auto/glossary/<path>`.
+
+Proposed `auto-doc-type` values, as the owner gave them:
+`glossary`, `index`, `index/bpmn`, `index/dmn`, `index/skills`, `index/tasks`,
+`index/processes`, `index/roles`.
+
+**`toc` is OUT.** It was in the owner's first list and withdrawn in the same
+session: *"no toc,... ther is no meanging at folio level/. (mayber later)"* — a
+table of contents is a document-order notion and a folio has no single order to
+take one over. Recorded here rather than dropped silently, because the next
+agent reading the original list would otherwise re-add it.
+
+Pieces 2–4 (the `glossary` content kind in core, coded + versioned in the
+schema, translatable) are unchanged by this and are still this bean's.
+
+**Not started.** Queued behind the who-iris ingestion work; the roast above still
+holds and still gates any build.

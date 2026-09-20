@@ -121,8 +121,17 @@ this way rather than as advice.
 | **R5** | Carry `dc.subject.mesh` as a **controlled** value with its authority | it can be resolved and subsumed; a keyword cannot |
 | **R6** | Model bitstreams per **bundle**, with size and format on the bitstream | an item is not a file |
 | **R7** | Model containment as a list of **paths** | four levels deep, and multiple mappings are legal |
-| **R8** | Never infer metadata from the PDF when a record exists | see below |
+| **R8** | Never infer metadata from the PDF when a record exists | OCR off a title page catalogued the WHO Editorial Style Manual as *Abies* |
 | **R9** | Record what the source says even when it contradicts the file | `dc.description` says `30 p.`; the PDF has **33** |
+| **R10** | An item with no known collection carries `parents: []` — never a guessed one | held-and-unplaceable is a STATE; inventing containment is unfalsifiable |
+| **R11** | Key a node by **path** when its UUID is not in the capture | an invented UUID resolves to nothing while looking authoritative |
+| **R12** | Keep the **page captured** and the **identifier** apart | `/items/<uuid>/full` is what was fetched; the Handle is what the item IS |
+| **R13** | A `materialized` claim must name bytes that EXIST, and something must check it | see `yl5w`: three claims resolved to nothing and the gate said "clean" |
+| **R14** | Read a storage figure in the units that round-trip its own bytes | IRIS prints "GB" for what its byte counts make **GiB** — a 7% error |
+| **R15** | Never fall back to a parent URL when an item has no upstream URI | "no upstream URI recorded" is the answer; the front page is a lie that resolves |
+| **R16** | A partial transcription must SAY it is partial | a truncated abstract that does not declare itself cannot be told from a short one |
+| **R17** | Hold what you hold: model the bitstreams whose bytes are here | the handbook lists **8** upstream; this repository has **1** |
+| **R18** | Do not "correct" a record that looks wrong | the English-titled editorial manual really does carry an **Italian** ISBN |
 
 ### R8 has a worked failure, in this repository
 
@@ -136,17 +145,27 @@ one title (`Handbook forGuideline Development 2nd edition` from joined title
 lines, `GRC Handbook - second edition` from PDF docinfo, and the real one), with
 no authority among them. That is what an IRIS record settles.
 
-## Getting a record, and why there isn't one for two of three
+## Getting a record — and the prediction this section made, which came true
 
 DSpace 7 exposes `/server/api/discover/search/objects`, paged and filterable by
 `dsoType`, `scope` and facets; communities are listed at `/community-list`.
 
-**None of that was exercised here.** `iris.who.int` is egress-blocked from this
-environment — `curl` returns `CONNECT tunnel failed, response 403`, the same
-block bean `r1lz` recorded on 2026-09-19. So the API shape above is read from
-DSpace's documentation and the site's own navigation, and two of the three items
-carry **derived** records marked as such. They are placeholders with honest
-provenance, to be replaced wholesale when IRIS is reachable — not records.
+**None of that has ever been exercised here.** `iris.who.int` is egress-blocked
+from this environment — `curl` returns `CONNECT tunnel failed, response 403`,
+the same block bean `r1lz` recorded on 2026-09-19. The API shape above is read
+from DSpace's documentation and the site's own navigation, not from a call.
+
+This section used to end by saying two of the three items carried **derived**
+records, *"placeholders with honest provenance, to be replaced wholesale when
+IRIS is reachable — not records."*
+
+**That is exactly what happened, by a route it did not anticipate.** IRIS is
+still unreachable. On 2026-09-20 the owner captured the two full item records
+by hand and uploaded them, and both derived records were replaced wholesale.
+The lesson is not that the prediction was lucky: it is that *marking a derived
+record as derived* is what made the replacement a clean swap instead of an
+archaeology exercise. Nothing had to be reconciled, because nothing downstream
+had been allowed to believe the placeholder.
 
 Enumeration cost, subsetting and the characterisation that decides whether IRIS
 may be cited at all are in

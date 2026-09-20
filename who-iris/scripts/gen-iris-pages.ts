@@ -53,6 +53,22 @@ const INSTANCE = resolve(import.meta.dir, "..");
 const REPO = resolve(INSTANCE, "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
 const OUT = join(INSTANCE, "docs");
+/**
+ * The skill this page is a PROJECTION of — never a second copy of it.
+ *
+ * Owner, 2026-09-20: *"captiure all your issues in ingesting iris documents in
+ * skills"*, then *"that are visible in who-iris/docs"*. Two instructions that
+ * pull opposite ways if you obey them separately: a skill an agent reads, and
+ * a page a person reads, each free to drift from the other the moment one is
+ * edited.
+ *
+ * So the page is generated FROM the skill. `who-iris/skills/iris-dspace.md` is
+ * the single place a finding is written down; the requirements table in it is
+ * parsed below and rendered here. Editing the page means editing the skill,
+ * and `iris:pages:check` fails if somebody edits the skill and does not
+ * re-render — which is the whole mechanism keeping the two honest.
+ */
+const SKILL = join(INSTANCE, "skills", "iris-dspace.md");
 
 /**
  * The filenames this generator OWNS, and may therefore delete.
@@ -63,7 +79,7 @@ const OUT = join(INSTANCE, "docs");
  * the same licence `prunableStickies` operates under. A hand-authored page, an
  * asset directory or a `.nojekyll` in the same directory is untouched.
  */
-export const OWNED = /^(index|community-list|collection-.*|item-.*)\.html$/;
+export const OWNED = /^(index|community-list|ingestion-notes|collection-.*|item-.*)\.html$/;
 
 /**
  * Where a committed file is actually served from.
@@ -339,6 +355,20 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
   .dl { white-space: nowrap; }
 
+  p.lede { font-size: 1.05rem; line-height: 1.6; max-width: 46rem; }
+
+  table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
+  table.reqs th, table.reqs td {
+    text-align: left; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
+    vertical-align: top;
+  }
+  table.reqs thead th { background: var(--iris-wash); font-weight: 700; }
+  table.reqs th.rid {
+    width: 3.2rem; white-space: nowrap; font-weight: 700; color: var(--iris-accent);
+  }
+  table.reqs td.why { color: var(--iris-muted); }
+  table.reqs code { font-size: 0.87em; }
+
   .caveat {
     border-left: 4px solid var(--iris-current); background: var(--iris-wash);
     padding: 0.9rem 1.1rem; margin: 1.6rem 0; font-size: 0.95rem;
@@ -354,15 +384,21 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
 
   @media (max-width: 640px) {
     h1 { font-size: 1.9rem; }
-    .none { color: var(--iris-muted); font-style: italic; }
-  /* The CDN link is secondary to the one that is known to work. */
-  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
-  .nologo { display: none; }
+    /* .none and .cdn are defined above and were duplicated in here; the
+       copies said nothing the base rules did not. A .nologo display:none was
+       in here too, which HID the "replica, not published under WHO" notice on
+       exactly the screens where a reader is least able to tell a replica from
+       the real site. It shrinks now; it does not disappear. */
+    .nologo { font-size: 0.72rem; max-width: none; }
     .wordmark .iris { font-size: 1.7rem; }
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
+    table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
+    table.reqs thead { display: none; }
+    table.reqs td, table.reqs th.rid { border-bottom: none; padding: 0.2rem 0; }
+    table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
   }
 </style>
 </head>
@@ -390,6 +426,7 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
 
 <nav class="main"><div class="wrap">
   <a href="community-list.html">Communities &amp; Collections</a>
+  <a href="ingestion-notes.html">Ingestion notes</a>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
@@ -800,6 +837,124 @@ ${collections
 `;
 }
 
+/** Where the skill itself is readable, for a reader who wants the full text. */
+const SKILL_BLOB = `https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md`;
+
+/**
+ * Markdown inline spans → HTML, for text that came out of the skill.
+ *
+ * Escaped FIRST, then marked up, so a `<` in a requirement stays a `<`. This
+ * is not a markdown implementation and does not pretend to be one: it handles
+ * the four spans the requirements table actually uses, and anything else
+ * passes through as the literal text it is, which is the failure mode you
+ * want from a renderer you are trusting with authored content.
+ *
+ * A RELATIVE link is rewritten onto the GitHub blob. The skill sits at
+ * `who-iris/skills/`, these pages at `who-iris/docs/`, and the page is served
+ * from two different mount routes — so a relative href that resolves in the
+ * repository resolves to nothing on the site. Better a link that leaves for
+ * GitHub than one that 404s in place.
+ */
+function inlineMd(md: string): string {
+  let h = esc(md);
+  h = h.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, text: string, href: string) => {
+    const abs = /^[a-z]+:|^#/.test(href)
+      ? href
+      : `${SKILL_BLOB.replace(/\/who-iris\/skills\/iris-dspace\.md$/, "")}/who-iris/skills/${href}`;
+    return `<a href="${esc(abs)}">${text}</a>`;
+  });
+  h = h.replace(/`([^`]+)`/g, "<code>$1</code>");
+  h = h.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  h = h.replace(/(^|[^*])\*([^*]+)\*/g, "$1<em>$2</em>");
+  return h;
+}
+
+type Requirement = { id: string; requirement: string; why: string };
+
+/**
+ * The requirements, read out of the skill.
+ *
+ * **Refuses rather than renders an empty table.** A projection that silently
+ * produces nothing when its source moves is the `check-catalogue` defect in
+ * another costume — an edge to nothing that reads as a relationship. If the
+ * table is renamed, restructured or emptied, this throws and the gate goes
+ * red, which is a message; a page reading "0 findings" is a lie.
+ */
+export function requirementsFromSkill(md: string): Requirement[] {
+  const out: Requirement[] = [];
+  for (const line of md.split("\n")) {
+    const m = /^\|\s*\*\*(R\d+)\*\*\s*\|(.+?)\|(.+?)\|\s*$/.exec(line);
+    if (m) out.push({ id: m[1]!, requirement: m[2]!.trim(), why: m[3]!.trim() });
+  }
+  if (out.length === 0) {
+    throw new Error(
+      "who-iris/skills/iris-dspace.md: no `| **Rn** | … | … |` rows found. " +
+        "The ingestion-notes page is a projection of that table — if the table " +
+        "moved, move this parser with it rather than shipping an empty page.",
+    );
+  }
+  return out;
+}
+
+/**
+ * What ingesting the IRIS documents actually cost, as a page.
+ *
+ * Every row here was paid for in this repository: a guessed parent, an
+ * invented UUID, a GB that was a GiB, three `materialized` claims resolving to
+ * no bytes. They are written down in the skill so the next AGENT is stopped by
+ * them, and rendered here so a PERSON can see what the ingestion is standing
+ * on without reading a skill file.
+ */
+function ingestionNotes(reqs: Requirement[], all: Node[]): string {
+  const items = all.filter((n) => n.flavour === "item");
+  const held = items.filter((n) => assetHref(n) !== undefined).length;
+
+  const rows = reqs
+    .map(
+      (r) =>
+        `<tr><th class="rid">${esc(r.id)}</th><td>${inlineMd(r.requirement)}</td>` +
+        `<td class="why">${inlineMd(r.why)}</td></tr>`,
+    )
+    .join("\n");
+
+  return `
+<h1>What ingesting these documents cost</h1>
+
+<p class="lede">Every rule below was learned by getting it wrong here first. They live in
+<code>who-iris/skills/iris-dspace.md</code> — <a href="${SKILL_BLOB}">read the skill</a> —
+and this page is generated from that file, so the two cannot drift. There are
+<strong>${reqs.length}</strong> of them, against <strong>${items.length}</strong> item(s) in the
+catalogue, <strong>${held}</strong> of which this repository actually holds the bytes for.</p>
+
+<div class="caveat">
+  <p><strong>Why a page and not just a skill.</strong> A skill is read by an agent about
+  to act. A reader deciding whether to <em>trust</em> what was ingested needs the same
+  facts and will not open a skill file to get them. Same text, two audiences, one
+  source — the skill.</p>
+</div>
+
+<h2>Requirements a record can be checked against</h2>
+<table class="reqs">
+  <thead><tr><th>#</th><th>Requirement</th><th>Why, in one line</th></tr></thead>
+  <tbody>
+${rows}
+  </tbody>
+</table>
+
+<h2>Still open</h2>
+<p>Bean <code>yl5w</code>: every <code>localPath</code> in the catalogue points at
+<code>who-iris/uploads/</code> and all three are missing — the bytes are under
+<code>cat-harness/uploads/</code>, and <code>check:catalogue</code> does not check
+<code>localPath</code> at all. These pages link to where the bytes <em>are</em> rather
+than to where the claim says they are, and say so rather than emitting a dead link
+that matches the claim. That is a workaround, not a fix.</p>
+
+<p><code>iris.who.int</code> is egress-blocked from the environment that generates this
+page, so nothing here was fetched from IRIS. Every record was transcribed from a capture
+the owner supplied. Where a transcription is partial, the record says so.</p>
+`;
+}
+
 function main(): number {
   const all = nodes();
   const files = new Map<string, string>();
@@ -807,6 +962,15 @@ function main(): number {
   files.set(
     "index.html",
     page("who-iris", [{ label: "Home" }], landingPage(all)),
+  );
+
+  files.set(
+    "ingestion-notes.html",
+    page(
+      "What ingesting these documents cost",
+      [{ label: "Home", href: "index.html" }, { label: "Ingestion notes" }],
+      ingestionNotes(requirementsFromSkill(readFileSync(SKILL, "utf-8")), all),
+    ),
   );
 
   files.set(

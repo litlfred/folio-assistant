@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WHO editorial style manual — ingested IRIS replica</title>
+<title>What ingesting these documents cost — ingested IRIS replica</title>
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
 <style>
   :root {
@@ -189,46 +189,61 @@
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">WHO editorial style manual</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="index.html">Home</a><span class="sep">•</span><span class="here">Ingestion notes</span></div></div>
 
 <main class="wrap">
-<h1>WHO editorial style manual</h1>
-<p>Permanent URI for this item
-  <a href="https://iris.who.int/handle/10665/36842">https://iris.who.int/handle/10665/36842</a>
-  <span class="state materialized">materialized</span></p>
 
-<p class="note" style="margin-left:0">In: 1. Headquarters &rsaquo; Publications</p>
+<h1>What ingesting these documents cost</h1>
 
-<h2>Files</h2>
-<table class="items">
-<thead><tr><th>Name</th><th>Bundle</th><th>Size</th><th>State</th></tr></thead>
-<tbody>
-<tr>
-  <td><code>WHO_PUB_TPS_93.1.pdf</code></td>
-  <td>ORIGINAL</td>
-  <td>3.14 MB</td>
-  <td><span class="state materialized">materialized</span></td>
-</tr>
-</tbody>
+<p class="lede">Every rule below was learned by getting it wrong here first. They live in
+<code>who-iris/skills/iris-dspace.md</code> — <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md">read the skill</a> —
+and this page is generated from that file, so the two cannot drift. There are
+<strong>18</strong> of them, against <strong>3</strong> item(s) in the
+catalogue, <strong>3</strong> of which this repository actually holds the bytes for.</p>
+
+<div class="caveat">
+  <p><strong>Why a page and not just a skill.</strong> A skill is read by an agent about
+  to act. A reader deciding whether to <em>trust</em> what was ingested needs the same
+  facts and will not open a skill file to get them. Same text, two audiences, one
+  source — the skill.</p>
+</div>
+
+<h2>Requirements a record can be checked against</h2>
+<table class="reqs">
+  <thead><tr><th>#</th><th>Requirement</th><th>Why, in one line</th></tr></thead>
+  <tbody>
+<tr><th class="rid">R1</th><td>Resolve by <strong>Handle</strong> where one exists; treat UUID and govdoc as secondary</td><td class="why">only the Handle is guaranteed outside WHO</td></tr>
+<tr><th class="rid">R2</th><td>Never deduplicate <code>dc.identifier.uri</code></td><td class="why">the second one is evidence of a host that vanished</td></tr>
+<tr><th class="rid">R3</th><td>Preserve repetition on <strong>every</strong> field, not a known list</td><td class="why">four fields repeat in a single record; assume more do</td></tr>
+<tr><th class="rid">R4</th><td>Treat an absent <code>language</code> as <em>unasserted</em>, never as <code>en</code></td><td class="why">both states occur in one record</td></tr>
+<tr><th class="rid">R5</th><td>Carry <code>dc.subject.mesh</code> as a <strong>controlled</strong> value with its authority</td><td class="why">it can be resolved and subsumed; a keyword cannot</td></tr>
+<tr><th class="rid">R6</th><td>Model bitstreams per <strong>bundle</strong>, with size and format on the bitstream</td><td class="why">an item is not a file</td></tr>
+<tr><th class="rid">R7</th><td>Model containment as a list of <strong>paths</strong></td><td class="why">four levels deep, and multiple mappings are legal</td></tr>
+<tr><th class="rid">R8</th><td>Never infer metadata from the PDF when a record exists</td><td class="why">OCR off a title page catalogued the WHO Editorial Style Manual as <em>Abies</em></td></tr>
+<tr><th class="rid">R9</th><td>Record what the source says even when it contradicts the file</td><td class="why"><code>dc.description</code> says <code>30 p.</code>; the PDF has <strong>33</strong></td></tr>
+<tr><th class="rid">R10</th><td>An item with no known collection carries <code>parents: []</code> — never a guessed one</td><td class="why">held-and-unplaceable is a STATE; inventing containment is unfalsifiable</td></tr>
+<tr><th class="rid">R11</th><td>Key a node by <strong>path</strong> when its UUID is not in the capture</td><td class="why">an invented UUID resolves to nothing while looking authoritative</td></tr>
+<tr><th class="rid">R12</th><td>Keep the <strong>page captured</strong> and the <strong>identifier</strong> apart</td><td class="why"><code>/items/&lt;uuid&gt;/full</code> is what was fetched; the Handle is what the item IS</td></tr>
+<tr><th class="rid">R13</th><td>A <code>materialized</code> claim must name bytes that EXIST, and something must check it</td><td class="why">see <code>yl5w</code>: three claims resolved to nothing and the gate said &quot;clean&quot;</td></tr>
+<tr><th class="rid">R14</th><td>Read a storage figure in the units that round-trip its own bytes</td><td class="why">IRIS prints &quot;GB&quot; for what its byte counts make <strong>GiB</strong> — a 7% error</td></tr>
+<tr><th class="rid">R15</th><td>Never fall back to a parent URL when an item has no upstream URI</td><td class="why">&quot;no upstream URI recorded&quot; is the answer; the front page is a lie that resolves</td></tr>
+<tr><th class="rid">R16</th><td>A partial transcription must SAY it is partial</td><td class="why">a truncated abstract that does not declare itself cannot be told from a short one</td></tr>
+<tr><th class="rid">R17</th><td>Hold what you hold: model the bitstreams whose bytes are here</td><td class="why">the handbook lists <strong>8</strong> upstream; this repository has <strong>1</strong></td></tr>
+<tr><th class="rid">R18</th><td>Do not &quot;correct&quot; a record that looks wrong</td><td class="why">the English-titled editorial manual really does carry an <strong>Italian</strong> ISBN</td></tr>
+  </tbody>
 </table>
 
-<h3>Both links, as asked for</h3>
-<table class="items">
-<thead><tr><th>Where</th><th>Link</th></tr></thead>
-<tbody>
-<tr><td>Upstream, at WHO</td><td><a href="https://iris.who.int/handle/10665/36842">https://iris.who.int/handle/10665/36842</a></td></tr>
-<tr><td>Held here, in folio-assistant</td>
-    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WHO_PUB_TPS_93.1.pdf">WHO_PUB_TPS_93.1.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/cat-harness/uploads/WHO_PUB_TPS_93.1.pdf">via CDN</a></td></tr>
-<tr><td>In collection</td><td><a href="collection-collection-hq-publications.html">Publications</a><br><code>in 1. Headquarters</code></td></tr>
-<tr><td>Ingested text (L1)</td>
-    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/who-pub-tps-931/sections">who-iris/library/who-pub-tps-931/sections/</a></td></tr>
-<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/who-pub-tps-931.dc.json">Download who-pub-tps-931.dc.json</a>
-      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/who-pub-tps-931.dc.json">via CDN</a>
-      <br><code>qualified Dublin Core · 4.8 KB</code></td></tr>
-</tbody>
-</table>
+<h2>Still open</h2>
+<p>Bean <code>yl5w</code>: every <code>localPath</code> in the catalogue points at
+<code>who-iris/uploads/</code> and all three are missing — the bytes are under
+<code>cat-harness/uploads/</code>, and <code>check:catalogue</code> does not check
+<code>localPath</code> at all. These pages link to where the bytes <em>are</em> rather
+than to where the claim says they are, and say so rather than emitting a dead link
+that matches the claim. That is a workaround, not a fix.</p>
 
-
+<p><code>iris.who.int</code> is egress-blocked from the environment that generates this
+page, so nothing here was fetched from IRIS. Every record was transcribed from a capture
+the owner supplied. Where a transcription is partial, the record says so.</p>
 
 </main>
 

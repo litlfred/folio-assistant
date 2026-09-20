@@ -19,7 +19,7 @@ import { describe, expect, it } from "bun:test";
 import { readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 
-import { OWNED } from "../gen-iris-pages.js";
+import { OWNED, requirementsFromSkill } from "../gen-iris-pages.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
@@ -82,7 +82,7 @@ describe("the generator owns its filenames, and prunes only those", () => {
     expect(html.length).toBeGreaterThan(3);
     const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
     const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
-    const wanted = new Set(["index.html", "community-list.html", ...items, ...colls]);
+    const wanted = new Set(["index.html", "community-list.html", "ingestion-notes.html", ...items, ...colls]);
     expect(html.filter((f) => !wanted.has(f))).toEqual([]);
     expect([...wanted].filter((f) => !html.includes(f))).toEqual([]);
   });
@@ -101,5 +101,35 @@ describe("the generator owns its filenames, and prunes only those", () => {
     for (const f of ["hand-authored.html", ".nojekyll", "README.md", "assets", "index.json"]) {
       expect(OWNED.test(f)).toBe(false);
     }
+  });
+});
+
+describe("ingestion-notes is a projection of the skill, not a copy of it", () => {
+  const SKILL = readFileSync(join(INSTANCE, "skills", "iris-dspace.md"), "utf-8");
+
+  it("every requirement in the skill reaches the page", () => {
+    // The point of generating the page: a requirement added to the skill and
+    // not visible on the page would be a finding captured where nobody who
+    // needs it is looking, which is the failure the page exists to prevent.
+    const page = readFileSync(join(DOCS, "ingestion-notes.html"), "utf-8");
+    const reqs = requirementsFromSkill(SKILL);
+    expect(reqs.length).toBeGreaterThan(10);
+    for (const r of reqs) expect(page).toContain(`>${r.id}</th>`);
+    expect(page).toContain(`<strong>${reqs.length}</strong>`);
+  });
+
+  it("refuses rather than rendering an empty table when the source moves", () => {
+    // A projection that quietly produces nothing when its source is renamed
+    // reports "0 findings", which is indistinguishable from "no problems" and
+    // is a lie. It throws instead, and the gate goes red.
+    expect(() => requirementsFromSkill("# a skill with no requirements table\n")).toThrow(
+      /no .* rows found/,
+    );
+  });
+
+  it("ids are unique and the numbering has no gaps", () => {
+    const ids = requirementsFromSkill(SKILL).map((r) => r.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(ids).toEqual(ids.map((_, i) => `R${i + 1}`));
   });
 });
