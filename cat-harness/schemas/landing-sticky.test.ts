@@ -21,6 +21,9 @@ import {
   LANDING_STICKY_IDS,
   SUBGRAPHS_OVERVIEW,
   SUBGRAPHS_STICKY_ID,
+  CAT_HARNESS_STICKY_ID,
+  CAT_HARNESS_URL,
+  catHarnessSticky,
   isExternalLink,
   isLandingSticky,
   landingSticky,
@@ -224,8 +227,11 @@ describe("the description stays markdown, and drives the summary", () => {
     );
   });
 
-  test("the theme defaults to grumpy-cat and can be overridden", () => {
-    expect(landingSticky({ description: DESCRIPTION, createdAt: CREATED }).theme).toBe("grumpy-cat");
+  test("the theme defaults to the ENGINEER and can be overridden", () => {
+    // The owner, 2026-09-20: "thats what the theme of the current landing page
+    // sticky should be, the engineer." Plain grumpy-cat now backs the cat's own
+    // introduction beside it, which is a different sticky.
+    expect(landingSticky({ description: DESCRIPTION, createdAt: CREATED }).theme).toBe("engineer");
     expect(
       landingSticky({ description: DESCRIPTION, createdAt: CREATED, theme: "pale-sage" }).theme,
     ).toBe("pale-sage");
@@ -290,7 +296,7 @@ describe("the page's stickies as a set", () => {
     // A reader needs to know what this instance IS before an orientation
     // paragraph about the graph's shape means anything.
     const ids = landingStickies({ description: DESCRIPTION, createdAt: CREATED }).map((s) => s.id);
-    expect(ids).toEqual([LANDING_STICKY_ID, SUBGRAPHS_STICKY_ID]);
+    expect(ids).toEqual([LANDING_STICKY_ID, CAT_HARNESS_STICKY_ID, SUBGRAPHS_STICKY_ID]);
   });
 
   test("the id list and the built set agree", () => {
@@ -314,6 +320,30 @@ describe("the page's stickies as a set", () => {
 
   test("a theme override applies to the whole board", () => {
     const all = landingStickies({ description: DESCRIPTION, createdAt: CREATED, theme: "pale-sage" });
-    expect(all.map((s) => s.theme)).toEqual(["pale-sage", "pale-sage"]);
+    expect(all.map((s) => s.theme)).toEqual(["pale-sage", "pale-sage", "pale-sage"]);
+  });
+
+  test("with NO override the two cats differ, which is the point", () => {
+    // The landing sticky is the engineer; the introduction is plain grumpy cat.
+    // A single default would make the board one cat twice and lose the
+    // distinction the owner drew.
+    const all = landingStickies({ description: DESCRIPTION, createdAt: CREATED });
+    expect(all.map((s) => s.theme)).toEqual(["engineer", "grumpy-cat", "engineer"]);
+  });
+
+  test("the cat's introduction links to cat-harness, and it is the only absolute link", () => {
+    const cat = catHarnessSticky({ createdAt: CREATED });
+    expect(cat.links).toHaveLength(1);
+    expect(cat.links[0]?.href).toBe(CAT_HARNESS_URL);
+    expect(isExternalLink(cat.links[0]!)).toBe(true);
+  });
+
+  test("the introduction keeps the owner's own words", () => {
+    // Kept verbatim: the joke carries the information that the name is a pun on
+    // "computable adjudication and agentic test harness". Sanding it into a
+    // product sentence would lose the only part that says so.
+    expect(catHarnessSticky({ createdAt: CREATED }).comment).toContain(
+      "a cat who acquires things",
+    );
   });
 });

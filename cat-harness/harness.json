@@ -67,6 +67,37 @@
       "title": "Thinking about it \u2014 square",
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant \u2014 the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them \u2014 the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     }
+  ,
+    {
+      "id": "landing-engineer-laptop",
+      "src": "docs/assets/img/harness/landing-engineer-laptop.png",
+      "role": "landing-engineer",
+      "layout": "laptop",
+      "width": 1672,
+      "height": 941,
+      "title": "The engineer, wide",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    },
+    {
+      "id": "landing-engineer-mobile",
+      "src": "docs/assets/img/harness/landing-engineer-mobile.png",
+      "role": "landing-engineer",
+      "layout": "mobile",
+      "width": 942,
+      "height": 1670,
+      "title": "The engineer, tall",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    },
+    {
+      "id": "landing-engineer-card",
+      "src": "docs/assets/img/harness/landing-engineer-card.png",
+      "role": "landing-engineer",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The engineer, square",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    }
   ],
   "assets": [
     {

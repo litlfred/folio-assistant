@@ -19,7 +19,11 @@ import {
   stickyFile,
   toAsciiJson,
 } from "../ensure-landing-sticky.js";
-import { LANDING_STICKY_ID, SUBGRAPHS_STICKY_ID } from "../../schemas/landing-sticky.js";
+import {
+  CAT_HARNESS_STICKY_ID,
+  LANDING_STICKY_ID,
+  SUBGRAPHS_STICKY_ID,
+} from "../../schemas/landing-sticky.js";
 import { LandingStickySchema } from "../../schemas/landing-sticky.js";
 
 /** A declaration in the committed style: ASCII-escaped, 2-space, prose comments. */
@@ -135,14 +139,18 @@ describe("running it twice changes nothing", () => {
     const root = instance();
     const first = ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     expect(first.declaredFolio).toBe("added");
-    expect(first.stickies.map((s) => s.state)).toEqual(["written", "written"]);
-    expect(first.stickies.map((s) => s.id)).toEqual([LANDING_STICKY_ID, SUBGRAPHS_STICKY_ID]);
+    expect(first.stickies.map((s) => s.state)).toEqual(["written", "written", "written"]);
+    expect(first.stickies.map((s) => s.id)).toEqual([
+      LANDING_STICKY_ID,
+      CAT_HARNESS_STICKY_ID,
+      SUBGRAPHS_STICKY_ID,
+    ]);
 
     // A LATER clock, deliberately: if `createdAt` were read from the clock
     // rather than from the file, this is the run that would show a diff.
     const second = ensureLandingSticky(root, "2027-01-01T00:00:00Z");
     expect(second.declaredFolio).toBe("already");
-    expect(second.stickies.map((s) => s.state)).toEqual(["already", "already"]);
+    expect(second.stickies.map((s) => s.state)).toEqual(["already", "already", "already"]);
   });
 
   test("the sticky's createdAt is the FIRST run's, not the second's", () => {

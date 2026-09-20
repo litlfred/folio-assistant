@@ -117,6 +117,32 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    id: "engineer",
+    name: "Grumpy cat, engineering",
+    description: "The cloud cream and a working green, behind the cat in a hi-vis vest.",
+    palette: {
+      surface: "#fdfbef", ink: "#1f2a24", edge: "#c9cfc4",
+      // NOT the hi-vis orange, however much it is the picture's signature colour.
+      // `accent` is the priority stripe's hue for `medium`, and `.fa-sticky-p-high`
+      // is a literal amber precisely so urgency reads the same on every board. An
+      // orange accent would make a medium sticky look like a high one — a theme may
+      // set a hue, never make two signals look alike.
+      accent: "#5a6b5c",
+    },
+    backdrop: {
+      imageRole: "landing-engineer",
+      // Measured like grumpy-cat's, over PURE BLACK: 10.36:1 for this ink, and
+      // 14.35:1 over white. The art carries bright hi-vis orange and near-black
+      // shadow in the same frame, so both ends are real here rather than
+      // hypothetical.
+      scrim: "rgba(253, 251, 239, 0.86)",
+      description:
+        "The instance's declared engineering landing art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
     id: "high-contrast-light",
     name: "High contrast, light",
     description: "Black on white. No gradation, by design.",

@@ -102,13 +102,26 @@ export const LANDING_STICKY_ID = "landing";
 export const SUBGRAPHS_STICKY_ID = "subgraphs";
 
 /**
+ * The third sticky's id: the introduction to the cat itself.
+ *
+ * The owner, 2026-09-20: *"plain old grumpy cat should just say 'please be
+ * introduced to a cat who acires thing, for whatever purpose, maybe somebody
+ * knows'. then provide link to cat-harness in the sticky."*
+ */
+export const CAT_HARNESS_STICKY_ID = "cat-harness";
+
+/**
  * Every sticky this instance's landing page carries, in render order.
  *
  * Exported as a list so a consumer iterates rather than naming each — the
  * failure shape `BLOCK_KINDS` exists to prevent, where seven hand-maintained
  * lists of one enumeration were all short and 461 blocks went unswept.
  */
-export const LANDING_STICKY_IDS = [LANDING_STICKY_ID, SUBGRAPHS_STICKY_ID] as const;
+export const LANDING_STICKY_IDS = [
+  LANDING_STICKY_ID,
+  CAT_HARNESS_STICKY_ID,
+  SUBGRAPHS_STICKY_ID,
+] as const;
 
 /**
  * The page a landing sticky is global to.
@@ -130,7 +143,32 @@ export const LANDING_STICKY_PAGE = "index";
  * palette-only — `resolveThemeBackdrop` reports that as `missing` rather than
  * serving art that is not there.
  */
-export const LANDING_STICKY_THEME = "grumpy-cat";
+export const LANDING_STICKY_THEME = "engineer";
+
+/**
+ * The theme the cat's own introduction takes.
+ *
+ * The owner, 2026-09-20, distinguishing the two: the landing sticky is *"the
+ * engineer"*, and *"plain old grumpy cat"* is the one that introduces the cat.
+ * So this is the original `grumpy-cat` — sage hoodie, the `landing` image role
+ * — and {@link LANDING_STICKY_THEME} is the hi-vis one beside it. Two themes
+ * rather than one, because they back different stickies and the art is the
+ * difference.
+ */
+export const CAT_HARNESS_STICKY_THEME = "grumpy-cat";
+
+/**
+ * Where the cat's introduction points.
+ *
+ * Read from nothing — a literal, and the one link here that is absolute. The
+ * instance's `canonicalUrl` is `https://litlfred.github.io/folio-assistant`,
+ * which is THIS site: a sticky on the landing page linking to the landing page
+ * is a link to itself. What the owner asked for is a link to **cat-harness**,
+ * the layer, which is still to be split out of this repository (issue #223) and
+ * therefore has no site of its own yet. The source is the honest destination
+ * until it does.
+ */
+export const CAT_HARNESS_URL = "https://github.com/litlfred/folio-assistant";
 
 /**
  * One link the sticky offers.
@@ -351,6 +389,40 @@ export function landingSticky(input: LandingStickyInput): LandingSticky {
 }
 
 /**
+ * The cat's own introduction.
+ *
+ * The owner's words are kept **verbatim**, down to the shape of the sentence.
+ * *"please be introduced to a cat who acquires things, for whatever purpose,
+ * maybe somebody knows"* is a joke that carries real information — it is a gloss
+ * on what the instance's own description spells out as *"computable adjudication
+ * and agentic test harness"*, arrived at by way of `caaat-harness`,
+ * `ca&at-harness`, `.c&at-harness`, `c@t-harness`. Sanding it into a product
+ * sentence would lose the only part that tells a reader the name is a pun.
+ * `alox` records the same decision for *"the documentation you will never
+ * read"*, and it was right there too.
+ */
+export function catHarnessSticky(input: {
+  createdAt: string;
+  page?: string;
+  theme?: string;
+}): LandingSticky {
+  return LandingStickySchema.parse({
+    $schema: LANDING_STICKY_SCHEMA_TAG,
+    id: CAT_HARNESS_STICKY_ID,
+    summary: "Please be introduced to a cat",
+    comment:
+      "Please be introduced to a cat who acquires things, for whatever purpose \u2014 maybe somebody knows.",
+    createdAt: input.createdAt,
+    anchor: { kind: "page", page: input.page ?? LANDING_STICKY_PAGE },
+    // Plain grumpy cat, NOT the engineer: this is the one the owner called
+    // "plain old grumpy cat", and it is a different default from the landing
+    // sticky's on purpose.
+    theme: input.theme ?? CAT_HARNESS_STICKY_THEME,
+    links: [{ label: "cat-harness", href: CAT_HARNESS_URL }],
+  });
+}
+
+/**
  * The knowledge-sub-graphs sticky.
  *
  * Carries **no links**, deliberately. It is an orientation paragraph, and the
@@ -385,8 +457,17 @@ export function subgraphsSticky(input: { createdAt: string; page?: string; theme
  * same reason `alox` gives for "Four things, in order".
  */
 export function landingStickies(input: LandingStickyInput): LandingSticky[] {
+  const shared = {
+    createdAt: input.createdAt,
+    ...(input.page === undefined ? {} : { page: input.page }),
+  };
   return [
     landingSticky(input),
+    // The theme override, when given, is NOT forwarded to this one. The landing
+    // sticky and the cat's introduction take deliberately different themes, so a
+    // caller asking for "everything in pale-sage" gets it, while a caller asking
+    // for nothing gets the two the owner chose rather than one twice.
+    catHarnessSticky({ ...shared, ...(input.theme === undefined ? {} : { theme: input.theme }) }),
     subgraphsSticky({
       createdAt: input.createdAt,
       ...(input.page === undefined ? {} : { page: input.page }),
