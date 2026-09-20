@@ -8,7 +8,14 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { THEME_LAYOUTS, ThemeSchema } from "./theme.js";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+
+import { readDeclaration } from "./cat-harness.js";
+// `folio` is registered by core on import and this instance declares a folio
+// graph, so without this `readDeclaration` throws on a valid declaration.
+import "./folio-graph-kind.js";
+import { THEME_LAYOUTS, ThemeSchema, resolveThemeBackdrop } from "./theme.js";
 import {
   DEFAULT_THEME_ID,
   GRADATED_THEME_IDS,
@@ -113,4 +120,62 @@ describe("every theme is readable, not just the ones that advertise it", () => {
       expect(contrast(t.palette.ink, t.palette.gradientTo!)).toBeGreaterThanOrEqual(4.5);
     },
   );
+});
+
+// ── A shipped backdrop must actually resolve against this instance ──
+
+describe("every shipped backdrop resolves against THIS instance's declaration", () => {
+  // The join no other test covers. A theme parses with `imageRole: "anything"`
+  // — the schema validates the field's SHAPE, because whether art exists is a
+  // question about the instance, not about the theme. So a theme naming a role
+  // this repository does not declare is well-formed, ships, and renders
+  // palette-only with nothing reporting why.
+  //
+  // This is also the guard that keeps an INCOMPLETE set out. Measured
+  // 2026-09-20: the architecture art arrived as two layouts of three (the third
+  // upload was a byte-identical copy of the second), so no `architecture` theme
+  // is declared. If somebody adds one before the portrait crop arrives, this
+  // fails rather than shipping a theme that serves a landscape crop to a phone.
+  const decl = readDeclaration(resolve(import.meta.dir, ".."));
+  const themed = THEMES.filter((t) => t.backdrop !== undefined);
+
+  test("there are backdrops to check — otherwise this proves nothing", () => {
+    expect(themed.length).toBeGreaterThan(0);
+  });
+
+  test.each(themed.map((t) => [t.id] as const))("`%s` resolves all three layouts", (id) => {
+    const theme = themeById(id)!;
+    const r = resolveThemeBackdrop(theme, decl?.images);
+    expect({ id, missing: r.missing, none: r.none }).toEqual({ id, missing: [], none: false });
+    expect([...r.art.keys()].sort()).toEqual([...THEME_LAYOUTS].sort());
+  });
+
+  test.each(themed.map((t) => [t.id] as const))("`%s`'s art exists on disk", (id) => {
+    // A declared src that is not there is the `dh4f` shape: a consumer resolves
+    // it, reports success, and serves a 404.
+    const theme = themeById(id)!;
+    for (const img of resolveThemeBackdrop(theme, decl?.images).art.values()) {
+      expect({ id, src: img.src, exists: existsSync(resolve(import.meta.dir, "..", img.src)) })
+        .toEqual({ id, src: img.src, exists: true });
+    }
+  });
+
+  test("the check CAN fire — a role nothing declares is reported missing", () => {
+    const bogus = ThemeSchema.parse({
+      ...themed[0]!,
+      id: "not-shipped",
+      backdrop: { imageRole: "no-such-role", scrim: "rgba(0,0,0,0.5)" },
+    });
+    const r = resolveThemeBackdrop(bogus, decl?.images);
+    expect(r.missing).toEqual([...THEME_LAYOUTS]);
+    expect(r.none).toBe(false);
+  });
+
+  test("the high-contrast pair declares NO backdrop, deliberately", () => {
+    // Art behind ink is the thing those two exist to remove, and a scrim strong
+    // enough to make a photograph safe at their ratios would hide it anyway.
+    for (const id of HIGH_CONTRAST_THEME_IDS) {
+      expect({ id, backdrop: themeById(id)?.backdrop }).toEqual({ id, backdrop: undefined });
+    }
+  });
 });

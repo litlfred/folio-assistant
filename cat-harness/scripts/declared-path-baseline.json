@@ -1,7 +1,6 @@
 {
   "_comment": "Per-file counts of declared-path literals that neither resolve to a file nor carry a `declared-path-literal: <reason>` marker. WRITTEN by `bun run check:declared-paths --update`; a count may only go DOWN. This is recorded debt, not a list of exemptions: each entry is a place where code hardcodes a path `harness.json` already declares. See the module header of scripts/check-declared-paths.ts for why it ships as a ratchet.",
   "files": {
-    "schemas/harness-config.ts": 2,
     "scripts/check-tools.ts": 2,
     "scripts/gen-schema-docs.ts": 1,
     "scripts/gen-skill-docs.ts": 2,

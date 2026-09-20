@@ -1817,6 +1817,88 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   );
 }
 
+/* A STICKY WITH A BACKDROP: art behind, scrim between art and ink.
+ *
+ * Two layers rather than one background, because the art cannot be a CSS
+ * background at all: `<picture>` swaps the FILE at a breakpoint, and a
+ * `background-image: url(...)` can only name one crop. Serving the wide crop to
+ * a phone is the bug `landing.html` records shipping once, so the art stays
+ * markup and this positions it.
+ *
+ * `isolation: isolate` creates a stacking context, so the two negative
+ * z-indexes stay inside the card. Without it they sit behind the PAGE and the
+ * art disappears under the site background — which looks exactly like a missing
+ * image, so it would be debugged as one.
+ *
+ * The scrim's fallback is the opaque surface, not `transparent`. A theme with a
+ * backdrop always has a scrim — the schema refuses one without — so this
+ * fallback is only reached by a sticky marked `--backdrop` whose theme did not
+ * load. Falling back to transparent there would show ink directly on the art at
+ * whatever contrast the photograph happens to give; falling back to the flat
+ * surface hides the art and keeps the words readable. Degrade toward legible. */
+.fa-sticky--backdrop {
+  position: relative;
+  isolation: isolate;
+  /* REQUIRED, not tidiness. Without it the art escapes the card's rounded
+   * corners; and if any rule above ever fails to position it, an unclipped
+   * backdrop lays out at its INTRINSIC size — 1672px wide — and covers the
+   * page. That is not hypothetical: it is what this board did on its first
+   * render, and it was invisible in the HTML, which was correct throughout. */
+  overflow: hidden;
+}
+
+/* THE POSITIONED LAYER IS THE `<picture>`, NOT THE `<img>`.
+ *
+ * This was `.fa-sticky--backdrop > .fa-sticky-art` and matched NOTHING: the
+ * `<img>` sits inside `<picture>`, so it is a grandchild and the child
+ * combinator failed silently. CSS has no error for a selector that matches
+ * nothing, so the page built clean, the markup was right, every request
+ * returned 200 — and the art rendered at full size in normal flow, pushing the
+ * text down and spilling across the whole viewport. Found by screenshotting the
+ * board, not by any gate.
+ *
+ * `<picture>` is the right element to position anyway: it is the box that
+ * represents the art, and the `<img>` inside it is the chosen crop. */
+.fa-sticky--backdrop > picture {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+/* Negative z-index puts this ABOVE the card's own background and below its
+ * content, which is what the painting order gives: an element's background
+ * paints first, then negative-z children, then in-flow content. `isolation`
+ * above keeps both layers inside the card rather than behind the page. */
+.fa-sticky--backdrop > picture > .fa-sticky-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* `contain`, so the WHOLE artwork is visible rather than a crop of it.
+   *
+   * This was `cover`, on the reasoning that the card's aspect will not match the
+   * art's and letterboxing reads as a broken image. Both halves were wrong here.
+   * `cover` cut the cat's head off on a short card and showed a meaningless
+   * middle band on a tall one — the owner, looking at it: "show full sticky
+   * image, not cropped." And the letterboxing argument does not apply to a
+   * backdrop faded to a tenth of its strength: the bands are the card's own
+   * surface colour, which is what the rest of the card already is.
+   *
+   * `top` because the thought-cloud is at the top of every crop and the text is
+   * held to the top of the card. Centring the art vertically would slide the
+   * cloud down behind the second paragraph. */
+  object-fit: contain;
+  object-position: center top;
+}
+
+.fa-sticky--backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--fa-sticky-scrim, var(--fa-sticky-surface, rgba(128, 128, 128, 0.08)));
+}
+
 /* PRIORITY STAYS LITERAL, DELIBERATELY. Critical is red and high is amber in
  * every theme, because the stripe encodes PRIORITY and a theme that recoloured
  * it would make the same urgency read differently on two boards. A theme
@@ -2392,3 +2474,100 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 }
 
 .fa-kind-fan-row .fa-kind-fan-open { margin-top: 0; }
+
+/* ── The landing board ──────────────────────────────────────────────
+ *
+ * The landing page is a board of stickies (issue #464). The sticky card
+ * itself, its backdrop art and its scrim are all `.fa-sticky` rules above;
+ * these are the landing-specific ones. */
+
+/* CLIPPED TO A PIXEL, NOT REMOVED. `display: none` takes a node out of the
+ * accessibility tree, and each landing sticky's accessible name comes from a
+ * heading referenced by `aria-labelledby` — remove it and the board is three
+ * anonymous `<article>` regions. The neighbouring `.fa-tiles .search-label`
+ * rule carries the long version of why, found by reading real Jekyll output
+ * rather than by a gate: axe accepts a non-empty placeholder as a last-resort
+ * pass and does not flag the demotion.
+ *
+ * Generalised here rather than copied: it was scoped to one selector, and this
+ * is the second caller. */
+.fa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* One column on a phone, side by side when there is room. `auto-fit` rather
+ * than `auto-fill`: with three cards and a wide viewport, `auto-fill` leaves
+ * empty phantom tracks and the board drifts left of centre. */
+.fa-landing-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--fa-sticky-min-width, 17rem), 1fr));
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+/* The landing stickies are read, not scanned, so they get more room than a
+ * board card and their text is not scaled down. */
+.fa-landing-sticky {
+  padding: 1.1em 1.2em;
+}
+
+/* CENTRED, AND HELD TO THE TOP. The owner, looking at the first render: "text
+ * centered around cloud towards top." The cloud occupies the upper portion of
+ * every crop — that is what the three declared `textRegion`s were describing
+ * back when the text was composited into it — so text at the top of the card
+ * sits over the cloud rather than over the cat.
+ *
+ * This is NOT textRegion returning. A region is an absolute box in a fixed
+ * crop, which is what stopped the card growing with its content. Top-aligned
+ * and centred is a FLOW rule: the card still sizes to its text, and long text
+ * runs down past the cloud instead of being clipped by it. */
+.fa-landing-sticky__body {
+  text-align: center;
+}
+
+/* A markdown body sets its own margins on the first and last child, which
+ * doubles the card's padding at top and bottom. */
+.fa-landing-sticky__body > :first-child { margin-top: 0; }
+.fa-landing-sticky__body > :last-child { margin-bottom: 0; }
+
+/* The derivation chain is several short lines. Left as separate blocks rather
+ * than run together, because the rungs ARE the content — and the NO-BREAK SPACE
+ * opening the last one is load-bearing typography, asserted by a test in
+ * `kg-node.test.ts`. Nothing here may collapse whitespace. */
+.fa-landing-sticky__body p { margin: 0 0 0.45em; }
+
+.fa-landing-sticky__links {
+  margin: 0.9em 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5em;
+  text-align: center;
+}
+
+/* The link inherits the theme's ink rather than the site's link colour: on a
+ * scrimmed photograph the site blue is the one value whose contrast was never
+ * measured against this ground. Underlined so it is still identifiable as a
+ * link without relying on hue (SC 1.4.1), which is the same rule the priority
+ * stripe follows by carrying a width as well as a colour. */
+.fa-landing-sticky__links a {
+  color: var(--fa-sticky-ink, inherit);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  font-weight: 600;
+}
+
+.fa-landing-sticky__note {
+  display: block;
+  font-size: 0.88em;
+  opacity: 0.85;
+}

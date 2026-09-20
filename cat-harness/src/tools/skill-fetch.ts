@@ -7,6 +7,17 @@ import { nodeSummary } from "../../scripts/front-matter.js";
 import { isSkillMd } from "../../scripts/known-skills.js";
 import { resolveSkillDirs } from "../../schemas/harness-config.js";
 import { readDeclaration } from "../../schemas/cat-harness.js";
+// The `folio` graph kind is registered by CORE as a load-time side effect
+// (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
+// renderable kind"), so the harness alone does not know it exists. This module
+// reads instance declarations, and this instance now DECLARES a folio graph, so
+// without this import `readDeclaration` throws `unknown graph kind "folio"` on a
+// declaration that is perfectly valid. Twelve tests and three gates failed that
+// way the first time a folio graph was declared here (issue #464) — nothing had
+// ever declared one before, so nothing had ever needed the registration to have
+// happened. Same import `scripts/kg-export.ts` and
+// `scripts/check-avatar-coverage.ts` already carry, and for the same reason.
+import "../../schemas/folio-graph-kind.js";
 
 // Session-level cache (lives for the lifetime of the MCP server process)
 const skillCache = new Map<string, { content: string; fetchedAt: number }>();
