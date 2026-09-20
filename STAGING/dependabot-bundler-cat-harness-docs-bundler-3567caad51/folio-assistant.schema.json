@@ -258,16 +258,237 @@
               "description": {
                 "type": "string",
                 "minLength": 1
+              },
+              "dependents": {
+                "type": "string",
+                "enum": [
+                  "reproduce",
+                  "skip"
+                ]
+              },
+              "coverage": {
+                "type": "object",
+                "properties": {
+                  "visualiser": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "docs": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "skill": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "exempt": {
+                    "type": "object",
+                    "properties": {
+                      "visualiser": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "docs": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "skill": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "theme": {
+                "type": "string",
+                "minLength": 1
               }
             },
             "required": [
               "id",
               "path",
+              "graphs",
+              "dependents"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "remoteGraphs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "graphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "url",
               "graphs"
             ],
             "additionalProperties": false
           },
           "default": []
+        },
+        "stickies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "order": {
+                "type": "integer"
+              },
+              "theme": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "body": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bodyFrom": {
+                "type": "string",
+                "enum": [
+                  "description"
+                ]
+              },
+              "bodyAppend": {
+                "type": "string",
+                "minLength": 1
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
+              },
+              "onboardingLinks": {
+                "type": "boolean"
+              },
+              "shape": {
+                "type": "string",
+                "enum": [
+                  "laptop",
+                  "mobile",
+                  "card"
+                ]
+              },
+              "text": {
+                "type": "object",
+                "properties": {
+                  "box": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "w": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "h": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "w",
+                      "h"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "scale": {
+                    "type": "number",
+                    "minimum": 0.6,
+                    "maximum": 2
+                  },
+                  "align": {
+                    "type": "string",
+                    "enum": [
+                      "start",
+                      "center",
+                      "end"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
+              "_comment": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "order",
+              "theme"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
@@ -283,8 +504,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/dependabot-bundler-cat-harness-docs-bundler-3567caad51/folio-assistant.jsonld",
   "staging": {
     "branch": "dependabot/bundler/cat-harness/docs/bundler-3567caad51",
-    "sha": "1385f50a48063840657c83c2f835f8a1fe59afe1",
+    "sha": "eb5d0fd8b866a8cd3fa0718ea55b43ddb91c1bcc",
     "pr": "462/merge",
-    "run": "35491763147"
+    "run": "35533678446"
   }
 }
