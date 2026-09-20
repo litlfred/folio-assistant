@@ -132,10 +132,42 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:InteractionGraph",
+      "@type": "rdfs:Class",
+      "label": "InteractionGraph",
+      "comment": "How a person wants to be asked — read at session start, never written by a process.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:IssueMarkGraph",
+      "@type": "rdfs:Class",
+      "label": "IssueMarkGraph",
+      "comment": "How far an agent has read an issue — the comment id and the edit time it accounted for.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:MemoryGraph",
+      "@type": "rdfs:Class",
+      "label": "MemoryGraph",
+      "comment": "Durable facts an agent carries between sessions. Read during a process, never written by one.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:QaGraph",
       "@type": "rdfs:Class",
       "label": "QaGraph",
       "comment": "QA witnesses — one `qa-witness/v1` document per audited subject, in three families (`block`, `kg`, `translation`), projected for the docs site from the verdicts that live beside their subjects. Generated; never hand-edited.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:SessionStateGraph",
+      "@type": "rdfs:Class",
+      "label": "SessionStateGraph",
+      "comment": "A session's context — the acting actor, the instances it has open, and what it waits on.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
     },

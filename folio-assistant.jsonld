@@ -247,25 +247,25 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T08:52:11.252Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fc199b39d72e9bff8e83d07530b4c74e998a65ad",
-  "sourceCommitSha": "fc199b39d72e9bff8e83d07530b4c74e998a65ad",
-  "sourceCommitAt": "2026-09-20T10:50:45+02:00",
+  "generatedAt": "2026-09-20T09:10:23.173Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e3bbd54cbf946ed044a1c1ad69e81f0f3b3e9295",
+  "sourceCommitSha": "e3bbd54cbf946ed044a1c1ad69e81f0f3b3e9295",
+  "sourceCommitAt": "2026-09-20T11:08:46+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 173,
+    "Skill": 179,
     "Actor": 27,
     "Capability": 24,
-    "Role": 111,
+    "Role": 116,
     "Convention": 2,
-    "SkillPackage": 7,
-    "Process": 38,
-    "SequenceFlow": 518,
-    "ProcessNode": 484,
-    "Tool": 31,
-    "Schema": 61,
-    "GraphKind": 16,
-    "Directory": 14
+    "SkillPackage": 8,
+    "Process": 39,
+    "SequenceFlow": 531,
+    "ProcessNode": 495,
+    "Tool": 32,
+    "Schema": 62,
+    "GraphKind": 20,
+    "Directory": 17
   },
   "@graph": [
     {
@@ -317,22 +317,6 @@
       "ambiguous": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-authoring",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bpmn-authoring",
-      "title": "bpmn-authoring",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/authoring-who-smart-guidelines"
-      ],
-      "instructionsPath": "skills/authoring-who-smart-guidelines/bpmn-authoring.md",
-      "instructionLines": 66,
-      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/input.schema.json",
-      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/output.schema.json",
-      "hasInstructions": true,
-      "hasIOContract": true,
-      "ambiguous": false
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/smart-base-tools",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "smart-base-tools",
@@ -358,22 +342,6 @@
       "instructionLines": 67,
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/fhir-validation/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/fhir-validation/output.schema.json",
-      "hasInstructions": true,
-      "hasIOContract": true,
-      "ambiguous": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/dmn-authoring",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "dmn-authoring",
-      "title": "dmn-authoring",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/authoring-who-smart-guidelines"
-      ],
-      "instructionsPath": "skills/authoring-who-smart-guidelines/dmn-authoring.md",
-      "instructionLines": 65,
-      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/input.schema.json",
-      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true,
       "ambiguous": false
@@ -599,6 +567,128 @@
       "ambiguous": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "process-state",
+      "title": "Process state — the task you are in, inside the process you are running",
+      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/process-state.md",
+      "instructionLines": 179,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-authoring",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bpmn-authoring",
+      "title": "bpmn-authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/bpmn-authoring.md",
+      "instructionLines": 82,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bpmn-processes",
+      "title": "Processes are BPMN, and the diagrams are executable",
+      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/bpmn-processes.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "session-context",
+      "title": "Session context",
+      "description": "What a state machine tracks across a session, as against one process instance. The six fields, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/session-context.md",
+      "instructionLines": 129,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/dmn-authoring",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "dmn-authoring",
+      "title": "dmn-authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/dmn-authoring.md",
+      "instructionLines": 65,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-state-machine",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "session-state-machine",
+      "title": "Playing a state machine",
+      "description": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `folio:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/session-state-machine.md",
+      "instructionLines": 130,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/workflow-state",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "workflow-state",
+      "title": "State in a running process",
+      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<folio:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/workflow-state.md",
+      "instructionLines": 126,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deterministic-and-agentic",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "deterministic-and-agentic",
+      "title": "The deterministic-to-agentic spectrum",
+      "description": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, what is measured today, and the three research questions — which are open, and marked as open.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/deterministic-and-agentic.md",
+      "instructionLines": 151,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/document-authoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "document-authoring",
@@ -791,21 +881,6 @@
       ],
       "instructionsPath": "skills/folio-core/bib-human-review.md",
       "instructionLines": 77,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "process-state",
-      "title": "Process state — the task you are in, inside the process you are running",
-      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/process-state.md",
-      "instructionLines": 179,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1102,7 +1177,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 127,
+      "instructionLines": 152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1206,22 +1281,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 533,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bpmn-processes",
-      "title": "Processes are BPMN, and the diagrams are executable",
-      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/bpmn-processes.md",
-      "instructionLines": 108,
+      "instructionLines": 559,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -2041,6 +2101,21 @@
       "ambiguous": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-context-and-state-graphs",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "content-context-and-state-graphs",
+      "title": "Content, context and state graphs",
+      "description": "Every declared graph is the subject a process produces, static context it reads, or live state it writes. The one question that settles it, the classification of every kind with its reason, what a consumer may assume of each layer, and why agent memory is context rather than state.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/content-context-and-state-graphs.md",
+      "instructionLines": 171,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-graph",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "content-graph",
@@ -2842,6 +2917,21 @@
       ],
       "instructionsPath": "../bootstrap/skills/confirm-harness.md",
       "instructionLines": 59,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/log-message",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "log-message",
+      "title": "Logging what you are doing",
+      "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+      ],
+      "instructionsPath": "../bootstrap/skills/log-message.md",
+      "instructionLines": 93,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -3772,15 +3862,13 @@
       "path": "skills/authoring-who-smart-guidelines",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/l2-dak-authoring",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/l3-fhir-authoring",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-authoring",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/dmn-authoring",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/terminology-management",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/fhir-validation",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/l2-dak-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/l3-fhir-authoring",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/quality-control",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/smart-base-tools"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/smart-base-tools",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/terminology-management"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/ig-publisher",
@@ -3848,6 +3936,27 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/workflow",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "workflow",
+      "version": "0.1.0",
+      "description": "BPMN navigation and workflow management: how a process is authored, where an instance keeps its position, and which store answers which question. Split out of folio-core, which held 97 skills — a package that holds everything is one nobody can be pointed at.",
+      "path": "skills/workflow",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deterministic-and-agentic",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-state-machine",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/workflow-state"
+      ],
+      "providesCapability": [],
+      "requiresCapability": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-document-adapter",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "folio-document-adapter",
@@ -3889,13 +3998,13 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bib-photo-ingestion-watcher",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bib-qa",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/block-density",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/canonical-watcher",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/chapter-complexity-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/code-node-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/compute-integration-watcher",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-acquisition",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-context-and-state-graphs",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-graph",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-profiles",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/continual-progress",
@@ -3949,7 +4058,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/production-vs-exploratory-discipline",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-witness",
@@ -15774,6 +15882,344 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Session state machine",
+      "enforcement": "advisory",
+      "sourcePath": "skills/workflows/session-state-machine.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Start_Session"
+      ],
+      "nodeCount": 11,
+      "flowCount": 13
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Start_Session",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_AskWhoIsActing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_AskWhoIsActing",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_OpenSession"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_OpenSession",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "nothing changed",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_Touch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_Touch",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "state changed",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_UpdateSession"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_UpdateSession",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the session is ending",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_CloseSession"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_CloseSession",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/End_Session"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Agent (playing the machine)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human actor",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Session%20record",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Session record",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Start_Session",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "An actor picks up",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Establish who is acting",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_1",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Actor established?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_3",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_AskWhoIsActing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Ask who is acting",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_OpenSession",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Open the session record",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_6"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Take in the turn",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_6",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_9",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_7"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "What did the turn change?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_8",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_10",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_12"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_Touch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Refresh `updatedAt` only",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_9"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_UpdateSession",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Write what changed",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_11"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_CloseSession",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Close the session",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_13"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/End_Session",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Session closed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_13"
+      ],
+      "outgoing": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_DocumentAuthoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Authoring a document",
@@ -18660,6 +19106,72 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/log-message",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "log-message",
+      "title": "Log a message to the discussion",
+      "description": "Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "timestamp",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Timestamp",
+            "description": "When it happened, as an ISO-8601 UTC instant.",
+            "required": true
+          },
+          {
+            "name": "actor",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "WHO acted. Never the Logger: it receives and records, so it cannot know.",
+            "required": true
+          },
+          {
+            "name": "process",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/ProcessId",
+            "description": "The process the actor was inside, e.g. initialize-harness.",
+            "required": true
+          },
+          {
+            "name": "task",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
+            "description": "The step within it, e.g. A_Install.",
+            "required": true
+          },
+          {
+            "name": "message",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "What happened, in the one line somebody scanning will read.",
+            "required": true
+          },
+          {
+            "name": "body",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Markdown",
+            "description": "The detail — a diff, an error, what was not where it should have been.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "entry",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Markdown",
+            "description": "The entry as posted."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/log-message"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/check-dependencies",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-dependencies",
@@ -20135,6 +20647,13 @@
       "module": "schemas/script-qa.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/session-context",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "session-context",
+      "title": "What a state machine tracks across a SESSION, as opposed to an instance.",
+      "module": "schemas/session-context.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/skill-package",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "skill-package",
@@ -20393,6 +20912,38 @@
       "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/session-state",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "session-state",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SessionStateGraph",
+      "renderable": false,
+      "summary": "A session's context — the acting actor, the instances it has open, and what it waits on."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "interaction",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#InteractionGraph",
+      "renderable": false,
+      "summary": "How a person wants to be asked — read at session start, never written by a process."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/issue-marks",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "issue-marks",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#IssueMarkGraph",
+      "renderable": false,
+      "summary": "How far an agent has read an issue — the comment id and the edit time it accounted for."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "memory",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#MemoryGraph",
+      "renderable": false,
+      "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "translation-sources",
@@ -20427,7 +20978,8 @@
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/User%20(person)",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Contributor%20(human%20or%20agent)",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Log%20operator%20(human)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor"
       ]
     },
     {
@@ -20811,18 +21363,22 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/semantic-review-scoping",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-state-machine",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-authoring-guidance",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/watch"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/workflow-state"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Authoring%20agent%20(system)",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Folio-Assistant%20Agent",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(this%20session)",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20/%20platform%20(automated)"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20/%20platform%20(automated)",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)"
       ]
     },
     {
@@ -21099,6 +21655,24 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/session-record",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "session-record",
+      "title": "Session record",
+      "description": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Session%20record"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/initiator",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "initiator",
@@ -21110,7 +21684,8 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/confirm-harness"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/confirm-harness",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/log-message"
       ],
       "bindsLane": []
     },
@@ -21139,6 +21714,20 @@
         "person"
       ],
       "judgementOnly": true,
+      "hasSkill": [],
+      "bindsLane": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/logger",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "logger",
+      "title": "Logger",
+      "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
       "hasSkill": [],
       "bindsLane": []
     },
@@ -21224,6 +21813,36 @@
       "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/memory",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "memory",
+      "path": "memory/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory"
+      ],
+      "description": "Agent memory — durable facts an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md`. `context` by the axis bean `mhh9` settled: read during a process, never written by one; it changes when a human directs an authoring agent. It sat in `skills/memory/` until 2026-09-20 — inside the `cat-harness` directory, which is `content` — so the CONTAINING kind and the contents were on opposite layers, and a nested declaration is the defect #263 names. Moving it was held back from the classification change on purpose (#395's rule, and bean `auap`'s precedent: a relocation is its own change) and is bean `07xs`. SCOPE IS `repository`, like `beans/`: these are facts about this REPOSITORY carried by the agents working in it, and `.claude/agents/` — the consumers — sit at the repository root too."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "interaction",
+      "path": "interaction/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction"
+      ],
+      "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/issue-marks",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "issue-marks",
+      "path": "issue-marks/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/issue-marks"
+      ],
+      "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/uploads",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "uploads",
@@ -21286,8 +21905,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "fc199b39d72e9bff8e83d07530b4c74e998a65ad",
+    "sha": "e3bbd54cbf946ed044a1c1ad69e81f0f3b3e9295",
     "pr": "main",
-    "run": "35500679563"
+    "run": "35501498221"
   }
 }

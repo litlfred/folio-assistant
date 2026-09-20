@@ -164,6 +164,34 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="interaction"] {
+  /* a spoken preference, already recorded — do not ask again */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H9l-4 4v-4a2 2 0 01-1-2zM8.5 10l2 2 4-4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="issue-marks"] {
+  /* a bookmark beside a list — how far an agent has read */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4h10v16l-5-4-5 4zM4 8h2M4 12h2' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="session-state"] {
+  /* a marker on a continuing line — where an actor is now */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12h18M14 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0M18 9l3 3-3 3' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="memory"] {
+  /* a knot in a thread — a fact tied down, read and not rewritten */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h4m8 0h4M9.5 9.5a3 3 0 000 5M14.5 9.5a3 3 0 010 5M9.5 9.5c2 1 3 1 5 0M9.5 14.5c2-1 3-1 5 0' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="fsh-guts"] {
   /* a bin — the trashcan that is kept, as a kind in its own right */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13M11 11v6M14 11v6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -198,6 +226,10 @@
   .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 46% 34%); }
   .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 46% 34%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
+  .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
+  .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
+  .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
+  .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 46% 34%); }
   .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 46% 34%); }
   .fa-avatar { background-color: hsl(0 46% 34%); }
 }
@@ -222,6 +254,10 @@
     .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 46% 34%); }
     .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 46% 34%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 46% 34%); }
+    .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
+    .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
+    .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
+    .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 46% 34%); }
     .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 46% 34%); }
     .fa-avatar { background-color: hsl(0 46% 34%); }
   }
@@ -247,6 +283,10 @@
   .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 42% 72%); }
   .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 42% 72%); }
   .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
+  .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
+  .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
+  .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
+  .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 42% 72%); }
   .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 42% 72%); }
   .fa-avatar { background-color: hsl(0 42% 72%); }
 }
@@ -271,6 +311,10 @@
     .fa-avatar[data-fa-kind="library"] { background-color: hsl(36 42% 72%); }
     .fa-avatar[data-fa-kind="voices"] { background-color: hsl(292 42% 72%); }
     .fa-avatar[data-fa-kind="translation-sources"] { background-color: hsl(176 42% 72%); }
+    .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
+    .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
+    .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
+    .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 42% 72%); }
     .fa-avatar[data-fa-kind="fsh-guts"] { background-color: hsl(16 42% 72%); }
     .fa-avatar { background-color: hsl(0 42% 72%); }
   }
@@ -298,6 +342,10 @@
   .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 16% 52%); }
   .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
+  .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
+  .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
+  .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
+  .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 16% 52%); }
   .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 16% 52%); }
 }
 
@@ -321,6 +369,10 @@
     .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 16% 52%); }
     .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 16% 52%); }
+    .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
+    .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
+    .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
+    .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 16% 52%); }
     .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 16% 52%); }
   }
 }
@@ -344,6 +396,10 @@
   .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 14% 56%); }
   .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
   .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
+  .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
+  .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
+  .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
+  .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 14% 56%); }
   .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 14% 56%); }
 }
 
@@ -367,6 +423,10 @@
     .fa-avatar[data-fa-kind="library"][data-fa-trash="true"] { background-color: hsl(36 14% 56%); }
     .fa-avatar[data-fa-kind="voices"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
     .fa-avatar[data-fa-kind="translation-sources"][data-fa-trash="true"] { background-color: hsl(176 14% 56%); }
+    .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
+    .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
+    .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
+    .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 14% 56%); }
     .fa-avatar[data-fa-kind="fsh-guts"][data-fa-trash="true"] { background-color: hsl(16 14% 56%); }
   }
 }
