@@ -60,6 +60,7 @@
  * @module content/pipeline/semantic-cone
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { join } from "path";
 import { buildContentGraph, type ContentGraph, type FormalSource } from "./content-graph";
 import { findContentRepoRoot } from "./repo-root";
@@ -225,7 +226,7 @@ if (import.meta.main) {
   );
 
   const repoRoot = findContentRepoRoot();
-  const rootDir = rootArg ? join(repoRoot, rootArg) : join(repoRoot, "content");
+  const rootDir = rootArg ? join(repoRoot, rootArg) : folioDir(repoRoot);
 
   if (targets.length === 0) {
     console.log(`Semantic-impact scoping (Lean Compass, arXiv 2604.16347).

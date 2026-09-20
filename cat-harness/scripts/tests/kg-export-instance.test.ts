@@ -3,16 +3,16 @@
  *
  * @module scripts/tests/kg-export-instance.test
  *
- * Bean `gn4l`. These assertions run against **bootstrap**, a real instance in
+ * Bean `gn4l`. These assertions run against **cat-bootstrap**, a real instance in
  * this repository that has a declaration, two skills, no `tools/`, no
  * `package.json` and no `.claude/` — which is exactly the shape the exporter
  * was never written for.
  *
- * It had no BPMN too, until this branch gave it `workflows/bootstrap.bpmn`.
+ * It had no BPMN too, until this branch gave it `workflows/cat-bootstrap.bpmn`.
  * Anything asserting on an absence here is asserting on a property of a
  * REAL instance that is still being built, so it belongs in a fixture — see
- * the workflow-directory test below, which was written against bootstrap and
- * broke the day bootstrap grew the feature.
+ * the workflow-directory test below, which was written against cat-bootstrap and
+ * broke the day cat-bootstrap grew the feature.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -36,26 +36,26 @@ const typesOf = (nodes: Array<Record<string, unknown>>): Map<string, number> => 
 };
 
 describe("a minimal instance exports through the same code path", () => {
-  test("bootstrap contributes its declared skills", async () => {
+  test("cat-bootstrap contributes its declared skills", async () => {
     // The whole point: `kg-export` could not see these at all before, because
     // it walked THIS repository regardless of what it was asked about.
     const problems: string[] = [];
-    const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "bootstrap"), DOC, BASE, problems);
+    const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "cat-bootstrap"), DOC, BASE, problems);
     expect(typesOf(nodes).get("Skill")).toBeGreaterThan(0);
   });
 
   test("and its declaration, without borrowing this repository's", async () => {
     const problems: string[] = [];
-    const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "bootstrap"), DOC, BASE, problems);
+    const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "cat-bootstrap"), DOC, BASE, problems);
     const dirs = typesOf(nodes).get("Directory") ?? 0;
     const rootDirs = typesOf(
       (await collectInstanceNodes(ROOT, DOC, BASE, [])).nodes,
     ).get("Directory")!;
     // Strictly fewer than the root's, and NOT a pinned number.
     //
-    // This asserted `toBe(1)` until 2026-09-19 and broke the moment bootstrap
+    // This asserted `toBe(1)` until 2026-09-19 and broke the moment cat-bootstrap
     // declared a second directory for its `workflows/`. One was an incidental
-    // fact about bootstrap that day; the PROPERTY is that bootstrap's
+    // fact about cat-bootstrap that day; the PROPERTY is that cat-bootstrap's
     // declaration is its own and smaller. A pinned count makes "the isolation
     // holds" and "somebody changed a declaration" indistinguishable — the
     // mistake this repository has paid for with coverage counts more than once.
@@ -80,18 +80,18 @@ describe("what was not looked for is not reported as clean", () => {
   test("instance-bound collectors are named as omitted, not silently skipped", async () => {
     // "This instance has no tools" and "tools were never looked for" are
     // different facts. Collapsing them is the `dh4f` defect.
-    const { omitted } = await collectInstanceNodes(join(repoRootFor(ROOT), "bootstrap"), DOC, BASE, []);
+    const { omitted } = await collectInstanceNodes(join(repoRootFor(ROOT), "cat-bootstrap"), DOC, BASE, []);
     expect([...omitted].sort()).toEqual(["packages", "registry", "schemas", "tools"]);
   });
 
-  test("an absent workflow directory is a problem, not a crash", async () => {
+  test("a declared directory holding no diagrams is a NOTE, not a crash and not a problem", async () => {
     // It threw ENOENT while this was being written: a directory found under
     // one root and joined against another.
     //
-    // Built as a FIXTURE rather than asserted against `bootstrap/`, which is
-    // what it named until 2026-09-19. Bootstrap had no `workflows/` then, so
+    // Built as a FIXTURE rather than asserted against `cat-bootstrap/`, which is
+    // what it named until 2026-09-19. CatBootstrap had no `workflows/` then, so
     // the test passed on a property nobody had chosen — and the moment this
-    // branch gave bootstrap its process diagram, a test about ENOENT handling
+    // branch gave cat-bootstrap its process diagram, a test about ENOENT handling
     // started failing because its SUBJECT had grown a feature. The behaviour
     // under test never changed.
     //
@@ -107,11 +107,11 @@ describe("what was not looked for is not reported as clean", () => {
       join(root, "harness.json"),
       JSON.stringify({
         name: "noflows",
-        directories: [{ id: "cat-harness", path: "skills/", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
     );
     const problems: string[] = [];
-    await collectInstanceNodes(root, DOC, BASE, problems);
+    const { notes } = await collectInstanceNodes(root, DOC, BASE, problems);
     rmSync(root, { recursive: true, force: true });
     // Matched on the WHOLE message, not on the substring "bpmn". Probed
     // 2026-09-19: a `.includes("bpmn")` passes for an absent directory, for an
@@ -119,8 +119,16 @@ describe("what was not looked for is not reported as clean", () => {
     // three different outcomes, one of them not a problem this test is about.
     // The loose form was green against all three, so it asserted only that
     // SOMETHING mentioned bpmn.
-    expect(problems.filter((p) => /no directory containing \.bpmn files was found/.test(p)))
+    //
+    // It is a NOTE since 2026-09-20. The fixture here is a declared `skills/`
+    // that EXISTS and holds a skill and no diagram, which is a determined
+    // empty: looked, found none. The ENOENT-safety this test was written for
+    // (a directory found under one root and joined against another) is still
+    // what it guards — nothing throws — and the finding is still emitted; it
+    // simply no longer fails the instance.
+    expect(notes.filter((n) => /no directory containing \.bpmn files was found/.test(n)))
       .toHaveLength(1);
+    expect(problems).toEqual([]);
   });
 
   test("an instance with no declaration at all does not throw", async () => {
@@ -136,19 +144,33 @@ describe("what was not looked for is not reported as clean", () => {
   test("a declared-but-ABSENT directory is reported", async () => {
     // `AGENTS.md`: a declared-but-absent directory is the `dh4f` defect,
     // where a consumer scans nothing and reports a clean run over it.
+    //
+    // THE FIXTURE DID NOT MATCH THE NAME, and that is why this is rewritten
+    // rather than adjusted. It called `mkdirSync(join(root, "skills"))` — so
+    // the declared directory was THERE, empty — and then asserted a problem.
+    // It passed because the old condition emitted one message for two
+    // different states: declared-and-absent, and declared-and-diagramless.
+    // The test named the first and exercised the second, and the first was
+    // never covered at all.
+    //
+    // So: NO `mkdirSync`. The declaration names `skills/` and the tree does
+    // not carry it, which is the `dh4f` defect this test claims to be about.
     const root = mkdtempSync(join(tmpdir(), "kgx-absent-"));
-    mkdirSync(join(root, "skills"), { recursive: true });
     writeFileSync(
       join(root, "harness.json"),
       JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "skills/", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
     );
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, BASE, problems);
     rmSync(root, { recursive: true, force: true });
-    expect(problems.length).toBeGreaterThan(0);
+    // On the WHOLE message: "absent" and "holds no diagrams" are now two
+    // findings in two channels, and a substring match would not tell them
+    // apart — which is exactly how this test came to assert the wrong one.
+    expect(problems.filter((p) => /declared knowledge-graph directory is absent/.test(p)))
+      .toHaveLength(1);
   });
 });
 

@@ -4,7 +4,6 @@ export const deploymentAuth: SkillDefinition = {
   id: "deployment-auth",
   name: "Deployment & Auth",
   description: "OAuth configuration, remote MCP deployment, and role/whitelist management.",
-  roles: ["owner"],
   requiredCapabilities: [
     { capabilityId: "deploy-access", degradation: "fail" },
   ],

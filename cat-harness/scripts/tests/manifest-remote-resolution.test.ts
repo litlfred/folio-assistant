@@ -156,16 +156,27 @@ describe("the reason the allowance was closed is still true", () => {
       const code = codeWithoutComments(readFileSync(join(ROOT, f), "utf8"));
       return /["'`][^"'`]*remote-packages[^"'`]*["'`]/.test(code);
     });
-    // FOUR, not five. `scripts/gen-skill-docs.ts` was on this list until
-    // 2026-09-19 and never read the directory: its only mention is the comment
-    // at line ~209, "`remote-packages/` and `memory/` are other node kinds" —
-    // counted as a reader because the pattern ran over prose. Removing it
-    // makes the list say what it claims to say.
+    // THREE, and it has been four and five. `scripts/gen-skill-docs.ts` came
+    // off on 2026-09-19 — it never read the directory, and was counted only
+    // because the pattern ran over prose.
+    //
+    // `scripts/generate-docs.ts` came off on 2026-09-20 for the opposite
+    // reason: it really did read the directory, and was RETIRED to
+    // `fsh-guts/scripts/` (bean `folio-assistant-3w0i`). It had been in this
+    // repository since the root commit and had never run once — never in a
+    // package.json script, never in a workflow, its output directory never
+    // committed in any commit. So this list loses a reader that was real and
+    // was never reached.
+    //
+    // The third entry RENAMED on 2026-09-20 rather than changing what it is:
+    // `repo-partition.ts` was split into a generic engine and this instance's
+    // data, and the literal travelled with the data. Still three, still the
+    // same three readers — the invariant this test states is unchanged and
+    // the assertion was not weakened to absorb the move.
     expect(readers.sort()).toEqual([
-      "scripts/generate-docs.ts",
       "scripts/kg-audit.ts",
       "scripts/known-skills.ts",
-      "scripts/repo-partition.ts",
+      "scripts/partition/instance-rules.ts",
     ]);
   });
 

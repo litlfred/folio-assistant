@@ -80,18 +80,35 @@ function metrics(r: { findings: { metric?: string }[] }): (string | undefined)[]
 }
 
 describe("staging-preview-size", () => {
-  it("fires at `major` on the owner's 100 MB threshold", () => {
-    // Three previews at the size measured on gh-pages 2026-09-19 (36.7–37.6 MB
-    // each) — the case the threshold was chosen for.
+  it("fires at `major` on the owner's 500 MB threshold", () => {
+    // FOURTEEN previews at the size measured on gh-pages (36.7–37.6 MB each).
+    //
+    // It was three, against a 100 MB threshold. The owner raised it to 500 MB
+    // on 2026-09-20 together with `folio-assistant-1feu`, which made a merged
+    // pull request's preview go away automatically. That is what changed the
+    // meaning: the total used to be MONOTONIC, so any threshold was breached
+    // once and stayed breached; now the store drains and what remains is
+    // bounded by concurrent reviews. 500 MB is about thirteen of them, so
+    // fourteen is the first breach.
     const r = stagingSizeCheck(healthyContext({
-      staging: { state: "ok", value: { branch: "present", previews: previews(3, 37 * MB), command: "fixture" } },
+      staging: { state: "ok", value: { branch: "present", previews: previews(14, 37 * MB), command: "fixture" } },
     }));
     expect(r.state).toBe("finding");
     expect(metrics(r)).toEqual(["staging-total-bytes"]);
     expect(r.findings[0].severity).toBe("major");
-    expect(r.findings[0].summary).toContain("111.0 MB");
+    expect(r.findings[0].summary).toContain("518.0 MB");
     // The action never removes anything — it asks.
     expect(r.findings[0].action).toContain("staging:cleanup");
+  });
+
+  it("thirteen concurrent reviews is UNDER the threshold — the number means a concurrency", () => {
+    // The point of the raise. Thirteen at ~37 MB is 481 MB: this repository's
+    // realistic ceiling of simultaneous open reviews should not read as a
+    // finding, or the signal is a permanent verdict again rather than news.
+    const r = stagingSizeCheck(healthyContext({
+      staging: { state: "ok", value: { branch: "present", previews: previews(13, 37 * MB), command: "fixture" } },
+    }));
+    expect(r.state).toBe("ok");
   });
 
   it("escalates to `critical` past three-quarters of the Pages limit, and reports ONE breach not two", () => {
@@ -536,6 +553,77 @@ describe("bean-store", () => {
     // The action is `scrapped`, and it says outright not to delete.
     expect(r.findings[0].action).toContain("scrapped");
     expect(r.findings[0].action).toContain("Never `beans delete`");
+  });
+
+  it("fires on a decision record listing ONE option — MADR's refusal, made checkable", () => {
+    // `madr.md`: "never fewer than two considered options — one option is not a
+    // choice". THE FALSIFIER FOR THE WHOLE CRITERION: over the real store this
+    // fires on nothing (2 records, both with 3 options), so without this the
+    // detector could have been broken in either direction and still looked clean.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Pick a serialisation", consideredOptions: 1 }),
+          bean({ id: "bbbb", title: "Ordinary work, no decision" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-thin-decision-records"]);
+    expect(r.findings[0].severity).toBe("minor");
+    expect(r.findings[0].summary).toContain("one option");
+    // The action must offer the methodology's OWN escape — say why no
+    // alternative existed — and must refuse the shortcut, or an agent reading it
+    // will pad the list to two and the check will have made the record worse.
+    expect(r.findings[0].action).toContain("WHY NO ALTERNATIVE EXISTED");
+    expect(r.findings[0].action).toContain("Never invent a straw option");
+  });
+
+  it("an options section with NO items reads differently from one with a single option", () => {
+    // Zero is not a smaller version of one. An empty section claims an analysis
+    // that did not happen, and the remedy is the opposite — drop the section, or
+    // fill it — so the two cannot share an action.
+    const r = beanStoreCheck(healthyContext({
+      beans: { state: "ok", value: [bean({ id: "aaaa", consideredOptions: 0 })] },
+    }));
+    expect(r.findings[0].summary).toContain("no options");
+    expect(r.findings[0].action).toContain("or drop the section");
+  });
+
+  it("a bean with no options section is NOT a malformed decision record", () => {
+    // The third state, and the one the check is likeliest to get wrong: most
+    // beans record WORK, and `madr.md` says a work bean needs no such section.
+    // Reading `undefined` as 0 would make all 172 of them findings.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [bean({ id: "aaaa" }), bean({ id: "bbbb", consideredOptions: undefined })],
+      },
+    }));
+    expect(metrics(r)).toEqual([]);
+    const m = r.measurements.find((x) => x.metric === "bean-decision-records");
+    expect(m?.value).toBe(0);
+  });
+
+  it("the SUBJECT COUNT is reported, so a detector that stops matching is not green", () => {
+    // Nothing thresholds `bean-decision-records`, and it is emitted anyway. The
+    // finding above can only fire on a bean this counts, so if the heading regex
+    // is narrowed or a heading respelled, this drops to 0 rather than the check
+    // passing over an empty walk — the trap `NoCheckScriptsFound` refuses one
+    // layer along. Measured on the real store 2026-09-20: 2 subjects, 0 thin.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", consideredOptions: 3 }),
+          bean({ id: "bbbb", consideredOptions: 2 }),
+          bean({ id: "cccc" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual([]);
+    expect(r.measurements.find((x) => x.metric === "bean-decision-records")?.value).toBe(2);
+    expect(r.measurements.find((x) => x.metric === "bean-thin-decision-records")?.value).toBe(0);
   });
 
   it("fires `minor` on a claim nobody has honoured for a fortnight", () => {

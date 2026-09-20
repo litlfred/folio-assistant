@@ -17,6 +17,7 @@
  * @module folio-assistant/routes/glossary
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 
@@ -37,7 +38,7 @@ function paperDir(repoRoot: string, paper: string): string {
   if (!/^[a-z0-9][a-z0-9-]*$/.test(paper)) {
     throw new Error("invalid paper name format");
   }
-  return join(repoRoot, "content", paper);
+  return join(folioDir(repoRoot),  paper);
 }
 
 // ── GET handlers ────────────────────────────────────────────────

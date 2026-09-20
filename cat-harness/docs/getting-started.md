@@ -116,7 +116,7 @@ two cannot drift apart. Nothing in `src/` needs to change.
 
 **The form of the question comes before its content.** The agent establishes how
 you would like to be asked — selectable options, ordinary chat, read aloud,
-large type — and records it in `.harness/interaction.json` so no future session
+large type — and records it in `interaction/interaction.json` so no future session
 asks you again. See [Accessibility](accessibility.html).
 
 Then, when the answer is genuinely ambiguous:
@@ -213,8 +213,8 @@ Full discipline: the
 Creating a folio should end with a link. Immediately after scaffolding:
 
 ```sh
-bun run pages:bootstrap            # derive the address, report, no probe
-bun run pages:bootstrap -- --wait  # probe until the site answers (bounded)
+bun run pages:cat-bootstrap            # derive the address, report, no probe
+bun run pages:cat-bootstrap -- --wait  # probe until the site answers (bounded)
 ```
 
 It derives the address from `harness.config.json` or the `origin` remote, finds

@@ -200,7 +200,7 @@ export const KgImageSchema = z.object({
  * Where a declared asset was copied from, for the staleness question.
  *
  * **A copy with no source ref cannot be checked, and is believed anyway.** The
- * bootstrap proposal states it for the cache and it is no different here:
+ * cat-bootstrap proposal states it for the cache and it is no different here:
  * *"'It was copied at init' is not an answer. The cheapest honest version
  * records the source ref and compares against it, reporting could not
  * determine when the upstream is unreachable."*
@@ -399,3 +399,40 @@ export function pickLayout(
   }
   return {};
 }
+
+/**
+ * `.claude/skills/<group>/*.json` — the typed nodes beside the skills.
+ *
+ * ## Why this is a schema rather than a constant inside the exporter
+ *
+ * It was `REGISTRY_GROUPS` in `scripts/kg-export.ts`, private to it. That made
+ * it a fact only the graph EXPORTER could see, and `scripts/ns-export.ts` —
+ * the VOCABULARY exporter, whose job is to define every class the graph
+ * projects — could not read it. So the two disagreed in the one way that
+ * matters: kg-export minted `folio:Convention` onto two real nodes while
+ * ns-export defined no such class, and the type on a published node did not
+ * dereference. Bean `blv9`.
+ *
+ * The check that exists to catch exactly that reported **0 undefined**, because
+ * `mintedTermsFromSource` scans for `termIri("Name")` LITERALS and a class
+ * minted as `` `${FOLIO_NS}${type}` `` from this table is not a literal
+ * anywhere. `ns-export.ts` documented the fix in a comment — *"the caller
+ * unions this with the terms a real export emits"* — and no caller ever did.
+ * A contract stated only in prose is a contract with no test: the same failure
+ * this repository's own `AGENTS.md` banner describes, one level down.
+ *
+ * Keyed by DIRECTORY name, valued by CLASS name, because the directory is what
+ * a scan finds and the class is what the vocabulary must define. Adding a row
+ * here is what makes a new node kind both exportable and defined — and
+ * `scripts/tests/registry-groups.test.ts` fails if the second half is skipped.
+ */
+export const REGISTRY_GROUPS: Readonly<Record<string, string>> = {
+  actors: "Actor",
+  capabilities: "Capability",
+  roles: "Role",
+  requirements: "Requirement",
+  // Bean `3190`. A convention is context attached to a PROCESS, so it is a
+  // node like the others rather than prose in AGENTS.md — which that file
+  // itself calls a rule with no home.
+  conventions: "Convention",
+};

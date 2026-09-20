@@ -140,9 +140,16 @@ describe("the issue body", () => {
         state: "ok",
         value: {
           branch: "present",
+          // 2 x 300 MB, not 2 x 60 MB. The sizes are fixture values chosen to
+          // BREACH the size threshold, and that threshold moved from 100 MB to
+          // 500 MB on 2026-09-20 with `folio-assistant-1feu` — which made a
+          // merged PR's preview go away, so the total drains and the number
+          // now expresses a concurrency rather than a cumulative ceiling.
+          // Two previews keeps the orphan case below intact; only the bytes
+          // change.
           previews: [
-            { slug: "claude-one", bytes: 60 * MB, files: 700 },
-            { slug: "claude-two", bytes: 60 * MB, files: 700 },
+            { slug: "claude-one", bytes: 300 * MB, files: 700 },
+            { slug: "claude-two", bytes: 300 * MB, files: 700 },
           ],
           command: "fixture",
         },
@@ -180,7 +187,7 @@ describe("the issue body", () => {
   it("names every finding and what a person should do about it", () => {
     const md = render(report);
     expect(md).toContain("staging-preview-size");
-    expect(md).toContain("120.0 MB");
+    expect(md).toContain("600.0 MB");
     expect(md).toContain("STAGING/claude-two");
     expect(md).toContain("staging:cleanup");
     // The preview whose PR is open is not proposed for anything.

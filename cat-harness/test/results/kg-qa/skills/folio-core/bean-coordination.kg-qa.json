@@ -5,15 +5,29 @@
     "id": "bean-coordination",
     "path": "skills/folio-core/bean-coordination.md"
   },
-  "source_hash": "dfe7c0d61a44",
+  "source_hash": "c53d5fd9bb9d",
   "criteria": {
-    "skill-is-brief": {
+    "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/bean-coordination.md",
+          "detail": "469 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
     "skill-not-a-document": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/bean-coordination.md",
+          "detail": "469 lines; p90 is 391. At this length it is a document."
+        }
+      ]
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -21,8 +35,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 0,
+    "pass": 2,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }

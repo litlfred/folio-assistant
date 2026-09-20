@@ -32,7 +32,7 @@ import { join } from "path";
  * Asserted generically over whatever folio is attached; no label is hardcoded.
  */
 describe.skipIf(!hasFolio())("uses-editorial-hygiene redundancy walks `uses` only", () => {
-  const contentDir = (): string => join(FOLIO_ROOT!, "content");
+  const contentDir = (): string => join(FOLIO_ROOT!, "folio");
 
   // Walks every block and builds the graph: seconds, not milliseconds.
   test("a warn fires iff a uses-only redundancy exists", () => {

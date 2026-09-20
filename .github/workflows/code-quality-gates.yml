@@ -262,17 +262,35 @@ jobs:
       - name: declared assets exist and resolve
         run: bun run check:declared-assets
 
-      # `bootstrap/bootstrap.jsonld` is COMMITTED, unlike `_kg/`, because its
-      # reader has nothing installed and cannot run a build — so a graph that
-      # only appears after one is a graph that reader never sees. Committed
-      # means it can drift, and this is what stops it.
+      # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
+      # declared -> disk; this walks disk -> declared, over the repository ROOT,
+      # which every other sweep skips because the root is deliberately not an
+      # instance. That is exactly where an undeclared file survives: commit
+      # `0301fbd2` put three 1.6-1.8 MB PNGs there with spaces and commas in
+      # their names and no gate noticed, and an automated pass then misread them
+      # as a regeneration of the existing art. A file nothing declares is a file
+      # nothing reasons about.
       #
-      # The generator is deliberately a PURE function of its inputs: no
-      # timestamp (which would make every run a diff and get the check
-      # switched off) and no commit SHA (which a committed generated file
-      # cannot carry without naming the commit BEFORE the one containing it).
-      - name: bootstrap graph is current
-        run: bun run bootstrap:graph:check
+      # Gating from the first commit, like its sibling and for the same reason:
+      # the root is clean as of this change, so it starts at zero findings
+      # rather than measuring a backlog.
+      - name: no undeclared files at the repository root
+        run: bun run check:undeclared-files:check
+
+      # `cat-bootstrap/cat-bootstrap.jsonld` HAD a staleness gate here, because it was
+      # committed. It no longer is — it is built at render time into the
+      # published site by `docs-site.yml` — so there is no committed copy to
+      # go stale and nothing for a byte gate to compare against.
+      #
+      # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
+      # assuming: the gate compared bytes, while every property it was
+      # protecting is asserted directly in `scripts/tests/cat-bootstrap-graph.test.ts`
+      # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
+      # build paths, skills derived from disk, graph kinds a subset of the
+      # declaration, and the `omitted` list. Those run in `bun test`, which
+      # the TypeScript job above already runs. Removing a check whose
+      # coverage lives elsewhere is fine; removing one and saying so is what
+      # stops the next reader reinstating it.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
@@ -283,6 +301,45 @@ jobs:
       # fake ref onto a real step.
       - name: workflow skill refs
         run: bun run check:workflow-refs
+
+      # Every link OUT of the files an agent reads first — bean `v8gh`.
+      # `AGENTS.md` carried seven dead links, five broken by one directory
+      # move, including the onboarding guide its own banner calls the place to
+      # start. `readme:audit` covers README.md only and `check:agents-xref`
+      # covers citations INTO AGENTS.md, so a directory move could silently
+      # break the one file every agent opens first.
+      - name: agent entry links
+        run: bun run check:agent-entry-links
+
+      # What `AGENTS.md` ASSERTS about the code — bean `77ex`. The two checks
+      # above bracket it without covering it: `agents-xref` verifies citations
+      # INTO the file, `agent-entry-links` verifies links OUT of it, and
+      # neither reads what the prose says is true.
+      #
+      # Gating from the first commit, because it starts at zero findings:
+      # every claim on the current file holds. The two it was written for are
+      # both historical, and the second is why the ABSENCE half exists — at
+      # `08f43c55b2` the file placed `resolveSkillDirs` in a module that DID
+      # declare it, so the location claim was true and only "has no caller"
+      # was false. `AGENTS.md` states the cost in its own voice: a stale gap
+      # notice is worse than none, because an agent that believes it either
+      # avoids the feature or rebuilds it.
+      - name: AGENTS.md claims about code
+        run: bun run check:agents-claims
+
+      # Which `.github/workflows/*.yml` are documented as BPMN — bean `7yvd`,
+      # owner: "make sure all workflows documented as bpmn".
+      #
+      # NOT `--strict` yet, deliberately. Coverage is 0 of 38 as this lands, so
+      # a strict gate would be red on arrival and switched off within the day.
+      # What it DOES fail on is the two unambiguous states: a workflow whose
+      # YAML cannot be read (exit 2 — could-not-determine is never rendered as
+      # clean, and an unreadable file is the one state that can hide a gap),
+      # and a diagram declaring a workflow that is not there (exit 1, the same
+      # tier as a dangling `<folio:skill ref>` above). The gap itself is
+      # reported so the number is visible and moves.
+      - name: workflow BPMN coverage
+        run: bun run check:workflow-coverage
 
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
@@ -324,6 +381,23 @@ jobs:
       - name: workflow yaml
         run: bun run check:workflows
 
+      # Every script path a workflow invokes resolves, from the directory the
+      # step actually runs in. Bean `52dz`. The #223 split moved the platform's
+      # scripts under `cat-harness/` and the workflows naming them without that
+      # prefix kept naming them without it — which is not a type error, not a
+      # lint error and not a test failure, so nothing here could see it.
+      #
+      # THREE workflows were live and broken when this was added: `ci-health`
+      # (weekly), `upstream-pins` (weekly) and `health-check` (DAILY), each
+      # crashing on its first command. `ci-health` exists to catch workflows
+      # failing where nobody looks, so it had been failing at its own job.
+      # Eight more were `workflow_dispatch`-only, two of them never once run.
+      #
+      # This step is the point: the previous sentence describes what happens
+      # when a check lives in `package.json` and no workflow invokes it.
+      - name: workflow script paths
+        run: bun run check:workflow-paths
+
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:
       # a lane binding a role that is not declared, a role carrying a skill
@@ -345,6 +419,19 @@ jobs:
       # preview overrides the base at export time only.
       - name: skill I/O schema addresses
         run: bun run kg:schema:check
+
+      # A WORKING validator that had lost its wiring — bean `shzs`. It validates
+      # every skill package manifest against `SkillPackageManifest` plus the
+      # `.claude/skills/` JSON, and it was in `package.json` once (two commits
+      # touched it there) and in no workflow now. That is `1xhc`'s class exactly:
+      # a gate that does not fire is indistinguishable from one that passed.
+      #
+      # Safe to wire because it is GREEN on this tree — 9 of 9 package manifests,
+      # 16 files, 0 errors — so this locks in a property the repo HAS rather than
+      # demanding work. Counted from the whole output, not from a `tail`: reading
+      # the last eight lines first made it look like 6 of 9, which was wrong.
+      - name: skill manifests and framework JSON
+        run: bun run check:skills
 
       - name: knowledge-graph audit
         run: bun run kg:audit:check
@@ -392,7 +479,7 @@ jobs:
       - name: README links resolve
         run: bun run readme:audit
 
-      # Agent memory is authored under `skills/memory/` and ASSEMBLED into
+      # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
       # harness injects. An entry edited and never assembled is a fact the
       # author believes an agent has and the agent has never seen -- invisible,
@@ -424,32 +511,117 @@ jobs:
       #                            staged there earlier in the session -- the
       #                            precise "green locally, red on a clean
       #                            runner" gap these gates exist to close.
-      #   check:ci-health       -- a REPORT, not a gate. It reads the default
-      #                            branch, so on a PR it describes main rather
-      #                            than the diff. `ci-health.yml` runs it.
-      #   check:corpus-gate     -- needs a folio; the platform carries none.
-      #   check:upstream-pins   -- `upstream-pins.yml` runs it weekly.
-      #   check:partition:edges -- prints the edge list; `check:partition` is
-      #                            the gate and is wired below.
-      #   translate-*:check     -- need a translation toolchain not installed
-      #                            on this runner.
+      #
+      # The scripts CI deliberately does NOT gate used to be listed here, in
+      # this comment. They now live in `SCRIPT_EXEMPTIONS` (scripts/gates.ts),
+      # because a comment cannot be compared against the set it describes:
+      # it covered six of the nine unwired check scripts, and the other three
+      # -- health:check, landing:data:check, landing:sticky:check -- had no
+      # reason anywhere and nothing said so. `bun run gates` now reports any
+      # check script no workflow runs. Bean `ot9a`.
+      #
+      # One entry here was also FALSE. `translate-*:check` was excluded as
+      # needing "a translation toolchain not installed on this runner"; both
+      # run clean on a bare checkout, measured 2026-09-20, and both are wired
+      # below. A reason nothing checks is free to stop being true.
       - name: gates that were registered and never run
         run: |
           set -e
+          # Wired 2026-09-20 (bean `ot9a`): each was declared in package.json
+          # and run by no workflow. `translate-kg-viewer:check` was RED on
+          # main for an unknown stretch while CI stayed green -- a gate no
+          # workflow runs cannot fail, which is bean `xom7` one level down.
+          bun run translate-kg-viewer:check
+          # Bean `07p7`: a published translation that has drifted from its
+          # source is a section a reader cannot reach in their language.
+          bun run translation:drift:check
+          # Bean `eief`: a stubbed tool must not read as a working one, and a
+          # stub that has outlived its tool must fail rather than linger.
+          bun run check:tabular-stubs
+          bun run translate-bpmn:check
+          bun run landing:sticky:check
+          bun run landing:data:check
+          bun run check:agents-xref
+          # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
+          # symbol claim and not a literal in a .ts file, so all three
+          # neighbouring checks miss it by design. The cold-start line every
+          # agent runs first rotted in exactly that gap.
+          bun run check:command-paths
           bun run check:bean-parents
+          # Bean `sfhr`: three store defects `beans check` cannot see, because
+          # none of them is a link -- an empty body on an open bean, a `title:`
+          # block scalar that swallowed the body's first lines, and a prose
+          # blocker naming a bean that is `completed` or `scrapped`. Baselined
+          # at the eight the store had, so a NEW one fails and the backlog is
+          # listed rather than demanded.
+          bun run check:bean-bodies
+          # Bean `bbbl`: a bean tagged `ready-to-close` carries the evidence its
+          # session did find. Fails only on a tag with no `## Evidence` -- the
+          # parking space the skill forbids. Closing them stays the owner's.
+          bun run check:ready-to-close
+          # Bean `bbbl` / the owner's waiver rule: a malformed waiver reads as
+          # permission and carries none, so it fails here rather than at the
+          # gate it claims to have opened.
+          bun run check:waivers
+          # Bean `oh78`: a bean and its issue must reach each other. The
+          # bean -> issue direction and the tracked-issue reverse are checked
+          # here; the general reverse needs the API and prints as undetermined
+          # rather than as clean.
+          bun run check:bean-issue-links
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          bun run check:catalogue
           bun run check:declared-paths
           bun run check:fallback-roles
+          bun run check:kind-validators
           bun run check:actor-reach
           bun run check:harness-dirs
+          # One config per instance: `<name>.config.json` at the
+          # instantiation root. This repository instantiates more than
+          # one harness, so a single `harness.config.json` at the repo
+          # root had become an answer to a question with two answers.
+          bun run check:instance-config
+          # Every instance renders its OWN graph, and an unreadable one is
+          # `undetermined` rather than a pass (bean `z4mq` item 3).
+          bun run check:instance-render
+          # ADVISORY by design, so it exits 0 on findings (bean `2krx`): of 22
+          # directories this instance declares, 2 have a renderer, and a hard
+          # gate on day one is a wall somebody switches off. It is here so the
+          # count is visible on every run and cannot drift unnoticed — the same
+          # path `undeclared` took in check:instance-render before it became
+          # fatal. `--strict` is the switch for the day the number is low
+          # enough to hold.
+          bun run check:subgraph-coverage
+
+          # The generators THIS FILE invokes directly, run as a set.
+          # Seven `--check` invocations live in workflow YAML and in no
+          # `package.json` script, so a local sweep of `check:*` came
+          # back clean while `gen-skill-docs --check` was red here
+          # (2026-09-20). It reads them out of the YAML rather than
+          # listing them, so a new one is covered the day it is added.
+          bun run check:ci-invocations
           bun run harness:dirs:check
           bun run check:schema-nodes
+          bun run check:retired-front-matter
+          bun run check:raci
+          # Subgraph containment, and how far the corpus is from the
+          # owner's "subgraphs should be disconnected" (bean `x4v4`). It
+          # REPORTS entanglement and broken links rather than refusing
+          # them — the disentangling is known-outstanding work, and a gate
+          # on that is one somebody switches off. Non-zero only on the
+          # third state: a file whose edges could not be read at all.
+          bun run check:subgraphs
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition
+          # Every XML namespace the corpus declares is reconciled against a
+          # specification record naming its EDITION. Added with the registry
+          # (2026-09-20): a diagram conforming to a spec nobody named is the
+          # defect that registry exists to end, and a registry nothing runs is
+          # the `xom7` shape one level along.
+          bun run external-schemas:check
           bun run docs:harness:check
           bun run gen:jsonld:check
           bun run readme:sync:check

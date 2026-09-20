@@ -129,7 +129,12 @@ describe("routing happens on CONTENT, with no PDF backend needed", () => {
     const f = fixtures();
     const p = planFor(f.zip, undefined, "library");
     expect(p.rung).toBe("archive");
-    expect(p.steps[0]).toContain("scripts/archive-contents.py");
+    // The step is an ABSOLUTE path since 2026-09-20 — `"scripts/<name>.py"`
+    // was resolved against the CWD and `bun run` puts you at the repository
+    // root, one level above where the helpers live, so every rung died with
+    // `can't open file`. Asserting the BASENAME rather than a spelling of the
+    // location is what stops this test re-pinning the next relocation.
+    expect(p.steps[0]!.some((a) => a.endsWith("/archive-contents.py"))).toBe(true);
     expect(p.why).toContain("application/zip");
   });
 
@@ -158,8 +163,8 @@ describe("routing happens on CONTENT, with no PDF backend needed", () => {
 
   test("the mimetype can be supplied, so the decision is testable in isolation", () => {
     expect(planFor("x", undefined, "library", "application/zip").rung).toBe("archive");
-    expect(planFor("x", { outline: 3, chars: 9000 }, "library", null).rung).toBe("pdf-structure");
-    expect(planFor("x", { outline: 3, chars: 9000 }, "library", "application/pdf").rung).toBe("pdf-structure");
+    expect(planFor("x", { outline: 3, outlineUsable: 3, chars: 9000 }, "library", null).rung).toBe("pdf-structure");
+    expect(planFor("x", { outline: 3, outlineUsable: 3, chars: 9000 }, "library", "application/pdf").rung).toBe("pdf-structure");
   });
 
   test("isArchiveMimetype refuses everything else", () => {
@@ -235,7 +240,11 @@ describe("the gate fires on an archive with no listing", () => {
 
 describe("the real corpus", () => {
   test("four PDFs, zero archives, and the gate says so per entry", () => {
+    // `undefined` means no `library` graph was declared, which is NOT an
+    // empty corpus — a test computed over it has checked nothing.
     const reports = checkAll(ROOT);
+    expect(reports, "no `library` declared under ROOT — this test would be vacuous").toBeDefined();
+    if (reports === undefined) return;
     expect(reports.length).toBeGreaterThan(0);
     for (const r of reports) {
       const q = r.requirements.find((x) => x.name === "archive-contents");

@@ -34,6 +34,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decision-table.js";
 import { ACTOR_KINDS, type ActorKind } from "../../schemas/role-graph.js";
+import { CONVENTION_EXT, conventionsInForce, type ConventionScope } from "../../schemas/convention.js";
 import { WORK_PLAN_OPS, type WorkPlanOp } from "./bean-link.js";
 
 /** Element types the interpreter can walk faithfully. */
@@ -54,6 +55,13 @@ const SUPPORTED = new Set<string>([
 ]);
 
 export type NodeKind = "start" | "end" | "activity" | "exclusive" | "parallel";
+
+/**
+ * The three RACI letters a diagram can declare. `responsible` is absent
+ * deliberately — the lane already carries it. See {@link ProcessNode.raci}.
+ */
+export const RACI_INVOLVEMENTS = ["accountable", "consulted", "informed"] as const;
+export type RaciInvolvement = (typeof RACI_INVOLVEMENTS)[number];
 
 export interface ProcessNode {
   id: string;
@@ -77,6 +85,38 @@ export interface ProcessNode {
   /** `<folio:skill ref="…"/>`, possibly several. */
   skills: string[];
   /**
+   * `<folio:raci ref="<role>" involvement="accountable|consulted|informed"/>`.
+   *
+   * **R is NOT here, and that is the point.** A BPMN lane already says who
+   * performs an activity — that IS Responsible — so declaring it again
+   * would be one fact in two places with nothing asserting they agree, the
+   * shape bean `85e8` removed `fallbackRole` for. Read `roleRef` for R.
+   *
+   * The other three letters have no home in BPMN and are what this adds:
+   * *Accountable* (one per activity, the neck on the block), *Consulted*
+   * (two-way, before) and *Informed* (one-way, after). Bean `7o7i`.
+   *
+   * Every value names a **role**, not an actor, for all three letters.
+   * `role-model.md`'s rule is that nothing IS a reviewer — somebody acts as
+   * one for the duration of a lane — and naming a concrete actor would bind
+   * a process to one participant.
+   */
+  raci: { role: string; involvement: RaciInvolvement }[];
+  /**
+   * The conventions in force HERE — process ∪ lane ∪ activity, in that order.
+   *
+   * `<folio:convention ref="…"/>`, mirroring `folio:skill` rather than
+   * inventing a second binding syntax. Bean `3190`: a convention is context
+   * attached to a process, so an agent implementing under CRDM has them and
+   * one adjudicating a translation does not.
+   *
+   * **EMPTY WHEN NOTHING BINDS, and that is the rule.** A default of "all
+   * conventions" would be the unconditional prose this replaces, wearing a
+   * schema. The scope is carried per entry so a reader can tell a
+   * process-wide rule from one attached to this step alone.
+   */
+  conventions: Array<{ ref: string; scope: ConventionScope }>;
+  /**
    * `<folio:no-skill reason="…"/>` — this activity names no skill ON PURPOSE,
    * and this is why.
    *
@@ -93,6 +133,36 @@ export interface ProcessNode {
    * silencing the criterion cheaper than satisfying it.
    */
   noSkillReason?: string;
+  /**
+   * `<folio:judgement reason="…"/>` — this gateway's branch is a JUDGEMENT
+   * call, on purpose, and this is why.
+   *
+   * ## The third state the vocabulary was missing
+   *
+   * An exclusive gateway either carries `folio:decision` and is computed, or
+   * it does not and the caller supplies the outcome. But "no table because
+   * this is somebody's call" and "no table because nobody has written one
+   * yet" were **indistinguishable from the outside** — exactly the gap
+   * {@link noSkillReason} closed for activities, one element type along.
+   *
+   * It is not hypothetical. Issue #200 §6 classifies all ten of this
+   * repository's decision points: four mechanical, six judgement, with
+   * reasons. That classification lives in an ISSUE, where nothing reads it
+   * and nothing checks it — a claim in prose, which is the failure this
+   * repository keeps writing down.
+   *
+   * ## Why it matters more than the activity case
+   *
+   * A step with no skill is a documentation gap. A gateway with no table is a
+   * point where an LLM decides the branch, and **how many of those there are,
+   * and which**, is the question the deterministic-vs-agentic spectrum is
+   * about (bean `q0tc`). A mechanism that cannot enumerate its own judgement
+   * points cannot answer it.
+   *
+   * The reason is REQUIRED, the same rule `no-skill` follows: an exemption
+   * whose justification is "" is one somebody adds to get to green.
+   */
+  judgementReason?: string;
   /**
    * `<folio:fulfilment kinds="person agent" reason="…"/>` — which actor kinds
    * may perform this activity, said explicitly.
@@ -279,6 +349,49 @@ function noSkillReasonOf(
 }
 
 /**
+ * `<folio:judgement reason="…"/>`, with the reason enforced at LOAD time.
+ *
+ * Refused at load rather than recorded as a finding, for the reason
+ * {@link noSkillReasonOf} gives: a declaration that silences a question must
+ * not be able to arrive half-formed.
+ *
+ * **Refused on anything but an exclusive gateway**, and refused ALONGSIDE
+ * `folio:decision`. A judgement marker on a computed gateway is a node
+ * claiming both that a table decides it and that a person does, and a reader
+ * has no way to tell which the author meant — so it is a conflict rather than
+ * a preference.
+ */
+function judgementReasonOf(
+  ext: { $type: string; reason?: string }[],
+  el: { id: string; $type: string },
+): string | undefined {
+  const decl = ext.find((v) => v.$type === "folio:judgement");
+  if (!decl) return undefined;
+  if (el.$type !== "bpmn:ExclusiveGateway") {
+    throw new Error(
+      `${el.id}: <folio:judgement/> is only meaningful on an exclusive gateway — ` +
+        `it says who chooses the branch, and ${el.$type} has no branch to choose.`,
+    );
+  }
+  if (ext.some((v) => v.$type === "folio:decision")) {
+    throw new Error(
+      `${el.id}: carries both <folio:decision/> and <folio:judgement/>. A gateway ` +
+        `is computed or it is somebody's call; declaring both leaves a reader ` +
+        `unable to tell which the author meant.`,
+    );
+  }
+  const reason = decl.reason?.trim();
+  if (!reason) {
+    throw new Error(
+      `${el.id}: <folio:judgement/> carries no reason. Say WHOSE call this is and ` +
+        `why no table can make it — an exemption nobody can review is one ` +
+        `somebody added to get to green.`,
+    );
+  }
+  return reason;
+}
+
+/**
  * `<folio:fulfilment kinds="…" reason="…"/>`, validated at LOAD time.
  *
  * Three ways to get it wrong, all refused here rather than recorded as a
@@ -339,6 +452,7 @@ interface ModdleElement {
       op?: string;
       enforcement?: string;
       capture?: string;
+      involvement?: string;
       relaxable?: string;
       reason?: string;
       kinds?: string;
@@ -431,20 +545,30 @@ export async function loadProcessModel(
   const laneOf = new Map<string, string>();
   const laneIdOf = new Map<string, string>();
   const roleRefOf = new Map<string, string>();
+  const laneConventionsOf = new Map<string, string[]>();
   const lanes: LaneDef[] = [];
   for (const lane of proc.laneSets?.[0]?.lanes ?? []) {
     const laneId = lane.id ?? lane.name ?? `lane_${lanes.length}`;
-    const roleRef = (lane.extensionElements?.values ?? []).find(
-      (v) => v.$type === "folio:role" && v.ref,
-    )?.ref;
+    const laneExt = lane.extensionElements?.values ?? [];
+    const roleRef = laneExt.find((v) => v.$type === "folio:role" && v.ref)?.ref;
+    const laneConventions = laneExt
+      .filter((v) => v.$type === CONVENTION_EXT && v.ref)
+      .map((v) => v.ref!);
     const nodeIds = (lane.flowNodeRef ?? []).map((r) => r.id);
     lanes.push({ id: laneId, name: lane.name, roleRef, nodes: nodeIds });
     for (const id of nodeIds) {
       if (lane.name) laneOf.set(id, lane.name);
       laneIdOf.set(id, laneId);
       if (roleRef) roleRefOf.set(id, roleRef);
+      if (laneConventions.length) laneConventionsOf.set(id, laneConventions);
     }
   }
+
+  // PROCESS-LEVEL conventions: bound on the <bpmn:process> itself, so they
+  // reach every step in the diagram without being restated on each one.
+  const processConventions = (proc.extensionElements?.values ?? [])
+    .filter((v) => v.$type === CONVENTION_EXT && v.ref)
+    .map((v) => v.ref!);
 
   const nodes = new Map<string, ProcessNode>();
   const flows = new Map<string, ProcessFlow>();
@@ -461,7 +585,22 @@ export async function loadProcessModel(
       laneId: laneIdOf.get(el.id),
       roleRef: roleRefOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
+      raci: ext
+        .filter((v) => v.$type === "folio:raci" && v.ref)
+        // An unrecognised `involvement` is DROPPED rather than coerced. A
+        // typo silently read as `informed` would put somebody on a
+        // notification list who was meant to be consulted, and the
+        // difference between those two is the whole point of the model.
+        // `check:raci` reports what this drops.
+        .filter((v) => (RACI_INVOLVEMENTS as readonly string[]).includes(v.involvement ?? ""))
+        .map((v) => ({ role: v.ref!, involvement: v.involvement as RaciInvolvement })),
+      conventions: conventionsInForce({
+        process: processConventions,
+        lane: laneConventionsOf.get(el.id),
+        activity: ext.filter((v) => v.$type === CONVENTION_EXT && v.ref).map((v) => v.ref!),
+      }),
       noSkillReason: noSkillReasonOf(ext, el.id),
+      judgementReason: judgementReasonOf(ext, el),
       fulfilment: fulfilmentOf(ext, el.id),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
       workPlanOp: readWorkPlanOp(el.id, ext),

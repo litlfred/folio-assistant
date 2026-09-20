@@ -26,6 +26,8 @@
  * conditional-on-class block missing either component (when run
  * with `--strict`).
  */
+import { folioDir } from "../../schemas/cat-harness.js";
+import { stripLeanComments } from "./lean-lexer.js";
 import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
@@ -45,7 +47,7 @@ const REPO_ROOT = findContentRepoRoot();
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
-const ROOT = join(REPO_ROOT, "content", requirePaper(_paperArg));
+const ROOT = join(folioDir(REPO_ROOT),  requirePaper(_paperArg));
 const STRICT = process.argv.includes("--strict");
 
 // Optional baseline-allowlist file (declared before WITNESS_OUT so its
@@ -109,11 +111,7 @@ async function loadAll(): Promise<Map<string, Block>> {
 }
 
 /** Strip Lean comments (`/-! … -/`, `/- … -/`, `-- …`) from text. */
-function stripLeanComments(s: string): string {
-  return s
-    .replace(/\/-[\s\S]*?-\//g, "")
-    .replace(/--[^\n]*/g, "");
-}
+
 
 /** Find the `.lean` file backing a block.
  *

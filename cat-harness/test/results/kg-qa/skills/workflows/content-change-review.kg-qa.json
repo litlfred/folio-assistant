@@ -5,8 +5,24 @@
     "id": "Process_ContentChangeReview",
     "path": "skills/workflows/content-change-review.bpmn"
   },
-  "source_hash": "sha256:1af503119fbe7797bcf7c97445450081049fe81cd7877b2fa8bc519657529fa9",
+  "source_hash": "sha256:78c88a2f841353ed97711010a3ddf39eed9e5c10e667a9a148b906fe1dd280fb",
   "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
     "skill-ref-resolves": {
       "result": "pass",
       "findings": []
@@ -44,14 +60,14 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 8,
     "fail": 0,
-    "n/a": 3,
+    "n/a": 6,
     "unknown": 0
   }
 }

@@ -16,6 +16,14 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, join as joinPath, relative } from "node:path";
 
 import { resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
+import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
+// The `folio` graph kind is registered by CORE as a load-time side effect
+// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
+// exists. This module resolves this instance's directories and the instance now
+// DECLARES a folio graph — without this import `resolveDirectories` throws
+// `unknown graph kind "folio"`, which `kgDirectories` used to swallow into an
+// empty list. See the comment on that catch for what that cost (issue #464).
+import "../schemas/folio-graph-kind.js";
 
 /**
  * Groups under `.claude/skills/` that hold something other than skills.
@@ -36,7 +44,12 @@ import { resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
  * skills is what made `commit-hygiene`, `content-lifecycle`, `lean-verification`
  * and `session-start` appear as reachable skill names with nothing behind them.
  */
-export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hooks", "requirements"]);
+// `conventions` joins these for the same reason as the rest: the directory
+// holds a different NODE KIND, and a scan that took them for skills would
+// publish a convention as something an activity could implement.
+export const NON_SKILL_GROUPS = new Set([
+  "actors", "capabilities", "roles", "hooks", "requirements", "conventions",
+]);
 
 /**
  * Does this directory hold at least one SKILL `.md` directly?
@@ -44,7 +57,7 @@ export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hoo
  * Not merely a `.md`. The two halves of this arrived from opposite directions
  * and meet here: declaration-driven discovery asks WHICH DIRECTORIES to look
  * in, and {@link isSkillMd} asks WHICH FILES in one count. Either alone
- * overcounts — `skills/memory/`'s 25 agent-memory nodes are `.md` in a
+ * overcounts — the 25 agent-memory nodes then in `skills/memory/` were `.md` in a
  * declared directory, and were admitted until the file-level predicate
  * existed.
  */
@@ -66,9 +79,9 @@ function holdsMarkdown(abs: string): boolean {
  * needs; a consumer that must NAME a root needs the declared id. `harness.json`
  * states the rule on its own `cat-harness` entry — *"ids are stable across a
  * relocation, paths are not"* — and `gen-skill-docs` is where it was paid for:
- * it keyed a category heading on the basename, that basename was `bootstrap`
- * only while the root was `bootstrap/`, and when #422 moved the skills to
- * `bootstrap/skills/` the generator demanded a heading for a package called
+ * it keyed a category heading on the basename, that basename was `cat-bootstrap`
+ * only while the root was `cat-bootstrap/`, and when #422 moved the skills to
+ * `cat-bootstrap/skills/` the generator demanded a heading for a package called
  * "skills".
  */
 export function kgDirectories(root: string): Array<{ id: string; path: string; absPath: string }> {
@@ -90,8 +103,29 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
       // on the `.ts`, not a guess about the `.md`.
       .filter((d) => d.graphs.length === 1 && d.graphs[0] === "cat-harness")
       .filter((d) => existsSync(d.absPath));
-  } catch {
-    return [];
+  } catch (err) {
+    // NOT swallowed into an empty list, and the reason is measured.
+    //
+    // This was `catch { return []; }`. `AGENTS.md` states the contract it was
+    // silently breaking: "Absent declaration is fine (an unmigrated instance
+    // falls back to today's conventions); a present-but-unreadable one throws."
+    // So the only thing this catch could ever catch was the case that is
+    // supposed to be loud — and it turned it into "this instance has no
+    // knowledge-graph directories".
+    //
+    // Measured 2026-09-20, when a `folio` graph was first declared here
+    // (issue #464): `resolveDirectories` threw, this returned `[]`,
+    // `workflowDirs` found nothing, and `translate-bpmn --check` reported
+    // "No .bpmn files in any declared knowledge-graph directory" and EXITED 0
+    // on a repository holding 36 of them. `skill_list` and `skill_fetch` read
+    // the same list. That is the `dh4f` defect from the inside — a consumer
+    // scans nothing and reports a clean run over it — and it is worse than the
+    // error it was hiding, because a broken declaration is recoverable and a
+    // silent empty graph is believed.
+    throw new Error(
+      `cannot resolve knowledge-graph directories for ${root}: ${err instanceof Error ? err.message : String(err)}`,
+      { cause: err },
+    );
   }
 }
 
@@ -100,7 +134,7 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
  *
  * Absolute paths. This is the answer to `join(root, "skills")` — the literal
  * `check:declared-paths` found in a dozen consumers, each of which a topical
- * layout (`bootstrap/`, `crdm/`) breaks silently.
+ * layout (`cat-bootstrap/`, `crdm/`) breaks silently.
  *
  * ## It is a LIST, and callers must not quietly take the first
  *
@@ -120,6 +154,14 @@ export function kgRoots(root: string): string[] {
 }
 
 /**
+ * NOTE ON THE EXAMPLES BELOW: the agent-memory nodes moved out of
+ * `skills/memory/` to the declared `memory/` graph on 2026-09-20 (bean
+ * `07xs`), so they are no longer scanned here at all. The history is kept in
+ * the present tense of the defect rather than rewritten, because the
+ * file-level predicate exists BECAUSE of it — and `isSkillMd` is still what
+ * does the work, which is why the move was safe rather than urgent. A reader
+ * following `skills/memory/` today finds nothing; that is the point.
+ *
  * Is this `.md` a skill, or another node kind that happens to live here?
  *
  * **Declaration over location.** A markdown file whose front matter carries
@@ -133,7 +175,7 @@ export function kgRoots(root: string): string[] {
  * {@link skillMdDirs} says non-skill directories under `skills/` "are excluded
  * by carrying **no `.md`**, which is the same test that admits a package", and
  * that "a directory that later grows a `.md` is a decision somebody makes
- * visibly". `skills/memory/` is exactly that directory: 25 agent-memory nodes,
+ * visibly". `skills/memory/` was exactly that directory: 25 agent-memory nodes,
  * every one a `.md`, none a skill. Measured 2026-09-19 — before this guard,
  * `skill-coverage.test.ts` demanded a published reference page for all 25, and
  * `kg-audit` had already written 25 bogus `kg-qa/` sidecars beside them
@@ -158,9 +200,9 @@ export function isSkillMd(path: string): boolean {
   //
   // It has already cost something once. `schemas/` is excluded from the KG
   // scan partly because "its `.md` files are READMEs" — without that, the
-  // corpus read 150 skills where it holds 149. Now `bootstrap/README.md` is
+  // corpus read 150 skills where it holds 149. Now `cat-bootstrap/README.md` is
   // the entry point an agent with no context reads first, and declaring
-  // `bootstrap/` as a knowledge graph would have admitted it as a skill named
+  // `cat-bootstrap/` as a knowledge graph would have admitted it as a skill named
   // `README`, making `<folio:skill ref="README"/>` resolve and handing
   // `kg-audit` a sidecar asserting heading and brevity rules against a
   // README. Requiring every README to carry a `$schema` disclaimer instead
@@ -223,7 +265,7 @@ export function skillMdDirs(root: string): string[][] {
   // Every directory the instance DECLARES as holding a `cat-harness` graph —
   // not the literal `skills/`.
   //
-  // This is what lets a topical directory (`bootstrap/`, `crdm/`, …) cost a
+  // This is what lets a topical directory (`cat-bootstrap/`, `crdm/`, …) cost a
   // declaration line and no code change. The literal was the last thing
   // standing between the layout and the declaration that is supposed to
   // describe it: `harness.json` said where the knowledge graph lives and
@@ -235,18 +277,18 @@ export function skillMdDirs(root: string): string[][] {
     // RELATIVE TO `root`, computed from the absPath the resolver already
     // produced — not from `d.path`, which is relative to whatever root the
     // entry's SCOPE names. Those were the same directory until the move (bean
-    // `wggr`); afterwards `bootstrap/skills/` is repository-scoped, so `d.path`
-    // said `bootstrap/skills` while `root` was the instance, and every caller
-    // resolved `<instance>/bootstrap/skills`. kg-export's `collectSkills`
+    // `wggr`); afterwards `cat-bootstrap/skills/` is repository-scoped, so `d.path`
+    // said `cat-bootstrap/skills` while `root` was the instance, and every caller
+    // resolved `<instance>/cat-bootstrap/skills`. kg-export's `collectSkills`
     // skips a directory that is not there as "a package this instance does not
-    // carry", so bootstrap's skills left the published graph IN SILENCE —
+    // carry", so cat-bootstrap's skills left the published graph IN SILENCE —
     // `confirm-harness` became a dangling `hasSkill` and `kg-navigation` only
     // looked fine because a second copy exists under `skills/` (bean `v3se`).
     //
     // `relative()` may yield a `../` prefix, and that is correct here: it is a
     // COMPUTED path between two known roots, not a declared one. The
     // dot-prefix guard in `check-harness-dirs.ts` governs what a declaration
-    // may SAY, which is still `bootstrap/skills/` with a scope beside it.
+    // may SAY, which is still `cat-bootstrap/skills/` with a scope beside it.
     // SPLIT back into segments, preserving this function's contract: callers
     // index them (`p[0] === "skills"`, `p[1]` is the package name) as well as
     // joining them. Returning one joined string fixed the root and broke the
@@ -254,7 +296,7 @@ export function skillMdDirs(root: string): string[][] {
     // against the filesystem.
     const rel = (abs: string): string[] => relative(root, abs).split("/");
     // The directory itself, when it holds skills directly — the shape a
-    // topical directory has (`bootstrap/getting-started.md`).
+    // topical directory has (`cat-bootstrap/getting-started.md`).
     if (holdsMarkdown(d.absPath)) dirs.push(rel(d.absPath));
     // ...and its immediate subdirectories, which is how `skills/` is laid out
     // today: one package per subdirectory.
@@ -381,6 +423,121 @@ export function manifestResolvableSkills(root: string): Set<string> {
   return new Set([...knownSkills(root), ...remotePackageSkills(root)]);
 }
 
+/**
+ * The skills that declare `consulted: true` — reference material nobody
+ * PERFORMS.
+ *
+ * ## The distinction, and why it had to be declared
+ *
+ * `kg-audit`'s `skill-in-role-or-process` reported **110 skills bound to no
+ * role and no activity**, graded `major`, and the number was not one
+ * population. `build-pdf`, `lean-generation` and `proof-triage` are tasks
+ * somebody performs; `directory-conventions`, `opening-brief` and
+ * `untrusted-input` are what the performer READS. A consulted skill belongs
+ * in no lane **by its nature**, so counting it as unbound measures the
+ * criterion rather than the corpus.
+ *
+ * It is not derivable. Two discriminators were tested over the 110 (bean
+ * `y1w9`): a sibling `.ts` `SkillDefinition` covers 20 and misses
+ * `glossary-build` and `editor`; an `allowed-tools:` line covers 58 and
+ * splits the same families arbitrarily. Both cut across the distinction
+ * rather than along it. So the axis is real, load-bearing for an audit
+ * criterion, and was declared nowhere — the mirror of this repository's
+ * usual defect, which is a field declared and read by nothing.
+ *
+ * ## Why `consulted` is the EXCEPTION rather than the default
+ *
+ * Absent means performed. Annotating the smaller set is the difference
+ * between marking dozens of files and marking every one of them, and an
+ * axis whose default costs 180 edits does not get adopted.
+ *
+ * ## Why this ships with its reader in the same change
+ *
+ * Bean `qif9` removed a front-matter field that carried 288 annotations and
+ * was consumed by nothing, for three months. `kg-audit` reads this one from
+ * the commit it lands in, in BOTH directions: the criterion skips a
+ * consulted skill, and a separate criterion reports a consulted skill that
+ * a lane or a role claims — so a wrong annotation is a finding rather than
+ * a quiet exemption.
+ */
+export function consultedSkills(root: string): Set<string> {
+  const out = new Set<string>();
+  for (const parts of skillMdDirs(root)) {
+    const dir = join(root, ...parts);
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith(".md") || !isSkillMd(join(dir, f))) continue;
+      let fm: FrontMatter;
+      try {
+        fm = parseFrontMatter(readFileSync(join(dir, f), "utf-8")).fm;
+      } catch {
+        // Unreadable is not "not consulted", by the same reasoning
+        // `isSkillMd` gives for the opposite default: there, undercounting
+        // the skill set produces a clean run over nothing. Here the risk
+        // runs the other way — treating an unreadable file as consulted
+        // would EXEMPT it from the criterion — so it stays performed and
+        // gets reported.
+        continue;
+      }
+      if (scalar(fm, "consulted") === "true") out.add(f.slice(0, -3));
+    }
+  }
+  return out;
+}
+
+/**
+ * The skills that declare `published: false` — kept out of every published
+ * graph, because publishing them advertises what they document.
+ *
+ * ## Why a declaration, when a name match already worked
+ *
+ * `isPublishedSkill` strips a skill whose NAME is an unpublished graph kind,
+ * and its own note says why that was enough and where it stops:
+ *
+ * > *"Same list, because the skill and the kind share a name by
+ * > construction. If that ever stops being true this needs its own list, not
+ * > a cleverer derivation."*
+ *
+ * This is that list, and it is a declaration rather than a list in code for
+ * the reason this repository applies everywhere else — `isSkillMd`, a bean's
+ * front matter, a workflow instance's `$schema`: **a directory is a place to
+ * look and the file says what it is.** A skill that must not be published
+ * says so in its own front matter, where the author who writes it is looking.
+ *
+ * It EXTENDS the name rule rather than replacing it. The two answer different
+ * questions — "is this named after the trashcan" and "did this skill say not
+ * to publish it" — and a skill whose subject is an unpublished graph but
+ * whose name is something else was previously unexpressible. Keeping both is
+ * the "an unavoidable duplicate is fine while an unchecked one is not" rule:
+ * the blanket test in `fsh-guts-unpublished.test.ts` asserts the OUTCOME over
+ * the built document at any depth, so neither input can quietly stop working.
+ *
+ * Unreadable is not "publishable", and the asymmetry is deliberate — the same
+ * shape as `consultedSkills` above, resolved the other way. There, treating
+ * an unreadable file as consulted would EXEMPT it from a criterion, so it
+ * stays performed. Here, treating one as publishable would LEAK it, so it
+ * stays unpublished.
+ */
+export function unpublishedSkills(root: string): Set<string> {
+  const out = new Set<string>();
+  for (const parts of skillMdDirs(root)) {
+    const dir = join(root, ...parts);
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith(".md") || !isSkillMd(join(dir, f))) continue;
+      let fm: FrontMatter;
+      try {
+        fm = parseFrontMatter(readFileSync(join(dir, f), "utf-8")).fm;
+      } catch {
+        out.add(f.slice(0, -3));
+        continue;
+      }
+      if (scalar(fm, "published") === "false") out.add(f.slice(0, -3));
+    }
+  }
+  return out;
+}
+
 /** Every skill name this instance can resolve. */
 export function knownSkills(root: string): Set<string> {
   const names = new Set<string>();
@@ -452,7 +609,7 @@ export function knownSkills(root: string): Set<string> {
  *
  * A `cat-harness` directory's `workflows/` subdirectory, plus the directory
  * itself when it holds diagrams directly. That covers today's
- * `skills/workflows/` and a topical `bootstrap/workflows/` without either
+ * `skills/workflows/` and a topical `cat-bootstrap/workflows/` without either
  * being written down.
  *
  * Returns ABSOLUTE paths, unlike {@link skillMdDirs}, because every caller

@@ -16,7 +16,7 @@ import { join } from "node:path";
 
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { frontMatter, frontMatterValue, probeBranches, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
+import { countConsideredOptions, frontMatter, frontMatterValue, probeBranches, probeBeans, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -311,5 +311,115 @@ describe("front matter", () => {
 
   it("returns undefined for a file with no front matter at all", () => {
     expect(frontMatter("# just a heading\n")).toBeUndefined();
+  });
+});
+
+describe("the root the sweep is given", () => {
+  it("is the REPOSITORY root, not the instance root", async () => {
+    // The probes above resolve their store from a declaration, and do it
+    // correctly. That was not enough: `run.ts` handed them the INSTANCE root,
+    // so from the moment `#437` moved the instance under `cat-harness/` both
+    // stores resolved to `cat-harness/beans/defs` and
+    // `cat-harness/todos/items`, neither of which exists.
+    //
+    // The three-state rule did its job — the sweep reported "could not be
+    // evaluated" and refused to call itself clean rather than reporting an
+    // empty store as healthy, which is the `dh4f` shape it exists to avoid.
+    // But a check that cannot see its subject is not doing the work either,
+    // and this one hid 215 inline completed beans and 449 MB of staging
+    // previews until it was repointed.
+    //
+    // Asserted against the real tree rather than a fixture: the defect was
+    // that a real path stopped existing, and a fixture would have passed
+    // throughout.
+    const { existsSync } = await import("node:fs");
+    const { join, resolve } = await import("node:path");
+    const { repoRootFor } = await import("../../schemas/cat-harness.ts");
+
+    const instanceRoot = resolve(import.meta.dir, "..", "..");
+    const repoRoot = repoRootFor(instanceRoot);
+
+    expect(existsSync(join(repoRoot, "beans", "beans.json"))).toBe(true);
+    expect(existsSync(join(instanceRoot, "beans", "beans.json"))).toBe(false);
+
+    // And the probes actually find something when given the right one.
+    const beans = probeBeans(repoRoot);
+    expect(beans.state).toBe("ok");
+  });
+});
+
+describe("countConsideredOptions — the parse the MADR criterion rests on", () => {
+  it("returns `undefined` for a bean with no options section, never 0", () => {
+    // The distinction the whole criterion depends on: a bean recording WORK has
+    // no options to list, and `madr.md` says so. 0 would make every one of them
+    // a malformed decision record — 172 findings on this store.
+    expect(countConsideredOptions("# Work\n\nDid the thing.\n")).toBeUndefined();
+  });
+
+  it("matches the spellings this store ACTUALLY uses, not only MADR's canonical heading", () => {
+    // Measured 2026-09-20: no bean here writes `## Considered options`. Both that
+    // record options write `## Options, …`. A detector keyed on the canonical
+    // heading alone would have had zero subjects and passed over nothing.
+    for (const h of ["## Considered options", "## Options", "## Options, with what each costs", "## OPTIONS"]) {
+      expect(countConsideredOptions(`${h}\n\n- a\n- b\n`)).toBe(2);
+    }
+  });
+
+  it("does not read `## Optional` as an options section", () => {
+    // `\b` rather than a bare prefix. Two real headings in this store start
+    // "Optional" — "Provenance is not optional", "Accessibility is not optional
+    // here" — and counting their bullets would invent decision records.
+    expect(countConsideredOptions("## Optional extras\n\n- a\n- b\n")).toBeUndefined();
+  });
+
+  it("counts `-`, `*` and numbered items alike", () => {
+    expect(countConsideredOptions("## Options\n\n1. one\n2. two\n3. three\n")).toBe(3);
+    expect(countConsideredOptions("## Options\n\n* one\n* two\n")).toBe(2);
+  });
+
+  it("an option's own sub-points are not options", () => {
+    // Indented items are the pros and cons OF an option — MADR's "pros and cons
+    // of the options" collapsed inline, which is how the two real records here
+    // are written. Counting them would report 6 options where there are 2.
+    const text = "## Options\n\n- first\n  - costs a lot\n  - ships sooner\n- second\n  - free\n";
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("stops at the next section, and a `###` inside an option does not end it", () => {
+    const text = "## Options\n\n- one\n\n### one in detail\n\n- still under one\n\n## Decision\n\n- not an option\n";
+    // TWO items counted, and each half of that matters:
+    //   · `- still under one` sits after a `###`, so the sub-heading did not end
+    //     the section — an option elaborated under its own heading stays inside.
+    //   · `- not an option` sits after `## Decision` and is excluded, so the
+    //     section really does end at the next level-2 heading.
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("an options section with no items is 0 — a real, reportable count", () => {
+    // Not `undefined`. The section exists, so the bean claims an analysis; that
+    // it lists nothing is the finding, and it gets a different remedy from one
+    // that lists a single option.
+    expect(countConsideredOptions("## Options\n\n(to be decided)\n")).toBe(0);
+  });
+
+  it("takes the FIRST options section when a bean revisits the decision", () => {
+    // A bean that comes back to a decision appends a second analysis. The first
+    // is the record; the later one is the re-analysis, and its own later section
+    // documents itself. Counting the last would let a thin original hide.
+    const text = "## Options\n\n- a\n\n## Later\n\n## Options, revisited\n\n- a\n- b\n- c\n";
+    expect(countConsideredOptions(text)).toBe(1);
+  });
+
+  it("the real store has SUBJECTS — a detector with none is not a detector that passed", async () => {
+    // Asserted against the real bean store rather than a fixture, for the same
+    // reason the staging test above is: the failure mode is the detector matching
+    // nothing in practice, and every fixture in this file would pass throughout.
+    const { repoRootFor } = await import("../../schemas/cat-harness.ts");
+    const { resolve } = await import("node:path");
+    const p = probeBeans(repoRootFor(resolve(import.meta.dir, "..", "..")));
+    expect(p.state).toBe("ok");
+    if (p.state !== "ok") return;
+    const records = p.value.filter((b) => b.consideredOptions !== undefined);
+    expect(records.length).toBeGreaterThan(0);
   });
 });

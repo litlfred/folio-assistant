@@ -172,7 +172,18 @@ export const ToolInvokeSchema = z.object({
    */
   inProcess: z
     .object({
-      /** Repo-relative path to the module, e.g. `src/tools/workflow.ts`. */
+      /**
+       * INSTANCE-relative path to the module, e.g. `src/tools/workflow.ts`.
+       *
+       * The instance, not the repository — this said "repo-relative" while giving
+       * an example that is instance-relative, and after the move under
+       * `cat-harness/` the two stopped being the same thing. The values were
+       * right and the word was stale; `check:tools` now resolves this field
+       * against the instance root and `invoke.shell` against the repository,
+       * because a shell command is typed from the repo root while a module is
+       * loaded by the instance's own server. Same convention as
+       * `maintains.source`.
+       */
       module: z.string().min(1),
       /** The registrar export, when the module has more than one. */
       register: z.string().min(1).optional(),

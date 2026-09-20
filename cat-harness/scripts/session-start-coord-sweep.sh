@@ -34,7 +34,7 @@ flock 200 2>/dev/null || true
 # asked twice, which is WCAG 2.2 SC 3.3.7 (Redundant Entry) — and for a user
 # who types with difficulty, "just ask again" is not a small cost.
 # See skills/folio-core/interaction-modality.md.
-INTERACTION="$REPO_ROOT/.harness/interaction.json"
+INTERACTION="$REPO_ROOT/interaction/interaction.json"
 if [ -f "$INTERACTION" ]; then
   echo "## Interaction preferences"
   echo
@@ -44,7 +44,7 @@ if [ -f "$INTERACTION" ]; then
       "- **\(.key)** — profiles: \(.value.profiles | join(", ") | if . == "" then "(none)" else . end)  \n  \(.value.note // "")  \n  _source: \(.value.source // "unrecorded")_"
     ' "$INTERACTION" 2>/dev/null || echo "- (could not parse $INTERACTION — read it by hand)"
   else
-    echo "- jq not installed; read \`.harness/interaction.json\` by hand."
+    echo "- jq not installed; read \`interaction/interaction.json\` by hand."
   fi
   echo
 fi
@@ -153,14 +153,14 @@ elif [ -d "$BEANS_DIR" ]; then
   echo "> 🫘 **BEANS CLI IS NOT INSTALLED. Install it before doing durable work:**"
   echo ">"
   echo "> \`\`\`sh"
-  echo "> scripts/install-beans.sh && export PATH=\"\$HOME/.local/bin:\$PATH\""
+  echo "> cat-harness/scripts/install-beans.sh && export PATH=\"\$HOME/.local/bin:\$PATH\""
   echo "> \`\`\`"
   echo ">"
   echo "> Until then the list below is parsed from \`beans/\` directly: titles and"
   echo "> statuses only, with no bodies, no priorities and no blocking relations —"
   echo "> so it cannot tell you what an item actually is or what it waits on."
   echo ">"
-  echo "> **But you are NOT read-only.** \`scripts/beans-fallback.ts\` writes the same"
+  echo "> **But you are NOT read-only.** \`cat-harness/scripts/beans-fallback.ts\` writes the same"
   echo "> store in the same layout, so work done here is claimed, not unclaimed:"
   echo ">"
   echo "> \`\`\`sh"
@@ -293,7 +293,7 @@ if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/harness-dirs.ts" ]
   if [ -z "$dirs_out" ]; then
     echo "## Declared directories"
     echo
-    echo "Could not check (bun present but \`scripts/harness-dirs.ts\` produced nothing)."
+    echo "Could not check (bun present but \`cat-harness/scripts/harness-dirs.ts\` produced nothing)."
     echo "Run it by hand: \`bun run harness:dirs\`."
     echo
   elif ! printf '%s' "$dirs_out" | grep -q '0 created\.'; then
@@ -306,12 +306,48 @@ if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/harness-dirs.ts" ]
   fi
 fi
 
+# ── 3c. Running process instances ───────────────────────────────────────────
+# Bean `vlhk`. 54 proposals merged in one four-hour window and the declared
+# `workflow-state` graph held only `.gitkeep` — not one session recorded a
+# running instance, so a reviewer could not classify a single session by lane.
+# The owner settled it 2026-09-20: the processes are REAL and the instance is
+# recorded, which makes "none recorded" a finding rather than the silence it
+# had been for 54 merges.
+#
+# It is deliberately NOT a failure. Plenty of turns are legitimately outside
+# any process; the point is that the sweep SAYS so, so the agent answers which
+# rather than never being asked. A directory that cannot be read is a third
+# state and says so, because "no instances" and "could not look" are the two
+# things this check exists to keep apart.
+wf_dir="$(cd "$REPO_ROOT/.." 2>/dev/null && pwd)/beans/workflows"
+echo "## Running processes"
+echo
+if [ ! -d "$wf_dir" ]; then
+  echo "**Could not check — treat as unknown, not as none.** No \`beans/workflows/\`"
+  echo "directory. Run \`bun run harness:dirs\` to create what the declaration names."
+else
+  wf_n=$(find "$wf_dir" -maxdepth 1 -name '*.json' 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$wf_n" = "0" ]; then
+    echo "**No instance recorded.** If this turn runs a process, start it"
+    echo "(\`workflow_start\`) so the state is committed and a sibling session reads the"
+    echo "same position — \`skills/workflow/process-state.md\` §\"Naming it is not the same"
+    echo "as recording it\". If it does not, say so in the turn report."
+  else
+    echo "$wf_n instance(s) recorded:"
+    echo
+    echo '```'
+    find "$wf_dir" -maxdepth 1 -name '*.json' -exec basename {} \; 2>/dev/null | sort
+    echo '```'
+  fi
+fi
+echo
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**
 
 1. **Install the beans CLI if the section above says it is missing** —
-   `scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"`. Do this
+   `cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"`. Do this
    FIRST: claiming and creating beans is not possible without it, and a
    session that skips it does its work unclaimed.
 2. If you'll do durable work, claim a bean

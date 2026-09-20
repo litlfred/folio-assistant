@@ -7,8 +7,8 @@ description: >
   identification) — with the coactive-learning measurement spec
   (per-arc correction quality and turns-to-convergence) and the
   prompt-lexicon convention. Generic folio-assistant platform skill.
-roles: [reader, collaborator, owner]
 user_invocable: true
+consulted: true
 ---
 
 # symbiotic-interaction — the three registers of author input

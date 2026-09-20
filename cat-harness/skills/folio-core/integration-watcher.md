@@ -1,6 +1,5 @@
 ---
 name: integration-watcher
-roles: [reader, collaborator, owner]
 user_invocable: false
 description: >
   Abstract parent skill for domain-specific **integration watchers**.
@@ -11,6 +10,7 @@ description: >
   flake handling — that every concrete watcher inherits. Children
   fill nine domain-specific slots; everything else is shared here.
 allowed-tools: Read Edit Write Bash Grep Glob Agent Monitor Skill
+consulted: true
 ---
 
 # integration-watcher (abstract parent)

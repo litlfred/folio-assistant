@@ -33,10 +33,21 @@
  * @module content/pipeline/graph-index
  */
 
+// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
+// and this module resolves a DECLARED directory. Without it the first
+// `directoryForGraph` throws `unknown graph kind "folio"`. Measured
+// 2026-09-20 across the 20 modules that resolve a declared directory: 10
+// threw, including `narratives.ts` and the `translation` MCP tool, while
+// every gate and all 3298 tests passed — nothing covered the path.
+//
+// Importing core's registration is correct by LAYERING, not a workaround:
+// `folio` is CORE's kind, so a content-side module may import it, while the
+// harness alone never sees it (schemas/folio-graph-kind.ts says so).
+import "../../schemas/folio-graph-kind.ts";
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join, dirname, relative } from "path";
 import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../schemas/jsonld";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 export interface GraphNode {
   /** The `@id` — a relative IRI, minted by `resolveLabel` for authored blocks. */
@@ -452,12 +463,30 @@ export function graphStats(index: GraphIndex): Record<string, unknown> {
 
 /** The standard roots: authored blocks and ingested documents. */
 export function defaultRoots(repoRoot: string): Array<{ name: string; dir: string }> {
+  // EVERY declared library, not the one.
+  //
+  // This is an INDEX. Indexing one of several libraries and reporting a clean
+  // build is the `dh4f` defect — a consumer scanning nothing and saying so is
+  // recoverable; one scanning half and saying nothing is not. `library` has
+  // three homes since bean `frs5`, so `directoryForGraph` REFUSES here rather
+  // than picking, which is the accessor doing its job and the reason this is
+  // plural rather than silently wrong.
+  //
+  // Named per directory rather than all called "library", because a node's
+  // root name is how a message says WHERE it came from, and two roots with one
+  // name make that answer useless exactly when there is something to tell apart.
+  const libraries = directoriesForGraph(repoRoot, "library");
   return [
-    { name: "content", dir: join(repoRoot, "content") },
+    { name: "folio", dir: folioDir(repoRoot) },
     // declared-path-literal: the convention fallback, at the call site so the
     // choice is visible. The index is built over whatever is there; a root
     // that resolves to nothing yields fewer nodes rather than an error.
-    { name: "library", dir: directoryForGraph(repoRoot, "library") ?? join(repoRoot, "library") },
+    ...(libraries.length === 0
+      ? [{ name: "library", dir: join(repoRoot, "library") }]
+      : libraries.map((dir, i) => ({
+          name: libraries.length === 1 ? "library" : `library:${relative(repoRoot, dir) || String(i)}`,
+          dir,
+        }))),
   ];
 }
 

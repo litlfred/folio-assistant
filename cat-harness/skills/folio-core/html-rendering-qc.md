@@ -1,6 +1,5 @@
 ---
 name: html-rendering-qc
-roles: [reader, collaborator, owner]
 ---
 
 # HTML Rendering QC

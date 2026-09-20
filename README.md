@@ -1,7 +1,7 @@
 # folio-assistant
 
 🤖 **Agent cold start — run this before any durable work:**
-`scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH" && beans prime`,
+`cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH" && beans prime`,
 then [`AGENTS.md` §"At session start"](AGENTS.md#at-session-start) for the rest.
 
 **A content-agnostic agent skills framework.** Author rigorous content with an
@@ -34,7 +34,7 @@ not, do not.
 
 ## Bootstrapping — setting up a repository to write in
 
-**`bootstrap litlfred/cat-harness`** means *set this repository up the same way
+**`cat-bootstrap litlfred/cat-harness`** means *set this repository up the same way
 that one is set up.*
 
 A repository that has been bootstrapped carries a small file saying what kind
@@ -47,11 +47,11 @@ which editorial style are all read from **that** repository's setup file, so
 there is nothing else to ask.
 
 An agent pointed at a repository that is not set up yet starts at
-**[`bootstrap/README.md`](bootstrap/README.md)**, which is written for someone
+**[`cat-bootstrap/README.md`](cat-bootstrap/README.md)**, which is written for someone
 who knows none of the above.
 
 Why it is built this way, and the questions still open:
-[proposals/bootstrap](fsh-guts/proposals/bootstrap.md) — in `fsh-guts/`, which
+[proposals/cat-bootstrap](fsh-guts/proposals/cat-bootstrap.md) — in `fsh-guts/`, which
 is kept and addressable but deliberately not published as a page, so that is a
 repository link rather than a site one.
 
@@ -168,6 +168,7 @@ repo to one where you can say *"add a chapter"* and have it work.
 
 In a new, empty repository:
 
+<!-- command-path-ok: run IN THE NEW FOLIO, where folio-assistant is the submodule just added -->
 ```sh
 # Get the platform. A submodule pins the exact revision your content is
 # authored against, so a fresh clone reproduces your build.
@@ -265,7 +266,7 @@ bun install
 bun run check-deps
 
 # 4. Run the MCP server (point --repo at your content repo)
-bun run src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 ### Common commands
@@ -278,7 +279,7 @@ bun test               # unit tests
 bun run test:e2e       # Playwright end-to-end tests
 bun run lint           # eslint
 
-bun run scripts/gen-schema-docs.ts   # regenerate the skill schema reference
+bun run cat-harness/scripts/gen-schema-docs.ts   # regenerate the skill schema reference
 bun run init-folio --help            # scaffold a new folio
 ```
 
@@ -368,7 +369,7 @@ work-plan / todo mechanism (durable, cross-session, cross-agent). See
 [`AGENTS.md`](./AGENTS.md).
 
 ```sh
-scripts/install-beans.sh
+cat-harness/scripts/install-beans.sh
 beans list
 beans create "<title>"
 beans <id> --status in-progress

@@ -20,6 +20,7 @@
  * @module content/pipeline/generate-main-tex
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 import type { Paper } from "../../schemas/types";
@@ -327,7 +328,7 @@ if (import.meta.main) {
     args[0] ||
       (() => {
         const p = requirePaper(undefined, contentRoot);
-        return join(contentRoot, "content", p, `${p}.ts`);
+        return join(folioDir(contentRoot),  p, `${p}.ts`);
       })(),
   );
 

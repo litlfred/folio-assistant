@@ -1,7 +1,6 @@
 ---
 name: pickup
 description: Pick up / continue work on one or more existing open PRs efficiently. Resolves each PR's REAL branch + title + checklist + reviews + CI in one batched pass, classifies CI as billing-vs-real, then dispatches one worktree sub-agent per PR with a filled-in brief, and applies the safe class of review-nit fixes (eval→ast.literal_eval, dead-code/unused-var removal, etc.). Use when the user says "pick up PR N", "continue 1543/1576/1571", "work these PRs", "address the review on PR N", or "take over PR N".
-roles: [collaborator]
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, ToolSearch, AskUserQuestion
 ---
 

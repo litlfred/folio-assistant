@@ -8,7 +8,19 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { THEME_LAYOUTS, ThemeSchema } from "./theme.js";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+
+import { readDeclaration } from "./cat-harness.js";
+// `folio` is registered by core on import and this instance declares a folio
+// graph, so without this `readDeclaration` throws on a valid declaration.
+import "./folio-graph-kind.js";
+import {
+  THEME_LAYOUTS,
+  ResolvedThemeSchema,
+  ThemeSchema,
+  resolveThemeBackdrop,
+} from "./theme.js";
 import {
   DEFAULT_THEME_ID,
   GRADATED_THEME_IDS,
@@ -95,6 +107,30 @@ describe("the high-contrast pair really is high contrast", () => {
   });
 });
 
+describe("a sticky's inline-code chip is legible in every theme", () => {
+  // `.fa-landing-sticky__text code` paints the chip with the CARD's palette —
+  // `--fa-sticky-surface` behind `--fa-sticky-ink` — after the site-wide chip
+  // (light text on `#0d1117`) had its foreground overridden by the sticky ink
+  // and went to **1.23:1**, invisible, on the published landing page.
+  //
+  // The first fix used `--fa-sticky-edge` as the background. Nine themes came
+  // back 9.33-10.14:1 and it looked done; the two high-contrast themes have
+  // **ink == edge**, so they were 1.00:1 — the same defect, moved. Hence this
+  // pair and this test.
+  test.each(THEMES.map((t) => t.id))("%s clears AAA (7:1) for ink on surface", (id) => {
+    const t = themeById(id)!;
+    expect(contrast(t.palette.ink, t.palette.surface)).toBeGreaterThanOrEqual(7);
+  });
+
+  test("`edge` is NOT a safe chip background, which is why the rule does not use it", () => {
+    // Guards the simplification, not the palette: if somebody rewrites the CSS
+    // to `background: var(--fa-sticky-edge)` because it looks tidier, this says
+    // why that is wrong — at least one shipped theme cannot survive it.
+    const worst = Math.min(...THEMES.map((t) => contrast(t.palette.ink, t.palette.edge)));
+    expect(worst).toBeLessThan(4.5);
+  });
+});
+
 describe("every theme is readable, not just the ones that advertise it", () => {
   test.each(THEMES.map((t) => t.id))("%s clears WCAG AA body text (4.5:1)", (id) => {
     // The decorative themes are the ones where this slips: a pale surface and a
@@ -113,4 +149,66 @@ describe("every theme is readable, not just the ones that advertise it", () => {
       expect(contrast(t.palette.ink, t.palette.gradientTo!)).toBeGreaterThanOrEqual(4.5);
     },
   );
+});
+
+// ── A shipped backdrop must actually resolve against this instance ──
+
+describe("every shipped backdrop resolves against THIS instance's declaration", () => {
+  // The join no other test covers. A theme parses with `imageRole: "anything"`
+  // — the schema validates the field's SHAPE, because whether art exists is a
+  // question about the instance, not about the theme. So a theme naming a role
+  // this repository does not declare is well-formed, ships, and renders
+  // palette-only with nothing reporting why.
+  //
+  // This is also the guard that keeps an INCOMPLETE set out. Measured
+  // 2026-09-20: the architecture art arrived as two layouts of three (the third
+  // upload was a byte-identical copy of the second), so no `architecture` theme
+  // is declared. If somebody adds one before the portrait crop arrives, this
+  // fails rather than shipping a theme that serves a landscape crop to a phone.
+  const decl = readDeclaration(resolve(import.meta.dir, ".."));
+  const themed = THEMES.filter((t) => t.backdrop !== undefined);
+
+  test("there are backdrops to check — otherwise this proves nothing", () => {
+    expect(themed.length).toBeGreaterThan(0);
+  });
+
+  test.each(themed.map((t) => [t.id] as const))("`%s` resolves all three layouts", (id) => {
+    const theme = themeById(id)!;
+    const r = resolveThemeBackdrop(theme, decl?.images);
+    expect({ id, missing: r.missing, none: r.none }).toEqual({ id, missing: [], none: false });
+    expect([...r.art.keys()].sort()).toEqual([...THEME_LAYOUTS].sort());
+  });
+
+  test.each(themed.map((t) => [t.id] as const))("`%s`'s art exists on disk", (id) => {
+    // A declared src that is not there is the `dh4f` shape: a consumer resolves
+    // it, reports success, and serves a 404.
+    const theme = themeById(id)!;
+    for (const img of resolveThemeBackdrop(theme, decl?.images).art.values()) {
+      expect({ id, src: img.src, exists: existsSync(resolve(import.meta.dir, "..", img.src)) })
+        .toEqual({ id, src: img.src, exists: true });
+    }
+  });
+
+  test("the check CAN fire — a role nothing declares is reported missing", () => {
+    // RESOLVED, not declared: `resolveThemeBackdrop` consumes a complete
+    // theme, and the declared form went lax when themes gained inheritance.
+    // Parsing the resolved schema here is what keeps this test about the
+    // BACKDROP rather than about which form it was handed.
+    const bogus = ResolvedThemeSchema.parse({
+      ...themed[0]!,
+      id: "not-shipped",
+      backdrop: { imageRole: "no-such-role", scrim: "rgba(0,0,0,0.5)" },
+    });
+    const r = resolveThemeBackdrop(bogus, decl?.images);
+    expect(r.missing).toEqual([...THEME_LAYOUTS]);
+    expect(r.none).toBe(false);
+  });
+
+  test("the high-contrast pair declares NO backdrop, deliberately", () => {
+    // Art behind ink is the thing those two exist to remove, and a scrim strong
+    // enough to make a photograph safe at their ratios would hide it anyway.
+    for (const id of HIGH_CONTRAST_THEME_IDS) {
+      expect({ id, backdrop: themeById(id)?.backdrop }).toEqual({ id, backdrop: undefined });
+    }
+  });
 });

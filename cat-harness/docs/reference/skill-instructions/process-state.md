@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/process-state.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/process-state.md) — do not edit here.
+> Generated from [`skills/workflow/process-state.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/process-state.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/process-state.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/process-state.md){: .fa-edit-source }
 
 {% raw %}
 # Process state — the task you are in, inside the process you are running
@@ -50,6 +50,36 @@ something to act on rather than a bare step name.
 changes who is accountable for the next step and which gates apply, and **a
 reader who does not know you switched will assume the old lane's rules still
 hold.**
+
+### Naming it is not the same as recording it (STRICT)
+
+**Measured 2026-09-20, bean `vlhk`.** 54 proposals merged in one four-hour
+window, and `beans/workflows/` — the declared `workflow-state` graph — held
+only `.gitkeep`. **Not one session recorded a running instance.** A reviewer
+sweeping that window could not classify a single session by lane, which is the
+one thing this section exists to make possible. `supn` and `v49e` measured the
+same empty directory from other angles.
+
+There were two readings — the processes are not being run, or they are run and
+the state is not committed — and they call for opposite remedies. The owner
+settled it, 2026-09-20: **the processes are real, and the instance is
+recorded.** So:
+
+> **A turn that is in a process has an INSTANCE under the declared
+> `workflow-state` graph. Naming the process in prose is the report; the
+> committed instance is the evidence, and a report with no evidence behind it
+> is what produced 54 merges and an empty directory.**
+
+`workflow_start` creates it, `workflow_next` and `workflow_complete` advance
+it, and the state is committed precisely so a sibling session reads the same
+position — [`workflow-state.md`](workflow-state.md) §"Why the state is
+committed".
+
+**The session-start sweep reports "no instance recorded" as a FINDING, not as
+silence.** That is the half that makes the rule self-enforcing: a STRICT rule
+whose breach looks exactly like compliance is the `xom7` shape, and it is how
+this one went unobserved for 54 merges. A finding is not a failure — plenty of
+turns are legitimately outside any process — it is the prompt to say which.
 
 ## How to tell you are out of process
 
@@ -125,7 +155,7 @@ So, as part of recovery, before step 3's confirmation:
   a person who remembers; "everything is fine" is not.
 - **Do not move anything back on your own judgement.** Re-anchoring to undo is
   another unlogged move, and it is a durable change made to cover one — see
-  [`deletion-requires-confirmation.md`](deletion-requires-confirmation.md),
+  [`deletion-requires-confirmation.md`](../folio-core/deletion-requires-confirmation.md),
   which is the same rule about a different verb.
 
 **Considered and rejected: giving the note its own history.** A `movedFrom`
@@ -155,7 +185,7 @@ exactly what it needs to avoid re-deriving the same mistake.
 
 A bean that had been tidied to show only the correct conclusion would read as
 though the work had always been aimed there. That is the failure mode
-[`bean-coordination.md`](bean-coordination.md) names when it says unwanted work
+[`bean-coordination.md`](../folio-core/bean-coordination.md) names when it says unwanted work
 is `scrapped` **with its reasons** rather than deleted: a record that shows only
 outcomes cannot distinguish a dead end somebody ruled out from one nobody tried.
 
@@ -173,7 +203,7 @@ outcomes cannot distinguish a dead end somebody ruled out from one nobody tried.
 
 ## Relationship to the opening brief
 
-The brief you open a turn with ([`turn-reporting.md`](turn-reporting.md))
+The brief you open a turn with ([`turn-reporting.md`](../folio-core/turn-reporting.md))
 is what makes detector 5 usable: without a stated plan there is nothing for the
 current work to have diverged *from*. The two skills are one loop — brief the
 route, notice the divergence, confirm the recovery.

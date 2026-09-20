@@ -95,7 +95,7 @@ describe("GitHub Actions workflows", () => {
     // what #300 did, and worse than the race it replaced. They get a retry,
     // safe here because the three write to different directories under one
     // root with `keep_files: true`.
-    const text = readFileSync(".github/workflows/discoverability-docs.yml", "utf-8");
+    const text = readFileSync(join(WORKFLOW_DIR, "discoverability-docs.yml"), "utf-8");
     expect(text).not.toContain("group: gh-pages-push");
     // Two push sites per job — the attempt and the retry — for three jobs.
     // Counted the way the checker counts: a COMMENT naming the action is not a
@@ -209,5 +209,110 @@ describe("gh-pages full-replace vs the STAGING previews", () => {
 
   test("no workflow in this repository wipes the previews", () => {
     expect(checkWorkflows().filter((f) => f.kind === "gh-pages-wipes-staging")).toEqual([]);
+  });
+});
+
+describe("every path that publishes or removes a preview also LOGS it", () => {
+  /**
+   * The log's whole value is that entries persist and a reader will believe
+   * they did. A path that changes `STAGING/` without appending an entry
+   * silently breaks that belief — and a silent break is worse than no log,
+   * because the next reader concludes from an absent entry that nothing
+   * happened. So the wiring is asserted rather than remembered.
+   *
+   * By JOB, not by counting calls: what matters is that each job which can
+   * change the branch carries the tool, not how many times it invokes it.
+   */
+  const staging = Bun.YAML.parse(
+    readFileSync(join(WORKFLOW_DIR, "feature-staging.yml"), "utf-8"),
+  ) as { jobs?: Record<string, { steps?: { run?: string; uses?: string; with?: Record<string, unknown> }[] }> };
+  const jobs = staging.jobs ?? {};
+
+  const runsOf = (job: string): string =>
+    (jobs[job]?.steps ?? []).map((s) => s.run ?? "").join("\n");
+
+  test.each([["stage"], ["cleanup"], ["cleanup-dispatch"]])(
+    "`%s` invokes render-log.ts",
+    (job) => {
+      expect(runsOf(job)).toContain("scripts/render-log.ts");
+    },
+  );
+
+  test("the change and its record are ONE commit, on EVERY path", () => {
+    // A separate log push can fail on its own and leave a preview that
+    // vanished — or appeared — with nothing saying why, the exact state bean
+    // `plj1` left the branch in. Staging them together is what makes that
+    // impossible.
+    //
+    // `stage` became one commit in PR #552 (bean `bm6d`, 2026-09-20). It used
+    // to deploy with `peaceiris/actions-gh-pages` and then push the log in a
+    // SECOND commit ten seconds later, which cancelled Pages' own build on 6
+    // of the last 10 measured deploys.
+    //
+    // THE PROPERTY SHIPPED UNPINNED, which is what this line fixes. The list
+    // said "in both removal paths" and stopped at `cleanup` +
+    // `cleanup-dispatch`, so the one path that had just been MADE atomic was
+    // the one path nothing asserted — it could have been split again without
+    // failing anything. A property is not defended by the change that
+    // establishes it.
+    for (const job of ["stage", "cleanup", "cleanup-dispatch"]) {
+      const runs = runsOf(job);
+      expect(runs).toMatch(/git (?:-C pages )?add -A "STAGING\/\$\w+" _render-log/);
+    }
+  });
+
+  test("a removal names a reason — the tool refuses without one", () => {
+    for (const job of ["cleanup", "cleanup-dispatch"]) {
+      const runs = runsOf(job);
+      const removed = runs.includes("--event removed");
+      expect(removed).toBe(true);
+      expect(runs).toContain("--reason");
+    }
+  });
+
+  test("a refused removal is recorded too — `retained` is why the log is worth reading", () => {
+    expect(runsOf("cleanup")).toContain("--event retained");
+  });
+
+  test("`cleanup` logs the GATE'S OWN reason, never a restatement of one branch", () => {
+    // Bean `1feu` gave the merge the standing a label used to have, so a
+    // record hardcoding "carried the staging:cleanup label" would name the
+    // wrong rule on every merged PR — worse than no reason, because it reads
+    // as evidence. The gate emits `merged | labelled |
+    // closed-unmerged-and-unlabelled`; the entry carries that value.
+    const steps = jobs["cleanup"]?.steps ?? [];
+    const logging = steps.filter((st) => (st.run ?? "").includes("render-log.ts"));
+    expect(logging.length).toBeGreaterThan(0);
+    for (const st of logging) {
+      expect(String((st as { env?: Record<string, string> }).env?.CLEANUP_REASON ?? "")).toContain(
+        "steps.check.outputs.reason",
+      );
+      expect(st.run).toContain("$CLEANUP_REASON");
+      // The label is not named as THE reason anywhere a record is written.
+      expect(st.run).not.toContain("--reason \"PR #${{ github.event.pull_request.number }} closed and carried");
+    }
+  });
+
+  test("every job that writes the log checks out the publish branch AND the platform", () => {
+    // The tool lives in the platform checkout and writes into the publish
+    // branch's. A job holding only one of the two cannot log anything, and
+    // would fail at run time rather than here.
+    for (const job of ["cleanup", "cleanup-dispatch"]) {
+      const steps = jobs[job]?.steps ?? [];
+      const paths = steps
+        .filter((s) => (s.uses ?? "").startsWith("actions/checkout"))
+        .map((s) => String((s.with ?? {}).path ?? ""));
+      expect(paths).toContain("source");
+      expect(paths).toContain("pages");
+    }
+  });
+
+  test("the log lives OUTSIDE STAGING/, so `rm -rf STAGING/$SLUG` cannot reach it", () => {
+    // Structural rather than guarded. Asserted here as well as in the schema
+    // tests because it is the workflow that holds the `rm`.
+    const runs = ["stage", "cleanup", "cleanup-dispatch"].map(runsOf).join("\n");
+    expect(runs).toContain("--dir pages");
+    expect(runs).not.toContain("STAGING/$SLUG/_render-log");
+    expect(runs).not.toMatch(/--path "STAGING\/\$\w+\/_render-log/);
   });
 });

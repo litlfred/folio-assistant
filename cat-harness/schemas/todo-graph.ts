@@ -50,9 +50,9 @@
 import { z } from "zod";
 
 import {
-  ContentDirectorySchema,
+  GraphNodeDirectorySchema,
   defaultGraphKinds,
-  type ContentDirectory,
+  type GraphNodeDirectory,
   type GraphKindRegistry,
 } from "./cat-harness";
 
@@ -66,8 +66,8 @@ import {
 export const TODO_NODE_KINDS = ["todo-items", "todo-feedback"] as const;
 export type TodoNodeKind = (typeof TODO_NODE_KINDS)[number];
 
-export const TodoGraphNodeSchema = ContentDirectorySchema;
-export type TodoGraphNode = ContentDirectory;
+export const TodoGraphNodeSchema = GraphNodeDirectorySchema;
+export type TodoGraphNode = GraphNodeDirectory;
 
 export const TodoGraphSchema = z.object({
   /** Display name — whose todos these are. */
@@ -76,8 +76,14 @@ export const TodoGraphSchema = z.object({
 });
 export type TodoGraph = z.infer<typeof TodoGraphSchema>;
 
-/** The graph file's name inside its root directory. */
-export const TODO_GRAPH_FILE = "todos.json";
+/**
+ * The graph file's name inside its root directory.
+ *
+ * Derived from the `todos` kind — see {@link BEAN_GRAPH_FILE} in
+ * `bean-graph.ts` for why the kind owns the name rather than this module or
+ * the directory it sits in.
+ */
+export const TODO_GRAPH_FILE = defaultGraphKinds.get("todos")?.declarationFile ?? "todos.json";
 
 /** Where the graph root sits, when a folio has not moved it. */
 export const DEFAULT_TODO_GRAPH_ROOT = "todos";

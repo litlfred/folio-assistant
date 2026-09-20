@@ -46,6 +46,19 @@ import {
   resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
 import { readFshGutsNode } from "../schemas/fsh-guts.js";
+// The `folio` graph kind is registered by CORE on import
+// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
+// exists. This module reads this instance's declaration and the instance
+// DECLARES a folio graph, so without this it throws `unknown graph kind
+// "folio"` on a valid declaration.
+//
+// Found statically, by listing every script any workflow invokes and checking
+// each for the import — NOT by running them. Running `site-links.ts` from the
+// wrong directory made it fail with "no harness.json; nothing to resolve",
+// which masked this and got it wrongly dismissed as a local-args artefact. A
+// script failing on bad arguments says nothing about whether it fails on good
+// ones.
+import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -66,6 +79,39 @@ export interface FshGutsDocument {
   skipped: SkippedFile[];
   /** Directories walked. Empty means the instance declares no trashcan. */
   scans: string[];
+}
+
+/**
+ * The keys already mapped to their own term in an exported node.
+ *
+ * Kept beside {@link extraFields} rather than inlined, because the two must
+ * agree: a common field that appears in both would be emitted twice, once
+ * under its term and once inside `data`.
+ */
+const MAPPED_KEYS = new Set([
+  "$schema",
+  "title",
+  "kind",
+  "movedOn",
+  "movedFrom",
+  "issue",
+  "bean",
+  "summary",
+]);
+
+/**
+ * A node's kind-specific fields, as `{ data: … }` or nothing at all.
+ *
+ * Nothing at all rather than `data: {}`, so a document of ordinary nodes is
+ * byte-identical to what it was before this existed — an empty object on
+ * every node would be noise that a reader has to learn to ignore.
+ */
+export function extraFields(node: Record<string, unknown>): { data?: Record<string, unknown> } {
+  const data: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(node)) {
+    if (!MAPPED_KEYS.has(k) && v !== undefined) data[k] = v;
+  }
+  return Object.keys(data).length > 0 ? { data } : {};
 }
 
 /** A declared trashcan directory: where it is, and what the declaration calls it. */
@@ -167,6 +213,16 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
         // is why the viewer fetches this lazily, when Settings is opened,
         // rather than on every page load for a badge number.
         body: read.body.trim(),
+        // Whatever this KIND carries that the common fields do not.
+        //
+        // The schema's `kind` is open, so the fields cannot be closed — and
+        // an allowlist here would close them again one level out. `bean` is
+        // the evidence: declaring it in the schema was necessary and not
+        // sufficient, because a node's extra field still has to be emitted.
+        //
+        // Nested under `data` rather than spread, so a node kind can never
+        // shadow `@id`, `@type` or a common term by choosing that name.
+        ...extraFields(n),
       });
     }
   }

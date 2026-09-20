@@ -162,7 +162,7 @@ jobs:
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
       # The harness has no renderer of its own — `folio` is the only renderable
-      # graph kind and it belongs to folio-assist-core — so its knowledge graph
+      # graph kind and it belongs to folio-assistant-core — so its knowledge graph
       # is published as DATA rather than as a page. Something else may draw it.
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
@@ -187,7 +187,7 @@ jobs:
       # No --base-url: the declaration's canonicalUrl is correct for main.
       - name: Export the knowledge graph and its schema
         run: |
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
+          STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
           bun run cat-harness/scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"
           bun run cat-harness/scripts/harness-schema-export.ts --out-dir ./_site
           bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
@@ -216,7 +216,7 @@ jobs:
           # THE VOCABULARY — one document per namespace, plus the union.
           #
           # Every term now hangs off its declaring layer's namespace: bs: for
-          # bootstrap, cat: for the harness, fac: for core. Each of those is an
+          # cat-bootstrap, cat: for the harness, fac: for core. Each of those is an
           # IRI stem, so each needs a document or `bs:Actor` dereferences to
           # nothing — the very defect this work exists to fix, and splitting
           # one namespace into three created three fresh instances of it. The
@@ -247,13 +247,73 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
+          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
+
+          # THE CAT_BOOTSTRAP GRAPH, and this is the first build that publishes it.
+          #
+          # It was COMMITTED to `cat-bootstrap/cat-bootstrap.jsonld` instead, on a
+          # rationale that said a cold reader with nothing installed could not
+          # build it — which was true — and cited a README step telling that
+          # reader to load it, which does not exist: no prose file under
+          # `cat-bootstrap/` mentions this document at all. Meanwhile the loop
+          # above published `cat-bootstrap/ns.jsonld`, the NAMESPACE document, and
+          # nothing published the GRAPH, so the `@id` it names itself by —
+          # `<base>/cat-bootstrap/cat-bootstrap.jsonld` — resolved to nothing. Bean
+          # `blv9`, in the artefact whose entire purpose is being resolved.
+          #
+          # `.json` alongside for the reason every other rendering here has
+          # one: Pages has no media type for `.jsonld` and serves it as
+          # octet-stream. The `.jsonld` stays canonical — it is what the `@id`
+          # names — so this is an alias, not a rename.
+          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
+          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
+
+      # Every `maintains` claim, checked where the answer exists.
+      #
+      # A Tool's `maintains` asserts it is authoritative for a PUBLISHED artefact.
+      # `kg:schema:check` reconciles only the claims whose Tool invokes the schema
+      # exporter — it cannot see inside `_site/`, and a check that answers a
+      # question it cannot see is worse than one that declines to. So the rest were
+      # unchecked, and an unchecked claim that rots is a 404 a reader follows.
+      # Bean `6f1x`.
+      #
+      # Here, after assembly, the tree exists. An unbuilt tree exits 2
+      # (could-not-determine) rather than passing, which is the state that matters:
+      # this workflow failed all 30 runs over two months once, and a check that is
+      # green where nobody built the site is how that stays invisible.
+      #
+      # Invoked by its DECLARED SCRIPT NAME rather than by its path, and that is
+      # load-bearing rather than tidy: `commandRunsScript` matches a script name
+      # at a token boundary, so a workflow that spells out the path runs the
+      # check while `unrunScripts` reports it as run by nothing — a gate that
+      # cannot fail, which is bean `ot9a` exactly. Found by that ratchet on its
+      # first encounter with this step.
+      - name: Every maintained artefact is in the published tree
+        run: bun run check:maintained-artefacts ./_site
+
+      # No page carries a block-level tag as escaped TEXT.
+      #
+      # Here for the same reason as the step above — it needs the assembled tree —
+      # and by the same convention, invoked by its DECLARED SCRIPT NAME so
+      # `unrunScripts` can see it running.
+      #
+      # It exists because the whole source-level gate wall passed over a published
+      # landing page whose stickies were not elements. `landing.html` built its
+      # `<article>` tag across several lines and one `{% endif -%}` right-stripped
+      # the newline before the next attribute, so the tag emitted as
+      # `…--fa-text-scale:0.74;"aria-labelledby=…`. That is unparseable, `index.md`
+      # is markdown, and Kramdown escaped the entire block: 3 escaped `<article>`
+      # tags, 0 real. The template was valid HTML the whole time, which is exactly
+      # why nothing readable from a checkout could catch it — only the built page
+      # shows what the markdown converter did.
+      - name: No escaped block-level markup in the published tree
+        run: bun run check:escaped-markup ./_site
 
       # The QA witnesses, published at the path the badges already point at.
       #
@@ -325,7 +385,18 @@ jobs:
       # offers nothing that is (`keep_files`, `force_orphan`, `exclude_assets` —
       # and `exclude_assets` filters the SOURCE, not the branch). So it would
       # also stop the main site's own DELETED pages from ever disappearing:
-      # rename a doc and both URLs serve forever. Restoring the previews into
+      # rename a doc and both URLs serve forever.
+      #
+      # THE OTHER END OF THIS TRADEOFF IS `feature-staging.yml`, and the two
+      # comments are one argument seen from its two sides. Staging carried
+      # `keep_files: true` to survive the deletion this file records — and paid
+      # for it in exactly the way predicted above: its previews could never show
+      # a REMOVAL, only an addition (bean `85im`, five stale `proposals/*.html`
+      # served after main relocated them). Neither end is fixable with a flag.
+      # Both are now fixed the same way and for the same reason: each deploy
+      # names the paths it owns. This one restores the previews into `_site` so
+      # a full replace does not touch them; that one deletes and rewrites its
+      # OWN `STAGING/<slug>/` and no other. If you change either, read both. Restoring the previews into
       # `_site` keeps both halves — the main site stays a full replace, the
       # previews are part of what is published.
       #

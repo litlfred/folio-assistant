@@ -19,6 +19,7 @@
  * @module scripts/lean-audit
  */
 
+import { folioDir } from "../schemas/cat-harness.js";
 import { readFileSync, existsSync } from "fs";
 import { resolve, basename, relative } from "path";
 import { globSync } from "glob";
@@ -33,7 +34,7 @@ import { leanModuleChapter } from "../content/pipeline/chapter-profile-registry-
 // for those globs. `findContentRepoRoot()` walks up from the real cwd;
 // `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT_ROOT = resolve(REPO_ROOT, "content");
+const FOLIO_ROOT = folioDir(REPO_ROOT);
 
 // ── Types ────────────────────────────────────────────────────────
 
@@ -337,7 +338,7 @@ function getChapterName(dir: string): string {
 // fact about one paper's module layout. Injected via the chapter-profile
 // registry; an unmatched path falls back exactly as before.
 function mapBuildFileToChapter(filePath: string): string {
-  const rel = relative(CONTENT_ROOT, filePath);
+  const rel = relative(FOLIO_ROOT, filePath);
   // `"core"` is the original fallback for an unmatched path — preserved.
   return leanModuleChapter(rel) ?? "core";
 }
@@ -346,7 +347,7 @@ function mapBuildFileToChapter(filePath: string): string {
 // ── Main audit ───────────────────────────────────────────────────
 
 function runAudit(paperDir: string, chapterFilter?: string): AuditReport {
-  const paperPath = resolve(CONTENT_ROOT, paperDir);
+  const paperPath = resolve(FOLIO_ROOT, paperDir);
   const currentCommit = getCurrentCommitSha();
 
   // Find all chapter directories

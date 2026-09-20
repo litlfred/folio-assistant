@@ -1,6 +1,5 @@
 ---
 name: flushable-containers
-roles: [reader, collaborator, owner]
 description: >
   A flushable container is a named store that accumulates by design — a trash
   you can recover from, a review preview, a console log. It declares a buffer
@@ -8,6 +7,7 @@ description: >
   limit, and select to prune. What "flush" means, and which end of the order is
   expendable, are declared per container and differ.
 allowed-tools: Read Grep Glob Bash AskUserQuestion
+consulted: true
 ---
 
 # Flushable containers

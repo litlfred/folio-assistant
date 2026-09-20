@@ -4,6 +4,7 @@ description: >
   Every user interface this project produces must be operable by keyboard,
   legible at measured contrast, and comfortable to hit. How to build to that,
   how to check it, and why an automated pass is not the standard.
+consulted: true
 ---
 
 # All UI must follow accessibility guidelines
@@ -15,7 +16,7 @@ tiles, anything future.
 ## Why it is load-bearing here, and not boilerplate
 
 **This instance's declared interaction profile is low-dexterity.**
-`.harness/interaction.json` records it, and it already shapes the form of every
+`interaction/interaction.json` records it, and it already shapes the form of every
 question the harness asks — numbered options, four or fewer, a stated default.
 
 A UI that needs precise pointing, or that cannot be driven from the keyboard,

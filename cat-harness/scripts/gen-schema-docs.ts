@@ -21,18 +21,39 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve } from "path";
 import { siteDirFor } from "../schemas/cat-harness.ts";
-import { directoryForGraph } from "../schemas/cat-harness.js";
+import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
+// The `folio` graph kind is registered by CORE on import
+// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
+// exists. This module resolves this instance's directories and the instance
+// DECLARES a folio graph, so without this `resolveDirectories` throws
+// `unknown graph kind "folio"` on a valid declaration.
+//
+// The NINTH module in this PR to need this line, and the class is not fixed by
+// adding a tenth: 52 modules call a declaration reader without it, and the next
+// one reintroduces the failure with no gate to catch it. The architectural fix
+// is open on the PR (issue #464) — this unblocks CI without pre-empting it.
+import "../schemas/folio-graph-kind.js";
 
 /**
- * The declared `schemas` graph, or the convention.
+ * THIS INSTANCE'S OWN `schemas` directory, or the convention.
  *
  * declared-path-literal: the fallback is at the call site so the choice is
  * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why `directoryForGraph` is asked for the
- * `schemas` one by name rather than being handed a single-home guess.
+ * the schema definitions — which is why the `schemas` one is asked for by name
+ * rather than being handed a single-home guess.
+ *
+ * `instanceDirectoryForGraph`, not `directoriesForGraph(...)[0]`, because every use
+ * below composes a path INSIDE this directory. The question is "where is MY
+ * schemas directory", not "who declares schemas" — and from the `cat-harness`
+ * root those have different answers: measured 2026-09-20, `schemas` resolves
+ * to FOUR homes (`cat-harness/`, `folio-assistant-core/`, `large-datasets/`,
+ * `detangle/`), three of them arriving through the dependency overlay and
+ * belonging to somebody else. `[0]` was right only because the resolver
+ * happens to order the root's own declarations first; a reordering would have
+ * sent this generator's output into another checkout, silently. Bean `a02m`.
  */
 function schemasRoot(root: string): string {
-  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+  return instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas");
 }
 
 
@@ -219,7 +240,7 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
   // "do not edit by hand" only tells a reader where NOT to go. The schema
   // files are the real source and are editable; the per-section links below
   // now carry an editor target alongside the raw view.
-  lines.push("_Generated from JSON Schema — do not edit by hand. Run `bun run scripts/gen-schema-docs.ts`._");
+  lines.push("_Generated from JSON Schema — do not edit by hand. Run `bun run cat-harness/scripts/gen-schema-docs.ts`._");
   lines.push("");
 
   if (input) {

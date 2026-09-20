@@ -30,8 +30,8 @@ import type { Data as CSLData, Person as CSLPerson } from "csl-json";
 // folio-assistant and made every content path below miss).
 const REPO_ROOT = findContentRepoRoot();
 // Content repo's content/, not folio-assistant's — see qa-checkers-extended.
-const CONTENT_DIR = join(findContentRepoRoot(), "content");
-const IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
+const FOLIO_DIR = folioDir(findContentRepoRoot());
+const IMAGES_DIR = join(FOLIO_DIR, "bib-qa-images");
 
 const args = process.argv.slice(2);
 const checkUrls = args.includes("--check-urls");
@@ -39,7 +39,7 @@ const ciMode = args.includes("--ci");
 const outIdx = args.indexOf("--out");
 const outPath = outIdx >= 0 && args[outIdx + 1]
   ? resolve(args[outIdx + 1])
-  : join(CONTENT_DIR, "bib-qa.json");
+  : join(FOLIO_DIR, "bib-qa.json");
 
 // ── Types ───────────────────────────────────────────────────────
 
@@ -146,7 +146,7 @@ function collectCitations(): Map<string, string[]> {
   // Lean: -- Ref: [key]
   const leanFiles = [
     ...scanFilesRecursive(join(REPO_ROOT, "lean"), ".lean"),
-    ...scanFilesRecursive(join(REPO_ROOT, "content"), ".lean"),
+    ...scanFilesRecursive(folioDir(REPO_ROOT), ".lean"),
   ];
   const REF_PAT = /(?:--\s*)?Ref:\s*\[([^\]]+)\]/g;
   for (const file of leanFiles) {
@@ -163,7 +163,7 @@ function collectCitations(): Map<string, string[]> {
   // LaTeX/Markdown: \cite{key1, key2}
   const texFiles = [
     ...scanFilesRecursive(join(REPO_ROOT, "chapters"), ".tex"),
-    ...scanFilesRecursive(join(REPO_ROOT, "content"), ".md"),
+    ...scanFilesRecursive(folioDir(REPO_ROOT), ".md"),
     ...[join(REPO_ROOT, "main.tex"), join(REPO_ROOT, "blueprint/src/content.tex")].filter(existsSync),
   ];
   const CITE_PAT = /\\cite(?:\[[^\]]*\])?\{([^}]+)\}/g;
@@ -224,7 +224,7 @@ function collectCitations(): Map<string, string[]> {
   // reference style. Added 2026-05-19 after the bib audit found
   // 6 papers wrongly flagged as `uncited` because the inventory
   // missed this source.
-  const tsFiles = scanFilesRecursive(join(REPO_ROOT, "content"), ".ts");
+  const tsFiles = scanFilesRecursive(folioDir(REPO_ROOT), ".ts");
   // Match: cites: [ "key1", "key2", ... ]  (handles single + multi-line)
   const TS_CITES_PAT = /\bcites\s*:\s*\[([^\]]*?)\]/gs;
   const TS_CITES_KEY = /["'`]([a-z][a-z0-9_-]*\d{4}[a-z]*)["'`]/gi;
@@ -364,7 +364,7 @@ async function checkUrl(
 
 import type { Verifier, VerificationStatus } from "../../schemas/bib-verification";
 import { verifierLabel } from "../../schemas/bib-verification";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 interface VerificationEntry {
   id: string;
@@ -379,7 +379,7 @@ interface VerificationEntry {
 }
 
 function loadVerifications(): Map<string, VerificationEntry> {
-  const path = join(CONTENT_DIR, "bib-qa-verifications.json");
+  const path = join(FOLIO_DIR, "bib-qa-verifications.json");
   if (!existsSync(path)) return new Map();
   const raw = JSON.parse(readFileSync(path, "utf-8"));
   const arr: (VerificationEntry & { id: string | null })[] = raw.entries ?? [];

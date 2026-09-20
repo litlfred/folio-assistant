@@ -194,7 +194,8 @@ function collectWiredWitnesses(): {
   blockHasWitnessFor: Map<string, Set<string>>; // label → set of witness paths
   blockLabels: Set<string>;
 } {
-  const tsFiles = globSync("content/**/*.ts", {
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const tsFiles = globSync("folio/**/*.ts", {
     cwd: REPO_ROOT,
     absolute: true,
     ignore: ["**/node_modules/**"],

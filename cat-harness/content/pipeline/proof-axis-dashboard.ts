@@ -9,8 +9,9 @@
  * into a structured summary for triage.
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync } from "fs";
-import { resolve, dirname, relative } from "path";
+import { resolve, dirname, relative, join } from "path";
 import { fileURLToPath } from "url";
 import { execSync } from "child_process";
 
@@ -97,12 +98,12 @@ function main() {
   // criterion scored 0/0. Accept a path when one is given, like `qa-sweep.ts`
   // already does.
   const asPath = resolve(process.cwd(), args.root);
-  const rootPath = existsSync(asPath) ? asPath : resolve(REPO_ROOT, "content", args.root);
+  const rootPath = existsSync(asPath) ? asPath : join(folioDir(REPO_ROOT),  args.root);
   if (!existsSync(rootPath)) {
     console.error(
       `proof-axis-dashboard: no such content root: ${args.root}\n` +
         `  tried (as path):  ${asPath}\n` +
-        `  tried (as paper): ${resolve(REPO_ROOT, "content", args.root)}\n` +
+        `  tried (as paper): ${join(folioDir(REPO_ROOT),  args.root)}\n` +
         `Pass the path to the folio's content root, e.g.\n` +
         `  bun run <platform>/content/pipeline/proof-axis-dashboard.ts content/<paper>`,
     );
@@ -123,10 +124,10 @@ function main() {
 
   for (const block of walkBlocks(rootPath)) {
     totalBlocks++;
-    const qaPath = block.qa ? resolve(REPO_ROOT, "content", block.qa) : undefined;
+    const qaPath = block.qa ? join(folioDir(REPO_ROOT),  block.qa) : undefined;
     const report = qaPath ? loadQaReport(qaPath) : undefined;
 
-    const hasLean = block.lean && existsSync(resolve(REPO_ROOT, "content", block.lean));
+    const hasLean = block.lean && existsSync(join(folioDir(REPO_ROOT),  block.lean));
     if (hasLean) blocksWithLean++;
 
     for (const cid of proofCriteria) {

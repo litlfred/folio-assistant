@@ -12,8 +12,9 @@
  *   bun run pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir> --json
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync, mkdirSync } from "fs";
-import { resolve, basename, dirname, relative as pathRelative } from "path";
+import { resolve, basename, dirname, relative as pathRelative, join } from "path";
 import { findContentRepoRoot } from "./repo-root";
 import {
   hashBlockFiles,
@@ -471,7 +472,7 @@ async function main() {
   const candidates = [
     resolve(args.root),
     resolve(REPO_ROOT, args.root),
-    resolve(REPO_ROOT, "content", args.root),
+    join(folioDir(REPO_ROOT),  args.root),
   ];
   const rootPath = candidates.find((c) => existsSync(c)) ?? candidates[candidates.length - 1];
   if (!existsSync(rootPath)) {

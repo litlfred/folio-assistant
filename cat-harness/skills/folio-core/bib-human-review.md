@@ -9,7 +9,6 @@ description: >-
   photos to the bib-photo-ingestion watcher. Use when auditing bib human-review
   status, ingesting an uploaded paper's results, or preparing a physical-review
   issue.
-roles: [collaborator]
 ---
 
 # bib-human-review

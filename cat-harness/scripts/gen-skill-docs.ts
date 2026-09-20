@@ -27,6 +27,19 @@ import { join, resolve, basename, relative } from "path";
 
 import { isSkillMd, kgDirectories } from "./known-skills.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+// The `folio` graph kind is registered by CORE on import
+// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
+// exists. This module reads this instance's declaration and the instance
+// DECLARES a folio graph, so without this it throws `unknown graph kind
+// "folio"` on a valid declaration.
+//
+// Found statically, by listing every script any workflow invokes and checking
+// each for the import — NOT by running them. Running `site-links.ts` from the
+// wrong directory made it fail with "no harness.json; nothing to resolve",
+// which masked this and got it wrongly dismissed as a local-args artefact. A
+// script failing on bad arguments says nothing about whether it fails on good
+// ones.
+import "../schemas/folio-graph-kind.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..");
 // A pencil, as a text glyph rather than an inline SVG. 130 generated pages
@@ -51,6 +64,30 @@ const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skill-instr
 const CHECK_ONLY = process.argv.includes("--check");
 const drifted: string[] = [];
 
+/**
+ * Published names two groups both claimed, with no `publishPrefix` between
+ * them and no entry in {@link SAME_BASENAME_DIFFERENT_DOCUMENT}.
+ *
+ * Bean `v3se`. This was a `↪` line in a list of 173 successes, and the
+ * consequence was the one cat-bootstrap exists to prevent: `kg-navigation` existed
+ * twice — cat-bootstrap's assuming NOTHING, folio-core's assuming the harness is
+ * installed — and the generator kept folio-core's. CatBootstrap's README sends a
+ * cold agent to read that name *before anything else is known*, so the reader
+ * least able to notice was served the body written for a repository it was not
+ * in.
+ *
+ * A DECLARED pair is not this: it carries a prefix, publishes under two names
+ * and gets a directional banner on each. What this catches is one name, two
+ * documents, and nobody having decided which governs — which is a judgement
+ * somebody has to make, not something a generator may settle by running order.
+ *
+ * Promoted to a hard failure while the count is ZERO (measured 2026-09-20,
+ * after `3jj9` renamed cat-bootstrap's copy). That is this repository's rule for
+ * every ratchet — an error only once the backlog is drained — and it is also
+ * the only moment the promotion is free.
+ */
+const collisions: Array<{ published: string; kept: string; from: string }> = [];
+
 function emit(path: string, content: string): void {
   if (CHECK_ONLY) {
     const current = existsSync(path) ? readFileSync(path, "utf-8") : null;
@@ -58,6 +95,33 @@ function emit(path: string, content: string): void {
     return;
   }
   writeFileSync(path, content);
+}
+
+/**
+ * An undeclared collision fails the run — writing mode too, not just `--check`.
+ *
+ * Dropping a document is not a staleness problem that a re-run fixes; it is a
+ * document that never reaches the site at all. Reporting it only under
+ * `--check` would leave the writer cheerfully publishing 173 pages and one
+ * silence.
+ */
+function reportCollisions(): void {
+  if (collisions.length === 0) return;
+  console.error(
+    `\n✗ ${collisions.length} published name(s) claimed by two groups, with no ` +
+      `prefix between them and no SAME_BASENAME_DIFFERENT_DOCUMENT entry.\n` +
+      `  One name, two documents: the later one was DROPPED and is not on the site.\n`,
+  );
+  for (const c of collisions) {
+    console.error(`  ${c.published}: kept ${c.kept}, dropped the copy from ${c.from}`);
+  }
+  console.error(
+    `\n  Resolve it deliberately rather than by running order — give the group a ` +
+      `\`publishPrefix\`, or\n  declare the pair in SAME_BASENAME_DIFFERENT_DOCUMENT ` +
+      `so both publish with a directional banner.\n  Bean \`v3se\`: the collision this ` +
+      `guards served a cold cat-bootstrap agent the body for a\n  repository it was not in.`,
+  );
+  process.exit(1);
 }
 
 function reportDrift(): void {
@@ -136,6 +200,19 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
   // Collided exactly as `todo-manager` did and carried NO banner, so a reader
   // landing on either page could not tell the other existed. Added with the
   // `tdmg` resolution.
+  "kg-navigation": [
+    {
+      published: "kg-navigation",
+      label: "Reading the knowledge graph (tooled)",
+      repoPrefix: "kg-navigation/skills",
+      canonical: true,
+    },
+    {
+      published: "local-kg-navigation",
+      label: "Reading a knowledge graph before you have anything (bootstrap)",
+      repoPrefix: "bootstrap/skills",
+    },
+  ],
   "bean-coordination": [
     {
       published: "bean-coordination",
@@ -162,24 +239,60 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
 const SKILLS_CATEGORIES: Record<string, string> = {
   "content-lifecycle": "Lifecycle skills",
   "folio-core": "Platform core (folio-core)",
+  workflow: "Workflow & process (workflow)",
+  "graph-management": "Graph management (graph-management)",
+  theming: "Theming (theming)",
   "folio-document-adapter": "Document adapter (folio-document-adapter)",
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
   "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
+  // Stubs for skills a remote package DECLARES and this instance does not
+  // vendor. The heading says "not implemented" in the reader's own words,
+  // because the published page is where somebody meets one of these first and
+  // the worst outcome is following it as guidance. `kg:audit` carries the same
+  // fact for machines, under `skill-is-a-stub`.
+  // Each methodology under `workflow-methodologies/` is its own declared
+  // subgraph and gets its own heading — the point of the layout is that a
+  // reader meets CRDM as a THING rather than as three skills scattered
+  // through folio-core with a filename prefix relating them. Owner,
+  // 2026-09-20: RACI, SDLC and MADR join it, each with a heading of its own
+  // when it exists. Nothing is declared before it has content — a
+  // declared-but-absent directory is the `dh4f` defect.
+  // Keyed on the DECLARATION'S id, not the directory basename: this root
+  // holds its skills directly, so `discoverGroups` takes the
+  // `SKILLS_CATEGORIES[decl.id]` branch — the same one `cat-bootstrap` uses
+  // below. Keyed on `crdm` it threw, naming the id it actually wanted.
+  "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
+  "methodology-raci": "RACI involvement model (methodologies/raci)",
+  "remote-stubs": "Declared but not implemented here (stubs)",
   // The two entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
-  // directory's DECLARED ID — `bootstrap` and `cat-harness-src`, not
-  // `bootstrap/skills` and `src/skills`.
+  // directory's DECLARED ID — `cat-bootstrap` and `cat-harness-src`, not
+  // `cat-bootstrap/skills` and `src/skills`.
   //
   // #428 keyed them by repo-relative path, which works and has a short
   // half-life: `harness.json` says on its own entry that "ids are stable
   // across a relocation, paths are not", and this file had already paid for
-  // that twice in one day — the basename was `bootstrap` only until #422 moved
-  // those skills to `bootstrap/skills/`. A path key breaks again at the
+  // that twice in one day — the basename was `cat-bootstrap` only until #422 moved
+  // those skills to `cat-bootstrap/skills/`. A path key breaks again at the
   // `cat-harness/` move, which is the next step on bean `wggr` and would turn
   // `src/skills` into `cat-harness/src/skills`.
-  bootstrap: "Bootstrap (read before anything else is known)",
+  "cat-bootstrap": "CatBootstrap (read before anything else is known)",
   "cat-harness-src": "Agent skills",
+  // Two top-level named subgraphs, staged ahead of the split (#223) and both
+  // keyed by DECLARED ID for the reason the comment above gives: their paths
+  // will change at the `cat-harness/` move and their ids will not.
+  //
+  // `kg-navigation` shares its name with `bootstrap/skills/kg-navigation.md`
+  // and the two are DIFFERENT DOCUMENTS — the tooled route and the zero-install
+  // floor. Measured 2026-09-20, before this entry existed: the published page
+  // carried bootstrap's body under the tooled one's name, so a reader landing
+  // there got the wrong skill with nothing saying so. That is the same
+  // collision `todo-manager` and `bean-coordination` are listed for below, and
+  // it is resolved the same way.
+  "kg-navigation": "Knowledge-graph navigation (tooled)",
+  "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
+  "who-iris-skills": "WHO IRIS (catalogue instance)",
 };
 
 /**
@@ -224,17 +337,17 @@ function discoverGroups(): Group[] {
   const undeclared: string[] = [];
   // Every DECLARED knowledge-graph directory, not `skills/` alone: an instance
   // may put its graph anywhere, and this repository declares three —
-  // `skills/`, `bootstrap/skills/` and `src/skills/` (beans `x3bd`, `osbo`).
+  // `skills/`, `cat-bootstrap/skills/` and `src/skills/` (beans `x3bd`, `osbo`).
   //
   // A directory may hold skills DIRECTLY as well as in packages: `src/skills/`
   // holds `corpus-grep.md` beside the `.ts` implementing it, and
-  // `bootstrap/skills/` holds both of bootstrap's.
+  // `cat-bootstrap/skills/` holds both of cat-bootstrap's.
   //
   // THE TWO CASES ARE KEYED DIFFERENTLY, and that is the point. A package
   // NAMES ITSELF, so its basename is the key. A root does not — its basename
   // is an artefact of where the declaration happens to point — so the key is
   // its DECLARED ID. This file keyed a root by basename until #422 moved
-  // bootstrap's skills one level down and the generator demanded a heading for
+  // cat-bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
   for (const decl of kgDirectories(REPO_ROOT)) {
@@ -379,8 +492,8 @@ function main(): void {
     if (!existsSync(group.dir)) continue;
     // `isSkillMd`, not a bare `.md` test — the FOURTH place in this repository
     // that predicate was spelled out by hand, and the second in this file.
-    // Without it `bootstrap/README.md` was published as a skill instruction
-    // page titled "bootstrap", complete with an "edit this page's source"
+    // Without it `cat-bootstrap/README.md` was published as a skill instruction
+    // page titled "cat-bootstrap", complete with an "edit this page's source"
     // link, for a file that is not a skill.
     const files = readdirSync(group.dir)
       .filter((f) => f.endsWith(".md") && isSkillMd(join(group.dir, f)))
@@ -403,6 +516,11 @@ function main(): void {
           `| [${name}](${published}.html) | \`${name}\` | — | _also in ${written.get(published)} (same page)_ |`,
         );
         console.log(`  ↪ ${published} (dup — kept ${written.get(published)})`);
+        collisions.push({
+          published,
+          kept: written.get(published) ?? "(unknown)",
+          from: group.category,
+        });
         continue;
       }
       // Where another group holds the same basename, say so on both pages: a
@@ -523,6 +641,9 @@ function main(): void {
   emit(join(OUT_DIR, "index.md"), idx.join("\n"));
   const total = Object.values(indexRows).reduce((n, r) => n + r.length, 0);
   console.log(`  ✓ index.md (${total} instruction bodies)`);
+  // BEFORE the drift report: a dropped document is not staleness, and a run
+  // that exits 0 on "up to date" would bury it.
+  reportCollisions();
   reportDrift();
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }

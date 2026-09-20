@@ -29,6 +29,7 @@
  * @module folio-assistant/routes/relevance
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
@@ -57,7 +58,7 @@ interface RefFacts {
 }
 
 function ledgerPath(repoRoot: string): string {
-  return join(repoRoot, "content", "bib-qa-verifications.json");
+  return join(folioDir(repoRoot),  "bib-qa-verifications.json");
 }
 
 function readLedger(repoRoot: string): SourceLedger {
@@ -74,7 +75,7 @@ function readLedger(repoRoot: string): SourceLedger {
  * validated CSL objects.  It is also never executed this way.
  */
 function readRefFacts(repoRoot: string): Map<string, RefFacts> {
-  const p = join(repoRoot, "content", "schema", "references.ts");
+  const p = join(folioDir(repoRoot),  "schema", "references.ts");
   const out = new Map<string, RefFacts>();
   if (!existsSync(p)) return out;
   const src = readFileSync(p, "utf-8");

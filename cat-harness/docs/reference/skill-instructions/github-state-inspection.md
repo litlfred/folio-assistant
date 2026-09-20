@@ -29,7 +29,7 @@ source-tree stub that Jekyll does not carry into the site. Anyone composing
 the URL from the source path gets a 404 and concludes the page is missing.
 
 **And a source path moves under you.** The worked example below was
-`docs/folio-assistant/proposals/bootstrap.md`; the stub pattern inverted it to
+`docs/folio-assistant/proposals/cat-bootstrap.md`; the stub pattern inverted it to
 `folio-assistant/docs/proposals/` (bean `wggr`), and then proposals were
 relocated out of the site entirely to `fsh-guts/proposals/`, which is kept and
 addressable but **deliberately unpublished** — so that page has no URL at all
@@ -63,6 +63,55 @@ The MCP GitHub tools answer the same question without a fetch —
 `get_file_contents` with `ref: "refs/heads/gh-pages"` and a directory path
 returns the listing. Use whichever is to hand; both read the ref, which is the
 point.
+
+## Present on the ref is not the same as SERVED — read the Pages deployment
+
+The step above is authoritative for *what exists*. It is not authoritative for
+*what a reader gets*, and the gap between them has a mechanism worth knowing.
+
+Pages-from-a-branch publishes through a `pages build and deployment` run, and a
+new push to the publish ref **cancels the run already in flight**. So a commit
+can sit on `gh-pages` with the file plainly there while the last *successful*
+deployment is an older tree.
+
+```sh
+git log --format='%h %ad %s' --date=iso -10 origin/gh-pages   # how fast is the ref moving
+```
+
+and the deployments themselves, which only the API has:
+
+```
+actions_list  method: list_workflow_runs
+              workflow_runs_filter: { branch: "gh-pages", event: "dynamic" }
+```
+
+Read `conclusion` per run, not just the newest — `cancelled` is the one that
+misleads, because nothing is red and yet nothing shipped from that commit.
+
+Measured 2026-09-20, on a repository with four concurrent agent sessions:
+**64 commits to `gh-pages` in 90 minutes**, and **6 of the last 10 Pages
+deployments `cancelled`**. The pattern was exact rather than random — each
+staging deploy pushes *two* commits about ten seconds apart, the payload
+(`staging(<slug>): from <sha>`) and then `render-log: rendered …`, and the second
+reliably cancels the first's build. Two pushes, two builds, one of them always
+wasted.
+
+So when a preview 404s and the file **is** on the ref:
+
+1. Check whether a deployment has succeeded *since* the commit that added it.
+   A `cancelled` newest run with an older success means the tree being served
+   predates your push.
+2. Check whether your subtree survives in that older tree too — on a ref this
+   busy, `git cat-file -e <commit>:<path>` over the recent commits answers
+   "was it ever missing" directly, and a path present at every one of them rules
+   the ref out as the cause entirely.
+3. Only then is the question about Pages rather than about the repository, and
+   it is a wait-or-escalate, not a fix.
+
+**What this does not license.** A `cancelled` run is an explanation to verify,
+never one to assert: it is equally consistent with a page that is serving fine.
+From a container that cannot reach the host, the honest report is the mechanism
+plus what you could and could not establish — not "it is probably propagation".
 
 ## Why `curl` is not the first check, and often not evidence at all
 
@@ -122,6 +171,6 @@ verify it rendered*, on the strength of two `curl` calls that returned `000`
 because the proxy had refused the tunnel — and I had built the URL from
 `docs/folio-assistant/proposals/` rather than resolving it. One
 `git ls-tree -r FETCH_HEAD | grep proposal` showed the page present at
-`proposals/bootstrap.html`. Both halves of the error — a composed URL and a
+`proposals/cat-bootstrap.html`. Both halves of the error — a composed URL and a
 fetch mistaken for evidence — are what this skill exists to prevent.
 {% endraw %}

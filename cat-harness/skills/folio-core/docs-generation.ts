@@ -4,7 +4,6 @@ export const docsGeneration: SkillDefinition = {
   id: "docs-generation",
   name: "Docs Generation",
   description: "TypeDoc generation, schema docs, PDF/HTML paper builds, and dependency graph rendering.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],
@@ -22,8 +21,5 @@ export const docsGeneration: SkillDefinition = {
     { path: ".github/scripts/generate_dependency_graph.py", runtime: "python", phase: "execute" },
   ],
   mcpServices: ["paper-assistant"],
-  schemas: [
-    { module: "schemas/formalization-types", types: ["ProofObjectsManifest", "GlossaryManifest"], access: "read" },
-  ],
   tags: ["docs", "generation", "build"],
 };

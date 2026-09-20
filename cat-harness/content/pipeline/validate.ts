@@ -16,6 +16,7 @@
  * @module content/pipeline/validate
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readdirSync, readFileSync, existsSync } from "fs";
 import { resolve, join, basename, dirname, relative, isAbsolute } from "path";
 import {
@@ -30,6 +31,7 @@ import { resolveRenderTarget } from "./render-discovery";
 import { readDeclaredFolioProfile } from "./profile-check";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";
+import { validateSimulatorAssets } from "./validate-simulator";
 import { findContentRepoRoot, findPapers } from "./repo-root";
 import { blockQaPath, blockOfQaPath, BLOCK_QA_SUFFIX } from "./qa-paths";
 import { referenceRegistryConfigured, getReferenceRegistry } from "./references-registry-di";
@@ -872,6 +874,26 @@ export async function validateObjects(
   // Phase 5: Witnessed-value directive validation (:val[name] rules)
   issues.push(...validateValueDirectives(defBlocks, { strict: opts.strict }));
 
+  // Phase 6: Simulator assets — does the declared `html:` exist on disk?
+  //
+  // Bean `023p`. Until this phase existed, `validate.ts` contained no mention
+  // of `simulator` or `.html`, so a block declaring a dead path validated
+  // clean: measured on qou, two of eleven targets were in neither repository
+  // and `run-validate` exited 0 without naming either. `SimulatorBlock`'s own
+  // doc comment claimed the pipeline checked this; it did not.
+  //
+  // Three states, and `undetermined` (a remote target, or a path outside the
+  // folio) is reported rather than passed — the same rule as everywhere else
+  // here: not having looked must never render as having looked and found
+  // nothing wrong.
+  {
+    const sim = validateSimulatorAssets(
+      [...allBlocks].map(([name, { block }]) => ({ name, block })),
+      REPO_ROOT,
+    );
+    issues.push(...sim.issues);
+  }
+
   const hasErrors = issues.some(i => i.level === "error");
   return { valid: !hasErrors, issues };
 }
@@ -892,11 +914,11 @@ if (import.meta.main) {
   const repoRoot = findContentRepoRoot();
   const targets = positional.length > 0
     ? positional.map(p => resolve(p))
-    : findPapers(repoRoot).map(p => join(repoRoot, "content", p));
+    : findPapers(repoRoot).map(p => join(folioDir(repoRoot),  p));
 
   if (targets.length === 0) {
     console.error(
-      `✗ No paper found under ${join(repoRoot, "content")} — expected at least ` +
+      `✗ No paper found under ${folioDir(repoRoot)} — expected at least ` +
       `one <paper>/<paper>.ts manifest.\n` +
       `  folio-assistant is the PLATFORM; run this from a folio checkout, or ` +
       `pass a paper/chapter directory explicitly.`,

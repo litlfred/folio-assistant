@@ -42,18 +42,34 @@ import { tools } from "../tools/index.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 import { stagingFields } from "./staging-stamp.js";
-import { directoryForGraph } from "../schemas/cat-harness.js";
+import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
+// The `folio` graph kind is registered by CORE on import
+// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
+// exists. This module resolves this instance's directories, and the instance
+// DECLARES a folio graph — without this the read throws `unknown graph kind
+// "folio"` on a perfectly valid declaration (issue #464).
+import "../schemas/folio-graph-kind.js";
 
 /**
- * The declared `schemas` graph, or the convention.
+ * THIS INSTANCE'S OWN `schemas` directory, or the convention.
  *
  * declared-path-literal: the fallback is at the call site so the choice is
  * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why `directoryForGraph` is asked for the
- * `schemas` one by name rather than being handed a single-home guess.
+ * the schema definitions — which is why the `schemas` one is asked for by name
+ * rather than being handed a single-home guess.
+ *
+ * `instanceDirectoryForGraph`, not `directoriesForGraph(...)[0]`, because every use
+ * below composes a path INSIDE this directory. The question is "where is MY
+ * schemas directory", not "who declares schemas" — and from the `cat-harness`
+ * root those have different answers: measured 2026-09-20, `schemas` resolves
+ * to FOUR homes (`cat-harness/`, `folio-assistant-core/`, `large-datasets/`,
+ * `detangle/`), three of them arriving through the dependency overlay and
+ * belonging to somebody else. `[0]` was right only because the resolver
+ * happens to order the root's own declarations first; a reordering would have
+ * sent this generator's output into another checkout, silently. Bean `a02m`.
  */
 function schemasRoot(root: string): string {
-  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+  return instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas");
 }
 
 
@@ -249,14 +265,24 @@ export function staleSkillIoIds(opts: SchemaExportOptions = {}): Array<{ source:
  * by fixing what it was asked to report.
  */
 /**
+ * How a Tool node spells "produced by this command".
+ *
+ * A literal, in the file that IS the command — the one place where naming it is
+ * not a second declaration of somebody else's fact. A node claiming an artefact
+ * this script writes carries exactly this string in `invoke.shell`, which is the
+ * link `artefactDeclarationDrift` follows.
+ */
+const SELF_INVOCATION = "bun run kg:schema";
+
+/**
  * Artefacts a Tool node declares itself authoritative for, by published path.
  *
  * Reads `maintains` off the `tools` graph — see {@link ToolMaintainsSchema} in
  * `schemas/tool.ts`. The base is irrelevant here: the comparison is on the
  * path relative to the instance base, which is what the declaration carries.
  */
-export function declaredArtefacts(): Map<string, { tool: string; source: string }> {
-  const out = new Map<string, { tool: string; source: string }>();
+export function declaredArtefacts(): Map<string, { tool: string; source: string; producedBy?: string }> {
+  const out = new Map<string, { tool: string; source: string; producedBy?: string }>();
   // `tools()` with no argument, so the I/O type IRIs are minted against the
   // DECLARED base. Passing `""` makes them relative and `defineTool` refuses
   // the node — correctly: a Tool whose schema refs do not dereference is not a
@@ -264,7 +290,12 @@ export function declaredArtefacts(): Map<string, { tool: string; source: string 
   // is on the artefact path relative to it, but the node still has to be valid
   // to be read at all.
   for (const t of tools()) {
-    for (const m of t.maintains ?? []) out.set(m.artefact, { tool: t.id, source: m.source });
+    for (const m of t.maintains ?? []) {
+      // `producedBy` is the declaring Tool's own invocation, carried through so
+      // the reconciliation below can tell which artefacts THIS command is
+      // answerable for. See `artefactDeclarationDrift`.
+      out.set(m.artefact, { tool: t.id, source: m.source, producedBy: t.invoke.shell });
+    }
   }
   return out;
 }
@@ -284,6 +315,34 @@ export function declaredArtefacts(): Map<string, { tool: string; source: string 
  * is wrong" — the artefact may be perfectly correct — it is the PROVENANCE
  * being unfollowable, and the remedy is the opposite (fix the path, not the
  * build).
+ *
+ * ## `unproduced` is scoped to what THIS command writes, and that is a narrowing
+ *
+ * It was not, until 2026-09-20. `maintains` says a Tool is authoritative for a
+ * published artefact; it never said the artefact is produced by the schema
+ * exporter. The three original carriers all happened to be, so the check was
+ * written against that coincidence and reported the first counterexample as
+ * drift: `ns-vocabulary` and `content-context` maintain `ns/vocabulary.jsonld`
+ * and `ns/content/v1.jsonld`, which `.github/workflows/docs-site.yml` publishes
+ * — both declarations true, both flagged.
+ *
+ * So the comparison now runs only over artefacts whose declaring Tool invokes
+ * this command. That keeps the rot guarantee exactly where this script can
+ * honour it and stops it claiming one it cannot: this script has no way to know
+ * whether the site build wrote a file into `_site/`, and a check that answers a
+ * question it cannot see is worse than one that declines to.
+ *
+ * **Coverage of the others is therefore now absent HERE, not merely narrower** —
+ * an artefact maintained by some other producer can rot to a 404 and nothing in
+ * this script notices. That was the honest cost of the narrowing, and it is now
+ * paid: `scripts/check-maintained-artefacts.ts` asks the same question where the
+ * answer exists, against the assembled `_site/` rather than against this script's
+ * output, and treats an unbuilt tree as could-not-determine rather than as a pass.
+ * Bean `6f1x`.
+ *
+ * `undeclared` is unchanged and still runs over everything produced: a file this
+ * command writes with no Tool declaring it is the drift that put this relation
+ * in a local array until 2026-09-19, and that direction needs no scoping.
  */
 export function artefactDeclarationDrift(produced: readonly string[]): {
   undeclared: string[];
@@ -296,7 +355,10 @@ export function artefactDeclarationDrift(produced: readonly string[]): {
   const unproduced: Array<{ artefact: string; tool: string }> = [];
   const missingSource: Array<{ artefact: string; tool: string; source: string }> = [];
   for (const [artefact, d] of declared) {
-    if (!producedSet.has(artefact)) unproduced.push({ artefact, tool: d.tool });
+    // Only this command's own artefacts: see the note above on the narrowing.
+    if (d.producedBy === SELF_INVOCATION && !producedSet.has(artefact)) {
+      unproduced.push({ artefact, tool: d.tool });
+    }
     if (!existsSync(join(ROOT, d.source))) {
       missingSource.push({ artefact, tool: d.tool, source: d.source });
     }

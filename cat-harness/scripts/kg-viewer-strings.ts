@@ -34,6 +34,17 @@
  *
  * @module scripts/kg-viewer-strings
  */
+// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
+// and this module resolves a DECLARED directory. Without it the first
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
+// 2026-09-20 across the 20 modules that resolve a declared directory: 10
+// threw, including `narratives.ts` and the `translation` MCP tool, while
+// every gate and all 3298 tests passed — nothing covered the path.
+//
+// Importing core's registration is correct by LAYERING, not a workaround:
+// `folio` is CORE's kind, so a content-side module may import it, while the
+// harness alone never sees it (schemas/folio-graph-kind.ts says so).
+import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
@@ -45,7 +56,7 @@ import type { PotEntry } from "../content/pipeline/pot-extract.js";
  * tree for a locale that has none yet.
  *
  * declared-path-literal: the convention fallback, stated at the call site
- * rather than inside `directoryForGraph` so the choice is visible.
+ * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
   return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
@@ -92,6 +103,14 @@ export const UI_STRINGS: readonly UiString[] = [
   {
     en: "Kind",
     comment: "Heading of the filter column. The kinds are node types (Tool, ProcessNode, …) and come from the graph, so they are not translated.",
+  },
+  {
+    en: "Subgraph",
+    comment:
+      "Heading of the SECOND filter column, added 2026-09-20. The values are declared-directory ids " +
+      "from the instance's own harness.json (cat-harness, bootstrap, schemas, …) and come from the " +
+      "graph, so like the kinds they are NOT translated — a reader types them into a query, and a " +
+      "translated id resolves to nothing.",
   },
   {
     en: "All",

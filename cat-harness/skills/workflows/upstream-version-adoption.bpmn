@@ -24,6 +24,7 @@ Shaped after `crdm-requirements.bpmn` because the question is the same one: some
         <bpmn:flowNodeRef>A_Scope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Impact</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Evidence</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_OptionsAnalysis</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ApplyPin</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_RecordOutcome</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Adopt</bpmn:flowNodeRef>
@@ -81,6 +82,13 @@ A `userTask`, and the lane admits `person` and `agent` — a review agent is a l
       <bpmn:extensionElements><folio:skill ref="staging-review"/></bpmn:extensionElements>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="GW_Findings" name="Findings we can fix?"/>
+    <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;adopt &#183; hold &#183; decline" calledElement="Process_OptionsAnalysis">
+      <bpmn:documentation>On the single edge into `PM_Decide`, and deliberately not earlier: the MVP build and its gates are HOW the options' costs are measured, so an analysis before `Task_Mvp` would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed.
+
+In the Agent lane, because this step produces the analysis and does not make the decision — `PM_Decide` is a `userTask` whose lane admits `person` only, and putting the analysis in the agent's lane is what keeps that separation legible rather than implied. A subprocess that decided would be a second accepting party.
+
+Reached through the loop as well as straight through: `SF_UA_8` re-enters at `A_Impact`, so a run where the reviewer found something fixable arrives here a second time with different evidence. That is a genuine re-analysis and its `op="note"` appends rather than deduping, which is the behaviour wanted — a second note records that the options were weighed again against changed inputs.</bpmn:documentation>
+    </bpmn:callActivity>
     <bpmn:userTask id="PM_Decide" name="Adopt, hold&#10;or decline">
       <bpmn:documentation>A PERSON decides. The lane admits `person` only, so `activity-fulfilment-kind` fails the moment somebody makes an agent the accepting party, and `relaxable="false"` means no package may relax the step.
 
@@ -118,7 +126,8 @@ Either way the decision is written down before the process ends, and the bean is
     <bpmn:sequenceFlow id="SF_UA_6" sourceRef="A_Evidence" targetRef="R_Review"/>
     <bpmn:sequenceFlow id="SF_UA_7" sourceRef="R_Review" targetRef="GW_Findings"/>
     <bpmn:sequenceFlow id="SF_UA_8" name="yes" sourceRef="GW_Findings" targetRef="A_Impact"/>
-    <bpmn:sequenceFlow id="SF_UA_9" name="no" sourceRef="GW_Findings" targetRef="PM_Decide"/>
+    <bpmn:sequenceFlow id="SF_UA_9" name="no" sourceRef="GW_Findings" targetRef="Call_OptionsAnalysis"/>
+    <bpmn:sequenceFlow id="SF_UA_15" sourceRef="Call_OptionsAnalysis" targetRef="PM_Decide"/>
     <bpmn:sequenceFlow id="SF_UA_10" sourceRef="PM_Decide" targetRef="GW_Adopt"/>
     <bpmn:sequenceFlow id="SF_UA_11" name="yes" sourceRef="GW_Adopt" targetRef="A_ApplyPin"/>
     <bpmn:sequenceFlow id="SF_UA_12" name="no" sourceRef="GW_Adopt" targetRef="A_RecordOutcome"/>
@@ -159,6 +168,9 @@ Either way the decision is written down before the process ends, and the bean is
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Evidence" bpmnElement="A_Evidence">
         <dc:Bounds x="1310" y="125" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_OptionsAnalysis" bpmnElement="Call_OptionsAnalysis">
+        <dc:Bounds x="1910" y="125" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_R_Review" bpmnElement="R_Review">
         <dc:Bounds x="1510" y="545" width="140" height="80" />
@@ -223,9 +235,13 @@ Either way the decision is written down before the process ends, and the bean is
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_UA_9" bpmnElement="SF_UA_9">
         <di:waypoint x="1760" y="585" />
-        <di:waypoint x="1850" y="585" />
-        <di:waypoint x="1850" y="755" />
-        <di:waypoint x="1910" y="755" />
+        <di:waypoint x="1880" y="585" />
+        <di:waypoint x="1880" y="165" />
+        <di:waypoint x="1910" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_UA_15" bpmnElement="SF_UA_15">
+        <di:waypoint x="1980" y="205" />
+        <di:waypoint x="1980" y="715" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_UA_10" bpmnElement="SF_UA_10">
         <di:waypoint x="2050" y="755" />

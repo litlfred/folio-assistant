@@ -82,7 +82,20 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    did **not run**; report it that way rather than folding it into a green,
    per the same honesty rule as the build above.
 6. **Push** the feature branch (retry/backoff as in step 2):
-   `git push -u origin <branch>`.
+   `git push -u origin <branch>`. Then **ask whether the push produced a run**:
+   `bun run check:head-has-run`.
+
+   This does not change what you do next — step 7 dispatches either way. It
+   changes what you can honestly SAY. A push here can silently produce no run
+   at all (bean `3pqn`, observed three times), and a pull request showing zero
+   checks is indistinguishable from one whose checks have not started, so a
+   reviewer cannot tell "CI is coming" from "CI is never coming". If the check
+   reports **no run**, write that in the PR body alongside the dispatched run's
+   URL — otherwise the PR looks like it is merely early.
+
+   Three states, and the third is not a finding: `could not ask` (no remote, no
+   network, 403, 404) means nothing was established, and it must not be
+   reported as either answer.
 7. **Dispatch the repo's CI on the pushed branch, and fold the result into the
    PR.** Local green is not CI green — CI runs on a cold cache, its own
    toolchain, and without whatever build flags you set locally. So after the
@@ -152,6 +165,45 @@ harness git instructions). Do not include the model identifier in the PR.
 - **`--force-with-lease`, never bare `--force`** when a rebase rewrote history.
 - **Honest green.** Pre-existing red is reported as pre-existing, with evidence;
   your-change red blocks the "ready" claim.
+
+- **NO CHECKS IS NOT GREEN — verify against the run list, never the PR page.**
+  This is the third state, and it is the one the PR page cannot show you: a PR
+  with **zero** check runs renders *identically* to one whose checks have not
+  started. Both are "nothing red". Bean `3pqn`.
+
+  It is not rare and it is not theoretical. Six observations on this repository
+  between 2026-09-19 and 2026-09-20: a push, a PR opened shortly after, and
+  **no `pull_request`-event run ever fires for that head**. The newest run on
+  the branch is for the *previous* head — usually the commit the branch's last
+  PR had just merged. Three hypotheses have been tested and falsified (a paths
+  filter, a ref-update/opened race, app-token suppression), and the elapsed-time
+  series is flat: 52 s fail, 45 s pass, 30 s fail, 13 s pass, seconds fail,
+  seconds fail. **Waiting longer is not the remedy, and neither is force-push
+  avoidance** — two of the six were plain fast-forwards.
+
+  So before calling a branch ready, and **before any merge**:
+
+  1. Read the PR's `head_sha`.
+  2. `mcp__github__actions_list` → `list_workflow_runs`, filtered by branch, and
+     find a run whose `head_sha` matches.
+  3. **No run for that sha → the branch is NOT ready**, whatever the PR page
+     shows. Say so in those words rather than "checks pending", and re-run them
+     with `mcp__github__actions_run_trigger` → `run_workflow` against the branch.
+     That is the workaround every one of the six needed; it is written here
+     rather than left as folklore (`3pqn` Done-when 3).
+  4. Re-check after **every** push. A new commit moves the head, and the head is
+     what the absence attaches to — measured on PR #552, which hit this twice in
+     eight minutes, on two different commits.
+
+  **Why this sits under a guardrail rather than in the recipe.** An agent
+  holding a standing merge authorisation will read zero checks as nothing-red
+  and merge unverified. That is not a hypothetical either: the session that
+  wrote this rule was operating under exactly such an authorisation when #552
+  reproduced the bug, and was one step from merging a PR with no coverage at
+  all. The same three-state discipline the rest of this repository applies to
+  `check:l1-complete`, `ci-health` and `toc_source` — **could-not-determine is
+  never rendered as clean** — has to reach the merge decision too, because that
+  is where it costs the most.
 - **One branch.** Develop on the assigned `claude/*` branch; moving work to a
   different branch needs explicit permission.
 - **NEVER DELETE A FEATURE OR STAGING BRANCH** without explicit assent from the

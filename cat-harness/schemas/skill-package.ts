@@ -62,8 +62,25 @@ export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallba
 export const ScriptRuntimeSchema = z.enum(["bash", "python", "typescript", "bun"]);
 export const ScriptPhaseSchema = z.enum(["pre", "execute", "validate", "post"]);
 export const ValidatorScopeSchema = z.enum(["file", "block", "chapter", "project"]);
+/**
+ * The lifecycle points a hook can bind to.
+ *
+ * `PreToolUse` was MISSING until 2026-09-20 and its absence was not academic:
+ * `interaction-modality` §4.1 is a STRICT rule about how a question is put to
+ * a person, and the one moment it certainly applies is the instant before
+ * `AskUserQuestion` is invoked. With only `PostToolUse` here, the rule could be
+ * reminded of *after* the question had already been asked, which is no
+ * reminder at all.
+ *
+ * The general shape is worth naming, because this enum will grow again: an
+ * event the host supports and this schema does not is a class of enforcement
+ * the instance cannot express, and it fails at the REGISTRY rather than at the
+ * hook — `.claude/settings.json` accepted the entry and the generated skill
+ * registry refused it. That is the right order (the gate caught it) and it is
+ * still a gap: the hook was live and unrepresentable at the same time.
+ */
 export const HookEventSchema = z.enum([
-  "SessionStart", "PostToolUse", "PreCommit", "PostCommit", "UserPromptSubmit",
+  "SessionStart", "PreToolUse", "PostToolUse", "PreCommit", "PostCommit", "UserPromptSubmit",
 ]);
 export const IdentitySourceSchema = z.enum([
   "git-config", "github-oauth", "google-oauth", "env-var", "bearer-token", "default",
@@ -117,6 +134,22 @@ export const CapabilityDefinitionSchema = z.object({
   description: z.string(),
   detection: CapabilityDetectionSchema,
   requires: z.array(z.string()).optional(),
+  /**
+   * The capability that stands in for this one when it is absent.
+   *
+   * Declared HERE and not on each skill that needs it. What substitutes for
+   * `lean-toolchain` is a property of `lean-toolchain`, not of the five
+   * skills that happened to say so — bean `folio-assistant-sym3`, on the
+   * owner's standing objection to duplicate data maintenance. A sixth Lean
+   * skill had to remember to repeat it, and a change of substitute had to be
+   * made five times and could be made four.
+   *
+   * **It must not transitively `requires` the capability it replaces.** A
+   * substitute that needs the missing thing is absent in exactly the case it
+   * exists for — `probeAll` computes `present = requiresMet && probe(…)`, so
+   * the fallback never fires. `check:fallback-roles` reports that.
+   */
+  fallbackTo: z.string().min(1).optional(),
 });
 
 // ─── SkillDefinition ─────────────────────────────────────────────────────────
@@ -124,14 +157,21 @@ export const CapabilityDefinitionSchema = z.object({
 export const SkillCapabilityRefSchema = z.object({
   capabilityId: z.string(),
   degradation: DegradationStrategySchema,
-  fallbackCapabilityId: z.string().optional(),
-  /**
-   * The ROLE that performs this instead, when no capability can — the
-   * air-gapped case, where an API cannot be reached and a person signs.
-   * See {@link SkillCapabilityRef} for why a role rather than an actor,
-   * and why this is not modelled as a capability.
-   */
-  fallbackRole: z.string().min(1).optional(),
+  // NEITHER fallback field lives here any more, and for two different
+  // reasons — both 2026-09-20.
+  //
+  // `fallbackRole` was DERIVABLE: the BPMN already carried it executably, so
+  // declaring it was a cached copy with nothing asserting the two agreed
+  // (bean `85e8`).
+  //
+  // `fallbackCapabilityId` was not derivable but was DUPLICATED: one fact,
+  // `lean-toolchain → lean-mcp`, written in five modules. It is
+  // `CapabilityDefinition.fallbackTo` now, declared once on the capability
+  // it is a property of (bean `sym3`).
+  //
+  // What stays is `degradation` — the SKILL's business, what it does when a
+  // capability is missing, as against the capability's, what stands in for
+  // it.
 });
 
 export const SkillDependencySchema = z.object({
@@ -165,7 +205,22 @@ export const SkillDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   description: z.string(),
-  roles: z.array(z.string()),
+  /**
+   * RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing.
+   *
+   * Required until today, which is why making it optional is part of the
+   * retirement rather than a separate tidy: removing the 23 declarations
+   * without this makes `skill()` throw on every definition.
+   *
+   * Record: `fsh-guts/retired/skill-definition-roles.md`. Short version — it
+   * mixed an HTTP access tier (`owner`, `collaborator`, and `reader`, which
+   * is not even a `UserRole`) with BPMN roles, and `src/core/rbac.ts` never
+   * consulted it: routes hardcode `hasRole(req, "collaborator")`. A field
+   * that reads as enforcement and enforces nothing is worse than an absent
+   * one. Reinstating it means writing the consumer first, and deciding which
+   * of the two vocabularies it speaks.
+   */
+  roles: z.array(z.string()).optional(),
   requiredCapabilities: z.array(SkillCapabilityRefSchema),
   dependsOn: z.array(SkillDependencySchema).optional(),
   allowedTools: z.array(z.string()).optional(),
@@ -175,10 +230,16 @@ export const SkillDefinitionSchema = z.object({
   routingPatterns: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   package: z.string().optional(),
-  // `SkillDefinition.schemas` is documented and appears in the interface's own
-  // example, but had no counterpart here — so `.parse()` stripped it off any
-  // skill that used one. Same defect as `lean` on the provable blocks.
-  schemas: z.array(SkillSchemaRefSchema).optional(),
+  // `schemas` was here until 2026-09-20, added because the interface had it
+  // and Zod was stripping it — a real defect, correctly fixed at the time.
+  //
+  // Both halves are gone now, and the fix is the reason worth keeping: the
+  // field reached no reader in EITHER state. Adding the counterpart made the
+  // value survive `.parse()` and travel to exactly one consumer,
+  // `generate-docs.ts`, which had never run since the root commit and is
+  // retired (`folio-assistant-3w0i`). Fixing a field's plumbing is not
+  // evidence that anything is on the other end — this one was two years of
+  // declaration with no destination (`folio-assistant-t2yg`).
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
   schemaRef: z.string().optional(),
 });
@@ -297,6 +358,13 @@ export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkou
  * `scripts/generate-docs.ts`, reads it for the Docker requirements this type's
  * own doc comment names. So `frequency` and `autoUpdate` are fields no code
  * consults.
+ *
+ * **Stronger since 2026-09-20**: that "only substantive reader" was itself
+ * never invoked — no package.json entry and no workflow, in any commit since
+ * the root commit — and is retired to `fsh-guts/scripts/` (bean
+ * `folio-assistant-3w0i`). The directory now has no substantive reader at
+ * all, which does not change the conclusion below; it removes the last
+ * reason to soften it.
  *
  * It is documented rather than deleted because the intent is real information
  * about two real external dependencies — a maintainer chose `shallow-clone` over

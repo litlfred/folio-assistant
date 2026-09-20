@@ -41,7 +41,7 @@
  */
 
 import { spawnSync } from "node:child_process";
-import { HARNESS_CONFIG } from "../schemas/harness-config";
+import { LEGACY_HARNESS_CONFIG } from "../schemas/harness-config";
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { extname, join, relative, resolve, sep } from "node:path";
 
@@ -108,7 +108,10 @@ const CONTENT_DIRS = new Set([
 
 /** Paths that are neither the author's material nor a question — just noise. */
 const SKIP_DIRS = new Set([
-  ".git", ".github", ".vscode", ".idea", "beans", ".harness", ".claude",
+  ".git", ".github", ".vscode", ".idea", "beans", ".claude",
+  // Moved out of `.harness/` on 2026-09-20 and DECLARED, so they are skipped
+  // by name rather than by a dot-prefix that no longer exists.
+  "interaction", "issue-marks",
   "node_modules", ".venv", "venv", "__pycache__", "dist", "build", "target",
   ".next", ".cache", "coverage", ".lake", ".pytest_cache", "vendor",
 ]);
@@ -125,14 +128,21 @@ const SKIP_FILES = new Set([
  * converted; skipping them keeps a re-run from proposing to import the
  * scaffolding it wrote last time.
  */
+// The config is matched by SUFFIX now, not by name: it is
+// `<instance>.config.json` as of 2026-09-20 and this module scans a
+// repository it may not yet have a declaration for. The retired global name
+// stays in the set so a re-run over a not-yet-migrated repo still skips it
+// rather than proposing to import it as content.
 const FOLIO_FILES = new Set([
-  HARNESS_CONFIG, "agents.md", "claude.md", "gemini.md", ".mcp.json",
+  LEGACY_HARNESS_CONFIG, "agents.md", "claude.md", "gemini.md", ".mcp.json",
 ]);
+const CONFIG_SUFFIX = ".config.json";
 
 function isSkipped(rel: string): boolean {
   const parts = rel.split("/");
   if (parts.some((p) => SKIP_DIRS.has(p))) return true;
   const base = parts[parts.length - 1]!.toLowerCase();
+  if (parts.length === 1 && base.endsWith(CONFIG_SUFFIX)) return true;
   if (SKIP_FILES.has(base) || FOLIO_FILES.has(base)) return true;
   // A dotfile sitting at the repo root is configuration, not the author's work.
   if (base.startsWith(".") && parts.length === 1) return true;
@@ -266,7 +276,7 @@ export function formatScan(r: ScanResult): string {
   const order: Bucket[] = ["library", "content", "unclassified"];
   const label: Record<Bucket, string> = {
     library: "library/ — source material somebody else wrote",
-    content: "content/ — prose authored here",
+    content: "folio/ — prose authored here",
     unclassified: "unclassified — I could not tell; you decide",
   };
 

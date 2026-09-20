@@ -11,7 +11,6 @@
  * cannot parse must not silently lose every voice check while reporting clean.
  */
 import { describe, test, expect } from "bun:test";
-import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -24,6 +23,7 @@ import { readActiveVoices } from "../../schemas/voices";
 import { criterionDefHash } from "../../content/pipeline/qa-utils";
 import { QA_CRITERIA_BY_ID } from "../../content/pipeline/qa-criteria-registry";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 describe("criterionVoices", () => {
   test("absent means NOT voice-scoped — the opposite default from profiles", () => {
@@ -81,22 +81,38 @@ describe("readActiveVoices", () => {
 
   test("a config with no voices key activates none", () => {
     const d = tmp();
-    writeFileSync(join(d, HARNESS_CONFIG), '{"contentType":"document"}');
+    writeInstanceConfig(d, '{"contentType":"document"}');
     expect(readActiveVoices(d)).toEqual([]);
   });
 
   test("a config listing voices returns them in order", () => {
     const d = tmp();
-    writeFileSync(
-      join(d, HARNESS_CONFIG),
-      '{"voices":{"active":["who-editorial","milnor"]}}',
+    writeInstanceConfig(d, '{"voices":{"active":["who-editorial","milnor"]}}',
     );
     expect(readActiveVoices(d)).toEqual(["who-editorial", "milnor"]);
   });
 
+  test("folio.config.json is NOT read here either — the old name is dead", () => {
+    // Bean `9ici`. `harness-dirs.test.ts` asserts the hard break for
+    // `resolveHarnessConfigPath`; this is the case it did not cover, and the
+    // one that was live: this function looped over BOTH names until
+    // 2026-09-20, so an old-name folio got a DETERMINED voice list while every
+    // other setting was dropped in silence.
+    //
+    // `undefined` is the assertion that matters, not `[]`. The third state
+    // makes voice criteria RUN; `[]` would grant them a skip on the strength
+    // of a file the rest of the platform refuses to read.
+    const d = tmp();
+    writeFileSync(
+      join(d, "folio.config.json"),
+      '{"voices":{"active":["who-editorial"]}}',
+    );
+    expect(readActiveVoices(d)).toBeUndefined();
+  });
+
   test("UNPARSEABLE config is undefined, not []", () => {
     const d = tmp();
-    writeFileSync(join(d, HARNESS_CONFIG), "{ not json");
+    writeInstanceConfig(d, "{ not json");
     expect(readActiveVoices(d)).toBeUndefined();
   });
 
@@ -104,19 +120,36 @@ describe("readActiveVoices", () => {
     // The author meant something; guessing which voices they meant is worse
     // than running every check.
     const d = tmp();
-    writeFileSync(join(d, HARNESS_CONFIG), '{"voices":{"active":"who-editorial"}}');
+    writeInstanceConfig(d, '{"voices":{"active":"who-editorial"}}');
     expect(readActiveVoices(d)).toBeUndefined();
   });
 
   test("this instance activates no voice", () => {
     // Issue #208: "the folio-asst's own docuemtnation conent doesnt have any
     // voice". Asserted so that activating one here is a deliberate act.
-    // The REPOSITORY root: `readActiveVoices` reads `harness.config.json`,
-    // which lives beside `package.json`. Passing the instance root found no
-    // config and returned `undefined` — the third state, correctly meaning
-    // "could not determine", for a file that is right there one level up.
+    //
+    // The INSTANCE root, and it has to be: a config belongs to an instance
+    // and is named after it, so the question "what does this activate" is
+    // only answerable of something that declares itself. `cat-harness/` is
+    // where `folio-assistant` is declared; its config sits one level up at
+    // the checkout root, and the outward walk finds it there.
+    const inst = join(import.meta.dir, "../..");
+    expect(readActiveVoices(inst)).toEqual([]);
+  });
+
+  test("the CHECKOUT is a different instance, and its silence is `undefined`", () => {
+    // The contrast that keeps the assertion above meaningful. The repo root
+    // declares `folio-assistant-checkout` — a real instance, deliberately not
+    // sharing the platform's name — and it has no config of its own. That is
+    // "could not determine", NOT "activates nothing", and collapsing the two
+    // would let the test above pass over a directory that was never read.
+    //
+    // It also says why `repoRootFor` is the wrong move here now: under one
+    // global filename any directory in the checkout resolved to one config,
+    // so walking to the repo root was harmless. With a config per instance
+    // the repo root is a DIFFERENT instance's question.
     const root = repoRootFor(join(import.meta.dir, "../.."));
-    expect(readActiveVoices(root)).toEqual([]);
+    expect(readActiveVoices(root)).toBeUndefined();
   });
 });
 

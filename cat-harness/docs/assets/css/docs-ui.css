@@ -1817,6 +1817,88 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   );
 }
 
+/* A STICKY WITH A BACKDROP: art behind, scrim between art and ink.
+ *
+ * Two layers rather than one background, because the art cannot be a CSS
+ * background at all: `<picture>` swaps the FILE at a breakpoint, and a
+ * `background-image: url(...)` can only name one crop. Serving the wide crop to
+ * a phone is the bug `landing.html` records shipping once, so the art stays
+ * markup and this positions it.
+ *
+ * `isolation: isolate` creates a stacking context, so the two negative
+ * z-indexes stay inside the card. Without it they sit behind the PAGE and the
+ * art disappears under the site background — which looks exactly like a missing
+ * image, so it would be debugged as one.
+ *
+ * The scrim's fallback is the opaque surface, not `transparent`. A theme with a
+ * backdrop always has a scrim — the schema refuses one without — so this
+ * fallback is only reached by a sticky marked `--backdrop` whose theme did not
+ * load. Falling back to transparent there would show ink directly on the art at
+ * whatever contrast the photograph happens to give; falling back to the flat
+ * surface hides the art and keeps the words readable. Degrade toward legible. */
+.fa-sticky--backdrop {
+  position: relative;
+  isolation: isolate;
+  /* REQUIRED, not tidiness. Without it the art escapes the card's rounded
+   * corners; and if any rule above ever fails to position it, an unclipped
+   * backdrop lays out at its INTRINSIC size — 1672px wide — and covers the
+   * page. That is not hypothetical: it is what this board did on its first
+   * render, and it was invisible in the HTML, which was correct throughout. */
+  overflow: hidden;
+}
+
+/* THE POSITIONED LAYER IS THE `<picture>`, NOT THE `<img>`.
+ *
+ * This was `.fa-sticky--backdrop > .fa-sticky-art` and matched NOTHING: the
+ * `<img>` sits inside `<picture>`, so it is a grandchild and the child
+ * combinator failed silently. CSS has no error for a selector that matches
+ * nothing, so the page built clean, the markup was right, every request
+ * returned 200 — and the art rendered at full size in normal flow, pushing the
+ * text down and spilling across the whole viewport. Found by screenshotting the
+ * board, not by any gate.
+ *
+ * `<picture>` is the right element to position anyway: it is the box that
+ * represents the art, and the `<img>` inside it is the chosen crop. */
+.fa-sticky--backdrop > picture {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+/* Negative z-index puts this ABOVE the card's own background and below its
+ * content, which is what the painting order gives: an element's background
+ * paints first, then negative-z children, then in-flow content. `isolation`
+ * above keeps both layers inside the card rather than behind the page. */
+.fa-sticky--backdrop > picture > .fa-sticky-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* `contain`, so the WHOLE artwork is visible rather than a crop of it.
+   *
+   * This was `cover`, on the reasoning that the card's aspect will not match the
+   * art's and letterboxing reads as a broken image. Both halves were wrong here.
+   * `cover` cut the cat's head off on a short card and showed a meaningless
+   * middle band on a tall one — the owner, looking at it: "show full sticky
+   * image, not cropped." And the letterboxing argument does not apply to a
+   * backdrop faded to a tenth of its strength: the bands are the card's own
+   * surface colour, which is what the rest of the card already is.
+   *
+   * `top` because the thought-cloud is at the top of every crop and the text is
+   * held to the top of the card. Centring the art vertically would slide the
+   * cloud down behind the second paragraph. */
+  object-fit: contain;
+  object-position: center top;
+}
+
+.fa-sticky--backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--fa-sticky-scrim, var(--fa-sticky-surface, rgba(128, 128, 128, 0.08)));
+}
+
 /* PRIORITY STAYS LITERAL, DELIBERATELY. Critical is red and high is amber in
  * every theme, because the stripe encodes PRIORITY and a theme that recoloured
  * it would make the same urgency read differently on two boards. A theme
@@ -2392,3 +2474,300 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 }
 
 .fa-kind-fan-row .fa-kind-fan-open { margin-top: 0; }
+
+/* ── The landing board ──────────────────────────────────────────────
+ *
+ * The landing page is a board of stickies (issue #464). The sticky card
+ * itself, its backdrop art and its scrim are all `.fa-sticky` rules above;
+ * these are the landing-specific ones. */
+
+/* CLIPPED TO A PIXEL, NOT REMOVED. `display: none` takes a node out of the
+ * accessibility tree, and each landing sticky's accessible name comes from a
+ * heading referenced by `aria-labelledby` — remove it and the board is three
+ * anonymous `<article>` regions. The neighbouring `.fa-tiles .search-label`
+ * rule carries the long version of why, found by reading real Jekyll output
+ * rather than by a gate: axe accepts a non-empty placeholder as a last-resort
+ * pass and does not flag the demotion.
+ *
+ * Generalised here rather than copied: it was scoped to one selector, and this
+ * is the second caller. */
+.fa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* One column on a phone, side by side when there is room. `auto-fit` rather
+ * than `auto-fill`: with three cards and a wide viewport, `auto-fill` leaves
+ * empty phantom tracks and the board drifts left of centre. */
+.fa-landing-board {
+  display: grid;
+  /* WIDER THAN A BOARD CARD, and the reason is the fixed shape rather than
+   * taste. A sticky's words now sit inside its art's cloud, which is a fraction
+   * of the card — the grumpy card crop's is 58% x 23.5%. At the 17rem column
+   * this board used, that cloud is about 160x65px, which no readable text fits.
+   * Measured: three of four cards overflowed at 17rem and none does at 26rem.
+   *
+   * So the column width is load-bearing for legibility here, not a layout
+   * preference, and it is written down because the next person to tighten it
+   * will not otherwise know what it costs. */
+  /* NOT routed through `--fa-sticky-min-width`, and that is the correction.
+   * `themes.css` is generated and gives that property to every THEME
+   * (`[data-fa-sticky-theme="pale-sage"] { --fa-sticky-min-width: 17rem }`),
+   * so it is a property of a sticky's palette rather than of a board's layout.
+   * Writing the landing board's column width into it lost twice: as a `var()`
+   * fallback it never applied, and as a declaration it fought the theme. The
+   * column width is not a theme decision, so it stops pretending to be one.
+   *
+   * `min(26rem, 100%)` rather than a flat 26rem: 26rem is 416px, and a 430px
+   * phone would otherwise be handed a column it cannot quite fit. */
+  grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+/* The landing stickies are read, not scanned, so they get more room than a
+ * board card and their text is not scaled down. */
+.fa-landing-sticky {
+  padding: 1.1em 1.2em;
+}
+
+/* START-ALIGNED, NOT CENTRED. The owner, 2026-09-20: "do not auto-cener
+ * markdown. assume left justified (or right if RHS lang)."
+ *
+ * `start` rather than `left`, and that is the whole of the right-to-left half:
+ * it resolves to left under `dir="ltr"` and right under `dir="rtl"`, from the
+ * document's own direction. Writing `left` and adding an RTL override would be
+ * two rules that can disagree, and this site is translated into six UN
+ * languages — Arabic among them — so the RTL case is real rather than
+ * hypothetical.
+ *
+ * This replaces `text-align: center`, which came from an earlier reading of
+ * "text centered around cloud towards top". That instruction was about WHERE
+ * THE BLOCK SITS — in the cloud, near the top — and the block is now positioned
+ * there by `--fa-tx/ty/tw/th`. Centring the prose as well was reading a layout
+ * instruction as a typographic one, and centred markdown is hard to read: every
+ * line starts in a different place, which is exactly what a ragged left edge
+ * costs a reader. */
+.fa-landing-sticky__body {
+  text-align: start;
+}
+
+/* ── A STICKY IS A FIXED SHAPE, AND THE SHAPE IS ITS CROP'S ──────────────────
+ *
+ * The owner, 2026-09-20, looking at a landscape sticky whose card had been
+ * sized by its text: "i want stickys to be the same fixd size, so there would
+ * be [no] unused space ... dispalyed content matches layout ratios."
+ *
+ * So the card takes the art's aspect and the art fills it exactly. The
+ * letterboxing that prompted this came from `object-fit: contain` (which stays
+ * — "show full sticky image, not cropped") fitting a 1.78 image into a box
+ * whose height was set by a paragraph. Give the box the image's ratio and
+ * `contain` and `cover` agree, so nothing is cropped AND nothing is banded.
+ *
+ * `aspect-ratio` has no fallback value on purpose: a sticky with no art has no
+ * ratio to take, and `auto` leaves it exactly as it was. */
+/* THE TODO BOARD, MOUNTED INSIDE THE LANDING BOARD.
+ *
+ * The owner: "i want todo board inside of the landing folio/board." The landing
+ * board is a grid of harness cards, so the todo board arrives as one more grid
+ * item — and it must span the whole row rather than sit in a single column,
+ * because it is a board in its own right with its own grid inside it.
+ *
+ * `--inline` rather than restyling `.fa-sticky-board`: everywhere else that
+ * board is an overlay opened by a launcher, and this must not change it there. */
+.fa-landing-board > .fa-sticky-board--inline {
+  grid-column: 1 / -1;
+}
+
+.fa-landing-sticky--fixed {
+  aspect-ratio: var(--fa-sticky-aspect, auto);
+  /* The padding moves to the text box, which positions itself against the art.
+   * Padding on the card would shift the cloud coordinates, which are fractions
+   * of the CARD, not of its content box. */
+  padding: 0;
+}
+
+/* WHICH LAYOUT IS IN FORCE, aliased here rather than in the `style` attribute.
+ *
+ * An inline custom property cannot be overridden by a stylesheet, so a card
+ * that set `--fa-sticky-aspect` inline would keep the laptop crop's ratio on a
+ * phone while `<picture>` served the portrait file — the art would letterbox
+ * again, and the words would sit in the wrong cloud. The template emits the raw
+ * per-layout values and `data-fa-shape`; the aliasing is all below.
+ *
+ * The fallbacks chain to the laptop values, because a role may declare a region
+ * for one crop and not another, and the nearest true thing beats a guess. */
+.fa-landing-sticky--fixed[data-fa-shape="laptop"] {
+  --fa-sticky-aspect: var(--fa-aspect-laptop);
+  --fa-tx: var(--fa-tx-laptop);
+  --fa-ty: var(--fa-ty-laptop);
+  --fa-tw: var(--fa-tw-laptop);
+  --fa-th: var(--fa-th-laptop);
+}
+.fa-landing-sticky--fixed[data-fa-shape="mobile"] {
+  --fa-sticky-aspect: var(--fa-aspect-mobile);
+  --fa-tx: var(--fa-tx-mobile);
+  --fa-ty: var(--fa-ty-mobile);
+  --fa-tw: var(--fa-tw-mobile);
+  --fa-th: var(--fa-th-mobile);
+}
+.fa-landing-sticky--fixed[data-fa-shape="card"] {
+  --fa-sticky-aspect: var(--fa-aspect-card);
+  --fa-tx: var(--fa-tx-card);
+  --fa-ty: var(--fa-ty-card);
+  --fa-tw: var(--fa-tw-card);
+  --fa-th: var(--fa-th-card);
+}
+
+/* THE WORDS, IN THE CLOUD.
+ *
+ * Fractions of the card, matching how `textRegion` is declared — "fractions
+ * rather than pixels so the declaration survives the image being re-exported".
+ *
+ * The defaults are what a sticky whose art declares NO region gets: a generous
+ * inset box, centred. That is deliberately not a guessed cloud — a role nobody
+ * measured has no quiet interior to aim at, and putting the words over the
+ * cat's face would be worse than putting them in the middle of the card. */
+.fa-landing-sticky--fixed > .fa-landing-sticky__text {
+  position: absolute;
+  left: calc(var(--fa-tx, 0.08) * 100%);
+  top: calc(var(--fa-ty, 0.08) * 100%);
+  width: calc(var(--fa-tw, 0.84) * 100%);
+  height: calc(var(--fa-th, 0.84) * 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: var(--fa-text-align, center);
+  font-size: calc(1em * var(--fa-text-scale, 1));
+  /* SCROLL, never clip and never spill. The geometry this restores was dropped
+   * because overflow used to be silent — words cut off or running over the art
+   * with nothing to say so. A scrollable box is the visible version of the same
+   * state: the reader can still read it, and the author can see there is more
+   * than fits and lower `text.scale` or widen `text.box`. */
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+/* A sticky with no art keeps the old flow behaviour exactly: no fixed shape, no
+ * absolute box. `--fixed` is only added when art resolved, so this is the
+ * third-state case the template already distinguishes. */
+.fa-landing-sticky:not(.fa-landing-sticky--fixed) > .fa-landing-sticky__text {
+  display: contents;
+}
+
+/* The two breakpoints are THE SAME NUMBERS the `<picture>` sources use. If one
+ * side moves and the other does not, the card takes one crop's ratio while the
+ * browser loads another's file — the art letterboxes and the cloud is in the
+ * wrong place. They are written here together for that reason. */
+@media (max-width: 48rem) {
+  .fa-landing-sticky--fixed[data-fa-shape] {
+    --fa-sticky-aspect: var(--fa-aspect-card, var(--fa-aspect-laptop));
+    --fa-tx: var(--fa-tx-card);
+    --fa-ty: var(--fa-ty-card);
+    --fa-tw: var(--fa-tw-card);
+    --fa-th: var(--fa-th-card);
+  }
+}
+@media (max-width: 30rem) {
+  .fa-landing-sticky--fixed[data-fa-shape] {
+    --fa-sticky-aspect: var(--fa-aspect-mobile, var(--fa-aspect-laptop));
+    --fa-tx: var(--fa-tx-mobile);
+    --fa-ty: var(--fa-ty-mobile);
+    --fa-tw: var(--fa-tw-mobile);
+    --fa-th: var(--fa-th-mobile);
+  }
+}
+
+/* A markdown body sets its own margins on the first and last child, which
+ * doubles the card's padding at top and bottom. */
+.fa-landing-sticky__body > :first-child { margin-top: 0; }
+.fa-landing-sticky__body > :last-child { margin-bottom: 0; }
+
+/* The derivation chain is several short lines. Left as separate blocks rather
+ * than run together, because the rungs ARE the content — and the NO-BREAK SPACE
+ * opening the last one is load-bearing typography, asserted by a test in
+ * `kg-node.test.ts`. Nothing here may collapse whitespace. */
+.fa-landing-sticky__body p { margin: 0 0 0.45em; }
+
+.fa-landing-sticky__links {
+  margin: 0.9em 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5em;
+  /* `start`, matching the body above: a centred list of links has the same
+   * ragged-edge problem, and the label and its note would centre independently
+   * of each other. */
+  text-align: start;
+}
+
+/* The link inherits the theme's ink rather than the site's link colour: on a
+ * scrimmed photograph the site blue is the one value whose contrast was never
+ * measured against this ground. Underlined so it is still identifiable as a
+ * link without relying on hue (SC 1.4.1), which is the same rule the priority
+ * stripe follows by carrying a width as well as a colour. */
+.fa-landing-sticky__links a {
+  color: var(--fa-sticky-ink, inherit);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  font-weight: 600;
+}
+
+/* ── Inline code belongs to the CARD, not to the site's code chip ───────────
+ *
+ * The owner, 2026-09-20, looking at the rendered board: *"why blackout on
+ * middle image?"* — `uploads/` and `library/` in the folio-assist-core sticky
+ * were solid black slabs.
+ *
+ * Measured, not guessed. Site-wide, inline code is LIGHT TEXT ON A DARK CHIP —
+ * `#e6e1e8` on `#0d1117`, which is fine and deliberate. Inside a sticky the
+ * chip kept its dark background while `color` was overridden by the rule above
+ * it, so the text became the theme's `--fa-sticky-ink` — on `library` that is
+ * `#1c2630`. Dark ink on a near-black chip:
+ *
+ *     #1c2630 on #0d1117  =  1.23:1     (AA needs 4.5:1)
+ *     the body text beside it        =  14.42:1
+ *
+ * So the words were not merely low-contrast, they were invisible, and only in
+ * stickies — which is why nothing else on the site showed it.
+ *
+ * Restoring the light foreground would fix the contrast and keep a black slab
+ * on a light paper card, which is what the owner objected to. So the chip joins
+ * the CARD's palette instead — and WHICH pair matters, checked across all
+ * eleven themes rather than the one in front of me:
+ *
+ *     ink on EDGE     nine themes 9.33-10.14:1, but `high-contrast-light` and
+ *                     `high-contrast-dark` have ink == edge, so 1.00:1 — the
+ *                     very defect being fixed, moved to another theme
+ *     ink on SURFACE  12.45:1 (library) to 21:1 (both high-contrast). AAA
+ *                     everywhere, because a theme's ink is CHOSEN against its
+ *                     surface; that is what makes the card readable at all
+ *
+ * So: the card's own paper, its ink, and `edge` demoted to the border, where
+ * ink == edge is a visible outline rather than a vanishing act. `themes.test.ts`
+ * pins the surface/ink ratio for every theme, so a new one cannot reintroduce
+ * this.
+ *
+ * Scoped to `__text` rather than the article, so a code span in any future
+ * chrome outside the text region keeps the site chip. */
+.fa-landing-sticky__text code {
+  background: var(--fa-sticky-surface, transparent);
+  color: var(--fa-sticky-ink, inherit);
+  border: 1px solid var(--fa-sticky-edge, transparent);
+  border-radius: 0.25em;
+  padding: 0.05em 0.32em;
+  font-size: 0.92em;
+}
+
+.fa-landing-sticky__note {
+  display: block;
+  font-size: 0.88em;
+  opacity: 0.85;
+}

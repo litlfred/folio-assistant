@@ -222,3 +222,69 @@ WHAT IS STILL A DECISION, and it is the owner's, not mine. Two forks, and they a
 2. WHO WRITES THE RECORD — bean question 1, still open and still the interesting part. Deploy time knows the PR and the issue; sweep time knows the size and the liveness; NEITHER knows both. The owner's "that's part of the behaviour of that node type" says the node owns the rule, but not which moment populates which fields.
 
 Not guessing either. Put to the owner before any code is written.
+
+_2026-09-20T04:53:02Z_ — UNBLOCKED. Owner picked option 1: make the change in `schemas/fsh-guts.ts` and flag the sibling. Done; the note is on `t0i3`, whose status I left `in-progress` and did not touch.
+
+The publishing half of this bean is now closed. A `staging-preview` record written as JSON under `fsh-guts/` reaches `<base>/fsh-guts.jsonld` with its `staging` block intact, under `data`. Three changes were needed, not one — the fields were being lost at the schema (`z.object` strips), at the reader (markdown front matter is flat, so a nested block becomes `[]`), and at the exporter (an explicit allowlist, so passthrough alone published nothing). Fixing any one alone would have changed nothing observable, which is why the first two limits looked like the whole problem when `6pfo` shipped.
+
+THE PINNED TESTS DID THEIR JOB. Both limits were pinned as failing-by-design constraints in `scripts/tests/staging-preview.test.ts`, on the stated grounds that a silent fix leaves a detour nobody can date. They failed the moment the fix landed. Rewritten rather than deleted: one now records FIXED, the other STILL TRUE — front matter is still flat, which is why the carrier stays JSON and why `readStagingPreview` remains a TYPED reader rather than a workaround.
+
+STILL OPEN, and it is the whole remaining half of this bean: **no workflow is wired.** Nothing writes a record at deploy time, nothing enriches it at sweep time, nothing retires it on cleanup. The owner's answer on shape was "deploy writes it, sweep enriches it" and "one document", and the node type implements exactly that — but the constraint recorded on 2026-09-19 has not changed and is the next thing to solve:
+
+- `feature-staging.yml` has `contents: write` and pushes only to `gh-pages`; it never writes to `main`.
+- `health-check.yml` is `contents: read` DELIBERATELY — AGENTS.md: "It reports and never acts." Granting it write to commit records would break a stated principle, so the sweep is not the writer without a decision.
+- Fourteen other workflows do have `contents: write`, so a scheduled writer is possible; which one, and whether per-preview commits to `main` are acceptable churn, is unanswered.
+
+Do not guess at that. It is a question for the owner, in the same shape as the two already answered.
+
+_2026-09-20T05:38:14Z_ — **CORRECTION to my own note above, re-measured on main at `ece998d22` after the cat-harness restructure.**
+
+I wrote: *"Fourteen other workflows do have `contents: write`, so a scheduled writer is possible."* That is true as a count and misleading as a conclusion, which is the worse kind of wrong.
+
+MEASURED, not quoted:
+
+- 16 workflows can write. **14 of them are `workflow_dispatch`-only** — a workflow nobody can trigger automatically is not a writer.
+- Exactly **2** both auto-fire and can write: `docs-site.yml` (push to `main`, path-filtered) and `feature-staging.yml`.
+- **3** workflows carry a `schedule:` — `ci-health.yml`, `health-check.yml`, `upstream-pins.yml` — and **all three are `contents: read`**.
+
+So **there is no scheduled writer at all**, and my "a scheduled writer is possible" pointed the next agent at an option that does not exist without building one.
+
+WHAT I MISSED, and it makes the remaining question much smaller. `feature-staging.yml` already fires at BOTH ends of a preview's life:
+
+```yaml
+pull_request:        types: [opened, synchronize, reopened]   # creation
+pull_request_target: types: [closed]                          # retirement
+```
+
+It has `contents: write`, and at both moments it knows the branch, the commit, the PR and the issue. So CREATION and RETIREMENT — the two halves the owner said belong to the node type — already have an owner that fires at exactly the right times. `retireStagingPreview` being idempotent matters here: `synchronize` fires repeatedly, `closed` can fire more than once.
+
+THE OPEN QUESTION IS ENRICHMENT ONLY — size, files, liveness. Those are the sweep's knowledge, and `health-check.yml` is `contents: read` **deliberately**: AGENTS.md states "It reports and never acts", with `plj1` as the worked example of what happens when a reporting tool acts. Granting it write to enrich records would contradict a stated principle, not merely a setting.
+
+Three shapes, put to the owner rather than guessed:
+
+1. Drop enrichment from the record — deploy facts only, retired on close. Meets this bean's `## Done when` without touching the principle or adding churn to `main`.
+2. Give `health-check.yml` write. Contradicts "It reports and never acts".
+3. A new scheduled workflow whose only job is to enrich. No principle broken, but a new writer committing per-preview records to `main`, and another thing to keep green.
+
+Leaving the wrong note above rather than editing it, so the correction is visible and the next reader does not re-derive it. What misled me: I counted `contents: write` and stopped, without asking what fires each workflow — the same shape as counting a thing and not checking it is reachable.
+
+_2026-09-20T06:52:59Z_ — OWNER CHOSE: retire into `gh-pages` OUTSIDE the deleted directory, **and never delete a retired record without explicit confirmation from the user**. That second half makes the retired store a durable artefact, so `deletion-requires-confirmation` governs it the same way it governs a bean or a preview.
+
+**MEASURED FIRST, and it changes what this costs.** There is NOWHERE on `gh-pages` a retired record survives today:
+
+- `docs-site.yml` is a FULL REPLACE — `git rm -r --ignore-unmatch '*'` over the whole branch, then copies `_site` in — and it is the only one of the repository's six `gh-pages` publishers without `keep_files: true`. It fires on every push to `main`.
+- The only reason `STAGING/<slug>/` survives is `restore-staging.ts`, which carries **the OPEN pull requests'** previews back into `_site` before the push (bean `plj1`).
+- A retired record belongs to a CLOSED pull request by definition. So it would be carried by nothing and wiped by the next deploy.
+
+So "retire it somewhere the cleanup does not touch" is necessary and not sufficient: the cleanup is not the only thing that deletes. `restore-staging.ts` has to carry the retired store too — and that is the RIGHT home rather than scope creep, because that script already is the single answer to "what survives a full replace".
+
+**A SECOND HAZARD, from the slug.** `STAGING/_retired/` is reachable by `rm -rf "STAGING/$SLUG"`: a branch named `_retired` slugifies to exactly `_retired`, and git permits that ref. Verified. So the store needs an explicit guard, not just a name nothing happens to collide with today.
+
+**AND A NEAR-MISS WORTH ITS OWN BEAN.** The slug sanitiser CAN emit `..` — input `..` gives output `..`, which as a path is `STAGING/..`, the checkout root, against an `rm -rf`. It is safe only because **git rejects every ref name containing `..`** (verified with `git check-ref-format` across eight candidates). The protection lives in git's ref rules, not in the `sed`, and that invariant is written down nowhere. A future change to the sanitiser, or a slug taken from something that is not a ref, loses it silently.
+
+So the design is four pieces, and the last two are what "never delete" actually costs:
+
+1. `stage` writes the live record into `_site/`, landing at `STAGING/<slug>/staging-preview.json`.
+2. `cleanup`, before `rm -rf`, retires it into the retired store.
+3. `restore-staging.ts` carries the retired store across a full replace — unconditionally, NOT gated on open pull requests, since a retired record's PR is closed.
+4. Every removal path is guarded: the slug-collision case refused outright, and any deliberate removal of a retired record requires the explicit confirmation input, the same shape `cleanup-dispatch` already uses.

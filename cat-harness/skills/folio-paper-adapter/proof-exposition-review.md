@@ -1,6 +1,5 @@
 ---
 name: proof-exposition-review
-roles: [collaborator, owner]
 description: >
   Paper-wide retrospective review of a single proof block. Given the
   current state of the paper — including all blocks added since the

@@ -12,6 +12,7 @@
  * @module content/pipeline/export-bibtex
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
@@ -22,7 +23,7 @@ import { findContentRepoRoot } from "./repo-root";
 // folio-assistant and made every content path below miss).
 const REPO_ROOT = findContentRepoRoot();
 // Content repo's content/, not folio-assistant's — see qa-checkers-extended.
-const CONTENT_DIR = join(findContentRepoRoot(), "content");
+const FOLIO_DIR = folioDir(findContentRepoRoot());
 const args = process.argv.slice(2);
 const outIdx = args.indexOf("--out");
 const outPath = outIdx >= 0 ? resolve(args[outIdx + 1]) : join(REPO_ROOT, "references.bib");
@@ -47,7 +48,7 @@ interface VerifEntry {
   note?: string;
 }
 
-const verifPath = join(CONTENT_DIR, "bib-qa-verifications.json");
+const verifPath = join(FOLIO_DIR, "bib-qa-verifications.json");
 let verifMap: Map<string, VerifEntry> = new Map();
 if (existsSync(verifPath)) {
   const raw = JSON.parse(readFileSync(verifPath, "utf-8"));
@@ -270,10 +271,10 @@ function ordinal(n: number): string {
 function buildBibtex(): string {
   const header = [
     "% Bibliography for Quantum Observable Universe",
-    "% AUTO-GENERATED from content/schema/references.ts — do not edit manually.",
+    "% AUTO-GENERATED from folio/schema/references.ts — do not edit manually.",
     "%",
     "% Key convention:  <firstauthorlastname><year>  (all lower-case)",
-    "% Source of truth: content/schema/references.ts (CSL-JSON)",
+    "% Source of truth: folio/schema/references.ts (CSL-JSON)",
     "% Generator:       content/pipeline/export-bibtex.ts",
     `% Generated:       ${new Date().toISOString()}`,
     "",

@@ -1,6 +1,5 @@
 ---
 name: lean-environment-setup
-roles: [collaborator, owner]
 description: >
   Sets up and troubleshoots the Lean 4 environment for Claude Code sessions.
   Ensures elan, lake, lean are installed so the paper-assistant MCP's Lean

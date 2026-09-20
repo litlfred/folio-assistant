@@ -107,6 +107,7 @@
  * as drift). Every one of them moved a count.
  */
 
+import { folioDir } from "../schemas/cat-harness.js";
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join, relative, resolve } from "path";
 
@@ -394,7 +395,7 @@ function audit(repoRoot: string, packages: readonly LeanPackage[]): Report {
 
   for (const pkg of packages) {
     const lakeRoot = resolve(repoRoot, pkg.lakeRoot);
-    const paperRoot = resolve(repoRoot, "content", pkg.paperDir);
+    const paperRoot = join(folioDir(repoRoot),  pkg.paperDir);
 
     const push = (m: Map<string, Decl[]>, d: Decl) => {
       const bucket = m.get(d.fqn);

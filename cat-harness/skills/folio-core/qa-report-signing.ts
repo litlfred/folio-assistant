@@ -5,13 +5,14 @@ export const qaReportSigning: SkillDefinition = {
   name: "QA report signing",
   description:
     "Attest a QA report's run hashes by one of two routes — an API signer, or a human release authority when the performing actor cannot reach out.",
-  roles: ["validation-pipeline", "attestation-service", "publication-manager"],
   requiredCapabilities: [
-    // The first use of `fallbackRole` (bean `folio-assistant-85e8`): when no
-    // capability can sign, a ROLE takes over rather than another tool. A
-    // `fallbackCapabilityId` cannot express this — there is no second tool on
-    // an air-gapped host, which is the whole case.
-    { capabilityId: "signing-api", degradation: "fallback", fallbackRole: "publication-manager" },
+    // `fallback` with NO `fallbackCapabilityId`, and that is the whole case:
+    // there is no second tool on an air-gapped host. The role that takes
+    // over is not declared here — `qa-report-signing.bpmn` already carries
+    // it, in the only form that routes anything: `Task_HumanSign` is a
+    // `userTask` in `Lane_Human`, which binds `publication-manager`.
+    // `check:fallback-roles` derives it and fails if it disappears.
+    { capabilityId: "signing-api", degradation: "fallback" },
   ],
   dependsOn: [
     { ref: "content-test", kind: "skill", conformance: "SHALL" },

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wlqd
 title: skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-19T05:47:28Z
-updated_at: 2026-09-19T11:05:51Z
+updated_at: 2026-09-20T17:19:50Z
 parent: folio-assistant-zzmr
 ---
 
@@ -224,3 +224,87 @@ unfetchable and the sync is still unimplemented. What changed is that QA now
 says so on every run instead of a doc block saying it once. Implementing the
 sync remains a platform capability change, so a GitHub issue and the CRDM
 workflow come first.
+
+---
+
+## Re-measured 2026-09-20 — three of the four claims have moved
+
+Checked against the code, not the checkboxes.
+
+| the bean's claim | now |
+|---|---|
+| `shallow-clone` is only a schema value, no code acts on it | **still true** |
+| `skill-fetch.ts` has no mention of `remote-packages/` | **stale** — it mentions it, but only in an EXCLUSION list, so the substance holds: it still does not serve them |
+| the registry does not carry them | **still true** |
+| `autoUpdate` / `frequency` are read by nothing | **still true** — the only hit is a test asserting the docs SAY "Intended frequency" |
+
+**And two real things were built since.** A `kg-qa` criterion,
+`remote-skill-is-servable` (`major`), which the summary records the owner asking
+for *"a todo that FAILS rather than prose explaining itself"*. And five **stub
+bodies** under `skills/remote-stubs/`.
+
+### The stubs are honest, and they still trip
+
+`remote-skill-is-servable` now **passes** — the names resolve, so the instance
+can serve them. That would be gaming the criterion if the stubs were empty.
+They are not. `smart-launch.md` opens *"This skill is declared, not implemented
+here. Do not follow it as guidance; there is none to follow"*, names the
+upstream repository, and restates the remedy and this bean.
+
+More to the point, **they still fail a different criterion**: `skill-is-a-stub`
+fires on all five, `major`. So the gap did not go quiet — it moved to the
+criterion that describes it accurately. That is the right outcome, not a
+silenced one.
+
+## What remains is blocked on the author, by the criterion's own text
+
+> Remedy: implement the sync (**a platform capability change, so a GitHub issue
+> and the CRDM workflow first**), or drop the declaration.
+
+Both branches need the author:
+
+- **Implement the sync** — a capability change. The CRDM process requires a
+  linked GitHub issue, and an agent never opens one without permission.
+- **Drop the declaration** — removing two wrappers about real external
+  dependencies, which
+  [`deletion-requires-confirmation`](../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)
+  puts with the author too. `skill-package.ts:353` records that *"a maintainer
+  chose `shallow-clone` over"* the alternatives, so the declaration carries a
+  decision somebody made.
+
+Nothing here is an agent's call. Brought back as a question rather than
+actioned.
+
+
+## OWNER: **"wlqd OK"**, 2026-09-20
+
+Approved to proceed. The remaining half is implementing the sync so
+`skill_fetch` can serve a declared remote package's skills — a **platform
+capability change**, so per `AGENTS.md` it takes a GitHub issue and the CRDM
+workflow before implementation, not a direct edit.
+
+Read as permission for that first step: scan for an existing issue, and open
+one only if none covers it. `AGENTS.md` §CRDM is explicit that an agent never
+creates an issue without permission, and this is it.
+
+**What must not be lost when it lands:** the `remote-skill-is-servable`
+criterion currently reports **5** findings, one per declared-and-unservable
+skill, and `scripts/tests/remote-skill-servable.test.ts` pins that set in BOTH
+directions — it cannot silently grow or silently vanish. Implementing the sync
+makes those five servable, which fails that test **by design**, and the test
+says so. Closing this bean means updating the expectation deliberately, not
+watching a green run.
+
+Also recorded there: both wrappers pin `ref: "main"` with `autoUpdate: true`,
+which would auto-ingest whatever upstream pushes. Prefer a pinned commit.
+---
+
+## Issue opened 2026-09-20 — CRDM entry
+
+Author authorised it. <https://github.com/litlfred/folio-assistant/issues/556>
+carries the context, the re-measurement, what is already done (so the
+requirements conversation does not re-litigate it) and the two branches with
+their costs. **No code was written**: CRDM Phase 1 starts from the issue, and
+the branch — implement, or retire the declaration — is the author's.
+
+Status stays `in-progress`; neither `## Done when` box has moved.

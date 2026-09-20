@@ -73,6 +73,7 @@
  * @module content/pipeline/content-graph
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { walkBlocks } from "./qa-utils";
@@ -549,7 +550,7 @@ if (import.meta.main) {
   const repoRoot = findContentRepoRoot();
   const rootDir = rootArg
     ? join(repoRoot, rootArg)
-    : join(repoRoot, "content");
+    : folioDir(repoRoot);
 
   const g = buildContentGraph(rootDir, repoRoot);
   const editorial = g.edges.filter((e) => e.kind === "editorial").length;

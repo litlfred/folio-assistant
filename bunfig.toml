@@ -1,0 +1,17 @@
+# Bun configuration.
+#
+# `preload` exists for ONE reason, and it is written up in full at
+# `cat-harness/schemas/test-preload.ts`: the `folio` graph kind is registered by
+# a load-time side effect in core, so whether a test that reads this instance's
+# declaration passes depended on where the runner happened to put that file.
+#
+# That is not hypothetical. On 2026-09-20 the suite was green locally (3198
+# pass) and red in CI (5 fail) on the same commit, and running the files in
+# isolation found five with the same latent order-dependence — CI had caught
+# only the first.
+#
+# This affects `bun test` alone. The gates run as separate `bun run` processes
+# with no preload, so a production module that forgets to register core still
+# fails its own gate rather than being covered up here.
+[test]
+preload = ["./cat-harness/schemas/test-preload.ts"]

@@ -46,7 +46,7 @@ const BUILDERS = JSON.stringify(join(PLATFORM, "schemas/builders.ts"));
 let repo: string;
 
 const block = (slug: string, label: string): string => {
-  const dir = join(repo, "content", "paper", "ch");
+  const dir = join(repo, "folio", "paper", "ch");
   mkdirSync(dir, { recursive: true });
   const p = join(dir, `${slug}.ts`);
   writeFileSync(
@@ -55,7 +55,7 @@ const block = (slug: string, label: string): string => {
       `export default proposition({ label: ${JSON.stringify(label)}, title: "T", statement: "s" });\n`,
   );
   writeFileSync(join(dir, `${slug}.md`), "Prose.\n");
-  return `content/paper/ch/${slug}.ts`;
+  return `folio/paper/ch/${slug}.ts`;
 };
 
 /** Drive a real instance to the point where the commit step is enabled. */
@@ -76,6 +76,11 @@ const authorise = async (label: string, decision = "accept"): Promise<void> => {
   complete(model, state, "Task_CollateFindings");
   complete(model, state, "Task_LogFindings");
   complete(model, state, "Task_ReviewFindings");
+  // The options analysis sits between the findings and the decision
+  // (`u4hs`). These fixtures are ordinary edits, so they take `GW_Trigger`'s
+  // "no" — the early exit `A_Frame` has always documented and, until this
+  // wiring exposed the gap, the diagram did not actually have.
+  drainSubprocess(model, state, "Call_OptionsAnalysis", { GW_Trigger: "no" });
   // The decision and its audit note are recorded before the gateway routes on them.
   complete(model, state, "Task_RecordDecision");
   complete(model, state, "Gateway_EditorDecision", { outcome: decision });
@@ -98,13 +103,13 @@ describe("what the gate ignores", () => {
   test("a .qa.json is machine-written by the sweep and is not a corpus write", async () => {
     block("x", "prop:x");
     // Gating these would make every qa-sweep look like an unauthorised edit.
-    expect(await check(["content/paper/ch/x.qa.json"])).toEqual([]);
+    expect(await check(["folio/paper/ch/x.qa.json"])).toEqual([]);
   });
 
   test("a .ts that is not a block manifest is skipped", async () => {
-    mkdirSync(join(repo, "content", "paper", "ch"), { recursive: true });
-    writeFileSync(join(repo, "content/paper/ch/helper.ts"), "export const n = 1;\n");
-    expect(await check(["content/paper/ch/helper.ts"])).toEqual([]);
+    mkdirSync(join(repo, "folio", "paper", "ch"), { recursive: true });
+    writeFileSync(join(repo, "folio/paper/ch/helper.ts"), "export const n = 1;\n");
+    expect(await check(["folio/paper/ch/helper.ts"])).toEqual([]);
   });
 });
 
@@ -176,7 +181,7 @@ describe("allowing what the process authorised", () => {
     block("carbon", "prop:carbon");
     await authorise("prop:carbon");
     // One block's worth of work, not two problems.
-    const findings = await check(["content/paper/ch/carbon.ts", "content/paper/ch/carbon.md"]);
+    const findings = await check(["folio/paper/ch/carbon.ts", "folio/paper/ch/carbon.md"]);
     expect(findings).toHaveLength(1);
     expect(findings[0].allowed).toBe(true);
   });
@@ -184,7 +189,7 @@ describe("allowing what the process authorised", () => {
 
 describe("it does not fail open", () => {
   test("a manifest whose identity cannot be established is refused", async () => {
-    const dir = join(repo, "content", "paper", "ch");
+    const dir = join(repo, "folio", "paper", "ch");
     mkdirSync(dir, { recursive: true });
     // Reads as a manifest textually, but the module throws on import: the
     // builder rejects a theorem label on a proposition.
@@ -193,7 +198,7 @@ describe("it does not fail open", () => {
       `import { proposition } from ${BUILDERS};\n` +
         `export default proposition({ label: "theorem:x", title: "T", statement: "s" });\n`,
     );
-    const [finding] = await check(["content/paper/ch/bad.ts"]);
+    const [finding] = await check(["folio/paper/ch/bad.ts"]);
     expect(finding.allowed).toBe(false);
     expect(finding.reason).toContain("does not fail open");
   });

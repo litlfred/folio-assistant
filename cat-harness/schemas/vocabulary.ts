@@ -9,7 +9,7 @@
  * check BY NAME, commenting "an IRI stem, not a file — nothing serves it and
  * nothing should try to." That was right while a term only had to be an
  * IDENTIFIER. It stopped being right when the owner asked, 2026-09-19, that
- * the bootstrap README link almost every word to its definition: a definition
+ * the cat-bootstrap README link almost every word to its definition: a definition
  * has to dereference.
  *
  * Fourth instance of the defect bean `blv9` records — a link-shaped value that
@@ -39,16 +39,16 @@
  * Which layer owns a term — and therefore which instances must carry it.
  *
  * The owner, 2026-09-19: "we shouldnt need voicegraph or librarygrph or
- * previewgrapjh in bootstrap!!" Exactly right, and the flat vocabulary I first
- * wrote had no way to say so. A bootstrap instance reads a declaration, walks
+ * previewgrapjh in cat-bootstrap!!" Exactly right, and the flat vocabulary I first
+ * wrote had no way to say so. A cat-bootstrap instance reads a declaration, walks
  * a dependency tree and hands over; it has no opinion about editorial voices,
  * an L1 library or a preview target, and a vocabulary that makes it define
- * them has made bootstrap carry the thing bootstrap exists to defer.
+ * them has made cat-bootstrap carry the thing cat-bootstrap exists to defer.
  *
  * Same three layers the repository split uses, so this does not invent a
  * fourth axis:
  *
- * - `bootstrap` — readable with nothing loaded: the declaration, its
+ * - `cat-bootstrap` — readable with nothing loaded: the declaration, its
  *   directories, and the actor/role/process/skill sentence the first BPMN
  *   needs. Nothing here may require the harness.
  * - `harness` — the agentic machinery: tools, capabilities, requirements,
@@ -57,9 +57,9 @@
  *   uploads, todos, the folio itself.
  *
  * The direction rule holds here as everywhere: core may name a harness term,
- * harness may name a bootstrap term, and never the reverse.
+ * harness may name a cat-bootstrap term, and never the reverse.
  */
-export type TermLayer = "bootstrap" | "harness" | "core";
+export type TermLayer = "cat-bootstrap" | "harness" | "core";
 
 /** A term's gloss, and where a reader goes for more. */
 export interface TermGloss {
@@ -86,20 +86,59 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss:
       "One item in the trashcan: something deprecated or thrown away, kept and addressable rather than deleted, and deliberately absent from the rendered site. Carries where it used to live, so it is not an orphan.",
   },
+  /**
+   * The two CONTENT-TYPE markers — what a repository asserts it is.
+   *
+   * Distinct from a graph kind, which says what is in a DIRECTORY. These say
+   * what the REPOSITORY is, and a repository is a set of them: `smart-base` is
+   * a DAK and a SUSHI project at once. `DAK` is not here because it is WHO's
+   * term in WHO's namespace, which is the point — a marker's type IRI belongs
+   * to whoever defines the type, and only the ones we mint need glossing here.
+   */
+  Instance: {
+    layer: "harness",
+    gloss:
+      "A repository carrying a harness declaration — it names itself, its published stub, and the directories it holds.",
+    seeAlso: "/agentic-harness.html",
+  },
+  Folio: {
+    layer: "harness",
+    gloss:
+      "A repository that authors folio content — it declares a content type, and `folio_init` wrote its config. Distinct from an Instance: this repository's `cat-harness/` is an Instance and is not a Folio.",
+    seeAlso: "/getting-started.html",
+  },
+  SushiProject: {
+    layer: "harness",
+    gloss:
+      "A repository SUSHI will build — FSH compiled to a FHIR implementation guide. Minted here because SUSHI publishes no logical model for its own config; this is our name for the membership, not a claim to define SUSHI.",
+  },
+
   Actor: {
-    layer: "bootstrap",
+    layer: "cat-bootstrap",
     gloss:
       "A concrete participant — human, agentic or mechanical — that persists across processes and takes on a role in each.",
     seeAlso: "/agentic-harness.html",
   },
+  Convention: {
+    layer: "harness",
+    gloss:
+      "A standing rule an actor must hold while performing a task, bound to a process, a lane or an activity rather than loaded unconditionally. Resolution is first-binding-wins along that order, not a merge, so a reader asking why a rule applies here gets one answer.",
+    seeAlso: "/agentic-harness.html",
+  },
+  Requirement: {
+    layer: "harness",
+    gloss:
+      "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
+    seeAlso: "/crdm-methodology.html",
+  },
   Role: {
-    layer: "bootstrap",
+    layer: "cat-bootstrap",
     gloss:
       "A BPMN swimlane: the persona an actor takes on because of the lane it is acting in, carrying that lane's skills.",
     seeAlso: "/agentic-harness.html",
   },
   Skill: {
-    layer: "bootstrap",
+    layer: "cat-bootstrap",
     gloss: "The instruction body an actor needs to perform a task.",
     seeAlso: "/skills.html",
   },
@@ -108,17 +147,17 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     seeAlso: "/skills.html",
   },
   Process: {
-    layer: "bootstrap",
+    layer: "cat-bootstrap",
     gloss: "A BPMN process: lanes that bind roles, activities that name skills, and the flow between them.",
     seeAlso: "/publication-workflow.html",
   },
   ProcessNode: {
-    layer: "bootstrap",
+    layer: "cat-bootstrap",
     gloss: "One element of a process — an activity, a gateway, a start or end event.",
     seeAlso: "/publication-workflow.html",
   },
   SequenceFlow: {
-    layer: "bootstrap",
+    layer: "cat-bootstrap",
     gloss: "A directed edge between two process nodes.",
     seeAlso: "/publication-workflow.html",
   },
@@ -133,12 +172,19 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: "Something an actor's environment provides — a binary, a service, a credential — probed rather than assumed.",
   },
   Directory: {
-    layer: "bootstrap",
+    layer: "cat-bootstrap",
     gloss: "A declared place to look, naming the kinds of graph found in it.",
     seeAlso: "/architecture.html",
   },
+  Asset: {
+    layer: "cat-bootstrap",
+    gloss:
+      "A file an instance declares as its own, with the role that file plays for it — the instance " +
+      "saying what something IS rather than a scan inferring it.",
+    seeAlso: "/architecture/harness-instances.html",
+  },
   GraphKind: {
-    layer: "bootstrap",
+    layer: "cat-bootstrap",
     gloss: "What a declared directory holds — the vocabulary a consumer matches on to decide whether to scan it.",
     seeAlso: "/architecture.html",
   },
@@ -189,15 +235,60 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Structure ────────────────────────────────────────────────────────
   partOf: { gloss: "The node this one belongs to." },
   inPackage: { gloss: "The skill package a skill ships in." },
+  inSubgraph: {
+    gloss:
+      "The DECLARED DIRECTORY a node was projected from — the named subgraph it belongs to, as a " +
+      "link to that directory's own node rather than a bare id. Derived from the instance's " +
+      "declaration, longest path prefix winning, and INHERITED through `partOf` for nodes that " +
+      "have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no " +
+      "value belongs to no declared directory — vocabulary nodes are minted from the namespace " +
+      "rather than from any file — and that absence is reported as its own state rather than " +
+      "folded into a default.",
+  },
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
   path: { gloss: "A declared directory's path, relative to the instance root." },
+  // `assetRole` and not `role`: an asset's role is a free string naming what
+  // the FILE is for, while a Role is a node an actor takes on in a swimlane.
+  // One spelling for both would give a consumer a literal where it expects a
+  // node, and the two would be indistinguishable in the graph.
+  assetRole: {
+    gloss:
+      "What a declared asset is FOR, as the instance names it — `instance-readme`, " +
+      "`agent-instructions`. A literal, and not the swimlane Role, which is a node with skills.",
+  },
   typeIri: { gloss: "The IRI of a node's type, so a consumer need not parse the `@type` string." },
+  // Convention terms (bean `3190`). Three separate glosses rather than one,
+  // because they are three separate claims and a reader deciding whether a
+  // rule still holds needs them apart.
+  statement: {
+    gloss:
+      "What a convention REQUIRES, in one line. Distinct from rdfs:comment, which is prose about " +
+      "the node: this is the rule itself, and a consumer filtering for enforceable text needs the two apart.",
+  },
+  rationale: {
+    gloss:
+      "Why a convention holds, so a reader can tell whether it still does. Kept separate from the " +
+      "statement deliberately — a rule and its justification collapsed into one field is a rule nobody " +
+      "can retire, because nothing is left that says what would falsify it.",
+  },
+  applies: {
+    gloss:
+      "The surfaces a convention governs — `typescript`, `bpmn`, `commit-message`. A filter, not prose, " +
+      "and open rather than enumerated: a closed set would have to be edited before a convention about a " +
+      "new surface could exist.",
+  },
   nodeKind: { gloss: "Which kind of node this is, where the type alone is not specific enough." },
   graphKind: { gloss: "The kind of graph a directory declares it holds." },
   holdsGraph: { gloss: "A graph kind found in this directory." },
   renderable: { gloss: "Whether a directory's contents are published as a website." },
   scans: { gloss: "A directory an instance will look in." },
+  scope: { gloss: "Which root a declared path resolves against — the instance's or the repository's." },
+  dependents: {
+    gloss:
+      "Whether an instance depending on this one materialises its own copy of a declared directory. " +
+      "Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+  },
 
   // ── The trashcan ─────────────────────────────────────────────────────
   // `movedFrom` is the one that earns its keep: without it a node in
@@ -245,6 +336,12 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   hasCapability: { gloss: "A capability this actor's environment provides." },
   providesCapability: { gloss: "A capability this node makes available." },
   requiresCapability: { gloss: "A capability this node needs before it can run." },
+  fallbackToCapability: {
+    gloss:
+      "The capability that stands in for this one when it is absent. It must not " +
+      "transitively require the capability it replaces — such a substitute is " +
+      "unavailable in exactly the case it exists for.",
+  },
 
   // ── Instructions and contracts ───────────────────────────────────────
   hasInstructions: { gloss: "Whether a skill has an instruction body at all." },
@@ -316,7 +413,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  *
  * A name this file does not gloss is `harness`, the middle. Same default and
  * same reasoning as {@link TermGloss.layer}: over-assigning to harness costs
- * an instance a term it did not need, while under-assigning to bootstrap makes
+ * an instance a term it did not need, while under-assigning to cat-bootstrap makes
  * the base depend on something above it.
  */
 export function termLayer(name: string): TermLayer {

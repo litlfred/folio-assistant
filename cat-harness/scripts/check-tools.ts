@@ -28,53 +28,138 @@
  *
  * @module scripts/check-tools
  */
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
-import { kgRoots } from "./known-skills.js";
-import { directoryForGraph } from "../schemas/cat-harness.js";
+import { knownSkills as knownSkillsIn } from "./known-skills.js";
+import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 
 /**
- * The declared `schemas` graph, or the convention.
+ * THIS INSTANCE'S OWN `schemas` directory, or the convention.
  *
  * declared-path-literal: the fallback is at the call site so the choice is
  * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why `directoryForGraph` is asked for the
- * `schemas` one by name rather than being handed a single-home guess.
+ * the schema definitions — which is why the `schemas` one is asked for by name
+ * rather than being handed a single-home guess.
+ *
+ * `instanceDirectoryForGraph`, not `directoriesForGraph(...)[0]`, because every use
+ * below composes a path INSIDE this directory. The question is "where is MY
+ * schemas directory", not "who declares schemas" — and from the `cat-harness`
+ * root those have different answers: measured 2026-09-20, `schemas` resolves
+ * to FOUR homes (`cat-harness/`, `folio-assistant-core/`, `large-datasets/`,
+ * `detangle/`), three of them arriving through the dependency overlay and
+ * belonging to somebody else. `[0]` was right only because the resolver
+ * happens to order the root's own declarations first; a reordering would have
+ * sent this generator's output into another checkout, silently. Bean `a02m`.
  */
 function schemasRoot(root: string): string {
-  return directoryForGraph(root, "schemas") ?? join(root, "schemas");
+  return instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas");
 }
 
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-/** Skill names, discovered — never a hardcoded list. See kg-export's note. */
-export function knownSkills(): Set<string> {
-  const names = new Set<string>();
-  const dirs: string[] = [];
-  // declared-path-literal: the convention fallback. Every declared root is
-  // scanned below; this names one for the message when none is declared.
-  const skillsRoot = kgRoots(ROOT)[0] ?? join(ROOT, "skills");
-  if (existsSync(skillsRoot)) {
-    for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-      if (d.isDirectory()) dirs.push(join(skillsRoot, d.name));
+/** The repository, one level above the instance. `invoke.shell` runs from here. */
+const REPO = join(ROOT, "..");
+
+/**
+ * Does every path a Tool node declares actually exist?
+ *
+ * ## The defect this exists for
+ *
+ * **Nine of the forty-four checkable `invoke.shell` values named a command that
+ * does not run.** Every one was missing the `cat-harness/` prefix — stale since
+ * the instance moved under that directory — and `bun run scripts/ingest-document.ts`
+ * failed with `Module not found`. Two Tool nodes, `ingest-stdlib` and
+ * `ingest-extended`, had been unreachable through their own declared invocation
+ * for as long as the inversion has been in.
+ *
+ * Nothing caught it, and `code-node-review` says why it expected not to: *"what
+ * no audit can tell you: whether the mechanism a Tool describes is the one that
+ * runs"*. That is true of WHAT the command does. It is **not** true of whether
+ * the command exists, which is a path and a filesystem — so the honest split is
+ * to check the part that is mechanical and leave the rest to a reviewer.
+ *
+ * ## Two roots, because the two fields mean different things
+ *
+ * | field | resolved against | why |
+ * |---|---|---|
+ * | `invoke.shell` | the **repository** | it is a command a caller types, and `package.json` and `.github/` are at the repo root |
+ * | `invoke.*.module` | the **instance** | it is loaded by this instance's own server, and matches `maintains.source` |
+ *
+ * Getting that backwards would have "fixed" twenty correct paths. The `module`
+ * field's own docstring said *"Repo-relative"* while giving `src/tools/workflow.ts`
+ * as its example — which is instance-relative and is where the file actually is —
+ * so the word was stale and the values were right.
+ *
+ * A bare command (`beans`, `jq`) is a RUNTIME DEPENDENCY rather than a path, and
+ * is reported as not-checkable rather than as passing: `requires.runtime` is where
+ * that claim lives, and this check has no business ruling on it.
+ */
+export function unresolvedPaths(): { field: string; tool: string; value: string; expected: string }[] {
+  const out: { field: string; tool: string; value: string; expected: string }[] = [];
+  for (const t of tools()) {
+    const inv = t.invoke as Record<string, unknown> | undefined;
+    if (!inv) continue;
+
+    const shell = typeof inv.shell === "string" ? inv.shell : undefined;
+    if (shell !== undefined) {
+      // `bun run X` where X is a path, or a bare path to a script or workflow.
+      const m = /^(?:bun|bunx) run ([^\s]+)/.exec(shell);
+      const target = m?.[1] ?? (/^[.\w][\w./-]*\.(?:ts|sh|ya?ml)$/.test(shell) ? shell : undefined);
+      // A `package.json` script name, not a path — `check:tools` and friends.
+      if (target !== undefined && /\.(?:ts|sh|ya?ml)$/.test(target) && !existsSync(join(REPO, target))) {
+        out.push({ field: "invoke.shell", tool: t.id, value: shell, expected: `${target} under the repository root` });
+      }
+    }
+
+    for (const arm of ["inProcess", "container", "mcp"]) {
+      const a = inv[arm] as { module?: unknown } | undefined;
+      const mod = a && typeof a.module === "string" ? a.module : undefined;
+      if (mod !== undefined && !existsSync(join(ROOT, mod))) {
+        out.push({ field: `invoke.${arm}.module`, tool: t.id, value: mod, expected: `${mod} under the instance root` });
+      }
     }
   }
-  for (const extra of ["src/skills", ".claude/skills/local"]) {
-    if (existsSync(join(ROOT, extra))) dirs.push(join(ROOT, extra));
-  }
-  for (const dir of dirs) {
-    for (const f of readdirSync(dir)) if (f.endsWith(".md")) names.add(f.slice(0, -3));
-  }
-  const io = join(ROOT, "schemas", "skills");
-  if (existsSync(io)) {
-    for (const e of readdirSync(io, { withFileTypes: true })) if (e.isDirectory()) names.add(e.name);
-  }
-  return names;
+  return out.sort((x, y) => x.tool.localeCompare(y.tool));
+}
+
+/**
+ * Skill names, from the ONE definition of where a skill lives.
+ *
+ * ## It had its own, and both halves of the disagreement were live
+ *
+ * This module carried a local scan: the FIRST declared `cat-harness` root, its
+ * immediate subdirectories, and two literal extras. `known-skills.ts` exists
+ * precisely so that no second answer to "does this skill exist" can drift from
+ * the first — its own header says two copies are "how one of them ends up
+ * reporting a wall of false dangling refs" — and this was the second copy.
+ *
+ * Measured 2026-09-20, the two sets differed **both ways** at once:
+ *
+ *  - **36 non-skills admitted.** `skills/memory/` then held agent-memory nodes,
+ *    every one a `.md` in a declared directory and none an instruction body.
+ *    {@link isSkillMd} excludes them by their `$schema:` line; a directory
+ *    scan cannot. So `satisfies: ["the-complement"]` would have RESOLVED —
+ *    a Tool claiming to implement a memory entry, checked and passed.
+ *  - **2 real skills missed.** `cat-bootstrap/skills/` holds its skills DIRECTLY
+ *    rather than in packages, and a scan of one root's subdirectories never
+ *    looks at the root itself. `confirm-harness` and `log-message` read as
+ *    dangling — which is how this was found: a Tool naming a skill that is
+ *    there, reported as an error.
+ *
+ * Taking the first root alone is the `dh4f` shape as well: a second declared
+ * root is scanned by nobody and reports clean.
+ *
+ * Zero-argument, because every caller here means THIS repository and the root
+ * is this module's own. The canonical function takes one, since a checker for
+ * another instance is a thing that exists.
+ */
+export function knownSkills(): Set<string> {
+  return knownSkillsIn(ROOT);
 }
 
 /**
@@ -294,9 +379,20 @@ if (import.meta.main) {
     console.error(`\n✗ ${r.unreadableContracts.length} skill contract(s) present but unreadable:`);
     for (const s of r.unreadableContracts) console.error(`    schemas/skills/${s}/input.schema.json`);
   }
+  const unresolved = unresolvedPaths();
+  if (unresolved.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${unresolved.length} declared path(s) that do not exist:`);
+    for (const u of unresolved) console.error(`    ${u.tool}.${u.field} = ${u.value}\n      expected ${u.expected}`);
+    console.error(
+      "\n    A node naming a command that does not run is unreachable through its own\n" +
+        "    declaration, which is the one thing a Tool node is for.",
+    );
+  }
   if (bad) process.exit(1);
   console.log(
     "\n✓ every satisfies resolves and agrees with its skill's contract; " +
-      "every io type is declared; every argv input is injection-safe",
+      "every io type is declared; every argv input is injection-safe; " +
+      "every declared path exists",
   );
 }

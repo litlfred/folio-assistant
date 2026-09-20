@@ -241,3 +241,54 @@ describe("the preflight's verdicts", () => {
     expect(slugProblem("release.v1-0-rc1")).toBeUndefined();
   });
 });
+
+describe("the close-event gate — merged removes, closed-unmerged does not", () => {
+  // Owner, 2026-09-20: "change policy, if merged to main, then staging goes
+  // away". Bean `folio-assistant-1feu`.
+  //
+  // This is the `cleanup` job, not `cleanup-dispatch` above. The distinction
+  // it encodes is about WHERE THE CONTENT LIVES: a merged PR's preview shows
+  // what the main site now shows, so it is redundant; a closed-unmerged one
+  // is the only rendering of that work, so it is the last copy.
+  const closeJob = wf.jobs["cleanup"];
+  const gate = closeJob.steps.find((s) => s.id === "check");
+
+  it("reads `merged` off the event, and binds it to env rather than interpolating", () => {
+    // Same reason as LABELS_JSON on the line above it: anything from the
+    // event payload reaching the script body directly is an injection site,
+    // and this job runs on `pull_request_target` with `contents: write`.
+    expect(gate?.env?.MERGED).toBe("${{ github.event.pull_request.merged }}");
+    expect(gate?.run ?? "").toContain('"$MERGED"');
+  });
+
+  it("a merged PR confirms WITHOUT a label", () => {
+    const run = gate?.run ?? "";
+    // The merged branch comes first and does not consult LABELS at all.
+    const merged = run.slice(run.indexOf('if [ "$MERGED" = "true" ]'), run.indexOf("elif"));
+    expect(merged).toContain("confirmed=true");
+    expect(merged).not.toContain("LABELS");
+  });
+
+  it("closed-unmerged still requires the label — the last-copy case", () => {
+    const run = gate?.run ?? "";
+    const rest = run.slice(run.indexOf("elif"));
+    expect(rest).toContain("staging:cleanup");
+    expect(rest).toContain("confirmed=false");
+  });
+
+  it("records WHICH rule removed it, so a reader can tell merge from label", () => {
+    // Without this the two paths are indistinguishable after the fact, and
+    // "was this removed because someone decided, or because it merged?" is
+    // exactly the question an audit of a deletion asks.
+    const run = gate?.run ?? "";
+    expect(run).toContain("reason=merged");
+    expect(run).toContain("reason=labelled");
+    expect(run).toContain("reason=closed-unmerged-and-unlabelled");
+  });
+
+  it("still fires only on close — it has not been widened to reach an OPEN PR", () => {
+    // The `plj1` guard. That failure deleted every open PR's preview, and no
+    // policy change about MERGED pull requests may reach one.
+    expect(closeJob.if).toContain("github.event.action == 'closed'");
+  });
+});

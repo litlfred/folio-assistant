@@ -562,7 +562,7 @@ Never silently rebuild Mathlib and throw the oleans away.
 
 ## Delegate the install to a sub-agent (recommended for the main task)
 
-The full bootstrap (elan + GitHub-toolchain workaround + full mathlib clone
+The full cat-bootstrap (elan + GitHub-toolchain workaround + full mathlib clone
 + from-source olean build) is **long, fiddly, and frequently blocked** — it
 should **not** run in the foreground of a content/proof task. Kick off a
 **background sub-agent** so the main session keeps moving, then verify the
@@ -572,7 +572,7 @@ target file(s) when it reports back.
 Agent(
   subagent_type = "general-purpose",
   run_in_background = true,
-  description = "Bootstrap Lean + verify <file>",
+  description = "CatBootstrap Lean + verify <file>",
   prompt = <the runbook below + the specific file/lemma to compile>
 )
 ```

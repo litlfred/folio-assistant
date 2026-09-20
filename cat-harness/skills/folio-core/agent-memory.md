@@ -7,6 +7,7 @@ description: >
   between "reaches everybody" and "deleted".
 adapters: [document, paper, dak]
 profiles: [document, paper]
+consulted: true
 ---
 
 # Subagent memory — what a durable entry may claim

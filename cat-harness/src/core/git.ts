@@ -8,6 +8,7 @@
  * @module folio-assistant/core/git
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync, symlinkSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { spawnSync } from "child_process";
@@ -150,10 +151,10 @@ export class GitHelper {
     mkdirSync(tmpFileDir, { recursive: true });
     try {
       // Symlink schema dir for relative imports
-      const schemaLink = join(branchTmpDir, "content", "schema");
-      const realSchema = resolve(this.repoRoot, "content", "schema");
+      const schemaLink = join(folioDir(branchTmpDir),  "schema");
+      const realSchema = join(folioDir(this.repoRoot),  "schema");
       if (!existsSync(schemaLink) && existsSync(realSchema)) {
-        mkdirSync(join(branchTmpDir, "content"), { recursive: true });
+        mkdirSync(folioDir(branchTmpDir), { recursive: true });
         try {
           symlinkSync(realSchema, schemaLink, "dir");
         } catch {}

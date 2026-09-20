@@ -28,8 +28,19 @@ on:
       - 'cat-harness/content/pipeline/gen-library-jsonld.ts'
       - 'cat-harness/content/pipeline/gen-site-jsonld.ts'
       - 'site-content/**'
-      - 'cat-harness/library/**/structure.json'
-      - 'cat-harness/library/**/candidates.json'
+      # Every library, wherever it is declared. `cat-harness/library/**` until
+      # bean `frs5` moved the four entries into `who-iris/` and
+      # `folio-assist-sci/` — a path filter naming a directory that no longer
+      # exists is a workflow that stops firing on the files it gates, and it
+      # reports nothing while doing so. That is `xom7` in its quietest form:
+      # not a red workflow, an absent one.
+      #
+      # `*/library/**` rather than the two names, so declaring a third library
+      # does not silently fall outside the gate. A filter listing the instances
+      # would have to be edited by whoever adds one, and the symptom of
+      # forgetting is invisible.
+      - '*/library/**/structure.json'
+      - '*/library/**/candidates.json'
       - 'cat-harness/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
@@ -44,8 +55,19 @@ on:
       - 'cat-harness/content/pipeline/gen-library-jsonld.ts'
       - 'cat-harness/content/pipeline/gen-site-jsonld.ts'
       - 'site-content/**'
-      - 'cat-harness/library/**/structure.json'
-      - 'cat-harness/library/**/candidates.json'
+      # Every library, wherever it is declared. `cat-harness/library/**` until
+      # bean `frs5` moved the four entries into `who-iris/` and
+      # `folio-assist-sci/` — a path filter naming a directory that no longer
+      # exists is a workflow that stops firing on the files it gates, and it
+      # reports nothing while doing so. That is `xom7` in its quietest form:
+      # not a red workflow, an absent one.
+      #
+      # `*/library/**` rather than the two names, so declaring a third library
+      # does not silently fall outside the gate. A filter listing the instances
+      # would have to be edited by whoever adds one, and the symptom of
+      # forgetting is invisible.
+      - '*/library/**/structure.json'
+      - '*/library/**/candidates.json'
       - 'cat-harness/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'

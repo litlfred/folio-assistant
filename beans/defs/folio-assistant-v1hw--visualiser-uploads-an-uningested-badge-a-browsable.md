@@ -1,0 +1,100 @@
+---
+# folio-assistant-v1hw
+title: 'VISUALISER: uploads/ — an uningested badge, a browsable queue, and the first WRITABLE surface'
+status: todo
+type: task
+priority: normal
+created_at: 2026-09-20T15:00:40Z
+updated_at: 2026-09-20T15:09:14Z
+parent: folio-assistant-slw1
+---
+
+Owner, 2026-09-20, verbatim:
+
+> like libray/ and foilio/ (should) and doc/ have visualtions as tools in the
+> harness that defines there schame, we need one for uploads/ that gives
+> count/badge of # uningested, lets you see what's there. lets you upload in
+> various ways.   defined in skills/tools.
+
+## What it asks for
+
+The `uploads/` visualiser, **a sibling of `jbx2`** (the `library/` one) and of
+whatever `docs/` and `folio/` get. Three capabilities, and the third is the one
+that makes this different from every other visualiser here:
+
+1. **A count/badge of how many are UNINGESTED** — a number you see without
+   opening anything.
+2. **See what is there** — the queue, browsable.
+3. **UPLOAD, in various ways.** Every other visualiser on this board is
+   read-only. This one WRITES, which is why it is the first real consumer of
+   the "writable interface *if* writable datastore" conditional on `yj32`.
+
+And the placement rule the owner states as the general one: **the visualiser
+lives as a tool in the harness that DEFINES the schema**, declared in
+`skills`/`tools`. Not beside the data, and not in whichever layer happens to
+render it — the layer that owns the vocabulary owns the tool for looking at it.
+
+## The blocker, and it is the badge itself
+
+**Nothing records that an upload was ingested.** Measured 2026-09-20:
+
+| | count |
+|---|---|
+| files in `uploads/` (root) | 22 |
+| files in `cat-harness/uploads/` | 4 |
+| entries in `cat-harness/library/` | 5 |
+
+Those numbers cannot be subtracted. `AssetSource` (`schemas/kg-node.ts:212`)
+records `{instance, path, ref}` — where an asset came from in ANOTHER
+INSTANCE — which is a different relation from "this library entry was made
+from that upload". There is no marker on an upload, no back-reference on a
+library entry, and no manifest between them.
+
+So **"# uningested" is not a query anybody can currently run**, and a badge
+that guessed would be worse than no badge: it would put a confident number on
+a set nobody has defined. The first piece of work here is the relation, not
+the widget.
+
+Three shapes for it, none chosen:
+
+- **A back-reference on the library entry** — each entry names the upload it
+  came from. Survives the upload being deleted; needs every entry to carry it.
+- **A marker on the upload** — a sidecar or a move to an `ingested/`
+  subdirectory. Cheapest to read, and it MUTATES the queue, which is the thing
+  a person is looking at.
+- **A manifest between them** — one file listing the pairs. One place to look,
+  one more artefact to keep in sync.
+
+## Depends on
+
+- **`slw1`** (epic, "one pipeline from uploads/ to a complete L1 library") —
+  that pipeline is where the ingested-relation would naturally be written, so
+  this should not invent a second answer. **Read `slw1` before starting.**
+- **`jbx2`** — the `library/` visualiser. It is NOT read-only either: the
+  owner added a quick upload+process action to it the same day, which starts
+  doc ingest from the corpus view. So the two share a write mechanism and must
+  not answer the write-path question twice, and the action there is what makes
+  the badge here tick down. One design, two entry points.
+- **`2krx`** — the QA axis requiring a visualiser and a doc entry per declared
+  subgraph. `uploads` is one of the two named there as declared-with-no-
+  renderer, so this bean CLEARS half of that finding.
+- **`yj32`**'s open question "what is the writable datastore?" — the upload
+  half of this cannot be designed until that is answered. Git is now confirmed
+  as the store (`cat-bootstrap/skills/roles/roles.json`, the
+  `knowledge-graph-data-store` role), so the remaining question is narrower:
+  which write path — a forge API, a local server, or a commit from a checkout.
+
+## Two instances declare `uploads`, and the visualiser must not merge them
+
+The root declares `uploads/` and `cat-harness` declares its own. They are two
+declarations on purpose (the `wwi6`/name-collision work), and attribution
+follows declaration — so a visualiser showing one queue of 26 would be
+reporting a set that does not exist. Per instance, or explicitly grouped.
+
+## Done when
+
+- [ ] The ingested relation exists and is readable, agreed with `slw1`
+- [ ] A tool in the harness that defines the `uploads` schema, declared in
+      `skills`/`tools` rather than placed beside the data
+- [ ] Badge count, browsable queue, and an upload path whose write mechanism
+      the owner has chosen

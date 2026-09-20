@@ -12,12 +12,29 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { GATES_WORKFLOW, NoGatesFound, gatesFrom, loadGates } from "../gates.ts";
+import {
+  GATES_WORKFLOW,
+  NoCheckScriptsFound,
+  NoGatesFound,
+  SCRIPT_EXEMPTIONS,
+  STEP_EXEMPTIONS,
+  checkScriptNames,
+  commandRunsScript,
+  commandsCiRuns,
+  gatesFrom,
+  loadGates,
+  otherWorkflowSteps,
+  scriptExemptionFor,
+  unclassifiedSteps,
+  unrunScripts,
+} from "../gates.ts";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 // THE REPOSITORY root — `GATES_WORKFLOW` is `.github/workflows/…`. See the
 // same constant in `gates.ts`.
 const ROOT = repoRootFor(resolve(import.meta.dir, "../.."));
+/** The REPOSITORY root — where `.github/workflows/` lives. */
+const REPO = ROOT;
 
 describe("the gates come from the workflow, not from a list", () => {
   test("the real workflow yields a substantial set", () => {
@@ -181,5 +198,139 @@ describe("a strict reader and a loose one agree", () => {
     // And the guard is not vacuous — a loose scan that matched nothing would
     // pass the filter above while proving nothing at all.
     expect(loose.length).toBeGreaterThan(30);
+  });
+});
+
+describe("every workflow step is accounted for", () => {
+  test("the foreign-step reader finds steps — an empty read is not a clean one", () => {
+    // `unclassifiedSteps` filters this list, so a reader that returns nothing
+    // reports nothing unclassified: a clean run over a directory it could not
+    // read. The property is asserted here rather than inferred from silence.
+    expect(otherWorkflowSteps(REPO).length).toBeGreaterThan(20);
+  });
+
+  test("no step CI runs is unclassified", () => {
+    // THE RATCHET, and the reason the table exists. A new workflow step lands
+    // in the gate set or in STEP_EXEMPTIONS with a reason, and never in the
+    // gap between them — which is where `gen-site-jsonld --check` sat while
+    // `bun run gates --all` passed 46 gates on a tree CI then rejected.
+    const missing = unclassifiedSteps(REPO).map((u) => `${u.file}: ${u.step.command}`);
+    expect(missing).toEqual([]);
+  });
+
+  test("every exemption states a reason", () => {
+    // Same rule `folio:no-skill` and `workflow-policy.json` follow: an
+    // exemption whose justification is "" is one somebody added to get to
+    // green, and nobody can review it afterwards.
+    const reasonless = STEP_EXEMPTIONS.filter((e) => !e.reason.trim()).map((e) => e.match);
+    expect(reasonless).toEqual([]);
+  });
+
+  test("every exemption still matches something CI runs", () => {
+    // The other direction, and the one that rots silently: a workflow step is
+    // deleted or reworded, its exemption stays, and the table slowly becomes
+    // a list of claims about a CI that no longer exists. Each entry must earn
+    // its place on every run.
+    const commands = otherWorkflowSteps(REPO).map((u) => u.step.command);
+    const stale = STEP_EXEMPTIONS.filter((e) => !commands.some((c) => c.includes(e.match)));
+    expect(stale.map((e) => e.match)).toEqual([]);
+  });
+});
+
+describe("every check script is accounted for — the direction nothing asked", () => {
+  test("the script scan finds scripts — an empty read is not full coverage", () => {
+    // `unrunScripts` FILTERS this list, so a scan returning nothing reports
+    // nothing unrun: total coverage over a `package.json` it could not read.
+    // The scan throws instead, and this asserts the floor rather than
+    // inferring it from silence.
+    expect(checkScriptNames(REPO).length).toBeGreaterThan(20);
+  });
+
+  test("an empty scan THROWS rather than reporting full coverage", () => {
+    const root = mkdtempSync(join(tmpdir(), "gates-noscripts-"));
+    try {
+      writeFileSync(join(root, "package.json"), JSON.stringify({ scripts: { build: "x" } }));
+      expect(() => checkScriptNames(root)).toThrow(NoCheckScriptsFound);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("no check script is unrun", () => {
+    // THE RATCHET for this direction. `unclassifiedSteps` asks "CI runs this
+    // — does the local set?", and its domain is steps found IN WORKFLOWS, so
+    // it is structurally unable to see a check that appears in no workflow at
+    // all. Nine did. `translate-kg-viewer:check` was RED on main while CI was
+    // green, because nothing ran it — bean `ot9a`.
+    expect(unrunScripts(REPO)).toEqual([]);
+  });
+
+  test("the commands read from CI are non-empty — the same vacuity trap", () => {
+    // `unrunScripts` reports everything as unrun if this returns nothing, so
+    // a broken reader here fails loudly rather than flooding. Asserted so the
+    // clean result above cannot come from an unreadable workflow directory.
+    expect(commandsCiRuns(REPO).length).toBeGreaterThan(20);
+  });
+
+  test("a script name must end at a TOKEN BOUNDARY, not merely match", () => {
+    // `check:partition` is the gate; `check:partition:edges` is a report. A
+    // substring match would read the wired gate as covering the unwired
+    // report — the two scripts in this repository that differ exactly in
+    // that way — and the report would count as gated.
+    expect(commandRunsScript("bun run check:partition", "check:partition")).toBe(true);
+    expect(commandRunsScript("bun run check:partition:edges", "check:partition")).toBe(false);
+    expect(commandRunsScript("bun run check:partition", "check:partition:edges")).toBe(false);
+    // A trailing flag is still a run of that script.
+    expect(commandRunsScript("bun run check:l1-complete -- --check", "check:l1-complete")).toBe(true);
+    // And a name inside a longer word is not a run of it.
+    expect(commandRunsScript("bun run xcheck:partition", "check:partition")).toBe(false);
+  });
+
+  test("every script exemption states a reason", () => {
+    // Same rule as STEP_EXEMPTIONS above: an exemption with an empty
+    // justification is one somebody added to get to green.
+    const reasonless = SCRIPT_EXEMPTIONS.filter((e) => !e.reason.trim()).map((e) => e.script);
+    expect(reasonless).toEqual([]);
+  });
+
+  test("every script exemption still names a script that EXISTS", () => {
+    // The direction that rots silently, and the one this bean was made of. A
+    // script is renamed or dropped, its exemption stays, and the table
+    // becomes a set of claims about a repository that has moved on. The six
+    // reasons these replaced lived in a YAML comment, where exactly that had
+    // happened: `translate-*:check` was excluded as needing "a translation
+    // toolchain not installed on this runner", and both run clean on a bare
+    // checkout.
+    const names = new Set(checkScriptNames(REPO));
+    const stale = SCRIPT_EXEMPTIONS.filter((e) => !names.has(e.script)).map((e) => e.script);
+    expect(stale).toEqual([]);
+  });
+
+  test("an exemption matches by exact name, never by prefix", () => {
+    // `check:partition:edges` is exempt and `check:partition` is not. A
+    // prefix or substring lookup would exempt the gate along with the report.
+    expect(scriptExemptionFor("check:partition:edges")).toBeDefined();
+    expect(scriptExemptionFor("check:partition")).toBeUndefined();
+  });
+
+  test("an unwired script IS reported — the check can fail", () => {
+    // The clean result above is only evidence if this reports a real gap.
+    // Built as a fixture rather than by mutating the repo: a gate that has
+    // never been shown failing is a gate nobody has tested.
+    const root = mkdtempSync(join(tmpdir(), "gates-unrun-"));
+    try {
+      mkdirSync(join(root, ".github", "workflows"), { recursive: true });
+      writeFileSync(
+        join(root, "package.json"),
+        JSON.stringify({ scripts: { "check:wired": "x", "check:orphan": "y" } }),
+      );
+      writeFileSync(
+        join(root, GATES_WORKFLOW),
+        "jobs:\n  typescript:\n    steps:\n      - run: bun run check:wired\n",
+      );
+      expect(unrunScripts(root)).toEqual(["check:orphan"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });

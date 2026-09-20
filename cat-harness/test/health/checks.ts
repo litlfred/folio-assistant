@@ -133,6 +133,21 @@ export interface BeanEvidence {
   status: string;
   /** ISO 8601, or `undefined` when the front matter carries none. */
   updatedAt?: string;
+  /**
+   * How many options the bean's own options section lists, or `undefined` when
+   * it has no such section.
+   *
+   * **`undefined` is the third state and the check must not read it as zero.** A
+   * bean that records WORK rather than a decision has no options to list, and
+   * `madr.md` says so in as many words: "a bean that records a decision carries
+   * these sections; a bean that records work does not need them." Collapsing
+   * absent into 0 would make every work bean a malformed decision record.
+   *
+   * Computed in the probe rather than here so the check stays a pure function
+   * over evidence and a fixture stays a literal — the reason `HealthContext` is
+   * a record of probes at all.
+   */
+  consideredOptions?: number;
 }
 
 export interface TodoEvidence {
@@ -248,6 +263,19 @@ function minutesSince(now: Date, iso: string | undefined): number | undefined {
   return (now.getTime() - t) / 60_000;
 }
 
+/**
+ * Whole hours between an ISO timestamp and `now`, or `undefined` if unreadable.
+ *
+ * Floored, and never negative: clock skew on a runner can date a write in the
+ * future, and a claim written "in the future" is the most recent claim there
+ * is. Reading it as 0 hours is the safe direction — the error spares a claim
+ * rather than accusing one of being quiet.
+ */
+function hoursBetween(later: Date, iso: string | undefined): number | undefined {
+  const m = minutesSince(later, iso);
+  return m === undefined ? undefined : Math.max(0, Math.floor(m / 60));
+}
+
 /** An age a person reads, from minutes. */
 export function formatAge(minutes: number): string {
   const m = Math.max(0, minutes);
@@ -305,14 +333,50 @@ export function formatAge(minutes: number): string {
  * in the browser instead of baking them into 390 pages, which turns 390
  * differing files into one small differing file. Bean `xxku`.
  *
- * **The threshold stays at 100 MB regardless**, because it is doing its job:
- * it is not a target the previews are failing to hit, it is a statement that
- * the current arrangement is not sustainable, and it is correct.
+ * ## 100 MB → 500 MB, 2026-09-20, and WHY the old reasoning stopped applying
+ *
+ * This comment used to end *"the threshold stays at 100 MB regardless… it is
+ * a statement that the current arrangement is not sustainable, and it is
+ * correct."* That was sound **under the retention policy of the day**, and
+ * the owner changed that policy the same afternoon.
+ *
+ * The old argument turned on the total being **monotonic**. Previews were
+ * retained on close as well as on merge, so nothing ever left: any threshold
+ * was breached eventually and stayed breached, and "over" carried no
+ * information after the first time. A number that can only ever be exceeded
+ * is a statement about the arrangement, which is exactly what that paragraph
+ * said it was.
+ *
+ * `folio-assistant-1feu` removed the monotonicity. A merged pull request's
+ * preview is now removed automatically — the merge is the confirmation, since
+ * the main site then shows what the preview showed — so the store **drains**.
+ * What remains is bounded by CONCURRENT REVIEWS rather than by cumulative
+ * history, and a threshold over a draining quantity is a live signal again
+ * rather than a permanent verdict.
+ *
+ * So the number now answers a different question: *how many reviews can be
+ * open at once before this is a problem?* At the measured ~38 MB per preview,
+ * **500 MB is about thirteen** — above any concurrency this repository has
+ * reached (eleven, on 2026-09-20, of which three were prunable) and half the
+ * documented 1 GB Pages ceiling, leaving the main site the other half.
+ *
+ * The floor argument above is unchanged and still governs: a preview whose
+ * branch is live must not be removed, so pruning cannot be the action. What
+ * changed is that draining is now automatic, so the floor falls on its own
+ * as work merges instead of being carried forever.
+ *
+ * Owner, 2026-09-20: *"set stagfing to 500mb. drain if branches merged"*.
  */
-export const STAGING_WARN_BYTES = 100 * MB;
+export const STAGING_WARN_BYTES = 500 * MB;
 
 /**
  * Three-quarters of the documented Pages ceiling.
+ *
+ * UNCHANGED by the 100 → 500 MB move, and the gap between them is now 250 MB
+ * rather than 650 MB. That is deliberate: `critical` is a property of the
+ * PLATFORM (a Pages build over 1 GB does not publish) while the warning point
+ * is a property of this repository's working style, so only one of them moves
+ * when the retention policy does.
  *
  * At this point the previews alone occupy most of the budget the main site
  * also has to fit inside, and the next deploy is the one that fails outright.
@@ -341,6 +405,20 @@ export const GIT_DIR_FLOOR_BYTES = 100 * MB;
 
 /** See {@link beanStoreCheck}. */
 export const BEAN_STALE_DAYS = 14;
+/**
+ * Hours of silence after which an in-progress claim is **quiet**.
+ *
+ * A DIFFERENT question from {@link BEAN_STALE_DAYS}, not a tighter version of
+ * it. Fourteen days asks whether a claim has been ABANDONED. This asks whether
+ * anybody is on it RIGHT NOW — which is what a session about to pick up an
+ * item needs to know, and what 14 days cannot answer.
+ *
+ * Bean `fgnw`, measured 2026-09-20: 60 beans `in-progress`, **43 with no change
+ * in a four-hour window**, and 38 of those last touched by one bulk move at
+ * 09:37. Eight sessions were active, so at most 17 claims corresponded to a
+ * session working them — and `status` cannot tell a reviewer which 17.
+ */
+export const BEAN_QUIET_HOURS = 72;
 export const BEAN_RESOLVED_INLINE_LIMIT = 100;
 export const BEAN_OPEN_LIMIT = 150;
 
@@ -357,17 +435,22 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
     unit: "bytes",
     severity: "major",
     basis:
-      "The owner's explicit instruction, 2026-09-19 (\"issue warning to user when exceeds > 100mb\"). " +
-      "It is also a tenth of GitHub's documented 1 GB limit for a published Pages site, which the " +
-      "previews share with the main site — an early-warning point that leaves room to act rather " +
-      "than a limit in itself. One preview measured 37.5–39.0 MB on 2026-09-19, so the third " +
-      "concurrent review breaches it. THE FLOOR IS ABOVE THE THRESHOLD AND THAT IS DELIBERATE: a " +
-      "live branch's preview must not be pruned, so N concurrent reviews floor the total at " +
-      "N x ~38 MB, and on 2026-09-19 only 2 of 9 previews were prunable orphans (76.7 MB, leaving " +
-      "269 MB). The action this finding names is therefore never \"prune more\" but preview SIZE: " +
-      "27.5 MB of each preview is HTML that shares ZERO blobs with any other preview, because the " +
-      "build timestamp and the slug appear on every page. See STAGING_WARN_BYTES for the four " +
-      "sources and bean `xxku` for the arithmetic.",
+      "The owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches " +
+      "merged\"), RAISED from the 100 MB they set on 2026-09-19 — and the raise went with a policy " +
+      "change that made the old number mean something different. Until `folio-assistant-1feu`, " +
+      "previews were retained on close AND on merge, so the total was monotonic: any threshold was " +
+      "breached eventually and stayed breached, and \"over\" carried no information after the first " +
+      "time. Now a merged pull request's preview is removed automatically, so the store DRAINS and " +
+      "what remains is bounded by concurrent reviews rather than by cumulative history. At the " +
+      "measured ~38 MB per preview, 500 MB is about thirteen concurrent reviews — above the most " +
+      "this repository has reached (eleven on 2026-09-20, three of them prunable) and half the " +
+      "documented 1 GB Pages ceiling, leaving the main site the other half. " +
+      "THE FLOOR IS STILL REAL AND STILL ABOVE PRUNING: a live branch's preview must not be " +
+      "removed, so N concurrent reviews floor the total at N x ~38 MB. What changed is that the " +
+      "floor now falls on its own as work merges. The action this finding names is therefore " +
+      "never \"prune more\" but preview SIZE: 27.5 MB of each preview is HTML that shares ZERO " +
+      "blobs with any other, because the build timestamp and the slug appear on every page. See " +
+      "STAGING_WARN_BYTES for the four sources and bean `xxku` for the arithmetic.",
   },
   {
     metric: "staging-total-bytes",
@@ -426,7 +509,14 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
     findings.push({
       metric: "staging-total-bytes",
       severity: "major",
-      summary: `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, over the 100 MB warning point.`,
+      // DERIVED, not written out. This said "over the 100 MB warning point"
+      // with the number as a literal, so raising STAGING_WARN_BYTES to 500 MB
+      // left the finding reporting a threshold that no longer existed — the
+      // constant and the sentence describing it are one fact, and the summary
+      // is the copy a reader sees first.
+      summary:
+        `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, ` +
+        `over the ${formatBytes(STAGING_WARN_BYTES)} warning point.`,
       action:
         "Report the list below to the owner and ask which are finished with. Removal is by adding " +
         "`staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative.",
@@ -838,6 +928,22 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "real ids. Any duplicate at all is the leading edge of that, so there is no tolerance band.",
   },
   {
+    metric: "bean-thin-decision-records",
+    value: 0,
+    unit: "count",
+    severity: "minor",
+    basis:
+      "MADR's own refusal, adopted whole 2026-09-20: \"never fewer than two considered options — one " +
+      "option is not a choice; a straw option is worse than a short list\" " +
+      "(`cat-harness/methodologies/madr.md`). Zero rather than a tolerance band because the rule has no " +
+      "tolerant form: a record listing one option has not compared anything, and the methodology says " +
+      "what to write instead — why no alternative existed, which is a finding about the constraint " +
+      "rather than a decision. MINOR, not major, because this maps analytical debt rather than corpus " +
+      "integrity; a thin record misleads a future reader, it does not break a consumer. Measured " +
+      "2026-09-20: 2 decision records in the store, 0 of them thin — so this locks in a property the " +
+      "store already has rather than demanding work.",
+  },
+  {
     metric: "bean-stale-in-progress",
     value: BEAN_STALE_DAYS,
     unit: "days",
@@ -848,6 +954,24 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "from abandoned work. Sessions are container-scoped and reclaimed, so a claim that has outlived " +
       "two weeks of containers is not one anybody is honouring. Measured 2026-09-19: 29 in-progress, " +
       "0 of them older than 14 days.",
+  },
+  {
+    metric: "bean-quiet-claims",
+    value: BEAN_QUIET_HOURS,
+    unit: "hours",
+    severity: "minor",
+    basis:
+      "NO EXTERNAL STANDARD; calibrated here, and the number is the weaker half of the rule. What " +
+      "actually settles whether a claim is live is a LIVENESS SIGNAL — an open PR naming the bean, an " +
+      "unmerged branch touching it, a note since. `skills/folio-core/bean-coordination.md` " +
+      "§\"A claim is branch-local\" is why: a claim becomes visible to a sibling when the PR opens, so " +
+      "a claim with no PR and no branch has announced nothing to anybody. **This check computes only " +
+      "the offline half** — time since `updated_at` — so its count is an UPPER BOUND on quiet claims " +
+      "and must be read as one: a bean here may have an open PR this sweep cannot see. " +
+      "72 hours because a claim is meant to become visible at the FIRST commit " +
+      "(`continual-progress` invariant 1), sessions are container-scoped and reclaimed, and three days " +
+      "spans a weekend without firing on one. It is deliberately far below the 14-day abandonment " +
+      "threshold and answers a different question, so both are reported.",
   },
   {
     metric: "bean-resolved-inline",
@@ -884,7 +1008,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const id = "bean-store";
   const summary =
     "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, " +
-    "and the size of the open backlog.";
+    "the size of the open backlog, and decision records that list fewer than two real options.";
   if (ctx.beans.state === "unknown") return unknownResult(id, summary, BEAN_THRESHOLDS, ctx.beans.reason);
   const beans = ctx.beans.value;
 
@@ -898,18 +1022,50 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const dupGroups = [...byTitle.values()].filter((g) => g.length > 1);
   const open = beans.filter((b) => OPEN_BEAN_STATUSES.has(b.status));
   const resolved = beans.filter((b) => RESOLVED_BEAN_STATUSES.has(b.status));
-  const stale = beans
-    .filter((b) => b.status === "in-progress" || b.status === "in_progress")
+  // `undefined` means NO options section, which is a bean recording work rather
+  // than a decision — not a decision record with nothing in it. `!== undefined`
+  // rather than a truthiness test, because 0 is a real and reportable count.
+  const decisionRecords = beans.filter((b) => b.consideredOptions !== undefined);
+  const thin = decisionRecords.filter((b) => (b.consideredOptions ?? 0) < 2);
+  const claimed = beans.filter((b) => b.status === "in-progress" || b.status === "in_progress");
+  const stale = claimed
     .map((b) => ({ bean: b, age: daysBetween(ctx.now, b.updatedAt) }))
     .filter((x): x is { bean: BeanEvidence; age: number } => x.age !== undefined && x.age > BEAN_STALE_DAYS);
+  // Quiet, not abandoned — see BEAN_QUIET_HOURS. The already-stale ones are
+  // excluded so one bean does not produce two findings saying the same thing
+  // at two timescales; the 14-day finding is the stronger claim and wins.
+  const quiet = claimed
+    .map((b) => ({ bean: b, hours: hoursBetween(ctx.now, b.updatedAt) }))
+    .filter(
+      (x): x is { bean: BeanEvidence; hours: number } =>
+        x.hours !== undefined && x.hours > BEAN_QUIET_HOURS && !stale.some((s) => s.bean.id === x.bean.id),
+    );
 
   const cmd = "beans/defs/*.md front matter";
+  const bodyCmd = "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading";
   const measurements: HealthMeasurement[] = [
     { metric: "bean-total", value: beans.length, unit: "count", command: cmd },
     { metric: "bean-open", value: open.length, unit: "count", command: cmd },
     { metric: "bean-resolved-inline", value: resolved.length, unit: "count", command: cmd },
     { metric: "bean-duplicate-title-groups", value: dupGroups.length, unit: "count", command: cmd },
     { metric: "bean-stale-in-progress", value: stale.length, unit: "count", command: cmd },
+    // The DENOMINATOR, reported so the next number is legible. "12 quiet" means
+    // nothing without it; "12 of 60 claimed" is a finding a person can act on,
+    // and `fgnw` is the bean that measured why — 43 of 60 read very differently
+    // from 43.
+    { metric: "bean-claimed", value: claimed.length, unit: "count", command: cmd },
+    { metric: "bean-quiet-claims", value: quiet.length, unit: "count", command: cmd },
+    // REPORTED EVEN THOUGH NOTHING THRESHOLDS IT, and that is the point. The
+    // finding below can only fire on a bean this count includes, so a detector
+    // that stops matching — a heading respelled, the regex narrowed — shows up
+    // here as 0 subjects instead of as a green tick over an empty walk. A check
+    // with no subjects is not a check that passed.
+    // A DIFFERENT provenance from the four above, and it has to say so: those
+    // read front matter, these read the BODY's options section. A measurement
+    // that misreports where it came from sends whoever re-derives it to the
+    // wrong place, which is the whole reason `command` is on the record.
+    { metric: "bean-decision-records", value: decisionRecords.length, unit: "count", command: bodyCmd },
+    { metric: "bean-thin-decision-records", value: thin.length, unit: "count", command: bodyCmd },
   ];
   const findings: HealthFinding[] = [];
   for (const g of dupGroups) {
@@ -923,6 +1079,24 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
         "leaves a sibling unable to tell abandonment from accident.",
     });
   }
+  for (const b of thin) {
+    const n = b.consideredOptions ?? 0;
+    findings.push({
+      metric: "bean-thin-decision-records",
+      severity: "minor",
+      summary:
+        `\`${b.id}\` records a decision and lists ${n === 0 ? "no options" : "one option"} ` +
+        `("${b.title}").`,
+      action:
+        n === 0
+          ? "Either list the options that were weighed, or drop the section — an empty options section " +
+            "claims an analysis that did not happen, which is worse than not claiming one."
+          : "Add the alternatives that were actually considered, with why each lost. If there genuinely " +
+            "was only one, say WHY NO ALTERNATIVE EXISTED and make that the record: per `madr.md` that " +
+            "is a finding about the constraint, not a decision. Never invent a straw option to reach " +
+            "two — the methodology refuses that more firmly than it refuses a short list.",
+    });
+  }
   for (const s of stale) {
     findings.push({
       metric: "bean-stale-in-progress",
@@ -930,7 +1104,24 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
       summary: `\`${s.bean.id}\` has been \`in-progress\` for ${s.age} days ("${s.bean.title}").`,
       action:
         "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a " +
-        "note saying the claim expired — do not resolve a sibling's bean, and do not delete it.",
+        "note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by " +
+        "evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it.",
+    });
+  }
+  for (const q of quiet) {
+    findings.push({
+      metric: "bean-quiet-claims",
+      severity: "minor",
+      summary:
+        `\`${q.bean.id}\` has been \`in-progress\` with no change for ${q.hours} hours ` +
+        `("${q.bean.title}") — ${quiet.length} of ${claimed.length} claims are quiet.`,
+      action:
+        "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged " +
+        "branch touching it. If there is one, the claim is live and there is nothing to do. If there is " +
+        "none, the claim has announced nothing to anybody and the item is fair game — take it, and say " +
+        "in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: " +
+        "this check reports, and a person or the session taking the work acts. " +
+        "See `skills/folio-core/bean-coordination.md` §\"A quiet claim\".",
     });
   }
   if (resolved.length > BEAN_RESOLVED_INLINE_LIMIT) {
@@ -1065,7 +1256,9 @@ export const HEALTH_CHECKS: readonly {
   },
   {
     id: "bean-store",
-    summary: "Duplicate titles, unhonoured claims, resolved items still inline, and the open backlog.",
+    summary:
+      "Duplicate titles, unhonoured claims, resolved items still inline, the open backlog, and " +
+      "decision records with fewer than two options.",
     run: beanStoreCheck,
   },
   {

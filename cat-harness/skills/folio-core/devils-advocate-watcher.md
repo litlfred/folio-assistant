@@ -1,6 +1,5 @@
 ---
 name: devils-advocate-watcher
-roles: [reader, collaborator, owner]
 user_invocable: true
 inherits: integration-watcher
 watch_arg: devils-advocate

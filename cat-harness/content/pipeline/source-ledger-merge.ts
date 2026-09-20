@@ -41,6 +41,7 @@
  * @module content/pipeline/source-ledger-merge
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -53,7 +54,7 @@ import type {
 } from "../../schemas/bib-verification";
 
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
-const LEDGER_PATH = join(REPO_ROOT, "content", "bib-qa-verifications.json");
+const LEDGER_PATH = join(folioDir(REPO_ROOT),  "bib-qa-verifications.json");
 
 /** Model identifier recorded as the assessing agent. */
 const AGENT_MODEL = process.env.FOLIO_AGENT_MODEL ?? "unknown-agent";
@@ -131,7 +132,7 @@ function beanBody(
     `Relevance: **${relevance.verdict}** — agent assessment, not yet adjudicated.`,
     "",
     "Raised by `local/paper-relevance-triage`; the ledger row is in " +
-      "`content/bib-qa-verifications.json`.",
+      "`folio/bib-qa-verifications.json`.",
   );
   return lines.join("\n");
 }

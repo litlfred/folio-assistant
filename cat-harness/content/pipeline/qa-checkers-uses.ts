@@ -17,9 +17,10 @@
  * @module content/pipeline/qa-checkers-uses
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
 import type { CheckerResult } from "../../schemas/block-qa";
-import { join } from "path";
+
 
 import {
   buildContentGraph,
@@ -46,9 +47,9 @@ function graph(): ContentGraph | null {
   _graphTried = true;
   try {
     const repoRoot = findContentRepoRoot();
-    const contentDir = join(repoRoot, "content");
-    if (!existsSync(contentDir)) return null;
-    _graph = buildContentGraph(contentDir, repoRoot);
+    const folioRoot = folioDir(repoRoot);
+    if (!existsSync(folioRoot)) return null;
+    _graph = buildContentGraph(folioRoot, repoRoot);
     _graphLoaded = _graph.nodes.size > 0;
     return _graphLoaded ? _graph : null;
   } catch {
@@ -117,7 +118,7 @@ export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
     return {
       result: "n/a",
       hits: [],
-      notes: "content graph unavailable (no content/ root found)",
+      notes: "content graph unavailable (no folio/ root found)",
     };
   }
   const src = readFileSync(tsPath, "utf-8");
@@ -245,7 +246,7 @@ export function checkUsesFormalCoverage(tsPath?: string): CheckerResult {
     return {
       result: "n/a",
       hits: [],
-      notes: "content graph unavailable (no content/ root found)",
+      notes: "content graph unavailable (no folio/ root found)",
     };
   }
   if (!g.hasFormal) {

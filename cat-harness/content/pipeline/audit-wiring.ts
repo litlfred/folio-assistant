@@ -28,6 +28,7 @@
  * @module content/pipeline/audit-wiring
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readdirSync, readFileSync, existsSync } from "fs";
 import { resolve, join, basename } from "path";
 import { BlockSchema } from "../../schemas/constraints";
@@ -41,7 +42,7 @@ import { paperArg } from "./cli-args";
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
 const PAPER = requirePaper(_paperArg);
-const PAPER_DIR = join(findContentRepoRoot(), "content", PAPER);
+const PAPER_DIR = join(folioDir(findContentRepoRoot()),  PAPER);
 const OUT_JSON = resolve(__dirname, "../audit-wiring.json");
 
 // Block kinds that don't require a .lean file.

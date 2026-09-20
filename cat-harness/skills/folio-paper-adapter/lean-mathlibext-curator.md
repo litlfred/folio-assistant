@@ -1,6 +1,5 @@
 ---
 name: lean-mathlibext-curator
-roles: [collaborator, owner]
 description: >
   Curate `<Paper>/MathlibExt.lean` — the staging area for upstream-
   candidate lemmas (List/sort plumbing, Foldl/foldr at Monoid

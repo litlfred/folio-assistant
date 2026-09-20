@@ -5,11 +5,16 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/kg-navigation.md) — do not edit here.
+> Generated from [`../kg-navigation/skills/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/../kg-navigation/skills/kg-navigation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/kg-navigation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../kg-navigation/skills/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
+> **This is the skill `skill_fetch` serves.** A stub of the same name
+> lives at `bootstrap/skills` and is published as
+> [Reading a knowledge graph before you have anything (bootstrap)](local-kg-navigation.html); it only points here.
+> Edit this page's source, never the stub.
+
 # Reading the knowledge graph — how to find the skill you need
 
 You are in a fresh container. You have a task, a filesystem, and no memory of
@@ -98,8 +103,8 @@ content, no server:
 Both Tools serve the same nodes. Neither is the skill: *knowing that a fallback
 exists* is the capability, and an agent that only knows the MCP route is an
 agent that stops when the server is absent. See
-[`skills-and-tools`](skills-and-tools.md) for why that distinction is enforced
-rather than merely preferred, and [`directory-conventions`](directory-conventions.md)
+[`skills-and-tools`](../../cat-harness/skills/folio-core/skills-and-tools.md) for why that distinction is enforced
+rather than merely preferred, and [`directory-conventions`](../../cat-harness/skills/folio-core/directory-conventions.md)
 for the declaration's schema and the full list of graph kinds.
 
 ## Not everything under the path is a skill
@@ -114,7 +119,7 @@ so they cannot disagree.
   Reading the tree as skills put 46 non-skills into the set, at which point
   `<folio:skill ref="viewer"/>` resolved — to a capability probe.
 - **A `.md` under the skills path that declares its own `$schema` is not a
-  skill.** The agent-memory nodes under `skills/memory/` declare
+  skill.** The agent-memory nodes under `memory/` declare
   `folio-memory/v1`. Without this rule the audit treated all 25 as skills and
   wrote 25 bogus QA sidecars beside them. Declaration over location.
 - **Some skills exist in three copies and only two are checked.**

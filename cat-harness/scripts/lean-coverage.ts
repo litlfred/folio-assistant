@@ -42,6 +42,8 @@
  *   - publish.yml (per-build coverage badge)
  */
 
+import { folioDir } from "../schemas/cat-harness.js";
+import { stripLeanComments } from "../content/pipeline/lean-lexer.js";
 import { readdirSync, readFileSync, existsSync, writeFileSync } from "fs";
 import { join, resolve, relative, dirname, basename } from "path";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
@@ -174,32 +176,6 @@ function* walkLean(dir: string): Generator<string> {
   }
 }
 
-function stripLeanComments(src: string): string {
-  // Strip Lean block comments (`/- ... -/`, `/-- ... -/`, `/-! ... -/`) first —
-  // they can contain prose like "sorry-free" that would otherwise be matched
-  // by /\bsorry\b/. Block comments can be nested (Lean's lexer supports
-  // arbitrary nesting), so we walk depth instead of using a single regex.
-  let out = "";
-  let depth = 0;
-  for (let i = 0; i < src.length; i++) {
-    if (depth === 0 && src[i] === "/" && src[i + 1] === "-") {
-      depth = 1;
-      i += 1;
-      continue;
-    }
-    if (depth > 0) {
-      if (src[i] === "/" && src[i + 1] === "-") { depth += 1; i += 1; continue; }
-      if (src[i] === "-" && src[i + 1] === "/") { depth -= 1; i += 1; continue; }
-      continue;
-    }
-    out += src[i];
-  }
-  // Then strip line comments (`-- ...` to EOL).
-  return out.split("\n").map(line => {
-    const idx = line.indexOf("--");
-    return idx >= 0 ? line.slice(0, idx) : line;
-  }).join("\n");
-}
 
 function inspectLean(leanPath: string): { hasSorry: boolean; hasClass: boolean } {
   const src = readFileSync(leanPath, "utf-8");
@@ -418,9 +394,9 @@ function flagValue(args: string[], flag: string): string | null {
 function resolveContentRoot(args: string[]): string {
   const explicit = flagValue(args, "--content-root");
   if (explicit) return resolve(explicit);
-  const cwdContent = resolve(process.cwd(), "content");
+  const cwdContent = folioDir(process.cwd());
   if (existsSync(cwdContent)) return cwdContent;
-  return join(SCRIPT_REPO_ROOT, "content");
+  return folioDir(SCRIPT_REPO_ROOT);
 }
 
 if (import.meta.main) {

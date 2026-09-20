@@ -1,5 +1,4 @@
 import { existsSync, readFileSync } from "fs";
-import { join } from "path";
 import { findContentRepoRoot } from "./repo-root";
 /**
  * Registry of QA criteria the per-block sweep recognises.
@@ -45,7 +44,7 @@ import { findContentRepoRoot } from "./repo-root";
  */
 
 import type { QaCriterionDefinition } from "../../schemas/block-qa";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 
 // ── Domain: voice ───────────────────────────────────────────────
 
@@ -360,6 +359,34 @@ const FRAMEWORK: QaCriterionDefinition[] = [
 ];
 
 // ── Domain: wall ────────────────────────────────────────────────
+
+// ── Folio-optional: the archimedean wall ────────────────────────
+//
+// The SAME axis as `detangler-archimedean-wall`, and the same folio's
+// mathematics: the substrate-to-archimedean wall, its two sides, and the
+// chapter names on each. These four cite that folio's `CLAUDE.md §7c` by
+// section number and name its chapters — `braids-and-knots`,
+// `quantum-observable-universes`, `models-of-qous`, `lifting-and-descent`,
+// `q-geometric-langlands`, `brings-surface`, `observations`,
+// `descartes-universe` — in criterion DESCRIPTIONS the platform ships to
+// every folio.
+//
+// `profiles: ["paper"]` is on two of them and fences nothing, for the reason
+// `domain-fencing.md` now states: a profile says what KIND of folio can
+// answer the question, not WHOSE question it is. Every paper folio has a
+// `.lean` to read and none of the others has these chapters.
+//
+// One opt-in covers both, because it is one wall:
+//
+//   // harness.config.json
+//   { "qaAxes": ["archimedean-wall"] }
+//
+// `q-usage-audit.ts` calls `checkWallSide` and `checkBaseRingMinimal`
+// DIRECTLY, not through the registry, so that script keeps working when the
+// axis is closed — it is a folio-run audit and its caller has already decided
+// the wall applies. Fencing the registry entries is about what the PLATFORM
+// asserts every folio should be measured against, which is a different
+// question from what a folio's own audit may compute.
 
 const WALL: QaCriterionDefinition[] = [
   {
@@ -1457,31 +1484,6 @@ const DETANGLER: QaCriterionDefinition[] = [
     also_invalidated_by: ["graph"],
   },
   {
-    id: "detangler-archimedean-wall",
-    domain: "detangler",
-    description:
-      "Chapter-level archimedean wall placement: blocks whose .lean is " +
-      "purely archimedean live in `archimedean-universe/` / `observations/` / " +
-      "`fluid-dynamics/`. Generic-R blocks live in `braids-and-knots/` / " +
-      "`quantum-observable-universes/` / `quantum-universes/`. " +
-      "Companion to `wall-side-correct` (per-block) — this one is " +
-      "per-chapter placement.",
-    default_severity: "major",
-    // Lean. Classifies a block by reading its `.lean` for archimedean
-    // constructs, which a document folio cannot have. (Its chapter list is
-    // also one folio's directory names — a separate, folio-specific defect
-    // that `folioOptionalAxes()` is the right home for, not this axis.)
-    profiles: ["paper"],
-    depends_on: ["ts", "lean"],
-    automated: true,
-    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
-    // ANOTHER block's uses[] changes it while this block's own files are
-    // untouched. Without this the entry stays fresh-skip and keeps a stale
-    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
-    // still recording a cycle that no longer existed.
-    also_invalidated_by: ["graph"],
-  },
-  {
     id: "detangler-block-tanglement",
     domain: "detangler",
     description:
@@ -1568,6 +1570,76 @@ const DETANGLER: QaCriterionDefinition[] = [
       "path as evidence.",
     default_severity: "major",
     depends_on: ["ts"],
+    automated: true,
+    // Verdict is a property of the chapter uses[] GRAPH, so an edit to
+    // ANOTHER block's uses[] changes it while this block's own files are
+    // untouched. Without this the entry stays fresh-skip and keeps a stale
+    // verdict — seen live in qou, where breaking 3 cycles left 15 blocks
+    // still recording a cycle that no longer existed.
+    also_invalidated_by: ["graph"],
+  },
+];
+
+// ── Folio-optional: the archimedean wall ────────────────────────
+//
+// `detangler-archimedean-wall` is a `detangler`-domain criterion by
+// mechanism and a SINGLE FOLIO's mathematics by content. Its wall, its
+// classifier and its six chapter directory names (`archimedean-universe/`,
+// `observations/`, `fluid-dynamics/`, `braids-and-knots/`,
+// `quantum-observable-universes/`, `quantum-universes/`) are qou's, and
+// `profiles: ["paper"]` does not fence them: any paper folio has a `.lean`
+// to read, so every other paper folio was being audited against chapters it
+// does not have. Measured here — this platform repo's own sidecars under
+// `test/results/block-qa/content/docs/publication-workflow/` carry
+// `detangler-archimedean-wall` verdicts on workflow documentation.
+//
+// So it is registered only when the folio opts in:
+//
+//   // harness.config.json
+//   { "qaAxes": ["archimedean-wall"] }
+//
+// The generic shell underneath — *a node must live on the side of a
+// declared partition wall that its content places it on* — is worth keeping
+// and is NOT what is fenced; re-expressing the wall, the classifier and the
+// chapter list as folio-supplied data (the repair `detangler-topic-coherence`
+// already had, when `DETANGLER_CHAPTER_KEYWORDS` migrated out to a
+// folio-supplied `topic-keywords.json`) would let the shell return to the
+// unconditional `detangler` axis. Until then, fenced.
+//
+// SAME AXIS as the `wall` domain above, and deliberately so: it is one wall,
+// so a folio opens both with one key and cannot end up half-fenced. A second
+// axis name would have made that state reachable.
+//
+// The `wall` domain was recorded here as "not fenced — its checkers are
+// called directly from `q-usage-audit.ts` and pinned by two tests, so it is
+// its own change with its own measurement." It got that measurement and both
+// halves of the caution were non-blocking: discovery is registry-driven, so a
+// fenced axis's checkers are simply not surfaced (verified against `q-usage`,
+// already fenced, BEFORE changing anything), and the direct callers in
+// `q-usage-audit.ts` are untouched by design — a folio's own audit deciding
+// the wall applies is a different question from what the platform asserts
+// every folio must be measured against.
+
+export const DETANGLER_ARCHIMEDEAN_WALL: QaCriterionDefinition[] = [
+  {
+    id: "detangler-archimedean-wall",
+    domain: "detangler",
+    description:
+      "Chapter-level archimedean wall placement: blocks whose .lean is " +
+      "purely archimedean live in `archimedean-universe/` / `observations/` / " +
+      "`fluid-dynamics/`. Generic-R blocks live in `braids-and-knots/` / " +
+      "`quantum-observable-universes/` / `quantum-universes/`. " +
+      "Companion to `wall-side-correct` (per-block) — this one is " +
+      "per-chapter placement.",
+    default_severity: "major",
+    // Lean. Classifies a block by reading its `.lean` for archimedean
+    // constructs, which a document folio cannot have. The chapter list is
+    // one folio's directory names, which is why the whole criterion is
+    // fenced behind the `archimedean-wall` opt-in axis below rather than
+    // relying on `profiles` alone — a paper folio that is not qou has a
+    // `.lean` to read and no such chapters.
+    profiles: ["paper"],
+    depends_on: ["ts", "lean"],
     automated: true,
     // Verdict is a property of the chapter uses[] GRAPH, so an edit to
     // ANOTHER block's uses[] changes it while this block's own files are
@@ -1715,7 +1787,8 @@ const BIBLIOGRAPHY: QaCriterionDefinition[] = [
     domain: "bibliography",
     description:
       "Every `\\cite{key}` and `-- Ref: [key]` in the block resolves to a " +
-      "registered entry in `content/schema/references.ts`. Mirrors the " +
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      "registered entry in `folio/schema/references.ts`. Mirrors the " +
       "`validate-bib` skill's resolution check at block granularity.",
     default_severity: "critical",
     depends_on: ["md", "lean"],
@@ -1747,7 +1820,8 @@ const BIBLIOGRAPHY: QaCriterionDefinition[] = [
     domain: "bibliography",
     description:
       "Every reference the block cites has a screenshot under " +
-      "`content/bib-qa-images/<id>.*` per `bib-qa.ts` tag " +
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      "`folio/bib-qa-images/<id>.*` per `bib-qa.ts` tag " +
       "`has_screenshot`. Provides provenance for the citation.",
     default_severity: "minor",
     depends_on: ["md", "lean"],
@@ -2201,8 +2275,12 @@ export function folioOptionalAxes(): string[] {
   const axes: string[] = [];
   _optionalAxes = axes;
   try {
-    const cfgPath = resolveHarnessConfigPath(findContentRepoRoot())?.path ?? join(findContentRepoRoot(), HARNESS_CONFIG);
-    if (existsSync(cfgPath)) {
+    // `undefined` when nothing declares an instance here — no name, so no
+    // filename, so no axes. Same answer as an absent config and for the same
+    // reason: a folio that has not asked for an axis is not audited against
+    // it, and neither is a directory that is not a folio.
+    const cfgPath = expectedInstanceConfigPath(findContentRepoRoot());
+    if (cfgPath !== undefined && existsSync(cfgPath)) {
       const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
       if (Array.isArray(cfg.qaAxes)) {
         axes.push(
@@ -2375,7 +2453,10 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...FIT,
   ...FRAMEWORK,
   ...RENDER,
-  ...WALL,
+  // Folio-optional — see `WALL` above. One folio's wall and one folio's
+  // chapter names; the same `archimedean-wall` axis as the detangler
+  // criterion below, because it is the same wall.
+  ...(folioOptionalAxes().includes("archimedean-wall") ? WALL : []),
   // Q_USAGE is FOLIO-OPTIONAL — see `folioOptionalAxes()` below. It
   // encodes one folio's mathematics (a substrate deformation parameter
   // `q` and its regimes), so it is registered only when the folio opts
@@ -2386,6 +2467,12 @@ export const QA_CRITERIA_REGISTRY: QaCriterionDefinition[] = [
   ...CANONICAL,
   ...COMPUTE,
   ...DETANGLER,
+  // Folio-optional — see `DETANGLER_ARCHIMEDEAN_WALL` above. One folio's
+  // wall and one folio's chapter names; `profiles: ["paper"]` does not
+  // fence them, because every paper folio has a `.lean` to read.
+  ...(folioOptionalAxes().includes("archimedean-wall")
+    ? DETANGLER_ARCHIMEDEAN_WALL
+    : []),
   ...USES,
   ...BIBLIOGRAPHY,
   ...SCRIPT_QUALITY,
@@ -2423,15 +2510,27 @@ export const ONE_VOICE_WATCHER_CRITERIA: string[] = [
   ...VOICE.map((c) => c.id),
   ...FIT.map((c) => c.id),
   ...FRAMEWORK.map((c) => c.id),
-  ...WALL.map((c) => c.id),
+  // Gated with the registry, never apart from it: a bucket naming a
+  // criterion the registry never registered is a watcher axis reporting on
+  // nothing and looking clean doing it (bean `dh4f`).
+  ...(folioOptionalAxes().includes("archimedean-wall")
+    ? WALL.map((c) => c.id)
+    : []),
 ];
 
 export const PROOF_WATCHER_CRITERIA: string[] = PROOF.map((c) => c.id);
 export const CANONICAL_WATCHER_CRITERIA: string[] = CANONICAL.map((c) => c.id);
 export const COMPUTE_WATCHER_CRITERIA: string[] = COMPUTE.map((c) => c.id);
-export const DETANGLER_WATCHER_CRITERIA: string[] = DETANGLER.map(
-  (c) => c.id,
-);
+export const DETANGLER_WATCHER_CRITERIA: string[] = [
+  ...DETANGLER.map((c) => c.id),
+  // Present only when the folio opts in (see folioOptionalAxes). The
+  // watcher bucket has to agree with the registry: a bucket naming a
+  // criterion the registry never registered is a watcher axis that
+  // reports on nothing and looks clean doing it (bean `dh4f`).
+  ...(folioOptionalAxes().includes("archimedean-wall")
+    ? DETANGLER_ARCHIMEDEAN_WALL.map((c) => c.id)
+    : []),
+];
 export const USES_WATCHER_CRITERIA: string[] = USES.map((c) => c.id);
 export const BIBLIOGRAPHY_WATCHER_CRITERIA: string[] = BIBLIOGRAPHY.map(
   (c) => c.id,
@@ -2577,10 +2676,14 @@ export const CRITERION_EXTRA_INPUTS: Record<string, string[]> = {
   "proof-lean-compiles": [
     "docs/audits/lean-compile-diagnostics.json",
   ],
-  "bib-cite-resolves": ["content/schema/references.ts"],
-  "bib-cited-ref-has-url": ["content/schema/references.ts"],
-  "bib-cited-ref-metadata-ok": ["content/schema/references.ts"],
-  "bib-cited-ref-has-screenshot": ["content/schema/references.ts"],
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "bib-cite-resolves": ["folio/schema/references.ts"],
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "bib-cited-ref-has-url": ["folio/schema/references.ts"],
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "bib-cited-ref-metadata-ok": ["folio/schema/references.ts"],
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "bib-cited-ref-has-screenshot": ["folio/schema/references.ts"],
 };
 
 /** Resolve a criterion's extra-input list (`[]` if none). */

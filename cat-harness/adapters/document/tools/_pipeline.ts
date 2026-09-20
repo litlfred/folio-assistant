@@ -11,6 +11,7 @@
  * @module adapters/paper/tools/_pipeline
  */
 
+import { folioDir } from "../../../schemas/cat-harness.js";
 import { spawnSync } from "child_process";
 import { existsSync, readdirSync } from "fs";
 import { join, resolve } from "path";
@@ -163,10 +164,10 @@ export function asToolText(title: string, r: PipelineResult) {
   return { content: [{ type: "text" as const, text }] };
 }
 
-/** Resolve the single paper under content/ if not given (else undefined). */
+/** Resolve the single paper under folio/ if not given (else undefined). */
 export function autoPaper(paper?: string): string | undefined {
   if (paper) return paper;
-  const dir = join(get.REPO_ROOT(), "content");
+  const dir = folioDir(get.REPO_ROOT());
   if (!existsSync(dir)) return undefined;
   const papers = readdirSync(dir, { withFileTypes: true })
     .filter(

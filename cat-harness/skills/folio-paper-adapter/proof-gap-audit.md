@@ -1,6 +1,5 @@
 ---
 name: proof-gap-audit
-roles: [reader, collaborator]
 description: >
   Audit individual proofs and the network of proofs for gaps. Detects
   intra-proof gaps (unproved assertions, existence without proof,

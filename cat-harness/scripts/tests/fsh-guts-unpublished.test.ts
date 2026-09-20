@@ -28,6 +28,11 @@ import {
   isPublishedSkill,
 } from "../../schemas/cat-harness.ts";
 import { buildExport } from "../kg-export.js";
+import { unpublishedSkills } from "../known-skills.js";
+
+import { resolve } from "node:path";
+
+const ROOT = resolve(import.meta.dir, "../..");
 
 const EXPORT = await buildExport();
 
@@ -91,5 +96,50 @@ describe("the built export", () => {
     expect(isPublishedSkill("fsh-guts")).toBe(false);
     expect(isPublishedSkill("where-a-proposal-goes")).toBe(true);
     expect(isPublishedSkill("prepare-merge")).toBe(true);
+  });
+});
+
+/**
+ * The DECLARED half of the strip.
+ *
+ * `isPublishedSkill` matched a skill's NAME against `UNPUBLISHED_GRAPH_KINDS`,
+ * and its own note said where that stops: *"Same list, because the skill and
+ * the kind share a name by construction. If that ever stops being true this
+ * needs its own list, not a cleverer derivation."*
+ *
+ * The owner asked for that list on 2026-09-20, as a declaration rather than
+ * a list in code — the same "a directory is a place to look and the file says
+ * what it is" rule as `isSkillMd`, bean front matter and a workflow
+ * instance's `$schema`. A skill that must not be published says so.
+ *
+ * These pin the INPUT. The blanket test above pins the outcome over the built
+ * document, which is what makes the mechanism safe to change at all — but an
+ * outcome test cannot tell you WHY it passed, so if the declaration silently
+ * vanished the name rule would carry it and nobody would learn that the
+ * declared half had stopped working.
+ */
+describe("the declaration, not just the name", () => {
+  test("`fsh-guts` declares `published: false` in its own front matter", () => {
+    expect([...unpublishedSkills(ROOT)]).toContain("fsh-guts");
+  });
+
+  test("the declaration is what excludes it, independently of the name rule", () => {
+    // Both inputs must say no. If someone removes `published: false`, this
+    // fails even though the export stays clean — which is the point: the
+    // outcome test would go on passing and hide the regression.
+    expect(unpublishedSkills(ROOT).has("fsh-guts")).toBe(true);
+    expect(isPublishedSkill("fsh-guts")).toBe(false);
+  });
+
+  test("an ordinary skill is neither declared nor name-matched", () => {
+    // Vacuity: a predicate that excluded everything would pass the two above.
+    const declared = unpublishedSkills(ROOT);
+    for (const ok of ["todo-manager", "opening-brief", "directory-conventions"]) {
+      expect(declared.has(ok), `${ok} is wrongly declared unpublished`).toBe(false);
+      expect(isPublishedSkill(ok)).toBe(true);
+    }
+    // And the declared set is SMALL — a scan that started matching everything
+    // would strip the corpus while every assertion above still passed.
+    expect(declared.size).toBeLessThan(5);
   });
 });

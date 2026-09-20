@@ -49,6 +49,7 @@
  * @module content/pipeline/codemod-leanval
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync, statSync, readdirSync } from "fs";
 import { resolve, join, extname } from "path";
 import {
@@ -294,7 +295,7 @@ function main(): void {
   const positional = args.filter((a) => !a.startsWith("--"));
   const root = positional[0]
     ? resolve(positional[0])
-    : resolve(REPO_ROOT, "content");
+    : folioDir(REPO_ROOT);
   const write = flags.has("--write");
   const check = flags.has("--check");
   if (write && check) usage();

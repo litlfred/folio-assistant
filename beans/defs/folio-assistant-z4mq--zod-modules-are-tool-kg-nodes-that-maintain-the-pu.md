@@ -81,3 +81,68 @@ every local run.
 themselves TOOL nodes that maintain the JSON-LD, and rendering JSON-LD being a
 checked conformance requirement of an arbitrary instance rather than a thing
 this repo happens to do.
+
+## Item 3 shipped — `check:instance-render`, 2026-09-20
+
+`scripts/check-instance-render.ts` + `scripts/tests/instance-render.test.ts`,
+wired into `code-quality-gates.yml` and so into `bun run gates` (42 now, no
+second edit — `n60j` deriving the list rather than restating it).
+
+**"Did it throw" is not the check, and that is the whole design.** An export of
+nothing SUCCEEDS. Both defects this was written against rendered cleanly:
+`collectSkills` resolved bootstrap's declared directory against the wrong root
+and dropped every one of its skills in silence, and `bootstrap.jsonld`
+publishes 16 graph kinds while its declaration names one. Neither threw. So the
+check compares what an instance DECLARES against what it PUBLISHES.
+
+**My own emptiness guard was unreachable, and its test is what proved it.** The
+first version failed an instance on `nodes.length === 0`. An instance declaring
+NOTHING renders 16 nodes — `collectGraphKinds()` is classified `universal`,
+takes no root, and emits the whole registry into everything. So the condition
+could never fire: a guard against a clean run over an empty set, itself
+reporting a clean run over an empty set. The verdict now counts the instance's
+OWN nodes (total minus the registry's) and reports both. Measured after the
+fix: cat-harness 1288 own of 1304, bootstrap 33 of 49, an empty fixture 0 of 16
+— which fails, as it must.
+
+**Declared means TRANSITIVELY declared.** `beans/beans.json` declares
+`bean-defs` and `workflow-state`, `todos/todos.json` declares `todo-items` and
+`todo-feedback`. Reading `harness.json` alone gives cat-harness five undeclared
+kinds where the true figure is ONE; four of the five are that mistake. The
+check follows nested graph files, reads both the `graphs` and `kinds`
+spellings, and an unparseable nested file contributes nothing rather than
+manufacturing a finding — that file's problem belongs to `check:harness-dirs`,
+which reports it loudly.
+
+**THREE STATES.** `rendered` · `undetermined` (no declaration, or one that will
+not parse — exit 2, never a pass, and it carries NO published kinds because it
+never looked) · `failed` (threw, or rendered nothing of its own — exit 1).
+
+**The undeclared-kind finding is REPORTED, not fatal, and that is deliberate.**
+Count today: cat-harness 1 (`folio`, contributed by core), bootstrap 15 — 16
+together, because every instance gets the whole registry. This repository's own
+rule, stated in `code-quality-gates.yml` for ruff: *a check is an error only
+once its count is zero*. Making it fatal now would mean either a red gate
+nobody can clear or this module quietly settling an ownership question that
+belongs to this bean. **Promote it the moment `collectGraphKinds` is
+instance-scoped and the count reaches zero**; a test pins the non-fatality so
+that promotion fails loudly if the count has not been cleared first.
+
+### Still open, unchanged by this
+
+`COLLECTOR_SCOPE` files `graphKinds` as `universal` — "reads nothing
+instance-specific at all". A graph kind is contributed by a LAYER, so the
+registry is global in STORAGE and not in OWNERSHIP. And the code already
+disagrees with itself: `collectGraphKinds`' comment says *"`voices` and
+`library` are core's"* while `graphKindNamespace()` resolves all 16 registered
+kinds to the cat-harness namespace. Either the namespaces or the comment is
+wrong and nothing checks which. **This check now measures the gap (16) rather
+than closing it**, which is what makes closing it verifiable.
+
+## Done when — item 3
+
+- [x] A check fails when an instance cannot render its JSON-LD.
+- [x] "Could not determine" is reported separately from "rendered", and exits
+      distinctly (2 vs 1 vs 0).
+- [x] It works on an arbitrary instance, including one whose declaration names
+      directories this repo does not have (temp-instance fixtures).

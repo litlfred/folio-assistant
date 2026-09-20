@@ -30,6 +30,11 @@ export default webpage({
       block: "content-workflows",
     },
     {
+      id: "deterministic-and-agentic",
+      title: "Deterministic and agentic processing",
+      block: "deterministic-and-agentic",
+    },
+    {
       id: "feature-request-workflow",
       title: "Feature-request workflow (CRDM)",
       block: "feature-request-workflow",

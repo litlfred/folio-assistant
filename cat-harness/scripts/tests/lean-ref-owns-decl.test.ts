@@ -17,7 +17,7 @@ interface Blk {
 
 function makeRepo(blocks: Blk[]) {
   const root = mkdtempSync(join(tmpdir(), "ownsdecl-"));
-  const dir = join(root, "content", "p", "ch");
+  const dir = join(root, "folio", "p", "ch");
   mkdirSync(dir, { recursive: true });
   mkdirSync(join(root, "computations"), { recursive: true });
   const paths: Record<string, string> = {};
@@ -107,7 +107,7 @@ describe("graph decl ownership tie-break", () => {
       { slug: "x-proof", label: "prf:x", kind: "proof", ref: "p:P.x" },
       { slug: "x", label: "prop:x", kind: "proposition", ref: "p:P.x" },
     ]);
-    const g = buildContentGraph(join(root, "content"), root);
+    const g = buildContentGraph(join(root, "folio"), root);
     expect(g.declOwners.get("P.x")?.sort()).toEqual(["prf:x", "prop:x"]);
     // Ownership for edge attachment goes to the proposition either way.
     const owners = g.declOwners.get("P.x")!;

@@ -1,11 +1,9 @@
 # ci-health-watcher — memory
 
-**Edit `skills/memory/*.md`, not this file.** The region below is assembled by
-`bun run agent-memory` and anything written into it by hand is overwritten;
-everything outside it — the session log — is yours and is never touched.
-Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote).
-
----
+**Edit `memory/*.md`, not this file** — `bun run agent-memory` overwrites the
+region below; outside it is yours. Types: **STABLE** · **TRAP** · **BASELINE**
+(re-measure, never quote). Compact on purpose: every line here is a line of
+the 200-line injection budget the entries need.
 
 <!-- folio:memory:begin -->
 
@@ -42,6 +40,16 @@ already look.
 is the opposite defect: one that fires constantly and fails every time. When
 triaging, decide which of the two you are looking at first — the remedies are
 unrelated.
+
+## STABLE — `gh-pages` keeps an append-only render log at `_render-log/`
+
+*What happened to `STAGING/<slug>`?* — `_render-log/<YYYY-MM-DD>.jsonl` at the
+branch ROOT, outside `STAGING/` so `rm -rf "STAGING/$SLUG"` cannot reach it.
+
+A full replace does NOT preserve it: `CARRIED_PREFIXES` in
+`restore-staging.ts` carries it across, and `--verify` checks the carry as well
+as the previews. Add a prefix there, never a third code path. Skill:
+[`folio-core/render-logging.md`](../cat-harness/skills/folio-core/render-logging.md).
 
 ## STABLE — two load-bearing properties of `ci-health.yml`
 
@@ -111,30 +119,16 @@ More: `detail/derive-the-gate-list-from-the-workflow.md`
 
 Owner, 2026-09-19: **"dont encode rules against a working setup."**
 
-A constraint in a schema, validator or gate is a **refusal**, and the two
-ways it can be wrong are not symmetric. A *missing* constraint lets a bad
-setup through, and it fails visibly at the point of use with the real error.
-A *wrong* constraint refuses a good setup at the gate, with a confident
-message asserting the thing is impossible — and nobody investigates a settled
-question. Same asymmetry as rendering "could not check" as green.
+A constraint is a REFUSAL, and the two failures are not symmetric: a missing
+one fails visibly at the point of use; a wrong one refuses a good setup with a
+confident message, and nobody investigates a settled question. So an asserted
+but unverified constraint stays OUT of the gate.
 
-So an **asserted but unverified** constraint is left OUT of the gate and
-written down as an open question. Not encoded "provisionally".
+Encode an entailment of the mechanism, or something measured here with the
+command shown. Never "someone said so".
 
-**The test is the evidence, not the confidence.** Encode an entailment of the
-mechanism (Pages has no per-file media-type config; air-gapped compute cannot
-reach hosted inference) or something measured here with the command shown.
-Do not encode "someone said so", or what was true of one account, one plan or
-one version.
-
-Worked case: `docs/proposals/deployment-topologies.md` §3 leaves
-`private repo` × `github-pages` out of its incompatibility table — issue #363
-states it as flatly unavailable, but GitHub has offered Pages on private
-repos on paid plans and the account's entitlement was never checked.
-
-The same rule in both lanes: a watcher must not render "could not check" as
-green, and a boundary guard must not encode a constraint that refuses a folio
-nobody has tried.
+Full rule, the worked case and both lanes:
+[`folio-core/unverified-constraints.md`](../cat-harness/skills/folio-core/unverified-constraints.md).
 
 ## TRAP — never assert on a QA VERDICT from the published corpus
 
@@ -150,37 +144,42 @@ sorted nothing would pass.
 
 More: `detail/never-assert-on-a-qa-verdict-from-the-published-corpus.md`
 
+## TRAP — Pages deploys are not on the default branch, and cancelled is a third state
+
+`check:ci-health`'s default-branch query **cannot see a Pages deployment**:
+those runs are on the *publish* branch, raised by `github-pages[bot]` on the
+`dynamic` event, in a workflow with no file. Measured 2026-09-20: the
+default-branch page held **zero**, the publish branch 51 cancelled / 49 green.
+
+**`cancelled` is a third state** — stale, not down, nobody owed a fix. Never
+fold it into success or failure. Say **whose** contention it was: one deploy
+pushing twice is fixed, several sessions racing for the ref is not. Report the
+counts, grade no share — only the floor *"deployments happened, none succeeded"*.
+
+**Never cached.** A Pages outcome is a fact GitHub holds about the repo, not
+repository state.
+
+More: `detail/pages-deploys-are-not-on-the-default-branch.md`
+
 ## TRAP — a 404 or a failed fetch is not evidence — read the publish ref
 
 **First check for a deployment or 404 question is the publish ref, not a
 fetch.** `git fetch origin gh-pages && git ls-tree -r --name-only FETCH_HEAD |
-grep <thing>`; staging previews are `STAGING/<branch-slug>/`, the slug being
-the branch with `/` replaced by `-`.
+grep <thing>`; staging previews are `STAGING/<branch-slug>/`.
 
-**A published URL is looked up, never composed.**
-`docs/<stub>/proposals/x.md` publishes to `/proposals/x.html` — the stub
-segment is a source-tree convention Jekyll does not carry into the site, so a
-composed URL 404s on a page that is there. Measured 2026-09-19 on
-`bootstrap.md`.
+**A published URL is looked up, never composed** — the `docs/<stub>/` segment
+does not reach the site, so a composed URL 404s on a page that is there.
 
-**A failed fetch from an agent container is a proxy result.** Outbound HTTPS
-is proxied and `github.io` is blocked: `curl` returns `000` with `CONNECT
-tunnel failed, response 403` whether or not the page exists. "Could not
-determine" is honest, and still the wrong answer when the ref could determine
-it.
+**A failed fetch from an agent container is a proxy result**, not an absence:
+`github.io` is blocked and `curl` returns `000` either way.
 
 **CI state is `get_check_runs`, not `get_status`** — the latter reports
-`{"state":"pending","total_count":0}` on a PR whose checks are green, because
-this repo posts check runs and no legacy statuses. Compare its `head_sha`
-against the PR's current head: `check_suite.completed` routinely names a
-superseded sha, and the staging workflow's own commits are not PR heads.
+`pending, total_count 0` on a green PR. Check its `head_sha` against the PR's
+current head.
 
 Skill: `skills/folio-core/github-state-inspection.md`.
 
-NOT tagged to `platform-boundary-guard`, which wants the compose-not-resolve
-half: measured 2026-09-19 it was already at **201 of its 200 lines**, so a
-14th entry pushes one of its own TRAPs past the harness cut. The skill is the
-source of truth; memory only summarises.
+More: `detail/read-the-ref-not-the-url.md`
 
 ## TRAP — two workflows fail BY DESIGN here; do not "fix" them by dispatching
 
@@ -199,9 +198,7 @@ Without rule 3 these two would be red forever. That is what rule 3 is for.
 
 <!-- folio:memory:end -->
 
----
-
 ## Session log
 
-One line per check: what was red, which of the three rules applied, whether
-it was a fire. Keep under ~200 lines — prune the log, never the TRAPs.
+One line per check: what was red, which rule applied, whether it was a fire.
+Prune the log, never the TRAPs.

@@ -2,22 +2,18 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/check-l1-complete.ts",
-    "script_hash": "0fa5d1f1d875"
+    "script_hash": "3bcb85c024d3"
   },
   "subject": {
     "kind": "library-document",
     "id": "library/who-pub-tps-931"
   },
-  "updated_at": "2026-09-19T16:11:07.189Z",
+  "updated_at": "2026-09-20T12:20:39.577Z",
   "families": {
     "notDerivable": {
       "summary": "L1 requirements NO ingest arm can produce yet. Not a defect in this entry and not a pass either — nothing has checked them, so this entry is not fully verified. Each names the bean that would make it checkable.",
-      "count": 2,
+      "count": 1,
       "entries": [
-        {
-          "requirement": "image-descriptions",
-          "detail": "no arm builds this yet — bean d5f1"
-        },
         {
           "requirement": "audio-transcripts",
           "detail": "no arm builds this yet — bean 1r0p"
@@ -30,5 +26,5 @@
       "entries": []
     }
   },
-  "total": 2
+  "total": 1
 }

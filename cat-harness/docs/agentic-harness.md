@@ -61,7 +61,7 @@ Active workflows in this platform:
 | **Content lifecycle** | [`content-lifecycle.bpmn`](../../skills/workflows/content-lifecycle.bpmn) | Content moves through validate → render → publish |
 | **Document ingestion** | [`document-ingestion.bpmn`](../../skills/workflows/document-ingestion.bpmn) | User drops a file in `uploads/` |
 | **Draft to publication** | [`draft-to-publication.bpmn`](../../skills/workflows/draft-to-publication.bpmn) | Content moves from draft to published |
-| **CRDM requirements** | [`crdm-requirements.bpmn`](../../skills/workflows/crdm-requirements.bpmn) | Agent detects a feature request |
+| **CRDM requirements** | [`crdm-requirements.bpmn`](../../methodologies/crdm/workflows/crdm-requirements.bpmn) | Agent detects a feature request |
 | **Evidence retrieval** | [`evidence-retrieval.bpmn`](../../skills/workflows/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
 
 **State transitions:** a workflow can be **suspended** when the user asks to
@@ -114,7 +114,7 @@ classification determines which workflow the agent enters.
 | **Content authoring** | Write, edit, extend folio content (chapters, blocks, sections) | Authoring workflow (paper or document) |
 | **Content review** | Review, validate, provide feedback on existing content | Content lifecycle / editing-HCI workflow |
 | **Content ingestion** | Ingest a source document into the folio | Document ingestion workflow |
-| **Feature request** | Request new platform capability (see [crdm-detect](../../skills/folio-core/crdm-detect.md)) | CRDM requirements workflow |
+| **Feature request** | Request new platform capability (see [crdm-detect](../../methodologies/crdm/crdm-detect.md)) | CRDM requirements workflow |
 | **Information request** | Ask about the platform, content, or process | No workflow — answer directly |
 | **Tool invocation** | Run a specific tool (`content_validate`, `qa_sweep`, etc.) | No workflow — execute and report |
 | **Work-plan management** | Create, update, or query beans | No workflow — execute and report |
@@ -124,7 +124,7 @@ classification determines which workflow the agent enters.
 
 The critical classification boundary is between **content authoring** and
 **feature request**. The `crdm-detect` skill
-([`skills/folio-core/crdm-detect.md`](../../skills/folio-core/crdm-detect.md))
+([`methodologies/crdm/crdm-detect.md`](../../methodologies/crdm/crdm-detect.md))
 provides the detailed detection signals. The summary rule:
 
 > If implementing the request would require changes to **folio-assistant**
@@ -164,6 +164,43 @@ classifying the request and routing to the right one — and the **exit point** 
 returning to idle state when the workflow completes, or suspending if the user
 switches context.
 
+## Deterministic and agentic processing
+{: #deterministic-and-agentic data-fa-label="sec:harness-deterministic_and_agentic" }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/deterministic-and-agentic.md){: .fa-node-edit title="Edit content/docs/agentic-harness/deterministic-and-agentic.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
+
+Workflow processing here is a **spectrum, not a switch**, and the harness is
+already at four different points on it without ever having named the axis:
+`folio:policy enforcement` decides whether a step that is not enabled is
+refused or merely noted; `relaxable="false"` decides whether a package may
+negotiate a base step away; `folio:decision` decides whether a branch is
+computed from a table rather than chosen; and the commit-boundary gate refuses
+the write by something that is not the agent.
+
+Those are **not one axis**, and treating them as one is the first thing to get
+wrong. At least three questions are being conflated — *who decides* the branch,
+*what happens if the decision is wrong*, and *who enforces*. A step can be
+fully agentic on the first and fully deterministic on the third: the commit
+boundary is exactly that, an agent deciding freely and a hook refusing the
+write regardless.
+
+A gateway now says which it is. `<folio:decision>` means a table computes it
+and a hand-supplied outcome is refused; `<folio:judgement reason="…">` means
+somebody's call, with the reason required. Before that marker, "no table
+because this is a judgement" and "no table because nobody wrote one" were
+indistinguishable — and `bun run check:workflow-refs` now prints the three-way
+split, so the question *how much of this is decided by a model?* has an answer
+that is counted rather than asserted.
+
+**What that count is for is research, and it is open.** Which judgement points
+are safety risks, how much must be deterministic, and how models compare across
+sub-workflows under a controlled overlay of context and memories are three
+questions this repository can now ask and has not answered. The agenda, with
+each claim marked as measured, decided or hypothesis, is
+[`deterministic-and-agentic`](reference/skill-instructions/deterministic-and-agentic.html).
+Read it as an agenda: there is more hypothesis in it than measurement, and it
+says so.
+
 ## Feature-request workflow (CRDM)
 {: #feature-request-workflow data-fa-label="sec:harness-feature_request_workflow" }
 
@@ -172,7 +209,7 @@ switches context.
 When a request is classified as a feature request, the agent enters the
 **CRDM requirements workflow**
 ([full documentation](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../../skills/workflows/crdm-requirements.bpmn)).
+[BPMN](../../methodologies/crdm/workflows/crdm-requirements.bpmn)).
 
 The feature-request workflow is where this harness document adds the most
 value, because it describes a behaviour that was previously implicit. The
@@ -181,7 +218,7 @@ requirements workflow existed only as ad-hoc conversation.
 
 ### How the agent enters CRDM
 
-The detection logic is in [`skills/folio-core/crdm-detect.md`](../../skills/folio-core/crdm-detect.md).
+The detection logic is in [`methodologies/crdm/crdm-detect.md`](../../methodologies/crdm/crdm-detect.md).
 Three scenarios:
 
 **New session, first request is a feature:**
@@ -307,8 +344,8 @@ back to its authoritative sources.
 | Session start sweep | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Bean protocol | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Commit and PR discipline | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Feature-request detection | `crdm-detect.md` | [`skills/folio-core/crdm-detect.md`](../../skills/folio-core/crdm-detect.md) |
-| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/folio-core/crdm-requirements-workflow.md`](../../skills/folio-core/crdm-requirements-workflow.md) |
+| Feature-request detection | `crdm-detect.md` | [`methodologies/crdm/crdm-detect.md`](../../methodologies/crdm/crdm-detect.md) |
+| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`methodologies/crdm/crdm-requirements-workflow.md`](../../methodologies/crdm/crdm-requirements-workflow.md) |
 | Content authoring (paper) | authoring-math skills | [`skills/authoring-math/`](../../skills/authoring-math/) |
 | Content authoring (document) | folio-document-adapter skills | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
 | Content lifecycle | content-lifecycle skills | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |

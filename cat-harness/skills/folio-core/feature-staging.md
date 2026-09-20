@@ -27,22 +27,64 @@ https://<owner>.github.io/<repo>/STAGING/<branch-slug>/
 When an agent pushes to a feature branch, `feature-staging.yml` automatically:
 
 1. Builds the docs site (Jekyll + TypeDoc + BPMN diagrams)
-2. Stamps every page with:
-   - Commit SHA (short)
-   - Build timestamp
-   - Source branch name
-   - Link to the CI build log
-3. Injects a **yellow staging banner** at the top of every HTML page
+2. Writes the build's facts — commit SHA, timestamp, branch, PR, issue, build
+   log — **once**, to `staging.json` at the preview root
+3. Injects a **constant** staging banner at the top of every HTML page, which
+   reads those facts in the browser
 4. Deploys to `gh-pages/STAGING/<branch-slug>/`
 5. Comments the staging URL on the PR
 
 ### 2. The staging banner
 
-Every staged page carries a yellow banner:
+Every staged page carries a muted-sage banner:
 
-> ⚠️ **STAGING** — branch `feature/update-schedule` · commit `a1b2c3d` · built 2026-09-18T00:30:00Z · PR #42 · [build log](…)
+> 🔀 **FEATURE BRANCH** — `claude/update-schedule` · commit `a1b2c3d` · built 2026-09-18T00:30:00Z · PR #42 · issue #215 · compare with main ↗ · build log
 
 This makes it impossible to mistake staged content for the published site.
+
+**Do not describe it as yellow.** It was `#d946ef`, which measured **3.46:1**
+against its own white text and so FAILED the 4.5:1 WCAG AA threshold — the
+banner was not merely glaring, it was the least readable element on every
+staged page. `#4F6F52` measures 5.63:1. Any replacement gets checked the same
+way; the pale decorator sages (`#9CAF88`, `#87A96B`) all land near 2.5:1.
+
+#### The facts are fetched, not baked — and that is a storage decision
+
+`cat-harness/scripts/staging-banner.ts` injects a fragment that is
+**byte-identical on every page and across every rebuild**, and the browser
+derives its preview root from `location.pathname`, fetches `staging.json` and
+fills the banner in.
+
+The banner used to be a bash string in `feature-staging.yml` with the SHA and
+a `date -u` timestamp interpolated into all ~530 pages. Because the timestamp
+changes every run, **every page was unique even across two builds of one
+branch**: each re-push added ~27.5 MB of permanently new objects to
+`gh-pages`, and the history grew even when the preview count did not. Measured
+2026-09-19 (bean `g196`): 9 previews, **346.1 MB**, and **zero HTML blobs
+shared between any two previews**.
+
+Three consequences for anyone editing this:
+
+- **Nothing per-build may go back into the fragment.**
+  `staging-banner-constant.test.ts` runs two builds with different facts and
+  compares the emitted bytes, so any leak fails regardless of how it is
+  spelled. Add the fact to `staging.json` instead.
+- **A failed fetch must still say PREVIEW.** The static markup carries
+  "FEATURE BRANCH" before any fetch happens, and the fetch only ever ADDS
+  detail. *"Could not determine" is never rendered as "this is the real
+  site"* — the same third-state rule the rest of the repository runs on, and
+  here the failure mode is a reviewer approving the wrong artefact.
+- **Every value from the JSON goes in as `textContent`, never as markup.**
+  Git ref names may contain `<`, `>` and `"` — they are not in git's forbidden
+  set, which stops at space, `~`, `^`, `:`, `?`, `*`, `[`, `\` and the control
+  characters. The bash version interpolated the branch name into a string;
+  the client builds nodes. `staging-banner.e2e.ts` pins this with a branch
+  name carrying an `onerror` payload.
+
+Pages still differ **between** previews, because Jekyll's `relative_url`
+prepends the `baseurl` to ~235 hrefs per page and the `fa-translation-index`
+island publishes `site.baseurl` to JavaScript. Those are coupled to the
+language switcher and are `g196`'s remaining half — not fixed here.
 
 ### 3. Commit SHA stamping
 
@@ -115,6 +157,23 @@ An author needs to change the immunization schedule:
 5. Author submits to the guidance review committee
 6. Committee compares `main` vs `STAGING/feature-update-immunization-schedule/`
 7. Committee approves → merge → staging cleaned up → main site updated
+
+## Before you hand a staging URL to a person
+
+**Check the ref, then say how long and come back.** A preview push is not a
+served page, and the bot's *"Staging preview deployed"* comment reports the
+first, not the second. List `STAGING/<slug>/` on `refs/heads/gh-pages` before
+relaying the URL; say the `stage` job takes ~2 minutes and Pages adds up to ten
+on top; schedule the re-check rather than promising it.
+
+The reason it is a rule: an agent relayed one preview URL to the owner **five
+times in a session** without checking anything, each time straight off the
+bot's comment. Whether the site served it was never established in either
+direction.
+
+The three states, and why the third is not yours to assert, are in
+[`staging-review`](staging-review.md) §"Before you hand a staging URL to a
+person (STRICT)". It is the same rule and it is written once, there.
 
 ## Before you report a staging URL as broken
 

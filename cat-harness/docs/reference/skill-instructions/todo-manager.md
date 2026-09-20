@@ -147,6 +147,121 @@ just clutter:
 The runaway loop is not something a doc can prevent; an unguarded `create` is.
 This rule is platform-level so every folio inherits it.
 
+## WHICH parent — the criterion nobody wrote down
+
+**A bean's parent is the epic whose SUBJECT it is, not the epic you happen to
+be working in.** That sentence was missing from this skill until 2026-09-20,
+and its absence is measurable: in one session six new beans were all filed
+under `yj32`, the epic that session was working in, while their subjects
+belonged to four different epics. The owner spotted it — *"beans misfiled...
+wrong skills guidance? tools guidance?"* — and the answer was yes, this file.
+
+**Nothing catches a wrong parent.** `check-bean-parents` tests exactly two
+things: that an open bean HAS a `parent`, and that the parent NAMES A BEAN
+THAT EXISTS. A bean filed under the wrong epic satisfies both, so it is
+textually clean, the guard is green, and it is only findable by a person
+reading the roadmap. **The check cannot distinguish a right parent from a
+wrong one, so the criterion has to live here or nowhere.**
+
+### How to choose
+
+1. **`beans list` and read the EPICS first** — there are many, each with a
+   thematic scope in its title. Do this BEFORE `beans create`, at the same time
+   as §"Check before you create"; both are questions about where a bean
+   belongs, and both are cheaper before the file exists.
+2. **Ask what the bean is ABOUT, not what you were doing when you wrote it.**
+   A visualiser whose blocker is an unrecorded ingest relation is an ingest
+   bean. A sticky's art is a rendering bean. The topic that makes the work hard
+   is usually the right epic.
+3. **When two epics both fit, pick the one whose OTHER children you would want
+   read alongside it**, and say in the body why the other was not chosen — a
+   parent is a claim about where somebody should go looking.
+
+### This conflicts with "every session is a Bean", and the conflict is real
+
+Core Directive 1 above says to create a session milestone and parent children
+to it. That is filing by SESSION; the repository is organised by SUBJECT, in
+thematic epics that outlive any session. **Where they disagree, file by
+subject** — a session bean is a useful record of what one sitting did, and it
+is not where the next person looks for the work. If you keep a session
+milestone, it is a sibling record, not the parent of topical work.
+
+## A GOAL is a `milestone` bean, and an epic joins one by parenting to it
+
+**Measured 2026-09-20, bean `wqht`.** The owner had stated three goals in chat.
+The store held **13 in-progress epics and 0 milestones**, with the `milestone`
+type configured and unused. No epic carried a goal's words, so classifying 140
+open items against those goals was a judgement made from scratch — and it would
+have been made from scratch again at the next review, differently.
+
+Nothing in this skill or in `session-intent` said where a goal LIVES. Both
+describe a "goal-scoped" queue, and a queue scoped to an object that does not
+exist cannot be a query; it can only be a re-derivation. The owner chose,
+2026-09-20:
+
+> **A goal is a `milestone` bean, in the owner's own words, and the epics
+> serving it are parented to it.**
+
+```sh
+beans create "<the goal, verbatim>" --type milestone   # after the existence check above
+beans update <epic-id> --parent <milestone-id>
+```
+
+Three properties make this the cheap answer rather than a new mechanism:
+
+- **The type already exists** and `check-bean-parents` already permits an epic
+  under a milestone, so nothing had to be built.
+- **`beans roadmap` groups by `parent:`**, so the goals become the roadmap's
+  top level the moment the epics are parented — which is what a roadmap was
+  always for.
+- **"Prioritise against the goals" becomes a query**: walk down from the
+  milestone. An item under no goal is then *visible* as such, which is itself
+  the finding a review wants.
+
+**Verbatim, and this is not a style note.** A goal is the owner's sentence, and
+a tidied paraphrase is a different claim that nobody agreed to — the same rule
+[`confirmation-waiver`](confirmation-waiver.md) applies to a waiver's `quote`,
+and for the same reason: the reader auditing the classification has only that
+string to check it against. **If you do not have the owner's words, you do not
+have the goal** — record the paraphrase as a paraphrase, say so, and ask.
+
+**This does not conflict with filing by subject** (§"WHICH parent"). A
+milestone sits ABOVE the epics; a bean is still parented to the epic whose
+subject it is, and the epic is parented to the goal it serves. Two levels, one
+criterion at each.
+
+---
+
+## After you create — parent it, and re-run the guard before you push
+
+`check-bean-parents` fails on an **open bean with no `parent`**, because such a
+bean lands in the roadmap's Miscellaneous section where nobody looks for it. The
+guard works. The way it gets past you is procedural, and it happened **twice in
+one session** on 2026-09-20:
+
+1. **A multi-flag `beans update` can apply only some of its flags.**
+   `beans update <id> -s in-progress --parent <epic>` set the status, silently
+   left the parent unset, and **reported success**. As two calls it worked. So
+   after setting several properties at once, **read the front matter back** —
+   `grep -n "^status:\|^parent:\|^priority:" beans/defs/<file>.md` — rather than
+   trusting the "Updated …" line.
+
+2. **A bean created after your last test run is an unguarded bean.** The second
+   occurrence was not the CLI at all: the bean was minted, its body written and
+   its priority set *after* `bun test` had passed, and the push went out on that
+   stale green. CI caught it, which cost a cycle for a one-line fix.
+
+**So: `beans create` and the `--parent` that follows it are one action, and
+touching the bean store invalidates your last test run.** Re-run at least
+`bun test cat-harness/scripts/tests/check-bean-parents.test.ts` — 105 ms —
+before pushing.
+
+The general shape is worth more than the bean case: **a green suite is green for
+the tree you ran it against.** Anything added afterwards, including an artefact
+that is "just a note", is untested. This is the cheap end of the same discipline
+`continual-progress` states about verifying rendered work rather than describing
+it.
+
 ## When the `beans` CLI is not there — you are still not read-only
 
 `scripts/beans-fallback.ts` writes the same store in the same layout: same
@@ -172,6 +287,69 @@ instead. The CLI's `create` does not, and that is the mechanism behind the
 14,688 duplicates in `qou`. `--force` exists for a genuinely intended duplicate
 and has to be typed.
 
+## Check before you WORK — a checkbox is a claim, not a measurement (STRICT)
+
+`beans create` is not idempotent, and §"Check before you create" above is the
+guard. This is its twin at the other end: **a bean's stated state is a claim
+somebody wrote down once, and the code has moved since.**
+
+> **Re-measure a bean's open items against the code before you act on them.**
+
+The cost is not wasted effort. It is *acting on a stale claim*, and twice in
+one session (2026-09-20) that came within a single edit of re-introducing a
+defect a test had been written to catch.
+
+### Measured, one session, four beans
+
+| bean | what the file said | what was true |
+|---|---|---|
+| `sa8y` | four items open | one open; two done, one a **deliberate** decision |
+| `vo9d` | five items open | one open; four done by siblings |
+| `30hn` | 16 of 33 undeclared | 14 of 41 — and the mover was **this session** |
+| `koth` / `b11x` | two beans | one defect, filed **3m53s apart** |
+
+### The two failures this prevents, and they are different
+
+**1. Doing work that exists.** The cheap one. `vo9d`'s four items were done by
+`11d43ce4fb` and `ca5ec3e373`, neither of which ticked a box.
+
+**2. Undoing a decision that was recorded elsewhere.** The expensive one.
+`sa8y`'s *"the three unbound lanes get roles"* reads like a gap. The roles
+exist; what is missing is `lanes`, and its absence is deliberate —
+`cat-bootstrap/skills/roles/roles.json` carries a `_lanes_comment` explaining that
+binding them mints three dangling links in the root's graph, with bean `pve3`
+owning the question. **Doing the obvious thing would have re-created the exact
+shape of the wrong fix `sa8y` exists to record.**
+
+The decision was never in the bean. It was in the file the bean is about.
+
+### What "re-measure" means, concretely
+
+- **Run the thing.** `sa8y`'s headline finding was fixed hours earlier;
+  `kg:audit` says so in one command.
+- **Read the body, not just the boxes.** `vo9d` describes a Tool node its own
+  checkbox still shows unticked.
+- **Date it.** `git log -S` on the symbol or the file against the bean's
+  `created_at` separates *fixed since* from *wrong when written* — and `vo9d`
+  was the second: it listed `check-l1-complete.ts` as having no callers when
+  `ingest-document.ts` had imported from it 32 minutes earlier.
+- **Read the file the bean is about**, for a comment saying why it is the way
+  it is. That is where a deliberate absence lives.
+
+### And a bean you re-measure, you record
+
+Leave what you found in the bean, with the commits and the times — a stale
+checkbox you silently worked around is one the next agent meets unchanged.
+Tick what is done and name who did it; withdraw a done-when you no longer
+believe, with reasons, rather than leaving it unmet. Where the bean and the
+code disagree, **the code is what is true and the bean is what is wrong** —
+the same rule [`AGENTS.md`'s banner](../../../AGENTS.md) states for a skill
+against that file.
+
+This is the work-plan half. The cross-session half — why two sessions can file
+one defect four minutes apart — is
+[`bean-coordination`](bean-coordination.md) §"A claim is branch-local".
+
 ## Working with Beans
 
 **1. Finding Tasks**
@@ -186,6 +364,65 @@ You can map out sequence blockers using:
 - When starting work: `beans update <id> --status in-progress`
 - When completed: `beans update <id> --status completed`
 - To add notes or discussion: `beans update <id> --body-append "Your note"`
+
+## Archiving — two dispositions, and they answer different questions
+
+`beans archive` moves every `completed` or `scrapped` bean out of the working
+set. It **moves**, never deletes: an archived bean is still resolvable by id,
+which is what makes it a disposal an agent may perform at all
+([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
+
+**There are two ways it can be driven, they are not alternatives, and a
+process author needs to know which one they are reaching for.** Owner,
+2026-09-20: *"outline both options and why used for. that is part of the
+skills to explain in context of larger process."*
+
+| | **a per-activity op** | **a periodic sweep** |
+|---|---|---|
+| what it is | a step inside one process — a fourth `<folio:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
+| the question it answers | *is **this item's** work over?* | *is **the store** still readable?* |
+| what decides | the process reaching a step that means completion | a uniform, process-independent criterion — `completed` or `scrapped` |
+| what the archive then records | **why** — "archived because the release shipped" | **when** — "archived in the sweep of that date" |
+| what it cannot do | reach a bean no process resolved | know that *this* release is what terminated *this* item |
+
+### Why neither replaces the other
+
+**The op cannot cover the store.** A bean resolved by a process with no
+archive step, by hand, or by a sibling session, is never reached. Coverage
+depends on every path having been drawn, and paths are added faster than they
+are wired.
+
+**The sweep cannot carry authority.** It knows only status. It cannot say
+that a requirement was archived *because the stakeholder signed off*, which
+is the fact an audit of the CRDM close would want — and `crdm-close.bpmn` is
+precisely where that authority exists.
+
+So the honest shape is: **the sweep is the floor, the op is the exception.**
+The sweep guarantees the store stays readable whatever anyone forgot; an op
+is worth adding only where a process's completion is *itself* the reason, and
+recording that reason is worth the extra edge on the diagram.
+
+### Where this sits against `resolve` — two layers, not two spellings
+
+`resolve` is the **process** saying *"I am done with this item."* Archiving
+is the **store** saying *"this is no longer in the working set."* They are
+different layers and they are allowed to be far apart in time — which is why
+`resolve` must never imply an archive.
+
+That gap is exactly what produced the backlog. Measured 2026-09-20: every
+process that touches the work plan reaches `resolve` and stops —
+`draft-to-publication` (claim → note → resolve), `crdm-close` (resolve),
+`code-change-review` (claim → resolve). `resolve` sets `completed`, and
+`completed` is what `beans archive` moves. Each of them manufactured the
+condition; none discharged it; **219 beans** accumulated until the owner
+asked for the sweep by hand.
+
+**Neither disposition is built yet**, and the first question is which —
+bean `folio-assistant-m8gz`, analysis in
+`fsh-guts/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
+owner's word and `beans archive`, run deliberately. Note the CLI prints
+`.beans/archive/` but honours `path:` from `.beans.yml`; here that means
+`beans/defs/archive/`.
 
 ## Status Display Format
 

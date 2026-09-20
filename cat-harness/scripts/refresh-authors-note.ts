@@ -17,6 +17,7 @@
  *   bun run scripts/refresh-authors-note.ts --check     # exit 1 if stale
  */
 
+import { folioDir } from "../schemas/cat-harness.js";
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { computeStats } from "./lean-coverage";
@@ -26,15 +27,15 @@ import { paperArg } from "../content/pipeline/cli-args";
 /**
  * The paper to report on, and the folio's `content/` root.
  *
- * Both were wrong: `computeStats(paperDir, contentRoot)` takes two arguments
- * and was called with one — so `contentRoot` was `undefined` at runtime — and
+ * Both were wrong: `computeStats(paperDir, folioRoot)` takes two arguments
+ * and was called with one — so `folioRoot` was `undefined` at runtime — and
  * the paper was hardcoded to `quantum-observable-universe`, one folio's paper
  * name living in the platform. `--paper` wins; otherwise take the folio's sole
  * paper and refuse to guess when there are several.
  */
-function statsTarget(): { paper: string; contentRoot: string } {
+function statsTarget(): { paper: string; folioRoot: string } {
   const repoRoot = findContentRepoRoot();
-  const contentRoot = join(repoRoot, "content");
+  const folioRoot = folioDir(repoRoot);
   const paper = paperArg() ?? soleFolioPaper(repoRoot);
   if (!paper) {
     // Exit cleanly rather than throwing: this is a CLI entry point, and a raw
@@ -43,12 +44,12 @@ function statsTarget(): { paper: string; contentRoot: string } {
     const found = findPapers(repoRoot);
     console.error(
       found.length === 0
-        ? `no paper found under ${contentRoot} — run from a folio checkout, or pass --paper`
+        ? `no paper found under ${folioRoot} — run from a folio checkout, or pass --paper`
         : `this folio has ${found.length} papers (${found.join(", ")}) — pass --paper to choose one`,
     );
     process.exit(2);
   }
-  return { paper, contentRoot };
+  return { paper, folioRoot };
 }
 
 
@@ -58,7 +59,7 @@ function statsTarget(): { paper: string; contentRoot: string } {
 // came from `statsTarget()` rather than being baked into the path.
 const REPO_ROOT = findContentRepoRoot();
 const notePathFor = (paper: string): string =>
-  join(REPO_ROOT, "content", paper, "introduction", "authors-note.md");
+  join(folioDir(REPO_ROOT),  paper, "introduction", "authors-note.md");
 
 const PROVABLE_RE = /\*\*\d+\s+of\s+\d+\s+\([\d.]+%\)\s+provable\s+claims\*\*/;
 // The note's prose was rewritten to distinguish PRIMARY conjectures from the
@@ -94,7 +95,7 @@ function buildConjectureClause(s: ReturnType<typeof computeStats>): { count: str
 function main(): number {
   const check = process.argv.includes("--check");
   const target = statsTarget();
-  const stats = computeStats(target.paper, target.contentRoot);
+  const stats = computeStats(target.paper, target.folioRoot);
 
   const NOTE_PATH = notePathFor(target.paper);
   const src = readFileSync(NOTE_PATH, "utf-8");

@@ -57,13 +57,14 @@
  */
 
 import {
+  type Dirent,
   existsSync,
   mkdirSync,
   readFileSync,
   readdirSync,
   writeFileSync,
 } from "node:fs";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 
 import {
@@ -77,6 +78,7 @@ import {
   type KgNodeLabels,
 } from "./kg-node";
 import { NS_PREFIXES, termIri } from "./namespaces";
+import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
 
 /** Root-relative filename carrying an instance's declaration. */
 export const DECLARATION_FILENAME = "harness.json";
@@ -93,6 +95,44 @@ export const DECLARATION_FILENAME = "harness.json";
  * the point of making them all graphs — but only a renderable one is wired to
  * the site build.
  */
+/**
+ * What a running process does with a graph of this kind.
+ *
+ * **One question settles it: does a running process WRITE it, READ it, or is it
+ * the SUBJECT?**
+ *
+ * - `content` — the subject. A process may PRODUCE it, and that is usually the
+ *   point of the process.
+ * - `context` — **static state.** A record about content that a process reads
+ *   and never writes. Fixed for the duration of an instance. It changes only
+ *   when a human directs an authoring act, outside any process.
+ * - `state` — **live state.** A record the process itself writes as it runs. A
+ *   bean's status changes because a step completed.
+ *
+ * Three values and no fourth. There is no "could not determine" here, and that
+ * is a departure from this repo's usual three-state rule for a reason worth
+ * stating: a third state is right when a CHECK looked and could not tell, and
+ * wrong when an AUTHOR is registering a kind they are defining. Whoever adds a
+ * kind knows what a process does with it; letting them decline to say would put
+ * the burden on every consumer instead, which is the position the axis exists
+ * to end.
+ *
+ * ## `context` arrived by being needed, not by being symmetrical
+ *
+ * The axis shipped with two values and the owner refined it the same day,
+ * settling bean `mhh9`: *"put memory under state/context as static, during a
+ * process. it does not change. agents dont work on it (except when an authoring
+ * agent is directed by human). todos, beans are not static."*
+ *
+ * That is not a subdivision for tidiness. `content` and `state` alone forced
+ * two unlike things together: a bean, which a step rewrites, and a memory
+ * entry, which no step may touch. A consumer told only "this is state" cannot
+ * tell whether writing to it is normal or a bug.
+ *
+ * See `skills/folio-core/content-context-and-state-graphs.md`.
+ */
+export type GraphLayer = "content" | "context" | "state" | "derived";
+
 /** What a declared directory's graph kind means. */
 export interface GraphKindDef {
   /** The `@type` IRI this kind projects to. */
@@ -108,6 +148,56 @@ export interface GraphKindDef {
    * here. See `schemas/folio-graph-kind.ts`.
    */
   renderable: boolean;
+  /**
+   * Does a graph of this kind say what the instance **IS**, or where something
+   * **GOT TO**?
+   *
+   * The second axis in this table, and the one the vocabulary was missing.
+   * `renderable` answers "does this become a website"; this answers "is this
+   * the subject matter, or a record about it". A consumer that needs one and
+   * is handed the other has no way to tell today.
+   *
+   * - **`content`** — authored nodes a reader or a tool consumes as the
+   *   subject matter. It is what the instance IS. It stands on its own: you
+   *   can read a skill, a schema or a library section without knowing what
+   *   anybody did with it.
+   * - **`context`** — STATIC state. A record about content that a running
+   *   process READS and never writes, fixed for the duration of an instance.
+   *   It changes only when a human directs an authoring act, outside any
+   *   process. A step that writes to a `context` graph is a defect.
+   * - **`state`** — LIVE state. A record the process itself WRITES as it
+   *   runs: a bean's status changes because a step completed, a workflow
+   *   instance's token moves. It REFERENCES content and is meaningless
+   *   without it.
+   *
+   * **REQUIRED, so a kind cannot go unclassified.** That is the
+   * `DOCUMENT_BLOCK_KINDS` discipline — derived as the complement of
+   * `MATH_BLOCK_KINDS` precisely so a new block kind cannot slip through
+   * unassigned. Here the same guarantee comes from the type being required
+   * rather than optional: `tsc` refuses a new kind that does not say, at the
+   * keyboard rather than at CI, and an optional field would have made "did
+   * not say" indistinguishable from "content".
+   *
+   * **The discipline is in the skill, not here** —
+   * `skills/folio-core/content-context-and-state-graphs.md` carries the definition,
+   * the classification of every kind with its reason, the two questions that
+   * settle a hard case, and what a consumer may assume about each side. The
+   * classification of `fsh-guts`, `qa`, `health` and `uploads` is the part
+   * worth reading before adding a kind: none of the four is obvious from its
+   * name, and each is decided by the same two questions rather than by taste.
+   *
+   * SETTLED, and DONE: agent memory is `context` — bean `mhh9`, decided by
+   * the owner 2026-09-20 — and the 36 nodes moved to the declared `memory/`
+   * graph the same day, as their own change (bean `07xs`), because relocating
+   * a directory as a SIDE EFFECT of adding a classification is the shape #395
+   * refused and bean `auap` did separately.
+   *
+   * The case is worth keeping because it proves the rule above: for the hours
+   * between, `cat-harness` was correctly `content` while something inside it
+   * was `context`, and both statements were true. Classifying the CONTAINING
+   * kind is not a ruling on its contents.
+   */
+  holds: GraphLayer;
   summary: string;
   /**
    * The skill that says how to READ a graph of this kind, by name.
@@ -128,8 +218,79 @@ export interface GraphKindDef {
    * Optional because not every kind has one answer: `cat-harness` holds node
    * kinds typed in different places — skills, workflows, roles, actors — and a
    * single pointer there would be a lie of precision rather than a fact.
+   *
+   * **It is NOT a validator**, and {@link GraphKindDef.validator} is why.
    */
   schema?: string;
+  /**
+   * What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a
+   * Zod schema.
+   *
+   * ## Why this is not {@link GraphKindDef.schema}
+   *
+   * The two look like one fact and are not, and the corpus is what settles
+   * it. `schema` answers *where is the shape written down*, and its own doc
+   * allows a `$schema` tag the files carry. `validator` answers *what can I
+   * run*. They diverge today, in the first case anyone looked at:
+   *
+   * | kind | `schema` | `validator` |
+   * |---|---|---|
+   * | `qa` | `content/pipeline/qa-witness.ts` | **none** — that module exports TypeScript INTERFACES; no Zod schema for `qa-witness/v1` exists anywhere |
+   *
+   * So overloading `schema` would have made its one substantial use a lie:
+   * a consumer that imported it expecting something parseable would get a
+   * module with nothing to call. Two fields, because a case where they
+   * differ is already committed.
+   *
+   * ## `module#Export`, not a bare module
+   *
+   * A module path names a file, and a file may export thirty schemas —
+   * `schemas/health-report.ts` exports five. The `#` form is the convention
+   * `<folio:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN
+   * gateway here, so this reuses a spelling rather than minting one.
+   *
+   * **Resolved relative to the INSTANCE root**, not the repository root. That
+   * distinction was invisible until `#437` moved the instance under
+   * `cat-harness/`: the three `schema` paths kept working as instance-relative
+   * strings while their own doc called them repo-relative, and nothing
+   * noticed because nothing read them. `bun run check:kind-validators` is
+   * what notices now.
+   *
+   * Absent means ABSENT — a kind with no runtime schema. A consumer must
+   * report that as *could not determine*, never as valid; 13 of the 16 base
+   * kinds are in that state and one of them, `qa`, is the largest generated
+   * graph here.
+   */
+  validator?: string;
+  /**
+   * The NESTED DECLARATION a directory of this kind carries, by filename.
+   *
+   * A graph directory may declare its own inner structure one level down:
+   * `beans/beans.json` says the `beans` graph holds `bean-defs` and
+   * `workflow-state`, so the root `harness.json` does not restate them. One
+   * fact, one place, at each level.
+   *
+   * ## Why the KIND names the file, and not the directory
+   *
+   * `declaredKinds` computed it as `${basename(path)}.json` — a filename
+   * derived from wherever the directory happened to sit. `bean-graph.ts`
+   * states the opposite rule, and states it as a design property: *moving
+   * `beans/` to `work/` requires editing nothing inside it.* Both were true
+   * of today's layout and they disagree the moment anybody relocates:
+   * the walker looks for `work/work.json`, the file is still `work/beans.json`,
+   * and the nested kinds vanish from `declared` with nothing said. A silent
+   * under-count, which manufactures an `undeclared` finding somewhere else.
+   *
+   * The owner settled the general rule on 2026-09-20 — **each type declares
+   * its own filename** — and this is that rule at the graph-kind level. The
+   * kind knows what its declaration is called; a directory name is a
+   * filesystem accident.
+   *
+   * Absent means the kind has no nested declaration, and `declaredKinds`
+   * falls back to the directory-name convention plus `graph.json` so an
+   * unmigrated graph keeps working.
+   */
+  declarationFile?: string;
 }
 
 /**
@@ -185,6 +346,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   tools: {
     type: termIri("ToolGraph"),
     renderable: false,
+    // A Tool node is an authored definition of a mechanism. It says what this
+    // instance CAN DO, not what anybody did.
+    holds: "content",
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
   // Named for the LAYER that defines it, like every other harness concept.
@@ -200,11 +364,113 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "cat-harness": {
     type: termIri("KnowledgeGraph"),
     renderable: false,
+    // Skills, workflows, roles, requirements — the authored instruction bodies
+    // and the diagrams they are named from. See the note on `holds`:
+    // classifying the container was never a ruling on its contents — for a
+    // few hours on 2026-09-20 it held `memory` nodes, which are `context`
+    // (beans `mhh9`, `07xs`).
+    holds: "content",
     summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
+  },
+  // ── Judgement methodologies, one sub-graph each ───────────────────────
+  //
+  // A methodology is a NAMED, EXTERNAL way of reaching a judgement — Kepner-Tregoe
+  // for a decision, MADR for its record, DMN for the computable case, GRADE for
+  // certainty of evidence. They are **parallel, not composable**: which one applies
+  // is contextual, and blending them produces a house method that cites nobody.
+  //
+  // ## Why its own kind rather than skills
+  //
+  // Three properties a skill does not have:
+  //
+  // 1. **Extractable.** A methodology is somebody else's work, adopted. If the
+  //    field moves on, or an instance needs a different one, the directory lifts
+  //    out and its declaration goes with it. A skill that had inlined the method
+  //    could not be lifted — it would have to be rewritten.
+  // 2. **Referenced, never inlined.** A skill names the methodology it follows;
+  //    the method's own text lives here once. Two skills quoting the same method
+  //    is two copies free to drift, which is the duplicate `directory-conventions`
+  //    calls unchecked.
+  // 3. **Not subject to skill criteria.** `skill-is-brief` caps a skill near 280
+  //    lines because a skill is an instruction. A methodology is a FAITHFUL
+  //    RENDERING of an external standard, and truncating it to fit a house limit
+  //    would misrepresent the standard.
+  //
+  // Any layer may declare a directory of this kind: the harness carries the
+  // domain-neutral ones, `smart-kg` carries GRADE, because certainty-of-evidence
+  // grading belongs to WHO L1 guideline development rather than to the harness.
+  methodology: {
+    type: termIri("MethodologyGraph"),
+    renderable: false,
+    // `context`, by the axis's own criterion and not by resemblance: read
+    // during a process, never written by one. A methodology here is somebody
+    // else's standard ADOPTED — Kepner-Tregoe, MADR, DMN, GRADE — so a step
+    // that decided to amend one would be rewriting the standard rather than
+    // recording anything, and the ingestion that brings a new one in is a
+    // human-directed act (`methodology-adoption`), exactly as relocating
+    // something into `fsh-guts` is.
+    //
+    // NOT `content`, though the files are prose a reader can follow: what
+    // makes `content` is being the folio's SUBJECT MATTER, and a methodology is
+    // how a decision about the subject gets made. `renderable: false` above
+    // follows from the same fact — nothing here is published as a page.
+    holds: "context",
+    summary:
+      "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
+  },
+  // THE ONE RENDERABLE KIND THE HARNESS OWNS, added 2026-09-20.
+  //
+  // This table carried no renderable kind until now, on the reasoning in
+  // `folio-graph-kind.ts`: "a layer that cannot render must not own the
+  // renderable kind." The owner's instruction changed the premise, not the
+  // principle — cat-harness now ships a renderer:
+  //
+  //   "docs/ is about documentation about the KG itself ... docs/ in
+  //    cat-harness ... only the most basic tooling and process ... builds off
+  //    generic process and single justthedocs tool. no extensions. no fancy.
+  //    no js (if possible)."
+  //
+  // So the rule reads, in its true form: A LAYER OWNS THE KINDS IT CAN RENDER.
+  // The harness can render plain documentation about itself, and does. `folio`
+  // stays core's because the harness cannot serve it — block viewers, LaTeX,
+  // QA badges, translation overlays — and that is the same rule, not an
+  // exception to it.
+  //
+  // A first attempt registered this on import, mirroring `folio`, so the
+  // assertion "the harness's own vocabulary contains no renderable kind" could
+  // stay literally true. That preserved a sentence at the cost of the design:
+  // `folio` pays the side-effect-import price because it is CONTRIBUTED by a
+  // dependency and may legitimately be absent, whereas `docs` ships with the
+  // harness and can never be absent. Twenty consumers would have needed an
+  // import for a kind that is always there. The test was updated instead,
+  // which is what it means for a premise to have changed.
+  //
+  // THE BOUNDARY THIS MUST NOT CROSS: the subject, not the feature list. The
+  // moment a `docs` page needs a block viewer, a LaTeX pass, a QA badge or a
+  // translation overlay, it is describing authored CONTENT and is a `folio`.
+  docs: {
+    type: termIri("DocsGraph"),
+    renderable: true,
+    // `content`, by the one question: a running process PRODUCES documentation,
+    // and it is the subject rather than something read or written in passing.
+    // Both supporting questions agree — detach a docs page and it still
+    // explains, and you would RE-AUTHOR it rather than arrive at it by
+    // re-running anything. Same layer as `cat-harness`, `schemas` and `voices`.
+    holds: "content",
+    summary:
+      "Documentation ABOUT the knowledge graph — how the harness works, what its " +
+      "directories hold, how a process runs. Rendered by the plain just-the-docs " +
+      "pipeline. Distinct from `folio`, which is content an author CREATES using " +
+      "the graph; the difference is the SUBJECT, not the format. The who-iris " +
+      "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
+      "how ingestion works is `docs`.",
   },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,
+    // A shape is the subject matter of the schema graph. It is true before
+    // anything is validated against it.
+    holds: "content",
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
   // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
@@ -221,12 +487,20 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   qa: {
     type: termIri("QaGraph"),
     renderable: false,
+    // A verdict is where a REVIEW got to on a subject that lives elsewhere.
+    // Detached from the artefact it judges it says nothing — which is the
+    // state test, and it is why the sidecar tree MIRRORS each subject's path.
+    holds: "state",
     summary:
       "QA witnesses — one `qa-witness/v1` document per audited subject, in three " +
       "families (`block`, `kg`, `translation`), projected for the docs site from the " +
       "verdicts that live beside their subjects. Generated; never hand-edited.",
     skill: "qa-witness",
     schema: "content/pipeline/qa-witness.ts",
+    // No `validator`, and that is a finding rather than an omission: the
+    // module above exports TypeScript interfaces only. The largest generated
+    // graph in this instance has no runtime schema, so `kg_validate` reports
+    // "could not determine" for it — which is the point of saying so here.
   },
   // Repository health reports — what the daily sweep under `test/health/`
   // wrote. A SEPARATE kind from `qa`, and the distinction is the same one that
@@ -247,11 +521,20 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   health: {
     type: termIri("HealthGraph"),
     renderable: false,
+    // The same shape one level out: where the REPOSITORY got to, measured
+    // against thresholds. A report is evidence about an instance, never part
+    // of it.
+    holds: "state",
     summary:
       "Repository health reports — one `health-report/v1` document per sweep, carrying every check's " +
       "three-state verdict, the thresholds it applied and the basis each threshold was chosen on. " +
       "Generated by `test/health/run.ts`; never hand-edited.",
     schema: "schemas/health-report.ts",
+    // declared-path-literal: this table IS the declaration. `validator` is the
+    // vocabulary entry that other code resolves THROUGH; reading it from a
+    // declaration would be reading it from here. `check:kind-validators`
+    // is what proves the path still resolves.
+    validator: "schemas/health-report.ts#HealthReportSchema",
   },
   // ONE kind for the whole work plan, not one per store. It replaced `workplan`
   // + `process-state` in #266; the rationale is in this map's doc comment above,
@@ -260,9 +543,17 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   beans: {
     type: termIri("BeanGraph"),
     renderable: false,
+    // The work plan. Its own declaration already splits WHAT IS BEING WORKED
+    // ON from WHERE IT GOT TO — both are records about content, neither is
+    // content.
+    holds: "state",
     summary:
       "The work plan — what is being worked on, and where each running BPMN instance got to. " +
       "Its inner directories are declared by `beans/beans.json`.",
+    // Named here rather than derived from the directory: `bean-graph.ts` holds
+    // that moving `beans/` to `work/` must rename nothing inside it, and a
+    // computed `${dirName}.json` would contradict that on the first relocation.
+    declarationFile: "beans.json",
   },
   // The two parts of the bean graph. They are BASE kinds rather than
   // something `bean-graph.ts` registers separately, because a directory and
@@ -272,6 +563,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "bean-defs": {
     type: termIri("BeanDefsGraph"),
     renderable: false,
+    // What is being worked on. A bean names a change to something; it is not
+    // the something.
+    holds: "state",
     summary:
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
@@ -279,6 +573,17 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "workflow-state": {
     type: termIri("WorkflowStateGraph"),
     renderable: false,
+    // The clearest case in the table: a token's position in a process drawn in
+    // the `cat-harness` graph. It cannot be read at all without the diagram it
+    // references.
+    holds: "state",
+    // The kind's own reader, wired 2026-09-20. `skill` is a property of the
+    // KIND rather than of a directory because a `workflow-state` graph is read
+    // the same way wherever it sits — and it was absent while the skill it
+    // names did not exist. A consumer arriving at this kind had the shape and
+    // no account of what a token position MEANS, which stores sit beside it,
+    // or why a step may write here and not to `memory`.
+    skill: "workflow-state",
     summary:
       "Running BPMN instances — one JSON file each, carrying " +
       "`\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
@@ -293,13 +598,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   todos: {
     type: termIri("TodoGraph"),
     renderable: false,
+    // A person's outstanding items. Outstanding is the word that settles it —
+    // an item records a position, not a fact.
+    holds: "state",
     summary:
       "Human actors' outstanding work — content, owned by the folio, tagged by role, " +
       "process, task and identity. Its inner directories are declared by `todos/todos.json`.",
+    declarationFile: "todos.json",
   },
   "todo-items": {
     type: termIri("TodoItemsGraph"),
     renderable: false,
+    // As `todos`.
+    holds: "state",
     summary:
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
       "Authored by people and by agents on their behalf.",
@@ -315,6 +626,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   uploads: {
     type: termIri("UploadsGraph"),
     renderable: false,
+    // A QUEUE, and a queue is a position in a pipeline. The declaration
+    // already says these files are NOT L1 and read as absent to every corpus
+    // consumer: the file is on disk and the content does not exist yet.
+    holds: "state",
     summary:
       "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
       "greppable as corpus: a document here reads as absent to every consumer.",
@@ -322,11 +637,61 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   library: {
     type: termIri("LibraryGraph"),
     renderable: false,
+    // DERIVED, not content — bean `hqku`, and the owner's ruling of
+    // 2026-09-20: *"library is static (only if we materialize assets or
+    // not)"*, *"can duplicate asset into a folio and work there"*.
+    //
+    // It still stands on its own — a library section reads without anything
+    // else, which is why this was `content` until now and why the skill used
+    // it as the example. What changed is the OTHER question: a section is
+    // produced from an ingested source and regenerated, never re-authored in
+    // place, so a QA finding against one is a finding against the ingestion
+    // that made it. `qa-sweep` skips it for exactly that reason.
+    //
+    // NOT `context`, and that was ruled out by a rule rather than by taste:
+    // `context` means a step writing to it is a defect, and
+    // `document-ingestion.bpmn` writes `library/`.
+    holds: "derived",
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
       "`structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every " +
       "knowledge-graph reference to a source resolves through here, never to a loose path " +
       "or a bare URL.",
+  },
+  // A REMOTE catalogue modelled in the graph without being held. Distinct from
+  // `library`, and the distinction is the whole point: `library` is L1 content
+  // that IS here, `catalogue` is the shape of a collection of which almost
+  // nothing is. A who-iris node says 1,057,223 files exist and that three of
+  // them are materialized; folding that into `library` would make a consumer
+  // asking "what have we got" receive an answer about what EXISTS.
+  //
+  // Every node declares a materialization state and there is no default — see
+  // folio-assistant-core/schemas/materialization.ts.
+  catalogue: {
+    type: termIri("CatalogueGraph"),
+    renderable: false,
+    // `content`, on the same reasoning that makes `library` content: it is
+    // DERIVED from an external source by an import process, and being derived
+    // rather than typed is not what the axis asks about. Detach a catalogue
+    // node and it still says something standing on its own — this item exists,
+    // at this handle, in this collection — so it is not the empty-when-detached
+    // shape that marks state. Contrast `uploads`, which is `state`: a queue
+    // says nothing once the thing has moved through it.
+    //
+    // THE TENSION, stated rather than hidden, per the skill's own rule: one
+    // FIELD of a catalogue node — `materialization.state` — genuinely is
+    // written by a running process, when `materialize-remote` moves a node from
+    // `referenced` to `materialized`. That does not make the graph state, for
+    // the same reason re-ingesting a PDF does not make `library` state: the
+    // axis classifies the KIND, not every field on it. If a consumer ever needs
+    // to ask "may a process write this field", that is a question about the
+    // field and belongs on `materialization.ts`, not a reclassification here.
+    holds: "content",
+    summary:
+      "A remote catalogue modelled by reference — communities, collections and items " +
+      "of a corpus the instance does not hold. Every node declares whether its bytes " +
+      "are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), " +
+      "with no default. Distinct from `library`, which is content that IS here.",
   },
   // Named editorial voice profiles, overlaid on the base house voice. A
   // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
@@ -336,6 +701,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   voices: {
     type: termIri("VoiceGraph"),
     renderable: false,
+    // An authored rule set. A voice is true whether or not any prose has been
+    // written against it.
+    holds: "content",
     summary:
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
@@ -343,6 +711,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "todo-feedback": {
     type: termIri("TodoFeedbackGraph"),
     renderable: false,
+    // As `todos`, plus a submitter's identity — which makes it more obviously
+    // a record OF something rather than the something.
+    holds: "state",
     summary:
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
@@ -372,9 +743,144 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // WHO SMART folios this platform targets. The collision was raised and the
   // owner confirmed the spelling; it is recorded here so the overlap is met
   // as a known fact rather than rediscovered as a defect.
+  // Agent memory — durable facts an agent carries between sessions.
+  //
+  // `context`, and it is the kind the third value was added FOR. The owner,
+  // settling bean `mhh9` on 2026-09-20: "put memory under state/context as
+  // static, during a process. it does not change. agents dont work on it
+  // (except when an authoring agent is directed by human). todos, beans are
+  // not static."
+  //
+  // Every clause of that is the `context` definition. A running process READS
+  // memory and no step writes it; a step that did would be a defect rather
+  // than an update. It changes when a human directs an authoring agent to
+  // change it, which is an act OUTSIDE any instance.
+  //
+  // That is also what separates it from `todos`, its mirror in the 2x2
+  // `todos/todos.json` states. Both were called "memory" there — human and
+  // agent — and the axis cuts ACROSS that: a todo is an OUTSTANDING ITEM a
+  // process closes, so it is live `state`, while a memory entry is an
+  // ESTABLISHED FACT nothing mid-process revises. Same quadrant row, opposite
+  // sides of this line.
+  //
+  // DECLARED at `memory/`, repository-scoped, since bean `07xs` — the same
+  // day this kind was registered. It was registered ahead of its directory for
+  // a few hours, which is the `folio` situation rather than the `dh4f` one:
+  // `dh4f` is a DIRECTORY declared and absent, where a consumer scans nothing
+  // and reports clean, and nothing scans a kind.
+  // A SESSION's context — who is acting, which instances are open, what it
+  // waits on. `state`: the session writes it as it goes.
+  //
+  // Distinct from `workflow-state`, and the line is not a nicety.
+  // `workflow-state` is where ONE INSTANCE got to; a session SPANS processes —
+  // it starts before any instance, may open several, and outlives each. A
+  // session with nothing open is the commonest state there is, and would be
+  // unrepresentable as a field on an instance.
+  //
+  // REGISTERED AHEAD OF A DIRECTORY, like `memory` and like `folio`: nothing
+  // writes a session record yet (bean `3nfv` is the state machine that will),
+  // and declaring a directory before it exists is the `dh4f` defect, where a
+  // consumer scans nothing and reports a clean run. Nothing scans a kind.
+  "session-state": {
+    type: termIri("SessionStateGraph"),
+    renderable: false,
+    holds: "state",
+    skill: "session-context",
+    schema: "schemas/session-context.ts",
+    summary: "A session's context — the acting actor, the instances it has open, and what it waits on.",
+  },
+
+  // Interaction preferences — how a PERSON wants to be asked.
+  //
+  // `context`, by the same test as `memory`: an agent READS it at session
+  // start and no step writes it; it changes when a person states a
+  // preference, which is a human-directed act outside any instance. The two
+  // are the same shape at different subjects — what the agent knows, and what
+  // the person needs.
+  //
+  // It lived in `.harness/` until 2026-09-20, undeclared, which was not a
+  // choice anyone could have defended: this repository's own dot-prefix guard
+  // REJECTS a dot-prefixed segment, so the file was in the one place the
+  // conventions forbid while being read at the start of every session.
+  interaction: {
+    type: termIri("InteractionGraph"),
+    renderable: false,
+    holds: "context",
+    schema: "schemas/harness-config.ts",
+    summary: "How a person wants to be asked — read at session start, never written by a process.",
+  },
+  // The marks an agent leaves on an issue it has read.
+  //
+  // `state`: a running process writes one each time it checks an issue. NOT
+  // the comments — the files carry `lastCommentId`, `lastUpdatedAt` and
+  // `checkedAt`, and one of the two in this repository says so in its own
+  // note: "the mark records only that the newest was seen". A kind named for
+  // the comments would promise a reader the bodies.
+  //
+  // Two marks rather than one, because a comment EDITED after being read
+  // keeps its id: the id alone would call it seen, and an edited requirement
+  // is a changed requirement (`issue-working`).
+  "issue-marks": {
+    type: termIri("IssueMarkGraph"),
+    renderable: false,
+    holds: "state",
+    schema: "src/issue-watch/seen-comments.ts",
+    summary: "How far an agent has read an issue — the comment id and the edit time it accounted for.",
+  },
+
+  memory: {
+    type: termIri("MemoryGraph"),
+    renderable: false,
+    holds: "context",
+    summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
+  },
+
+  // A confirmation the owner gave IN ADVANCE — `skills/folio-core/confirmation-waiver.md`.
+  //
+  // Owner, 2026-09-20: "human can waive confirmation rights (e.g. for session,
+  // for process run)", and "context dependent, should be in memories".
+  //
+  // `context` by exactly the test that settled `memory` above — a running
+  // process READS a waiver before a gate fires and no step writes one; it
+  // changes when a person grants or withdraws permission, which is an act
+  // OUTSIDE any instance. That is why it is declared over the SAME directory:
+  // `memory/` holds both, and the two are told apart by the `$schema` tag
+  // inside each file rather than by where it sits. A directory is a place to
+  // look and may hold more than one part of a graph.
+  //
+  // A kind of its own rather than a fourth memory label, and the reason is
+  // structural: `MemoryNodeSchema` carries NO status by design — "a TRAP is
+  // not open, and marking one done would assert that the failure it records
+  // has stopped being possible". A waiver's whole content is that it EXPIRES.
+  // Labelling one `stable` would assert the opposite of what the node says.
+  waiver: {
+    type: termIri("WaiverGraph"),
+    renderable: false,
+    holds: "context",
+    skill: "confirmation-waiver",
+    schema: "schemas/waiver.ts",
+    // declared-path-literal: as on `health` and `translation-sources` — this
+    // table IS the declaration, so resolving `validator` through one would be
+    // reading it from here. `check:kind-validators` proves it still loads.
+    validator: "schemas/waiver.ts#WaiverNodeSchema",
+    summary:
+      "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
+  },
+
   "fsh-guts": {
     type: termIri("FshGutsGraph"),
     renderable: false,
+    // The one that reads like content, and the one `context` moved. What is
+    // in here is deprecated or superseded, so the fact it carries is WHERE
+    // SOMETHING GOT TO — which is why it is deliberately absent from the
+    // rendered site while being renderable in principle. But no running step
+    // writes it: relocating something here is a HUMAN-DIRECTED act, and
+    // `deletion-requires-confirmation` is the skill that says so in as many
+    // words. Read, never written by a process — which is `context`, and it
+    // was `state` for the few hours between the axis landing and `mhh9`
+    // being settled. Classified state by the owner 2026-09-20; the refinement
+    // the same day moved it, by the same criterion that moved memory.
+    holds: "context",
     summary:
       "Deprecated and throwaway structured content — kept, addressable and exported, and " +
       "deliberately absent from the rendered site. The destination for anything that would " +
@@ -411,12 +917,22 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   "translation-sources": {
     type: termIri("TranslationSourceGraph"),
     renderable: false,
+    // A `.po` catalogue and its manifest are authored content in another
+    // language, not a record of a translation having happened.
+    holds: "content",
     summary:
       "POT templates, PO catalogues and their `TranslationNode` manifests, one directory " +
       "per target locale. The INPUT to injection; the rendered output is ordinary content " +
       "that declares its own `lang`.",
     skill: "translation-manager",
     schema: "schemas/translation.ts",
+    // `TranslationConfigSchema`, not `TranslationNodeSchema`: this graph's
+    // directory holds the CONFIG that declares the sources, and a node is
+    // reached through it. Naming the node schema would validate the wrong
+    // file and pass.
+    // declared-path-literal: as above — the vocabulary cannot resolve itself
+    // through the vocabulary. `check:kind-validators` proves it resolves.
+    validator: "schemas/translation.ts#TranslationConfigSchema",
   },
 };
 
@@ -480,6 +996,31 @@ export function resolveGraphKind(name: string): { kind: string; deprecated?: str
   return to ? { kind: to, deprecated: name } : { kind: name };
 }
 
+/**
+ * Are two registrations of one name the SAME kind, or a conflict?
+ *
+ * Only the fields that change how a consumer behaves count. `type` is the
+ * projected identity, `renderable` decides whether the site build takes it, and
+ * `holds` decides whether a consumer asking for content may be handed this —
+ * three behavioural facts, and two definitions disagreeing on any of them are
+ * two different kinds wearing one name.
+ *
+ * `summary`, `skill` and `schema` are deliberately NOT compared. They are
+ * descriptive: a dependency wording its summary differently is not a conflict,
+ * and treating it as one would make a diamond fail on prose.
+ *
+ * **`holds` was the hole this function exists to close.** The comparison was
+ * inline and named `type` and `renderable` only, so when the axis landed, two
+ * layers registering one kind on opposite sides of the content/state line would
+ * have passed the diamond check and the first would silently have won — the
+ * exact "one name, two answers" failure the registry throws to prevent,
+ * reintroduced by the field that was added to end it. Named and extracted so
+ * the next field added to `GraphKindDef` has one place to be considered.
+ */
+function sameKind(a: GraphKindDef, b: GraphKindDef): boolean {
+  return a.type === b.type && a.renderable === b.renderable && a.holds === b.holds;
+}
+
 export class GraphKindRegistry {
   private kinds = new Map<string, GraphKindDef>();
 
@@ -490,7 +1031,7 @@ export class GraphKindRegistry {
   register(name: string, def: GraphKindDef): void {
     const existing = this.kinds.get(name);
     if (existing) {
-      if (existing.type === def.type && existing.renderable === def.renderable) return; // diamond
+      if (sameKind(existing, def)) return; // diamond
       throw new GraphKindConflictError(name);
     }
     this.kinds.set(name, def);
@@ -527,10 +1068,109 @@ export function isRenderable(kind: string, registry: GraphKindRegistry = default
   return registry.get(kind)?.renderable === true;
 }
 
+/**
+ * What a running process does with a graph of this kind, or `undefined` for a
+ * kind this registry does not know.
+ *
+ * **`undefined` is a further state and callers must not collapse it.** An
+ * unregistered kind has not said `content`; it has not said anything, and a
+ * consumer that reads the absence as content will hand somebody a QA verdict
+ * where they asked for a skill. The predicates below are deliberately NOT each
+ * other's negations for the same reason.
+ */
+export function graphLayer(kind: string, registry: GraphKindRegistry = defaultGraphKinds): GraphLayer | undefined {
+  return registry.get(kind)?.holds;
+}
+
+/** Does this kind hold the subject matter? False for an unregistered kind. */
+export function isContentGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "content";
+}
+
+/**
+ * Is this STATIC state — read during a process and never written by one?
+ *
+ * False for an unregistered kind, and false for `content`. There is
+ * deliberately no `isNotContent` convenience: "is this the subject matter" and
+ * "may a step write this" are different questions, and one predicate answering
+ * both is how two call sites come to disagree about which they asked.
+ */
+export function isContextGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "context";
+}
+
+/**
+ * Is this LIVE state — a record a running process writes as it goes?
+ *
+ * **Narrowed when `context` arrived.** It previously answered for every
+ * non-content kind, so a caller asking "may a step write this" got `true` for
+ * a memory entry. Anything that meant "not content" must now say which of the
+ * two it meant.
+ */
+export function isStateGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "state";
+}
+
+/**
+ * Is this DERIVED material — produced from a source, regenerable, and not the
+ * working corpus?
+ *
+ * Owner, 2026-09-20: *"library is static (only if we materialize assets or
+ * not)"* and *"can duplicate asset into a folio and work there"*. Bean `hqku`.
+ *
+ * **Why `context` was the wrong answer, and it was ruled out by a rule rather
+ * than by taste.** `library/` is static for authoring — nobody edits a section
+ * in place; the asset is duplicated into the folio and worked on there. That
+ * sounds exactly like `context`. But `context` carries *"a step that writes to
+ * it is a defect, not an update"*, and `document-ingestion.bpmn` WRITES
+ * `library/`. Declaring it `context` would have made a declared process a
+ * defect by the axis's own rule.
+ *
+ * **And `content` was wrong in the other direction.** The sweep rule is *"only
+ * on active/working content"* (owner, 2026-09-20): a QA finding against a
+ * derived section is a finding against its GENERATOR, not against the corpus,
+ * and it sends a reviewer to fix the wrong file.
+ *
+ * The skill's two supporting questions disagree here — *"does it stand on its
+ * own?"* says content (a library section still reads), *"would you regenerate
+ * it or re-author it?"* says regenerate — and the skill's instruction for that
+ * case is to **say so rather than picking**. This layer is saying so.
+ */
+export function isDerivedGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "derived";
+}
+
+/**
+ * May a running process WRITE to a graph of this kind?
+ *
+ * The question `isStateGraph` is usually being asked in service of, named so a
+ * caller does not have to know that `state` is the only writable layer — and
+ * so that adding a fourth value later is one edit here rather than a search
+ * for every `=== "state"`.
+ *
+ * `content` is `false` on purpose even though a process certainly produces
+ * content: writing content is the SUBJECT of an authoring process, governed by
+ * the HCI validation gate and the commit boundary, not a bookkeeping write a
+ * step performs in passing. Those are the writes this predicate is about.
+ */
+export function processMayWrite(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "state";
+}
+
+/** Every registered kind on one side of the line, sorted. */
+export function graphKindsOfLayer(layer: GraphLayer, registry: GraphKindRegistry = defaultGraphKinds): string[] {
+  return registry.names().filter((n) => graphLayer(n, registry) === layer).sort();
+}
+
 // ── The declaration ─────────────────────────────────────────────
 
-/** One declared content directory. */
-export interface ContentDirectory extends KgNodeLabels {
+/**
+ * One declared place to look, with no statement about inheritance.
+ *
+ * The base both an instance directory and a GRAPH NODE share. See
+ * {@link GraphNodeDirectorySchema} for why the two are not one type.
+ */
+export interface GraphNodeDirectory extends KgNodeLabels {
   /**
    * Stable identifier, unique within an instance. Inheritance overrides match
    * on THIS, never on `path` — see the module note on relocation.
@@ -566,6 +1206,48 @@ export interface ContentDirectory extends KgNodeLabels {
    * concept.
    */
   graphs: GraphKind[];
+}
+
+/**
+ * One declared directory of an INSTANCE — a place to look, plus what a
+ * dependent does about it.
+ *
+ * The single field separating this from {@link GraphNodeDirectory} is the
+ * one a graph node cannot answer: nothing resolves a node across instances,
+ * so "does a dependent get its own?" has no meaning there.
+ */
+export interface ContentDirectory extends GraphNodeDirectory {
+  /**
+   * Whether a DEPENDENT instance materialises its own copy of this directory.
+   *
+   * Orthogonal to {@link GraphNodeDirectory.scope}, which says where a path
+   * RESOLVES. This says whether a folio depending on this instance gets one
+   * of its own. Required, because neither default is safe — see
+   * {@link DependentMaterialisationSchema} for the measurement.
+   */
+  dependents: DependentMaterialisation;
+
+  /**
+   * What makes this subgraph reachable — a renderer, a documentation entry,
+   * and a governing skill — or the reasons it does not need one.
+   *
+   * OPTIONAL on purpose, unlike {@link dependents} above. An absent field is
+   * exactly the finding `check:subgraph-coverage` exists to raise, so making
+   * it required would both destroy the measurement and bill every concurrent
+   * branch for a field they had no reason to know about — which is what
+   * `dependents` did the day it landed. See {@link SubgraphCoverageSchema}.
+   */
+  coverage?: SubgraphCoverage;
+
+  /**
+   * Which theme this subgraph renders on — one answer for every surface that
+   * renders it (navbar section, board panel, sticky).
+   *
+   * Absent means the instance's own theme. See {@link ContentDirectorySchema}
+   * for why it lives on the directory and why the methodologies take
+   * `analyst`.
+   */
+  theme?: string;
 }
 
 /** An instance's root declaration. */
@@ -660,9 +1342,92 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   topology?: Topology;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
+  /** Graphs known but not held — {@link RemoteGraph}. */
+  remoteGraphs?: RemoteGraph[];
+  /**
+   * Sticky notes this layer contributes to the landing board.
+   *
+   * **A contribution, not a list somebody else owns.** The owner's ask was
+   * *"each intiator should create its own sticky"*, and this is the seam that
+   * makes it true: the board is composed from whatever the layers present
+   * declare, so a new layer adds its card by declaring one rather than by
+   * editing a constant in the layer above. See
+   * {@link StickyContribution} for why this is a declaration rather than a
+   * code registry — cat-bootstrap holds no TypeScript and may not import the
+   * layer composed on top of it, so a registry is a seam it cannot reach.
+   *
+   * Optional, and absent means **this layer contributes none** rather than
+   * "unmigrated". That is the honest reading and the useful one: a bare
+   * cat-bootstrap instance with no cat is the owner's ruling, and a default here
+   * would hand one back.
+   */
+  stickies?: StickyContribution[];
 }
 
-export const ContentDirectorySchema = z.object({
+/**
+ * Whether a DEPENDENT instance materialises its own copy of this directory.
+ *
+ * ## The question this answers, and why `scope` cannot
+ *
+ * `scope` says WHERE a path resolves — against the instance or against the
+ * repository. This asks something orthogonal: when another instance depends on
+ * mine, **does it get one of its own?** The two are independent, and treating
+ * them as one axis was measured and refused: moving one queue by giving
+ * `uploads` `scope: "repository"` turned **6 tests red**, three of them the
+ * guarantee a dependent inherits its own `uploads/` and `library/`.
+ *
+ * - **`reproduce`** — the directory is part of the SHAPE a folio has. A
+ *   dependent gets its own, empty, with a keep marker. `uploads/` and
+ *   `library/` are the worked examples: an ingestion queue with the
+ *   dependency's files in it would be worse than useless.
+ * - **`skip`** — the directory is merely WHERE THIS INSTANCE'S CONTENT LIVES.
+ *   A dependent reads it through the overlay and materialises nothing.
+ *   `schemas/`, `tools/` and `src/skills/` are the platform's own.
+ *
+ * ## It does not touch resolution, only materialisation
+ *
+ * A `skip` entry is still RESOLVED into a dependent's directory list, because
+ * that is how the cross-instance overlay serves a dependency's skills —
+ * `skill_list` and `skill_fetch` depend on it. What `skip` suppresses is
+ * `mkdirSync`, nothing else. Conflating the two would break the overlay to fix
+ * a directory-creation problem.
+ *
+ * ## Why REQUIRED, when nearly every other field here is optional
+ *
+ * Because neither default is safe, which is unusual and is the whole argument.
+ * Defaulting to `reproduce` is today's behaviour and ships junk: simulated on a
+ * fresh folio depending on this instance, **12 directories are inherited** and
+ * four of them are the platform's own, each materialised empty with a committed
+ * keep marker — the `dh4f` shape, shipped downstream to every folio.
+ * Defaulting to `skip` silently stops a folio getting an ingestion queue, and
+ * nothing would fail. A field whose wrong value is invisible either way is a
+ * field that has to be written down, so this follows the `BLOCK_KINDS`
+ * discipline: a directory added without a classification does not compile.
+ */
+export const DependentMaterialisationSchema = z.enum(["reproduce", "skip"]);
+export type DependentMaterialisation = z.infer<typeof DependentMaterialisationSchema>;
+
+/**
+ * A place to look, with no statement about inheritance.
+ *
+ * ## Why this is separate from {@link ContentDirectorySchema}
+ *
+ * One schema served two jobs that differ in exactly one respect. An INSTANCE
+ * directory can be inherited by a dependent, so "does a dependent get its own?"
+ * is a real question about it. A GRAPH NODE — `beans/defs`, `todos/feedback` —
+ * lives inside a graph that is inherited or not as a whole; nothing ever
+ * resolves a node across instances, so the question has no answer there.
+ *
+ * Making `dependents` required on the shared schema forced every graph node to
+ * state something meaningless, and a required field that is sometimes noise is
+ * a required field people learn to fill in without reading. That is the
+ * failure mode the requirement exists to prevent, arriving by the back door.
+ *
+ * **This is a split, not a restatement.** `ContentDirectorySchema` extends this
+ * one, so the shape is still declared once — which is the property
+ * `bean-graph.ts` and `todo-graph.ts` were reusing it for.
+ */
+export const GraphNodeDirectorySchema = z.object({
   id: z.string().min(1),
   path: z.string().min(1),
   ...scopeShape,
@@ -672,6 +1437,95 @@ export const ContentDirectorySchema = z.object({
   // rendering pipeline depends on.
   graphs: z.array(z.string().min(1)).min(1),
   ...kgNodeLabelShape,
+});
+
+/**
+ * What makes a declared subgraph REACHABLE — and the reasons it may not need
+ * to be.
+ *
+ * The owner, 2026-09-20: *"everytime an instance names a directory as a
+ * subgraph, it needs (QA valduation) to have visualizer, documenationentry. QA
+ * if no skill, no tools."* Three obligations that fail differently, so they are
+ * three fields rather than one flag:
+ *
+ * - `visualiser` — something renders it. Without one, a reader cannot LOOK.
+ * - `docs` — something says what it is FOR. Without one, a reader who finds it
+ *   cannot tell what belongs in it.
+ * - `skill` — a skill governs it. Without one there is nothing for an agent to
+ *   invoke, so the graph is agent-unreachable even where a human can read it.
+ *   This is the sharpest of the three and the easiest to miss, because the
+ *   directory looks perfectly fine.
+ *
+ * ## Every field is OPTIONAL, and that is deliberate
+ *
+ * `dependents` was made REQUIRED four hours before this was written, and the
+ * bill landed on a sibling branch within the hour: `main` added two directory
+ * entries without it, and CI on the merged tree reported 166 failures and 35
+ * errors. Nothing was wrong with either side. **A required field is a change
+ * every concurrent branch pays for**, and this one does not need to be
+ * required to do its job — an absent field is exactly the finding the axis
+ * exists to raise.
+ *
+ * ## `exempt` carries a REASON, never a bare true
+ *
+ * Not every subgraph wants a viewer: `interaction/` is read by an agent at
+ * session start and a human page for it may be pointless. But an opt-out with
+ * no reason is a silence list, and the next person cannot tell a considered
+ * waiver from a shrug. So the value is the reason, and the axis prints it.
+ */
+export const SubgraphCoverageSchema = z.object({
+  visualiser: z.string().min(1).optional(),
+  docs: z.string().min(1).optional(),
+  skill: z.string().min(1).optional(),
+  exempt: z
+    .object({
+      visualiser: z.string().min(1).optional(),
+      docs: z.string().min(1).optional(),
+      skill: z.string().min(1).optional(),
+    })
+    .optional(),
+});
+export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
+
+export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
+  dependents: DependentMaterialisationSchema,
+  coverage: SubgraphCoverageSchema.optional(),
+  /**
+   * Which theme this subgraph renders on.
+   *
+   * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies
+   * (CRDM, MADR, SDLC, etc.)"*, with *"use judgement"* on how.
+   *
+   * ## Why the DIRECTORY carries it
+   *
+   * A theme was previously declarable in two places — a sticky
+   * (`StickyContribution.theme`) and, since bean `5y4b`, a todo. Neither
+   * answers "what does this SUBGRAPH look like", which is the question a
+   * per-instance navbar section and a board panel both ask (`603s`, `6lb8`).
+   * Putting it on the directory means one methodology declares its theme once
+   * and every surface that renders the methodology agrees, instead of each
+   * surface deciding separately and drifting.
+   *
+   * ## Judgement applied: the methodologies take `analyst`, and nothing else does
+   *
+   * `methodologies`, `methodology-crdm`, `methodology-raci` and
+   * `smart-kg-methodologies` — the four directories that hold or index a
+   * methodology. MADR and SDLC are named in the instruction and do not exist
+   * yet; they inherit the answer when they are declared, which is the point of
+   * writing it on the directory rather than per page.
+   *
+   * Not applied to the rest. A theme on every directory would make the field
+   * mean nothing, and this repository's own rule is that a distinction which
+   * fires on every subject is not a distinction.
+   *
+   * ## Open string, like every other theme reference here
+   *
+   * Closing the enum means importing the theme table into the declaration
+   * reader, and that reader is what the site build, the gates and every
+   * consumer of a `harness.json` go through. An unknown theme is a rendering
+   * finding, not a parse error.
+   */
+  theme: z.string().min(1).optional(),
 });
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
@@ -724,7 +1578,7 @@ export const ContentDirectorySchema = z.object({
  *
  * `folio` — the one renderable kind — is registered by CORE, not the harness,
  * and the harness cannot default a directory to a kind it does not know. Any
- * topical directory (`bootstrap/`, `crdm/`, …) is declared, one line each: the
+ * topical directory (`cat-bootstrap/`, `crdm/`, …) is declared, one line each: the
  * platform cannot guess names it has never met, and guessing would re-create
  * the `dh4f` shape for every name it guessed wrong.
  */
@@ -732,14 +1586,29 @@ export const ContentDirectorySchema = z.object({
 // site reads through `resolveDirectories`; reading a declaration to learn the
 // fallback for an instance that has none is not a thing that can be done.
 export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
-  { id: "tools", path: "tools/", graphs: ["tools"] },
-  { id: "schemas", path: "schemas/", graphs: ["schemas", "cat-harness"] },
-  { id: "cat-harness", path: "skills/", graphs: ["cat-harness"] },
-  { id: "beans", path: "beans/", graphs: ["beans"] },
-  { id: "todos", path: "todos/", graphs: ["todos"] },
-  { id: "uploads", path: "uploads/", graphs: ["uploads"] },
-  { id: "library", path: "library/", graphs: ["library"] },
-  { id: "voices", path: "voices/", graphs: ["voices"] },
+  // `dependents` on the CONVENTIONAL set, classified by the same question as
+  // every declared entry: would a folio depending on this one want its own?
+  //
+  // The four `skip` entries are the platform's own machinery — a folio reads
+  // this instance's schemas, tools and skills through the overlay and has no
+  // use for four empty directories bearing those names. The four `reproduce`
+  // entries are the shape a folio HAS: its own work plan, its own todos, its
+  // own ingestion queue, its own L1 library.
+  //
+  // `beans/` and `todos/` are marked `reproduce` and it costs nothing, because
+  // both are repository-scoped and `resolveDirectories` never inherits a
+  // repository-scoped entry in the first place. Classifying them anyway keeps
+  // the rule "every entry carries one" free of an exception nobody would
+  // remember — and if either ever loses that scope, the classification it
+  // already has is the right one.
+  { id: "tools", path: "tools/", dependents: "skip", graphs: ["tools"] },
+  { id: "schemas", path: "schemas/", dependents: "skip", graphs: ["schemas", "cat-harness"] },
+  { id: "cat-harness", path: "skills/", dependents: "skip", graphs: ["cat-harness"] },
+  { id: "beans", path: "beans/", dependents: "reproduce", graphs: ["beans"] },
+  { id: "todos", path: "todos/", dependents: "reproduce", graphs: ["todos"] },
+  { id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] },
+  { id: "library", path: "library/", dependents: "reproduce", graphs: ["library"] },
+  { id: "voices", path: "voices/", dependents: "reproduce", graphs: ["voices"] },
 ];
 
 /**
@@ -976,6 +1845,77 @@ export class TopologyConflictError extends Error {
   }
 }
 
+/**
+ * A graph this instance KNOWS ABOUT but does not hold.
+ *
+ * The owner, 2026-09-20: *"any top level repos or KGs in the repo, or
+ * navigable if external/remote pointed to in the core harness schema (need to
+ * extend so graphs can be url of remote graph)"*.
+ *
+ * ## A remote graph is NOT a directory, and that is the whole modelling
+ *
+ * The first cut made `ContentDirectory.path` optional and added a `url` beside
+ * it. That is wrong twice over. `bean-graph.ts` and `todo-graph.ts` REUSE
+ * `ContentDirectorySchema` for their own nodes — AGENTS.md says so outright,
+ * *"a bean-graph entry IS a ContentDirectory"* — and a bean store is never
+ * remote, so relaxing the shared schema weakened two graphs that had nothing
+ * to do with the change. And a field that is sometimes a path and sometimes an
+ * address is one field with two meanings, which every consumer then has to
+ * guess between.
+ *
+ * So this is its own node kind. It has an `id` and `graphs` like a directory,
+ * because those are what make it addressable and filterable; it has no `path`,
+ * because there is nothing here.
+ *
+ * ## It is `materialization` at the graph level
+ *
+ * `folio-assistant-core/schemas/materialization.ts` already names the states a
+ * body of content is in, and a declared graph is in the same ones: a
+ * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
+ * **referenced** (we know it exists and where, we hold none of it).
+ *
+ * A reader may FOLLOW a remote graph — the KG viewer does, to keep a hierarchy
+ * of named subgraphs navigable across instances that are not in this checkout.
+ * Anything that wants the CONTENTS goes through `materialize-remote`: the five
+ * gates and a declared purpose, rather than fetching it merely because it has
+ * an address.
+ */
+export interface RemoteGraph extends KgNodeLabels {
+  /** Stable identifier, unique within an instance — as on a directory, and for the same reason. */
+  id: string;
+  /** Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates. */
+  url: string;
+  /** Which parts of the knowledge graph live there. */
+  graphs: GraphKind[];
+}
+
+export const RemoteGraphSchema = z
+  .object({
+    id: z.string().min(1),
+    url: z.string().url(),
+    graphs: z.array(z.string().min(1)).min(1),
+    ...kgNodeLabelShape,
+  })
+  // STRICT, and that is the point rather than tidiness: without it a stray
+  // `path` on a remote graph is silently accepted, and the declaration then
+  // carries two answers to where the graph is — the exact confusion this node
+  // kind exists to prevent. Caught by its own test on the hour it was written.
+  .strict();
+
+/**
+ * The local path of a declared directory, or `undefined` when the graph is
+ * REMOTE.
+ *
+ * Every consumer that needs bytes on disk goes through this, so "this graph is
+ * not in this checkout" is a case each one has to answer rather than a
+ * `string` it can assume. When `url` landed on 2026-09-20 the compiler named
+ * the whole set in nine errors across six files — which is the set that had
+ * been assuming a local path all along, and the reason `path` was made
+ * optional rather than widened to hold a URL. A field that is sometimes a path
+ * and sometimes an address is one field with two meanings, and every consumer
+ * then has to guess which it got.
+ */
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -995,6 +1935,13 @@ export const CatHarnessDeclarationSchema = z.object({
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
+  /**
+   * Graphs this instance knows about and does not hold — see {@link RemoteGraph}.
+   * A SEPARATE array from `directories`, not a variant of one, because a remote
+   * graph has no directory.
+   */
+  remoteGraphs: z.array(RemoteGraphSchema).default([]),
+  stickies: z.array(StickyContributionSchema).optional(),
 });
 
 /**
@@ -1093,7 +2040,7 @@ export function siteDir(_d: Pick<CatHarnessDeclaration, "name" | "stub">): strin
  * The repository root holds what belongs to the REPOSITORY rather than to any
  * instance in it: the CI configuration that builds it, the package manifest
  * and lockfile that install it, `.gitignore`, and the stores that are never
- * overlaid — `beans/`, `todos/`, `fsh-guts/`, `bootstrap/`. That set is closed
+ * overlaid — `beans/`, `todos/`, `fsh-guts/`, `cat-bootstrap/`. That set is closed
  * by a test rather than by this comment; a repository holding two instances
  * has one of each of those and two of everything else, which is the property
  * that decides membership.
@@ -1169,6 +2116,59 @@ export function findInstanceRoot(start: string): string | undefined {
   }
 }
 
+/**
+ * Every instance in `repoRoot` — the repository root itself when it declares,
+ * plus each immediate subdirectory that does.
+ *
+ * {@link findInstanceRoot} walks UP from a path to the instance owning it;
+ * this is the same fact in the other direction, and until now it was the
+ * direction nobody had implemented — the note on {@link initializationDoc}
+ * said so explicitly ("*NOT implemented and is not assumed here*", bean
+ * `wggr`).
+ *
+ * **Two gates were each carrying their own literal `["cat-harness",
+ * "cat-bootstrap"]` instead** (`check-declared-assets`, `check-instance-render`),
+ * and by 2026-09-20 there were FOUR instances: those two, `folio-assist-core`,
+ * and the repository root. So both gates reported clean runs over sets that
+ * excluded half the subject — `dh4f` again, in the two checks whose whole job
+ * is to look at instances.
+ *
+ * `check-instance-render`'s literal even sat under the docstring "*Every
+ * instance this repository owns — the root, and any beside it*", which was
+ * false in both halves: the root was not in the list and two instances beside
+ * it were missing. **A list that has to be edited when a directory is added is
+ * a list that will be wrong**, and the fix is to ask the filesystem rather
+ * than to lengthen it (bean `6tkl`).
+ *
+ * Scanning is deliberately ONE level deep and skips dot-prefixed segments,
+ * matching the dot-prefix guard the directory conventions already apply
+ * everywhere else. Results are sorted so a caller's report is stable, with the
+ * repository root first when it declares.
+ */
+export function instanceRootsIn(repoRoot: string): string[] {
+  const root = resolve(repoRoot);
+  const out: string[] = [];
+  if (existsSync(join(root, DECLARATION_FILENAME))) out.push(root);
+
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(root, { withFileTypes: true });
+  } catch {
+    // Unreadable root is "could not determine", and a caller that treats an
+    // empty list as "no instances" is the very failure this function exists
+    // to end — so say nothing rather than claim an empty set.
+    return out;
+  }
+
+  const subs = entries
+    .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+    .map((e) => join(root, e.name))
+    .filter((p) => existsSync(join(p, DECLARATION_FILENAME)))
+    .sort();
+
+  return out.concat(subs);
+}
+
 /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */
 export function instanceRootFor(start: string): string {
   const root = findInstanceRoot(start);
@@ -1202,7 +2202,7 @@ export function instanceRootFor(start: string): string {
  *
  * ## Why a fixed convention rather than a lookup
  *
- * §5 of the bootstrap proposal has the agent obtain exactly ONE reference —
+ * §5 of the cat-bootstrap proposal has the agent obtain exactly ONE reference —
  * `litlfred/f-a-sci` — and read everything else from that instance's own
  * declaration. That answers *which* instance. It does not answer *where in it*
  * the initialization steps are, and without a fixed answer the agent needs
@@ -1210,24 +2210,24 @@ export function instanceRootFor(start: string): string {
  * precisely what one reference was meant to remove.
  *
  * So every cat-harness instance, and every instance that depends on one,
- * publishes them at the SAME place. Bootstrap then needs no special case per
+ * publishes them at the SAME place. CatBootstrap then needs no special case per
  * target: `f-a-sci`, `smart-base` and a specialised harness nobody has written
- * yet are all read the same way. That is what lets bootstrap initialise into a
+ * yet are all read the same way. That is what lets cat-bootstrap initialise into a
  * *specialised* kind rather than only into the one it was written against.
  *
  * ## Composed, never spelled
  *
- * Built from {@link siteDir} rather than written as `docs/bootstrap/...`,
+ * Built from {@link siteDir} rather than written as `docs/cat-bootstrap/...`,
  * because the stub pattern INVERTED on 2026-09-19 — `docs/<stub>` became
  * `<stub>/docs` (bean `wggr`) — and every literal spelling of the old layout
  * had to be found and changed. A convention composed from the one function
  * that knows the site root survives the next relocation; a literal does not.
  */
-export const BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
+export const CAT_BOOTSTRAP_INIT_DOC = "cat-bootstrap/initialization.md";
 
 /**
  * The path to an instance's initialization instructions, relative to that
- * INSTANCE's root — `docs/bootstrap/initialization.md`.
+ * INSTANCE's root — `docs/cat-bootstrap/initialization.md`.
  *
  * THE one answer, so the README that tells an agent where to look and the
  * check that verifies the file is there cannot disagree about the spelling.
@@ -1240,11 +2240,11 @@ export const BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
  * directory of its own and the stub level inside it would repeat the name.
  *
  * So the suffix is IDENTICAL for every instance, which is a stronger version
- * of the property bootstrap relies on than "differs only by site root".
+ * of the property cat-bootstrap relies on than "differs only by site root".
  *
  * ## The open half, stated rather than papered over
  *
- * Bootstrap is handed ONE reference and must reach this file, so it needs the
+ * CatBootstrap is handed ONE reference and must reach this file, so it needs the
  * instance's DIRECTORY, and this function no longer supplies it. On this
  * repository the directory is `cat-harness/` while the stub is
  * `folio-assistant` — deliberately different, since the stub names published
@@ -1254,11 +2254,11 @@ export const BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
  * Resolving it by scanning the top level for a `harness.json` is the
  * declaration-driven answer and is what {@link findInstanceRoot} already does
  * in the other direction, but it is NOT implemented and is not assumed here.
- * Recorded on bean `wggr`; until then bootstrap can compose this suffix and
+ * Recorded on bean `wggr`; until then cat-bootstrap can compose this suffix and
  * still needs told which directory to hang it off.
  */
 export function initializationDoc(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
-  return `${siteDir(d)}/${BOOTSTRAP_INIT_DOC}`;
+  return `${siteDir(d)}/${CAT_BOOTSTRAP_INIT_DOC}`;
 }
 
 export function siteDirFor(root: string): string {
@@ -1343,6 +2343,74 @@ export const UNPUBLISHED_GRAPH_KINDS: readonly string[] = ["fsh-guts"] as const;
 /** Is this graph kind allowed into a published graph? */
 export function isPublishedGraphKind(name: string): boolean {
   return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+}
+
+/**
+ * Does an instance declaring a directory of this kind owe a **visualiser**?
+ *
+ * The owner, 2026-09-20: *"if there is active state directory in repo root/
+ * (**not part of the static KG**) like `beans/`, `todos/`, `fsh-guts/` those
+ * have their vuisalizers too as requiement of handler.... needs to render
+ * sometihng for each 'state' dir it declares/inits."*
+ *
+ * So the discriminator is the owner's own parenthetical: **is this the static
+ * knowledge graph, or is it active material about the work?** Authored
+ * subject matter you can read as itself; a record of where something got to
+ * you cannot, which is why it needs something that renders it.
+ *
+ * That is exactly `holds !== "content"`, and the phrasing is not a
+ * coincidence — `content` is defined on {@link GraphLayer} as *"authored
+ * nodes a reader or a tool consumes as the subject matter… It stands on its
+ * own"*. A graph that stands on its own does not need a viewer to be
+ * legible. Everything else does.
+ *
+ * ## The rule this is NOT, and why that matters
+ *
+ * The first derivation was `holds === "state"`, and it was falsified inside
+ * ten minutes: it covers `beans` and `todos` and **misses `fsh-guts`**, which
+ * the owner names in the same sentence. `mhh9` reclassified `fsh-guts` from
+ * `state` to `context` earlier the SAME DAY, on the ground that no running
+ * step writes it — relocating something there is a human-directed act.
+ *
+ * `holds !== "content"` survives that move, because both `state` and
+ * `context` are on the same side of it. That is the test a rule over this
+ * axis has to pass: a kind changing category within the non-content layers
+ * must not silently change what it owes.
+ *
+ * ## `renderable` is the one structural exemption
+ *
+ * A `renderable` kind is its own view — `docs` and `folio` render to pages,
+ * so demanding a separate viewer would be asking for a second rendering of
+ * the same thing. Both are already `holds: "content"`, so this is belt and
+ * braces rather than a second rule; it is stated because a future renderable
+ * kind that is not content would otherwise acquire an obligation it meets by
+ * construction.
+ *
+ * ## Bootstrap is exempt by INSTANCE, not by kind
+ *
+ * `hfkl` carries the owner's ruling that `cat-bootstrap` has no visualiser
+ * *"but it must have its json/jsonld... that is its existence"*. That
+ * exemption lives in the checker as `VISUALISER_EXEMPT_INSTANCES`, keyed on
+ * the instance name, so every other instance declaring the same kind keeps
+ * the obligation. An axis that dropped bootstrap by KIND would stop checking
+ * the one thing bootstrap must have.
+ */
+export function owesVisualiser(
+  kind: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): boolean {
+  const def = registry.get(kind);
+  // An UNKNOWN kind owes one, and that is deliberate rather than a fallback.
+  //
+  // `graphLayer` returns `undefined` here and its doc comment is explicit
+  // that callers must not collapse that into `content`. This one does not:
+  // it collapses the unknown into OWING, which is the opposite direction and
+  // the safe one. A kind nobody has classified must not escape an obligation
+  // by being unmentioned — the same reason `DOCUMENT_BLOCK_KINDS` is a
+  // derived complement rather than a list.
+  if (!def) return true;
+  if (def.renderable) return false;
+  return def.holds !== "content";
 }
 
 /**
@@ -1538,6 +2606,38 @@ export function readDeclaration(
   }
   const parsed = CatHarnessDeclarationSchema.safeParse(stripJsonLd(raw, registry));
   if (!parsed.success) {
+    // ── The one failure worth naming, because it is the one that arrives by
+    //    MERGE rather than by editing ───────────────────────────────────────
+    //
+    // `dependents` is required, so any branch that adds a directory entry
+    // while this field exists — and any branch cut before it existed —
+    // produces a declaration that will not parse the moment the two meet. That
+    // is not hypothetical: main added `methodology-crdm` and `methodology-raci`
+    // while the field was in review, and CI on the merged tree reported **166
+    // failures and 35 errors** whose only visible cause was a raw Zod dump
+    // repeated across every test that reads a declaration.
+    //
+    // Nothing was wrong with either side. The author of the other branch did
+    // not know the field existed, and 166 red tests are a terrible way to find
+    // out. So the missing-field case says which entries, and what to write.
+    const missing = parsed.error.issues
+      .filter((i) => i.path.length === 3 && i.path[0] === "directories" && i.path[2] === "dependents")
+      .map((i) => {
+        const dirs = (raw as { directories?: Array<{ id?: string }> })?.directories ?? [];
+        return dirs[i.path[1] as number]?.id ?? `#${String(i.path[1])}`;
+      });
+    if (missing.length > 0) {
+      throw new Error(
+        `${p}: ${missing.length} directory entr${missing.length === 1 ? "y is" : "ies are"} ` +
+          `missing the required \`dependents\` field: ${missing.join(", ")}.\n` +
+          `  Add \`"dependents": "reproduce"\` if an instance depending on this one should get its ` +
+          `OWN copy of the directory (\`uploads/\`, \`library/\`, \`folio/\`),\n` +
+          `  or \`"dependents": "skip"\` if it merely says where THIS instance's content lives ` +
+          `(\`schemas/\`, \`tools/\`, \`src/skills/\`).\n` +
+          `  It has no default on purpose: \`reproduce\` would ship empty directories into every ` +
+          `downstream folio, and \`skip\` would silently deny one its ingestion queue.`,
+      );
+    }
     throw new Error(`${p} is not a valid CatHarness declaration: ${parsed.error.message}`);
   }
   // Kind validation is here rather than in the Zod schema because the
@@ -1625,6 +2725,137 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
     });
   }
   return o;
+}
+
+// ── Subgraphs ───────────────────────────────────────────────────
+
+/**
+ * A FOLDER CORRESPONDS TO A SUBGRAPH, and subgraphs should be DISCONNECTED.
+ *
+ * The owner, 2026-09-20, settling bean `x4v4`: *"`cat-harness/methodologies/`
+ * is a subgraph. should be disconnected. convention folder corresponds to
+ * subgraph (but may be in process of being disentangled). use schema
+ * declaration/definition."*
+ *
+ * The question it settles is not cosmetic. `methodologies/` is declared as a
+ * `methodology` graph, and `methodologies/crdm/` and `methodologies/raci/`
+ * are declared as `cat-harness` graphs INSIDE it. Nothing said whether the
+ * inner graphs' nodes were also the outer one's, and the two readings differ
+ * by every node underneath — a consumer scanning `methodologies/` either
+ * sees two methodologies or sees two methodologies plus three skills and
+ * eight diagrams.
+ *
+ * **They are not.** A subgraph's nodes are its own. `methodologies/` holds
+ * two nodes, and each of those is a graph in its own right.
+ *
+ * ## Containment is DERIVED, never declared
+ *
+ * A `parent` or `contains` field would restate what the paths already say,
+ * and this repository has paid for one fact in two places often enough to
+ * stop writing the second one: the retired skill `roles:` field cost 260
+ * dangling values, and `fallbackRole` was removed (bean `85e8`) for exactly
+ * this shape — two statements with nothing asserting they agree.
+ *
+ * So containment is computed from the declaration that already exists. The
+ * one thing a reader must know is that **`id` still governs overrides** —
+ * path governs only containment. Matching an override on path makes two
+ * graphs out of one relocation, which is the rule `resolveDirectories`
+ * already states and this does not weaken.
+ *
+ * ## "Should be" is an intent, and the corpus does not meet it yet
+ *
+ * Measured 2026-09-20: CRDM's skills reference **seven** skills in
+ * `folio-core` (`staging-review`, `interaction-modality`, `todo-manager`,
+ * `theme-ui-review`, `directory-conventions`, `decision-comparison`,
+ * `data-modelling`). So the methodology subgraphs are entangled today, which
+ * is what the owner's *"may be in process of being disentangled"*
+ * anticipates.
+ *
+ * That is why `check:subgraphs` REPORTS and does not gate. A gate that fails
+ * on seven edges nobody has yet decided about is the *"check that cries wolf
+ * is a check somebody switches off"* failure `known-skills.ts` names — and
+ * this session already reached it once by a different route, counting test
+ * literals in `check-declared-paths` (bean `dhol`).
+ */
+export interface SubgraphRelation {
+  /** The containing directory's `id`. */
+  parent: string;
+  /** Directories nested immediately inside it, by `id`. */
+  children: string[];
+}
+
+/** `a/b/` contains `a/b/c/`; a path never contains itself. */
+function pathContains(outer: string, inner: string): boolean {
+  const o = `${outer.replace(/\/+$/, "")}/`;
+  const i = inner.replace(/\/+$/, "");
+  return i !== o.replace(/\/$/, "") && `${i}/`.startsWith(o);
+}
+
+/**
+ * The subgraph tree, derived from declared paths.
+ *
+ * Only IMMEDIATE containment: with `a/`, `a/b/` and `a/b/c/` all declared,
+ * `a` has one child and not two. A transitive answer would make a node's
+ * owner ambiguous, which is the question this whole function exists to give
+ * one answer to.
+ *
+ * Scope matters and is honoured: a `repository`-scoped entry and an
+ * instance-relative one resolve against different roots, so they are
+ * compared by ABSOLUTE path where one is available. `smart-kg/methodologies/`
+ * is repository-scoped precisely so it lifts out whole, and reading it as a
+ * child of an instance-relative `methodologies/` would be wrong on both the
+ * path and the intent.
+ */
+export function subgraphTree(
+  dirs: ReadonlyArray<{ id: string; path: string; absPath?: string }>,
+): SubgraphRelation[] {
+  const key = (d: { path: string; absPath?: string }): string => d.absPath ?? d.path;
+  const out: SubgraphRelation[] = [];
+  for (const parent of dirs) {
+    const children = dirs
+      .filter((c) => c.id !== parent.id && pathContains(key(parent), key(c)))
+      // Immediate only: drop any child that is itself inside another child.
+      .filter((c, _i, all) => !all.some((m) => m.id !== c.id && pathContains(key(m), key(c))))
+      .map((c) => c.id)
+      .sort();
+    if (children.length > 0) out.push({ parent: parent.id, children });
+  }
+  return out.sort((a, b) => a.parent.localeCompare(b.parent));
+}
+
+/**
+ * The directory that owns a node at `path`, which is the DEEPEST containing
+ * declaration rather than the first one found.
+ *
+ * This is the function a consumer actually needs, and getting it wrong is the
+ * `x4v4` defect in its concrete form: a sweep over `methodologies/` that
+ * collects `methodologies/crdm/crdm-detect.md` has attributed a CRDM node to
+ * the methodology graph, and every count computed from it is then wrong in a
+ * way nothing reports.
+ */
+export function owningDirectory<T extends { id: string; path: string; absPath?: string }>(
+  dirs: readonly T[],
+  path: string,
+): T | undefined {
+  // Compare in the SPACE OF THE PATH GIVEN. `resolveDirectories` populates
+  // `absPath`, so keying on it unconditionally makes every relative query
+  // return `undefined` — measured on the first run of this function, where
+  // all four probes answered "no declaration contains it" over a corpus in
+  // which all four are declared.
+  //
+  // That failure mode is the reason this comment exists rather than a tidier
+  // one-liner: `undefined` is a LEGITIMATE answer (a node in no declared
+  // directory), so a mismatch does not look like a bug, it looks like a
+  // finding. A sweep built on it would have reported a clean, empty result
+  // over the whole corpus.
+  const absolute = path.startsWith("/");
+  const keyOf = (d: T): string | undefined => (absolute ? d.absPath : d.path);
+  const containing = dirs.filter((d) => {
+    const k = keyOf(d);
+    return k !== undefined && pathContains(k, path);
+  });
+  if (containing.length === 0) return undefined;
+  return containing.reduce((deep, d) => ((keyOf(d) ?? "").length > (keyOf(deep) ?? "").length ? d : deep));
 }
 
 // ── Inheritance ─────────────────────────────────────────────────
@@ -1827,20 +3058,77 @@ export function ownDirectories(
   registry: GraphKindRegistry = defaultGraphKinds,
 ): ResolvedDirectory[] {
   const decl = readDeclaration(link.root, registry);
-  if (!decl) {
-    return DEFAULT_DIRECTORIES.map((dir) => ({
-      ...dir,
-      declaredBy: "(default)",
-      absPath: resolve(link.root, dir.path),
-      own: false,
-    })).filter((d) => existsSync(d.absPath));
+
+  // The conventional set FIRST, existence-filtered, and then declared entries
+  // override it by id — which is `resolveDirectories`' order, and now this
+  // function's too.
+  //
+  // ## The disagreement this closes (bean `rday`)
+  //
+  // These were the same declaration read by two resolvers that answered
+  // differently. `resolveDirectories` seeded `DEFAULT_DIRECTORIES` at the root
+  // link whatever the declaration said; this one applied them ONLY to a root
+  // with no declaration at all. So a declaration's mere EXISTENCE withdrew
+  // every convention from this function's callers, and `directories` defaults
+  // to `[]` in the schema — meaning the minimal honest declaration,
+  // `{ "name": "x" }`, silently emptied the result.
+  //
+  // Measured 2026-09-20: `resolveSkillDirs` over a fixture with a `skills/`
+  // directory on disk went from 3 to 0 the moment the fixture was given a
+  // name. Nothing failed except the tests that happened to assert an overlay;
+  // a consumer would have read it as "this instance has no skills".
+  //
+  // Seeding unconditionally is the smaller of the two fixes the bean named
+  // (the other was teaching the schema to tell an ABSENT `directories` from an
+  // empty one, which is a migration). It is also the one that makes the rule
+  // sayable in a sentence: **a declaration adds and overrides; it does not
+  // withdraw.** An instance that genuinely owns none of the conventional
+  // directories says so by not having them on disk — the existence filter is
+  // what makes that the same answer either way, and it is the same reason
+  // `DEFAULT_DIRECTORIES` carries: a declared-but-absent directory is `dh4f`,
+  // where a consumer scans nothing and reports a clean run over it.
+  const byId = new Map<string, ResolvedDirectory>();
+  for (const dir of DEFAULT_DIRECTORIES) {
+    const absPath = resolve(link.root, dir.path);
+    if (!existsSync(absPath)) continue;
+    byId.set(dir.id, { ...dir, declaredBy: "(default)", absPath, own: false });
   }
-  return decl.directories.map((dir) => ({
-    ...dir,
-    declaredBy: decl.name,
-    absPath: resolve(link.root, dir.path),
-    own: link.own === true,
-  }));
+  if (!decl) return [...byId.values()];
+
+  for (const dir of decl.directories
+    // A REPOSITORY-scoped entry is not inherited, for the reason
+    // `resolveDirectories` gives: a dependency's repository is a different
+    // checkout, so inheriting its entry points every consumer at somebody
+    // else's store. Stated in both resolvers because both are entry points.
+    .filter((dir) => dir.scope !== "repository" || link.own === true)
+    .map((dir) => ({
+      ...dir,
+      declaredBy: decl.name,
+      // THROUGH `rootForScope`, not `resolve(link.root, …)`. This function was
+      // the third consumer of a declared path and the one that did not go
+      // through the one place a scope turns into a directory — which made
+      // `rootForScope`'s own doc comment ("every consumer … goes through
+      // here") false from the day this was written.
+      //
+      // The consequence was silent and it was `dh4f`. `cat-harness/harness.json`
+      // declares `cat-bootstrap/skills/` at `scope: "repository"`; resolving it
+      // against the INSTANCE gave `cat-harness/cat-bootstrap/skills`, which is not
+      // there, and `resolveSkillDirs` drops a directory that does not exist.
+      // So `skill_fetch` answered "package not found" for every cat-bootstrap
+      // skill while the declaration naming them was correct and present, and
+      // nothing reported a problem: a clean pass over an empty set. Eight
+      // entries here carry `scope: "repository"`; `cat-bootstrap` is the one that
+      // was harmed, because it is the only kg-only one among them.
+      absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
+      own: link.own === true,
+    }))) {
+    // Override by id, replacing IN PLACE so the conventional order survives a
+    // relocation — the same rule and the same reason as `resolveDirectories`:
+    // a consumer should not have its scan order reshuffled because a
+    // declaration moved one directory.
+    byId.set(dir.id, dir);
+  }
+  return [...byId.values()];
 }
 
 // ── Materialisation ─────────────────────────────────────────────
@@ -1958,6 +3246,26 @@ export function materialiseDirectories(
   const rootAbs = resolve(instanceRoot);
   const out: MaterialisedDirectory[] = [];
   for (const dir of dirs) {
+    // ── What a DEPENDENT gets, and what it does not ───────────────────
+    //
+    // An instance always materialises what it DECLARED ITSELF; `dependents`
+    // governs only what an INHERITED entry does here. `skip` means the entry
+    // names where the declaring instance's own content lives — `schemas/`,
+    // `tools/`, `src/skills/` — and a dependent has no use for an empty
+    // directory of that name.
+    //
+    // Measured before this existed: a fresh folio depending on this instance
+    // inherits 12 directories, four of them the platform's own, and every one
+    // was created with a committed keep marker. That is the `dh4f` shape —
+    // a consumer scanning a directory that exists and is empty, reporting a
+    // clean run over it — manufactured for every downstream folio by the tool
+    // written to prevent it.
+    //
+    // RESOLUTION IS UNTOUCHED. A `skip` entry stays in the resolved list, so
+    // the cross-instance overlay still serves the dependency's skills through
+    // `skill_list` and `skill_fetch`. The only thing suppressed here is
+    // `mkdirSync`.
+    if (dir.own !== true && dir.dependents === "skip") continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);
@@ -1968,6 +3276,45 @@ export function materialiseDirectories(
           `(${dir.path} -> ${abs}); a directory outside the ${where} is not a directory of it`,
       );
     }
+    // ── The scope trap ────────────────────────────────────────────────
+    //
+    // `scope` is optional and its ABSENCE is meaningful: the path resolves
+    // against the instance rather than the repository. Omit it on an entry
+    // that meant `repository` and the declaration silently names a different
+    // directory — and this function then CREATES that directory, with a keep
+    // marker, turning declared-but-absent into declared-and-empty. The
+    // `dh4f` false pass, wearing a tidier face, manufactured by the tool
+    // written to prevent it.
+    //
+    // That is not hypothetical: it happened here on 2026-09-20, to the two
+    // entries (`interaction`, `issue-marks`) added the same day, and stood
+    // for about an hour with every gate green.
+    //
+    // So: before creating anything, look at the OTHER root. A directory of
+    // this name already sitting there, with content, is overwhelmingly a
+    // missing or wrong `scope` rather than a coincidence — and creating an
+    // empty twin beside it is the one outcome that helps nobody.
+    const otherBase = rootForScope(rootAbs, dir.scope === "repository" ? undefined : "repository");
+    if (otherBase !== base) {
+      const twin = resolve(otherBase, dir.path);
+      // The condition is "this one is EMPTY and the twin has content", not
+      // "this one is absent" — so it DETECTS the mistake already standing as
+      // well as preventing a new one. A first draft tested absence only, and
+      // would have refused to create the empty twin while saying nothing
+      // about the empty twin already sitting there from an hour earlier.
+      // A guard that cannot see the case that motivated it is half a guard.
+      const emptyish = !existsSync(abs) || readdirSync(abs).every((f) => f === ".gitignore");
+      if (emptyish && existsSync(twin) && readdirSync(twin).length > 0) {
+        throw new Error(
+          `declared directory "${dir.id}" is empty at ${abs}, ` +
+            `while ${twin} already holds content. That is what a missing or wrong ` +
+            `\`scope\` looks like: ${dir.scope === "repository" ? "the entry says `repository` and the content is in the instance" : "the entry omits `scope`, so it resolves against the instance, and the content is at the repository root"}. ` +
+            `A consumer following the declaration scans the empty one and reports a clean run. ` +
+            `Fix \`scope\` on the declaration rather than materialising both.`,
+        );
+      }
+    }
+
     const existed = existsSync(abs);
     const markerPath = join(abs, ".gitignore");
     const markerExisted = existed && existsSync(markerPath);
@@ -2033,19 +3380,289 @@ export function renderableDirectories(
  * convention as a fallback say so at their own call site, where the choice
  * is visible.
  *
- * Returns the FIRST declaration carrying the graph. A graph declared by two
- * directories is legal — `cat-harness` is, by `schemas/` and `skills/` — so a
- * caller wanting all of them resolves the list itself; this is the accessor
- * for the single-home case, which is every other graph kind here.
+ * ## Ambiguity REFUSES rather than picking, and that is the point
+ *
+ * A graph declared by two directories is legal — `cat-harness` is declared by
+ * four (`schemas/`, `skills/`, `cat-bootstrap/skills/`, `src/skills/`) and
+ * `methodology` by two. This used to return the FIRST of them, under a comment
+ * saying it was "the accessor for the single-home case". That precondition was
+ * stated and enforced by nothing, which is this repository's own rule broken
+ * in one line: an unavoidable duplicate is fine, an UNCHECKED one is not.
+ *
+ * The cost is on the record. Bean `wggr`: a by-graph lookup for `cat-harness`
+ * resolves to `schemas/`, not `skills/`, because `schemas/` declares
+ * `["schemas", "cat-harness"]` and comes first. An audit walked `schemas/`,
+ * wrote **37** sidecars against the wrong subjects, and exited **0**. Nothing
+ * threw, because the wrong answer is indistinguishable from the right one at
+ * the call site — *"a by-graph lookup is not a weaker version of a by-id
+ * lookup; for `cat-harness` it resolves to a DIFFERENT DIRECTORY."*
+ *
+ * So an ambiguous kind now throws, naming every candidate. Measured before the
+ * change: **none of the 34 call sites in this repository asks for either
+ * ambiguous kind** — every one passed `library`, `translation-sources`,
+ * `uploads`, `schemas`, `fsh-guts`, `todos` or `memory`, all single-homed at
+ * the time. The throw was therefore unreachable, and existed for the caller
+ * who had not been written yet, which is the one `wggr` was.
+ *
+ * **That caller arrived the same day.** Bean `frs5` moved the corpus out of
+ * the platform into `who-iris/library/` and `folio-assist-sci/library/`, so
+ * `library` has TWO homes and `schemas` has FOUR (`cat-harness/`,
+ * `folio-assistant-core/`, `large-datasets/`, `detangle/`). The paragraph
+ * above is kept as written and corrected here rather than edited, because
+ * what it records — a throw added for a caller nobody had written — is worth
+ * more beside the date it stopped being true than it is silently updated.
+ *
+ * Every site that wanted one was migrated: scanners fan out through
+ * {@link directoriesForGraph}, write targets refuse through this, and the four
+ * that wanted THEIR OWN instance's directory ask
+ * {@link instanceDirectoryForGraph}, which is a third question neither of the
+ * other two answers. `scripts/tests/no-silent-first-directory.test.ts` fails
+ * on a new `directoriesForGraph(…)[0]`, since the last fix of this shape was
+ * one site at a time and left thirty-one.
+ *
+ * {@link directoriesForGraph} is the honest accessor when several homes are
+ * what you want; a by-ID lookup through {@link resolveDirectories} is the
+ * answer when you want a particular one.
  */
 export function directoryForGraph(
   root: string,
   graph: string,
   registry: GraphKindRegistry = defaultGraphKinds,
 ): string | undefined {
-  return resolveDirectories([{ name: "(local)", root, own: true }], registry).find((d) =>
+  const all = matchingDirectories(root, graph, registry);
+  if (all.length > 1) {
+    throw new Error(
+      `graph "${graph}" is declared by ${all.length} directories, so there is no single ` +
+        `directory for it: ${all.map((d) => `${d.id} (${d.path})`).join(", ")}. ` +
+        `Returning the first silently is bean \`wggr\` — it resolved \`cat-harness\` to ` +
+        `\`schemas/\` and wrote 37 sidecars against the wrong subjects on a run that exited 0. ` +
+        `Use \`directoriesForGraph\` if you want all of them, or look the directory up by its ` +
+        `\`id\` through \`resolveDirectories\` if you want a particular one.`,
+    );
+  }
+  return all[0]?.absPath;
+}
+
+/** Every directory this instance declares as holding `graph`, in declaration order. */
+function matchingDirectories(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry,
+): ResolvedDirectory[] {
+  return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
     d.graphs.includes(graph as GraphKind),
-  )?.absPath;
+  );
+}
+
+/**
+ * Every directory holding `graph`, for the callers {@link directoryForGraph}
+ * now refuses.
+ *
+ * Empty means the instance declares the graph nowhere — the same third state
+ * its sibling documents, and for the same reason: a caller that wants the
+ * convention as a fallback says so at its own call site, where the choice is
+ * visible, rather than being handed a path to a directory that is not there.
+ */
+export function directoriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string[] {
+  return matchingDirectories(root, graph, registry).map((d) => d.absPath);
+}
+
+/**
+ * Where a folio's authored content lives — **asked, not assumed**.
+ *
+ * Bean `hs08`. The owner's ruling, 2026-09-20: *"content/ shouldnt be expected
+ * anymore. folio/ was renamed as default/convention"*, then *"no content/
+ * fallback. excise!!!!!"* — and then the part that makes this function
+ * necessary rather than tidy:
+ *
+ * > *"qou can declare a new folio at content/"*
+ *
+ * That is the whole point of a declaration. A folio is not obliged to put its
+ * content under `folio/`; it says where its `folio` graph is, and consumers
+ * read the declaration. `litlfred/qou` keeps `content/` and stays readable by
+ * declaring it — **but only if the platform asks.**
+ *
+ * It did not. After the excision, 162 sites spelled `join(root, "folio")` as a
+ * literal, so a declaration naming anything else was ignored and the folio was
+ * invisible. The rename was done; the *mechanism* the rename exists to serve
+ * was not wired up. This is that wiring, in one place.
+ *
+ * ## Why `"folio"` is named HERE, in the harness
+ *
+ * `ot9a` set the falsifier: *"if the harness still has to know the string
+ * `folio` anywhere for the declaration to validate, the re-siting is
+ * cosmetic."* The harness does still know it — this module is `harness` by
+ * `repo-partition`, as are `content/pipeline/repo-root.ts` and `scripts/`.
+ *
+ * That is not this function reintroducing the problem; it is this function
+ * CONCENTRATING it. The harness knew the string in 162 places before and knows
+ * it in one now, which is the difference between a fact you can audit and one
+ * you can only grep for. Only a `harness` module can serve every caller —
+ * `allowed` gives `core: ["core", "harness"]` and `harness: ["harness"]`, so
+ * a core home would be unreachable from the harness half.
+ *
+ * ## The fallback is the CONVENTION, not `content/`
+ *
+ * An instance that declares nothing gets `folio/`. It never gets `content/`:
+ * that root is excised, and a folio keeping it must SAY so. Silence means the
+ * convention, and the convention is `folio/`.
+ *
+ * @param root repository root to resolve against
+ * @returns the declared folio directory, else `<root>/folio`
+ */
+export function folioDir(root: string): string {
+  try {
+    // declared-path-literal: the base case. This IS where the convention is
+    // written down; resolving it through a declaration would be circular.
+    return directoryForGraph(root, "folio") ?? join(root, "folio");
+  } catch (e) {
+    // An instance whose declaration does not KNOW the `folio` kind — core
+    // registers it by load-time side effect (`schemas/folio-graph-kind.ts`)
+    // and a harness-only process may not have reached it. That is `ot9a`'s
+    // fragility, and the convention is the right answer for it.
+    //
+    // Narrow deliberately: any OTHER failure is a malformed declaration, and
+    // swallowing it would report a guess as an answer. "Could not determine"
+    // is never rendered as a clean result.
+    if (e instanceof Error && /unknown graph kind "folio"/.test(e.message)) {
+      // DO NOT fall back here. This was the first version and it was wrong in
+      // the one way that matters: with the kind unregistered, the declaration
+      // cannot be READ, so returning the convention answers a question nobody
+      // could answer. A folio declaring `content/` — which the owner has said
+      // qou will do — would be silently invisible, and the caller would get a
+      // plausible path instead of a fault.
+      //
+      // "Could not determine" is never rendered as a clean result. Fail, and
+      // say what to import.
+      throw new Error(
+        `folioDir(${root}): the \`folio\` graph kind is not registered, so the ` +
+          `instance's declaration cannot be read and its folio directory is ` +
+          `UNKNOWN — not "folio/". Import \`schemas/folio-graph-kind.js\` for ` +
+          `its load-time registration before calling this. Falling back to the ` +
+          `convention here would silently ignore a folio that declares another ` +
+          `path (bean hs08; the fragility is ot9a).`,
+      );
+    }
+    throw e;
+  }
+}
+
+/**
+ * The directory a graph has AT THIS INSTANCE'S OWN ROOT — repository-scoped
+ * entries pointing at sibling instances excluded.
+ *
+ * ## A third question, found by reading the callers rather than by design
+ *
+ * `a02m` began with two shapes in mind: scan every home, or expect exactly
+ * one (`directoryForGraph`, reinstated on `main` the same day with the
+ * refusing semantics this branch had built separately as
+ * `directoryForGraph` — two names for one question, resolved in favour of
+ * main's). Both were wrong for the four `schemas` call sites, which is how this
+ * one was found. `check-tools`, `harness-schema-export`, `gen-schema-docs` and
+ * `fsh-guts/generate-docs` all compose `join(schemasRoot(root), "skills")` or
+ * `"generated"` — a path INSIDE the directory. They are not asking "who
+ * declares schemas", they are asking "where is MY schemas directory".
+ *
+ * ## `own` is NOT the discriminator, and assuming it was is a correction
+ *
+ * The first version of this filtered on `ResolvedDirectory.own`. Measured:
+ * from the `cat-harness` root all FOUR `schemas` directories are `own` —
+ * `cat-harness/schemas` plus `folio-assistant-core/`, `large-datasets/` and
+ * `detangle/`, each declared by cat-harness's own `harness.json` with
+ * `scope: "repository"` because this repository stages three future instances
+ * as sibling top-level directories. `own` distinguishes the root from a
+ * DEPENDENCY, which is a different question and not the one being asked.
+ *
+ * The discriminator is `scope`, and `rootForScope` above is where it already
+ * means exactly this: a repository-scoped entry resolves against the
+ * REPOSITORY root, everything else against the instance root. So this asks for
+ * the entries that resolve against `root` itself — the directory that is
+ * genuinely this instance's, not one it points at from across the repository.
+ *
+ * ## Why `[0]` was not already wrong here
+ *
+ * `resolveDirectories` happens to order the root's instance-scoped
+ * declarations first, so `[0]` landed on the intended one. A reordering, or a
+ * staged sibling declared earlier, would have moved it silently — and the
+ * symptom would be a generator writing its output into another instance's
+ * tree, with a clean exit code.
+ */
+export function instanceDirectoryForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string | undefined {
+  const here = matchingDirectories(root, graph, registry).filter(
+    (d) => d.own && d.scope !== "repository",
+  );
+  if (here.length > 1) {
+    throw new Error(
+      `instance at ${root} declares ${here.length} directories for graph "${graph}" at its own root, ` +
+        `and this call site expects one: ${here.map((d) => `${d.id} → ${d.absPath}`).join("; ")}.`,
+    );
+  }
+  return here[0]?.absPath;
+}
+
+/**
+ * EVERY declared directory, remote entries included — the navigable set.
+ *
+ * The complement of {@link resolveDirectories}, which answers "where do I
+ * scan" and therefore drops remote graphs because there is nothing on disk to
+ * walk. This one answers **"what is declared"**, which is the question the KG
+ * viewer asks: the owner, 2026-09-20, wants the hierarchy of named subgraphs
+ * filterable *"or navigable if external/remote pointed to in the core harness
+ * schema"*, and a graph whose bytes are elsewhere is still a node in that
+ * hierarchy.
+ *
+ * Two functions rather than a flag, because the two questions have different
+ * right answers and a caller that passed the wrong flag would get a plausible
+ * list either way.
+ */
+export interface DeclaredGraph extends KgNodeLabels {
+  id: string;
+  graphs: GraphKind[];
+  declaredBy: string;
+  /** Set iff the graph is HERE. */
+  absPath?: string;
+  /** Set iff the graph is elsewhere. Exactly one of the two, always. */
+  url?: string;
+}
+
+export function declaredGraphs(
+  root: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): DeclaredGraph[] {
+  const decl = readDeclaration(root, registry);
+  if (!decl) return [];
+  return [
+    ...decl.directories.map((d) => ({
+      ...d,
+      declaredBy: decl.name,
+      absPath: resolve(rootForScope(root, d.scope), d.path),
+    })),
+    ...(decl.remoteGraphs ?? []).map((g) => ({ ...g, declaredBy: decl.name })),
+  ];
+}
+/**
+ * The local path of a declared directory, or `undefined` when the graph is
+ * REMOTE.
+ *
+ * Every consumer that needs bytes on disk goes through this, so "this graph is
+ * not in this checkout" is a case each one has to answer rather than a
+ * `string` it can assume. When `url` landed on 2026-09-20 the compiler named
+ * the whole set in nine errors across six files — which is the set that had
+ * been assuming a local path all along, and the reason `path` was made
+ * optional rather than widened to hold a URL. A field that is sometimes a path
+ * and sometimes an address is one field with two meanings, and every consumer
+ * then has to guess which it got.
+ */
+export function localPathOf(d: { path?: string; url?: string }): string | undefined {
+  return d.path;
 }
 
 // ── Graph projection ────────────────────────────────────────────
@@ -2062,7 +3679,13 @@ export function toJsonLd(
   registry: GraphKindRegistry = defaultGraphKinds,
 ): Record<string, unknown> {
   return {
-    "@context": { ...NS_PREFIXES, path: termIri("path"), directories: termIri("scans") },
+    "@context": {
+      ...NS_PREFIXES,
+      path: termIri("path"),
+      directories: termIri("scans"),
+      scope: termIri("scope"),
+      dependents: termIri("dependents"),
+    },
     "@type": termIri("Harness"),
     name: decl.name,
     ...(decl.title ? { title: decl.title } : {}),
@@ -2089,9 +3712,93 @@ export function toJsonLd(
         // make every existing published form look changed.
         "@type": types.length === 1 ? types[0] : types,
         path: d.path,
+        // `dependents` is REQUIRED, so a projection that dropped it produced a
+        // document that no longer parses as a declaration — caught by the
+        // round-trip test rather than by review.
+        dependents: d.dependents,
+        // ...and `scope` was ALREADY being dropped, silently, because it is
+        // optional: a declaration round-tripped through JSON-LD came back
+        // saying every path resolves against the instance. `beans/`, `todos/`
+        // and six others are repository-scoped, so the projection was lossy
+        // about the one field that decides WHERE they are. Found while adding
+        // the line above; nothing had caught it because an absent optional
+        // field parses cleanly and means something else.
+        ...(d.scope ? { scope: d.scope } : {}),
         ...(d.title ? { title: d.title } : {}),
         ...(d.description ? { description: d.description } : {}),
       };
     }),
   };
+}
+
+/**
+ * The graph kinds an instance DECLARES — its own, not the universal registry's.
+ *
+ * Moved here from `scripts/check-instance-render.ts` (bean `3jj9`) so the two
+ * exporters can read one fact. `kg-export` needs it to stop emitting every
+ * kind any layer defines into every instance's graph: `cat-bootstrap` published
+ * 16 GraphKind nodes while declaring exactly one. The render check already
+ * imports `kg-export`, so importing back would have been a cycle — and a
+ * declaration's own contents belong beside the declaration reader anyway.
+ *
+ * Follows NESTED declarations, which is the part a plain read of
+ * `directories[].graphs` misses: `beans/beans.json` is what says `bean-defs`
+ * and `workflow-state` exist, and an instance that owns them would otherwise
+ * be reported as not owning them.
+ */
+export function declaredKinds(
+  root: string,
+  decl: CatHarnessDeclaration,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Set<string> {
+  const kinds = new Set<string>();
+  for (const d of decl.directories ?? []) {
+    for (const g of d.graphs ?? []) kinds.add(g);
+    // The nested declaration, if the directory carries one — how `beans/` says
+    // what its inner nodes are without `harness.json` restating them.
+    //
+    // ASKED OF THE KIND FIRST, and that is the fix rather than the tidy-up.
+    // This computed `${basename(path)}.json` and nothing else, while
+    // `bean-graph.ts` held that moving `beans/` to `work/` must rename nothing
+    // inside it. Both true of today's layout, contradictory on the first
+    // relocation: the walk would look for `work/work.json`, the file would
+    // still be `work/beans.json`, and the nested kinds would drop out of
+    // `declared` silently — under-counting, which manufactures an `undeclared`
+    // finding somewhere else. `declarationFile` on the kind is where that fact
+    // now lives, once.
+    //
+    // The directory-name convention stays as a FALLBACK, after it: a graph
+    // whose kind declares no filename is unmigrated, not broken, and an
+    // instance that never relocates behaves exactly as before.
+    const dirName = basename(d.path.replace(/\/+$/, ""));
+    const declared = (d.graphs ?? [])
+      .map((g) => registry.get(g)?.declarationFile)
+      .filter((f): f is string => typeof f === "string");
+    for (const candidate of [...declared, `${dirName}.json`, "graph.json"]) {
+      const p = join(declaredKindsEntryRoot(root, d), candidate);
+      if (!existsSync(p)) continue;
+      try {
+        const nested = JSON.parse(readFileSync(p, "utf-8")) as {
+          directories?: Array<{ graphs?: string[]; kinds?: string[] }>;
+        };
+        for (const nd of nested.directories ?? []) {
+          for (const g of [...(nd.graphs ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
+        }
+      } catch {
+        // A nested file that will not parse is not this check's finding to
+        // make — `check:harness-dirs` owns that and says so loudly. Skipping
+        // here would understate `declared` and manufacture an `undeclared`,
+        // so the kinds it would have contributed are simply not added and the
+        // reason is recorded by the caller if it matters.
+      }
+    }
+  }
+  return kinds;
+}
+
+
+/** Where a declared directory actually is, honouring `scope`. */
+function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
+  const base = d.scope === "repository" ? repoRootFor(root) : root;
+  return resolve(base, d.path);
 }

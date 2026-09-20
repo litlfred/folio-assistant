@@ -1,7 +1,6 @@
 ---
 name: interaction-modality
 description: Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.
-roles: [reader, collaborator, owner]
 user_invocable: true
 ---
 
@@ -9,7 +8,7 @@ user_invocable: true
 
 Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn),
 `Task_DetectModality` and `Task_AskIntent`.
-Preferences: `.harness/interaction.json` (committed, read at session start).
+Preferences: `interaction/interaction.json` (committed, read at session start).
 
 ## 0. The failure this prevents
 
@@ -50,7 +49,7 @@ it costs nothing to the user who would rather type.
 
 The detection must not itself be an unusable question. So:
 
-1. **Read `.harness/interaction.json` first.** If it says, you are done. Never
+1. **Read `interaction/interaction.json` first.** If it says, you are done. Never
    re-ask what is recorded.
 2. **Read the channel.** A voice session is `audio` without asking. A terminal
    session is not.
@@ -73,7 +72,7 @@ to take. The profile is about the interface, not about them.
 
 ## 3. Where the preference lives
 
-`.harness/interaction.json`, committed, beside `beans/workflows/` and for the same
+`interaction/interaction.json`, committed, beside `beans/workflows/` and for the same
 reason: a preference that lives in one agent's context is re-learned by every
 sibling session, and re-learning it means asking again.
 
@@ -124,7 +123,13 @@ Six parts, in order:
    coined, a field, a Lean declaration, a file path: all opaque without their
    gloss. An option name you invented three paragraphs ago in another document
    is the worst case, because it *feels* defined to you.
-3. **The options, each with what it costs** — not each with its name.
+3. **The options, compared** — what each does, its pro, its con, what it
+   changes **downstream**, and how reversible it is. Laid out here, in the
+   prose, where the rows can be read against each other; a selection tool shows
+   one option at a time, so trade-offs written into its labels are not a
+   comparison. [`decision-comparison`](decision-comparison.md) carries the
+   columns, why cost and downstream impact are different things, and when a
+   decision is too small to deserve a table.
 4. **Your recommendation, and why**, stated first and marked. See §4.2.
 5. **What happens if they say nothing.** Then do that.
 6. **The question itself**, last.
@@ -197,6 +202,29 @@ than silence.
 **There is no "just listing what's open" exemption.** A wrap-up that names a
 decision has handed it over, whatever the framing sentence says. Either the
 options and their costs are there, or the name comes out and a count goes in.
+
+#### Enforced, not remembered — the three layers added 2026-09-20
+
+This section was STRICT and complete on 2026-09-20, and was broken the same day
+by the agent implementing its neighbours. The owner: *"ask specific questiosn w/
+context/ recommendations/pros/cons (see skills, why not invoked?)"* — and the
+"why not" is mechanical rather than a lapse of care. The rule lives here, in the
+knowledge graph; `AGENTS.md` carries a **summary** of it; the summary omits the
+clause that was broken (the comparison goes in the prose, not in the selection
+tool's labels); and nothing sat between the agent and the question tool.
+
+**A rule that depends on being remembered is not enforced.** So:
+
+| layer | what it does | what it cannot do |
+|---|---|---|
+| `.claude/skills/interaction-modality/` | makes this skill **offerable by name**, which it was not — an agent looking for the rule found only the summary | triggering is probabilistic; it helps an agent already thinking about asking well |
+| `PreToolUse` on `AskUserQuestion` → `scripts/ask-well.sh` | prints the six parts at the one moment the rule certainly applies, on every agent and every session | it sees the tool call, not the prose written before it, so it REMINDS and never blocks — a gate that cannot tell must not refuse |
+| `schemas/decision-request.ts` | makes the comparison **unomittable**: no optionals, so a decision with two options and one comparison does not parse, and `renderDecision` emits the prose table and the selection from ONE object so they cannot drift | it cannot tell a good `con` from a lazy one, and does not try — it checks that the question was asked, never that the answer is honest |
+
+None of the three is sufficient and the omissions are stated rather than
+implied, which is the same three-state discipline the rest of this skill asks
+for. `bun test cat-harness/scripts/tests/decision-request.test.ts` asserts each
+refusal, because a schema whose refusals are untested quietly stops refusing.
 
 ### 4.2 Form — the checklist
 
@@ -289,7 +317,7 @@ than taken on trust:
 The published site carries a settings control (gear, top right) writing the same
 four profiles to `localStorage`, so a reader who is not the author still gets
 large type or reduced motion. It is per-viewer and per-browser by construction —
-it never reaches an agent. `.harness/interaction.json` is the agent-facing record
+it never reaches an agent. `interaction/interaction.json` is the agent-facing record
 and the site control is the reader-facing one; conflating them would mean a
 reader's font choice silently reconfiguring how an agent talks to the author.
 
@@ -302,7 +330,7 @@ reader's font choice silently reconfiguring how an agent talks to the author.
    "Happy to explain if useful" does not repair it — it moves the work back onto
    the person the question is for.
 1. **Asking someone to describe their disability.** Ask about the interface.
-2. **Re-asking what `.harness/interaction.json` records.** That is WCAG 3.3.7
+2. **Re-asking what `interaction/interaction.json` records.** That is WCAG 3.3.7
    violated in the least excusable way, since the file is right there.
 3. **A "quick open question" because the option list felt like overkill.** The
    list is cheaper for the person answering, which is the only budget that

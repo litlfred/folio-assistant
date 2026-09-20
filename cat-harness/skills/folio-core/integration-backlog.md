@@ -1,6 +1,5 @@
 ---
 name: integration-backlog
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   Dispatcher for the `/integration-backlog <axes>` slash command.

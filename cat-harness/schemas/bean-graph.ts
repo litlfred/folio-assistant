@@ -75,9 +75,9 @@
 import { z } from "zod";
 
 import {
-  ContentDirectorySchema,
+  GraphNodeDirectorySchema,
   defaultGraphKinds,
-  type ContentDirectory,
+  type GraphNodeDirectory,
   type GraphKindRegistry,
 } from "./cat-harness";
 
@@ -116,9 +116,9 @@ export type BeanNodeKind = (typeof BEAN_NODE_KINDS)[number];
  * A bean carries its id, `title`, `status` and `type` in front matter; a
  * workflow instance carries `"$schema": "folio-workflow-instance/v1"`.
  */
-export const BeanGraphNodeSchema = ContentDirectorySchema;
+export const BeanGraphNodeSchema = GraphNodeDirectorySchema;
 
-export type BeanGraphNode = ContentDirectory;
+export type BeanGraphNode = GraphNodeDirectory;
 
 export const BeanGraphSchema = z.object({
   /** Display name — which instance's work plan this is. */
@@ -129,8 +129,26 @@ export const BeanGraphSchema = z.object({
 
 export type BeanGraph = z.infer<typeof BeanGraphSchema>;
 
-/** The graph file's name inside its root directory. */
-export const BEAN_GRAPH_FILE = "beans.json";
+/**
+ * The graph file's name inside its root directory.
+ *
+ * DERIVED from the `beans` kind rather than written here, so the name exists
+ * once. Both spellings were correct and they disagreed about what happens on a
+ * move: this module holds that relocating `beans/` to `work/` must rename
+ * nothing inside it, while `declaredKinds` computed `${basename(path)}.json`
+ * and would have gone looking for `work/work.json`. Same fact, two places, and
+ * the drift only appears when somebody relocates — so nothing would have
+ * caught it.
+ *
+ * The owner's rule, 2026-09-20: **each type declares its own filename.** The
+ * kind is the type here, so the kind is where it is declared.
+ *
+ * The `??` is unreachable while the kind carries the field and is not a
+ * default: a registry that has lost the kind has bigger problems than this
+ * filename, and falling back to the literal keeps the reader oriented rather
+ * than crashing in a constant initialiser.
+ */
+export const BEAN_GRAPH_FILE = defaultGraphKinds.get("beans")?.declarationFile ?? "beans.json";
 
 /** Where the graph root sits, when a repo has not moved it. */
 export const DEFAULT_BEAN_GRAPH_ROOT = "beans";

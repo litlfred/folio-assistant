@@ -11,8 +11,9 @@
  *   bun run pipeline/generate-lean-stubs.ts <chapter-dir> --dry-run
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync, existsSync } from "fs";
-import { resolve, dirname, relative } from "path";
+import { resolve, dirname, relative, join } from "path";
 import { fileURLToPath } from "url";
 import { walkBlocks } from "./qa-utils";
 
@@ -161,7 +162,7 @@ function main() {
     process.exit(2);
   }
 
-  const rootPath = resolve(REPO_ROOT, "content", args.root);
+  const rootPath = join(folioDir(REPO_ROOT),  args.root);
   if (!existsSync(rootPath)) {
     console.error(`Root not found: ${rootPath}`);
     process.exit(2);
@@ -172,7 +173,7 @@ function main() {
 
   for (const block of walkBlocks(rootPath)) {
     if (!block.lean) { continue; }
-    const leanPath = resolve(REPO_ROOT, "content", block.lean);
+    const leanPath = join(folioDir(REPO_ROOT),  block.lean);
     if (!existsSync(leanPath)) { continue; }
 
     const leanText = readFileSync(leanPath, "utf-8");
@@ -181,7 +182,7 @@ function main() {
       continue;
     }
 
-    const tsPath = resolve(REPO_ROOT, "content", block.ts);
+    const tsPath = join(folioDir(REPO_ROOT),  block.ts);
     const tsText = readFileSync(tsPath, "utf-8");
     const kind = extractKind(tsText);
     const label = extractLabel(tsText);

@@ -6,7 +6,6 @@ export const contentValidation: SkillDefinition = {
   description:
     "Three-level validation pipeline: Zod schema, constraint rules, " +
     "and LaTeX AST checking for content objects.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],
@@ -28,9 +27,5 @@ export const contentValidation: SkillDefinition = {
     { path: "content/pipeline/build.ts", runtime: "bun", phase: "execute" },
   ],
   mcpServices: ["paper-assistant"],
-  schemas: [
-    { module: "schemas/types", types: ["Block", "Chapter", "Paper", "ValidationResult"], access: "read" },
-    { module: "schemas/constraints", types: ["BlockSchema", "CONSTRAINT_RULES"], access: "read" },
-  ],
   tags: ["validation", "content", "schema"],
 };

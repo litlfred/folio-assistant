@@ -47,8 +47,16 @@ import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
-import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
+import {
+  BASE_GRAPH_KINDS,
+  declaredAssets,
+  declaredGraphs,
+  declaredKinds,
+  repoRootFor,
+  resolveDirectories,
+} from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
+import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
   defaultGraphKinds,
@@ -60,7 +68,14 @@ import {
   renderingPath,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
-import { isSkillMd, kgRoots, skillMdDirs as knownSkillDirs, workflowDirs } from "./known-skills.js";
+import {
+  isSkillMd,
+  kgDirectories,
+  kgRoots,
+  skillMdDirs as knownSkillDirs,
+  workflowDirs,
+  unpublishedSkills,
+} from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
@@ -118,13 +133,6 @@ function skillMdDirs(root: string = ROOT): string[] {
  */
 const SKILL_IO_DIR = "schemas/skills";
 
-/** `.claude/skills/<group>/*.json` — the typed nodes beside the skills. */
-const REGISTRY_GROUPS: Record<string, string> = {
-  actors: "Actor",
-  capabilities: "Capability",
-  roles: "Role",
-  requirements: "Requirement",
-};
 
 /**
  * Directories holding BPMN processes, DISCOVERED.
@@ -143,13 +151,13 @@ const REGISTRY_GROUPS: Record<string, string> = {
  *
  * It walked the filesystem — every directory under the root to depth 4, minus
  * a skip list of *names*. That was right while this repository was the only
- * instance in the tree. `bootstrap/` is now a second one, with its own
+ * instance in the tree. `cat-bootstrap/` is now a second one, with its own
  * declaration, and the walk does not know that: measured 2026-09-19 on `main`,
  * `_kg/folio-assistant.jsonld` contained **88** references to
- * `Process_Bootstrap`. Bootstrap's process was being published as part of
+ * `Process_CatBootstrap`. CatBootstrap's process was being published as part of
  * folio-assistant's graph.
  *
- * The repair that suggests itself is `skip.add("bootstrap")` — a directory
+ * The repair that suggests itself is `skip.add("cat-bootstrap")` — a directory
  * name written in code, which is the defect `check:declared-paths` exists to
  * refuse, and which would need another line for every instance ever added.
  * Reading the declaration needs none: an instance's diagrams are the ones it
@@ -233,12 +241,24 @@ export function buildContext(): Record<string, unknown> {
 
     // Edges. Each of these is a LINK, not a string — see above.
     partOf: { "@id": termIri("partOf"), ...link },
+    // A LINK, not a literal, and the gate was right to demand the decision:
+    // the declared Directory nodes are already in this graph (they are what
+    // `collectDeclaration` emits), so a bare id would have been a second,
+    // unresolvable way of naming a node that is right there. As a link the
+    // viewer's subgraph facet and the declaration hierarchy are the same edge.
+    inSubgraph: { "@id": termIri("inSubgraph"), ...link },
     implementedBy: { "@id": termIri("implementedBy"), ...link },
     performedBy: { "@id": termIri("performedBy"), ...link },
     declaresSkill: { "@id": termIri("declaresSkill"), ...link },
     inPackage: { "@id": termIri("inPackage"), ...link },
     providesCapability: { "@id": termIri("providesCapability"), ...link },
     requiresCapability: { "@id": termIri("requiresCapability"), ...link },
+    // `CapabilityDefinition.fallbackTo` — the capability that stands in for
+    // this one. A LINK for the same reason `requiresCapability` is: the
+    // value is a capability id and every Capability is a node in this
+    // document, so it resolves. Bean `folio-assistant-sym3`, which moved it
+    // off five skill modules onto the one capability it describes.
+    fallbackToCapability: { "@id": termIri("fallbackToCapability"), ...link },
     satisfies: { "@id": termIri("satisfies"), ...link },
     // The role REGISTRY's own two edges, as against the lane-derived view.
     // `hasSkill` is what the role knows; `bindsLane` is where it is bound.
@@ -336,6 +356,19 @@ export function buildContext(): Record<string, unknown> {
     // document already uses in another sense -- a GraphKind is a "kind" too --
     // so the term now says which one it is.
     bpmnType: termIri("bpmnType"),
+    // Convention terms (bean `3190`). All LITERALS — none is a link, so none
+    // gets `{"@type": "@id"}`: a bare name under `@id` resolves against the
+    // document base and mints an IRI nobody chose.
+    //
+    // `statement` is NOT a synonym of `rdfs:comment`. The comment is prose
+    // ABOUT the node; the statement is the rule ITSELF, and a consumer
+    // filtering for enforceable text needs them apart. `rationale` is
+    // separate again for a reason worth stating: a rule and its justification
+    // collapsed into one field is a rule nobody can retire, because there is
+    // nothing left that says what would falsify it.
+    statement: termIri("statement"),
+    rationale: termIri("rationale"),
+    applies: termIri("applies"),
     nodeKind: termIri("nodeKind"),
     enforcement: termIri("enforcement"),
     workPlanOp: termIri("workPlanOp"),
@@ -375,6 +408,22 @@ export function buildContext(): Record<string, unknown> {
     // because it is one relation in both places -- unlike `source` above, which
     // was one name over two relations.
     path: termIri("path"),
+    // A declared ASSET's role, and a LITERAL rather than a link.
+    //
+    // `assetRole` and not `role`, which is the one decision in this term. An
+    // asset's role is a free string naming what the FILE is for —
+    // `agent-instructions`, `instance-readme`, `landing-operations` — and it is
+    // a different vocabulary from the actor/swimlane Role, which is a node
+    // with an id, skills and `actedUpon`. Spelling both `role` would make a
+    // consumer that resolves the term get a bare string where it expects a
+    // Role node, and the two would be indistinguishable in the graph.
+    //
+    // A literal because `KgAssetSchema.role` is `z.string().min(1)` with no
+    // enum behind it, so there is no node set for a value to name. Coercing it
+    // to `@id` would resolve each bare name against the document base and mint
+    // an IRI nobody chose — which is the failure the export's own undeclared
+    // -term report warns about by name.
+    assetRole: termIri("assetRole"),
     // `schema:` is declared as a prefix above and this is its first use: a
     // package version is a software version and schema.org already has the
     // predicate. Minting `folio:version` beside it would be a second name for
@@ -739,7 +788,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
       // `isSkillMd`, not a bare `.md` test. This carried its OWN copy of the
       // predicate — a third definition of "is this a skill" in a module whose
       // own header is about two definitions disagreeing — and it admitted
-      // `bootstrap/README.md` as a skill named `README` the moment a second
+      // `cat-bootstrap/README.md` as a skill named `README` the moment a second
       // knowledge-graph root existed. `skill-coverage.test.ts` caught it,
       // which is the only reason this is a comment rather than a published
       // graph node nobody could explain.
@@ -786,8 +835,20 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
   // The skill documenting an unpublished kind is itself unpublished — it
   // carries that kind's name, and its subject is where SDLC churn goes, so
   // publishing it advertises the trashcan. Bean `folio-assistant-uv09`.
+  //
+  // TWO inputs, deliberately. `isPublishedSkill` matches the NAME against
+  // `UNPUBLISHED_GRAPH_KINDS`; `unpublishedSkills` reads a skill's own
+  // `published: false`. Its own note asked for the second — *"if that ever
+  // stops being true this needs its own list, not a cleverer derivation"* —
+  // and the declaration is that list, kept with the file rather than in
+  // code. They answer different questions ("is it NAMED after the trashcan",
+  // "did it SAY not to publish it"), and the blanket test asserts the
+  // OUTCOME over the built document at any depth, so neither can quietly
+  // stop working.
+  const declared = unpublishedSkills(ROOT);
+  const publishable = (name: string): boolean => isPublishedSkill(name) && !declared.has(name);
   return [...byName.entries()]
-    .filter(([name]) => isPublishedSkill(name))
+    .filter(([name]) => publishable(name))
     .map(([name, s]) => ({
     "@id": makeIri(doc, "skill", name),
     "@type": termIri("Skill"),
@@ -796,7 +857,10 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
     title: s.title,
     description: s.description,
     // A link per package, not a bare string: the skill's package is an edge.
-    inPackage: s.packages.map((d) => makeIri(doc, "package", d.split("/").pop()!)),
+    // Through `packageIdFor`, so a skill's edge lands on the node its package
+    // actually emits. Composing the id here independently is what let the two
+    // sides agree on a name neither package had declared (bean `r1vw`).
+    inPackage: s.packages.map((d) => makeIri(doc, "package", packageIdFor(d))),
     // `packagePaths` was here, repeating each package's directory beside the
     // link that already reaches it. REMOVED as denormalised: `inPackage` lands
     // on a SkillPackage node carrying `path`, every one of those links resolves
@@ -865,12 +929,18 @@ function registryFields(
     };
   }
   if (group === "capabilities") {
-    const { requires, ...other } = rest;
+    const { requires, fallbackTo, ...other } = rest;
     return {
       ...other,
       ...(requires === undefined
         ? {}
         : { requiresCapability: names(requires).map((c) => makeIri(doc, "capability", c)) }),
+      // Renamed on the way out, like `requires` above: `fallbackTo` is a
+      // fine field name on a Capability and an ambiguous TERM in a shared
+      // vocabulary, where a Tool and a Role could each want one.
+      ...(typeof fallbackTo === "string"
+        ? { fallbackToCapability: makeIri(doc, "capability", fallbackTo) }
+        : {}),
     };
   }
   return rest;
@@ -919,29 +989,94 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   return nodes;
 }
 
+/**
+ * A package's id — from its MANIFEST's `name`, not from its directory.
+ *
+ * ## The collision this replaces, measured 2026-09-20 (bean `r1vw`)
+ *
+ * The id was `dir.split("/").pop()`, and eleven of the twelve packages here
+ * hid that, because their directory is named after the package. The twelfth
+ * is `cat-bootstrap/skills/`, whose manifest declares `"name": "cat-bootstrap"`
+ * and whose node was `package/skills`, **named `skills`** — the manifest's own
+ * name was never read.
+ *
+ * `cat-harness/src/skills/` has the same basename. Both wanted `package/skills`,
+ * and the `seen` set below silently dropped whichever came second while its
+ * skills kept emitting `inPackage -> package/skills`. So `corpus-grep`, a
+ * cat-harness skill in a directory with no manifest at all, was published as a
+ * member of cat-bootstrap's package. Nothing reported it: both sides resolved,
+ * no link dangled, and the audit's `skill-servable` criterion was SATISFIED by
+ * the collision — a skill served by a package it was never listed in.
+ *
+ * An id derived from a path is an id two paths can agree on by accident. Read
+ * from the declaration and the accident needs two authors to choose one name.
+ *
+ * The basename remains the fallback, and that is not a hedge: `src/skills/` and
+ * `.claude/skills/local` carry no manifest, and a package with no declared name
+ * has nothing else to be called. What changes is that the name is only INFERRED
+ * where nothing was declared.
+ */
+function packageIdFor(dirRelToRoot: string): string {
+  const leaf = dirRelToRoot.split("/").pop()!;
+  const mf = join(ROOT, dirRelToRoot, "package-manifest.json");
+  if (!existsSync(mf)) return leaf;
+  try {
+    const name = (JSON.parse(readFileSync(mf, "utf-8")) as { name?: unknown }).name;
+    return typeof name === "string" && name.length > 0 ? name : leaf;
+  } catch {
+    // An unparseable manifest is reported by `collectPackages` below, which
+    // reads the same file. Falling back here keeps one defect from becoming
+    // two: the package still gets a node, under the only name left.
+    return leaf;
+  }
+}
+
 function collectPackages(doc: string, problems: string[]): Node[] {
   const nodes: Node[] = [];
-  const seen = new Set<string>();
 
   // Every directory that holds skills is a package node, manifest or not.
   // `src/skills` and `.claude/skills/local` carry no `package-manifest.json`,
   // and skipping them left 9 `inPackage` links pointing at nodes that were
   // never emitted — a dangling link in a published graph, which is the defect
   // this export exists to make visible rather than to commit.
+  // Which directory claimed each id, so a second claimant can be NAMED rather
+  // than dropped. `seen` was a bare Set of basenames and its `continue` was
+  // the whole bug: two directories wanting one id was indistinguishable from
+  // the same directory seen twice.
+  const claimedBy = new Map<string, string>();
   for (const dir of skillMdDirs()) {
-    const leaf = dir.split("/").pop()!;
-    if (!existsSync(join(ROOT, dir)) || seen.has(leaf)) continue;
-    seen.add(leaf);
+    if (!existsSync(join(ROOT, dir))) continue;
+    const id = packageIdFor(dir);
+    const prior = claimedBy.get(id);
+    if (prior !== undefined) {
+      // NOT a silent skip. One node is still emitted — dropping it would
+      // dangle every `inPackage` edge pointing at it — but the graph no
+      // longer pretends the second directory does not exist.
+      if (prior !== dir) {
+        problems.push(
+          `two skill directories claim package id "${id}": ${prior} and ${dir}. ` +
+            `A package's id comes from its manifest's \`name\`, or from its directory ` +
+            `basename when it declares none — so give one of them a manifest that ` +
+            `names it, rather than letting both resolve to the same node.`,
+        );
+      }
+      continue;
+    }
+    claimedBy.set(id, dir);
     nodes.push({
-      "@id": makeIri(doc, "package", leaf),
+      "@id": makeIri(doc, "package", id),
       "@type": termIri("SkillPackage"),
-      name: leaf,
+      name: id,
       path: dir,
       hasManifest: existsSync(join(ROOT, dir, "package-manifest.json")),
     });
   }
 
   const skillsRoot = join(ROOT, "skills");
+  // Hoisted: `unpublishedSkills` walks every declared skill directory, so
+  // calling it inside the filter below would re-read the corpus once per
+  // package entry.
+  const declaredUnpublished = unpublishedSkills(ROOT);
   if (!existsSync(skillsRoot)) return nodes;
   for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
     if (!d.isDirectory()) continue;
@@ -949,11 +1084,18 @@ function collectPackages(doc: string, problems: string[]): Node[] {
     if (!existsSync(mf)) continue;
     try {
       const m = JSON.parse(readFileSync(mf, "utf-8")) as Record<string, unknown>;
+      // The SAME id the stub loop minted — from the manifest's `name`, via the
+      // one resolver. Composing `d.name` here was harmless only because every
+      // package under `skills/` happens to sit in a directory of its own name;
+      // the moment one does not, this pushed a second node beside the stub
+      // instead of replacing it (bean `r1vw`).
+      const id = packageIdFor(`skills/${d.name}`);
+      const iri = makeIri(doc, "package", id);
       // Replace the stub emitted above with the manifest-backed node.
-      const stubAt = nodes.findIndex((n) => n["@id"] === makeIri(doc, "package", d.name));
+      const stubAt = nodes.findIndex((n) => n["@id"] === iri);
       if (stubAt !== -1) nodes.splice(stubAt, 1);
       nodes.push({
-        "@id": makeIri(doc, "package", d.name),
+        "@id": iri,
         "@type": termIri("SkillPackage"),
         name: m.name ?? d.name,
         version: m.version,
@@ -964,7 +1106,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
         // Filtered too: an edge to a stripped node is a dangling reference
         // that still spells the name it was meant to remove.
         declaresSkill: ((m.skills as string[]) ?? [])
-          .filter(isPublishedSkill)
+          .filter((n) => isPublishedSkill(n) && !declaredUnpublished.has(n))
           .map((n) => makeIri(doc, "skill", n)),
         providesCapability: ((m.providesCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
         requiresCapability: ((m.requiresCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
@@ -976,19 +1118,220 @@ function collectPackages(doc: string, problems: string[]): Node[] {
   return nodes;
 }
 
-async function collectProcesses(doc: string, problems: string[], root: string = ROOT): Promise<Node[]> {
+
+/**
+ * Stamp every node with the DECLARED DIRECTORY it came from.
+ *
+ * The owner, 2026-09-20, on the KG viewer: *"should show hierarchy of named
+ * subgraphs in the harness instance(s) ... I should see ability to filter by
+ * bootstrap/ cat-harness/ f-a-core/ f-a/ etc."* A reader cannot filter by
+ * something no node says, and until now no node said it: a skill carried
+ * `instructionsPath`, a schema carried `module`, and which *declared graph*
+ * either belonged to had to be re-derived by whoever looked.
+ *
+ * ## Derived from the declaration, in one pass, rather than threaded
+ *
+ * Every emitter could have been given the id. That is nine call sites to keep
+ * in step, and the tenth emitter added next week is the one that forgets —
+ * which is the shape this repository keeps paying for. Here the mapping is
+ * computed ONCE from `declaredGraphs()`, so a directory that moves takes its
+ * stamp with it and a directory that is added is covered without touching this
+ * function.
+ *
+ * ## Longest prefix wins, and that is load-bearing
+ *
+ * `src/skills/` sits inside `src/`, and `skills/workflows/` inside `skills/`.
+ * Matching the first declaration that fits would file a workflow under the
+ * skills graph. Sorting by descending path length makes the most specific
+ * declaration win, which is the same rule a router uses and the same one
+ * `resolveDirectories` relies on for overrides.
+ *
+ * A node whose path matches no declared directory is left UNSTAMPED rather
+ * than bucketed into a default — "could not determine" is a distinct answer
+ * from "belongs to the root graph", and the viewer shows it as its own facet
+ * so the gap is visible instead of absorbed.
+ */
+function stampSubgraph(graph: Node[], doc: string): void {
+  const dirs = declaredGraphs(ROOT)
+    .filter((d) => d.absPath !== undefined)
+    .map((d) => ({ id: d.id, rel: relative(ROOT, d.absPath!).replace(/\\/g, "/").replace(/\/$/, "") }))
+    // `..` is KEPT, and dropping it is what made this facet useless.
+    //
+    // Every repository-scoped entry — `who-iris/`, `folio-assistant-core/`,
+    // `bootstrap/`, `detangle/`, `large-datasets/`, `who-style-guide/` —
+    // resolves to `../<instance>/…` relative to this instance, so
+    // `!startsWith("..")` excluded the entire set the facet exists to offer.
+    //
+    // MEASURED after the fact, which is the part worth recording: the facet
+    // rendered, was screenshotted, and was reported as working, while its
+    // values were `cat-harness` (1,267 nodes) and a handful of this instance's
+    // own directories. Not one sibling instance appeared. The owner had asked
+    // to "filter by bootstrap/ cat-harness/ f-a-core/ etc"; the thing shipped
+    // could not.
+    //
+    // A path that leaves the instance is still a path this graph carries —
+    // `schema-nodes.ts` mints `../folio-assistant-core/schemas/…` — so the
+    // comparison below matches in the same space rather than excluding it.
+    .filter((d) => d.rel.length > 0)
+    .sort((a, b) => b.rel.length - a.rel.length);
+
+  const PATH_KEYS = ["instructionsPath", "module", "sourcePath", "path"] as const;
+  for (const n of graph) {
+    let p: string | undefined;
+    for (const k of PATH_KEYS) {
+      const v = n[k];
+      if (typeof v === "string" && v.length > 0) { p = v.replace(/\\/g, "/"); break; }
+    }
+    if (p === undefined) continue;
+    const hit = dirs.find((d) => p === d.rel || p!.startsWith(d.rel + "/"));
+    if (hit) n.inSubgraph = makeIri(doc, "directory", hit.id);
+  }
+
+  // INHERIT through `partOf`, for the nodes that have no path of their own.
+  //
+  // A Process carries `sourcePath`; the 1,092 ProcessNodes and SequenceFlows
+  // inside it do not — they are parts of a diagram, not files. Measured before
+  // this loop: 301 of 1,642 nodes stamped, and the 1,341 left were almost all
+  // process internals whose subgraph is simply their parent's.
+  //
+  // Iterated to a fixed point rather than done once, because `partOf` nests
+  // (a flow belongs to a process which belongs to a package), and a single
+  // pass would stamp only the first level. It terminates: every pass either
+  // stamps at least one node or stops.
+  const byIri = new Map(graph.map((n) => [String(n["@id"]), n]));
+  for (;;) {
+    let stamped = 0;
+    for (const n of graph) {
+      if (n.inSubgraph !== undefined) continue;
+      const parent = n.partOf;
+      const parentIri = Array.isArray(parent) ? parent[0] : parent;
+      if (typeof parentIri !== "string") continue;
+      const sub = byIri.get(parentIri)?.inSubgraph;
+      if (typeof sub === "string") { n.inSubgraph = sub; stamped += 1; }
+    }
+    if (stamped === 0) break;
+  }
+}
+
+async function collectProcesses(
+  doc: string,
+  problems: string[],
+  root: string = ROOT,
+  /**
+   * Determined empties. SEPARATE from `problems` because they are different
+   * facts with different consequences: a problem means this instance's graph
+   * could not be exported correctly, a note means it was exported correctly
+   * and something it might have had, it has none of.
+   *
+   * Optional so the two existing callers keep compiling; a caller that does
+   * not pass one still gets the finding, in `problems`, which is the old
+   * behaviour and the safe default for a sink nobody is reading.
+   */
+  notes?: string[],
+): Promise<Node[]> {
   const nodes: Node[] = [];
   const lanes = new Set<string>();
   const dirs = findBpmnDirs(root);
-  if (dirs.length === 0) {
-    // Zero diagrams is a determined empty ONLY if we looked. Say which.
-    // REPO-RELATIVE, not absolute: this string is written into a COMMITTED
-    // artefact (`bootstrap/bootstrap.jsonld`), and an absolute path differs
-    // between a developer's machine and CI, so its staleness gate would fail
-    // on a tree nobody touched.
-    problems.push(
+  // Zero diagrams is a determined empty ONLY if we looked. Say which.
+  //
+  // AND AN INSTANCE THAT DECLARES NO `kg` DIRECTORY HAS NOTHING TO LOOK IN.
+  // `workflowDirs` searches the instance's declared `kg` directories, so for
+  // an instance declaring none it returns `[]` for a reason that is not
+  // "nothing was found" but "there was nowhere to look, by the instance's own
+  // declaration". Reporting the first as the second turned a determined empty
+  // into a FAILURE: measured 2026-09-20, the repository root — which declares
+  // `uploads/` and nothing else — failed `check:instance-render` on this
+  // message alone, with 1 node of its own rendered and published and no other
+  // complaint. A gate that fails an instance for not having a kind of graph it
+  // never claimed is asking it to declare something to stay green, which is
+  // how a declaration stops meaning anything.
+  //
+  // REPO-RELATIVE, not absolute: this string is written into a PUBLISHED
+  // artefact, and an absolute path differs between a developer's machine and
+  // CI — so it would leak a runner's filesystem layout into a public document
+  // and change on every build.
+  //
+  // It said "a COMMITTED artefact (`cat-bootstrap/cat-bootstrap.jsonld`) ... so its
+  // staleness gate would fail on a tree nobody touched". **That file is not
+  // committed and has no staleness gate.** `.gitignore:108` ignores it
+  // deliberately — it was committed once, on a rationale citing a README step
+  // that no prose file under `cat-bootstrap/` actually contains, and it was 52 %
+  // of `cat-bootstrap/` by line count. `docs-site.yml:274` builds it into
+  // `_site/cat-bootstrap/cat-bootstrap.jsonld` at render time instead.
+  //
+  // The CHOICE was right and its stated reason was not, which is the worse
+  // failure of the two: a reader checking the claim finds no gate, concludes
+  // the constraint is imaginary, and makes the path absolute. The real reason
+  // is above, and it does not depend on where the file is stored.
+  //
+  // A DECLARED DIRECTORY HOLDING NO DIAGRAMS IS A NOTE, NOT A PROBLEM, and
+  // until 2026-09-20 it was a problem. It has to be SAID either way —
+  // `instance-graph-isolation.test.ts` puts it exactly right, "it says it
+  // found none, rather than passing over in silence" — but saying it and
+  // FAILING the instance for it are different things, and only the first was
+  // ever wanted. Three instances arrived at once (`kg-navigation`,
+  // `large-datasets`, `who-iris`), each holding one skill and no workflow,
+  // each rendering its nodes, each failed on this message alone. A skills
+  // package with no process is an ordinary thing; requiring a diagram to stay
+  // green is asking an instance to carry something it never claimed.
+  //
+  // AND THE SAME DISTINCTION ONE LEVEL DOWN, which is what this asked for
+  // until 2026-09-20: a declared `kg` directory that HOLDS NO DIAGRAMS is a
+  // determined empty, not a failure. The condition above read
+  // `dirs.length === 0 && kgDirectories(root).length > 0` — "declares a
+  // knowledge graph and no .bpmn was found" — which is only a defect if
+  // declaring a knowledge graph meant declaring PROCESSES. It does not. An
+  // instance declaring `skills/` claims skills; a skills package with no
+  // workflow is an ordinary thing and three arrived at once
+  // (`kg-navigation`, `large-datasets`, `who-iris`), each holding one skill,
+  // each rendering its nodes, each failed on this message alone.
+  //
+  // That is the same shape the paragraph above rejects, one level in: asking
+  // an instance to carry a diagram it never claimed in order to stay green.
+  // The `dh4f` case it was reaching for — a declared directory nothing scans
+  // — is real and is caught by the ABSENCE check, which now runs over the
+  // DECLARED directories rather than only over the ones already known to hold
+  // a diagram. Before this it could not fire for a diagramless directory at
+  // all: `findBpmnDirs` never returned one, so the loop below never saw it.
+  // NOT `kgDirectories`, and that distinction is the whole check.
+  //
+  // `kgDirectories` ends with `.filter((d) => existsSync(d.absPath))`, so an
+  // absent directory is gone from its result and an absence check written
+  // over it can never fire. I wrote exactly that first, and it reported a
+  // clean run while `kg-navigation/skills/` was moved out from under it —
+  // a vacuous guard offered as the replacement for the one being removed,
+  // which is worse than removing it with nothing in its place.
+  //
+  // Reading the DECLARATION is the only way to compare what was claimed
+  // against what is there, because the filtered view has already thrown the
+  // discrepancy away.
+  if (dirs.length === 0 && kgDirectories(root).length > 0) {
+    (notes ?? problems).push(
       `no directory containing .bpmn files was found under ${relative(ROOT, root) || "."}`,
     );
+  }
+
+  // NOT `kgDirectories`, and that distinction is the whole check.
+  //
+  // `kgDirectories` ends with `.filter((d) => existsSync(d.absPath))`, so an
+  // absent directory is gone from its result and an absence check written
+  // over it can never fire. I wrote exactly that first, and it reported a
+  // clean run while `kg-navigation/skills/` was moved out from under it —
+  // a vacuous guard offered as the replacement for the one being softened,
+  // which is worse than softening it with nothing in its place.
+  //
+  // Reading the DECLARATION is the only way to compare what was claimed
+  // against what is there, because the filtered view has already thrown the
+  // discrepancy away. This is the `dh4f` case the old condition was reaching
+  // for and could not reach: before this, a declared-but-absent directory and
+  // a declared-but-diagramless one produced the SAME message, so the test
+  // named "a declared-but-ABSENT directory is reported" passed while its
+  // fixture created the directory.
+  for (const d of resolveDirectories([{ name: "(local)", root, own: true }])) {
+    if (!d.graphs.includes("cat-harness")) continue;
+    if (!existsSync(d.absPath)) {
+      problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
+    }
   }
   for (const rel of dirs) {
   const dir = join(root, rel);
@@ -1228,7 +1571,7 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // EVERY declared `kg` root, not the literal `skills/` and not the first one
   // that answers. `kgRoots` is explicit that taking the first is the `dh4f`
   // defect arriving through the helper written to prevent it: a topical
-  // layout (`bootstrap/`, `crdm/`) would report a clean run over the roots
+  // layout (`cat-bootstrap/`, `crdm/`) would report a clean run over the roots
   // this never visited. First declaration of a role id wins, so a later root
   // cannot silently redefine one.
   const roles: RoleDef[] = [];
@@ -1256,18 +1599,46 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   }));
 }
 
-function collectGraphKinds(): Node[] {
+function collectGraphKinds(root: string = ROOT): Node[] {
   // `fsh-guts` and anything else in UNPUBLISHED_GRAPH_KINDS never reaches a
   // published graph. Filtered HERE, where the document is built, rather than
   // at upload: a strip that runs only on the happy path leaves a graph that
   // LOOKS clean and is not. Bean `folio-assistant-uv09`.
   const published = defaultGraphKinds.names().filter(isPublishedGraphKind);
-  return published.map((name) => {
+
+  // ── EMIT ONLY WHAT THIS INSTANCE DECLARES.
+  //
+  // `defaultGraphKinds` is the UNIVERSAL registry — every kind any layer
+  // defines. Emitting all of it into every instance's graph made `cat-bootstrap`,
+  // whose whole premise is that it knows nothing yet, publish 16 GraphKind
+  // nodes when its declaration names exactly ONE (`cat-harness`, across both
+  // its directories). It advertised `folio`, `voices` and `library` — core's —
+  // and `beans` and `todos` — cat-harness's — none of which it can reach.
+  //
+  // The comment below already recorded the layering ("`voices` and `library`
+  // are core's") without acting on it; this is the missing half. A cat-bootstrap
+  // that names a vocabulary it cannot resolve is the same defect as a `@type`
+  // that does not dereference (`blv9`), one level up: the node is there, and
+  // nothing behind it is.
+  //
+  // Reuses `declaredKinds` rather than re-deriving: it already follows the
+  // NESTED declarations (`beans/beans.json` naming `bean-defs` and
+  // `workflow-state`), which a plain read of `directories[].graphs` misses —
+  // and missing them here would drop kinds the instance really does own.
+  //
+  // Falls back to the full set when there is no declaration, because an
+  // undeclared instance has said nothing about what it owns, and reporting
+  // that as "owns nothing" would be a clean run over an empty set.
+  const decl = readDeclaration(root);
+  const owned = decl ? declaredKinds(root, decl) : undefined;
+  const emitted = owned ? published.filter((n) => owned.has(n)) : published;
+
+  return emitted.map((name) => {
     const def = defaultGraphKinds.get(name)!;
     return {
       // The instance sits in the SAME namespace as the class it instantiates,
       // which is not always the harness's: `cat-harness` and `schemas` are
-      // bootstrap's kinds, `voices` and `library` are core's. Derived from the
+      // cat-bootstrap's kinds, `voices` and `library` are core's. Derived from the
       // kind's own `type` rather than chosen here, so the two cannot drift.
       "@id": `${graphKindNamespace(name)}graphKind/${name}`,
       "@type": termIri("GraphKind"),
@@ -1277,6 +1648,54 @@ function collectGraphKinds(): Node[] {
       summary: def.summary,
     };
   });
+}
+
+/**
+ * An instance's DECLARED ASSETS, as nodes.
+ *
+ * ## They were declared and then dropped
+ *
+ * `harness.json` gives each asset an id, a `src`, a `role`, a title and a
+ * description, and `declaredAssets` reads and validates them — but no
+ * collector emitted them, so that data reached `check-declared-assets` and
+ * nothing else. An instance could declare what its files ARE and have none of
+ * it appear in its own graph.
+ *
+ * ## Measured: it was the difference between rendering and failing
+ *
+ * 2026-09-20, `folio-assist-core` is a stub — a `README.md` and a declaration
+ * naming it, `directories: []`. It rendered **zero** nodes and
+ * `check:instance-render` failed it on "an empty graph is a failure, not an
+ * empty success". That verdict was right about the graph and wrong about the
+ * instance: core had declared exactly one thing about itself, and the exporter
+ * discarded it. The empty graph was manufactured here.
+ *
+ * This is also what makes the harness layer's floor checkable. CatBootstrap owes
+ * its `.json`/`.jsonld` — *"that is its existence"* — and an existence claim
+ * whose declared assets are dropped is thinner than the declaration that
+ * produced it.
+ *
+ * `exists` is carried through rather than filtered on: a declared asset whose
+ * file is absent is a FINDING that `check-declared-assets` already raises, and
+ * silently omitting it here would hide the node whose absence is the point.
+ */
+function collectDeclaredAssets(doc: string, problems: string[], root: string = ROOT): Node[] {
+  let assets: ReturnType<typeof declaredAssets>;
+  try {
+    assets = declaredAssets(root);
+  } catch (e) {
+    problems.push(`unreadable declaration for assets: ${e instanceof Error ? e.message : String(e)}`);
+    return [];
+  }
+  return assets.map((a) => ({
+    "@id": makeIri(doc, "asset", a.id),
+    "@type": termIri("Asset"),
+    name: a.id,
+    path: a.src,
+    assetRole: a.role,
+    title: a.title,
+    description: a.description,
+  }));
 }
 
 function collectDeclaration(doc: string, problems: string[], root: string = ROOT): Node[] {
@@ -1323,7 +1742,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
 
 /** Every term in the context that is declared `{"@type": "@id"}`. */
 const LINK_TERMS = [
-  "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage",
+  "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage", "inSubgraph",
   "providesCapability", "requiresCapability", "holdsGraph", "startNode",
   "incoming", "outgoing", "from", "to", "satisfies", "hasCapability",
   "hasSkill", "bindsLane",
@@ -1363,7 +1782,7 @@ export const COLLECTOR_SCOPE = {
 } as const;
 
 /**
- * The nodes ANY declared instance contributes — bootstrap included.
+ * The nodes ANY declared instance contributes — cat-bootstrap included.
  *
  * ## Why this exists rather than a `--root` flag
  *
@@ -1391,15 +1810,17 @@ export async function collectInstanceNodes(
   doc: string,
   base: string,
   problems: string[],
-): Promise<{ nodes: Node[]; omitted: readonly string[] }> {
+): Promise<{ nodes: Node[]; omitted: readonly string[]; notes: string[] }> {
+  const notes: string[] = [];
   const nodes = [
     ...collectSkills(doc, base, problems, root),
-    ...(await collectProcesses(doc, problems, root)),
-    ...collectGraphKinds(),
+    ...(await collectProcesses(doc, problems, root, notes)),
+    ...collectGraphKinds(root),
     ...collectDeclaredRoles(doc, root),
     ...collectDeclaration(doc, problems, root),
+    ...collectDeclaredAssets(doc, problems, root),
   ];
-  return { nodes, omitted: COLLECTOR_SCOPE.instanceBound };
+  return { nodes, omitted: COLLECTOR_SCOPE.instanceBound, notes };
 }
 
 function undeclaredTerms(
@@ -1651,7 +2072,10 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...collectGraphKinds(),
     ...collectDeclaredRoles(docIri),
     ...collectDeclaration(docIri, problems),
+    ...collectDeclaredAssets(docIri, problems),
   ].map(compact);
+
+  stampSubgraph(graph, docIri);
 
   // A preview's nodes say, explicitly and per node, which canonical node they
   // are an alternate presentation of.

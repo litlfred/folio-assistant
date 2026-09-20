@@ -2,11 +2,11 @@
  * Tests for content/pipeline/po-resolve.ts — PO source resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { resolvePoSources, mergePoSources, availableLocales } from "./po-resolve";
 import { parsePo } from "./po-inject";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_po_resolve__");
 
@@ -62,19 +62,19 @@ beforeAll(() => {
   // Dependency
   const depRoot = join(TMP, "dep-folio");
   mkpo(join(depRoot, "translations", "fr"), "my-block.po", DEP_PO);
-  writeFileSync(join(depRoot, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(depRoot, JSON.stringify({
     translation: { translationDir: "translations" },
-  }), "utf-8");
+  }));
 
   // Folio config with dependency
-  writeFileSync(join(TMP, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(TMP, JSON.stringify({
     translation: { translationDir: "translations" },
     dependencies: {
       folioAssistant: [
         { name: "dep-folio", path: depRoot },
       ],
     },
-  }), "utf-8");
+  }));
 });
 
 afterAll(() => {

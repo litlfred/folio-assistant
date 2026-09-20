@@ -5,14 +5,18 @@
     "id": "library-ingestion",
     "path": "skills/folio-core/library-ingestion.md"
   },
-  "source_hash": "1e40228ccc94",
+  "source_hash": "d5d7cce12dda",
   "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
     "skill-is-brief": {
       "result": "fail",
       "findings": [
         {
           "where": "skills/folio-core/library-ingestion.md",
-          "detail": "314 lines; p75 of the skill corpus is 279."
+          "detail": "373 lines; p75 of the skill corpus is 279."
         }
       ]
     },
@@ -26,7 +30,7 @@
     }
   },
   "totals": {
-    "pass": 2,
+    "pass": 3,
     "fail": 1,
     "n/a": 0,
     "unknown": 0

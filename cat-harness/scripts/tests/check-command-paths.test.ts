@@ -1,0 +1,147 @@
+/**
+ * The command-path check, tested on the cases that made it wrong.
+ *
+ * Bean `b963`. Every test here is a false positive the first draft produced
+ * over this repository's own corpus, or the defect the check exists to catch.
+ * They are kept as tests rather than as comments because the tokenizer is the
+ * part that will be edited next, and each of these is one edit away.
+ *
+ * @module folio-assistant/scripts/tests/check-command-paths
+ */
+
+import { describe, expect, test } from "bun:test";
+import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import {
+  aboutThisTree,
+  checkCommandPaths,
+  shellBlocks,
+  shellWords,
+  skipCommand,
+  skipReason,
+} from "../check-command-paths.ts";
+
+function fixture(files: Record<string, string>, dirs: string[] = []): string {
+  const root = mkdtempSync(join(tmpdir(), "cmdpaths-"));
+  for (const d of dirs) mkdirSync(join(root, d), { recursive: true });
+  for (const [rel, body] of Object.entries(files)) {
+    mkdirSync(join(root, rel, ".."), { recursive: true });
+    writeFileSync(join(root, rel), body);
+  }
+  return root;
+}
+
+describe("a word is judged WHOLE, never as a path-shaped run inside one", () => {
+  // Each of these yielded a token that never appears in the text, reported as
+  // a missing file, on the first run over this repository.
+  test.each([
+    ["curl -fsSL https://bun.sh/install | bash", "bun.sh/install"],
+    ['export PATH="$HOME/.local/bin:$PATH"', "HOME/.local/bin"],
+    ["bun run x.ts --repo /path/to/your/content-repo", "path/to/your/content-repo"],
+    ["python3 x.py bpmn2fsh <file.bpmn|dir> -o OUTDIR", "file.bpmn"],
+  ])("%s does not yield %s", (cmd, ghost) => {
+    expect(shellWords(cmd)).not.toContain(ghost);
+  });
+
+  test("an assignment is not a path", () => {
+    expect(skipReason("SMART_BASE_HOME=/path/to/smart-base")).toBe("an assignment");
+  });
+
+  test("an upper-case segment is a stand-in", () => {
+    expect(skipReason("uploads/FILE.pdf")).toBe("an upper-case stand-in");
+    expect(skipReason("beans/defs")).toBeUndefined();
+  });
+});
+
+describe("whole commands the check declines", () => {
+  test("a `cd` moves the base, so the rest is not root-relative", () => {
+    expect(skipCommand("cd content && bun run pipeline/bib-qa.ts")).toMatch(/changes directory/);
+  });
+
+  test("a git ref is path-shaped and is not a path", () => {
+    expect(skipCommand("git show origin/main:beans/defs/x.md")).toMatch(/git command/);
+  });
+
+  test("an ordinary command is not declined", () => {
+    expect(skipCommand("bun run cat-harness/scripts/install-beans.sh")).toBeUndefined();
+  });
+});
+
+describe("the skill corpus judges only what claims to be about this tree", () => {
+  const root = fixture({ "keep.md": "" }, ["cat-harness", "beans"]);
+
+  test("a path under an existing root directory is judged", () => {
+    expect(aboutThisTree(root, "cat-harness/scripts/x.ts")).toBe(true);
+  });
+
+  test("a folio's path is not — the platform carries no folio", () => {
+    expect(aboutThisTree(root, "content/pipeline/qa-sweep.ts")).toBe(false);
+    expect(aboutThisTree(root, "./scripts/tests/run-tests.sh")).toBe(false);
+  });
+
+  test("a bare MARKDOWN name is judged — the `z9eb` case", () => {
+    expect(aboutThisTree(root, "STATUS.md")).toBe(true);
+  });
+
+  test("a bare non-markdown name is a folio artefact, not judged", () => {
+    expect(aboutThisTree(root, "harness.config.json")).toBe(false);
+    expect(aboutThisTree(root, "proof-objects.json")).toBe(false);
+  });
+});
+
+describe("the exemption carries a reason and is counted", () => {
+  test("a marked block is exempt; an unmarked one is not", () => {
+    const md = [
+      "<!-- command-path-ok: a probe -->",
+      "```sh",
+      "ls content/",
+      "```",
+      "",
+      "```sh",
+      "ls other/",
+      "```",
+      "",
+    ].join("\n");
+    const blocks = shellBlocks(md);
+    expect(blocks).toHaveLength(2);
+    expect(blocks[0]!.exempt).toBe(true);
+    expect(blocks[1]!.exempt).toBe(false);
+  });
+
+  test("a marker with no reason does not exempt — silencing costs more than fixing", () => {
+    const md = ["<!-- command-path-ok: -->", "```sh", "ls content/", "```", ""].join("\n");
+    expect(shellBlocks(md)[0]!.exempt).toBe(false);
+  });
+});
+
+describe("the defect it was written for", () => {
+  test("a moved script in an entry document fails", () => {
+    const root = fixture(
+      {
+        "AGENTS.md": "```sh\nscripts/install-beans.sh\n```\n",
+        "cat-harness/scripts/install-beans.sh": "",
+      },
+      ["cat-harness/scripts"],
+    );
+    const r = checkCommandPaths(root);
+    expect(r.dead.map((d) => d.token)).toEqual(["scripts/install-beans.sh"]);
+  });
+
+  test("...and passes once repointed", () => {
+    const root = fixture(
+      {
+        "AGENTS.md": "```sh\ncat-harness/scripts/install-beans.sh\n```\n",
+        "cat-harness/scripts/install-beans.sh": "",
+      },
+      ["cat-harness/scripts"],
+    );
+    expect(checkCommandPaths(root).dead).toEqual([]);
+  });
+
+  test("EXAMINED NOTHING is not a pass", () => {
+    const root = fixture({});
+    expect(checkCommandPaths(root).filesRead).toBe(0);
+  });
+});

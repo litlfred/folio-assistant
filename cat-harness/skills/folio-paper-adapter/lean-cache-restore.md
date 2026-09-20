@@ -1,6 +1,5 @@
 ---
 name: lean-cache-restore
-roles: [reader, collaborator, owner]
 user_invocable: true
 description: >
   The Lean build loop — restore a warm cache before working, and
@@ -88,7 +87,7 @@ package+toolchain. `3` means someone did and it is broken — repair with
 
 ## Cold start
 
-If there is no usable branch at all, that is a bootstrap, not a session
+If there is no usable branch at all, that is a cat-bootstrap, not a session
 task:
 
 ```sh

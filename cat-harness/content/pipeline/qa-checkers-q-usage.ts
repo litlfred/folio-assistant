@@ -36,6 +36,7 @@
  */
 
 import { existsSync, readFileSync } from "fs";
+import { stripLeanComments } from "./lean-lexer.js";
 import { sep } from "path";
 
 // Chapter profiles are FOLIO content and now arrive through a registry, the
@@ -135,11 +136,7 @@ function readMaybe(path: string | undefined): string {
  * The tactic scan below already skipped comment lines; the `Real.*` scan
  * beside it did not.
  */
-function stripLeanComments(lean: string): string {
-  return lean
-    .replace(/\/-[\s\S]*?-\//g, (m) => "\n".repeat((m.match(/\n/g) ?? []).length))
-    .replace(/--[^\n]*/g, "");
-}
+
 
 function stripFraming(md: string): string {
   let out = md;
@@ -184,13 +181,13 @@ const MEV_RE = /\b(MeV|GeV|keV|CODATA|PDG|ppb|ppm|ppq)\b/;
 /** Q-related word boundary — picks up `$q$`, `q ∈`, `q :`. */
 const MENTIONS_Q_RE = /\$q\b|\bq\s*[:∈]|\bq\^|\$q\^|q_0/;
 
-/** Lift the chapter directory name from a file path under `content/<paper>/<chapter>/<file>`. */
+/** Lift the chapter directory name from a file path under `folio/<paper>/<chapter>/<file>`. */
 export function chapterFromPath(path: string | undefined): string | undefined {
   if (!path) return undefined;
   const parts = path.split(sep);
-  const idx = parts.indexOf("content");
+  const idx = parts.indexOf("folio");
   if (idx < 0 || idx + 2 >= parts.length) return undefined;
-  // content / <paper-dir> / <chapter-dir> / <file>
+  // folio / <paper-dir> / <chapter-dir> / <file>
   return parts[idx + 2];
 }
 
@@ -311,7 +308,23 @@ export function leanDeclFromTs(ts: string): string | undefined {
   return last && last.length > 0 ? last : undefined;
 }
 
-const LEAN_DECL_RE =
+/**
+ * The second declaration pattern in this repository, and it disagrees with
+ * `DECL_RE` in `lean-lexer.ts` — see that constant's comment for the measured
+ * table and why neither is simply widened into the other.
+ *
+ * EXPORTED only so `lean-decl-regex-divergence.test.ts` can compare the two
+ * rather than re-typing them: a test that restates the pattern it is testing
+ * drifts from it the first time either is edited, which is the failure mode
+ * this whole bean is about.
+ *
+ * The one difference that is a defect HERE rather than there: the name class
+ * omits `.`, so `theorem Foo.bar` yields a span named `Foo`. A caller looking
+ * up the declaration by its full name does not find it and falls back to
+ * scanning the whole file — which is the behaviour
+ * {@link leanDeclSpans}' callers exist to avoid.
+ */
+export const LEAN_DECL_RE =
   /^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputable\s+|partial\s+|unsafe\s+)*(?:theorem|lemma|def|abbrev|structure|inductive|class|instance|axiom|example|opaque)\s+([A-Za-z_][A-Za-z0-9_'!?]*)/;
 
 interface LeanSpan {

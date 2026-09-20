@@ -10,7 +10,7 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 import {
   LOG_REF_KINDS,
@@ -19,6 +19,7 @@ import {
   LogReferenceSchema,
   logDirs,
 } from "../../schemas/log-entry.ts";
+import { workflowFiles } from "../known-skills.js";
 import { loadProcessModel } from "../../src/workflow/process-model.ts";
 import { describeCapture, writeLogEntry } from "../../src/logging/log-writer.ts";
 
@@ -26,8 +27,8 @@ import { describeCapture, writeLogEntry } from "../../src/logging/log-writer.ts"
 function instance(declareFshGuts = true): string {
   const root = mkdtempSync(join(tmpdir(), "log-writer-"));
   const directories = declareFshGuts
-    ? [{ id: "fsh-guts", path: "fsh-guts/", description: "trashcan", graphs: ["fsh-guts"] }]
-    : [{ id: "schemas", path: "schemas/", description: "schemas", graphs: ["schemas"] }];
+    ? [{ id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", description: "trashcan", graphs: ["fsh-guts"] }]
+    : [{ id: "schemas", path: "schemas/", dependents: "reproduce", description: "schemas", graphs: ["schemas"] }];
   for (const d of directories) mkdirSync(join(root, d.path), { recursive: true });
   writeFileSync(
     join(root, "harness.json"),
@@ -248,8 +249,21 @@ describe("the process says whether running it is logged", () => {
   const dir = join(import.meta.dir, "../../skills/workflows");
 
   test("the three processes the owner named declare capture", async () => {
+    // Located through `workflowFiles`, not composed from a literal
+    // directory. `crdm-requirements.bpmn` moved to its own topical subgraph
+    // on 2026-09-20 and a composed path went ENOENT — which this test read
+    // as the process failing to declare capture, the wrong finding
+    // entirely. The declaration says where diagrams live; asking it is the
+    // difference between "this moved" and "this is broken".
+    const byStem = new Map(
+      workflowFiles(join(import.meta.dir, "../..")).map((f) => [basename(f, ".bpmn"), f]),
+    );
     for (const stem of ["crdm-requirements", "editing-hci-validation", "content-lifecycle"]) {
-      const m = await loadProcessModel(join(dir, `${stem}.bpmn`));
+      const file = byStem.get(stem);
+      // Asserted rather than defaulted: a missing diagram must not read as a
+      // missing declaration.
+      expect(`${stem}: ${file ? "found" : "NOT FOUND"}`).toBe(`${stem}: found`);
+      const m = await loadProcessModel(file!);
       expect(m.logCapture, `${stem} does not declare folio:log`).toBe("on");
     }
   });

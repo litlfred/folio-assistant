@@ -18,8 +18,8 @@ import {
   PUBLICATION_HOSTS,
   publicationHost,
   publicationLinkStyleConflict,
-  repoRootFor,
-} from "../../schemas/cat-harness.ts";
+  } from "../../schemas/cat-harness.ts";
+import { resolveHarnessConfigPath } from "../../schemas/harness-config.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const temps: string[] = [];
@@ -119,9 +119,13 @@ describe("this repository's own declaration", () => {
     // The live assertion. folio-assistant publishes to Pages and its README
     // defaults to `blob`, so this must stay quiet — and will speak up if
     // either side is changed without the other.
-    const cfgPath = join(repoRootFor(ROOT), "harness.config.json");
+    // RESOLVED, not composed. This repository instantiates more than one
+    // harness, so there is no single config filename to join onto the repo
+    // root any more — `resolveHarnessConfigPath` walks out from `ROOT` and
+    // answers with the config of the instance `ROOT` actually sits in.
+    const cfgPath = resolveHarnessConfigPath(ROOT)?.path;
     let linkStyle: string | undefined;
-    if (existsSync(cfgPath)) {
+    if (cfgPath && existsSync(cfgPath)) {
       const cfg = JSON.parse(readFileSync(cfgPath, "utf-8")) as {
         readme?: { linkStyle?: string };
       };

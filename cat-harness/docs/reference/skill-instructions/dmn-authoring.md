@@ -5,14 +5,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-who-smart-guidelines/dmn-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/dmn-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/dmn-authoring.html).
+> Generated from [`skills/workflow/dmn-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/dmn-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/dmn-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/dmn-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/dmn-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # dmn-authoring
 
-> Skill id: `dmn-authoring` · Package: `authoring-who-smart-guidelines` ·
+> Skill id: `dmn-authoring` · Package: `workflow` ·
 > Named by `l2-dak-authoring.bpmn` step **Decision logic · DMN tables**, in the
 > `Business analyst` lane.
 

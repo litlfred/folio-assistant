@@ -98,6 +98,30 @@ skill exists to prevent. A user who says "I want to add a chapter" has stated
 `new-content`; a user who says "create a folio" has stated **nothing**, because
 that sentence is what the five requests have in common.
 
+> **`isFolio` is ONE MEMBERSHIP of a set, and the set is what a repository
+> is.** `describeRepository()` (`schemas/content-type.ts`) returns every
+> marker a repository carries — `folio`, `harness`, `dak`, `sushi` — with the
+> facts each states and any disagreement between them.
+> `describeRepositoryClosure()` (`schemas/harness-config.ts`) extends that
+> through the dependency tree, attributing each membership to the instance
+> that carried it. Bean `79t3`.
+>
+> **`folio` and `harness` are different types, and the distinction is load-
+> bearing here.** `harness.json` says *this is an instance*; `harness.config.json`
+> says *this authors folio content*. `cat-harness/` carries the first and not
+> the second — it is a harness and is **not** a folio, which is the
+> platform-not-content rule as a fact about two files. `isFolio` is exactly
+> membership of `folio`, which is what this table has always meant by it: the
+> DMN documents the input as *"harness.config.json exists in the working
+> directory"*.
+>
+> So a repository being several things at once does **not** perturb the five
+> branches. They key on folio-ness alone, and a folio that is also a DAK takes
+> the same branch as one that is not — it is still already a folio, still has
+> content, and the user has still either stated an intent or not. Use
+> `describeRepository` when you want to know what a repository *is*; this
+> probe when you want to know which branch to take.
+
 > **`isFolio` is about the working directory, not about the user.** Somebody
 > who has used folio-assistant before, in another repo, is still in an
 > `isFolio=false` directory. Their experience is not a fact this table reads —

@@ -2,25 +2,25 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "d8c95d3b0a3a"
+    "script_hash": "c44c03bd2e40"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-19T12:01:31.466Z",
+  "updated_at": "2026-09-20T19:09:15.261Z",
   "verdict": "findings",
   "checks": [
     {
       "id": "staging-preview-size",
-      "state": "finding",
+      "state": "ok",
       "summary": "The review previews under `STAGING/` on the publish branch have grown past what a GitHub Pages site can carry alongside the main site.",
       "thresholds": [
         {
           "metric": "staging-total-bytes",
-          "value": 104857600,
+          "value": 524288000,
           "unit": "bytes",
-          "basis": "The owner's explicit instruction, 2026-09-19 (\"issue warning to user when exceeds > 100mb\"). It is also a tenth of GitHub's documented 1 GB limit for a published Pages site, which the previews share with the main site — an early-warning point that leaves room to act rather than a limit in itself. One preview measured 36.7–37.6 MB on 2026-09-19, so the third concurrent review breaches it.",
+          "basis": "The owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches merged\"), RAISED from the 100 MB they set on 2026-09-19 — and the raise went with a policy change that made the old number mean something different. Until `folio-assistant-1feu`, previews were retained on close AND on merge, so the total was monotonic: any threshold was breached eventually and stayed breached, and \"over\" carried no information after the first time. Now a merged pull request's preview is removed automatically, so the store DRAINS and what remains is bounded by concurrent reviews rather than by cumulative history. At the measured ~38 MB per preview, 500 MB is about thirteen concurrent reviews — above the most this repository has reached (eleven on 2026-09-20, three of them prunable) and half the documented 1 GB Pages ceiling, leaving the main site the other half. THE FLOOR IS STILL REAL AND STILL ABOVE PRUNING: a live branch's preview must not be removed, so N concurrent reviews floor the total at N x ~38 MB. What changed is that the floor now falls on its own as work merges. The action this finding names is therefore never \"prune more\" but preview SIZE: 27.5 MB of each preview is HTML that shares ZERO blobs with any other, because the build timestamp and the slug appear on every page. See STAGING_WARN_BYTES for the four sources and bean `xxku` for the arithmetic.",
           "severity": "major"
         },
         {
@@ -34,29 +34,22 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 361040543,
+          "value": 214354417,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 9,
+          "value": 4,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
-      "findings": [
-        {
-          "summary": "9 staging preview(s) total 344.3 MB, over the 100 MB warning point.",
-          "metric": "staging-total-bytes",
-          "severity": "major",
-          "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "staging-preview-orphans",
-      "state": "finding",
+      "state": "ok",
       "summary": "A `STAGING/` preview that no liveness signal claims — no open pull request, no branch carrying unmerged work, no recent commit. Retained by policy, not by mistake: this is the list a person needs in order to decide, never a list to act on unasked.",
       "thresholds": [
         {
@@ -70,35 +63,24 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 2,
+          "value": 0,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 80372574,
+          "value": 0,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-live-count",
-          "value": 7,
+          "value": 4,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
       ],
-      "findings": [
-        {
-          "summary": "`STAGING/claude-4kiw-memory-pointer` (38.3 MB, 786 files) — no open pull request; `claude/4kiw-memory-pointer` is already in `main`, tip 64 min old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-4kiw-memory-pointer` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-4kiw-memory-pointer` and `cleanup_confirm: claude-4kiw-memory-pointer`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-consolidate-test-dir` (38.4 MB, 786 files) — no open pull request; `claude/consolidate-test-dir` is already in `main`, tip 59 min old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-consolidate-test-dir` is finished. Nothing here removes it. Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, or a `workflow_dispatch` with `cleanup_slug: claude-consolidate-test-dir` and `cleanup_confirm: claude-consolidate-test-dir`, which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a valid answer."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "repository-size",
@@ -137,38 +119,38 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 35780071,
+          "value": 92127412,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 453966732,
+          "value": 823303667,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 428227584,
+          "value": 819564544,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 61,
+          "value": 9,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 12.69,
+          "value": 8.94,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 432.9 MB against 34.1 MB of tracked content — 12.7x, in 61 pack(s).",
+          "summary": "`.git` is 785.2 MB against 87.9 MB of tracked content — 8.9x, in 9 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -178,7 +160,7 @@
     {
       "id": "bean-store",
       "state": "finding",
-      "summary": "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, and the size of the open backlog.",
+      "summary": "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, the size of the open backlog, and decision records that list fewer than two real options.",
       "thresholds": [
         {
           "metric": "bean-duplicate-title-groups",
@@ -188,10 +170,24 @@
           "severity": "major"
         },
         {
+          "metric": "bean-thin-decision-records",
+          "value": 0,
+          "unit": "count",
+          "basis": "MADR's own refusal, adopted whole 2026-09-20: \"never fewer than two considered options — one option is not a choice; a straw option is worse than a short list\" (`cat-harness/methodologies/madr.md`). Zero rather than a tolerance band because the rule has no tolerant form: a record listing one option has not compared anything, and the methodology says what to write instead — why no alternative existed, which is a finding about the constraint rather than a decision. MINOR, not major, because this maps analytical debt rather than corpus integrity; a thin record misleads a future reader, it does not break a consumer. Measured 2026-09-20: 2 decision records in the store, 0 of them thin — so this locks in a property the store already has rather than demanding work.",
+          "severity": "minor"
+        },
+        {
           "metric": "bean-stale-in-progress",
           "value": 14,
           "unit": "days",
           "basis": "NO EXTERNAL STANDARD; calibrated here. A claimed bean is a claim a sibling session is expected to respect, and `skills/folio-core/bean-blocking.md` says a block with no expiry cannot be told from abandoned work. Sessions are container-scoped and reclaimed, so a claim that has outlived two weeks of containers is not one anybody is honouring. Measured 2026-09-19: 29 in-progress, 0 of them older than 14 days.",
+          "severity": "minor"
+        },
+        {
+          "metric": "bean-quiet-claims",
+          "value": 72,
+          "unit": "hours",
+          "basis": "NO EXTERNAL STANDARD; calibrated here, and the number is the weaker half of the rule. What actually settles whether a claim is live is a LIVENESS SIGNAL — an open PR naming the bean, an unmerged branch touching it, a note since. `skills/folio-core/bean-coordination.md` §\"A claim is branch-local\" is why: a claim becomes visible to a sibling when the PR opens, so a claim with no PR and no branch has announced nothing to anybody. **This check computes only the offline half** — time since `updated_at` — so its count is an UPPER BOUND on quiet claims and must be read as one: a bean here may have an open PR this sweep cannot see. 72 hours because a claim is meant to become visible at the FIRST commit (`continual-progress` invariant 1), sessions are container-scoped and reclaimed, and three days spans a weekend without firing on one. It is deliberately far below the 14-day abandonment threshold and answers a different question, so both are reported.",
           "severity": "minor"
         },
         {
@@ -218,13 +214,13 @@
         },
         {
           "metric": "bean-open",
-          "value": 94,
+          "value": 181,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 192,
+          "value": 105,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -239,14 +235,44 @@
           "value": 0,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-claimed",
+          "value": 74,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-quiet-claims",
+          "value": 0,
+          "unit": "count",
+          "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-decision-records",
+          "value": 6,
+          "unit": "count",
+          "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
+        },
+        {
+          "metric": "bean-thin-decision-records",
+          "value": 0,
+          "unit": "count",
+          "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         }
       ],
       "findings": [
         {
-          "summary": "192 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "105 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
+        },
+        {
+          "summary": "181 open beans (todo + in-progress), past the 150 calibration point.",
+          "metric": "bean-open",
+          "severity": "minor",
+          "action": "Read `beans roadmap` rather than `beans list` and check the backlog still has a shape. This is a fact about the plan, not about any one item."
         }
       ]
     },

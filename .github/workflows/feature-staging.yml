@@ -144,6 +144,36 @@ jobs:
           # Sanitise the branch name for use as a URL path segment
           BRANCH="${HEAD_REF:-${INPUT_BRANCH:-$REF_NAME}}"
           SLUG=$(echo "$BRANCH" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          # THE SLUG MUST BE ONE SAFE PATH SEGMENT — checked by VALUE, never
+          # trusted because of where it came from. Bean `fuzm`.
+          #
+          # `.` is in the permitted class above and `sed` REPLACES rather than
+          # deletes, so two adjacent input dots survive: input `..` gives output
+          # `..`, measured. A slug of `..` makes `STAGING/$SLUG` the checkout
+          # root.
+          #
+          # Two guards already stand between that and harm, and BOTH were found
+          # by measuring rather than by reading:
+          #   1. git rejects every ref name containing `..` — `..`, `a..b`,
+          #      `../..`, `feat/../x`, `...`, `.git` all refused by
+          #      `git check-ref-format`. A ref-derived slug cannot be `..`.
+          #   2. `rm` refuses `.` and `..` operands outright: `rm -rf
+          #      "STAGING/.."` skips and exits 1, deleting nothing.
+          #
+          # What neither covers is `git add -A "STAGING/.."`, which does NOT
+          # refuse — it stages the whole tree above, so the job would commit
+          # unrelated changes. That is the residual, and it is why the check is
+          # on the VALUE: guard 1 holds only while the slug comes from a ref,
+          # and `cleanup-dispatch` already takes one from a dispatch input.
+          #
+          # `/` is not in the permitted class, so the output is always a single
+          # segment; the whole hazard is the two spellings refused here.
+          case "$SLUG" in
+            ""|.|..)
+              echo "::error::staging slug resolved to '$SLUG', which names no preview. Refusing."
+              exit 1
+              ;;
+          esac
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "Staging slug: $SLUG"
@@ -168,15 +198,37 @@ jobs:
         env:
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
         run: |
+          # `short_sha`, `built_at` and `run_url` are DELIBERATELY ABSENT on a
+          # staging build, and this is the second half of bean `g196`.
+          #
+          # `docs/_includes/footer_custom.html` renders all three into the
+          # footer of EVERY page. A fresh `date -u` therefore made every page
+          # unique on every run — the same defect as the staging banner, one
+          # include away, and it survived the banner fix: measured on two
+          # deploys of one branch three minutes apart, 1466 insertions and
+          # 1465 deletions across 613 files, every page changed by exactly one
+          # line, with a constant banner already shipping.
+          #
+          # Omitting them makes Jekyll render the footer identically on every
+          # build, and `staging-banner.ts`'s client fills the real values in
+          # from `staging.json` — the same one fetch the banner already makes.
+          # The information a reader needs is unchanged; only the moment it is
+          # bound moves from build time to load time.
+          #
+          # `docs-site.yml` still writes all three for the MAIN site, where it
+          # is right: there is one copy of that site, nothing to deduplicate,
+          # and the footer's own comment explains why the stamp has to be
+          # there at all — "a stale browser cache and a deploy that has not run
+          # look identical".
+          #
+          # The remaining keys are constant for a given preview, so they cost
+          # nothing: the branch and the slug do not change between rebuilds,
+          # and neither does the PR number.
           mkdir -p cat-harness/docs/_data
           {
-            echo "sha: \"${GITHUB_SHA}\""
-            echo "short_sha: \"${GITHUB_SHA:0:7}\""
-            echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
             echo "branch: \"${STAGING_BRANCH}\""
             echo "staging: true"
             echo "staging_slug: \"${{ steps.slug.outputs.slug }}\""
-            echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
             echo "pr_number: \"${{ github.event.pull_request.number || '' }}\""
           } > cat-harness/docs/_data/build.yml
           cat cat-harness/docs/_data/build.yml
@@ -253,9 +305,34 @@ jobs:
       - name: Strip SEO identity claims from the preview
         run: bun run cat-harness/scripts/strip-preview-seo.ts --site ./_site
 
+      # `--gitRevision` pins the source links to the BRANCH, not the commit.
+      # Bean `g196`, third cause.
+      #
+      # TypeDoc defaults `gitRevision` to the current commit SHA and writes it
+      # into every "Defined in" link:
+      #
+      #   <a href="https://github.com/…/blob/<40-hex-sha>/…/builders.ts#L85">
+      #
+      # So every API page changed on every build, for the same reason the
+      # banner and the footer did — and it OUTLIVED both fixes. Measured on
+      # two consecutive deploys of one branch whose only source difference was
+      # a bean file: 1193 insertions, 1192 deletions, and the changed set
+      # began at `api/` where it used to begin at `accessibility.html`. The
+      # Jekyll half was fixed; this half was not.
+      #
+      # The branch name is stable across rebuilds of one preview, which is
+      # what makes the pages deduplicate. The cost is that a source link
+      # follows the branch rather than freezing a commit — correct for a
+      # PREVIEW, whose whole purpose is to show the branch as it stands, and
+      # the reason `docs-site.yml` is deliberately NOT changed: the published
+      # site keeps SHA-pinned links, where there is one copy, nothing to
+      # deduplicate, and a permanent link is worth more than a live one.
       - name: Generate TypeDoc API reference
+        env:
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
         run: |
           npx --yes typedoc \
+            --gitRevision "$STAGING_BRANCH" \
             --out ./_site/api \
             --entryPointStrategy expand \
             --readme none \
@@ -296,9 +373,27 @@ jobs:
       # is free, and this is the useful end of it.
       - name: Emit the knowledge-graph viewer
         run: |
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
+          STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
           bun run cat-harness/scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
 
+      # The banner is injected as a CONSTANT fragment and the per-preview
+      # facts go into one `staging.json` the browser reads at load time.
+      # Bean `g196`.
+      #
+      # It used to be composed here as a bash string with the commit SHA and a
+      # `date -u` timestamp baked into all ~530 pages. Because the timestamp
+      # changes every run, EVERY PAGE WAS UNIQUE EVEN ACROSS TWO BUILDS OF ONE
+      # BRANCH: each re-push added ~27.5 MB of permanently new objects to
+      # `gh-pages`, and the history grew even when the preview count did not.
+      # Measured 2026-09-19: 9 previews, 346.1 MB, and ZERO HTML blobs shared
+      # between any two previews.
+      #
+      # The markup, the colour reasoning and the sidebar-offset mechanism all
+      # moved into `cat-harness/scripts/staging-banner.ts` unchanged — they are
+      # in the script's docstring now, where a test can hold them. Do not
+      # re-inline them here: the property this step buys is that the injected
+      # bytes do not depend on the build, and it is pinned by
+      # `staging-banner-constant.test.ts`.
       - name: Inject staging banner
         # PR title and body come through `env`, NOT `${{ }}` interpolation.
         # An expression is substituted into the script TEXT before bash sees
@@ -310,15 +405,22 @@ jobs:
           PR_BODY: ${{ github.event.pull_request.body }}
           # Raw branch name — the slug is sanitised, the branch is not.
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
-        # bash explicitly: the loop uses process substitution and ${var//a/b}.
         shell: bash
         run: |
-          SHA="${GITHUB_SHA:0:7}"
-          BRANCH="$STAGING_BRANCH"
-          BUILT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           PR="${{ github.event.pull_request.number || 'n/a' }}"
-          BRANCH_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${BRANCH}"
-          MAIN_SITE="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          # The issue this branch is FOR. A reviewer landing on a staged page
+          # can see the branch, the commit and the PR, but not WHY the work
+          # exists — which is the question a preview most often raises.
+          #
+          # Taken as the first issue reference in the PR title, else the body,
+          # excluding the PR's own number (GitHub numbers issues and PRs from
+          # one sequence, so "#258" in the body of PR 258 is a self-reference,
+          # not an issue). Absent is a normal state, not an error: a branch
+          # need not have an issue, and the banner simply omits the link.
+          ISSUE="$(printf '%s\n%s\n' "$PR_TITLE" "$PR_BODY" \
+            | grep -oE '#[0-9]+' | tr -d '#' \
+            | grep -vx "$PR" | head -1 || true)"
+
           # Which pages actually EXIST on the published main site.
           #
           # The compare link exists to put this page beside its counterpart on
@@ -335,90 +437,34 @@ jobs:
           # `gh-pages` is not in this checkout (checkout@v4, depth 1), so fetch
           # a shallow copy of just that ref. Paths under STAGING/ are other
           # branches' previews, not the main site, and are excluded.
-          MAIN_PAGES=""
-          MAIN_PAGES_KNOWN=0
+          #
+          # ABSENT and EMPTY are different answers, which is why the file is
+          # only passed on when it has content: an unreadable publish ref must
+          # not render as "every page is new".
+          MAIN_PAGES_ARG=""
           if git fetch --depth=1 origin gh-pages >/dev/null 2>&1; then
-            MAIN_PAGES="$(git ls-tree -r --name-only FETCH_HEAD 2>/dev/null | grep -v '^STAGING/' || true)"
-            # An empty tree is a determined empty, but a failed read is not —
-            # only claim knowledge when the listing actually produced paths.
-            [ -n "$MAIN_PAGES" ] && MAIN_PAGES_KNOWN=1
-          fi
-          if [ "$MAIN_PAGES_KNOWN" = "1" ]; then
-            echo "Read $(printf '%s\n' "$MAIN_PAGES" | wc -l) page(s) from the publish ref"
-          else
-            echo "Could not read the publish ref — compare links fall back to the site root"
-          fi
-          PR_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${PR}"
-          # The issue this branch is FOR. A reviewer landing on a staged page
-          # can see the branch, the commit and the PR, but not WHY the work
-          # exists — which is the question a preview most often raises.
-          #
-          # Taken as the first issue reference in the PR title, else the body,
-          # excluding the PR's own number (GitHub numbers issues and PRs from
-          # one sequence, so "#258" in the body of PR 258 is a self-reference,
-          # not an issue). Absent is a normal state, not an error: a branch
-          # need not have an issue, and the banner simply omits the link.
-          ISSUE="$(printf '%s\n%s\n' "$PR_TITLE" "$PR_BODY" \
-            | grep -oE '#[0-9]+' | tr -d '#' \
-            | grep -vx "$PR" | head -1 || true)"
-          ISSUE_FRAGMENT=""
-          if [ -n "$ISSUE" ]; then
-            ISSUE_FRAGMENT=" · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/issues/${ISSUE}\" style=\"color:#fff;text-decoration:underline\">issue #${ISSUE}</a>"
-          fi
-          # The banner must PUSH THE FIXED SIDEBAR DOWN, not sit on top of it.
-          #
-          # just-the-docs makes `.side-bar` `position: fixed; top: 0`. A
-          # `position: sticky` banner is in normal flow and moves nothing that
-          # is out of it, so the banner covered the top of the sidebar: the
-          # site title, and part of the toolbar row holding the theme, reading
-          # preferences, language and QR controls. A reader reported the
-          # language selector "still not visible" — it was under the banner.
-          #
-          # A fixed offset would be wrong: the banner wraps to two or three
-          # lines on a narrow viewport, and its height is not knowable here.
-          # So measure it and publish the value as a custom property, on load
-          # and on resize.
-          OFFSET_STYLE="<style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style>"
-          OFFSET_SCRIPT="<script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>"
-          CHIP='font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px'
-          BANNER="<div data-fa-staging-banner style=\"background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui\">🔀 <b>FEATURE BRANCH</b> — <a href=\"${BRANCH_URL}\" style=\"color:#fff;text-decoration:underline\"><span style=\"${CHIP}\">${BRANCH}</span></a> · commit <span style=\"${CHIP}\">${SHA}</span> · built ${BUILT} · <a href=\"${PR_URL}\" style=\"color:#fff;text-decoration:underline\">PR #${PR}</a>${ISSUE_FRAGMENT} · @@COMPARE@@ · <a href=\"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\" style=\"color:#fff;text-decoration:underline\">build log</a></div>${OFFSET_STYLE}${OFFSET_SCRIPT}"
-          # Match the WHOLE opening tag, not the literal "<body". Matching
-          # "<body" alone re-emitted "<body>" and left the original tag's own
-          # ">" behind, so every staged page carried a stray ">" after the
-          # banner — and any <body> carrying attributes came out as
-          # "<body>BANNER class="..."">: attributes orphaned as visible text,
-          # and the real tag stripped of them.
-          #
-          # Per-file, not one sed over everything: the compare link names THIS
-          # page, so the banner is no longer a constant. Everything else in it
-          # is, so only the one fragment is rebuilt per file.
-          #
-          # Three states, and the middle one is the reason this is not a
-          # one-line change:
-          #   present on main      -> deep link to the same page
-          #   absent from main     -> site root, and SAY the page is new
-          #   publish ref unread   -> site root, worded as today
-          # "Could not tell" must never render as "this page is new": that
-          # would label every page new on any run where the fetch failed.
-          INJECTED=0
-          NEW_PAGES=0
-          while IFS= read -r f; do
-            REL="${f#./_site/}"
-            if [ "$MAIN_PAGES_KNOWN" = "1" ]; then
-              if printf '%s\n' "$MAIN_PAGES" | grep -qxF "$REL"; then
-                COMPARE="<a href=\"${MAIN_SITE}/${REL}\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a>"
-              else
-                COMPARE="<a href=\"${MAIN_SITE}/\" style=\"color:#fff;text-decoration:underline\">main ↗</a> <span style=\"opacity:.85\">(new page)</span>"
-                NEW_PAGES=$((NEW_PAGES + 1))
-              fi
-            else
-              COMPARE="<a href=\"${MAIN_SITE}/\" style=\"color:#fff;text-decoration:underline\">compare with main ↗</a>"
+            git ls-tree -r --name-only FETCH_HEAD 2>/dev/null \
+              | grep -v '^STAGING/' > /tmp/main-pages.txt || true
+            if [ -s /tmp/main-pages.txt ]; then
+              MAIN_PAGES_ARG="--main-pages /tmp/main-pages.txt"
+              echo "Read $(wc -l < /tmp/main-pages.txt) page(s) from the publish ref"
             fi
-            PAGE_BANNER="${BANNER//@@COMPARE@@/$COMPARE}"
-            sed -i "s|<body\([^>]*\)>|<body\1>${PAGE_BANNER}|" "$f" 2>/dev/null || true
-            INJECTED=$((INJECTED + 1))
-          done < <(find ./_site -name "*.html")
-          echo "Injected staging banner into ${INJECTED} HTML files (${NEW_PAGES} with no counterpart on main)"
+          fi
+
+          # shellcheck disable=SC2086  # MAIN_PAGES_ARG is a deliberate two-token flag or empty
+          bun run cat-harness/scripts/staging-banner.ts \
+            --site ./_site \
+            --branch "$STAGING_BRANCH" \
+            --sha "${GITHUB_SHA:0:7}" \
+            --built "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --pr "$PR" \
+            --pr-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${PR}" \
+            --branch-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${STAGING_BRANCH}" \
+            --issues-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/issues" \
+            ${ISSUE:+--issue "$ISSUE"} \
+            --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --main-site "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
+            $MAIN_PAGES_ARG
 
       # The branch's KG, published beside the branch's site, so the graph a
       # reviewer inspects is the one this PR produces rather than main's. The
@@ -435,7 +481,7 @@ jobs:
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
           BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
+          STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
           # Both exporters stamp their own output with the build identity, from
           # the one `stagingStamp()` in scripts/staging-stamp.ts. It was an
           # inline `bun -e` here that rewrote the JSON-LD after the fact and
@@ -447,7 +493,44 @@ jobs:
           bun run cat-harness/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
-          cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json" 
+          cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
+
+          # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
+          #
+          # Staging published NONE of these while the live site published all
+          # of them. That is not a missing file, it is a preview that cannot
+          # show the artefact it exists to review: the export above stamps every
+          # node with an `@id` under `$BASE`, and the vocabulary those nodes
+          # reference then dereferenced to 404. A reviewer opening a staged
+          # knowledge-graph change got a graph whose own terms resolved to
+          # nothing.
+          #
+          # The namespace documents are deployment-INDEPENDENT on purpose — a
+          # vocabulary's IRIs are the vocabulary, and they are the same document
+          # at any base — so these are copied from the live build's step
+          # unchanged.
+          mkdir -p "./_site/ns/content"
+          cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+          bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
+          cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
+
+          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
+            LAYER="${pair%%:*}"; DIR="${pair##*:}"
+            mkdir -p "./_site/${DIR}"
+            bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
+            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
+            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
+          done
+
+          # THE BOOTSTRAP GRAPH, with `--base-url` so the staged copy names
+          # ITSELF rather than the live document. `gen-cat-bootstrap-graph.ts` took
+          # no such flag until this change — it minted `@id` from the canonical
+          # URL whatever tree it wrote into, so a staged copy would have
+          # asserted it lives on the live site. That is worse than the 404 it
+          # replaces: a reader following the `@id` lands on a different document
+          # that looks correct.
+          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --base-url "$BASE" --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
+          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.
@@ -500,28 +583,177 @@ jobs:
       #
       # `continue-on-error` on the first attempt only. If the retry fails too,
       # it fails the job — a lost staging deploy must stay visible.
-      - name: Deploy to gh-pages/STAGING/<slug>
-        id: deploy
-        continue-on-error: true
-        uses: peaceiris/actions-gh-pages@v4
+      # ── Deploy and log, in ONE commit ────────────────────────
+      #
+      # Bean `bm6d`. This used to be a `peaceiris` deploy (plus two retries)
+      # followed by a separate render-log commit, and the two pushes landed
+      # about ten seconds apart. **GitHub Pages starts a build on the first
+      # and the second cancels it**, so the first was always wasted: measured
+      # 2026-09-20, 6 of the last 10 `pages build and deployment` runs were
+      # `cancelled`, in an exact pattern rather than a random one. A cancelled
+      # deployment is red nowhere — `check:ci-health` reads the DEFAULT
+      # branch, and these are bot-triggered runs on `gh-pages` — which is the
+      # `xom7` shape: a thing failing repeatedly with nothing saying so.
+      #
+      # The split had a real reason, recorded here so it is not reintroduced:
+      # the log CANNOT ride in `_site`, because the old deploy wrote into
+      # `destination_dir`, which would put the entry at
+      # `STAGING/<slug>/_render-log/` — inside the very directory a cleanup
+      # removes, the one place a record of the removal must not be.
+      #
+      # Checking the branch out and committing by hand removes that
+      # constraint: the payload goes to `STAGING/<slug>/` and the entry to
+      # `_render-log/` at the root, in one `git add` and one commit. The
+      # cleanup job below already does exactly this — "The record rides in the
+      # SAME commit as the removal" — so this is the proven pattern in this
+      # file rather than a new one.
+      #
+      # It also removes the reason the third attempt was bought. The note that
+      # bought it counted the render log adding a SECOND push per run, "a ~38%
+      # rise in write volume, after which attempt 2 started losing the race".
+      # Halving this workflow's writes attacks that cause rather than
+      # absorbing it. The three-attempt rebase loop is kept regardless: the
+      # contention BETWEEN sessions is untouched, and is `6pfo`'s ground.
+      - name: Check out the publish branch
+        uses: actions/checkout@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          destination_dir: STAGING/${{ steps.slug.outputs.slug }}
-          publish_branch: gh-pages
-          keep_files: true
-          commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }}'
+          ref: gh-pages
+          path: pages
+          persist-credentials: true
 
-      - name: Retry deploy (another workflow pushed to gh-pages first)
-        if: steps.deploy.outcome == 'failure'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          destination_dir: STAGING/${{ steps.slug.outputs.slug }}
-          publish_branch: gh-pages
-          keep_files: true
-          commit_message: 'staging(${{ steps.slug.outputs.slug }}): from ${{ github.sha }} (retry)'
+      - name: Deploy the preview and log the render, in one commit
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          # THE SLUG, RE-CHECKED BY VALUE. It was validated in the `slug` step,
+          # but it has crossed a job boundary as an output since — and this
+          # file's own rule is "checked by VALUE, never trusted because of
+          # where it came from" (bean `fuzm`). The next line deletes a
+          # directory; an empty slug would make it `pages/STAGING/`, which is
+          # EVERY open PR's preview. That is `plj1` exactly, and it is worth
+          # four lines to make it unreachable rather than merely unlikely.
+          case "$STAGING_SLUG" in
+            ""|.|..|*/*)
+              echo "::error::staging slug '$STAGING_SLUG' is not one safe path segment. Refusing to deploy."
+              exit 1
+              ;;
+          esac
+
+          # REPLACE this slug's preview rather than overlaying it — bean `85im`.
+          #
+          # The copy below adds and overwrites and never deletes, which is what
+          # `keep_files: true` did before this job took over the push. That
+          # protected every OTHER branch's preview (the `plj1` protection, and
+          # it still holds — nothing here touches a sibling slug) but it also
+          # preserved THIS slug's files that the build no longer produces.
+          #
+          # Measured 2026-09-19: main relocated four proposals out of the
+          # rendered site to `fsh-guts/`, the main-site deploy honoured it, and
+          # the staging preview served five `proposals/*.html` pages the build
+          # had stopped producing. Provably stale rather than rebuilt — the
+          # deploy was gh-pages c190bc19c (13:18:11) while the last commit
+          # touching those files was aca09df0e (12:34:09), the PREVIOUS deploy.
+          #
+          # Why that matters more than a stale page: a preview is what a
+          # reviewer opens to answer "did my change take effect?", and an
+          # overlay can only ever answer that for ADDITIONS. A reviewer
+          # checking whether a removal worked got a false negative from the one
+          # artefact built to tell them — the `xom7` shape, landing on the
+          # review surface instead of in CI. The deploy is green, the comment
+          # is posted, the URL resolves, and the content is wrong.
+          #
+          # Path-scoped BY CONSTRUCTION rather than by a flag: this names one
+          # directory. `keep_files`/`force_orphan`/`exclude_assets` offer
+          # nothing path-scoped, which is what `docs-site.yml`'s comment says
+          # from the other end of the same tradeoff.
+          # THE BUILD, CHECKED BEFORE ANYTHING IS DELETED — bean `oisv`.
+          #
+          # `85im` traded a preview that OVER-reports (stale files linger) for
+          # one that MIRRORS the build, and that is the right trade because a
+          # reviewer can act on a mirror. The same property is what makes this
+          # check necessary: once the deploy deletes first, a build that failed
+          # WHILE STILL EXITING 0 — a generator that wrote nothing, a step
+          # whose `|| true` swallowed a failure, a path that moved — replaces a
+          # working preview with an empty one, and an empty preview 404s
+          # exactly like a page the author meant to delete. The reviewer then
+          # concludes their change took effect.
+          #
+          # That is *"could not determine"* wearing the costume of a determined
+          # answer, which this repository refuses everywhere else.
+          #
+          # ORDER IS THE WHOLE SAFETY ARGUMENT. This runs BEFORE the `rm`, so a
+          # refusal leaves the previous preview standing and a reviewer keeps
+          # the last thing that was known to build. A check after the delete
+          # protects nothing — it only reports the damage.
+          #
+          # Non-empty is a FLOOR, not a correctness check. A threshold ("at
+          # least N pages") would need calibration this has no basis for, which
+          # is the same argument that stopped `6xaz` from inventing one.
+          if [ -z "$(ls -A _site 2>/dev/null || true)" ]; then
+            echo "::error::the build produced an empty ./_site — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
+            exit 1
+          fi
+          rm -rf "pages/STAGING/$STAGING_SLUG"
+          mkdir -p "pages/STAGING/$STAGING_SLUG"
+          cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
+          # Writes into the directory and never pushes: this step already
+          # holds the checkout and the retry loop, and a second pusher racing
+          # those is a new way to lose a deploy.
+          # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+          # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+          # safe, because shell parameter expansion inside double quotes does
+          # not re-tokenize. The reason is the Tool contract — prose may not be
+          # an argv word — and `jq --arg` builds the JSON without concatenation.
+          #
+          # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+          # a gate from a line starting with `bun`, so piping `jq | bun run`
+          # would hide this step from the gate set and orphan its exemption.
+          PROSE=$(jq -n --arg s 'staging preview published' '{summary:$s}')
+          bun run cat-harness/scripts/render-log.ts --dir pages \
+            --event rendered --kind staging-preview \
+            --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
+            --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
+          git -C pages config user.name 'github-actions[bot]'
+          git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C pages add -A "STAGING/$STAGING_SLUG" _render-log
+          git -C pages commit \
+            -m "staging($STAGING_SLUG): from $GITHUB_SHA" \
+            -m "render-log: rendered STAGING/$STAGING_SLUG" \
+            -m "$RUN_URL" || exit 0
+          # THE LOG IS NOW ATOMIC WITH THE DEPLOY, and that is a deliberate
+          # change of failure mode. The old log step was `continue-on-error`
+          # on the argument that a gap in the record is not a failed deploy.
+          # One commit cannot offer that: there is no deploy to succeed
+          # without it. The stronger property is worth more — a preview can no
+          # longer exist with no entry saying where it came from, which is the
+          # question the log was added (`5mg5`) to answer at all.
+          #
+          # Three attempts, rebasing between: `gh-pages` is the most contended
+          # ref here and a queue does not help, because a PENDING job is
+          # cancelled by the next arrival rather than waiting. A rebase picks
+          # up whoever won and lands this branch's directory beside it.
+          for attempt in 1 2 3; do
+            if git -C pages push origin gh-pages; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::could not deploy the staging preview after 3 attempts"
+              exit 1
+            fi
+            echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            git -C pages pull --rebase origin gh-pages
+            # Doubling with jitter, via the ONE implementation the repo has
+            # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
+            # `sleep $((attempt * 5))` in all FOUR loops here — linear and
+            # unjittered, which is the thundering herd `retry-backoff.md`
+            # names, on the ref it cites as contended, written by the very
+            # sessions it says contend on it.
+            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+          done
 
       - name: Comment staging URL on PR
         if: github.event_name == 'pull_request'
@@ -562,8 +794,25 @@ jobs:
             }
 
   # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
-  # REQUIRES explicit user confirmation via the 'staging:cleanup' label.
-  # Without that label, staging persists so reviewers can still compare.
+  # MERGED closes the question; CLOSED-UNMERGED does not.
+  #
+  # Owner, 2026-09-20: "change policy, if merged to main, then staging goes
+  # away". The distinction is the whole rule, and it is about where the
+  # content lives rather than about how sure anyone is:
+  #
+  #   merged            the diff is on `main`, so the preview shows what the
+  #                     MAIN SITE now shows. It is redundant the moment the
+  #                     merge lands, and keeping it costs ~40 MB of a Pages
+  #                     site that shares a 1 GB budget with the real one.
+  #   closed, unmerged  the preview is the ONLY rendering of that work. It is
+  #                     not redundant, it is the last copy — so the
+  #                     'staging:cleanup' label is still required.
+  #
+  # This is NOT a relaxation of `deletion-requires-confirmation`. The merge is
+  # the confirmation: a person decided this content belongs on `main`, which
+  # is a stronger statement about the preview than a label would be. What the
+  # label still guards is the case where nobody decided anything — a PR closed
+  # without merging.
   cleanup:
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
@@ -572,9 +821,29 @@ jobs:
     # works — a three-attempt rebase-and-push loop below — and a cleanup that
     # removes one directory loses nothing by rebasing onto whatever landed.
     steps:
-      - uses: actions/checkout@v4
+      # TWO checkouts, like `cleanup-dispatch` below and for the same reason:
+      # the publish branch is what changes, and the platform is what knows how
+      # to write the render log. `actions/checkout` on `pull_request_target`
+      # defaults to the BASE branch — never the fork's head — which is the
+      # whole reason that default matters in this job.
+      - name: Check out the platform, to write the render log
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install deps
+        working-directory: source
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Check out the publish branch
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
+          path: pages
 
       - name: Determine staging slug
         id: slug
@@ -587,21 +856,40 @@ jobs:
         run: |
           BRANCH="$HEAD_REF"
           SLUG=$(echo "$BRANCH" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          # Same guard as `stage`, and this is the job that runs `rm -rf` and
+          # `git add -A` on the result. See the comment there for the two
+          # measured invariants and the one they do not cover.
+          case "$SLUG" in
+            ""|.|..)
+              echo "::error::staging slug resolved to '$SLUG', which names no preview. Refusing."
+              exit 1
+              ;;
+          esac
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
 
       - name: Check for cleanup confirmation
         id: check
         env:
           LABELS_JSON: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          MERGED: ${{ github.event.pull_request.merged }}
         run: |
-          # Only remove staging if the PR has the 'staging:cleanup' label.
-          # Via env: a label containing a single quote would otherwise close the
-          # quoting and run as a command.
+          # MERGED removes without a label — the merge IS the confirmation.
+          # Closed-unmerged still requires 'staging:cleanup', because there the
+          # preview is the only rendering of the work that exists.
+          #
+          # Both via env: `merged` is a boolean from the event payload, and a
+          # label containing a single quote would otherwise close the quoting
+          # and run as a command.
           LABELS="$LABELS_JSON"
-          if echo "$LABELS" | grep -q 'staging:cleanup'; then
+          if [ "$MERGED" = "true" ]; then
             echo "confirmed=true" >> "$GITHUB_OUTPUT"
+            echo "reason=merged" >> "$GITHUB_OUTPUT"
+          elif echo "$LABELS" | grep -q 'staging:cleanup'; then
+            echo "confirmed=true" >> "$GITHUB_OUTPUT"
+            echo "reason=labelled" >> "$GITHUB_OUTPUT"
           else
             echo "confirmed=false" >> "$GITHUB_OUTPUT"
+            echo "reason=closed-unmerged-and-unlabelled" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Remove staging directory (confirmed)
@@ -612,21 +900,55 @@ jobs:
         # shape in this workflow that a reader should be able to copy.
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          CLEANUP_REASON: ${{ steps.check.outputs.reason }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           SLUG="$STAGING_SLUG"
-          if [ -d "STAGING/$SLUG" ]; then
-            rm -rf "STAGING/$SLUG"
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add -A "STAGING/$SLUG"
-            git commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
+          if [ -d "pages/STAGING/$SLUG" ]; then
+            rm -rf "pages/STAGING/$SLUG"
+            # ONE COMMIT for the removal and its record, deliberately. A
+            # separate log push can fail on its own and leave a preview that
+            # vanished with nothing saying why — which is the exact state bean
+            # `plj1` left the branch in. Here the removal cannot land without
+            # its entry, because they are the same commit.
+            #
+            # `reason` is not optional: `render-log.ts` refuses a `removed`
+            # entry without one, so this step fails loudly rather than writing
+            # a record that says an artefact went and not why. It is a FIELD of
+            # the stdin object now, not a flag — bean `ru6i`.
+            #
+            # The reason is the GATE'S OWN — `merged` | `labelled` — never a
+            # restatement of one branch of it. Bean `1feu` gave the merge the
+            # standing a label used to have, so a record hardcoding "carried
+            # the staging:cleanup label" would name the wrong rule on every
+            # merged PR, which is worse than no reason: it reads as evidence.
+            # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+            # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+            # safe, because shell parameter expansion inside double quotes does
+            # not re-tokenize. The reason is the Tool contract — prose may not be
+            # an argv word — and `jq --arg` builds the JSON without concatenation.
+            #
+            # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+            # a gate from a line starting with `bun`, so piping `jq | bun run`
+            # would hide this step from the gate set and orphan its exemption.
+            PROSE=$(jq -n --arg s 'staging preview removed on PR close' \
+                        --arg r "PR #${{ github.event.pull_request.number }} closed; removal confirmed by: $CLEANUP_REASON" \
+                        '{summary:$s, reason:$r}')
+            bun run source/cat-harness/scripts/render-log.ts --dir pages \
+              --event removed --kind staging-preview \
+              --path "STAGING/$SLUG" --slug "$SLUG" \
+              --run "$RUN_URL" <<<"$PROSE"
+            git -C pages config user.name 'github-actions[bot]'
+            git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git -C pages add -A "STAGING/$SLUG" _render-log
+            git -C pages commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
             # Same race as the deploy above, and the same reason a queue is not
             # enough: five other workflows push to `gh-pages` without joining
             # it. Rebase and retry rather than losing the cleanup — our commit
             # only removes one STAGING/ directory, so it rebases onto whatever
             # landed first without touching it.
             for attempt in 1 2 3; do
-              if git push origin gh-pages; then
+              if git -C pages push origin gh-pages; then
                 echo "pushed on attempt $attempt"
                 break
               fi
@@ -635,13 +957,80 @@ jobs:
                 exit 1
               fi
               echo "push rejected; rebasing onto origin/gh-pages and retrying"
-              git pull --rebase origin gh-pages
-              sleep $((attempt * 5))
+              git -C pages pull --rebase origin gh-pages
+              # Doubling with jitter, via the ONE implementation the repo has
+              # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
+              # `sleep $((attempt * 5))` in all FOUR loops here — linear and
+              # unjittered, which is the thundering herd `retry-backoff.md`
+              # names, on the ref it cites as contended, written by the very
+              # sessions it says contend on it.
+              bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
             done
             echo "Cleaned up STAGING/$SLUG"
           else
             echo "No staging directory found for $SLUG (already cleaned up)"
           fi
+
+      # `retained` is the event that makes the log worth reading. A removal was
+      # CONSIDERED and refused, and without an entry that leaves no trace at
+      # all — so the next person asking *"why is this preview still up"* has
+      # only the PR comment below, which is on the pull request rather than on
+      # the branch the preview lives on. Bean `w2g5` is how that gap looks from
+      # the far side: a branch reused across five successive pull requests,
+      # with nothing on `gh-pages` saying why its preview kept surviving.
+      - name: Log the retention
+        if: steps.check.outputs.confirmed == 'false'
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          CLEANUP_REASON: ${{ steps.check.outputs.reason }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          SLUG="$STAGING_SLUG"
+          if [ ! -d "pages/STAGING/$SLUG" ]; then
+            echo "No STAGING/$SLUG on gh-pages — nothing was retained, so there is nothing to record."
+            exit 0
+          fi
+          # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+          # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+          # safe, because shell parameter expansion inside double quotes does
+          # not re-tokenize. The reason is the Tool contract — prose may not be
+          # an argv word — and `jq --arg` builds the JSON without concatenation.
+          #
+          # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+          # a gate from a line starting with `bun`, so piping `jq | bun run`
+          # would hide this step from the gate set and orphan its exemption.
+          PROSE=$(jq -n --arg s 'staging preview retained after PR close' \
+                      --arg r "PR #${{ github.event.pull_request.number }} closed; removal refused because: $CLEANUP_REASON" \
+                      '{summary:$s, reason:$r}')
+          bun run source/cat-harness/scripts/render-log.ts --dir pages \
+            --event retained --kind staging-preview \
+            --path "STAGING/$SLUG" --slug "$SLUG" \
+            --run "$RUN_URL" <<<"$PROSE"
+          git -C pages config user.name 'github-actions[bot]'
+          git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C pages add -A _render-log
+          git -C pages commit -m "render-log: retained STAGING/$SLUG" || exit 0
+          for attempt in 1 2 3; do
+            if git -C pages push origin gh-pages; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::could not append the render log after 3 attempts"
+              exit 1
+            fi
+            echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            git -C pages pull --rebase origin gh-pages
+            # Doubling with jitter, via the ONE implementation the repo has
+            # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
+            # `sleep $((attempt * 5))` in all FOUR loops here — linear and
+            # unjittered, which is the thundering herd `retry-backoff.md`
+            # names, on the ref it cites as contended, written by the very
+            # sessions it says contend on it.
+            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+          done
 
       - name: Post retention notice (not confirmed)
         if: steps.check.outputs.confirmed == 'false'
@@ -796,9 +1185,31 @@ jobs:
           du -sh "STAGING/$CLEANUP_SLUG" || true
           find "STAGING/$CLEANUP_SLUG" -type f | wc -l
           rm -rf -- "STAGING/$CLEANUP_SLUG"
+          # The record rides in the SAME commit as the removal, so a preview
+          # cannot vanish without an entry saying who dispatched it and why.
+          # `--path` is re-checked by VALUE inside the tool rather than trusted
+          # because the guard above passed: bean `fuzm` — the slug here is a
+          # DISPATCH INPUT, not a git ref, so the invariant that makes `..`
+          # impossible for a branch-derived slug does not hold for this one.
+          # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
+          # `ru6i`. NOT a bug fix: the old `--reason "...$CLEANUP_REASON"` was
+          # safe, because shell parameter expansion inside double quotes does
+          # not re-tokenize. The reason is the Tool contract — prose may not be
+          # an argv word — and `jq --arg` builds the JSON without concatenation.
+          #
+          # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
+          # a gate from a line starting with `bun`, so piping `jq | bun run`
+          # would hide this step from the gate set and orphan its exemption.
+          PROSE=$(jq -n --arg s 'staging preview removed by dispatch' \
+                      --arg r "dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals" \
+                      '{summary:$s, reason:$r}')
+          bun run ../source/cat-harness/scripts/render-log.ts --dir . \
+            --event removed --kind staging-preview \
+            --path "STAGING/$CLEANUP_SLUG" --slug "$CLEANUP_SLUG" \
+            --run "$RUN_URL" <<<"$PROSE"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A "STAGING/$CLEANUP_SLUG"
+          git add -A "STAGING/$CLEANUP_SLUG" _render-log
           git commit \
             -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
             -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness/scripts/staging-cleanup-preflight.ts." \
@@ -818,6 +1229,12 @@ jobs:
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
             git pull --rebase origin gh-pages
-            sleep $((attempt * 5))
+            # Doubling with jitter, via the ONE implementation the repo has
+            # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
+            # `sleep $((attempt * 5))` in all FOUR loops here — linear and
+            # unjittered, which is the thundering herd `retry-backoff.md`
+            # names, on the ref it cites as contended, written by the very
+            # sessions it says contend on it.
+            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
           done
           echo "Removed STAGING/$CLEANUP_SLUG"

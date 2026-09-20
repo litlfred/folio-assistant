@@ -24,6 +24,7 @@
  * @module content/pipeline/lean-compile-audit
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from "fs";
 import { resolve, dirname, join, relative, extname, sep } from "path";
 import { fileURLToPath } from "url";
@@ -236,7 +237,7 @@ if (args[0] === "--ingest" && args[1]) {
 } else if (args[0] === "--stale") {
   reportStale();
 } else if (args[0] === "--list") {
-  const contentRoot = args[1] || join(REPO_ROOT, "content");
+  const contentRoot = args[1] || folioDir(REPO_ROOT);
   const files = findLeanFilesWithSiblingTs(contentRoot);
   for (const f of files) console.log(f);
   console.log(`\n${files.length} .lean files with .ts siblings`);

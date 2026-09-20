@@ -1,6 +1,5 @@
 ---
 name: bean-coordination
-roles: [reader, collaborator, owner]
 description: >
   Pointer to the bean-based session work-plan system (the `beans` CLI
   flat-file issue tracker, data under `beans/`). Operational usage lives in
@@ -31,9 +30,19 @@ unable to tell abandonment from accident.
 
 **Claiming and closing are separately scoped.** Claim before you work, so two
 sessions do not pick the same item — with the limit in the next section, because
-a claim is not a lock. Never *resolve* a bean another session or a human owns —
-closing someone else's is how one of them loses work it had not finished
-reporting.
+a claim is not a lock.
+
+**Closing is governed by evidence, not by authorship**, and this paragraph used
+to say the opposite. It read *"Never resolve a bean another session or a human
+owns"*, full stop, which contradicted §"Closing a bean whose work has already
+landed" three screens down and produced the failure that section measures: six
+beans verified done on `main` and left `in-progress` because the rule named who
+may **not** close one and never named who **may**. Read that section before you
+close anything — it carries the three obligations, and the `ready-to-close` tag
+for the case where you cannot re-derive the measurement yourself. What stays
+off limits is a bean a sibling is **mid-flight** on: a claim naming a branch, a
+recent note, an open PR. Closing that is how a session loses work it had not
+finished reporting.
 
 Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
 
@@ -48,7 +57,7 @@ Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-ass
   working on?" display.
 - [`idle-backlog.md`](idle-backlog.md) — pull right-scoped beans while idle.
 
-**Install the CLI:** [`scripts/install-beans.sh`](../../../scripts/install-beans.sh)
+**Install the CLI:** [`scripts/install-beans.sh`](../../scripts/install-beans.sh)
 (idempotent; `go install github.com/hmans/beans@latest`).
 
 > **Ownership note.** The *generic* coordinator/orchestrator bean-coordination
@@ -180,12 +189,261 @@ what makes them the shared substrate.
    started.
 
 An **unclaimed** bean is fair game for any session; a claimed one is not.
-Respect sibling claims. Agents create and set `in-progress`; they do not resolve
-another session's items.
+Respect sibling claims. Agents create and set `in-progress`; they do not take
+over the work another session is mid-flight on.
+
+## Closing a bean whose work has already landed (STRICT)
+
+The sentence above used to end *"they do not resolve another session's
+items"*, full stop, and it produced the opposite of the care it intended.
+
+**Measured 2026-09-20, bean `0pes`.** Six beans carried the same sentence,
+verbatim in shape:
+
+> *"Verified resolved, `<date>` on main at `<sha>`. … This bean's defect is
+> closed. **NOT closing it — not my bean to resolve.**"*
+
+`1dfh`, `ckpe`, `dzl3`, `g4dv`, `lx2s`, `xd1s`. Every one `in-progress`. And
+the number that made it a defect rather than a habit: **zero** beans carrying
+that phrase had ever reached `completed`. The rule named who may **not** close
+a bean and never named who **may**, so nothing ever discharged it. It also
+contradicted §"A claim is branch-local" one screen up, which says an unclaimed
+bean is fair game — none of the six carried a claim.
+
+The cost is the failure this section already warns about, reached from the
+other side. *"A bean abandoned silently is indistinguishable from one nobody
+started"* — and so is a bean **verified done** and left open. Worse, in fact:
+an agent that picks one up re-derives work already on `main`. Paid twice in one
+session, on `r1lz` and again while sweeping for others.
+
+**So: a bean closes on EVIDENCE, not on authorship.**
+
+> **You may close any bean — whoever opened it — when you have re-run the
+> measurement yourself and it passes.** You may not close one because a note in
+> it says somebody else measured it.
+
+Three obligations come with that, and they are what stop it becoming a licence:
+
+1. **Re-derive, never quote.** The note claiming resolution is the thing under
+   suspicion; reading it is not verification. Run the check, then record the
+   command and its result in the bean. Where a note gives a line number, verify
+   the *fact* — line numbers rot. `xd1s`'s note said "seven workflows" and named
+   six; four files actually carry the group, and the invariant holds by
+   *group **or** retry*, which is what its gate asserts. Discharged on the gate,
+   not on the count.
+2. **A Done-when only a person can satisfy is not yours to discharge.**
+   `lx2s`'s is *"Issue #215 can be closed by its author"*, and an agent never
+   closes an issue on its own say-so. It stayed open, and its own note had
+   already walked its resolution back. **Two of seven candidates in that sweep
+   failed re-verification**, which is the whole reason the obligation is
+   re-measurement rather than trust.
+3. **Mid-flight is still off limits.** This governs work that has *landed*. A
+   bean a sibling is actively working — a claim naming a branch, a recent note,
+   an open PR — is theirs, finished or not.
+
+**Verified-done and still not closable? Say why, with an expiry.** Same shape
+[`bean-blocking.md`](bean-blocking.md) requires of a block, and for the same
+reason: an exception that carries no way to re-derive it is indistinguishable
+from an oversight, which is precisely how six of these accumulated.
 
 Stopping because you are *blocked* is a different state with its own
 requirements — what it waits on, since when, an expiry and a handoff:
 [`bean-blocking.md`](bean-blocking.md).
+
+### When you cannot re-derive it yourself — `ready-to-close`
+
+Obligation 1 is the expensive one, and it is where the rule above stalls.
+
+**Measured 2026-09-20, bean `bbbl`.** Four beans read as finished in their own
+bodies and sat `in-progress`: `7uff` (*"Everything on this bean is now done …
+Ready to resolve once the owner confirms; not resolving unilaterally"*, 0 of 7
+boxes ticked), `t0i3` (its one open box done in the body at commit `8d1c8f27`),
+`y8as` (both halves merged, the platform copy sha256-verified and deleted),
+`d1r6` (a full `## Implemented` section, 0 of 5 ticked). Every session that met
+one discharged it the same way — by leaving it open — so the cost is a session
+of confusion per bean, paid again on every sweep.
+
+Re-derivation is not always available. The measurement may need a running
+deployment, a branch this container does not have, or a judgement the owner
+reserved. The rule as written then has **no exit**, and *leave it open* is what
+an agent picks, every time.
+
+> **The third state: tag the bean `ready-to-close`, quote under a `## Evidence`
+> heading what you DID verify, and say in one line what you could not re-derive
+> and why. The owner confirms the batch.**
+
+It is a **tag, not a status**, and the reason is mechanical rather than
+stylistic. The status vocabulary belongs to the third-party CLI:
+
+```
+$ beans update <id> --status ready-to-close
+Error: invalid status: ready-to-close (must be in-progress, todo, draft, completed, scrapped)
+$ beans update <id> --tag ready-to-close
+Updated <id>
+```
+
+and `BeanStatusSchema` in `schemas/tool-types.ts` is defined as *"exactly what
+`beans update --status` accepts"*. A sixth status here would desync the schema
+from the tool it documents on the next `beans` release.
+
+`bun run check:ready-to-close` lists every tagged bean with its evidence, so the
+confirmation is one read rather than four. **It reports and never acts** —
+[`deletion-requires-confirmation.md`](deletion-requires-confirmation.md) — unless
+the owner has waived the `bean-close` gate for this session or process run, in
+which case the batch closes under that waiver and the turn report names it:
+[`confirmation-waiver.md`](confirmation-waiver.md).
+
+**It is not a parking space.** `ready-to-close` says *re-derivation is beyond
+this session*; it never says *I would rather not*. Where you can run the check,
+run it and close the bean — that is still the rule this subsection sits under.
+
+## Where a sibling session is visible from (STRICT)
+
+**Measured 2026-09-20, bean `ab3n`.** Eight sibling sessions committed to this
+repository in one four-hour window. The session API returned **not found** for
+all eight lookups by id, and its listing showed only the asking session. So
+both of this skill's central instructions — claim before you work, and watch
+the open PRs — assume a visibility that did not exist, and nothing said so.
+
+> **A session is an ephemeral container, and nothing about it survives the
+> container except what it committed. The `Claude-Session:` trailer on a commit
+> is therefore the ONLY durable session identity this repository has, and a
+> branch tip is the only durable statement of where a session got to.**
+
+### A sibling's state is INFERRED, and the inference has a boundary
+
+| what the trailer and the branches DO tell you | what they do NOT |
+|---|---|
+| which commits a session authored | whether it is running now |
+| when it started and stopped committing | whether it is blocked, thinking, or gone |
+| which branches carry its work, and its latest subject | what it intends to do next |
+
+**"Stopped committing" is not "finished", and it is not "abandoned".** Those
+are three states and a checkout can distinguish only the first from the pair.
+Treat a recent tip as a live claim, treat silence as a question, and ask —
+never as licence.
+
+### One command, not a procedure
+
+```sh
+bun run sessions --since 4h
+```
+
+`sibling-sessions` is a **Tool node** (`tools/sessions.ts`), which is what
+`ab3n` asked for and for a reason: prose describing how to grep a trailer is a
+procedure every session re-derives slightly differently, the counts then
+disagree, and nobody can tell which sweep was wrong. It reads **all** branches,
+because a sibling's work is on ITS branch — precisely where the asking session
+cannot see it by looking at its own history. A window with no commits **exits
+non-zero** rather than reporting "no siblings": a sweep over nothing has not
+found anything.
+
+### Worked example — the session that built this tool, tripping over it
+
+**2026-09-20, an hour after `ab3n` was written.** This session created three
+`milestone` beans for the owner's three goals, each carrying the `goal-review`
+sweep's **paraphrase**, because the verbatim words were not written down
+anywhere it could see — it searched the issue, its comments, the pull request
+and the whole store.
+
+A sibling session had created the same three milestones **with the owner's
+verbatim words** and merged them to `main` at 18:50, about an hour earlier. All
+three of this session's beans were scrapped as duplicates.
+
+Two things were true at once and both matter:
+
+- **The checkout is a snapshot.** A container fetched `main` when it started,
+  and everything merged since is invisible until it fetches again. An hour is
+  long enough here: 54 proposals merged in one four-hour window that same day.
+- **`beans create` is not idempotent and dedupes on nothing**, so the cost of
+  not looking is paid in duplicates somebody scraps one at a time. The
+  existence check in [`todo-manager`](todo-manager.md) §"Check before you
+  create" reads the LOCAL store, so it cannot catch this case: the duplicate is
+  not there yet.
+
+**So before creating a bean for a decision, or claiming one, do both:**
+
+```sh
+git fetch origin main
+bun run sessions --since 4h
+```
+
+The second is the one that gets skipped, and it is the one that answers *who
+else is on this right now*. It cost nothing and would have saved all three.
+
+## A quiet claim — what `in-progress` does NOT tell you
+
+**Measured 2026-09-20, bean `fgnw`.** 60 beans were `in-progress`; **43 had no
+change in a four-hour window**, and 38 of those were last touched by a single
+bulk move at 09:37. Eight sessions were active in that window. So at most 17 of
+the 60 claims corresponded to a session actually working the item — and the
+`status` field cannot tell a reviewer which 17.
+
+That is the cost of §"A claim is branch-local" landing without its complement.
+`blocked` has an expiry ([`bean-blocking.md`](bean-blocking.md)); `in-progress`
+has nothing, so it carries **no information about activity** and a reader cannot
+tell a stalled agent from a claim nobody has thought about since a bulk edit.
+
+### The signal is liveness, not elapsed time
+
+> **A claim is LIVE when something outside the bean says so: an open PR naming
+> it, an unmerged branch touching it, or a note since. A claim with none of
+> those has announced nothing to anybody — and a claim that announces nothing
+> does not reserve anything.**
+
+That falls straight out of the rule above it. A claim becomes visible to a
+sibling when the PR opens, and this repository opens the PR at the first commit
+([`continual-progress`](continual-progress.md) invariant 1). So "claimed, with
+no PR and no branch" is not a claim a sibling could have seen even in
+principle.
+
+**Elapsed time is the fallback, not the rule**, because it is what a tool can
+compute offline. `bun run health` reports `bean-quiet-claims` at **72 hours**
+since `updated_at`, alongside `bean-claimed` as the denominator — *12 of 60* and
+*12* are different findings. Its count is an **upper bound**: a bean it lists
+may have an open PR the sweep cannot see. Read it as "check these", never as
+"take these".
+
+### Who may act
+
+- **Any session may TAKE a quiet claim** — check for a liveness signal first;
+  if there is none, work it, and say in the bean that you took it and what you
+  found. This is the unclaimed case, reached by a different route.
+- **Nothing re-statuses it automatically.** The check reports; a person or the
+  session taking the work acts. A tool that flipped `in-progress` back to
+  `todo` would be destroying the one record of who was where, which is the same
+  argument that makes a bean `scrapped` rather than deleted.
+- **Quiet is not evidence of completion.** Closing is governed by §"Closing a
+  bean whose work has already landed", and staleness is not evidence. A quiet
+  claim on unfinished work goes back to the pool; it does not get closed.
+
+## The store on `main` is the one every sibling reads (STRICT)
+
+§"A claim is branch-local" states the fact. This says what to do about it.
+
+**Measured 2026-09-20, bean `cvab`.** Branch `claude/sleepy-rubin-mr6kdu`
+(PR #477, 65 commits ahead, 1,937 files) carried the `kupb` epic and **12 of its
+13 children**. None existed on `main`. A review of the store on `main` therefore
+saw **0 %** of the IRIS work plan, and a whole goal's workstream was invisible
+until somebody swept the branch by hand.
+
+The owner chose both remedies, 2026-09-20:
+
+1. **Land beans ahead of code.** A bean-only change — the epic, its children,
+   their Done-whens — opens its own PR and merges **as soon as the plan
+   exists**. The code branch that follows carries only status updates. A
+   bean-only diff has nothing to review but the plan, so it does not wait on
+   the code's review, and the store on `main` is never blind to a goal that has
+   been decided.
+2. **A sweep reads the open branches' stores too.** [`goal-review`](goal-review.md)
+   already does; the todo-manager fallback does not, and the fallback is what a
+   container without the CLI falls back to. Until it does, a sweep run from the
+   fallback is reporting over `main` only, and must say so rather than present
+   its count as the work plan.
+
+The two are not alternatives. (1) prevents the blindness; (2) catches the
+branches that were already open when (1) landed — including #477, whose 12
+beans are still branch-only today.
 
 ## Which copy is canonical — `skills/folio-core/`
 

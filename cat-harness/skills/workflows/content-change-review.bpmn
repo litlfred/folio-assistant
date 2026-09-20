@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:folio="http://folio-assistant.dev/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
@@ -29,6 +29,7 @@
         <bpmn:flowNodeRef>Task_EditContent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_EditLogic</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AssessImpact</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_OptionsAnalysis</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CommitPush</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Iterate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Agent</bpmn:flowNodeRef>
@@ -205,6 +206,15 @@
       <bpmn:outgoing>a6</bpmn:outgoing>
     </bpmn:task>
 
+    <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;how to absorb the impact" calledElement="Process_OptionsAnalysis">
+      <bpmn:documentation>On the edge OUT of `Task_AssessImpact` and before `Task_CommitPush`, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed.
+
+NOT between `Task_AssessImpact` and `Task_ReviewImpact`, although that is the handoff the work-plan named. Those two tasks are in DIFFERENT LANES with no sequence flow between them — the agent's assessment reaches the committee through `Task_CompareBeforeAfter`, not directly — so there was no edge there to interpose on. The conceptual handoff is real; the edge was not.
+
+In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process.
+
+On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since `Task_EditLogic` feeds straight into the assessment.</bpmn:documentation>
+    </bpmn:callActivity>
     <bpmn:task id="Task_CommitPush" name="Commit, push, update PR">
       <bpmn:extensionElements>
         <folio:skill ref="prepare-merge-auto"/>
@@ -460,7 +470,8 @@
     <bpmn:sequenceFlow id="a3" sourceRef="Task_CreateBranch" targetRef="Task_EditContent" />
     <bpmn:sequenceFlow id="a4" sourceRef="Task_EditContent" targetRef="Task_EditLogic" />
     <bpmn:sequenceFlow id="a5" sourceRef="Task_EditLogic" targetRef="Task_AssessImpact" />
-    <bpmn:sequenceFlow id="a6" sourceRef="Task_AssessImpact" targetRef="Task_CommitPush" />
+    <bpmn:sequenceFlow id="a6" sourceRef="Task_AssessImpact" targetRef="Call_OptionsAnalysis" />
+    <bpmn:sequenceFlow id="a6b" sourceRef="Call_OptionsAnalysis" targetRef="Task_CommitPush" />
     <bpmn:sequenceFlow id="a7" sourceRef="Task_CommitPush" targetRef="Start_Pipeline" />
     <bpmn:sequenceFlow id="p1" sourceRef="Start_Pipeline" targetRef="Task_BuildStaging" />
     <bpmn:sequenceFlow id="p2" sourceRef="Task_BuildStaging" targetRef="Task_DeployStaging" />
@@ -565,8 +576,11 @@
       <bpmndi:BPMNShape id="Task_AssessImpact_di" bpmnElement="Task_AssessImpact">
         <dc:Bounds x="1420" y="340" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_CommitPush_di" bpmnElement="Task_CommitPush">
+      <bpmndi:BPMNShape id="Call_OptionsAnalysis_di" bpmnElement="Call_OptionsAnalysis">
         <dc:Bounds x="1620" y="340" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CommitPush_di" bpmnElement="Task_CommitPush">
+        <dc:Bounds x="1820" y="340" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Iterate_di" bpmnElement="Task_Iterate">
         <dc:Bounds x="2830" y="340" width="140" height="80" />

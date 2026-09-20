@@ -8,6 +8,7 @@
  * @module scripts/mcp-server/git
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { REPO_ROOT } from "./paths.js";
 import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync, symlinkSync, readdirSync } from "fs";
 import { join, resolve } from "path";
@@ -223,10 +224,10 @@ export async function gitImportTs(branch: string, relPath: string): Promise<unkn
     // Also need to ensure imported relative deps are on disk.
     // For content .ts files, they import from schema/ which lives on disk
     // and is the same across branches. We symlink content/schema → real schema.
-    const schemaLink = join(branchTmpDir, "content", "schema");
-    const realSchema = resolve(REPO_ROOT, "content", "schema");
+    const schemaLink = join(folioDir(branchTmpDir),  "schema");
+    const realSchema = join(folioDir(REPO_ROOT),  "schema");
     if (!existsSync(schemaLink) && existsSync(realSchema)) {
-      mkdirSync(join(branchTmpDir, "content"), { recursive: true });
+      mkdirSync(folioDir(branchTmpDir), { recursive: true });
       try {
         symlinkSync(realSchema, schemaLink, "dir");
       } catch {}

@@ -14,39 +14,35 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { loadProcessModel, isActivity } from "../../src/workflow/process-model.ts";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
 
 const ROOT = join(import.meta.dir, "../..");
 
+/**
+ * Skill names, from the ONE definition of where a skill lives.
+ *
+ * ## This was the THIRD copy, and it was the stalest
+ *
+ * It listed **five directories by hand**, four of them under `skills/`. That
+ * is the exact defect `known-skills.ts`'s own header records fixing —
+ * *"It was five hardcoded entries … `authoring-math` (3 skills) and
+ * `authoring-who-smart-guidelines` (9) were absent"* — left standing in a copy
+ * the fix did not reach.
+ *
+ * Measured 2026-09-20 against the canonical resolver: the hand-written list
+ * missed **19** real skills, among them `bpmn-authoring` and `l2-dak-authoring`
+ * (named by `<folio:skill ref>` in the diagrams this very test checks),
+ * `bpmn-processes` and `process-state` the moment they moved into
+ * `skills/workflow/`, and both of cat-bootstrap's. A list somebody must remember
+ * to extend is not a single answer; it is a copy that happens to match today,
+ * and this one had stopped matching.
+ *
+ * It is how the defect announces itself: this test failed on a diagram whose
+ * refs `check:workflow-refs` had already resolved. Two checkers, two answers,
+ * and the wrong one gating.
+ */
 function knownSkills(): Set<string> {
-  const names = new Set<string>();
-  for (const dir of [
-    join(ROOT, "skills", "content-lifecycle"),
-    join(ROOT, "skills", "folio-core"),
-    join(ROOT, "skills", "folio-document-adapter"),
-    join(ROOT, "skills", "folio-paper-adapter"),
-    join(ROOT, "src", "skills"),
-  ]) {
-    if (!existsSync(dir)) continue;
-    for (const f of readdirSync(dir)) if (f.endsWith(".md")) names.add(f.slice(0, -3));
-  }
-  const schemaDir = join(ROOT, "schemas", "skills");
-  if (existsSync(schemaDir)) {
-    for (const e of readdirSync(schemaDir, { withFileTypes: true })) {
-      if (e.isDirectory()) names.add(e.name);
-    }
-  }
-  const localRoot = join(repoRootFor(ROOT), ".claude", "skills");
-  if (existsSync(localRoot)) {
-    for (const g of readdirSync(localRoot, { withFileTypes: true })) {
-      if (!g.isDirectory()) continue;
-      for (const f of readdirSync(join(localRoot, g.name))) {
-        if (f.endsWith(".md")) names.add(f.slice(0, -3));
-        else if (f.endsWith(".json")) names.add(f.slice(0, -5));
-      }
-    }
-  }
-  return names;
+  return canonicalKnownSkills(ROOT);
 }
 
 describe("declared diagram paths resolve", () => {

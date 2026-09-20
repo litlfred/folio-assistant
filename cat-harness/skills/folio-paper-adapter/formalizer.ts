@@ -6,9 +6,8 @@ export const formalizer: SkillDefinition = {
   description:
     "Lean proof generation, library synthesis, tactic translation, " +
     "and sorry-removal workflows.",
-  roles: ["collaborator", "owner"],
   requiredCapabilities: [
-    { capabilityId: "lean-toolchain", degradation: "fallback", fallbackCapabilityId: "lean-mcp" },
+    { capabilityId: "lean-toolchain", degradation: "fallback" },
     { capabilityId: "lean-mcp", degradation: "warn" },
   ],
   dependsOn: [
@@ -20,9 +19,6 @@ export const formalizer: SkillDefinition = {
     "prove",
     "remove\\s+sorry",
     "formalize",
-  ],
-  schemas: [
-    { module: "schemas/types", types: ["Block", "LeanRef", "FormalizationStatus", "DefinitionBlock"], access: "read-write" },
   ],
   tags: ["lean", "formalization", "proof"],
 };

@@ -1,6 +1,5 @@
 ---
 name: todo-review
-roles: [reader, collaborator, owner]
 description: >
   Monitor and triage open feedback across all content blocks.
   At session start, ask the author if they'd like to work on feedback.
@@ -178,7 +177,7 @@ badge on any feedback item).
 ## Seeding Feedback
 
 When `feedback/` is empty or doesn't exist for a paper, the skill can
-bootstrap an initial set by scanning for issues:
+cat-bootstrap an initial set by scanning for issues:
 
 | Source | How to scan | Priority |
 |--------|-------------|----------|

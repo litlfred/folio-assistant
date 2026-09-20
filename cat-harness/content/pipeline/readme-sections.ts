@@ -39,6 +39,7 @@
  * @module content/pipeline/readme-sections
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { basename, join, resolve } from "path";
 
@@ -53,7 +54,7 @@ import {
   type ReadmeTocConfig,
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 import { INSTANCE_README_ROLE, declaredAssetPath } from "../../schemas/cat-harness";
 
 // ── Section contract ────────────────────────────────────────────────────────
@@ -92,7 +93,7 @@ export interface SectionContext {
  */
 export type LeanCoverageStats = (
   paperDir: string,
-  contentRoot: string,
+  folioRoot: string,
 ) => {
   provable: { total: number; with_lean_file: number; sorry_free: number; percent_sorry_free: number };
   conjectures: { total: number; with_lean_file: number; class_axiomatized: number; percent_class_axiomatized: number };
@@ -159,8 +160,8 @@ function undetermined(why: string): SectionOutput {
  */
 export function leanLibName(root: string, paper: string): string | undefined {
   for (const candidate of [
-    join(root, "content", paper, "lean", "lakefile.toml"),
-    join(root, "content", paper, "lakefile.toml"),
+    join(folioDir(root),  paper, "lean", "lakefile.toml"),
+    join(folioDir(root),  paper, "lakefile.toml"),
   ]) {
     if (!existsSync(candidate)) continue;
     const src = readFileSync(candidate, "utf-8");
@@ -172,7 +173,7 @@ export function leanLibName(root: string, paper: string): string | undefined {
 
 /** The directory holding a paper's Lean sources, if it has one. */
 function leanDir(root: string, paper: string): string | undefined {
-  const dir = join(root, "content", paper, "lean");
+  const dir = join(folioDir(root),  paper, "lean");
   return existsSync(dir) ? dir : undefined;
 }
 
@@ -219,13 +220,13 @@ const leanCoverageSection: ReadmeSection = {
     const papers = papersWithLean(root);
     if (papers.length === 0) return empty("papers with Lean sources");
 
-    const contentRoot = join(root, "content");
+    const folioRoot = folioDir(root);
     const rows: string[] = [];
     const notes: string[] = [];
     for (const paper of papers) {
       let stats;
       try {
-        stats = leanCoverage(paper.dir, contentRoot);
+        stats = leanCoverage(paper.dir, folioRoot);
       } catch (e) {
         // A paper whose stats will not compute is named, not skipped: a table
         // silently missing a row reads as a paper with no Lean at all.
@@ -308,8 +309,9 @@ const simulatorsSection: ReadmeSection = {
     // default naming the platform is how they came to live in the platform in
     // the first place.
     let dir = "simulators";
-    const configPath = resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG);
-    if (existsSync(configPath)) {
+    const configPath = expectedInstanceConfigPath(root);
+    // `undefined` = nothing declares an instance here; nothing to read.
+    if (configPath !== undefined && existsSync(configPath)) {
       try {
         const parsed = JSON.parse(readFileSync(configPath, "utf-8")) as {
           simulators?: { dir?: string };
@@ -327,7 +329,8 @@ const simulatorsSection: ReadmeSection = {
       // partial checkout, or a folio that has not declared its directory.
       return undetermined(
         `simulators directory '${dir}' is not present in this checkout ` +
-          `(is it declared in ${HARNESS_CONFIG}, and is the checkout complete?)`,
+          `(is it declared in ${configPath === undefined ? "this instance's config" : basename(configPath)}, ` +
+          "and is the checkout complete?)",
       );
     }
     const files = readdirSync(abs)

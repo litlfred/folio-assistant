@@ -1,6 +1,5 @@
 ---
 name: exposition-swarm-drain
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   Drain the paper's narrative blocks through an exposition-quality
@@ -66,7 +65,7 @@ autonomously, without hand-editing block by block.
 
 Score each block on the eight Milnor hallmarks, 0–2 each
 (authoritative: `expo-milnor-clarity` spec,
-[`docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md` §5A](../../../docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md);
+`docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md` §5A (no longer in this repository);
 author-facing: `milnor-exposition-standard.md`):
 
 | | Hallmark |

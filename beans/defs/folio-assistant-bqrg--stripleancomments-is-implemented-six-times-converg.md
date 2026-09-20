@@ -75,3 +75,146 @@ the last of the core→sci edges in the repository-partition work. Extracting th
 lexer to `content/pipeline/lean-lexer.ts` (classified core, by the same test as
 `schemas/lean-packages.ts`) drained that edge and gave the five copies one home
 to converge on.
+
+## DONE 2026-09-20 — all five converged, with the corpus evidence this bean demanded
+
+The bean warned that converging blind is how a cleanup becomes a silent
+re-scoring, and named a third state — **no corpus to compare against** — that
+must not be collapsed. There IS a corpus: qou's **3,954** `.lean` files, read
+as test data.
+
+### The comparison that mattered, and the one that did not
+
+Raw output was the wrong axis: canonical BLANKS comments to preserve byte
+offsets while every copy DELETED them, so raw output differed on 3,947 of
+3,954 files — a design difference, not a behavioural one. Comparing the
+**identifier set** each produced is what a downstream checker actually sees:
+
+    impl        same token set   differs   verdict
+    extended         3954           0      equivalent — depth counter
+    coverage         3954           0      equivalent — depth counter
+    vacuity          3950           4      NOT equivalent
+    banner           3950           4      NOT equivalent
+    qusage           3950           4      NOT equivalent
+
+So this was never "five copies of one function". Two were faithful
+reimplementations; **three were broken**.
+
+### The defect in the three
+
+All three used `/\/-[\s\S]*?-\//g`, which is non-greedy and matches to the
+FIRST `-/`. Lean nests block comments, so an outer comment ends early and its
+tail reaches the checker as code. Measured on
+`confined-particle.lean` (nesting depth 2): **113 prose tokens** leaked —
+`def`, `Prop`, `fun`, `True`, and English words including "docstring" and
+"about" — into text three QA checkers scan for declarations. That is exactly
+what `lean-lexer`'s own header warns of: *"how a scanner invents edges out of
+documentation."*
+
+### Before/after, REPORTED not asserted
+
+Four files in the corpus strip differently now:
+
+     113 tokens   knots-particles-confinement/confined-particle.lean
+     117 tokens   lean/QOU/Interactions/AlgebraicPrimality.lean
+      60 tokens   lean/QOU/HeckeAlgebra/JonesMarkovWenzl.lean
+     328 tokens   scripts/lean/probes/prop-field-carrier-vacuity.lean
+
+In every case the change REMOVES prose that was being read as code. Whether
+any verdict flips is qou's to observe — this repository carries no folio, and
+asserting "verdicts unchanged" from here is the thing the bean forbids. The
+four files and the token counts are the handover.
+
+### What landed
+
+Five definitions deleted; all five sites import `lean-lexer`'s. One
+implementation remains repo-wide. `check:partition` passes — `lean-lexer` is
+core and `scripts/lean-coverage.ts` may import it.
+
+7 tests, ratchet falsified (reintroducing a copy fails 1), plus the three
+invariants a reimplementation kept losing: byte offsets preserved, nested
+`/- /- -/ -/` closing in the right place, and doc comments counting as
+comments.
+
+### `leanDeclSpans` is NOT done
+
+The bean also noted `qa-checkers-q-usage` carries its own declaration splitter
+beside `lean-lexer`'s `splitDeclarations`. Untouched here — a span splitter's
+output feeds offsets rather than a token set, so the same differential method
+needs a different comparison, and bundling it would have made one change two.
+
+## 2026-09-20 — the stripper half is DONE; the splitter half is measured and pinned
+
+### `stripLeanComments`: converged and gated
+
+All six call sites import from `content/pipeline/lean-lexer.js`. Nothing else
+defines one. `scripts/tests/lean-lexer-is-the-only-stripper.test.ts` is the
+ratchet — it scans for a second definition and fails on one — and it asserts
+the two invariants the bean said a reimplementation was unlikely to reproduce:
+byte offsets preserved (comment bodies become equal-length whitespace), and
+`/-- … -/` doc comments treated as comments. 7 tests, passing.
+
+### The splitter is NOT one duplicate, and that changes the task
+
+`leanDeclSpans` (qa-checkers-q-usage) and `splitDeclarations` (lean-lexer)
+answer **different questions**:
+
+| | returns | for |
+|---|---|---|
+| `splitDeclarations` | `{name, signature, body, bodyAt}` — byte offsets | splitting a declaration into type and value |
+| `leanDeclSpans` | `{name, start, end}` — 1-indexed inclusive LINE range | blanking everything outside a declaration while preserving line numbers |
+
+Neither replaces the other and converging them would lose a projection. The
+bean listed this as a second duplicate; it is not one.
+
+### What IS duplicated: the pattern, and it has drifted four ways
+
+`DECL_RE` (lean-lexer) vs `LEAN_DECL_RE` (q-usage), measured by running both
+over named cases:
+
+```
+   axiom                lexer=[]           q-usage=["choice"]
+   opaque               lexer=[]           q-usage=["secret"]
+   unsafe def           lexer=[]           q-usage=["loop"]
+   dotted name          lexer=["Foo.bar"]  q-usage=["Foo"]
+   theorem/def/lemma/noncomputable/private/@[simp]/structure — AGREE
+```
+
+**Three are defects in `lean-lexer`**, and `axiom` is the sharp one:
+`splitDeclarations` feeds `lean-signature.ts` and `lean-triviality-probe.ts`,
+and in a formal corpus an axiom is the declaration whose presence most changes
+what a proof is worth. A triviality probe that cannot see one is blind to
+exactly what it exists to find. `unsafe` is worse than it looks — the modifier
+list is `*`-repeated, so an unrecognised modifier makes the keyword fail to
+match and the declaration is not seen at all.
+
+**The fourth is a defect in q-usage**: its name class omits `.`, so
+`theorem Foo.bar` yields a span named `Foo`. Its callers look a declaration up
+by name and fall back to scanning the whole file when absent — so the truncation
+silently triggers the fallback those callers exist to avoid.
+
+### Why it is pinned rather than converged, and this is a hard blocker
+
+The bean's own warning is right — every copy feeds a QA checker, so widening
+either is a corpus-wide re-sweep and a changed verdict on merged content.
+
+**And the sweep cannot be run here: this repository holds 0 `.lean` files.**
+The platform carries no folio. So "just take the union" is not a judgement
+call, it is an unmeasurable one, and shipping it would be precisely the silent
+re-scoring the bean was opened to prevent.
+
+`scripts/tests/lean-decl-regex-divergence.test.ts` pins all four differences by
+name, importing both patterns rather than restating them — a test that re-types
+the regex it tests stops testing it the first time either is edited, which is
+the failure this whole bean is made of. It also asserts the seven cases where
+they AGREE, so the table cannot be produced by one pattern matching nothing;
+and it asserts this repo still has no `.lean` files, so the day a corpus lands
+here the pinning fails and the sweep becomes possible.
+
+## Done when
+
+- [x] `stripLeanComments`: one implementation, gated.
+- [x] The splitter's real duplication located: the pattern, not the functions.
+- [x] The divergence measured, named, and pinned against silent drift.
+- [ ] One union pattern, with before/after verdicts on a real Lean corpus —
+      **needs a folio**, and `litlfred/qou` is the corpus that has one.

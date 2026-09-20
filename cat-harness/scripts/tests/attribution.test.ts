@@ -10,9 +10,10 @@
  * @module scripts/tests/attribution
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { libraryEntries } from "./library-dirs.ts";
 
 import { QA_REVIEWER_KINDS } from "../../schemas/block-qa.ts";
 import {
@@ -93,11 +94,38 @@ describe("the origin registry is total over what actually exists", () => {
     // This is what stops a narrative arm landing an unclassified kind: the
     // moment one appears in the corpus, this fails until somebody decides
     // whether it is somebody's account or the source's own words.
+    // PARSED, not scraped. This regexed `"kind": "..."` out of the raw text
+    // until 2026-09-20, which matched every NESTED kind too: the moment a
+    // figure block carried `narrative.drafted_by.kind = "agent"`, the test
+    // demanded an origin classification for "agent", a value that is not a
+    // block kind at all. A regex over JSON cannot tell depth, and the thing
+    // being asserted here is specifically about the TOP-LEVEL kind.
     const kinds = new Set<string>();
-    for (const line of new TextDecoder()
-      .decode(Bun.spawnSync(["sh", "-c", `cat ${ROOT}/library/*/blocks/*.jsonld`]).stdout)
-      .matchAll(/"kind"\s*:\s*"([^"]+)"/g)) {
-      kinds.add(line[1]);
+    // Every declared library, READ rather than composed. This globbed
+    // `${ROOT}/library/*/blocks/*.jsonld`, which named one directory and went
+    // silent when bean `frs5` moved the corpus out of it — and a glob that
+    // matches nothing produces an empty set, so the assertion below would have
+    // passed over zero blocks.
+    const blockFiles: string[] = [];
+    for (const { dir } of libraryEntries()) {
+      const blocks = join(dir, "blocks");
+      if (!existsSync(blocks)) continue;
+      for (const b of readdirSync(blocks)) if (b.endsWith(".jsonld")) blockFiles.push(join(blocks, b));
+    }
+    expect(blockFiles.length, "no blocks found — this test would be vacuous").toBeGreaterThan(0);
+    for (const f of blockFiles) {
+      // Read and parse SEPARATELY, and let anything that is not a parse
+      // failure through untouched. A single try/catch around both reported a
+      // missing import as "could not parse" — a code defect dressed as a data
+      // problem, which is the costliest kind of wrong error message.
+      const body = readFileSync(f, "utf-8");
+      let k: unknown;
+      try {
+        k = JSON.parse(body).kind;
+      } catch (e) {
+        throw new Error(`${f} is not valid JSON, so the kind set would be incomplete: ${e}`);
+      }
+      if (typeof k === "string") kinds.add(k);
     }
     expect(kinds.size).toBeGreaterThan(0);
     for (const k of kinds) expect(LIBRARY_BLOCK_ORIGIN[k]).toBeDefined();
@@ -207,7 +235,11 @@ describe("what the gate refuses to wave through", () => {
 
 describe("the real corpus", () => {
   test("every block is extracted prose with a valid provenance", () => {
+    // `undefined` means no `library` graph was declared, which is NOT an
+    // empty corpus — a test computed over it has checked nothing.
     const reports = checkAll(ROOT);
+    expect(reports, "no `library` declared under ROOT — this test would be vacuous").toBeDefined();
+    if (reports === undefined) return;
     expect(reports.length).toBeGreaterThan(0);
     for (const r of reports) {
       const q = r.requirements.find((x) => x.name === "narrative-provenance");

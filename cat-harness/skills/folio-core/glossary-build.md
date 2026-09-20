@@ -1,6 +1,5 @@
 ---
 name: glossary-build
-roles: [reader, collaborator, owner]
 ---
 
 # Glossary Build Skill

@@ -24,6 +24,8 @@
  */
 import { z } from "zod";
 
+import type { TermLayer } from "./vocabulary.js";
+
 import { renderingPath } from "./cat-harness.js";
 
 /** A bean's identifier, e.g. `folio-assistant-1dfh`. */
@@ -154,6 +156,53 @@ export const InstanceIdSchema = z
   .refine((i) => !i.includes(".."), "an instance id may not contain `..`")
   .describe("A workflow instance id — the stem of a file in the bean graph's workflow-state node");
 
+/**
+ * An instant, as an ISO-8601 UTC timestamp — `2026-09-20T14:03:11Z`.
+ *
+ * **Required on a log line, which is the whole reason it is constrained rather
+ * than free text.** A log whose times are written three ways cannot be sorted,
+ * and a reader cannot tell "before" from "after" without knowing which writer
+ * produced which line. The pattern admits one spelling and refuses the rest.
+ *
+ * `Z` and not an offset, deliberately. An offset is a second fact — where the
+ * writer was — smuggled into a field that answers when, and two lines an hour
+ * apart in different offsets compare wrongly as strings. Where the local time
+ * matters it is prose, and prose has a home: the optional markdown body.
+ *
+ * Injection-safe by construction: digits, hyphens, colons, `T` and `Z`, and
+ * nothing else parses.
+ */
+export const TimestampSchema = z
+  .string()
+  .regex(
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?Z$/,
+    "a timestamp is an ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z",
+  )
+  .describe("An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z");
+
+/**
+ * A time window for a history sweep — `4h`, `2d`, `1w`, or a calendar date.
+ *
+ * Bean `ab3n`'s sweep takes one, and `check:tools` refused the first draft for
+ * declaring it `Text`: free text on a command line can express a shell
+ * payload, and `--since "$(...)"` is the whole of the objection. The remedy
+ * this repository prefers is not escaping but **unrepresentability** — the
+ * grammar here admits a count with a unit, or an ISO date, and nothing else
+ * parses.
+ *
+ * Deliberately NARROWER than `git log --since`, which also accepts
+ * "yesterday", "last monday" and much else. A tool's declared input type is a
+ * contract, not a description of what the underlying program tolerates, and
+ * the phrase forms buy nothing a count with a unit does not already give.
+ */
+export const TimeWindowSchema = z
+  .string()
+  .regex(
+    /^(\d{1,4}[hdw]|\d{4}-\d{2}-\d{2})$/,
+    'a time window is a count with a unit (4h, 2d, 1w) or an ISO date (2026-09-20)',
+  )
+  .describe("A history window: a count with a unit (4h, 2d, 1w) or an ISO date.");
+
 /** A BCP-47 language tag, e.g. `en`, `fr-CA`. */
 export const LocaleSchema = z
   .string()
@@ -232,6 +281,38 @@ export const PreferenceActionSchema = z
  * would make each Tool's contract claim a value it rejects, which is the
  * failure mode a contract exists to prevent.
  */
+/**
+ * A render-log event — `rendered` | `removed` | `restored` | `retained`.
+ *
+ * The closed half of `render-log`'s vocabulary. `RENDER_SUBJECT_KINDS` is
+ * deliberately open and takes `Slug`; this one is a fixed four, because
+ * `EVENTS_REQUIRING_REASON` branches on it and a fifth event would need a
+ * decision about whether it owes a reason rather than a schema edit.
+ *
+ * Injection-safe by construction: a value outside the member list does not
+ * parse, and no member contains a shell metacharacter.
+ */
+/**
+ * A git commit SHA — full or abbreviated.
+ *
+ * Declared rather than borrowing `Slug`, which a 40-hex string does match: a
+ * type's `describe` is part of a Tool's published contract, and "A folio slug,
+ * e.g. quantum-observable-universe" is the wrong thing for a reader to be told
+ * about a commit. Reusing a type because its REGEX happens to admit the value is
+ * how a contract ends up asserting something nobody meant.
+ *
+ * Hex only, so injection-safe by construction. Abbreviated forms are admitted
+ * because every caller here passes `$GITHUB_SHA` or a `git rev-parse --short`.
+ */
+export const CommitShaSchema = z
+  .string()
+  .regex(/^[0-9a-f]{7,40}$/, "a commit sha is 7-40 lowercase hex digits")
+  .describe("A git commit sha, full or abbreviated (7-40 hex digits).");
+
+export const RenderEventSchema = z
+  .enum(["rendered", "removed", "restored", "retained"])
+  .describe("A render-log event: rendered, removed, restored or retained.");
+
 export const RenderFormatSchema = z.enum(["pdf", "html"]).describe("A render target: pdf or html.");
 
 /** A render a preview can open, including images the render path emits. */
@@ -264,10 +345,119 @@ export const ReadmeSectionSchema = z
   .enum(["folio:toc", "folio:lean-coverage", "folio:lean-modules", "folio:simulators", "folio:workflows"])
   .describe("A generated README section, named by its marker.");
 
+/**
+ * One namespace layer, as a command-line word.
+ *
+ * ## Why this exists rather than `Text`
+ *
+ * `check:tools` refuses free text on a flag, because an argv word that can hold
+ * arbitrary characters can hold a shell payload. It caught `ns-vocabulary`'s
+ * `--layer` on exactly that rule. The fix for an enumerable input is the enum,
+ * never a looser type that happens to pass.
+ *
+ * ## Why it is guarded rather than merely copied
+ *
+ * The members duplicate `TermLayer` in `schemas/vocabulary.ts`, and zod needs a
+ * literal tuple so the duplication cannot be avoided. What CAN be avoided is the
+ * duplication going stale silently, which is the only reason a duplicate is
+ * dangerous — `directory-conventions` puts it as: an unavoidable duplicate is
+ * fine while an unchecked one is not.
+ *
+ * `satisfies` catches a member that stops being a layer. `NamespaceLayerCovers`
+ * catches the other direction — a layer added to `TermLayer` and not added here
+ * fails `tsc`, rather than producing a Tool contract that quietly refuses a
+ * value the script accepts.
+ */
+const NAMESPACE_LAYERS = ["cat-bootstrap", "harness", "core"] as const satisfies readonly TermLayer[];
+
+/** Fails to compile if `TermLayer` gains a member this tuple does not list. */
+type NamespaceLayerCovers = Exclude<TermLayer, (typeof NAMESPACE_LAYERS)[number]> extends never
+  ? true
+  : never;
+const _namespaceLayersAreExhaustive: NamespaceLayerCovers = true;
+void _namespaceLayersAreExhaustive;
+
+/**
+ * A `lake-cache` verb.
+ *
+ * ## Why an enum and not `Text`
+ *
+ * Same rule as `NamespaceLayer`: `check:tools` refuses free text on a flag or a
+ * positional, because an argv word that can hold arbitrary characters can hold a
+ * shell payload. A subcommand is enumerable, so the enum is the fix — and
+ * reaching for `Slug` because it happens to be injection-safe would type the
+ * input as something it is not.
+ *
+ * Read from the script's own usage block rather than guessed, which is why
+ * `contribute` and `doctor` are here: a list of the four obvious verbs would have
+ * refused two real ones and looked complete doing it.
+ */
+export const LakeCacheActionSchema = z
+  .enum([
+    "status",
+    "restore",
+    "restore-toolchain",
+    "install-toolchain",
+    "verify",
+    "seed",
+    "contribute",
+    "list",
+    "doctor",
+  ])
+  .describe("A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.");
+
+export const NamespaceLayerSchema = z
+  .enum(NAMESPACE_LAYERS)
+  .describe("A namespace layer: cat-bootstrap resolves before anything else, then harness, then core.");
+
 /** The granularity a translation sign-off covers. */
 export const TranslationLevelSchema = z
   .enum(["block", "section", "chapter", "folio"])
   .describe("What a translation sign-off covers.");
+
+/**
+ * A plain non-negative count — how many of something, or how many to show.
+ *
+ * ## Why this exists, and why it did not until 2026-09-20
+ *
+ * This vocabulary had **no general numeric type**. `Dpi` and `Port` are both
+ * numbers and both mean something specific, so neither can stand in for "a
+ * number of things", and the honest move at each call site was to leave the
+ * input undeclared and say so in a comment. Two nodes did exactly that:
+ * `content-graph-build`, whose edge counts became one `Text` report, and
+ * `fsh-cone`, whose `--top N` and `--history N` are still not declared.
+ *
+ * **Two independent needs is the bar.** The rule this repository keeps is that
+ * adding a type to fit ONE flag is how a vocabulary stops meaning anything —
+ * and that rule was applied, twice, by refusing to invent `Count` for a single
+ * node. It is a different judgement once the same gap has been met from two
+ * directions by two different mechanisms.
+ *
+ * ## The bounds, and what each is for
+ *
+ * `min(0)` because a count of zero is a real answer and the commonest one worth
+ * reporting: zero findings, zero blocks, zero edges. Excluding it would push
+ * every such case into a sentinel or an absent field, which is the third-state
+ * confusion this vocabulary exists to prevent.
+ *
+ * `int()` and a finite `max` because that is what makes it **injection-safe by
+ * construction**, the same argument `Dpi` and `Port` carry: a value bearing a
+ * shell metacharacter does not parse, so it can reach argv. An unbounded number
+ * would admit `Infinity` and `1e21`, which stringify into argv as words no
+ * consumer expects. The ceiling is deliberately far above any real corpus —
+ * it bounds the TYPE, not the domain, and a node needing a tighter limit says so
+ * in its port description rather than by minting a narrower type.
+ *
+ * NOT for a limit that must be positive. `--top 0` is a legitimate request for
+ * nothing, and a type that forbade it would be asserting a policy that belongs
+ * to the flag.
+ */
+export const CountSchema = z
+  .number()
+  .int()
+  .min(0)
+  .max(1_000_000_000)
+  .describe("A non-negative count — how many of something, or how many to show. Zero is a real answer.");
 
 /** Resolution for rendered formulae. */
 export const DpiSchema = z.number().int().min(24).max(1200).describe("Dots per inch for rendered formulae.");
@@ -316,6 +506,8 @@ export const TOOL_TYPES = {
   NodeId: NodeIdSchema,
   InstanceId: InstanceIdSchema,
   Locale: LocaleSchema,
+  Timestamp: TimestampSchema,
+  TimeWindow: TimeWindowSchema,
   Flag: FlagSchema,
   BeanStatus: BeanStatusSchema,
   RepoPath: RepoPathSchema,
@@ -328,7 +520,11 @@ export const TOOL_TYPES = {
   Slug: SlugSchema,
   ContentType: ContentTypeSchema,
   LinkMode: LinkModeSchema,
+  LakeCacheAction: LakeCacheActionSchema,
+  NamespaceLayer: NamespaceLayerSchema,
   PreferenceAction: PreferenceActionSchema,
+  CommitSha: CommitShaSchema,
+  RenderEvent: RenderEventSchema,
   RenderFormat: RenderFormatSchema,
   PreviewFormat: PreviewFormatSchema,
   RenderScope: RenderScopeSchema,
@@ -338,6 +534,7 @@ export const TOOL_TYPES = {
   LinkStyle: LinkStyleSchema,
   ReadmeSection: ReadmeSectionSchema,
   TranslationLevel: TranslationLevelSchema,
+  Count: CountSchema,
   Dpi: DpiSchema,
   Port: PortSchema,
   DecisionFacts: DecisionFactsSchema,
@@ -405,6 +602,9 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "NodeId",
   "InstanceId",
   "Locale",
+  "Timestamp",
+  // A count with a unit or an ISO date; nothing else parses. See the schema.
+  "TimeWindow",
   // Not a string at all, so it cannot carry a payload.
   "Flag",
   "BeanStatus",
@@ -419,7 +619,11 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   // rejected, it is unrepresentable.
   "ContentType",
   "LinkMode",
+  "LakeCacheAction",
+  "NamespaceLayer",
   "PreferenceAction",
+  "CommitSha",
+  "RenderEvent",
   "RenderFormat",
   "PreviewFormat",
   "RenderScope",
@@ -429,6 +633,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "LinkStyle",
   "ReadmeSection",
   "TranslationLevel",
+  "Count",
   "Dpi",
   "Port",
   // Deliberately absent: `Text`, `FilesystemPath`, `DecisionFacts`. Each is

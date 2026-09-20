@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pn6j
 title: 'INGEST: L1 completeness gate — derived content must be present before L1 KG is complete'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-19T12:56:53Z
+updated_at: 2026-09-20T10:59:25Z
 parent: folio-assistant-slw1
 ---
 
@@ -61,3 +61,91 @@ total is NEVER zero and that is the honest reading. The tempting design counts o
 Staleness compares everything except updated_at, which churns per run. Verified by perturbing a committed file: --check exits 1 naming the entry, and 0 once rewritten. Note the consequence: editing this checker changes script_hash and invalidates all four verdicts, so a change to it must rewrite them — same property kg-audit has.
 
 Still NOT done on this bean: opening a bean on failure, and holding the document in uploads/. Both unchanged from the previous note. Recording the verdict INSIDE the asset (manifest.jsonld) remains 2634's territory and is deliberately untouched.
+
+*2026-09-20* — The third state stopped expiring, and had already expired.
+
+`image-descriptions` sat in NOT_DERIVABLE naming `d5f1` while all four library
+entries carried a complete `images.json` — 2 / 20 / 121 / 21 images, every one
+with a role and a basis, 24 of them describable and described. The gate
+reported "no arm builds this yet" and checked none of it.
+
+The entry above read *"this list shrinks by work rather than by editing"*. It
+does not: nothing forced the edit. So each remaining entry now carries a
+`probe` — the artefact whose EXISTENCE means the arm runs — and
+`expiredExceptions` fails the gate when one is found. The probe is the CORPUS,
+not the bean's status: `d5f1` is still `in-progress` while its output is
+committed and complete, so a status field would have reported this as
+correctly not-derivable. A human-maintained flag is the weak signal.
+
+That is the third time this session one repository has paid for the same
+shape: a reason in a YAML comment that nothing compared and had become false
+(`ot9a`), a drift backlog that exempted a whole page so it could drift further
+in silence (`07p7`), and this. Each was a declared exception that outlived its
+premise because nothing re-derived it.
+
+`image-descriptions` is now CHECKED, with three states of its own: `images:
+null` is the sidecar's could-not-determine and carries its reason; an image
+with an `undetermined` ROLE is unmet, because whether it needs describing is
+unknown; a page scan needs no narrative, which matters when 140 of 164 images
+are page scans.
+
+Also fixed here, and it is bean `04vl` a second time: `narrative-review`
+RESTATED the review queue's bearing list — the same three files, the same
+`doc.narrative` single-narrative read — and went stale at the same moment and
+for the same reason, reporting "no narrative-bearing file in this entry" over
+four entries holding 24 drafts. It imports `NARRATIVE_BEARING` and
+`narrativesIn` from `scripts/narratives.ts` now. One rule in two places is two
+rules.
+
+Ten mutations, each caught by a NAMED test. Three were first caught only by
+the sidecar-staleness test, which fires on any edit to this file and so proves
+nothing about the branch; targeted tests were added and the three re-run.
+
+The four committed verdicts were rewritten, as this bean's own note requires:
+editing the checker changes `script_hash`.
+
+STILL NOT DONE, unchanged and deliberate: opening a bean on failure, and
+holding the document in uploads/. Both are blocked on standing rules rather
+than on effort — see below.
+
+*2026-09-20* — Both remaining Done-whens CLOSED, by the owner's decision.
+
+**Open a bean on failure: NO.** The owner chose reporting-only. `beans create`
+dedupes on nothing and once produced 14,688 duplicates; a gate minting one per
+run against that store is a bad trade, and a person reading the refusal has
+context a bean would only approximate. Recorded as a decision, not left as a
+gap.
+
+**Hold the document in uploads/: reframed as REFUSE TO PROMOTE, and built.**
+The arms already take `-o <dir>`, so the only change needed was which
+directory. They write into `ingest-staging/<slug>/`, and `--promote` is the
+single moment anything crosses into `library/`. Nothing is ever moved OUT of
+the library and nothing is deleted, so `deletion-requires-confirmation` is
+untouched — which is why this reframing was available and "move it back" was
+not.
+
+The first placement was WRONG and the measurement caught it. Gating at the end
+of the ingest command refused milnorlink on SEVEN unmet requirements, because
+`planFor` runs ONE rung: `pdf-pages.py` alone yields page files and none of
+structure.json, sections/, blocks/, manifest.jsonld or images.json. That gate
+would have refused every document ever ingested, and a gate that always
+refuses is one somebody switches off. Hence a separate promote step.
+
+Verified end-to-end on the real corpus, both directions:
+- incomplete staging + `--promote` → refused, exit 1, `library/` untouched,
+  staged output left in place for inspection;
+- `library/milnorlink/` copied into staging + `--promote` → promoted, exit 0,
+  byte-identical no-op, staging cleaned.
+
+Staging is NOT dot-prefixed, for the reason `8xzw`/`x89g` moved `.beans/` and
+`.harness/` out: a staging tree holding a REFUSED document is exactly what
+somebody comes looking for.
+
+Eight mutations. Seven caught by a named test. The eighth — replacing the CLI's
+`if (ingestMode(argv) === "stage")` with `if (false)` — is control flow no unit
+test reaches without running the whole CLI against a real PDF, and it is
+recorded here rather than papered over. Both branches WERE exercised by hand
+end-to-end, which is evidence and not a test. Two decisions were extracted into
+`mayPromote` and `ingestMode` precisely because the first pass covered them
+only with source-text greps, and two mutations survived that read fine
+textually.

@@ -23,6 +23,7 @@
  * @module content/pipeline/q-usage-audit
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, relative } from "node:path";
@@ -163,7 +164,7 @@ const REPO_ROOT = findContentRepoRoot();
  * the pipeline).
  */
 const PAPERS: string[] = paperFilter ? [paperFilter] : findPapers(REPO_ROOT);
-const PAPER_ROOTS: string[] = PAPERS.map((p) => join(REPO_ROOT, "content", p));
+const PAPER_ROOTS: string[] = PAPERS.map((p) => join(folioDir(REPO_ROOT),  p));
 
 // ── Walk block files ────────────────────────────────────────────
 
@@ -565,7 +566,7 @@ function main(): void {
     if (paperFilter) console.error(`  --paper           : ${paperFilter}`);
     console.error(
       PAPERS.length === 0
-        ? "  No `content/<paper>/<paper>.ts` manifest found. Run from the content repo root."
+        ? "  No `folio/<paper>/<paper>.ts` manifest found. Run from the content repo root."
         : "  Papers resolved but no blocks matched. Check --chapter / --paper spelling.",
     );
     process.exit(2);

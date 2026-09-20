@@ -43,12 +43,23 @@
  * @module content/pipeline/readme-toc
  */
 
-import { execFileSync } from "child_process";
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
 import { findPapers } from "./repo-root";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../schemas/harness-config";
+// The git facts and the publish targets are generic and live in harness
+// (bean `cp3l`). Re-exported because this module's callers have always got
+// them from here, and moving a file should not break a folio's tooling.
+import {
+  DEFAULT_PUBLISH_REF,
+  detectRepoUrl,
+  ownerRepo,
+  publishTargets,
+  publishedPaths,
+} from "../../src/core/git-refs";
+export { detectRepoUrl, publishedPaths } from "../../src/core/git-refs";
 
 // ── Configuration ───────────────────────────────────────────────────────────
 
@@ -88,7 +99,7 @@ export interface ReadmeTocConfig {
 
 const DEFAULT_CONFIG: ReadmeTocConfig = {
   linkStyle: "blob",
-  publishRef: "gh-pages",
+  publishRef: DEFAULT_PUBLISH_REF,
   marker: "folio:toc",
   pdfPathPatterns: [
     "papers/{paper}/chapters/{chapter}.pdf",
@@ -112,9 +123,10 @@ const DEFAULT_CONFIG: ReadmeTocConfig = {
  * whether or not the repository is public.
  */
 export function loadReadmeConfig(root: string): ReadmeTocConfig {
-  const configPath = resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG);
+  const configPath = expectedInstanceConfigPath(root);
   let fromFile: Partial<ReadmeTocConfig> = {};
-  if (existsSync(configPath)) {
+  // `undefined` = nothing declares an instance here; nothing to read.
+  if (configPath !== undefined && existsSync(configPath)) {
     try {
       const parsed = JSON.parse(readFileSync(configPath, "utf-8")) as {
         readme?: Partial<ReadmeTocConfig>;
@@ -125,83 +137,17 @@ export function loadReadmeConfig(root: string): ReadmeTocConfig {
       // own it; the TOC falling back to defaults is better than refusing.
     }
   }
-  return { ...DEFAULT_CONFIG, ...fromFile };
-}
-
-// ── Git-derived facts ───────────────────────────────────────────────────────
-
-function git(root: string, args: string[]): string | undefined {
-  try {
-    return execFileSync("git", ["-C", root, ...args], {
-      encoding: "utf-8",
-      stdio: ["ignore", "pipe", "ignore"],
-      // A published site is tens of thousands of files; `ls-tree -r` over one
-      // is several megabytes. Node's 1 MiB default makes `execFileSync` throw
-      // ENOBUFS, which this catch turns into "ref unavailable" — so a large,
-      // healthy publish branch reported as no branch at all, and every PDF
-      // cell fell back to '—'. Found running against a real folio; the fixture
-      // trees in the tests are far too small to reach it.
-      maxBuffer: 64 * 1024 * 1024,
-    }).trim();
-  } catch {
-    return undefined;
-  }
-}
-
-/**
- * `https://github.com/owner/repo` for this checkout, from `origin`.
- *
- * Normalises the SSH form and strips `.git`, so a config that omits
- * `repoUrl` still produces working links.
- */
-export function detectRepoUrl(root: string): string | undefined {
-  const remote = git(root, ["remote", "get-url", "origin"]);
-  if (!remote) return undefined;
-  const ssh = remote.match(/^git@([^:]+):(.+?)(?:\.git)?$/);
-  if (ssh) return `https://${ssh[1]}/${ssh[2]}`;
-  return remote.replace(/\.git$/, "");
-}
-
-/** `owner/repo` from a repo web URL, for `raw.githubusercontent.com`. */
-function ownerRepo(repoUrl: string): string | undefined {
-  const m = repoUrl.match(/[^/]+\/[^/]+$/);
-  return m ? m[0] : undefined;
-}
-
-/**
- * Every path published at `ref`, or `undefined` when the ref is unavailable.
- *
- * `undefined` and "published nothing" are deliberately different: an
- * unavailable ref (a shallow clone that never fetched `gh-pages`, a folio that
- * does not publish) must not silently blank out a table that was correct
- * yesterday. Callers report the first case rather than emitting `—` for
- * everything.
- */
-export function publishedPaths(
-  root: string,
-  ref: string,
-  fetch = false,
-): Set<string> | undefined {
-  const read = (): Set<string> | undefined => {
-    for (const candidate of [`refs/remotes/origin/${ref}`, ref]) {
-      const listing = git(root, ["ls-tree", "-r", "--name-only", candidate]);
-      if (listing !== undefined && listing.length > 0) return new Set(listing.split("\n"));
-    }
-    return undefined;
-  };
-  const local = read();
-  if (local || !fetch) return local;
-  // Opt-in only. A generator that reaches the network on every run is a
-  // generator nobody can run offline; the failure message names this command
-  // so the choice stays the operator's.
-  git(root, ["fetch", "--depth", "1", "origin", `${ref}:refs/remotes/origin/${ref}`]);
-  return read();
+  // The three publish targets come from `publishTargets`, which reads the
+  // SAME `readme` block — one file, one key, so the harness-level reader and
+  // this one cannot drift. What is layered on here is the genuinely
+  // README-shaped part: link style, marker, PDF path patterns.
+  return { ...DEFAULT_CONFIG, ...publishTargets(root), ...fromFile };
 }
 
 // ── Folio structure ─────────────────────────────────────────────────────────
 
 export interface PaperInfo {
-  /** Directory under `content/`. */
+  /** Directory under `folio/`. */
   dir: string;
   /** Title from the paper manifest, falling back to the folio entry, then the dir. */
   title: string;
@@ -231,8 +177,8 @@ function matchTitle(src: string): string | undefined {
  * folio almost always is.
  */
 export function discoverPapers(root: string): PaperInfo[] {
-  const contentDir = join(root, "content");
-  const folioPath = join(contentDir, "folio.ts");
+  const folioRoot = folioDir(root);
+  const folioPath = join(folioRoot, "folio.ts");
   let entries: { dir: string; folioTitle?: string }[] = [];
 
   if (existsSync(folioPath)) {
@@ -247,7 +193,7 @@ export function discoverPapers(root: string): PaperInfo[] {
 
   const papers: PaperInfo[] = [];
   for (const { dir, folioTitle } of entries) {
-    const manifest = join(contentDir, dir, `${dir}.ts`);
+    const manifest = join(folioRoot, dir, `${dir}.ts`);
     if (!existsSync(manifest)) continue;
     const manifestTitle = matchTitle(readFileSync(manifest, "utf-8"));
     papers.push({ dir, title: manifestTitle ?? folioTitle ?? dir });
@@ -263,13 +209,13 @@ export function discoverPapers(root: string): PaperInfo[] {
  * numbered nor an appendix.
  */
 export function chaptersOf(root: string, paper: string): ChapterInfo[] {
-  const manifest = join(root, "content", paper, `${paper}.ts`);
+  const manifest = join(folioDir(root),  paper, `${paper}.ts`);
   if (!existsSync(manifest)) return [];
   const src = readFileSync(manifest, "utf-8");
   const dirs = [...src.matchAll(/chapterRef\(\s*\{\s*dir:\s*["']([^"']+)["']/g)].map((m) => m[1]);
 
   return dirs.map((dir) => {
-    const chapterTs = join(root, "content", paper, dir, `${dir}.ts`);
+    const chapterTs = join(folioDir(root),  paper, dir, `${dir}.ts`);
     let title = dir;
     if (existsSync(chapterTs)) title = matchTitle(readFileSync(chapterTs, "utf-8")) ?? dir;
     const kind = dir.startsWith("appendix-")
@@ -341,7 +287,7 @@ export function renderToc(root: string, cfg: ReadmeTocConfig, fetch = false): To
 
     const paperPdf = firstPublished(cfg.paperPdfPathPatterns, { paper: paper.dir }, published);
     const paperPdfUrl = paperPdf && urlFor(paperPdf, cfg, repoUrl);
-    const source = `[\`content/${paper.dir}/\`](content/${paper.dir}/)`;
+    const source = `[\`folio/${paper.dir}/\`](folio/${paper.dir}/)`;
     out.push(
       paperPdfUrl
         ? `${source} · [full PDF](${paperPdfUrl})`
@@ -370,7 +316,7 @@ export function renderToc(root: string, cfg: ReadmeTocConfig, fetch = false): To
       if (!pdfPath && published) missingPdfs.push({ paper: paper.dir, chapter: ch.dir });
       const pdfCell = pdfUrl ? `[${ch.dir}.pdf](${pdfUrl})` : "—";
       out.push(
-        `| ${label} | ${cell(ch.title)} | [\`${ch.dir}/\`](content/${paper.dir}/${ch.dir}/) | ${pdfCell} |`,
+        `| ${label} | ${cell(ch.title)} | [\`${ch.dir}/\`](folio/${paper.dir}/${ch.dir}/) | ${pdfCell} |`,
       );
     }
     out.push("");

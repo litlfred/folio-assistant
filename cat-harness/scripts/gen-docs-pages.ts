@@ -725,10 +725,42 @@ function processHierarchy(): Record<string, string[]> {
   for (const f of workflowFiles(REPO_ROOT)) {
     if (!f.endsWith(".bpmn")) continue;
     const xml = readFileSync(f, "utf-8");
-    const id = /<bpmn:process id="([^"]+)"/.exec(xml)?.[1];
+    // PREFIX-AGNOSTIC, and that is a live fix rather than defensiveness.
+    // `translation-workflow.bpmn` binds the BPMN MODEL namespace as its
+    // DEFAULT (`xmlns="…/MODEL"`) and writes `<process id="Process_Trans-
+    // lation">`, which is valid BPMN. A `/<bpmn:process id="…"/` matched
+    // nothing there, so that process was absent from the published hierarchy
+    // altogether — a todo tagged `Process_Translation` would have read as
+    // naming a process no diagram declares.
+    //
+    // `\bid=` rather than a fixed position, because attribute order is the
+    // author's choice: this file writes `id` first and `isExecutable` last,
+    // another may not.
+    const id = /<(?:\w+:)?process\b[^>]*\bid="([^"]+)"/.exec(xml)?.[1];
     if (!id) continue;
     const calls = new Set<string>();
-    for (const m of xml.matchAll(/calledElement="([^"]+)"/g)) calls.add(m[1]!);
+    // Scoped to `<bpmn:callActivity …>` OPENING TAGS, not to the whole file.
+    // A bare `/calledElement="([^"]+)"/g` over the XML reads PROSE as
+    // structure, and that was live: `upstream-version-adoption.bpmn` documents
+    // itself with *"Callers invoke it with `calledElement="Process_Upstream-
+    // Adoption"`"*, so the published hierarchy carried
+    // `Process_UpstreamAdoption → itself` — an edge `loadProcessModel` REFUSES
+    // outright ("A process cannot contain itself", process-model.ts), because
+    // an interpreter entering A → A settles forever.
+    //
+    // The comment above worries about this regex matching NOTHING and the
+    // board coming out flat. Matching TOO MUCH is the same class reversed and
+    // is worse: a flat board is visibly empty, whereas a phantom edge renders
+    // as a real one and stacks a process under itself. Documentation that
+    // names an id is the normal way to describe a reusable subprocess, so this
+    // was not a typo waiting to be found — the pattern invited it.
+    //
+    // Attribute order is not assumed: the tag is matched first, then the
+    // attribute within it.
+    for (const tag of xml.matchAll(/<(?:\w+:)?callActivity\b[^>]*>/g)) {
+      const ref = /calledElement="([^"]+)"/.exec(tag[0]!)?.[1];
+      if (ref) calls.add(ref);
+    }
     out[id] = [...calls].sort();
   }
   return out;
@@ -761,9 +793,42 @@ function processHierarchy(): Record<string, string[]> {
   }));
   mkdirSync(dirname(TODO_ASSET), { recursive: true });
   const processes = processHierarchy();
+  // INDENTED, and it is about merging rather than about reading.
+  //
+  // Minified, this file is ONE LINE of ~12 KB. Git merges text by line, so a
+  // single line means any change on both sides of a merge is a whole-file
+  // conflict — two branches adding two different todos cannot both win. That
+  // is not hypothetical: it conflicted on three consecutive merges of one
+  // branch on 2026-09-20, every time, while `repo-partition.ts`,
+  // `package-manifest.json` and `AGENTS.md` all auto-merged cleanly despite
+  // being edited on both sides.
+  //
+  // Indented, each todo occupies its own lines, so two branches whose new
+  // todos land in DIFFERENT parts of the sorted list merge untouched.
+  //
+  // **It is a partial fix, and the limit is worth knowing**: two todos that
+  // sort ADJACENT still conflict, because the inserted lines overlap. Measured
+  // on a scratch repository rather than reasoned about — five base items, one
+  // branch inserting at the front and one at the back:
+  //
+  //   minified   CONFLICT
+  //   indented   clean, both todos present, 7 items
+  //
+  // and with both branches appending at the same position, BOTH formats
+  // conflict. So this removes the guaranteed conflict, not every conflict.
+  //
+  // It works at all only because the order is already deterministic —
+  // `readTodoFiles` sorts, `processHierarchy` reads the sorted
+  // `workflowFiles` — which the comment above that function had to establish
+  // for a different reason: an artefact reproducible only where it was
+  // generated is a snapshot, not a generated file. A mergeable one needs the
+  // same guarantee, or every regeneration reshuffles and conflicts anyway.
+  //
+  // The cost is 11,963 -> 14,144 bytes on a static asset gzip mostly removes.
+  // `docs-ui.js` calls `JSON.parse`; it never sees the whitespace.
   emit(
     TODO_ASSET,
-    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }) + "\n",
+    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }, null, 2) + "\n",
     "data",
   );
   console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);

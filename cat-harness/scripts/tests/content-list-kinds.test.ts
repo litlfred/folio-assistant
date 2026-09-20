@@ -43,7 +43,7 @@ function scaffoldChapter(contentType: "paper" | "document"): string {
     assistantPath: "folio-assistant",
     skipVcs: true,
   });
-  return join(d, "content", "cold-chain-guidance", "introduction");
+  return join(d, "folio", "cold-chain-guidance", "introduction");
 }
 
 /** What `content_list` reads for one `.ts`, exactly as the tool does. */

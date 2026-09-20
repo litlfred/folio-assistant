@@ -1,11 +1,9 @@
 # platform-boundary-guard — memory
 
-**Edit `skills/memory/*.md`, not this file.** The region below is assembled by
-`bun run agent-memory` and anything written into it by hand is overwritten;
-everything outside it — the session log — is yours and is never touched.
-Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote).
-
----
+**Edit `memory/*.md`, not this file** — `bun run agent-memory` overwrites the
+region below; outside it is yours. Types: **STABLE** · **TRAP** · **BASELINE**
+(re-measure, never quote). Compact on purpose: every line here is a line of
+the 200-line injection budget the entries need.
 
 <!-- folio:memory:begin -->
 
@@ -44,8 +42,8 @@ before writing any literal that names one folio.
 Four entries that restated parts of it are archived rather than kept here
 (`the-shape-of-every-defect-here`, `adapter-vs-profile`,
 `compose-nothing-resolve-everything`,
-`the-readme-generator-that-replaced-the-whole-file`) — still nodes under
-`skills/memory/`, in no prompt. **The skill governs; this is a pointer, not
+`the-readme-generator-that-replaced-the-whole-file`) — still nodes in the
+declared `memory` graph, in no prompt. **The skill governs; this is a pointer, not
 a summary of it.** Where they would disagree, the skill wins — so read it,
 and fix it there rather than restating it back into this file.
 
@@ -79,10 +77,20 @@ session-start hook and the beans store.
   back to the paper adapter, so an adapter-scoped tool would be unreachable
   in exactly the case it exists for.
 
-## STABLE — top level = bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
+## STABLE — `gh-pages` keeps an append-only render log at `_render-log/`
+
+*What happened to `STAGING/<slug>`?* — `_render-log/<YYYY-MM-DD>.jsonl` at the
+branch ROOT, outside `STAGING/` so `rm -rf "STAGING/$SLUG"` cannot reach it.
+
+A full replace does NOT preserve it: `CARRIED_PREFIXES` in
+`restore-staging.ts` carries it across, and `--verify` checks the carry as well
+as the previews. Add a prefix there, never a third code path. Skill:
+[`folio-core/render-logging.md`](../cat-harness/skills/folio-core/render-logging.md).
+
+## STABLE — top level = cat-bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
 
 Owner, 2026-09-20: the top level is *"the contents of repos"* except
-`bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
+`cat-bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling
 of cat-harness. keep it here (like beans and todos/) as this instance's own
 working memory."*
 
@@ -94,7 +102,7 @@ consequence.
 
 **Tooling and store separate.** All three kinds are introduced by cat-harness;
 the stores stay top-level. So "beans is a cat-harness concept" and "`beans/` is
-not inside `cat-harness/`" are both true. `bootstrap/` introduces none — it is
+not inside `cat-harness/`" are both true. `cat-bootstrap/` introduces none — it is
 read before any harness resolves. `scope: "repository"` means exactly these four.
 
 ## STABLE — there is no `recommendation` block kind
@@ -130,30 +138,16 @@ unreadable, always.
 
 Owner, 2026-09-19: **"dont encode rules against a working setup."**
 
-A constraint in a schema, validator or gate is a **refusal**, and the two
-ways it can be wrong are not symmetric. A *missing* constraint lets a bad
-setup through, and it fails visibly at the point of use with the real error.
-A *wrong* constraint refuses a good setup at the gate, with a confident
-message asserting the thing is impossible — and nobody investigates a settled
-question. Same asymmetry as rendering "could not check" as green.
+A constraint is a REFUSAL, and the two failures are not symmetric: a missing
+one fails visibly at the point of use; a wrong one refuses a good setup with a
+confident message, and nobody investigates a settled question. So an asserted
+but unverified constraint stays OUT of the gate.
 
-So an **asserted but unverified** constraint is left OUT of the gate and
-written down as an open question. Not encoded "provisionally".
+Encode an entailment of the mechanism, or something measured here with the
+command shown. Never "someone said so".
 
-**The test is the evidence, not the confidence.** Encode an entailment of the
-mechanism (Pages has no per-file media-type config; air-gapped compute cannot
-reach hosted inference) or something measured here with the command shown.
-Do not encode "someone said so", or what was true of one account, one plan or
-one version.
-
-Worked case: `docs/proposals/deployment-topologies.md` §3 leaves
-`private repo` × `github-pages` out of its incompatibility table — issue #363
-states it as flatly unavailable, but GitHub has offered Pages on private
-repos on paid plans and the account's entitlement was never checked.
-
-The same rule in both lanes: a watcher must not render "could not check" as
-green, and a boundary guard must not encode a constraint that refuses a folio
-nobody has tried.
+Full rule, the worked case and both lanes:
+[`folio-core/unverified-constraints.md`](../cat-harness/skills/folio-core/unverified-constraints.md).
 
 ## TRAP — a page is a translation because it declares `lang`, never because of its directory's name
 
@@ -198,9 +192,7 @@ Each shipped once:
 
 <!-- folio:memory:end -->
 
----
-
 ## Session log
 
-One line per review: what you checked, any literal you caught, any TRAP you
-added. Keep under ~200 lines — prune the log, never the TRAPs.
+One line per review: what you checked, any literal caught, any TRAP added.
+Prune the log, never the TRAPs.

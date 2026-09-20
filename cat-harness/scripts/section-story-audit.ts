@@ -63,6 +63,7 @@
  * wired into CI as a quality gate.
  */
 
+import { folioDir } from "../schemas/cat-harness.js";
 import { readFileSync, existsSync, writeFileSync } from "fs";
 import { join } from "path";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
@@ -73,7 +74,7 @@ import { requirePaper } from "../content/pipeline/repo-root";
 // for those globs. `findContentRepoRoot()` walks up from the real cwd;
 // `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT = join(REPO_ROOT, "content");
+const CONTENT = folioDir(REPO_ROOT);
 
 const GENERIC_NAME_RE = /^sec:.*-(part-\d+|extras|misc-\d+)$/;
 const BLOCK_TITLE_LIST_TELL =
@@ -253,7 +254,7 @@ function auditPaper(paper: string): Finding[] {
         kind: "missing-chapter-manifest",
         severity: "major",
         chapter: dir,
-        detail: `Chapter manifest not found at content/${paper}/${dir}/${dir}.ts`,
+        detail: `Chapter manifest not found at folio/${paper}/${dir}/${dir}.ts`,
         link: blobUrl(paper, dir),
       });
       continue;

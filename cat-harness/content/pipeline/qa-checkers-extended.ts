@@ -22,9 +22,15 @@
  * @module content/pipeline/qa-checkers-extended
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
+import { stripLeanComments } from "./lean-lexer.js";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import type { CheckerPaths, CheckerHit, CheckerResult } from "../../schemas/block-qa";
 import { resolve, dirname, join, relative } from "path";
+// The conformance check itself, plus its result type. Imported here rather than
+// given its own module because a checker belongs in the registry's file, and the
+// mechanism it wraps is one function.
+import { checkFolioProfile, readDeclaredFolioProfile, type ProfileCheckResult } from "./profile-check";
 import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
@@ -48,9 +54,9 @@ const REPO_ROOT = findContentRepoRoot();
 // references.ts, and the paper manifests. The paper lookup therefore always
 // missed and the ENTIRE detangler axis reported n/a on every folio,
 // silently, while looking healthy.
-const CONTENT_DIR = join(REPO_ROOT, "content");
+const FOLIO_DIR = folioDir(REPO_ROOT);
 const COMPUTATIONS_DIR = join(REPO_ROOT, "computations");
-const BIB_QA_REPORT = join(CONTENT_DIR, "bib-qa.json");
+const BIB_QA_REPORT = join(FOLIO_DIR, "bib-qa.json");
 
 
 // ── Lazy-loaded bib-qa report (cached across calls per process) ─
@@ -68,6 +74,101 @@ function loadBibQaReport(): Record<string, unknown> | null {
     bibQaReportCache = {};
   }
   return bibQaReportCache;
+}
+
+// ── Profile conformance — the check that was reachable only over MCP ─
+//
+// `checkFolioProfile` catches what schema validation STRUCTURALLY cannot: a
+// block valid against its own schema but wrong for the folio's content profile,
+// because adapters partition disjointly while profiles NEST. Until this axis it
+// had no shell entry point at all — its only caller registered MCP tools — so CI
+// could never ask the question. Bean `0bzg`, and the owner chose this axis over a
+// `check:profile` script precisely because a sweep verdict is durable where a
+// printed one is not.
+//
+// CACHED PER PROCESS, and that is not an optimisation. `checkFolioProfile` walks
+// the whole folio; calling it per block would re-walk once per block, which is
+// bean `4n37`'s defect (`probeAll` re-spawning 25 subprocesses per call) in a
+// different costume. The profile and the manifests cannot change mid-sweep, so
+// one walk is not a cache of something volatile — it is not repeating work.
+let profileCheckCache: ProfileCheckResult | null | undefined;
+function loadProfileCheck(): ProfileCheckResult | null {
+  if (profileCheckCache !== undefined) return profileCheckCache;
+  try {
+    profileCheckCache = checkFolioProfile(REPO_ROOT, FOLIO_DIR);
+  } catch {
+    // A throw is COULD-NOT-DETERMINE, never conformance. Swallowing it into a
+    // pass is how `qa-checkers-extended`'s detangler axis once reported n/a on
+    // every folio while looking healthy — see the `FOLIO_DIR` note above.
+    profileCheckCache = null;
+  }
+  return profileCheckCache;
+}
+
+/**
+ * Does this block conform to the folio's declared content profile?
+ *
+ * Its own criterion, NEVER folded into the schema verdict. `0bzg`'s argument is
+ * that this check answers a question schema validation cannot reach, so a
+ * combined verdict would report one judgement where there are two — and the one
+ * it would hide is the one with no other source.
+ *
+ * Three results, and the `n/a` cases are the point:
+ *
+ *   · **no manifest** — nothing to place in a profile.
+ *   · **the folio declares no profile** — `profile-check.ts` is explicit that
+ *     this is distinct from declaring `paper`, and that a consumer which skips
+ *     work on the strength of a profile must not skip it on the strength of a
+ *     guess. So: not a pass.
+ *   · **the check threw** — could-not-determine.
+ *
+ * Only a folio that declares a profile AND has no violation for this block
+ * passes.
+ */
+export function checkProfileConformance(ts: string | undefined): CheckerResult {
+  if (ts === undefined) {
+    return { result: "n/a", hits: [], notes: "no `.ts` manifest for this block, so it sits in no profile" };
+  }
+  const r = loadProfileCheck();
+  if (r === null) {
+    return { result: "n/a", hits: [], notes: "the profile check could not run — could not determine, not conformant" };
+  }
+  // ASKED OF `readDeclaredFolioProfile`, not of `r.profile`, and finding that out
+  // took running it. `checkFolioProfile` resolves through `readFolioProfile`,
+  // which turns an undeclared profile into `"paper"` — the right default for a
+  // VALIDATOR, since the wider vocabulary is the safe one to validate against —
+  // so `r.profile` is never `undefined` and a guard on it never fires. The first
+  // version of this axis therefore reported `pass` on a folio that declares
+  // nothing, which is exactly the laundering it exists to prevent.
+  //
+  // Not inferred from `declaredBy`'s wording either: that is prose, and matching
+  // on "default (…)" would break the moment the sentence is reworded. The
+  // declared/undeclared question has its own function, and that function's whole
+  // documented purpose is keeping the two apart.
+  const declared = readDeclaredFolioProfile(REPO_ROOT);
+  if (declared.profile === undefined) {
+    return {
+      result: "n/a",
+      hits: [],
+      notes: `the folio declares no content profile (${declared.declaredBy}) — could not determine, not conformant`,
+    };
+  }
+  // Compared by RESOLVED path. `ProfileViolation.ts` is absolute and the sweep's
+  // companion path may be relative, so a string compare would silently match
+  // nothing and report every block conformant.
+  const mine = r.violations.filter((v) => resolve(v.ts) === resolve(ts));
+  if (mine.length === 0) {
+    return {
+      result: "pass",
+      hits: [],
+      notes: `conforms to the declared \`${r.profile}\` profile (${r.declaredBy})`,
+    };
+  }
+  return {
+    result: "fail",
+    hits: mine.map((v) => ({ file: v.ts, line: 1, text: `${v.reason}: ${v.detail}` })),
+    notes: `${mine.length} profile violation(s) against the declared \`${r.profile}\` profile`,
+  };
 }
 
 // Extract `\cite{key1, key2}` + `-- Ref: [key]` from .md / .lean.
@@ -111,7 +212,7 @@ function loadBibIdSet(): Set<string> {
   // Primary source: references.ts. Parse out every `id: "<key>"`.
   // This is robust to bib-qa.json absence (the file is gitignored).
   try {
-    const refsPath = join(CONTENT_DIR, "schema", "references.ts");
+    const refsPath = join(FOLIO_DIR, "schema", "references.ts");
     if (existsSync(refsPath)) {
       const src = readFileSync(refsPath, "utf-8");
       const idRe = /\bid:\s*"([^"]+)"/g;
@@ -234,7 +335,7 @@ export function checkBibCitedRefHasScreenshot(
     mdPath,
     leanPath,
     "has_screenshot",
-    "no screenshot under content/bib-qa-images/",
+    "no screenshot under folio/bib-qa-images/",
   );
 }
 
@@ -1920,12 +2021,12 @@ function loadChapterGraph(): void {
   let sawAnyPaper = false;
 
   for (const paper of papers) {
-    const paperTs = join(CONTENT_DIR, paper, `${paper}.ts`);
+    const paperTs = join(FOLIO_DIR, paper, `${paper}.ts`);
     if (!existsSync(paperTs)) continue;
     sawAnyPaper = true;
     const src = readFileSync(paperTs, "utf-8");
     const dirs = [...src.matchAll(/dir:\s*"([^"]+)"/g)].map(m => m[1]);
-    const base = join(CONTENT_DIR, paper);
+    const base = join(FOLIO_DIR, paper);
 
     // Reserve this paper's chapter index range up front so the block
     // scan and the position pass agree on indices.
@@ -2209,7 +2310,7 @@ export function checkDetanglerBlockTanglement(
   // Chapter key is `"<paper>/<chapter>"`, matching loadChapterGraph's
   // namespacing — a multi-paper folio must not collide two same-named
   // chapters. Platform-aware split: `relative()` yields `\` on Windows.
-  const relSeg = relative(CONTENT_DIR, tsPath).split(/[\\/]/);
+  const relSeg = relative(FOLIO_DIR, tsPath).split(/[\\/]/);
   const thisChapter = relSeg.length >= 2 ? `${relSeg[0]}/${relSeg[1]}` : relSeg[0];
   const thisIdx = _chapterOrder.get(thisChapter) ?? 999;
 
@@ -2419,7 +2520,7 @@ function topicKeywords(): Record<string, string[]> {
   if (_topicKeywords) return _topicKeywords;
   const merged: Record<string, string[]> = {};
   for (const paper of findPapers(REPO_ROOT)) {
-    const f = join(CONTENT_DIR, paper, "topic-keywords.json");
+    const f = join(FOLIO_DIR, paper, "topic-keywords.json");
     if (!existsSync(f)) continue;
     try {
       const parsed = JSON.parse(readFileSync(f, "utf-8"));
@@ -2479,7 +2580,7 @@ export function checkDetanglerTopicCoherence(
 
   // Bare chapter name here (not the `paper/chapter` key): the keyword
   // table below is keyed by chapter directory name.
-  const homeSeg = relative(CONTENT_DIR, mdPath).split(/[\\/]/);
+  const homeSeg = relative(FOLIO_DIR, mdPath).split(/[\\/]/);
   const homeChapter = homeSeg.length >= 2 ? homeSeg[1] : homeSeg[0]; // platform-aware (relative() yields `\` on Windows)
   // If we have no keyword profile for the home chapter we cannot judge
   // coherence — its home score is structurally 0, so ANY other-chapter
@@ -2922,43 +3023,6 @@ export function checkProofNoTrivialSkeleton(
     audit.flagged[leanChapter] ??
     audit.flagged[leanAbs];
   if (!flagged || flagged.length === 0) return { result: "pass", hits: [] };
-  const stripLeanComments = (text: string): string => {
-    let out = "";
-    let i = 0;
-    let blockDepth = 0;
-    while (i < text.length) {
-      const c = text[i];
-      const n = text[i + 1] ?? "";
-      if (blockDepth > 0) {
-        if (c === "/" && n === "-") {
-          blockDepth += 1;
-          i += 2;
-          continue;
-        }
-        if (c === "-" && n === "/") {
-          blockDepth -= 1;
-          i += 2;
-          continue;
-        }
-        if (c === "\n") out += "\n";
-        i += 1;
-        continue;
-      }
-      if (c === "/" && n === "-") {
-        blockDepth = 1;
-        i += 2;
-        continue;
-      }
-      if (c === "-" && n === "-") {
-        i += 2;
-        while (i < text.length && text[i] !== "\n") i += 1;
-        continue;
-      }
-      out += c;
-      i += 1;
-    }
-    return out;
-  };
   const source = stripLeanComments(readFileSync(leanPath, "utf-8")).split(/\r?\n/);
   const normalize = (s: string) => s.replace(/\s+/g, " ").trim();
   // Guard against stale audit rows: only fail when the captured snippet
@@ -3172,6 +3236,9 @@ export const EXTENDED_AUTOMATED_CHECKERS: Record<
   string,
   (paths: CheckerPaths) => CheckerResult
 > = {
+  // profile conformance — bean `0bzg`; its own criterion, never folded into
+  // the schema verdict, because it answers what schema validation cannot reach.
+  "profile-conformance": (p) => checkProfileConformance(p.ts),
   // bibliography
   "bib-cite-resolves": (p) => checkBibCiteResolves(p.md, p.lean),
   "bib-cited-ref-has-url": (p) => checkBibCitedRefHasUrl(p.md, p.lean),

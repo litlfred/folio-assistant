@@ -15,6 +15,7 @@ export { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "./constraints.js";
  */
 
 import type { BlockKind } from "./block-kinds.js";
+import type { Narrative } from "./narrative.ts";
 
 // The skill-framework vocabulary moved to `skill-package.ts` — see that
 // module's header. Re-exported so existing importers are unaffected; harness
@@ -869,8 +870,17 @@ export interface SimulatorRef {
  * the `.md` of any remark that references this simulator.
  *
  * Pipeline validates:
- *   - .html companion exists (or companions.html resolves)
+ *   - `html:` resolves to a file on disk — `content/pipeline/validate-simulator.ts`,
+ *     phase 6 of `validate.ts`. Three states: present, absent (a finding), and
+ *     undetermined (a remote target, or a path escaping the repository), which
+ *     is reported rather than passed.
  *   - defaultView is present with at least one param
+ *
+ * This block said the first of those for months while it was FALSE: `validate.ts`
+ * contained no reference to `simulator` or `.html`, and two of qou's eleven
+ * targets were dangling through a clean `✓ Valid`. Bean `023p`. A documented
+ * check that does not run is worse than an absent one, because a reader stops
+ * looking — so if one of these lines stops being true, delete the line.
  */
 export interface SimulatorBlock extends BlockBase {
   kind: "simulator";
@@ -974,6 +984,40 @@ export interface TableBlock extends OptionalLabelBlockBase {
   caption?: string;
 }
 
+/**
+ * Figure block — a raster image PLACED on a page of a source document, as
+ * distinct from a `diagram`, which is authored.
+ *
+ * Bean `d5f1`. The two are genuinely different things and conflating them
+ * would put a lie in the data model: `DiagramBlock` carries `tex`, meaning
+ * tikzcd source somebody wrote, and a consumer reading `diagram.tex` on an
+ * extracted bitmap finds nothing. A figure has a FILE and no source.
+ *
+ * Only images the extractor judged to be figures reach this block kind. Of
+ * 164 placed images measured across this corpus on 2026-09-20, **140 are page
+ * scans** — one near-full-bleed image per page, which is the page itself —
+ * against 24 figures. `scripts/pdf-images.py` makes that call and records the
+ * numbers it made it from; see `schemas/document-image.ts`.
+ *
+ * `narrative` is deliberately NOT a string. A description has a state and an
+ * author, and only a human may confirm one — `schemas/narrative.ts` enforces
+ * that an agent cannot accept its own draft.
+ */
+export interface FigureBlock extends OptionalLabelBlockBase {
+  kind: "figure";
+  /** Figure label (e.g. "fig:incidence-by-region"). */
+  label?: string;
+  /** The extracted image, relative to the library entry. NOT optional: a
+   *  figure block with no file is a claim about an image nobody can see. */
+  file: string;
+  /** Caption text as printed in the source, where one was found. */
+  caption?: string;
+  /** Which page of the source document it sits on, 1-based as a reader counts. */
+  page?: number;
+  /** The authored description and its state. See `schemas/narrative.ts`. */
+  narrative?: Narrative;
+}
+
 // ── The discriminated union ──────────────────────────────────────
 
 export type Block =
@@ -991,7 +1035,8 @@ export type Block =
   | ProseBlock
   | EquationBlock
   | DiagramBlock
-  | TableBlock;
+  | TableBlock
+  | FigureBlock;
 
 /**
  * `BLOCK_KINDS`, `BlockKind` and `BLOCK_KIND_ALT` now live in the leaf
@@ -1275,6 +1320,14 @@ export interface TodoItem {
   data?: Record<string, unknown>;
   /** Labels of related todos (for threading). */
   related?: string[];
+  /**
+   * Which theme's art backs this todo's sticky — declared, never inferred.
+   *
+   * Absent means the instance's own theme. See {@link TodoItemSchema} in
+   * `constraints.ts` for why this is a bare string rather than an enum, and
+   * why the default is inherited rather than guessed (bean `5y4b`).
+   */
+  theme?: string;
 }
 
 // ── Feedback (committed to main via worktree) ────────────────
@@ -1303,7 +1356,7 @@ export interface FeedbackItem extends TodoItem {
  * The pipeline resolves `<dir>/<dir>.ts` by convention.
  */
 export interface PaperRef {
-  /** Directory name under content/ (e.g. "quantum-observable-universe"). */
+  /** Directory name under folio/ (e.g. "quantum-observable-universe"). */
   dir: string;
   /** Optional display title override (otherwise read from paper manifest). */
   title?: string;

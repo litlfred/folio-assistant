@@ -15,6 +15,17 @@
  * @module src/tools/translation
  */
 
+// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
+// and this module resolves a DECLARED directory. Without it the first
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
+// 2026-09-20 across the 20 modules that resolve a declared directory: 10
+// threw, including `narratives.ts` and the `translation` MCP tool, while
+// every gate and all 3298 tests passed — nothing covered the path.
+//
+// Importing core's registration is correct by LAYERING, not a workaround:
+// `folio` is CORE's kind, so a content-side module may import it, while the
+// harness alone never sees it (schemas/folio-graph-kind.ts says so).
+import "../../schemas/folio-graph-kind.ts";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
 import { basename, join, relative } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -29,7 +40,7 @@ import { parsePo, injectMarkdown } from "../../content/pipeline/po-inject.js";
  * tree for a locale that has none yet.
  *
  * declared-path-literal: the convention fallback, stated at the call site
- * rather than inside `directoryForGraph` so the choice is visible.
+ * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
   return directoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
@@ -51,7 +62,7 @@ export function registerTranslationTools(server: McpServer, repoRoot: string): v
     {
       path: z.string().describe(
         "Path to a .md file or directory of .md files (relative to repo root). " +
-          "E.g. 'docs/guides/agent-onboarding.md' or 'content/paper/chapters/ch1/'"
+          "E.g. 'docs/guides/agent-onboarding.md' or 'folio/paper/chapters/ch1/'"
       ),
       locale: z.string().default("en").describe(
         "Source locale (BCP 47 tag). Default: 'en'."

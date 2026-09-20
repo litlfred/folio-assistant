@@ -6,15 +6,24 @@
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
 import { registerFolioGraphKind } from "./folio-graph-kind";
+import { THEMES } from "./themes";
+import { BEAN_GRAPH_FILE } from "./bean-graph";
+import { TODO_GRAPH_FILE } from "./todo-graph";
 import {
-  BASE_GRAPH_KINDS,
   defaultGraphKinds,
   GraphKindRegistry,
+  graphLayer,
+  isContentGraph,
+  isContextGraph,
+  isStateGraph,
+  processMayWrite,
+  graphKindsOfLayer,
+  BASE_GRAPH_KINDS,
   GraphKindConflictError,
   DECLARATION_FILENAME,
   isRenderable,
@@ -23,8 +32,13 @@ import {
   materialiseDirectories,
   renderableDirectories,
   DEFAULT_DIRECTORIES,
+  declaredKinds,
+  directoryForGraph,
+  directoriesForGraph,
   resolveDirectories,
   resolveGraphKind,
+  ContentDirectorySchema,
+  instanceRootsIn,
   toJsonLd,
   type ResolvedDirectory,
 } from "./cat-harness";
@@ -45,9 +59,9 @@ beforeAll(() => {
     JSON.stringify({
       name: "agentic-harness",
       directories: [
-        { id: "tools", path: "tools/", graphs: ["tools"] },
-        { id: "kg", path: "kg/", graphs: ["kg"] },
-        { id: "schemas", path: "schemas/", graphs: ["schemas"] },
+        { id: "tools", path: "tools/", dependents: "reproduce", graphs: ["tools"] },
+        { id: "kg", path: "kg/", dependents: "reproduce", graphs: ["kg"] },
+        { id: "schemas", path: "schemas/", dependents: "reproduce", graphs: ["schemas"] },
       ],
     }),
     "utf-8",
@@ -57,7 +71,7 @@ beforeAll(() => {
   mkdirSync(CORE, { recursive: true });
   writeFileSync(
     join(CORE, DECLARATION_FILENAME),
-    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", graphs: ["folio"] }] }),
+    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }),
     "utf-8",
   );
 
@@ -65,7 +79,7 @@ beforeAll(() => {
   mkdirSync(RELOCATED, { recursive: true });
   writeFileSync(
     join(RELOCATED, DECLARATION_FILENAME),
-    JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", graphs: ["kg"] }] }),
+    JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", dependents: "reproduce", graphs: ["kg"] }] }),
     "utf-8",
   );
 
@@ -93,12 +107,56 @@ describe("reading a declaration", () => {
     expect(() => readDeclaration(BROKEN)).toThrow(/not valid JSON/);
   });
 
+  it("names the entries missing `dependents`, rather than dumping the Zod error", () => {
+    // THE REAL CASE, reproduced. `dependents` is required, so a branch that
+    // adds a directory entry without knowing the field exists produces a
+    // declaration that will not parse once the two meet. Main added
+    // `methodology-crdm` and `methodology-raci` while the field was in review,
+    // and CI on the merged tree reported 166 failures and 35 errors whose only
+    // visible cause was a raw Zod dump repeated across every test that reads a
+    // declaration. Nothing was wrong with either side.
+    const bad = join(TMP, "missing-dependents");
+    mkdirSync(bad, { recursive: true });
+    writeFileSync(
+      join(bad, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "x",
+        directories: [
+          { id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] },
+          { id: "methodology-raci", path: "methodologies/raci/", graphs: ["cat-harness"] },
+          { id: "methodology-crdm", path: "methodologies/crdm/", graphs: ["cat-harness"] },
+        ],
+      }),
+      "utf-8",
+    );
+    let err: unknown;
+    try {
+      readDeclaration(bad);
+    } catch (e) {
+      err = e;
+    }
+    const msg = (err as Error).message;
+    // It must name WHICH entries — the author's next action is editing those
+    // two lines, and a count alone does not point at them.
+    const named = msg.split("\n")[0]!;
+    expect(named).toContain("methodology-raci");
+    expect(named).toContain("methodology-crdm");
+    // ...and NOT the entry that is fine, or the reader edits the wrong line.
+    // Scoped to the first line on purpose: the guidance below it cites
+    // `uploads/` as an EXAMPLE of a `reproduce` directory, so asserting over
+    // the whole message would be asserting against the help text.
+    expect(named).not.toContain("uploads");
+    // Both values, because the whole difficulty is knowing which to write.
+    expect(msg).toContain('"dependents": "reproduce"');
+    expect(msg).toContain('"dependents": "skip"');
+  });
+
   it("rejects an unknown graph kind rather than accepting it", () => {
     const bad = join(TMP, "bad-kind");
     mkdirSync(bad, { recursive: true });
     writeFileSync(
       join(bad, DECLARATION_FILENAME),
-      JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graphs: ["wishful"] }] }),
+      JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", dependents: "reproduce", graphs: ["wishful"] }] }),
       "utf-8",
     );
     // The message must name the offending kind AND what is known, so the
@@ -207,57 +265,28 @@ describe("layering", () => {
 });
 
 describe("graph kinds — the harness declares its own, core adds folio", () => {
-  it("the harness's own vocabulary contains no renderable kind", () => {
+  it("the harness owns exactly one renderable kind — the one it can serve", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
-    expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
-      "bean-defs",
-      "beans",
-      // Renamed from `kg` on 2026-09-19: named for the LAYER that defines it,
-      // like every other harness concept. `kg` still READS, as a deprecated
-      // alias — see the alias test below.
-      "cat-harness",
-      // The trashcan that is kept: `renderable: false` ON PURPOSE rather
-      // than because there was never a page to make of it. It belongs to
-      // the harness for the same reason `beans` does — an instance can
-      // have something to throw away whether or not it has content.
-      "fsh-guts",
-      // The daily repository sweep's own reports. A SEPARATE kind from `qa`:
-      // a QA verdict judges an artefact this repository produced, a health
-      // report judges the repository itself — its size, its publish branch,
-      // its work plan. Neither criterion belongs to the other's subject.
-      "health",
-      // The two stages of the ingestion pipeline, declared separately because
-      // they are not interchangeable: the corpus checklist greps `library/`
-      // and not `uploads/`.
-      "library",
-      // The published projection of every verdict. Its own kind rather than
-      // part of `kg`, because a witness and the verdict it projects are
-      // different artefacts: one is what a checker wrote and lives beside its
-      // subject, the other is that flattened for the web and is never edited.
-      "qa",
-      "schemas",
-      // The todo graph: human actors' outstanding work. NOT a second work
-      // plan — `beans` is the agent work plan — but the harness owns the KIND
-      // while a folio owns the directory, exactly as with `beans`.
-      "todo-feedback",
-      "todo-items",
-      "todos",
-      "tools",
-      // The gettext INPUT to injection — `.pot`, `.po`, and the manifests
-      // that make each pair addressable. There is deliberately no matching
-      // kind for the OUTPUT: a rendered translation is the same kind of thing
-      // as the page it translates, differing by a `lang` the file declares
-      // for itself. See this kind's comment in cat-harness.ts for the version
-      // of PR #351 that got this wrong and why.
-      "translation-sources",
-      "uploads",
-      "voices",
-      "workflow-state",
-    ]);
-    for (const def of Object.values(BASE_GRAPH_KINDS)) {
-      expect(def.renderable).toBe(false);
-    }
+    //
+    // This ENUMERATED all sixteen until 2026-09-20, which asserted a roster
+    // the test's own name does not claim — so adding `memory` broke it, on the
+    // change that was correct, and the failure said "the list differs" rather
+    // than "something renderable appeared". Same pinned-count antipattern this
+    // repo keeps paying for, one level along: a list nothing derives it from.
+    const renderable = Object.entries(BASE_GRAPH_KINDS)
+      .filter(([, def]) => def.renderable)
+      .map(([name]) => name);
+    // `docs` was added 2026-09-20 and IS renderable, which is why this is no
+    // longer empty. The rule the empty list stood for was "a layer that cannot
+    // render must not own the renderable kind"; the harness now ships a plain
+    // just-the-docs renderer, so the rule reads in its true form — A LAYER OWNS
+    // THE KINDS IT CAN RENDER — and `docs` is the one it can serve.
+    expect(renderable).toEqual(["docs"]);
+    // `folio` is STILL genuinely not here, and that is the same rule applied
+    // rather than an exception to it: it needs block viewers, LaTeX, QA badges
+    // and translation overlays, none of which the harness has.
+    expect(Object.keys(BASE_GRAPH_KINDS)).not.toContain("folio");
   });
 
   it("a bare harness registry does not know `folio` at all", () => {
@@ -265,11 +294,10 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     // naming it against a bare registry is refused.
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
-    expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "cat-harness", "fsh-guts", "health", "library", "qa", "schemas",
-      "todo-feedback", "todo-items", "todos",
-      "tools", "translation-sources", "uploads", "voices", "workflow-state",
-    ]);
+    expect(bare.get("folio")).toBeUndefined();
+    // A bare registry is exactly the harness's own vocabulary and nothing
+    // more. Derived rather than listed, for the reason above.
+    expect(bare.names().sort()).toEqual(Object.keys(BASE_GRAPH_KINDS).sort());
   });
 
   it("core's registration adds it, and it is the renderable one", () => {
@@ -296,8 +324,115 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
   it("registering a DIFFERENT definition under one name throws", () => {
     const reg = new GraphKindRegistry();
     registerFolioGraphKind(reg);
-    expect(() => reg.register("folio", { type: "urn:other", renderable: false, summary: "x" }))
+    expect(() => reg.register("folio", { type: "urn:other", renderable: false, holds: "content", summary: "x" }))
       .toThrow(GraphKindConflictError);
+  });
+
+  it("every registered kind says what a process does with it", () => {
+    // `tsc` enforces this for a kind written as a literal; this catches one
+    // built dynamically, where the type is erased. A kind that has not said is
+    // the `dh4f` shape on a new axis: every consumer asking for content is
+    // handed it, and reports a clean run.
+    for (const name of defaultGraphKinds.names()) {
+      expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|context|state|derived)$/)]);
+    }
+  });
+
+  it("the predicates are not each other's negations", () => {
+    // An unregistered kind has not said `content` — it has not said anything.
+    // Collapsing that is how somebody asking for a skill is handed a QA
+    // verdict.
+    expect(graphLayer("not-a-kind")).toBeUndefined();
+    expect(isContentGraph("not-a-kind")).toBe(false);
+    expect(isContextGraph("not-a-kind")).toBe(false);
+    expect(isStateGraph("not-a-kind")).toBe(false);
+    expect(processMayWrite("not-a-kind")).toBe(false);
+    // ...and `context` is not a flavour of `state`. `isStateGraph` answered
+    // for every non-content kind until `context` landed, so a caller asking
+    // "may a step write this" got `true` for a memory entry.
+    expect(isStateGraph("memory")).toBe(false);
+    expect(isContextGraph("memory")).toBe(true);
+  });
+
+  it("the four layers partition the registry and none is empty", () => {
+    // No pinned counts: the property is that every kind lands on exactly one
+    // layer. A count would break on the change that was correct — which is
+    // what the two roster assertions above did when `memory` arrived, and
+    // again when `derived` did (bean `hqku`).
+    //
+    // The ARITY is still pinned, deliberately: adding a layer must be a
+    // deliberate edit here, not something a registry change does quietly.
+    const layers = (["content", "context", "state", "derived"] as const).map((l) => graphKindsOfLayer(l));
+    expect(layers.flat().length).toBe(defaultGraphKinds.names().length);
+    expect(new Set(layers.flat()).size).toBe(layers.flat().length);
+    for (const l of layers) expect(l.length).toBeGreaterThan(0);
+  });
+
+  it("only `state` is writable by a running step", () => {
+    // The property `context` exists for. A step writing to a context graph is
+    // a defect, and this is what lets a consumer ask.
+    for (const name of defaultGraphKinds.names()) {
+      expect([name, processMayWrite(name)]).toEqual([name, graphLayer(name) === "state"]);
+    }
+  });
+
+  it("the classification of the kinds a reader would guess wrong is pinned", () => {
+    // Named individually rather than counted, so a failure says WHICH moved.
+    // Reasoning: skills/folio-core/content-context-and-state-graphs.md.
+    expect({
+      // Read during a process, never written by one. The owner's ruling on
+      // bean `mhh9`, 2026-09-20 — and the kind the third layer exists for.
+      memory: graphLayer("memory"),
+      // Its mirror in the todos/ 2x2, and the axis cuts ACROSS that row: a
+      // todo is an outstanding item a process CLOSES.
+      todos: graphLayer("todos"),
+      // Renderable in principle and withheld on purpose, and nothing mid-
+      // process writes it — relocating something there is a human-directed
+      // act. `state` for a few hours until `mhh9` was settled.
+      "fsh-guts": graphLayer("fsh-guts"),
+      // A verdict is where a REVIEW got to, and the sweep writes it.
+      qa: graphLayer("qa"),
+      // The same shape about the repository rather than its artefacts.
+      health: graphLayer("health"),
+      // A QUEUE that ingestion drains. Same file, different layer from
+      // `library`, which is what ingestion produced — and the two are STILL
+      // different after `library` moved to `derived` (bean `hqku`): a queue is
+      // live state a step drains, a library section is a produced artefact
+      // nobody edits in place.
+      uploads: graphLayer("uploads"),
+      // `content` until 2026-09-20. The owner's ruling: *"library is static
+      // (only if we materialize assets or not)"*, *"can duplicate asset into a
+      // folio and work there"* — so a sweep must skip it, and a QA finding
+      // against a section belongs to the ingestion that produced it.
+      //
+      // NOT `context`, and that was eliminated by a rule: `context` means a
+      // step writing to it is a defect, and `document-ingestion.bpmn` writes
+      // `library/`.
+      library: graphLayer("library"),
+    }).toEqual({
+      memory: "context",
+      todos: "state",
+      "fsh-guts": "context",
+      qa: "state",
+      health: "state",
+      uploads: "state",
+      library: "derived",
+    });
+  });
+
+  it("a diamond differing only in `holds` is a CONFLICT, not a no-op", () => {
+    // REGRESSION GUARD for the hole the axis opened. `register`'s diamond
+    // check compared `type` and `renderable` only, so two layers registering
+    // one name on opposite sides of the line would have passed and the first
+    // would silently have won — the "one name, two answers" failure the
+    // registry throws to prevent, reintroduced by the field added to end it.
+    const reg = new GraphKindRegistry();
+    const def = { type: "urn:probe", renderable: false, holds: "content", summary: "x" } as const;
+    reg.register("probe", def);
+    expect(() => reg.register("probe", def)).not.toThrow();
+    expect(() => reg.register("probe", { ...def, holds: "state" })).toThrow(GraphKindConflictError);
+    // ...while prose differing is still a diamond: `summary` is descriptive.
+    expect(() => reg.register("probe", { ...def, summary: "worded differently" })).not.toThrow();
   });
 
   it("every registered kind projects to a distinct @type", () => {
@@ -321,6 +456,9 @@ describe("materialiseDirectories", () => {
     id,
     path,
     graphs: ["kg"],
+    // The fixture default. A case that is ABOUT `dependents` overrides it
+    // through `extra`; every other case should not have to mention it.
+    dependents: "reproduce",
     declaredBy: "test",
     absPath: path,
     own: true,
@@ -332,6 +470,56 @@ describe("materialiseDirectories", () => {
     const out = materialiseDirectories([resolved("library", "library/")], root);
     expect(existsSync(join(root, "library"))).toBe(true);
     expect(out[0]!.created).toBe(true);
+  });
+
+  describe("`dependents` decides what an INHERITED entry does here", () => {
+    // The whole point, and both directions are needed: a test that only checks
+    // the `skip` case passes equally well for a change that materialises
+    // nothing at all.
+    test("an inherited `skip` entry is not created", () => {
+      const root = tmpRoot();
+      const out = materialiseDirectories(
+        [resolved("schemas", "schemas/", { own: false, dependents: "skip" })],
+        root,
+      );
+      expect(existsSync(join(root, "schemas"))).toBe(false);
+      expect(out).toEqual([]);
+    });
+
+    test("an inherited `reproduce` entry IS created", () => {
+      const root = tmpRoot();
+      const out = materialiseDirectories(
+        [resolved("uploads", "uploads/", { own: false, dependents: "reproduce" })],
+        root,
+      );
+      expect(existsSync(join(root, "uploads"))).toBe(true);
+      expect(out[0]!.created).toBe(true);
+    });
+
+    test("an instance's OWN `skip` entry is still created — it declared it", () => {
+      // `dependents` says what a DEPENDENT does, never what the declaring
+      // instance does about its own directory. Without this, marking
+      // `schemas/` as `skip` would stop the platform creating its own.
+      const root = tmpRoot();
+      const out = materialiseDirectories(
+        [resolved("schemas", "schemas/", { own: true, dependents: "skip" })],
+        root,
+      );
+      expect(existsSync(join(root, "schemas"))).toBe(true);
+      expect(out[0]!.created).toBe(true);
+    });
+
+    test("a `skip` entry is still RESOLVED — only materialisation is suppressed", () => {
+      // The overlay reads a dependency's skills through the resolved list, so
+      // suppressing resolution instead of creation would break `skill_fetch`
+      // to fix a directory-creation problem.
+      const dirs = [
+        resolved("schemas", "schemas/", { own: false, dependents: "skip" }),
+        resolved("uploads", "uploads/", { own: false, dependents: "reproduce" }),
+      ];
+      expect(dirs.map((d) => d.id)).toEqual(["schemas", "uploads"]);
+      expect(materialiseDirectories(dirs, tmpRoot()).map((m) => m.id)).toEqual(["uploads"]);
+    });
   });
 
   test("is a no-op on the second run", () => {
@@ -411,15 +599,51 @@ describe("materialiseDirectories", () => {
     expect(existsSync(join(root, "library"))).toBe(false);
   });
 
-  test("this instance declares uploads and library", () => {
-    // The declaration half of the bean: without these two entries the
+  test("this instance declares uploads, and reaches a library", () => {
+    // The declaration half of the bean: without an entry at each end the
     // materialiser has nothing to create, and the ingestion pipeline's two
     // stages stay described in prose and declared nowhere.
-    const ids = resolveDirectories([
-      { name: "folio-assistant", root: REPO_ROOT, own: true },
-    ]).map((d) => d.id);
-    expect(ids).toContain("uploads");
+    //
+    // The two ends are no longer symmetric. `uploads` is still the platform's
+    // own — the queue is where a file arrives before anything knows what it
+    // is, and that is a platform concern. `library` is NOT: bean `frs5` moved
+    // the corpus into `who-iris/` and `folio-assist-sci/`, and the platform's
+    // own `library` entry was REMOVED rather than left pointing at an emptied
+    // directory, which is the `dh4f` defect.
+    //
+    // So this asserts on the GRAPH rather than on an id. An id is a name
+    // somebody chose; the graph is what the pipeline needs to find, and it
+    // keeps being found however many instances declare one or whatever they
+    // call their entries.
+    const dirs = resolveDirectories([{ name: "folio-assistant", root: REPO_ROOT, own: true }]);
+    expect(dirs.map((d) => d.id)).toContain("uploads");
+    const libraries = dirs.filter((d) => d.graphs.includes("library"));
+    expect(libraries.length, "no library graph reachable from the platform root").toBeGreaterThan(0);
+
+    // SEVERAL, and that is the assertion. The platform declares `library` and
+    // HOLDS NOTHING IN IT: bean `frs5` moved all four entries out, and the
+    // entry came back on the owner's 2026-09-20 ruling because `wwi6` pins
+    // the guarantee that a DEPENDENT folio materialises its own `uploads/`
+    // and `library/`, which it gets by inheriting the convention the harness
+    // declares. Remove it and every downstream folio silently loses a library.
+    //
+    // This asserted `not.toContain("library")` for a few hours — the platform
+    // owning no content, stated as a rule. The rule is not wrong; the entry
+    // is no longer a claim about what this instance HOLDS. What replaces it is
+    // the check that the corpus is reachable and is NOT here: at least two
+    // libraries resolve, and the platform's own is not one of the two that
+    // carry documents.
+    const ids = libraries.map((d) => d.id);
     expect(ids).toContain("library");
+    expect(libraries.length).toBeGreaterThan(1);
+    // The platform's own library EXISTS and is EMPTY. It was absent for a few
+    // hours between `frs5` and the owner's ruling; `harness:dirs:check`
+    // reports a declared-but-missing directory, so re-declaring it required
+    // re-creating it. Emptiness is the assertion — existence is what the
+    // declaration demands, and holding nothing is what the platform rule does.
+    const own = libraries.find((d) => d.id === "library")!.absPath;
+    expect(existsSync(own)).toBe(true);
+    expect(readdirSync(own).filter((f) => !f.startsWith("."))).toEqual([]);
   });
 });
 
@@ -461,7 +685,7 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
     mkdirSync(join(old, "skills"), { recursive: true });
     writeFileSync(
       join(old, DECLARATION_FILENAME),
-      JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", graphs: ["kg"] }] }),
+      JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", dependents: "reproduce", graphs: ["kg"] }] }),
       "utf-8",
     );
     const d = readDeclaration(old);
@@ -517,7 +741,7 @@ describe("default directories — inherit the convention, declare only the devia
       join(moved, DECLARATION_FILENAME),
       JSON.stringify({
         name: "relocated",
-        directories: [{ id: "cat-harness", path: "graph/knowledge/", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "graph/knowledge/", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
       "utf-8",
     );
@@ -534,7 +758,7 @@ describe("default directories — inherit the convention, declare only the devia
     // quietly replace an explicit declaration.
     const mine = resolveDirectories([{ name: "folio-assistant", root: ROOT, own: true }]);
     expect(mine.length).toBeGreaterThan(0);
-    expect(mine.every((x) => x.declaredBy === "folio-assistant")).toBe(true);
+    expect(mine.every((x) => x.declaredBy === "cat-harness")).toBe(true);
   });
 
   it("no default claims a kind the harness registry does not know", () => {
@@ -545,5 +769,385 @@ describe("default directories — inherit the convention, declare only the devia
     for (const d of DEFAULT_DIRECTORIES) {
       for (const g of d.graphs) expect(bare.has(g)).toBe(true);
     }
+  });
+});
+
+describe("the scope trap", () => {
+  it("refuses to materialise an empty twin beside a directory that has content", () => {
+    // REGRESSION, 2026-09-20, and the defect was mine. `scope` is optional and
+    // its ABSENCE is meaningful — the path resolves against the instance
+    // rather than the repository. Omitting it on an entry that meant
+    // `repository` made the declaration name a different directory, and
+    // `materialiseDirectories` then CREATED that directory with a keep
+    // marker: declared-but-absent became declared-and-empty, which is the
+    // `dh4f` false pass manufactured by the tool written to prevent it. It
+    // stood for about an hour with every gate green.
+    const repo = mkdtempSync(join(tmpdir(), "scope-trap-"));
+    const instance = join(repo, "inst");
+    mkdirSync(join(repo, "shared"), { recursive: true });
+    writeFileSync(join(repo, "shared", "real.json"), "{}", "utf-8");
+    mkdirSync(instance, { recursive: true });
+    try {
+      // The content is at the REPOSITORY root; the entry omits `scope`.
+      const dirs = [
+        { id: "shared", path: "shared/", dependents: "reproduce", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+      ] as unknown as Parameters<typeof materialiseDirectories>[0];
+      expect(() => materialiseDirectories(dirs, instance)).toThrow(/scope/);
+      // ...and it did not create the twin on the way to throwing.
+      expect(existsSync(join(instance, "shared"))).toBe(false);
+    } finally {
+      rmSync(repo, { recursive: true, force: true });
+    }
+  });
+
+  it("materialises normally when there is no twin to be confused with", () => {
+    // The guard must not fire on the ordinary case, or it becomes the thing
+    // somebody turns off.
+    const repo = mkdtempSync(join(tmpdir(), "scope-ok-"));
+    const instance = join(repo, "inst");
+    mkdirSync(instance, { recursive: true });
+    try {
+      const dirs = [
+        { id: "own", path: "own/", dependents: "reproduce", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+      ] as unknown as Parameters<typeof materialiseDirectories>[0];
+      const out = materialiseDirectories(dirs, instance);
+      expect(out[0]?.created).toBe(true);
+      expect(existsSync(join(instance, "own"))).toBe(true);
+    } finally {
+      rmSync(repo, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("directoryForGraph refuses an ambiguous kind rather than picking one", () => {
+  /**
+   * Bean `wggr`, as a guard rather than as a story.
+   *
+   * `directoryForGraph` returned the FIRST directory declaring a kind, under a
+   * doc comment calling itself "the accessor for the single-home case". The
+   * precondition was stated and enforced by nothing — this repository's own
+   * rule broken in one line: an unavoidable duplicate is fine, an UNCHECKED
+   * one is not.
+   *
+   * What it cost: a by-graph lookup for `cat-harness` resolves to `schemas/`
+   * rather than `skills/`, because `schemas/` declares
+   * `["schemas", "cat-harness"]` and comes first. An audit walked `schemas/`,
+   * wrote 37 sidecars against the wrong subjects, and exited 0.
+   *
+   * Fixtures rather than the real tree, deliberately. Asserting that THIS
+   * repository has an ambiguous `cat-harness` pins today's declaration: the
+   * test would go green the day somebody removed `cat-harness` from
+   * `schemas/`, which is a change to the subject rather than to the code.
+   */
+  function twoHomes(): string {
+    const root = mkdtempSync(join(tmpdir(), "amb-"));
+    mkdirSync(join(root, "a"), { recursive: true });
+    mkdirSync(join(root, "b"), { recursive: true });
+    writeFileSync(
+      join(root, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "amb",
+        directories: [
+          { id: "first", path: "a/", dependents: "reproduce", graphs: ["schemas", "cat-harness"] },
+          { id: "second", path: "b/", dependents: "reproduce", graphs: ["cat-harness"] },
+        ],
+      }),
+    );
+    return root;
+  }
+
+  test("two homes → it throws, and the message names both", () => {
+    const root = twoHomes();
+    try {
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/declared by 2 directories/);
+      // Naming the candidates is what makes the throw actionable rather than
+      // merely loud: the caller has to pick one, and cannot without knowing
+      // what there is to pick from.
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/first \(a\/\)/);
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/second \(b\/\)/);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("...and it does NOT silently return the first, which is the whole defect", () => {
+    // Stated as its own assertion because a throw and a wrong answer are the
+    // same shape to a caller that does not check: the old behaviour returned
+    // `a/` here and nothing anywhere said so.
+    const root = twoHomes();
+    try {
+      let returned: string | undefined | symbol = Symbol("not reached");
+      try {
+        returned = directoryForGraph(root, "cat-harness");
+      } catch {
+        returned = Symbol("threw");
+      }
+      expect(returned).not.toBe(join(root, "a"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a single-homed kind in the SAME declaration still resolves", () => {
+    // The throw must be scoped to the ambiguous kind, not to a declaration
+    // that happens to contain one. `schemas` lives only in `a/` here.
+    const root = twoHomes();
+    try {
+      expect(directoryForGraph(root, "schemas")).toBe(join(root, "a"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("directoriesForGraph returns every home, in declaration order", () => {
+    const root = twoHomes();
+    try {
+      expect(directoriesForGraph(root, "cat-harness")).toEqual([join(root, "a"), join(root, "b")]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a kind the instance declares nowhere is empty, not a throw", () => {
+    // The third state its sibling already documents: undeclared is not the
+    // same as declared-at-the-convention, and defaulting here would hand a
+    // caller a path to a directory that is not there.
+    const root = twoHomes();
+    try {
+      expect(directoriesForGraph(root, "voices")).toEqual([]);
+      expect(directoryForGraph(root, "voices")).toBeUndefined();
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("a nested declaration is named by its KIND, not by its directory", () => {
+  /**
+   * The disagreement this closes was live and silent.
+   *
+   * `declaredKinds` computed the nested filename as `${basename(path)}.json`.
+   * `bean-graph.ts` holds the opposite, and holds it as a design property:
+   * *"moving `beans/` to `work/` requires editing nothing inside it."* Both
+   * statements were true of today's layout and contradict each other on the
+   * first relocation — the walk looks for `work/work.json`, the file is still
+   * `work/beans.json`, and the nested kinds drop out of `declared` with
+   * nothing said. An under-count, which then manufactures an `undeclared`
+   * finding somewhere else.
+   *
+   * The owner settled the general rule on 2026-09-20 — each type declares its
+   * own filename — and `GraphKindDef.declarationFile` is that rule at the
+   * graph-kind level.
+   */
+  function withNested(dirPath: string, fileName: string): string {
+    const root = mkdtempSync(join(tmpdir(), "nested-"));
+    const dir = join(root, dirPath);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(
+      join(dir, fileName),
+      JSON.stringify({
+        name: "n",
+        directories: [{ id: "defs", path: "defs", dependents: "reproduce", graphs: ["bean-defs"] }],
+      }),
+    );
+    writeFileSync(
+      join(root, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "n",
+        directories: [{ id: "beans", path: `${dirPath}/`, dependents: "reproduce", graphs: ["beans"] }],
+      }),
+    );
+    return root;
+  }
+
+  test("at the conventional path, the nested kinds are found", () => {
+    const root = withNested("beans", "beans.json");
+    try {
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["bean-defs", "beans"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("RELOCATED to `work/`, the file keeps its name and the kinds are STILL found", () => {
+    // The case the two readers disagreed about, and the reason for the field.
+    // Before this, `declaredKinds` looked for `work/work.json`, found nothing,
+    // and returned `beans` alone — silently dropping `bean-defs`.
+    const root = withNested("work", "beans.json");
+    try {
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["bean-defs", "beans"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the directory-name convention still works for a kind declaring no filename", () => {
+    // Unmigrated is not broken. A graph whose kind names no declaration file
+    // falls back to `${dirName}.json`, so an instance that never relocates
+    // behaves exactly as it did.
+    const root = mkdtempSync(join(tmpdir(), "nested-conv-"));
+    try {
+      mkdirSync(join(root, "qa"), { recursive: true });
+      writeFileSync(
+        join(root, "qa", "qa.json"),
+        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", dependents: "reproduce", graphs: ["health"] }] }),
+      );
+      writeFileSync(
+        join(root, DECLARATION_FILENAME),
+        JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", dependents: "reproduce", graphs: ["qa"] }] }),
+      );
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["health", "qa"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the two modules' constants agree with the kinds, because they are derived", () => {
+    // The duplicate is removed rather than merely checked — but assert it, so
+    // reintroducing a literal in either module fails here rather than on
+    // somebody's relocation.
+    // Compared as a pair rather than with `?.` on each side: an accessor that
+    // returned `undefined` for both would otherwise make this pass over
+    // nothing, which is the vacuous-assertion shape this repository keeps
+    // paying for.
+    expect({
+      beans: defaultGraphKinds.get("beans")?.declarationFile,
+      todos: defaultGraphKinds.get("todos")?.declarationFile,
+    }).toEqual({ beans: BEAN_GRAPH_FILE, todos: TODO_GRAPH_FILE });
+    expect(BEAN_GRAPH_FILE).toBe("beans.json");
+    expect(TODO_GRAPH_FILE).toBe("todos.json");
+  });
+});
+
+describe("instanceRootsIn — discovered, never listed", () => {
+  it("finds the root itself and every declaring subdirectory, root first", () => {
+    const base = mkdtempSync(join(tmpdir(), "roots-"));
+    const decl = JSON.stringify({ name: "x", directories: [] });
+    writeFileSync(join(base, DECLARATION_FILENAME), decl);
+    for (const d of ["beta", "alpha"]) {
+      mkdirSync(join(base, d), { recursive: true });
+      writeFileSync(join(base, d, DECLARATION_FILENAME), decl);
+    }
+    // declares nothing — present, but not an instance
+    mkdirSync(join(base, "plain"), { recursive: true });
+
+    expect(instanceRootsIn(base)).toEqual([
+      resolve(base),
+      join(resolve(base), "alpha"),
+      join(resolve(base), "beta"),
+    ]);
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("omits the root when the root does not declare", () => {
+    const base = mkdtempSync(join(tmpdir(), "roots-"));
+    mkdirSync(join(base, "only"), { recursive: true });
+    writeFileSync(
+      join(base, "only", DECLARATION_FILENAME),
+      JSON.stringify({ name: "only", directories: [] }),
+    );
+    expect(instanceRootsIn(base)).toEqual([join(resolve(base), "only")]);
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("skips dot-prefixed directories, like every other path guard here", () => {
+    const base = mkdtempSync(join(tmpdir(), "roots-"));
+    mkdirSync(join(base, ".hidden"), { recursive: true });
+    writeFileSync(
+      join(base, ".hidden", DECLARATION_FILENAME),
+      JSON.stringify({ name: "hidden", directories: [] }),
+    );
+    expect(instanceRootsIn(base)).toEqual([]);
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("does not descend — a declaration two levels down is not an instance here", () => {
+    const base = mkdtempSync(join(tmpdir(), "roots-"));
+    mkdirSync(join(base, "outer", "inner"), { recursive: true });
+    writeFileSync(
+      join(base, "outer", "inner", DECLARATION_FILENAME),
+      JSON.stringify({ name: "inner", directories: [] }),
+    );
+    expect(instanceRootsIn(base)).toEqual([]);
+    rmSync(base, { recursive: true, force: true });
+  });
+
+  it("finds EVERY instance of THIS repository, which is the defect it fixes", () => {
+    // The gates carried `["cat-harness", "bootstrap"]`. Asserting against the
+    // real repository is the point: a fixture would have passed for the whole
+    // period the literal was wrong. If an instance is added or removed this
+    // test SHOULD fail — that is the signal the literal never gave.
+    //
+    // It fired as designed on 2026-09-20 and the list below is the updated
+    // truth, not a widened assertion: seven instances arrived on one branch
+    // (`who-iris`, `who-style-guide`, `folio-assist-sci`, `kg-navigation`,
+    // `detangle`, `large-datasets`, `agent-skills`) and `folio-assist-core`
+    // became `folio-assistant-core` under the owner's ruling that cat-harness,
+    // folio-assistant-core and folio-assistant are three distinct instances.
+    // Four of eleven is what the old literal would have gone on reporting.
+    const repo = resolve(import.meta.dir, "..", "..");
+    const found = instanceRootsIn(repo).map((r) => r.slice(repo.length + 1) || ".");
+    expect(found).toEqual([
+      ".",
+      "agent-skills",
+      "cat-bootstrap",
+      "cat-harness",
+      "detangle",
+      "folio-assist-sci",
+      "folio-assistant-core",
+      "kg-navigation",
+      "large-datasets",
+      "who-iris",
+      "who-style-guide",
+    ]);
+    // The two the literal named, pinned individually: the repository root is
+    // the entry that was `"."` and then silently stopped resolving, and
+    // `folio-assistant-core` is the rename that would otherwise read as a
+    // deletion plus an addition.
+    expect(found).toContain("folio-assistant-core");
+    expect(found).toContain(".");
+  });
+});
+
+describe("a directory declares the theme it renders on (owner, 2026-09-20)", () => {
+  it("is optional — absent means the instance's own theme", () => {
+    const r = ContentDirectorySchema.safeParse({
+      id: "x", path: "x/", dependents: "skip", graphs: ["cat-harness"],
+    });
+    expect(r.success).toBe(true);
+    if (r.success) expect(r.data.theme).toBeUndefined();
+  });
+
+  it("refuses an empty theme — absent and blank are different claims", () => {
+    expect(
+      ContentDirectorySchema.safeParse({
+        id: "x", path: "x/", dependents: "skip", graphs: ["cat-harness"], theme: "",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("THE METHODOLOGIES TAKE `analyst`, and the theme id is real", () => {
+    // Against the real declaration and the real theme table, so a typo in
+    // either is caught. Asserting the id exists is the half that matters: a
+    // misspelled theme parses (it is an open string by design) and would fall
+    // back silently at render time.
+    const repo = resolve(import.meta.dir, "..", "..");
+    const decl = readDeclaration(join(repo, "cat-harness"));
+    const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
+    expect(themed.map((d) => d.id).sort()).toEqual([
+      "methodologies", "methodology-crdm", "methodology-raci", "smart-kg-methodologies",
+    ]);
+    for (const d of themed) expect(d.theme).toBe("analyst");
+    expect(THEMES.map((t) => t.id)).toContain("analyst");
+  });
+
+  it("and NOTHING else is themed — a field that fires on every subject means nothing", () => {
+    const repo = resolve(import.meta.dir, "..", "..");
+    const decl = readDeclaration(join(repo, "cat-harness"));
+    const all = decl?.directories ?? [];
+    expect(all.filter((d) => d.theme !== undefined).length).toBeLessThan(all.length);
   });
 });

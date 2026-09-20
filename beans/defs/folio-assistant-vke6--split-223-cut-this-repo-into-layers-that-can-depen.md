@@ -3,8 +3,10 @@
 title: 'SPLIT (#223): cut this repo into layers that can depend on each other'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:44Z
-updated_at: 2026-09-19T11:43:44Z
+updated_at: 2026-09-20T18:48:38Z
+parent: folio-assistant-vuip
 ---
 
 Issue #223 — cut this repo into layers that can depend on each other without

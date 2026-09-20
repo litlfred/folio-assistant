@@ -42,7 +42,9 @@
  */
 
 import { createHash } from "node:crypto";
-import { workflowDirs, workflowFiles } from "./known-skills.js";
+import { kgDirectories, workflowDirs, workflowFiles } from "./known-skills.js";
+// `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
+// results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
@@ -50,6 +52,8 @@ import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
   kgQaSidecarPath,
+  sweepOrphans,
+  type OrphanSidecar,
   KG_QA_MANIFEST_SCHEMA,
   KG_QA_MANIFEST_PATH,
   KG_CRITERIA_BY_ID,
@@ -76,10 +80,19 @@ import {
   type LoadedActor,
 } from "../schemas/role-graph.js";
 import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
+import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
-import { isSkillMd, knownSkills, remotePackageDeclarations, remotePackageSkills } from "./known-skills.js";
+import {
+  consultedSkills,
+  unpublishedSkills,
+  isSkillMd,
+  knownSkills,
+  remotePackageDeclarations,
+  remotePackageSkills,
+} from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { CONVENTION_GROUP } from "../schemas/convention.js";
 
 const ENGINE_VERSION = "1";
 
@@ -378,7 +391,55 @@ async function auditProcess(
     }
   }
 
+  // CONVENTION REFS. The dangling direction only — see the criterion's note
+  // in `kg-qa.ts` for why absence is deliberately not a finding.
+  const conventionDir = join(repoRootFor(root), ".claude", "skills", CONVENTION_GROUP);
+  const knownConventions = existsSync(conventionDir)
+    ? new Set(readdirSync(conventionDir).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)))
+    : undefined;
+  const danglingConvention: KgFinding[] = [];
+  let conventionRefs = 0;
+  if (knownConventions) {
+    for (const n of m.nodes.values()) {
+      for (const c of n.conventions ?? []) {
+        conventionRefs += 1;
+        if (!knownConventions.has(c.ref)) {
+          danglingConvention.push({
+            where: n.id,
+            detail: `names convention \`${c.ref}\` (${c.scope} scope), which is not in ${CONVENTION_GROUP}/`,
+          });
+        }
+      }
+    }
+  }
+
+  // RACI. ONE implementation, shared with `bun run raci` — `raciBreaches`
+  // tags each breach with its kind, so three severities can be filed
+  // separately without a second copy of the rule. Two answers to "is this
+  // chart sound" is the drift this whole cluster exists to prevent.
+  //
+  // Rows come from the model already loaded here rather than from re-reading
+  // the diagram: the sidecar records that file's content hash, so a second
+  // parse would be filed under the first one's hash and free to disagree.
+  const raciRows = raciRowsOf(m);
+  const raciAll = graph
+    ? raciBreaches(raciRows, new Set((graph.roles ?? []).map((r) => r.id)))
+    : [];
+  const raciOf = (k: RaciBreachKind): KgFinding[] =>
+    raciAll.filter((b) => b.kind === k).map((b) => ({ where: b.activity, detail: b.detail }));
+  // Applicable only where the diagram CLAIMS something. An activity with no
+  // RACI is `n/a`, never a failure: annotation is incremental by design and
+  // the rule is on what a diagram claims, not on how much it has claimed.
+  const raciApplies = Boolean(graph) && raciRows.length > 0;
+
   const criteria: Record<string, KgCriterionEntry> = {
+    "raci-role-resolves": entry(raciOf("role-undeclared"), raciApplies),
+    "raci-single-accountable": entry(raciOf("accountable-count"), raciApplies),
+    "raci-accountable-not-consulted": entry(raciOf("accountable-also-consulted"), raciApplies),
+    // `n/a` when the diagram binds none, which is most of them — distinct
+    // from `pass`, because a process with nothing to resolve has not been
+    // shown to resolve anything.
+    "convention-ref-resolves": entry(danglingConvention, conventionRefs > 0),
     "skill-ref-resolves": entry(danglingSkill),
     "skill-servable": entry(unservable),
     "decision-ref-resolves": entry(danglingDecision, decisionRefs.length > 0),
@@ -400,7 +461,18 @@ async function auditProcess(
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
-    for (const id of ["role-ref-resolves", "lane-binds-role", "role-carries-activity-skill", "activity-fulfilment-kind"]) {
+    for (const id of [
+      "role-ref-resolves",
+      "lane-binds-role",
+      "role-carries-activity-skill",
+      "activity-fulfilment-kind",
+      // Every RACI value IS a role, so with no registry none of the three can
+      // be resolved. `unknown` rather than `pass` — the third state, and the
+      // reason this audit writes sidecars rather than printing a verdict.
+      "raci-role-resolves",
+      "raci-single-accountable",
+      "raci-accountable-not-consulted",
+    ]) {
       criteria[id] = { result: "unknown", findings: [{ where: "—", detail: "no role graph declared at skills/roles/roles.json." }] };
     }
   }
@@ -547,6 +619,22 @@ function auditSkills(): KgQaReport[] {
       }
     }
 
+    // `stub:` in the front matter, if any. Read positionally rather than with a
+    // YAML parser because the front matter here is already walked line-by-line
+    // above, and a stub's reason is a single scalar.
+    let stubReason: string | undefined;
+    if (lines[0]?.trim() === "---") {
+      for (let i = 1; i < lines.length; i += 1) {
+        const l = lines[i]!;
+        if (l.trim() === "---") break;
+        const m = /^stub:\s*(.+?)\s*$/.exec(l);
+        if (m) {
+          stubReason = m[1]!.replace(/^["']|["']$/g, "");
+          break;
+        }
+      }
+    }
+
     out.push(
       report(
         "skill",
@@ -554,6 +642,19 @@ function auditSkills(): KgQaReport[] {
         rel,
         createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 12),
         {
+          // A stub declares itself in front matter, and the DECLARATION is the
+          // contract — not a filename convention, not a line count. Same rule
+          // as every other node kind here: extension is a coincidence, a
+          // declaration inside the file is binding.
+          //
+          // The reason is carried into the finding rather than summarised,
+          // because "this is a stub" without "and here is what would finish it"
+          // is a note nobody can act on.
+          "skill-is-a-stub": entry(
+            stubReason === undefined
+              ? []
+              : [{ where: rel, detail: stubReason }],
+          ),
           "skill-is-brief": entry(
             n > 280 ? [{ where: rel, detail: `${n} lines; p75 of the skill corpus is 279.` }] : [],
           ),
@@ -793,24 +894,58 @@ function auditRequirements(
 
 // ── Graph roll-up ───────────────────────────────────────────────
 
-function manifestSkills(): Set<string> {
-  const out = new Set<string>();
-  const skillsRoot = join(root, "skills");
-  if (!existsSync(skillsRoot)) return out;
-  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const mp = join(skillsRoot, d.name, "package-manifest.json");
-    if (!existsSync(mp)) continue;
+/**
+ * Every package manifest this instance declares, with the package it names.
+ *
+ * ## Two defects this replaces, and both were the same shape
+ *
+ * `manifestSkills` and `manifestEntries` each walked `join(root, "skills")` and
+ * each scanned exactly one level of subdirectories. So:
+ *
+ * 1. **The path was hardcoded**, not read from the declaration. That is the
+ *    defect `harness.json` exists to remove, and the third instance of it found
+ *    in two days — `KG_ROOT` here and `SKILLS_CATEGORIES` in `gen-skill-docs`
+ *    were the others. A hardcoded root scans the wrong tree the moment the
+ *    layout moves, which it did on 2026-09-20.
+ * 2. **A manifest AT a declared directory was invisible**, because the walk only
+ *    looked inside subdirectories. `gen-skill-docs` already documents that two
+ *    declared directories — `cat-bootstrap` and `cat-harness-src` — "hold their
+ *    skills DIRECTLY rather than in package subdirectories". So a manifest for
+ *    those could not be found however correctly it was written, which is why
+ *    `confirm-harness` reported as listed by no package manifest while being
+ *    perfectly declarable.
+ *
+ * One walk now, returning both shapes the callers wanted, so the two cannot
+ * drift apart again.
+ */
+function manifestPackages(): { pkg: string; skill: string }[] {
+  const out: { pkg: string; skill: string }[] = [];
+  const read = (mp: string, pkg: string): void => {
+    if (!existsSync(mp)) return;
     try {
       const m = JSON.parse(readFileSync(mp, "utf-8")) as { skills?: string[] };
-      for (const s of m.skills ?? []) out.add(s);
+      for (const s of m.skills ?? []) out.push({ pkg, skill: s });
     } catch {
       // A manifest that will not parse is `validate-skills.ts`'s finding, not
       // this one's. Treating it as "declares nothing" here would turn one
       // defect into a hundred unrelated orphan reports.
     }
+  };
+  for (const d of kgDirectories(root)) {
+    // A manifest at the declared directory itself: the shape `cat-bootstrap` and
+    // `cat-harness-src` use.
+    read(join(d.absPath, "package-manifest.json"), d.id);
+    if (!existsSync(d.absPath)) continue;
+    // ...and one per package subdirectory: the shape `skills/` uses.
+    for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
+      if (e.isDirectory()) read(join(d.absPath, e.name, "package-manifest.json"), e.name);
+    }
   }
   return out;
+}
+
+function manifestSkills(): Set<string> {
+  return new Set(manifestPackages().map((m) => m.skill));
 }
 
 /**
@@ -850,21 +985,110 @@ function localHarnessSkills(): Set<string> {
 
 /** Manifest entries, with the package each came from, for the reverse check. */
 function manifestEntries(): { pkg: string; skill: string }[] {
-  const out: { pkg: string; skill: string }[] = [];
-  const skillsRoot = join(root, "skills");
-  if (!existsSync(skillsRoot)) return out;
-  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const mp = join(skillsRoot, d.name, "package-manifest.json");
-    if (!existsSync(mp)) continue;
+  return manifestPackages();
+}
+
+/**
+ * Nested instances in this tree whose graph this audit does not read.
+ *
+ * ## Why this is reported rather than fixed
+ *
+ * Reading them would be the defect. `instance-graph-isolation.test.ts` guards a
+ * leak that was LIVE on 2026-09-19: a filesystem walk discovered
+ * `cat-bootstrap/workflows/` from the repository root and put 88 references to a
+ * cat-bootstrap process into folio-assistant's published graph. One instance's graph
+ * must not carry another's nodes, and this audit is right not to.
+ *
+ * What was wrong is that nothing said so. The silence was read as a blind spot on
+ * 2026-09-20 and "fixed" by declaring the nested directory at the root, which
+ * re-introduced that leak until the test stopped it. So the unread corpus is
+ * counted here: a reported number is not deducible-and-mis-deducible.
+ *
+ * A declaration counts as an instance when it names `directories`. That excludes
+ * `docs/_data/harness.json`, which `sync-docs-harness` writes with the
+ * reader-facing fields only — a Jekyll data file, not an instance.
+ */
+function unreadNestedInstances(): KgFinding[] {
+  const repo = repoRootFor(root);
+  const out: KgFinding[] = [];
+  const walk = (dir: string, depth: number): void => {
+    if (depth > 3) return;
+    let entries;
     try {
-      const m = JSON.parse(readFileSync(mp, "utf-8")) as { skills?: string[] };
-      for (const s of m.skills ?? []) out.push({ pkg: d.name, skill: s });
+      entries = readdirSync(dir, { withFileTypes: true });
     } catch {
-      // `validate-skills.ts`'s finding, not this one's.
+      return;
     }
-  }
-  return out;
+    for (const e of entries) {
+      if (e.name.startsWith(".") || e.name === "node_modules") continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) {
+        walk(p, depth + 1);
+        continue;
+      }
+      if (e.name !== "harness.json") continue;
+      // Not this audit's own instance, whichever directory that is.
+      if (resolve(dir) === resolve(root)) continue;
+      let decl: { directories?: unknown[]; name?: string };
+      try {
+        decl = JSON.parse(readFileSync(p, "utf-8")) as typeof decl;
+      } catch {
+        continue;
+      }
+      if (!Array.isArray(decl.directories) || decl.directories.length === 0) continue;
+      const diagrams = workflowFiles(dir).filter((f) => f.endsWith(".bpmn")).length;
+      out.push({
+        where: relative(repo, p),
+        detail:
+          `nested instance "${decl.name ?? relative(repo, dir)}" declares its own graph, and this audit ` +
+          `does not read it — ${diagrams} diagram(s) there are unaudited by this run. That is correct: ` +
+          `one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT ` +
+          `declare its directories here — that re-introduces the leak ` +
+          `instance-graph-isolation.test.ts guards.`,
+      });
+    }
+  };
+  walk(repo, 0);
+  return out.sort((a, b) => a.where.localeCompare(b.where));
+}
+
+/**
+ * The graph directories this audit actually read, as a phrase for a finding.
+ *
+ * ## Why every graph-ranging finding has to carry this
+ *
+ * A finding that says a skill is "named by no activity" is true OF THE GRAPH IT
+ * RANGED OVER and says nothing about any other. Worded absolutely it reads as a
+ * fact about the repository, and on 2026-09-20 a session read it that way:
+ * `confirm-harness` is named three times by `cat-bootstrap/workflows/`, which this
+ * audit does not read, so the absolute wording looked like a blind spot. The
+ * session "fixed" it by declaring that directory at the root and re-introduced a
+ * defect `instance-graph-isolation.test.ts` had been written the day before to
+ * prevent — one instance's graph carrying another's nodes, which had put 88
+ * references to a cat-bootstrap process into folio-assistant's published graph.
+ *
+ * The isolation is correct and the scoping is correct. **Only the sentence was
+ * wrong**, and it cost a change a test had to stop. Bean `sa8y`.
+ */
+function graphScope(): string {
+  // No filter: `kgDirectories` already returns only the declared
+  // knowledge-graph directories, which is exactly the set this audit walks.
+  //
+  // The DECLARED path string, not a computed relative one. Computing it against
+  // this script's root printed `../cat-bootstrap/skills` once the tree moved into
+  // `cat-harness/`, which is accurate and reads like a bug — and it is the
+  // declaration that a reader would go and edit. "Resolve, do not compose",
+  // applied to a diagnostic rather than to a link.
+  const dirs = kgDirectories(root).map((d) => `\`${d.id}\` at \`${d.path}\``);
+  return dirs.length > 0 ? dirs.join(", ") : "no knowledge-graph directory declared";
+}
+
+/** Appended to any finding whose range is this instance's graph and not the tree. */
+function scopedToThisGraph(): string {
+  return (
+    ` In this instance's graph only (read: ${graphScope()}) —` +
+    " a nested instance may name it, and this audit does not read one."
+  );
 }
 
 function auditGraph(
@@ -883,7 +1107,12 @@ function auditGraph(
   const orphans = [...skills]
     .filter((s) => !reachable.has(s))
     .sort()
-    .map((s) => ({ where: s, detail: `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` }));
+    .map((s) => ({
+      where: s,
+      detail:
+        `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` +
+        scopedToThisGraph(),
+    }));
 
   // The OTHER question, asked separately because the answers differ by two
   // orders of magnitude: what does the actor → role → task model actually
@@ -895,12 +1124,54 @@ function auditGraph(
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) for (const s of n.skills) modelled.add(s);
   }
+  // `consulted: true` is skipped, and that is the criterion becoming
+  // MEANINGFUL rather than being relaxed. A skill that is reference material
+  // belongs in no lane by its nature — `directory-conventions` is what a
+  // performer reads, not a step anybody takes — so counting it as unbound
+  // measured the criterion rather than the corpus. Bean `y1w9`.
+  const consulted = consultedSkills(root);
+  // A skill that must never reach a published graph cannot be carried by a
+  // published role either, so reporting it as unbound measures the strip
+  // rather than the corpus.
+  //
+  // `fsh-guts` is the standing case and it is STRUCTURAL, not an oversight:
+  // a role carrying it emits a dangling `hasSkill` edge into the export,
+  // because every emitter strips the node while the edge keeps its name.
+  // Measured 2026-09-20 — adding it to `docs-authoring-agent` broke
+  // `kg-export.test.ts` on exactly that. So the criterion would report it
+  // forever and the only "fix" available would re-introduce the leak the
+  // owner's "NEVER include fsh-guts in the KG" rule exists to prevent.
+  //
+  // Exempting on the DECLARATION rather than on the name, per the owner's
+  // 2026-09-20 answer: the skill says `published: false` in its own front
+  // matter, and this reads what it said. The narrower, safer direction is
+  // deliberate — a skill is exempt here only because it opted out of
+  // publication, never merely because nothing happens to bind it.
+  const unpublished = unpublishedSkills(root);
   const unmodelled = [...skills]
-    .filter((s) => !modelled.has(s))
+    .filter((s) => !modelled.has(s) && !consulted.has(s) && !unpublished.has(s))
     .sort()
     .map((s) => ({
       where: s,
-      detail: `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.`,
+      detail:
+        `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.` +
+        scopedToThisGraph(),
+    }));
+
+  // The OTHER direction, and the reason the exemption is safe to grant. A
+  // skill cannot be reference material AND a step somebody performs: if a
+  // lane or a role claims it, either the annotation is wrong or the binding
+  // is. Without this, `consulted: true` would be an unfalsifiable opt-out of
+  // the criterion, which is a worse field than the one `qif9` removed.
+  const consultedButPerformed = [...consulted]
+    .filter((s) => modelled.has(s))
+    .sort()
+    .map((s) => ({
+      where: s,
+      detail:
+        `"${s}" declares \`consulted: true\` — reference material nobody performs — ` +
+        `but a role carries it or an activity names it. One of the two is wrong.` +
+        scopedToThisGraph(),
     }));
 
   const declaredRoles = new Set((graph?.roles ?? []).map((r) => r.id));
@@ -957,6 +1228,7 @@ function auditGraph(
       // skill looks unmodelled and the count would be the whole corpus — a
       // number that says nothing about the corpus and everything about the
       // missing file. Reporting it as a finding would be a wall of noise.
+      "consulted-skill-not-performed": entry(consultedButPerformed, consulted.size > 0),
       "skill-in-role-or-process": graph
         ? entry(unmodelled)
         : { result: "unknown" as KgResult, findings: [{ where: "—", detail: "no role graph declared." }] },
@@ -971,6 +1243,9 @@ function auditGraph(
       // contain no mention of `remote-packages/` at all, and the single consumer —
       // `scripts/generate-docs.ts` — reads those files solely for Docker
       // requirements, which is what `schemas/skill-package.ts` documents them as.
+      // (That consumer was retired to `fsh-guts/scripts/` on 2026-09-20,
+      // having never been invoked in any commit since the root commit — bean
+      // `folio-assistant-3w0i`. The reading below only gets stronger.)
       //
       // So an entry resolvable only that way publishes a registry name that
       // `skill_fetch` answers "not found" for, which is exactly the defect this
@@ -1034,6 +1309,7 @@ function auditGraph(
       "actor-capabilities-resolve": entry(badCaps),
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
+      "nested-instance-audited": entry(unreadNestedInstances()),
     },
   );
 }
@@ -1048,7 +1324,7 @@ function sidecarPath(r: KgQaReport): string {
   // live under several packages, so one directory per kind would collide two
   // packages' same-named skills into one sidecar. Processes have exactly that
   // shape the moment an instance declares more than one knowledge-graph
-  // directory — `bootstrap/workflows/` and `crdm/workflows/` can each hold a
+  // directory — `cat-bootstrap/workflows/` and `crdm/workflows/` can each hold a
   // `review.bpmn`, and a kind-keyed table sends both to one file, so one
   // silently overwrites the other's findings.
   //
@@ -1137,8 +1413,10 @@ if (check) {
   writeFileSync(manifestPath, manifestText);
 }
 
+const written = new Set<string>();
 for (const r of reports) {
   const p = sidecarPath(r);
+  written.add(resolve(p));
   const text = serialise(r);
   if (check) {
     const current = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
@@ -1147,6 +1425,71 @@ for (const r of reports) {
     mkdirSync(join(p, ".."), { recursive: true });
     writeFileSync(p, text);
   }
+}
+
+// ── A SIDECAR NO REPORT ACCOUNTS FOR.
+//
+// The loop above compares each report against its file. It never looks the
+// other way, so a sidecar whose SUBJECT has been renamed or deleted is
+// structurally invisible: nothing regenerates it, nothing prunes it, and
+// `--check` compares it against nothing.
+//
+// Measured, bean `3jj9`: `cat-bootstrap/workflows/cat-bootstrap.kg-qa.json` sat in
+// the tree auditing `cat-bootstrap/workflows/cat-bootstrap.bpmn`, a path that does
+// not exist — the process had been renamed to `initialize-harness.bpmn`.
+// It reported `lane-binds-role: pass` over a file nobody had, while the live
+// diagram had no sidecar at all, and `kg:audit:check` exited 0 across both.
+// A verdict about a file that is gone is worse than no verdict: it is the
+// one a reader trusts.
+//
+// REPORTED, NEVER DELETED. An orphan can also mean the subject is
+// temporarily unreachable — here the real cause is bean `pve3`, the root
+// declaring `cat-bootstrap/skills/` but not `cat-bootstrap/workflows/`, so the
+// process is simply not discovered from this root. Deleting on that
+// evidence would destroy a verdict to hide a declaration gap.
+// `deletion-requires-confirmation` — the agent reports, a person decides.
+const orphans = sweepOrphans(root, written);
+if (orphans.length > 0) {
+  const gone = orphans.filter((o) => o.subjectExists === false);
+  const present = orphans.filter((o) => o.subjectExists === true);
+  const unknown = orphans.filter((o) => o.subjectExists === undefined);
+  console.error(`\n\u2717 ${orphans.length} sidecar(s) audit a subject no report covers:`);
+  const show = (label: string, rows: OrphanSidecar[], advice: string): void => {
+    if (rows.length === 0) return;
+    console.error(`\n  ${label} (${rows.length}):`);
+    for (const o of rows.sort((a, b) => (a.sidecar < b.sidecar ? -1 : 1))) {
+      console.error(`    ${o.sidecar}`);
+    }
+    console.error(`    ${advice}`);
+  };
+  show(
+    "SUBJECT GONE",
+    gone,
+    "The audited file is not there. The verdict describes nothing; the sidecar is dead.",
+  );
+  show(
+    "SUBJECT PRESENT, NOT AUDITED",
+    present,
+    "The file exists and this run did not audit it. Either discovery is wrong, or it\n" +
+      "    is excluded on purpose — `isPartOfASkill` excludes a fragment that declares\n" +
+      "    `part-of:`, and a sidecar predating that exclusion is stale, not evidence.",
+  );
+  show(
+    "SUBJECT UNREADABLE",
+    unknown,
+    "The sidecar could not be parsed or names no path, so which case this is could\n" +
+      "    not be determined. That is not a pass for it.",
+  );
+  console.error("\n  Reported, never deleted — `deletion-requires-confirmation`.");
+  // And, since 2026-09-20, this FAILS `kg:audit:check`. Reporting without
+  // failing is what let twelve of these accumulate: the finding printed `✗` on
+  // every run while the gate set announced "53 gates pass", so the only reader
+  // who would ever act on it was one already reading the log for another reason.
+  //
+  // Failing the check does NOT delete anything — the line above still holds, and
+  // the remedy is still a person's. What changes is that the remedy cannot be
+  // indefinitely deferred in silence.
+  console.error("  It fails `kg:audit:check`; removing a dead sidecar is still yours to authorise.");
 }
 
 if (asJson) {
@@ -1192,6 +1535,39 @@ if (check) {
     const w = worstSeverity(r);
     return w !== undefined && gate.includes(w);
   });
-  process.exit(stale.length || tripped ? 1 : 0);
+  // ORPHANS FAIL, and they did not until the count reached zero.
+  //
+  // The sweep printed its findings to stderr and `orphans` appeared nowhere in
+  // this expression, so `kg:audit:check` reported twelve and exited 0 — a
+  // report nobody fails on, which is `xom7`: from inside a checkout that looks
+  // exactly like a clean run. CI ran this command and was green over all of
+  // them.
+  //
+  // Gating earlier would have been gating a backlog, which is how a check gets
+  // switched off within a week. The repository's own precedent is the ruff
+  // comment in `code-quality-gates.yml`: **a check is an error only once its
+  // count is zero.** The twelve were cleared in the commit that added this
+  // line — four whose subject had moved, eight written before
+  // `isPartOfASkill` existed — so it starts at zero and any new one is a
+  // regression rather than debt.
+  //
+  // Three further points, from a second session that reached this same change
+  // independently and whose merge is where these were folded in:
+  //
+  //   · WHY the severity gate could not already see them: orphans are computed
+  //     outside `reports`, so `worstSeverity` has nothing to rank. They are not
+  //     findings ABOUT a subject — a stale sidecar is a verdict that has not
+  //     caught up, an orphaned one a verdict about something this run did not
+  //     judge — which is why they sit beside `stale` rather than inside the
+  //     severity ladder.
+  //   · ALL THREE orphan groups count, the UNREADABLE one included. `AGENTS.md`
+  //     on this repository's own sweeps: could-not-determine "is never rendered
+  //     as clean" and it "outranks a finding" — a sweep blind on one check has
+  //     not cleared the others. Excluding the unresolvable case would put the
+  //     third state back on the pass side.
+  //   · Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0,
+  //     or regenerating after a rename would fail the very command you run to
+  //     fix it.
+  process.exit(stale.length || tripped || orphans.length > 0 ? 1 : 0);
 }
 process.exit(0);

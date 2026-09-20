@@ -35,7 +35,13 @@
  * changes, this is a judgement to re-make there rather than a number to
  * recompute here — no test asserts the match, because none can.
  */
-import { THEME_SCHEMA_TAG, ThemeSchema, type Theme } from "./theme.js";
+import {
+  THEME_SCHEMA_TAG,
+  ThemeSchema,
+  explainThemeFailure,
+  resolveTheme,
+  type ResolvedTheme,
+} from "./theme.js";
 
 /** Geometry shared by every shipped theme: the sticky is the same sticky. */
 const LAYOUTS = {
@@ -47,6 +53,7 @@ const LAYOUTS = {
 const RAW = [
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "pale-sage",
     name: "Pale sage",
     description: "The default. Matches the staging banner.",
@@ -57,6 +64,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "pale-sage-fade",
     name: "Pale sage, fading",
     description: "The sage with a soft vertical gradation.",
@@ -68,6 +76,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "dusty-carolina",
     name: "Dusty Carolina blue",
     palette: {
@@ -77,6 +86,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "dusty-carolina-fade",
     name: "Dusty Carolina blue, fading",
     description: "The blue with a soft vertical gradation.",
@@ -88,16 +98,225 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "grumpy-cat",
     name: "Grumpy cat",
     description: "Warm greys and a sage accent, after the mark.",
     palette: {
       surface: "#edeae4", ink: "#221f1b", edge: "#cbc5bb", accent: "#7d8a6e",
     },
+    // The one shipped theme with art, and it names a ROLE rather than three
+    // paths — so an instance declaring its own `landing` images gets its own
+    // backdrop, and one declaring none renders palette-only instead of pointing
+    // at three `.webp`s that live only in this repository. See
+    // `theme.ts`'s ThemeBackdropSchema docs for why that inversion is the whole
+    // point of the field.
+    backdrop: {
+      imageRole: "landing",
+      // 0.86 is measured, not chosen by eye: `themes.test.ts` computes the
+      // WORST-CASE contrast of `ink` over this scrim laid on pure black — the
+      // darkest art any instance could declare — and requires it to clear WCAG
+      // AAA. At 0.90 it is 10.94:1, against 13.93:1 on pure white — the dark end
+      // is the binding one. A thinner scrim is where that guarantee
+      // goes, which is why the number has a test and not a comment saying it
+      // looked fine.
+      // 0.82, and the whole history is here because this number has been moved
+      // three times by LOOKING at it: 0.86 too present, 0.93 too far, 0.90
+      // settled — and then, on a board where the art finally filled its card,
+      // "still slightly too faded". The earlier readings were taken when the
+      // art was letterboxed into a text-sized box, so the cat was small and the
+      // scrim was doing less work than it appeared to.
+      //
+      // Re-measured rather than nudged. Ink over this scrim on PURE BLACK — the
+      // darkest art any instance could declare, which is the binding case:
+      //   grumpy-cat 9.02:1 | engineer 10.33:1 | library 8.81:1 | analyst 9.70:1
+      // Every one still clears AAA (7:1), which is the floor this must not cross.
+      scrim: "rgba(237, 234, 228, 0.82)",
+      description:
+        "The instance's declared landing art, behind the sticky's ink rather than composited with it.",
+    },
     layouts: LAYOUTS,
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
+    id: "cat-bootstrap",
+    name: "CatBootstrap",
+    description: "Desert sand and sienna \u2014 the frontier at the start of the trail.",
+    palette: {
+      surface: "#f4f0e6", ink: "#26211a", edge: "#d8cdb6", accent: "#b1683c",
+    },
+    // BOOTSTRAP'S OWN, which is the convention the owner set: "each harness
+    // hould have its own unique theme". It was the one harness with a sticky
+    // and no art, so its card rendered palette-only while every other card
+    // carried a cat \u2014 visible as a gap rather than as a choice.
+    //
+    // The art is a grumpy cat in a cowboy hat and boots, in the rain, in a
+    // Sonoran desert with a roadrunner. That reads as the frontier at the start
+    // of the trail, which is what bootstrap IS: "the graph an agent reads
+    // before it knows what this repository is".
+    //
+    // Its three crops each declare their own `textRegion`, measured by opening
+    // them: the cloud sits high and the @ mark occupies its top centre, so the
+    // words go BELOW the mark rather than over it. Without those, this role
+    // would fall back to the default grumpy cloud, whose geometry is a
+    // different composition's and would put the text across the @.
+    backdrop: {
+      imageRole: "landing-cat-bootstrap",
+      // Measured the same way as its siblings: `ink` over this scrim laid on
+      // PURE BLACK, the darkest art any instance could declare, is 9.25:1 \u2014
+      // clear of the AAA 7:1 floor. 14.37:1 on pure white.
+      scrim: "rgba(244, 240, 230, 0.82)",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
+    id: "operations",
+    name: "Grumpy cat, operations",
+    description: "Steel and blueprint blue — building the thing, and running it.",
+    palette: {
+      surface: "#edf0f3", ink: "#1a2129", edge: "#ccd4db",
+      // Blueprint blue rather than the hi-vis yellow, for the reason `engineer`
+      // gives below about its own signature colour: `accent` is the priority
+      // stripe's hue, so a theme whose accent is a safety yellow makes `medium`
+      // read as a warning on that board alone. The scene supplies a second
+      // honest colour — the blueprint screen and the sky — and that is this one.
+      accent: "#3f6d9e",
+    },
+    // THE OWNER'S CLUSTER, 2026-09-20: "avatar/theme for engineering/test
+    // harness/deploment/operations". A grumpy cat in a hard hat and hi-vis with
+    // a clipboard, on a site where a space elevator is going up: cranes,
+    // robotic assembly lines, a blueprint on a screen, a planet overhead.
+    // Building infrastructure and then operating it, which is what that cluster
+    // is about.
+    //
+    // ADDED BESIDE `engineer` RATHER THAN REPLACING IT. The two overlap — the
+    // owner's cluster names "engineering" and `engineer` exists — but `engineer`
+    // is referenced only from tests, and replacing its art would discard work
+    // nobody asked to remove. Collapsing them is a judgement for the owner, and
+    // it is cheap to do later and not cheap to undo.
+    //
+    // Which cards wear this is a JUDGEMENT, not a lookup: the owner's standing
+    // ruling is "no formal role/theme mapping per se. that is authoring
+    // (human/agentic) decision/judgement", and they framed this one the same way
+    // — "as jsugementcall in narratives and on test plans, and related
+    // (sub)graphs".
+    //
+    // All three crops are one scene, and each declares its OWN `textRegion`,
+    // measured by opening it. The @ mark sits in the cloud's upper centre in
+    // every crop, so the words go BELOW it — and the cloud is WIDE AND SHORT in
+    // the square and tall crops, which leaves genuinely little room. That is a
+    // property of the composition rather than a mistake, and it makes this
+    // theme suit SHORT cards; a long one should either declare its own
+    // `text.box` or wear a roomier theme.
+    backdrop: {
+      imageRole: "landing-operations",
+      // Measured the way every sibling's is: `ink` over this scrim laid on PURE
+      // BLACK — the darkest art any instance could declare, and therefore the
+      // binding case — is 9.36:1, clear of the AAA 7:1 floor. 14.57:1 on pure
+      // white.
+      scrim: "rgba(237, 240, 243, 0.82)",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
+    id: "engineer",
+    name: "Grumpy cat, engineering",
+    description: "The cloud cream and a working green, behind the cat in a hi-vis vest.",
+    palette: {
+      surface: "#fdfbef", ink: "#1f2a24", edge: "#c9cfc4",
+      // NOT the hi-vis orange, however much it is the picture's signature colour.
+      // `accent` is the priority stripe's hue for `medium`, and `.fa-sticky-p-high`
+      // is a literal amber precisely so urgency reads the same on every board. An
+      // orange accent would make a medium sticky look like a high one — a theme may
+      // set a hue, never make two signals look alike.
+      accent: "#5a6b5c",
+    },
+    backdrop: {
+      imageRole: "landing-engineer",
+      // Measured like grumpy-cat's, over PURE BLACK: 11.41:1 for this ink, and
+      // 14.35:1 over white. The art carries bright hi-vis orange and near-black
+      // shadow in the same frame, so both ends are real here rather than
+      // hypothetical.
+      //
+      // 0.90 after two looks at the rendered board: 0.86 left the logo too
+      // present ("should be fadded a lot ... logo faded especially"), 0.93 went
+      // past it ("a bit less faded"). Arrived at by rendering and looking, which
+      // is the only way this value was ever going to be settled. The scrim is the
+      // ONE fade knob: adding an `opacity` to the art would be a second control
+      // for one effect, and the two would have to be kept in step by whoever
+      // next changed either.
+      scrim: "rgba(253, 251, 239, 0.82)",
+      description:
+        "The instance's declared engineering landing art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
+    id: "library",
+    name: "Grumpy cat, librarian",
+    description: "Storm slate and a cool cream, behind the cat with the books.",
+    palette: {
+      // Sampled from the art rather than chosen: a 7px grid over the square crop
+      // gives #e4e4e4 / #e4e4d8 for the cloud at 20% of the frame, and a slate
+      // family — #6c8490, #78849c, #78909c, #90a8b4 — for the rain and the
+      // library behind it. The values below sit inside those clusters.
+      surface: "#e8e8e0", ink: "#1c2630", edge: "#c2ccd4",
+      // A slate blue, clear of the literal red and amber the critical/high
+      // priority stripes carry, so urgency still reads the same on this board.
+      // 3.98:1 against `surface` — past the 3:1 SC 1.4.11 floor for a non-text
+      // channel, which is what the stripe is.
+      accent: "#5c7484",
+    },
+    backdrop: {
+      imageRole: "landing-library",
+      // Measured over PURE BLACK like the others: 9.97:1 for this ink, 12.72:1
+      // over white. This art has the widest tonal range of the three — a
+      // near-black 4% of the frame beside lamplight — so the dark end is real.
+      scrim: "rgba(232, 232, 224, 0.82)",
+      description:
+        "The instance's declared librarian art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
+    id: "analyst",
+    name: "Grumpy cat, analyst",
+    description: "Daylight cream and a working blue, behind the cat with the charts.",
+    palette: {
+      // Sampled from the art, and the numbers say why this is not a variation
+      // on the others: a 7px grid over the square crop gives #f0f0e4 across 28%
+      // of the frame, against #e4e4e4 for the librarian, with sky blues
+      // (#a8ccfc, #b4d8fc, #c0d8fc, #9cccfc) where the others have rain-grey.
+      // This is the ONLY sunny backdrop in the set.
+      surface: "#f2f2e8", ink: "#1e2a3a", edge: "#cbd6e2",
+      // The tie blue. 4.76:1 against `surface`, past the 3:1 SC 1.4.11 floor
+      // for a non-text channel, and clear of the literal red and amber the
+      // critical/high stripes carry so urgency reads the same on every board.
+      accent: "#2f6ea8",
+    },
+    backdrop: {
+      imageRole: "landing-analyst",
+      // Measured over PURE BLACK like the rest: 10.29:1 for this ink, 13.04:1
+      // over white. The art is bright, so the dark end is the one that could
+      // have been assumed and was not.
+      scrim: "rgba(242, 242, 232, 0.82)",
+      description:
+        "The instance's declared analyst art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "high-contrast-light",
     name: "High contrast, light",
     description: "Black on white. No gradation, by design.",
@@ -106,6 +325,7 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "high-contrast-dark",
     name: "High contrast, dark",
     description: "White on black. No gradation, by design.",
@@ -114,8 +334,27 @@ const RAW = [
   },
 ] as const;
 
-/** Every shipped theme, parsed — so a malformed one fails at import, not at render. */
-export const THEMES: readonly Theme[] = RAW.map((t) => ThemeSchema.parse(t));
+/**
+ * Every shipped theme, RESOLVED — so a malformed one fails at import, not at
+ * render, and so consumers get the form that has all its fields.
+ *
+ * `ResolvedThemeSchema`, not `ThemeSchema`. The declared form went lax when
+ * themes gained inheritance (bean `j66n`): every field but identity is
+ * optional there, because a theme states only what it changes. That is the
+ * AUTHOR's form. A renderer needs the resolved one, where requiredness
+ * actually lives — `data-modelling` step 7.
+ *
+ * None of these eleven inherits from anything, so resolving them is a parse
+ * with `kind` defaulted to `sticky`. They go through the same function a
+ * who-iris theme will, rather than a shortcut that would stop exercising the
+ * path the moment it mattered.
+ */
+export const THEMES: readonly ResolvedTheme[] = RAW.map((t) => {
+  const declared = ThemeSchema.parse(t);
+  const r = resolveTheme({ instance: "cat-harness", theme: declared }, () => undefined);
+  if (!r.ok) throw new Error(`theme ${declared.id}: ${explainThemeFailure(r.failure)}`);
+  return r.theme;
+});
 
 /**
  * The default.
@@ -132,6 +371,6 @@ export const GRADATED_THEME_IDS = THEMES.filter((t) => t.palette.gradientFrom).m
 /** The high-contrast pair, which the accessibility clause requires to exist. */
 export const HIGH_CONTRAST_THEME_IDS = ["high-contrast-light", "high-contrast-dark"] as const;
 
-export function themeById(id: string): Theme | undefined {
+export function themeById(id: string): ResolvedTheme | undefined {
   return THEMES.find((t) => t.id === id);
 }

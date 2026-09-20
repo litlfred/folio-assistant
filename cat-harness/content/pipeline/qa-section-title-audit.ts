@@ -64,7 +64,8 @@ import { createHash } from "node:crypto";
 import { findContentRepoRoot } from "./repo-root";
 
 // Was `resolve(import.meta.dir, "..", "..")` — this file's own location, so
-// the PLATFORM repo. Every path below is cwd-relative (`resolve("content",
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+// the PLATFORM repo. Every path below is cwd-relative (`resolve("folio",
 // paper, …)`), so that one line pointed the entire audit at
 // `<platform>/content`, which holds only `pipeline/`. Run from a folio it
 // chdir'd BACK OUT to the platform through the `folio-assistant/` symlink.
@@ -152,7 +153,8 @@ function stripMath(t: string): string {
 
 function findChapterManifests(paperFilter?: string): string[] {
   const out: string[] = [];
-  const contentDir = resolve("content");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const contentDir = resolve("folio");
   for (const paper of readdirSync(contentDir)) {
     if (paperFilter && paper !== paperFilter) continue;
     // Skip tooling / dependency / docs dirs — only paper dirs hold chapters.
@@ -275,7 +277,8 @@ function hashContent(s: string): string {
 function blockSourceFiles(paper: string, chapterDir: string, root: string): string[] {
   const out: string[] = [];
   for (const ext of ["md", "ts", "lean"]) {
-    const p = resolve("content", paper, chapterDir, `${root}.${ext}`);
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const p = resolve("folio", paper, chapterDir, `${root}.${ext}`);
     if (existsSync(p)) out.push(p);
   }
   return out;
@@ -317,7 +320,8 @@ function subtreeStalenessHash(
 function chapterStaleKeys(
   paper: string, chapterDir: string, sections: unknown, thoroughMode: boolean,
 ): { manifestHash: string; keyOf: (nodeKey: string) => string } {
-  const manifestPath = resolve("content", paper, chapterDir, `${chapterDir}.ts`);
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const manifestPath = resolve("folio", paper, chapterDir, `${chapterDir}.ts`);
   let manifestHash = "";
   try { manifestHash = hashContent(readFileSync(manifestPath, "utf8")); } catch { /* */ }
   if (!thoroughMode) return { manifestHash, keyOf: () => manifestHash };
@@ -348,7 +352,8 @@ function writeSidecars(
     arr.push(n);
   }
   for (const [paper, chapters] of byPaper) {
-    const sidecarPath = resolve("content", paper, "section-title-audit.qa.json");
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const sidecarPath = resolve("folio", paper, "section-title-audit.qa.json");
     let prev: { chapters?: Record<string, { agent?: Record<string, { reviewed_hash?: string; stale_mode?: string }> }> } = {};
     try { prev = JSON.parse(readFileSync(sidecarPath, "utf8")); } catch { /* first run */ }
     const out: Record<string, unknown> = { criterion: "voice-section-title-coherence", paper, chapters: {} };
@@ -404,7 +409,8 @@ async function recordVerdict(): Promise<void> {
     process.exit(2);
   }
   const [paper, chapterDir] = vChapter.split("/");
-  const sidecarPath = resolve("content", paper, "section-title-audit.qa.json");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const sidecarPath = resolve("folio", paper, "section-title-audit.qa.json");
   let sidecar: {
     chapters?: Record<string, {
       manifest_hash?: string;
@@ -461,7 +467,8 @@ async function recordVerdict(): Promise<void> {
   // Compute the staleness key the verdict is gated on — manifest hash, or
   // (under --thorough) this section's subtree hash incl. block content +
   // descendant subsections. Import the manifest for its section tree.
-  const manifestPath = resolve("content", paper, chapterDir, `${chapterDir}.ts`);
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const manifestPath = resolve("folio", paper, chapterDir, `${chapterDir}.ts`);
   let sections: unknown = [];
   try {
     const mod = (await import(pathToFileURL(manifestPath).href)) as { default?: { sections?: unknown } };
@@ -532,7 +539,8 @@ async function main(): Promise<void> {
     const chapterDir = dirname(m).split("/").pop() ?? "?";
     const paper = dirname(dirname(m)).split("/").pop() ?? "?";
     if (!paperTitle.has(paper)) {
-      const pm = resolve("content", paper, `${paper}.ts`);
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const pm = resolve("folio", paper, `${paper}.ts`);
       try {
         const pmod = (await import(pathToFileURL(pm).href)) as { default?: { title?: string } };
         paperTitle.set(paper, pmod.default?.title ?? paper);
@@ -639,7 +647,7 @@ async function main(): Promise<void> {
 
   if (writeSidecar) {
     writeSidecars(allNodes, flags, structureFlags, rawSectionsByChapter, thorough);
-    console.log(`  sidecars → content/<paper>/section-title-audit.qa.json (machine findings + agent slots${thorough ? "; thorough subtree-hash gate" : ""}; CI git-diff-gated)`);
+    console.log(`  sidecars → folio/<paper>/section-title-audit.qa.json (machine findings + agent slots${thorough ? "; thorough subtree-hash gate" : ""}; CI git-diff-gated)`);
   }
 
   const depthViolations = structureFlags.filter((f) => f.kind === "depth").length;

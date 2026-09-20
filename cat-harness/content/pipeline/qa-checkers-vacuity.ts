@@ -53,6 +53,7 @@
  */
 
 import { readFileSync, existsSync } from "fs";
+import { stripLeanComments } from "./lean-lexer.js";
 import type { CheckerResult, CheckerHit } from "./qa-checkers-voice";
 
 /** A field assignment inside a structure-instance body. */
@@ -487,9 +488,7 @@ export function checkDocstringHonesty(leanPath?: string): CheckerResult {
  * ------------------------------------------------------------------ */
 
 /** Strip Lean block comments (docstrings included) and line comments. */
-function stripLeanComments(src: string): string {
-  return src.replace(/\/-[\s\S]*?-\//g, "").replace(/--.*$/gm, "");
-}
+
 
 /** Collapse whitespace so two spellings of one expression compare equal. */
 function normExpr(s: string): string {

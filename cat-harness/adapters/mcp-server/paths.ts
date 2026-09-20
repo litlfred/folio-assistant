@@ -7,7 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph, directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -26,7 +26,7 @@ import { directoryForGraph } from "../../schemas/cat-harness.js";
 export const REPO_ROOT = findContentRepoRoot();
 
 /** Content objects directory. */
-export const CONTENT_DIR = resolve(REPO_ROOT, "content");
+export const FOLIO_DIR = folioDir(REPO_ROOT);
 
 /**
  * Ingested documents directory — the `.jsonld` nodes and `sections/*.md` that
@@ -43,14 +43,28 @@ export const CONTENT_DIR = resolve(REPO_ROOT, "content");
 // CREATES this directory on its first run, and resolving to nothing before
 // then would make the first ingest impossible rather than merely empty.
 // declared-path-literal: the convention fallback for a WRITE target.
-// `directoryForGraph` returns undefined for a directory that is not there
+// `directoriesForGraph` returns undefined for a directory that is not there
 // yet, and the ingestion queue must be creatable before anything is in it.
 // The declared `uploads` graph — the ingestion queue, before anything is L1.
 // Write-target fallback, as above.
 export const UPLOADS_DIR = directoryForGraph(REPO_ROOT, "uploads") ?? resolve(REPO_ROOT, "uploads");
 
-// declared-path-literal: the convention fallback, at the call site so the choice is visible — ingestion CREATES library/ on its first run.
-export const LIBRARY_DIR = directoryForGraph(REPO_ROOT, "library") ?? resolve(REPO_ROOT, "library");
+// EVERY declared library, not the first — the graph tools read all of them.
+//
+// Singular until bean `a02m`. One name for a list of one was fine while
+// `library` had one home; the moment a second is declared, a server exporting
+// LIBRARY_DIR serves half the corpus and reports success. Plural here rather
+// than at each consumer so the shape of the answer is the shape of the
+// question.
+//
+// declared-path-literal: the convention fallback, at the call site so the
+// choice is visible — ingestion CREATES library/ on its first run, so
+// resolving to nothing before then would make the first ingest impossible
+// rather than merely empty.
+export const LIBRARY_DIRS: string[] = (() => {
+  const declared = directoriesForGraph(REPO_ROOT, "library");
+  return declared.length > 0 ? declared : [resolve(REPO_ROOT, "library")];
+})();
 
 /** LaTeX chapters output directory. */
 export const CHAPTERS_DIR = resolve(REPO_ROOT, "chapters");

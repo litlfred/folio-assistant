@@ -2,8 +2,12 @@
  * Tests for schemas/harness-config.ts — cross-folio dependency schema and resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import { HARNESS_CONFIG } from "./harness-config";
-import { mkdirSync, writeFileSync, rmSync, readFileSync } from "node:fs";
+// REQUIRED: cat-harness/harness.json declares a `folio` graph, and that kind is
+// registered by a load-time side effect in core. Without this, reading the
+// declaration under test throws `unknown graph kind "folio"`.
+import "./folio-graph-kind";
+import { mkdirSync, mkdtempSync, writeFileSync, rmSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
   FolioAssistantDependencySchema,
@@ -14,7 +18,9 @@ import {
   flattenDependencies,
   resolveSkillDirs,
   resolveTranslationDirs,
+  materialiseDeclaredDirectories,
 } from "./harness-config";
+import { instanceConfigPathIn, writeInstanceConfig } from "../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_folio_config__");
 
@@ -30,29 +36,29 @@ beforeAll(() => {
   const depA = join(TMP, "dep-a");
   mkdirSync(join(depA, "skills"), { recursive: true });
   mkdirSync(join(depA, "translations", "fr"), { recursive: true });
-  writeFileSync(join(depA, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(depA, JSON.stringify({
     translation: { translationDir: "translations" },
-  }), "utf-8");
+  }));
 
   // Dependency B (transitive dep of A)
   const depB = join(TMP, "dep-b");
   mkdirSync(join(depB, "skills"), { recursive: true });
-  writeFileSync(join(depB, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(depB, JSON.stringify({
     translation: { translationDir: "translations" },
-  }), "utf-8");
+  }));
 
   // A depends on B
-  writeFileSync(join(depA, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(depA, JSON.stringify({
     translation: { translationDir: "translations" },
     dependencies: {
       folioAssistant: [
         { name: "dep-b", path: depB },
       ],
     },
-  }), "utf-8");
+  }));
 
   // Root config
-  writeFileSync(join(TMP, HARNESS_CONFIG), JSON.stringify({
+  writeInstanceConfig(TMP, JSON.stringify({
     contentType: "document",
     translation: {
       defaultLocale: "en",
@@ -64,7 +70,7 @@ beforeAll(() => {
         { name: "dep-a", path: depA },
       ],
     },
-  }), "utf-8");
+  }));
 });
 
 afterAll(() => {
@@ -175,21 +181,21 @@ describe("resolveDependencyTree", () => {
     // Create a cycle: dep-b depends on root
     const depB = join(TMP, "dep-b");
     const origConfig = JSON.parse(
-      readFileSync(join(depB, HARNESS_CONFIG), "utf-8"),
+      readFileSync(instanceConfigPathIn(depB), "utf-8"),
     );
-    writeFileSync(join(depB, HARNESS_CONFIG), JSON.stringify({
+    writeInstanceConfig(depB, JSON.stringify({
       ...origConfig,
       dependencies: {
         folioAssistant: [{ name: "root", path: TMP }],
       },
-    }), "utf-8");
+    }));
 
     // Should not infinite loop
     const tree = resolveDependencyTree(TMP);
     expect(tree).toHaveLength(1);
 
     // Restore original
-    writeFileSync(join(depB, HARNESS_CONFIG), JSON.stringify(origConfig), "utf-8");
+    writeInstanceConfig(depB, JSON.stringify(origConfig));
   });
 });
 
@@ -220,5 +226,106 @@ describe("resolveTranslationDirs", () => {
     expect(dirs.length).toBeGreaterThanOrEqual(1);
     // Root is last
     expect(dirs[dirs.length - 1]).toBe(join(TMP, "translations"));
+  });
+});
+
+/**
+ * A downstream instance INHERITS the ingestion directories, and gets them made.
+ *
+ * The owner, 2026-09-20: *"please add back uploads/ folder … library/ should
+ * also be added in at initation."*
+ *
+ * **"Add back" turned out not to mean restore.** Both directories are present,
+ * declared and populated in this checkout — `uploads/` with the raw queue,
+ * `library/` with 1455 tracked files — so the ask is about what a *newly
+ * initiated* instance gets, not about this one. Measured before anything was
+ * written, so that nobody goes looking for a deletion to revert or "restores" a
+ * directory over one that already has contents.
+ *
+ * And a newly initiated instance **already gets both**: they are declared
+ * instance-scoped in `cat-harness/harness.json`, so `resolveDirectories` hands
+ * them to every dependent and `materialiseDeclaredDirectories` — which
+ * `init-folio` calls — creates them in the dependent's own root.
+ *
+ * So why a test rather than nothing? Because that property holds by a chain of
+ * four facts, **none of which is stated anywhere**, and one of them is a single
+ * absent JSON key. Adding `"scope": "repository"` to the `uploads` entry would
+ * be a plausible-looking edit that silently stops every downstream folio getting
+ * an ingestion queue — `resolveDirectories` skips a repository-scoped entry for
+ * a dependency on purpose, and the folio would simply have nowhere to drop a
+ * file. Nothing would fail. This is what makes that loud.
+ */
+describe("a dependent instance inherits the ingestion directories", () => {
+  // Its OWN temporary root, deliberately NOT under `TMP`. `TMP` already holds a
+  // `translations/` for the tests above, and `materialiseDirectories` now
+  // refuses a declared directory that is empty at its resolved path while a
+  // twin at the other scope holds content — *"that is what a missing or wrong
+  // `scope` looks like"*. A downstream folio nested inside `TMP` inherits
+  // `translations/` instance-scoped, finds it empty, sees `TMP/translations`
+  // full, and trips that guard. The guard is right; the nesting was the
+  // mistake.
+  const DOWN = mkdtempSync(join(tmpdir(), "downstream-folio-"));
+
+  beforeAll(() => {
+    mkdirSync(DOWN, { recursive: true });
+    // The downstream folio is an INSTANCE — it declares itself, and its config
+    // is named after that declaration. A bare `harness.config.json` here would
+    // be a file `resolveHarnessConfigPath` no longer looks for.
+    writeInstanceConfig(
+      DOWN,
+      JSON.stringify({
+        contentType: "document",
+        dependencies: {
+          folioAssistant: [{ name: "folio-assistant", path: join(import.meta.dir, "..") }],
+        },
+      }),
+    );
+  });
+
+  it("materialises uploads/ and library/ in the DEPENDENT's own root", () => {
+    // An instance inherits the CONVENTION — an id and a relative path — not a
+    // licence to write into the dependency's checkout. `absPath` pointing back
+    // into cat-harness/ would be the equivalent of creating folders inside
+    // node_modules.
+    const made = materialiseDeclaredDirectories(DOWN, { dryRun: true });
+    for (const id of ["uploads", "library"]) {
+      const dir = made.find((d) => d.id === id);
+      expect(dir, `no "${id}" among ${made.map((d) => d.id).join(", ")}`).toBeDefined();
+      expect(dir!.absPath.startsWith(DOWN)).toBe(true);
+      expect(dir!.declaredBy).toBe("cat-harness");
+    }
+  });
+
+  it("they are inherited, not defaults — the declaring instance is named", () => {
+    // `DEFAULT_DIRECTORIES` entries report `(default)`. If these ever came
+    // through that path instead, an instance declaring nothing would still get
+    // them and the declaration would have stopped being what decides.
+    const made = materialiseDeclaredDirectories(DOWN, { dryRun: true });
+    for (const id of ["uploads", "library"]) {
+      expect(made.find((d) => d.id === id)!.declaredBy).not.toBe("(default)");
+    }
+  });
+
+  it("the work plan is NOT inherited, which is the contrast that makes this mean something", () => {
+    // `beans/` and `todos/` are repository-scoped: a dependency's repository is
+    // a different checkout, so inheriting them would point every consumer at
+    // somebody else's work plan. Their absence here is what shows the test can
+    // tell inherited from not.
+    const ids = materialiseDeclaredDirectories(DOWN, { dryRun: true }).map((d) => d.id);
+    expect(ids).not.toContain("beans");
+    expect(ids).not.toContain("todos");
+  });
+
+  it("uploads/ and library/ are DISTINCT declarations, not one directory twice", () => {
+    // Their own keep-markers record why: `uploads/` is the incoming queue, raw
+    // files as dropped, and is NOT greppable as corpus — the corpus checklist
+    // searches `library/` only. A source still sitting in uploads/ therefore
+    // reads as absent to every consumer while the file is on disk. Collapsing
+    // them would make that failure silent.
+    const made = materialiseDeclaredDirectories(DOWN, { dryRun: true });
+    const up = made.find((d) => d.id === "uploads")!;
+    const lib = made.find((d) => d.id === "library")!;
+    expect(up.absPath).not.toBe(lib.absPath);
+    expect(up.path).not.toBe(lib.path);
   });
 });

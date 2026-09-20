@@ -7,6 +7,7 @@ description: >
   validation structurally cannot.
 adapters: [document, paper, dak]
 profiles: [document, paper]
+consulted: true
 ---
 
 # Content types — `document` is the base, a paper extends it

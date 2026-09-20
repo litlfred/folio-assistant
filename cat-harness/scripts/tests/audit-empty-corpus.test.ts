@@ -23,7 +23,7 @@
  * Neither could read anything in EITHER repo. `qa-section-title-audit` began
  * with `process.chdir(resolve(import.meta.dir, "..", ".."))` — the platform —
  * and every path in it is cwd-relative; `trivial-skeleton-audit` globbed under
- * a hardcoded `content/quantum-observable-universe` beneath a self-rooted
+ * a hardcoded `folio/quantum-observable-universe` beneath a self-rooted
  * `REPO_ROOT`, a path present in no checkout.
  *
  * The rule these now follow is the one `validateObjects` settled (bean
@@ -53,7 +53,7 @@ const run = (script: string, cwd: string, args: string[] = []) =>
 /** A folio with one paper: a chapter manifest and a Lean file. */
 function makeFolio(name: string): string {
   const root = join(DIR, name);
-  const paper = join(root, "content", "demo-paper");
+  const paper = join(root, "folio", "demo-paper");
   mkdirSync(join(paper, "ch-one"), { recursive: true });
   mkdirSync(join(paper, "lean", "Demo"), { recursive: true });
   writeFileSync(

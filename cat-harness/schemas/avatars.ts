@@ -4,7 +4,7 @@
  *
  * Owner, 2026-09-19: *"each content type should have an avatar in and out of
  * trash. dark and light mode"*, and then: *"all kinds need an avatary.
- * bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
+ * cat-bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
  *
  * ## The glyph is a MASK, not an image or an inline `<svg>`
  *
@@ -64,9 +64,9 @@ export interface Avatar {
 export const AVATARS: Readonly<Record<string, Avatar>> = {
   // ── The layer identities the owner named ───────────────────────────
   //
-  // Owner: *"bootstrap has avatar, so does cat-harness, folio-asst"*. Two of
+  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*. Two of
   // these three are NOT graph kinds this repo declares — the split (#223) has
-  // not happened, so `bootstrap` and `folio-assist-core` exist as layers in
+  // not happened, so `cat-bootstrap` and `folio-assist-core` exist as layers in
   // the namespace and as nothing in `harness.json`.
   //
   // They are here anyway, and `check-avatar-coverage` reports them as
@@ -74,7 +74,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // layer before its directory exists is the right way round: the alternative
   // is a split that lands with three blank avatars, discovered by a reader.
   // The finding is the honest record that they are ahead of the declaration.
-  bootstrap: {
+  "cat-bootstrap": {
     // A seed with a shoot: the graph an agent reads before it knows anything.
     glyph: "M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z",
     tone: 96,
@@ -151,6 +151,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 140,
     reads: "a shield with a tick — a verdict about an artefact",
   },
+  // A fork in a path: two ways onward, one taken. Methodologies are PARALLEL
+  // tracks selected by context, so the glyph shows the choice rather than a
+  // procedure — a flowchart or a checklist would draw the wrong idea.
+  methodology: {
+    glyph: "M12 20V12m0 0L6 6m6 6l6-6M4 4h4m8 0h4",
+    tone: 268,
+    reads: "a fork in a path — parallel ways to a judgement, one chosen by context",
+  },
   health: {
     glyph: "M3 13h4l2-5 3 10 2-6 2 3h5",
     tone: 4,
@@ -160,6 +168,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M12 17V5m0 0l-4 4m4-4l4 4M5 19h14",
     tone: 200,
     reads: "an arrow onto a line — something arriving",
+  },
+  catalogue: {
+    // A card index: drawers of cards standing for things that are elsewhere.
+    // Deliberately NOT books on a shelf — that is `library`, and the difference
+    // between "we have it" and "we know of it" is the point of the kind.
+    glyph: "M4 6h16v12H4zM4 10h16M10 6v12M13 13h4M13 15h3",
+    tone: 258,
+    reads: "a card index — what is known to exist, mostly not held",
   },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
@@ -175,6 +191,64 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h7M7 6v2c0 3-1 5-3 6M6 10c1 3 3 4 5 5M13 19l4-10 4 10M15 16h5",
     tone: 176,
     reads: "a glyph and an A — one language against another",
+  },
+  docs: {
+    // The one renderable kind the harness owns. Distinct from `folio`, which is
+    // core's: the difference is the SUBJECT, not the format, so the glyph is a
+    // page WITH a magnifier over it — documentation ABOUT something — rather
+    // than a plain page, which would read as "any content".
+    glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4",
+    tone: 212,
+    reads: "a page with a folded corner — documentation about the graph itself",
+  },
+  interaction: {
+    // A speech bubble with a tick inside — a preference that has been STATED,
+    // so nobody has to ask again. The tick is the point: this file exists so
+    // that re-asking is a defect (WCAG 2.2 SC 3.3.7, Redundant Entry), not a
+    // courtesy skipped.
+    glyph: "M4 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H9l-4 4v-4a2 2 0 01-1-2zM8.5 10l2 2 4-4",
+    tone: 224,
+    reads: "a spoken preference, already recorded — do not ask again",
+  },
+  "issue-marks": {
+    // A bookmark at a place in a list — how far this agent has read, and
+    // nothing about what it read. Deliberately not a speech bubble: these
+    // files hold an id and two timestamps, never a comment body, and a
+    // comment glyph would promise a reader something the store does not have.
+    glyph: "M7 4h10v16l-5-4-5 4zM4 8h2M4 12h2",
+    tone: 28,
+    reads: "a bookmark beside a list — how far an agent has read",
+  },
+  "session-state": {
+    // A marker on a line, with the line continuing past it — where one actor
+    // is RIGHT NOW, and still moving. Deliberately not a clock: a session is
+    // a position, not a duration. Distinct from `memory`'s knot, which is
+    // tied and does not move, and from `workflow-state`, which is one token
+    // in one diagram rather than an actor across several.
+    glyph: "M3 12h18M14 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0M18 9l3 3-3 3",
+    tone: 64,
+    reads: "a marker on a continuing line — where an actor is now",
+  },
+  memory: {
+    // A knot tied in a thread — the oldest mnemonic there is, and the right
+    // read for a kind that is fixed rather than accumulating: the knot is
+    // already tied. Deliberately NOT a brain, which would say "the agent" and
+    // this kind is what the agent CARRIES, not the agent.
+    glyph: "M4 12h4m8 0h4M9.5 9.5a3 3 0 000 5M14.5 9.5a3 3 0 010 5M9.5 9.5c2 1 3 1 5 0M9.5 14.5c2-1 3-1 5 0",
+    tone: 108,
+    reads: "a knot in a thread — a fact tied down, read and not rewritten",
+  },
+  waiver: {
+    // A key handed over, not a key held: the bow is drawn toward the reader.
+    // Deliberately NOT a lock or a shield, which say "this is guarded" — a
+    // waiver is the opposite act, a gate's owner giving the gate away. The
+    // short tail says it opens ONE thing: the gate class it names, never
+    // everything. Hue sits beside `memory`, because it is declared over the
+    // same directory and a reader should see the kinship before the
+    // difference.
+    glyph: "M14 10a3 3 0 11-6 0 3 3 0 016 0M14 10h7M18 10v3M21 10v2",
+    tone: 132,
+    reads: "a key passed across — a confirmation given before it was asked for",
   },
   "fsh-guts": {
     // The trashcan itself is a kind. Distinct from the trash STATE below.

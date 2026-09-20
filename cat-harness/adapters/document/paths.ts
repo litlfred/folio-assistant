@@ -9,7 +9,7 @@
  */
 
 import { resolve } from "path";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 // Default: assume folio-assistant/adapters/paper/ is inside the repo
 let _repoRoot = resolve(import.meta.dir, "../../..");
@@ -28,7 +28,7 @@ export function getRepoRoot(): string {
 
 export const get = {
   REPO_ROOT: () => _repoRoot,
-  CONTENT_DIR: () => resolve(_repoRoot, "content"),
+  FOLIO_DIR: () => folioDir(_repoRoot),
   CHAPTERS_DIR: () => resolve(_repoRoot, "chapters"),
   MAIN_TEX: () => resolve(_repoRoot, "main.tex"),
   /**
@@ -43,7 +43,7 @@ export const get = {
   // declared-path-literal: the convention fallback for a WRITE target —
   // see adapters/mcp-server/paths.ts for the reasoning.
   // The declared `uploads` graph, falling back to the convention because
-  // this is a WRITE target: `directoryForGraph` returns undefined for a
+  // this is a WRITE target: `directoriesForGraph` returns undefined for a
   // directory that is not there yet, and the ingestion queue has to be
   // creatable before anything has been dropped in it.
   UPLOADS_DIR: () => directoryForGraph(_repoRoot, "uploads") ?? resolve(_repoRoot, "uploads"),
@@ -54,7 +54,7 @@ export const get = {
 // tools should import `get` above.
 
 export const REPO_ROOT = _repoRoot;
-export const CONTENT_DIR = resolve(_repoRoot, "content");
+export const FOLIO_DIR = folioDir(_repoRoot);
 export const CHAPTERS_DIR = resolve(_repoRoot, "chapters");
 export const MAIN_TEX = resolve(_repoRoot, "main.tex");
 export const LEAN_DIR = _repoRoot;

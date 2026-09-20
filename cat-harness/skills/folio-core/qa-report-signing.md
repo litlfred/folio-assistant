@@ -1,6 +1,5 @@
 ---
 name: qa-report-signing
-roles: [validation-pipeline, attestation-service, publication-manager]
 ---
 
 # QA report signing — two routes, chosen by the performer's reach
@@ -86,9 +85,14 @@ requiredCapabilities: [
 ```
 
 `fallbackRole` (bean `folio-assistant-85e8`) says **which lane takes over**
-when no capability can do it. It does not route anything: measured
-2026-09-20, the only reader of the degradation model is
-`scripts/generate-docs.ts`, which renders it. The gateway is what executes.
+when no capability can do it. It does not route anything, and the first
+measurement of that was too generous: this said the only reader was
+`scripts/generate-docs.ts`, "which renders it". Re-measured 2026-09-20 —
+**nothing invokes that script**, it is in no `package.json` entry and no
+workflow, and its output directory `schemas/generated/` does not exist. So
+the degradation model has **zero** effective readers, not one. The gateway is
+what executes. (`folio-assistant-3lbz`, and
+`fsh-guts/proposals/zod-schemas-as-tools.md`.)
 
 Both are worth having, and they must agree — the declaration is what a
 reader, a generated doc and `check:fallback-roles` can see without executing

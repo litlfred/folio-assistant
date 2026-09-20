@@ -298,7 +298,11 @@ describe("the gate fires on a workbook with no record", () => {
 
 describe("the real corpus", () => {
   test("four PDFs, zero datasets, said per entry rather than left silent", () => {
+    // `undefined` means no `library` graph was declared, which is NOT an
+    // empty corpus — a test computed over it has checked nothing.
     const reports = checkAll(ROOT);
+    expect(reports, "no `library` declared under ROOT — this test would be vacuous").toBeDefined();
+    if (reports === undefined) return;
     expect(reports.length).toBeGreaterThan(0);
     for (const r of reports) {
       const q = r.requirements.find((x) => x.name === "tabular-records");

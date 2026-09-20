@@ -50,7 +50,8 @@
  * @graphNode schema
  */
 
-import { join, relative } from "node:path";
+import { existsSync, readdirSync, readFileSync, type Dirent } from "node:fs";
+import { join, relative, resolve } from "node:path";
 
 import { z } from "zod";
 
@@ -118,6 +119,27 @@ export const KG_QA_RESULTS_DIR = join("test", "results", "kg-qa");
  * subjects because of it; mirroring keeps that guarantee while moving the
  * files, and keeps the package legible in the path.
  *
+ * ## A subject OUTSIDE the instance keeps its own segment, not `..`
+ *
+ * A repository-scoped directory can sit above the instance root — this
+ * repository declares `bootstrap/skills/` and `bootstrap/workflows/` that way,
+ * from `cat-harness/`. `relative` then answers `../bootstrap/workflows`, and
+ * joining that CLIMBS BACK OUT: the sidecars landed in
+ * `test/results/bootstrap/`, a sibling of `kg-qa/` rather than a subtree of
+ * it. Measured 2026-09-20 on bean `7u3g`, the moment those diagrams became
+ * visible at all.
+ *
+ * The damage is not cosmetic. `sweepOrphans` walks `KG_QA_RESULTS_DIR`, so an
+ * escaped sidecar is outside the only tree that would notice it going stale —
+ * the one mechanism written to stop a verdict outliving its subject, blind to
+ * the verdicts most likely to. And `kg:audit:check`'s staleness comparison
+ * reads the same tree.
+ *
+ * So an outside subject is re-rooted under `_external/` rather than allowed
+ * its `..`: still a mirror, still collision-free, and INSIDE the tree the
+ * sweep walks. `..` is dropped rather than encoded, because the segment that
+ * matters for collisions is the path below the escape.
+ *
  * @param repoRoot   absolute instance root
  * @param subjectDir absolute directory the subject itself lives in
  * @param stem       the subject's filename without extension, or its id
@@ -127,8 +149,101 @@ export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: stri
   // spelling of the same directory must land on the same results path, or the
   // writer and the reader disagree again by another route.
   const rel = relative(repoRoot, subjectDir);
-  return join(repoRoot, KG_QA_RESULTS_DIR, rel, `${stem}.kg-qa.json`);
+  const inside = rel.split(/[\\/]/).filter((seg) => seg !== "" && seg !== "..");
+  const escaped = rel.startsWith("..");
+  return join(
+    repoRoot,
+    KG_QA_RESULTS_DIR,
+    ...(escaped ? ["_external", ...inside] : inside),
+    `${stem}.kg-qa.json`,
+  );
 }
+
+/** An orphan sidecar, and what its own `subject.path` says about why. */
+export interface OrphanSidecar {
+  /** Repo-relative path of the sidecar itself. */
+  sidecar: string;
+  /** `subject.path` as the sidecar records it, or `undefined` if it records none. */
+  subject?: string;
+  /**
+   * Whether that subject is on disk. `undefined` means the sidecar could not
+   * be read or names no path — a THIRD state, kept because "could not tell"
+   * rendered as either answer is how the eight fragment sidecars below got
+   * the wrong diagnosis in the first place.
+   */
+  subjectExists?: boolean;
+}
+
+/**
+ * Sidecars under the results tree that this run did not write.
+ *
+ * ## Why it reads each sidecar rather than only its filename
+ *
+ * The first version asked one question — is this path in `written`? — and then
+ * handed the reader a GUESS between two causes: *"Either the subject moved and
+ * the sidecar should go, or it is no longer discovered from this root and the
+ * DECLARATION is what is wrong."*
+ *
+ * Both branches were wrong for eight of the twelve it found, and the guess was
+ * written into bean `3jj9` as a finding: *"their verdicts are real and the
+ * cause is discovery, not staleness."* It is neither. Those eight declare
+ * `part-of:` and are excluded by {@link isPartOfASkill}, deliberately and
+ * correctly — a fragment measured against thresholds meant for a whole skill
+ * produces findings about nothing, which is the defect that predicate was
+ * added to remove. They are sidecars written BEFORE the exclusion existed.
+ *
+ * The sidecar already records `subject.path`. Reading it splits "the file is
+ * gone" from "the file is there and was not audited" mechanically, which is
+ * the difference between a dead verdict and a stale one — and the two want
+ * opposite responses. One `existsSync` would have prevented the misdiagnosis.
+ *
+ * ## Still reports, still never deletes
+ *
+ * `deletion-requires-confirmation`: the agent reports what would go, with the
+ * reason; a person decides. Splitting the report makes that decision possible
+ * rather than making it automatic.
+ */
+export function sweepOrphans(root: string, written: ReadonlySet<string>): OrphanSidecar[] {
+  const found: OrphanSidecar[] = [];
+  const walk = (dir: string): void => {
+    let entries: Dirent[];
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return; // No sidecar tree yet is not a finding.
+    }
+    for (const e of entries) {
+      const full = join(dir, e.name);
+      if (e.isDirectory()) {
+        walk(full);
+        continue;
+      }
+      if (!e.name.endsWith(".kg-qa.json")) continue;
+      if (written.has(resolve(full))) continue;
+      const row: OrphanSidecar = { sidecar: relative(root, full) };
+      try {
+        const doc = JSON.parse(readFileSync(full, "utf-8")) as { subject?: { path?: unknown } };
+        const sp = doc.subject?.path;
+        if (typeof sp === "string" && sp.length > 0) {
+          row.subject = sp;
+          row.subjectExists = existsSync(join(root, sp));
+        }
+      } catch {
+        // Leave `subjectExists` undefined: unreadable is its own answer.
+      }
+      found.push(row);
+    }
+  };
+  // KG_QA_RESULTS_DIR, not KG_QA_DIRNAME. The first draft of this sweep used
+  // the dirname ("kg-qa") and so walked `cat-harness/kg-qa`, which does not
+  // exist — `readdirSync` threw, the catch returned, and the guard reported a
+  // clean sweep over nothing on every run. It was caught only because the
+  // orphan it was written for was put back and the guard stayed silent.
+  // A guard that cannot fire is the defect it was written to prevent.
+  walk(join(root, KG_QA_RESULTS_DIR));
+  return found;
+}
+
 
 /** What kind of node a sidecar audits. */
 export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "skill", "graph"] as const;
@@ -204,6 +319,27 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "in no local package. `workflow_next` hands the agent a name, and fetching it returns \"package not found\".",
   },
   {
+    id: "convention-ref-resolves",
+    applies: ["process"],
+    // `critical`, and the severity is the whole point of this one.
+    //
+    // It is the DANGLING direction, not the absence direction. A diagram
+    // naming a convention nobody wrote hands an agent a rule it cannot read —
+    // the `blv9` shape, a link-shaped value that does not dereference.
+    //
+    // THERE IS DELIBERATELY NO CRITERION FOR ABSENCE. Bean `3190`: "absent
+    // binding means no conventions, not all of them". Most steps legitimately
+    // carry none, so a criterion that fired on an unbound activity would be
+    // red across every diagram on the day it shipped and would train a reader
+    // to ignore it — and worse, the only way to clear it would be to bind
+    // conventions everywhere, which is the unconditional prose the bean
+    // exists to replace. The check is that what IS bound resolves.
+    severity: "critical",
+    summary:
+      "A `<folio:convention ref>` on a process, lane or activity names a convention that is not in " +
+      "`.claude/skills/conventions/`. The agent is told a rule applies and cannot read it.",
+  },
+  {
     id: "activity-names-skill",
     applies: ["process"],
     // `major`, not `minor`, SINCE the exemptions became declarations.
@@ -223,6 +359,42 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "An activity names no skill and declares no reason for having none. Exempt: a call activity (implemented " +
       "by the process it calls), a lane whose role is `actedUpon` (written to, never acts) or `judgementOnly` " +
       "(acts, but no procedure yields the answer), and an activity carrying `<folio:no-skill reason=\"…\"/>`.",
+  },
+  {
+    id: "raci-role-resolves",
+    applies: ["process"],
+    // `critical`, and the severity is argued rather than picked. Every
+    // `critical` in this registry is a DANGLING REFERENCE and every `major`
+    // is a gap between things that exist — and this is `role-ref-resolves`
+    // on a different edge: a name in a RACI column that dereferences to no
+    // declared role. Grading it lower would say the same defect matters less
+    // depending on which attribute carries it.
+    severity: "critical",
+    summary:
+      "A `<folio:raci ref>` names a role that is in no role registry, so 'who is accountable' " +
+      "dereferences to nothing.",
+  },
+  {
+    id: "raci-single-accountable",
+    applies: ["process"],
+    // `major`: structural, not dangling. Every role named exists; what is
+    // wrong is how many of them carry the decision.
+    severity: "major",
+    summary:
+      "An activity declaring RACI does not have exactly one `accountable`. Zero is a breach too — a " +
+      "half-annotated activity is worse than an unannotated one, because the chart looks complete.",
+  },
+  {
+    id: "raci-accountable-not-consulted",
+    applies: ["process"],
+    // `major` for the same reason, and not `minor`. `minor` here grades
+    // INTENDED states (a stub, reference material nobody performs); this is a
+    // modelling error that makes the chart read as complete while one of its
+    // four letters is decorative.
+    severity: "major",
+    summary:
+      "A role is both `accountable` and `consulted` on one activity — asking yourself is not " +
+      "consultation, and it is how `consulted` quietly becomes a formality.",
   },
   {
     id: "activity-fulfilment-kind",
@@ -386,6 +558,44 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   // rather than instructions. `minor` at 280 is roughly p75. Neither is a
   // style opinion; both say "this is longer than three quarters of its peers".
   {
+    id: "nested-instance-audited",
+    applies: ["graph"],
+    // `minor`, because the SILENCE is correct and only its invisibility is the
+    // defect. One instance's graph must not carry another's nodes — that is
+    // `instance-graph-isolation.test.ts`, guarding a live 2026-09-19 leak of 88
+    // references. So this audit rightly does not read a nested instance, and
+    // rightly must not be made to.
+    //
+    // What was wrong is that nothing said so. On 2026-09-20 a session read
+    // "named by no activity" as absolute, concluded the audit had a blind spot,
+    // declared the nested directory at the root and re-introduced the leak the
+    // test exists to prevent. Scoping the wording stopped that MISreading; this
+    // criterion is the other half — it names the unread instance outright, so
+    // the gap is a reported number rather than something to be deduced and
+    // mis-deduced. Bean `sa8y`.
+    severity: "minor",
+    summary:
+      "This tree holds a nested instance whose graph this audit does not read — correctly, but the unread corpus should be counted rather than silent.",
+  },
+  {
+    id: "skill-is-a-stub",
+    applies: ["skill"],
+    // `minor`, and the severity is the whole point. A stub is INTENDED
+    // work-in-progress, not a defect: it exists so the graph traverses and
+    // `skill_fetch` answers instead of failing mid-task. It must be VISIBLE —
+    // otherwise stubbing a gap hides it, which is strictly worse than leaving the
+    // gap open — and it must not gate, or the act of stubbing would turn CI red.
+    //
+    // `minor` gives exactly that: `kg:audit` prints it, `kg:audit:check` passes,
+    // and `kg:audit:strict` does not promote it either. The owner's principle,
+    // 2026-09-20: "stub things out knowing its not working. make sure QA checks
+    // pickup so we can fix later. principle: KG is always a work in progress. QA
+    // helps show where to work on it next, close gaps."
+    severity: "minor",
+    summary:
+      "A skill is a declared stub: it exists so the graph traverses and skill_fetch answers, and its content is not here yet.",
+  },
+  {
     id: "skill-is-brief",
     applies: ["skill"],
     severity: "minor",
@@ -451,7 +661,33 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "COVERAGE, not a defect: no role carries this skill and no activity names it, so nothing in the " +
       "actor/role/process model reaches it. Legitimate for a skill invoked directly by name, which most " +
-      "are. Expect this to be large and to stay large; watch it move, do not drive it to zero.",
+      "are. Expect this to be large and to stay large; watch it move, do not drive it to zero. Skills " +
+      "declaring `consulted: true` are EXCLUDED — reference material belongs in no lane by its nature, " +
+      "so counting it measured this criterion rather than the corpus (bean `y1w9`).",
+  },
+  {
+    id: "consulted-skill-not-performed",
+    applies: ["graph"],
+    severity: "major",
+    // The guard that makes `consulted: true` falsifiable, and the reason
+    // the exemption above is safe to grant.
+    //
+    // A skill cannot be reference material AND a step somebody performs. If
+    // a lane or a role claims one, either the annotation is wrong or the
+    // binding is — and which it is takes a person, so this reports both
+    // rather than choosing.
+    //
+    // `major` rather than `minor`, unlike the criterion it guards, because
+    // the failure mode is different in kind. That one is coverage and
+    // expected to be large; this is a CONTRADICTION between two
+    // declarations, and there should never be any. Without it,
+    // `consulted: true` would be an unfalsifiable opt-out — a worse field
+    // than the one `qif9` removed, because that one at least did nothing.
+    summary:
+      "A skill declares `consulted: true` — reference material nobody performs — while a role carries it " +
+      "or a BPMN activity names it. The two declarations contradict each other; a person decides which " +
+      "is wrong. Guards the `consulted` exemption in `skill-in-role-or-process` from being an " +
+      "unfalsifiable opt-out.",
   },
   {
     id: "manifest-skill-exists",

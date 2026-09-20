@@ -49,7 +49,10 @@ describe("the profile partition", () => {
     // Spelled out so that a kind moving between profiles is a reviewed diff
     // rather than a consequence of an unrelated edit to BLOCK_KINDS.
     expect([...(DOCUMENT_BLOCK_KINDS as readonly string[])].sort()).toEqual(
-      ["algorithm", "diagram", "equation", "example", "prose", "remark", "simulator", "table"],
+      // `figure` joined the document profile with bean `d5f1` (2026-09-20): an
+      // image extracted from a source document asserts nothing formal, so it
+      // belongs here rather than in the math set. Reviewed, not inherited.
+      ["algorithm", "diagram", "equation", "example", "figure", "prose", "remark", "simulator", "table"],
     );
     expect([...(MATH_BLOCK_KINDS as readonly string[])].sort()).toEqual(
       ["conjecture", "corollary", "definition", "lemma", "proof", "proposition", "theorem"],

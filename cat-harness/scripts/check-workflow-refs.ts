@@ -46,20 +46,46 @@ const strict = process.argv.includes("--strict");
  *
  * Root-only until 2026-09-19, and the comment below is the argument for the
  * change: *"a dangling `<folio:skill ref>` in a diagram this checker never
- * opens is a broken reference reported as clean."* `bootstrap/` is a separate
+ * opens is a broken reference reported as clean."* `cat-bootstrap/` is a separate
  * instance with its own declaration and its own two skills, so
- * `bootstrap/workflows/bootstrap.bpmn` was in exactly that state from the day
+ * `cat-bootstrap/workflows/cat-bootstrap.bpmn` was in exactly that state from the day
  * it was written — unchecked, and reported clean by a checker scoped to
  * somebody else's graph.
  *
  * Each instance's refs resolve against ITS OWN skills, never the union: a
- * bootstrap diagram naming a harness skill is a real dangling ref, because
- * bootstrap runs before the harness exists.
+ * cat-bootstrap diagram naming a harness skill is a real dangling ref, because
+ * cat-bootstrap runs before the harness exists.
  */
-const INSTANCES = [REPO, join(REPO, "bootstrap")];
+const INSTANCES = [REPO, join(REPO, "cat-bootstrap")];
 
 const dangling: Dangling[] = [];
 const coverage: Coverage[] = [];
+
+/**
+ * Every exclusive gateway, split by who chooses the branch.
+ *
+ * **The question this exists to make answerable is bean `q0tc`'s** — how much
+ * of a workflow must be deterministic, and which judgement points are safety
+ * risks. That cannot be asked of a corpus that cannot enumerate its own
+ * judgement points, and until `folio:judgement` landed it could not: a gateway
+ * with no decision table was either somebody's call or an unwritten table, and
+ * nothing told them apart.
+ *
+ * Issue #200 §6 classified all ten of this repository's decision points in
+ * PROSE, in an issue. This is the same classification where something reads
+ * it.
+ *
+ * REPORTED, not enforced. `undeclared` is a real backlog rather than a defect
+ * to fail on: every gateway that predates the marker lands there, and a gate
+ * that fails on a corpus nobody has annotated yet is a gate somebody turns
+ * off. It is printed so the number is visible and shrinking.
+ */
+const branches = {
+  computed: [] as Array<{ file: string; node: string }>,
+  judgement: [] as Array<{ file: string; node: string }>,
+  undeclared: [] as Array<{ file: string; node: string }>,
+};
+
 let knownCount = 0;
 let fileCount = 0;
 let rootFiles: string[] = [];
@@ -95,6 +121,17 @@ for (const file of files) {
     total: activities.length,
     uncovered,
   });
+
+  // Every exclusive gateway, by WHO decides it. Counted here rather than in a
+  // checker of its own because this loop already has the model, and a second
+  // loader is a second answer to which diagrams exist.
+  for (const node of model.nodes.values()) {
+    if (node.kind !== "exclusive") continue;
+    const where = { file: relative(REPO, file), node: node.id };
+    if (node.decisionRef) branches.computed.push(where);
+    else if (node.judgementReason) branches.judgement.push(where);
+    else branches.undeclared.push(where);
+  }
 }
 }
 
@@ -180,7 +217,7 @@ if (existsSync(INDEX_DIR)) {
     .join("\n");
   // The page names diagrams by BASENAME (`crdm-close.bpmn`), so that is what
   // is matched — but only where the basename is unambiguous. Under a topical
-  // layout `bootstrap/workflows/review.bpmn` and `crdm/workflows/review.bpmn`
+  // layout `cat-bootstrap/workflows/review.bpmn` and `crdm/workflows/review.bpmn`
   // share one, and a single mention of `review.bpmn` indexes NEITHER: a
   // reader who follows it reaches one diagram and cannot tell which. Such a
   // diagram must be named by its repo-relative path to count.
@@ -202,6 +239,22 @@ if (existsSync(INDEX_DIR)) {
 if (unindexed.length) {
   console.log("\nNOT INDEXED — a diagram no reader of the workflow page can find:");
   for (const f of unindexed) console.log(`  \u2717 ${f}`);
+}
+
+console.log(
+  `\nDecision points — ${branches.computed.length} computed by a DMN table, ` +
+    `${branches.judgement.length} declared judgement, ${branches.undeclared.length} undeclared.`,
+);
+if (branches.undeclared.length) {
+  console.log(
+    "  An undeclared gateway is not a defect — it predates `folio:judgement` —\n" +
+      "  but it is a decision point nobody has said is a JUDGEMENT rather than a\n" +
+      "  table nobody wrote. Bean `q0tc` needs the difference.",
+  );
+  for (const g of branches.undeclared.slice(0, 8)) console.log(`  \u00b7 ${g.file}: ${g.node}`);
+  if (branches.undeclared.length > 8) {
+    console.log(`  \u00b7 …and ${branches.undeclared.length - 8} more`);
+  }
 }
 
 if (dangling.length || missingDeclared.length || unindexed.length) process.exit(1);

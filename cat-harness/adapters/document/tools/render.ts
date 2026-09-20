@@ -19,6 +19,7 @@
  * @module folio-assistant/adapters/document/tools/render
  */
 
+import { folioDir } from "../../../schemas/cat-harness.js";
 import { z } from "zod";
 import { execSync, spawnSync } from "child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
@@ -26,7 +27,7 @@ import { join, resolve, dirname } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { Paper } from "../../../schemas/types";
 import { REPO_ROOT, BUILD_DIR, MAIN_TEX, CHAPTERS_DIR } from "../paths.js";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../../schemas/harness-config";
 // Note: paths are resolved from the paper adapter's paths module.
 
 /** Check if a command is available on PATH. */
@@ -90,8 +91,9 @@ export function registerLatexRenderTools(server: McpServer): void {
         // Read base folder from harness.config.json or env
         let baseFolder = process.env.GDRIVE_FOLDER_PATH ?? "";
         if (!baseFolder) {
-          const cfgPath = resolveHarnessConfigPath(REPO_ROOT)?.path ?? join(REPO_ROOT, HARNESS_CONFIG);
-          if (existsSync(cfgPath)) {
+          const cfgPath = expectedInstanceConfigPath(REPO_ROOT);
+          // `undefined` = nothing declares an instance here; nothing to read.
+          if (cfgPath !== undefined && existsSync(cfgPath)) {
             try {
               const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
               baseFolder = cfg?.googleDrive?.folderPath ?? "";
@@ -121,22 +123,22 @@ export function registerLatexRenderTools(server: McpServer): void {
           mkdirSync(blockPdfsDir, { recursive: true });
 
           // Find the block's .ts and .md in content/
-          const contentDir = join(REPO_ROOT, "content");
-          const found = spawnSync("find", [contentDir, "-name", `${target}.ts`, "-not", "-path", "*/node_modules/*"], {
+          const folioRoot = folioDir(REPO_ROOT);
+          const found = spawnSync("find", [folioRoot, "-name", `${target}.ts`, "-not", "-path", "*/node_modules/*"], {
             stdio: "pipe",
           });
           const tsPath = found.stdout?.toString().trim().split("\n").find(p => p);
           if (!tsPath || !existsSync(tsPath)) {
-            return { content: [{ type: "text" as const, text: `Error: block '${target}' not found under content/` }] };
+            return { content: [{ type: "text" as const, text: `Error: block '${target}' not found under folio/` }] };
           }
           const blockDir = dirname(tsPath);
           const mdPath = join(blockDir, `${target}.md`);
           const preamblePath = join(REPO_ROOT, "latex", "preamble.tex");
 
           // Load paper manifest (first parent .ts in the paper dir)
-          const paperDirParts = blockDir.replace(contentDir + "/", "").split("/");
+          const paperDirParts = blockDir.replace(folioRoot + "/", "").split("/");
           const paperSlug = paperDirParts[0];
-          const paperManifestPath = join(contentDir, paperSlug, `${paperSlug}.ts`);
+          const paperManifestPath = join(folioRoot, paperSlug, `${paperSlug}.ts`);
           let paper: Paper;
           try {
             const paperMod = await import(paperManifestPath);
@@ -483,28 +485,28 @@ const HTML_PDF_ENGINES = ["weasyprint", "prince", "wkhtmltopdf"] as const;
  * plausible artifact, which is worse than an error.
  */
 function resolveDocumentManifest(name?: string): { path: string; slug: string } | string {
-  const contentDir = join(REPO_ROOT, "content");
-  if (!existsSync(contentDir)) {
-    return `Error: no content/ directory at ${REPO_ROOT}. Run folio_init first, or point --repo at your folio.`;
+  const folioRoot = folioDir(REPO_ROOT);
+  if (!existsSync(folioRoot)) {
+    return `Error: no folio/ directory at ${REPO_ROOT}. Run folio_init first, or point --repo at your folio.`;
   }
-  const candidates = readdirSync(contentDir, { withFileTypes: true })
+  const candidates = readdirSync(folioRoot, { withFileTypes: true })
     .filter((d) => d.isDirectory())
     .map((d) => d.name)
-    .filter((slug) => existsSync(join(contentDir, slug, `${slug}.ts`)));
+    .filter((slug) => existsSync(join(folioRoot, slug, `${slug}.ts`)));
 
   if (candidates.length === 0) {
-    return `Error: no document manifest found. Expected content/<slug>/<slug>.ts under ${contentDir}.`;
+    return `Error: no document manifest found. Expected folio/<slug>/<slug>.ts under ${folioRoot}.`;
   }
   if (name) {
     if (!candidates.includes(name)) {
       return `Error: no such document '${name}'. Available: ${candidates.join(", ")}`;
     }
-    return { path: join(contentDir, name, `${name}.ts`), slug: name };
+    return { path: join(folioRoot, name, `${name}.ts`), slug: name };
   }
   if (candidates.length > 1) {
     return `Error: ${candidates.length} documents in this folio — pass \`document\`. Available: ${candidates.join(", ")}`;
   }
-  return { path: join(contentDir, candidates[0], `${candidates[0]}.ts`), slug: candidates[0] };
+  return { path: join(folioRoot, candidates[0], `${candidates[0]}.ts`), slug: candidates[0] };
 }
 
 /** Format the issue list a build returns, or a clean bill of health. */
@@ -537,7 +539,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
     "renderers consume, and is worth rendering on its own to inspect ordering.",
     {
       document: z.string().optional()
-        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+        .describe("Document slug under folio/ (auto-detected if the folio holds one)"),
     },
     async ({ document }) => {
       const resolved = resolveDocumentManifest(document);
@@ -574,7 +576,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
     "Markdown. No LaTeX toolchain required.",
     {
       document: z.string().optional()
-        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+        .describe("Document slug under folio/ (auto-detected if the folio holds one)"),
       toc: z.boolean().default(true).describe("Emit a table of contents"),
       css: z.string().optional()
         .describe("Path to a stylesheet to inline, relative to the repo root"),
@@ -648,7 +650,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
     "are missing rather than falling back to LaTeX.",
     {
       document: z.string().optional()
-        .describe("Document slug under content/ (auto-detected if the folio holds one)"),
+        .describe("Document slug under folio/ (auto-detected if the folio holds one)"),
       engine: z.enum(["auto", ...HTML_PDF_ENGINES]).default("auto")
         .describe("PDF engine. 'auto' picks the first installed of weasyprint, prince, wkhtmltopdf."),
       css: z.string().optional()

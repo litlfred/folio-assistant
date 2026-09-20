@@ -42,6 +42,7 @@ import { dirname, join, resolve } from "node:path";
 
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
 import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer } from "../schemas/namespaces.js";
+import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import { CLASS_GLOSSES, PROPERTY_GLOSSES, type TermGloss, type TermLayer } from "../schemas/vocabulary.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -61,8 +62,8 @@ export function vocabularyIri(): string {
   // day it deployed.
   //
   // Nothing is lost by moving: no term hangs off this document. Every term
-  // lives in its layer's namespace (`bootstrap/ns`, `cat-harness/ns`,
-  // `folio-assist-core/ns`), each of which IS a file and dereferences. The
+  // lives in its layer's namespace (`cat-bootstrap/ns`, `cat-harness/ns`,
+  // `folio-assistant-core/ns`), each of which IS a file and dereferences. The
   // union is a convenience for a person reading the whole vocabulary at once,
   // so it can sit anywhere that resolves.
   return `${LEGACY_FOLIO_NS.replace(/ns#$/, "")}ns/vocabulary.jsonld`;
@@ -124,8 +125,8 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
  * is the one thing the direction rule forbids.
  */
 const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
-  "cat-harness": "bootstrap",
-  schemas: "bootstrap",
+  "cat-harness": "cat-bootstrap",
+  schemas: "cat-bootstrap",
   // Everything the owner named as NOT bootstrap, plus the rest of the folio's
   // own furniture: "we shouldnt need voicegraph or librarygrph or
   // previewgrapjh in bootstrap!!"
@@ -183,7 +184,7 @@ export function buildVocabulary(
   const kinds = graphKindTerms();
   const doublyDefined = [...kinds.keys()].filter((t) => t in CLASS_GLOSSES || t in PROPERTY_GLOSSES).sort();
 
-  const ORDER: readonly TermLayer[] = ["bootstrap", "harness", "core"];
+  const ORDER: readonly TermLayer[] = ["cat-bootstrap", "harness", "core"];
   const cutoff = layer ? ORDER.indexOf(layer) : ORDER.length - 1;
   const inSlice = (g: TermGloss): boolean => {
     const i = ORDER.indexOf(g.layer ?? "harness");
@@ -219,7 +220,21 @@ export function buildVocabulary(
     ...kinds.keys(),
     ...Object.keys(PROPERTY_GLOSSES),
   ]);
-  const minted = mintedTermsFromSource(root);
+  // THE UNION THIS FILE HAS DOCUMENTED SINCE IT WAS WRITTEN, now performed.
+  //
+  // `mintedTermsFromSource` scans for `termIri("Name")` literals, and says in
+  // its own doc comment that it "is not complete on its own" because
+  // `kg-export` mints `` `${FOLIO_NS}${type}` `` from a registry group name —
+  // so those classes appear in the exported graph and in NO literal anywhere.
+  // It names `Actor` and `Capability` as the cases. Both happened to be
+  // defined, so the gap never showed, and the caller was written to filter the
+  // scan ALONE. A promise kept only in prose is not kept.
+  //
+  // Bean `3190` collected the bill: `Convention` was projected onto two real
+  // nodes whose `@type` dereferenced to nothing while this check reported
+  // `0 undefined` — a clean run over a set it never looked at. `Requirement`
+  // was in the same state and had been for longer.
+  const minted = new Set<string>([...mintedTermsFromSource(root), ...Object.values(REGISTRY_GROUPS)]);
   const undefinedTerms = layer === undefined ? [...minted].filter((t) => !everything.has(t)).sort() : [];
 
   const doc = {
@@ -255,7 +270,7 @@ if (import.meta.main) {
   const check = argv.includes("--check");
   const layerIdx = argv.indexOf("--layer");
   const layer = layerIdx >= 0 ? (argv[layerIdx + 1] as TermLayer) : undefined;
-  if (layer !== undefined && !["bootstrap", "harness", "core"].includes(layer)) {
+  if (layer !== undefined && !["cat-bootstrap", "harness", "core"].includes(layer)) {
     console.error(`--layer must be bootstrap, harness or core (got ${String(layer)})`);
     process.exit(2);
   }

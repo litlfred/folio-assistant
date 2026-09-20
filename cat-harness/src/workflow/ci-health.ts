@@ -281,6 +281,64 @@ export interface WorkflowHealth {
    * a time.
    */
   headUnjudged?: boolean;
+  /**
+   * This workflow's file exists, and **no run of it fell inside the window**.
+   *
+   * Set only on a `no-runs` row, which before 2026-09-20 was unreachable: the
+   * state existed in {@link Health} and `classifyRuns` set it at
+   * `runs.length === 0`, but rows were built by grouping the runs, and a group
+   * is never empty. So a workflow with nothing in the window was not a row
+   * with a quiet verdict — it was **absent from the report entirely**.
+   *
+   * Measured on this repository, 2026-09-20: 38 workflow files, 3 rows,
+   * `✓ every workflow … is green`. The 35 were not judged and not mentioned.
+   */
+  noRunsInWindow?: boolean;
+  /**
+   * This workflow fires on a `schedule:`.
+   *
+   * Supplied by the caller ({@link AssessOptions.hasSchedule}), because
+   * reading YAML is not this module's business. It changes what a `no-runs`
+   * row MEANS, and the difference is the whole point of carrying it: a
+   * `workflow_dispatch`-only file with no runs is working as intended, while a
+   * scheduled one with no runs is either broken or outside the window — and
+   * the second of those is a fact about the REPORT, not about the workflow.
+   */
+  scheduled?: boolean;
+  /**
+   * What a DIRECT request for this workflow's own runs established, when the
+   * window did not reach it.
+   *
+   * Three states, and collapsing any two of them is the defect this module is
+   * about. `"never-ran"` means the forge was asked and answered zero: a real
+   * finding, and `5rfy`'s shape — a workflow that cannot be red because it has
+   * never run. `"unknown"` means the request failed, which is not evidence of
+   * anything. Unset means no direct request was made.
+   *
+   * The first draft of this change printed "the direct fetch did not answer"
+   * for a workflow whose fetch answered perfectly well, with zero. A message
+   * that reports a clean measurement as a failed one is worse than silence,
+   * because it sends the reader to debug the tool instead of the workflow.
+   */
+  probe?: "never-ran" | "unknown";
+  /**
+   * It has never run because it has never had the CHANCE — the workflow file
+   * is younger than the longest gap its cron can leave.
+   *
+   * Set only on a `probe: "never-ran"` row, and only when both the file's age
+   * and {@link cronPeriodDays} are known. It turns a finding into a fact.
+   *
+   * Measured 2026-09-20, which is why it exists: `upstream-pins.yml` was
+   * reported as a finding — never run on `main`, asked directly. True, and
+   * meaningless: the file had been added the day before and its cron is
+   * `43 9 * * 2`, a Tuesday two days out. A workflow neutered for months and
+   * one added yesterday rendered identically. That is `5rfy`'s ambiguity one
+   * level in — the report could see that nothing HAD run, not that nothing
+   * COULD have.
+   */
+  tooYoung?: boolean;
+  /** Whole days since the workflow file first appeared on the default branch. */
+  fileAgeDays?: number;
 }
 
 /** Conclusions that are not a pass but are also not the workflow's fault. */
@@ -411,6 +469,71 @@ export interface AssessOptions {
    * a finding.
    */
   triggersOnPush?: (path: string) => boolean | undefined;
+  /**
+   * Every workflow file in the repository, so a file with no run in the window
+   * becomes a ROW rather than an absence.
+   *
+   * Without this the report is a function of the runs alone, and a workflow
+   * that did not run is indistinguishable from one that does not exist. That
+   * is the `xom7` defect — a workflow failing where nobody looks — with the
+   * dial at zero, and it was live in this module: see
+   * {@link WorkflowHealth.noRunsInWindow}.
+   *
+   * Omitting it keeps the old behaviour exactly. Not knowing the file list
+   * must not invent rows, so an empty array and `undefined` are different: the
+   * first says "there are none", the second says "I did not look".
+   */
+  knownWorkflows?: Array<{ path: string; name: string }>;
+  /**
+   * Does this workflow fire on a `schedule:`? `undefined` when unreadable.
+   *
+   * Only consulted for a file with no runs, where it separates "dispatch-only,
+   * nothing expected" from "scheduled and nothing arrived". Unknown is left
+   * unset rather than guessed, on the same rule as every other predicate here.
+   */
+  hasSchedule?: (path: string) => boolean | undefined;
+  /**
+   * The outcome of a direct per-workflow request, for files the window missed.
+   * See {@link WorkflowHealth.probe}. Omit it and no row claims to have been
+   * probed.
+   */
+  probed?: (path: string) => "never-ran" | "unknown" | undefined;
+  /**
+   * When did this workflow file first appear on the default branch? ISO, or
+   * `undefined` when git cannot answer.
+   *
+   * Only consulted for a `never-ran` row. Not knowing leaves the row as a
+   * plain finding, which is the safe direction: an unknown age must never
+   * explain a silent workflow away.
+   */
+  workflowAddedAt?: (path: string) => string | undefined;
+  /** The workflow's cron expression, for {@link cronPeriodDays}. */
+  cronOf?: (path: string) => string | undefined;
+}
+
+/**
+ * Is this workflow simply too new to have fired yet?
+ *
+ * Every input is optional and any missing one yields `{}` — not knowing must
+ * leave the row a finding rather than explain it away. The comparison is
+ * against the LONGEST gap the cron can leave, so `tooYoung` is only ever set
+ * when the schedule demonstrably could not have come round.
+ */
+function youth(
+  path: string,
+  opts: AssessOptions,
+  now: Date,
+): { tooYoung?: true; fileAgeDays?: number } {
+  if (opts.probed?.(path) !== "never-ran") return {};
+  const added = opts.workflowAddedAt?.(path);
+  if (!added) return {};
+  const ageMs = now.getTime() - new Date(added).getTime();
+  if (Number.isNaN(ageMs)) return {};
+  const fileAgeDays = Math.floor(ageMs / 86_400_000);
+  const cron = opts.cronOf?.(path);
+  const period = cron ? cronPeriodDays(cron) : undefined;
+  if (period === undefined) return { fileAgeDays };
+  return fileAgeDays < period ? { tooYoung: true, fileAgeDays } : { fileAgeDays };
 }
 
 export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHealth[] {
@@ -418,7 +541,7 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
   const live = opts.workflowExists
     ? runs.filter((r) => !r.path || opts.workflowExists!(r.path))
     : runs;
-  return [...byWorkflow(live).entries()]
+  const rows: WorkflowHealth[] = [...byWorkflow(live).entries()]
     .map(([workflow, rs]) => {
       const h: WorkflowHealth = {
         workflow,
@@ -444,7 +567,35 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
         }
       }
       return h;
-    })
+    });
+
+  // Files that produced NO run in the window. Appended rather than merged,
+  // because they come from a different source of truth: the runs say what
+  // happened, the file list says what exists, and only the second can tell you
+  // that something did not happen at all.
+  //
+  // `knownWorkflows` omitted means the caller did not look, and that is not
+  // the same as there being none — so the loop simply does not run, and the
+  // report is exactly what it was before this existed.
+  const seen = new Set(rows.map((h) => h.path).filter((p): p is string => !!p));
+  const extra: WorkflowHealth[] = [];
+  for (const wf of opts.knownWorkflows ?? []) {
+    if (seen.has(wf.path)) continue;
+    extra.push({
+      workflow: wf.name,
+      path: wf.path,
+      health: "no-runs",
+      consecutiveFailures: 0,
+      noRunsInWindow: true,
+      // Unknown stays unset. A row that cannot say whether it was expected to
+      // run says nothing about it, rather than implying "dispatch-only".
+      ...(opts.hasSchedule?.(wf.path) === true ? { scheduled: true } : {}),
+      ...(opts.probed?.(wf.path) ? { probe: opts.probed(wf.path) } : {}),
+      ...youth(wf.path, opts, now),
+    });
+  }
+
+  return [...rows, ...extra]
     .sort((a, b) => {
       // Worst first: a reader who reads one line should read the worst one.
       const order: Health[] = ["red", "running", "superseded", "green", "no-runs"];
@@ -460,11 +611,101 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
  * health check that goes quiet when it cannot see is worse than no check: it
  * reads as reassurance.
  */
+export interface Window {
+  /** How many runs the single API call returned. */
+  runs: number;
+  /** ISO timestamp of the OLDEST run in that page. */
+  from: string;
+  /** ISO timestamp of the NEWEST. */
+  to: string;
+}
+
+/**
+ * The window, in words, with its span in hours or days.
+ *
+ * **The span is the point, not the count.** `?per_page=100` is a page of RUNS,
+ * not a period, so how far back it reaches is a function of how busy the
+ * repository is. Measured here on 2026-09-20: 100 runs covered **6.1 hours**
+ * (of 1096 on the branch). A weekly workflow cannot appear in six hours, and a
+ * daily one appears only if the repository happens to be quiet — so `ci-health`
+ * (weekly), `upstream-pins` (weekly) and `health-check` (daily) were absent by
+ * construction from a report that then printed `✓ every workflow … is green`.
+ *
+ * That is `xom7` — a workflow red where nobody looks — inside the module
+ * written for `xom7`. Stating the span is what lets a reader see it; fetching
+ * the scheduled ones separately is what fixes it, and that is the caller's job
+ * because it costs API calls.
+ */
+/**
+ * The LONGEST gap a 5-field cron can leave between fires, in days.
+ *
+ * `undefined` when the expression is not one of the shapes below — which is
+ * the honest answer and the one every caller here is built to take, rather
+ * than a guess that would be indistinguishable from a measurement.
+ *
+ * ## Why an approximation is the right tool
+ *
+ * This answers exactly one question: **has this workflow's schedule had a
+ * chance to fire since its file appeared?** For that, the longest gap is
+ * sufficient and a full cron evaluator is not needed — and a full evaluator
+ * is a surprising amount of code to carry for a yes/no.
+ *
+ * It exists because `never-ran` alone is ambiguous in the worst way. Measured
+ * 2026-09-20: `upstream-pins.yml` had never run on `main` and the report
+ * raised it as a finding. It had been added **the previous day**, and its
+ * cron is `43 9 * * 2` — a Tuesday, two days out. Nothing was wrong with it.
+ * A workflow neutered for months and one added yesterday rendered identically,
+ * which is `5rfy`'s ambiguity one level in: the report could see that nothing
+ * had run, and not that nothing *could* have.
+ */
+export function cronPeriodDays(cron: string): number | undefined {
+  const f = cron.trim().split(/\s+/);
+  if (f.length !== 5) return undefined;
+  const [minute, hour, dom, , dow] = f as [string, string, string, string, string];
+
+  // Anything sub-daily in minute or hour: at most a day, so nothing is ever
+  // "too young" by more than that. One day is the safe over-estimate.
+  if (/[*/,-]/.test(minute) && minute !== "*") return 1;
+  if (minute === "*") return 1;
+  if (hour === "*" || hour.includes("/")) return 1;
+
+  const domEvery = dom === "*";
+  const dowEvery = dow === "*";
+
+  if (domEvery && dowEvery) return 1; // daily at a fixed time
+  // A day-of-week field, with no day-of-month restriction: weekly at worst,
+  // and less when it names several days — but the LONGEST gap is what is
+  // asked for, so 7 stands whether it is one day or three.
+  if (domEvery && !dowEvery) return 7;
+  // A specific day of month. The longest month is 31 days.
+  if (!domEvery && dowEvery) return 31;
+  // Both restricted. GitHub ORs them, which can fire often or almost never
+  // depending on the values; not worth guessing.
+  return undefined;
+}
+
+export function describeWindow(w: Window): string {
+  const hours = (new Date(w.to).getTime() - new Date(w.from).getTime()) / 3_600_000;
+  const span =
+    hours >= 48
+      ? `${(hours / 24).toFixed(1)}d`
+      : hours >= 1
+        ? `${hours.toFixed(1)}h`
+        : `${Math.round(hours * 60)}m`;
+  return `${w.runs} recent run(s) spanning ${span}`;
+}
+
 export function render(
   health: WorkflowHealth[],
-  opts: { unreachable?: string; branch: string },
+  opts: { unreachable?: string; branch: string; window?: Window },
 ): string {
   const lines = ["## CI health", ""];
+  if (opts.window) {
+    // Above the unreachable branch on purpose: when the check DID look, the
+    // reader needs to know how far. A verdict without its window is a verdict
+    // whose scope the reader has to assume, and they assume "all of it".
+    lines.push(`_Window: ${describeWindow(opts.window)} on \`${opts.branch}\`._`, "");
+  }
   if (opts.unreachable) {
     lines.push(
       `**Not checked — treat as unknown, not as green.** ${opts.unreachable}`,
@@ -531,9 +772,73 @@ export function render(
     );
   }
 
-  const ok = health.filter((h) => h.health !== "red" && h.health !== "superseded");
-  if (red.length === 0 && superseded.length === 0 && pending.length === 0) {
+  // A scheduled workflow that produced nothing in the window is reported ABOVE
+  // the summary and by name. It is not a failure — it may simply have a period
+  // longer than the window — but it is the one thing a reader must not take
+  // the summary's word on, because the summary is computed from workflows that
+  // ran and this one did not.
+  // A workflow that has never run because its schedule has not come round yet
+  // is NOT a finding, and must not sit in the list that withholds the green
+  // tick. It is still reported — silence would be the other error — but below
+  // the fold and as a fact.
+  const tooYoung = health.filter((h) => h.noRunsInWindow && h.scheduled && h.tooYoung);
+  const unjudgedScheduled = health.filter(
+    (h) => h.noRunsInWindow && h.scheduled && !h.tooYoung,
+  );
+  for (const h of unjudgedScheduled) {
+    const why =
+      h.probe === "never-ran"
+        ? "asked directly, and it has **never run on this branch**. A workflow " +
+          "with no runs cannot be red, so nothing that reads runs can see it " +
+          "(bean `5rfy`)."
+        : h.probe === "unknown"
+          ? "asked directly, and the request failed — state UNKNOWN, not green."
+          : "**no run of it fell in the window**, and it was not asked directly. " +
+            "If its period is longer than the window above, it cannot appear " +
+            "however healthy or broken it is.";
+    lines.push(`- ⚠️ **${h.workflow}** — fires on a schedule; ${why}`);
+  }
+
+  for (const h of tooYoung) {
+    lines.push(
+      `- 🌱 **${h.workflow}** — scheduled and not yet run, but the file is only ` +
+        `${h.fileAgeDays}d old and its schedule has not come round. Nothing to do.`,
+    );
+  }
+
+  const unjudgedOther = health.filter((h) => h.noRunsInWindow && !h.scheduled);
+  if (unjudgedOther.length > 0) {
+    // A count rather than a list. Most of these are folio-vendored,
+    // dispatch-only files the platform should never judge, and naming 35 of
+    // them every run is how a reader learns to skip the section. The count is
+    // what makes the ratio visible; `--markdown` readers who want the names
+    // have the file list.
+    lines.push(
+      `- ℹ️ ${unjudgedOther.length} other workflow file(s) produced no run in ` +
+        `the window and are unjudged (dispatch-only, or vendored for a folio).`,
+    );
+  }
+
+  const ok = health.filter(
+    (h) => h.health !== "red" && h.health !== "superseded" && !h.noRunsInWindow,
+  );
+  if (
+    red.length === 0 &&
+    superseded.length === 0 &&
+    pending.length === 0 &&
+    unjudgedScheduled.length === 0
+  ) {
     lines.push(`✓ every workflow with a recent run on \`${opts.branch}\` is green (${ok.length}).`);
+  } else if (red.length === 0 && superseded.length === 0 && pending.length === 0) {
+    // Every workflow that RAN is green, and at least one scheduled workflow did
+    // not run. The tick is withheld deliberately: a reader who sees ✓ stops
+    // reading, and what is above this line is the part they must not stop
+    // before.
+    lines.push(
+      "",
+      `_(${ok.length} workflow(s) green; ${unjudgedScheduled.length} scheduled ` +
+        `workflow(s) unjudged. Not "all green" — the window did not reach them.)_`,
+    );
   } else if (red.length === 0 && superseded.length === 0) {
     lines.push(
       `_(no settled failures; ${pending.length} workflow(s) still reporting. ` +
@@ -546,5 +851,290 @@ export function render(
     lines.push("", `_(${ok.length} other workflow(s) not failing.)_`);
   }
   lines.push("");
+  return lines.join("\n");
+}
+
+// ── Pages deployments — bean `3yi4` ──────────────────────────────────────
+//
+// **A Pages build outcome is not repository state.** It is a fact an external
+// service holds, which *changes the status of the repo* — the owner's
+// correction, 2026-09-20: *"they are not. changes status of repo. tools need
+// to look external."* So nothing here caches it; these are pure reducers over
+// what the caller fetched, and the caller asks the API.
+//
+// The gap they close: `bm6d` measured **6 of the last 10 `pages build and
+// deployment` runs cancelled**, in an exact pattern, with nothing anywhere
+// saying so. Three properties hid it — the runs are on `gh-pages` rather than
+// the default branch, they are bot-triggered (`github-pages[bot]`, event
+// `dynamic`), and the query above asks `?branch=<default>`. The reader was
+// never missing; the question was too narrow.
+
+/** The workflow GitHub runs for Pages. Not a file in `.github/workflows/`. */
+export const PAGES_WORKFLOW = "pages build and deployment";
+
+export interface PagesHealth {
+  total: number;
+  success: number;
+  /**
+   * THE THIRD STATE, and the reason this exists. A cancelled deployment is
+   * neither success nor failure: nothing broke, and nothing shipped. Folding
+   * it into either is the lie — into success because the preview is stale,
+   * into failure because nobody needs to fix a build that was superseded.
+   */
+  cancelled: number;
+  failure: number;
+  /** Queued, in flight, skipped, neutral — not yet a verdict of any kind. */
+  unsettled: number;
+  latest?: RunSummary;
+}
+
+/** Reduce the Pages runs the caller fetched. Pure; asks nothing. */
+export function pagesHealth(runs: readonly RunSummary[]): PagesHealth {
+  const pages = runs.filter((r) => r.name.toLowerCase() === PAGES_WORKFLOW);
+  const h: PagesHealth = {
+    total: pages.length,
+    success: 0,
+    cancelled: 0,
+    failure: 0,
+    unsettled: 0,
+    latest: pages[0],
+  };
+  for (const r of pages) {
+    if (r.status !== "completed") h.unsettled++;
+    else if (r.conclusion === "success") h.success++;
+    else if (r.conclusion === "cancelled") h.cancelled++;
+    else if (NOT_A_VERDICT.has(r.conclusion ?? "")) h.unsettled++;
+    else h.failure++;
+  }
+  return h;
+}
+
+/** One commit on the publish branch, as the commits API returns it. */
+export interface DeployCommit {
+  sha: string;
+  message: string;
+  /** ISO-8601. */
+  date: string;
+}
+
+/**
+ * The staging slug a publish-branch commit is about, or `undefined`.
+ *
+ * Three spellings, and **the order between them is load-bearing** — which a
+ * mutation established rather than a reading. The first version tried the
+ * `staging(<slug>):` subject first and a `render-log: … STAGING/<slug>`
+ * trailer second, on the rationale that the subject is authoritative. Stubbing
+ * the order gave a SURVIVING mutation, so the rationale was checked against
+ * `feature-staging.yml` and was wrong twice over.
+ *
+ * It was vacuous where it was right: a deploy commit writes `$STAGING_SLUG`
+ * into both spellings from one variable, so on that commit the two branches
+ * cannot disagree and the order decides nothing.
+ *
+ * And it was wrong where it mattered: the cleanup commits spell the subject
+ * `staging(cleanup): remove STAGING/<slug>`, where `cleanup` is the OPERATION
+ * and the slug is in the path. Subject-first read every removal as a deploy of
+ * a branch called `cleanup` — so two removals for two unrelated PRs became one
+ * slug, and {@link selfSupersedes} reported them as this repository contending
+ * with itself. A false finding in exactly the direction `3yi4` exists to
+ * remove.
+ *
+ * So a `STAGING/<slug>` path wins wherever it appears, and the bare subject is
+ * the fallback for a deploy commit that carries no path. Order alone carries
+ * it — the first fix also excluded the literal `cleanup` from the subject
+ * branch, and a test written for the cost of the fix rather than its benefit
+ * caught that this breaks a branch genuinely NAMED `cleanup`, whose deploy
+ * commit has no `remove STAGING/` for the first branch to find. A blanket
+ * exclusion would have made one real branch permanently invisible to the
+ * report, to guard a case the ordering already handles.
+ */
+export function slugOfDeployCommit(message: string): string | undefined {
+  const removed = /^staging\(cleanup\): \w+ STAGING\/(\S+)/m.exec(message);
+  if (removed) return removed[1];
+  const logged = /^render-log: \w+ STAGING\/(\S+)/m.exec(message);
+  if (logged) return logged[1];
+  const staged = /^staging\(([^)]+)\):/m.exec(message);
+  if (staged) return staged[1];
+  return undefined;
+}
+
+export interface SelfSupersede {
+  slug: string;
+  /** The commit that cancelled the build of `superseded`. */
+  by: string;
+  superseded: string;
+  secondsApart: number;
+}
+
+/**
+ * Consecutive publish-branch commits from ONE deploy — `bm6d`'s signature.
+ *
+ * **This is what separates self-cancellation from cross-session contention**,
+ * which `3yi4` asks for and `bm6d` needs: that bean fixed one workflow pushing
+ * twice and did nothing about four sessions contending for one ref, so a
+ * merged cancellation count cannot show whether it worked.
+ *
+ * Two commits naming the SAME slug within `withinSeconds` are one deploy
+ * writing twice; the second cancels the first's Pages build. Different slugs
+ * are two sessions, which is `6pfo`'s ground and not counted here.
+ *
+ * `commits` is newest-first, as the API returns it.
+ */
+export function selfSupersedes(
+  commits: readonly DeployCommit[],
+  withinSeconds = 120,
+): SelfSupersede[] {
+  const out: SelfSupersede[] = [];
+  for (let i = 0; i + 1 < commits.length; i++) {
+    const newer = commits[i];
+    const older = commits[i + 1];
+    const a = slugOfDeployCommit(newer.message);
+    const b = slugOfDeployCommit(older.message);
+    if (!a || a !== b) continue;
+    const gap = (Date.parse(newer.date) - Date.parse(older.date)) / 1000;
+    // A negative gap means the caller did not hand them over newest-first.
+    // Refuse rather than report a pair from an ordering we cannot trust.
+    if (!Number.isFinite(gap) || gap < 0 || gap > withinSeconds) continue;
+    out.push({ slug: a, by: newer.sha, superseded: older.sha, secondsApart: gap });
+  }
+  return out;
+}
+
+/**
+ * Everything the caller managed to learn about the Pages deployments.
+ *
+ * Two independent questions, so two independent "could not look" fields. The
+ * runs and the publish-branch commits come from different endpoints and either
+ * can fail alone; one reason field would make a failure of one silence the
+ * other, which is the `xom7` shape at the level of the report itself.
+ */
+export interface PagesReport {
+  /** Absent when {@link PagesReport.unreachable} says why. */
+  health?: PagesHealth;
+  /** Why the deployment runs could not be read. Never rendered as green. */
+  unreachable?: string;
+  /**
+   * The branch the deployments actually ran against — **measured** from the
+   * runs, never assumed. `/repos/{slug}/pages` would say it outright and
+   * answers 403 without admin (checked 2026-09-20), so the publish branch is
+   * read off `head_branch`. A repository publishing from `main` or from a
+   * `docs/` folder therefore reports its own branch rather than a guess.
+   */
+  publishBranch?: string;
+  supersedes?: SelfSupersede[];
+  /** Why the publish-branch commits could not be read. */
+  commitsUnreachable?: string;
+  /** The span the commits covered, for the same reason the CI window exists. */
+  window?: Window;
+}
+
+/**
+ * The Pages section, rendered separately from {@link render} **on purpose**.
+ *
+ * `render` returns early when the default-branch API was unreachable and again
+ * when that branch had no runs. Folding this in would let a failure to read
+ * `main` silence a question about `gh-pages` — two independent facts collapsed
+ * into one verdict, which is the defect the whole module exists to prevent.
+ * Separate functions make that structurally impossible rather than carefully
+ * avoided.
+ *
+ * ## It reports; it does not grade a share
+ *
+ * Measured 2026-09-20 on this repository: **52 of the last 100** deployments
+ * cancelled, 48 succeeded, none failed. That is bad, and no number here says
+ * how bad, because no basis for a threshold exists — the same argument that
+ * stopped `6xaz` inventing one. The counts are stated and the reader judges.
+ *
+ * The one graded statement is a FLOOR rather than a threshold: deployments
+ * happened and **not one of them succeeded**. That is answerable without
+ * calibration, exactly as `-z` on `ls -A` is in `oisv`.
+ */
+export function renderPages(r: PagesReport): string {
+  const lines = ["## Pages deployments", ""];
+  lines.push(
+    "_A Pages build outcome is not repository state — it is a fact GitHub holds_",
+    "_about this repository, asked fresh every run and cached nowhere._",
+    "",
+  );
+  if (r.unreachable || !r.health) {
+    lines.push(
+      `**Not checked — treat as unknown, not as green.** ${r.unreachable ?? "no deployment runs were fetched."}`,
+      "",
+      "The previews may or may not be building. Nothing here can tell you which.",
+      "",
+    );
+    return lines.join("\n");
+  }
+  const h = r.health;
+  const on = r.publishBranch ? ` on \`${r.publishBranch}\`` : "";
+  if (h.total === 0) {
+    // NOT a green. A repository with no Pages, and a repository whose
+    // deployments this failed to see, look identical from here.
+    lines.push(
+      `_No \`${PAGES_WORKFLOW}\` runs in the window${on}._ Unjudged, not green —`,
+      "a repository that publishes nothing and one whose deployments went",
+      "unseen read the same from here.",
+      "",
+    );
+    return lines.join("\n");
+  }
+  lines.push(
+    `_Window: ${r.window ? describeWindow(r.window) : `${h.total} recent deployments`}${on}._`,
+    "",
+  );
+  lines.push(
+    `- ✓ **${h.success}** succeeded`,
+    `- ❔ **${h.cancelled}** cancelled — *neither shipped nor broken*: a superseded`,
+    "  build leaves the previous preview in place, so the site is stale rather",
+    "  than down, and nobody is sent to fix anything.",
+    `- ✗ **${h.failure}** failed`,
+    `- ⏳ **${h.unsettled}** not settled`,
+    "",
+  );
+  if (h.success === 0) {
+    // The floor. No calibration needed to say that nothing got through.
+    lines.push(
+      `**Not one of ${h.total} deployments succeeded.** The published site is`,
+      "whatever the last successful build left, and that is older than this window.",
+      "",
+    );
+  }
+  if (r.commitsUnreachable) {
+    lines.push(
+      `_Could not read the publish branch's commits (${r.commitsUnreachable}), so_`,
+      "_the cancellations below are uncategorised — not absent._",
+      "",
+    );
+    return lines.join("\n");
+  }
+  const self = r.supersedes ?? [];
+  if (self.length === 0) {
+    lines.push(
+      "No deployment superseded its own slug in the window — whatever cancelled",
+      "these builds, it was not one workflow pushing twice (`bm6d`).",
+      "",
+    );
+    return lines.join("\n");
+  }
+  // WHOSE contention. `bm6d` fixed one workflow pushing twice; `6pfo` is
+  // several sessions racing for one ref, and is not fixed. A merged count
+  // cannot show whether the first fix held, which is why these are named.
+  const bySlug = new Map<string, number>();
+  for (const s of self) bySlug.set(s.slug, (bySlug.get(s.slug) ?? 0) + 1);
+  lines.push(
+    `**${self.length}** cancellation(s) were self-inflicted: one deploy pushed`,
+    "twice and cancelled its own build. That is `bm6d`'s signature, and a slug",
+    "still showing it is running a workflow from before that fix.",
+    "",
+  );
+  for (const [slug, n] of [...bySlug.entries()].sort((a, b) => b[1] - a[1])) {
+    lines.push(`- \`${slug}\` — ${n}`);
+  }
+  lines.push(
+    "",
+    "Cancellations NOT listed here are several sessions racing for the publish",
+    "ref (`6pfo`), which is a different fix and is not done.",
+    "",
+  );
   return lines.join("\n");
 }

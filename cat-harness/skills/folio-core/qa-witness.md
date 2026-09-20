@@ -1,10 +1,10 @@
 ---
 name: qa-witness
-roles: [reader, collaborator, owner]
 description: >
   The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document
   says, which three families produce one, how to read a verdict and the witness
   behind it, and why "could not determine" is a third state everywhere in them.
+consulted: true
 ---
 
 # QA witnesses — the published projection of every verdict

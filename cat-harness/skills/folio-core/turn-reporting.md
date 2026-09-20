@@ -1,12 +1,12 @@
 ---
 name: turn-reporting
-roles: [reader, collaborator, owner]
 description: >
   Say which bean you are on, every turn — the opening and closing report
   formats, the rules that make a report worth reading (two sentences and a link
   per bean, every mention), and the STRICT rule that the "next" line is a
   question and must carry its own context.
 allowed-tools: Read Grep Glob AskUserQuestion
+consulted: true
 ---
 
 # Turn reporting — say which bean you are on, every turn
@@ -36,8 +36,8 @@ attempting — before the first tool call, not after the work lands:
 **End every turn** with the beans you touched and what is next.
 
 > **Beans**
-> - **worked** [`fwr8`](beans/folio-assistant-fwr8--re-baseline-the-forward-ref-arc.md) — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
-> - **next** [`fwr7`](beans/folio-assistant-fwr7--retarget-seven-mis-aimed-uses-edges.md) — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
+> - **worked** `fwr8` — Re-baseline the forward-ref arc endpoints. Re-ran both with the fixed parser: the arc is 274 → 195, not 274 → 192. This corrects my own earlier claim that the start figure was understated — only the post-mid-arc figures are short, and only by 3.
+> - **next** `fwr7` — Retarget seven `uses[]` edges that point at the wrong block. Two of the seven are now confirmed detangler findings rather than reader reports, which raises their priority above the remaining five.
 
 ### Before you send the report — one pass for named decisions (STRICT)
 

@@ -8,7 +8,6 @@ export const contentGraph: SkillDefinition = {
     "and examples relationships. Applies heuristics to detect forward references, " +
     "cross-chapter/cross-section coupling, sparse/dense sections, and isolated blocks. " +
     "Produces ranked reorganisation suggestions and implements approved moves.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],
@@ -33,9 +32,6 @@ export const contentGraph: SkillDefinition = {
     "split.*section",
     "merge.*section",
     "concrete.*reorg",
-  ],
-  schemas: [
-    { module: "schemas/types", types: ["Block", "Chapter", "Section"], access: "read" },
   ],
   scripts: [
     {

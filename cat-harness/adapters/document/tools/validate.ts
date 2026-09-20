@@ -15,7 +15,7 @@ import { spawnSync, type SpawnSyncReturns } from "child_process";
 import { existsSync, readdirSync } from "fs";
 import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { REPO_ROOT, CONTENT_DIR } from "../paths.js";
+import { REPO_ROOT, FOLIO_DIR } from "../paths.js";
 import { checkFolioProfile, formatProfileCheck } from "../../../content/pipeline/profile-check.js";
 import {
   readBlockManifest,
@@ -24,10 +24,10 @@ import {
 import { resolvePipelineScript } from "./_pipeline.js";
 // Note: paths are resolved from the document adapter's paths module.
 
-/** Find all paper directories under content/. */
+/** Find all paper directories under folio/. */
 function discoverPapers(): string[] {
-  if (!existsSync(CONTENT_DIR)) return [];
-  return readdirSync(CONTENT_DIR, { withFileTypes: true })
+  if (!existsSync(FOLIO_DIR)) return [];
+  return readdirSync(FOLIO_DIR, { withFileTypes: true })
     .filter(d => d.isDirectory() && !d.name.startsWith(".") &&
       d.name !== "schema" && d.name !== "pipeline" && d.name !== "node_modules")
     .map(d => d.name);
@@ -113,12 +113,12 @@ export function registerValidateTools(server: McpServer): void {
         const papers = discoverPapers();
         if (papers.length === 0) {
           return {
-            content: [{ type: "text" as const, text: "No papers found in content/" }],
+            content: [{ type: "text" as const, text: "No papers found in folio/" }],
           };
         }
 
         const paperName = paper || papers[0];
-        const paperDir = join(CONTENT_DIR, paperName);
+        const paperDir = join(FOLIO_DIR, paperName);
 
         if (!existsSync(paperDir)) {
           return {
@@ -146,12 +146,12 @@ export function registerValidateTools(server: McpServer): void {
           // validated, whatever the block-level checks below say.
           pipelineError =
             "Could not locate `content/pipeline/validate.ts` in either this folio " +
-            `(${join(CONTENT_DIR, "pipeline")}) or the platform checkout. ` +
+            `(${join(FOLIO_DIR, "pipeline")}) or the platform checkout. ` +
             "Schema and constraint validation DID NOT RUN.";
         } else {
           const target = chapter ? join(paperDir, chapter) : paperDir;
           const result = spawnSync("bun", ["run", script, target], {
-            cwd: CONTENT_DIR,
+            cwd: FOLIO_DIR,
             stdio: "pipe",
             timeout: chapter ? 60_000 : 120_000,
           });
@@ -217,11 +217,11 @@ export function registerValidateTools(server: McpServer): void {
     "it per document.",
     {
       document: z.string().optional()
-        .describe("Restrict to one document under content/ (default: the whole folio)"),
+        .describe("Restrict to one document under folio/ (default: the whole folio)"),
     },
     async ({ document }) => {
       try {
-        const scope = document ? join(CONTENT_DIR, document) : CONTENT_DIR;
+        const scope = document ? join(FOLIO_DIR, document) : FOLIO_DIR;
         if (document && !existsSync(scope)) {
           return { content: [{ type: "text" as const, text: `Document not found: ${scope}` }] };
         }
@@ -251,7 +251,7 @@ export function registerValidateTools(server: McpServer): void {
         const lines: string[] = [];
 
         for (const p of papers) {
-          const paperDir = join(CONTENT_DIR, p);
+          const paperDir = join(FOLIO_DIR, p);
           lines.push(`# ${p}`);
 
           for (const chDir of findChapterDirs(paperDir)) {
@@ -334,11 +334,11 @@ export function registerPaperBuildTools(server: McpServer): void {
         const paperName = paper || papers[0];
         if (!paperName) {
           return {
-            content: [{ type: "text" as const, text: "No papers found in content/" }],
+            content: [{ type: "text" as const, text: "No papers found in folio/" }],
           };
         }
 
-        const paperDir = join(CONTENT_DIR, paperName);
+        const paperDir = join(FOLIO_DIR, paperName);
         const docTs = join(paperDir, `${paperName}.ts`);
         const outDir = output_dir || join(REPO_ROOT, "chapters");
 
@@ -349,11 +349,11 @@ export function registerPaperBuildTools(server: McpServer): void {
         }
 
         const result = spawnSync("bun", [
-          "run", join(CONTENT_DIR, "pipeline/build.ts"),
+          "run", join(FOLIO_DIR, "pipeline/build.ts"),
           docTs,
           "--out-dir", outDir,
         ], {
-          cwd: CONTENT_DIR,
+          cwd: FOLIO_DIR,
           stdio: "pipe",
           timeout: 120_000,
         });

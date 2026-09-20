@@ -22,10 +22,10 @@ import {
 } from "../../adapters/mcp-server/tools/graph";
 
 const ROOT = mkdtempSync(join(tmpdir(), "mcp-graph-"));
-const CONTENT = join(ROOT, "content", "qou", "ch01");
+const CONTENT = join(ROOT, "folio", "qou", "ch01");
 const LIBRARY = join(ROOT, "library", "doc-1", "blocks");
 const ROOTS = [
-  { name: "content", dir: join(ROOT, "content") },
+  { name: "folio", dir: join(ROOT, "folio") },
   { name: "library", dir: join(ROOT, "library") },
 ];
 
@@ -163,7 +163,7 @@ describe("get_graph_stats", () => {
   test("an absent root is reported absent, so 'not built' differs from 'no match'", () => {
     const s = JSON.parse(
       executeGraphTool("get_graph_stats", { refresh: true }, [
-        { name: "content", dir: join(ROOT, "content") },
+        { name: "folio", dir: join(ROOT, "folio") },
         { name: "library", dir: join(ROOT, "nope") },
       ])!,
     );
