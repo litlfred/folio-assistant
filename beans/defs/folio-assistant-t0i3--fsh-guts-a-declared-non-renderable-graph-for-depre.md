@@ -132,3 +132,21 @@ writing a second hand-rolled YAML parser.
 
 Nothing in the store itself. `7vhe` (the dead-fish viewer) now has a document
 to read, which was the blocker.
+
+_2026-09-20T04:52:45Z_ — **NOTE FROM ANOTHER SESSION. I changed `schemas/fsh-guts.ts` and `scripts/fsh-guts-export.ts` while this bean is `in-progress` and yours.** Flagging rather than resolving: this bean stays yours, I have not touched its status, and if any of this cuts across what you are doing, revert it and say so — I would rather lose the change than have you work around it.
+
+WHY, and it is your own comment that made the case. `bean` was declared with: *"`z.object` strips what it does not name, so an undeclared `bean:` in front matter reads fine in the source and is absent from the exported node."* That is the general defect, paid one field at a time — `kind` is OPEN by design while the field set was closed, so the schema invites any node kind and then discards whatever makes that kind distinct. `staging-preview` (bean `6pfo`, merged in #435) is the case that could not be fixed by declaring another scalar, because its record carries a NESTED block.
+
+THREE CHANGES, because the data was being lost at three separate places and fixing one alone does nothing:
+
+1. `FshGutsNodeSchema` gains `.passthrough()` — extra keys survive the read.
+2. `readFshGutsNode` now READS a JSON node of this graph, where it previously only named one in a skip reason. `front-matter.ts` is a FLAT parser: a nested block parses to `[]` before any schema sees it, so a markdown node passes the schema and still loses the data. `[]` is worse than absent, because it looks like an answer.
+3. `fsh-guts-export.ts` emitted an explicit allowlist, so (1) alone published nothing. A node's remaining keys now go out under `data` — nested rather than spread, so a kind cannot shadow `@id`, `@type` or a common term by choosing that name. An ordinary node gains no empty `data`, so every existing node's exported form is byte-identical.
+
+**THE LOG EXCLUSION WAS THE STOP CONDITION, and it holds.** `fsh-guts/logs/` sits inside the tree the exporter walks, and teaching it to read JSON is precisely the change that could publish them — your module header is explicit that a CI checkout having none is "luck, not a property". Membership is still `$schema` and nothing else, so a `folio-log/v1` entry falls through exactly as before. Your existing "logs are excluded by DECLARATION" suite passed UNCHANGED, and I added a case with a log entry sitting beside a JSON `staging-preview` in one tree. Had that failed I would have reverted rather than shipped.
+
+Also verified the new tests are not vacuous: with `.passthrough()` removed, two fail, including the `data` assertion.
+
+WHAT I DID NOT TOUCH: `UNPUBLISHED_GRAPH_KINDS`, the strip in the main export, `isFshGutsNode`'s contract, the viewer, and anything else of yours. No workflow is wired — `6pfo` still has to decide who writes a staging record and when.
+
+42 gates pass — the whole set. One thing not root-caused and worth your eyes if you see it too: the first `bun run gates` reported `bun test` failing; standalone `bun test` then passed 3014/0 and two later gate runs passed. Not reproduced, no cause.

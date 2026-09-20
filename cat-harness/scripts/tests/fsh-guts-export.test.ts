@@ -203,3 +203,104 @@ describe("the folded block scalar the corpus actually uses", () => {
     for (const n of withSummary) expect(String(n.description)).not.toBe(">-");
   });
 });
+
+describe("a kind's own fields survive, because `kind` is open", () => {
+  // The schema invites any `kind` and then stripped whatever made that kind
+  // distinct. `bean` is the evidence it was being paid for one field at a
+  // time: its own comment records the symptom — reads fine in the source,
+  // absent from the exported node. `staging-preview` (bean `6pfo`) carries a
+  // NESTED block, which no amount of declaring scalars would have held.
+
+  test("an extra field survives the read instead of being stripped", () => {
+    const r = readFshGutsNode(
+      JSON.stringify({
+        $schema: "folio-fsh-guts/v1",
+        title: "Staging preview — x",
+        kind: "staging-preview",
+        staging: { slug: "x", branch: "b", commit: "c", builtAt: "2026-09-20T00:00:00Z" },
+      }),
+    );
+    expect(r.node).toBeDefined();
+    const staging = (r.node as Record<string, unknown> | undefined)?.["staging"] as
+      | Record<string, unknown>
+      | undefined;
+    expect(staging?.["slug"]).toBe("x");
+  });
+
+  test("and reaches the exported document, under `data`", () => {
+    const root = instance();
+    writeFileSync(
+      join(repoRootFor(root), "fsh-guts", "preview.json"),
+      JSON.stringify({
+        $schema: "folio-fsh-guts/v1",
+        title: "Staging preview — x",
+        kind: "staging-preview",
+        staging: { slug: "x", liveness: "live" },
+      }),
+    );
+    const doc = buildFshGutsExport(root);
+    expect(doc.nodeCount).toBe(1);
+    const n = doc["@graph"][0] as Record<string, unknown>;
+    expect((n["data"] as Record<string, unknown>)["staging"]).toEqual({ slug: "x", liveness: "live" });
+  });
+
+  test("an ordinary node gains no empty `data` — the document is unchanged for it", () => {
+    const root = instance();
+    writeFileSync(join(repoRootFor(root), "fsh-guts", "kept.md"), node({ title: "Kept" }));
+    const n = buildFshGutsExport(root)["@graph"][0] as Record<string, unknown>;
+    expect("data" in n).toBe(false);
+  });
+
+  test("a common field is emitted once, under its term and not also in `data`", () => {
+    const root = instance();
+    writeFileSync(join(repoRootFor(root), "fsh-guts", "kept.md"), node({ title: "Kept", bean: "abcd" }));
+    const n = buildFshGutsExport(root)["@graph"][0] as Record<string, unknown>;
+    expect(n["bean"]).toBe("abcd");
+    expect("data" in n).toBe(false);
+  });
+});
+
+describe("a JSON node of THIS graph is read, and a log still is not", () => {
+  test("the JSON carrier works, because front matter is flat", () => {
+    // Measured: `schemas/front-matter.ts` parses to Record<string, string |
+    // string[]>, so a nested `staging:` block comes back as []. A record a
+    // workflow writes and a tool reads cannot use that carrier.
+    const r = readFshGutsNode(
+      JSON.stringify({ $schema: "folio-fsh-guts/v1", title: "T", kind: "staging-preview" }),
+    );
+    expect(r.node?.title).toBe("T");
+    expect(r.node?.kind).toBe("staging-preview");
+  });
+
+  test("its body is empty rather than invented — a JSON node's content IS its fields", () => {
+    const r = readFshGutsNode(JSON.stringify({ $schema: "folio-fsh-guts/v1", title: "T", kind: "k" }));
+    expect("body" in r ? r.body : undefined).toBe("");
+  });
+
+  test("READING JSON DID NOT LET LOGS IN — the guarantee this change had to keep", () => {
+    // The whole risk of teaching the exporter to read JSON: `fsh-guts/logs/`
+    // sits inside the tree it walks. Exclusion is still by DECLARATION, so a
+    // log entry falls through exactly as before.
+    const root = instance();
+    const logs = join(repoRootFor(root), "fsh-guts", "logs");
+    mkdirSync(logs, { recursive: true });
+    writeFileSync(
+      join(logs, "entry.json"),
+      JSON.stringify({ $schema: "folio-log/v1", id: "x", summary: "a secret-ish trace" }),
+    );
+    writeFileSync(
+      join(repoRootFor(root), "fsh-guts", "preview.json"),
+      JSON.stringify({ $schema: "folio-fsh-guts/v1", title: "P", kind: "staging-preview" }),
+    );
+
+    const doc = buildFshGutsExport(root);
+    expect(doc.nodeCount).toBe(1);
+    expect(JSON.stringify(doc["@graph"])).not.toContain("secret-ish");
+  });
+
+  test("a JSON file declaring this schema but failing it is a defect, not a clean skip", () => {
+    const r = readFshGutsNode(JSON.stringify({ $schema: "folio-fsh-guts/v1", kind: "k" }));
+    expect(r.node).toBeUndefined();
+    expect("reason" in r ? r.reason : "").toContain("does not satisfy it");
+  });
+});
