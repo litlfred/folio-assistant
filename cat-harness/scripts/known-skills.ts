@@ -485,6 +485,59 @@ export function consultedSkills(root: string): Set<string> {
   return out;
 }
 
+/**
+ * The skills that declare `published: false` — kept out of every published
+ * graph, because publishing them advertises what they document.
+ *
+ * ## Why a declaration, when a name match already worked
+ *
+ * `isPublishedSkill` strips a skill whose NAME is an unpublished graph kind,
+ * and its own note says why that was enough and where it stops:
+ *
+ * > *"Same list, because the skill and the kind share a name by
+ * > construction. If that ever stops being true this needs its own list, not
+ * > a cleverer derivation."*
+ *
+ * This is that list, and it is a declaration rather than a list in code for
+ * the reason this repository applies everywhere else — `isSkillMd`, a bean's
+ * front matter, a workflow instance's `$schema`: **a directory is a place to
+ * look and the file says what it is.** A skill that must not be published
+ * says so in its own front matter, where the author who writes it is looking.
+ *
+ * It EXTENDS the name rule rather than replacing it. The two answer different
+ * questions — "is this named after the trashcan" and "did this skill say not
+ * to publish it" — and a skill whose subject is an unpublished graph but
+ * whose name is something else was previously unexpressible. Keeping both is
+ * the "an unavoidable duplicate is fine while an unchecked one is not" rule:
+ * the blanket test in `fsh-guts-unpublished.test.ts` asserts the OUTCOME over
+ * the built document at any depth, so neither input can quietly stop working.
+ *
+ * Unreadable is not "publishable", and the asymmetry is deliberate — the same
+ * shape as `consultedSkills` above, resolved the other way. There, treating
+ * an unreadable file as consulted would EXEMPT it from a criterion, so it
+ * stays performed. Here, treating one as publishable would LEAK it, so it
+ * stays unpublished.
+ */
+export function unpublishedSkills(root: string): Set<string> {
+  const out = new Set<string>();
+  for (const parts of skillMdDirs(root)) {
+    const dir = join(root, ...parts);
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith(".md") || !isSkillMd(join(dir, f))) continue;
+      let fm: FrontMatter;
+      try {
+        fm = parseFrontMatter(readFileSync(join(dir, f), "utf-8")).fm;
+      } catch {
+        out.add(f.slice(0, -3));
+        continue;
+      }
+      if (scalar(fm, "published") === "false") out.add(f.slice(0, -3));
+    }
+  }
+  return out;
+}
+
 /** Every skill name this instance can resolve. */
 export function knownSkills(root: string): Set<string> {
   const names = new Set<string>();
