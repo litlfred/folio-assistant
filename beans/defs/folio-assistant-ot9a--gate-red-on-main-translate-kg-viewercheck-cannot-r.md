@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ot9a
 title: 'GATE RED ON MAIN: translate-kg-viewer:check cannot read the declaration, and no workflow runs it'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T08:47:02Z
-updated_at: 2026-09-20T08:47:23Z
+updated_at: 2026-09-20T09:49:42Z
 parent: folio-assistant-1xhc
 ---
 
@@ -80,3 +80,66 @@ Adding the import and pushing. It turns one silent failure into one silent
 wrong-direction edge, and the owner has an open decision on exactly this —
 four options, on PR #465. Recording the measurement is the contribution; the
 choice is not the agent's.
+
+---
+
+## Resolved 2026-09-20 — and three of the four Done-whens were already true
+
+**1. The check passes on main, and nobody fixed it on purpose.**
+`scripts/translate-kg-viewer.ts` is untouched since the `cat-harness/`
+relocation — no `folio-graph-kind` import was added to it. It passes because
+`schemas/harness-config.ts` picked that import up, and this script reaches it
+transitively. That is exactly the fragility the bean described, now landing in
+our favour instead of against us, and `scripts/tests/declared-directory-resolves.test.ts`
+(#482) is what stops it drifting back: it imports all 20 modules that call
+`directoryForGraph`, each in a FRESH subprocess, and fails if any cannot
+resolve. That also settles Done-when #4 — the answer is the class, not this
+script.
+
+**2. No wrong-direction edge.** `check:partition:edges` reports **0**. The
+repair the bean warned against as a drive-by was never needed, and the
+architectural options on #465 are untouched.
+
+**3. The gate is wired** — along with four others nobody was running.
+
+## What the bean did not know: it was one of nine, and then one of five
+
+Measured across `package.json`: **9 of 46** `check:` / `:check` scripts were in
+no workflow at all. Six already had reasons — written as a COMMENT in
+`code-quality-gates.yml`. The other three (`health:check`, `landing:data:check`,
+`landing:sticky:check`) had no reason anywhere, and nothing said so.
+
+**The comment was also wrong.** It excluded `translate-*:check` as needing
+*"a translation toolchain not installed on this runner"*. Both run clean on a
+bare checkout. That premise kept two working gates out of CI, and because a
+comment cannot be compared against anything, nothing could tell a stale reason
+from a true one.
+
+Five were genuinely unwired and all five now run:
+`translate-kg-viewer:check`, `translate-bpmn:check`, `landing:sticky:check`,
+`landing:data:check`, `check:agents-xref` — the last found by the derived
+reader, not by the hand count that preceded it.
+
+## Why `unclassifiedSteps` could never have caught this
+
+Its domain is steps found IN WORKFLOWS: *"Steps CI runs that are neither gated
+nor exempted."* A check in no workflow is outside that domain by construction,
+so the coverage audit was structurally unable to report the thing it exists to
+report — the same shape as `04vl`, where the queue's own test was true of what
+the queue could see and false of the corpus.
+
+`unrunScripts()` asks the complementary question and `SCRIPT_EXEMPTIONS` holds
+the five real exemptions with their reasons, where a test compares them against
+the live script list. **The runner is still workflow-derived** and that argument
+is not re-litigated: it answers *"what will CI run against my change"*, and only
+the workflow knows that. This is a different question, so it gets a different
+domain.
+
+Gates: 47 → **52**. Six mutations, each caught by a named test.
+
+## Done when
+
+- [x] `bun run translate-kg-viewer:check` passes on main
+- [x] the fix adds no wrong-direction edge — 0 measured
+- [x] a workflow runs this gate — and the four others nobody was running
+- [x] the class is enumerated rather than this one script
