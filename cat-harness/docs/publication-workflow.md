@@ -110,6 +110,14 @@ call path only, where `inherits` would carry both specialisms everywhere.
 | `review-code.bpmn` | The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs? |
 | `voice-review.bpmn` | Which named editorial voices has this folio ACTIVATED, and does each rule's own citation support the finding it raised? Called from `review-narrative.bpmn`, and it leaves immediately when no voice is active — the default, and this instance's case. |
 
+**Acquisition** — how a resource reaches the queue at all. `document-ingestion`
+begins at *"a file lands in `uploads/`"* and calls that its only entry point,
+which is true of ingestion and silent on everything before it:
+
+| Diagram | Answers |
+|---------|---------|
+| `content-acquisition.bpmn` | Something is offered unprompted, or is needed and has to be asked for — and through which channel: `uploads/` is one, the conversation is another, and the set is open |
+
 **Ingestion** — turning an uploaded source document into corpus. The first is
 the outer process; the rest are its call activities:
 
