@@ -49,7 +49,7 @@ export const NON_SKILL_GROUPS = new Set([
  * Not merely a `.md`. The two halves of this arrived from opposite directions
  * and meet here: declaration-driven discovery asks WHICH DIRECTORIES to look
  * in, and {@link isSkillMd} asks WHICH FILES in one count. Either alone
- * overcounts — `skills/memory/`'s 25 agent-memory nodes are `.md` in a
+ * overcounts — the 25 agent-memory nodes then in `skills/memory/` were `.md` in a
  * declared directory, and were admitted until the file-level predicate
  * existed.
  */
@@ -125,6 +125,14 @@ export function kgRoots(root: string): string[] {
 }
 
 /**
+ * NOTE ON THE EXAMPLES BELOW: the agent-memory nodes moved out of
+ * `skills/memory/` to the declared `memory/` graph on 2026-09-20 (bean
+ * `07xs`), so they are no longer scanned here at all. The history is kept in
+ * the present tense of the defect rather than rewritten, because the
+ * file-level predicate exists BECAUSE of it — and `isSkillMd` is still what
+ * does the work, which is why the move was safe rather than urgent. A reader
+ * following `skills/memory/` today finds nothing; that is the point.
+ *
  * Is this `.md` a skill, or another node kind that happens to live here?
  *
  * **Declaration over location.** A markdown file whose front matter carries
@@ -138,7 +146,7 @@ export function kgRoots(root: string): string[] {
  * {@link skillMdDirs} says non-skill directories under `skills/` "are excluded
  * by carrying **no `.md`**, which is the same test that admits a package", and
  * that "a directory that later grows a `.md` is a decision somebody makes
- * visibly". `skills/memory/` is exactly that directory: 25 agent-memory nodes,
+ * visibly". `skills/memory/` was exactly that directory: 25 agent-memory nodes,
  * every one a `.md`, none a skill. Measured 2026-09-19 — before this guard,
  * `skill-coverage.test.ts` demanded a published reference page for all 25, and
  * `kg-audit` had already written 25 bogus `kg-qa/` sidecars beside them

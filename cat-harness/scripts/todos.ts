@@ -14,7 +14,7 @@
  * | | memory | workflow management |
  * |---|---|---|
  * | human actor | **todos** (here) | *— nothing —* |
- * | agent actor | `skills/memory/` | `beans/` |
+ * | agent actor | `memory/` | `beans/` |
  *
  * The empty quadrant is empty deliberately and still is.
  *

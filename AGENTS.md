@@ -330,7 +330,7 @@ lines only**, with the overflow dropped silently.
 **The discipline is in the skill, not here** —
 [`skills/folio-core/agent-memory.md`](cat-harness/skills/folio-core/agent-memory.md) carries
 the three entry labels and what each promises, why entries are authored as nodes
-under `skills/memory/` rather than in the generated file, the two ways the
+under `memory/` rather than in the generated file, the two ways the
 injection budget has to be checked, archiving as the third state between
 "reaches everybody" and "deleted", and why an entry is never re-homed into an
 agent that does not own its subject.

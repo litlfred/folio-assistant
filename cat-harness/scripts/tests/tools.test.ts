@@ -167,7 +167,7 @@ describe("tools", () => {
     // The two halves, named, so a re-divergence says WHICH failure returned
     // rather than only that the sets differ.
     //
-    // Admitted 36 non-skills: `skills/memory/` holds agent-memory nodes, every
+    // Admitted 36 non-skills: `skills/memory/` then held agent-memory nodes, every
     // one a `.md` in a declared directory. A directory scan cannot tell them
     // apart; `isSkillMd` does, by their `$schema:` line. Under the old scan a
     // Tool could have satisfied a memory entry and passed.

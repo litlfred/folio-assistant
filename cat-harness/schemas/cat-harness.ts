@@ -184,14 +184,16 @@ export interface GraphKindDef {
    * worth reading before adding a kind: none of the four is obvious from its
    * name, and each is decided by the same two questions rather than by taste.
    *
-   * SETTLED, and the move is outstanding: agent memory is `context` — bean
-   * `mhh9`, decided by the owner 2026-09-20. The `memory` kind below carries
-   * that. The 36 nodes still sit in `skills/memory/`, inside a `cat-harness`
-   * directory, because relocating a directory as a SIDE EFFECT of adding a
-   * classification is the shape #395 refused and bean `auap` did as its own
-   * change. Bean `07xs`. Classifying the CONTAINING kind was never a ruling on
-   * its contents, and this is the case that proves it: `cat-harness` is
-   * correctly `content` while something inside it is not.
+   * SETTLED, and DONE: agent memory is `context` — bean `mhh9`, decided by
+   * the owner 2026-09-20 — and the 36 nodes moved to the declared `memory/`
+   * graph the same day, as their own change (bean `07xs`), because relocating
+   * a directory as a SIDE EFFECT of adding a classification is the shape #395
+   * refused and bean `auap` did separately.
+   *
+   * The case is worth keeping because it proves the rule above: for the hours
+   * between, `cat-harness` was correctly `content` while something inside it
+   * was `context`, and both statements were true. Classifying the CONTAINING
+   * kind is not a ruling on its contents.
    */
   holds: GraphLayer;
   summary: string;
@@ -333,8 +335,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     // Skills, workflows, roles, requirements — the authored instruction bodies
     // and the diagrams they are named from. See the note on `holds`:
-    // classifying the container is not a ruling on `skills/memory/` (bean
-    // `mhh9`).
+    // classifying the container was never a ruling on its contents — for a
+    // few hours on 2026-09-20 it held `memory` nodes, which are `context`
+    // (beans `mhh9`, `07xs`).
     holds: "content",
     summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
   },
@@ -584,11 +587,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // ESTABLISHED FACT nothing mid-process revises. Same quadrant row, opposite
   // sides of this line.
   //
-  // REGISTERED BUT NOT YET DECLARED by any directory here: the nodes are in
-  // `skills/memory/`, inside a `cat-harness` directory, and moving them is
-  // bean `07xs`. A kind registered ahead of a directory is the `folio`
-  // situation, not the `dh4f` one — `dh4f` is a DIRECTORY declared and absent,
-  // where a consumer scans nothing and reports clean. Nothing scans a kind.
+  // DECLARED at `memory/`, repository-scoped, since bean `07xs` — the same
+  // day this kind was registered. It was registered ahead of its directory for
+  // a few hours, which is the `folio` situation rather than the `dh4f` one:
+  // `dh4f` is a DIRECTORY declared and absent, where a consumer scans nothing
+  // and reports clean, and nothing scans a kind.
   // A SESSION's context — who is acting, which instances are open, what it
   // waits on. `state`: the session writes it as it goes.
   //

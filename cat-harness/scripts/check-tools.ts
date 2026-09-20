@@ -65,7 +65,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  *
  * Measured 2026-09-20, the two sets differed **both ways** at once:
  *
- *  - **36 non-skills admitted.** `skills/memory/` holds agent-memory nodes,
+ *  - **36 non-skills admitted.** `skills/memory/` then held agent-memory nodes,
  *    every one a `.md` in a declared directory and none an instruction body.
  *    {@link isSkillMd} excludes them by their `$schema:` line; a directory
  *    scan cannot. So `satisfies: ["the-complement"]` would have RESOLVED —

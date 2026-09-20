@@ -145,19 +145,19 @@ wins. `summary`, `skill` and `schema` are descriptive and are not compared.
 
 ## Classifying a kind is not a ruling on a directory's contents
 
-`cat-harness` is correctly `content`. `skills/memory/` sits inside a
-`cat-harness` directory and holds `context`. **Both are true**, and this is the
-case that shows why the two questions are separate.
+`cat-harness` is correctly `content`. For a few hours on 2026-09-20,
+`skills/memory/` sat inside a `cat-harness` directory and held `context`.
+**Both were true at once**, and that is the case that shows why the two
+questions are separate: classifying a kind says what that KIND holds, not what
+every node beneath a directory of that kind is.
 
-The nodes have not moved yet. `skills/memory/` is inside `skills/`, which is
-declared `cat-harness`, and a nested declaration is the defect #263 names — so
-the fix is a relocation to a declared `memory/`, not a second declaration
-inside the first. That is **bean `07xs`**, deliberately its own change:
-relocating a directory as a side effect of adding a classification is the shape
-#395 refused and bean `auap` did separately. The `memory` kind is registered
-ahead of the directory, which is the `folio` situation rather than the `dh4f`
-one — `dh4f` is a directory *declared and absent*, where a consumer scans
-nothing and reports clean. Nothing scans a kind.
+The nodes have since moved to their own declared `memory/` graph (bean
+`07xs`), as their own change — relocating a directory as a side effect of
+adding a classification is the shape #395 refused and bean `auap` did
+separately. So the example is now history rather than a live gap, and it is
+kept because the rule it illustrates is not: **a directory of one kind may
+contain a node of another, and the containing declaration is not a claim about
+its contents.**
 
 ## See also
 
