@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d5f1
 title: 'INGEST: narrative description per image, localized, including images extracted from PDFs'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-20T04:15:47Z
+updated_at: 2026-09-20T04:47:50Z
 parent: folio-assistant-slw1
 ---
 

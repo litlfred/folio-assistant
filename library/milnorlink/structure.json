@@ -1,7 +1,7 @@
 {
   "_schema": "pdf-structure/v1",
   "doc_id": "milnorlink",
-  "toc_source": "none",
+  "toc_source": "outline-unusable",
   "granularity": "page",
   "text_source": "text-layer",
   "sections": [
@@ -206,7 +206,7 @@
       "n_words": 419
     }
   ],
-  "structure_note": "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no embedded outline and its inferred chapter structure was measurably wrong (bean 6xaz), so no chapter tree is claimed. A page is a determined division; an inferred chapter was not.",
+  "structure_note": "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF DOES carry an embedded outline, and it is not a structure: measured 2026-09-20, all 35 entries are journal furniture from JSTOR — 19 are bare page labels (\"p. 177\", \"p. 178\", …), 16 have no resolvable destination, and the two top-level entries are \"Article Contents\" and \"Issue Table of Contents\". Thirteen name OTHER articles from the same issue, which are not in this file. Not one entry is a heading of this document. Inferring a chapter tree from the text instead was measurably wrong (bean 6xaz), so no chapter tree is claimed by either route. A page is a determined division; an inferred chapter was not, and a page label borrowed from a journal wrapper is not either. An earlier version of this note said the PDF carried no outline — true to the rung chosen, false about the document, and that error is what opened bean 8shg against content that was correct.",
   "source": {
     "file": "milnorlink.pdf",
     "sha256": "7644abb4d24b46d888a0f57c4224663305008f4b6cf3da81dbe68328c1e3792e",

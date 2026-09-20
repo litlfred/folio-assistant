@@ -15,19 +15,106 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { NOT_DERIVABLE, checkAll, checkEntry, sidecarDocument, staleSidecars } from "../check-l1-complete.ts";
-import { OCR_THRESHOLD_CHARS, planFor } from "../ingest-document.ts";
+import { OCR_THRESHOLD_CHARS, planFor, usableOutlineEntries } from "../ingest-document.ts";
 
 const made: string[] = [];
 afterEach(() => {
   for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true });
 });
 
+describe("what makes an outline entry capable of being a chapter", () => {
+  // The rule lives in ONE language. It used to be spelled twice — once as a
+  // TS regex, once as a Python regex inside a JS template literal, where the
+  // backslashes were invalid escapes and were dropped. Python got a pattern
+  // matching nothing and reported 35 entries of journal furniture as 19
+  // usable chapters. The probe now emits (title, page) and this decides.
+  const e = (title: string, page: number) => ({ title, page });
+
+  test("a real heading counts", () => {
+    expect(usableOutlineEntries([e("2. Preliminaries", 7)])).toBe(1);
+  });
+
+  test("an entry with no resolvable destination does not", () => {
+    // PyMuPDF reports -1. Nothing to navigate to is nothing to divide at.
+    expect(usableOutlineEntries([e("Issue Table of Contents", -1)])).toBe(0);
+    expect(usableOutlineEntries([e("Article Contents", 0)])).toBe(0);
+  });
+
+  test("a bare page reference does not, in the spellings the corpus uses", () => {
+    for (const t of ["p. 177", "p.177", "p 177", "pp. 12", "P. 3", "  p. 9  "]) {
+      expect(usableOutlineEntries([e(t, 4)])).toBe(0);
+    }
+  });
+
+  test("a heading that merely CONTAINS a page number still counts", () => {
+    // The disqualifier is "is only a page reference", not "mentions one".
+    expect(usableOutlineEntries([e("Chapter 3, p. 177", 9)])).toBe(1);
+    expect(usableOutlineEntries([e("Theorem 177", 9)])).toBe(1);
+  });
+
+  test("the milnorlink shape: 35 in, 0 usable", () => {
+    const toc = [
+      e("Article Contents", -1),
+      e("Issue Table of Contents", -1),
+      ...Array.from({ length: 19 }, (_, i) => e(`p. ${177 + i}`, i + 2)),
+      ...Array.from({ length: 14 }, (_, i) => e(`Some Other Article ${i}`, -1)),
+    ];
+    expect(toc).toHaveLength(35);
+    expect(usableOutlineEntries(toc)).toBe(0);
+  });
+
+  test("nothing in is 0 out, not a crash", () => {
+    expect(usableOutlineEntries([])).toBe(0);
+  });
+});
+
 describe("which rung a document needs", () => {
   test("an embedded outline selects pdf-structure — the structure is READ", () => {
-    const p = planFor("x.pdf", { outline: 258, chars: 90_000 });
+    const p = planFor("x.pdf", { outline: 258, outlineUsable: 257, chars: 90_000 });
     expect(p.rung).toBe("pdf-structure");
     expect(p.steps[0]).toContain("scripts/pdf-structure.py");
     expect(p.why).toContain("258");
+    // Measured on uploads/9789241548960_eng.pdf, 2026-09-20.
+    expect(p.why).toContain("257");
+  });
+
+  test("an outline of JUNK is not a structure — the bean `8shg` case", () => {
+    // Measured on uploads/milnorlink.pdf, 2026-09-20: 35 entries, and not one
+    // of them a heading. 19 are bare page labels (`p. 177`, `p. 178`, …) and
+    // 16 have no resolvable destination, because the outline is JSTOR's
+    // journal wrapper — this article's pages, then THIRTEEN OTHER ARTICLES
+    // from the same issue that are not in the file at all.
+    //
+    // Routing on the raw count sent this to `pdf-structure`, which would have
+    // produced a section tree of page numbers plus thirteen phantom chapters.
+    // The committed entry is at `pdf-pages`, and it was RIGHT: this bean was
+    // opened believing the opposite.
+    const p = planFor("x.pdf", { outline: 35, outlineUsable: 0, chars: 47_871 });
+    expect(p.rung).toBe("pdf-pages");
+    // Present but unusable is a THIRD fact. Reporting it as "no outline" is a
+    // different lie, and is how the committed structure_note came to say so.
+    expect(p.why).toContain("35");
+    expect(p.why).not.toContain("no outline");
+  });
+
+  test("a junk outline still falls through to OCR when there is no text either", () => {
+    const p = planFor("x.pdf", { outline: 35, outlineUsable: 0, chars: 0 });
+    expect(p.rung).toBe("pdf-ocr+pdf-pages");
+    expect(p.why).toContain("35");
+  });
+
+  test("an outline whose usability was NOT measured is undetermined, not structure", () => {
+    // A probe predating `outlineUsable` omits it. Absent is UNKNOWN: routing
+    // on the raw count would reinstate the bug above, and calling it "no
+    // outline" would be the other lie. So neither — re-probe.
+    for (const probe of [
+      { outline: 35, chars: 47_871 },
+      { outline: 35, outlineUsable: null, chars: 47_871 },
+    ]) {
+      const p = planFor("x.pdf", probe);
+      expect({ rung: p.rung, steps: p.steps.length }).toEqual({ rung: "undetermined", steps: 0 });
+      expect(p.why).toContain("unknown");
+    }
   });
 
   test("no outline but a text layer selects pdf-pages, and says it infers nothing", () => {
@@ -57,7 +144,7 @@ describe("which rung a document needs", () => {
     for (const probe of [
       { outline: null, chars: null, error: "no PDF backend" },
       { outline: null, chars: 10 },
-      { outline: 3, chars: null },
+      { outline: 3, outlineUsable: 3, chars: null },
     ]) {
       const p = planFor("x.pdf", probe);
       expect({ rung: p.rung, steps: p.steps.length }).toEqual({ rung: "undetermined", steps: 0 });

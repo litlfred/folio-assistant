@@ -106,9 +106,39 @@ export function bibSlug(file: string): string {
 
 /** What the PDF itself says: does it carry an outline, and readable text? */
 export interface Probe {
+  /** Raw entry count. Kept because "there is an outline, and it is junk" is
+   *  a different fact from "there is no outline", and the reader needs both. */
   outline: number | null;
+  /**
+   * Entries that could actually carry a chapter tree. `undefined` on a probe
+   * from before this field existed, which callers read as "unknown", never 0.
+   *
+   * Bean `8shg`. A raw count routes on the wrong question. `milnorlink.pdf`
+   * carries 35 entries and NONE of them is a heading: 19 are bare page labels
+   * (`p. 177`, `p. 178`, …) and 16 have no resolvable destination, because
+   * the outline is JSTOR's journal wrapper — this article's pages, then
+   * thirteen OTHER articles from the same issue that are not in the file.
+   * Routing on `> 0` sent it to `pdf-structure`, which would have produced a
+   * section tree of page numbers plus thirteen phantom chapters.
+   */
+  outlineUsable?: number | null;
   chars: number | null;
   error?: string;
+}
+
+/**
+ * Is an outline entry capable of being a chapter?
+ *
+ * Two disqualifiers, both measured on the corpus rather than imagined:
+ * no resolvable destination (PyMuPDF reports page `-1`), and a title that is
+ * only a page reference. Neither names a division of the document.
+ */
+export function usableOutlineEntries(
+  entries: readonly { title: string; page: number }[],
+): number {
+  return entries.filter(
+    (e) => e.page >= 1 && !/^pp?\.?\s*\d+$/i.test(e.title.trim()),
+  ).length;
 }
 
 /**
@@ -132,12 +162,35 @@ except Exception as e:
 try:
     d = pymupdf.open(sys.argv[1])
     chars = sum(len(d[i].get_text()) for i in range(min(len(d), 20)))
-    print(json.dumps({"outline": len(d.get_toc()), "chars": chars}))
+    toc = d.get_toc()
+    # Facts only. Whether an entry can carry a chapter is decided ONCE, by
+    # usableOutlineEntries() above, rather than restated here: a rule spelled
+    # in two languages is two rules, and this one had already diverged.
+    # The Python copy lived in a JS template literal, where a regex
+    # metacharacter escape is an INVALID string escape and JS drops the
+    # backslash. Python therefore received a pattern that matched nothing,
+    # and 35 entries of journal furniture were reported as 19 usable
+    # chapters -- silent, and wrong in the unsafe direction. Bean 8shg.
+    # (This comment is escape-free on purpose: the first draft of it
+    # contained the very sequences it describes, and broke the parse.)
+    print(json.dumps({
+        "outline": len(toc),
+        "toc": [[t[1], t[2]] for t in toc],
+        "chars": chars,
+    }))
 except Exception as e:
     print(json.dumps({"error": str(e)}))
 `;
   const r = Bun.spawnSync(["python3", "-c", py, pdf]);
-  return parseProbe(new TextDecoder().decode(r.stdout));
+  const raw = parseProbe(new TextDecoder().decode(r.stdout)) as Probe & {
+    toc?: [string, number][];
+  };
+  if (raw.toc === undefined) return raw;
+  const { toc, ...rest } = raw;
+  return {
+    ...rest,
+    outlineUsable: usableOutlineEntries(toc.map(([title, page]) => ({ title, page }))),
+  };
 }
 
 /**
@@ -277,18 +330,43 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
       steps: [],
     };
   }
-  if (p.outline > 0) {
+  // An outline was found but we cannot tell whether any of it is usable: a
+  // probe predating `outlineUsable` returns it absent, and absent is UNKNOWN.
+  // Routing on the raw count here would reinstate exactly the bug below;
+  // calling it "no outline" would be a different lie. So: third state.
+  if (p.outline > 0 && (p.outlineUsable === undefined || p.outlineUsable === null)) {
+    return {
+      rung: "undetermined",
+      why:
+        `${p.outline} outline entries, but how many can carry a chapter is unknown ` +
+        `(this probe did not report it). Re-probe rather than guess a rung`,
+      steps: [],
+    };
+  }
+  if ((p.outlineUsable ?? 0) > 0) {
     return {
       rung: "pdf-structure",
-      why: `${p.outline} embedded outline entries — the structure is READ, not inferred`,
+      why:
+        `${p.outlineUsable} of ${p.outline} embedded outline entries can carry a ` +
+        `chapter — the structure is READ, not inferred`,
       steps: [["python3", "scripts/pdf-structure.py", "-o", lib, pdf]],
     };
   }
+  // The case bean `8shg` exists for. An outline is PRESENT and carries nothing
+  // usable, which is not the same as absent and must not be reported as it:
+  // `milnorlink.pdf` has 35 entries of JSTOR journal furniture. Falls through
+  // to the text-layer rungs, and says why so the next reader does not re-open
+  // this as "the outline was ignored" — which is how this bean was opened.
+  const junkOutline =
+    p.outline > 0
+      ? `an outline of ${p.outline} entries, none of which can carry a chapter ` +
+        `(page labels and entries with no destination) — present, but not a structure. `
+      : "";
   if (p.chars < OCR_THRESHOLD_CHARS) {
     return {
       rung: "pdf-ocr+pdf-pages",
       why:
-        `no outline, and ${p.chars} characters over the first pages ` +
+        `${junkOutline || "no outline, and "}${p.chars} characters over the first pages ` +
         `(< ${OCR_THRESHOLD_CHARS}) — there is no usable text layer`,
       steps: [
         ["python3", "scripts/pdf-ocr.py", "-o", lib, pdf],
@@ -299,7 +377,7 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
   return {
     rung: "pdf-pages",
     why:
-      `no outline, ${p.chars} characters of text layer — PAGE granularity. ` +
+      `${junkOutline || "no outline, "}${p.chars} characters of text layer — PAGE granularity. ` +
       `A chapter tree is NOT inferred (bean 6xaz)`,
     steps: [["python3", "scripts/pdf-pages.py", "-o", lib, pdf]],
   };

@@ -40,6 +40,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -80,6 +81,44 @@ def _load_tech_meta():
 
 
 tech_meta = _load_tech_meta()
+
+
+def outline_state(pdf: Path) -> str:
+    """What the PDF's own outline offers this rung: `none` or `outline-unusable`.
+
+    Bean `8shg`. This rung is reached when nothing usable could be READ, and
+    writing `none` for that was a lie of omission whenever an outline existed
+    and was junk. `milnorlink.pdf` carries 35 entries — 19 bare page labels,
+    16 with no destination, thirteen naming other articles from the same JSTOR
+    issue — and calling that "no outline" is what opened `8shg` against content
+    that was correct.
+
+    The rule is the same one `usableOutlineEntries` applies in
+    `ingest-document.ts`. It is stated twice, in two languages, and that is the
+    one duplicate here worth its cost: the router decides which rung to take
+    before this script runs, and this script must be able to say what it saw
+    without depending on having been routed. `scripts/tests/pdf-pages-outline.test.py`
+    pins the two against the same cases so they cannot drift.
+
+    Never raises: a rung that cannot read the outline says `none-undetermined`
+    rather than claiming absence, because absence is a finding and this is not.
+    """
+    try:
+        import pymupdf
+    except ImportError:
+        return "none-undetermined"
+    try:
+        toc = pymupdf.open(pdf).get_toc()
+    except Exception:
+        return "none-undetermined"
+    if not toc:
+        return "none"
+    usable = [
+        t for t in toc
+        if t[2] is not None and t[2] >= 1
+        and not re.fullmatch(r"pp?\.?\s*\d+", str(t[1]).strip(), re.I)
+    ]
+    return "outline" if usable else "outline-unusable"
 
 
 def page_texts(pdf: Path, from_ocr: bool, outroot: Path) -> tuple[list[str], str]:
@@ -193,7 +232,7 @@ def main() -> int:
         existing.update({
             "_schema": existing.get("_schema", "pdf-structure/v1"),
             "doc_id": doc_id,
-            "toc_source": "none",
+            "toc_source": outline_state(pdf),
             "granularity": "page",
             "text_source": source,
             # EXACTLY the section shape `pdf-structure.py` writes, field for
