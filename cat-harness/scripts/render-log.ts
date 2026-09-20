@@ -141,15 +141,20 @@ const USAGE =
 /**
  * Prose does not travel in argv — bean `ru6i`.
  *
- * `--summary` and `--reason` used to be command-line words, and two things were
- * wrong with that at once.
+ * `--summary` and `--reason` used to be command-line words. The reason for moving
+ * them is the CONTRACT, and it is worth being exact about that, because the first
+ * version of this comment claimed a live bug that does not exist.
  *
- * THE MEASURED BUG. Three of the four callers built them by interpolation —
- * `--reason "PR #... closed; removal confirmed by: $CLEANUP_REASON"` — so a
- * quote or a backtick in `$CLEANUP_REASON` broke the command line. That data
- * comes from a preflight, not from a constant.
+ * WHAT IS NOT THE REASON. I claimed the four callers in `feature-staging.yml`
+ * were broken by a quote in `$CLEANUP_REASON`, since they built the argument as
+ * `--reason "PR #... confirmed by: $CLEANUP_REASON"`. **Measured: they were
+ * safe.** Shell parameter expansion inside double quotes does not re-tokenize or
+ * re-quote, so `he said "no"`, a backtick and a `$(id)` all arrived as one
+ * literal argument with nothing executed. The value comes through `env:`, which
+ * is a shell variable — not a `${{ }}` template substitution, which would be a
+ * different story.
  *
- * THE CONTRACT. `tool-types.ts` refuses prose as an argv word by design: "no
+ * THE ACTUAL REASON. `tool-types.ts` refuses prose as an argv word by design: "no
  * pattern admits real markdown and excludes a payload … a tool whose prose
  * argument is a command-line word was always going to need quoting nobody
  * checks." So `render-logging` could not have a Tool node at all while its
@@ -158,10 +163,16 @@ const USAGE =
  *     ✗ 1 command-line input(s) of a type that can express a shell payload:
  *         render-log.summary : Text — put free text on stdin
  *
- * The flags are REFUSED rather than quietly ignored, and that is the whole
- * value of this function. A caller left behind by the migration fails at exit 2
- * naming the flag, instead of writing a log entry with an empty summary — which
- * would be a record that something was published and not what.
+ * That rule is about what a TYPE can express, not about today's callers: its own
+ * argument is that "a caller is one refactor away from a template literal", and
+ * the property that survives a careless caller is the value never being
+ * dangerous. So this is a defensive change and a contract change, not a bug fix,
+ * and calling it a bug fix would have been a claim nobody could check.
+ *
+ * The flags are REFUSED rather than quietly ignored, and that part stands on its
+ * own. A caller left behind by the migration fails at exit 2 naming the flag,
+ * instead of writing a log entry with an empty summary — which would be a record
+ * that something was published and not what.
  */
 function refuseProseFlags(argv: string[]): void {
   const prose = ["summary", "reason", "detail"].filter((n) =>
