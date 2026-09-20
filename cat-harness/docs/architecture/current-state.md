@@ -81,7 +81,7 @@ reports the edges that cross a boundary **in the wrong direction**.
 | proposed repo | modules | by rule | hand-triaged | by keyword | fell through |
 |---|---:|---:|---:|---:|---:|
 | `agentic-harness` | 58 | 43 | 15 | 0 | 0 |
-| `folio-assistant-core` | **129** | 120 | 9 | 0 | 0 |
+| `folio-assist-core` | **129** | 120 | 9 | 0 | 0 |
 | `folio-asst-sci` | 36 | 8 | 8 | 20 | 0 |
 | `smart-kg` | **0** | 0 | 0 | 0 | 0 |
 | `smart-base` | 4 | 1 | 0 | 3 | 0 |
@@ -120,10 +120,10 @@ than a floor:
 
 | importer | imports from | edges |
 |---|---|---:|
-| `agentic-harness` | `folio-assistant-core` | **21** |
-| `folio-assistant-core` | `folio-asst-sci` | **20** |
+| `agentic-harness` | `folio-assist-core` | **21** |
+| `folio-assist-core` | `folio-asst-sci` | **20** |
 | `agentic-harness` | `folio-asst-sci` | 3 |
-| `folio-assistant-core` | `smart-base` | 2 |
+| `folio-assist-core` | `smart-base` | 2 |
 
 `bun run check:partition:edges` prints all 46 by name. The two large groups have
 different causes and different fixes.

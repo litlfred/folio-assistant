@@ -50,7 +50,7 @@ folio repository. The [platform-boundary rule](../../AGENTS.md) is the test.
   rename reaching the declaration and the readers. This one is the *content of*
   `cat-harness/folio/`. Check `hs08`'s state before starting — if the rename is
   unfinished, this builds on sand.
-- **The rendering path is `folio-assistant-core`'s, not the harness's** — per
+- **The rendering path is `folio-assist-core`'s, not the harness's** — per
   `cat-harness-minimum`, the just-the-docs pipeline and every renderer belong to
   core. "A minimal just-the-docs rendering in `cat-harness/folio/`" therefore
   needs the layering question answered first: does cat-harness reach up to

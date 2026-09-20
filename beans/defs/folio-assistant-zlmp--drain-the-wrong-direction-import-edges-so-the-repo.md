@@ -3,8 +3,9 @@
 title: Drain the wrong-direction import edges so the repo split can cut
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-19T00:54:54Z
+updated_at: 2026-09-20T18:31:16Z
 parent: folio-assistant-vke6
 ---
 
@@ -163,7 +164,7 @@ projector read `ToolDefinition.summary` while this branch renamed it to
 CI builds the PR MERGED WITH MAIN — 1829 tests across 134 files locally, 1883
 across 138 there. Merge main before trusting a local green.
 
-_2026-09-19T00:41:16Z_ — Re-measured 2026-09-19 on main at 17dc1e6 — GENUINELY LIVE, do not treat as stale. 'bun run check:partition' reports 16 wrong-direction edges (agentic-harness -> folio-assistant-core 11, folio-assistant-core -> folio-asst-sci 4, folio-assistant-core -> smart-base 1), down from the 49 this bean last recorded, against a target of 0. Also 3 modules unassigned, where the bean's table records 0 — the tool declines to judge 4 edges touching them and says so rather than counting them clean. PR #304 ('Drain the wrong-direction imports to 10') is open on this.
+_2026-09-19T00:41:16Z_ — Re-measured 2026-09-19 on main at 17dc1e6 — GENUINELY LIVE, do not treat as stale. 'bun run check:partition' reports 16 wrong-direction edges (agentic-harness -> folio-assist-core 11, folio-assist-core -> folio-asst-sci 4, folio-assist-core -> smart-base 1), down from the 49 this bean last recorded, against a target of 0. Also 3 modules unassigned, where the bean's table records 0 — the tool declines to judge 4 edges touching them and says so rather than counting them clean. PR #304 ('Drain the wrong-direction imports to 10') is open on this.
 
 _2026-09-19T00:54:54Z_ — The feedback cluster: 10 -> 6, and the reason the obvious fix failed twice. Measured at d26a96fd — reclassifying src/core/feedback.ts, src/routes/feedback.ts and src/routes/relevance.ts to core ALONE gives 11 edges, not 6, because src/server.ts, src/index.ts and src/routes/chat.ts then cross the line to MOUNT them: five new edges replace four. Content handlers mounted by a harness composition root cross whichever side holds them. That is why moving them was recommended and measured worse twice before the mechanism was understood. The fix is two steps and only works in this order. (1) src/route-groups.ts — routes resolved by VARIABLE specifier from a declaration, like tool-groups, qa-checker-discovery and render-discovery; each route module exports a mount* factory that casts what it needs out of an opaque services bag, so the cast lives in the layer that owns the type. Edge-neutral by itself, still 10, which is the expected result since all five route modules were harness. Order is behaviour here unlike the tool groups, because dispatch is first-match-wins, so the declaration order is asserted by test. (2) The reclassification, now a net win: four modules to core (the store plus the feedback, relevance and glossary routes), 10 -> 6. Three imports had to go first or the move would have traded four edges for three: the adapter now takes feedbackDir and builds its OWN FeedbackStore rather than being handed one by src/index.ts (a directory is a path, a store is content; ContentAdapter declares getFeedbackStore?(): unknown, so the harness declares the slot and the content layer fills it); the server's getFeedbackStore() was deleted rather than retyped because nothing called it; and handleChatPost's _feedbackStore parameter was deleted because it was never read — harmless while the store was the harness's, a wrong-direction import bought with nothing once it became core's, now pinned by a test. Six remain, unrelated to each other: harness-config -> contributions, schemas/index.ts -> dak-blocks, check-workflow-refs -> translation-tools, src/types.ts -> FeedbackItem/PaperMacro, corpus-gate -> qa-utils and -> block-module. PR #316.
 
@@ -197,8 +198,8 @@ what gets registered is core's. So I hand-triaged it to `harness` and re-ran.
 
 **The count went UP, 6 -> 7.** Edge 1 disappeared and two replaced it:
 
-    schemas/contributions.ts (agentic-harness) -> schemas/block-qa.ts (folio-assistant-core)
-    schemas/contributions.ts (agentic-harness) -> schemas/block-kinds.ts (folio-assistant-core)
+    schemas/contributions.ts (agentic-harness) -> schemas/block-qa.ts (folio-assist-core)
+    schemas/contributions.ts (agentic-harness) -> schemas/block-kinds.ts (folio-assist-core)
 
 Because `contributions.ts:57-58` imports `CheckerPaths`/`CheckerResult` and
 `ADAPTER_BLOCK_KINDS`/`CONTENT_ADAPTERS`. **The contribution mechanism is
@@ -258,7 +259,7 @@ whether a script reads PLATFORM or CONTENT — this one reads changed content
 blocks. Enforcing a harness-defined process does not make the enforcer harness,
 any more than a linter belongs to the language it checks. Re-triaged to core.
 
-**Together: 6 -> 4.** `agentic-harness -> folio-assistant-core` fell 5 -> 3.
+**Together: 6 -> 4.** `agentic-harness -> folio-assist-core` fell 5 -> 3.
 
 Verified: `bun run check:partition` reports 4 with 0 unassigned; `bun test`
 2114 / 0 fail; tsc and eslint clean; `check-corpus-gate.ts` still runs.
@@ -271,3 +272,38 @@ Verified: `bun run check:partition` reports 4 with 0 unassigned; `bun test`
 | `schemas/index.ts` | `schemas/dak-blocks.ts` | barrel crossing a layer; drop the re-export or reclassify `dak-blocks` |
 | `scripts/check-workflow-refs.ts` | `schemas/translation-tools.ts` | already lazy; invert or reclassify the script |
 | `src/types.ts` | `schemas/types.ts` | `import type` only, and **this edge is the fix** for a drifted `FeedbackItem`; the answer is to move the type down, not delete the import |
+
+
+## RE-MEASURED 2026-09-20, after #477 — the count is now 0
+
+`bun run check:partition --edges` on `main` at `4cdd77d7d8`:
+
+```
+Partition — 679 modules, 1534 internal import edges
+  agentic-harness    163   folio-assist-core  177   folio-asst-sci  40
+  smart-kg             0   smart-base           6   (test material) 293
+  unassigned           0
+Wrong-direction edges: 0
+Edges touching an unassigned module: 0
+```
+
+The bean's body records **4** remaining, measured 2026-09-19 and each named
+with its fix (`harness-config.ts`→`contributions.ts`,
+`schemas/index.ts`→`dak-blocks.ts`, `check-workflow-refs.ts`→
+`translation-tools.ts`, `src/types.ts`→`schemas/types.ts`). All four are
+gone, and `unassigned` is 0 as well, so this is not the vacuous reading the
+tool warns about — a classification gap would show there rather than as a
+clean edge count.
+
+**This matters beyond the bean.** `vke6` names this as the gate for the whole
+cut: *"a lower layer importing from a higher one becomes a circular
+dependency BETWEEN REPOSITORIES the moment the cut happens, so that count has
+to reach zero before anything else here is safe."* On this measurement the
+gate is clear and `wggr` / `b5f0` / `zmdo` are no longer waiting on it.
+
+Recorded rather than resolved: this bean belongs to another session, and
+`bean-coordination` says never resolve a sibling's. Whoever owns it should
+check the four fixes actually landed (rather than the edges being hidden by a
+re-classification under #477's new instances) and then close it.
+
+_Recorded by session_017PqeiS4JYySSWGAYLedmus._

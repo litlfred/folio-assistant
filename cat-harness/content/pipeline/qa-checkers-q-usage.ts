@@ -308,7 +308,23 @@ export function leanDeclFromTs(ts: string): string | undefined {
   return last && last.length > 0 ? last : undefined;
 }
 
-const LEAN_DECL_RE =
+/**
+ * The second declaration pattern in this repository, and it disagrees with
+ * `DECL_RE` in `lean-lexer.ts` — see that constant's comment for the measured
+ * table and why neither is simply widened into the other.
+ *
+ * EXPORTED only so `lean-decl-regex-divergence.test.ts` can compare the two
+ * rather than re-typing them: a test that restates the pattern it is testing
+ * drifts from it the first time either is edited, which is the failure mode
+ * this whole bean is about.
+ *
+ * The one difference that is a defect HERE rather than there: the name class
+ * omits `.`, so `theorem Foo.bar` yields a span named `Foo`. A caller looking
+ * up the declaration by its full name does not find it and falls back to
+ * scanning the whole file — which is the behaviour
+ * {@link leanDeclSpans}' callers exist to avoid.
+ */
+export const LEAN_DECL_RE =
   /^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputable\s+|partial\s+|unsafe\s+)*(?:theorem|lemma|def|abbrev|structure|inductive|class|instance|axiom|example|opaque)\s+([A-Za-z_][A-Za-z0-9_'!?]*)/;
 
 interface LeanSpan {

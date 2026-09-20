@@ -40,7 +40,7 @@ The stickies do not go away — they are what a collapsed section shows.
    first question to settle, and the answer is probably `harness.json`, since
    that is what every existing consumer treats as the marker.
 2. **Dependency ordering.** `bootstrap` is the footer (it is what an agent reads
-   before it knows anything), `cat-harness` above it, then `folio-assistant-core`,
+   before it knows anything), `cat-harness` above it, then `folio-assist-core`,
    then the rest. That is the same deepest-first overlay order `resolveSkillDirs`
    already computes — reuse it rather than mint a second answer.
 3. **Collapsed vs open.** Collapsed is INFO (the instance's sticky, essentially).

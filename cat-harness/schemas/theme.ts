@@ -73,7 +73,7 @@
  * wholesale.
  *
  * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `cat-bootstrap` (the
- * cowboy in the desert) is cat-bootstrap's, `library` is folio-assistant-core's, and
+ * cowboy in the desert) is cat-bootstrap's, `library` is folio-assist-core's, and
  * `engineer` is reserved for testing surfaces.
  *
  * ## Choosing a theme is an AUTHORING judgement — there is no mapping

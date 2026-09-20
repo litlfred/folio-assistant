@@ -19,7 +19,7 @@ Group 11 of 13 in `d308`. **11 files, 3 entry points.**
 **BPMN:** `evidence-retrieval · Task_L1Sources` (refs `document-intake`),
 `Task_VerifyAuthority`, `Task_RecordUnverified`, `Task_RecordGap`.
 
-**Target repo (#223):** `folio-assistant-core`.
+**Target repo (#223):** `folio-assist-core`.
 
 **The constraint that makes this group delicate:** `Task_VerifyAuthority` checks a
 citation against an external registry, and `Task_RecordUnverified` exists because

@@ -1,6 +1,6 @@
 /**
  * The guard has to FAIL on each defect it claims to catch.
- *
+ * Every OPEN bean is placed under an epic or a milestone. This is what keeps
  * Written against temp stores rather than the real one on purpose: the real
  * corpus is clean, so a test that only asserts "the repo passes" would go on
  * passing if the checker were gutted to `return { problems: [] }`. Each case
@@ -97,6 +97,50 @@ describe("every open bean belongs to an epic", () => {
     // check, and the report says so rather than claiming the plan is sound.
     expect(r.store).toBeNull();
     expect(r.problems).toEqual([]);
+  });
+
+  // A MILESTONE IS A ROOT, and until 2026-09-20 this checker did not know it.
+  //
+  // `beans prime` states the hierarchy as `milestone -> epic -> feature ->
+  // task/bug`, so a milestone sits above an epic and has nothing to hang
+  // from. Only `epic` was exempt, and the first three milestones ever created
+  // (the owner's goals, bean `wqht`) failed on the day they landed, demanding
+  // a parent that by the hierarchy cannot exist.
+  //
+  // Both directions are asserted. Without the second test, deleting
+  // `PARENT_TYPES` and accepting ANY parent type would still pass the first.
+  test("a milestone needs no parent of its own — milestones are roots too", () => {
+    const r = checkBeanParents(store([["ms1", "in-progress", "milestone", ""]]));
+    expect(r.problems).toEqual([]);
+    // It is excluded from the population, not merely forgiven within it.
+    expect(r.open).toBe(0);
+  });
+
+  test("an epic may hang from a milestone", () => {
+    const r = checkBeanParents(store([
+      ["ms1", "in-progress", "milestone", ""],
+      ["ep1", "in-progress", "epic", "ms1"],
+      ["t1", "todo", "task", "ep1"],
+    ]));
+    expect(r.problems).toEqual([]);
+  });
+
+  test("a task parented to a MILESTONE is accepted, to a task is not", () => {
+    // Accepting a milestone as a parent is deliberate: it is a root, so a
+    // bean hanging from one is placed. A task is not, and that is the
+    // original reason the constraint exists.
+    expect(checkBeanParents(store([
+      ["ms1", "in-progress", "milestone", ""],
+      ["t1", "todo", "task", "ms1"],
+    ])).problems).toEqual([]);
+
+    const bad = checkBeanParents(store([
+      EPIC,
+      ["t1", "todo", "task", "ep1"],
+      ["t2", "todo", "task", "t1"],
+    ]));
+    expect(bad.problems).toHaveLength(1);
+    expect(bad.problems[0]).toContain("not an epic or a milestone");
   });
 
   test("the real corpus passes", () => {

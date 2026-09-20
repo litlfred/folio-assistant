@@ -1,6 +1,6 @@
 ---
 # folio-assistant-hso8
-title: 'BLOCKER: main and this branch name the core instance differently — folio-assistant-core vs folio-assistant-core'
+title: 'BLOCKER: main and this branch name the core instance differently — folio-assist-core vs folio-assistant-core'
 status: todo
 type: task
 priority: high
@@ -19,9 +19,9 @@ is a decision about somebody else's work.
 
 | | this branch | `main` |
 |---|---|---|
-| directory | `folio-assistant-core/` | `folio-assistant-core/` |
+| directory | `folio-assistant-core/` | `folio-assist-core/` |
 | contents | **14 files** — `library-ref`, `dublin-core`, `catalogue`, `materialization`, `extraction`, `external-schema`, `folios/` | **2 files** — `README.md`, `harness.json` |
-| `CORE_NS` | `…/folio-assistant-core/ns#` | `…/folio-assistant-core/ns#` |
+| `CORE_NS` | `…/folio-assistant-core/ns#` | `…/folio-assist-core/ns#` |
 | files naming it | 48 | 80 |
 | the other name appears | — | **nowhere** |
 
@@ -40,7 +40,7 @@ session, twice:
 > cat-harness, folio-assistant-core, folio-assistant are distinct
 > instances/schemas
 
-That ruling was given while `main` carried a `folio-assistant-core/` stub, and
+That ruling was given while `main` carried a `folio-assist-core/` stub, and
 this branch renamed to match it. Main has since built 80 files' worth of work
 on the short name and never adopted the long one. So the minority spelling is
 the one with the explicit instruction behind it, and the majority spelling is
@@ -48,7 +48,7 @@ the one the trunk is actually built on.
 
 Both resolutions destroy something real:
 
-- **Take main's `folio-assistant-core`** — reverses an explicit instruction, and
+- **Take main's `folio-assist-core`** — reverses an explicit instruction, and
   moves a **published IRI** (`CORE_NS`) for the second time in two days.
 - **Keep `folio-assistant-core`** — renames 80 files of main's work from a
   feature branch, including the namespace constants three other instances
@@ -56,7 +56,7 @@ Both resolutions destroy something real:
 
 Merging without deciding gives the worst outcome and is the one thing that
 must not happen: TWO directories for ONE instance, a populated
-`folio-assistant-core/` beside main's empty `folio-assistant-core/`. That is the
+`folio-assistant-core/` beside main's empty `folio-assist-core/`. That is the
 exact defect this PR already recorded hitting once — *"one instance, two
 directories … `instanceRoots` is keyed on the declared name, so the stub and
 the populated one were one key, and the stub won."*

@@ -31,7 +31,7 @@ and, minutes later:
    and it is the sharpened form of `bp4x`.
 2. **Each harness has its own avatar.** Avatars are already per-kind
    (`schemas/avatars.ts`, 19 kinds incl. `bootstrap`, `cat-harness`,
-   `folio-assistant-core`), so this rides the existing mechanism.
+   `folio-assist-core`), so this rides the existing mechanism.
 3. **An ingestion skill for avatar/theme art**: takes 3 layouts, checks them
    against formatting constraints, and **returns success or an explanation of
    the failure**.

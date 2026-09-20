@@ -66,7 +66,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   //
   // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*. Two of
   // these three are NOT graph kinds this repo declares — the split (#223) has
-  // not happened, so `cat-bootstrap` and `folio-assistant-core` exist as layers in
+  // not happened, so `cat-bootstrap` and `folio-assist-core` exist as layers in
   // the namespace and as nothing in `harness.json`.
   //
   // They are here anyway, and `check-avatar-coverage` reports them as
@@ -86,7 +86,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
   },
-  "folio-assistant-core": {
+  "folio-assist-core": {
     glyph: "M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h5",
     tone: 212,
     reads: "a leaf of paper with lines — the folio itself",

@@ -1,7 +1,7 @@
 ---
 # folio-assistant-9ici
 title: readActiveVoices still reads folio.config.json after the hard break, so an old-name folio is HALF-configured
-status: todo
+status: completed
 type: task
 priority: normal
 parent: folio-assistant-zzmr
@@ -75,3 +75,20 @@ third state: nothing anywhere says the other fifteen settings were dropped.
 
 Reinstating the fallback. The hard break is the owner's explicit instruction
 (`6nfy`, 2026-09-18) and this bean is about honouring it, not revisiting it.
+
+## Closed 2026-09-20 — fixed in #534, verified here
+
+`readActiveVoices` goes through `resolveHarnessConfigPath` and nothing else.
+The `[HARNESS_CONFIG, "folio.config.json"]` loop is gone, and the reason it
+existed is recorded at the call site rather than lost: it was a LEFTOVER of
+`6nfy`'s two-step rename — ship a legacy fallback, then hard-break on the
+owner's instruction — and one of eleven consolidated sites kept the loop.
+
+Which is `6nfy`'s own prediction landing on `6nfy`: *"a legacy fallback written
+eleven times diverges at ten of them, and the one that forgets is the one a
+folio silently stops being configured by."* It diverged at one, in the
+direction that keeps a dead name alive.
+
+The function now returns `undefined` — the third state — when no config
+resolves, which is what makes the voice criteria RUN rather than reporting a
+determined "no voices are active" over a config nobody read.

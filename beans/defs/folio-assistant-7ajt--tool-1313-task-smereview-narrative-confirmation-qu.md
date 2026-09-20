@@ -17,7 +17,7 @@ as its subject.
 **BPMN:** `editing-hci-validation · Task_SmeReview` and `Task_RecordDecision` —
 both `userTask`, the human confirmation gate, which existed before this script did.
 
-**Target repo (#223):** `folio-assistant-core`.
+**Target repo (#223):** `folio-assist-core`.
 
 ## Why this one is `high` despite being one file
 

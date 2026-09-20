@@ -15,7 +15,7 @@ Lean special case inside a generic validator.
 
 Build the real import/call graph and partition it against the five proposed
 repos. Output: per-repo module lists, plus the list of edges crossing a proposed
-boundary **in the wrong direction** (a would-be `folio-assistant-core` module
+boundary **in the wrong direction** (a would-be `folio-assist-core` module
 importing a Lean module). That cross-edge list is Phase I's actual worklist.
 
 Independent of 0.1 — can run in parallel.
@@ -32,7 +32,7 @@ Independent of 0.1 — can run in parallel.
 | proposed repo | modules | rule | keyword | fell through |
 |---|---:|---:|---:|---:|
 | agentic-harness | 43 | 43 | 0 | 0 |
-| folio-assistant-core | 119 | 119 | 0 | 0 |
+| folio-assist-core | 119 | 119 | 0 | 0 |
 | folio-asst-sci | 28 | 8 | 20 | 0 |
 | smart-kg | **0** | 0 | 0 | 0 |
 | smart-base | 4 | 1 | 3 | 0 |
@@ -41,10 +41,10 @@ Independent of 0.1 — can run in parallel.
 
 | importer | imports from | edges |
 |---|---|---:|
-| folio-assistant-core | folio-asst-sci | 19 |
-| agentic-harness | folio-assistant-core | 17 |
+| folio-assist-core | folio-asst-sci | 19 |
+| agentic-harness | folio-assist-core | 17 |
 | agentic-harness | folio-asst-sci | 3 |
-| folio-assistant-core | smart-base | 2 |
+| folio-assist-core | smart-base | 2 |
 
 **Two results that changed the plan rather than confirming it:**
 

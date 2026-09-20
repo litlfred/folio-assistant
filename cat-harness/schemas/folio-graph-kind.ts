@@ -5,7 +5,7 @@
  * to a website. It is the only **renderable** kind, and that is precisely why
  * it does not live in `schemas/cat-harness.ts`:
  *
- * > `cat-harness` is **not** self-documenting; `folio-assistant-core` is.
+ * > `cat-harness` is **not** self-documenting; `folio-assist-core` is.
  * > Everything that depends on the just-the-docs rendering pipeline belongs to
  * > core.
  *

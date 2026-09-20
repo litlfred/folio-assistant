@@ -110,7 +110,7 @@ export const VoiceRuleSourceSchema = z
      * A NAME, never a path. `../who-iris/library/...` would work today and
      * hardcode a checkout layout into content, which is the practice
      * `AGENTS.md` opens by warning against and which this repository paid for
-     * twice in one week. Resolution is `folio-assistant-core`'s
+     * twice in one week. Resolution is `folio-assist-core`'s
      * `resolveLibraryRef`, which reports an unknown instance as its own
      * finding and NEVER falls back to local.
      */

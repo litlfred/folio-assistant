@@ -27,7 +27,7 @@ Five folio-assistant instances, composed through the
 ```mermaid
 flowchart TD
     AH[agentic-harness<br/><i>Roles · Skills · Tools · BPMN</i><br/>does nothing itself]
-    CORE[folio-assistant-core<br/><i>document/webpage schema + KG</i><br/>authoring · ingestion · render · QA]
+    CORE[folio-assist-core<br/><i>document/webpage schema + KG</i><br/>authoring · ingestion · render · QA]
     SCI[folio-asst-sci<br/><i>Lean · LaTeX · proofs</i>]
     KG[smart-kg<br/><i>WHO L1 document + KG schemas</i>]
     BASE[smart-base<br/><i>L2–L3 skills · adaptation · OCL</i>]
@@ -82,7 +82,7 @@ That last pair is the sharpest boundary in the whole split, and the easiest to
 get wrong. The harness owns *that* QA findings are sidecar JSON with severities
 and axes; it must not own *which* findings exist.
 
-### `folio-assistant-core`
+### `folio-assist-core`
 
 **Authoritative for:** the base, generic document / webpage / etc. schema and
 its knowledge graph; the authoring pipeline; base workflows; ingestion; and the
@@ -94,15 +94,15 @@ the pipeline that serves them.
 
 | today | lands in |
 |---|---|
-| `schemas/{types,constraints,builders,block-kinds}.ts`, `schemas/jsonld.ts`, `schemas/webpage.ts` | `folio-assistant-core` |
-| `adapters/document/` | `folio-assistant-core` |
-| `content/pipeline/` minus the Lean/TeX files | `folio-assistant-core` |
-| `content/pipeline/render-markdown.ts` + `document_render_{md,html,pdf}` | `folio-assistant-core` |
-| ingestion (`docs/document-ingestion.md` and its pipeline) | `folio-assistant-core` |
-| `content/pipeline/readme-sections.ts`, `readme-links.ts`, `src/tools/readme-*.ts` | `folio-assistant-core` |
-| `skills/{folio-core,folio-document-adapter,content-lifecycle}/` | `folio-assistant-core` |
-| `translations/`, `schemas/translation.ts`, `src/tools/translation.ts` | `folio-assistant-core` |
-| `ui/`, `viewer/`, `blueprint/` | `folio-assistant-core` (**judgement call** — see below) |
+| `schemas/{types,constraints,builders,block-kinds}.ts`, `schemas/jsonld.ts`, `schemas/webpage.ts` | `folio-assist-core` |
+| `adapters/document/` | `folio-assist-core` |
+| `content/pipeline/` minus the Lean/TeX files | `folio-assist-core` |
+| `content/pipeline/render-markdown.ts` + `document_render_{md,html,pdf}` | `folio-assist-core` |
+| ingestion (`docs/document-ingestion.md` and its pipeline) | `folio-assist-core` |
+| `content/pipeline/readme-sections.ts`, `readme-links.ts`, `src/tools/readme-*.ts` | `folio-assist-core` |
+| `skills/{folio-core,folio-document-adapter,content-lifecycle}/` | `folio-assist-core` |
+| `translations/`, `schemas/translation.ts`, `src/tools/translation.ts` | `folio-assist-core` |
+| `ui/`, `viewer/`, `blueprint/` | `folio-assist-core` (**judgement call** — see below) |
 
 **Judgement call on the viewer.** `ui/`, `viewer/` and `blueprint/` render the
 content-object model, which is core's. But `blueprint/` is an interactive
@@ -115,7 +115,7 @@ registers into it. That mechanism does not exist today.
 
 **Authoritative for:** the Lean, LaTeX and simulator content types, and the
 scientific-authoring skills. Per the issue, it depends **only** on
-`folio-assistant-core`.
+`folio-assist-core`.
 
 | today | lands in |
 |---|---|
@@ -146,7 +146,7 @@ skills and QA checks that go with them.
 
 L1 is narrative guidance — the published guideline as a structured document. It
 is a *document* folio in the existing profile sense, with a WHO-specific schema
-layered on. It therefore depends on `folio-assistant-core` and not on
+layered on. It therefore depends on `folio-assist-core` and not on
 `agentic-harness` directly.
 
 | today | lands in |
@@ -191,7 +191,7 @@ Applying the [taxonomy's splitting rule](repo-taxonomy.html#splitting-a-mixed-re
 |---|---|---|
 | `smart-kg` / `smart-kg-tools` | **likely yes** | L1 guidance changes on WHO's cadence; the tooling changes on the platform's. Different reviewers entirely. |
 | `smart-base` / `smart-base-tools` | **likely yes** | same argument, and L2–L3 tooling (FSH, OCL, ArchiMate) is heavy and independently versioned |
-| `folio-assistant-core` | **no** | its schemas and its pipeline always change together; splitting gives two repos with one changelog |
+| `folio-assist-core` | **no** | its schemas and its pipeline always change together; splitting gives two repos with one changelog |
 | `agentic-harness` | **no** | it is already a Tool repo whose content is its own manual |
 | `folio-asst-sci` | **defer** | plausible later (`-sci-tools` for the Lean/LaTeX toolchain) but not before the extraction itself is proven |
 

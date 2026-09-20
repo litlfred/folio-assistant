@@ -9,7 +9,7 @@
  * It was part of it, and that was a **layering violation I introduced**.
  * `repo-partition --edges` reported two wrong-direction edges out of
  * `sync-docs-harness.ts` (agentic-harness) into `ensure-landing-sticky.ts` and
- * `schemas/landing-sticky.ts` (folio-assistant-core): the harness reaching up into
+ * `schemas/landing-sticky.ts` (folio-assist-core): the harness reaching up into
  * core's content nodes.
  *
  * The fix is not an exemption, it is the right owner. **Core owns the folio

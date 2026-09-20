@@ -66,7 +66,7 @@ before anybody rebuilds what is there.
       present case passes equally for a control that is always shown.
 - [ ] For a landing sticky, the path resolves to the CONTRIBUTING instance's
       `harness.json`, not to `cat-harness/` by default. Three contributors exist
-      today (`cat-harness`, `bootstrap`, `folio-assistant-core`), so a wrong default
+      today (`cat-harness`, `bootstrap`, `folio-assist-core`), so a wrong default
       is silently right one third of the time.
 - [ ] The affordance comes from the layered content-generation pass, not from a
       branch in the landing template.

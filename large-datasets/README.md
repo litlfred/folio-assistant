@@ -15,7 +15,7 @@ Every source answers differently and none of it is guessable. Without a declared
 descriptor, an agent asked for "the WPRO style guides" has to be told the API by
 a human every single time, and that answer is written down nowhere.
 
-It belongs to neither neighbour: `folio-assistant-core` is the **content** layer
+It belongs to neither neighbour: `folio-assist-core` is the **content** layer
 and this is about sources the instance will never hold; `cat-harness` is about
 the harness. It is the third thing.
 

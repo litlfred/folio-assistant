@@ -46,7 +46,7 @@ import "../schemas/folio-graph-kind.js";
 
 `repo-partition.ts` classifies `scripts/translate-kg-viewer.ts` as
 **agentic-harness** (line 642) and `schemas/folio-graph-kind.ts` as
-**folio-assistant-core**. So that import is a **wrong-direction edge** — the
+**folio-assist-core**. So that import is a **wrong-direction edge** — the
 harness reaching up into core — and `check:partition:edges` would report it.
 
 That is not a reason to leave the gate red. It is evidence about the open

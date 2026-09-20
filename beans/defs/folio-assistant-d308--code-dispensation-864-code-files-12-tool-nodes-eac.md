@@ -113,19 +113,19 @@ Dispensation codes:
 
 | group | files | run here | mode 755 | can't tell | dispensation | BPMN process · task | target repo (#223) |
 |---|--:|--:|--:|--:|---|---|---|
-| Publication & export (site, JSON-LD, previews) | 34 | 16 | 3 | 15 | **TOOL** | authoring-a-paper · Task_Publish [content-publish] | folio-assistant-core (site) / agentic-harness (kg-export) |
+| Publication & export (site, JSON-LD, previews) | 34 | 16 | 3 | 15 | **TOOL** | authoring-a-paper · Task_Publish [content-publish] | folio-assist-core (site) / agentic-harness (kg-export) |
 | Lean formalisation & proof status | 33 | 0 | 16 | 17 | **TOOL** | authoring-a-paper · Task_Formalize [lean-formalization] | folio-asst-sci |
 | QA sweep & witnesses | 27 | 2 | 0 | 25 | **TOOL** | content-lifecycle · Task_Test [content-test] | agentic-harness (sidecar infra) / core (checkers) |
-| Translation (POT / PO / round-trip QA) | 24 | 5 | 0 | 19 | **TOOL** | human-translation-workflow · Task_ExtractPOT / Task_InjectPO / Task_RoundTripQA | folio-assistant-core |
+| Translation (POT / PO / round-trip QA) | 24 | 5 | 0 | 19 | **TOOL** | human-translation-workflow · Task_ExtractPOT / Task_InjectPO / Task_RoundTripQA | folio-assist-core |
 | Knowledge-graph audit & rendering | 20 | 11 | 0 | 9 | **TOOL** | review-code · Task_RunNodeAudits · Task_ReviewTool | agentic-harness |
-| Content graph & dependency analysis | 19 | 1 | 0 | 18 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assistant-core |
+| Content graph & dependency analysis | 19 | 1 | 0 | 18 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assist-core |
 | LaTeX / PDF rendering | 16 | 0 | 3 | 13 | **TOOL** | authoring-a-paper · Task_Render [latex-authoring] | folio-asst-sci |
-| Document ingestion (PDF → text → claims) | 15 | 2 | 5 | 8 | **TOOL** | ingest-extract-structure · Task_ExtractText / Task_Ocr / Task_Candidates | folio-assistant-core |
-| Block authoring & prose structure | 14 | 1 | 0 | 13 | **TOOL** | authoring-a-paper · Task_AuthorBlocks [content-author] | folio-assistant-core |
-| Schema & constraint validation | 12 | 3 | 0 | 9 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assistant-core |
-| Bibliography, evidence & glossary | 11 | 0 | 3 | 8 | **TOOL** | evidence-retrieval · Task_L1Sources [document-intake] | folio-assistant-core |
+| Document ingestion (PDF → text → claims) | 15 | 2 | 5 | 8 | **TOOL** | ingest-extract-structure · Task_ExtractText / Task_Ocr / Task_Candidates | folio-assist-core |
+| Block authoring & prose structure | 14 | 1 | 0 | 13 | **TOOL** | authoring-a-paper · Task_AuthorBlocks [content-author] | folio-assist-core |
+| Schema & constraint validation | 12 | 3 | 0 | 9 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assist-core |
+| Bibliography, evidence & glossary | 11 | 0 | 3 | 8 | **TOOL** | evidence-retrieval · Task_L1Sources [document-intake] | folio-assist-core |
 | FHIR / IG / DAK build | 3 | 0 | 0 | 3 | **TOOL** | l3-fhir-pipeline · Task_Sushi · Task_Validate; ig-incremental-build · Task_Cone | smart-base |
-| Narrative confirmation queue (human gate) | 1 | 1 | 0 | 0 | **TOOL** | editing-hci-validation · Task_SmeReview · Task_RecordDecision | folio-assistant-core |
+| Narrative confirmation queue (human gate) | 1 | 1 | 0 | 0 | **TOOL** | editing-hci-validation · Task_SmeReview · Task_RecordDecision | folio-assist-core |
 | MCP server / routing / adapters | 43 | 1 | 1 | 41 | **IS** | — (the Tool projection) | agentic-harness |
 | Scaffolding & environment setup | 13 | 1 | 10 | 2 | **IS** | authoring-a-paper · Task_Scaffold; getting-started | agentic-harness |
 | Work plan & session coordination | 12 | 6 | 6 | 0 | **IS** | authoring-a-paper · Task_SeedPlan [todo-manager] | agentic-harness |
@@ -137,7 +137,7 @@ Dispensation codes:
 | Skill-adjacent code (in the kg graph) | 23 | 0 | 0 | 23 | **CARRY** | — (the graph itself) | agentic-harness |
 | Translated content objects | 7 | 0 | 0 | 7 | **CARRY** | human-translation-workflow · Task_InjectPO | stays — this instance's own folio |
 | Tool node declarations | 3 | 0 | 0 | 3 | **CARRY** | — (the graph itself) | every instance declares its own |
-| Content-type adapters | 14 | 0 | 1 | 13 | **LIB** | authoring-a-paper · Task_AuthorBlocks | folio-assistant-core |
+| Content-type adapters | 14 | 0 | 1 | 13 | **LIB** | authoring-a-paper · Task_AuthorBlocks | folio-assist-core |
 | Shared library (no entry point) | 11 | 0 | 1 | 10 | **LIB** | — (behind every Tool) | follows its callers |
 | One-shot migration / codemod | 17 | 0 | 5 | 12 | **SCRAP** | — | — |
 | Tests | 242 | 1 | 1 | 240 | **TEST** | code-change-review · Task_RunGates | follows its subject |
@@ -337,19 +337,19 @@ into an import path.
 
 | group | files | run here | mode 755 | can't tell | dispensation | BPMN process · task | target repo (#223) |
 |---|--:|--:|--:|--:|---|---|---|
-| Publication & export (site, JSON-LD, previews) | 35 | 17 | 3 | 15 | **TOOL** | authoring-a-paper · Task_Publish [content-publish] | folio-assistant-core (site) / agentic-harness (kg-export) |
+| Publication & export (site, JSON-LD, previews) | 35 | 17 | 3 | 15 | **TOOL** | authoring-a-paper · Task_Publish [content-publish] | folio-assist-core (site) / agentic-harness (kg-export) |
 | Lean formalisation & proof status | 33 | 0 | 16 | 17 | **TOOL** | authoring-a-paper · Task_Formalize [lean-formalization] | folio-asst-sci |
 | QA sweep & witnesses | 27 | 2 | 0 | 25 | **TOOL** | content-lifecycle · Task_Test [content-test] | agentic-harness (sidecar infra) / core (checkers) |
-| Translation (POT / PO / round-trip QA) | 24 | 5 | 0 | 19 | **TOOL** | human-translation-workflow · Task_ExtractPOT / Task_InjectPO / Task_RoundTripQA | folio-assistant-core |
+| Translation (POT / PO / round-trip QA) | 24 | 5 | 0 | 19 | **TOOL** | human-translation-workflow · Task_ExtractPOT / Task_InjectPO / Task_RoundTripQA | folio-assist-core |
 | Knowledge-graph audit & rendering | 21 | 12 | 0 | 9 | **TOOL** | review-code · Task_RunNodeAudits · Task_ReviewTool | agentic-harness |
-| Content graph & dependency analysis | 19 | 1 | 0 | 18 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assistant-core |
+| Content graph & dependency analysis | 19 | 1 | 0 | 18 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assist-core |
 | LaTeX / PDF rendering | 16 | 0 | 3 | 13 | **TOOL** | authoring-a-paper · Task_Render [latex-authoring] | folio-asst-sci |
-| Document ingestion (PDF → text → claims) | 15 | 2 | 5 | 8 | **TOOL** | ingest-extract-structure · Task_ExtractText / Task_Ocr / Task_Candidates | folio-assistant-core |
-| Block authoring & prose structure | 14 | 1 | 0 | 13 | **TOOL** | authoring-a-paper · Task_AuthorBlocks [content-author] | folio-assistant-core |
-| Schema & constraint validation | 12 | 3 | 0 | 9 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assistant-core |
-| Bibliography, evidence & glossary | 11 | 0 | 3 | 8 | **TOOL** | evidence-retrieval · Task_L1Sources [document-intake] | folio-assistant-core |
+| Document ingestion (PDF → text → claims) | 15 | 2 | 5 | 8 | **TOOL** | ingest-extract-structure · Task_ExtractText / Task_Ocr / Task_Candidates | folio-assist-core |
+| Block authoring & prose structure | 14 | 1 | 0 | 13 | **TOOL** | authoring-a-paper · Task_AuthorBlocks [content-author] | folio-assist-core |
+| Schema & constraint validation | 12 | 3 | 0 | 9 | **TOOL** | authoring-a-paper · Task_Validate [content-validate] | folio-assist-core |
+| Bibliography, evidence & glossary | 11 | 0 | 3 | 8 | **TOOL** | evidence-retrieval · Task_L1Sources [document-intake] | folio-assist-core |
 | FHIR / IG / DAK build | 3 | 0 | 0 | 3 | **TOOL** | l3-fhir-pipeline · Task_Sushi · Task_Validate; ig-incremental-build · Task_Cone | smart-base |
-| Narrative confirmation queue (human gate) | 1 | 1 | 0 | 0 | **TOOL** | editing-hci-validation · Task_SmeReview · Task_RecordDecision | folio-assistant-core |
+| Narrative confirmation queue (human gate) | 1 | 1 | 0 | 0 | **TOOL** | editing-hci-validation · Task_SmeReview · Task_RecordDecision | folio-assist-core |
 | MCP server / routing / adapters | 43 | 1 | 1 | 41 | **IS** | — (the Tool projection) | agentic-harness |
 | Scaffolding & environment setup | 13 | 1 | 10 | 2 | **IS** | authoring-a-paper · Task_Scaffold; getting-started | agentic-harness |
 | Work plan & session coordination | 12 | 6 | 6 | 0 | **IS** | authoring-a-paper · Task_SeedPlan [todo-manager] | agentic-harness |
@@ -361,7 +361,7 @@ into an import path.
 | Skill-adjacent code (in the kg graph) | 24 | 0 | 0 | 24 | **CARRY** | — (the graph itself) | agentic-harness |
 | Translated content objects | 7 | 0 | 0 | 7 | **CARRY** | human-translation-workflow · Task_InjectPO | stays — this instance's own folio |
 | Tool node declarations | 3 | 0 | 0 | 3 | **CARRY** | — (the graph itself) | every instance declares its own |
-| Content-type adapters | 14 | 0 | 1 | 13 | **LIB** | authoring-a-paper · Task_AuthorBlocks | folio-assistant-core |
+| Content-type adapters | 14 | 0 | 1 | 13 | **LIB** | authoring-a-paper · Task_AuthorBlocks | folio-assist-core |
 | Shared library (no entry point) | 11 | 0 | 1 | 10 | **LIB** | — (behind every Tool) | follows its callers |
 | One-shot migration / codemod | 17 | 0 | 5 | 12 | **SCRAP** | — | — |
 | Tests | 252 | 1 | 1 | 250 | **TEST** | code-change-review · Task_RunGates | follows its subject |

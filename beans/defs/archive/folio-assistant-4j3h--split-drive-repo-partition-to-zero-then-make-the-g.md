@@ -97,7 +97,7 @@ Draining the rest surfaced four more, including one worth naming: **`schemas/
 fsh-guts.ts` was `smart-base` because the keyword rule
 `/(dak|fhir|fsh|ocl|l2|l3|smart|who|ig)/` matched `fsh` in the name of the
 TRASHCAN.** A keyword rule cannot tell a homograph from a hit. It was the
-single `folio-assistant-core -> smart-base` edge in the whole repository.
+single `folio-assist-core -> smart-base` edge in the whole repository.
 
 ## The residue, named rather than hidden
 

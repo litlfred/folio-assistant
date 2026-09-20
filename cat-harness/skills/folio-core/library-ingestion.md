@@ -34,7 +34,7 @@ and therefore in **what has to be decided first**.
 | the source is | a file somebody put in `uploads/` | an asset listed in a remote graph a dependency declares |
 | decided first | which rung reads it | the five gates, and a purpose |
 | entry | `bun run ingest uploads/FILE.pdf` | `materialize-remote.bpmn` |
-| owned by | this layer — the rungs are here | **`folio-assistant-core`** — see below |
+| owned by | this layer — the rungs are here | **`folio-assist-core`** — see below |
 
 **Neither is a shortcut past the other.** A materialized asset still arrives as
 bytes that have to be read, so it re-enters the rungs below at exactly the point
@@ -50,7 +50,7 @@ further down dep tree)"*.
 - **This layer (`cat-harness`) owns the rungs.** `pdf-structure`, `pdf-pages`,
   `pdf-ocr`, `pdf-tables` — reading bytes is platform work, and the owner's
   standing instruction is that OCR stays here.
-- **`folio-assistant-core` owns the remote half**, because `library/` is core's
+- **`folio-assist-core` owns the remote half**, because `library/` is core's
   graph and so are `materialization.ts` and `library-ref.ts`. A harness that
   cannot hold content must not own the vocabulary for acquiring it.
 - **`large-datasets` owns the question before both**: how to enumerate a corpus
@@ -357,7 +357,7 @@ Bean `p67i`.
 ## Ingestion is a HARNESS capability, not core's
 
 `uploads` and `library` are both graph kinds declared by the **harness** layer;
-`folio` — authored content — is `folio-assistant-core`'s. So this skill and its
+`folio` — authored content — is `folio-assist-core`'s. So this skill and its
 tooling belong with the harness.
 
 Putting ingestion in core would make the harness's own `library` graph writable

@@ -98,7 +98,7 @@ import {
  * Both moved to `schemas/sticky-contribution.ts` when the board became a
  * composed set: the declaration field that carries contributions lives on
  * `CatHarnessDeclarationSchema`, which is `agentic-harness`, and this module is
- * `folio-assistant-core` — so defining the shape here would make the harness import
+ * `folio-assist-core` — so defining the shape here would make the harness import
  * core, a wrong-direction edge. Re-exported rather than moved silently so that
  * nothing which imported `LandingLinkSchema` has to change, and so a reader
  * following the old name arrives at the new home.

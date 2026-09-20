@@ -20,7 +20,7 @@ Group 5 of 13 in `d308`. **24 files, 5 entry points.**
 Task_RoundTripQA` — three `serviceTask`s, so this is a strong candidate for three
 Tool nodes rather than one. Also `ingest-l1-completeness-gate · Task_RoundTrip`.
 
-**Target repo (#223):** `folio-assistant-core`.
+**Target repo (#223):** `folio-assist-core`.
 
 **Known live defect in this group, already paid for once:** `po-resolve.ts`
 declared the translations directory a second time, which turned

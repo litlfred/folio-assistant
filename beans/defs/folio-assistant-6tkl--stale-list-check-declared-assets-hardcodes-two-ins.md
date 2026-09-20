@@ -26,10 +26,10 @@ Four directories in this repository now carry a `harness.json`:
 |---|---|---|
 | `cat-harness/harness.json` | `folio-assistant` | yes — checked |
 | `cat-bootstrap/harness.json` | `bootstrap` | yes — checked |
-| `folio-assistant-core/harness.json` | `folio-assistant-core` | **yes — NOT checked** |
+| `folio-assist-core/harness.json` | `folio-assist-core` | **yes — NOT checked** |
 | `harness.json` (the root) | `folio-assistant-checkout` | no assets today |
 
-So `folio-assistant-core`'s `README.md`, declared with `role: "instance-readme"`,
+So `folio-assist-core`'s `README.md`, declared with `role: "instance-readme"`,
 is not verified to exist and its links are not audited. The gate reports
 `N declared asset(s) across 2 instance(s)` — truthfully, and about the wrong
 number of instances.
@@ -44,7 +44,7 @@ empty set, which is `dh4f` in the one check whose whole subject is a file
 nobody was looking at."
 
 That is the same defect recurring for the same reason: **a hand-kept list of
-instances drifts the moment somebody adds one.** `folio-assistant-core` became a
+instances drifts the moment somebody adds one.** `folio-assist-core` became a
 real instance on 2026-09-20 and nothing updated the constant.
 
 ## The fix, and the thing to get right
@@ -64,7 +64,7 @@ Two things a fix must keep:
 ## Done when
 
 - [ ] `check:declared-assets` discovers instances instead of listing them.
-- [ ] `folio-assistant-core`'s README is verified and its links audited — the
+- [ ] `folio-assist-core`'s README is verified and its links audited — the
       concrete thing currently unchecked.
 - [ ] A test asserts the count of instances checked is at least 3, so the next
       instance is covered without anybody remembering.
@@ -76,9 +76,9 @@ Re-measured before working it, which changed what the work was.
 
 **Already fixed:** `DECLARED_INSTANCES` is gone. `declaredInstances()` calls
 `instanceRootsIn()`, and the gate reports *"6 declared asset(s) across 4
-instance(s)"* — `cat-harness`, `bootstrap`, `folio-assistant-core` and the root.
+instance(s)"* — `cat-harness`, `bootstrap`, `folio-assist-core` and the root.
 So the first two boxes were closed by someone else, including the concrete
-one: folio-assistant-core's README is verified and its links audited.
+one: folio-assist-core's README is verified and its links audited.
 
 **Still open, and the more important half.** Discovery fixed the *list*; it did
 not fix the *failure mode*. Measured in a directory with no declarations:
@@ -102,13 +102,13 @@ hit three times in this session.
 
 6 tests: the count floor (≥ 3, a floor not an equality, so adding an instance
 does not fail a test whose whole subject is that adding one needs no edit),
-folio-assistant-core present, the root counted with no assets and that not being
+folio-assist-core present, the root counted with no assets and that not being
 a finding, a directory without `harness.json` not counted, a nested one
 counted, and an empty repository discovering none.
 
 ## Done when
 
 - [x] check:declared-assets discovers instances instead of listing them — by a sibling
-- [x] folio-assistant-core's README verified and links audited — by the same
+- [x] folio-assist-core's README verified and links audited — by the same
 - [x] a test asserts the count is at least 3
 - [x] zero discovered instances fails rather than passes

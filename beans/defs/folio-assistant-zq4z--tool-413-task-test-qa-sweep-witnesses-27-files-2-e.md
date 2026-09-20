@@ -21,7 +21,7 @@ vacuity, voice), `qa-criteria-registry`, `qa-criterion-hash`, `qa-merge-findings
 `editing-hci-validation · Task_BuildGates`.
 
 **Target repo (#223):** splits — sidecar infrastructure is `agentic-harness`, the
-individual checkers are `folio-assistant-core` (and `qa-checkers-dak` is `smart-base`).
+individual checkers are `folio-assist-core` (and `qa-checkers-dak` is `smart-base`).
 
 **Why 2 entry points for 27 files is the interesting number:** this group is already
 almost entirely library-behind-one-command, which is the END STATE `d308` argues

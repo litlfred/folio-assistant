@@ -65,7 +65,7 @@ import "../schemas/folio-graph-kind.js";
  *
  * **How far it had drifted, measured 2026-09-20 while adding the sixth
  * instance** (`folio-assistant-sci`, bean `frs5`): the list still said two while
- * `folio-assistant-core`, `who-iris`, `detangle`, `kg-navigation` and
+ * `folio-assist-core`, `who-iris`, `detangle`, `kg-navigation` and
  * `large-datasets` had all arrived. Five instances the gate had never opened,
  * reported in the same words as a clean run — and the README declared by
  * `folio-assistant-sci`'s brand-new `harness.json` would have been the sixth.

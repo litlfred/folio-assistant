@@ -21,7 +21,7 @@ Group 8 of 13 in `d308`. **15 files, 7 entry points.**
 Task_Candidates` — three `serviceTask`s. Also `document-ingestion` and
 `ingest-derive-content`.
 
-**Target repo (#223):** `folio-assistant-core`.
+**Target repo (#223):** `folio-assist-core`.
 
 **Partly done already, and that is the point:** `main` added `ingest-stdlib` and
 its paired Tool on 2026-09-19 with a measured dependency posture (three installs

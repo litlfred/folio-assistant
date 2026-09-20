@@ -20,7 +20,7 @@ Group 10 of 13 in `d308`. **12 files, 3 entry points.**
 Also `authoring-a-document · Task_Validate` and `Task_ProfileCheck`, and
 `editing-hci-validation · Task_SchemaValidate · Task_SyntaxSpell`.
 
-**Target repo (#223):** `folio-assistant-core`. The 59 CARRY schema files are its
+**Target repo (#223):** `folio-assist-core`. The 59 CARRY schema files are its
 subject, not its siblings.
 
 **What `profile-check` is for, so a Tool does not flatten it:** it catches what

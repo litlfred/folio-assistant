@@ -4,9 +4,9 @@ title: 'COORDINATION: two files moved under sibling PRs'' feet — gen-bootstrap
 status: todo
 type: task
 priority: normal
-parent: folio-assistant-vke6
 created_at: 2026-09-20T16:26:22Z
-updated_at: 2026-09-20T16:26:22Z
+updated_at: 2026-09-20T19:09:25Z
+parent: folio-assistant-vke6
 ---
 
 
@@ -68,3 +68,28 @@ re-target rather than a choice between two versions: put the `RULES` entry in
 Both affected PRs have merged or rebased past these two changes. This bean is
 a NOTICE with an expiry, not work — scrap it once #542 and #477 are through,
 and do not let it sit looking like a task.
+
+
+## The expiry condition this bean set is now MET — 2026-09-20
+
+The bean's own instruction: *"Both affected PRs have merged or rebased past
+these two changes. This bean is a NOTICE with an expiry, not work — scrap it
+once #542 and #477 are through, and do not let it sit looking like a task."*
+
+Both are through:
+
+| | merged |
+|---|---|
+| #477 | 2026-09-20T18:18:43Z, by the owner |
+| #542 | 2026-09-20T18:55Z |
+
+**Recorded rather than scrapped**, because `bean-coordination` says never
+resolve a sibling's bean and the owner has not yet ruled on `bbbl`, which is
+exactly this collision: `0pes` says a bean closes on evidence rather than on
+authorship, and bean-coordination says a sibling never closes one. This bean
+is the cheapest instance of that disagreement — its author wrote the closing
+condition down in advance, and it has come true.
+
+Whoever owns it: the condition is met and the scrap is one command.
+
+_Recorded by session_017PqeiS4JYySSWGAYLedmus, which merged both PRs._

@@ -13,7 +13,7 @@ parent: Skill instructions
 # KG export — publishing the graph as linked data, not as a page
 
 **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph
-kind and it belongs to `folio-assistant-core`, so the harness cannot put its
+kind and it belongs to `folio-assist-core`, so the harness cannot put its
 knowledge graph on a page the way a folio puts a chapter on one. That boundary
 is deliberate and this does not move it.
 

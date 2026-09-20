@@ -1,6 +1,6 @@
 ---
 # folio-assistant-gk55
-title: Re-site the `folio` graph kind out of agent-harness into folio-assistant-core
+title: Re-site the `folio` graph kind out of agent-harness into folio-assist-core
 status: completed
 type: task
 priority: normal
@@ -15,7 +15,7 @@ renderable: true. That contradicts 'agent-harness is not self documenting' —
 the harness cannot render, so the renderable kind is not its to declare.
 
 Shape: make graph kinds REGISTRABLE rather than a closed union. The harness
-declares the base three (tools, kg, schemas); folio-assistant-core registers
+declares the base three (tools, kg, schemas); folio-assist-core registers
 `folio`. Reuses the Phase 0.1 load-time registration rather than inventing a
 second mechanism, and keeps core -> harness as the legal direction.
 

@@ -32,7 +32,7 @@ describe("instance discovery", () => {
   it("finds instances by their DECLARED name, not by their published stub", () => {
     const roots = instanceRoots(REPO);
     // This used to read "not by DIRECTORY name", witnessed by a declared
-    // `folio-assistant-core` in a directory called `folio-assistant-core`. After
+    // `folio-assist-core` in a directory called `folio-assistant-core`. After
     // the owner's 2026-09-20 ruling — `cat-harness`, `folio-assistant-core`
     // and `folio-assistant` are distinct instances — every name agrees with
     // its directory, so that witness is gone and a test asserting it would be

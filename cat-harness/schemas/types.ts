@@ -1320,6 +1320,14 @@ export interface TodoItem {
   data?: Record<string, unknown>;
   /** Labels of related todos (for threading). */
   related?: string[];
+  /**
+   * Which theme's art backs this todo's sticky — declared, never inferred.
+   *
+   * Absent means the instance's own theme. See {@link TodoItemSchema} in
+   * `constraints.ts` for why this is a bare string rather than an enum, and
+   * why the default is inherited rather than guessed (bean `5y4b`).
+   */
+  theme?: string;
 }
 
 // ── Feedback (committed to main via worktree) ────────────────

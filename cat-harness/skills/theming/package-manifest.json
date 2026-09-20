@@ -1,0 +1,43 @@
+{
+  "name": "theming",
+  "version": "0.1.0",
+  "description": "How a theme is made, declared, generated and checked for contrast. Split out of folio-core, where three theming skills sat among 107 and were found by knowing they existed rather than by looking.",
+  "skills": [
+    "create-sticky-note",
+    "site-presentation-assets",
+    "theme-art-intake"
+  ],
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": [
+      "curl",
+      "git",
+      "git-lfs",
+      "python3",
+      "python3-pip",
+      "python3-venv",
+      "nodejs",
+      "npm",
+      "jq",
+      "ripgrep",
+      "ca-certificates"
+    ],
+    "pipPackages": [
+      "jsonschema",
+      "pyyaml",
+      "requests"
+    ],
+    "npmPackages": [
+      "typescript",
+      "ts-node"
+    ],
+    "labels": {
+      "org.opencontainers.image.title": "folio-assistant-core",
+      "org.opencontainers.image.description": "Content-agnostic platform agent skills (coordination, watchers, QA pipeline)",
+      "org.opencontainers.image.source": "https://github.com/litlfred/folio-assistant"
+    }
+  },
+  "providesCapabilities": [],
+  "requiresCapabilities": [],
+  "lifecycleStages": []
+}

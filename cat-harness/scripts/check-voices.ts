@@ -78,7 +78,7 @@ const MIN_QUOTE = 24;
 /**
  * Resolve a citation, in this instance or another.
  *
- * Delegates to `folio-assistant-core`'s `resolveLibraryRef` rather than composing
+ * Delegates to `folio-assist-core`'s `resolveLibraryRef` rather than composing
  * a path. Composing one is what this file did until 2026-09-20 — `join(LIBRARY,
  * …)` against the VOICE'S OWN instance root — which made a cross-instance
  * citation unrepresentable and was the blocker on moving the three WHO voices

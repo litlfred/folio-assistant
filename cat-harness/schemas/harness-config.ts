@@ -277,7 +277,7 @@ export interface ResolvedDependency {
  *
  * So the file stays at the INSTANTIATION ROOT — the checkout, where instances
  * are tracked — and takes the instance's own name. This checkout already
- * holds `cat-harness` and `bootstrap`, with `folio-assistant-core` arriving; one
+ * holds `cat-harness` and `bootstrap`, with `folio-assist-core` arriving; one
  * filename between them could only ever configure one.
  *
  * ## Two roots, and they were never the same question (bean `zkgs`)

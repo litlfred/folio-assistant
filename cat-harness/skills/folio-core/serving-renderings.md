@@ -16,7 +16,7 @@ reader who knows the repository knows the filename.
 
 The dependency tree is **a set of overlaying instances**, and each renders under
 its own stub. That is the point of the stub being per-instance rather than
-per-repository: after the split, `folio-assistant-core` depending on
+per-repository: after the split, `folio-assist-core` depending on
 `cat-harness` means both are present, and both publish.
 
 ```

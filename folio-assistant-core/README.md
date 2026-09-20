@@ -1,4 +1,4 @@
-# folio-assistant-core
+# folio-assist-core
 
 **The content layer.** What a *folio* is — the content-object model, the block
 kinds, the adapters, and the `folio` graph kind itself.

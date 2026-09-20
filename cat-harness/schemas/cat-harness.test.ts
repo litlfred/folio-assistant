@@ -11,6 +11,7 @@ import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
 import { registerFolioGraphKind } from "./folio-graph-kind";
+import { THEMES } from "./themes";
 import { BEAN_GRAPH_FILE } from "./bean-graph";
 import { TODO_GRAPH_FILE } from "./todo-graph";
 import {
@@ -36,6 +37,7 @@ import {
   directoriesForGraph,
   resolveDirectories,
   resolveGraphKind,
+  ContentDirectorySchema,
   instanceRootsIn,
   toJsonLd,
   type ResolvedDirectory,
@@ -46,7 +48,7 @@ const REPO_ROOT = resolve(import.meta.dir, "..");
 const HARNESS = join(TMP, "agentic-harness");
 /** This repository itself — the instance that declares all seven. */
 const ROOT = resolve(import.meta.dir, "..");
-const CORE = join(TMP, "folio-assistant-core");
+const CORE = join(TMP, "folio-assist-core");
 const RELOCATED = join(TMP, "relocated");
 const BROKEN = join(TMP, "broken");
 
@@ -69,7 +71,7 @@ beforeAll(() => {
   mkdirSync(CORE, { recursive: true });
   writeFileSync(
     join(CORE, DECLARATION_FILENAME),
-    JSON.stringify({ name: "folio-assistant-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }),
+    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }),
     "utf-8",
   );
 
@@ -199,13 +201,13 @@ describe("inheritance — the Phase 0.3 gate", () => {
   it("core scans its own folio/ AND the three it inherits from the harness", () => {
     const dirs = resolveDirectories([
       { name: "agentic-harness", root: HARNESS },
-      { name: "folio-assistant-core", root: CORE, own: true },
+      { name: "folio-assist-core", root: CORE, own: true },
     ]);
     expect(dirs.map((d) => d.id).sort()).toEqual(["folio", "kg", "schemas", "tools"]);
 
     const folio = dirs.find((d) => d.id === "folio")!;
     expect(folio.own).toBe(true);
-    expect(folio.declaredBy).toBe("folio-assistant-core");
+    expect(folio.declaredBy).toBe("folio-assist-core");
 
     const tools = dirs.find((d) => d.id === "tools")!;
     expect(tools.own).toBe(false);
@@ -249,7 +251,7 @@ describe("inheritance — the Phase 0.3 gate", () => {
 describe("layering", () => {
   it("does not import the content vocabulary", () => {
     // The property, pinned structurally rather than by a drift guard: this is
-    // a HARNESS-layer module, and `schemas/jsonld.ts` is folio-assistant-core's
+    // a HARNESS-layer module, and `schemas/jsonld.ts` is folio-assist-core's
     // content vocabulary (block kinds, DoCO types, SPAR citation terms).
     // Importing it would make agentic-harness depend on the content model for
     // its own type IRIs — a harness -> core edge, already the largest
@@ -332,7 +334,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     // the `dh4f` shape on a new axis: every consumer asking for content is
     // handed it, and reports a clean run.
     for (const name of defaultGraphKinds.names()) {
-      expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|context|state)$/)]);
+      expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|context|state|derived)$/)]);
     }
   });
 
@@ -352,11 +354,15 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     expect(isContextGraph("memory")).toBe(true);
   });
 
-  it("the three layers partition the registry and none is empty", () => {
+  it("the four layers partition the registry and none is empty", () => {
     // No pinned counts: the property is that every kind lands on exactly one
     // layer. A count would break on the change that was correct — which is
-    // what the two roster assertions above did when `memory` arrived.
-    const layers = (["content", "context", "state"] as const).map((l) => graphKindsOfLayer(l));
+    // what the two roster assertions above did when `memory` arrived, and
+    // again when `derived` did (bean `hqku`).
+    //
+    // The ARITY is still pinned, deliberately: adding a layer must be a
+    // deliberate edit here, not something a registry change does quietly.
+    const layers = (["content", "context", "state", "derived"] as const).map((l) => graphKindsOfLayer(l));
     expect(layers.flat().length).toBe(defaultGraphKinds.names().length);
     expect(new Set(layers.flat()).size).toBe(layers.flat().length);
     for (const l of layers) expect(l.length).toBeGreaterThan(0);
@@ -389,8 +395,19 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       // The same shape about the repository rather than its artefacts.
       health: graphLayer("health"),
       // A QUEUE that ingestion drains. Same file, different layer from
-      // `library`, which is what ingestion produced.
+      // `library`, which is what ingestion produced — and the two are STILL
+      // different after `library` moved to `derived` (bean `hqku`): a queue is
+      // live state a step drains, a library section is a produced artefact
+      // nobody edits in place.
       uploads: graphLayer("uploads"),
+      // `content` until 2026-09-20. The owner's ruling: *"library is static
+      // (only if we materialize assets or not)"*, *"can duplicate asset into a
+      // folio and work there"* — so a sweep must skip it, and a QA finding
+      // against a section belongs to the ingestion that produced it.
+      //
+      // NOT `context`, and that was eliminated by a rule: `context` means a
+      // step writing to it is a defect, and `document-ingestion.bpmn` writes
+      // `library/`.
       library: graphLayer("library"),
     }).toEqual({
       memory: "context",
@@ -399,7 +416,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       qa: "state",
       health: "state",
       uploads: "state",
-      library: "content",
+      library: "derived",
     });
   });
 
@@ -554,7 +571,7 @@ describe("materialiseDirectories", () => {
     const out = materialiseDirectories(
       [
         resolved("library", "library/", {
-          declaredBy: "folio-assistant-core",
+          declaredBy: "folio-assist-core",
           own: false,
           absPath: join(depCheckout, "library"),
         }),
@@ -1080,9 +1097,9 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "cat-harness",
       "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
-      // used to sort BEFORE `folio-assistant-core` ("assist-" < "assista"),
-      // and `folio-assistant-sci` sorts after it. The list is the assertion,
-      // so the swap is the visible half of the rename.
+      // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
+      // `folio-assistant-sci` sorts after it. The list is the assertion, so
+      // the swap is the visible half of the rename.
       "folio-assistant-core",
       "folio-assistant-sci",
       "kg-navigation",
@@ -1096,5 +1113,45 @@ describe("instanceRootsIn — discovered, never listed", () => {
     // deletion plus an addition.
     expect(found).toContain("folio-assistant-core");
     expect(found).toContain(".");
+  });
+});
+
+describe("a directory declares the theme it renders on (owner, 2026-09-20)", () => {
+  it("is optional — absent means the instance's own theme", () => {
+    const r = ContentDirectorySchema.safeParse({
+      id: "x", path: "x/", dependents: "skip", graphs: ["cat-harness"],
+    });
+    expect(r.success).toBe(true);
+    if (r.success) expect(r.data.theme).toBeUndefined();
+  });
+
+  it("refuses an empty theme — absent and blank are different claims", () => {
+    expect(
+      ContentDirectorySchema.safeParse({
+        id: "x", path: "x/", dependents: "skip", graphs: ["cat-harness"], theme: "",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("THE METHODOLOGIES TAKE `analyst`, and the theme id is real", () => {
+    // Against the real declaration and the real theme table, so a typo in
+    // either is caught. Asserting the id exists is the half that matters: a
+    // misspelled theme parses (it is an open string by design) and would fall
+    // back silently at render time.
+    const repo = resolve(import.meta.dir, "..", "..");
+    const decl = readDeclaration(join(repo, "cat-harness"));
+    const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
+    expect(themed.map((d) => d.id).sort()).toEqual([
+      "methodologies", "methodology-crdm", "methodology-raci", "smart-kg-methodologies",
+    ]);
+    for (const d of themed) expect(d.theme).toBe("analyst");
+    expect(THEMES.map((t) => t.id)).toContain("analyst");
+  });
+
+  it("and NOTHING else is themed — a field that fires on every subject means nothing", () => {
+    const repo = resolve(import.meta.dir, "..", "..");
+    const decl = readDeclaration(join(repo, "cat-harness"));
+    const all = decl?.directories ?? [];
+    expect(all.filter((d) => d.theme !== undefined).length).toBeLessThan(all.length);
   });
 });

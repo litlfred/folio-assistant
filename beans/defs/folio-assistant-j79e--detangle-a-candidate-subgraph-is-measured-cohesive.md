@@ -13,7 +13,7 @@ Owner, 2026-09-20, defining the term after four carves had already been picked b
 
 > 'candidate subgraph = large collection of thematiactally related content that is diconnected (maybe some light detagling) from other parts of the KG. (part of larger process detangle knwoedlge graph. look in lean, paper layout for related. generalize, make subprocess, deangle heuristics...).'
 
-THIS IS A CRITERION, AND IT INVALIDATES THE METHOD USED SO FAR. `folio-assistant-core-schemas`, `kg-navigation`, and the four carves chosen in this session were all picked by reading and arguing. Three of them may well survive the measurement; NONE of them was measured, and 'it turned out to be right' is not the same fact as 'it was checked'.
+THIS IS A CRITERION, AND IT INVALIDATES THE METHOD USED SO FAR. `folio-assist-core-schemas`, `kg-navigation`, and the four carves chosen in this session were all picked by reading and arguing. Three of them may well survive the measurement; NONE of them was measured, and 'it turned out to be right' is not the same fact as 'it was checked'.
 
 THREE NUMBERS DECIDE IT, and they are the same three every graph-cut question uses:
 - SIZE of the candidate node set. 'Large' is in the owner's definition; a two-node subgraph is a file move.

@@ -1,6 +1,6 @@
 ---
 # folio-assistant-7deg
-title: 'LIBRARIAN: an avatar for knowledge content, and Dublin Core introduced in folio-assistant-core'
+title: 'LIBRARIAN: an avatar for knowledge content, and Dublin Core introduced in folio-assist-core'
 status: todo
 type: feature
 created_at: 2026-09-20T06:23:14Z
@@ -16,7 +16,7 @@ parent: folio-assistant-o3xy
 ## Two things, and they are separable
 
 1. **A librarian avatar** for knowledge-content-specific material in
-   `folio-assistant-core`.
+   `folio-assist-core`.
 2. **A Dublin Core skill**, introduced there for the first time.
 
 ## What exists — measured 2026-09-20
@@ -27,10 +27,10 @@ keys, each `{ glyph, tone, reads }` where `tone` is a hue angle;
 `scripts/gen-avatars-css.ts` derives both colour schemes and both trash states
 from that single hue; `scripts/check-avatar-coverage.ts` reports kinds with no
 glyph AND glyphs with no kind, so a new avatar is checked in both directions.
-The existing `folio-assistant-core` key is already among the 19.
+The existing `folio-assist-core` key is already among the 19.
 
 So the librarian is: a glyph path, a hue, and a `reads` line. The one judgement
-is **which kind it attaches to** — `folio-assistant-core` the layer, or `folio` the
+is **which kind it attaches to** — `folio-assist-core` the layer, or `folio` the
 renderable content kind, or a new content-specific kind. The ask says *"for
 knowledge content specific stuff"*, which sounds like the content rather than
 the layer.
@@ -61,6 +61,6 @@ for them.
 - [ ] the skill-vs-schema question is answered
 - [ ] Dublin Core terms reachable through `namespaces.ts` rather than spelled at
       use sites
-- [ ] introduced in `folio-assistant-core`'s layer, which does not exist as a
+- [ ] introduced in `folio-assist-core`'s layer, which does not exist as a
       directory yet (issue #223) — so where it lives before the split is part of
       the answer

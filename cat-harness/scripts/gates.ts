@@ -357,6 +357,29 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
   },
   {
+    // Four call sites, one entry — `match` is a substring and the script is
+    // the same in every retry loop in `feature-staging.yml`.
+    match: "backoff-sleep.ts",
+    kind: "ci-only",
+    reason:
+      "it SLEEPS. Running it as a gate would add a jittered wait of up to 24s to every " +
+      "`bun run gates`, to observe a number `retry.test.ts` already covers at the source — " +
+      "`waitFor` is the only arithmetic here and this script does not repeat it (bean `06kg`). " +
+      "That it is reached from every retry loop, rather than each loop computing its own wait, " +
+      "is covered by `retry-backoff-in-workflows.test.ts` in `bun test`, which is a gate",
+  },
+  {
+    match: "staging-banner.ts",
+    kind: "ci-only",
+    reason:
+      "injects the banner into the built `_site` and writes `staging.json` beside it; there is " +
+      "no `_site` in a checkout, and the facts it writes (run id, event payload, publish-ref " +
+      "listing) exist only in CI. The property it exists for — that the injected bytes do NOT " +
+      "depend on the build, which is what lets git deduplicate a preview against its own next " +
+      "rebuild (bean `g196`) — is covered by `staging-banner-constant.test.ts` in `bun test`, " +
+      "and the client half it ships by `staging-banner.e2e.ts` in the e2e set. Both are gates",
+  },
+  {
     match: "restore-staging.ts",
     kind: "ci-only",
     reason: "reconciles the `gh-pages` working tree against the open PRs' previews; needs that branch checked out",

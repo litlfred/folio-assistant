@@ -186,18 +186,24 @@ export const GH_PAGES_GROUP = "gh-pages-push";
  * ## What counts as pushing, and as retrying
  *
  * Pushing: the `peaceiris/actions-gh-pages` action, or a bare
- * `git push … gh-pages` in a `run:` body — `feature-staging`'s `cleanup` uses
- * the latter and contends for the same ref.
+ * `git push … gh-pages` in a `run:` body — every job in `feature-staging`
+ * uses the latter and contends for the same ref. That became true of `stage`
+ * in PR #552 and this comment still named it as the action example, which is
+ * the failure mode of a doc comment about which file does what: nothing reads
+ * it, so nothing catches it.
  *
  * Retrying comes in two shapes here, and both are detected STRUCTURALLY
  * rather than by a marker comment, so a retry cannot be claimed without being
  * implemented:
  *
  * - **Two `uses:` push steps plus `continue-on-error: true`** — the action
- *   form, used by `feature-staging`'s `stage` and by `discoverability-docs`.
+ *   form, used by `discoverability-docs`. `feature-staging`'s `stage` used it
+ *   too until PR #552 (bean `bm6d`, 2026-09-20), when it moved to the loop
+ *   form so the preview and its render-log entry could be ONE commit.
  * - **A shell loop around `git push`, with a rebase inside it** —
  *   `feature-staging`'s `cleanup` does three attempts with
- *   `git pull --rebase` between them. Missing this shape is not hypothetical:
+ *   `git pull --rebase` between them, and `stage` now does the same.
+ *   Missing this shape is not hypothetical:
  *   the first version of this check flagged `cleanup` as unprotected while it
  *   was sitting next to a working retry loop, which is how a correct check
  *   teaches somebody to delete a correct fix.

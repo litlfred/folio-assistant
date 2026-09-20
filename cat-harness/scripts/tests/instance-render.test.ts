@@ -131,14 +131,14 @@ describe("this repository's own instances", () => {
     // This asserted exactly `["cat-harness", "bootstrap"]`, and it PASSED for
     // the whole period that list was wrong: `instancesIn` returned a literal
     // and this test pinned the same literal, so the two agreed with each other
-    // and neither looked at the repository. `folio-assistant-core` and the root
+    // and neither looked at the repository. `folio-assist-core` and the root
     // were instances the gate never rendered (bean `6tkl`).
     //
     // The order is root-first then sorted, which is what `instanceRootsIn`
     // promises so that a report is stable.
     //
     // Updated 2026-09-20 when it fired as designed: seven instances arrived on
-    // one branch and `folio-assist-core` was renamed to `folio-assistant-core`. This
+    // one branch and `folio-assist-core` became `folio-assistant-core`. This
     // list is the new truth, and it is the SECOND place that truth is written
     // — `schemas/cat-harness.test.ts` holds the other. Two copies is a real
     // cost and it is taken deliberately: they assert different things (that
@@ -154,9 +154,9 @@ describe("this repository's own instances", () => {
       "cat-harness",
       "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
-      // used to sort BEFORE `folio-assistant-core` ("assist-" < "assista"),
-      // and `folio-assistant-sci` sorts after it. The list is the assertion,
-      // so the swap is the visible half of the rename.
+      // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
+      // `folio-assistant-sci` sorts after it. The list is the assertion, so
+      // the swap is the visible half of the rename.
       "folio-assistant-core",
       "folio-assistant-sci",
       "kg-navigation",

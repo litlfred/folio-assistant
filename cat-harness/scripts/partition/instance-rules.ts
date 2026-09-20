@@ -51,7 +51,7 @@ export type Repo = "harness" | "core" | "sci" | "kg" | "base" | "test";
 /** Display names, in dependency order (most depended-upon first). */
 export const REPOS: Array<{ id: Repo; name: string }> = [
   { id: "harness", name: "agentic-harness" },
-  { id: "core", name: "folio-assistant-core" },
+  { id: "core", name: "folio-assist-core" },
   { id: "sci", name: "folio-asst-sci" },
   { id: "kg", name: "smart-kg" },
   { id: "base", name: "smart-base" },
@@ -324,7 +324,7 @@ export const RULES: Rule[] = [
       // their schemas cannot be in a different repository from the union that
       // names them — and calling it smart-base made the CORE barrel
       // `schemas/index.ts` re-export a smart-base module, which was the single
-      // `folio-assistant-core → smart-base` wrong-direction edge. The
+      // `folio-assist-core → smart-base` wrong-direction edge. The
       // classification was wrong, not the import.
       //
       // What stays smart-base is the L2/L3 AUTHORING skills: the procedures
@@ -565,7 +565,7 @@ export const RULES: Rule[] = [
       //
       // Classifying the script alone minted exactly the two edges that comment
       // warns about — measured with `--edges`: `scripts/render-log.ts` and
-      // `scripts/restore-staging.ts` both reaching into `folio-assistant-core`,
+      // `scripts/restore-staging.ts` both reaching into `folio-assist-core`,
       // taking the wrong-direction count from 1 to 3. With the schema here it
       // is back to 1, the `src/types.ts` residue this file already analyses.
       "schemas/render-log.ts",
@@ -682,7 +682,7 @@ export const RULES: Rule[] = [
       // `fsh` in a name that has nothing to do with FHIR Shorthand. A keyword
       // rule cannot tell a homograph from a hit, which is why every keyword
       // assignment in this file is provisional against a read of the module.
-      // It was the single `folio-assistant-core -> smart-base` edge.
+      // It was the single `folio-assist-core -> smart-base` edge.
       "schemas/front-matter.ts",    // "this repository's self-declaring files"
       "schemas/test-run.ts",        // what was measured, with what; only eval-crdm-detect reads it
       "schemas/note-anchor.ts",     // read only by `carried-note.ts`, already harness
@@ -728,6 +728,7 @@ export const RULES: Rule[] = [
       "scripts/check-fallback-roles.ts",    // reads role-graph
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
+      "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/gates.ts",                   // the gate runner itself
@@ -737,6 +738,8 @@ export const RULES: Rule[] = [
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
+      "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
+      "scripts/backoff-sleep.ts",           // the one retry wait (bean `06kg`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",
       // The activity log's vocabulary: "what an agent did, when, and in which
@@ -901,7 +904,7 @@ export const RULES: Rule[] = [
     // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
     // part of the core content model by the core's own declaration. Calling
     // the module that defines their schemas `smart-base` made the core barrel
-    // re-export a smart-base module — the one `folio-assistant-core → smart-base`
+    // re-export a smart-base module — the one `folio-assist-core → smart-base`
     // wrong-direction edge, and it was the classification that was wrong
     // rather than the import.
     //
@@ -913,7 +916,7 @@ export const RULES: Rule[] = [
     keyword: /(^|[/-])(dak|fhir|fsh|ocl|l2|l3|smart|who|ig)([/.-]|$)/i,
   },
 
-  // ── folio-assistant-core: the generic document model and its pipeline
+  // ── folio-assist-core: the generic document model and its pipeline
   {
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no

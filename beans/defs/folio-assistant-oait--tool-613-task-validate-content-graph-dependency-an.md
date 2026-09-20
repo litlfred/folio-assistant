@@ -24,7 +24,7 @@ Group 6 of 13 in `d308`. **19 files, 1 entry point.**
 served by more than one Tool, which is what `alternativeTo` and `selection` are
 for.
 
-**Target repo (#223):** `folio-assistant-core`.
+**Target repo (#223):** `folio-assist-core`.
 
 **The rule this group must not break:** `uses[]` and `interprets` are the
 EDITORIAL relation — what a READER must have read. They are never populated from
