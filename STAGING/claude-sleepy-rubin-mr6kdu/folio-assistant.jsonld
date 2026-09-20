@@ -199,6 +199,7 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "path": "https://litlfred.github.io/folio-assistant/cat-harness/ns#path",
+    "assetRole": "https://litlfred.github.io/folio-assistant/cat-harness/ns#assetRole",
     "version": "https://schema.org/softwareVersion",
     "hasCapability": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasCapability",
@@ -259,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T15:05:34.055Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/376d16b5bd901ee8ad2a194287d32b9b183ca789",
-  "sourceCommitSha": "376d16b5bd901ee8ad2a194287d32b9b183ca789",
-  "sourceCommitAt": "2026-09-20T15:03:45Z",
+  "generatedAt": "2026-09-20T15:43:22.408Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63e940c5c04550a6d49c274951bf5c2070fa9cc4",
+  "sourceCommitSha": "63e940c5c04550a6d49c274951bf5c2070fa9cc4",
+  "sourceCommitAt": "2026-09-20T15:41:54Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 204,
@@ -277,7 +278,8 @@
     "Tool": 59,
     "Schema": 77,
     "GraphKind": 21,
-    "Directory": 30
+    "Directory": 31,
+    "Asset": 3
   },
   "@graph": [
     {
@@ -870,7 +872,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/domain-fencing.md",
-      "instructionLines": 147,
+      "instructionLines": 187,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1632,7 +1634,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 187,
+      "instructionLines": 272,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2102,7 +2104,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 382,
+      "instructionLines": 423,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -31294,6 +31296,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/who-iris-library"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/agent-skills-library",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "agent-skills-library",
+      "path": "agent-skills/library/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library"
+      ],
+      "description": "The agent-skill literature instance's library -- published guidance on authoring and operating agent skills, vendor documentation and arXiv papers alike. Same staging arrangement and same reason as `who-iris-library` and `folio-assist-sci-library` below: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect). It is NOT in cat-harness/library/ although its subject is this harness's own: `AGENTS.md` opens by saying the platform holds no content, and these are other publishers' documents.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/agent-skills-library"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/folio-assist-sci-library",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "folio-assist-sci-library",
@@ -31443,12 +31456,43 @@
       ],
       "description": "The detangle criterion's schema node -- size, cohesion, inbound/outbound and the enforced/recorded edge authority that decides whether a boundary's direction is a fact or a filing decision. Repository-scoped, staged ahead of the split. UNDECLARED until 2026-09-20 although committed days earlier, which is the dh4f defect in reverse: graph content no declaration mentioned, so every declaration-driven consumer scanned past it -- including `check:schema-nodes`, the gate whose whole job is to stop a schema being silently absent.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/detangle-schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — folio-assistant",
+      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/agent-instructions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "folio-assistant",
+      "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/instance-readme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#asset/bootstrap-initialization",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "bootstrap-initialization",
+      "path": "docs/bootstrap/initialization.md",
+      "assetRole": "bootstrap-initialization",
+      "title": "Initializing into folio-assistant",
+      "description": "What bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours, composed by `initializationDoc()` rather than spelled, so bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not. The path is INSTANCE-relative here, not `<stub>/docs/...`: this instance has its own directory (`cat-harness/`), so `siteDir` is plain `docs`, and the stub names published artefacts rather than a directory. Whether bootstrap can still find it from one reference is open — see bean `wggr`.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#directory/docs",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/bootstrap-initialization"
     }
   ],
   "staging": {
     "branch": "claude/sleepy-rubin-mr6kdu",
-    "sha": "cb932317e49abfeb496519c7043eb0562381fa5e",
+    "sha": "f18a2f18a5e2c4e40114c0072ceb15f6c329771b",
     "pr": "477/merge",
-    "run": "35518397589"
+    "run": "35520402194"
   }
 }
