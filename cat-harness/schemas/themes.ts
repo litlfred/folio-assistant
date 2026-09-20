@@ -94,6 +94,115 @@ const RAW = [
     palette: {
       surface: "#edeae4", ink: "#221f1b", edge: "#cbc5bb", accent: "#7d8a6e",
     },
+    // The one shipped theme with art, and it names a ROLE rather than three
+    // paths — so an instance declaring its own `landing` images gets its own
+    // backdrop, and one declaring none renders palette-only instead of pointing
+    // at three `.webp`s that live only in this repository. See
+    // `theme.ts`'s ThemeBackdropSchema docs for why that inversion is the whole
+    // point of the field.
+    backdrop: {
+      imageRole: "landing",
+      // 0.86 is measured, not chosen by eye: `themes.test.ts` computes the
+      // WORST-CASE contrast of `ink` over this scrim laid on pure black — the
+      // darkest art any instance could declare — and requires it to clear WCAG
+      // AAA. At 0.90 it is 10.94:1, against 13.93:1 on pure white — the dark end
+      // is the binding one. A thinner scrim is where that guarantee
+      // goes, which is why the number has a test and not a comment saying it
+      // looked fine.
+      scrim: "rgba(237, 234, 228, 0.90)",
+      description:
+        "The instance's declared landing art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    id: "engineer",
+    name: "Grumpy cat, engineering",
+    description: "The cloud cream and a working green, behind the cat in a hi-vis vest.",
+    palette: {
+      surface: "#fdfbef", ink: "#1f2a24", edge: "#c9cfc4",
+      // NOT the hi-vis orange, however much it is the picture's signature colour.
+      // `accent` is the priority stripe's hue for `medium`, and `.fa-sticky-p-high`
+      // is a literal amber precisely so urgency reads the same on every board. An
+      // orange accent would make a medium sticky look like a high one — a theme may
+      // set a hue, never make two signals look alike.
+      accent: "#5a6b5c",
+    },
+    backdrop: {
+      imageRole: "landing-engineer",
+      // Measured like grumpy-cat's, over PURE BLACK: 11.41:1 for this ink, and
+      // 14.35:1 over white. The art carries bright hi-vis orange and near-black
+      // shadow in the same frame, so both ends are real here rather than
+      // hypothetical.
+      //
+      // 0.90 after two looks at the rendered board: 0.86 left the logo too
+      // present ("should be fadded a lot ... logo faded especially"), 0.93 went
+      // past it ("a bit less faded"). Arrived at by rendering and looking, which
+      // is the only way this value was ever going to be settled. The scrim is the
+      // ONE fade knob: adding an `opacity` to the art would be a second control
+      // for one effect, and the two would have to be kept in step by whoever
+      // next changed either.
+      scrim: "rgba(253, 251, 239, 0.90)",
+      description:
+        "The instance's declared engineering landing art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    id: "library",
+    name: "Grumpy cat, librarian",
+    description: "Storm slate and a cool cream, behind the cat with the books.",
+    palette: {
+      // Sampled from the art rather than chosen: a 7px grid over the square crop
+      // gives #e4e4e4 / #e4e4d8 for the cloud at 20% of the frame, and a slate
+      // family — #6c8490, #78849c, #78909c, #90a8b4 — for the rain and the
+      // library behind it. The values below sit inside those clusters.
+      surface: "#e8e8e0", ink: "#1c2630", edge: "#c2ccd4",
+      // A slate blue, clear of the literal red and amber the critical/high
+      // priority stripes carry, so urgency still reads the same on this board.
+      // 3.98:1 against `surface` — past the 3:1 SC 1.4.11 floor for a non-text
+      // channel, which is what the stripe is.
+      accent: "#5c7484",
+    },
+    backdrop: {
+      imageRole: "landing-library",
+      // Measured over PURE BLACK like the others: 9.97:1 for this ink, 12.72:1
+      // over white. This art has the widest tonal range of the three — a
+      // near-black 4% of the frame beside lamplight — so the dark end is real.
+      scrim: "rgba(232, 232, 224, 0.90)",
+      description:
+        "The instance's declared librarian art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    id: "analyst",
+    name: "Grumpy cat, analyst",
+    description: "Daylight cream and a working blue, behind the cat with the charts.",
+    palette: {
+      // Sampled from the art, and the numbers say why this is not a variation
+      // on the others: a 7px grid over the square crop gives #f0f0e4 across 28%
+      // of the frame, against #e4e4e4 for the librarian, with sky blues
+      // (#a8ccfc, #b4d8fc, #c0d8fc, #9cccfc) where the others have rain-grey.
+      // This is the ONLY sunny backdrop in the set.
+      surface: "#f2f2e8", ink: "#1e2a3a", edge: "#cbd6e2",
+      // The tie blue. 4.76:1 against `surface`, past the 3:1 SC 1.4.11 floor
+      // for a non-text channel, and clear of the literal red and amber the
+      // critical/high stripes carry so urgency reads the same on every board.
+      accent: "#2f6ea8",
+    },
+    backdrop: {
+      imageRole: "landing-analyst",
+      // Measured over PURE BLACK like the rest: 10.29:1 for this ink, 13.04:1
+      // over white. The art is bright, so the dark end is the one that could
+      // have been assumed and was not.
+      scrim: "rgba(242, 242, 232, 0.90)",
+      description:
+        "The instance's declared analyst art, behind the sticky's ink rather than composited with it.",
+    },
     layouts: LAYOUTS,
   },
   {

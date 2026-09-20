@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Deliver",
     "path": "skills/workflows/crdm-deliver.bpmn"
   },
-  "source_hash": "sha256:2c8b155cb9fe3ffc6f349588dfd397ef6387ce3c6ea7b6b5615d067c9e7115ed",
+  "source_hash": "sha256:bf701aebecb0b889ba580d8ba7b26af3d42daa54af64c284a61c119f6012cb3c",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -36,8 +36,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_ThemeUIReview",
+          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -53,8 +58,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 7,
+    "fail": 1,
     "n/a": 3,
     "unknown": 0
   }
