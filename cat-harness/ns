@@ -298,6 +298,14 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:reach",
+      "@type": "rdf:Property",
+      "label": "reach",
+      "comment": "What this actor can reach off its own machine — internet, egress-restricted or air-gapped. The same vocabulary the deployment declares, at the level of one participant; absent means undeclared, which is not `internet`.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:hasSkill",
       "@type": "rdf:Property",
       "label": "hasSkill",

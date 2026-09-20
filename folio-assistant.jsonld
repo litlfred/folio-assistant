@@ -130,6 +130,7 @@
     "localId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#localId",
     "actorKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKinds",
+    "reach": "https://litlfred.github.io/folio-assistant/cat-harness/ns#reach",
     "actedUpon": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -243,22 +244,22 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:12:09.502Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4657c43e7324a01c9c387e4667e51860d4f223a3",
-  "sourceCommitSha": "4657c43e7324a01c9c387e4667e51860d4f223a3",
-  "sourceCommitAt": "2026-09-20T06:10:46+02:00",
-  "sourceTreeDirty": true,
+  "generatedAt": "2026-09-20T04:19:46.601Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/55cadd69757d4f6240613fd0035f02583b76763c",
+  "sourceCommitSha": "55cadd69757d4f6240613fd0035f02583b76763c",
+  "sourceCommitAt": "2026-09-20T06:18:22+02:00",
+  "sourceTreeDirty": false,
   "counts": {
-    "Skill": 169,
-    "Actor": 26,
-    "Capability": 23,
-    "Role": 103,
+    "Skill": 170,
+    "Actor": 27,
+    "Capability": 24,
+    "Role": 109,
     "SkillPackage": 8,
-    "Process": 34,
-    "SequenceFlow": 475,
-    "ProcessNode": 444,
+    "Process": 36,
+    "SequenceFlow": 498,
+    "ProcessNode": 464,
     "Tool": 30,
-    "Schema": 53,
+    "Schema": 54,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -1217,7 +1218,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 491,
+      "instructionLines": 536,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -1578,6 +1579,20 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": true
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "qa-report-signing",
+      "title": "QA report signing — two routes, chosen by the performer's reach",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/qa-report-signing.md",
+      "instructionLines": 105,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/mcp-assembly",
@@ -2908,6 +2923,21 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/attestation-service",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "attestation-service",
+      "actorKind": "system",
+      "title": "Attestation service",
+      "description": "The signing endpoint. Declares `reach: \"internet\"` because an API signer that cannot reach out is not a signer — this is the one actor whose reach is part of what it IS, rather than a fact about where it happens to run.",
+      "reach": "internet",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/signing-api"
+      ],
+      "roleName": [
+        "attestation-service"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#actor/ci-pipeline",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
       "localId": "ci-pipeline",
@@ -3256,6 +3286,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/git-push"
       ],
       "roleName": [
+        "administrator",
         "programme-manager",
         "publication-manager",
         "editor",
@@ -3567,6 +3598,17 @@
       }
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/signing-api",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "signing-api",
+      "name": "Signing API",
+      "description": "An attestation endpoint that will sign a QA report's run hashes. Probed by configuration, not by calling it: a probe that made a live request would be indistinguishable from an outage on the one machine this matters for, and would call an external service just to answer a question about setup.",
+      "detection": {
+        "method": "env-var",
+        "variable": "FOLIO_SIGNING_ENDPOINT"
+      }
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/html-pdf-engine",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
       "localId": "html-pdf-engine",
@@ -3840,6 +3882,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/production-vs-exploratory-discipline",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/readme-sections",
@@ -9780,6 +9823,350 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Actor and role administration",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/actor-role-administration.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Start_AdminRequest"
+      ],
+      "nodeCount": 11,
+      "flowCount": 14
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A01",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Start_AdminRequest",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A02",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "add actor",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AddActor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A03",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "assign roles",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AssignRoles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A04",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "permission",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A05",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "retire",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RetireActor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A06",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AddActor",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A07",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AssignRoles",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A08",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A09",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RetireActor",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RunKgAudit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/End_Administered"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Administrator",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Graph%20audit%20(system)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Graph audit (system)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Start_AdminRequest",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A change to who can do what",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A01"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which administration change?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A01",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A02",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A03",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A04",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A05"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AddActor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Add an actor, and declare its kind",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A06"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_AssignRoles",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Open or close a role to an actor",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A07"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Grant or revoke a permission",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A08"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RetireActor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Retire an actor — never delete one",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A09"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_Changed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Declaration edited",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A06",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A07",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A08",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A10"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Branch, gates, PR and review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/continual-progress"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A11"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Audit the graph [kg:audit]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Graph%20audit%20(system)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A12"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Audit clean?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A13",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A14"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/node/End_Administered",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Graph changed and audited",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ActorRoleAdministration/flow/A14"
+      ],
+      "outgoing": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_BeanLifecycle",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Agent bean lifecycle",
@@ -10959,6 +11346,274 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_VoiceReview/flow/F_V13"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "QA report signing",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/qa-report-signing.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "api",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "human",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/End_Signed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Validation and QA (mechanical + agents)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20service%20(API)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Attestation service (API)",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20signer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human signer",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Start_ReportReady",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "QA report ready to attest",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_BuildRun",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Build the test run [folio-test-run/v1]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-test"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Resolve the performer's reach [effectiveReach + signing-api probe]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_SigningRoute",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which signing route?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/signing-route.dmn#Decision_SigningRoute",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_ApiSign",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Sign over the API",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20service%20(API)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_HumanSign",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Sign as release authority",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20signer",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Signed",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S06",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record which route signed it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Report attested",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_QaReportSigning/flow/S09"
       ],
       "outgoing": []
     },
@@ -13649,12 +14304,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Programme%20manager",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Programme manager",
-      "sourceKind": "bpmn-lane"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Validation%20and%20QA%20(mechanical%20+%20agents)",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Validation and QA (mechanical + agents)",
       "sourceKind": "bpmn-lane"
     },
     {
@@ -18515,6 +19164,13 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/actor-reach",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "actor-reach",
+      "title": "**Network reach is a property of an ACTOR**, and how it composes with the",
+      "module": "schemas/actor-reach.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/archive-contents",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "archive-contents",
@@ -19204,6 +19860,24 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/administrator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "administrator",
+      "title": "Administrator",
+      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Administrator"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/programme-manager",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "programme-manager",
@@ -19239,11 +19913,13 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/ig-publication",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager",
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Publication%20manager%20—%20deploy%20and%20seed",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20signer"
       ]
     },
     {
@@ -19602,6 +20278,23 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/attestation-service",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "attestation-service",
+      "title": "Attestation service",
+      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-report-signing"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20service%20(API)"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/work-plan",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "work-plan",
@@ -19853,8 +20546,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "4657c43e7324a01c9c387e4667e51860d4f223a3",
+    "sha": "55cadd69757d4f6240613fd0035f02583b76763c",
     "pr": "main",
-    "run": "35488483256"
+    "run": "35488807258"
   }
 }
