@@ -499,6 +499,16 @@
       ]
     },
     {
+      "id": "agent-skills-library",
+      "path": "agent-skills/library/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The agent-skill literature instance's library -- published guidance on authoring and operating agent skills, vendor documentation and arXiv papers alike. Same staging arrangement and same reason as `who-iris-library` and `folio-assist-sci-library` below: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect). It is NOT in cat-harness/library/ although its subject is this harness's own: `AGENTS.md` opens by saying the platform holds no content, and these are other publishers' documents.",
+      "graphs": [
+        "library"
+      ]
+    },
+    {
       "id": "folio-assist-sci-library",
       "path": "folio-assist-sci/library/",
       "scope": "repository",

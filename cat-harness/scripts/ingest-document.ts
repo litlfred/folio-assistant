@@ -100,6 +100,18 @@ const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
  *
  * One function so the next relocation is one line, and so that a reader
  * grepping for `.py` finds the resolution rather than three copies of it.
+ *
+ * **It did not reach the RUNG TABLE, and that is how this recurred.** Seven
+ * more call sites spelled `"scripts/<name>.py"` inside the `steps` arrays
+ * below — every rung that actually ingests a document — so the helper existed,
+ * the comment above said the problem was solved, and `bun run ingest` could
+ * not ingest anything. Fixed 2026-09-20, when ingesting the agent-skill
+ * corpus hit it on the first real document.
+ *
+ * These seven failed LOUDLY (`can't open file`, exit 2, "stopping"), unlike
+ * the three above, so nothing was mis-filed. That is luck, not design: the
+ * `steps` runner checks the exit code, and the helpers it invokes are the ones
+ * whose absence the three silent call sites were taught to report honestly.
  */
 function pyHelper(name: string): string {
   return join(dirname(fileURLToPath(import.meta.url)), name);
@@ -189,7 +201,14 @@ export function bibSlug(file: string): string {
     "import sys, importlib.util as u\n" +
     `spec = u.spec_from_file_location('d', ${JSON.stringify(pyHelper("_pdf_doc_id.py"))})\n` +
     "m = u.module_from_spec(spec); spec.loader.exec_module(m)\n" +
-    "print(m.derive_doc_id(sys.argv[1]))\n";
+    // `derive_doc_id_from_pdf`, NOT `derive_doc_id`. The latter takes the
+    // extracted front matter as an argument and this call site has none, so it
+    // fell through to the basename slug for every arXiv paper while
+    // `pdf-structure.py` — which DOES have the front matter — named the same
+    // file `arxiv-<id>v<n>`. The two then disagreed about which directory the
+    // document was in, and `--promote` reported the entry incomplete rather
+    // than missing.
+    "print(m.derive_doc_id_from_pdf(sys.argv[1]))\n";
   const r = Bun.spawnSync(["python3", "-c", py, file]);
   const out = new TextDecoder().decode(r.stdout).trim();
   if (r.exitCode !== 0 || !out) {
@@ -405,7 +424,7 @@ export function planFor(
     return {
       rung: "tabular",
       why: `the package declares ${mime} — a workbook, read for its sheets and headers`,
-      steps: [["python3", "scripts/tabular-records.py", "-o", lib, pdf]],
+      steps: [["python3", pyHelper("tabular-records.py"), "-o", lib, pdf]],
     };
   }
 
@@ -417,7 +436,7 @@ export function planFor(
     return {
       rung: "tabular",
       why: "no magic bytes, but the rows split consistently — delimited text",
-      steps: [["python3", "scripts/tabular-records.py", "-o", lib, pdf]],
+      steps: [["python3", pyHelper("tabular-records.py"), "-o", lib, pdf]],
     };
   }
 
@@ -425,7 +444,7 @@ export function planFor(
     return {
       rung: "archive",
       why: `sniffed ${mime} — an archive. Its entries are listed as data, not extracted`,
-      steps: [["python3", "scripts/archive-contents.py", "-o", lib, pdf]],
+      steps: [["python3", pyHelper("archive-contents.py"), "-o", lib, pdf]],
     };
   }
   return planForPdf(pdf, p ?? probe(pdf), lib);
@@ -458,7 +477,7 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
       why:
         `${p.outlineUsable} of ${p.outline} embedded outline entries can carry a ` +
         `chapter — the structure is READ, not inferred`,
-      steps: [["python3", "scripts/pdf-structure.py", "-o", lib, pdf]],
+      steps: [["python3", pyHelper("pdf-structure.py"), "-o", lib, pdf]],
     };
   }
   // The case bean `8shg` exists for. An outline is PRESENT and carries nothing
@@ -478,8 +497,8 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
         `${junkOutline || "no outline, and "}${p.chars} characters over the first pages ` +
         `(< ${OCR_THRESHOLD_CHARS}) — there is no usable text layer`,
       steps: [
-        ["python3", "scripts/pdf-ocr.py", "-o", lib, pdf],
-        ["python3", "scripts/pdf-pages.py", "-o", lib, "--from-ocr", pdf],
+        ["python3", pyHelper("pdf-ocr.py"), "-o", lib, pdf],
+        ["python3", pyHelper("pdf-pages.py"), "-o", lib, "--from-ocr", pdf],
       ],
     };
   }
@@ -488,7 +507,7 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
     why:
       `${junkOutline || "no outline, "}${p.chars} characters of text layer — PAGE granularity. ` +
       `A chapter tree is NOT inferred (bean 6xaz)`,
-    steps: [["python3", "scripts/pdf-pages.py", "-o", lib, pdf]],
+    steps: [["python3", pyHelper("pdf-pages.py"), "-o", lib, pdf]],
   };
 }
 

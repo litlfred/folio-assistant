@@ -907,6 +907,7 @@ const RULES: Rule[] = [
       // wrong-direction edges for the tidiness of one homogeneous list.
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
+      "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
       "scripts/narratives.ts",              // the narrative review queue
       // Same test, same answer: it reads `library/<bib-slug>/images.json`,
       // which is a folio's own material, and imports `schemas/attribution.ts`

@@ -104,7 +104,12 @@ describe("which rung a document needs", () => {
   test("an embedded outline selects pdf-structure — the structure is READ", () => {
     const p = planFor("x.pdf", { outline: 258, outlineUsable: 257, chars: 90_000 }, LIB);
     expect(p.rung).toBe("pdf-structure");
-    expect(p.steps[0]).toContain("scripts/pdf-structure.py");
+    // The step is an ABSOLUTE path since 2026-09-20 — `"scripts/<name>.py"`
+    // was resolved against the CWD and `bun run` puts you at the repository
+    // root, one level above where the helpers live, so every rung died with
+    // `can't open file`. Asserting the BASENAME rather than a spelling of the
+    // location is what stops this test re-pinning the next relocation.
+    expect(p.steps[0]!.some((a) => a.endsWith("/pdf-structure.py"))).toBe(true);
     expect(p.why).toContain("258");
     // Measured on uploads/9789241548960_eng.pdf, 2026-09-20.
     expect(p.why).toContain("257");
@@ -161,7 +166,7 @@ describe("which rung a document needs", () => {
   test("no outline and almost no text selects OCR FIRST, then pages", () => {
     const p = planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS - 1 }, LIB);
     expect(p.rung).toBe("pdf-ocr+pdf-pages");
-    expect(p.steps.map((s) => s[1])).toEqual(["scripts/pdf-ocr.py", "scripts/pdf-pages.py"]);
+    expect(p.steps.map((s) => s[1]!.replace(/^.*\//, ""))).toEqual(["pdf-ocr.py", "pdf-pages.py"]);
     expect(p.steps[1]).toContain("--from-ocr");
   });
 

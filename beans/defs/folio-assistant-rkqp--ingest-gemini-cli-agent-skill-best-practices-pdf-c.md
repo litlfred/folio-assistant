@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rkqp
 title: Ingest Gemini-CLI agent-skill best-practices PDF + commit 4677175 as MODEL-SPECIFIC voices for skills
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-20T14:51:00Z
+updated_at: 2026-09-20T15:10:23Z
 parent: folio-assistant-slw1
 ---
 
