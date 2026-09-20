@@ -1463,6 +1463,20 @@
       "file": "beans/defs/folio-assistant-amom--mode-testswarm-a-stack-of-models-over-shared-or-in.md"
     },
     {
+      "id": "folio-assistant-ankg",
+      "title": "Subgraph viewer generators write but never prune — an orphan page answers to no declaration",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:02:36Z",
+      "updatedAt": "2026-09-20T21:02:36Z",
+      "preview": "Found live during #603's merge of main, not hypothesised.\n\n## What happened\n\n#604 renamed `folio-assist-sci/` to `folio-assistant-sci/`. Subject slugs in\nthe schema and library viewers are derived from the entry's PATH, so\nregeneration correctly produced the new page:\n\n    /cat-harness/library/folio-assistant-sci/\n\nIt did NOT remove the page it replaced. `folio-assist-sci/index.html` survived\nas a",
+      "file": "beans/defs/folio-assistant-ankg--subgraph-viewer-generators-write-but-never-prune-a.md"
+    },
+    {
       "id": "folio-assistant-apui",
       "title": "INGEST: one pipeline entry point — uploads/ to library/ through a single documented path",
       "status": "in-progress",
@@ -3945,6 +3959,20 @@
       "updatedAt": "2026-09-19T18:04:06Z",
       "preview": "Owner direction, 2026-09-19: \"dont do docs/<stub> tools/<stub> etc, rather do <stub>/docs and <stub>/tools. update the references/graph/dirs and then move is much cleaer.... this dir is this repo. and we can do more QA here before separation. so there would be in top-level only bootstrap/ cat-harness/ f-a-core/ etc. all content migrated to respective expexted dirs. also keeps URI/IRIs not so redun",
       "file": "beans/defs/folio-assistant-wggr--split-invert-the-stub-pattern-stubdocs-not-docsstu.md"
+    },
+    {
+      "id": "folio-assistant-whbf",
+      "title": "Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:10:28Z",
+      "updatedAt": "2026-09-20T21:10:28Z",
+      "preview": "Owner, 2026-09-20, splitting the work explicitly:\n\n| dynamic stuff is bean for later.  but static visualiztion overview is needed.\n| panel at top (colassibkle)\n\nThe static half shipped: a collapsible `<details>` panel at the top of the\nschema viewer holding a deterministic SVG of the whole graph. See\n`schema-management` §\"The overview panel\".\n\n## What is NOT there, and is this bean\n\n- Dragging a n",
+      "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
     },
     {
       "id": "folio-assistant-wlqd",

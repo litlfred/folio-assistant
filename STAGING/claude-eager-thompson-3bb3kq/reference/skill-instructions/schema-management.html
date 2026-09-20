@@ -850,10 +850,49 @@ permanently in the header, and again on any type carrying id-style fields —
 because a diagram that omitted a whole class of relation <em>silently</em> would be
 the “rendered as nothing” failure this repository works to avoid. An
 undrawn association is <strong>invisible, not absent</strong>.</p>
+<h3 id="ref--declaring-the-edge-the-reader-cannot-find">
+  
+  
+    <a href="#ref--declaring-the-edge-the-reader-cannot-find" class="anchor-heading" aria-labelledby="ref--declaring-the-edge-the-reader-cannot-find"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">@ref</code> — declaring the edge the reader cannot find
+  
+  
+</h3>
+    
 
-<p>If you want those edges drawn, they have to be <strong>declared</strong>: the id field must
-say what it points at. That is a modelling change, not a reader change, and it
-belongs to <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/data-modelling.html"><code class="language-plaintext highlighter-rouge">data-modelling</code></a>.</p>
+<p>Those edges are drawable, and the mechanism is a <strong>JSDoc tag on the field</strong>:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Skills available to an actor in this role, before inheritance.
+ *
+ * @ref SkillDefinitionSchema
+ */</span>
+<span class="nx">skills</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nx">array</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">()).</span><span class="k">default</span><span class="p">([]),</span>
+</code></pre></div></div>
+
+<p>Zero runtime cost — no helper, no wrapper, nothing changes about what the
+schema validates. <code class="language-plaintext highlighter-rouge">firstProse</code> already skips every <code class="language-plaintext highlighter-rouge">@</code>-line, so the prose
+summary and the machine-readable tag do not swallow each other.</p>
+
+<p><strong>It cannot resolve the way everything else does.</strong> <code class="language-plaintext highlighter-rouge">resolve()</code> requires the
+name to be BOUND in the module, and the entire point of a string id is that
+the target is not imported. So an <code class="language-plaintext highlighter-rouge">@ref</code> resolves <strong>by name, nearest first</strong> —
+same module, then same directory, then graph-wide — <strong>and only when the
+narrowing leaves exactly one</strong>. Two equally-near targets is an <em>ambiguous tag</em>,
+not a winner: picking the first is the <code class="language-plaintext highlighter-rouge">wggr</code> failure one level down, an answer
+that looks resolved and may be the wrong schema. That case is real here rather
+than defensive — <code class="language-plaintext highlighter-rouge">SkillDefinition</code> is declared <strong>twice in one directory</strong>.</p>
+
+<p>A tag naming nothing, and an ambiguous one, both land in <code class="language-plaintext highlighter-rouge">refProblems</code> and are
+<strong>reported</strong>. Silence would make a typo indistinguishable from a field with no
+tag — the same rule <code class="language-plaintext highlighter-rouge">undetermined</code> states.</p>
+
+<p><code class="language-plaintext highlighter-rouge">id-ref</code> is its own edge kind and is never folded into <code class="language-plaintext highlighter-rouge">field</code>, so a consumer
+can tell a reference <strong>the source proves</strong> from one <strong>an author asserted</strong>. The
+diagram draws it dashed for that reason.</p>
+
+<p><strong>What to tag is still a modelling question</strong> —
+<a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/data-modelling.html"><code class="language-plaintext highlighter-rouge">data-modelling</code></a>. A tag is an assertion about the domain,
+and a wrong one is worse than none: it draws an edge that does not exist.</p>
 <h3 id="the-control-worked-in-both-directions">
   
   
@@ -1023,10 +1062,141 @@ precisely what stops a dependent from getting its own. Nothing was declared
 against an absent directory here, because a declared-but-absent directory is
 the <code class="language-plaintext highlighter-rouge">dh4f</code> defect. Bean <code class="language-plaintext highlighter-rouge">n0nf</code> carries the same <code class="language-plaintext highlighter-rouge">skip</code> finding from the root’s
 side.</p>
-<h2 id="editing-a-viewer--no-backticks-editing-a-viewer--no-backticks">
+<h2 id="the-relationship-diagram--what-is-defined-here-and-how-it-is-linked">
   
   
-    <a href="#editing-a-viewer--no-backticks-editing-a-viewer--no-backticks" class="anchor-heading" aria-labelledby="editing-a-viewer--no-backticks-editing-a-viewer--no-backticks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editing a viewer — no backticks## Editing a viewer — no backticks
+    <a href="#the-relationship-diagram--what-is-defined-here-and-how-it-is-linked" class="anchor-heading" aria-labelledby="the-relationship-diagram--what-is-defined-here-and-how-it-is-linked"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The relationship diagram — what is defined here, and HOW it is linked
+  
+  
+</h2>
+    
+
+<p>A collapsible panel at the top of the viewer draws the declarations the page is
+scoped to as <strong>UML class boxes wired by their edges, each edge labelled with
+the field it goes through</strong>. That label is the point. Owner, 2026-09-20:</p>
+
+<blockquote>
+  <p>so you can see Role is linked to Task (how) etc. / the relatioship diagram
+or so</p>
+</blockquote>
+
+<p><em>“Role is linked to Skill”</em> is half an answer; <em>“via <code class="language-plaintext highlighter-rouge">skills</code>, many”</em> is the
+whole one. A picture that shows connection without naming the relation is a
+prettier version of the list it replaced.</p>
+<h3 id="it-is-scoped-and-refusing-is-an-answer">
+  
+  
+    <a href="#it-is-scoped-and-refusing-is-an-answer" class="anchor-heading" aria-labelledby="it-is-scoped-and-refusing-is-an-answer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It is scoped, and refusing is an answer
+  
+  
+</h3>
+    
+
+<p>Owner, same day: <strong>“not the WHOLE thing”</strong>, and <em>“what’s defined in that KG
+harness”</em>. So the diagram draws the page’s scope narrowed by the <strong>module
+filter</strong>, and above <code class="language-plaintext highlighter-rouge">DIA_MAX</code> (40) declarations it <strong>refuses and says how to
+get a picture</strong> — pick a module. Drawing 812 labelled boxes is exactly the
+hairball <a href="/folio-assistant/STAGING/claude-eager-thompson-3bb3kq/reference/skill-instructions/kg-viewer.html"><code class="language-plaintext highlighter-rouge">kg-viewer</code></a> measured at 1111 nodes; that rule is
+applied here rather than argued with.</p>
+<h3 id="one-hop-of-context-because-counting-an-edge-is-not-showing-it">
+  
+  
+    <a href="#one-hop-of-context-because-counting-an-edge-is-not-showing-it" class="anchor-heading" aria-labelledby="one-hop-of-context-because-counting-an-edge-is-not-showing-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One hop of context, because counting an edge is not showing it
+  
+  
+</h3>
+    
+
+<p>A strict module filter cuts the edge most worth seeing.
+<code class="language-plaintext highlighter-rouge">RoleDefSchema --skills--&gt; SkillDefinitionSchema</code> spans two files, so
+filtering to <code class="language-plaintext highlighter-rouge">role-graph.ts</code> drew Role with its most interesting relation
+missing and reported the loss as a number.</p>
+
+<p>So a declaration just outside the filter that a drawn one touches <strong>is drawn</strong>,
+faded and dashed, marked as context rather than as part of the set.
+Context-to-context edges are not drawn — that would be a graph the page is not
+about.</p>
+
+<p><strong>The fade is load-bearing.</strong> It shipped broken once: the CSS landed but the
+class was never applied, so context boxes were indistinguishable from real
+ones — a diagram that quietly widened its own scope. Caught by counting
+<code class="language-plaintext highlighter-rouge">.dia-ctx</code> in the render test rather than by reading the diff.</p>
+<h3 id="three-edge-kinds-and-id-ref-is-drawn-differently-on-purpose">
+  
+  
+    <a href="#three-edge-kinds-and-id-ref-is-drawn-differently-on-purpose" class="anchor-heading" aria-labelledby="three-edge-kinds-and-id-ref-is-drawn-differently-on-purpose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three edge kinds, and <code class="language-plaintext highlighter-rouge">id-ref</code> is drawn differently on purpose
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>kind</th>
+      <th>drawn</th>
+      <th>means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">extends</code></td>
+      <td>solid, hollow triangle</td>
+      <td>generalisation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">field</code></td>
+      <td>solid, open arrow</td>
+      <td>a reference <strong>in the source</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id-ref</code></td>
+      <td><strong>dashed</strong></td>
+      <td>an association <strong>declared</strong> with <code class="language-plaintext highlighter-rouge">@ref</code> over a plain string</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>A field reference is something the reader <em>found</em>. An id-ref is something an
+author <em>asserted</em>, because the target is a string id the reader structurally
+cannot see. Drawing them alike would claim the reader saw something it did
+not — the same honesty the three <code class="language-plaintext highlighter-rouge">undetermined</code>/<code class="language-plaintext highlighter-rouge">unresolved</code>/<code class="language-plaintext highlighter-rouge">external</code> states
+already enforce one level down.</p>
+<h3 id="layout">
+  
+  
+    <a href="#layout" class="anchor-heading" aria-labelledby="layout"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Layout
+  
+  
+</h3>
+    
+
+<p>Longest-path layering so a generalisation reads downward, then one barycentre
+pass to reduce crossings, ties broken by name. The walk is <strong>depth-capped
+rather than assuming a DAG</strong>: mutually recursive types are real here, and a
+cycle must settle rather than hang.</p>
+
+<p>Static, in the strict sense — computed once, no simulation, nothing to settle.
+Dragging and alternate arrangements are bean <code class="language-plaintext highlighter-rouge">whbf</code>.</p>
+
+<p>Edge labels stagger by index, because two edges whose midpoints land in the
+same band overplot: <code class="language-plaintext highlighter-rouge">permissions * 0..1</code> and <code class="language-plaintext highlighter-rouge">actors * 0..1</code> came out on top of
+each other. The stagger only has to separate neighbours, not be optimal.</p>
+<h3 id="clicking-a-box-opens-its-definition">
+  
+  
+    <a href="#clicking-a-box-opens-its-definition" class="anchor-heading" aria-labelledby="clicking-a-box-opens-its-definition"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Clicking a box opens its definition
+  
+  
+</h3>
+    
+
+<p>Which is what makes the diagram navigation rather than a poster — the owner’s
+original ask was <em>“browsable, so i can give overview like browsing”</em>.</p>
+<h2 id="editing-a-viewer--no-backticks">
+  
+  
+    <a href="#editing-a-viewer--no-backticks" class="anchor-heading" aria-labelledby="editing-a-viewer--no-backticks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editing a viewer — no backticks
   
   
 </h2>
