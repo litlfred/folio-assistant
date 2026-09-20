@@ -15,7 +15,7 @@ import { createHash } from "crypto";
 import { existsSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 
-import { coversWanted, nodes, COVER_WIDTH, DERIVED_MARKER } from "../gen-covers.js";
+import { coversWanted, nodes, pngSize, COVER_WIDTH, DERIVED_MARKER } from "../gen-covers.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 
@@ -104,6 +104,63 @@ describe("a THUMBNAIL that does not declare itself derived is refused", () => {
       if (!thumb) continue;
       expect(thumb.materialization.purpose).toBe("working");
       expect(thumb.materialization.gates?.sourceLoss.verdict).not.toBe("permitted");
+    }
+  });
+});
+
+describe("the check keeps its teeth where PyMuPDF is not installed", () => {
+  // THE DEFECT THIS IS THE RATCHET FOR. `iris:covers:check` was registered in
+  // the CI gate job, which installs `ruff` and nothing else, so it threw
+  // `pymupdf is not installed` on every run and turned the branch red three
+  // times. The repository had already written this down — `ingest-stdlib`'s
+  // Tool node says it "is the only one of the pair that runs where nothing has
+  // been installed, which is every fresh container and every CI job here".
+  //
+  // The fix is not to install a backend in the gate job, and not to degrade to
+  // could-not-determine either: four of the five claims a node makes about a
+  // cover need no decoder at all. These assert that they really are checkable
+  // from the committed bytes.
+  const { covers } = coversWanted(nodes());
+
+  it("PNG dimensions are readable from the file header, with no decoder", () => {
+    for (const c of covers) {
+      const buf = readFileSync(join(INSTANCE, c.outPath));
+      const size = pngSize(buf);
+      expect(size).not.toBeUndefined();
+      expect(size!.w).toBe(c.declaredW!);
+      expect(size!.h).toBe(c.declaredH!);
+    }
+  });
+
+  it("every cover is the shared listing width", () => {
+    for (const c of covers) expect(c.declaredW).toBe(COVER_WIDTH);
+  });
+
+  it("pngSize refuses bytes that are not a PNG rather than guessing", () => {
+    // A corrupt file must report as unreadable, not as a dimension mismatch:
+    // the two have different causes and different fixes.
+    expect(pngSize(Buffer.alloc(4))).toBeUndefined();
+    expect(pngSize(Buffer.from("not a png at all, but long enough to index"))).toBeUndefined();
+    const real = readFileSync(join(INSTANCE, covers[0]!.outPath));
+    const wrongChunk = Buffer.from(real);
+    wrongChunk.write("IHDX", 12, "latin1");
+    expect(pngSize(wrongChunk)).toBeUndefined();
+  });
+
+  it("a flipped byte changes the digest the node declares", () => {
+    // The tamper case, asserted rather than only tried by hand: the digest is
+    // what makes the backend-free path a real check instead of a file-exists
+    // test wearing its clothes.
+    const c = covers[0]!;
+    const buf = Buffer.from(readFileSync(join(INSTANCE, c.outPath)));
+    expect(createHash("sha256").update(buf).digest("hex")).toBe(c.declaredSha!);
+    buf[buf.length - 5] ^= 0xff;
+    expect(createHash("sha256").update(buf).digest("hex")).not.toBe(c.declaredSha!);
+  });
+
+  it("the declared byte count is the file's own length", () => {
+    for (const c of covers) {
+      expect(c.declaredBytes).toBe(readFileSync(join(INSTANCE, c.outPath)).length);
     }
   });
 });

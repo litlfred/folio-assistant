@@ -632,13 +632,21 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
-          # The cover thumbnails, re-rendered and compared byte for byte against
-          # what is committed -- and against the sha256 and pixel dimensions the
-          # catalogue nodes declare. This is the narrow half of `yl5w` that is
-          # this script's own to answer: a `materialized` claim it makes is a
-          # claim it checks. It also refuses a THUMBNAIL that does not declare
-          # itself derived, so a cover we rasterised cannot read as one IRIS
-          # supplied.
+          # The cover thumbnails, checked against the sha256, byte count and
+          # PNG dimensions the catalogue nodes declare. The narrow half of
+          # `yl5w` this script owns: a `materialized` claim it makes is a claim
+          # it checks. It also refuses a THUMBNAIL that does not declare itself
+          # derived, so a cover we rasterised cannot read as one IRIS supplied.
+          #
+          # NO PDF BACKEND IS INSTALLED HERE AND NONE IS NEEDED. This job
+          # installs `ruff` and nothing else, and the first version of this
+          # gate re-rendered each cover through PyMuPDF -- so it threw
+          # `pymupdf is not installed` on every run and turned the branch red
+          # three times. Four of the five claims need no decoder: the bytes
+          # exist, their digest matches, their length matches, and their pixel
+          # dimensions are readable straight out of the PNG's IHDR chunk. Only
+          # "these bytes are what that PDF renders to" needs the backend, and
+          # `--check` says in its own output which of the two it ran.
           bun run iris:covers:check
           bun run translation:block-qa:check
 

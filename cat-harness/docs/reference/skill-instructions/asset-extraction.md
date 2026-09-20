@@ -138,6 +138,31 @@ to say when it was unsure.
 listing reserves the box before the bytes arrive. Absent is *unmeasured*, not
 square: any default would be wrong about two of those three.
 
+**Check the claim where the check can actually run.** A gate that re-renders a
+derived artefact needs the backend that produced it — and the CI job that runs
+this repository's gates installs `ruff` and nothing else, which is stated on
+`ingest-stdlib`'s own Tool node and was walked into anyway: `iris:covers:check`
+threw `pymupdf is not installed` on every run and turned a branch red three
+times.
+
+The fix is not to install a backend in the gate job, and **not** to degrade to
+could-not-determine — that would report `unknown` on every CI run, which is a
+check nobody can read. Split the claim instead. Of the five things a node
+asserts about a derived image, four need no decoder at all:
+
+| claim | needs the backend? |
+|---|---|
+| the bytes exist | no |
+| their sha256 is the declared one | no |
+| their length is the declared one | no |
+| their pixel dimensions are the declared ones | **no** — a PNG's `IHDR` puts width and height at bytes 16..24, big-endian |
+| these bytes are what that source renders to | **yes** |
+
+So the gate keeps its teeth everywhere and gains the last row where the
+backend happens to be present — and it **says in its own output which of the
+two it ran**, because "3 covers verified" would read identically either way
+and the two are different assurances.
+
 ## Where the record lives
 
 Beside the container, in `uploads/`. **`uploads/` is a `state` graph** — a
