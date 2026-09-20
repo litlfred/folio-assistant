@@ -8,13 +8,17 @@
 import { describe, expect, test } from "bun:test";
 
 import {
-  NO_ANCHOR,
-  NoteAnchorSchema,
+  alsoAboutLabels,
   anchorOf,
+  badgeAt,
   duplicateNote,
   isOnBlock,
   isPageGlobal,
   moveNote,
+  NO_ANCHOR,
+  NoteAnchorSchema,
+  notesAt,
+  type Related,
 } from "./note-anchor.js";
 
 const NOTE = { id: "t1", summary: "s" };
@@ -155,5 +159,68 @@ describe("beans carry no anchor — the owner's rule, guarded", () => {
 
     const src = await file.text();
     expect(src).not.toMatch(/NoteAnchor|\banchor\b/i);
+  });
+});
+
+describe("one primary, declared secondaries — the owner's CRDM Q1 ruling", () => {
+  const note = (id: string, label?: string, also: string[] = []) => ({
+    id,
+    ...(label ? { targetLabel: label } : {}),
+    ...(also.length ? { alsoAbout: also.map((l) => ({ kind: "block" as const, label: l })) } : {}),
+  });
+
+  test("a secondary reference does not change where the note is attached", () => {
+    // The whole reason this shape was chosen over making the block anchor a
+    // list: every consumer of `targetLabel` keeps working untouched.
+    const n = note("a", "sec:page-one", ["sec:page-two"]);
+    expect(anchorOf(n)).toEqual({ kind: "block", label: "sec:page-one" });
+  });
+
+  test("a note with no list reads as [] rather than undefined", () => {
+    expect(alsoAboutLabels(note("a"))).toEqual([]);
+    expect(alsoAboutLabels(note("a", "sec:x", ["sec:y"]))).toEqual(["sec:y"]);
+  });
+
+  test("the two relations come back split, from one pass", () => {
+    const notes = [note("a", "sec:here"), note("b", "sec:elsewhere", ["sec:here"]), note("c", "sec:elsewhere")];
+    const at = notesAt(notes, "sec:here");
+    expect(at.attached.map((n) => n.id)).toEqual(["a"]);
+    expect(at.alsoAbout.map((n) => n.id)).toEqual(["b"]);
+  });
+
+  test("a note attached AND also-about the same node counts once, as attached", () => {
+    // Otherwise a self-referential declaration inflates a badge past the
+    // length of the list it labels — the disagreement R6 exists to prevent.
+    const at = notesAt([note("a", "sec:here", ["sec:here"])], "sec:here");
+    expect(at.attached.map((n) => n.id)).toEqual(["a"]);
+    expect(at.alsoAbout).toEqual([]);
+  });
+
+  test("the badge counts PRIMARIES — R6 stays true with secondaries in play", () => {
+    const notes = [note("a", "sec:here"), note("b", "sec:elsewhere", ["sec:here"])];
+    expect(badgeAt(notes, "sec:here")).toEqual({ count: 1, showCount: false });
+  });
+
+  test("the badge shows a count only above one, and keeps the exact number", () => {
+    // R5, the owner's "badge of # if > 1". `count` is what `aria-label` says;
+    // `showCount` is what the chip renders. A screen-reader user is not told
+    // less because the visual got denser.
+    const at = [
+      { id: "a", targetLabel: "sec:here" },
+      { id: "b", targetLabel: "sec:here" },
+    ];
+    expect(badgeAt(at, "sec:here")).toEqual({ count: 2, showCount: true });
+    expect(badgeAt([], "sec:here")).toEqual({ count: 0, showCount: false });
+  });
+
+  test("a page-global or unattached note is at no block", () => {
+    // The third state, carried through the new reader rather than re-derived.
+    const global = { id: "g", anchor: { kind: "page" as const, page: "index" } };
+    expect(notesAt([global], "sec:here").attached).toEqual([]);
+    // Typed, because `Related`'s fields are all optional: an untyped literal
+    // has nothing in common with it and TypeScript refuses the call rather
+    // than inferring a note out of a bare id.
+    const unattached: Related & { id: string } = { id: "n" };
+    expect(notesAt([unattached], "sec:here")).toEqual({ attached: [], alsoAbout: [] });
   });
 });

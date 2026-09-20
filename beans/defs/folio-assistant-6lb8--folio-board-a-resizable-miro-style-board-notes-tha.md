@@ -2,11 +2,11 @@
 # folio-assistant-6lb8
 title: 'FOLIO BOARD: a resizable Miro-style board, notes that move and attach, and semantic zoom to avatars'
 status: in-progress
-type: feature
+type: epic
 priority: normal
 created_at: 2026-09-20T10:37:35Z
-updated_at: 2026-09-20T20:23:00Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-20T21:48:12Z
+parent: folio-assistant-p5wm
 ---
 
 ## The ask, owner 2026-09-20 (verbatim, in the order it arrived)
@@ -551,3 +551,19 @@ linked analyses. Recommendation **C** — define `v1` as what is actually
 published — because exactly one reader exists and it is ours, so the usual cost
 of defining a version late is not being paid. **Stated default: silence means
 C.**
+
+
+## Promoted to an epic, 2026-09-20 — and why the parent moved
+
+CRDM Phase 5 produced **ten implementation units** (`8hg7`, `f76l`, `1rta`,
+`51wf`, `0jtj`, `t4my`, `db7g`, `le8b`, `zsah`, `q2wm`, `sd8x`), and
+`check:bean-parents` enforces `milestone -> epic -> feature -> task`: a
+`feature` may not be a parent at all. So this became an epic, and an epic's
+parent is a milestone rather than another epic — hence `p5wm` (GOAL 2) in place
+of `yj32`.
+
+**Nothing about the work changed and no information was lost.** `yj32` — HARNESS
+AS INTERFACE — is still the theme this belongs to, and its own parent is `p5wm`,
+so this sits in the same goal one level up rather than somewhere else. If you would
+rather it stayed a feature under `yj32`, the alternative is to reparent the ten
+tasks onto `yj32` directly; both are one line of front matter.

@@ -74,6 +74,31 @@
  *
  * @graphNode schema
  * @module schemas/board-positions
+ *
+ * ## ONE position per note per board, in the TYPE rather than in one function
+ *
+ * The owner, 2026-09-20, choosing between three: **"One per board — make it
+ * structural."**
+ *
+ * The first draft stored an ARRAY of `{note, x, y}` per board, so the type
+ * admitted a note twice while `place()` filtered by note before appending, so
+ * the code forbade it. **One fact with two answers and nothing asserting they
+ * agree** — which is the exact shape of the failures `data-modelling` cites as
+ * its own worked examples (`sym3`, `85e8`). A hand-written file, a merge that
+ * kept both sides, or any writer that did not go through `place()` produced a
+ * document the schema accepted and every consumer then had to decide about.
+ *
+ * Keyed by note id, the question cannot be asked. `boards[board][note]` is one
+ * position or none, and "which of the two is the real one?" stops being a
+ * state anybody has to handle.
+ *
+ * **It costs nothing in mergeability, which was the reason for the shape.**
+ * Keys still sort, each note still occupies its own lines under an indented
+ * write, and two sessions placing two different notes still merge untouched.
+ * If anything it is better: a note's position now has a stable ADDRESS in the
+ * text rather than a place in a sequence, so a move edits one line-block in
+ * situ instead of potentially reordering its neighbours.
+ *
  */
 import { z } from "zod";
 
@@ -91,28 +116,37 @@ export const BOARD_POSITIONS_SCHEMA_TAG = "folio-board-positions/v1";
  * There is deliberately no `z` and no `width`. A note's size is its content's
  * business — the sticky sizes to what it holds, which is the property
  * `theme-artefacts` records — and stacking order is a rendering decision the
- * board makes from the list, not a value a person edits into a file.
+ * board makes from the document, not a value a person edits into a file.
+ *
+ * **And no `note`**: the note is the KEY this sits under. Carrying it here as
+ * well would be one fact in two places, free to disagree the moment somebody
+ * edits the file by hand.
  */
-export const BoardPositionSchema = z.object({
-  /** The note this places. An id, never an embedded copy — see the module docs. */
-  note: z.string().min(1),
-  /** Horizontal position in board units. */
-  x: z.number().finite(),
-  /** Vertical position in board units. */
-  y: z.number().finite(),
-});
+export const BoardPositionSchema = z
+  .object({
+    /** Horizontal position in board units. */
+    x: z.number().finite(),
+    /** Vertical position in board units. */
+    y: z.number().finite(),
+  })
+  .strict();
 export type BoardPosition = z.infer<typeof BoardPositionSchema>;
+
+/** A position together with the note it places — what the readers hand back. */
+export type PlacedNote = BoardPosition & { note: string };
 
 /**
  * Every board's positions, in one document.
  *
- * `boards` is a map keyed by board id rather than an array, because a board is
- * looked up by name and an array would make "two entries for one board" a
- * state the schema permits and every consumer has to handle.
+ * Two levels of map, and each one removes a state rather than saving a
+ * keystroke: `boards` is keyed by board id, so "two entries for one board" is
+ * unrepresentable; each board is keyed by note id, so "two positions for one
+ * note" is too. See the module docs for why the second one is the owner's
+ * ruling rather than a preference.
  */
 export const BoardPositionsSchema = z.object({
   $schema: z.literal(BOARD_POSITIONS_SCHEMA_TAG),
-  boards: z.record(z.string().min(1), z.array(BoardPositionSchema)),
+  boards: z.record(z.string().min(1), z.record(z.string().min(1), BoardPositionSchema)),
 });
 export type BoardPositions = z.infer<typeof BoardPositionsSchema>;
 
@@ -124,16 +158,21 @@ export const BOARD_POSITIONS_FILE = "board-positions.json";
  *
  * **This is the mergeability guarantee, not a tidiness pass.** See the module
  * docs: an indented file merges cleanly only while its line order is a
- * function of its contents rather than of the writer's iteration order.
+ * function of its contents rather than of the writer's iteration order. A JSON
+ * object has no inherent order, but `JSON.stringify` emits insertion order —
+ * so the document is rebuilt with sorted keys rather than merely read in a
+ * sorted pass, which would leave the written order to whoever built the object.
  *
  * `localeCompare` is deliberately NOT used — it is locale-dependent, so two
  * machines could sort the same ids differently and each rewrite the other's
  * file. Plain `<` on the code units is the same everywhere.
  */
 export function sortPositions(doc: BoardPositions): BoardPositions {
-  const boards: Record<string, BoardPosition[]> = {};
+  const boards: Record<string, Record<string, BoardPosition>> = {};
   for (const id of Object.keys(doc.boards).sort()) {
-    boards[id] = [...doc.boards[id]!].sort((a, b) => (a.note < b.note ? -1 : a.note > b.note ? 1 : 0));
+    const notes: Record<string, BoardPosition> = {};
+    for (const note of Object.keys(doc.boards[id]!).sort()) notes[note] = doc.boards[id]![note]!;
+    boards[id] = notes;
   }
   return { $schema: doc.$schema, boards };
 }
@@ -151,6 +190,32 @@ export function renderPositions(doc: BoardPositions): string {
 /** An empty document, which is a real state: a folio with no board yet. */
 export function emptyPositions(): BoardPositions {
   return { $schema: BOARD_POSITIONS_SCHEMA_TAG, boards: {} };
+}
+
+/**
+ * One board's notes, in canonical order, each carrying the id it is keyed by.
+ *
+ * The reader every consumer wants: a map is the right STORAGE because it makes
+ * a duplicate unrepresentable, and a list is the right thing to RENDER. This
+ * is the one place that converts, so no caller re-implements the join between
+ * a key and its value — and an unknown board is an empty board rather than an
+ * exception, because a folio that has not placed anything yet is a real state.
+ */
+export function positionsOn(doc: BoardPositions, board: string): PlacedNote[] {
+  const notes = doc.boards[board];
+  if (notes === undefined) return [];
+  return Object.keys(notes)
+    .sort()
+    .map((note) => ({ note, ...notes[note]! }));
+}
+
+/** Where one note sits on one board, or `undefined` if it has not been placed. */
+export function positionOf(
+  doc: BoardPositions,
+  board: string,
+  note: string,
+): BoardPosition | undefined {
+  return doc.boards[board]?.[note];
 }
 
 /**
@@ -172,8 +237,8 @@ export function orphanPositions(
 ): Array<{ board: string; note: string }> {
   const out: Array<{ board: string; note: string }> = [];
   for (const board of Object.keys(doc.boards).sort()) {
-    for (const p of doc.boards[board]!) {
-      if (!liveNotes.has(p.note)) out.push({ board, note: p.note });
+    for (const note of Object.keys(doc.boards[board]!).sort()) {
+      if (!liveNotes.has(note)) out.push({ board, note });
     }
   }
   return out;
@@ -183,14 +248,22 @@ export function orphanPositions(
  * Place a note, replacing any position it already had on that board.
  *
  * Returns a NEW document rather than mutating, so a caller cannot half-apply a
- * move and write the result. Replacing rather than appending is what keeps
- * "two entries for one note on one board" unrepresentable through this path —
- * the schema permits it, and nothing that goes through here creates it.
+ * move and write the result. The replacement is now the MAP's, not this
+ * function's: assigning a key overwrites, so "two entries for one note" is
+ * unrepresentable through every path rather than merely unreachable through
+ * this one. That difference is the owner's Q2 ruling — see the module docs.
  */
-export function place(doc: BoardPositions, board: string, pos: BoardPosition): BoardPositions {
-  const existing = doc.boards[board] ?? [];
-  const next = existing.filter((p) => p.note !== pos.note).concat(pos);
-  return sortPositions({ ...doc, boards: { ...doc.boards, [board]: next } });
+export function place(
+  doc: BoardPositions,
+  board: string,
+  note: string,
+  pos: BoardPosition,
+): BoardPositions {
+  const existing = doc.boards[board] ?? {};
+  return sortPositions({
+    ...doc,
+    boards: { ...doc.boards, [board]: { ...existing, [note]: pos } },
+  });
 }
 
 /**
@@ -203,6 +276,8 @@ export function place(doc: BoardPositions, board: string, pos: BoardPosition): B
  */
 export function unplace(doc: BoardPositions, board: string, note: string): BoardPositions {
   const existing = doc.boards[board];
-  if (existing === undefined) return doc;
-  return sortPositions({ ...doc, boards: { ...doc.boards, [board]: existing.filter((p) => p.note !== note) } });
+  if (existing === undefined || !(note in existing)) return doc;
+  const next = { ...existing };
+  delete next[note];
+  return sortPositions({ ...doc, boards: { ...doc.boards, [board]: next } });
 }

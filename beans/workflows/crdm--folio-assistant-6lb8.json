@@ -6,7 +6,7 @@
   "subject": "folio-assistant-6lb8",
   "bean": "folio-assistant-6lb8",
   "tokens": [
-    "Call_DataModel"
+    "Call_Signoff"
   ],
   "arrivals": {},
   "history": [
@@ -51,11 +51,17 @@
       "node": "Call_Requirements",
       "actor": "claude",
       "note": "subprocess Process_CRDM_Requirements completed"
+    },
+    {
+      "at": "2026-09-20T21:33:51.250Z",
+      "node": "Call_DataModel",
+      "actor": "claude",
+      "note": "subprocess Process_CRDM_DataModel completed"
     }
   ],
   "status": "running",
   "startedAt": "2026-09-20T20:25:49.818Z",
-  "updatedAt": "2026-09-20T21:26:51.493Z",
+  "updatedAt": "2026-09-20T21:48:45.270Z",
   "children": {
     "Call_Issue": {
       "id": "crdm--folio-assistant-6lb8/Call_Issue",
@@ -222,9 +228,7 @@
       "source": "cat-harness/methodologies/crdm/workflows/crdm-data-model.bpmn",
       "subject": "folio-assistant-6lb8",
       "bean": "folio-assistant-6lb8",
-      "tokens": [
-        "A_Declare"
-      ],
+      "tokens": [],
       "arrivals": {},
       "history": [
         {
@@ -262,11 +266,49 @@
           "outcome": "yes",
           "actor": "litlfred",
           "note": "Entities recognised and every cardinality answered — the two conditions this gateway names, both met in the same exchange. Four questions asked with selectable options, four answered; none deferred, so the loop leaves rather than returning to A_Entities. The skill's own exit rule is the reason the count matters: a model with one unanswered cardinality is not 95 per cent done, it is a model with a hole exactly where the exceptions live."
+        },
+        {
+          "at": "2026-09-20T21:33:51.250Z",
+          "node": "A_Declare",
+          "actor": "claude",
+          "note": "The model is DECLARED, with a reader shipped in the same change — step 6 of the technique, and the part it insists on: \"a field with no consumer is not a model, it is a comment with punctuation.\"\n\nWHAT LANDED, one module per answered question:\n  Q2 -> schemas/board-positions.ts reshaped. boards[board] moves from an ARRAY of {note,x,y} to a RECORD keyed by note id, so \"two positions for one note\" is UNREPRESENTABLE rather than merely unreachable through place(). New readers positionsOn() and positionOf() convert the map to a list at the one place that should: a map is the right storage because it makes a duplicate impossible, a list is the right thing to render. 25 tests, including one asserting the OLD array document no longer validates.\n  Q3 -> schemas/board.ts, NEW. The Board entity the positions layer has been keying by since it merged, with nothing behind it. Optional filter, two axes (pages, kinds), OR within an axis and AND across them, absent means the whole folio. Readers boardShows() and boardContent(); document order preserved because R4's linear collapse renders that order. 17 tests.\n  Q4 -> schemas/semantic-zoom.ts, NEW. Folio default with a per-kind override; `because` REQUIRED on every override and zoomThresholdFor() returns the SOURCE alongside the value, because an inherited value is still a fact somebody must be able to trace. 14 tests.\n  Q1 -> schemas/note-anchor.ts gains AlsoAboutSchema, alsoAboutLabels(), notesAt() and badgeAt(); carried-note.ts gains the optional `alsoAbout` field. notesAt returns BOTH relations from one pass so a badge and its panel cannot be built apart, which is R6 made structural rather than documented. badgeAt carries R5's >1 threshold with the exact count kept for aria-label. 7 tests added.\n\nTHE LAYERING IS ASSERTED, NOT ASSUMED. board.ts and board-positions.ts each have a test reading their own source and requiring their import list to be exactly [\"zod\"]. The owner's \"notes exist lower down than folio, make sure arrows correct\" is a property a future edit can break silently, so it is checked at the import level rather than described.\n\nWHAT IS NOT DECLARED HERE, deliberately: no instance, no folio wiring, no renderer. A_Declare asks for a model a tool can read; the board a folio actually owns, the harness.json wiring for the zoom document and the rendering are implementation units for Phase 5's beans. The schemas are the contract they will be built against."
+        },
+        {
+          "at": "2026-09-20T21:33:51.250Z",
+          "node": "End_Process_CRDM_DataModel",
+          "note": "end event reached"
+        }
+      ],
+      "status": "completed",
+      "startedAt": "2026-09-20T21:05:54.568Z",
+      "updatedAt": "2026-09-20T21:33:51.250Z"
+    },
+    "Call_Signoff": {
+      "id": "crdm--folio-assistant-6lb8/Call_Signoff",
+      "processId": "Process_CRDM_Signoff",
+      "source": "cat-harness/methodologies/crdm/workflows/crdm-signoff.bpmn",
+      "subject": "folio-assistant-6lb8",
+      "bean": "folio-assistant-6lb8",
+      "tokens": [
+        "BA_Signoff"
+      ],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-09-20T21:33:51.250Z",
+          "node": "Start_Process_CRDM_Signoff",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-09-20T21:48:45.270Z",
+          "node": "A_CreateBeans",
+          "actor": "claude",
+          "note": "Eleven beans created, all children of 6lb8, each scoped to a single PR-sized unit and each naming issue #602 in its body.\n\n  8hg7 board wiring — declare where a folio keeps its board, positions and zoom document (the OMG DI split)\n  f76l todo index — define folio-todo-index/v1 as published, and emit target{page,node,label}  [R3, option C]\n  1rta badge — the >1 threshold, and a test that fails if the count stops being the panel's cardinality  [R5,R6]\n  51wf semantic zoom + windows — start in avatar, open projects a window, z-order with raise-on-select  [R2,R9,R15]\n  0jtj linear floor — the tile listing is the artefact, the board is an overlay over it  [R4,R8]\n  t4my panel chrome — the kind declares its controls, the platform fixes the frame, badges ride the avatar  [R10,R7]\n  db7g fsh-guts action — [fishbones] relocates open content, behind a confirm that names the scope  [R11]\n  le8b board filter + movement — a reader's filter that commits nothing, keyboard-first move/resize  [R13,R14]\n  zsah board tiles — tools declare themselves board-mountable, and a tile opens the EXISTING visualisation  [R12,R16]\n  q2wm render safety — declared XSS hints on tools and skills, lazy loading, dynamic render  [R17]\n  sd8x skills + BPMN — author the disciplines as skills and the processes as executable diagrams\n\nCHECK BEFORE CREATE was run rather than asserted. 523 beans scanned against board|miro|avatar|zoom|tile|fsh-guts|sticky|panel|visualis|xss; 30 matched and five are live neighbours that these beans REFERENCE instead of duplicating: 1le7 already owns the tile template (zsah says extend it, never mint a second), 7vhe owns the fsh-guts viewer and counter, d1r6 already discards a sticky to fsh-guts and db7g generalises that ONE path rather than growing a second, 4kj4 owns per-kind avatars, and xgd8/jbx2/v1hw own the visualisers a tile opens. beans create dedupes on nothing, so an unguarded re-run is how a repo once produced 14,688 duplicates.\n\nONE STRUCTURAL CHANGE, FLAGGED RATHER THAN QUIET. check:bean-parents enforces milestone -> epic -> feature -> task and a FEATURE MAY NOT BE A PARENT AT ALL, so ten tasks under feature 6lb8 failed two gates. 6lb8 is now an EPIC, and because an epic's parent must be a milestone rather than another epic, its parent moved from yj32 (epic) to p5wm (GOAL 2, milestone). Nothing about the work changed and nothing was lost — yj32's own parent IS p5wm, so this sits in the same goal one level up. The alternative, reparenting the ten tasks onto yj32 directly, is equally one line of front matter and the owner can have it instead. Recorded in 6lb8's body too, because a tree that moved silently is a tree nobody can trust.\n\nWHAT THE BEANS COVER THAT THE REQUIREMENTS DID NOT. R8-R17 arrived AFTER GW_Reqs closed, in two messages. They are additive — checked against the declared model rather than assumed, and nothing already built is invalidated — but they are a second requirements round and the beans are written against both rounds. Sign-off says so explicitly rather than presenting eleven beans as though one requirements set produced them."
         }
       ],
       "status": "running",
-      "startedAt": "2026-09-20T21:05:54.568Z",
-      "updatedAt": "2026-09-20T21:26:51.493Z"
+      "startedAt": "2026-09-20T21:33:51.250Z",
+      "updatedAt": "2026-09-20T21:48:45.270Z"
     }
   }
 }
