@@ -122,14 +122,32 @@ type Node = {
   }[];
 };
 
+/**
+ * Every catalogue node, in a DETERMINISTIC order.
+ *
+ * **The sort is the whole point of this function having a comment.**
+ * `readdirSync` returns entries in whatever order the filesystem gives, which
+ * is not stable across machines — and several pages below render LISTS of
+ * these nodes, so the generated HTML inherited that order. The result was a
+ * generator that produced different bytes from identical inputs: green on the
+ * machine that wrote the pages, and `iris:pages:check` red in CI with exactly
+ * the two list-rendering pages stale (`index.html`, `community-list.html`)
+ * while the four per-node pages passed.
+ *
+ * Sorted on `id`, which every node carries and which is unique — the filename
+ * would do today but is derived, and a node renamed on disk should not reorder
+ * a page.
+ */
 function nodes(): Node[] {
   return readdirSync(NODES)
     .filter((f) => f.endsWith(".json"))
+    .sort()
     .map((f) => {
       const raw = JSON.parse(readFileSync(join(NODES, f), "utf-8"));
       for (const k of Object.keys(raw)) if (k.startsWith("_")) delete raw[k];
       return raw as Node;
-    });
+    })
+    .sort((a, b) => a.id.localeCompare(b.id, "en"));
 }
 
 /** HTML-escape. Every interpolated value goes through it — titles are external data. */
