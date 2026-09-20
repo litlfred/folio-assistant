@@ -9,6 +9,12 @@ updated_at: 2026-09-20T18:39:46Z
 parent: folio-assistant-o3xy
 ---
 
+**Tracked as [#558](https://github.com/litlfred/folio-assistant/issues/558)**, and the
+link is recorded HERE because it was one-way: the issue names this bean, this bean
+named nothing. A one-way link is worse than none between an issue and a bean,
+because the half that has it reads as complete — an agent arriving at the bean
+cannot tell whether an issue exists, and opens a second.
+
 Owner, 2026-09-20, verbatim:
 
 > when you unpin, sticky, it loses its theme and you cant move around dispaly.
