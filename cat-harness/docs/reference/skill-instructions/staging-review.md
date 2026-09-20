@@ -124,17 +124,42 @@ When an author has made content changes on a feature branch:
 
 ## Staging retention
 
-Staging previews are **retained by default** when a PR is closed or merged.
-Removal requires explicit human confirmation, so reviewers can continue
-comparing before/after even after the code is merged.
+**A MERGED pull request's preview goes away. Everything else is retained by
+default.** Owner, 2026-09-20: *"change policy, if merged to main, then staging
+goes away"* — replacing a blanket retain-on-close.
+
+The distinction is about **where the content lives**, not about how confident
+anyone is:
+
+| the PR was | the preview is | so |
+|---|---|---|
+| **merged** | the same thing the MAIN SITE now shows | redundant on the instant, and removed automatically — no label |
+| **closed, unmerged** | the ONLY rendering of that work | the last copy, and retained unless a person says otherwise |
+
+**This is not a relaxation of
+[`deletion-requires-confirmation`](deletion-requires-confirmation.md) — it is
+that rule applied more precisely.** The merge *is* the confirmation: a person
+decided this content belongs on `main`, which says more about the preview than
+a label does. What the label still guards is the case where nobody decided
+anything.
+
+And it does **not** reverse `plj1`. That failure deleted every **open** PR's
+preview — work nobody had accepted, mid-review. Nothing here touches an open
+PR, and the one-directory-at-a-time shape that bean forced on the job is
+unchanged.
 
 **Which mechanism depends on whether the PR is still open, and that is not a
-detail.** There are two, and the first cannot reach a closed PR:
+detail.** Three cases, and the label cannot reach a closed PR:
 
-1. **While the PR is open** — add the `staging:cleanup` label. `cleanup` in
-   `feature-staging.yml` fires on `pull_request_target: closed` and reads the
-   labels off that event, so the label has to be there *before* the PR closes.
-2. **Once the PR is closed** — run `feature-staging.yml` from the Actions tab
+0. **Merged** — nothing to do. `cleanup` reads
+   `github.event.pull_request.merged` off the close event and removes without
+   a label, recording the reason as `merged`.
+1. **While the PR is open, and it will not be merged** — add the
+   `staging:cleanup` label. `cleanup` in `feature-staging.yml` fires on
+   `pull_request_target: closed` and reads the labels off that event, so the
+   label has to be there *before* the PR closes.
+2. **Once the PR is closed unmerged and unlabelled** — run
+   `feature-staging.yml` from the Actions tab
    with `cleanup_slug: <slug>` and `cleanup_confirm: <slug>`. The confirmation
    repeats the slug so that it names the artefact it confirms, and the job
    re-checks that nothing is still using the preview before it removes

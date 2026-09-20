@@ -264,10 +264,15 @@ export interface CapabilityDefinition {
  * `folio-assistant-ind9` fixed exactly the error of putting non-probeable
  * things in `capabilities[]`. Reusing it would undo a completed fix.
  *
- * **What reads this, honestly.** Measured 2026-09-20: 24 skill modules
- * declare `requiredCapabilities` with 23 degradation values (17 `fail`,
- * 5 `fallback`, 1 `warn`), and the only reader is `scripts/generate-docs.ts`,
- * which RENDERS them. Nothing enforces degradation at runtime. This field is
+ * **What reads this, honestly. Nothing does.** Measured 2026-09-20: 24 skill
+ * modules declare `requiredCapabilities` with 23 degradation values (17
+ * `fail`, 5 `fallback`, 1 `warn`). This said the only reader was
+ * `scripts/generate-docs.ts`, "which RENDERS them" — too generous, and the
+ * more comfortable error, because a field with one renderer sounds maintained
+ * while a field with none is inert. That script was never invoked by
+ * anything, in any commit since the root commit, and was RETIRED to
+ * `fsh-guts/scripts/` on 2026-09-20 (bean `folio-assistant-3w0i`). So the
+ * count of readers is ZERO. This field is
  * therefore a DECLARATION; the thing that executes a two-route process today
  * is a BPMN gateway. `check:fallback-roles` keeps the declaration from
  * drifting into the inert pile the way skill front-matter `roles:` did
@@ -406,8 +411,9 @@ export interface SkillDefinition {
    * Lifecycle stages this skill participates in.
    *
    * Present on all 18 skill definitions on disk and on `SkillDefinitionSchema`,
-   * but missing here — so `scripts/generate-docs.ts`, which renders it, had to
-   * read it off an `any`.
+   * but missing here — so `generate-docs.ts`, the only thing that named it,
+   * had to read it off an `any`. That script never ran and was retired to
+   * `fsh-guts/scripts/` on 2026-09-20, so nothing reads this field now.
    */
   lifecycleStages?: LifecycleStage[];
   /**

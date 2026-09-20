@@ -562,8 +562,25 @@ jobs:
             }
 
   # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
-  # REQUIRES explicit user confirmation via the 'staging:cleanup' label.
-  # Without that label, staging persists so reviewers can still compare.
+  # MERGED closes the question; CLOSED-UNMERGED does not.
+  #
+  # Owner, 2026-09-20: "change policy, if merged to main, then staging goes
+  # away". The distinction is the whole rule, and it is about where the
+  # content lives rather than about how sure anyone is:
+  #
+  #   merged            the diff is on `main`, so the preview shows what the
+  #                     MAIN SITE now shows. It is redundant the moment the
+  #                     merge lands, and keeping it costs ~40 MB of a Pages
+  #                     site that shares a 1 GB budget with the real one.
+  #   closed, unmerged  the preview is the ONLY rendering of that work. It is
+  #                     not redundant, it is the last copy — so the
+  #                     'staging:cleanup' label is still required.
+  #
+  # This is NOT a relaxation of `deletion-requires-confirmation`. The merge is
+  # the confirmation: a person decided this content belongs on `main`, which
+  # is a stronger statement about the preview than a label would be. What the
+  # label still guards is the case where nobody decided anything — a PR closed
+  # without merging.
   cleanup:
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
@@ -593,15 +610,25 @@ jobs:
         id: check
         env:
           LABELS_JSON: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          MERGED: ${{ github.event.pull_request.merged }}
         run: |
-          # Only remove staging if the PR has the 'staging:cleanup' label.
-          # Via env: a label containing a single quote would otherwise close the
-          # quoting and run as a command.
+          # MERGED removes without a label — the merge IS the confirmation.
+          # Closed-unmerged still requires 'staging:cleanup', because there the
+          # preview is the only rendering of the work that exists.
+          #
+          # Both via env: `merged` is a boolean from the event payload, and a
+          # label containing a single quote would otherwise close the quoting
+          # and run as a command.
           LABELS="$LABELS_JSON"
-          if echo "$LABELS" | grep -q 'staging:cleanup'; then
+          if [ "$MERGED" = "true" ]; then
             echo "confirmed=true" >> "$GITHUB_OUTPUT"
+            echo "reason=merged" >> "$GITHUB_OUTPUT"
+          elif echo "$LABELS" | grep -q 'staging:cleanup'; then
+            echo "confirmed=true" >> "$GITHUB_OUTPUT"
+            echo "reason=labelled" >> "$GITHUB_OUTPUT"
           else
             echo "confirmed=false" >> "$GITHUB_OUTPUT"
+            echo "reason=closed-unmerged-and-unlabelled" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Remove staging directory (confirmed)

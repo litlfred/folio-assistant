@@ -998,6 +998,9 @@ function auditGraph(
       // contain no mention of `remote-packages/` at all, and the single consumer —
       // `scripts/generate-docs.ts` — reads those files solely for Docker
       // requirements, which is what `schemas/skill-package.ts` documents them as.
+      // (That consumer was retired to `fsh-guts/scripts/` on 2026-09-20,
+      // having never been invoked in any commit since the root commit — bean
+      // `folio-assistant-3w0i`. The reading below only gets stronger.)
       //
       // So an entry resolvable only that way publishes a registry name that
       // `skill_fetch` answers "not found" for, which is exactly the defect this
