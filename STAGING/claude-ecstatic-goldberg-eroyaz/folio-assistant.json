@@ -256,10 +256,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T16:16:17.819Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ee90b3cb19bbfce9b6ee7e5aed3ee4afec54348a",
-  "sourceCommitSha": "ee90b3cb19bbfce9b6ee7e5aed3ee4afec54348a",
-  "sourceCommitAt": "2026-09-20T16:13:05Z",
+  "generatedAt": "2026-09-20T16:32:00.693Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/600b44220ff2d66b5bbddff18d208e92dee01fc4",
+  "sourceCommitSha": "600b44220ff2d66b5bbddff18d208e92dee01fc4",
+  "sourceCommitAt": "2026-09-20T16:27:28Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 202,
@@ -271,7 +271,7 @@
     "Process": 51,
     "SequenceFlow": 665,
     "ProcessNode": 630,
-    "Tool": 61,
+    "Tool": 62,
     "Schema": 68,
     "GraphKind": 20,
     "Directory": 21,
@@ -1227,13 +1227,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/unverified-constraints",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "unverified-constraints",
-      "title": "Never encode a constraint you have not verified",
+      "title": "consulted: reference material nobody performs — a DISCIPLINE. \"Never encode a constraint you have not verified\" is a rule that governs other work; its headings are the argument and the worked case. Nobody performs it as a task.",
       "description": "Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something \"is not supported\".",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/unverified-constraints.md",
-      "instructionLines": 75,
+      "instructionLines": 77,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1322,13 +1322,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/mcp-projection",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "mcp-projection",
-      "title": "MCP projection — turning a Tool node into an MCP service",
+      "title": "consulted: reference material nobody performs — EXPLAINS a mapping — Tool node to MCP service — and instructs nobody. Classified the same way in the y1w9 sample of 15, by reading it, before this pass.",
       "description": "Generate an MCP server from Tool nodes — the mapping from this harness's skill/Tool vocabulary onto the current MCP standard. Read before exposing a CLI tool over MCP, or when asked how an agent stands a service up.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/mcp-projection.md",
-      "instructionLines": 150,
+      "instructionLines": 152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1876,13 +1876,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/retry-backoff",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "retry-backoff",
-      "title": "A falling-off retry rate, on every error",
+      "title": "consulted: reference material nobody performs — a PRINCIPLE, not a procedure: every heading is an argument (\"Retrying a definitive answer is not caution\", \"Jitter is not decoration here\"), and it names no actor and no trigger. It is read when writing retry code, never performed as a step.",
       "description": "Every error gets a falling-off retry rate — each wait doubles, with jitter. Read before writing any call that can fail transiently, and before deciding that a failure is worth retrying at all. Exhausting the retries does not change the verdict.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/retry-backoff.md",
-      "instructionLines": 84,
+      "instructionLines": 86,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2339,7 +2339,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 189,
+      "instructionLines": 228,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2371,7 +2371,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge-auto.md",
-      "instructionLines": 172,
+      "instructionLines": 181,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -25798,6 +25798,122 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/gates"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#tool/render-log",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "render-log",
+      "title": "Record what the publish branch served",
+      "description": "Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/render-log.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A checkout of the publish branch, or a publish directory about to become one. This tool NEVER fetches, commits or pushes: the workflows that call it already hold the checkout with their own retry and concurrency handling, and a second pusher racing those is a new way to lose a deploy.",
+            "required": true,
+            "arg": {
+              "flag": "--dir"
+            }
+          },
+          {
+            "name": "event",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RenderEvent",
+            "description": "`rendered`, `removed`, `restored` or `retained`. `retained` is the one that makes the log worth reading — a removal CONSIDERED and refused, which otherwise leaves no trace at all.",
+            "required": true,
+            "arg": {
+              "flag": "--event"
+            }
+          },
+          {
+            "name": "kind",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Slug",
+            "description": "What was rendered — `staging-preview`, `site`, `export`. Open on purpose: the publish branch carries more than previews, and a closed enum would put a schema change between somebody and logging what they published.",
+            "required": true,
+            "arg": {
+              "flag": "--kind"
+            }
+          },
+          {
+            "name": "path",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The path on the publish branch. Checked as a VALUE, never trusted by provenance: the slug sanitiser can emit `..`, and that is only safe for a slug taken from a git ref — a dispatch input is not one (bean `fuzm`).",
+            "required": true,
+            "arg": {
+              "flag": "--path"
+            }
+          },
+          {
+            "name": "slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Slug",
+            "description": "The staging slug, where the subject has one.",
+            "required": false,
+            "arg": {
+              "flag": "--slug"
+            }
+          },
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch the render came from.",
+            "required": false,
+            "arg": {
+              "flag": "--branch"
+            }
+          },
+          {
+            "name": "commit",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/CommitSha",
+            "description": "The commit the artefact was built from.",
+            "required": false,
+            "arg": {
+              "flag": "--commit"
+            }
+          },
+          {
+            "name": "run",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Url",
+            "description": "The workflow run that wrote this, so a reader can open the log.",
+            "required": false,
+            "arg": {
+              "flag": "--run"
+            }
+          },
+          {
+            "name": "prose",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/Markdown",
+            "description": "One JSON object on STDIN: `{summary, reason?, detail?, format?}`. `summary` is required and one line. `reason` is required by the SCRIPT for `removed` and `retained` — an entry saying an artefact went and not why is the ambiguity the log exists to prevent. `format` declares how the prose reads (absent means plain text, never sniffed). Build it with `jq -n --arg`, never by concatenation.",
+            "required": true,
+            "arg": {
+              "stdin": true
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "entry",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The day's JSONL the entry was APPENDED to. Append is the only verb: there is no `--remove`, no `--edit` and no `--id`, so a takedown is a `removed` ENTRY rather than the erasure of the `rendered` one before it — the never-delete rule made structural instead of a guard three cleanup paths have to remember."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "jq"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/render-log"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#tool/ci-health",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "ci-health",
@@ -29500,8 +29616,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "ee90b3cb19bbfce9b6ee7e5aed3ee4afec54348a",
-    "pr": "claude/ecstatic-goldberg-eroyaz",
-    "run": "35522103984"
+    "sha": "30086e8d1cd2bf1cf0bddc86e60cc73cb538c8c3",
+    "pr": "552/merge",
+    "run": "35522942526"
   }
 }
