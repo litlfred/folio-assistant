@@ -94,6 +94,24 @@ describe("readActiveVoices", () => {
     expect(readActiveVoices(d)).toEqual(["who-editorial", "milnor"]);
   });
 
+  test("folio.config.json is NOT read here either — the old name is dead", () => {
+    // Bean `9ici`. `harness-dirs.test.ts` asserts the hard break for
+    // `resolveHarnessConfigPath`; this is the case it did not cover, and the
+    // one that was live: this function looped over BOTH names until
+    // 2026-09-20, so an old-name folio got a DETERMINED voice list while every
+    // other setting was dropped in silence.
+    //
+    // `undefined` is the assertion that matters, not `[]`. The third state
+    // makes voice criteria RUN; `[]` would grant them a skip on the strength
+    // of a file the rest of the platform refuses to read.
+    const d = tmp();
+    writeFileSync(
+      join(d, "folio.config.json"),
+      '{"voices":{"active":["who-editorial"]}}',
+    );
+    expect(readActiveVoices(d)).toBeUndefined();
+  });
+
   test("UNPARSEABLE config is undefined, not []", () => {
     const d = tmp();
     writeFileSync(join(d, HARNESS_CONFIG), "{ not json");

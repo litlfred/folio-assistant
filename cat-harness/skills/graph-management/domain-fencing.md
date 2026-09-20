@@ -97,6 +97,46 @@ every consumer sees — including the MCP adapter `src/index.ts` selects — and
 its own change with its own measurement. Recorded rather than acted on, which
 is the rule below about residue applied to the tool doing the fencing.
 
+### The residue was measured, and it came back clean
+
+`domain-fencing.md` recorded the whole `wall` domain — `wall-side-correct`,
+`wall-base-ring-minimal`, `wall-side-statement`, `wall-side-proof` — as the
+same folio's mathematics by the same argument, and did NOT fence it: *"its
+checkers are called directly from `q-usage-audit.ts` and pinned by two tests,
+so it is its own change with its own measurement."*
+
+That was the right call and the measurement has now been taken. **Both halves
+of the caution turned out to be non-blocking, and only measuring showed it:**
+
+- **Discovery is registry-driven, not checker-driven.** The worry was that
+  fencing four criteria would strand their checkers as orphans and trip
+  *"every orphan names a criterion the registry really declares
+  non-automated"*. It does not: `q-usage` has been fenced for some time and
+  its checkers are simply **not discovered at all** when the axis is closed.
+  Measured before changing anything, on the already-fenced axis, which is the
+  cheap way to ask the question.
+- **The direct callers keep working, and SHOULD.** `q-usage-audit.ts` calls
+  `checkWallSide` and `checkBaseRingMinimal` by function, not through the
+  registry. That path is untouched, and the distinction is worth stating:
+  fencing governs what the **platform asserts every folio must be measured
+  against**, which is a different question from what a **folio's own audit**
+  may compute. A folio running that audit has already decided the wall applies.
+
+Measured, off and on:
+
+| | `wall` in registry | in the one-voice bucket | wall checkers discovered |
+|---|---|---|---|
+| no `qaAxes` | 0 | 0 | none |
+| `qaAxes: ["archimedean-wall"]` | 4 | 4 | `wall-side-correct`, `wall-base-ring-minimal` |
+
+Orphans and unimplemented are unchanged in both states, and the full suite is
+3899 pass / 0 fail.
+
+**One axis, not two**, because it is one wall: `detangler-archimedean-wall` and
+the four `wall` criteria open together on `archimedean-wall`. A folio adds one
+key, not two, and cannot end up half-fenced — which is the state a second axis
+name would have made reachable.
+
 Verification therefore ran against a synthetic folio root, which is also what
 `scripts/tests/folio-optional-axes.test.ts` does, in a subprocess: the registry
 reads its config ONCE at module load, so OFF and ON are not both observable in
