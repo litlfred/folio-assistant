@@ -47,8 +47,9 @@ import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../schemas/harness-config.js";
+
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { resolveHarnessConfigPath } from "../schemas/harness-config.js";
 
 export type Probe = "ok" | "not-found" | "error" | "unchecked";
 export type PagesOutcome = "live" | "not-yet" | "unknown";
@@ -105,7 +106,8 @@ function gitRemote(root: string): string | undefined {
 }
 
 /**
- * Where the site lives. `harness.config.json` wins when it says, because an
+ * Where the site lives. The instance's config (`<name>.config.json`) wins
+ * when it says, because an
  * author with a custom domain has said something the remote cannot tell us.
  */
 export function derivePagesUrl(root: string): Pick<PagesReport, "url" | "urlSource" | "owner" | "repo"> {
@@ -248,7 +250,8 @@ export function formatReport(r: PagesReport): string {
   } else {
     out.push("Site address: COULD NOT DETERMINE");
     out.push(
-      `  No \`readme.pagesBaseUrl\` in ${HARNESS_CONFIG} and no parseable \`origin\` remote.\n` +
+      "  No `readme.pagesBaseUrl` in this instance's config (`<name>.config.json`) and no\n" +
+        "  parseable `origin` remote.\n" +
        +
         "  Not guessed from the directory name — a wrong URL is worse than none, because\n" +
         "  it is what the author will paste to somebody else.",

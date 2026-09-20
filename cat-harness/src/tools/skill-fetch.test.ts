@@ -9,6 +9,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { LOCAL_PACKAGES, discoverLocalPackages } from "./skill-fetch.js";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -106,10 +107,12 @@ describe("a dependency's packages are served — the overlay", () => {
     // skills are not reachable today. This is what reachable looks like.
     const dep = instance({ shared: SKILL, "dep-only": SKILL });
     const root = instance({ shared: SKILL });
-    writeFileSync(
-      // `root` is a FIXTURE instance root; its config belongs IN it. The
-      // sweep sent this to the fixture's parent — `/tmp`.
-      join(root, "harness.config.json"),
+    // `root` is a FIXTURE instance root; its config belongs IN it, under the
+    // name `root` declares. The sweep sent this to the fixture's parent —
+    // `/tmp` — and the name half is newer still: there is no global config
+    // filename to join on any more.
+    writeInstanceConfig(
+      root,
       JSON.stringify({ dependencies: { folioAssistant: [{ name: "dep", path: dep }] } }),
     );
 
@@ -133,7 +136,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // the earlier package is found and then silently dropped. No collision is
     // reported, nothing throws, and `skill_fetch` answers "package not found"
     // for a package discovery had in hand. `dh4f` one layer up from the scope
-    // defect that hid `bootstrap/skills/` in the first place.
+    // defect that hid `cat-bootstrap/skills/` in the first place.
     const repo = mkdtempSync(join(tmpdir(), "held-"));
 
     // The sibling, with its OWN declaration — this is what makes it nameable.
@@ -148,7 +151,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     writeFileSync(join(repo, "sibling", "skills", "s.md"), SKILL);
 
     // The instance, declaring its own kg directory AND the sibling's, the
-    // second at repository scope — the `bootstrap/skills/` shape.
+    // second at repository scope — the `cat-bootstrap/skills/` shape.
     const inst = join(repo, "inst");
     mkdirSync(join(inst, "kg"), { recursive: true });
     writeFileSync(join(inst, "kg", "i.md"), SKILL);

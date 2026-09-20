@@ -7,6 +7,8 @@ description: >-
   out of the formal-math skills that first stated them.
 capability: architecture
 package: graph-management
+# consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — "Not every edge is a dependency", "Provenance is three-valued", "Taint propagates down the dependency graph". It is read before deciding how to traverse a graph; nobody performs it as a task.
+consulted: true
 ---
 
 # Edge kinds and blast radius

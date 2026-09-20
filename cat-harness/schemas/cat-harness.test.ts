@@ -1019,13 +1019,13 @@ describe("instanceRootsIn — discovered, never listed", () => {
   });
 
   it("finds all four instances of THIS repository, which is the defect it fixes", () => {
-    // The gates carried `["cat-harness", "bootstrap"]`. Asserting against the
+    // The gates carried `["cat-harness", "cat-bootstrap"]`. Asserting against the
     // real repository is the point: a fixture would have passed for the whole
     // period the literal was wrong. If an instance is added or removed this
     // test SHOULD fail — that is the signal the literal never gave.
     const repo = resolve(import.meta.dir, "..", "..");
     const found = instanceRootsIn(repo).map((r) => r.slice(repo.length + 1) || ".");
-    expect(found).toEqual([".", "bootstrap", "cat-harness", "folio-assist-core"]);
+    expect(found).toEqual([".", "cat-bootstrap", "cat-harness", "folio-assist-core"]);
     expect(found).toContain("folio-assist-core");
     expect(found).toContain(".");
   });

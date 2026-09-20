@@ -27,7 +27,7 @@ import { join, resolve, dirname } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { Paper } from "../../../schemas/types";
 import { REPO_ROOT, BUILD_DIR, MAIN_TEX, CHAPTERS_DIR } from "../paths.js";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../../schemas/harness-config";
 // Note: paths are resolved from the paper adapter's paths module.
 
 /** Check if a command is available on PATH. */
@@ -91,8 +91,9 @@ export function registerLatexRenderTools(server: McpServer): void {
         // Read base folder from harness.config.json or env
         let baseFolder = process.env.GDRIVE_FOLDER_PATH ?? "";
         if (!baseFolder) {
-          const cfgPath = resolveHarnessConfigPath(REPO_ROOT)?.path ?? join(REPO_ROOT, HARNESS_CONFIG);
-          if (existsSync(cfgPath)) {
+          const cfgPath = expectedInstanceConfigPath(REPO_ROOT);
+          // `undefined` = nothing declares an instance here; nothing to read.
+          if (cfgPath !== undefined && existsSync(cfgPath)) {
             try {
               const cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
               baseFolder = cfg?.googleDrive?.folderPath ?? "";

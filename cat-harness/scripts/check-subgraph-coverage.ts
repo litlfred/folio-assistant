@@ -99,9 +99,19 @@ export interface InstanceCoverage {
  * A NAME rather than a path, because the exemption is about what bootstrap IS
  * — the floor that owns no renderer — not about where it happens to sit. An
  * instance that relocated would keep its exemption; a different instance that
- * moved into `bootstrap/` would not inherit one.
+ * moved into `cat-bootstrap/` would not inherit one.
+ *
+ * BOTH NAMES, and the old one is not dead weight. `bootstrap` was renamed to
+ * `cat-bootstrap` on main while this branch was open, and the rename would
+ * have made this set match NOTHING — the owner's exemption silently stops
+ * firing, cat-bootstrap is asked for a visualiser it is exempt from, and the
+ * only symptom is one extra minor finding among fifty. Keeping the old name
+ * costs nothing and means a half-finished rename in either direction does not
+ * quietly revoke a ruling. The test below pins the set against the instances
+ * discovery actually finds, so a name that matches nothing is a failure rather
+ * than a silence.
  */
-export const VISUALISER_EXEMPT_INSTANCES = new Set(["bootstrap"]);
+export const VISUALISER_EXEMPT_INSTANCES = new Set(["cat-bootstrap", "bootstrap"]);
 
 /** Does this entry's declared target actually resolve? */
 function targetExists(root: string, target: string): boolean {

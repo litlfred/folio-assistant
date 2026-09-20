@@ -71,9 +71,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // Bean `3jj9`, and the owner's ruling that human/agent and agent/agent
     // interaction is documented as a skill plus a tool. The SKILL lives in
-    // `bootstrap/skills/discussion.md`, because an Initiator must be able to
+    // `cat-bootstrap/skills/discussion.md`, because an Initiator must be able to
     // READ it with nothing installed; the typed node lives here, because a
-    // Tool is cat-harness's vocabulary and bootstrap may not import it.
+    // Tool is cat-harness's vocabulary and cat-bootstrap may not import it.
     //
     // `invoke: { manual: true }` — "performed by a person following the
     // skill, with no command", and the `beans-manual` precedent is explicit
@@ -214,7 +214,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // `hashlib` ship with Python. Stated, so "needs nothing" is
       // distinguishable from an unfinished record.
       install: { none: true },
-      invoke: { shell: "bun run scripts/ingest-document.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/ingest-document.ts" },
       requires: { runtime: ["python3"], network: false },
       io: {
         inputs: [
@@ -247,7 +247,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // own checker caught. `requirements.txt` is generated from the
       // declaration; the apt packages are not pip-installable and stay named.
       install: { cli: "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils" },
-      invoke: { shell: "bun run scripts/ingest-document.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/ingest-document.ts" },
       requires: { runtime: ["python3", "pymupdf", "tesseract"], network: false },
       io: {
         inputs: [
@@ -582,7 +582,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
       install: { none: true },
-      invoke: { shell: "scripts/lean-build-all.sh" },
+      invoke: { shell: "cat-harness/scripts/lean-build-all.sh" },
       io: {
         inputs: [
           { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "Build one paper instead of all of them." },
@@ -619,7 +619,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
       install: { none: true },
-      invoke: { shell: "scripts/lake-cache.sh" },
+      invoke: { shell: "cat-harness/scripts/lake-cache.sh" },
       io: {
         inputs: [
           { name: "action", schema: t("LakeCacheAction"), required: true, arg: { positional: 0 }, description: "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked." },
@@ -640,7 +640,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // It IS the install step, so `install.cli` names itself: an agent that needs
       // Lean runs this, and `install.none` would say no step exists.
       install: { cli: "scripts/setup-lean-toolchain.sh" },
-      invoke: { shell: "scripts/setup-lean-toolchain.sh" },
+      invoke: { shell: "cat-harness/scripts/setup-lean-toolchain.sh" },
       io: {
         inputs: [],
         outputs: [{ name: "toolchain", schema: t("Text"), description: "The linked toolchain name, and the per-repo override that selects it." }],
@@ -870,7 +870,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-schema-docs.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-schema-docs.ts" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
@@ -887,7 +887,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-skill-docs.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-skill-docs.ts" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
@@ -925,7 +925,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "bun run ns:export" },
       io: {
         inputs: [
-          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
+          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `cat-bootstrap` for the layer that must resolve before anything else does." },
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults under `_kg/`, which is build output." },
         ],
         outputs: [{ name: "vocabulary", schema: t("RepoPath"), description: "The written namespace document." }],
@@ -949,7 +949,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept.",
       install: { none: true },
-      invoke: { shell: "bun run scripts/gen-jsonld-context.ts" },
+      invoke: { shell: "bun run cat-harness/scripts/gen-jsonld-context.ts" },
       io: {
         inputs: [
           // `--check` is the CI arm: it compares against the committed copy and
@@ -1019,6 +1019,65 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "It runs what the workflow declares, so a check CI does not run is a check this does not run — that is the point, not a gap. The default omits the browser jobs; `--all` adds them, and `render:bpmn:check` needs Chromium.",
         cost: "The fast set is about a minute, dominated by `bun test`. `--all` adds a browser render.",
+      },
+    }),
+
+    // ── The narrative review queue — what is waiting on a PERSON ──────────
+    //
+    // Bean `7ajt`, and the node almost did not get written. I had it filed as a
+    // capability-vocabulary question for the owner — the `yean` shape, "no skill
+    // states this, so authoring one is a design act" — on the grounds that
+    // `Task_SmeReview` refs `content-review`, whose contract REQUIRES
+    // `reviewType` and `contentRef`, and this script takes a queue index and a
+    // numbered preset.
+    //
+    // That was wrong for the THIRD time in one session, and always the same way:
+    // I searched skill NAMES instead of reading skill BODIES.
+    // `library-ingestion` §"Reviewing: `bun run narratives`" names these exact
+    // commands in a fenced block, and states the rule this node exists to make
+    // reachable:
+    //
+    //   "Two attributions, because they are two acts. `drafted_by` is who wrote
+    //    the words; `confirmed_by` is who accepted them. … AN AGENT CANNOT
+    //    CONFIRM ITS OWN DRAFT — `confirmed_by.kind` must be "human",
+    //    structurally. … without it, `confirmed` degrades into 'an agent said so
+    //    twice'."
+    //
+    // So: case 1 of `covered-is-not-reachable` in its plainest form, a mechanism
+    // inlined in its skill's prose, and the remedy is a node rather than a new
+    // skill. `interaction-modality` carries the other half — the `low-dexterity`
+    // profile's "every question is a selection, options numbered" — and is cited
+    // rather than restated.
+    //
+    // THE INVOKE IS THE LISTING, AND THAT IS THE DESIGN. `reviewer()` throws
+    // outside a TTY — "Confirming is a PERSON's act; an agent running this would
+    // be recorded as one" — because `git config user.name` in an agent container
+    // recorded the agent as the reviewer and the schema could not see it. So an
+    // agent CANNOT confirm or reject, and a node whose `invoke` were
+    // `narratives:confirm` would declare a capability the caller reading it does
+    // not have. What an agent can do, and the thing that was missing, is FIND
+    // the queue and read what is waiting on a person.
+    defineTool({
+      id: "narrative-queue",
+      title: "What narratives are waiting on a person",
+      description:
+        "List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it.",
+      install: { none: true },
+      invoke: { shell: "bun run narratives" },
+      io: {
+        inputs: [],
+        outputs: [
+          { name: "queue", schema: t("Text"), description: "Every narrative awaiting a person, NUMBERED, with its subject, its text and its file — then the two commands that act on a number, then the rejection reasons, also numbered. Numbered throughout because the person this is for has very limited hand function and every action must be a selection rather than a typed sentence; `interaction-modality`'s `low-dexterity` profile is the general rule." },
+        ],
+      },
+      satisfies: ["library-ingestion"],
+      requires: { runtime: ["bun"], network: false },
+      selection: {
+        when:
+          "To find out what is waiting on a person, or to discover that this queue exists at all — which was the actual gap. Before this node, `grep narrative tools/*.ts` returned nothing, so an agent asking the graph how a person confirms a narrative got no answer, and that is exactly the population the command is for.",
+        limits:
+          "IT ONLY LISTS. Acting on a number is `bun run narratives:confirm <n>` or `bun run narratives:reject <n> --why <r>`, and both REFUSE outside a terminal: `reviewer()` throws with \"Confirming is a PERSON's act; an agent running this would be recorded as one\". That refusal is load-bearing rather than defensive — driving the CLI in an agent container once wrote `\"rejected_by\": {\"kind\": \"human\", \"id\": \"Claude\"}`, because `git config user.name` is the agent's and the schema could not tell. So this node deliberately does not offer the confirming arms: an agent may read the queue and must not answer it. A rejection with no reason is refused too, not defaulted, because one lets the next agent redraft the identical thing.",
+        cost: "Reads the narrative-bearing files under the declared graph. No network.",
       },
     }),
 
@@ -1307,11 +1366,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // ── Logging ────────────────────────────────────────────────────────
     //
     // Declared HERE although the skill and the sub-process it serves live in
-    // `bootstrap/`, and that is a limitation rather than a decision. Tool
+    // `cat-bootstrap/`, and that is a limitation rather than a decision. Tool
     // collection is import-bound — `tools/index.ts` merges what it imports —
     // so a Tool node contributed by a nested instance is not reachable from
     // the barrel yet. Bean `gn4l`. When it is, this node moves to
-    // `bootstrap/tools/` unchanged, and nothing that references it by id
+    // `cat-bootstrap/tools/` unchanged, and nothing that references it by id
     // notices.
     defineTool({
       id: "log-message",

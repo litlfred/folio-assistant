@@ -69,8 +69,20 @@ export interface ContentTypeDef {
    * SUSHI's spelling and is YAML; `dak.json` is WHO's. A convention that
    * claimed to cover the set would be false on arrival, so there is no
    * convention — there is this field.
+   *
+   * ## A FUNCTION where the name is the instance's, not the type's
+   *
+   * `folio` was the one fixed name that stopped being fixed: a harness config
+   * is `<instance>.config.json` as of 2026-09-20, so the marker's spelling is
+   * a property of the repository rather than of the type. It still DECLARES
+   * its filename — the owner's rule is untouched — it just declares how to
+   * compute it. `undefined` from the function means "this repository has no
+   * name to compose one from", which is not-a-member rather than an error.
+   *
+   * Every other type stays a plain string, because every other type really
+   * does own its spelling.
    */
-  filename: string;
+  filename: string | ((repoRoot: string) => string | undefined);
   /** The `@type` IRI this membership projects to. Must dereference. */
   type: string;
   /** One line: what carrying this marker claims about the repository. */
@@ -193,7 +205,11 @@ export function describeRepository(
 ): RepositoryDescription {
   const types: ContentTypeMembership[] = [];
   for (const [id, def] of registry.entries()) {
-    const path = join(repoRoot, def.filename);
+    const marker = typeof def.filename === "function" ? def.filename(repoRoot) : def.filename;
+    // No name to compose a marker from ⇒ not a member. Distinct from "the
+    // marker is absent" only in cause, and neither is a finding.
+    if (marker === undefined) continue;
+    const path = join(repoRoot, marker);
     if (!existsSync(path)) continue;
 
     let parsed = false;
@@ -213,7 +229,7 @@ export function describeRepository(
       parsed = false;
       facts = {};
     }
-    types.push({ id, type: def.type, marker: def.filename, parsed, facts });
+    types.push({ id, type: def.type, marker, parsed, facts });
   }
 
   // Cross-check every fact any two markers both state.

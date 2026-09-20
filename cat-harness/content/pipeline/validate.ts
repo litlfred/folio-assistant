@@ -31,6 +31,7 @@ import { resolveRenderTarget } from "./render-discovery";
 import { readDeclaredFolioProfile } from "./profile-check";
 import { validateDefterms } from "./validate-defterm";
 import { validateValueDirectives } from "./validate-value";
+import { validateSimulatorAssets } from "./validate-simulator";
 import { findContentRepoRoot, findPapers } from "./repo-root";
 import { blockQaPath, blockOfQaPath, BLOCK_QA_SUFFIX } from "./qa-paths";
 import { referenceRegistryConfigured, getReferenceRegistry } from "./references-registry-di";
@@ -872,6 +873,26 @@ export async function validateObjects(
 
   // Phase 5: Witnessed-value directive validation (:val[name] rules)
   issues.push(...validateValueDirectives(defBlocks, { strict: opts.strict }));
+
+  // Phase 6: Simulator assets — does the declared `html:` exist on disk?
+  //
+  // Bean `023p`. Until this phase existed, `validate.ts` contained no mention
+  // of `simulator` or `.html`, so a block declaring a dead path validated
+  // clean: measured on qou, two of eleven targets were in neither repository
+  // and `run-validate` exited 0 without naming either. `SimulatorBlock`'s own
+  // doc comment claimed the pipeline checked this; it did not.
+  //
+  // Three states, and `undetermined` (a remote target, or a path outside the
+  // folio) is reported rather than passed — the same rule as everywhere else
+  // here: not having looked must never render as having looked and found
+  // nothing wrong.
+  {
+    const sim = validateSimulatorAssets(
+      [...allBlocks].map(([name, { block }]) => ({ name, block })),
+      REPO_ROOT,
+    );
+    issues.push(...sim.issues);
+  }
 
   const hasErrors = issues.some(i => i.level === "error");
   return { valid: !hasErrors, issues };

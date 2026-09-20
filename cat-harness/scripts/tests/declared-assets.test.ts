@@ -30,7 +30,7 @@ describe("this repository's own declarations", () => {
   test("both instances declare their agent instructions", () => {
     // The gap that started this: `AGENTS.md` was the only root artefact in
     // neither `directories[]` nor `images[]`.
-    for (const inst of [ROOT, join(repoRootFor(ROOT), "bootstrap")]) {
+    for (const inst of [ROOT, join(repoRootFor(ROOT), "cat-bootstrap")]) {
       const agents = declaredAssets(inst).filter((a) => a.role === AGENT_INSTRUCTIONS_ROLE);
       expect(agents).toHaveLength(1);
       expect(agents[0]!.exists).toBe(true);
@@ -38,18 +38,18 @@ describe("this repository's own declarations", () => {
   });
 
   test("no declared asset is missing and no link is dead", () => {
-    for (const inst of [ROOT, join(repoRootFor(ROOT), "bootstrap")]) {
+    for (const inst of [ROOT, join(repoRootFor(ROOT), "cat-bootstrap")]) {
       expect(auditInstance(inst).findings).toEqual([]);
     }
   });
 
-  test("bootstrap's AGENTS.md is its own origin; the root's names a source", () => {
+  test("cat-bootstrap's AGENTS.md is its own origin; the root's names a source", () => {
     // Absent `source` is a THIRD STATE — authored here — and is a different
     // fact from an upstream that cannot be reached.
-    const boot = declaredAssets(join(repoRootFor(ROOT), "bootstrap")).find((a) => a.id === "agent-instructions");
+    const boot = declaredAssets(join(repoRootFor(ROOT), "cat-bootstrap")).find((a) => a.id === "agent-instructions");
     const root = declaredAssets(ROOT).find((a) => a.id === "agent-instructions");
     expect(boot!.source).toBeUndefined();
-    expect(root!.source?.path).toBe("bootstrap/AGENTS.md");
+    expect(root!.source?.path).toBe("cat-bootstrap/AGENTS.md");
   });
 });
 

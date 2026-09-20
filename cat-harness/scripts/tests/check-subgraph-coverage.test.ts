@@ -165,8 +165,21 @@ describe("bootstrap's exemption is by layer, and is a second criterion not a hol
   });
 
   it("is keyed on the instance NAME, so a relocation keeps it", () => {
-    expect(VISUALISER_EXEMPT_INSTANCES.has("bootstrap")).toBe(true);
+    expect(VISUALISER_EXEMPT_INSTANCES.has("cat-bootstrap")).toBe(true);
     expect(VISUALISER_EXEMPT_INSTANCES.has("cat-harness")).toBe(false);
+  });
+
+  it("AT LEAST ONE exempt name matches a real instance — a rename must not revoke it", () => {
+    // The failure this pins actually happened: `bootstrap` was renamed to
+    // `cat-bootstrap` on main while this branch was open. A set holding only
+    // the old name matches nothing, the owner's exemption silently stops
+    // firing, and the only symptom is one extra minor finding among fifty.
+    // Asserting against the instances discovery really finds turns that
+    // silence into a failure.
+    const repo = resolve(import.meta.dir, "..", "..", "..");
+    const real = auditAll(repo).map((r) => r.instance);
+    const matched = [...VISUALISER_EXEMPT_INSTANCES].filter((n) => real.includes(n));
+    expect(matched.length).toBeGreaterThan(0);
   });
 });
 
@@ -191,7 +204,7 @@ describe("this repository", () => {
     const repo = resolve(import.meta.dir, "..", "..", "..");
     const rs = auditAll(repo);
     expect(rs.map((r) => r.instance)).toContain("cat-harness");
-    expect(rs.map((r) => r.instance)).toContain("bootstrap");
+    expect(rs.map((r) => r.instance)).toContain("cat-bootstrap");
     expect(rs.every((r) => r.verdict === "checked")).toBe(true);
   });
 });

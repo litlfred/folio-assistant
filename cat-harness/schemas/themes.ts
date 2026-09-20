@@ -128,20 +128,20 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
-    id: "bootstrap",
-    name: "Bootstrap",
+    id: "cat-bootstrap",
+    name: "CatBootstrap",
     description: "Desert sand and sienna \u2014 the frontier at the start of the trail.",
     palette: {
       surface: "#f4f0e6", ink: "#26211a", edge: "#d8cdb6", accent: "#b1683c",
     },
-    // BOOTSTRAP'S OWN, which is the convention the owner set: "each harness
+    // CAT_BOOTSTRAP'S OWN, which is the convention the owner set: "each harness
     // hould have its own unique theme". It was the one harness with a sticky
     // and no art, so its card rendered palette-only while every other card
     // carried a cat \u2014 visible as a gap rather than as a choice.
     //
     // The art is a grumpy cat in a cowboy hat and boots, in the rain, in a
     // Sonoran desert with a roadrunner. That reads as the frontier at the start
-    // of the trail, which is what bootstrap IS: "the graph an agent reads
+    // of the trail, which is what cat-bootstrap IS: "the graph an agent reads
     // before it knows what this repository is".
     //
     // Its three crops each declare their own `textRegion`, measured by opening
@@ -150,7 +150,7 @@ const RAW = [
     // would fall back to the default grumpy cloud, whose geometry is a
     // different composition's and would put the text across the @.
     backdrop: {
-      imageRole: "landing-bootstrap",
+      imageRole: "landing-cat-bootstrap",
       // Measured the same way as its siblings: `ink` over this scrim laid on
       // PURE BLACK, the darkest art any instance could declare, is 9.25:1 \u2014
       // clear of the AAA 7:1 floor. 14.37:1 on pure white.

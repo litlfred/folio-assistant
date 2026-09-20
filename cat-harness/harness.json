@@ -182,14 +182,14 @@
       "description": "The grumpy cat as analyst: pinstripe suit, blue tie carrying the c@t mark, glasses, a tablet, printed bar and pie charts, books with chart devices on the spines, a marked mug. Backdrop for the `analyst` theme - SDLC, CRDM, business analysis and data engineering. Reached by ROLE rather than by path, so an instance declaring its own `landing-analyst` art gets its own. THE ONLY SUNNY ONE. Blue sky and flowering shrubs where grumpy-cat, engineer, architecture and library are all storm-grey, which is why its palette is warmer and brighter than theirs rather than a variation on one: the sampled cloud is #f0f0e4 over 28% of the frame, against #e4e4e4 for the librarian. The wide crop is 1536x1024 (aspect 1.50) where the other landscape crops are 1671x941 (1.78). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface instead of cropping the subject. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2 MB a crop; one is loaded per viewport, not all three. Conversion is bean ll11."
     },
     {
-      "id": "landing-bootstrap-laptop",
-      "src": "docs/assets/img/harness/landing-bootstrap-laptop.webp",
-      "role": "landing-bootstrap",
+      "id": "landing-cat-bootstrap-laptop",
+      "src": "docs/assets/img/harness/landing-cat-bootstrap-laptop.webp",
+      "role": "landing-cat-bootstrap",
       "layout": "laptop",
       "width": 1536,
       "height": 1024,
-      "title": "Bootstrap — wide",
-      "description": "A grumpy cat in a cowboy hat, bandana and boots, sitting in the rain in a Sonoran desert while a roadrunner shouts at it; a large thought cloud carries the @ mark. The frontier at the start of the trail — which is what bootstrap is: the graph an agent reads before it knows what this repository is.",
+      "title": "CatBootstrap — wide",
+      "description": "A grumpy cat in a cowboy hat, bandana and boots, sitting in the rain in a Sonoran desert while a roadrunner shouts at it; a large thought cloud carries the @ mark. The frontier at the start of the trail — which is what cat-bootstrap is: the graph an agent reads before it knows what this repository is.",
       "textRegion": {
         "x": 0.15,
         "y": 0.2,
@@ -198,13 +198,13 @@
       }
     },
     {
-      "id": "landing-bootstrap-mobile",
-      "src": "docs/assets/img/harness/landing-bootstrap-mobile.webp",
-      "role": "landing-bootstrap",
+      "id": "landing-cat-bootstrap-mobile",
+      "src": "docs/assets/img/harness/landing-cat-bootstrap-mobile.webp",
+      "role": "landing-cat-bootstrap",
       "layout": "mobile",
       "width": 941,
       "height": 1672,
-      "title": "Bootstrap — tall",
+      "title": "CatBootstrap — tall",
       "description": "The same scene cropped portrait: the cloud fills the upper third, the cat and the roadrunner below it.",
       "textRegion": {
         "x": 0.07,
@@ -214,13 +214,13 @@
       }
     },
     {
-      "id": "landing-bootstrap-card",
-      "src": "docs/assets/img/harness/landing-bootstrap-card.webp",
-      "role": "landing-bootstrap",
+      "id": "landing-cat-bootstrap-card",
+      "src": "docs/assets/img/harness/landing-cat-bootstrap-card.webp",
+      "role": "landing-cat-bootstrap",
       "layout": "card",
       "width": 1254,
       "height": 1254,
-      "title": "Bootstrap — square",
+      "title": "CatBootstrap — square",
       "description": "The same scene cropped square.",
       "textRegion": {
         "x": 0.1,
@@ -267,10 +267,10 @@
       "scope": "repository",
       "role": "agent-instructions",
       "title": "AGENTS.md — folio-assistant",
-      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
+      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
       "source": {
         "instance": "litlfred/folio-assistant",
-        "path": "bootstrap/AGENTS.md"
+        "path": "cat-bootstrap/AGENTS.md"
       }
     },
     {
@@ -282,11 +282,11 @@
       "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
     },
     {
-      "id": "bootstrap-initialization",
-      "src": "docs/bootstrap/initialization.md",
-      "role": "bootstrap-initialization",
+      "id": "cat-bootstrap-initialization",
+      "src": "docs/cat-bootstrap/initialization.md",
+      "role": "cat-bootstrap-initialization",
       "title": "Initializing into folio-assistant",
-      "description": "What bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours, composed by `initializationDoc()` rather than spelled, so bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not. The path is INSTANCE-relative here, not `<stub>/docs/...`: this instance has its own directory (`cat-harness/`), so `siteDir` is plain `docs`, and the stub names published artefacts rather than a directory. Whether bootstrap can still find it from one reference is open — see bean `wggr`."
+      "description": "What cat-bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours, composed by `initializationDoc()` rather than spelled, so cat-bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not. The path is INSTANCE-relative here, not `<stub>/docs/...`: this instance has its own directory (`cat-harness/`), so `siteDir` is plain `docs`, and the stub names published artefacts rather than a directory. Whether cat-bootstrap can still find it from one reference is open — see bean `wggr`."
     }
   ],
   "stub": "folio-assistant",
@@ -350,11 +350,11 @@
       ]
     },
     {
-      "id": "bootstrap",
-      "path": "bootstrap/skills/",
+      "id": "cat-bootstrap",
+      "path": "cat-bootstrap/skills/",
       "dependents": "skip",
       "scope": "repository",
-      "description": "The bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `bootstrap/skills/`, NOT `bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `bootstrap/README.md` and `bootstrap/AGENTS.md` declare neither, and they are the bootstrap instance's two DECLARED ASSETS — so a graph rooted at `bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `bootstrap/harness.json`; this entry is the same fact at the root, and it is stated twice BY DECISION (2026-09-20) rather than by necessity. THE EARLIER NOTE HERE WAS WRONG and the correction is the useful part: it said \"this instance depends on bootstrap\" is not expressible because `HarnessConfigDependenciesSchema` knows only `folioAssistant`. That key does not mean the folio-assistant PACKAGE \u2014 its own doc comment reads \"Other folio-assistant instances this folio depends on\", and bootstrap is such an instance by every test the code applies. MEASURED, not argued: writing `cat-harness/harness.config.json` with `{name: \"bootstrap\", path: \"../bootstrap\", provides: [\"skills\"]}` serves bootstrap through `LOCAL_PACKAGES` with `folio-assistant` unmoved. The zod schema needs no change at all. WHAT ACTUALLY BLOCKS IT is one directory entry, and it is not in the dependency schema: bootstrap declares `workflows/` with no `scope`, so cat-harness INHERITS it, and `materialiseDirectories` resolves an inherited path against the INHERITING instance by design \u2014 it wants `cat-harness/workflows/`, which does not exist, and `harness:dirs:check` reports `21 declared, 1 missing` and exits 1. The gap it exposes is general and this entry is only where it surfaced: a `ContentDirectory` cannot say whether it is a LAYOUT dependents should reproduce (`uploads/`, `library/`, `voices/`) or merely WHERE ITS OWN CONTENT LIVES (`workflows/`, `schemas/`, `tools/`). Simulated on a fresh folio depending on this instance, `init-folio` would create five directories it has no use for, each with a committed keep-marker \u2014 the `dh4f` shape, shipped downstream. Adding that distinction was considered and DECLINED for now: it is a schema change whose per-directory classification is a judgement about every directory here, not a bootstrap workaround. So THIS entry stays, and the thing to fix before deleting it is the convention/content distinction \u2014 not the dependency schema. The earlier note here said `resolveSkillDirs` had no caller: it has one \u2014 `discoverLocalPackages` \u2014 and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
+      "description": "The cat-bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `cat-bootstrap/skills/`, NOT `cat-bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `cat-bootstrap/README.md` and `cat-bootstrap/AGENTS.md` declare neither, and they are the cat-bootstrap instance's two DECLARED ASSETS — so a graph rooted at `cat-bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `cat-bootstrap/harness.json`; this entry is the same fact at the root, and it is stated twice BY DECISION (2026-09-20) rather than by necessity. THE EARLIER NOTE HERE WAS WRONG and the correction is the useful part: it said \"this instance depends on cat-bootstrap\" is not expressible because `HarnessConfigDependenciesSchema` knows only `folioAssistant`. That key does not mean the folio-assistant PACKAGE \u2014 its own doc comment reads \"Other folio-assistant instances this folio depends on\", and cat-bootstrap is such an instance by every test the code applies. MEASURED, not argued: writing `cat-harness/harness.config.json` with `{name: \"cat-bootstrap\", path: \"../cat-bootstrap\", provides: [\"skills\"]}` serves cat-bootstrap through `LOCAL_PACKAGES` with `folio-assistant` unmoved. The zod schema needs no change at all. WHAT ACTUALLY BLOCKS IT is one directory entry, and it is not in the dependency schema: cat-bootstrap declares `workflows/` with no `scope`, so cat-harness INHERITS it, and `materialiseDirectories` resolves an inherited path against the INHERITING instance by design \u2014 it wants `cat-harness/workflows/`, which does not exist, and `harness:dirs:check` reports `21 declared, 1 missing` and exits 1. The gap it exposes is general and this entry is only where it surfaced: a `ContentDirectory` cannot say whether it is a LAYOUT dependents should reproduce (`uploads/`, `library/`, `voices/`) or merely WHERE ITS OWN CONTENT LIVES (`workflows/`, `schemas/`, `tools/`). Simulated on a fresh folio depending on this instance, `init-folio` would create five directories it has no use for, each with a committed keep-marker \u2014 the `dh4f` shape, shipped downstream. Adding that distinction was considered and DECLINED for now: it is a schema change whose per-directory classification is a judgement about every directory here, not a cat-bootstrap workaround. So THIS entry stays, and the thing to fix before deleting it is the convention/content distinction \u2014 not the dependency schema. The earlier note here said `resolveSkillDirs` had no caller: it has one \u2014 `discoverLocalPackages` \u2014 and the reachability it was waiting on arrived with the `scope` fix in `ownDirectories`, which until then resolved this path against the INSTANCE and so dropped it for not existing. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "graphs": [
         "cat-harness"
       ]
@@ -384,7 +384,7 @@
       "theme": "analyst",
       "path": "methodologies/crdm/",
       "dependents": "skip",
-      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in skills/workflows/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
+      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in skills/workflows/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `cat-bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
       "graphs": [
         "cat-harness"
       ]
@@ -552,7 +552,7 @@
       "theme": "analyst",
       "path": "smart-kg/methodologies/",
       "dependents": "skip",
-      "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
+      "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and cat-bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the cat-bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
       "graphs": [
         "methodology"
       ],

@@ -11,12 +11,24 @@
  * nowhere else, because every individual file is syntactically fine.
  */
 import { describe, test, expect, afterEach } from "bun:test";
-import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync, symlinkSync } from "fs";
 import { join, resolve } from "path";
 import { tmpdir } from "os";
 
 import { initFolio, isValidSlug, slugify, type InitFolioOptions } from "../init-folio";
+import { instanceConfigFilename } from "../../schemas/harness-config.js";
+import { DECLARATION_FILENAME } from "../../schemas/cat-harness.js";
+
+/**
+ * The scaffold names its config after the folio's SLUG, not after the temp
+ * directory it happens to land in. A fixture helper that composes the name
+ * from `basename(dir)` is right for a fixture that declares itself and wrong
+ * here, because `folio_init` is the thing under test and it writes the
+ * declaration too.
+ */
+const SLUG = "cold-chain-guidance";
+const SCAFFOLD_CONFIG = instanceConfigFilename(SLUG);
+const scaffoldConfigIn = (dir: string): string => join(dir, SCAFFOLD_CONFIG);
 
 const PLATFORM = resolve(import.meta.dir, "../..");
 const dirs: string[] = [];
@@ -89,7 +101,8 @@ describe("what gets written", () => {
     const d = tmp();
     const r = initFolio(opts(d));
     for (const f of [
-      HARNESS_CONFIG,
+      DECLARATION_FILENAME,
+      SCAFFOLD_CONFIG,
       ".mcp.json",
       ".beans.yml",
       "folio/schema/builders.ts",
@@ -112,13 +125,13 @@ describe("what gets written", () => {
   test("the config selects the adapter matching the content type", () => {
     const doc = tmp();
     initFolio(opts(doc));
-    const docCfg = JSON.parse(readFileSync(join(doc, HARNESS_CONFIG), "utf-8"));
+    const docCfg = JSON.parse(readFileSync(scaffoldConfigIn(doc), "utf-8"));
     expect(docCfg.contentType).toBe("document");
     expect(docCfg.adapterModule).toContain("adapters/document/index.ts");
 
     const pap = tmp();
     initFolio(opts(pap, { contentType: "paper" }));
-    const papCfg = JSON.parse(readFileSync(join(pap, HARNESS_CONFIG), "utf-8"));
+    const papCfg = JSON.parse(readFileSync(scaffoldConfigIn(pap), "utf-8"));
     expect(papCfg.contentType).toBe("paper");
     expect(papCfg.adapterModule).toContain("adapters/paper/index.ts");
   });
@@ -189,7 +202,7 @@ describe("re-running is safe", () => {
     const d = tmp();
     const r = initFolio(opts(d, { dryRun: true }));
     expect(r.created.length).toBeGreaterThan(10);
-    expect(existsSync(join(d, HARNESS_CONFIG))).toBe(false);
+    expect(existsSync(scaffoldConfigIn(d))).toBe(false);
     expect(existsSync(join(d, "folio"))).toBe(false);
   });
 
@@ -234,7 +247,7 @@ describe("the scaffolded folio actually builds", () => {
     const { checkFolioProfile } = await import("../../content/pipeline/profile-check");
     const r = checkFolioProfile(d);
     expect(r.profile).toBe("document");
-    expect(r.declaredBy).toContain(HARNESS_CONFIG);
+    expect(r.declaredBy).toContain(SCAFFOLD_CONFIG);
     expect(r.blocksChecked).toBe(1);
     expect(r.violations).toEqual([]);
   });

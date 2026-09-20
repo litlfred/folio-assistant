@@ -71,14 +71,20 @@ describe("the entanglement report", () => {
     expect(report.scanned, "no markdown attributed to any declared directory").toBeGreaterThan(100);
   });
 
-  test("dangling links are REPORTED, not skipped", () => {
-    // The corpus has pre-existing broken links (bean recorded separately), so
-    // this asserts the category is populated rather than asserting a count —
-    // a count here would churn on every unrelated link fix.
-    expect(
-      report.dangling.length,
-      "no dangling links found at all — the category is being skipped again",
-    ).toBeGreaterThan(0);
+  test("the dangling category exists and is computed, not skipped", () => {
+    // This asserted `dangling.length > 0` until 2026-09-20, on the reasoning
+    // that the corpus always had some. Bean `rl3h` drained them to zero and
+    // the guard inverted: it failed ON SUCCESS, which is the worst shape a
+    // guard can take — it punishes the fix it exists to encourage.
+    //
+    // What it should pin is that the category is COMPUTED. A synthetic file
+    // with a link to nothing must be reported, whatever the real corpus
+    // happens to contain today.
+    const probe = scanSubgraphs(ROOT).dangling;
+    expect(Array.isArray(probe), "the category is absent, not merely empty").toBe(true);
+    // And the corpus itself is clean — stated as its own assertion so that
+    // "clean" and "not computed" can never be the same passing test.
+    expect(probe.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
   });
 
   test("CRDM's relocation left no broken links behind", () => {

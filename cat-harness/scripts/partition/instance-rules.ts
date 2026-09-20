@@ -142,6 +142,7 @@ export const RULES: Rule[] = [
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
+      "scripts/check-instance-config.ts",    // the config-naming gate
       // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
       // entry was added to `RULES` while `RULES` was moving to this file,
       // so it arrives here rather than where it was written.
@@ -629,7 +630,7 @@ export const RULES: Rule[] = [
       "schemas/memory.ts",
       "schemas/carried-note.ts",
       // Translation is cat-harness's, stated directly: "ui stuff like
-      // translations (skills, tooling) are not in bootstrap, it is in
+      // translations (skills, tooling) are not in cat-bootstrap, it is in
       // cat-harness/". These three are the gettext machinery and the registry
       // that binds a content type to its extractors — the tools that DO the
       // translating, not the translated content.
@@ -715,7 +716,7 @@ export const RULES: Rule[] = [
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
-      "scripts/gen-bootstrap-graph.ts",     // writes bootstrap/bootstrap.jsonld
+      "scripts/gen-cat-bootstrap-graph.ts", // writes cat-bootstrap/cat-bootstrap.jsonld
       "scripts/gen-python-deps.ts",         // writes requirements.txt
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
@@ -757,6 +758,23 @@ export const RULES: Rule[] = [
     repo: "core",
     triaged: true,
     exact: [
+      // The simulator-asset validator (bean `023p`). It falls to `sci` on the
+      // keyword rule further down, which matches the WORD `simulator` — and
+      // that is the CLASSIFICATION being wrong rather than the import, exactly
+      // as `schemas/dak-blocks.ts` was in the `smart-base` block.
+      //
+      // MEASURED: `simulator` is in core's own `DOCUMENT_BLOCK_KINDS` and NOT
+      // in `MATH_BLOCK_KINDS`. A simulator block is part of the generic
+      // document model, so a check on its declared asset path belongs to the
+      // layer that declares the kind. The module carries no Lean, no TeX and
+      // no science — it asks whether a declared file is on disk.
+      //
+      // It sits in THIS rule rather than the core block below because first
+      // match wins and the sci keyword rule comes first: an `exact` after it
+      // never runs. The keyword rule itself stays — `simulators/` as CONTENT
+      // is subject matter, which is what its own comment says. This is one
+      // module whose NAME collides with it.
+      "content/pipeline/validate-simulator.ts",
       "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
       // Statement-level hashing for `.lean` files, by the same test: the
       // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in

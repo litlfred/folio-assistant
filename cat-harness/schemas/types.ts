@@ -870,8 +870,17 @@ export interface SimulatorRef {
  * the `.md` of any remark that references this simulator.
  *
  * Pipeline validates:
- *   - .html companion exists (or companions.html resolves)
+ *   - `html:` resolves to a file on disk — `content/pipeline/validate-simulator.ts`,
+ *     phase 6 of `validate.ts`. Three states: present, absent (a finding), and
+ *     undetermined (a remote target, or a path escaping the repository), which
+ *     is reported rather than passed.
  *   - defaultView is present with at least one param
+ *
+ * This block said the first of those for months while it was FALSE: `validate.ts`
+ * contained no reference to `simulator` or `.html`, and two of qou's eleven
+ * targets were dangling through a clean `✓ Valid`. Bean `023p`. A documented
+ * check that does not run is worse than an absent one, because a reader stops
+ * looking — so if one of these lines stops being true, delete the line.
  */
 export interface SimulatorBlock extends BlockBase {
   kind: "simulator";
