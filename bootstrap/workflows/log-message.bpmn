@@ -57,4 +57,64 @@ person can read it">
     <bpmn:sequenceFlow id="SF_LM_4" name="yes" sourceRef="GW_Complete" targetRef="A_Record"/>
     <bpmn:sequenceFlow id="SF_LM_5" sourceRef="A_Record" targetRef="End_Logged"/>
   </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_LogMessage">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_LogMessage" bpmnElement="Collaboration_Process_LogMessage">
+      <bpmndi:BPMNShape id="Shape_Participant" bpmnElement="Participant_Process_LogMessage" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="760" height="320"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Actor" bpmnElement="Lane_Actor" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="730" height="200"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Logger" bpmnElement="Lane_Logger" isHorizontal="true">
+        <dc:Bounds x="190" y="280" width="730" height="120"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Start_LogMessage" bpmnElement="Start_LogMessage">
+        <dc:Bounds x="232" y="147" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="212" y="190" width="80" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Compose" bpmnElement="A_Compose">
+        <dc:Bounds x="320" y="125" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Complete" bpmnElement="GW_Complete" isMarkerVisible="true">
+        <dc:Bounds x="480" y="140" width="50" height="50"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="466" y="103" width="78" height="27"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_NotLogged" bpmnElement="End_NotLogged">
+        <dc:Bounds x="600" y="147" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="578" y="190" width="82" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Logged" bpmnElement="End_Logged">
+        <dc:Bounds x="800" y="147" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="790" y="190" width="60" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Record" bpmnElement="A_Record">
+        <dc:Bounds x="455" y="295" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Edge_SF_LM_1" bpmnElement="SF_LM_1">
+        <di:waypoint x="268" y="165"/>
+        <di:waypoint x="320" y="165"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_LM_2" bpmnElement="SF_LM_2">
+        <di:waypoint x="420" y="165"/>
+        <di:waypoint x="480" y="165"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_LM_3" bpmnElement="SF_LM_3">
+        <di:waypoint x="530" y="165"/>
+        <di:waypoint x="600" y="165"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="555" y="140" width="22" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_LM_4" bpmnElement="SF_LM_4">
+        <di:waypoint x="505" y="190"/>
+        <di:waypoint x="505" y="295"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="513" y="228" width="24" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_LM_5" bpmnElement="SF_LM_5">
+        <di:waypoint x="555" y="335"/>
+        <di:waypoint x="818" y="335"/>
+        <di:waypoint x="818" y="183"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </bpmn:definitions>
