@@ -192,5 +192,30 @@ describe("over the real corpus", () => {
     // machine, and pinning it would make the suite fail on a developer
     // laptop with Lean present. Asserting the shape is the honest test.
     for (const r of rows) expect(["ready", "partial", "degraded", "blocked"]).toContain(r.state);
-  });
+    // AN EXPLICIT BUDGET, because the default was never chosen for this test.
+    //
+    // `probeAll` spawns one detection SUBPROCESS per declared capability — 25 of
+    // them — and it does not cache: measured 2026-09-20, run 1 and run 2 both
+    // cost ~432 ms, and the whole file runs locally in 563 ms. Bun's default 5000
+    // ms is intended for pure-function tests, and this one exceeded it on CI
+    // three times out of four while passing at 822 ms on the fourth:
+    //
+    //   9268d23   5007.52 ms  FAIL      33edd5ab   5008.06 ms  FAIL
+    //   89d9dfee   822.85 ms  pass
+    //
+    // Both failures logged `Terminate orphan process: pid (…) (java)` in the same
+    // job's teardown, so the variance is a shared runner with a JVM competing for
+    // it, not the corpus — nothing in the diffs touched capabilities or probing.
+    //
+    // 30 s is ~50x the local cost, chosen to sit well clear of contention rather
+    // than just above the observed 5008 ms: a budget set to the worst figure seen
+    // so far is a budget that fails again on the next slower runner.
+    //
+    // This is a BUDGET, not a relaxation. Every assertion still runs and still
+    // holds; nothing is skipped and nothing is quarantined. The cost underneath —
+    // that three tests in this file each re-probe 25 subprocesses, so one run
+    // spawns 75 — is a production question about memoising `probeAll`, and
+    // caching a probe is wrong if the environment changes mid-session. Carried to
+    // its own bean rather than decided here.
+  }, 30_000);
 });
