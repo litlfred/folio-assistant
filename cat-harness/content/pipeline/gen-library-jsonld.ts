@@ -55,6 +55,7 @@ import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
 import { directoryForGraph } from "../../schemas/cat-harness.js";
+import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 // The `folio` graph kind is registered by CORE on import
 // (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
 // exists. This module resolves this instance's directories, and the instance
@@ -134,6 +135,7 @@ export function buildDocumentNodes(
   structure: Structure,
   candidates: Candidates | undefined,
   hasSectionMd: (sid: string) => boolean,
+  images?: ImagesSidecar,
 ): Array<{ path: string; content: string }> {
   const out: Array<{ path: string; content: string }> = [];
   const sections = structure.sections ?? [];
@@ -146,6 +148,20 @@ export function buildDocumentNodes(
     const list = bySection.get(sid) ?? [];
     list.push(c);
     bySection.set(sid, list);
+  }
+
+  // Figures, by the page they sit on. Only FIGURES: of 164 placed images in
+  // this corpus 140 are page scans, and a scan is the page itself rather than
+  // something on it — `schemas/document-image.ts` carries the measurement.
+  // `images: null` means the extractor could not look, which is not the same
+  // as "no figures" and must not become an empty map silently; it does become
+  // one here, but the sidecar keeps the reason and `pdf-images.py` exits 2.
+  const figuresByPage = new Map<number, DocumentImage[]>();
+  for (const img of images?.images ?? []) {
+    if (img.role !== "figure" || img.basis === undefined) continue;
+    const list = figuresByPage.get(img.basis.page) ?? [];
+    list.push(img);
+    figuresByPage.set(img.basis.page, list);
   }
 
   const sectionIris: string[] = [];
@@ -198,6 +214,39 @@ export function buildDocumentNodes(
       });
       if (statement) out.push({ path: `blocks/${bid}.md`, content: `${statement}\n` });
     });
+
+    // Figures whose page falls in this section. A section with no `page_end`
+    // claims only its start page — the same rule `pdf-tables.py` applies, so
+    // a figure and a table on one page are attributed to the same section.
+    const from = sec.page_start ?? undefined;
+    const to = sec.page_end ?? sec.page_start ?? undefined;
+    if (from !== undefined && to !== undefined) {
+      for (let pg = from; pg <= to; pg++) {
+        for (const img of figuresByPage.get(pg) ?? []) {
+          const bid = `figure-${img.id}`;
+          contained.push(docIri(docId, `blocks/${bid}`));
+          out.push({
+            path: `blocks/${bid}.jsonld`,
+            content: node({
+              "@id": docIri(docId, `blocks/${bid}`),
+              "@type": typesForKind("figure"),
+              kind: "figure",
+              // Relative to the block, as `text` already is for prose.
+              file: `../${img.file}`,
+              pageStart: pg,
+              pageEnd: pg,
+              // Carried through so a reader can see the description's STATE,
+              // not merely its absence: "nobody has written one" and "a human
+              // rejected the draft" are different facts.
+              narrative: img.narrative ?? undefined,
+              derivedFrom: docIri(docId, `sections/${key}`),
+              sourceDocument: docIri(docId, "manifest"),
+              provenance: "ingested",
+            }),
+          });
+        }
+      }
+    }
 
     const sIri = docIri(docId, `sections/${key}`);
     sectionIris.push(sIri);
@@ -311,8 +360,13 @@ async function run(): Promise<number> {
       continue;
     }
     const candidates = readJson<Candidates>(join(dir, "candidates.json"));
-    const files = buildDocumentNodes(docId, structure, candidates, (sid) =>
-      existsSync(join(dir, "sections", `${sid}.md`)),
+    const images = readJson<ImagesSidecar>(join(dir, "images.json"));
+    const files = buildDocumentNodes(
+      docId,
+      structure,
+      candidates,
+      (sid) => existsSync(join(dir, "sections", `${sid}.md`)),
+      images,
     );
 
     for (const f of files) {

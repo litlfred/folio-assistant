@@ -92,6 +92,18 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A concrete participant — human, agentic or mechanical — that persists across processes and takes on a role in each.",
     seeAlso: "/agentic-harness.html",
   },
+  Convention: {
+    layer: "harness",
+    gloss:
+      "A standing rule an actor must hold while performing a task, bound to a process, a lane or an activity rather than loaded unconditionally. Resolution is first-binding-wins along that order, not a merge, so a reader asking why a rule applies here gets one answer.",
+    seeAlso: "/agentic-harness.html",
+  },
+  Requirement: {
+    layer: "harness",
+    gloss:
+      "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
+    seeAlso: "/crdm-methodology.html",
+  },
   Role: {
     layer: "bootstrap",
     gloss:
@@ -193,6 +205,26 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   module: { gloss: "The source module a node was projected from." },
   path: { gloss: "A declared directory's path, relative to the instance root." },
   typeIri: { gloss: "The IRI of a node's type, so a consumer need not parse the `@type` string." },
+  // Convention terms (bean `3190`). Three separate glosses rather than one,
+  // because they are three separate claims and a reader deciding whether a
+  // rule still holds needs them apart.
+  statement: {
+    gloss:
+      "What a convention REQUIRES, in one line. Distinct from rdfs:comment, which is prose about " +
+      "the node: this is the rule itself, and a consumer filtering for enforceable text needs the two apart.",
+  },
+  rationale: {
+    gloss:
+      "Why a convention holds, so a reader can tell whether it still does. Kept separate from the " +
+      "statement deliberately — a rule and its justification collapsed into one field is a rule nobody " +
+      "can retire, because nothing is left that says what would falsify it.",
+  },
+  applies: {
+    gloss:
+      "The surfaces a convention governs — `typescript`, `bpmn`, `commit-message`. A filter, not prose, " +
+      "and open rather than enumerated: a closed set would have to be edited before a convention about a " +
+      "new surface could exist.",
+  },
   nodeKind: { gloss: "Which kind of node this is, where the type alone is not specific enough." },
   graphKind: { gloss: "The kind of graph a directory declares it holds." },
   holdsGraph: { gloss: "A graph kind found in this directory." },

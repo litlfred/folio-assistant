@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d5f1
 title: 'INGEST: narrative description per image, localized, including images extracted from PDFs'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-20T04:15:47Z
+updated_at: 2026-09-20T04:47:50Z
 parent: folio-assistant-slw1
 ---
 
@@ -115,3 +115,87 @@ Note before starting: `probe()` in `ingest-document.ts` imported the deprecated
 parse. Fixed in `68dt`. Routing now works — and for `d5f1` specifically, read
 this bean's own 2026-09-19 measurement FIRST: the image count is not the figure
 count, and 121 of `who-pub-tps-931`'s images are page scans.
+
+## 2026-09-20 — measured with a working backend, and it changes the scope
+
+Bean `68dt` merged, so the image path can be measured rather than reasoned
+about. Two findings, and both change what this bean is.
+
+### 1. "Each image in manifest.jsonld" is currently an EMPTY SET
+
+No manifest in `library/` carries any image at all — all four have keys
+`@context @id @type contains meta provenance title` and nothing imagey. The
+"Done when" as written is vacuous: there is nothing to describe. **Extraction
+and recording must exist before the narrative half means anything**, which is a
+materially bigger scope than the title suggests.
+
+### 2. Image count is not figure count, and the discriminator is clean
+
+| document | pages | placed images | coverage | verdict |
+|---|---|---|---|---|
+| `WHO_PUB_TPS_93.1` | 121 | 121 | 0.998 each, one per page | page scans |
+| `milnorlink` | 20 | 20 | 19 full-bleed + 1 at 0.008 | 19 scans, 1 figure |
+| `9789241548960_eng` | 179 | 2 | ~0.50 | figures |
+| `WPR-RDO-2020-003-eng` | 33 | 21 on 7 pages | median 0.013 | figures |
+
+**140 page scans against 24 candidate figures.** Describing every extracted
+image would produce 140 narratives of "a scanned page" — six times as many as
+there are real figures.
+
+The separation has no overlap, so no content heuristic is needed: a page scan
+is one near-full-bleed image per page; a figure is smaller and occurs 0..n per
+page. Measured as image-rectangle area over page area, via
+`page.get_image_rects(xref)` rather than the image's own pixel dimensions,
+because a placed image is what a reader sees.
+
+### `milnorlink` was recorded wrong earlier in the same session
+
+An earlier note here read "20 pages / 1 image then codec error". That was
+measured with no working backend. It actually carries 19 full-bleed page images
+**plus** an extractable text layer (47 871 chars) — a scan with OCR baked in,
+consistent with the JSTOR provenance established in `8shg` the same day. The
+earlier figure was an artefact of the measuring tool, not the document.
+
+### Consequence for the design
+
+An image entry must record the verdict AND its basis (coverage, images per
+page), not just the verdict — the `nso8` discipline. A bare `kind: "scan"` is
+unfalsifiable by the next reader, and this bean has already been misled once by
+a stored conclusion whose reason was not checkable.
+
+## 2026-09-20 — Stage A and Stage B shipped; the narrative half remains
+
+### What now exists
+
+| | |
+|---|---|
+| `scripts/pdf-images.py` | extracts placed images, classifies each, writes `images.json` |
+| `schemas/document-image.ts` | role + the **basis** it was computed from; refuses a verdict with no working |
+| `figure` block kind | registered at all seven points; `folio:Figure` + `doco:Figure` |
+| `gen-library-jsonld.ts` | emits figure blocks into the section whose pages hold them |
+
+**24 figure blocks on the real corpus** — 21 / 2 / 1 / **zero** for the
+121-page scan. Matches the hand survey exactly.
+
+Each carries `narrative: {state: "not-authored"}`, so the bean's "Done when"
+is now a **non-empty** set for the first time: there are images in
+`manifest.jsonld`, and each says it has no description yet.
+
+### What is NOT done
+
+The descriptions themselves, and their localisation. That needs a **vision
+backend**, and nothing declares one — the same shape as `1r0p`'s missing
+transcription backend, and the same rule applies: do not claim the capability
+until something declares it. `schemas/python-deps.ts` is where it would go.
+
+The narrative machinery is ready: `schemas/narrative.ts` has the four states
+and the rule that **only a human may confirm a draft**, and
+`scripts/narratives.ts` refuses to record a human decision from a
+non-interactive shell.
+
+### A measurement corrected here
+
+An earlier note in this bean said 141 scans / 23 figures. The true split is
+**140 / 24** — `milnorlink`'s one small image (coverage 0.008) was tallied as a
+scan though the same table had already called it figure-shaped. Total of 164
+was right; the split was not.

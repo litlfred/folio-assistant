@@ -49,6 +49,7 @@ import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.j
 import { termLayer } from "../schemas/vocabulary.js";
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
+import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
   defaultGraphKinds,
@@ -118,13 +119,6 @@ function skillMdDirs(root: string = ROOT): string[] {
  */
 const SKILL_IO_DIR = "schemas/skills";
 
-/** `.claude/skills/<group>/*.json` — the typed nodes beside the skills. */
-const REGISTRY_GROUPS: Record<string, string> = {
-  actors: "Actor",
-  capabilities: "Capability",
-  roles: "Role",
-  requirements: "Requirement",
-};
 
 /**
  * Directories holding BPMN processes, DISCOVERED.
@@ -336,6 +330,19 @@ export function buildContext(): Record<string, unknown> {
     // document already uses in another sense -- a GraphKind is a "kind" too --
     // so the term now says which one it is.
     bpmnType: termIri("bpmnType"),
+    // Convention terms (bean `3190`). All LITERALS — none is a link, so none
+    // gets `{"@type": "@id"}`: a bare name under `@id` resolves against the
+    // document base and mints an IRI nobody chose.
+    //
+    // `statement` is NOT a synonym of `rdfs:comment`. The comment is prose
+    // ABOUT the node; the statement is the rule ITSELF, and a consumer
+    // filtering for enforceable text needs them apart. `rationale` is
+    // separate again for a reason worth stating: a rule and its justification
+    // collapsed into one field is a rule nobody can retire, because there is
+    // nothing left that says what would falsify it.
+    statement: termIri("statement"),
+    rationale: termIri("rationale"),
+    applies: termIri("applies"),
     nodeKind: termIri("nodeKind"),
     enforcement: termIri("enforcement"),
     workPlanOp: termIri("workPlanOp"),

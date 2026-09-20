@@ -43,7 +43,12 @@ import "../schemas/folio-graph-kind.js";
  * skills is what made `commit-hygiene`, `content-lifecycle`, `lean-verification`
  * and `session-start` appear as reachable skill names with nothing behind them.
  */
-export const NON_SKILL_GROUPS = new Set(["actors", "capabilities", "roles", "hooks", "requirements"]);
+// `conventions` joins these for the same reason as the rest: the directory
+// holds a different NODE KIND, and a scan that took them for skills would
+// publish a convention as something an activity could implement.
+export const NON_SKILL_GROUPS = new Set([
+  "actors", "capabilities", "roles", "hooks", "requirements", "conventions",
+]);
 
 /**
  * Does this directory hold at least one SKILL `.md` directly?

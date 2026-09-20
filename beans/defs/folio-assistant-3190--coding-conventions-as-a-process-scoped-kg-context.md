@@ -1,10 +1,11 @@
 ---
 # folio-assistant-3190
 title: Coding conventions as a process-scoped KG context kind
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-18T22:22:06Z
-updated_at: 2026-09-18T22:22:06Z
+updated_at: 2026-09-20T06:01:40Z
 parent: folio-assistant-ahvw
 ---
 
