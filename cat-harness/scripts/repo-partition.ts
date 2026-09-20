@@ -619,6 +619,7 @@ const RULES: Rule[] = [
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-python-deps.ts",       // the repo's own toolchain
+      "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts",     // writes bootstrap/bootstrap.jsonld

@@ -324,6 +324,23 @@ jobs:
       - name: workflow yaml
         run: bun run check:workflows
 
+      # Every script path a workflow invokes resolves, from the directory the
+      # step actually runs in. Bean `52dz`. The #223 split moved the platform's
+      # scripts under `cat-harness/` and the workflows naming them without that
+      # prefix kept naming them without it — which is not a type error, not a
+      # lint error and not a test failure, so nothing here could see it.
+      #
+      # THREE workflows were live and broken when this was added: `ci-health`
+      # (weekly), `upstream-pins` (weekly) and `health-check` (DAILY), each
+      # crashing on its first command. `ci-health` exists to catch workflows
+      # failing where nobody looks, so it had been failing at its own job.
+      # Eight more were `workflow_dispatch`-only, two of them never once run.
+      #
+      # This step is the point: the previous sentence describes what happens
+      # when a check lives in `package.json` and no workflow invokes it.
+      - name: workflow script paths
+        run: bun run check:workflow-paths
+
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:
       # a lane binding a role that is not declared, a role carrying a skill

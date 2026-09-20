@@ -94,13 +94,28 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  * **`ci-only`** — the step needs something a checkout does not have: a built
  * `_site`, a `gh-pages` working tree, a deploy slug off the event payload.
  *
- * **`no-folio`** — the step runs against a FOLIO's tree, and this repository is
+ * **`no-folio`** — the step's INPUT is a folio's tree, and this repository is
  * the platform. `AGENTS.md` states the fact and names two of them; the table
- * below is the first place a machine can read it. These workflows resolve
- * `pipeline/build.ts`, `content/pipeline/qa-sweep.ts`, a `content/` at the
- * repository root — paths a folio has and the platform does not. They are not
- * broken and they are not runnable here, and until this table existed nothing
- * could tell either from a real gap.
+ * below is the first place a machine can read it.
+ *
+ * Say it precisely, because the imprecise version was wrong here for two
+ * months and three entries still carried it on 2026-09-20: **the scripts are
+ * the platform's** — `cat-harness/scripts/audit-wiring.ts` and friends are
+ * right here. What is absent is the `content/` tree they read. Two entries
+ * said "no such path in the platform", which was false, and a third said the
+ * platform "has no `pipeline/`", which was also false. An exemption resting
+ * on a false reason is precisely what this table exists to prevent, so the
+ * error mattered more here than it would have in prose (bean `52dz`).
+ *
+ * The one case where the distinction has teeth: `pipeline/build.ts` runs after
+ * `cd content` and names a FOLIO's build, while `cat-harness/content/pipeline/
+ * build.ts` exists and is a different file with the same basename. "Fixing"
+ * the path to the platform's copy would look correct and silently run the
+ * wrong program. `check:workflow-paths` records that as a `FOLIO_PATHS`
+ * exemption with the same reason, and a test pins it.
+ *
+ * These steps are not broken and not runnable here, and until this table
+ * existed nothing could tell either from a real gap.
  *
  * **Not a reason: "it is slow" or "it usually passes."** A step with no entry
  * here is reported as UNCLASSIFIED and fails `gates.test.ts`, so a new
@@ -181,7 +196,11 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   {
     match: "pipeline/build.ts",
     kind: "no-folio",
-    reason: "a folio's LaTeX/Lean build; the platform has no `pipeline/` and no folio to build",
+    reason:
+      "runs after `cd content`, so it names a FOLIO's build. `cat-harness/" +
+      "content/pipeline/build.ts` does exist — a different file sharing the " +
+      "basename — so resolving to it would be a wrong fix that looks right " +
+      "(bean `52dz`, 2026-09-20)",
   },
   {
     match: "qa-sweep",
@@ -216,12 +235,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   {
     match: "scripts/audit-wiring.ts",
     kind: "no-folio",
-    reason: "a folio-side script; no such path in the platform",
+    reason:
+      "the SCRIPT is the platform's (`cat-harness/scripts/audit-wiring.ts`); " +
+      "what it needs and the platform lacks is a folio's witness tree. The " +
+      "earlier reason here — \"no such path in the platform\" — was false, " +
+      "and an exemption resting on a false reason is what this table exists " +
+      "to prevent (bean `52dz`)",
   },
   {
     match: "scripts/section-story-audit.ts",
     kind: "no-folio",
-    reason: "a folio-side script; no such path in the platform",
+    reason:
+      "as `audit-wiring.ts`: the script is the platform's, the section tree " +
+      "it audits is a folio's. Previous reason was false (bean `52dz`)",
   },
   {
     match: "trivial-skeleton-audit.ts",
