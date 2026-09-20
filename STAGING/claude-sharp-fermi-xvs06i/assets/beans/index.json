@@ -2059,6 +2059,20 @@
       "file": "beans/defs/folio-assistant-fgnw--in-progress-carries-no-activity-43-of-60-claims-un.md"
     },
     {
+      "id": "folio-assistant-flh4",
+      "title": "STATE PAGES: a graph whose declaration names a visualiser is reported as having none — the missing third state",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:26:38Z",
+      "updatedAt": "2026-09-20T21:26:38Z",
+      "preview": "`cat-harness/docs/uploads/index.html` says \"This graph is declared and nothing publishes a projection for it yet\", while `harness.json` AND `cat-harness/harness.json` both give it a `coverage.visualiser`, that page exists, and it renders live per-instance queue counts (4/4/0, 28/2/26, 1/1/0). The page contradicts the repository's own declaration.\n\nCause: `projectionFor(id)` in `state-visualizer.ts",
+      "file": "beans/defs/folio-assistant-flh4--state-pages-a-graph-whose-declaration-names-a-visu.md"
+    },
+    {
       "id": "folio-assistant-frq2",
       "title": "RELEASE PATH: release-please names config files that do not exist, and both release workflows document another repository's behaviour",
       "status": "todo",
