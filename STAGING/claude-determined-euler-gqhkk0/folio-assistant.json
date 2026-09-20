@@ -260,13 +260,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T22:06:02.426Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/68f2c54d64602a8eb6cc0176e89f37a8090f7d8d",
-  "sourceCommitSha": "68f2c54d64602a8eb6cc0176e89f37a8090f7d8d",
-  "sourceCommitAt": "2026-09-20T22:00:32Z",
+  "generatedAt": "2026-09-20T22:16:36.395Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/983e31a067988c8410faf9ec85916e5a840406b6",
+  "sourceCommitSha": "983e31a067988c8410faf9ec85916e5a840406b6",
+  "sourceCommitAt": "2026-09-20T22:13:03Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 217,
+    "Skill": 218,
     "Actor": 27,
     "Capability": 28,
     "Role": 130,
@@ -275,7 +275,7 @@
     "Process": 55,
     "SequenceFlow": 714,
     "ProcessNode": 680,
-    "Tool": 68,
+    "Tool": 69,
     "Schema": 79,
     "GraphKind": 22,
     "Directory": 32,
@@ -1110,7 +1110,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/readme-sections.md",
-      "instructionLines": 98,
+      "instructionLines": 163,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1769,7 +1769,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 671,
+      "instructionLines": 730,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1916,12 +1916,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "harness-requirements",
       "title": "Harness requirements — what an instance owes for what it declares",
-      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, and why the discriminator is \"is this the static knowledge graph\".",
+      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/harness-requirements.md",
-      "instructionLines": 178,
+      "instructionLines": 253,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2161,6 +2161,22 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/voice-overlay-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/render-order",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "render-order",
+      "title": "Render order — flattening a dependency hierarchy, and the two stages",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/render-order.md",
+      "instructionLines": 116,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-order"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/translation-manager",
@@ -2507,7 +2523,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
-      "instructionLines": 221,
+      "instructionLines": 258,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2575,7 +2591,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/agent-memory.md",
-      "instructionLines": 125,
+      "instructionLines": 166,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5330,6 +5346,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/render-logging",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/render-order",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/role-model",
@@ -30790,6 +30807,52 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/readme-audit"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#tool/render-order",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "render-order",
+      "title": "The render pipeline, in dependency order",
+      "description": "Flatten the repository's renders into the order their `needs` imply, and optionally run them. Two stages: the current declared state as json/jsonld and the README derived from it are FATAL; the dynamic renderers (viewers, visualisers, doc pages, diagrams) skip and log; the dynamic-state export closes it. A cycle or a missing dependency yields NO order rather than a partial one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run render",
+        "mcp": {
+          "tool": "render_order"
+        },
+        "inProcess": {
+          "module": "src/tools/render-order.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dry_run",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/tool-types.schema.json#/$defs/Flag",
+            "description": "Print the flattened order and each step's failure policy without running anything.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/tool-types.schema.json#/$defs/Markdown",
+            "description": "Per step: ran, failed, skipped, or PENDING — declared with no implementation yet, which is never rendered as a pass."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/render-order"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#tool/readme-sync",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "readme-sync",
@@ -33923,8 +33986,8 @@
       "name": "agent-instructions",
       "path": "AGENTS.md",
       "assetRole": "agent-instructions",
-      "title": "AGENTS.md — folio-assistant",
-      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the cat-bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
+      "title": "AGENTS.md — cat-harness",
+      "description": "The cold-start file for an agent working IN this layer, and it is THIS LAYER'S own as of 2026-09-20 (issue #592). It was declared `scope: \"repository\"`, so it resolved to the repository root's AGENTS.md — one file answering both \"what binds everywhere\" and \"what binds in the harness layer\", which is the conflation `readmeFinding` calls MAJOR for a non-root instance and could not report, because the asset DID resolve. It resolved to the wrong file's job. No `source`: this file is authored here. The root's carries the cat-bootstrap provenance, because the root's is the file cat-bootstrap copies at initialisation.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/agent-instructions"
     },
     {
@@ -33933,8 +33996,8 @@
       "name": "instance-readme",
       "path": "README.md",
       "assetRole": "instance-readme",
-      "title": "folio-assistant",
-      "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link.",
+      "title": "cat-harness",
+      "description": "What this LAYER is, for a reader — as distinct from what the repository is, which is the root's README. Split from it on 2026-09-20 (issue #592); before that this instance had no README of its own and claimed the repository's. It does not list this instance's directories: `harness.json` is that list, and a second copy in prose is free to disagree with it the day a directory moves.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/instance-readme"
     },
     {
@@ -33951,8 +34014,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "a396b9e51cc63a67ba57ff40e85518c8b898ff79",
+    "sha": "f201e175addaacbd2742a5c99723e5fe31a21f96",
     "pr": "607/merge",
-    "run": "35540527870"
+    "run": "35541091560"
   }
 }
