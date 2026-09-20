@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pha7
 title: 'TOOL 5/13: Task_ExtractPOT/InjectPO/RoundTripQA — translation (24 files, 5 entry points)'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:34:35Z
-updated_at: 2026-09-20T04:34:35Z
+updated_at: 2026-09-20T11:31:01Z
 parent: folio-assistant-d308
 ---
 
@@ -73,3 +73,106 @@ exists to make, and this group is its clearest test case.
       (the schema's own note: 12 of 25 skills carry several Tools and nearly all
       are complementary)
 - [ ] scrapped with reasons if the answer is "already fully reached"
+
+
+---
+
+## 2026-09-20: MEASURED. The prediction was right, and the answer is worse than it
+
+This bean's corrected form asked a measurement question rather than for a node.
+Here is the measurement.
+
+### What the five existing nodes actually reach
+
+All five (`translation-extract`, `-inject`, `-status`, `-signoff`, `-validate`)
+have `inProcess` pointing at `src/tools/translation.ts`. That module imports
+**exactly two** pipeline modules:
+
+```
+content/pipeline/pot-extract.js   → extractMarkdown, formatPot
+content/pipeline/po-inject.js     → parsePo, injectMarkdown
+```
+
+So of the group, **two of twenty-four files are reachable through a Tool node.**
+
+### The whole group, and what runs each
+
+| file | entry point | what runs it |
+|---|---|---|
+| `pot-extract` | — | **a Tool node** (imported) |
+| `po-inject` | — | **a Tool node** (imported) |
+| `po-resolve` | — | library — `translation-drift`, `translation-tools` |
+| `translation-index` | main | `translation:index` |
+| `translation-block-qa` | main | `translation:block-qa` |
+| `translation-qa-sweep` | main | no script, but imported by `translation-index` / `-block-qa`, so reached |
+| `bpmn-translate` | — | library, under `translate-bpmn` |
+| `translate-bpmn` | top-level | `translate-bpmn` |
+| `translate-kg-viewer` | top-level | `translate-kg-viewer` |
+| **`translation-roundtrip`** | **main** | **NOTHING** |
+| **`check-l1-complete`** | **main** | **NOTHING** |
+
+### The prediction, confirmed and then sharpened
+
+The bean predicted: *"If a node covers the extract/inject pair but nothing reaches
+the round-trip QA, then the skill is covered and the CODE is not."*
+
+That is exactly what happened — and the reality is worse than "a node wraps a thin
+part". `translation-roundtrip.ts` **has** an `import.meta.main`. What it does not
+have is any caller:
+
+- no Tool node
+- no `package.json` script
+- no GitHub workflow
+- **no importer anywhere** — `grep "from.*translation-roundtrip"` returns nothing
+- its only two mentions are a `@see` doc comment in `schemas/translation.ts` and a
+  `console.log` in `scripts/translation/simulate-translation.ts` that prints
+  *"then translation-roundtrip.ts with a pair of agents"*
+
+Meanwhile `Task_RoundTripQA` is a live `serviceTask` on the **critical path** of
+`translation-workflow.bpmn`: `Task_PoInject → Task_RoundTripQA → Gateway_Drift`.
+The diagram asserts the step happens; the repository contains the program and no
+way anything reaches it except a person reading a printed instruction.
+
+**So this is `covered-is-not-reachable`'s third case inverted.** That case was a
+mechanism with no entry point. This is a mechanism WITH an entry point and no
+callers, while a process diagram claims the step runs. The skill is covered, the
+step is drawn, and the code is orphaned — three surfaces agreeing that something
+happens which nothing invokes.
+
+`check-l1-complete.ts` is the same shape, smaller: it has a main, and its only
+occurrence outside itself is a string literal in `repo-partition.ts`'s
+classification table. The bean also names `ingest-l1-completeness-gate ·
+Task_RoundTrip`, so that gate's mechanism is unreachable too.
+
+### The two original boxes that were already satisfied
+
+- **`alternativeTo` is EMPTY on all five**, verified by reading the nodes rather
+  than by assuming: `alternativeTo: null` on each. They are a five-step sequence,
+  and the schema's own note says sharing a skill does not make Tools
+  substitutable.
+- **The declared directory is read, never composed.**
+  `src/tools/translation.ts` calls `directoryForGraph(repoRoot,
+  "translation-sources")` with the convention only as a documented fallback,
+  stated at the call site "so the choice is visible" — which is the live defect
+  this bean warned about (`po-resolve` declaring the directory twice, red CI on
+  2026-09-19) not being repeated.
+
+### Not scrapped, and not fixed either
+
+The corrected list offered "scrapped with reasons if the answer is *already fully
+reached*". **It is not** — two files are orphaned, so the bean earned its keep.
+
+Nor is the fix mine to pick: `translation-roundtrip` back-translates **with a pair
+of agents**, so it is not a CI gate, and wiring it to one would assert a check
+that cannot run unattended. Whether it becomes an npm script for a human, a step
+an agent performs inside the workflow, or a `qa-sweep` axis is a design question.
+Carried to its own bean with options.
+
+## Done when — the corrected list
+
+- [x] which of the 24 files the five nodes actually reach, measured — **2 of 24**
+- [x] any file reachable from no node named, with what runs it — table above;
+      `translation-roundtrip` and `check-l1-complete` are run by NOTHING
+- [x] `alternativeTo` / `selection` checked on the five — empty on all five, as it
+      should be
+- [x] not scrapped: the answer was not "already fully reached"

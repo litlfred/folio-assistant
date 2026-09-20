@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T11:24:19.051Z",
+  "updated_at": "2026-09-20T11:32:14.302Z",
   "verdict": "clean",
   "checks": [
     {
@@ -34,7 +34,7 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 456181152,
+          "value": 456185012,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
@@ -119,31 +119,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 86128638,
+          "value": 86136683,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 582884560,
+          "value": 590659357,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 547913728,
+          "value": 555629568,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 71,
+          "value": 72,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 6.77,
+          "value": 6.86,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
@@ -194,7 +194,7 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 180,
+          "value": 181,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -206,7 +206,7 @@
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 43,
+          "value": 44,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -224,7 +224,7 @@
         },
         {
           "metric": "bean-decision-records",
-          "value": 3,
+          "value": 4,
           "unit": "count",
           "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         },
