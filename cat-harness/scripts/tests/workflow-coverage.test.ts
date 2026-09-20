@@ -77,7 +77,16 @@ describe("autoTriggered — does it fire without somebody asking?", () => {
 });
 
 describe("the survey's three states", () => {
-  /** A scratch repo with a workflows directory and a `skills/workflows/` graph. */
+  /**
+   * A scratch repo with a workflows directory and a `skills/workflows/` graph.
+   *
+   * Every call below passes the root TWICE — as the repository root and as the
+   * instance root — because in this checkout they differ: `.github/workflows/`
+   * is at the repository root and the diagrams are under `cat-harness/`. A
+   * first version of both the tool and these tests conflated them, and the
+   * tests could not catch it, because a scratch repo puts both at one path.
+   * Passing both explicitly is what makes the distinction visible here.
+   */
   function repoWith(workflows: Record<string, string>, diagrams: Record<string, string>): string {
     const root = mkdtempSync(join(tmpdir(), "wfcov-"));
     mkdirSync(join(root, ".github", "workflows"), { recursive: true });
@@ -95,7 +104,7 @@ describe("the survey's three states", () => {
       { "a.yml": "on:\n  push:\njobs: {}\n" },
       { "a.bpmn": declares(".github/workflows/a.yml") },
     );
-    const { rows } = surveyWorkflows(root);
+    const { rows } = surveyWorkflows(root, root);
     expect(rows).toHaveLength(1);
     expect(rows[0]!.coverage).toBe("covered");
     expect(rows[0]!.auto).toBe(true);
@@ -103,7 +112,7 @@ describe("the survey's three states", () => {
 
   test("UNCOVERED is a DETERMINED absence — the file read fine, nothing declares it", () => {
     const root = repoWith({ "a.yml": "on:\n  push:\njobs: {}\n" }, {});
-    const { rows } = surveyWorkflows(root);
+    const { rows } = surveyWorkflows(root, root);
     expect(rows[0]!.coverage).toBe("uncovered");
     expect(rows[0]!.reason).toBeUndefined();
   });
@@ -115,7 +124,7 @@ describe("the survey's three states", () => {
       { "a.yml": "on:\n  push:\n   bad\n    indent: [\n" },
       { "a.bpmn": declares(".github/workflows/a.yml") },
     );
-    const { rows } = surveyWorkflows(root);
+    const { rows } = surveyWorkflows(root, root);
     expect(rows[0]!.coverage).toBe("unknown");
     expect(rows[0]!.reason).toBeDefined();
   });
@@ -129,7 +138,7 @@ describe("the survey's three states", () => {
           `see .github/workflows/a.yml</bpmn:documentation></bpmn:process></bpmn:definitions>`,
       },
     );
-    const { rows } = surveyWorkflows(root);
+    const { rows } = surveyWorkflows(root, root);
     expect(rows[0]!.coverage).toBe("uncovered");
   });
 
@@ -138,7 +147,7 @@ describe("the survey's three states", () => {
       { "a.yml": "on:\n  push:\njobs: {}\n" },
       { "a.bpmn": declares(".github/workflows/gone.yml") },
     );
-    const { rows, dangling } = surveyWorkflows(root);
+    const { rows, dangling } = surveyWorkflows(root, root);
     expect(dangling).toEqual([
       { diagram: "skills/workflows/a.bpmn", workflow: ".github/workflows/gone.yml" },
     ]);
@@ -148,7 +157,7 @@ describe("the survey's three states", () => {
 
   test("no workflows directory is an empty survey, not a crash", () => {
     const root = mkdtempSync(join(tmpdir(), "wfcov-empty-"));
-    const { rows, dangling } = surveyWorkflows(root);
+    const { rows, dangling } = surveyWorkflows(root, root);
     expect(rows).toEqual([]);
     expect(dangling).toEqual([]);
   });
@@ -162,6 +171,21 @@ describe("this repository, right now", () => {
 
   test("no declaration dangles", () => {
     expect(surveyWorkflows().dangling).toEqual([]);
+  });
+
+  test("the diagrams are FOUND — the two roots differ here, and conflating them found none", () => {
+    // THE REGRESSION TEST for the defect above, and it has to live here
+    // because it is unreproducible in a scratch repo. `.github/workflows/` is
+    // at the repository root; the diagrams are in the graph `cat-harness/`
+    // declares. Passing the repository root for both found ZERO diagrams and
+    // reported 0/38 with declarations sitting on disk — a clean-looking run
+    // over a directory it never opened.
+    //
+    // Asserting "> 0" rather than a count: a number here would be a claim
+    // about how many diagrams somebody has drawn, which changes, and
+    // `check:workflow-coverage` is where that number belongs.
+    const covered = surveyWorkflows().rows.filter((r) => r.coverage === "covered");
+    expect(covered.length).toBeGreaterThan(0);
   });
 
   test("there are workflows to survey — a green run over zero files is not coverage", () => {

@@ -150,8 +150,21 @@ export function autoTriggered(yaml: string): boolean | { reason: string } {
   return names.some((n) => AUTO_TRIGGERS.has(n));
 }
 
-/** Every workflow file, with its coverage. */
-export function surveyWorkflows(repo: string = REPO): {
+/**
+ * Every workflow file, with its coverage.
+ *
+ * TWO ROOTS, and conflating them was a real defect here rather than a
+ * hypothetical one. `.github/workflows/` sits at the REPOSITORY root, while
+ * the diagrams live in the graph an INSTANCE declares — `cat-harness/` in this
+ * checkout. A first version passed `repoRootFor(...)` to both and found no
+ * diagrams at all, so it reported 0/38 while a declaration was sitting on
+ * disk. The unit tests could not catch it: their scratch repository puts both
+ * at the same path, which is exactly the case where the bug is invisible.
+ *
+ * @param repo the repository root, holding `.github/workflows/`
+ * @param instance the instance root whose declared graph holds the diagrams
+ */
+export function surveyWorkflows(repo: string = REPO, instance: string = HERE): {
   rows: WorkflowRow[];
   /** Declarations pointing at a workflow that is not there. */
   dangling: { diagram: string; workflow: string }[];
@@ -166,7 +179,7 @@ export function surveyWorkflows(repo: string = REPO): {
   // diagram -> declared workflows, and the inverse.
   const byWorkflow = new Map<string, string[]>();
   const dangling: { diagram: string; workflow: string }[] = [];
-  for (const d of workflowFiles(repo).filter((f) => f.endsWith(".bpmn"))) {
+  for (const d of workflowFiles(instance).filter((f) => f.endsWith(".bpmn"))) {
     const rel = relative(repo, d);
     for (const w of declaredWorkflows(readFileSync(d, "utf-8"))) {
       if (!existsSync(join(repo, w))) {

@@ -115,6 +115,18 @@ new tenant is a row in `upstream-pins.json` rather than a third diagram:
 | `upstream-pin-watch.bpmn` | Has a pinned dependency fallen behind a release, and what happens when the check cannot tell? Mechanical throughout, and it maintains ONE tracking issue rather than sending mail nobody reads |
 | `upstream-version-adoption.bpmn` | A candidate version exists. What of ours binds it, what does the MVP build prove, and who is allowed to say yes? The accept is a `userTask` in a person-only lane, and no package may relax it |
 
+**The CI workflows themselves** — `.github/workflows/*.yml` are processes
+too, with triggers, gateways and compensation paths, and until 2026-09-20 none
+was drawn. `bun run check:workflow-coverage` measures how many are, in three
+states; a diagram declares its subject with
+`<folio:implements workflow="…"/>` rather than being matched on its filename,
+because a mention is not coverage:
+
+| Diagram | Answers |
+|---------|---------|
+| `feature-staging.bpmn` | The lifecycle of a review preview: staged on a push, taken down on a close, or removed by an explicit dispatch. **Both gateways are three-state** — a merge confirms a removal on its own while a close without one still needs the label (bean `1feu`), and the dispatch preflight refuses on a live signal AND on could-not-tell. Every path that changes `STAGING/` writes to the render log, and the two removal paths write the record in the SAME commit as the removal |
+| `upstream-pin-watch.bpmn` | Also `upstream-pins.yml` — see **Upstream dependencies** below. The declaration was added when the coverage check was written; the diagram already documented that workflow step for step |
+
 **The publish branch** — what is on `gh-pages`, and what happened to it. The
 branch has six publishers and one of them is a full replace, so "the preview
 is gone" has never had an answer a reader could look up:
