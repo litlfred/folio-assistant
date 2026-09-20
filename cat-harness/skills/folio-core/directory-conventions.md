@@ -1,3 +1,7 @@
+---
+consulted: true
+---
+
 # Directory conventions — what an instance declares it scans
 
 Every instance carries an **`harness.json`** at its repository root. It declares the directories the instance scans for content,

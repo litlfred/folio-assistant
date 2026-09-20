@@ -1,3 +1,7 @@
+---
+consulted: true
+---
+
 # Where a proposal goes — the issue, not the documentation
 
 **A design proposal is a comment on the issue it is for.** Not a page in

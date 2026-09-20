@@ -19,6 +19,7 @@
  * @module content/pipeline/validate-references
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { references, referenceMap, CSLEntrySchema } from "./references-registry-di";
@@ -128,11 +129,9 @@ const leanCitations = new Set<string>();
 
 // Scan .lean files for -- Ref: [key] patterns
 const leanDir = join(REPO_ROOT, "lean");
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const contentDir = join(REPO_ROOT, "folio");
+const folioRoot = folioDir(REPO_ROOT);
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const leanArchiveDir = join(REPO_ROOT, "folio", requirePaper(_paperArg), "lean");
+const leanArchiveDir = join(folioDir(REPO_ROOT),  requirePaper(_paperArg), "lean");
 
 function scanFilesRecursive(dir: string, ext: string): string[] {
   if (!existsSync(dir)) return [];
@@ -155,7 +154,7 @@ function scanFilesRecursive(dir: string, ext: string): string[] {
 const leanFiles = [
   ...scanFilesRecursive(leanDir, ".lean"),
   ...scanFilesRecursive(leanArchiveDir, ".lean"),
-  ...scanFilesRecursive(contentDir, ".lean"),
+  ...scanFilesRecursive(folioRoot, ".lean"),
 ];
 
 // Bare bracket citation `[authorYYYY]` in .lean docstrings — matches
@@ -198,7 +197,7 @@ const CITE_PATTERN = /\\cite(?:\[[^\]]*\])?\{([^}]+)\}/g;
 const BRACKET_CITE_PATTERN = /(?<![!\w])\[([a-z][a-z0-9-]*\d{4}[a-z]*)\](?!\()/g;
 const texFiles = [
   ...scanFilesRecursive(join(REPO_ROOT, "chapters"), ".tex"),
-  ...scanFilesRecursive(contentDir, ".md"),
+  ...scanFilesRecursive(folioRoot, ".md"),
   join(REPO_ROOT, "main.tex"),
   join(REPO_ROOT, "blueprint/src/content.tex"),
 ].filter(existsSync);
@@ -239,7 +238,7 @@ console.log("Cross-checking .ts manifest cites: arrays...");
 const TS_CITES_BLOCK = /\bcites\s*:\s*\[([^\]]*?)\]/gs;
 const TS_CITES_KEY = /["'`]([a-z][a-z0-9_-]*\d{4}[a-z0-9_-]*)["'`]/gi;
 const tsCitations = new Set<string>();
-const tsFiles = scanFilesRecursive(contentDir, ".ts");
+const tsFiles = scanFilesRecursive(folioRoot, ".ts");
 for (const file of tsFiles) {
   const content = readFileSync(file, "utf-8");
   let blockMatch;

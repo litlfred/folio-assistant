@@ -143,6 +143,41 @@ export function gitIgnored(repoRoot: string, names: readonly string[]): Set<stri
   );
 }
 
+/**
+ * Directories that exist only to HOLD ignored files.
+ *
+ * `gitIgnored` asks whether a path is itself ignored, and for `scripts/` the
+ * answer is no — `.gitignore` names `__pycache__/`, not `scripts/`. So a root
+ * directory containing nothing but a `__pycache__` was reported as
+ * unaccounted-for, and the consequence was asymmetric in the worst direction:
+ * **CI stayed green** (a clean checkout has no bytecode) while **every
+ * contributor who ran the Python tests went red locally**. The gate failed for
+ * the people doing the work and passed for the machine that was not.
+ *
+ * From git's point of view such a directory is not part of the repository's
+ * content at all: nothing in it is tracked, and nothing in it is untracked
+ * either, because every candidate is ignored. It exists on disk as a side
+ * effect of running something.
+ *
+ * Both questions have to be asked. `git status` alone would call a directory
+ * of tracked, unmodified files empty; `git ls-files` alone would miss one
+ * holding only new files a contributor has not added yet.
+ *
+ * Returns false when git is unavailable, so the sweep REPORTS rather than
+ * skips — the same direction `gitIgnored` takes, and for the same reason: the
+ * failure being guarded against is a file going unseen.
+ */
+export function holdsOnlyIgnored(repoRoot: string, name: string): boolean {
+  const ask = (args: string[]): string | undefined => {
+    const r = spawnSync("git", args, { cwd: repoRoot, encoding: "utf8" });
+    return r.error || r.status !== 0 ? undefined : r.stdout;
+  };
+  const tracked = ask(["ls-files", "--", name]);
+  const untracked = ask(["status", "--porcelain", "--untracked-files=all", "--", name]);
+  if (tracked === undefined || untracked === undefined) return false;
+  return tracked.trim() === "" && untracked.trim() === "";
+}
+
 /** Directories no sweep should walk, whatever git says. */
 export const IGNORED_ROOT_DIRS = ["node_modules", ".git"] as const;
 
@@ -250,6 +285,9 @@ export function undeclaredAtRoot(repoRoot: string): UndeclaredEntry[] {
   const out: UndeclaredEntry[] = [];
   for (const entry of readdirSync(repoRoot, { withFileTypes: true })) {
     if (ignored.has(entry.name)) continue;
+    // A directory holding nothing but ignored files is git's business too —
+    // `scripts/` with only a `__pycache__` in it is not a finding.
+    if (entry.isDirectory() && holdsOnlyIgnored(repoRoot, entry.name)) continue;
     // Dotfiles are git's and the tooling's; sweeping them would report
     // `.gitignore` as a finding on every run, and a report whose first five
     // lines are always the same is a report nobody reads.

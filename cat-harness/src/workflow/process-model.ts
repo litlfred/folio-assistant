@@ -56,6 +56,13 @@ const SUPPORTED = new Set<string>([
 
 export type NodeKind = "start" | "end" | "activity" | "exclusive" | "parallel";
 
+/**
+ * The three RACI letters a diagram can declare. `responsible` is absent
+ * deliberately — the lane already carries it. See {@link ProcessNode.raci}.
+ */
+export const RACI_INVOLVEMENTS = ["accountable", "consulted", "informed"] as const;
+export type RaciInvolvement = (typeof RACI_INVOLVEMENTS)[number];
+
 export interface ProcessNode {
   id: string;
   /** The `name` on the diagram, with the `[skill]` line stripped. */
@@ -77,6 +84,24 @@ export interface ProcessNode {
   roleRef?: string;
   /** `<folio:skill ref="…"/>`, possibly several. */
   skills: string[];
+  /**
+   * `<folio:raci ref="<role>" involvement="accountable|consulted|informed"/>`.
+   *
+   * **R is NOT here, and that is the point.** A BPMN lane already says who
+   * performs an activity — that IS Responsible — so declaring it again
+   * would be one fact in two places with nothing asserting they agree, the
+   * shape bean `85e8` removed `fallbackRole` for. Read `roleRef` for R.
+   *
+   * The other three letters have no home in BPMN and are what this adds:
+   * *Accountable* (one per activity, the neck on the block), *Consulted*
+   * (two-way, before) and *Informed* (one-way, after). Bean `7o7i`.
+   *
+   * Every value names a **role**, not an actor, for all three letters.
+   * `role-model.md`'s rule is that nothing IS a reviewer — somebody acts as
+   * one for the duration of a lane — and naming a concrete actor would bind
+   * a process to one participant.
+   */
+  raci: { role: string; involvement: RaciInvolvement }[];
   /**
    * The conventions in force HERE — process ∪ lane ∪ activity, in that order.
    *
@@ -427,6 +452,7 @@ interface ModdleElement {
       op?: string;
       enforcement?: string;
       capture?: string;
+      involvement?: string;
       relaxable?: string;
       reason?: string;
       kinds?: string;
@@ -559,6 +585,15 @@ export async function loadProcessModel(
       laneId: laneIdOf.get(el.id),
       roleRef: roleRefOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
+      raci: ext
+        .filter((v) => v.$type === "folio:raci" && v.ref)
+        // An unrecognised `involvement` is DROPPED rather than coerced. A
+        // typo silently read as `informed` would put somebody on a
+        // notification list who was meant to be consulted, and the
+        // difference between those two is the whole point of the model.
+        // `check:raci` reports what this drops.
+        .filter((v) => (RACI_INVOLVEMENTS as readonly string[]).includes(v.involvement ?? ""))
+        .map((v) => ({ role: v.ref!, involvement: v.involvement as RaciInvolvement })),
       conventions: conventionsInForce({
         process: processConventions,
         lane: laneConventionsOf.get(el.id),

@@ -17,6 +17,7 @@
  * @module folio-assistant/routes/glossary
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 
@@ -37,8 +38,7 @@ function paperDir(repoRoot: string, paper: string): string {
   if (!/^[a-z0-9][a-z0-9-]*$/.test(paper)) {
     throw new Error("invalid paper name format");
   }
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  return join(repoRoot, "folio", paper);
+  return join(folioDir(repoRoot),  paper);
 }
 
 // ── GET handlers ────────────────────────────────────────────────

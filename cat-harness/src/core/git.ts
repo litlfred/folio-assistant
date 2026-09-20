@@ -8,6 +8,7 @@
  * @module folio-assistant/core/git
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync, symlinkSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { spawnSync } from "child_process";
@@ -150,13 +151,10 @@ export class GitHelper {
     mkdirSync(tmpFileDir, { recursive: true });
     try {
       // Symlink schema dir for relative imports
-      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-      const schemaLink = join(branchTmpDir, "folio", "schema");
-      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-      const realSchema = resolve(this.repoRoot, "folio", "schema");
+      const schemaLink = join(folioDir(branchTmpDir),  "schema");
+      const realSchema = join(folioDir(this.repoRoot),  "schema");
       if (!existsSync(schemaLink) && existsSync(realSchema)) {
-        // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-        mkdirSync(join(branchTmpDir, "folio"), { recursive: true });
+        mkdirSync(folioDir(branchTmpDir), { recursive: true });
         try {
           symlinkSync(realSchema, schemaLink, "dir");
         } catch {}

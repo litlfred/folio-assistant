@@ -6,6 +6,7 @@ description: >
   per bean, every mention), and the STRICT rule that the "next" line is a
   question and must carry its own context.
 allowed-tools: Read Grep Glob AskUserQuestion
+consulted: true
 ---
 
 # Turn reporting — say which bean you are on, every turn

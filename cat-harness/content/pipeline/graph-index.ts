@@ -35,7 +35,7 @@
 
 // `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
 // and this module resolves a DECLARED directory. Without it the first
-// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
+// `directoryForGraph` throws `unknown graph kind "folio"`. Measured
 // 2026-09-20 across the 20 modules that resolve a declared directory: 10
 // threw, including `narratives.ts` and the `translation` MCP tool, while
 // every gate and all 3298 tests passed — nothing covered the path.
@@ -47,7 +47,7 @@ import "../../schemas/folio-graph-kind.ts";
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join, dirname, relative } from "path";
 import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../schemas/jsonld";
-import { directoriesForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 export interface GraphNode {
   /** The `@id` — a relative IRI, minted by `resolveLabel` for authored blocks. */
@@ -463,21 +463,21 @@ export function graphStats(index: GraphIndex): Record<string, unknown> {
 
 /** The standard roots: authored blocks and ingested documents. */
 export function defaultRoots(repoRoot: string): Array<{ name: string; dir: string }> {
-  // EVERY declared library, not the first.
+  // EVERY declared library, not the one.
   //
   // This is an INDEX. Indexing one of several libraries and reporting a clean
   // build is the `dh4f` defect — a consumer scanning nothing and saying so is
-  // recoverable; a consumer scanning half and saying nothing is not. It read
-  // `directoriesForGraph(...)[0]` until bean `a02m`, which was correct only
-  // while `library` had one home.
+  // recoverable; one scanning half and saying nothing is not. `library` has
+  // three homes since bean `frs5`, so `directoryForGraph` REFUSES here rather
+  // than picking, which is the accessor doing its job and the reason this is
+  // plural rather than silently wrong.
   //
   // Named per directory rather than all called "library", because a node's
   // root name is how a message says WHERE it came from, and two roots with one
-  // name make the answer useless exactly when there is something to tell apart.
+  // name make that answer useless exactly when there is something to tell apart.
   const libraries = directoriesForGraph(repoRoot, "library");
   return [
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    { name: "folio", dir: join(repoRoot, "folio") },
+    { name: "folio", dir: folioDir(repoRoot) },
     // declared-path-literal: the convention fallback, at the call site so the
     // choice is visible. The index is built over whatever is there; a root
     // that resolves to nothing yields fewer nodes rather than an error.
