@@ -244,10 +244,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:27:36.845Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6438aaf507ebb7bed7a5299b78ca23d9a0557692",
-  "sourceCommitSha": "6438aaf507ebb7bed7a5299b78ca23d9a0557692",
-  "sourceCommitAt": "2026-09-20T06:26:13+02:00",
+  "generatedAt": "2026-09-20T04:46:47.813Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6abc2215ec482314dfa8eabdee504139744af48f",
+  "sourceCommitSha": "6abc2215ec482314dfa8eabdee504139744af48f",
+  "sourceCommitAt": "2026-09-20T06:45:25+02:00",
   "sourceTreeDirty": false,
   "counts": {
     "Skill": 170,
@@ -259,7 +259,7 @@
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 30,
-    "Schema": 54,
+    "Schema": 55,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -17644,7 +17644,7 @@
       "title": "Ingest, with PDF and image extensions",
       "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
       "install": {
-        "cli": "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils"
+        "cli": "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils"
       },
       "invoke": {
         "shell": "bun run scripts/ingest-document.ts"
@@ -19384,6 +19384,13 @@
       "module": "schemas/precision-scalar.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/python-deps",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "python-deps",
+      "title": "The Python packages this repository's scripts need — declared once.",
+      "module": "schemas/python-deps.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/qa-review",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "qa-review",
@@ -20546,8 +20553,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "6438aaf507ebb7bed7a5299b78ca23d9a0557692",
+    "sha": "6abc2215ec482314dfa8eabdee504139744af48f",
     "pr": "main",
-    "run": "35489137360"
+    "run": "35489940891"
   }
 }
