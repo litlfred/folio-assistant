@@ -198,6 +198,35 @@ describe("over the real corpus", () => {
   // states — and say nothing about speed, so raising the limit weakens no
   // claim. 30s is generous against the ~5s observed while still failing fast
   // if the probe ever genuinely hangs.
+  //
+  // TWO MORE DATA POINTS, from a third session arriving at the same fix
+  // independently: `9268d23` 5007.52ms and `33edd5ab` 5008.06ms both failed,
+  // while `89d9dfee` passed at 822.85ms. So four commits across three sessions,
+  // every failure within ~13ms of the limit and the one pass nowhere near it —
+  // which is the signature of a test sitting exactly on its budget rather than
+  // of anything in a diff.
+  //
+  // A cause for the "order of magnitude slower on a shared runner" above: both
+  // of those failures logged `Terminate orphan process: pid (…) (java)` in the
+  // same job's teardown, so a JVM was competing for the runner. Nothing in
+  // either diff touched capabilities or probing.
+  //
+  // NO COST UNDERNEATH, and an earlier version of this comment claimed one.
+  // Bean `4n37` asserted that three tests in this file each call `probeAll`, so a
+  // run spawned ~78 processes, and proposed hoisting it into a `beforeAll`. All of
+  // it was wrong and the bean is SCRAPPED:
+  //
+  //   · `probeAll` is called ONCE here, and once in `src/index.ts`. No caller
+  //     calls it twice, so there is nothing to hoist. The "three tests" were
+  //     three tests in this `describe` calling `loadSkillNeeds`, not `probeAll`.
+  //   · it ALREADY memoises within a call — the `resolved` map and `inFlight` set
+  //     in `capabilities.ts` probe each capability once even when several others
+  //     `require` it, and resolve a cycle to unmet rather than looping.
+  //   · 26 capabilities cost 441 ms measured, against this 30 s budget: 68x
+  //     headroom.
+  //
+  // So the budget is not a workaround for a deeper problem. It is the whole fix,
+  // on its own terms.
   test("the real join runs and produces a verdict per skill", async () => {
     const { kgRoots } = await import("../../scripts/known-skills.ts");
     const { loadCapabilities, probeAll } = await import("./capabilities.ts");
