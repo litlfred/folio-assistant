@@ -59,6 +59,7 @@ import {
   readDeclaration,
   repoRootFor,
   instanceRootFor,
+  owesVisualiser,
   type CatHarnessDeclaration,
 } from "../schemas/cat-harness.js";
 // `folio` is registered by CORE as a load-time side effect, and this module
@@ -218,12 +219,29 @@ export function auditInstance(root: string): InstanceCoverage {
 
       const declared = dir.coverage?.[criterion];
       if (declared === undefined) {
+        // An UNMET OBLIGATION outranks an unanswered question.
+        //
+        // The owner, 2026-09-20: a directory an instance declares or initiates
+        // and then writes to — `beans/`, `todos/`, `fsh-guts/` — owes a
+        // visualiser "as requiement of handler". So for those kinds a missing
+        // one is not "nobody has said yet", it is a thing the declaring
+        // instance promised and did not deliver.
+        //
+        // Ranked, not gated, and the axis stays advisory: 0 of 20 such
+        // directories have one today, and a hard gate on day one is the wall
+        // this file's own header says somebody switches off. What changes is
+        // that the 20 stop being indistinguishable from the kinds that never
+        // owed anything.
+        const unmetObligation = criterion === "visualiser" && dir.graphs.some((g) => owesVisualiser(g));
         findings.push({
           instance,
           directory: dir.id,
           criterion,
-          severity: "minor",
-          detail: `no ${criterion} declared — nobody has said what ${criterion === "visualiser" ? "renders it" : criterion === "docs" ? "documents it" : "governs it"}`,
+          severity: unmetObligation ? "major" : "minor",
+          detail: unmetObligation
+            ? `no visualiser declared, and ${dir.graphs.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
+              `an instance renders what it declares`
+            : `no ${criterion} declared — nobody has said what ${criterion === "visualiser" ? "renders it" : criterion === "docs" ? "documents it" : "governs it"}`,
         });
         continue;
       }
