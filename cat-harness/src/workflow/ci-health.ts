@@ -281,6 +281,46 @@ export interface WorkflowHealth {
    * a time.
    */
   headUnjudged?: boolean;
+  /**
+   * This workflow's file exists, and **no run of it fell inside the window**.
+   *
+   * Set only on a `no-runs` row, which before 2026-09-20 was unreachable: the
+   * state existed in {@link Health} and `classifyRuns` set it at
+   * `runs.length === 0`, but rows were built by grouping the runs, and a group
+   * is never empty. So a workflow with nothing in the window was not a row
+   * with a quiet verdict — it was **absent from the report entirely**.
+   *
+   * Measured on this repository, 2026-09-20: 38 workflow files, 3 rows,
+   * `✓ every workflow … is green`. The 35 were not judged and not mentioned.
+   */
+  noRunsInWindow?: boolean;
+  /**
+   * This workflow fires on a `schedule:`.
+   *
+   * Supplied by the caller ({@link AssessOptions.hasSchedule}), because
+   * reading YAML is not this module's business. It changes what a `no-runs`
+   * row MEANS, and the difference is the whole point of carrying it: a
+   * `workflow_dispatch`-only file with no runs is working as intended, while a
+   * scheduled one with no runs is either broken or outside the window — and
+   * the second of those is a fact about the REPORT, not about the workflow.
+   */
+  scheduled?: boolean;
+  /**
+   * What a DIRECT request for this workflow's own runs established, when the
+   * window did not reach it.
+   *
+   * Three states, and collapsing any two of them is the defect this module is
+   * about. `"never-ran"` means the forge was asked and answered zero: a real
+   * finding, and `5rfy`'s shape — a workflow that cannot be red because it has
+   * never run. `"unknown"` means the request failed, which is not evidence of
+   * anything. Unset means no direct request was made.
+   *
+   * The first draft of this change printed "the direct fetch did not answer"
+   * for a workflow whose fetch answered perfectly well, with zero. A message
+   * that reports a clean measurement as a failed one is worse than silence,
+   * because it sends the reader to debug the tool instead of the workflow.
+   */
+  probe?: "never-ran" | "unknown";
 }
 
 /** Conclusions that are not a pass but are also not the workflow's fault. */
@@ -411,6 +451,35 @@ export interface AssessOptions {
    * a finding.
    */
   triggersOnPush?: (path: string) => boolean | undefined;
+  /**
+   * Every workflow file in the repository, so a file with no run in the window
+   * becomes a ROW rather than an absence.
+   *
+   * Without this the report is a function of the runs alone, and a workflow
+   * that did not run is indistinguishable from one that does not exist. That
+   * is the `xom7` defect — a workflow failing where nobody looks — with the
+   * dial at zero, and it was live in this module: see
+   * {@link WorkflowHealth.noRunsInWindow}.
+   *
+   * Omitting it keeps the old behaviour exactly. Not knowing the file list
+   * must not invent rows, so an empty array and `undefined` are different: the
+   * first says "there are none", the second says "I did not look".
+   */
+  knownWorkflows?: Array<{ path: string; name: string }>;
+  /**
+   * Does this workflow fire on a `schedule:`? `undefined` when unreadable.
+   *
+   * Only consulted for a file with no runs, where it separates "dispatch-only,
+   * nothing expected" from "scheduled and nothing arrived". Unknown is left
+   * unset rather than guessed, on the same rule as every other predicate here.
+   */
+  hasSchedule?: (path: string) => boolean | undefined;
+  /**
+   * The outcome of a direct per-workflow request, for files the window missed.
+   * See {@link WorkflowHealth.probe}. Omit it and no row claims to have been
+   * probed.
+   */
+  probed?: (path: string) => "never-ran" | "unknown" | undefined;
 }
 
 export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHealth[] {
@@ -418,7 +487,7 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
   const live = opts.workflowExists
     ? runs.filter((r) => !r.path || opts.workflowExists!(r.path))
     : runs;
-  return [...byWorkflow(live).entries()]
+  const rows: WorkflowHealth[] = [...byWorkflow(live).entries()]
     .map(([workflow, rs]) => {
       const h: WorkflowHealth = {
         workflow,
@@ -444,7 +513,34 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
         }
       }
       return h;
-    })
+    });
+
+  // Files that produced NO run in the window. Appended rather than merged,
+  // because they come from a different source of truth: the runs say what
+  // happened, the file list says what exists, and only the second can tell you
+  // that something did not happen at all.
+  //
+  // `knownWorkflows` omitted means the caller did not look, and that is not
+  // the same as there being none — so the loop simply does not run, and the
+  // report is exactly what it was before this existed.
+  const seen = new Set(rows.map((h) => h.path).filter((p): p is string => !!p));
+  const extra: WorkflowHealth[] = [];
+  for (const wf of opts.knownWorkflows ?? []) {
+    if (seen.has(wf.path)) continue;
+    extra.push({
+      workflow: wf.name,
+      path: wf.path,
+      health: "no-runs",
+      consecutiveFailures: 0,
+      noRunsInWindow: true,
+      // Unknown stays unset. A row that cannot say whether it was expected to
+      // run says nothing about it, rather than implying "dispatch-only".
+      ...(opts.hasSchedule?.(wf.path) === true ? { scheduled: true } : {}),
+      ...(opts.probed?.(wf.path) ? { probe: opts.probed(wf.path) } : {}),
+    });
+  }
+
+  return [...rows, ...extra]
     .sort((a, b) => {
       // Worst first: a reader who reads one line should read the worst one.
       const order: Health[] = ["red", "running", "superseded", "green", "no-runs"];
@@ -460,11 +556,53 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
  * health check that goes quiet when it cannot see is worse than no check: it
  * reads as reassurance.
  */
+export interface Window {
+  /** How many runs the single API call returned. */
+  runs: number;
+  /** ISO timestamp of the OLDEST run in that page. */
+  from: string;
+  /** ISO timestamp of the NEWEST. */
+  to: string;
+}
+
+/**
+ * The window, in words, with its span in hours or days.
+ *
+ * **The span is the point, not the count.** `?per_page=100` is a page of RUNS,
+ * not a period, so how far back it reaches is a function of how busy the
+ * repository is. Measured here on 2026-09-20: 100 runs covered **6.1 hours**
+ * (of 1096 on the branch). A weekly workflow cannot appear in six hours, and a
+ * daily one appears only if the repository happens to be quiet — so `ci-health`
+ * (weekly), `upstream-pins` (weekly) and `health-check` (daily) were absent by
+ * construction from a report that then printed `✓ every workflow … is green`.
+ *
+ * That is `xom7` — a workflow red where nobody looks — inside the module
+ * written for `xom7`. Stating the span is what lets a reader see it; fetching
+ * the scheduled ones separately is what fixes it, and that is the caller's job
+ * because it costs API calls.
+ */
+export function describeWindow(w: Window): string {
+  const hours = (new Date(w.to).getTime() - new Date(w.from).getTime()) / 3_600_000;
+  const span =
+    hours >= 48
+      ? `${(hours / 24).toFixed(1)}d`
+      : hours >= 1
+        ? `${hours.toFixed(1)}h`
+        : `${Math.round(hours * 60)}m`;
+  return `${w.runs} recent run(s) spanning ${span}`;
+}
+
 export function render(
   health: WorkflowHealth[],
-  opts: { unreachable?: string; branch: string },
+  opts: { unreachable?: string; branch: string; window?: Window },
 ): string {
   const lines = ["## CI health", ""];
+  if (opts.window) {
+    // Above the unreachable branch on purpose: when the check DID look, the
+    // reader needs to know how far. A verdict without its window is a verdict
+    // whose scope the reader has to assume, and they assume "all of it".
+    lines.push(`_Window: ${describeWindow(opts.window)} on \`${opts.branch}\`._`, "");
+  }
   if (opts.unreachable) {
     lines.push(
       `**Not checked — treat as unknown, not as green.** ${opts.unreachable}`,
@@ -531,9 +669,59 @@ export function render(
     );
   }
 
-  const ok = health.filter((h) => h.health !== "red" && h.health !== "superseded");
-  if (red.length === 0 && superseded.length === 0 && pending.length === 0) {
+  // A scheduled workflow that produced nothing in the window is reported ABOVE
+  // the summary and by name. It is not a failure — it may simply have a period
+  // longer than the window — but it is the one thing a reader must not take
+  // the summary's word on, because the summary is computed from workflows that
+  // ran and this one did not.
+  const unjudgedScheduled = health.filter((h) => h.noRunsInWindow && h.scheduled);
+  for (const h of unjudgedScheduled) {
+    const why =
+      h.probe === "never-ran"
+        ? "asked directly, and it has **never run on this branch**. A workflow " +
+          "with no runs cannot be red, so nothing that reads runs can see it " +
+          "(bean `5rfy`)."
+        : h.probe === "unknown"
+          ? "asked directly, and the request failed — state UNKNOWN, not green."
+          : "**no run of it fell in the window**, and it was not asked directly. " +
+            "If its period is longer than the window above, it cannot appear " +
+            "however healthy or broken it is.";
+    lines.push(`- ⚠️ **${h.workflow}** — fires on a schedule; ${why}`);
+  }
+
+  const unjudgedOther = health.filter((h) => h.noRunsInWindow && !h.scheduled);
+  if (unjudgedOther.length > 0) {
+    // A count rather than a list. Most of these are folio-vendored,
+    // dispatch-only files the platform should never judge, and naming 35 of
+    // them every run is how a reader learns to skip the section. The count is
+    // what makes the ratio visible; `--markdown` readers who want the names
+    // have the file list.
+    lines.push(
+      `- ℹ️ ${unjudgedOther.length} other workflow file(s) produced no run in ` +
+        `the window and are unjudged (dispatch-only, or vendored for a folio).`,
+    );
+  }
+
+  const ok = health.filter(
+    (h) => h.health !== "red" && h.health !== "superseded" && !h.noRunsInWindow,
+  );
+  if (
+    red.length === 0 &&
+    superseded.length === 0 &&
+    pending.length === 0 &&
+    unjudgedScheduled.length === 0
+  ) {
     lines.push(`✓ every workflow with a recent run on \`${opts.branch}\` is green (${ok.length}).`);
+  } else if (red.length === 0 && superseded.length === 0 && pending.length === 0) {
+    // Every workflow that RAN is green, and at least one scheduled workflow did
+    // not run. The tick is withheld deliberately: a reader who sees ✓ stops
+    // reading, and what is above this line is the part they must not stop
+    // before.
+    lines.push(
+      "",
+      `_(${ok.length} workflow(s) green; ${unjudgedScheduled.length} scheduled ` +
+        `workflow(s) unjudged. Not "all green" — the window did not reach them.)_`,
+    );
   } else if (red.length === 0 && superseded.length === 0) {
     lines.push(
       `_(no settled failures; ${pending.length} workflow(s) still reporting. ` +
