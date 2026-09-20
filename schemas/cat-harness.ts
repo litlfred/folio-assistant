@@ -1033,6 +1033,46 @@ export function siteDir(d: Pick<CatHarnessDeclaration, "name" | "stub">): string
  * nameless. A site root guessed wrong writes 278 pages into a directory
  * nothing serves, and "could not determine" is never rendered as an answer.
  */
+/**
+ * Where an instance publishes the instructions for BOOTSTRAPPING INTO IT,
+ * relative to that instance's own docs root.
+ *
+ * ## Why a fixed convention rather than a lookup
+ *
+ * §5 of the bootstrap proposal has the agent obtain exactly ONE reference —
+ * `litlfred/f-a-sci` — and read everything else from that instance's own
+ * declaration. That answers *which* instance. It does not answer *where in it*
+ * the initialization steps are, and without a fixed answer the agent needs
+ * per-instance knowledge of every harness it might be pointed at, which is
+ * precisely what one reference was meant to remove.
+ *
+ * So every cat-harness instance, and every instance that depends on one,
+ * publishes them at the SAME place. Bootstrap then needs no special case per
+ * target: `f-a-sci`, `smart-base` and a specialised harness nobody has written
+ * yet are all read the same way. That is what lets bootstrap initialise into a
+ * *specialised* kind rather than only into the one it was written against.
+ *
+ * ## Composed, never spelled
+ *
+ * Built from {@link siteDir} rather than written as `docs/bootstrap/...`,
+ * because the stub pattern INVERTED on 2026-09-19 — `docs/<stub>` became
+ * `<stub>/docs` (bean `wggr`) — and every literal spelling of the old layout
+ * had to be found and changed. A convention composed from the one function
+ * that knows the site root survives the next relocation; a literal does not.
+ */
+export const BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
+
+/**
+ * The full repo-relative path to an instance's initialization instructions —
+ * `<stub>/docs/bootstrap/initialization.md`.
+ *
+ * THE one answer, so the README that tells an agent where to look and the
+ * check that verifies the file is there cannot disagree about the spelling.
+ */
+export function initializationDoc(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
+  return `${siteDir(d)}/${BOOTSTRAP_INIT_DOC}`;
+}
+
 export function siteDirFor(root: string): string {
   const p = join(root, "harness.json");
   let raw: unknown;
