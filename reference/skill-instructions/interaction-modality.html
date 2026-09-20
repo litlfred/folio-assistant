@@ -961,6 +961,57 @@ tool’s labels); and nothing sat between the agent and the question tool.</p>
 implied, which is the same three-state discipline the rest of this skill asks
 for. <code class="language-plaintext highlighter-rouge">bun test cat-harness/scripts/tests/decision-request.test.ts</code> asserts each
 refusal, because a schema whose refusals are untested quietly stops refusing.</p>
+<h5 id="the-posture-and-the-condition-that-revisits-it">
+  
+  
+    <a href="#the-posture-and-the-condition-that-revisits-it" class="anchor-heading" aria-labelledby="the-posture-and-the-condition-that-revisits-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The posture, and the condition that revisits it
+  
+  
+</h5>
+    
+
+<p><strong>The owner chose, 2026-09-20: <em>“reminder now, gate later.”</em></strong> The third layer
+does <strong>not</strong> block. Asked as: should the <code class="language-plaintext highlighter-rouge">PreToolUse</code> hook refuse
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> until a validated {@link DecisionRequest} has been rendered?</p>
+
+<p>The argument against gating <em>today</em> is not that gating is wrong. It is that
+<code class="language-plaintext highlighter-rouge">decision-request.ts</code> was written in one sitting against four questions its own
+author had got wrong — <strong>a sample of one author, and a biased one</strong>. A gate that
+refused a well-formed question because the schema turned out too narrow would
+cost the person the one channel they use to correct an agent, and the day it was
+written is the day that channel mattered.</p>
+
+<p>So the posture is:</p>
+
+<ol>
+  <li><strong>The hook reminds.</strong> It never blocks, and a question always reaches the
+person, well-formed or not.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">renderDecision</code> is the house style</strong> for any decision with more than two
+options, or any decision whose options differ in cost rather than only in
+kind. Write the object, render the prose, then offer the selection.</li>
+  <li><strong>Gating is revisited on EVIDENCE, not on a date.</strong></li>
+</ol>
+
+<blockquote>
+  <p><strong>The condition: twelve real decision records.</strong> <code class="language-plaintext highlighter-rouge">bun run health</code> reports
+<code class="language-plaintext highlighter-rouge">bean-decision-records</code> — beans carrying a <code class="language-plaintext highlighter-rouge">## Options</code> section — and it read
+<strong>7</strong> on 2026-09-20. At twelve, a person can read them and answer the question
+the schema cannot answer about itself: does this shape fit the decisions this
+repository actually has?</p>
+</blockquote>
+
+<p><strong>The counter is the one that already existed</strong>, and deliberately so. Adding a
+second store of decision objects would have created a parallel count free to
+disagree with <code class="language-plaintext highlighter-rouge">bean-store</code>’s — the <code class="language-plaintext highlighter-rouge">beans</code>/<code class="language-plaintext highlighter-rouge">todos</code> confusion one level along. So
+a decision worth keeping goes into the <strong>bean it belongs to</strong>, under
+<code class="language-plaintext highlighter-rouge">## Options</code>, where <code class="language-plaintext highlighter-rouge">madr.md</code>’s two-option floor and
+<code class="language-plaintext highlighter-rouge">bean-thin-decision-records</code> already govern it. <code class="language-plaintext highlighter-rouge">renderDecision</code> composes the
+chat message; the bean keeps the record.</p>
+
+<p><strong>A deferral with no trigger is not a deferral</strong>, which is the defect class this
+whole section is about: it is a rule with no home, indistinguishable a month
+later from a decision nobody made. The trigger is named, it is measured by a
+command, and it is carried as an open Done-when on bean <code class="language-plaintext highlighter-rouge">hajp</code>.</p>
 <h3 id="42-form--the-checklist">
   
   
@@ -1127,7 +1178,7 @@ rule — not asking at all — and no stylesheet delivers it.</li>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35534075936"><code>cdbde30</code></a> &middot; 2026-09-20T20:00:31Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35534362002"><code>bea07a8</code></a> &middot; 2026-09-20T20:05:19Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
