@@ -46,9 +46,9 @@ Measured twice, in one session, both times against me:
 
 - `e5a514e3ff` — I wrote a comment arguing `dak`/`sushi` could stay in core
   and move to a WHO adapter "later". `check:partition:edges` refused within
-  minutes: `folio-assist-core → smart-base`. Reaching for `DAK_TYPE` IS the
+  minutes: `folio-assistant-core → smart-base`. Reaching for `DAK_TYPE` IS the
   edge.
-- `eb6c87db42` — same shape again: `agentic-harness → folio-assist-core`,
+- `eb6c87db42` — same shape again: `agentic-harness → folio-assistant-core`,
   because a filename containing "content" classified marker machinery to core.
 
 > **A boundary argued in prose is not a boundary. It holds when the import

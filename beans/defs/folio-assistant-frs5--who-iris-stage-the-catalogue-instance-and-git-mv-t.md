@@ -33,7 +33,7 @@ showing 1,431 additions and as many deletions.
 | | |
 |---|---|
 | `who-iris/library/` | the three IRIS items — `wpr-rdo-2020-003-eng`, `who-pub-tps-931`, `9789241548960-eng` |
-| `folio-assist-sci/library/` | `milnorlink`, in a NEW staged instance (bean `r1lz` named the destination; this made it) |
+| `folio-assistant-sci/library/` | `milnorlink`, in a NEW staged instance (bean `r1lz` named the destination; this made it) |
 | `cat-harness/library/` | gone, keep-marker and all |
 
 **The keep-marker had to go too, and finding out why was the useful part.**

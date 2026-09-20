@@ -35,7 +35,7 @@ families in this repository today are:
 
 **This settled a live merge conflict**, which is why it is worth recording
 rather than inferring later: `main` had renamed the core instance to
-`folio-assist-core` while this branch carried `folio-assistant-core`, and the
+`folio-assistant-core` while this branch carried `folio-assistant-core`, and the
 ruling above decided it — the `cat-` prefix reaches the harness layer
 (`bootstrap` -> `cat-bootstrap`, which was taken from main) and stops there.
 
@@ -85,8 +85,8 @@ owner it is theirs to change.
 
 ## Not a rename of anything existing
 
-Nothing here asks for `folio-assist-sci` -> `folio-assistant-sci` or for `qou`
-to move. The owner has decided `qou` stays; `folio-assist-sci` has not been
+Nothing here asks for `folio-assistant-sci` -> `folio-assistant-sci` or for `qou`
+to move. The owner has decided `qou` stays; `folio-assistant-sci` has not been
 raised and is NOT assumed. This bean is about the SKILL and the one README
 pointer.
 

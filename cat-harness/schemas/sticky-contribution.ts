@@ -72,7 +72,7 @@
  * ## Why this module is HARNESS and not CORE
  *
  * `schemas/cat-harness.ts` is classified `agentic-harness` and
- * `schemas/landing-sticky.ts` is `folio-assist-core`. The declaration field that
+ * `schemas/landing-sticky.ts` is `folio-assistant-core`. The declaration field that
  * carries these lives on `CatHarnessDeclarationSchema`, so defining the shape in
  * `landing-sticky.ts` would make the harness import core — a **wrong-direction
  * edge**, which `check:partition:edges` reports and which is the falsifier this

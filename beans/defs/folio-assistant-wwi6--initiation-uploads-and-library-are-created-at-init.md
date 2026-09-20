@@ -48,7 +48,7 @@ Flagged rather than guessed at, because each changes what gets built:
    `UNPUBLISHED_GRAPH_KINDS` (`["fsh-guts"]`) and `DeclarationScopeSchema`
    (`instance` | `repository`), and neither is obviously this. **Is "state" a
    new declared property, or an existing one under another name?**
-2. **"initiation skill of folio-asst-core/."** `folio-assist-core` is a layer of
+2. **"initiation skill of folio-asst-core/."** `folio-assistant-core` is a layer of
    the not-yet-done split (issue #223) and does not exist as a directory here —
    the roots today are `bootstrap/` and `cat-harness/`. `mggs` put the folio
    step in cat-harness initiation on the owner's ruling (*"cat-harness initaton

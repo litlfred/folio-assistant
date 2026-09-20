@@ -183,7 +183,7 @@ jobs:
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
       # The harness has no renderer of its own — `folio` is the only renderable
-      # graph kind and it belongs to folio-assist-core — so its knowledge graph
+      # graph kind and it belongs to folio-assistant-core — so its knowledge graph
       # is published as DATA rather than as a page. Something else may draw it.
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
@@ -268,7 +268,7 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
+          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"

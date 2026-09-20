@@ -18,7 +18,7 @@ Group 1 of 13 in `d308`. **34 files, 19 entry points** — the largest loose sur
 **BPMN:** `authoring-a-paper · Task_Publish` and `authoring-a-document ·
 Task_Publish`, both `serviceTask`, both already ref `content-publish`.
 
-**Target repo (#223):** splits — the site half is `folio-assist-core`, `kg-export`
+**Target repo (#223):** splits — the site half is `folio-assistant-core`, `kg-export`
 and `pages-bootstrap` are `agentic-harness`. That split is a finding, not a
 problem: it is the one group whose files do not all go to one repo, so it is also
 the one most likely to be two Tools rather than one.
@@ -52,7 +52,7 @@ reachable-by-mechanism are different questions, and `d308` is the second one.
 
 ## This bean is really two, and the split is the table's own
 
-`d308`'s table already said the target repo splits — *"folio-assist-core (site) /
+`d308`'s table already said the target repo splits — *"folio-assistant-core (site) /
 agentic-harness (kg-export)"*. That was written and then not acted on. Acting on
 it:
 

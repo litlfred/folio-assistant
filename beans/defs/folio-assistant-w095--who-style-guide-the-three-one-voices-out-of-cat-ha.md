@@ -78,7 +78,7 @@ Now: 4 voices, 37 rules, across two instances. Before: 1 and 12.
 
 ## Not done, and it is somebody else's bean
 
-`milnor` cites `folio-assist-sci` and that instance now EXISTS — its
+`milnor` cites `folio-assistant-sci` and that instance now EXISTS — its
 destination stopped being hypothetical when `frs5` created it. Noted on `r1lz`
 rather than acted on: this bean scopes it out in as many words, and resolving
 a sibling's bean because one clause of it came true is what `bean-coordination`

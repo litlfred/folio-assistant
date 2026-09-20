@@ -1,4 +1,4 @@
-# AGENTS.md — folio-assist-core
+# AGENTS.md — folio-assistant-core
 
 This directory is a **staged instance**, not a repository yet. The agent
 guidance that governs work here is the root

@@ -6,7 +6,7 @@
  * It was, and that placement inverted a dependency. `jsonld.ts` is the
  * **content** vocabulary: block kinds, DoCO structural types, SPAR citation
  * terms, the FHIR and smart-base namespaces. It belongs to
- * `folio-assist-core`, and it imports `./block-kinds` to build its projection
+ * `folio-assistant-core`, and it imports `./block-kinds` to build its projection
  * tables.
  *
  * But `schemas/cat-harness.ts` — the root declaration every instance
@@ -14,7 +14,7 @@
  * also needs the platform namespace, to mint the `@type` IRIs for its graph
  * kinds. Importing it from `jsonld.ts` would have made `agentic-harness`
  * depend on the content model for its own type IRIs: a
- * `harness → folio-assist-core` edge, which is already the largest
+ * `harness → folio-assistant-core` edge, which is already the largest
  * wrong-direction group `bun run check:partition` reports, and exactly the
  * coupling the five-repo split has to undo.
  *

@@ -151,7 +151,7 @@ author, and it is what connects this epic to `v49e` (the workflow view) and
 
 **And `qmjh` already encodes half of it.** All four are classified `reproduce`,
 so a dependent instance materialises its own — the four-directory model is
-already what a new folio gets. `folio-assist-core` declares none of them today,
+already what a new folio gets. `folio-assistant-core` declares none of them today,
 which the navbar stub shows as three "NOT DECLARED" rows.
 
 ## Layout: dynamic by default, a declared theme as the override

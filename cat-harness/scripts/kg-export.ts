@@ -3,7 +3,7 @@
  * Dump the instance's knowledge graph to one JSON file, for publication.
  *
  * `agentic-harness` has no renderer. `folio` is the only `renderable` graph
- * kind and it belongs to `folio-assist-core`, so the harness cannot put its own
+ * kind and it belongs to `folio-assistant-core`, so the harness cannot put its own
  * knowledge graph on a page the way a folio puts a chapter on one. That is the
  * right boundary and this does not move it: the export is **data**, not a
  * rendered document. Something else may draw it.
@@ -1352,7 +1352,7 @@ async function collectProcesses(
  * a node saying what that kind holds and whether it renders.
  *
  * Note this imports `folio-graph-kind`, so the export sees the kind
- * `folio-assist-core` registers and not just the harness's four. It takes no
+ * `folio-assistant-core` registers and not just the harness's four. It takes no
  * document IRI because these nodes are minted under the NAMESPACE: a graph
  * kind means the same thing in a preview and in the canonical graph, so its
  * IRI must not vary with where the document is published.
@@ -1579,7 +1579,7 @@ function collectGraphKinds(root: string = ROOT): Node[] {
  *
  * ## Measured: it was the difference between rendering and failing
  *
- * 2026-09-20, `folio-assist-core` is a stub — a `README.md` and a declaration
+ * 2026-09-20, `folio-assistant-core` is a stub — a `README.md` and a declaration
  * naming it, `directories: []`. It rendered **zero** nodes and
  * `check:instance-render` failed it on "an empty graph is a failure, not an
  * empty success". That verdict was right about the graph and wrong about the

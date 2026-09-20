@@ -41,7 +41,7 @@ describe("instances are discovered, not listed", () => {
   });
 
   test("folio-assistant-core is among them — the instance that was silently unchecked", () => {
-    // `folio-assistant-core`, not `folio-assist-core`. The two spellings were a
+    // `folio-assistant-core`, not `folio-assistant-core`. The two spellings were a
     // live disagreement between `main` and PR #477 until the owner settled it
     // on 2026-09-20: the `cat-` prefix reaches the harness layer
     // (`bootstrap` -> `cat-bootstrap`, taken from main) and does NOT extend to

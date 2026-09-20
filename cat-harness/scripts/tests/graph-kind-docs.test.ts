@@ -76,7 +76,7 @@ function documentedKinds(): string[] {
     const line = lines[i]!;
     if (!line.trimStart().startsWith("|")) break;
     const first = line.split("|")[1] ?? "";
-    // A cell reads `` `tools` `` or `` **`folio-assist-core`** ``; the kind is the
+    // A cell reads `` `tools` `` or `` **`folio-assistant-core`** ``; the kind is the
     // backticked token, and bold marks WHO DECLARES it in the next column.
     const kind = first.replace(/[`*]/g, "").trim();
     if (kind) out.push(kind);

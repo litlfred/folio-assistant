@@ -149,3 +149,38 @@ The THEME half stands and is done where the art exists: a theme is a declared no
 **Still open and genuinely unanswered**: whether the `tools` graph has a rendered surface at all to carry a sticky on. Measured 2026-09-20: `docs/reference/` holds `skills/` and `skill-instructions/` only, Tools appear as prose, and every consumer of `tools/index.js` is non-visual. A theme cannot be chosen for a surface that does not exist, which is a different question from the one this bean was opened on.
 
 **Recommend the owner scrap or re-scope this bean and `d3yq`** rather than leaving them open against a premise that has been withdrawn. Not doing so unilaterally: `bean-coordination` says unwanted work is scrapped WITH ITS REASONS by whoever owns the call, and a bean quietly emptied of its premise is worse than one that says what happened to it.
+
+## RE-SCOPED, owner 2026-09-20 — not scrapped
+
+Same ruling as `xffc`: the withdrawn premise does not scrap the bean, it
+re-points it at the theme model `j66n` landed the same day.
+
+### Why this one survives more easily than `xffc`
+
+The avatar half is still wanted independently. `tfo1` names *"avatar for
+testing, engineering, architecture"* and cites the owner's own commit
+`1b62b57773dafaeaa05f9c7247ac65db00af92d1`, so there IS a supplied artefact
+here — which is exactly what `xffc` lacks and is blocked on.
+
+That makes this bean the easier of the two to start: the source exists.
+
+### The new scope
+
+A testing/engineering theme with `Theme.kind` chosen deliberately, every
+palette role read off the supplied art rather than eyedroppered by judgement,
+and a test that re-reads the art. `who-iris/themes/themes.test.ts` is the
+pattern — it unzips the captured stylesheet at test time and asserts the theme
+agrees with it, which makes the tests a freshness check as well as a
+correctness one.
+
+Note the constraint the existing node already states and a new theme must not
+break: *a theme sets the stripe's hue; it never sets its width to zero.* Colour
+alone carrying a whole signal fails WCAG SC 1.4.1. A "grumpy" theme that
+signalled failure by hue alone would break it in the most tempting way.
+
+### Done when
+- The three layouts are complete for the chosen kind, or the theme is INVALID —
+  never degraded.
+- Every value cites the supplied art, and a test re-reads it.
+- The non-colour-signal rule is checked, not assumed.
+- It goes through `resolveTheme` like every other theme, not a shortcut.

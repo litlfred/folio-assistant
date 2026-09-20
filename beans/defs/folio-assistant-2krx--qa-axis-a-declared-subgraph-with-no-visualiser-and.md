@@ -23,7 +23,7 @@ It reports, per instance, which declared directories have a renderer:
 |---|---|---|
 | `folio-assistant` (cat-harness) | **22** | 2 — `folio/` and `docs/` |
 | `bootstrap` | 2 + docs | 1 — `docs/` |
-| `folio-assist-core` | 0 + docs | 1 — `docs/` |
+| `folio-assistant-core` | 0 + docs | 1 — `docs/` |
 
 So **19 declared subgraphs in this instance alone have no way to look at them.**
 `library/` and `uploads/` are declared by every instance that has content and

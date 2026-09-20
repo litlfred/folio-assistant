@@ -42,7 +42,7 @@
  *
  * It is about the content model — which kinds exist and which adapter owns
  * them — so it belongs with the model. Putting it under `src/` would have
- * added another `agentic-harness → folio-assist-core` import, already the
+ * added another `agentic-harness → folio-assistant-core` import, already the
  * largest wrong-direction group in `bun run check:partition` (20 edges). A
  * mechanism built to enable the split should not deepen the thing the split
  * has to undo.

@@ -160,13 +160,13 @@ describe("coverage is a QA axis, not a promise", () => {
   });
 
   test("an avatar ahead of its declaration is REPORTED, not pruned", () => {
-    // `cat-bootstrap` and `folio-assist-core` are layers the owner named by name
+    // `cat-bootstrap` and `folio-assistant-core` are layers the owner named by name
     // and the split (#223) has not happened, so nothing declares them yet.
     // Drawing art before the directory exists is the right way round; the
     // finding is the honest record that they are ahead.
     const orphaned = coverage(ROOT).orphaned;
     expect(orphaned).toContain("cat-bootstrap");
-    expect(orphaned).toContain("folio-assist-core");
+    expect(orphaned).toContain("folio-assistant-core");
   });
 
   test("the trash derivation is asserted once, and it is in place", () => {

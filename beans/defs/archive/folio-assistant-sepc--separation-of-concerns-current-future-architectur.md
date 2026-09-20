@@ -19,7 +19,7 @@ Branch: `claude/sleepy-babbage-ls90iz`.
 1. A repo **taxonomy** — Tool, Test, Content and Consumer repos, and what each
    may contain.
 2. The **future-state split** into five folio-assistant instances:
-   `agentic-harness`, `folio-assist-core`, `smart-kg`, `smart-base`,
+   `agentic-harness`, `folio-assistant-core`, `smart-kg`, `smart-base`,
    `folio-asst-sci`.
 3. **Phase I / II / III** migration.
 4. (comment) rename top-level `content/` to `folio/`; make `folio` its own

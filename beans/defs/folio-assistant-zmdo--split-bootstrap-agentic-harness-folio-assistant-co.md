@@ -1,6 +1,6 @@
 ---
 # folio-assistant-zmdo
-title: 'SPLIT: bootstrap agentic-harness + folio-assist-core as forks, then prove an empty-repo bootstrap'
+title: 'SPLIT: bootstrap agentic-harness + folio-assistant-core as forks, then prove an empty-repo bootstrap'
 status: todo
 type: task
 created_at: 2026-09-18T17:24:16Z
@@ -12,7 +12,7 @@ parent: folio-assistant-vke6
 
 Owner, in chat 2026-09-18, verbatim intent:
 
-> when we get to an MVP for agent-harness and folio-assist-core, create
+> when we get to an MVP for agent-harness and folio-assistant-core, create
 > the two repo as forks of folio-asst. then delete/modify the new repos
 > until we get to a state we can test under a new/empty repo "bootstrap a
 > litlfred/folio-assistant here"

@@ -69,7 +69,7 @@ function contributionsOf(rel: string): DeclaredContribution[] {
 const CAT = contributionsOf("cat-harness");
 // The DIRECTORY, which is `folio-assistant-core/` since the owner's ruling of
 // 2026-09-20 ("use folio-assistant-core/"). The sticky's own id below is
-// `folio-assist-core` and is deliberately NOT renamed with it: a card id is a
+// `folio-assistant-core` and is deliberately NOT renamed with it: a card id is a
 // published identifier on the landing page, the directory is where the files
 // sit, and this line is the one place they differ — which is exactly why it
 // broke when they were assumed to be one string.
@@ -507,9 +507,9 @@ describe("`onboardingLinks` asks for the SET rather than copying it", () => {
   });
 
   test("without the flag a sticky carries exactly its declared links and no more", () => {
-    const declared = CORE.find((c) => c.contribution.id === "folio-assist-core")!.contribution;
+    const declared = CORE.find((c) => c.contribution.id === "folio-assistant-core")!.contribution;
     expect(declared.onboardingLinks ?? false).toBe(false);
-    expect(sticky(CORE, "folio-assist-core").links).toEqual([...declared.links]);
+    expect(sticky(CORE, "folio-assistant-core").links).toEqual([...declared.links]);
   });
 });
 
@@ -540,13 +540,13 @@ describe("the summary is derived, not a second field to keep in step", () => {
   });
 
   test("a declared summary wins", () => {
-    expect(sticky(CORE, "folio-assist-core").summary).toBe("What a folio is");
+    expect(sticky(CORE, "folio-assistant-core").summary).toBe("What a folio is");
   });
 });
 
 describe("the sub-graphs card says what the owner asked for", () => {
-  const body = () => sticky(CORE, "folio-assist-core").comment;
-  const links = () => sticky(CORE, "folio-assist-core").links;
+  const body = () => sticky(CORE, "folio-assistant-core").comment;
+  const links = () => sticky(CORE, "folio-assistant-core").links;
 
   // It WAS two sentences with no links, on the owner's first instruction. The
   // second: "knwoedege graph (content, skills, process, tools) could be a but
@@ -683,9 +683,9 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // resolver that always answered `cat-harness/harness.json` would be
     // silently right one time in three.
     const a = sourceLinks(REPO, "cat-harness/harness.json", "main")!;
-    const b = sourceLinks(REPO, "folio-assist-core/harness.json", "main")!;
+    const b = sourceLinks(REPO, "folio-assistant-core/harness.json", "main")!;
     expect(a.editHref).not.toEqual(b.editHref);
-    expect(b.editHref).toContain("folio-assist-core/harness.json");
+    expect(b.editHref).toContain("folio-assistant-core/harness.json");
   });
 
   test("a branch other than main is honoured", () => {

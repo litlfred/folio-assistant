@@ -4,7 +4,7 @@
  * Named for the **harness**, not for folio-assistant, and the distinction is
  * the point: `agentic-harness` is the layer that defines Roles, Skills, Tools
  * and the conventional directories, and every other instance — including
- * `folio-assist-core` — inherits from it. Calling this a "FolioAssistant"
+ * `folio-assistant-core` — inherits from it. Calling this a "FolioAssistant"
  * declaration would put the platform family's name on a harness-layer concept
  * and imply that an instance must be a folio-assistant to have one. It need
  * not: a Tool repo or a Test repo carries the same declaration.
@@ -32,7 +32,7 @@
  * ## Inheritance
  *
  * An instance inherits its dependencies' directory conventions. `agentic-
- * harness` declares `tools/`, `kg/` and `schemas/`; `folio-assist-core`
+ * harness` declares `tools/`, `kg/` and `schemas/`; `folio-assistant-core`
  * declares `folio/` and **also scans the three it inherits**, without
  * restating them. This is the same depth-first walk as
  * `schemas/harness-config.ts`, and the same overlay order — deepest dependency
@@ -143,7 +143,7 @@ export interface GraphKindDef {
    * The only behavioural distinction in the vocabulary — and the reason
    * `folio` is not declared here. The harness **cannot render**: the
    * just-the-docs pipeline and the webpage content type belong to
-   * `folio-assist-core`. A layer that cannot render must not own the
+   * `folio-assistant-core`. A layer that cannot render must not own the
    * renderable kind, so `folio` is REGISTERED by core rather than declared
    * here. See `schemas/folio-graph-kind.ts`.
    */
@@ -312,7 +312,7 @@ export interface GraphKindDef {
  *
  * ## Why the work plan is the harness's and not core's
  *
- * `folio` is registered by `folio-assist-core` because only core can render.
+ * `folio` is registered by `folio-assistant-core` because only core can render.
  * The work plan has no such constraint in either direction: an instance has
  * work whether or not it has content, and `agentic-harness` itself carries a
  * `beans/` store for its own. A Tool repo and a Test repo have work plans too.
@@ -1973,7 +1973,7 @@ export function findInstanceRoot(start: string): string | undefined {
  *
  * **Two gates were each carrying their own literal `["cat-harness",
  * "cat-bootstrap"]` instead** (`check-declared-assets`, `check-instance-render`),
- * and by 2026-09-20 there were FOUR instances: those two, `folio-assist-core`,
+ * and by 2026-09-20 there were FOUR instances: those two, `folio-assistant-core`,
  * and the repository root. So both gates reported clean runs over sets that
  * excluded half the subject — `dh4f` again, in the two checks whose whole job
  * is to look at instances.
@@ -3146,7 +3146,7 @@ export function renderableDirectories(
  * who had not been written yet, which is the one `wggr` was.
  *
  * **That caller arrived the same day.** Bean `frs5` moved the corpus out of
- * the platform into `who-iris/library/` and `folio-assist-sci/library/`, so
+ * the platform into `who-iris/library/` and `folio-assistant-sci/library/`, so
  * `library` has TWO homes and `schemas` has FOUR (`cat-harness/`,
  * `folio-assistant-core/`, `large-datasets/`, `detangle/`). The paragraph
  * above is kept as written and corrected here rather than edited, because

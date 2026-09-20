@@ -94,7 +94,7 @@ mode, caught at the point it occurs.
 `schemas/contributions.ts`, not `src/core/`. The registry is about the content
 model — which kinds exist, which adapter owns them — so it belongs with the
 model, and putting it under `src/` would have added another
-`agentic-harness → folio-assist-core` import, already the largest
+`agentic-harness → folio-assistant-core` import, already the largest
 wrong-direction group. A mechanism built to enable the split must not deepen
 what the split has to undo. Verified: `check:partition` reports 45 edges before
 and after. MCP tool contributions are carried as opaque registrar callbacks for
@@ -122,7 +122,7 @@ Two results change the plan below rather than merely confirming it:
 - **`smart-kg` partitions to zero modules.** There is no L1 code to move, so
   that repo is new construction like the Test repos, not an extraction. It is
   re-sequenced accordingly.
-- **21 of the 46 edges are `agentic-harness` → `folio-assist-core`** — the
+- **21 of the 46 edges are `agentic-harness` → `folio-assistant-core`** — the
   harness importing the content-object model, which is its defining constraint
   failing in practice. Extracting the harness is therefore *harder* than
   extracting sci, not easier, and Phase II's order reflects that.
@@ -178,7 +178,7 @@ archaeology.
 repo publishes its own knowledge graph, and the graphs are only mergeable if
 their node IRIs do not collide. Naming every artefact after its repository and
 minting `@id`s under that repository's `canonicalUrl` guarantees that by
-construction: `agentic-harness.jsonld` and `folio-assist-core.jsonld` cannot
+construction: `agentic-harness.jsonld` and `folio-assistant-core.jsonld` cannot
 assert the same node IRI, because the document IRI is part of every node's.
 
 The corollary is the rule the skill states and a test enforces: **artefacts are
@@ -209,7 +209,7 @@ One repo at a time, each becoming a folio-assistant instance in its own right.
 | 4 | `smart-kg` | the L1/L2 line holds | needs WHO context; least-built today |
 | 5 | `smart-kg-tools`, `smart-base-tools` | the Tool/Content kind split | only worth doing once the parents are stable |
 
-`folio-assist-core` is never extracted: it is what remains.
+`folio-assistant-core` is never extracted: it is what remains.
 
 **Per-repo gate — all five required:**
 
@@ -263,7 +263,7 @@ Stated plainly so the gaps are not mistaken for omissions:
   largest open question; `folio-asst-sci` is unbuildable until it is answered.
 - **Where the L1/L2 boundary falls** between `smart-kg` and `smart-base`.
 - **Whether the viewer splits by content type** or exposes a registration point
-  ([future state](future-state.html#folio-assist-core)).
+  ([future state](future-state.html#folio-assistant-core)).
 - **Repo ownership, naming and hosting** — org, visibility, release cadence.
 - **Whether `folio-asst-sci` depends on core only**, as the issue states, or
   also needs harness surface that core does not re-export.

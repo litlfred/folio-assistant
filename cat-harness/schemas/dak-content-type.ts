@@ -12,7 +12,7 @@
  * minutes:
  *
  * ```
- * schemas/content-types-base.ts [folio-assist-core] -> schemas/dak.ts [smart-base]
+ * schemas/content-types-base.ts [folio-assistant-core] -> schemas/dak.ts [smart-base]
  * A repo may not import one that depends on it.
  * ```
  *

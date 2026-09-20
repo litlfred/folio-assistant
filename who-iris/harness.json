@@ -16,7 +16,7 @@
       "id": "library",
       "path": "library/",
       "dependents": "reproduce",
-      "description": "The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assist-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
+      "description": "The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assistant-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
       "graphs": [
         "library"
       ]
@@ -43,7 +43,7 @@
       "id": "who-iris-skills",
       "path": "skills/",
       "dependents": "skip",
-      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool.",
+      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assistant-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool.",
       "graphs": [
         "cat-harness"
       ]

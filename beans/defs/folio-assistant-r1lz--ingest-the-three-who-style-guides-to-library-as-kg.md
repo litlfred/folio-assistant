@@ -153,7 +153,7 @@ consumers of `library/` that any such move has to bring with it.
 
 ## 2026-09-20 — the destination this bean named now exists
 
-`folio-assist-sci/` was created as a staged top-level instance and
+`folio-assistant-sci/` was created as a staged top-level instance and
 `library/milnorlink/` moved into it (bean `frs5`, owner: *"milnor goes in
 f-a-sci library/, move all 4 and fix fallout"*). 64 tracked files, `git mv`, so
 history follows. Its share of `image-verdicts.json` went with it.
@@ -170,10 +170,10 @@ one clause of it came true is exactly what `bean-coordination` forbids.
 WHO publication.
 
 What changed is that its destination is no longer hypothetical.
-`folio-assist-sci/` exists (bean `frs5`) and holds `library/milnorlink/`, and
-`milnor.json` already cites `{ instance: "folio-assist-sci" }` and resolves.
+`folio-assistant-sci/` exists (bean `frs5`) and holds `library/milnorlink/`, and
+`milnor.json` already cites `{ instance: "folio-assistant-sci" }` and resolves.
 So the remaining move is a `git mv` of one file into a
-`folio-assist-sci/voices/` that does not exist yet, plus the declaration.
+`folio-assistant-sci/voices/` that does not exist yet, plus the declaration.
 
 `check-voices` will follow it without changes — it enumerates the instances
 shipping a `voices/` directory since `w095`. Status untouched: this is a note,

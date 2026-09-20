@@ -118,7 +118,7 @@ decides it.
 | `voices` | **harness** | editorial voice profiles — one JSON each, `"$schema": "folio-voice/v1"`. Every rule cites its source. **Opt-in**: shipping a voice does not apply it. | no |
 | `translation-sources` | **harness** | the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; there is deliberately **no kind for the rendered output**. Read with the [`translation-manager`](translation-manager.md) skill; shape in `schemas/translation.ts`. | no |
 | `docs` | **harness** | documentation **about** the knowledge graph — how the harness works, what its directories hold, how a process runs. Distinct from `folio` by its SUBJECT, not its format. Added 2026-09-20: this table carried no renderable harness kind until the harness gained a plain just-the-docs renderer, and the rule reads in its true form — a layer owns the kinds it CAN render. | **yes** — the plain just-the-docs pipeline, no extensions |
-| `folio` | **`folio-assist-core`** | authored content an AUTHOR creates using the graph — a note, a visualization, a paper. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`. | **yes** — just-the-docs renders it to a website |
+| `folio` | **`folio-assistant-core`** | authored content an AUTHOR creates using the graph — a note, a visualization, a paper. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`. | **yes** — just-the-docs renders it to a website |
 
 > ### `test/` is the one test tree — resolved 2026-09-19
 >
@@ -324,7 +324,7 @@ agentic-harness/          folio-assistant-core/
 ```
 
 `agentic-harness` declares `tools/`, `kg/` and `schemas/`.
-`folio-assist-core` declares **only** `folio/` and inherits the other three.
+`folio-assistant-core` declares **only** `folio/` and inherits the other three.
 
 ## Inheritance
 
@@ -584,7 +584,7 @@ silently miss half its instructions.
 
 The declaration schema needs the platform's IRI namespace to mint `@type`
 values. That namespace used to live in `schemas/jsonld.ts`, which is
-`folio-assist-core`'s **content** vocabulary — block kinds, DoCO structural
+`folio-assistant-core`'s **content** vocabulary — block kinds, DoCO structural
 types, SPAR citation terms. Importing it would have made `agentic-harness`
 depend on the content model for its own type IRIs: a `harness → core` edge,
 already the largest wrong-direction group `bun run check:partition` reports.

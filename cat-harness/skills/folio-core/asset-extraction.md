@@ -103,7 +103,7 @@ file's `localPath`, which exists only once somebody asked for it.
 
 - [`library-ingestion`](library-ingestion.md) — the other way in. A container
   read this way has not been ingested; it has been *described*.
-- `schemas/extraction.ts` in folio-assist-core — the record, and why each
+- `schemas/extraction.ts` in folio-assistant-core — the record, and why each
   field is optional or not.
 - `schemas/materialization.ts` — `materializedAt`, the timestamp this one is
   most often confused with.

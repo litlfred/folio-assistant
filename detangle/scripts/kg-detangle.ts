@@ -102,7 +102,7 @@ const dangling: Array<{ from: string; ref: string; via: string }> = [];
 // `Record<string, "enforced" | "recorded">` — two of the three levels — while
 // the table below assigns `"prose"` and line 157 assigns it directly. A real
 // TS2322 that nothing caught, because `tsconfig.json` did not include this
-// tree; `detangle/`, `large-datasets/`, `who-iris/` and `folio-assist-sci/`
+// tree; `detangle/`, `large-datasets/`, `who-iris/` and `folio-assistant-sci/`
 // were all outside the program while the file's own comment said "Every tree
 // is now compiled".
 const AUTHORITY: Record<string, EdgeAuthority> = {

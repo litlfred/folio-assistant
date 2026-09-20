@@ -17,7 +17,7 @@ AGENTS.md is explicit: **'Declare only what exists — a declared-but-absent dir
 
 ## Owner requirement (2026-09-19, chat)
 - `uploads/` and `library/` exist like they do in `litlfred/qou`, each with a `.gitignore` and a `# do not delete me` marker, so an empty directory survives a git checkout (git tracks files, not directories).
-- Both declared in the schema and skills for **folio-assist-core**, not only in a folio.
+- Both declared in the schema and skills for **folio-assistant-core**, not only in a folio.
 - **Creation walks the declared `directories` of the top-level `cat-harness.json` AND of every derivative instance / dependency**, creating any that do not exist. This is the behaviour of ALL getting-started / instantiation paths, not a one-off in `folio_init`.
 
 ## Done when

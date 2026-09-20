@@ -17,7 +17,7 @@ Found 2026-09-20 while closing bean `v8gh` — a check that every link out of
 
 ```
 scripts/check-agent-entry-links.ts (agentic-harness)
-  → content/pipeline/readme-links.ts (folio-assist-core)
+  → content/pipeline/readme-links.ts (folio-assistant-core)
 ```
 
 `check:partition` refuses it, and `main` now asserts **zero** wrong-direction

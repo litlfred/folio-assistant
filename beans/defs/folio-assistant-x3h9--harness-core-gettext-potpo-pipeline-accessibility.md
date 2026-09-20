@@ -16,7 +16,7 @@ Owner, [#223 comment](https://github.com/litlfred/folio-assistant/issues/223#iss
 
 ## Why it is a separation-of-concerns item and not a translation item
 
-#223 is the split of `agentic-harness` from `folio-assist-core`. The risk this
+#223 is the split of `agentic-harness` from `folio-assistant-core`. The risk this
 guards against is the translation pipeline and the accessibility conventions
 being classified as **folio/content** concerns and landing on the wrong side of
 the split — at which point a Tool repo or a KG repo, which are harness instances

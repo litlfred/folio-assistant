@@ -74,7 +74,7 @@ import {
  */
 import { CORE_NS } from "./namespaces";
 
-// Content terms are folio-assist-core's, so they hang off core's namespace —
+// Content terms are folio-assistant-core's, so they hang off core's namespace —
 // the same layer that owns block kinds, voices and the library.
 export { CORE_NS };
 /** SPAR Document Components Ontology — structural document parts. */

@@ -46,7 +46,7 @@ const REPO_ROOT = resolve(import.meta.dir, "..");
 const HARNESS = join(TMP, "agentic-harness");
 /** This repository itself — the instance that declares all seven. */
 const ROOT = resolve(import.meta.dir, "..");
-const CORE = join(TMP, "folio-assist-core");
+const CORE = join(TMP, "folio-assistant-core");
 const RELOCATED = join(TMP, "relocated");
 const BROKEN = join(TMP, "broken");
 
@@ -69,7 +69,7 @@ beforeAll(() => {
   mkdirSync(CORE, { recursive: true });
   writeFileSync(
     join(CORE, DECLARATION_FILENAME),
-    JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }),
+    JSON.stringify({ name: "folio-assistant-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }),
     "utf-8",
   );
 
@@ -199,13 +199,13 @@ describe("inheritance — the Phase 0.3 gate", () => {
   it("core scans its own folio/ AND the three it inherits from the harness", () => {
     const dirs = resolveDirectories([
       { name: "agentic-harness", root: HARNESS },
-      { name: "folio-assist-core", root: CORE, own: true },
+      { name: "folio-assistant-core", root: CORE, own: true },
     ]);
     expect(dirs.map((d) => d.id).sort()).toEqual(["folio", "kg", "schemas", "tools"]);
 
     const folio = dirs.find((d) => d.id === "folio")!;
     expect(folio.own).toBe(true);
-    expect(folio.declaredBy).toBe("folio-assist-core");
+    expect(folio.declaredBy).toBe("folio-assistant-core");
 
     const tools = dirs.find((d) => d.id === "tools")!;
     expect(tools.own).toBe(false);
@@ -249,7 +249,7 @@ describe("inheritance — the Phase 0.3 gate", () => {
 describe("layering", () => {
   it("does not import the content vocabulary", () => {
     // The property, pinned structurally rather than by a drift guard: this is
-    // a HARNESS-layer module, and `schemas/jsonld.ts` is folio-assist-core's
+    // a HARNESS-layer module, and `schemas/jsonld.ts` is folio-assistant-core's
     // content vocabulary (block kinds, DoCO types, SPAR citation terms).
     // Importing it would make agentic-harness depend on the content model for
     // its own type IRIs — a harness -> core edge, already the largest
@@ -554,7 +554,7 @@ describe("materialiseDirectories", () => {
     const out = materialiseDirectories(
       [
         resolved("library", "library/", {
-          declaredBy: "folio-assist-core",
+          declaredBy: "folio-assistant-core",
           own: false,
           absPath: join(depCheckout, "library"),
         }),
@@ -590,7 +590,7 @@ describe("materialiseDirectories", () => {
     // The two ends are no longer symmetric. `uploads` is still the platform's
     // own — the queue is where a file arrives before anything knows what it
     // is, and that is a platform concern. `library` is NOT: bean `frs5` moved
-    // the corpus into `who-iris/` and `folio-assist-sci/`, and the platform's
+    // the corpus into `who-iris/` and `folio-assistant-sci/`, and the platform's
     // own `library` entry was REMOVED rather than left pointing at an emptied
     // directory, which is the `dh4f` defect.
     //
@@ -1066,7 +1066,7 @@ describe("instanceRootsIn — discovered, never listed", () => {
     //
     // It fired as designed on 2026-09-20 and the list below is the updated
     // truth, not a widened assertion: seven instances arrived on one branch
-    // (`who-iris`, `who-style-guide`, `folio-assist-sci`, `kg-navigation`,
+    // (`who-iris`, `who-style-guide`, `folio-assistant-sci`, `kg-navigation`,
     // `detangle`, `large-datasets`, `agent-skills`) and `folio-assist-core`
     // became `folio-assistant-core` under the owner's ruling that cat-harness,
     // folio-assistant-core and folio-assistant are three distinct instances.
@@ -1079,8 +1079,12 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "cat-bootstrap",
       "cat-harness",
       "detangle",
-      "folio-assist-sci",
+      // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
+      // used to sort BEFORE `folio-assistant-core` ("assist-" < "assista"),
+      // and `folio-assistant-sci` sorts after it. The list is the assertion,
+      // so the swap is the visible half of the rename.
       "folio-assistant-core",
+      "folio-assistant-sci",
       "kg-navigation",
       "large-datasets",
       "who-iris",

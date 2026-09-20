@@ -228,7 +228,7 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
  * The docstring above is unchanged and was FALSE in both halves until
  * 2026-09-20: this listed `["cat-harness", "cat-bootstrap"]`, so the root was not
  * in it and two instances beside it were missing. There are four —
- * `folio-assist-core` and the repository root are the two that were going
+ * `folio-assistant-core` and the repository root are the two that were going
  * unchecked, and `check-declared-assets` carried the same literal and the same
  * blind spot (bean `6tkl`).
  *

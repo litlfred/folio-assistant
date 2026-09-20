@@ -17,16 +17,16 @@ Deliverables:
 4. Suggestions for user todo management (explicitly requested).
 
 The 16:28 comment revises 16:13 substantially:
-- agent-harness is **not** self documenting; folio-assist-core is.
+- agent-harness is **not** self documenting; folio-assistant-core is.
 - Everything depending on the justthedocs rendering pipeline (webpage etc) -> core.
-- Tools illustrating BPMN/DMN -> folio-assist-core-tools; the SKILLS on how they
+- Tools illustrating BPMN/DMN -> folio-assistant-core-tools; the SKILLS on how they
   are agent guardrails stay in agent-harness.
 - Todos and beans remain in agent-harness (schemas, workflow state); their
-  RENDERINGS are in folio-assist-core-tools.
+  RENDERINGS are in folio-assistant-core-tools.
 - Todo schema and Beans schema live in agent-harness.
 - agent-harness is allowed exactly ONE tool: beans (bean-management skills plus
   the Tool node describing CLI install; MCP not required).
-- Current folio-assistant depends on folio-assist-core and uses core-tools.
+- Current folio-assistant depends on folio-assistant-core and uses core-tools.
 
 Falsifier for the analysis: if agent-harness ends up with more than a handful of
 skills and no crisp line against core, then 'not self-documenting' has not

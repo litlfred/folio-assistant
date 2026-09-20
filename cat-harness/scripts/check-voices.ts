@@ -78,7 +78,7 @@ const MIN_QUOTE = 24;
 /**
  * Resolve a citation, in this instance or another.
  *
- * Delegates to `folio-assist-core`'s `resolveLibraryRef` rather than composing
+ * Delegates to `folio-assistant-core`'s `resolveLibraryRef` rather than composing
  * a path. Composing one is what this file did until 2026-09-20 — `join(LIBRARY,
  * …)` against the VOICE'S OWN instance root — which made a cross-instance
  * citation unrepresentable and was the blocker on moving the three WHO voices
@@ -164,7 +164,7 @@ function main(): number {
    * A voice's `sources[]` is where it says what it was derived from. A rule's
    * `source` says which of those, and where in it. Making every rule restate
    * the instance would put one fact in two places and let them disagree: a
-   * voice pointing at `who-iris` with a rule pointing at `folio-assist-sci` is
+   * voice pointing at `who-iris` with a rule pointing at `folio-assistant-sci` is
    * representable, meaningless, and nothing would catch it.
    *
    * This became load-bearing with bean `frs5`, which moved the corpus out of

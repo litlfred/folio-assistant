@@ -570,7 +570,7 @@ to spend the words: **do not start the topic.**
   may assume of each, and why agent memory is `context` while its mirror
   `todos/` is `state` (bean `mhh9`, settled 2026-09-20).
   An instance **inherits its dependencies' directories**: `agentic-harness`
-  declares `tools/`, `kg/` and `schemas/`; `folio-assist-core` declares only
+  declares `tools/`, `kg/` and `schemas/`; `folio-assistant-core` declares only
   `folio/` and gets the other three. **Overrides match on the entry's `id`, not
   its `path`** — matching on path makes two knowledge graphs out of one
   relocation, and every consumer then scans a directory that is not there.

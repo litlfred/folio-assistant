@@ -21,7 +21,7 @@ Group 9 of 13 in `d308`. **14 files, 1 entry point.**
 `document-authoring`) — two skills, one Tool, which is legitimate and is what
 `satisfies` being an array is for.
 
-**Target repo (#223):** `folio-assist-core`. The 14 `adapters/` files (LIB) sit
+**Target repo (#223):** `folio-assistant-core`. The 14 `adapters/` files (LIB) sit
 behind it.
 
 ## Done when

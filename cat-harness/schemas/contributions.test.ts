@@ -238,7 +238,7 @@ describe("contributed renderers", () => {
     // as not-checked rather than as a pass.
     const r = new ContributionRegistry();
     r.register({
-      name: "folio-assist-core",
+      name: "folio-assistant-core",
       renderers: [{ format: "markdown", adapters: ["document"], render: () => "# x" }],
     });
     expect(r.renderer("markdown")?.validate).toBeUndefined();
