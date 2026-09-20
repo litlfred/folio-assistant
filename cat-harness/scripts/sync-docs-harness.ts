@@ -34,6 +34,7 @@ import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { siteLinks } from "./site-links.js";
 
+
 const ROOT = resolve(import.meta.dir, "..");
 const OUT = join(ROOT, siteDirFor(ROOT), "_data/harness.json");
 const check = process.argv.includes("--check");
