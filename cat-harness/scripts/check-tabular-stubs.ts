@@ -120,7 +120,7 @@ function run(): number {
   // This read `directoryForGraph(ROOT, "library")`, which was right while the
   // platform held the corpus and refuses — loudly, by name — now that it does
   // not. Bean `frs5` moved the four entries into `who-iris/` and
-  // `folio-assist-sci/`, and `wwi6`'s inheritance guarantee kept a third,
+  // `folio-assistant-sci/`, and `wwi6`'s inheritance guarantee kept a third,
   // empty declaration here, so `library` has three homes.
   //
   // THE REFUSAL IS THE DESIGN WORKING. `a02m` migrated every

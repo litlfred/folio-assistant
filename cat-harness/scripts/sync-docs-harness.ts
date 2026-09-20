@@ -8,7 +8,7 @@
  * declaration is the source; this copies the reader-facing part of it into
  * `docs/_data/harness.json`, which `docs/_includes/title.html` renders.
  *
- * Usage:  bun run scripts/sync-docs-harness.ts [--check]
+ * Usage:  bun run cat-harness/scripts/sync-docs-harness.ts [--check]
  *
  * `--check` writes nothing and exits 1 if the copy is stale, for CI.
  *

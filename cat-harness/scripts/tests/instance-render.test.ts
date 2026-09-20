@@ -153,8 +153,12 @@ describe("this repository's own instances", () => {
       "cat-bootstrap",
       "cat-harness",
       "detangle",
-      "folio-assist-sci",
+      // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
+      // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
+      // `folio-assistant-sci` sorts after it. The list is the assertion, so
+      // the swap is the visible half of the rename.
       "folio-assistant-core",
+      "folio-assistant-sci",
       "kg-navigation",
       "large-datasets",
       "who-iris",

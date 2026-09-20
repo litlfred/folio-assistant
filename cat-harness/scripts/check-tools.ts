@@ -72,7 +72,7 @@ const REPO = join(ROOT, "..");
  *
  * **Nine of the forty-four checkable `invoke.shell` values named a command that
  * does not run.** Every one was missing the `cat-harness/` prefix — stale since
- * the instance moved under that directory — and `bun run scripts/ingest-document.ts`
+ * the instance moved under that directory — and `bun run cat-harness/scripts/ingest-document.ts`
  * failed with `Module not found`. Two Tool nodes, `ingest-stdlib` and
  * `ingest-extended`, had been unreachable through their own declared invocation
  * for as long as the inversion has been in.

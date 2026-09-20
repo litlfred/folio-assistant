@@ -102,7 +102,7 @@ var DATA_HREF = "../../../assets/library/index.json";
 /* The SUBJECT this page is scoped to, or "" for the handler's whole view.
    One projection serves both — a second JSON per subject would be the same
    facts written N+1 times, free to disagree the moment one is regenerated. */
-var SCOPE = "folio-assist-sci";
+var SCOPE = "folio-assistant-sci";
 function inScope(x){ return !SCOPE || x.instance === SCOPE; }
 function $(i){ return document.getElementById(i); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){

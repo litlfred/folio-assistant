@@ -6,7 +6,7 @@ carrying the quote and the page it came from.
 
 Staged as a top-level directory ahead of becoming its own repository — the same
 arrangement as [`who-iris/`](../who-iris/),
-[`folio-assist-sci/`](../folio-assist-sci/) and
+[`folio-assistant-sci/`](../folio-assistant-sci/) and
 [`folio-assistant-core/`](../folio-assistant-core/).
 
 ## The three
@@ -35,12 +35,12 @@ than merely unresolvable.
 names its sources in `sources[]`; a rule says which of them and where in it.
 Repeating the instance on every rule would put one fact in two places and let
 them disagree — a voice pointing at `who-iris` with a rule pointing at
-`folio-assist-sci` is representable, meaningless, and nothing would catch it.
+`folio-assistant-sci` is representable, meaningless, and nothing would catch it.
 
 ## What is not here
 
 **`milnor` did not come.** It is read from a mathematics paper, not a WHO
-publication, and its source moved to `folio-assist-sci/library/milnorlink/`
+publication, and its source moved to `folio-assistant-sci/library/milnorlink/`
 (bean `r1lz`). A directory named for one house style is not a place to keep
 another domain's voice.
 

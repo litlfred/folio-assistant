@@ -155,7 +155,7 @@ namespace, and a viewer there would squat on the instance's own site.
 | `/cat-harness/library/` | every declared `library/`, and every queue |
 | `/cat-harness/library/who-iris/` | who-iris's three entries and its queue |
 | `/cat-harness/library/agent-skills/` | its two entries |
-| `/cat-harness/library/folio-assist-sci/` | its one entry |
+| `/cat-harness/library/folio-assistant-sci/` | its one entry |
 | `/cat-harness/schemas/` | every declared `schemas/` |
 | `/cat-harness/schemas/<instance>/` | that instance's modules and declarations |
 

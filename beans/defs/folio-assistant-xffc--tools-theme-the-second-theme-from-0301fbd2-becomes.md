@@ -131,3 +131,43 @@ The THEME half stands and is done where the art exists: a theme is a declared no
 **Still open and genuinely unanswered**: whether the `tools` graph has a rendered surface at all to carry a sticky on. Measured 2026-09-20: `docs/reference/` holds `skills/` and `skill-instructions/` only, Tools appear as prose, and every consumer of `tools/index.js` is non-visual. A theme cannot be chosen for a surface that does not exist, which is a different question from the one this bean was opened on.
 
 **Recommend the owner scrap or re-scope this bean and `d3yq`** rather than leaving them open against a premise that has been withdrawn. Not doing so unilaterally: `bean-coordination` says unwanted work is scrapped WITH ITS REASONS by whoever owns the call, and a bean quietly emptied of its premise is worse than one that says what happened to it.
+
+## RE-SCOPED, owner 2026-09-20 — not scrapped
+
+The premise this bean was written on was withdrawn, and the choice put to the
+owner was scrap or re-scope. **Re-scope**, against the theme model that landed
+the same day (`j66n`).
+
+### What changed underneath it
+
+`schemas/theme.ts` now carries `Theme.kind` = `sticky | webpage | publication`,
+the palette vocabulary is shared across every kind and only the geometry
+varies, and `who-iris/themes/themes.ts` is the worked example: two themes, each
+value citing the artefact it was measured from, and tests that re-read those
+artefacts rather than a copy of the constants.
+
+### The new scope, and the thing that makes it hard
+
+A tools theme **measured from a stated source**, the way `iris-web` and
+`who-wpro-publication` are. That is the whole difficulty and it is worth saying
+plainly: the original bean would have INVENTED a palette, and a theme read off
+nothing is exactly what `theme.ts` exists to prevent one level down — 106
+hardcoded hex colours became 22 named roles, and a theme whose values came from
+somebody's judgement reintroduces that with a schema around it.
+
+So this bean is now blocked on a question rather than on work: **what does a
+tools theme get measured FROM?** Candidate answers, none chosen:
+
+- the tool-node metadata already in the `tools` graph (a theme derived from
+  what tools ARE, rather than from a picture of them);
+- an existing palette in this repository with a stated provenance;
+- an artefact the owner supplies, as the IRIS capture was supplied.
+
+### Done when
+- The source is named, and it is a source somebody can re-read.
+- `kind` is chosen deliberately (`sticky` is the default and probably wrong for
+  a tools surface).
+- Every palette role cites where its value came from, and a test re-reads the
+  source rather than the constant.
+- Any value that is a CHOICE rather than a measurement is flagged as one, as
+  `who-wpro-publication.palette.edge` is.

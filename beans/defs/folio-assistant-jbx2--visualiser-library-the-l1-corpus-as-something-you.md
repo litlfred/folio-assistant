@@ -245,3 +245,31 @@ not in this code.
 - [x] Sortable listing with metadata, and a folio/desktop view, over one projection
 - [ ] Materialise/duplicate into a chosen folio (a WRITE — `yj32`)
 - [ ] Quick upload+process trigger (a WRITE — `yj32`, shared with `v1hw`)
+
+---
+
+## Note from #584, appended after #583 merged — still not a claim
+
+The owner ruled *"leave jbx2 to #583"*, so nothing above is edited and nothing
+here is claimed. Three facts that PR needed and that are now **merged**, kept
+short because they are discoverable rather than secret:
+
+- **Mounting is done.** `cat-harness/scripts/mount-instance-docs.ts` runs in
+  both `docs-site.yml` and `feature-staging.yml`. Two handlers register per
+  instance — `/<kind>/<instance>/` (the kind's default rendering) and
+  `/<instance>/` (the instance's own themed root) — so a library view emitted
+  into a `library`-declared directory with an `index.html` at its root appears
+  at `/library/<instance>/` with no deployment work. The `index.html` is the
+  trigger: the mount floor is "has a front door", which is what separates a
+  built visualiser from a directory of source files served under a URL that
+  promises one.
+- **`iris-web` is the theme** the owner's *"libray/ vislaused needs to pick up
+  themes"* refers to — `who-iris/themes/themes.ts`, resolved through the
+  platform's own `resolveTheme`. Take values from the theme's ROLES rather than
+  re-reading the CSS; `who-iris/scripts/gen-iris-pages.ts` shows the pattern.
+- **Bean `yl5w` is the trap.** Every `localPath` in `who-iris/catalogue/` points
+  at `who-iris/uploads/` and all three are MISSING — the bytes are in
+  `cat-harness/uploads/`. `check:catalogue` does not verify `localPath`, so it
+  reports a clean run over three `materialized` claims that resolve to nothing.
+  A library viewer resolving bytes that way renders three broken links and no
+  error.

@@ -161,6 +161,13 @@ export const RULES: Rule[] = [
       // time it ran after the split, which is the behaviour worth keeping.
       "scripts/partition/engine.ts",         // the generic algorithm
       "scripts/partition/instance-rules.ts", // this file: the data it runs on
+      // HARNESS, and the reasoning is the same as `check-ci-health` above:
+      // it reasons about INSTANCES and their declarations — which harness
+      // instantiated which directory, and where that mounts on the published
+      // site. It never opens a content object. The owner's addressing rule
+      // (`<base-url>/<path-to-kind-or-node>`) is a statement about harnesses,
+      // not about what a folio holds.
+      "scripts/mount-instance-docs.ts",      // instance-rendered content -> /<kind>/<instance>/
       "scripts/check-workflow-refs.ts",      // every BPMN folio:skill ref resolves
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
       "scripts/stakeholder-map.ts",          // CRDM phase 1 CLI

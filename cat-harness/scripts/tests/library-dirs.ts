@@ -5,7 +5,7 @@
  * ## Why this exists
  *
  * Bean `frs5` moved the four library entries out of `cat-harness/library/`
- * into `who-iris/library/` and `folio-assist-sci/library/`, and twenty-three
+ * into `who-iris/library/` and `folio-assistant-sci/library/`, and twenty-three
  * tests broke — every one of them because it had composed the path instead of
  * reading the declaration. They were not wrong to assert about the real
  * corpus; that is the point of those tests, and a fixture cannot make the

@@ -4,8 +4,8 @@
  * LaTeX math, and markdown using Playwright.
  *
  * Usage:
- *   bun run scripts/headless-render-qc.ts
- *   bun run scripts/headless-render-qc.ts --screenshot  # save screenshots
+ *   bun run cat-harness/scripts/headless-render-qc.ts
+ *   bun run cat-harness/scripts/headless-render-qc.ts --screenshot  # save screenshots
  *
  * Requires: playwright (npx playwright install chromium)
  */

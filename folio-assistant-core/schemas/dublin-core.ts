@@ -4,7 +4,7 @@
  * @module schemas/dublin-core
  * @graphNode schema
  *
- * ## Why this is in cat-harness and not in `who-iris/`
+ * ## Why this is in the content layer and not in `who-iris/`
  *
  * The owner, 2026-09-20: *"break up working bits (like .ts record for dublin
  * core) etc. fully worked for the three examples"*, and in the same breath
@@ -165,3 +165,168 @@ export function dcValues(
 export function dcElement(rec: DublinCoreRecord, element: string): DcField[] {
   return rec.fields.filter((f) => f.element === element);
 }
+
+// ---------------------------------------------------------------------------
+// JSON-LD projection
+// ---------------------------------------------------------------------------
+
+/**
+ * The fifteen simple elements. DCMI publishes these at the `elements/1.1/`
+ * stem and the qualified refinements at `terms/`; they are different
+ * namespaces and this module keeps them apart on purpose.
+ */
+export const DC_ELEMENTS_NS = "http://purl.org/dc/elements/1.1/";
+
+/**
+ * DCMI Metadata Terms. Duplicated from `cat-harness/schemas/jsonld.ts`, which
+ * needs it for the block context and cannot import content-layer modules.
+ *
+ * An unavoidable duplicate is fine; an UNCHECKED one is not — so
+ * `dublin-core.test.ts` asserts the two spellings are byte-identical. If the
+ * platform's ever changes, this fails rather than drifting into two
+ * namespaces that look the same in a diff and join with nothing.
+ */
+export const DCTERMS_NS = "http://purl.org/dc/terms/";
+
+/**
+ * Where a qualified field name with no DCMI equivalent is minted.
+ *
+ * Under the content layer's published stem, because this is the layer that
+ * owns the Dublin Core model — the same rule that put this module here rather
+ * than in `who-iris/`.
+ */
+export const DSPACE_NS = "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns/dspace#";
+
+/** The fifteen. A qualifier on any of them is a refinement, not one of these. */
+const SIMPLE_ELEMENTS = new Set([
+  "contributor", "coverage", "creator", "date", "description", "format",
+  "identifier", "language", "publisher", "relation", "rights", "source",
+  "subject", "title", "type",
+]);
+
+/**
+ * The predicate IRI for one field.
+ *
+ * ## The hazard this routes around, which is the whole reason the function exists
+ *
+ * The obvious projection maps every `dc.identifier.*` onto `dcterms:identifier`
+ * and every `dc.date.*` onto `dcterms:date`. It is wrong, and wrong in exactly
+ * the way the `iris-dspace` skill's R1 and R2 are about.
+ *
+ * The measured record carries `dc.identifier.uri` TWICE and
+ * `dc.identifier.govdoc` once. Those are three values from **three different
+ * identifier systems** — a Handle guaranteed outside WHO, a legacy regional
+ * URI kept alive after a server merge, and a WHO publication number with no
+ * authority behind it. Collapsed onto one predicate they become an unordered
+ * bag of three strings, and the distinction R1 exists to preserve ("resolve by
+ * Handle, treat govdoc as secondary") is no longer *expressible* in the
+ * projected graph. Nothing errors. The consumer just cannot ask the question.
+ *
+ * So: a QUALIFIED field gets its own minted IRI, keyed on the full
+ * `schema.element.qualifier` spelling. A BARE field whose element is one of the
+ * fifteen gets the DCMI elements IRI, because there the mapping is exact and
+ * standard. Everything else is minted.
+ */
+export function dcPredicate(f: Pick<DcField, "schema" | "element" | "qualifier">): string {
+  if (f.schema === "dc" && !f.qualifier && SIMPLE_ELEMENTS.has(f.element)) {
+    return DC_ELEMENTS_NS + f.element;
+  }
+  return DSPACE_NS + dcFieldName(f);
+}
+
+/** A JSON-LD value object, or a controlled-value node when an authority is asserted. */
+type DcJsonLdValue =
+  | { "@value": string; "@language"?: string }
+  | { "@type": string; "rdf:value": { "@value": string; "@language"?: string }; [k: string]: unknown };
+
+function projectValue(v: DcValue): DcJsonLdValue {
+  // ALWAYS a value object, never a bare string, for the reason the module
+  // header gives about `values`: a shape that is sometimes one thing and
+  // sometimes another makes every consumer branch, and the consumer that
+  // forgets to branch is the one that loses data.
+  const literal: { "@value": string; "@language"?: string } = { "@value": v.value };
+  if (v.language !== undefined) literal["@language"] = v.language;
+
+  if (v.authority === undefined) return literal;
+
+  // A controlled value is not a literal — it is a thing with an authority
+  // record behind it, which is what makes `dc.subject.mesh` resolvable and a
+  // free-text keyword not (R5). JSON-LD value objects may not carry extra
+  // keys, so it becomes a node with `rdf:value`.
+  return {
+    "@type": `${DSPACE_NS}ControlledValue`,
+    "rdf:value": literal,
+    [`${DSPACE_NS}authority`]: v.authority,
+  };
+}
+
+/**
+ * Project a record to JSON-LD.
+ *
+ * ## Why repeated values are an `@list` and not an array
+ *
+ * A plain JSON-LD array is an unordered SET — two serialisations with the
+ * values swapped are the same graph. DSpace stores a `place` on every repeated
+ * field and the order is meaningful, so a set would silently discard it: the
+ * two `dc.identifier.uri` values would still both be present (R2 satisfied)
+ * but "which one did the source give first" would be unanswerable. `@list`
+ * preserves it.
+ *
+ * ## Why `@id` is not the Handle
+ *
+ * R1 says a later tool should resolve by Handle. That is a JUDGEMENT about
+ * which of three identifier systems is authoritative, and this module's header
+ * says plainly that such judgement belongs to the `iris-dspace` skill, which
+ * can explain itself, and not to a schema that would make it invisibly and
+ * permanently. So `@id` is minted from `rec.id` — the repository's own key,
+ * the one the record is actually keyed on — and a caller that wants
+ * Handle-keyed nodes passes `opts.id` and owns that decision where a reader
+ * can see it.
+ */
+export function dublinCoreToJsonLd(
+  rec: DublinCoreRecord,
+  opts: { id?: string } = {},
+): Record<string, unknown> {
+  const out: Record<string, unknown> = {
+    "@id": opts.id ?? `${DSPACE_NS}item/${rec.id}`,
+    "@type": `${DSPACE_NS}Item`,
+  };
+
+  // Fields are merged by PREDICATE, not by array position: the schema permits
+  // the same qualified name to appear as two separate `DcField` entries (the
+  // header says why `fields` is an array), and two JSON keys with one name is
+  // not a thing JSON can represent. Source order is preserved across the join.
+  const byPredicate = new Map<string, DcJsonLdValue[]>();
+  for (const f of rec.fields) {
+    const p = dcPredicate(f);
+    const acc = byPredicate.get(p) ?? [];
+    acc.push(...f.values.map(projectValue));
+    byPredicate.set(p, acc);
+  }
+  for (const [p, values] of byPredicate) out[p] = { "@list": values };
+
+  out[`${DSPACE_NS}provenance`] = {
+    [`${DSPACE_NS}source`]: rec.provenance.source,
+    [`${DSPACE_NS}retrievedAt`]: rec.provenance.retrievedAt,
+    [`${DSPACE_NS}method`]: rec.provenance.method,
+  };
+
+  return out;
+}
+
+/**
+ * The `@context` a projected record compacts against.
+ *
+ * Deliberately NOT merged into the platform's `CONTENT_CONTEXT`. That context
+ * is shared by authored blocks and ingested `library/**` nodes so that one
+ * loader serves both; a catalogue record is a third population with its own
+ * vocabulary, and folding sixty minted DSpace terms into the block context
+ * would make every block's published context grow a namespace no block uses.
+ */
+export const DUBLIN_CORE_CONTEXT = {
+  "@version": 1.1,
+  dc: DC_ELEMENTS_NS,
+  dcterms: DCTERMS_NS,
+  dspace: DSPACE_NS,
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+} as const;

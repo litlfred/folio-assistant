@@ -102,10 +102,95 @@ an opt-out with silence is what made this invisible.
 re-diagnose it from the same log. `xd1s` is `completed` and is **not** this
 bean's to reopen; this is the residue after it, not a claim that it was wrong.
 
+## CORRECTION, same session: the fix above understates it, and the exposure is wider
+
+The section above recommends *"give `docs-site.yml` the fetch-rebase-retry
+`feature-staging` already has"*. Measured before starting, that is **not a
+transplant**, and `docs-site` is **not the only one exposed**.
+
+### Why it is not a transplant
+
+`feature-staging` checks `gh-pages` out itself into `pages/`, commits, and
+pushes — so it *can* wrap its own `git push` in a loop
+(`feature-staging.yml:738`, three attempts, `pull --rebase` between, backing
+off through `scripts/backoff-sleep.ts`).
+
+`docs-site` hands the whole clone-replace-commit-push to
+`peaceiris/actions-gh-pages@v4` in one step. **The race window is inside the
+action**, so there is nothing to wrap. Adding a retry means replacing the
+publish step with a manual loop — on a path that carries documented
+full-replace semantics (`docs-site.yml:384`, *"`keep_files: true` is NOT the
+fix"*) and a post-push verifier that reads `.staging-restored.json` and
+deliberately fails the job to avoid the `plj1` silence. That is surgery on the
+publish path, not a robustness tweak, and it is why this bean stays **filed,
+not started** rather than being done on an agent's own judgement.
+
+### The exposure is ONE workflow, not four — measured, not read
+
+A first pass here said four workflows publish through `peaceiris` with no retry
+(`blueprint`, `docs-site`, `lean_ci`, `discoverability-docs`) and called
+`discoverability-docs` the sharpest case for being outside the group as well.
+**That was read off the workflow FILES and is wrong about this repository.**
+`xd1s` already said so in prose; this bean's own rule is never to quote a count
+from prose, so it was measured:
+
+| workflow | runs EVER in this repo | retry | in `gh-pages-push` |
+|---|---|---|---|
+| `feature-staging.yml` | **1210** | yes (8) | **no — deliberately** |
+| `docs-site.yml` | **313** | **none** | yes |
+| `blueprint.yml` | **0** | none | yes |
+| `lean_ci.yml` | **0** | none | yes |
+| `discoverability-docs.yml` | **0** | none | no |
+| `publish.yml` | 1, in June | partial | yes |
+
+A workflow that has never run cannot lose a race and cannot cause one. So
+three of the four "exposed" files are not exposed to anything, and
+`discoverability-docs` — named above as the worst case — is pushing to nothing.
+
+### What is actually true, and it is worse than the first reading
+
+**Two workflows contend for `gh-pages` here. The lock separates them.**
+
+- `docs-site` is **inside** `gh-pages-push`, where its only fellow members are
+  three workflows that have never run. The lock holds it against **nobody**.
+- `feature-staging` is **outside** the lock, by a deliberate and measured
+  trade, and runs **1210** times against `docs-site`'s 313 — roughly four
+  pushes to `gh-pages` for every one of docs-site's.
+
+So `docs-site` carries the cost of a serialisation group that protects it from
+zero actual pushers, and meets the one real contender with no lock and no
+retry. That is why 19:53 was fatal: the group was never going to help, and
+there was nothing else.
+
+It also means **completing the group cannot fix this**. Adding the three
+never-run workflows changes nothing, and adding `feature-staging` is the trade
+already measured and rejected (a pending job is cancelled, not queued). The
+lock is not an incomplete fix; on this repository it is the wrong instrument.
+
+### What this does to the fix
+
+It shrinks it to one workflow and confirms the one hard part. `docs-site` has
+to survive losing to `feature-staging`, and the only way to do that is to make
+its push retryable — which means replacing the `peaceiris` step, because the
+race window is inside the action.
+
+There is **no cheap half** on this repository. The obvious cheap moves —
+adding `discoverability-docs` to the group, giving `deploy-folio` a
+`concurrency` block — are edits to workflows that have never run. They would
+look like progress in the diff and change nothing that happens, which is the
+failure this whole bean is about.
+
+`06kg` still applies to HOW, not to how many: whatever loop is written reuses
+`scripts/backoff-sleep.ts` rather than open-coding `sleep`, since that is the
+one backoff implementation and it was made one for this exact ref.
+
 ## Done when
 
-- [ ] `docs-site.yml`'s publish survives a losing race (retry + rebase), with
-      the failure reproduced before the fix and the fix shown to pass
+- [ ] A ruling on ONE shared publishing step vs four copies (see the
+      correction above — `06kg` is the precedent against copying)
+- [ ] `docs-site.yml`'s publish survives a losing race, with the failure
+      reproduced before the fix and the fix shown to pass — **and the same for
+      `blueprint.yml` and `lean_ci.yml`, which are equally exposed**
 - [ ] `discoverability-docs.yml` and `deploy-folio.yml` either name the group
       or carry a stated reason, the way `feature-staging.yml:94` does
 - [ ] `check-workflows`' `gh-pages-ungrouped` finding is re-checked — `xd1s`
