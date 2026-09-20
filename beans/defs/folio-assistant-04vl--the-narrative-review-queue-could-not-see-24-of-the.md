@@ -1,11 +1,11 @@
 ---
 # folio-assistant-04vl
 title: the narrative review queue could not see 24 of the 24 drafts, and its own test said zero
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T09:21:33Z
-updated_at: 2026-09-20T09:21:33Z
+updated_at: 2026-09-20T09:25:21Z
 blocking:
     - folio-assistant-d5f1
 ---
@@ -63,4 +63,7 @@ A count a component produces cannot check that component.
 - [x] `narratives.ts` sees both shapes and writes back at the narrative's own path
 - [x] the corpus count is derived independently and compared
 - [x] every new branch mutation-checked against a NAMED failing test
-- [ ] the 24 drafts reviewed by the owner (a person's act, by construction)
+Reviewing the 24 drafts is `d5f1`'s remaining step, not this one's: it is the
+owner's act by construction, and `reviewer()` refuses to record it from a
+non-interactive shell. This bean is what made it POSSIBLE, which is a
+different claim and the one being closed.
