@@ -248,10 +248,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:34:44.365Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/78c57826e0c63c1c14539baa862f628c7932cec6",
-  "sourceCommitSha": "78c57826e0c63c1c14539baa862f628c7932cec6",
-  "sourceCommitAt": "2026-09-20T04:32:30Z",
+  "generatedAt": "2026-09-20T05:11:01.955Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9bc6ea36bbb58379a6db1fc75b3e191f5ce23e60",
+  "sourceCommitSha": "9bc6ea36bbb58379a6db1fc75b3e191f5ce23e60",
+  "sourceCommitAt": "2026-09-20T05:09:23Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 170,
@@ -263,7 +263,7 @@
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 30,
-    "Schema": 55,
+    "Schema": 56,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -20637,6 +20637,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/dak"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/document-image",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "document-image",
+      "title": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "module": "schemas/document-image.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/document-image"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/folio-graph-kind",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "folio-graph-kind",
@@ -21991,8 +21999,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "10fc99e773dea4f0805364fc0ded48eb5476015c",
-    "pr": "455/merge",
-    "run": "35489438706"
+    "sha": "d92550c6a1743378cf29651a46fd5044b8e727bb",
+    "pr": "460/merge",
+    "run": "35490958908"
   }
 }
