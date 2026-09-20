@@ -177,6 +177,64 @@ export type StickyBodySource = (typeof STICKY_BODY_SOURCES)[number];
  * Gaps of ten, so a contribution can be slipped between two without renumbering
  * a file in another layer.
  */
+/**
+ * How a harness's initiation went, as its sticky reports it.
+ *
+ * The owner, 2026-09-20: *"it is skill/tool to add sticky note at end of harnes
+ * sinitialziation. (maybe create it a the beingnngin, update when done, to show
+ * some status)"*, and *"each own intiaization sticky note to show sucess"*.
+ *
+ * So a sticky is a **receipt**: the board is what initiation left behind, and a
+ * card on it means that harness ran.
+ *
+ * ## Three states, and `running` is the one that earns the design
+ *
+ * Writing the card only at the END would make a crashed initiation
+ * indistinguishable from one that never started — in both cases the board is
+ * simply missing a card, and "missing" is the least informative thing a status
+ * display can say. Creating it at the START as `running` and updating it at the
+ * end turns that silence into a visible state: a board still showing `running`
+ * long after the fact is a harness that died mid-initiation, which is exactly
+ * the failure nobody would otherwise see.
+ *
+ * That is the same third-state discipline `ci-health` and the QA sidecars
+ * follow: **could-not-determine is never rendered as clean.**
+ */
+export const INITIATION_STATUSES = ["running", "ok", "failed"] as const;
+export type InitiationStatus = (typeof INITIATION_STATUSES)[number];
+
+/**
+ * What a harness's initiation reported, written onto its sticky.
+ *
+ * Optional on the node: a sticky authored by hand, or one from a layer that
+ * does not run an initiation, has no status and renders as it always did. An
+ * ABSENT status is not `ok` — it means nothing reported, which is a different
+ * fact and must not be painted green.
+ */
+export const InitiationSchema = z
+  .object({
+    status: z.enum(INITIATION_STATUSES),
+    /** ISO 8601, when the harness began. Set by `--begin`. */
+    startedAt: z.string().min(1),
+    /** ISO 8601, when it finished. Absent while `running`. */
+    completedAt: z.string().min(1).optional(),
+    /**
+     * One line on what happened. Required on `failed`.
+     *
+     * A failure with no detail is a red light nobody can act on, which is the
+     * same objection `ThemeArtFailure.remedy` answers.
+     */
+    detail: z.string().min(1).optional(),
+  })
+  .strict()
+  .refine((i) => i.status !== "failed" || (i.detail?.trim().length ?? 0) > 0, {
+    message: "a `failed` initiation must say what failed — a red light nobody can act on is not a report",
+  })
+  .refine((i) => i.status === "running" || i.completedAt !== undefined, {
+    message: "a finished initiation carries `completedAt`; only `running` may omit it",
+  });
+export type Initiation = z.infer<typeof InitiationSchema>;
+
 export const STICKY_ORDER_LEADING = 10;
 export const STICKY_ORDER_TRAILING = 90;
 

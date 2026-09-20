@@ -351,13 +351,65 @@ export function declaredContributions(root: string): DeclaredContribution[] {
  * every time a new one was added, which is the no-op property this exists to
  * protect. Each file answers for itself.
  */
-export function stickiesFor(root: string, dir: string, now: string): LandingSticky[] {
-  return declaredContributions(root)
-    .map((d) => stickyFromContribution(d, { createdAt: now }))
-    .map((wanted) => {
-      const existing = readExistingSticky(join(dir, stickyFile(wanted.id)));
-      return existing ? { ...wanted, createdAt: existing.createdAt } : wanted;
+export function stickiesFor(
+  root: string,
+  dir: string,
+  now: string,
+  initiation?: InitiationUpdate,
+): LandingSticky[] {
+  return declaredContributions(root).map((d) => {
+    const existing = readExistingSticky(join(dir, stickyFile(d.contribution.id)));
+    // The status this card should carry after this run. Only the harness named
+    // by the update changes; every other card keeps what it had, because one
+    // harness finishing says nothing about another.
+    const next = initiation && initiation.harness === d.declaredBy
+      ? nextInitiation(existing?.initiation, initiation, now)
+      : existing?.initiation;
+    const wanted = stickyFromContribution(d, {
+      createdAt: now,
+      ...(next === undefined ? {} : { initiation: next }),
     });
+    return existing ? { ...wanted, createdAt: existing.createdAt } : wanted;
+  });
+}
+
+/** What a `--begin` / `--complete` run is asking for. */
+export interface InitiationUpdate {
+  /** The instance NAME whose card this is about — `declaredBy`, not a path. */
+  harness: string;
+  phase: "begin" | "complete";
+  /** `ok` unless the caller says otherwise. Only read on `complete`. */
+  status?: "ok" | "failed";
+  detail?: string;
+}
+
+/**
+ * The status a card should carry after an update, given what it had.
+ *
+ * **`startedAt` is preserved across `complete`.** It answers *when did this
+ * harness begin*, and a completion that overwrote it would turn the pair into
+ * two readings of the same instant — which is exactly the drift `createdAt`
+ * reuse exists to prevent one field over.
+ *
+ * A `complete` with nothing on the card is not refused. An initiation that was
+ * never announced still finished, and losing that is worse than a `startedAt`
+ * that is only as precise as the completion.
+ */
+export function nextInitiation(
+  existing: LandingSticky["initiation"],
+  update: InitiationUpdate,
+  now: string,
+): NonNullable<LandingSticky["initiation"]> {
+  if (update.phase === "begin") {
+    return { status: "running", startedAt: now };
+  }
+  const status = update.status ?? "ok";
+  return {
+    status,
+    startedAt: existing?.startedAt ?? now,
+    completedAt: now,
+    ...(update.detail === undefined ? {} : { detail: update.detail }),
+  };
 }
 
 /**
@@ -388,7 +440,7 @@ export function readLandingStickies(root: string): LandingSticky[] {
 export function ensureLandingSticky(
   root: string,
   now: string,
-  opts: { check?: boolean } = {},
+  opts: { check?: boolean; initiation?: InitiationUpdate } = {},
 ): EnsureReport {
   const raw = readFileSync(join(root, "harness.json"), "utf8");
   const decl = JSON.parse(raw) as { directories?: ContentDirectory[] };
@@ -396,7 +448,7 @@ export function ensureLandingSticky(
   const folioDir = folioDirPath(decl);
   const absDir = join(root, folioDir);
 
-  const wanted = stickiesFor(root, absDir, now);
+  const wanted = stickiesFor(root, absDir, now, opts.initiation);
   const planned = wanted.map((w) => {
     const abs = join(absDir, stickyFile(w.id));
     const wantedText = `${JSON.stringify(w, null, 2)}\n`;
@@ -420,13 +472,45 @@ export function ensureLandingSticky(
   return report;
 }
 
+/** Parse `--begin <harness>` / `--complete <harness>` off the argv. */
+export function initiationFromArgv(argv: readonly string[]): InitiationUpdate | undefined {
+  const at = (flag: string): string | undefined => {
+    const i = argv.indexOf(flag);
+    return i >= 0 ? argv[i + 1] : undefined;
+  };
+  const begin = at("--begin");
+  if (begin) return { harness: begin, phase: "begin" };
+  const complete = at("--complete");
+  if (!complete) return undefined;
+  const failed = argv.includes("--failed");
+  const detail = at("--detail");
+  return {
+    harness: complete,
+    phase: "complete",
+    status: failed ? "failed" : "ok",
+    ...(detail === undefined ? {} : { detail }),
+  };
+}
+
 if (import.meta.main) {
   const check = process.argv.includes("--check");
   // `instanceRootFor` rather than cwd: the instance root and the repository root
   // stopped being the same directory in bean `wggr`, and a gate invoked from the
   // repository root would look for `harness.json` one level up from where it is.
   const root = instanceRootFor(import.meta.dir);
-  const report = ensureLandingSticky(root, new Date().toISOString(), { check });
+  // `--begin <harness>` at the START of that harness's initiation, `--complete
+  // <harness>` at the end. Without the pair, a crashed initiation and one that
+  // never ran look identical — both are a card that is simply not there, and
+  // "missing" is the least informative thing a status board can say.
+  const initiation = initiationFromArgv(process.argv);
+  if (initiation && check) {
+    console.error("`--check` reports; it does not record an initiation. Drop one of the two.");
+    process.exit(2);
+  }
+  const report = ensureLandingSticky(root, new Date().toISOString(), {
+    check,
+    ...(initiation === undefined ? {} : { initiation }),
+  });
 
   if (check) {
     const problems = [
@@ -449,4 +533,9 @@ if (import.meta.main) {
     `folio graph ${report.declaredFolio === "added" ? "DECLARED" : "already declared"} at ${report.folioDir}; ` +
       report.stickies.map((st) => `${st.id} ${st.state}`).join(", "),
   );
+  if (initiation) {
+    console.log(
+      `${initiation.harness}: initiation ${initiation.phase === "begin" ? "RUNNING" : (initiation.status ?? "ok").toUpperCase()}`,
+    );
+  }
 }

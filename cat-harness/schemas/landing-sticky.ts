@@ -83,10 +83,12 @@ import { z } from "zod";
 import { CarriedNoteSchema } from "./carried-note.js";
 import { PageAnchorSchema } from "./note-anchor.js";
 import {
+  InitiationSchema,
   StickyLinkSchema,
   StickyTextSchema,
   isExternalLink,
   type DeclaredContribution,
+  type Initiation,
   type StickyLink,
 } from "./sticky-contribution.js";
 
@@ -180,6 +182,14 @@ export const LandingStickySchema = CarriedNoteSchema.extend({
    * this reverses the earlier "nothing reads textRegion" decision.
    */
   text: StickyTextSchema.optional(),
+  /**
+   * What this harness's initiation reported — the sticky as a RECEIPT.
+   *
+   * Written by the minting tool rather than declared: a layer says what its
+   * card SAYS, and initiation says how it WENT. Absent means no initiation has
+   * reported, which is not the same as `ok` and must never render as it.
+   */
+  initiation: InitiationSchema.optional(),
 });
 export type LandingSticky = z.infer<typeof LandingStickySchema>;
 
@@ -235,6 +245,8 @@ export interface StickyBuildContext {
   createdAt: string;
   /** Defaults to {@link LANDING_STICKY_PAGE}. */
   page?: string;
+  /** Carried onto the node when initiation has reported. See {@link Initiation}. */
+  initiation?: Initiation;
 }
 
 /**
@@ -288,6 +300,11 @@ export function stickyFromContribution(
     // as stale and an author reads as a change they did not make.
     ...(c.shape === undefined ? {} : { shape: c.shape }),
     ...(c.text === undefined ? {} : { text: c.text }),
+    // Preserved across a rebuild rather than reset. The builder runs on every
+    // initiation and on every `--check`; dropping the status would make a
+    // finished harness read as "never reported" the next time anything touched
+    // the board.
+    ...(ctx.initiation === undefined ? {} : { initiation: ctx.initiation }),
   });
 }
 
