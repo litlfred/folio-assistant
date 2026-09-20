@@ -15,12 +15,12 @@ import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { tmpdir } from "os";
 
-import {
-  auditLinks,
-  classify,
-  parseLinks,
-  runReadmeAudit,
-} from "../../content/pipeline/readme-links";
+// The auditor moved to harness (bean `cp3l`); `runReadmeAudit` is the
+// README front end that stayed. Imported from their real homes rather than
+// through the re-export, so this file fails if the move is ever undone by
+// accident.
+import { auditLinks, classify, parseLinks } from "../../src/core/markdown-links";
+import { runReadmeAudit } from "../../content/pipeline/readme-links";
 
 const dirs: string[] = [];
 afterEach(() => {

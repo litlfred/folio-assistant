@@ -43,6 +43,9 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_PR" name="Pull request opened,&#10;synchronised or reopened">
+      <bpmn:extensionElements>
+        <folio:job name="stage"/>
+      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Build" name="Build the docs site&#10;Jekyll · TypeDoc · KG export">
@@ -79,6 +82,9 @@
       <bpmn:incoming>Flow_4</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:startEvent id="Start_Closed" name="Pull request&#10;closed">
+      <bpmn:extensionElements>
+        <folio:job name="cleanup"/>
+      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Slug" name="Derive the slug&#10;from the head ref">
@@ -124,6 +130,9 @@
       <bpmn:incoming>Flow_11</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:startEvent id="Start_Dispatch" name="Dispatched with&#10;cleanup_slug">
+      <bpmn:extensionElements>
+        <folio:job name="cleanup-dispatch"/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_18</bpmn:incoming>
       <bpmn:outgoing>Flow_12</bpmn:outgoing>
     </bpmn:startEvent>

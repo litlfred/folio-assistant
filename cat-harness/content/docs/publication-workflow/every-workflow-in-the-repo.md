@@ -135,7 +135,22 @@ too, with triggers, gateways and compensation paths, and until 2026-09-20 none
 was drawn. `bun run check:workflow-coverage` measures how many are, in three
 states; a diagram declares its subject with
 `<folio:implements workflow="…"/>` rather than being matched on its filename,
-because a mention is not coverage:
+because a mention is not coverage.
+
+**Coverage alone would not have been worth having.** Bean `7yvd`: *"a diagram
+that is drawn once and then drifts is worse than none, because it is
+consulted."* So the node standing for a job declares it —
+`<folio:job name="stage"/>` — and the same check compares the two sets in
+**both** directions: a job with no node is a diagram that has gone stale, a
+node naming a job the workflow does not have is one that was stale already.
+Both exit 1, in the same tier as a dangling `<folio:implements>`, because
+both mislead a reader who follows them.
+
+Declaring is opt-in per diagram, and a covered workflow whose diagram names
+no job is reported as **undeclared** rather than as fully drifted: "nobody has
+said yet" and "said, and wrong" are different answers, and only the second is
+a finding. What is never allowed is a diagram declaring *some* of a
+workflow's jobs and reading as complete.
 
 | Diagram | Answers |
 |---------|---------|
