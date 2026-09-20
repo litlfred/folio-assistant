@@ -5,7 +5,7 @@ kind: proposal
 issue: 223
 bean: folio-assistant-3lbz
 summary: >-
-  Is Zod usage reachable through skills and Tools? No. 198 exported schemas, 3 named by a Tool node, 0 Tools that validate, 0 Tools bound to kg-navigation. The requirement already exists in #223 and is unmet. Analyses three routes; recommends one parameterised pattern keyed on graph kind, because the parameter the repo is missing is a single field on GraphKindRegistry.
+  Is Zod usage reachable through skills and Tools? No. 199 exported schemas, 3 named by a Tool node, 0 Tools that validate, 0 Tools bound to kg-navigation. The requirement already exists in #223 and is unmet. Analyses three routes; recommends one parameterised pattern keyed on graph kind, because the parameter the repo is missing is a single field on GraphKindRegistry.
 ---
 
 # Zod schemas as Tools — audit and analysis
@@ -37,27 +37,32 @@ Worth separating before any number means anything.
 
 | | what it is | count | Zod |
 |---|---|---|---|
-| **MCP tools** | `src/tools/*.ts` — what an agent calls at runtime | 13 | 10 use it, for **input** shapes |
-| **KG Tool nodes** | `folio-assistant/tools/index.ts`, via `defineTool`, each carrying `satisfies: [skill…]` | 10 | 3 mention it |
+| **MCP tools** | `cat-harness/src/tools/*.ts` — what an agent calls at runtime | 13 | 10 use it, for **input** shapes |
+| **KG Tool nodes** | `cat-harness/tools/index.ts`, via `defineTool`, each carrying `satisfies: [skill…]` | 10 | 3 mention it |
 
 Only the second is bound to skills. The owner's question is about the second.
 
 ## The audit
 
-Measured 2026-09-20 on `ad5af8ec`. Method stated with each row, because two of
-these numbers are easy to misread.
+**Re-measured 2026-09-20 on `c7b5d9a6`**, after [#437](https://github.com/litlfred/folio-assistant/pull/437)
+moved the instance under `cat-harness/`. Every path below is the post-move one;
+the first pass cited pre-move paths that no longer resolve, and a proposal whose
+paths do not land is the failure [#457](https://github.com/litlfred/folio-assistant/pull/457)
+was about. Two counts moved with the restructure — 198 → 199 exported schemas and
+93 → 94 composed — and the conclusions did not. Method is stated with each row,
+because two of these numbers are easy to misread.
 
 | | |
 |---|---|
-| exported `*Schema` consts under `schemas/` | **198** |
+| exported `*Schema` consts under `cat-harness/schemas/` | **199** |
 | …with a direct non-test `.parse` / `.safeParse` call site | **39** |
-| …composed into another schema (>2 mentions repo-wide) — validated *indirectly* | **93** |
+| …composed into another schema (>2 mentions repo-wide) — validated *indirectly* | **94** |
 | …exported, mentioned ≤2 times — effectively unreferenced | **66** |
 | Zod schemas represented as a KG Tool node | **3** |
 | Tool nodes that **validate** anything | **0** |
 | Tool nodes bound to `kg-navigation` | **0** |
 
-**The 159 without a direct call site are not 159 unvalidated schemas.** 93 are
+**The 160 without a direct call site are not 160 unvalidated schemas.** 94 are
 sub-schemas folded into a parent that *is* parsed — `constraints.CorollarySchema`
 into the block union, and so on. The `>2 mentions` split is a crude proxy and is
 reported as one; the honest reading is *"66 are candidates for being orphaned"*,
@@ -72,15 +77,15 @@ against the schema for its kind"*.
 ## The part that is worse than it looks
 
 `SkillDefinition.schemas` already exists — `SkillSchemaRef { module, types,
-access }` in `schemas/assistant-types.ts`, whose own doc says it links a skill
+access }` in `cat-harness/schemas/assistant-types.ts`, whose own doc says it links a skill
 to the Zod schemas it reads or writes. **11 of 22 skill modules declare one.**
 It is precisely #223's *"constrain Skills i/o with schemas"*, half-adopted.
 
-The only code that references the field is `scripts/generate-docs.ts`. And:
+The only code that references the field is `cat-harness/scripts/generate-docs.ts`. And:
 
 - **nothing invokes `generate-docs.ts`** — it appears in no `package.json`
   script and no workflow;
-- its output directory, `schemas/generated/`, **does not exist** and has never
+- its output directory, `cat-harness/schemas/generated/`, **does not exist** and has never
   been committed;
 - the line that would render the field is
   `` `${d.schemas.join(", ")}` `` over an array of *objects*, which would emit
@@ -97,7 +102,7 @@ So `SkillDefinition.schemas` has **zero** effective readers. So does
 generous, and it is the more comfortable error: a field with one renderer
 sounds maintained, a field with none is inert. `generate-docs.ts` is not a
 consumer of anything — it is a second, dead doc generator sitting beside the
-two live ones (`gen-skill-docs.ts`, `gen-schema-docs.ts`).
+two live ones (`cat-harness/scripts/gen-skill-docs.ts`, `cat-harness/scripts/gen-schema-docs.ts`).
 
 ## Three routes
 
@@ -115,7 +120,7 @@ What makes it possible is that two of the three declarations already exist:
 | a module declaring itself a schema node | ✅ the `@graphNode schema` tag, checked by `check:schema-nodes` |
 | **graph kind → the schema that validates its nodes** | ❌ **missing** |
 
-`GraphKindRegistry` in `schemas/cat-harness.ts` declares each kind and whether
+`GraphKindRegistry` in `cat-harness/schemas/cat-harness.ts` declares each kind and whether
 it is `renderable`. It carries no schema reference. **That one field is the
 parameter**, and adding it turns "validate a node" from 198 special cases into
 one lookup.
@@ -151,7 +156,7 @@ documents the status quo, doing A first adds the one capability that is missing.
 
 ### Route C — a Tool per published schema
 
-Rejected by the owner, and the audit agrees: 198 nodes, most of them
+Rejected by the owner, and the audit agrees: 199 nodes, most of them
 sub-schemas nobody invokes independently, each one a declaration to maintain.
 It also does not validate anything — it extends the three *publishing* Tools,
 which is the thing already covered.

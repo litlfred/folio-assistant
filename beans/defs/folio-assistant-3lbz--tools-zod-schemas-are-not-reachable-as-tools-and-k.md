@@ -20,13 +20,13 @@ Analysis: `fsh-guts/proposals/zod-schemas-as-tools.md`, attached to
 already carries the requirement — *"must constrain Skills i/o with schemas
 (json,.ts)"*.
 
-## Measured 2026-09-20 on `ad5af8ec`
+## Measured 2026-09-20 — re-run on `c7b5d9a6` after #437
 
 | | |
 |---|---|
-| exported `*Schema` consts | 198 |
+| exported `*Schema` consts | 199 |
 | with a direct non-test parse call site | 39 |
-| composed into a parsed parent (indirect) | 93 |
+| composed into a parsed parent (indirect) | 94 |
 | exported, ≤2 mentions — candidates for orphaned | 66 |
 | Zod schemas that are KG Tool nodes | 3, all *publishing* JSON Schema |
 | Tool nodes that validate | **0** |
@@ -66,3 +66,16 @@ gates as Tool nodes, which adds discoverability rather than capability.
 Removing the 66 near-orphans. The proxy is crude and an exported schema with no
 caller may be a published contract for a downstream instance, which is what
 `kg:schema` exists for.
+
+
+## Re-measured after the #437 restructure
+
+PR #437 merged mid-review and moved the instance under `cat-harness/`, so every
+path in the first pass stopped resolving. Re-ran the whole scan on `c7b5d9a6`
+rather than prefixing the numbers: **199** exported schemas (was 198) and **94**
+composed (was 93) — the restructure brought one more schema. Everything else is
+unchanged, including the finding that nothing invokes
+`cat-harness/scripts/generate-docs.ts`.
+
+Paths in the proposal are now the post-move ones. A proposal whose paths do not
+land is the failure #457 was about.
