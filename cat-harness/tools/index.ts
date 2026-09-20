@@ -299,6 +299,57 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── Running the checks CI runs ────────────────────────────────────────
+    //
+    // `tools/` is an INHERITED declaration and `.github/workflows/` is not:
+    // a downstream instance gets this node and none of the gates it names.
+    // That asymmetry is the whole business case for the node.
+    defineTool({
+      id: "gates",
+      title: "The platform's quality gates",
+      description:
+        "Run the checks CI runs, derived from the workflow rather than listed here. One Tool for all of them, not one per gate: the list is computed from `.github/workflows/code-quality-gates.yml` at call time, so it cannot drift from what CI actually enforces.",
+      install: { none: true },
+      invoke: { shell: "bun run gates" },
+      io: {
+        inputs: [
+          { name: "all", schema: t("Flag"), required: false, arg: { flag: "--all" }, description: "Add the jobs that need a browser; the default is the fast set." },
+          { name: "list", schema: t("Flag"), required: false, arg: { flag: "--list" }, description: "Print the derived gates and exit, running none." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "One line per gate, then a pass count or the failures. Exit non-zero on any failure." }],
+      },
+      // ONE node, and that is the design rather than a shortcut — bean
+      // `folio-assistant-ppkm`, route B of `folio-assistant-3lbz`.
+      //
+      // The obvious reading of "bind the gates as Tool nodes" is one node per
+      // gate. The audit that proposed route B named the cost of that itself:
+      // the Tool list becomes A SECOND ANSWER to "what are the gates", free
+      // to disagree with `gates.ts` the moment either changes. `gates.ts`
+      // derives the list from the workflow, so 43 hand-written nodes would be
+      // 43 copies of a fact that is already computed.
+      //
+      // Two further reasons, both measured. `Gate` carries `{ job, step,
+      // command }` and NO skill binding, so each of the 43 would need an
+      // invented `satisfies:` — 43 judgements, none derived from anything.
+      // And route A settled the same question one bean earlier, on the
+      // owner's own instruction about Zod schemas: "a Tool per Zod schema...
+      // no, but there should be common patterns (single pattern?) with some
+      // parameters more or less".
+      //
+      // Per-gate discoverability is still reachable, and the way to get it is
+      // to give `Gate` a declared skill in the workflow the list is derived
+      // FROM — not to hand-maintain the nodes here.
+      satisfies: ["platform-gates", "prepare-merge", "continual-progress"],
+      requires: { runtime: ["bun"], network: false },
+      selection: {
+        when:
+          "Before any push, and as the answer to \"what checks this?\". It matters most where CI is not: `tools/` is an INHERITED declaration and `.github/workflows/` is not, so a downstream instance gets this Tool and none of the gates it names. #363's self-sovereign topology has no CI at all.",
+        limits:
+          "It runs what the workflow declares, so a check CI does not run is a check this does not run — that is the point, not a gap. The default omits the browser jobs; `--all` adds them, and `render:bpmn:check` needs Chromium.",
+        cost: "The fast set is about a minute, dominated by `bun test`. `--all` adds a browser render.",
+      },
+    }),
+
     // ── The zod modules that maintain this instance's public schemas ──────
     //
     // The owner's requirement: "the zod(.ts) should be tool KG nodes that
@@ -394,6 +445,50 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       maintains: [
         { source: "schemas/tool-types.ts", artefact: "tool-types.schema.json", format: "json-schema" },
       ],
+    }),
+
+    // ── Logging ────────────────────────────────────────────────────────
+    //
+    // Declared HERE although the skill and the sub-process it serves live in
+    // `bootstrap/`, and that is a limitation rather than a decision. Tool
+    // collection is import-bound — `tools/index.ts` merges what it imports —
+    // so a Tool node contributed by a nested instance is not reachable from
+    // the barrel yet. Bean `gn4l`. When it is, this node moves to
+    // `bootstrap/tools/` unchanged, and nothing that references it by id
+    // notices.
+    defineTool({
+      id: "log-message",
+      title: "Log a message to the discussion",
+      description:
+        "Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry.",
+      // The destination is a conversation. There is nothing to install and
+      // there could not be — that is the property that makes it the arm an
+      // Initiator can always reach.
+      install: { none: true },
+      // `manual`, and honestly so. The agent composes the entry and sends it;
+      // no command runs. Modelling it as an absent `shell` would have made it
+      // indistinguishable from an unfinished record — the distinction
+      // `beans-manual` established.
+      invoke: { manual: true },
+      io: {
+        // No `arg` on any input: a manual Tool has no command line, so the
+        // inputs are the contract rather than argv. That is also why `actor`
+        // and `message` may be `Text` and `body` may be `Markdown` here —
+        // injection-safety constrains command-line WORDS, and there are none.
+        inputs: [
+          { name: "timestamp", schema: t("Timestamp"), required: true, description: "When it happened, as an ISO-8601 UTC instant." },
+          { name: "actor", schema: t("Text"), required: true, description: "WHO acted. Never the Logger: it receives and records, so it cannot know." },
+          { name: "process", schema: t("ProcessId"), required: true, description: "The process the actor was inside, e.g. initialize-harness." },
+          { name: "task", schema: t("NodeId"), required: true, description: "The step within it, e.g. A_Install." },
+          { name: "message", schema: t("Text"), required: true, description: "What happened, in the one line somebody scanning will read." },
+          { name: "body", schema: t("Markdown"), required: false, description: "The detail — a diff, an error, what was not where it should have been." },
+        ],
+        // The entry as rendered, so a caller can quote what it actually wrote
+        // rather than reconstructing it from the six fields.
+        outputs: [{ name: "entry", schema: t("Markdown"), description: "The entry as posted." }],
+      },
+      satisfies: ["log-message"],
+      requires: { network: false },
     }),
 
     // The twenty tools this instance already serves over MCP. Kept in a sibling

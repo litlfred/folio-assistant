@@ -236,9 +236,9 @@ export interface CapabilityDefinition {
  * | `fail` | Skill cannot execute — abort with error |
  * | `warn` | Log a warning but continue |
  * | `skip` | Silently skip this skill |
- * | `fallback` | Use `fallbackCapabilityId`, or `fallbackRole` |
+ * | `fallback` | Use the capability's `fallbackTo`, or a derived human lane |
  *
- * ## A fallback may be another ACTOR, not only another tool
+ * ## A fallback may be another ACTOR, not only another tool — and it is DERIVED
  *
  * Until 2026-09-20 the only fallback was `fallbackCapabilityId` — always
  * another capability. So the model could express *use a different tool* and
@@ -249,13 +249,30 @@ export interface CapabilityDefinition {
  * > actor. depending on the propeorty, different tools might not work. in
  * > this case an API wouldnt wokr and a human actor is needed."
  *
- * When no tool can do it, the answer is a **person**, and that is a
- * different kind of answer. `fallbackRole` says which lane takes over.
+ * When no tool can do it, the answer is a **person**. A `fallbackRole` field
+ * was added that day to say so, and **removed the same day** — bean
+ * `folio-assistant-85e8`, on the owner's question: *"do we need fallbackRole,
+ * can it be computed, i dont like duplicate data maintenace issues"*.
  *
- * **Why a ROLE and not an actor id.** A role is the swimlane — the thing a
- * process can route to. Naming a concrete actor would bind a skill to one
- * participant, which is the `role-model.md` rule that nothing IS a
- * reviewer; somebody ACTS AS one for the duration of a lane.
+ * **It can, exactly.** The diagram already carries it, executably:
+ * `Gateway_SigningRoute` branches to `Task_HumanSign`, a `userTask`, in
+ * `Lane_Human`, which binds `<folio:role ref="publication-manager"/>`. So
+ * the fallback role is *the role of a lane holding a task only a person can
+ * fill* — `fulfilmentKindsForBpmnType`, which the diagram's own
+ * documentation already relies on to stop the air-gapped route quietly
+ * becoming another machine route.
+ *
+ * Measured before removing it: the derivation returns exactly the declared
+ * value, and is unambiguous across the corpus — 3 of 3 skills with any
+ * human-only lane have exactly one such role. `fallbackRoleFor` in
+ * `scripts/check-fallback-roles.ts` is the query.
+ *
+ * **Why the declaration had to go rather than be checked.** It was one fact
+ * in two places with nothing asserting they agreed, which is the drift this
+ * repository keeps paying for. The argument for keeping it — declaration and
+ * execution are different mechanisms — is real, and it is not enough: a
+ * declaration that can be computed from the executable artefact is a cached
+ * copy, and an unvalidated cache is worse than no cache.
  *
  * **Why not model "a human is available" as a capability**, which would have
  * reused the existing field: a `CapabilityDefinition` carries
@@ -264,34 +281,35 @@ export interface CapabilityDefinition {
  * `folio-assistant-ind9` fixed exactly the error of putting non-probeable
  * things in `capabilities[]`. Reusing it would undo a completed fix.
  *
- * **What reads this, honestly. Nothing does.** Measured 2026-09-20: 24 skill
- * modules declare `requiredCapabilities` with 23 degradation values (17
- * `fail`, 5 `fallback`, 1 `warn`). This said the only reader was
- * `scripts/generate-docs.ts`, "which RENDERS them" — too generous, and the
- * more comfortable error, because a field with one renderer sounds maintained
- * while a field with none is inert. That script was never invoked by
- * anything, in any commit since the root commit, and was RETIRED to
- * `fsh-guts/scripts/` on 2026-09-20 (bean `folio-assistant-3w0i`). So the
- * count of readers is ZERO. This field is
- * therefore a DECLARATION; the thing that executes a two-route process today
- * is a BPMN gateway. `check:fallback-roles` keeps the declaration from
- * drifting into the inert pile the way skill front-matter `roles:` did
- * (bean `folio-assistant-qif9`).
+ * **What reads `degradation`, honestly. Nothing does.** Measured 2026-09-20:
+ * 24 skill modules declare `requiredCapabilities` with 24 degradation values
+ * (17 `fail`, 6 `fallback`, 1 `warn`). An earlier revision of this comment
+ * said the only reader was `scripts/generate-docs.ts`, "which RENDERS them" —
+ * too generous, and the more comfortable error, because a field with one
+ * renderer sounds maintained while a field with none is inert. That script
+ * was never invoked by anything, in any commit since the root commit, and
+ * was RETIRED to `fsh-guts/scripts/` (bean `folio-assistant-3w0i`). So the
+ * count of readers is ZERO.
+ *
+ * `degradation` is NOT duplicate data and was kept: `fail` says a skill
+ * cannot run without the capability, which no diagram states. It needs a
+ * reader, not a deletion.
  */
 export interface SkillCapabilityRef {
   /** The capability this skill needs. */
   capabilityId: string;
   /** What to do when the capability is unavailable. */
   degradation: "fail" | "warn" | "skip" | "fallback";
-  /** Alternative capability to use in fallback mode. */
-  fallbackCapabilityId?: string;
-  /**
-   * The ROLE that performs this instead, when no capability can.
-   *
-   * An id in `skills/roles/roles.json`. Checked by
-   * `bun run check:fallback-roles`.
-   */
-  fallbackRole?: string;
+  // No `fallbackCapabilityId`. What substitutes for a capability is a
+  // property of THAT capability — `CapabilityDefinition.fallbackTo`, bean
+  // `folio-assistant-sym3`. It was written in five skill modules, all
+  // identical, which is the duplicate-maintenance shape: a sixth Lean skill
+  // had to remember to repeat it.
+  // NO `fallbackRole`. It existed for eight hours on 2026-09-20 and was
+  // removed as a computable duplicate — see the header. The role that takes
+  // over is `fallbackRoleFor(skill)`, read from the BPMN corpus, and
+  // `check:fallback-roles` fails a `fallback` that resolves to neither a
+  // declared capability nor a derivable human lane.
 }
 
 /**
@@ -335,9 +353,24 @@ export interface SkillValidator {
 /**
  * Reference to a schema type that this skill operates on.
  *
- * Links a skill to the TypeScript/Zod schemas it reads or writes,
- * enabling auto-generated documentation to cross-reference skills
- * with their data models.
+ * **RETIRED 2026-09-20 — kept as a type, removed from `SkillDefinition`.**
+ *
+ * Its stated purpose was *"enabling auto-generated documentation to
+ * cross-reference skills with their data models"*. The generator that would
+ * have done the cross-referencing was `scripts/generate-docs.ts`, which had
+ * been in this repository since its ROOT COMMIT and **never ran once** —
+ * never in a `package.json` script, never in a workflow, its output directory
+ * never committed. It was retired to `fsh-guts/scripts/` (bean
+ * `folio-assistant-3w0i`), and with it went the only code that referenced
+ * this type.
+ *
+ * So 11 of 22 skill modules carried a declaration that reached no reader and
+ * no page. The declarations are removed (`folio-assistant-t2yg`); the type
+ * stays because a downstream instance may hold one and a removed export is a
+ * breaking change for a field that costs nothing to leave declarable.
+ *
+ * **Reinstating it means writing the consumer first.** A field whose only
+ * justification is a generator that does not run is how this one lasted.
  */
 import type { ActorKind, LifecycleStage, SkillPackageManifest } from "./skill-package.js";
 import type { NetworkReach } from "./cat-harness.js";
@@ -405,8 +438,10 @@ export interface SkillDefinition {
   tags?: string[];
   /** External package this skill belongs to (undefined = local). */
   package?: string;
-  /** Schema types this skill reads/writes — for doc cross-referencing. */
-  schemas?: SkillSchemaRef[];
+  // `schemas?: SkillSchemaRef[]` was here until 2026-09-20. Removed with the
+  // generator that was its only reader — see {@link SkillSchemaRef}. Not
+  // re-add without the consumer: the field existed for a page nobody ever
+  // built.
   /**
    * Lifecycle stages this skill participates in.
    *

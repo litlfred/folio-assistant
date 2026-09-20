@@ -5,7 +5,6 @@ description: >
   systems, MeSH as a controlled vocabulary, bundles, and the containment path.
   What a later tool needs from a record, stated as requirements it can be
   checked against.
-roles: [ingestion-agent, authoring-agent, collaborator, owner]
 ---
 
 # IRIS, DSpace and Dublin Core

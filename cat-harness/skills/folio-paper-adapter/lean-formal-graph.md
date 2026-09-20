@@ -1,6 +1,5 @@
 ---
 name: lean-formal-graph
-roles: [reader, collaborator, owner]
 user_invocable: true
 description: >
   Build and query the FORMAL dependency graph — what a proof actually

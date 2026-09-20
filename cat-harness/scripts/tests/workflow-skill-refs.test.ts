@@ -14,62 +14,35 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { loadProcessModel, isActivity } from "../../src/workflow/process-model.ts";
-import { repoRootFor } from "../../schemas/cat-harness.js";
-import { kgRoots } from "../known-skills.ts";
+import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
 
 const ROOT = join(import.meta.dir, "../..");
 
 /**
- * Every skill this repository declares.
+ * Skill names, from the ONE definition of where a skill lives.
  *
- * ## It listed five directories by hand until 2026-09-20
+ * ## This was the THIRD copy, and it was the stalest
  *
- * That is the practice `AGENTS.md` opens by warning against — *"hardcoding a
- * path is how a skill goes missing the moment the layout moves"* — and it had
- * already gone wrong twice over by the time it was found: the list omitted
- * `authoring-math`, `authoring-who-smart-guidelines` and `bootstrap/skills`,
- * so every skill in them was invisible here, and it then reported
- * `materialize-remote` as naming no skill when two new named subgraphs landed.
+ * It listed **five directories by hand**, four of them under `skills/`. That
+ * is the exact defect `known-skills.ts`'s own header records fixing —
+ * *"It was five hardcoded entries … `authoring-math` (3 skills) and
+ * `authoring-who-smart-guidelines` (9) were absent"* — left standing in a copy
+ * the fix did not reach.
  *
- * It was the THIRD implementation of one question in this repository, after
- * `scripts/known-skills.ts` (correct) and `scripts/check-tools.ts` (also
- * scanning only the first root, fixed the same day). All three now read the
- * declaration, so a relocation moves them together or fails all three.
+ * Measured 2026-09-20 against the canonical resolver: the hand-written list
+ * missed **19** real skills, among them `bpmn-authoring` and `l2-dak-authoring`
+ * (named by `<folio:skill ref>` in the diagrams this very test checks),
+ * `bpmn-processes` and `process-state` the moment they moved into
+ * `skills/workflow/`, and both of bootstrap's. A list somebody must remember
+ * to extend is not a single answer; it is a copy that happens to match today,
+ * and this one had stopped matching.
+ *
+ * It is how the defect announces itself: this test failed on a diagram whose
+ * refs `check:workflow-refs` had already resolved. Two checkers, two answers,
+ * and the wrong one gating.
  */
 function knownSkills(): Set<string> {
-  const names = new Set<string>();
-  // Every DECLARED knowledge-graph root, plus one level down: a root may hold
-  // skills directly (`src/skills/corpus-grep.md`, `kg-navigation/skills/`) as
-  // well as in packages (`skills/folio-core/`).
-  const dirs: string[] = [];
-  for (const root of kgRoots(ROOT)) {
-    if (!existsSync(root)) continue;
-    dirs.push(root);
-    for (const d of readdirSync(root, { withFileTypes: true })) {
-      if (d.isDirectory()) dirs.push(join(root, d.name));
-    }
-  }
-  for (const dir of dirs) {
-    if (!existsSync(dir)) continue;
-    for (const f of readdirSync(dir)) if (f.endsWith(".md")) names.add(f.slice(0, -3));
-  }
-  const schemaDir = join(ROOT, "schemas", "skills");
-  if (existsSync(schemaDir)) {
-    for (const e of readdirSync(schemaDir, { withFileTypes: true })) {
-      if (e.isDirectory()) names.add(e.name);
-    }
-  }
-  const localRoot = join(repoRootFor(ROOT), ".claude", "skills");
-  if (existsSync(localRoot)) {
-    for (const g of readdirSync(localRoot, { withFileTypes: true })) {
-      if (!g.isDirectory()) continue;
-      for (const f of readdirSync(join(localRoot, g.name))) {
-        if (f.endsWith(".md")) names.add(f.slice(0, -3));
-        else if (f.endsWith(".json")) names.add(f.slice(0, -5));
-      }
-    }
-  }
-  return names;
+  return canonicalKnownSkills(ROOT);
 }
 
 describe("declared diagram paths resolve", () => {

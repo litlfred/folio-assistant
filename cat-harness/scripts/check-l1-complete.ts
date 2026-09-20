@@ -42,6 +42,17 @@
  *
  * @module scripts/check-l1-complete
  */
+// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
+// and this module resolves a DECLARED directory. Without it the first
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
+// 2026-09-20 across the 20 modules that resolve a declared directory: 10
+// threw, including `narratives.ts` and the `translation` MCP tool, while
+// every gate and all 3298 tests passed — nothing covered the path.
+//
+// Importing core's registration is correct by LAYERING, not a workaround:
+// `folio` is CORE's kind, so a content-side module may import it, while the
+// harness alone never sees it (schemas/folio-graph-kind.ts says so).
+import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -455,38 +466,38 @@ export function checkEntry(dir: string): EntryReport {
 }
 
 /**
- * Thrown when the root handed in declares nothing, so "nothing to check" would
- * be indistinguishable from "checked, and complete".
+ * The instance root, which is NOT the current working directory.
  *
- * This is not defensive programming; it is a bug this gate shipped with.
- * `resolve(".")` is the CWD, `.github/workflows/code-quality-gates.yml` runs
- * `bun run check:l1-complete` from the REPOSITORY root, and the repository root
- * carries no `harness.json` — the declaration lives one level down in
- * `cat-harness/`. So the gate found no `library` graph, printed "no library/
- * entries — nothing to check", and **exited 0 over a corpus of four documents
- * and 1,402 files**. `--check` passed for the same reason: an empty report list
- * has no stale sidecars.
+ * This resolved the library from `resolve(".")` alone. The instance moved
+ * under `cat-harness/` (bean `wggr`), npm scripts run from the REPOSITORY
+ * root, and so `bun run check:l1-complete` — a CI gate — found no declaration,
+ * reported "no library/ entries — nothing to check" and **exited 0**. Measured
+ * 2026-09-20: four entries present, zero checked, gate green.
  *
- * The script's own comment had the rule right — *"Absent declaration is
- * 'nothing to check', never 'complete'"* — and then returned `[]`, which every
- * caller treats as complete. Stating a rule is not enforcing it.
+ * That is `xom7` one level in: a check that cannot fail is indistinguishable
+ * from a check that passes. Tries the working directory first, so a downstream
+ * folio invoking this from its own root still resolves its own library, and
+ * falls back to the directory this module lives in.
  */
-export class NoDeclaredLibrary extends Error {}
+export function instanceRootFor(cwd: string): string | undefined {
+  if (directoriesForGraph(cwd, "library")[0]) return cwd;
+  const own = resolve(import.meta.dir, "..");
+  return directoriesForGraph(own, "library")[0] ? own : undefined;
+}
 
-export function checkAll(root: string): EntryReport[] {
+/**
+ * Entries to check, or `undefined` when no `library` is declared ANYWHERE.
+ *
+ * Three states, and the middle one is the point. `[]` means "a library is
+ * declared and holds nothing" — a determined finding. `undefined` means
+ * "no declaration was found", which is not the same and must never be
+ * rendered as a clean run.
+ */
+export function checkAll(root: string): EntryReport[] | undefined {
   // Declared, not composed — see `libraryRoot` in `ingest-document.ts` for why.
   const lib = directoriesForGraph(root, "library")[0];
-  if (!lib) {
-    throw new NoDeclaredLibrary(
-      `${root} declares no \`library\` graph. This is UNKNOWN, not complete — see NoDeclaredLibrary. ` +
-        `Run from an instance root, or pass one.`,
-    );
-  }
-  // A declared directory that is not there is the dh4f defect and is also not a
-  // pass: the declaration says a corpus should be here.
-  if (!existsSync(lib)) {
-    throw new NoDeclaredLibrary(`${root} declares a \`library\` graph at ${lib}, which does not exist.`);
-  }
+  if (!lib) return undefined;
+  if (!existsSync(lib)) return [];
   return readdirSync(lib)
     .filter((d) => statSync(join(lib, d)).isDirectory())
     .sort()
@@ -611,29 +622,35 @@ function format(reports: EntryReport[]): string {
   return out.join("\n");
 }
 
-/** This instance's root — the directory holding the declaration, one level up from `scripts/`. */
-const INSTANCE_ROOT = resolve(import.meta.dir, "..");
-
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const target = argv.find((a) => !a.startsWith("--"));
-  // THE INSTANCE ROOT, not the CWD. `resolve(".")` made this gate a no-op in
-  // CI — see NoDeclaredLibrary. An explicit `--root` still wins, so a folio
-  // checking its own corpus is unaffected. Declared OUTSIDE the try: the
-  // sidecar reader below needs it too, and scoping it to the try is how the
-  // first cut of this fix threw `root is not defined` at the --check path.
-  const rootArg = argv.find((a) => a.startsWith("--root="))?.slice("--root=".length);
-  const root = rootArg ? resolve(rootArg) : INSTANCE_ROOT;
   let reports: EntryReport[];
   try {
-    reports = target ? [checkEntry(target)] : checkAll(root);
+    if (target) {
+      reports = [checkEntry(target)];
+    } else {
+      const root = instanceRootFor(resolve("."));
+      if (root === undefined) {
+        console.error("Could not find a declared `library` directory from " + resolve("."));
+        console.error("This is NOT a pass. Treat it as unknown.");
+        process.exit(2);
+      }
+      const all = checkAll(root);
+      if (all === undefined) {
+        console.error(`No \`library\` graph is declared under ${root}.`);
+        console.error("This is NOT a pass. Treat it as unknown.");
+        process.exit(2);
+      }
+      reports = all;
+    }
   } catch (e) {
     console.error(`Could not check L1 completeness: ${e instanceof Error ? e.message : e}`);
     console.error("This is NOT a pass. Treat it as unknown.");
     process.exit(2);
   }
   if (argv.includes("--check")) {
-    const stale = staleSidecars(root, reports);
+    const stale = staleSidecars(instanceRootFor(resolve(".")) ?? resolve("."), reports);
     if (stale.length) {
       console.error("Committed L1 verdicts are out of date:");
       for (const x of stale) console.error(`  ✗ ${x}`);
@@ -643,7 +660,13 @@ if (import.meta.main) {
     console.log(`✓ ${reports.length} committed L1 verdict(s) current`);
   }
   if (argv.includes("--write")) {
-    for (const r of reports) console.log(`wrote ${sidecarFor(root, r)}`);
+    // The SAME root the reports came from. `resolve(".")` wrote the sidecars
+    // beside the working directory, so running the documented command from
+    // the repository root put them in a `test/` tree of their own while the
+    // committed ones sat under the instance — two sets, neither checking the
+    // other. Measured 2026-09-20.
+    const writeRoot = instanceRootFor(resolve(".")) ?? resolve(".");
+    for (const r of reports) console.log(`wrote ${sidecarFor(writeRoot, r)}`);
   }
   console.log(argv.includes("--json") ? JSON.stringify(reports, null, 2) : format(reports));
   process.exit(reports.some((r) => r.requirements.some((q) => q.state === "unmet")) ? 1 : 0);

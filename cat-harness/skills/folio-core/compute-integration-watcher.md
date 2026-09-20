@@ -1,6 +1,5 @@
 ---
 name: compute-integration-watcher
-roles: [collaborator, owner]
 user_invocable: true
 inherits: local/integration-watcher
 watch_arg: compute

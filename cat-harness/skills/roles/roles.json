@@ -12,7 +12,8 @@
       "lanes": [
         "User (person)",
         "Contributor (human or agent)",
-        "Log operator (human)"
+        "Log operator (human)",
+        "Human actor"
       ],
       "skills": [
         "dispatch-agent",
@@ -469,7 +470,8 @@
         "Folio-Assistant Agent",
         "Agent",
         "Agent (this session)",
-        "Agent / platform (automated)"
+        "Agent / platform (automated)",
+        "Agent (playing the machine)"
       ],
       "skills": [
         "bean-coordination",
@@ -495,11 +497,14 @@
         "prepare-merge",
         "prepare-merge-auto",
         "semantic-review-scoping",
+        "session-context",
+        "session-state-machine",
         "todo-manager",
         "translation-manager",
         "upstream-version-adoption",
         "voice-authoring-guidance",
-        "watch"
+        "watch",
+        "workflow-state"
       ],
       "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code.",
       "voice": "Imperative and checkable. Give the rule, the reason it exists, and what a violation looks like — a rule with no failure mode gets reasoned around.",
@@ -771,6 +776,21 @@
       ],
       "skills": [
         "activity-log"
+      ]
+    },
+    {
+      "id": "session-record",
+      "title": "Session record",
+      "description": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "lanes": [
+        "Session record"
+      ],
+      "skills": [
+        "session-context"
       ]
     }
   ]

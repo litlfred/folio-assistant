@@ -1,6 +1,5 @@
 ---
 name: exposition-swarm-drain
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   Drain the paper's narrative blocks through an exposition-quality

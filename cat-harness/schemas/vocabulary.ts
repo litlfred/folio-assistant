@@ -277,6 +277,12 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   hasCapability: { gloss: "A capability this actor's environment provides." },
   providesCapability: { gloss: "A capability this node makes available." },
   requiresCapability: { gloss: "A capability this node needs before it can run." },
+  fallbackToCapability: {
+    gloss:
+      "The capability that stands in for this one when it is absent. It must not " +
+      "transitively require the capability it replaces — such a substitute is " +
+      "unavailable in exactly the case it exists for.",
+  },
 
   // ── Instructions and contracts ───────────────────────────────────────
   hasInstructions: { gloss: "Whether a skill has an instruction body at all." },

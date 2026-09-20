@@ -6,13 +6,17 @@
  * rather than asserted.
  */
 import { describe, expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { tools } from "../../tools/index.js";
 import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
 import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
+import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+
 
 const BASE = "https://example.invalid/fa";
 
@@ -23,6 +27,11 @@ const BASE = "https://example.invalid/fa";
  * instance path. `process.cwd()` is the REPOSITORY root when the suite runs,
  * and the two were the same directory until the move (bean `wggr`), so passing
  * the cwd was right by coincidence rather than by argument.
+ *
+ * It is also the root the canonical `knownSkills` is asked for below, which is
+ * the same question one level along: skill discovery resolves an instance's
+ * declaration, so handing it a repository root would scan the wrong tree the
+ * moment the two differ.
  */
 const INSTANCE = resolve(import.meta.dir, "../..");
 
@@ -147,6 +156,31 @@ describe("tools", () => {
     expect(s.has("kg-export")).toBe(true); // skills/folio-core
   });
 
+  test("skill discovery is the ONE definition, not a second scan", () => {
+    // REGRESSION, 2026-09-20. This module had its own `knownSkills`: the first
+    // declared `cat-harness` root and its immediate subdirectories. It
+    // disagreed with `known-skills.ts` in both directions at once, and each
+    // direction is a different way for the check to be wrong.
+    const s = knownSkills();
+    const canonical = canonicalKnownSkills(INSTANCE);
+    expect([...canonical].filter((n) => !s.has(n))).toEqual([]);
+    expect([...s].filter((n) => !canonical.has(n))).toEqual([]);
+
+    // The two halves, named, so a re-divergence says WHICH failure returned
+    // rather than only that the sets differ.
+    //
+    // Admitted 36 non-skills: `skills/memory/` then held agent-memory nodes, every
+    // one a `.md` in a declared directory. A directory scan cannot tell them
+    // apart; `isSkillMd` does, by their `$schema:` line. Under the old scan a
+    // Tool could have satisfied a memory entry and passed.
+    expect(s.has("the-complement")).toBe(false);
+    // Missed 2 real ones: `bootstrap/skills/` holds skills DIRECTLY rather
+    // than in packages, and a scan of a root's subdirectories never looks at
+    // the root. Both read as dangling, which is how this was found.
+    expect(s.has("confirm-harness")).toBe(true);
+    expect(s.has("log-message")).toBe(true);
+  });
+
   test("io IRIs follow the publication base, not the declaration", async () => {
     // A staging build published tool-types.schema.json at the STAGING url while
     // its Tool nodes referenced the CANONICAL one — a document that did not
@@ -244,5 +278,62 @@ describe("substitutable Tools declare it, and say how to choose", () => {
     // Each names the other as where its limits are picked up.
     expect(std?.selection?.limits).toContain("ingest-extended");
     expect(ext?.selection?.limits).toContain("ingest-stdlib");
+  });
+});
+
+describe("the gates Tool — one node over a derived list", () => {
+  const all = tools(BASE);
+  const gates = all.find((t) => t.id === "gates");
+
+  test("the node exists, or nothing below is testing anything", () => {
+    expect(gates?.id).toBe("gates");
+  });
+
+  test("its command is a real script, not a guess at one", () => {
+    // `invoke.shell` is prose to the schema. The failure it cannot catch is a
+    // node naming a script that was renamed or never existed, which an agent
+    // discovers by running it.
+    const pkg = JSON.parse(
+      readFileSync(resolve(repoRootFor(INSTANCE), "package.json"), "utf-8"),
+    ) as { scripts: Record<string, string> };
+    expect(gates?.invoke.shell).toBe("bun run gates");
+    expect(pkg.scripts.gates).toContain("scripts/gates.ts");
+  });
+
+  test("every flag it declares is one `gates.ts` actually reads", () => {
+    // The drift this pins is the cheap one: a node advertising an option the
+    // script ignores fails silently, running the default and reporting
+    // success.
+    const src = readFileSync(resolve(INSTANCE, "scripts/gates.ts"), "utf-8");
+    // `arg` is a union of flag / positional / stdin, so narrow rather than
+    // reach through it — a positional input would otherwise be read as an
+    // absent flag and silently drop out of the comparison.
+    const flags = (gates?.io.inputs ?? [])
+      .map((i) => (i.arg && "flag" in i.arg ? i.arg.flag : undefined))
+      .filter((f): f is string => f !== undefined);
+    expect(flags).toEqual(["--all", "--list"]);
+    for (const f of flags) expect(src).toContain(`process.argv.includes("${f}")`);
+  });
+
+  test("there is exactly ONE gate Tool, and the list stays derived", () => {
+    // Route B of `folio-assistant-3lbz` reads naturally as one node per gate.
+    // That would make `tools/` a second answer to "what are the gates", free
+    // to disagree with `gates.ts` — which computes the list from the workflow
+    // — the moment either changes. The node count is the assertion: if a
+    // later change starts minting per-gate nodes, this fails and the author
+    // has to argue for it rather than drift into it.
+    const gateish = all.filter((t) => t.id === "gates" || t.id.startsWith("gate-"));
+    expect(gateish.map((t) => t.id)).toEqual(["gates"]);
+  });
+
+  test("it says why it exists where CI does not, which is the whole business case", () => {
+    // `tools/` is inherited across instances and `.github/workflows/` is not.
+    // An agent choosing this tool downstream has no CI to fall back on, so
+    // `selection.when` has to carry that rather than leave it to the reader.
+    for (const k of ["when", "limits", "cost"] as const) {
+      expect(`${k}: ${gates?.selection?.[k] ? "present" : "MISSING"}`).toBe(`${k}: present`);
+    }
+    expect(gates?.selection?.when).toContain("INHERITED");
+    expect(gates?.requires?.network).toBe(false);
   });
 });

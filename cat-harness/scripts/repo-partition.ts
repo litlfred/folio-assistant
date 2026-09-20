@@ -253,6 +253,11 @@ const RULES: Rule[] = [
       // part of the content model.
       "scripts/schema-nodes.ts",
       "scripts/check-schema-nodes.ts",
+      // The retired-front-matter ratchet. Harness for the same reason: it
+      // reads `harness.json` for where to sweep and for where the trashcan
+      // is, and the keys it retires are the harness's own vocabulary. It
+      // needs no folio to have anything to do.
+      "scripts/check-retired-front-matter.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -315,6 +320,21 @@ const RULES: Rule[] = [
       // inversion alone just relocated them here, measured.
       "scripts/check-corpus-gate.ts",        // runs in the folio repo, over its content
       "scripts/gen-schema-docs.ts",          // content-object model → reference
+      // CORE, not harness, and the test is the one this table uses elsewhere:
+      // does it need a folio to have anything to do? This one CREATES the
+      // folio graph and writes content nodes into it — the landing stickies —
+      // so it does not merely need a folio, it is where one comes from. It also
+      // imports `schemas/landing-sticky.ts` (a content node) and
+      // `schemas/folio-graph-kind.ts`, which is core's by the argument written
+      // on that module: a layer that cannot render must not own the renderable
+      // kind. Classifying it harness would put core's own kind registration
+      // behind a harness module.
+      "scripts/ensure-landing-sticky.ts",    // creates folio/ and mints its landing stickies
+      // Same repo and the same reason: it reads the folio graph's sticky nodes
+      // and writes the data file the landing page renders from. It was part of
+      // `sync-docs-harness.ts` (agentic-harness) until `--edges` reported that
+      // as two wrong-direction edges — the harness reaching up into core.
+      "scripts/gen-landing-data.ts",         // folio stickies -> docs/_data/stickies.json
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
@@ -438,6 +458,17 @@ const RULES: Rule[] = [
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",
+      // Both read the DECLARATION and write a string; neither needs a folio to
+      // have anything to do, which is the same test `sync-docs-harness.ts` and
+      // `harness-schema-export.ts` pass above.
+      //
+      // `upload-url.ts` sits here rather than with content tooling for a reason
+      // worth keeping: it is the acquisition QUEUE's address, and the address is
+      // a fact about the instance's layout — an instance-scoped declared path
+      // resolved against the REPOSITORY root. What eventually lands in that
+      // queue is content; where the queue IS, is not.
+      "scripts/print-stub.ts",
+      "scripts/upload-url.ts",
       // The staging-preview record and the script that writes it — bean `6pfo`,
       // arrived from `main` (#466) AFTER this pass began and was caught by the
       // unassigned gate added in the same change, on its first real encounter.
@@ -451,6 +482,20 @@ const RULES: Rule[] = [
       "schemas/staging-preview.ts",
       "scripts/staging-record.ts",
       "scripts/restore-staging.ts",
+      // The render log — same family, same argument, and the schema moves WITH
+      // the script for the reason stated just above. It describes what is on
+      // the PUBLISH BRANCH, which is a property of the repository rather than
+      // of any folio's content, and its only imports are zod and
+      // `schemas/log-entry.ts` (harness). Caught by the unassigned gate added
+      // in #469 on its first encounter, which is the gate working.
+      //
+      // Classifying the script alone minted exactly the two edges that comment
+      // warns about — measured with `--edges`: `scripts/render-log.ts` and
+      // `scripts/restore-staging.ts` both reaching into `folio-assist-core`,
+      // taking the wrong-direction count from 1 to 3. With the schema here it
+      // is back to 1, the `src/types.ts` residue this file already analyses.
+      "schemas/render-log.ts",
+      "scripts/render-log.ts",
       "scripts/serve-rendering.ts",
       "scripts/staging-cleanup-preflight.ts",
       "src/tools/check-deps.ts",
@@ -563,6 +608,14 @@ const RULES: Rule[] = [
       "schemas/front-matter.ts",    // "this repository's self-declaring files"
       "schemas/test-run.ts",        // what was measured, with what; only eval-crdm-detect reads it
       "schemas/note-anchor.ts",     // read only by `carried-note.ts`, already harness
+      // Declaration vocabulary, by the same test as the four above: it imports
+      // only zod, and it carries no part of the content model. The direction is
+      // what forces it — `CatHarnessDeclarationSchema` (harness) holds the
+      // `stickies` field, so defining the shape in `landing-sticky.ts` (core)
+      // would make the harness import core. That wrong-direction edge was the
+      // falsifier the contribution design was measured against, and this is
+      // where it is answered rather than absorbed.
+      "schemas/sticky-contribution.ts",
       "schemas/fsh-guts.ts",        // the trashcan, not FHIR Shorthand
       "schemas/python-deps.ts",     // the repository's own Python toolchain
       "schemas/avatars.ts",         // an avatar for every declared kind
@@ -1013,42 +1066,50 @@ function main(): void {
   console.log("These are not cross-edges — they are edges this tool declined to judge.");
   console.log("Classify the endpoints, then re-run; do not read them as clean.");
 
-  // ── What this gate ENFORCES, against what it merely reports.
+  // ── What this gate ENFORCES. Both axes, as of 2026-09-20.
   //
-  // `check:partition` runs in CI without `--strict`, so until 2026-09-20 the
-  // only failing path was one nothing invoked: it reported 8 wrong-direction
-  // edges and exited 0, and three of those edges had been introduced that
-  // morning by a PR whose board was green 43/43. A gate that CANNOT fail is
-  // indistinguishable, from the outside, from one that passed — bean `xom7`,
-  // one level up from the workflow it was written about.
+  // `check:partition` ran in CI WITHOUT `--strict`, so its only failing path
+  // was one nothing invoked: it reported 8 wrong-direction edges and exited 0
+  // while the board read 43/43, and three of those edges had been introduced
+  // that morning. A gate that CANNOT fail is indistinguishable, from the
+  // outside, from one that passed — bean `xom7`, one level up from the
+  // workflow it was written about.
   //
-  // The repository's own precedent for switching a reporter into an enforcer
-  // is the ruff comment in `code-quality-gates.yml`: **a check is an error
-  // only once its count is zero.** Turning a red gate on just teaches the
-  // next agent to append `|| true`.
+  // The repository's precedent for switching a reporter into an enforcer is
+  // the ruff comment in `code-quality-gates.yml`: **a check is an error only
+  // once its count is zero.** Turning a red gate on just teaches the next
+  // agent to append `|| true`.
   //
-  // So it is applied PER AXIS, because the axes reached zero at different
-  // times. An UNASSIGNED module is now always an error: the count is 0, and
-  // the report already refuses to call the edges touching one clean ("edges
-  // this tool declined to judge"). A module that falls through every rule is
-  // a module nobody has decided about, and it is cheap to decide — this is
-  // the one failure mode a contributor adding a file can cause by accident.
+  // So it was applied per axis as each reached zero. Unassigned reached zero
+  // first (bean `4j3h`) and was enforced then; the comment there said to
+  // delete the distinction once the edges followed. They have — `jcmx`
+  // retired the last one, `src/types.ts -> schemas/types.ts`, by declaring
+  // the structural minimum a harness signature needs instead of importing
+  // the content model. Both axes are now zero and both are enforced.
   //
-  // Wrong-direction edges stay REPORTED, because the count is 1, not 0. The
-  // residue is `src/types.ts -> schemas/types.ts`, analysed in this file
-  // above and deliberately left: `ContentAdapter` is defined entirely in
-  // content terms, so splitting it moves the edge rather than removing it.
-  // That is an adapter-contract redesign, and it wants deciding, not
-  // smuggling into a partition pass. When it reaches 0, delete the
-  // distinction below and let `strict` govern both.
+  // `--strict` is kept as an accepted no-op so existing invocations do not
+  // break; there is no longer a laxer mode for it to select.
   const unassigned = [...modules].filter(([, a]) => a.repo === "unassigned").map(([m]) => m);
+  let failed = false;
   if (unassigned.length > 0) {
+    failed = true;
     console.error(`\n\u2717 ${unassigned.length} module(s) fell through every rule:`);
     for (const m of unassigned.sort()) console.error(`    ${m}`);
     console.error("    Classify each in REPO_RULES. An unassigned module is not a clean result.");
-    process.exit(1);
   }
-  if (strict && crossEdges.length > 0) process.exit(1);
+  if (crossEdges.length > 0) {
+    failed = true;
+    console.error(`\n\u2717 ${crossEdges.length} wrong-direction edge(s):`);
+    for (const e of crossEdges) {
+      console.error(`    ${e.from} [${repoName(e.fromRepo)}] -> ${e.to} [${repoName(e.toRepo)}]`);
+    }
+    console.error(
+      "    A repo may not import one that depends on it. Either the CLASSIFICATION is wrong —" +
+        "\n    check the target's layer before the importer's — or the import is.",
+    );
+  }
+  if (failed) process.exit(1);
+  void strict;
 }
 
 if (import.meta.main) main();

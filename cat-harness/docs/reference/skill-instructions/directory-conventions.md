@@ -42,6 +42,13 @@ graph**. `folio` is one graph kind among several.
 
 The vocabulary is **open**, and split across two layers.
 
+**A kind answers two questions, and only one of them is here.** `renderable`
+— does this become a website — is below. The other is what a running process
+does with the graph: produces it, reads it, or writes it, and
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md) owns
+it. **Read it before adding a kind** — `holds` is required, so a kind that has
+not decided does not compile.
+
 > ### `kg` was renamed to `cat-harness` (2026-09-19)
 >
 > Every other harness concept is named for the **layer that defines it** —
@@ -77,7 +84,16 @@ The vocabulary is **open**, and split across two layers.
 > and churning them would touch hundreds of references for no gain in what a
 > declaration MEANS.
 
-| kind | declared by | holds | renderable |
+**The column is `contents`, not `holds`.** `holds` is the FIELD on
+`GraphKindDef`, and it carries the content/context/state layer rather than a
+description — one word meaning two things in the same document is a collision
+worth one rename. The layer is deliberately **not** a column here: it is
+`graphKindsOfLayer()` in
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md), and a
+hand-maintained copy of it would be free to drift from the registry that
+decides it.
+
+| kind | declared by | contents | renderable |
 |---|---|---|---|
 | `tools` | **harness** | Tool definitions, themselves nodes in the KG | no |
 | `cat-harness` | **harness** | skills, workflows, roles — the harness layer's own knowledge graph. Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. | no |
@@ -90,6 +106,10 @@ The vocabulary is **open**, and split across two layers.
 | `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
 | `todo-items` | **harness** | todo nodes — one file each, `"$schema": "folio-todo/v1"`. Authored by people, and by agents on their behalf. | no |
 | `todo-feedback` | **harness** | feedback items — todos raised against a specific block, carrying the submitter's identity. Read by `todo-review`. | no |
+| `session-state` | **harness** | a SESSION's context — the acting actor, the instances it has open, the beans it claimed and what it waits on. Distinct from `workflow-state`, which is where ONE instance got to: a session spans processes, and a session with nothing open is the commonest state there is. `actor` is required because nothing else can supply it. **Registered ahead of a directory**: nothing writes one yet, and the state machine that will is bean `3nfv`. Shape in `schemas/session-context.ts`; read with [`session-context`](../workflow/session-context.md). | no |
+| `interaction` | **harness** | how a PERSON wants to be asked — committed, read at session start by every agent. `context`: read during a process, never written by one; it changes when a person states a preference. Also `harness.config.json`'s `interaction` key, which defaults here, so the declaration and the config name one place. | no |
+| `issue-marks` | **harness** | how far an agent has read an issue — `lastCommentId`, `lastUpdatedAt`, `checkedAt`, one file per issue. **Not the comments**: an id and two timestamps, never a body. Two marks because a comment EDITED after being read keeps its id. Read with [`issue-working`](issue-working.md); shape in `src/issue-watch/seen-comments.ts`. | no |
+| `memory` | **harness** | agent memory — durable facts an agent carries between sessions, one `"$schema": "folio-memory/v1"` node each. Read during a process and never written by one; it changes when a human directs an authoring agent. Declared at `memory/`, **repository-scoped** — these are facts about the repository carried by the agents working in it, and `.claude/agents/` sits at the repository root too. They were in `skills/memory/` until 2026-09-20 (bean `07xs`), where the containing kind was `content` and the contents were `context`. | no |
 | `fsh-guts` | **harness** | deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. | **no, on purpose** |
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `catalogue` | **harness** | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
@@ -543,9 +563,15 @@ Decide which layer owns it first — **if it renders, it is not the harness's.**
   `schemas/folio-graph-kind.ts` that calls `registry.register(name, def)` at
   import, so the harness never learns the name until that layer is loaded.
 
-Either way the definition is `@type` IRI + `renderable` + summary, and the
-JSON-LD projection and the reverse lookup both derive from it. A kind added
-without deciding `renderable` will not compile.
+Either way the definition is `@type` IRI + `renderable` + `holds` + summary,
+and the JSON-LD projection and the reverse lookup both derive from it. A kind
+added without deciding **either** axis will not compile.
+
+`holds` is the content/context/state one, and
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md) is
+where you answer it — including the bar for adding a value at all, why there is
+no "could not determine", and why it is compared by `sameKind` so two layers
+cannot register one name on different layers and have the first silently win.
 
 Note the declaration's `graphs` field is validated **against the registry at
 read time**, not by a closed Zod enum. An enum would be built at module load —

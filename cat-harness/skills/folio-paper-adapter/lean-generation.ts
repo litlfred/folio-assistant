@@ -6,15 +6,12 @@ export const leanGeneration: SkillDefinition = {
   description: "Stub extraction from LaTeX, cross-reference sync between content objects and Lean files.",
   roles: ["collaborator", "owner"],
   requiredCapabilities: [
-    { capabilityId: "lean-toolchain", degradation: "fallback", fallbackCapabilityId: "lean-mcp" },
+    { capabilityId: "lean-toolchain", degradation: "fallback" },
   ],
   dependsOn: [
     { ref: "content-validation", kind: "skill", conformance: "SHALL" },
   ],
   mcpServices: ["lean-lsp"],
   routingPatterns: ["extract.*stub", "from\\s+latex", "generate.*lean"],
-  schemas: [
-    { module: "schemas/types", types: ["Block", "LeanRef", "DefinitionBlock"], access: "read" },
-  ],
   tags: ["lean", "generation", "stub"],
 };

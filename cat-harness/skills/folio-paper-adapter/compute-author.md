@@ -1,6 +1,5 @@
 ---
 name: compute-author
-roles: [collaborator, owner]
 description: >
   Pre-work briefing + durable patterns for anyone writing or modifying
   compute scripts (or the native crates they call). Read this BEFORE you

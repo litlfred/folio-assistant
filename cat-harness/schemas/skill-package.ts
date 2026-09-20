@@ -117,6 +117,22 @@ export const CapabilityDefinitionSchema = z.object({
   description: z.string(),
   detection: CapabilityDetectionSchema,
   requires: z.array(z.string()).optional(),
+  /**
+   * The capability that stands in for this one when it is absent.
+   *
+   * Declared HERE and not on each skill that needs it. What substitutes for
+   * `lean-toolchain` is a property of `lean-toolchain`, not of the five
+   * skills that happened to say so — bean `folio-assistant-sym3`, on the
+   * owner's standing objection to duplicate data maintenance. A sixth Lean
+   * skill had to remember to repeat it, and a change of substitute had to be
+   * made five times and could be made four.
+   *
+   * **It must not transitively `requires` the capability it replaces.** A
+   * substitute that needs the missing thing is absent in exactly the case it
+   * exists for — `probeAll` computes `present = requiresMet && probe(…)`, so
+   * the fallback never fires. `check:fallback-roles` reports that.
+   */
+  fallbackTo: z.string().min(1).optional(),
 });
 
 // ─── SkillDefinition ─────────────────────────────────────────────────────────
@@ -124,14 +140,21 @@ export const CapabilityDefinitionSchema = z.object({
 export const SkillCapabilityRefSchema = z.object({
   capabilityId: z.string(),
   degradation: DegradationStrategySchema,
-  fallbackCapabilityId: z.string().optional(),
-  /**
-   * The ROLE that performs this instead, when no capability can — the
-   * air-gapped case, where an API cannot be reached and a person signs.
-   * See {@link SkillCapabilityRef} for why a role rather than an actor,
-   * and why this is not modelled as a capability.
-   */
-  fallbackRole: z.string().min(1).optional(),
+  // NEITHER fallback field lives here any more, and for two different
+  // reasons — both 2026-09-20.
+  //
+  // `fallbackRole` was DERIVABLE: the BPMN already carried it executably, so
+  // declaring it was a cached copy with nothing asserting the two agreed
+  // (bean `85e8`).
+  //
+  // `fallbackCapabilityId` was not derivable but was DUPLICATED: one fact,
+  // `lean-toolchain → lean-mcp`, written in five modules. It is
+  // `CapabilityDefinition.fallbackTo` now, declared once on the capability
+  // it is a property of (bean `sym3`).
+  //
+  // What stays is `degradation` — the SKILL's business, what it does when a
+  // capability is missing, as against the capability's, what stands in for
+  // it.
 });
 
 export const SkillDependencySchema = z.object({
@@ -175,10 +198,16 @@ export const SkillDefinitionSchema = z.object({
   routingPatterns: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   package: z.string().optional(),
-  // `SkillDefinition.schemas` is documented and appears in the interface's own
-  // example, but had no counterpart here — so `.parse()` stripped it off any
-  // skill that used one. Same defect as `lean` on the provable blocks.
-  schemas: z.array(SkillSchemaRefSchema).optional(),
+  // `schemas` was here until 2026-09-20, added because the interface had it
+  // and Zod was stripping it — a real defect, correctly fixed at the time.
+  //
+  // Both halves are gone now, and the fix is the reason worth keeping: the
+  // field reached no reader in EITHER state. Adding the counterpart made the
+  // value survive `.parse()` and travel to exactly one consumer,
+  // `generate-docs.ts`, which had never run since the root commit and is
+  // retired (`folio-assistant-3w0i`). Fixing a field's plumbing is not
+  // evidence that anything is on the other end — this one was two years of
+  // declaration with no destination (`folio-assistant-t2yg`).
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
   schemaRef: z.string().optional(),
 });

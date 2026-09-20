@@ -1,6 +1,5 @@
 ---
 name: one-voice-integration-watcher
-roles: [reader, collaborator, owner]
 user_invocable: true
 inherits: local/integration-watcher
 watch_arg: one-voice

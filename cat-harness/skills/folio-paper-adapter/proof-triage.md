@@ -1,6 +1,5 @@
 ---
 name: proof-triage
-roles: [collaborator, owner]
 description: >
   Systematically triages and resolves `sorry` stubs across the Lean codebase.
   Inventories all sorry sites, orders them by dependency, attempts proofs using

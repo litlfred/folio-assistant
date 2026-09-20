@@ -50,7 +50,7 @@ import "../../schemas/folio-graph-kind.js";
 const ROOT = join(import.meta.dir, "../..");
 const DOC = "skills/folio-core/directory-conventions.md";
 /** The table's header row, verbatim. Renaming a column is a deliberate edit. */
-const HEADER = "| kind | declared by | holds | renderable |";
+const HEADER = "| kind | declared by | contents | renderable |";
 
 /**
  * The kinds the table names, read from its FIRST COLUMN only.

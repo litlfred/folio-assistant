@@ -11,16 +11,49 @@
 import { describe, expect, test } from "bun:test";
 import { join } from "node:path";
 import { stakeholderMap, formatStakeholderMap } from "../../src/impact/stakeholder-map.ts";
+import { readRoleGraph } from "../../schemas/role-graph.ts";
 
 const ROOT = join(import.meta.dir, "../..");
 
 describe("stakeholder map", () => {
-  test("a changed skill resolves to its name and declared roles", async () => {
+  test("a changed skill resolves to its name and path", async () => {
     const map = await stakeholderMap(ROOT, ["skills/folio-core/todo-manager.md"]);
     expect(map.skills.map((s) => s.name)).toEqual(["todo-manager"]);
-    // todo-manager is read by everyone who touches the work plan.
-    expect(map.skills[0].roles.length).toBeGreaterThan(0);
+    expect(map.skills[0].path).toContain("todo-manager.md");
     expect(map.untraced).toEqual([]);
+  });
+
+  test("roles come from the LANES reached, and every one resolves in the registry", async () => {
+    // Until 2026-09-20 this read each skill's own `roles:` front matter, and
+    // "Roles reached: collaborator, owner" named two things that were in no
+    // registry — 260 of 325 annotations resolved against nothing, and the
+    // report gave no way to tell those from a real role. Bean `qif9`.
+    const map = await stakeholderMap(ROOT, ["skills/folio-core/todo-manager.md"]);
+    expect(map.roles.length).toBeGreaterThan(0);
+    const declared = new Set(
+      (readRoleGraph(join(ROOT, "skills"))?.roles ?? []).map((r) => r.id),
+    );
+    expect(declared.size).toBeGreaterThan(0);
+    for (const r of map.roles) expect(`${r}: ${declared.has(r)}`).toBe(`${r}: true`);
+    // And the retired vocabulary cannot come back through this door.
+    for (const gone of ["reader", "collaborator", "owner"]) {
+      expect(map.roles).not.toContain(gone);
+    }
+  });
+
+  test("a lane binding no declared role is UNDETERMINED, not silently roleless", async () => {
+    const map = await stakeholderMap(ROOT, ["skills/folio-core/todo-manager.md"]);
+    const declared = new Set(
+      (readRoleGraph(join(ROOT, "skills"))?.roles ?? []).flatMap((r) => r.lanes),
+    );
+    const unbound = map.lanes.filter((l) => !declared.has(l.lane));
+    // Conditional on the corpus having one, and the assertion says which
+    // case ran — a test that quietly passes on an empty filter is the
+    // vacuity this repository keeps paying for.
+    const said = map.notDetermined.join(" ");
+    expect(`${unbound.length > 0 ? "unbound lanes exist" : "every lane binds"}: reported=${
+      unbound.length > 0 ? said.includes("binding no declared role") : true
+    }`).toBe(`${unbound.length > 0 ? "unbound lanes exist" : "every lane binds"}: reported=true`);
   });
 
   test("a changed skill reaches the process lanes accountable for using it", async () => {

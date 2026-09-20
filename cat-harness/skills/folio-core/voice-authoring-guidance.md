@@ -1,6 +1,5 @@
 ---
 name: voice-authoring-guidance
-roles: [author, authoring-agent, editor]
 description: >
   Load the active voices' rules BEFORE writing, so a block is drafted in the
   register it will be reviewed against. The authoring half of the voice overlay;

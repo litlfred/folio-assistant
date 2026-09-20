@@ -28,6 +28,17 @@
  * both draft and confirm would be one `--yes` away from the failure the whole
  * state machine exists to prevent.
  */
+// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
+// and this module resolves a DECLARED directory. Without it the first
+// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
+// 2026-09-20 across the 20 modules that resolve a declared directory: 10
+// threw, including `narratives.ts` and the `translation` MCP tool, while
+// every gate and all 3298 tests passed — nothing covered the path.
+//
+// Importing core's registration is correct by LAYERING, not a workaround:
+// `folio` is CORE's kind, so a content-side module may import it, while the
+// harness alone never sees it (schemas/folio-graph-kind.ts says so).
+import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
@@ -36,15 +47,92 @@ import { directoriesForGraph } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
-/** Files that may carry a `narrative` record, by the arm that writes them. */
-export const NARRATIVE_BEARING = ["tabular.jsonld", "contents.jsonld", "manifest.jsonld"] as const;
+/**
+ * Files that may carry a `narrative` record, by the arm that writes them.
+ *
+ * `images.json` joined on 2026-09-20 (bean `04vl`) and is the reason
+ * {@link narrativesIn} exists. The first three hold ONE narrative at the top level; that one holds
+ * MANY, at `images[i].narrative`. Adding it to this list alone found nothing:
+ * the queue read `doc.narrative`, which an images sidecar does not have, so it
+ * reported "0 drafts" over 24 real ones and looked exactly like an empty queue.
+ */
+export const NARRATIVE_BEARING = [
+  "tabular.jsonld",
+  "contents.jsonld",
+  "manifest.jsonld",
+  "images.json",
+] as const;
+
+/** Where a narrative sits inside its document, so `decide` can write it back. */
+export type NarrativePath = readonly (string | number)[];
 
 export interface QueueItem {
   /** Repo-relative path of the file holding it. */
   file: string;
   /** The library entry's slug. */
   slug: string;
+  /**
+   * The narrative's location WITHIN the file — `["narrative"]` for a
+   * single-narrative document, `["images", 3, "narrative"]` for an images
+   * sidecar. Carried rather than recomputed so `decide` writes back to the one
+   * the reviewer actually saw; with several drafts in one file, "the
+   * narrative" is not a location.
+   */
+  path: NarrativePath;
+  /** What this narrative is ABOUT, when the file holds more than one. */
+  subject?: string;
   narrative: Narrative;
+}
+
+/**
+ * Every narrative in one parsed document, with its path.
+ *
+ * Two shapes, and the second is why this is a function rather than a field
+ * read. A flat document carries `narrative`; an images sidecar carries a list
+ * whose entries each may. Returns `[]` for a document with neither, which is a
+ * determined answer — the caller cannot tell it from "not looked" otherwise.
+ */
+export function narrativesIn(
+  doc: Record<string, unknown>,
+): { path: NarrativePath; narrative: Narrative; subject?: string }[] {
+  const out: { path: NarrativePath; narrative: Narrative; subject?: string }[] = [];
+
+  const flat = NarrativeSchema.safeParse(doc.narrative);
+  if (flat.success) out.push({ path: ["narrative"], narrative: flat.data });
+
+  const images = doc.images;
+  if (Array.isArray(images)) {
+    images.forEach((img, i) => {
+      if (typeof img !== "object" || img === null) return;
+      const rec = img as Record<string, unknown>;
+      const parsed = NarrativeSchema.safeParse(rec.narrative);
+      if (!parsed.success) return;
+      out.push({
+        path: ["images", i, "narrative"],
+        narrative: parsed.data,
+        // The reviewer is being asked about ONE picture among many. Without
+        // this the queue shows twenty-four entries distinguishable only by
+        // their text, which is the thing under review.
+        subject: typeof rec.id === "string" ? rec.id : undefined,
+      });
+    });
+  }
+  return out;
+}
+
+/** Read a narrative's container so `decide` can replace exactly one. */
+function setAtPath(doc: Record<string, unknown>, path: NarrativePath, value: Narrative): void {
+  let cur: unknown = doc;
+  for (const key of path.slice(0, -1)) {
+    if (typeof cur !== "object" || cur === null) {
+      throw new Error(`cannot write narrative at ${path.join(".")}: the path does not exist`);
+    }
+    cur = (cur as Record<string | number, unknown>)[key];
+  }
+  if (typeof cur !== "object" || cur === null) {
+    throw new Error(`cannot write narrative at ${path.join(".")}: the path does not exist`);
+  }
+  (cur as Record<string | number, unknown>)[path[path.length - 1]] = value;
 }
 
 /**
@@ -68,9 +156,9 @@ export function queue(root = ROOT): QueueItem[] {
       } catch {
         continue;
       }
-      const parsed = NarrativeSchema.safeParse(doc.narrative);
-      if (parsed.success && parsed.data.state === "draft") {
-        out.push({ file: relative(root, f), slug, narrative: parsed.data });
+      for (const { path, narrative, subject } of narrativesIn(doc)) {
+        if (narrative.state !== "draft") continue;
+        out.push({ file: relative(root, f), slug, path, subject, narrative });
       }
     }
   }
@@ -158,7 +246,10 @@ export function decide(
   if (!r.success) {
     throw new Error(`refusing to write an invalid narrative: ${r.error.issues[0]?.message ?? "invalid"}`);
   }
-  doc.narrative = r.data;
+  // Written at the item's OWN path. `doc.narrative = …` was right while every
+  // bearing file held one narrative; with 24 in a single images sidecar it
+  // would have added a stray top-level record and left the draft untouched.
+  setAtPath(doc, item.path, r.data);
   writeFileSync(f, JSON.stringify(doc, null, 2) + "\n", "utf-8");
   return r.data;
 }
@@ -174,7 +265,8 @@ function list(items: QueueItem[]): void {
   items.forEach((it, i) => {
     const d = it.narrative.drafted_by;
     const who = d ? `${d.kind}${d.model ? ` ${d.model}` : ""} (${d.id})` : "unknown";
-    console.log(`  [${i + 1}] ${it.slug}  — drafted by ${who}`);
+    const what = it.subject ? `${it.slug}/${it.subject}` : it.slug;
+    console.log(`  [${i + 1}] ${what}  — drafted by ${who}`);
     console.log(`      ${it.narrative.text}`);
     console.log(`      ${it.file}\n`);
   });

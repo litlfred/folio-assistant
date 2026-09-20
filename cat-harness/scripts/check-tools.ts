@@ -28,13 +28,13 @@
  *
  * @module scripts/check-tools
  */
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/index.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
-import { kgRoots } from "./known-skills.js";
+import { knownSkills as knownSkillsIn } from "./known-skills.js";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
 
 /**
@@ -52,44 +52,39 @@ function schemasRoot(root: string): string {
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-/** Skill names, discovered — never a hardcoded list. See kg-export's note. */
+/**
+ * Skill names, from the ONE definition of where a skill lives.
+ *
+ * ## It had its own, and both halves of the disagreement were live
+ *
+ * This module carried a local scan: the FIRST declared `cat-harness` root, its
+ * immediate subdirectories, and two literal extras. `known-skills.ts` exists
+ * precisely so that no second answer to "does this skill exist" can drift from
+ * the first — its own header says two copies are "how one of them ends up
+ * reporting a wall of false dangling refs" — and this was the second copy.
+ *
+ * Measured 2026-09-20, the two sets differed **both ways** at once:
+ *
+ *  - **36 non-skills admitted.** `skills/memory/` then held agent-memory nodes,
+ *    every one a `.md` in a declared directory and none an instruction body.
+ *    {@link isSkillMd} excludes them by their `$schema:` line; a directory
+ *    scan cannot. So `satisfies: ["the-complement"]` would have RESOLVED —
+ *    a Tool claiming to implement a memory entry, checked and passed.
+ *  - **2 real skills missed.** `bootstrap/skills/` holds its skills DIRECTLY
+ *    rather than in packages, and a scan of one root's subdirectories never
+ *    looks at the root itself. `confirm-harness` and `log-message` read as
+ *    dangling — which is how this was found: a Tool naming a skill that is
+ *    there, reported as an error.
+ *
+ * Taking the first root alone is the `dh4f` shape as well: a second declared
+ * root is scanned by nobody and reports clean.
+ *
+ * Zero-argument, because every caller here means THIS repository and the root
+ * is this module's own. The canonical function takes one, since a checker for
+ * another instance is a thing that exists.
+ */
 export function knownSkills(): Set<string> {
-  const names = new Set<string>();
-  const dirs: string[] = [];
-  // EVERY declared knowledge-graph root, not just the first.
-  //
-  // This read `kgRoots(ROOT)[0]` until 2026-09-20 — "the root's graph" — and
-  // the comment beside it claimed "every declared root is scanned below", which
-  // was false the moment a second root held a skill. It cost a dangling
-  // `satisfies` the same day: `kg-validate → kg-navigation` reported as naming
-  // no skill, because `kg-navigation` had moved into a named subgraph of its
-  // own and this scan could not see past the first root. `known-skills.ts`
-  // resolved it correctly throughout — two implementations of one question,
-  // which is the drift AGENTS.md keeps naming, and the failing one was the
-  // local copy.
-  //
-  // A root may hold skills DIRECTLY as well as in packages (`src/skills/`
-  // holds `corpus-grep.md` beside its `.ts`; `kg-navigation/skills/` and
-  // `large-datasets/skills/` hold theirs), so each root is scanned itself AND
-  // one level down.
-  for (const skillsRoot of kgRoots(ROOT)) {
-    if (!existsSync(skillsRoot)) continue;
-    dirs.push(skillsRoot);
-    for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-      if (d.isDirectory()) dirs.push(join(skillsRoot, d.name));
-    }
-  }
-  for (const extra of ["src/skills", ".claude/skills/local"]) {
-    if (existsSync(join(ROOT, extra))) dirs.push(join(ROOT, extra));
-  }
-  for (const dir of dirs) {
-    for (const f of readdirSync(dir)) if (f.endsWith(".md")) names.add(f.slice(0, -3));
-  }
-  const io = join(ROOT, "schemas", "skills");
-  if (existsSync(io)) {
-    for (const e of readdirSync(io, { withFileTypes: true })) if (e.isDirectory()) names.add(e.name);
-  }
-  return names;
+  return knownSkillsIn(ROOT);
 }
 
 /**

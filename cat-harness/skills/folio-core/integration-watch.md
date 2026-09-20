@@ -1,6 +1,5 @@
 ---
 name: integration-watch
-roles: [reader, collaborator, owner]
 user_invocable: true
 description: >
   Dispatcher for the `/integration-watch` slash command. Routes to

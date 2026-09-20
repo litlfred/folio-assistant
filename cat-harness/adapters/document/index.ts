@@ -57,8 +57,16 @@ import type {
   BlockDiff,
   BranchCharacterization,
   TriageResult,
-  FeedbackItem,
   UserRole } from "../../src/types.js";
+// The REAL feedback type, straight from the schema that validates it.
+//
+// It used to come through `src/types.ts`, which re-exported it from here —
+// and that re-export was the last wrong-direction edge in the partition
+// (bean `jcmx`). This adapter is core, so importing the schema directly is
+// core -> core and adds no edge; it also means the adapter works with the
+// full type rather than the structural minimum the HARNESS needs, which is
+// all `TodoRef` in `src/types.ts` ever claimed to be.
+import type { FeedbackItem } from "../../schemas/types.js";
 import type { GitHelper } from "../../src/core/git.js";
 import { FeedbackStore } from "../../src/core/feedback.js";
 import { log } from "../../src/core/logging.js";

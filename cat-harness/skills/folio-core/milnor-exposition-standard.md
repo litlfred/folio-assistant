@@ -1,6 +1,5 @@
 ---
 name: milnor-exposition-standard
-roles: [author, editor, reviewer, narrative-reviewer]
 description: >
   The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the
   only passing total, derived from John Milnor's "Link Groups" (1954). The

@@ -1,6 +1,5 @@
 ---
 name: md-authoring
-roles: [reader, collaborator, owner]
 ---
 
 # Markdown Authoring Conventions

@@ -169,8 +169,14 @@ duplicate is fine while an unchecked one is not. In this instance
 
 These were `.beans/` and `.harness/workflow/` until 2026-09-18 (beans `8xzw`,
 `x89g`) — the two artefacts a person looks for first were the two hardest to
-find. `.harness/` still holds `interaction.json` and `issue-comments/`; only the
-workflow state moved. Option A of
+find. **`.harness/` is now empty and gone** — 2026-09-20 finished the job:
+`interaction.json` moved to the declared `interaction/` (`context`: read at
+session start, never written by a process) and `issue-comments/` to
+`issue-marks/` (`state`, and named for what it holds — an id and two
+timestamps, never a comment body). Leaving them behind a dot was never
+defensible: this repository's own dot-prefix guard rejects a dot-prefixed
+segment, so the file read at the start of every session sat in the one place
+the conventions forbid. Option A of
 [`fsh-guts/proposals/workflow-state-in-beans.md`](fsh-guts/proposals/workflow-state-in-beans.md):
 the criticism it carried there ("two places to look") was never about two
 stores, but about two *hidden* ones.
@@ -324,7 +330,7 @@ lines only**, with the overflow dropped silently.
 **The discipline is in the skill, not here** —
 [`skills/folio-core/agent-memory.md`](cat-harness/skills/folio-core/agent-memory.md) carries
 the three entry labels and what each promises, why entries are authored as nodes
-under `skills/memory/` rather than in the generated file, the two ways the
+under `memory/` rather than in the generated file, the two ways the
 injection budget has to be checked, archiving as the third state between
 "reaches everybody" and "deleted", and why an entry is never re-homed into an
 agent that does not own its subject.
@@ -417,7 +423,7 @@ and the task, and **say when you switch**, because switching changes who is
 accountable for the next step and which gates apply.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/process-state.md`](cat-harness/skills/folio-core/process-state.md)
+[`skills/workflow/process-state.md`](cat-harness/skills/workflow/process-state.md)
 §"Say which process you are in" carries the format, and the rest of that skill
 carries the five detectors for being out of process and the recovery that
 confirms with the user before re-entering.
@@ -520,11 +526,15 @@ to spend the words: **do not start the topic.**
   picture of the HCI validation gate, the draft-review-publish path and the
   work-plan lane. `folio-assistant/docs/assets/img/workflows/*.svg` is
   generated: `bun run render:bpmn`, and `render:bpmn:check` fails if stale.
-  `workflow_list` / `workflow_start` / `workflow_next` / `workflow_complete`
-  (MCP) run one, and state is committed under `beans/workflows/` so a sibling
-  session sees the same position.
+  `workflow_list` / `workflow_start` / `workflow_next` / `workflow_gate` /
+  `workflow_complete` (MCP) run one — all five declared as Tool nodes — and
+  state is committed under `beans/workflows/` so a sibling session sees the
+  same position. **Which store answers which question**, what
+  `<folio:bean op>` actually performs, and why an instance and a bean must be
+  one answer rather than two, are in
+  [`workflow-state`](cat-harness/skills/workflow/workflow-state.md).
   **The discipline is in the skill, not here** —
-  [`bpmn-processes`](cat-harness/skills/folio-core/bpmn-processes.md) carries how to author
+  [`bpmn-processes`](cat-harness/skills/workflow/bpmn-processes.md) carries how to author
   an activity (`<folio:skill ref>` and `<folio:bean>`, both required), strict
   vs advisory and the four steps no package may relax, the commit-boundary
   corpus gate and why it refuses when it cannot tell, DMN-backed gateways and
@@ -534,7 +544,7 @@ to spend the words: **do not start the topic.**
   holds nested state — a task, inside a process instance, under a role that owns
   a swimlane — and the five detectors for "you are out of process", plus the
   recovery that **confirms with the user before re-entering**, are in
-  [`skills/folio-core/process-state.md`](cat-harness/skills/folio-core/process-state.md).
+  [`skills/workflow/process-state.md`](cat-harness/skills/workflow/process-state.md).
   Bean status defaults to **non-blocking**; a real block carries what it waits
   on, since, an **expiry** and a handoff, because a block with no expiry cannot
   be told from abandoned work —
@@ -547,8 +557,18 @@ to spend the words: **do not start the topic.**
   the repo root.** Each entry names a directory and the **kind of graph** it
   holds: `folio` (authored content, rendered to a website by just-the-docs),
   `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,
-  roles) or `schemas`. `renderable` is the only behavioural difference in that
-  table, and it is what makes `folio` special — the rest are graphs tools read.
+  roles) or `schemas`. A kind answers TWO questions: `renderable` — is it wired
+  to the site build, which is what makes `folio` special — and `holds`, which
+  asks what a running process does with the graph: produces it (`content`),
+  READS it and never writes it (`context`), or WRITES it as it runs (`state`).
+  Both are required, so a kind that has not decided does not compile, and a
+  step writing to a `context` graph is a defect rather than an update.
+  **The discipline is in the skill, not here** —
+  [`skills/folio-core/content-context-and-state-graphs.md`](cat-harness/skills/folio-core/content-context-and-state-graphs.md)
+  carries the one question that settles a kind, the two that settle a hard
+  case, the kinds whose layer is not obvious from their name, what a consumer
+  may assume of each, and why agent memory is `context` while its mirror
+  `todos/` is `state` (bean `mhh9`, settled 2026-09-20).
   An instance **inherits its dependencies' directories**: `agentic-harness`
   declares `tools/`, `kg/` and `schemas/`; `folio-assist-core` declares only
   `folio/` and gets the other three. **Overrides match on the entry's `id`, not

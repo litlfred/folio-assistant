@@ -1,6 +1,5 @@
 ---
 name: document-intake
-roles: [collaborator, owner]
 description: >
   Process uploaded documents (PDFs, scans, LaTeX, structured/normative
   guidelines, etc.) from uploads/ into structured content objects. Handles OCR

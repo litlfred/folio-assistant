@@ -1,6 +1,5 @@
 ---
 name: semantic-review-scoping
-roles: [collaborator, owner]
 user_invocable: true
 description: >
   Decide what to review FIRST. Computes which blocks' semantic

@@ -66,6 +66,116 @@
       },
       "title": "Thinking about it — square",
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
+    },
+    {
+      "id": "landing-engineer-laptop",
+      "src": "docs/assets/img/harness/landing-engineer-laptop.png",
+      "role": "landing-engineer",
+      "layout": "laptop",
+      "width": 1672,
+      "height": 941,
+      "title": "The engineer, wide",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    },
+    {
+      "id": "landing-engineer-mobile",
+      "src": "docs/assets/img/harness/landing-engineer-mobile.png",
+      "role": "landing-engineer",
+      "layout": "mobile",
+      "width": 942,
+      "height": 1670,
+      "title": "The engineer, tall",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    },
+    {
+      "id": "landing-engineer-card",
+      "src": "docs/assets/img/harness/landing-engineer-card.png",
+      "role": "landing-engineer",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The engineer, square",
+      "description": "The grumpy cat in a hi-vis engineering vest, rust-stained, with the c@t mark as a chest patch, under the same thought-cloud. Backdrop for the `engineer` theme, reached by ROLE rather than by path, so an instance declaring its own `landing-engineer` art gets its own. No `textRegion`, deliberately: this art backs a STICKY, and a sticky is the container that sizes to its content rather than text fitted into a cloud interior, so a region here would reimpose the geometry the sticky removes. The three landing-*.webp entries keep theirs, because the composited path still uses them. PNG rather than webp because no converter was available where these arrived; at roughly 1.6 MB each against 100 KB for the webp siblings that is worth fixing and is tracked separately. One is loaded per viewport, not all three."
+    },
+    {
+      "id": "landing-architecture-laptop",
+      "src": "docs/assets/img/harness/landing-architecture-laptop.png",
+      "role": "landing-architecture",
+      "layout": "laptop",
+      "width": 1671,
+      "height": 941,
+      "title": "The architect, wide",
+      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content."
+    },
+    {
+      "id": "landing-architecture-card",
+      "src": "docs/assets/img/harness/landing-architecture-card.png",
+      "role": "landing-architecture",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The architect, square",
+      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content."
+    },
+    {
+      "id": "landing-library-laptop",
+      "src": "docs/assets/img/harness/landing-library-laptop.png",
+      "role": "landing-library",
+      "layout": "laptop",
+      "width": 1669,
+      "height": 942,
+      "title": "The librarian, wide",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    },
+    {
+      "id": "landing-library-mobile",
+      "src": "docs/assets/img/harness/landing-library-mobile.png",
+      "role": "landing-library",
+      "layout": "mobile",
+      "width": 1024,
+      "height": 1536,
+      "title": "The librarian, tall",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    },
+    {
+      "id": "landing-library-card",
+      "src": "docs/assets/img/harness/landing-library-card.png",
+      "role": "landing-library",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The librarian, square",
+      "description": "The grumpy cat as librarian: reading glasses, knitted scarf, a stack of tooled leather books with paw-print and tree devices, a satchel carrying the c@t mark on a brass fob, a gothic library behind in the rain. Backdrop for the `library` theme - the one for knowledge-graph discussion, content, data modelling and schema definition. Reached by ROLE rather than by path, so an instance declaring its own `landing-library` art gets its own. NOTE the portrait crop is 1024x1536 (aspect 0.667) where the other themes' portrait crops are 941x1670 (0.564). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface colour instead of cropping the subject. It would matter if this art were ever composited behind text positioned by a textRegion, which is why the difference is written down. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2.3 MB a crop, against ~100 KB for the original webp siblings; one is loaded per viewport, not all three. Converting is tracked in bean ll11."
+    },
+    {
+      "id": "landing-analyst-laptop",
+      "src": "docs/assets/img/harness/landing-analyst-laptop.png",
+      "role": "landing-analyst",
+      "layout": "laptop",
+      "width": 1536,
+      "height": 1024,
+      "title": "The analyst, wide",
+      "description": "The grumpy cat as analyst: pinstripe suit, blue tie carrying the c@t mark, glasses, a tablet, printed bar and pie charts, books with chart devices on the spines, a marked mug. Backdrop for the `analyst` theme - SDLC, CRDM, business analysis and data engineering. Reached by ROLE rather than by path, so an instance declaring its own `landing-analyst` art gets its own. THE ONLY SUNNY ONE. Blue sky and flowering shrubs where grumpy-cat, engineer, architecture and library are all storm-grey, which is why its palette is warmer and brighter than theirs rather than a variation on one: the sampled cloud is #f0f0e4 over 28% of the frame, against #e4e4e4 for the librarian. The wide crop is 1536x1024 (aspect 1.50) where the other landscape crops are 1671x941 (1.78). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface instead of cropping the subject. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2 MB a crop; one is loaded per viewport, not all three. Conversion is bean ll11."
+    },
+    {
+      "id": "landing-analyst-mobile",
+      "src": "docs/assets/img/harness/landing-analyst-mobile.png",
+      "role": "landing-analyst",
+      "layout": "mobile",
+      "width": 941,
+      "height": 1672,
+      "title": "The analyst, tall",
+      "description": "The grumpy cat as analyst: pinstripe suit, blue tie carrying the c@t mark, glasses, a tablet, printed bar and pie charts, books with chart devices on the spines, a marked mug. Backdrop for the `analyst` theme - SDLC, CRDM, business analysis and data engineering. Reached by ROLE rather than by path, so an instance declaring its own `landing-analyst` art gets its own. THE ONLY SUNNY ONE. Blue sky and flowering shrubs where grumpy-cat, engineer, architecture and library are all storm-grey, which is why its palette is warmer and brighter than theirs rather than a variation on one: the sampled cloud is #f0f0e4 over 28% of the frame, against #e4e4e4 for the librarian. The wide crop is 1536x1024 (aspect 1.50) where the other landscape crops are 1671x941 (1.78). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface instead of cropping the subject. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2 MB a crop; one is loaded per viewport, not all three. Conversion is bean ll11."
+    },
+    {
+      "id": "landing-analyst-card",
+      "src": "docs/assets/img/harness/landing-analyst-card.png",
+      "role": "landing-analyst",
+      "layout": "card",
+      "width": 1254,
+      "height": 1254,
+      "title": "The analyst, square",
+      "description": "The grumpy cat as analyst: pinstripe suit, blue tie carrying the c@t mark, glasses, a tablet, printed bar and pie charts, books with chart devices on the spines, a marked mug. Backdrop for the `analyst` theme - SDLC, CRDM, business analysis and data engineering. Reached by ROLE rather than by path, so an instance declaring its own `landing-analyst` art gets its own. THE ONLY SUNNY ONE. Blue sky and flowering shrubs where grumpy-cat, engineer, architecture and library are all storm-grey, which is why its palette is warmer and brighter than theirs rather than a variation on one: the sampled cloud is #f0f0e4 over 28% of the frame, against #e4e4e4 for the librarian. The wide crop is 1536x1024 (aspect 1.50) where the other landscape crops are 1671x941 (1.78). Recorded rather than corrected: the backdrop is `contain`ed and faded, so a different aspect letterboxes into the card's own surface instead of cropping the subject. No `textRegion`: this art backs a STICKY, and a sticky sizes to its content. PNG at ~2 MB a crop; one is loaded per viewport, not all three. Conversion is bean ll11."
     }
   ],
   "assets": [
@@ -103,15 +213,39 @@
   "publication": {
     "host": "github-pages"
   },
-  "directories": [
+  "stickies": [
     {
-      "id": "docs",
-      "path": "docs/",
-      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`.",
-      "graphs": [
-        "docs"
+      "_comment": "THE DESCRIPTION, and it comes first: a reader needs to know what this instance IS before an orientation paragraph about the graph's shape means anything. `bodyFrom: description` rather than a copy of it, so the landing page cannot drift from the declaration one line above. The ENGINEER theme, not the plain cat — the owner: \"thats what the themne of the current landing page sticky should be, the engineer\".",
+      "id": "landing",
+      "order": 10,
+      "theme": "engineer",
+      "bodyFrom": "description",
+      "onboardingLinks": true
+    },
+    {
+      "_comment": "The owner's words are kept VERBATIM, down to the shape of the sentence. It is a joke that carries real information — a gloss on \"computable adjudication and agentic test harness\", arrived at by way of caaat-harness, ca&at-harness, .c&at-harness, c@t-harness. Sanding it into a product sentence would lose the only part that tells a reader the name is a pun. Plain grumpy cat, NOT the engineer: the owner called this one \"plain old grumpy cat\", and the two themes differing is the point. The link is ABSOLUTE and points at the source: cat-harness is still to be split out of this repository (issue #223) and has no site of its own, and this instance's canonicalUrl is THIS site — a sticky on the landing page linking to the landing page is a link to itself.",
+      "id": "cat-harness",
+      "order": 20,
+      "theme": "grumpy-cat",
+      "summary": "Please be introduced to a cat",
+      "body": "Please be introduced to a cat who acquires things, for whatever purpose — maybe somebody knows.",
+      "links": [
+        {
+          "label": "cat-harness",
+          "href": "https://github.com/litlfred/folio-assistant"
+        }
       ]
     },
+    {
+      "_comment": "Two sentences, not three, because that is what was asked for. Three of the four named map onto a declared graph kind — `folio` is content, `tools` is tools, `cat-harness` is skills — and ACQUISITION DOES NOT. The text is careful not to imply it does: what exists is `uploads/` and `library/`. `readDeclaration` throws on an unknown kind, so prose naming a fifth one would send the next agent looking for something the registry would reject. NO LINKS, deliberately: the four are graph kinds rather than pages, there is no single URL for \"tools\" to point at, and inventing four would be four more link-shaped values for bean blv9 to collect.",
+      "id": "subgraphs",
+      "order": 30,
+      "theme": "engineer",
+      "summary": "The knowledge sub-graphs",
+      "body": "**Content** is what somebody authors and a reader reads; **acquisition** is how\nunstructured and semi-structured sources — documents, data, loose information —\nget into the graph in the first place; **tools** are what an agent can call; and\n**skills** are the instructions for doing the work.\n\nAll four are **declared directories** rather than conventions, so an instance\nsays which of them it holds and a consumer reads that declaration instead of\nwalking the tree."
+    }
+  ],
+  "directories": [
     {
       "id": "tools",
       "path": "tools/",
@@ -136,6 +270,140 @@
       "description": "The bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `bootstrap/skills/`, NOT `bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `bootstrap/README.md` and `bootstrap/AGENTS.md` declare neither, and they are the bootstrap instance's two DECLARED ASSETS — so a graph rooted at `bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `bootstrap/harness.json`; this entry is the same fact at the root, and it has to be stated twice only because `resolveSkillDirs` has no caller, so a nested instance's directories are not yet reachable from here. When that is wired, THIS entry is the one to delete. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "graphs": [
         "cat-harness"
+      ]
+    },
+    {
+      "id": "cat-harness",
+      "path": "skills/",
+      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "qa",
+      "path": "test/results/",
+      "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Three kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) and `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote). The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
+      "graphs": [
+        "qa"
+      ]
+    },
+    {
+      "id": "fsh-guts",
+      "path": "fsh-guts/",
+      "scope": "repository",
+      "description": "The trashcan that is kept. Deprecated and throwaway structured content — addressable, exported as <base>/fsh-guts.jsonld, and DELIBERATELY absent from the rendered site. Every other declared kind here is non-renderable because it is a graph a tool reads and there was never a page to make of it; this one's contents could be rendered and are not, so that something can be kept without being published. It is also the destination that makes the never-delete rule enforceable beyond beans: AGENTS.md forbids deleting a bean because a scrapped item stops the next agent re-entering a dead end while a deleted one cannot be told from an accident, and that reasoning was always general — an agent removing a page or a script had only `rm`. Delete now means relocate here, and relocate is reversible. Files declare themselves with `$schema: folio-fsh-guts/v1`, per the same contract the bean and workflow stores use. NOTE on the name: `.fsh` is FHIR Shorthand in this codebase and across the WHO SMART folios; the collision was raised and the owner confirmed this spelling. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
+      "graphs": [
+        "fsh-guts"
+      ]
+    },
+    {
+      "id": "health",
+      "path": "test/health/results/",
+      "description": "Repository health reports — what the daily sweep under `test/health/` wrote. One `health-report/v1` document, declaring itself with a `$schema` tag rather than being duck-typed by path: a directory is a PLACE TO LOOK and the files inside say what they are. A SEPARATE graph from `qa`, and the line between them is about the SUBJECT, not the producer: a QA verdict judges an artefact this repository produced, against criteria that artefact is supposed to meet; a health report judges the REPOSITORY ITSELF — how big it has grown, how much of the publish branch the review previews occupy, whether the work plan has duplicates in it. Folding it into `qa` would leave a consumer asking for verdicts about this instance's content holding a fact about its clone. NOTE the path: it was `tests/health/results/` when this graph landed in #395, because this repository then had BOTH `test/` (the `qa` graph) and `tests/` (the Playwright e2e specs), and the owner asked for `tests/health`. #395 flagged that inconsistency in `skills/folio-core/directory-conventions.md` rather than resolving it, since relocating a declared directory as a side effect of adding a check is the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. The owner settled it on `test/` the same day and it moved as its own change — bean `auap`, PR #400. The `id` here is unchanged, deliberately: an inheriting instance overrides on the entry's id and never on its path, so `health` still binds after the relocation. The e2e specs came to the declaration rather than the declaration to the specs, because `testDir` is one line of one config file and a declared path is what every downstream override resolves against.",
+      "graphs": [
+        "health"
+      ]
+    },
+    {
+      "id": "beans",
+      "path": "beans/",
+      "scope": "repository",
+      "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
+      "graphs": [
+        "beans"
+      ]
+    },
+    {
+      "id": "todos",
+      "path": "todos/",
+      "scope": "repository",
+      "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
+      "graphs": [
+        "todos"
+      ]
+    },
+    {
+      "id": "memory",
+      "path": "memory/",
+      "scope": "repository",
+      "description": "Agent memory — durable facts an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md`. `context` by the axis bean `mhh9` settled: read during a process, never written by one; it changes when a human directs an authoring agent. It sat in `skills/memory/` until 2026-09-20 — inside the `cat-harness` directory, which is `content` — so the CONTAINING kind and the contents were on opposite layers, and a nested declaration is the defect #263 names. Moving it was held back from the classification change on purpose (#395's rule, and bean `auap`'s precedent: a relocation is its own change) and is bean `07xs`. SCOPE IS `repository`, like `beans/`: these are facts about this REPOSITORY carried by the agents working in it, and `.claude/agents/` — the consumers — sit at the repository root too.",
+      "graphs": [
+        "memory"
+      ]
+    },
+    {
+      "id": "interaction",
+      "path": "interaction/",
+      "scope": "repository",
+      "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
+      "graphs": [
+        "interaction"
+      ]
+    },
+    {
+      "id": "issue-marks",
+      "path": "issue-marks/",
+      "scope": "repository",
+      "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
+      "graphs": [
+        "issue-marks"
+      ]
+    },
+    {
+      "id": "uploads",
+      "path": "uploads/",
+      "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
+      "graphs": [
+        "uploads"
+      ]
+    },
+    {
+      "id": "library",
+      "path": "library/",
+      "description": "L1 source content — one <bib-slug>/ per ingested document, holding sections/*.md, structure.json and, where the source was scanned, ocr/page-NNN.txt. Every knowledge-graph reference to a source resolves THROUGH here, never to a loose path or a bare URL.",
+      "graphs": [
+        "library"
+      ]
+    },
+    {
+      "id": "voices",
+      "path": "voices/",
+      "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
+      "graphs": [
+        "voices"
+      ]
+    },
+    {
+      "id": "translation-sources",
+      "path": "translations/",
+      "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
+      "graphs": [
+        "translation-sources"
+      ]
+    },
+    {
+      "id": "cat-harness-src",
+      "path": "src/skills/",
+      "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse — committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "folio",
+      "path": "folio/",
+      "graphs": [
+        "folio"
+      ],
+      "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop."
+    },
+    {
+      "id": "docs",
+      "path": "docs/",
+      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`.",
+      "graphs": [
+        "docs"
       ]
     },
     {
@@ -192,97 +460,6 @@
       "description": "The detangle criterion's schema node -- size, cohesion, inbound/outbound and the enforced/recorded edge authority that decides whether a boundary's direction is a fact or a filing decision. Repository-scoped, staged ahead of the split. UNDECLARED until 2026-09-20 although committed days earlier, which is the dh4f defect in reverse: graph content no declaration mentioned, so every declaration-driven consumer scanned past it -- including `check:schema-nodes`, the gate whose whole job is to stop a schema being silently absent.",
       "graphs": [
         "schemas",
-        "cat-harness"
-      ]
-    },
-    {
-      "id": "cat-harness",
-      "path": "skills/",
-      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not.",
-      "graphs": [
-        "cat-harness"
-      ]
-    },
-    {
-      "id": "qa",
-      "path": "test/results/",
-      "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Three kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) and `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote). The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
-      "graphs": [
-        "qa"
-      ]
-    },
-    {
-      "id": "fsh-guts",
-      "path": "fsh-guts/",
-      "scope": "repository",
-      "description": "The trashcan that is kept. Deprecated and throwaway structured content — addressable, exported as <base>/fsh-guts.jsonld, and DELIBERATELY absent from the rendered site. Every other declared kind here is non-renderable because it is a graph a tool reads and there was never a page to make of it; this one's contents could be rendered and are not, so that something can be kept without being published. It is also the destination that makes the never-delete rule enforceable beyond beans: AGENTS.md forbids deleting a bean because a scrapped item stops the next agent re-entering a dead end while a deleted one cannot be told from an accident, and that reasoning was always general — an agent removing a page or a script had only `rm`. Delete now means relocate here, and relocate is reversible. Files declare themselves with `$schema: folio-fsh-guts/v1`, per the same contract the bean and workflow stores use. NOTE on the name: `.fsh` is FHIR Shorthand in this codebase and across the WHO SMART folios; the collision was raised and the owner confirmed this spelling. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
-      "graphs": [
-        "fsh-guts"
-      ]
-    },
-    {
-      "id": "health",
-      "path": "test/health/results/",
-      "description": "Repository health reports — what the daily sweep under `test/health/` wrote. One `health-report/v1` document, declaring itself with a `$schema` tag rather than being duck-typed by path: a directory is a PLACE TO LOOK and the files inside say what they are. A SEPARATE graph from `qa`, and the line between them is about the SUBJECT, not the producer: a QA verdict judges an artefact this repository produced, against criteria that artefact is supposed to meet; a health report judges the REPOSITORY ITSELF — how big it has grown, how much of the publish branch the review previews occupy, whether the work plan has duplicates in it. Folding it into `qa` would leave a consumer asking for verdicts about this instance's content holding a fact about its clone. NOTE the path: it was `tests/health/results/` when this graph landed in #395, because this repository then had BOTH `test/` (the `qa` graph) and `tests/` (the Playwright e2e specs), and the owner asked for `tests/health`. #395 flagged that inconsistency in `skills/folio-core/directory-conventions.md` rather than resolving it, since relocating a declared directory as a side effect of adding a check is the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. The owner settled it on `test/` the same day and it moved as its own change — bean `auap`, PR #400. The `id` here is unchanged, deliberately: an inheriting instance overrides on the entry's id and never on its path, so `health` still binds after the relocation. The e2e specs came to the declaration rather than the declaration to the specs, because `testDir` is one line of one config file and a declared path is what every downstream override resolves against.",
-      "graphs": [
-        "health"
-      ]
-    },
-    {
-      "id": "beans",
-      "path": "beans/",
-      "scope": "repository",
-      "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
-      "graphs": [
-        "beans"
-      ]
-    },
-    {
-      "id": "todos",
-      "path": "todos/",
-      "scope": "repository",
-      "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
-      "graphs": [
-        "todos"
-      ]
-    },
-    {
-      "id": "uploads",
-      "path": "uploads/",
-      "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
-      "graphs": [
-        "uploads"
-      ]
-    },
-    {
-      "id": "library",
-      "path": "library/",
-      "description": "L1 source content — one <bib-slug>/ per ingested document, holding sections/*.md, structure.json and, where the source was scanned, ocr/page-NNN.txt. Every knowledge-graph reference to a source resolves THROUGH here, never to a loose path or a bare URL.",
-      "graphs": [
-        "library"
-      ]
-    },
-    {
-      "id": "voices",
-      "path": "voices/",
-      "description": "Editorial voice profiles — named rule sets overlaid on the base house voice, one JSON per voice. A voice is a THIRD axis beside adapters (which partition block kinds) and profiles (which partition what a folio may contain): it partitions how prose reads. Opt-in: this instance ships four and activates none, because folio-assistant's own documentation carries no voice (issue #208).",
-      "graphs": [
-        "voices"
-      ]
-    },
-    {
-      "id": "translation-sources",
-      "path": "translations/",
-      "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
-      "graphs": [
-        "translation-sources"
-      ]
-    },
-    {
-      "id": "cat-harness-src",
-      "path": "src/skills/",
-      "description": "A SECOND knowledge-graph directory, holding skills DIRECTLY rather than in package subdirectories: `src/skills/corpus-grep.md` sits beside the `corpus-grep.ts` that implements it, because a skill whose whole body is 'run this tool' belongs next to the tool. Undeclared until 2026-09-19 (bean `osbo`), which is the `dh4f` defect in reverse — committed graph content that no declaration mentioned, so every declaration-driven consumer scanned past it and `LOCAL_PACKAGES` carried a hand-written exception for the one package discovery could not see. The id is NOT `cat-harness`: overrides match on id, and `skills/` already holds that one, so reusing it would replace the graph rather than add to it.",
-      "graphs": [
         "cat-harness"
       ]
     }

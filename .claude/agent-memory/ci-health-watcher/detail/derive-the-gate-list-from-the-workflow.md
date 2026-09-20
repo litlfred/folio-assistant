@@ -1,4 +1,4 @@
-<!-- Generated from skills/memory/derive-the-gate-list-from-the-workflow.md by `bun run agent-memory`. -->
+<!-- Generated from memory/derive-the-gate-list-from-the-workflow.md by `bun run agent-memory`. -->
 <!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
 The command:
@@ -13,7 +13,7 @@ The command:
 side and blanking the hash keys — these are single-line JSON, so
 `grep -v scriptHash` filters nothing.
 
-`MEMORY.md` is generated from `skills/memory/` by `bun run agent-memory`; a TRAP
+`MEMORY.md` is generated from `memory/` by `bun run agent-memory`; a TRAP
 written into it directly is deleted by the next run. The harness injects the
 FIRST 200 lines, so an entry past that line is dropped silently — put evidence
 in an entry's `detail`, which is written beside the file rather than into it.

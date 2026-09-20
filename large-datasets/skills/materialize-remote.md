@@ -4,7 +4,6 @@ description: >
   Landing remote content locally — the five gates, the three states, and the
   two purposes. One process, shared by catalogue import and harness bootstrap,
   plus the refresh that is not a re-import.
-roles: [user, ingestion-agent, corpus, owner, collaborator]
 ---
 
 # Materializing remote content

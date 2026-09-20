@@ -194,7 +194,12 @@ export const TranslationConfigSchema = z.object({
  */
 export const HarnessDirsSchema = z.object({
   /** Per-user interaction preferences, read at session start. */
-  interaction: z.string().default(".harness/interaction.json"),
+  // declared-path-literal: a DEFAULT for a config key, which is read before
+  // — and without — any declaration. Resolving it through `harness.json`
+  // would make the fallback depend on the thing it is the fallback for. The
+  // declaration and this default name the same place on purpose; the
+  // `interaction` directory entry carries the other half of that pairing.
+  interaction: z.string().default("interaction/interaction.json"),
 });
 
 export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
@@ -220,6 +225,17 @@ import {
   resolveDirectories,
   type MaterialisedDirectory,
 } from "./cat-harness";
+// The `folio` graph kind is registered by CORE as a load-time side effect
+// (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
+// renderable kind"), so the harness alone does not know it exists. This module
+// reads instance declarations, and this instance now DECLARES a folio graph, so
+// without this import `readDeclaration` throws `unknown graph kind "folio"` on a
+// declaration that is perfectly valid. Twelve tests and three gates failed that
+// way the first time a folio graph was declared here (issue #464) — nothing had
+// ever declared one before, so nothing had ever needed the registration to have
+// happened. Same import `scripts/kg-export.ts` and
+// `scripts/check-avatar-coverage.ts` already carry, and for the same reason.
+import "./folio-graph-kind";
 
 /**
  * Resolved dependency — a dependency that has been located on disk.
