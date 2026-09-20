@@ -5,16 +5,17 @@
     {
       "id": "initiator",
       "title": "Initiator",
-      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
       "actorKinds": [
         "agent"
       ],
       "skills": [
-        "kg-navigation",
+        "bootstrap-kg-navigation",
         "confirm-harness",
+        "discussion",
         "log-message"
       ],
-      "persona": "Knows nothing about this repository and cannot look anything up. Reads files, follows one process, and asks exactly one question when it must."
+      "persona": "Knows nothing about this repository and cannot look anything up. Reads files, follows the processes bootstrap carries, and asks exactly one question when it must — `discussion` is how that asking is performed and what it must produce."
     },
     {
       "id": "knowledge-graph-data-store",

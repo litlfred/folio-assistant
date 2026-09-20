@@ -43,12 +43,15 @@
 
 import { createHash } from "node:crypto";
 import { kgDirectories, workflowDirs, workflowFiles } from "./known-skills.js";
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+// `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
+// results tree with `withFileTypes` to tell a directory from a file.
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync, type Dirent } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
+  KG_QA_RESULTS_DIR,
   kgQaSidecarPath,
   KG_QA_MANIFEST_SCHEMA,
   KG_QA_MANIFEST_PATH,
@@ -1327,8 +1330,10 @@ if (check) {
   writeFileSync(manifestPath, manifestText);
 }
 
+const written = new Set<string>();
 for (const r of reports) {
   const p = sidecarPath(r);
+  written.add(resolve(p));
   const text = serialise(r);
   if (check) {
     const current = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
@@ -1337,6 +1342,61 @@ for (const r of reports) {
     mkdirSync(join(p, ".."), { recursive: true });
     writeFileSync(p, text);
   }
+}
+
+// ── A SIDECAR NO REPORT ACCOUNTS FOR.
+//
+// The loop above compares each report against its file. It never looks the
+// other way, so a sidecar whose SUBJECT has been renamed or deleted is
+// structurally invisible: nothing regenerates it, nothing prunes it, and
+// `--check` compares it against nothing.
+//
+// Measured, bean `3jj9`: `bootstrap/workflows/bootstrap.kg-qa.json` sat in
+// the tree auditing `bootstrap/workflows/bootstrap.bpmn`, a path that does
+// not exist — the process had been renamed to `initialize-harness.bpmn`.
+// It reported `lane-binds-role: pass` over a file nobody had, while the live
+// diagram had no sidecar at all, and `kg:audit:check` exited 0 across both.
+// A verdict about a file that is gone is worse than no verdict: it is the
+// one a reader trusts.
+//
+// REPORTED, NEVER DELETED. An orphan can also mean the subject is
+// temporarily unreachable — here the real cause is bean `pve3`, the root
+// declaring `bootstrap/skills/` but not `bootstrap/workflows/`, so the
+// process is simply not discovered from this root. Deleting on that
+// evidence would destroy a verdict to hide a declaration gap.
+// `deletion-requires-confirmation` — the agent reports, a person decides.
+const orphans: string[] = [];
+const sweepOrphans = (dir: string): void => {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return; // No sidecar tree yet is not a finding.
+  }
+  for (const e of entries) {
+    const full = join(dir, e.name);
+    if (e.isDirectory()) {
+      sweepOrphans(full);
+      continue;
+    }
+    if (!e.name.endsWith(".kg-qa.json")) continue;
+    if (!written.has(resolve(full))) orphans.push(relative(root, full));
+  }
+};
+// KG_QA_RESULTS_DIR, not KG_QA_DIRNAME. The first draft of this sweep used
+// the dirname ("kg-qa") and so walked `cat-harness/kg-qa`, which does not
+// exist — `readdirSync` threw, the catch returned, and the guard reported a
+// clean sweep over nothing on every run. It was caught only because the
+// orphan it was written for was put back and the guard stayed silent.
+// A guard that cannot fire is the defect it was written to prevent.
+sweepOrphans(join(root, KG_QA_RESULTS_DIR));
+if (orphans.length > 0) {
+  console.error(`\n\u2717 ${orphans.length} sidecar(s) audit a subject no report covers:`);
+  for (const o of orphans.sort()) console.error(`    ${o}`);
+  console.error(
+    "    Either the subject moved and the sidecar should go, or it is no longer" +
+      "\n    discovered from this root and the DECLARATION is what is wrong.",
+  );
 }
 
 if (asJson) {
