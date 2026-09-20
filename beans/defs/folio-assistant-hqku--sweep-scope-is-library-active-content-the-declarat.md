@@ -133,3 +133,48 @@ Reverting `library` to `content` fails 2 tests; setting it to `context` fails
 2, one of them the elimination asserted against `document-ingestion.bpmn`. The
 skill's `content` example was **"a library section"** and is now a folio
 chapter, with the correction stated rather than silently swapped.
+
+---
+
+## Re-asked, and re-confirmed with a carve-out — 2026-09-20, later the same day
+
+**A second session asked the owner this question without knowing it had already
+been answered and implemented above.** It read the bean from a branch that
+predated this merge, framed it as open, and was told the opposite: *"active
+content — sweeps judge it."*
+
+That answer is **not** in force. Put back to the owner with both readings side
+by side, the ruling is:
+
+> **`derived` stays. Sweeps still skip `library/`. AND a fidelity check may
+> read it.**
+
+### Why the earlier answer survives a second look
+
+The argument above is the one the re-ask never put to the owner, and it is the
+load-bearing one: *a QA finding against a derived section is a finding against
+its **generator***. A sweep that judges `library/` sends a reviewer to fix the
+wrong file. Nothing about that changed, and the ratchet is real — reverting
+`library.holds` to `content` fails 2 tests, `context` fails 2 more.
+
+### What the carve-out adds, and what it does not
+
+A check may verify the **ingestion is faithful** — pages present, OCR coverage,
+the manifest matching the directory, an image claimed and absent. It may not
+judge the **prose**, which belongs to another publisher and whose findings
+would never be actionable here.
+
+`image-verdicts.json` is already exactly this shape and is the precedent
+rather than a new idea.
+
+**This does not reopen `holds`.** `derived` is the layer, the sweep walk in
+`qa-utils.ts` still skips it, and a fidelity check is a distinct consumer that
+reads the graph deliberately — which is what `derived` permits and `state`
+would not. A later agent reading only the carve-out must not conclude the layer
+moved: it did not.
+
+### Recorded so a third session does not re-ask
+
+Two sessions have now asked this on one day and got opposite answers, because
+the second could not see the first. The bean is `completed` and the ruling
+above is the whole of it.

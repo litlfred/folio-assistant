@@ -157,6 +157,22 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
   },
   {
+    // Mounts each instance's rendered content into the built site. It COPIES
+    // rather than checks, so there is no verdict for a contributor to run —
+    // and it is meaningless outside a job that has just built `_site/`.
+    //
+    // Its refusals are not exempt: the collision rule (two instances claiming
+    // one path) is asserted by `mount-instance-docs.test.ts` in `bun test`,
+    // which IS in the gate set, and the staleness of what it mounts is gated
+    // by `iris:pages:check`.
+    match: "mount-instance-docs.ts",
+    kind: "ci-only",
+    reason:
+      "a DEPLOY step, not a check: it copies rendered output into ./_site, which only exists " +
+      "inside the site-build job. Its path-collision refusal is covered by " +
+      "mount-instance-docs.test.ts in `bun test`",
+  },
+  {
     match: "bun install",
     kind: "ci-only",
     reason: "installing dependencies is not a check; every workflow opens with it",
