@@ -117,6 +117,22 @@ export const CapabilityDefinitionSchema = z.object({
   description: z.string(),
   detection: CapabilityDetectionSchema,
   requires: z.array(z.string()).optional(),
+  /**
+   * The capability that stands in for this one when it is absent.
+   *
+   * Declared HERE and not on each skill that needs it. What substitutes for
+   * `lean-toolchain` is a property of `lean-toolchain`, not of the five
+   * skills that happened to say so — bean `folio-assistant-sym3`, on the
+   * owner's standing objection to duplicate data maintenance. A sixth Lean
+   * skill had to remember to repeat it, and a change of substitute had to be
+   * made five times and could be made four.
+   *
+   * **It must not transitively `requires` the capability it replaces.** A
+   * substitute that needs the missing thing is absent in exactly the case it
+   * exists for — `probeAll` computes `present = requiresMet && probe(…)`, so
+   * the fallback never fires. `check:fallback-roles` reports that.
+   */
+  fallbackTo: z.string().min(1).optional(),
 });
 
 // ─── SkillDefinition ─────────────────────────────────────────────────────────
@@ -124,12 +140,21 @@ export const CapabilityDefinitionSchema = z.object({
 export const SkillCapabilityRefSchema = z.object({
   capabilityId: z.string(),
   degradation: DegradationStrategySchema,
-  fallbackCapabilityId: z.string().optional(),
-  // `fallbackRole` was here from 2026-09-20 until later the same day. It is
-  // DERIVED now — the role of a lane holding a task only a person can fill,
-  // which the BPMN already carries executably. Declaring it too was one fact
-  // in two places with nothing asserting they agreed. See
-  // {@link SkillCapabilityRef} and `scripts/check-fallback-roles.ts`.
+  // NEITHER fallback field lives here any more, and for two different
+  // reasons — both 2026-09-20.
+  //
+  // `fallbackRole` was DERIVABLE: the BPMN already carried it executably, so
+  // declaring it was a cached copy with nothing asserting the two agreed
+  // (bean `85e8`).
+  //
+  // `fallbackCapabilityId` was not derivable but was DUPLICATED: one fact,
+  // `lean-toolchain → lean-mcp`, written in five modules. It is
+  // `CapabilityDefinition.fallbackTo` now, declared once on the capability
+  // it is a property of (bean `sym3`).
+  //
+  // What stays is `degradation` — the SKILL's business, what it does when a
+  // capability is missing, as against the capability's, what stands in for
+  // it.
 });
 
 export const SkillDependencySchema = z.object({

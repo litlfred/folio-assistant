@@ -48,18 +48,35 @@ data model / logical model / information model across all seven
    how to identify entities, where the model is declared, how it is
    validated, and how it binds to the content-object triple.
 
-## Open question for the owner
+## Answered 2026-09-20 — TWO skills
 
-Whether this is **one** skill (`data-modelling`, a CRDM phase) or **two** —
-the CRDM phase guidance, and a separate reusable skill on modelling
-technique that the phase calls. The second reads like the platform/content
-split applied again, but it is a judgement about the methodology rather
-than about the code.
+Owner: *"2 twoskills"*.
+
+So: a **technique** skill and a **phase** skill, and the split is the one
+already load-bearing elsewhere here.
+
+| skill | what it is | reused by |
+|---|---|---|
+| modelling technique | how to identify entities, relations and cardinality; where the model is declared; how it is validated | any process that models data, CRDM included |
+| CRDM data-modelling phase | *when* in CRDM a model is built, what it is built from (the BPA and requirements of phases 2–4), who signs it off | `crdm-data-model.bpmn` only |
+
+Why it matters beyond tidiness: the technique skill has **no CRDM in it**,
+so a folio modelling data outside a requirements process can read it
+without inheriting a methodology it is not running. The phase skill is
+where CRDM-specific sequencing lives, and it is the one the diagram's
+activities reference. That is the same shape as the platform/content split
+the `platform-boundary-guard` enforces — the general thing must not carry
+the particular caller's assumptions.
+
+The phase skill CALLS the technique skill rather than restating it. Where
+the two would disagree, the technique wins and the phase entry is wrong —
+`AGENTS.md`'s own rule about a skill and its pointer.
 
 ## Done when
 
-- [ ] the one-or-two question answered
-- [ ] skill authored under `folio-core`, platform-generic
+- [x] the one-or-two question answered — **two**
+- [ ] BOTH skills authored under `folio-core`, platform-generic; the phase
+      references the technique rather than restating it
 - [ ] `crdm-data-model.bpmn`, called from `crdm-requirements.bpmn`, every
       activity carrying `<folio:skill ref>` and `<folio:role ref>`
 - [ ] `render:bpmn` regenerated; `check:workflow-refs` and `kg:audit` clean

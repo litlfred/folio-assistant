@@ -68,8 +68,6 @@ export interface FallbackUse {
   /** The skill id, taken from the module basename. */
   skill: string;
   capabilityId: string;
-  /** `fallbackCapabilityId`, when the module declares one. */
-  fallbackCapabilityId?: string;
 }
 
 /**
@@ -89,9 +87,16 @@ export function declaredRoles(root: string): Set<string> {
   return out;
 }
 
-/** Every declared capability id. */
-export function declaredCapabilities(root: string): Set<string> {
-  const out = new Set<string>();
+/** A declared capability, as much of it as this check needs. */
+export interface CapabilityFacts {
+  id: string;
+  requires: string[];
+  fallbackTo?: string;
+}
+
+/** Every declared capability, by id. */
+export function declaredCapabilityFacts(root: string): Map<string, CapabilityFacts> {
+  const out = new Map<string, CapabilityFacts>();
   // `.claude/skills/capabilities/` is a convention rather than a declared
   // graph — the same place `src/tools/capabilities.ts` reads.
   for (const base of new Set([root, resolve(root, "..")])) {
@@ -104,7 +109,13 @@ export function declaredCapabilities(root: string): Set<string> {
     }
     for (const f of names.filter((n) => n.endsWith(".json"))) {
       try {
-        out.add(JSON.parse(readFileSync(join(dir, f), "utf-8")).id ?? basename(f, ".json"));
+        const j = JSON.parse(readFileSync(join(dir, f), "utf-8")) as Record<string, unknown>;
+        const id = typeof j.id === "string" ? j.id : basename(f, ".json");
+        out.set(id, {
+          id,
+          requires: Array.isArray(j.requires) ? j.requires.map(String) : [],
+          ...(typeof j.fallbackTo === "string" ? { fallbackTo: j.fallbackTo } : {}),
+        });
       } catch {
         // A capability file that will not parse is not a declared
         // capability. It is also not this check's business to report —
@@ -134,6 +145,39 @@ function stripComments(text: string): string {
     .split("\n")
     .map((l) => (/^\s*\/\//.test(l) ? "" : l))
     .join("\n");
+}
+
+/** Ids only, for callers that just need membership. */
+export function declaredCapabilities(root: string): Set<string> {
+  return new Set(declaredCapabilityFacts(root).keys());
+}
+
+/**
+ * Does `target` need `missing`, directly or through its own `requires`?
+ *
+ * The question that decides whether a fallback can ever fire.
+ * `probeAll` computes `present = requiresMet && probe(…)`, so a substitute
+ * that transitively requires the absent capability is absent in exactly the
+ * case it exists for.
+ *
+ * Cycle-safe by the same reading `probeAll` takes: a capability already on
+ * the stack is unmet rather than infinitely recursed.
+ */
+export function transitivelyRequires(
+  caps: Map<string, CapabilityFacts>,
+  target: string,
+  missing: string,
+  seen: Set<string> = new Set(),
+): boolean {
+  if (seen.has(target)) return false;
+  seen.add(target);
+  const c = caps.get(target);
+  if (!c) return false;
+  for (const r of c.requires) {
+    if (r === missing) return true;
+    if (transitivelyRequires(caps, r, missing, seen)) return true;
+  }
+  return false;
 }
 
 function walk(dir: string, out: string[] = []): string[] {
@@ -172,12 +216,10 @@ export function fallbackUses(root: string, dirs: string[]): FallbackUse[] {
       for (const line of text.split("\n")) {
         if (!/degradation:\s*["'`]fallback["'`]/.test(line)) continue;
         const cap = /capabilityId:\s*["'`]([^"'`]+)["'`]/.exec(line);
-        const fb = /fallbackCapabilityId:\s*["'`]([^"'`]+)["'`]/.exec(line);
         out.push({
           file: relative(root, f),
           skill: basename(f, ".ts"),
           capabilityId: cap?.[1] ?? "(unparsed)",
-          ...(fb ? { fallbackCapabilityId: fb[1]! } : {}),
         });
       }
     }
@@ -217,13 +259,13 @@ export const SCANNED = ["skills", "src", "schemas", "content", "adapters"];
 if (import.meta.main) {
   const explain = process.argv.includes("--explain");
   const roles = declaredRoles(ROOT);
-  const caps = declaredCapabilities(ROOT);
+  const facts = declaredCapabilityFacts(ROOT);
   const uses = fallbackUses(ROOT, SCANNED);
   const diagrams = workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn"));
 
   console.log(
     `fallback: ${uses.length} use(s) across ${SCANNED.length} tree(s); ` +
-      `${roles.size} declared role(s), ${caps.size} declared capability(ies), ` +
+      `${roles.size} declared role(s), ${facts.size} declared capability(ies), ` +
       `${diagrams.length} diagram(s)`,
   );
 
@@ -240,14 +282,28 @@ if (import.meta.main) {
   }
 
   const bad: string[] = [];
+  /**
+   * Reported, not gated — see the header.
+   *
+   * Keyed by the CAPABILITY PAIR, not by the skill that hit it. Five Lean
+   * skills share one broken fallback; printing it five times would report a
+   * count of 5 for a defect of 1, which is the "a count is a claim, not
+   * evidence" failure this repository keeps naming. The skills are listed
+   * as the blast radius instead.
+   */
+  const circular = new Map<string, Set<string>>();
   for (const u of uses) {
-    const viaCap = u.fallbackCapabilityId !== undefined;
-    if (viaCap && !caps.has(u.fallbackCapabilityId!)) {
-      bad.push(`${u.file}  →  fallbackCapabilityId "${u.fallbackCapabilityId}" is not a declared capability`);
-      continue;
-    }
-    if (viaCap) {
-      if (explain) console.log(`  · ${u.skill.padEnd(24)} ${u.capabilityId} → capability ${u.fallbackCapabilityId}`);
+    const via = facts.get(u.capabilityId)?.fallbackTo;
+    if (via !== undefined) {
+      if (!facts.has(via)) {
+        bad.push(`${u.file}  →  ${u.capabilityId}.fallbackTo "${via}" is not a declared capability`);
+        continue;
+      }
+      if (transitivelyRequires(facts, via, u.capabilityId)) {
+        const key = `${u.capabilityId} → ${via}`;
+        (circular.get(key) ?? circular.set(key, new Set()).get(key)!).add(u.skill);
+      }
+      if (explain) console.log(`  · ${u.skill.padEnd(24)} ${u.capabilityId} → capability ${via}`);
       continue;
     }
     const derived = await fallbackRoleFor(ROOT, u.skill);
@@ -258,12 +314,38 @@ if (import.meta.main) {
     }
     if (derived.length === 0) {
       bad.push(
-        `${u.file}  →  declares no fallbackCapabilityId and no diagram gives "${u.skill}" a ` +
-          `human-only lane, so the fallback resolves to nothing`,
+        `${u.file}  →  ${u.capabilityId} declares no \`fallbackTo\` and no diagram gives ` +
+          `"${u.skill}" a human-only lane, so the fallback resolves to nothing`,
       );
       continue;
     }
     if (explain) console.log(`  · ${u.skill.padEnd(24)} ${u.capabilityId} → role ${derived.join(", ")} (derived)`);
+  }
+
+  if (circular.size > 0) {
+    // REPORTED, NOT GATED — and the precedent is this repo's own
+    // `check:agents-xref`, which "had a backlog and rightly reported before
+    // it gated". Gating today would fail CI on a contradiction whose
+    // correct side is not yet decided: either `lean-mcp` should not
+    // `requires` a local toolchain (likely — it is an `mcp-probe` against a
+    // service, and a remote Lean is the whole point of the fallback), or
+    // the fallback is wrong. Bean `folio-assistant-sym3` carries both
+    // readings. Whichever it is, the FINDING is sound.
+    const skills = new Set([...circular.values()].flatMap((v) => [...v]));
+    console.log(
+      `\n⚠ ${circular.size} fallback(s) can never fire — the substitute needs the missing ` +
+        `thing (${skills.size} skill(s) affected):`,
+    );
+    for (const [pair, hit] of circular) {
+      const [cap, via] = pair.split(" → ");
+      console.log(`  · ${pair}, but ${via} requires ${cap}`);
+      console.log(`      reached by: ${[...hit].sort().join(", ")}`);
+    }
+    console.log(
+      `  \`probeAll\` computes present = requiresMet && probe(…), so a substitute that\n` +
+        `  transitively requires the absent capability is absent in exactly the case it\n` +
+        `  exists for. Reported rather than gated while the correct side is undecided.`,
+    );
   }
 
   if (bad.length === 0) {
@@ -274,7 +356,7 @@ if (import.meta.main) {
   console.log(`\n✗ ${bad.length} fallback(s) resolve to nothing:`);
   for (const b of bad) console.log(`  · ${b}`);
   console.log(
-    `\nEither declare a \`fallbackCapabilityId\` that exists, or give the skill a\n` +
+    `\nEither give the capability a \`fallbackTo\` that exists, or give the skill a\n` +
       `\`userTask\` in a lane that binds a declared role. A fallback with nothing\n` +
       `behind it is the defect this check exists to prevent.`,
   );
