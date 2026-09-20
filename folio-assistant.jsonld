@@ -251,21 +251,21 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T11:33:51.309Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2879f078d9e27f3fda09a48a8a2fdf8f626acad2",
-  "sourceCommitSha": "2879f078d9e27f3fda09a48a8a2fdf8f626acad2",
-  "sourceCommitAt": "2026-09-20T13:32:23+02:00",
-  "sourceTreeDirty": true,
+  "generatedAt": "2026-09-20T11:46:48.858Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a38fc2e3a3e72ee8e913c13a7d19dd9ffe6b75f7",
+  "sourceCommitSha": "a38fc2e3a3e72ee8e913c13a7d19dd9ffe6b75f7",
+  "sourceCommitAt": "2026-09-20T13:44:56+02:00",
+  "sourceTreeDirty": false,
   "counts": {
-    "Skill": 192,
+    "Skill": 193,
     "Actor": 27,
     "Capability": 26,
     "Role": 116,
     "Convention": 2,
     "SkillPackage": 9,
-    "Process": 42,
-    "SequenceFlow": 558,
-    "ProcessNode": 521,
+    "Process": 43,
+    "SequenceFlow": 582,
+    "ProcessNode": 547,
     "Tool": 51,
     "Schema": 63,
     "GraphKind": 20,
@@ -1938,6 +1938,21 @@
       ],
       "instructionsPath": "skills/folio-core/github-state-inspection.md",
       "instructionLines": 128,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-contribution-offer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "kg-contribution-offer",
+      "title": "Offering the knowledge graph — the question nobody was asking",
+      "description": "Ask whether agreed requirements should become knowledge-graph content, and as what — in a form the person can answer by selecting. Use at the end of CRDM sign-off, or whenever a body of agreed work could become a skill, a process, a schema or a bean and nobody has been asked. Offers \"none\" as a first-class answer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/kg-contribution-offer.md",
+      "instructionLines": 131,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -4275,6 +4290,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/interaction-modality",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/issue-working",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-contribution-offer",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-viewer",
@@ -9164,6 +9180,569 @@
       "outgoing": []
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Staging a feature branch preview, and taking it down",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/feature-staging.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_PR",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Closed",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch"
+      ],
+      "nodeCount": 22,
+      "flowCount": 19
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_0",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_PR",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Build",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Deploy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Deploy",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRendered"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRendered",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Comment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Comment",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Staged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Closed",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Slug"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Slug",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "merged, or labelled",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Remove",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Removed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "closed unmerged,\nno label",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRetained"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRetained",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Notice"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Notice",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Retained"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Validate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Validate",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Preflight"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Preflight",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no signal —\nsafe to remove",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_RemoveDisp"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_16",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_RemoveDisp",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_RemovedDisp"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_17",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "live, OR\ncould not tell",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_18",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/H_Confirm",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human actor",
+      "sourceKind": "bpmn-lane"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_PR",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Pull request opened, synchronised or reopened",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_0"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Build",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Build the docs site Jekyll · TypeDoc · KG export",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_0"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Deploy",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Publish to STAGING/&lt;slug&gt;",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRendered",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Append `rendered` to the render log",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_3"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Comment",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Comment the preview URL on the PR",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Staged",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preview live",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_4"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Closed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Pull request closed",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Slug",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Derive the slug from the head ref",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_6"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Confirmed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Removal confirmed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_7",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_9"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Remove",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Remove the preview AND append `removed` — one commit",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_8"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Removed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preview gone, with its reason",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_8"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_LogRetained",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Append `retained`, with why it stays",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_10"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Notice",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Post the retention notice on the PR",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_11"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Retained",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preview kept",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_11"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Start_Dispatch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Dispatched with cleanup_slug",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_18"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_12"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Validate",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Check the slug's SHAPE and that the confirmation repeats it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_13"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_Preflight",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Re-evaluate liveness AT REMOVAL TIME",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_14"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/GW_Live",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Still in use?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_15",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_17"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/Task_RemoveDisp",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Remove it AND append `removed` — one commit",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_16"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_RemovedDisp",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preview gone",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_16"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/End_Refused",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "REFUSED — nothing removed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_17"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/node/H_Confirm",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Repeat the slug, exactly, to confirm",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_FeatureStaging/flow/Flow_18"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Requirements",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "CRDM Phases 2–4 — BPA and requirements",
@@ -13149,8 +13728,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/Start_Process_CRDM_Signoff"
       ],
-      "nodeCount": 5,
-      "flowCount": 4
+      "nodeCount": 9,
+      "flowCount": 9
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_1",
@@ -13171,6 +13750,43 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_Signoff",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_ChooseKg"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_ChooseKg",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "a graph",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_RecordKg"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_RecordKg",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_AnnounceBranch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_None",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "none — recorded\nas an answer",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_AnnounceBranch"
     },
     {
@@ -13252,7 +13868,8 @@
       "workPlanOp": "claim",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_3"
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_4",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_None"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_4"
@@ -13273,6 +13890,86 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_4"
       ],
       "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Offer the knowledge-graph destinations for the agreed set",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-contribution-offer"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/BA_ChooseKg",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Choose a destination, or none",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/BA%20/%20Feature%20Requestor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-contribution-offer"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A destination?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_3",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_None"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/node/A_RecordKg",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Run placement, and raise a bean for the authoring",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/placement"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_4"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_UpstreamPinWatch",
@@ -16940,12 +17637,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Agent (playing the machine)",
-      "sourceKind": "bpmn-lane"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Human actor",
       "sourceKind": "bpmn-lane"
     },
     {
@@ -21214,7 +21905,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "folio-init",
       "title": "Scaffold a folio",
-      "description": "Create a new folio repository that uses this platform — content/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
+      "description": "Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
       "install": {
         "none": true
       },
@@ -23942,8 +24633,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "2879f078d9e27f3fda09a48a8a2fdf8f626acad2",
+    "sha": "a38fc2e3a3e72ee8e913c13a7d19dd9ffe6b75f7",
     "pr": "main",
-    "run": "35508120931"
+    "run": "35508687247"
   }
 }
