@@ -115,3 +115,50 @@ Note before starting: `probe()` in `ingest-document.ts` imported the deprecated
 parse. Fixed in `68dt`. Routing now works — and for `d5f1` specifically, read
 this bean's own 2026-09-19 measurement FIRST: the image count is not the figure
 count, and 121 of `who-pub-tps-931`'s images are page scans.
+
+## 2026-09-20 — measured with a working backend, and it changes the scope
+
+Bean `68dt` merged, so the image path can be measured rather than reasoned
+about. Two findings, and both change what this bean is.
+
+### 1. "Each image in manifest.jsonld" is currently an EMPTY SET
+
+No manifest in `library/` carries any image at all — all four have keys
+`@context @id @type contains meta provenance title` and nothing imagey. The
+"Done when" as written is vacuous: there is nothing to describe. **Extraction
+and recording must exist before the narrative half means anything**, which is a
+materially bigger scope than the title suggests.
+
+### 2. Image count is not figure count, and the discriminator is clean
+
+| document | pages | placed images | coverage | verdict |
+|---|---|---|---|---|
+| `WHO_PUB_TPS_93.1` | 121 | 121 | 0.998 each, one per page | page scans |
+| `milnorlink` | 20 | 20 | 19 full-bleed | **page scans** |
+| `9789241548960_eng` | 179 | 2 | ~0.50 | figures |
+| `WPR-RDO-2020-003-eng` | 33 | 21 on 7 pages | median 0.013 | figures |
+
+**141 page scans against 23 candidate figures.** Describing every extracted
+image would produce 141 narratives of "a scanned page" — six times as many as
+there are real figures.
+
+The separation has no overlap, so no content heuristic is needed: a page scan
+is one near-full-bleed image per page; a figure is smaller and occurs 0..n per
+page. Measured as image-rectangle area over page area, via
+`page.get_image_rects(xref)` rather than the image's own pixel dimensions,
+because a placed image is what a reader sees.
+
+### `milnorlink` was recorded wrong earlier in the same session
+
+An earlier note here read "20 pages / 1 image then codec error". That was
+measured with no working backend. It actually carries 19 full-bleed page images
+**plus** an extractable text layer (47 871 chars) — a scan with OCR baked in,
+consistent with the JSTOR provenance established in `8shg` the same day. The
+earlier figure was an artefact of the measuring tool, not the document.
+
+### Consequence for the design
+
+An image entry must record the verdict AND its basis (coverage, images per
+page), not just the verdict — the `nso8` discipline. A bare `kind: "scan"` is
+unfalsifiable by the next reader, and this bean has already been misled once by
+a stored conclusion whose reason was not checkable.
