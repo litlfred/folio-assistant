@@ -550,6 +550,12 @@ jobs:
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition
+          # Every XML namespace the corpus declares is reconciled against a
+          # specification record naming its EDITION. Added with the registry
+          # (2026-09-20): a diagram conforming to a spec nobody named is the
+          # defect that registry exists to end, and a registry nothing runs is
+          # the `xom7` shape one level along.
+          bun run external-schemas:check
           bun run docs:harness:check
           bun run gen:jsonld:check
           bun run readme:sync:check

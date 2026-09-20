@@ -901,6 +901,13 @@ const RULES: Rule[] = [
       // `extraction.ts`. Classifying it harness would buy a wrong-direction
       // edge to core for the tidiness of one list.
       "scripts/extract-assets.ts",          // a container's INDEX → uploads/*.extraction.json
+
+      // HARNESS, unlike its two neighbours above, and the test says why: it
+      // reconciles the specifications the ENGINE conforms to — BPMN, DD —
+      // against the diagrams under `skills/workflows/`. That is machinery,
+      // not a folio's material. It reads DC terms from catalogue records too,
+      // but reading a folio's data is not the same as being about it.
+      "scripts/external-schemas.ts",       // which OMG/DCMI editions we conform to
     ],
   },
 ];
