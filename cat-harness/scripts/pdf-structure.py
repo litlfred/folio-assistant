@@ -52,6 +52,7 @@ Dependencies (either one suffices; both optional at import time):
 from __future__ import annotations
 
 import argparse
+import contextlib
 import glob
 import hashlib
 import json
@@ -1204,8 +1205,48 @@ def open_backend(path: str, prefer: str = "auto") -> _Backend:
     )
 
 
+@contextlib.contextmanager
+def library_noise_to_stderr():
+    """
+    A PDF backend's warnings belong on stderr, not in the artefact — bean `ccqg`.
+
+    PyMuPDF writes its warnings to **`sys.stdout`**, so on a PDF with an
+    unreadable embedded font `--json` output began:
+
+        MuPDF error: library error: FT_New_Memory_Face(RUYKIO+...): unknown file format
+        {"_schema": "pdf-structure/v1", ...
+
+    and `json.load()` raised `Expecting value: line 1 column 1`. `--help`
+    promises `--json` prints the artefact and writes nothing else, and it did
+    not keep that.
+
+    **The warning is moved, never silenced.** An unreadable embedded font is a
+    real fact about the document; dropping it would trade a parse failure for a
+    lost diagnostic, the worse of the two.
+
+    A file-descriptor `dup2` was written first, on the assumption that MuPDF
+    wrote from its C layer past `sys.stdout` — **measured 2026-09-20, it does
+    not**: a `redirect_stdout` around `pymupdf.open(...)` plus `get_text()`
+    captured the warning in full and nothing leaked. The descriptor machinery
+    was doing nothing this does not, and `pdf-structure.py` spawns no
+    subprocess, so there is no child writing to fd 1 either. Kept simple
+    because the evidence says simple is enough.
+    """
+    with contextlib.redirect_stdout(sys.stderr):
+        yield
+
+
 def process(path: str, outdir: str | None = None, use_ocr: bool = False,
             backend: str = "auto") -> tuple[dict[str, Any], list[Section]]:
+    # Everything that touches a PDF backend runs under the redirect. `process`
+    # writes nothing to stdout itself — it RETURNS the artefact and its caller
+    # prints it — so nothing legitimate is caught by this.
+    with library_noise_to_stderr():
+        return _process(path, outdir, use_ocr, backend)
+
+
+def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
+             backend: str = "auto") -> tuple[dict[str, Any], list[Section]]:
     reader = open_backend(path, backend)
     pages = reader.page_texts()
     ocr_used = False

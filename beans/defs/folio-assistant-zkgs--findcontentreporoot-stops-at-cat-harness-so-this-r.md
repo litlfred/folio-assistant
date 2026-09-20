@@ -160,3 +160,19 @@ arriving. Nothing else among #525, #526, #530, #531 touches `harness-config.ts`,
 Migrating downstream folios. qou is pinned at `df28d02` (2026-09-07) and cannot
 see any of this until its pin is bumped — see `5xfr`, which carries the recipe
 and must be updated with THIS name once it lands.
+
+## x-ref — `b5f0`, 2026-09-20: the ruling predates a question it does not answer
+
+The ruling here is on **`harness.config.json`** (the CONFIG). The owner restated
+it later the same day as *"`cat-harness.config.json` as an **instance
+declaration** in root"* — and the declaration is `harness.json`, a **different
+file** (`schemas/cat-harness.ts`: directories, graphs, dependents, assets,
+stickies).
+
+So the convention `<name>.config.json` is settled; **whether it replaces
+`harness.json` or sits beside it is not.** Both answers have a cost, recorded in
+`b5f0` §1: merging undoes a separation qou needed both halves of on this very
+day, and keeping them separate leaves the `.config`-suffixed file as the config
+and the unsuffixed one as the declaration, with neither name saying so.
+
+Do not start the rename without settling that. `b5f0` carries it as an owner item.

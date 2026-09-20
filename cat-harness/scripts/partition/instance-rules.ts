@@ -142,6 +142,12 @@ export const RULES: Rule[] = [
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // Ported from main during the split (d8f23d39a2, bean `3pqn`): the
+      // entry was added to `RULES` while `RULES` was moving to this file,
+      // so it arrives here rather than where it was written.
+      // The unattended half of the same question, and harness for the same
+      // reasons: it reads the forge's view of this repository's pull requests.
+      "scripts/check-prs-have-runs.ts",
       // The two halves this tool was split into, 2026-09-20. Both HARNESS,
       // and the target-before-importer test says why: `engine.ts` imports
       // nothing but `fs` and `path`, and this file imports one TYPE from

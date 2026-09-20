@@ -105,3 +105,18 @@ lands inside whatever this produces.
 ## Not started
 
 Queued per the owner's standing instruction to queue rather than pivot.
+
+## x-ref — `b5f0`, 2026-09-20: the owner tied the navbar to INSTANTIATION
+
+> "instantiating a harness means that you get a slot in the LHS navbar = set of
+> controls on folio"
+
+That makes the slot a **consequence of instantiating**, not a thing an instance
+may opt into. Measured against that (`b5f0` §6): the contribution seam already
+exists and already inverts ownership the right way
+(`schemas/sticky-contribution.ts`), and `bootstrap/harness.json` declares its
+own card — but the **root** instance declares no `stickies` at all, and
+`grep -rln "navbar" cat-harness/schemas cat-harness/src` returns nothing.
+
+So the gap is not the seam. It is that instantiation **permits** a slot rather
+than **producing** one, and there is no navbar for the slot to be in.
