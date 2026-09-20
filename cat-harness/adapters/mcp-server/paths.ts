@@ -26,7 +26,8 @@ import { directoriesForGraph, soleDirectoryForGraph } from "../../schemas/cat-ha
 export const REPO_ROOT = findContentRepoRoot();
 
 /** Content objects directory. */
-export const CONTENT_DIR = resolve(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+export const CONTENT_DIR = resolve(REPO_ROOT, "folio");
 
 /**
  * Ingested documents directory — the `.jsonld` nodes and `sections/*.md` that

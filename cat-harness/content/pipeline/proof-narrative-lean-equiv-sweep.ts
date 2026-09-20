@@ -471,7 +471,8 @@ async function main() {
   const candidates = [
     resolve(args.root),
     resolve(REPO_ROOT, args.root),
-    resolve(REPO_ROOT, "content", args.root),
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    resolve(REPO_ROOT, "folio", args.root),
   ];
   const rootPath = candidates.find((c) => existsSync(c)) ?? candidates[candidates.length - 1];
   if (!existsSync(rootPath)) {

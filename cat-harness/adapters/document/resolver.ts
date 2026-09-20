@@ -62,7 +62,8 @@ export class PaperResolver {
 
   async resolveFolio(branch?: string): Promise<{ title: string; papers: FolioItem[]; branch: string }> {
     const br = branch;
-    const folioRel = "content/folio.ts";
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const folioRel = "folio/folio.ts";
     let folioData: { title: string; papers: Array<{ dir: string; title?: string; description?: string; tags?: string[] }> };
 
     if (this.gitHelper.fileExistsBranch(br, folioRel)) {
@@ -70,7 +71,8 @@ export class PaperResolver {
     } else {
       const dirs = this.gitHelper.listDirBranch(br, "content").filter((d) => {
         if (d === "schema" || d === "pipeline" || d === "node_modules") return false;
-        return this.gitHelper.fileExistsBranch(br, `content/${d}/${d}.ts`);
+        // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+        return this.gitHelper.fileExistsBranch(br, `folio/${d}/${d}.ts`);
       });
       folioData = { title: "Documents", papers: dirs.map((d) => ({ dir: d })) };
     }
@@ -78,11 +80,13 @@ export class PaperResolver {
     const items: FolioItem[] = [];
     for (const ref of folioData.papers) {
       try {
-        const paperMod = await this.gitHelper.importTsBranch<Paper>(br, `content/${ref.dir}/${ref.dir}.ts`);
+        // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+        const paperMod = await this.gitHelper.importTsBranch<Paper>(br, `folio/${ref.dir}/${ref.dir}.ts`);
         let blockCount = 0, provedCount = 0, todoCount = 0, chapCount = 0;
 
         for (const chRef of paperMod.chapters || []) {
-          const chRel = `content/${ref.dir}/${chRef.dir}/${chRef.dir}.ts`;
+          // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+          const chRel = `folio/${ref.dir}/${chRef.dir}/${chRef.dir}.ts`;
           if (!this.gitHelper.fileExistsBranch(br, chRel)) continue;
           chapCount++;
           const ch = await this.gitHelper.importTsBranch<Chapter>(br, chRel);
@@ -93,7 +97,8 @@ export class PaperResolver {
             // resolver; both now use the one reference test.
             if (isSectionRef(sec)) continue;
             for (const rootName of sectionBlockNames(sec)) {
-              const blkRel = `content/${ref.dir}/${chRef.dir}/${rootName}.ts`;
+              // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+              const blkRel = `folio/${ref.dir}/${chRef.dir}/${rootName}.ts`;
               if (!this.gitHelper.fileExistsBranch(br, blkRel)) continue;
               blockCount++;
               try {
@@ -143,7 +148,8 @@ export class PaperResolver {
     if (cached) return cached;
 
     const br = branch;
-    const paperRel = `content/${id}/${id}.ts`;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const paperRel = `folio/${id}/${id}.ts`;
     if (!this.gitHelper.fileExistsBranch(br, paperRel)) return null;
 
     const paperMod = await this.gitHelper.importTsBranch<Paper>(br, paperRel);
@@ -152,7 +158,8 @@ export class PaperResolver {
     // Auto-number chapters from manifest order: skip unnumbered ones (tabLabel set)
     let autoNum = 1;
     for (const chRef of paperMod.chapters || []) {
-      const chTsRel = `content/${id}/${chRef.dir}/${chRef.dir}.ts`;
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const chTsRel = `folio/${id}/${chRef.dir}/${chRef.dir}.ts`;
       if (!this.gitHelper.fileExistsBranch(br, chTsRel)) continue;
       const ch = await this.gitHelper.importTsBranch<Chapter>(br, chTsRel);
       const chapterNumber = ch.tabLabel != null ? undefined : autoNum++;
@@ -188,7 +195,8 @@ export class PaperResolver {
     if (cached) return cached;
 
     const br = branch;
-    const chRel = `content/${paperId}/${chapterDir}`;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const chRel = `folio/${paperId}/${chapterDir}`;
     const chTsRel = `${chRel}/${chapterDir}.ts`;
     if (!this.gitHelper.fileExistsBranch(br, chTsRel)) return null;
 
@@ -256,7 +264,8 @@ export class PaperResolver {
     if (cached) return cached;
 
     const br = branch;
-    const chRel = `content/${paperId}/${chapterDir}`;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const chRel = `folio/${paperId}/${chapterDir}`;
     const chTsRel = `${chRel}/${chapterDir}.ts`;
     if (!this.gitHelper.fileExistsBranch(br, chTsRel)) return null;
 
@@ -294,7 +303,8 @@ export class PaperResolver {
     if (cached) return cached;
 
     const br = branch;
-    const paperRel = `content/${id}/${id}.ts`;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const paperRel = `folio/${id}/${id}.ts`;
     if (!this.gitHelper.fileExistsBranch(br, paperRel)) return null;
 
     const paperMod = await this.gitHelper.importTsBranch<Paper>(br, paperRel);
@@ -303,7 +313,8 @@ export class PaperResolver {
     // Auto-number chapters from manifest order
     let autoNum = 1;
     for (const chRef of paperMod.chapters || []) {
-      const chRel = `content/${id}/${chRef.dir}`;
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      const chRel = `folio/${id}/${chRef.dir}`;
       const chTsRel = `${chRel}/${chRef.dir}.ts`;
       if (!this.gitHelper.fileExistsBranch(br, chTsRel)) continue;
       const ch = await this.gitHelper.importTsBranch<Chapter>(br, chTsRel);

@@ -892,11 +892,13 @@ if (import.meta.main) {
   const repoRoot = findContentRepoRoot();
   const targets = positional.length > 0
     ? positional.map(p => resolve(p))
-    : findPapers(repoRoot).map(p => join(repoRoot, "content", p));
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    : findPapers(repoRoot).map(p => join(repoRoot, "folio", p));
 
   if (targets.length === 0) {
     console.error(
-      `✗ No paper found under ${join(repoRoot, "content")} — expected at least ` +
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      `✗ No paper found under ${join(repoRoot, "folio")} — expected at least ` +
       `one <paper>/<paper>.ts manifest.\n` +
       `  folio-assistant is the PLATFORM; run this from a folio checkout, or ` +
       `pass a paper/chapter directory explicitly.`,

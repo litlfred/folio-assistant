@@ -21,7 +21,7 @@ const dirs: string[] = [];
 function folio(contentType?: string): string {
   const d = mkdtempSync(join(tmpdir(), "folio-profile-"));
   dirs.push(d);
-  mkdirSync(join(d, "content", "doc", "ch"), { recursive: true });
+  mkdirSync(join(d, "folio", "doc", "ch"), { recursive: true });
   if (contentType !== undefined) {
     writeFileSync(join(d, HARNESS_CONFIG), JSON.stringify({ contentType }), "utf-8");
   }
@@ -67,7 +67,7 @@ describe("readFolioProfile", () => {
 describe("a conforming document folio", () => {
   test("passes with every document kind present", () => {
     const d = folio("document");
-    const ch = join(d, "content", "doc", "ch");
+    const ch = join(d, "folio", "doc", "ch");
     block("a", ch, 'import { prose } from "x";\nexport default prose({ label: "prose:a" });\n');
     block("b", ch, 'import { remark } from "x";\nexport default remark({ label: "rem:b" });\n');
     block("c", ch, 'import { table } from "x";\nexport default table({ label: "tbl:c" });\n');
@@ -82,7 +82,7 @@ describe("a conforming document folio", () => {
 describe("violations", () => {
   test("a math kind in a document folio", () => {
     const d = folio("document");
-    block("t", join(d, "content", "doc", "ch"),
+    block("t", join(d, "folio", "doc", "ch"),
       'import { theorem } from "x";\nexport default theorem({ label: "thm:t" });\n');
 
     const r = checkFolioProfile(d);
@@ -98,7 +98,7 @@ describe("violations", () => {
     // Rule 1 alone would let this through: `remark` IS a document kind, and
     // its `lean` is optional on the type. The profile forbids populating it.
     const d = folio("document");
-    block("r", join(d, "content", "doc", "ch"),
+    block("r", join(d, "folio", "doc", "ch"),
       'import { remark } from "x";\nexport default remark({\n  label: "rem:r",\n  lean: { ref: "lean4:P/M#f" },\n});\n');
 
     const r = checkFolioProfile(d);
@@ -111,7 +111,7 @@ describe("violations", () => {
     // Formalization can be carried by convention alone — <root>.lean beside
     // <root>.ts — so reading the manifest is not enough.
     const d = folio("document");
-    const ch = join(d, "content", "doc", "ch");
+    const ch = join(d, "folio", "doc", "ch");
     block("s", ch, 'import { example } from "x";\nexport default example({ label: "ex:s" });\n');
     writeFileSync(join(ch, "s.lean"), "theorem foo : True := trivial\n", "utf-8");
 
@@ -123,7 +123,7 @@ describe("violations", () => {
 
   test("the report names the file, so the finding is actionable", () => {
     const d = folio("document");
-    block("t", join(d, "content", "doc", "ch"),
+    block("t", join(d, "folio", "doc", "ch"),
       'import { lemma } from "x";\nexport default lemma({ label: "lem:t" });\n');
     const text = formatProfileCheck(checkFolioProfile(d));
     expect(text).toContain("lem:t");
@@ -135,7 +135,7 @@ describe("violations", () => {
 describe("the paper profile admits what the document profile forbids", () => {
   test("the same corpus passes as a paper and fails as a document", () => {
     const write = (d: string): void => {
-      const ch = join(d, "content", "doc", "ch");
+      const ch = join(d, "folio", "doc", "ch");
       block("t", ch, 'import { theorem } from "x";\nexport default theorem({ label: "thm:t" });\n');
       block("p", ch, 'import { prose } from "x";\nexport default prose({ label: "prose:p" });\n');
     };
@@ -150,7 +150,7 @@ describe("the paper profile admits what the document profile forbids", () => {
 });
 
 describe("an absent corpus", () => {
-  test("no content/ is zero blocks, not an error", () => {
+  test("no folio/ is zero blocks, not an error", () => {
     const d = mkdtempSync(join(tmpdir(), "folio-empty-"));
     dirs.push(d);
     writeFileSync(join(d, HARNESS_CONFIG), JSON.stringify({ contentType: "document" }), "utf-8");

@@ -37,7 +37,8 @@ function paperDir(repoRoot: string, paper: string): string {
   if (!/^[a-z0-9][a-z0-9-]*$/.test(paper)) {
     throw new Error("invalid paper name format");
   }
-  return join(repoRoot, "content", paper);
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  return join(repoRoot, "folio", paper);
 }
 
 // ── GET handlers ────────────────────────────────────────────────

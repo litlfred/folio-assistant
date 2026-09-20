@@ -46,7 +46,8 @@ function graph(): ContentGraph | null {
   _graphTried = true;
   try {
     const repoRoot = findContentRepoRoot();
-    const contentDir = join(repoRoot, "content");
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const contentDir = join(repoRoot, "folio");
     if (!existsSync(contentDir)) return null;
     _graph = buildContentGraph(contentDir, repoRoot);
     _graphLoaded = _graph.nodes.size > 0;
@@ -117,7 +118,7 @@ export function checkUsesEditorialHygiene(tsPath?: string): CheckerResult {
     return {
       result: "n/a",
       hits: [],
-      notes: "content graph unavailable (no content/ root found)",
+      notes: "content graph unavailable (no folio/ root found)",
     };
   }
   const src = readFileSync(tsPath, "utf-8");
@@ -245,7 +246,7 @@ export function checkUsesFormalCoverage(tsPath?: string): CheckerResult {
     return {
       result: "n/a",
       hits: [],
-      notes: "content graph unavailable (no content/ root found)",
+      notes: "content graph unavailable (no folio/ root found)",
     };
   }
   if (!g.hasFormal) {

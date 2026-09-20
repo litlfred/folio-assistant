@@ -141,7 +141,8 @@ export class DocumentContentAdapter implements ContentAdapter {
     this.gitHelper = gitHelper;
     this.feedbackStore = new FeedbackStore(feedbackDir);
     this.resolver = new PaperResolver(repoRoot, gitHelper, this.feedbackStore);
-    this.contentDir = resolve(repoRoot, "content");
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    this.contentDir = resolve(repoRoot, "folio");
     this.leanDir = resolve(repoRoot, "lean");
     this.buildDir = resolve(repoRoot, "build");
     this.mainTex = resolve(repoRoot, "main.tex");
@@ -809,7 +810,7 @@ End every response with suggested follow-ups:
         if (!rootName || !chapterDir) {
           return Response.json({ error: `Block "${label}" not found` }, { status: 404, headers: CORS });
         }
-        const base = `content/${id}/${chapterDir}/${rootName}`;
+        const base = `folio/${id}/${chapterDir}/${rootName}`;
         const files = [`${base}.ts`, `${base}.md`, `${base}.lean`];
         const commits = this.gitHelper.gitLogFiles(files, limit);
         return Response.json({ label, rootName, chapterDir, commits }, { headers: { "Cache-Control": "no-cache", ...CORS } });

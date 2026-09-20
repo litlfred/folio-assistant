@@ -35,7 +35,7 @@ function inTmp(run: (root: string) => void): void {
 
 /** A block at `<root>/content/ch/b`, with whichever verdicts are asked for. */
 function fixture(root: string, opts: { legacy?: boolean; results?: boolean }): string {
-  const blockRoot = join(root, "content", "ch", "b");
+  const blockRoot = join(root, "folio", "ch", "b");
   mkdirSync(dirname(blockRoot), { recursive: true });
   writeFileSync(blockRoot + ".ts", "export default {};\n");
   if (opts.legacy) writeFileSync(legacyBlockQaPath(blockRoot), '{"which":"legacy"}\n');
@@ -108,10 +108,10 @@ describe("where a verdict is WRITTEN", () => {
   it("mirrors the block's directory rather than flattening it", () => {
     // Flat collides: block stems repeat freely across chapters.
     inTmp((root) => {
-      const a = blockQaPath(root, join(root, "content", "ch-a", "intro"));
-      const b = blockQaPath(root, join(root, "content", "ch-b", "intro"));
+      const a = blockQaPath(root, join(root, "folio", "ch-a", "intro"));
+      const b = blockQaPath(root, join(root, "folio", "ch-b", "intro"));
       expect(a).not.toBe(b);
-      expect(a).toContain(join("content", "ch-a"));
+      expect(a).toContain(join("folio", "ch-a"));
     });
   });
 });
@@ -119,14 +119,14 @@ describe("where a verdict is WRITTEN", () => {
 describe("the inverse, which no-orphan-sidecar depends on", () => {
   it("round-trips a results-tree verdict back to its manifest", () => {
     inTmp((root) => {
-      const blockRoot = join(root, "content", "ch", "b");
+      const blockRoot = join(root, "folio", "ch", "b");
       expect(blockOfQaPath(root, blockQaPath(root, blockRoot))).toBe(blockRoot + ".ts");
     });
   });
 
   it("refuses a path outside the results tree, so a legacy sibling cannot map onto itself", () => {
     inTmp((root) => {
-      const blockRoot = join(root, "content", "ch", "b");
+      const blockRoot = join(root, "folio", "ch", "b");
       expect(blockOfQaPath(root, legacyBlockQaPath(blockRoot))).toBeUndefined();
     });
   });

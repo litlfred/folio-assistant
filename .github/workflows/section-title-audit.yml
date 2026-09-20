@@ -41,7 +41,7 @@ jobs:
       # trailing-colon / empty title (or a depth>3 nesting) now fails CI.
       # Soft conciseness warnings (compound / too-long) still do not fail.
       - name: Machine review — titles + structure (hard gate)
-        run: bun run content/pipeline/qa-section-title-audit.ts
+        run: bun run cat-harness/content/pipeline/qa-section-title-audit.ts
 
       # HARD GATE: sidecars must be regenerated when a manifest — or, in
       # --thorough mode, any contained block (.md/.ts/.lean) or descendant
@@ -50,8 +50,8 @@ jobs:
       # under it re-opens that verdict (pending), forcing a refresh here.
       - name: Sidecars up to date
         run: |
-          bun run content/pipeline/qa-section-title-audit.ts --report-only --write-sidecar --thorough
+          bun run cat-harness/content/pipeline/qa-section-title-audit.ts --report-only --write-sidecar --thorough
           if ! git diff --exit-code -- content/*/section-title-audit.qa.json; then
-            echo "::error::section-title-audit sidecars are stale. Run: bun run content/pipeline/qa-section-title-audit.ts --report-only --write-sidecar --thorough"
+            echo "::error::section-title-audit sidecars are stale. Run: bun run cat-harness/content/pipeline/qa-section-title-audit.ts --report-only --write-sidecar --thorough"
             exit 1
           fi

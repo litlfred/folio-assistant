@@ -72,7 +72,8 @@ function walk(dir: string, suffix: string, out: string[] = []): string[] {
 // Scans `title`, `note`, `container-title` literals; flags any `_`, `^`, or
 // non-ASCII character that is not inside a `$...$` math span.
 function auditReferencesTs() {
-  const refsFile = join(REPO_ROOT, "content/schema/references.ts");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const refsFile = join(REPO_ROOT, "folio/schema/references.ts");
   if (!existsSync(refsFile)) return;
   const text = readFileSync(refsFile, "utf-8");
 
@@ -237,7 +238,8 @@ function auditMathTextSeams(file: string) {
 // ── Run ──────────────────────────────────────────────────────────────────────
 console.log("Auditing TeX-source hazards...");
 auditReferencesTs();
-const contentRoot = join(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const contentRoot = join(REPO_ROOT, "folio");
 const mdFiles = walk(contentRoot, ".md");
 // Same rule: a report over zero files is not a clean result.
 if (mdFiles.length === 0) {
@@ -266,7 +268,8 @@ for (const f of findings) {
 
 // Sidecar: machine-readable findings (e.g. the math-text-seam list) for
 // downstream tooling / a content-fix worklist. Written every run.
-const OUT_JSON = resolve(REPO_ROOT, "content/audit-tex-source.json");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const OUT_JSON = resolve(REPO_ROOT, "folio/audit-tex-source.json");
 writeFileSync(
   OUT_JSON,
   JSON.stringify(

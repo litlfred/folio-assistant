@@ -64,3 +64,67 @@ which is a different problem from the one it fixed.
 |---|---|
 | the previous round, and its reasoning | `4kiw` |
 | the entry waiting for room | `5mg5` |
+
+_2026-09-20T10:55Z_ — **Two of this bean's own claims were wrong, and the
+measurements that correct them also say what the remedy costs.**
+
+## "Roughly 21 lines a day" was wrong — it was ONE entry, once
+
+Tracked by reading the generated file's line count at each commit that touched
+it, rather than by dividing a difference by a day:
+
+```
+09-19 12:43   185 lines   4kiw closed here
+09-19 15:45   188         +3
+09-20 04:42   206         +18   <- one commit, one entry
+09-20 09:42   206         unchanged since
+```
+
+The +18 is a single STABLE entry — *"top level = bootstrap/ + one dir per repo
++ beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory"*.
+This is not a churn rate that needs a policy. It is one long entry.
+
+## The two eviction candidates are NOT superseded — checked, not assumed
+
+`4kiw`'s warning applies exactly. Grepped `directory-conventions.md` for the
+18-line entry's literals: **one** mention of `fsh-guts`, **zero** of "working
+memory", `scope: "repository"` or `bootstrap/`, and it does not carry the
+owner's criterion at all (*memory beats never-overlaid*). Archiving it would
+delete the only written record of why those four directories are top-level.
+
+## The state is better than the warning sounds
+
+The generated region ends at line **199** against a 200 budget — the entries
+FIT. What falls past the cut is hand-written boilerplate: a `## Session log`
+heading and its instruction, which reads *"Keep under ~200 lines — prune the
+log, never the TRAPs."* The guidance on managing the budget was the thing the
+budget evicted.
+
+## What was done, and what it bought
+
+Compacted the hand-written head and tail of BOTH files — boilerplate only, no
+fact dropped, **no TRAP touched**:
+
+| | before | after |
+|---|---|---|
+| platform-boundary-guard | 8 over | **3 over** |
+| ci-health-watcher | 7 over | **4 over** |
+
+## And the number this bean was missing
+
+**An entry costs ~8 rendered lines minimum** — heading, blank, ~5 body lines,
+blank. Measured by adding the render-log entry back: at 3–4 lines over it
+still pushed a TRAP past the cut on both agents, so it was removed again.
+
+So the remaining boxes need **≥8 lines of headroom**, not "some". That is a
+target somebody can act on, which "get under budget" was not.
+
+## Done when — revised
+
+- [x] the growth is understood: one 18-line entry, not a rate
+- [x] the candidates checked for supersession — both fail, and must stay
+- [x] boilerplate compacted, 4–5 lines recovered, no TRAP touched
+- [ ] **≥8 lines** freed, which now means shortening a substantive entry
+      rather than archiving one — a judgement on another session's content,
+      and the owner's call
+- [ ] the render-log entry re-added once there is room

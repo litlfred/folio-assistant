@@ -128,9 +128,11 @@ const leanCitations = new Set<string>();
 
 // Scan .lean files for -- Ref: [key] patterns
 const leanDir = join(REPO_ROOT, "lean");
-const contentDir = join(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const contentDir = join(REPO_ROOT, "folio");
 // Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
-const leanArchiveDir = join(REPO_ROOT, "content", requirePaper(_paperArg), "lean");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const leanArchiveDir = join(REPO_ROOT, "folio", requirePaper(_paperArg), "lean");
 
 function scanFilesRecursive(dir: string, ext: string): string[] {
   if (!existsSync(dir)) return [];

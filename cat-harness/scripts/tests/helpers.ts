@@ -102,7 +102,8 @@ const CONTENT_ROOT = FOLIO_ROOT ?? INSTANCE_ROOT;
 /** Legacy alias: default paper's Lake directory (QOU). */
 export const QOU_LEAN_DIR = join(
   CONTENT_ROOT,
-  "content/quantum-observable-universe/lean",
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "folio/quantum-observable-universe/lean",
 );
 /**
  * `chapters/*.tex` — `content_build` output, which lives in the FOLIO.

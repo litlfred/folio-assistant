@@ -14,11 +14,11 @@ title: |-
     - [ ] decide: shipped-for-a-folio, or dead since the split, per workflow
     - [ ] the shipped ones have a home that makes their non-running visible rather than silent
     - [ ] the dead ones go to `fsh-guts/`, never `rm`
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T07:44:35Z
-updated_at: 2026-09-20T08:44:39Z
+updated_at: 2026-09-20T09:12:10Z
 parent: folio-assistant-1xhc
 ---
 
@@ -88,13 +88,99 @@ holds. **For the other seven it is wrong**, and an exemption resting on a wrong
 reason is the thing that table exists to prevent. Correcting them is part of
 this bean now, not a separate one.
 
+## 2026-09-20, working it: the dispatch-only framing was STILL too narrow
+
+Measured by writing the check rather than by reading the workflows, which is
+what turned up the part I had missed twice.
+
+### THREE live workflows were broken, and one of them is the watchdog
+
+Not dispatch-only. These fire on a schedule and crashed on their first
+command, every time, since the #223 split:
+
+| workflow | schedule | invoked | resolves? |
+|---|---|---|---|
+| `health-check.yml` | **daily** `41 6 * * *` | `bun run test/health/run.ts` | no — it is `cat-harness/test/health/run.ts` |
+| `ci-health.yml` | weekly Mon | `bun run scripts/check-ci-health.ts` | no — `cat-harness/scripts/...` |
+| `upstream-pins.yml` | weekly Tue | `bun run scripts/check-upstream-pins.ts` | no — `cat-harness/scripts/...` |
+
+Run by hand at the time of writing, both exit 1 with
+`error: Module not found`.
+
+**`ci-health.yml` is the workflow whose entire purpose is catching workflows
+that fail where nobody looks** (`xom7`, `ynu8`, `lq7e`). It had been failing
+at its own job, at its own job. That is not irony worth a sentence; it is the
+argument for gating this mechanically, because the one guard aimed at this
+class was itself a member of the class and could not see itself.
+
+`ci-health.yml` is also written defensively — a crash writes no report, so
+`status=1` degrades to `verdict=unknown`, the tracking issue is left untouched
+and the job fails. The design worked. Nobody read the result.
+
+**Confirmation after the fix, and it is the good kind:** `bun run
+check:ci-health` now runs, and its FIRST finding is *"Repository health
+watchdog — 1 consecutive failure(s), no success in the window, last ran 0d
+ago"* — i.e. the tool, once repaired, immediately reports the daily workflow
+I had found by hand. It also prints `(4 other workflow(s) not failing.)`
+against a repository carrying roughly thirty: everything with **no runs** is
+invisible to it, which is `5rfy` and is why this bean's dispatch-only half
+cannot be closed by a report that reads runs.
+
+### The other framing correction: `pipeline/build.ts` DOES exist
+
+The previous section of this bean said it "exists nowhere". Wrong —
+`cat-harness/content/pipeline/build.ts` is there. But pointing the workflow at
+it would be a **wrong fix that looks like a right one**: those invocations run
+after `cd content`, so they name a *folio's* pipeline, and the platform's file
+merely shares the basename. That is now recorded as a `FOLIO_PATHS` exemption
+with exactly that reason, and a test pins it.
+
+So the honest count is: **every referenced script exists somewhere**; eleven
+invocations legitimately need a folio; eight were platform scripts that simply
+lost their prefix.
+
+### What was done
+
+- the three live workflows now call the **npm script** (`health`,
+  `check:ci-health`, `check:upstream-pins`), so the path is written down once
+  instead of in every caller
+- the five dispatch-only ones had `cat-harness/` restored inline
+- `cat-harness/scripts/check-workflow-paths.ts` — every script path a workflow
+  invokes must resolve **from the directory the step actually runs in**. It
+  computes the cwd (job defaults, step `working-directory`, `cd` within the
+  run block, `--cwd`, and `actions/checkout` `path:`), because checking the
+  spelling alone reports working workflows as broken and trains readers to
+  skim. Three verdicts plus `undetermined`, which FAILS — a `cd` naming a
+  variable is not a pass.
+- registered as `check:workflow-paths` **and added to the gates workflow**.
+  That last part is the point: this bean is about a check nothing invoked.
+- 20 tests, each pinning a refusal or a discrimination; ratchet falsified in
+  both directions (un-fixing a path goes red; an exemption matching nothing
+  goes red).
+
+### What is still the owner's
+
+Fixing the paths makes these workflows *load*. It does not make them
+*runnable*: the five dispatch-only ones still expect a folio tree under
+`content/`, which this repository does not have, so they would now fail for
+the true reason instead of a misleading one. Whether they should live here at
+all is unchanged and unanswered — and is deliberately not settled by this
+change.
+
 ## Done when
 
-- [ ] `pipeline/build.ts`'s four workflows: shipped-for-a-folio, or dead — and
-      if dead, to `fsh-guts/`, never `rm`
-- [ ] the seven with pre-split paths: fix the path, or say why the workflow
-      should not exist here
-- [ ] the `no-folio` exemptions re-worded to the reason that is actually true
-      for each
-- [ ] a check that a dispatch-only workflow naming a path that does not resolve
-      is REPORTED — the absence of runs is exactly why nothing caught this
+- [x] the live, scheduled workflows are fixed — `health-check` (daily),
+      `ci-health` and `upstream-pins` (weekly)
+- [x] the platform scripts that lost their `cat-harness/` prefix are restored
+- [x] a check that a workflow naming an unresolvable path is REPORTED, and it
+      is wired into a workflow that actually runs
+- [x] the `no-folio` claim re-stated per invocation, with the reason that is
+      actually true for each (`FOLIO_PATHS`, with tests)
+- [ ] **owner:** the five dispatch-only workflows expecting a folio under
+      `content/` — do they belong in the platform repo, or move to what
+      `folio_init` writes into a folio? If dead, they go to `fsh-guts/`,
+      never `rm`
+- [ ] **owner:** two of them (`section-title-audit`, `witness-pipeline`) have
+      never been run once. A workflow with no runs is invisible to
+      `check:ci-health` by construction, so "fixed" here is unobservable
+      until something dispatches them

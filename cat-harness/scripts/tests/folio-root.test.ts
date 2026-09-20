@@ -35,14 +35,14 @@ describe("FOLIO_ROOT detection", () => {
 
   test("a folio is exactly a root that carries at least one paper", () => {
     // The definition, restated against the shared helpers so the two cannot
-    // drift: a paper is `content/<name>/<name>.ts`.
+    // drift: a paper is `folio/<name>/<name>.ts`.
     const root = findContentRepoRoot();
     expect(hasFolio()).toBe(findPapers(root).length > 0);
   });
 
   test("the platform alone is NOT a folio", () => {
     // folio-assistant has a `content/` directory (content/pipeline), which is
-    // why a bare "does content/ exist" check is not enough to detect a folio —
+    // why a bare "does folio/ exist" check is not enough to detect a folio —
     // it would make the platform look like one and let content assertions run
     // against it, which is the failure this whole guard exists to prevent.
     expect(findPapers(INSTANCE_ROOT)).toEqual([]);

@@ -1137,7 +1137,8 @@ export function renderBlock(
         // or `content/`, so probe both layouts when checking existence.
         let figPath: string;
         if (sourceDir) {
-          const chapterLocal = join("content", sourceDir, figFile);
+          // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+          const chapterLocal = join("folio", sourceDir, figFile);
           const cwd = process.cwd();
           const chapterLocalExists =
             existsSync(chapterLocal) ||

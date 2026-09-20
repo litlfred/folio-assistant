@@ -28,7 +28,7 @@ import { join } from "path";
 describe.skipIf(!hasFolio())("editorial cycle detection", () => {
   // Lazy: `describe.skipIf` still evaluates this body, and FOLIO_ROOT is
   // undefined when the platform repo is tested on its own.
-  const contentDir = (): string => join(FOLIO_ROOT!, "content");
+  const contentDir = (): string => join(FOLIO_ROOT!, "folio");
 
   /** Labels the checker says sit on a cycle. */
   function flaggedByChecker(): Set<string> {

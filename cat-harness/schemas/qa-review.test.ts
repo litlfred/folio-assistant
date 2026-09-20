@@ -23,7 +23,7 @@ import {
 
 const NOW = "2026-09-18T00:00:00Z";
 
-const cite: Citation = { kind: "file", ref: "content/ch1/thm-foo.ts", locator: "12-14" };
+const cite: Citation = { kind: "file", ref: "folio/ch1/thm-foo.ts", locator: "12-14" };
 
 function mechanicalFinding(over: Partial<Finding> = {}): Finding {
   return {
@@ -68,7 +68,7 @@ function decision(over: Partial<Decision> = {}): Decision {
 function cleanReview(over: Partial<QaReview> = {}): QaReview {
   return {
     $schema: QA_REVIEW_SCHEMA,
-    subject: { kind: "block", id: "thm:foo", path: "content/ch1/thm-foo.ts" },
+    subject: { kind: "block", id: "thm:foo", path: "folio/ch1/thm-foo.ts" },
     findings: [mechanicalFinding()],
     notes: [note()],
     decisions: [decision()],

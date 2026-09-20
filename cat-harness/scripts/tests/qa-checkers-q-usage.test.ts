@@ -37,7 +37,7 @@ function tmp(name: string, contents: string): string {
 
 /** Write a file under a path `chapterFromPath` reads as `<chapter>`. */
 function inChapter(chapter: string, name: string, contents: string): string {
-  const dir = join(DIR, `${seq++}`, "content", "paper", chapter);
+  const dir = join(DIR, `${seq++}`, "folio", "paper", chapter);
   mkdirSync(dir, { recursive: true });
   const p = join(dir, name);
   writeFileSync(p, contents);
