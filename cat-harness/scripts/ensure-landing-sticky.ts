@@ -61,9 +61,15 @@
  * Exit codes: 0 up to date or written · 1 stale/absent under `--check`.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
-import { instanceRootFor, readDeclaration, type ContentDirectory } from "../schemas/cat-harness.js";
+import {
+  findInstanceRoot,
+  instanceRootFor,
+  readDeclaration,
+  rootForScope,
+  type ContentDirectory,
+} from "../schemas/cat-harness.js";
 // REQUIRED, and not merely tidy: `folio` is registered by CORE as a load-time
 // side effect (`schemas/folio-graph-kind.ts`, "a layer that cannot render must
 // not own the renderable kind"), so the harness alone does not know the kind
@@ -74,11 +80,15 @@ import { instanceRootFor, readDeclaration, type ContentDirectory } from "../sche
 // registration to have happened.
 import "../schemas/folio-graph-kind.js";
 import {
-  LANDING_STICKY_IDS,
   LandingStickySchema,
-  landingStickies,
+  stickyFromContribution,
   type LandingSticky,
 } from "../schemas/landing-sticky.js";
+import {
+  StickyContributionSchema,
+  composeContributions,
+  type DeclaredContribution,
+} from "../schemas/sticky-contribution.js";
 
 /** The graph kind, and the conventional directory an instance keeps it in. */
 export const FOLIO_GRAPH_KIND = "folio";
@@ -252,6 +262,88 @@ export function readExistingSticky(path: string): LandingSticky | undefined {
 }
 
 /**
+ * Every layer that contributes to this instance's board, in read order.
+ *
+ * Two sources, and the second is what makes bootstrap's card possible:
+ *
+ * 1. **the instance itself** — its own `harness.json`;
+ * 2. **every NESTED instance** — a declared directory that belongs to another
+ *    instance in this checkout. `bootstrap/` is exactly that.
+ *
+ * Nested instances are the PRE-SPLIT shape (issue #223). After the split they
+ * become dependencies and arrive through the dependency chain instead, which is
+ * why this returns a **list of roots** rather than doing the reading: the caller
+ * supplies whichever set is true of its layout, the same way `resolveDirectories`
+ * takes a `chain` rather than walking one so that *"this module does not depend on
+ * the dependency resolver"*.
+ *
+ * **Discovered rather than hardcoded.** Naming `bootstrap/` here would put the
+ * layer list back in the layer above — the ownership inversion this whole change
+ * is undoing — and would go stale the moment the split happens.
+ *
+ * ## Two mechanisms this has to use rather than reimplement
+ *
+ * Measured against the live declaration, which is where a plausible version of
+ * this function got both wrong and quietly composed a board of three instead of
+ * four:
+ *
+ * | | why a naive `join(root, dir.path)` misses it |
+ * |---|---|
+ * | **`scope`** | `bootstrap` is declared `repository`-scoped, so its path resolves against the REPOSITORY root, not the instance. `rootForScope` is what knows that. |
+ * | **the declared path is not the instance root** | the entry is `bootstrap/skills/` — the graph directory — and `harness.json` sits one level up, in `bootstrap/`. `findInstanceRoot` walks up to the instance that OWNS a directory. |
+ *
+ * Looking for `harness.json` inside the declared directory finds nothing here,
+ * and the failure is silent: the board renders, bootstrap's card is simply not on
+ * it. That is the same shape as the CSS selector that matched nothing — no error,
+ * no output, and only a count says so.
+ */
+export function contributingRoots(root: string): string[] {
+  const decl = readDeclaration(root);
+  const own = resolve(root);
+  const nested: string[] = [];
+  for (const dir of decl?.directories ?? []) {
+    // `rootForScope` FIRST: a repository-scoped entry is relative to the
+    // checkout, and resolving it against the instance would point outside it.
+    const abs = resolve(rootForScope(own, dir.scope), dir.path);
+    // Then up to the instance that owns that directory. `undefined` means the
+    // directory belongs to no instance — `beans/` at the repository root is the
+    // live case — which is a real answer and not a gap.
+    const owner = findInstanceRoot(abs);
+    if (owner !== undefined && resolve(owner) !== own) nested.push(resolve(owner));
+  }
+  // The instance LAST, so its own contributions are read after its nested
+  // layers'. Order here does not decide the board — `order` does — but a stable
+  // read order makes the duplicate-id error message name the layers in a
+  // predictable sequence.
+  return [...new Set(nested), own];
+}
+
+/**
+ * The contributions every layer declares, composed and ordered.
+ *
+ * Reads `stickies` off each layer's declaration and pairs it with that layer's
+ * own `name` and `description` — `bodyFrom: "description"` means **the declaring
+ * instance's** description, so bootstrap's card carries bootstrap's sentence and
+ * not this instance's. Reading the root's for every layer would give a board of
+ * one sentence repeated, which is the defect that makes the whole seam pointless.
+ */
+export function declaredContributions(root: string): DeclaredContribution[] {
+  const declared: DeclaredContribution[] = [];
+  for (const layer of contributingRoots(root)) {
+    const decl = readDeclaration(layer);
+    if (!decl?.stickies) continue;
+    for (const raw of decl.stickies) {
+      declared.push({
+        contribution: StickyContributionSchema.parse(raw),
+        declaredBy: decl.name,
+        ...(decl.description === undefined ? {} : { description: decl.description }),
+      });
+    }
+  }
+  return composeContributions(declared);
+}
+
+/**
  * The stickies this instance should have, each reusing its own `createdAt`.
  *
  * **Per-sticky reuse, not one timestamp for the set.** Reading the first
@@ -260,32 +352,27 @@ export function readExistingSticky(path: string): LandingSticky | undefined {
  * protect. Each file answers for itself.
  */
 export function stickiesFor(root: string, dir: string, now: string): LandingSticky[] {
-  const decl = readDeclaration(root);
-  return landingStickies({
-    // An instance with no description still gets a sticky: its `name` is what
-    // `displayTitle` already falls back to, and a landing page with no words is
-    // worse than one naming the instance.
-    description: decl?.description ?? decl?.name ?? "",
-    createdAt: now,
-  }).map((wanted) => {
-    const existing = readExistingSticky(join(dir, stickyFile(wanted.id)));
-    return existing ? { ...wanted, createdAt: existing.createdAt } : wanted;
-  });
+  return declaredContributions(root)
+    .map((d) => stickyFromContribution(d, { createdAt: now }))
+    .map((wanted) => {
+      const existing = readExistingSticky(join(dir, stickyFile(wanted.id)));
+      return existing ? { ...wanted, createdAt: existing.createdAt } : wanted;
+    });
 }
 
 /**
  * Every landing sticky currently on disk, in the declared render order.
  *
- * Reads the FILES rather than rebuilding from `landingStickies()`, because the
- * two answer different questions: the builder says what an instance *should*
- * have, and a renderer must draw what it *does* have. If initiation has not run,
- * or has run against an older set, drawing the builder's answer would render a
- * page that does not exist on disk — and the `--check` gate that exists to
- * report exactly that divergence would be bypassed by the renderer agreeing
- * with the builder instead of with the files.
+ * Reads the FILES rather than rebuilding them, because the two answer different
+ * questions: the declarations say what an instance *should* have, and a renderer
+ * must draw what it *does* have. If initiation has not run, or has run against an
+ * older set, drawing the declarations' answer would render a page that does not
+ * exist on disk — and the `--check` gate that exists to report exactly that
+ * divergence would be bypassed by the renderer agreeing with the declaration
+ * instead of with the files.
  *
- * Order comes from {@link LANDING_STICKY_IDS} rather than from directory
- * listing, which is alphabetical and would put `cat-harness` before `landing`.
+ * Order comes from the composed contributions rather than from directory
+ * listing, which is alphabetical and would put `bootstrap` before `landing`.
  * A sticky whose file is absent or unparseable is skipped rather than faked.
  */
 export function readLandingStickies(root: string): LandingSticky[] {
@@ -293,9 +380,9 @@ export function readLandingStickies(root: string): LandingSticky[] {
     directories?: ContentDirectory[];
   };
   const dir = join(root, folioDirPath(decl));
-  return LANDING_STICKY_IDS.map((id) => readExistingSticky(join(dir, stickyFile(id)))).filter(
-    (s): s is LandingSticky => s !== undefined,
-  );
+  return declaredContributions(root)
+    .map((d) => readExistingSticky(join(dir, stickyFile(d.contribution.id))))
+    .filter((s): s is LandingSticky => s !== undefined);
 }
 
 export function ensureLandingSticky(

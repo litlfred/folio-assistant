@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mggs
 title: 'LANDING: the landing page is a sticky note, minted by bootstrap as its last act'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T05:11:45Z
-updated_at: 2026-09-20T06:51:47Z
+updated_at: 2026-09-20T08:16:28Z
 parent: folio-assistant-o3xy
 ---
 
@@ -193,3 +193,48 @@ That cuts both ways and both matter:
 **NOT done in this bean**, deliberately: the folio's e2e config, its fixtures and its CI job are their own change, and bolting a Jekyll build into the existing Playwright project mid-PR would widen a change that is already large. Needs its own bean if it is to be done.
 
 Related: the a11y suite not reaching the docs site at all is bigger than this one page and is worth checking against `alox`, whose open item (a) is that nobody had visually verified the landing fade either.
+
+
+
+_2026-09-20_ — PREPARE-MERGE RUN, owner authorized the merge ("mrege").
+
+Generic recipe: working tree clean; base `main` fetched; base had moved one commit and was **merged in** (a PDF added at the repository root — see below); `git merge-tree --write-tree` exits 0, so it merges cleanly; branch pushed at `dbc925a`, 28 commits ahead.
+
+Content type is `document` (`harness.config.json`), which the prepare-merge recipe does not list among its content-specific gates — so the **platform** checks were run and no content-specific suite was skipped silently:
+
+- `bun test` — 3298 pass, 0 fail
+- `eslint .` — clean
+- `tsc --noEmit -p tsconfig.json` — clean
+- generated docs in sync: `gen-schema-docs`, `gen-skill-docs`, `gen-docs-pages`, `landing:data`, `docs:harness` all re-run and left **zero** uncommitted diff
+- all **35** package gates green
+
+**A FINDING FROM THE BASE MERGE, not acted on:** main's new commit adds `Publication and information products style guide-info.pdf` **at the repository root**. That is the fifth time content has landed there — after `0301fbd2`, `1b62b57`, `fd84bccc` and `c354719c` — and it is bean `ll11`'s gap: the root is not an instance, so `check-declared-assets` does not scan it and nothing reports the file at all.
+
+By `content-acquisition`'s own rule this is an **unprompted offer** and should be accepted and routed to `uploads/`. I did not move it: relocating somebody's file in the middle of a merge preparation is not what "merge" asked for, and a PDF is a document-ingestion input rather than theme art, so routing it is a judgement about what it is FOR. Flagged to the owner instead.
+
+
+_2026-09-20_ — **MERGED.** PR #465 merged to `main` as `a8e0cba` on the owner's
+explicit authorization ("mrege"), with `mergeable_state: clean` and all three
+workflows `success` on `dbc925a` (Code-quality gates, Feature Staging, JSON-LD
+drift). Implementation summary posted to issue #464
+(`issues/464#issuecomment-5748612673`); **the issue was left open** — an agent
+does not close one on its own say-so, and two decisions below are the owner's.
+
+Closing this bean `done`. Three things it deliberately did NOT do, each already
+written up above and each needing its own bean rather than a quiet carry-over:
+
+1. **No automated coverage of the rendered landing page.** `a11y.e2e.ts` targets
+   the KG viewer; no e2e test or config mentions `landing.html`. The suite's
+   green says nothing about this surface — only the screenshots do. The folio's
+   e2e config, fixtures and CI job are their own change.
+2. **The `folio` graph-kind registration** is a load-time side effect in core, so
+   `readDeclaration` is import-order dependent and **52 modules** call a
+   declaration reader without the registration import. Every module CI runs is
+   covered, so it is latent rather than blocking. Correction to the option I
+   recommended on the PR: it would **add** a wrong-direction partition edge,
+   because the partition puts `cat-harness.ts` in agentic-harness and
+   `folio-graph-kind.ts` in core. Needs re-costing before the owner decides.
+3. **The root PDF** is still at the repository root, flagged and untouched —
+   `deletion-requires-confirmation` applies to relocation as much as removal.
+   Bean `ll11` is where the structural half lives: the root is not an instance,
+   so `check-declared-assets` does not scan it and nothing reports the file.

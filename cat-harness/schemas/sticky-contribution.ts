@@ -1,0 +1,291 @@
+/**
+ * A sticky is a CONTRIBUTION from a layer, declared by that layer.
+ *
+ * @module schemas/sticky-contribution
+ * @graphNode schema
+ *
+ * The owner's ask, 2026-09-20: *"each intiator should create its own sticky.
+ * bootstrap sticky will have link back to the source code + ghpaghes for boot
+ * strrap."*
+ *
+ * ## What this replaces, and why it is a change of shape
+ *
+ * `landing-sticky.ts` shipped the board as a **fixed set of three**, returned by
+ * `landingStickies()`. That is a list this repository owns, and the ask inverts
+ * the ownership: the set is **composed from the layers present** rather than
+ * enumerated in one place. `folio-graph-kind.ts` already states the principle —
+ * *a layer owns what it can serve, and the layer above does not enumerate it.*
+ *
+ * ## Why a DECLARATION and not a code registry
+ *
+ * The obvious design is `registerStickyContributor()`, matching
+ * `registerFolioGraphKind`. It cannot work here, and the reason is the one that
+ * motivates the whole change:
+ *
+ * | | code registry | declaration |
+ * |---|---|---|
+ * | bootstrap can contribute | **no** — `bootstrap/` holds no TypeScript, and `bootstrap/harness.json` declares an instance that *may not import from the layer composed on top of it* | yes |
+ * | a downstream folio can contribute | only by shipping code | yes |
+ * | inheritance | hand-wired | already resolved, `resolveDirectories`-style |
+ * | expressiveness | arbitrary | the fields below, and no more |
+ *
+ * The first row settles it. Bootstrap contributing its own sticky is the
+ * requirement, and a registry it cannot call is not a seam it can reach. The
+ * cost is the last row — a declaration needs a small vocabulary for *"my
+ * description"* and *"the four onboarding links"* instead of running code — and
+ * that cost is paid deliberately below, kept as small as it can be.
+ *
+ * It is also the more correct home for the words. `AGENTS.md`: *"If you are
+ * about to write subject matter here … you are writing something that belongs in
+ * the folio as data."* A sticky's text is subject matter, and it was living in
+ * `schemas/`.
+ *
+ * ## Why this module is HARNESS and not CORE
+ *
+ * `schemas/cat-harness.ts` is classified `agentic-harness` and
+ * `schemas/landing-sticky.ts` is `folio-assist-core`. The declaration field that
+ * carries these lives on `CatHarnessDeclarationSchema`, so defining the shape in
+ * `landing-sticky.ts` would make the harness import core — a **wrong-direction
+ * edge**, which `check:partition:edges` reports and which is the falsifier this
+ * design was measured against. `repo-partition.ts` therefore classifies this
+ * module `agentic-harness`, on the same test it applies to `note-anchor.ts` and
+ * `front-matter.ts`: it is declaration vocabulary, it imports only `zod`, and it
+ * carries no part of the content model.
+ *
+ * {@link StickyLinkSchema} moved here from `landing-sticky.ts` for that reason
+ * and is re-exported there, so nothing that imported it has to change.
+ */
+import { z } from "zod";
+
+/** The tag a declared contribution set is identified by, for documentation. */
+export const STICKY_CONTRIBUTION_SCHEMA_TAG = "folio-sticky-contribution/v1";
+
+/**
+ * One link a sticky offers.
+ *
+ * ## `href` must be site-root-relative or absolute — never bare-relative
+ *
+ * The one validation here that is about a defect rather than a shape. Bean
+ * `blv9`'s entire subject is **link-shaped values that resolve by luck**, and it
+ * carries seven instances. The site is a *project* Pages site with
+ * `baseurl: /folio-assistant`, so:
+ *
+ * | form | what happens |
+ * |---|---|
+ * | `/guides/index.html` | correct — the template adds the baseurl with `relative_url` |
+ * | `guides/index.html` | resolves against **whatever page is rendering**, and works only by position |
+ * | `https://…` | correct — and must NOT be passed through `relative_url` |
+ *
+ * The middle form is the trap, and it was live in the file the sticky board
+ * replaced: `docs/index.md` carried `[Install](installation.html)` written bare,
+ * beside four siblings that went through `relative_url` properly. Those worked
+ * because `index.md` declares `permalink: /`, which is *position-safe rather than
+ * baseurl-safe*. Refusing the form here means a link moved into a sticky cannot
+ * inherit that luck.
+ *
+ * `external` is DERIVED rather than declared, and the derivation is exact rather
+ * than a guess: a URL scheme is what makes a link absolute, so reading it off the
+ * scheme cannot disagree with the value the way a hand-set flag can.
+ */
+export const StickyLinkSchema = z
+  .object({
+    /** The link text. Translatable — it is what a reader sees. */
+    label: z.string().min(1),
+    /**
+     * Site-root-relative (`/guides/index.html`) or absolute (`https://…`).
+     *
+     * A bare-relative path is refused; see the schema docs for why.
+     */
+    href: z
+      .string()
+      .min(1)
+      .refine((h) => h.startsWith("/") || /^[a-z][a-z0-9+.-]*:\/\//i.test(h), {
+        message:
+          "an href is site-root-relative (/path) or absolute (https://…); a bare-relative path resolves by position — see bean blv9",
+      }),
+    /** One line under the label, when the label alone is not enough. Translatable. */
+    note: z.string().min(1).optional(),
+  })
+  .strict();
+export type StickyLink = z.infer<typeof StickyLinkSchema>;
+
+/** Is this link off-site, and therefore NOT to be passed through `relative_url`? */
+export function isExternalLink(link: StickyLink): boolean {
+  return /^[a-z][a-z0-9+.-]*:\/\//i.test(link.href);
+}
+
+/**
+ * Where a contribution's body text comes from, when it is not written out.
+ *
+ * One member today, and an enum rather than a boolean so a second source can be
+ * added without a second flag — `bodyFrom: "description"` reads better than
+ * `useDescription: true` and leaves room for the next one to be named rather
+ * than implied.
+ *
+ * **`description` is the DECLARING instance's description, not the root's.** That
+ * is the whole point of a contribution: bootstrap's sticky carries bootstrap's
+ * description, and cat-harness's carries cat-harness's. Reading the root's for
+ * every layer would give a board of one sentence repeated.
+ */
+export const STICKY_BODY_SOURCES = ["description"] as const;
+export type StickyBodySource = (typeof STICKY_BODY_SOURCES)[number];
+
+/**
+ * The order a contribution asks for, on a shared scale.
+ *
+ * **Declared, never inherited from dependency resolution.** This is the cost the
+ * work-plan item called out before any of it was written: a composed set with no
+ * declared order renders in `resolveDirectories`' deepest-dependency-first order,
+ * which would put bootstrap's sticky **above the instance's own description** —
+ * and the description has to come first, because a reader needs to know what the
+ * instance IS before anything else means anything.
+ *
+ * The scale reads *how early should a reader meet this*, 0 first. A layer can
+ * only state its own priority — it cannot see the others — so bootstrap declaring
+ * {@link STICKY_ORDER_TRAILING} is bootstrap's own judgement that it is the least
+ * interesting card on the board, not cat-harness reaching down to place it.
+ *
+ * Gaps of ten, so a contribution can be slipped between two without renumbering
+ * a file in another layer.
+ */
+export const STICKY_ORDER_LEADING = 10;
+export const STICKY_ORDER_TRAILING = 90;
+
+/**
+ * One sticky a layer contributes, as that layer declares it.
+ *
+ * `.strict()` so a misspelled key is refused rather than silently dropped — the
+ * same reason `ThemeBackdropSchema` is strict, where a `src` key had to become
+ * impossible rather than merely discouraged.
+ */
+export const StickyContributionSchema = z
+  .object({
+    /**
+     * The sticky's id — and **the idempotency key**.
+     *
+     * Initiation runs again: a re-initialisation, a sibling session, a resumed
+     * container. A generated id would mint a second sticky every time. `beans
+     * create` dedupes on nothing and one unguarded re-run produced **14,688**
+     * duplicates, 92 % of every open bean in that repository; the same shape
+     * applied to a landing page is one store's worth of the same defect.
+     *
+     * Unique across the **composed** set, not merely within a layer — two layers
+     * declaring `landing` would write one file twice. {@link composeContributions}
+     * refuses that rather than letting the last writer win.
+     */
+    id: z.string().regex(/^[a-z][a-z0-9-]*$/, "a sticky id is lowercase kebab-case"),
+    /** See {@link STICKY_ORDER_LEADING}. Required: an absent order is a tie with everything. */
+    order: z.number().int(),
+    /**
+     * The theme id, by reference. **No default, and that is load-bearing.**
+     *
+     * A default here is exactly how *"a bare bootstrap instance gets no cat"*
+     * would stop being true: the owner's ruling was *"i want the grumpy cat moved
+     * out of bootstrap and into cat harness"*, and a schema defaulting to
+     * `grumpy-cat` would hand one back to every layer that forgot to say
+     * otherwise. Requiring it makes the choice visible in the declaration.
+     *
+     * Validated for **shape and not existence**, as `ThemedTodoFields` does:
+     * whether a theme is installed is a question about the instance's theme set,
+     * which a declaration cannot see. Resolution happens at render time, where a
+     * missing theme degrades rather than failing the page.
+     */
+    theme: z.string().regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
+    /** Shown where notes are listed. Derived from the body's first line when absent. */
+    summary: z.string().min(1).optional(),
+    /** The sticky's text, markdown, written out. Mutually exclusive with `bodyFrom`. */
+    body: z.string().min(1).optional(),
+    /** Read the body from the declaring instance instead. See {@link STICKY_BODY_SOURCES}. */
+    bodyFrom: z.enum(STICKY_BODY_SOURCES).optional(),
+    /**
+     * Links the sticky offers, written out.
+     *
+     * **Declared rather than composed, including a link to the layer's own
+     * source.** Composing that from the git remote was the first design and is
+     * wrong: a fork has a different remote, so the minted file would differ from
+     * the committed one and `ensure-landing-sticky --check` would fail on every
+     * fork — a gate that reports a defect nobody introduced. A declared URL is
+     * the same in every checkout.
+     */
+    links: z.array(StickyLinkSchema).default([]),
+    /**
+     * Also offer the platform's four onboarding links.
+     *
+     * A flag rather than four declared links, because the set is maintained in
+     * one place and a layer copying it would be the `BLOCK_KINDS` failure shape —
+     * an enumeration kept in two places, one of which goes short.
+     */
+    onboardingLinks: z.boolean().optional(),
+    /** Free-form note for a reader of the declaration. Never rendered. */
+    _comment: z.string().optional(),
+  })
+  .strict()
+  .refine((c) => (c.body === undefined) !== (c.bodyFrom === undefined), {
+    message:
+      "a contribution declares exactly one of `body` or `bodyFrom`: both is a contradiction, neither leaves the sticky with no words",
+  });
+export type StickyContribution = z.infer<typeof StickyContributionSchema>;
+
+/** A contribution, plus which layer declared it. */
+export interface DeclaredContribution {
+  contribution: StickyContribution;
+  /** The declaring instance's `name`. */
+  declaredBy: string;
+  /** The declaring instance's `description`, for `bodyFrom: "description"`. */
+  description?: string;
+}
+
+/**
+ * Sort contributions into render order, deterministically.
+ *
+ * `order` first, then **`declaredBy` and `id`** — a total order, so two layers
+ * choosing the same number still render the same way on every run. A partial
+ * order here would make the board depend on the sequence the declarations
+ * happened to be read in, which is the dependency-resolution order this design
+ * exists to stop deciding the layout.
+ */
+export function compareContributions(a: DeclaredContribution, b: DeclaredContribution): number {
+  return (
+    a.contribution.order - b.contribution.order ||
+    a.declaredBy.localeCompare(b.declaredBy) ||
+    a.contribution.id.localeCompare(b.contribution.id)
+  );
+}
+
+/** Raised when two layers claim the same sticky id. */
+export class StickyIdConflictError extends Error {
+  constructor(
+    readonly id: string,
+    readonly declaredBy: readonly string[],
+  ) {
+    super(
+      `two layers contribute a sticky with id "${id}" (${declaredBy.join(", ")}); ` +
+        `an id is the file name and the idempotency key, so one of them would overwrite the other`,
+    );
+    this.name = "StickyIdConflictError";
+  }
+}
+
+/**
+ * The composed board: every layer's contributions, in declared order.
+ *
+ * **Refuses a duplicate id rather than letting the last writer win.** The id is
+ * the file name *and* the idempotency key, so a collision does not produce two
+ * stickies — it produces one file written twice, where which layer's text
+ * survives depends on read order. That is the failure mode with no symptom: the
+ * board renders, and one layer's card is simply not on it.
+ */
+export function composeContributions(
+  declared: readonly DeclaredContribution[],
+): DeclaredContribution[] {
+  const byId = new Map<string, DeclaredContribution[]>();
+  for (const d of declared) {
+    const seen = byId.get(d.contribution.id);
+    if (seen) seen.push(d);
+    else byId.set(d.contribution.id, [d]);
+  }
+  for (const [id, group] of byId) {
+    if (group.length > 1) throw new StickyIdConflictError(id, group.map((g) => g.declaredBy));
+  }
+  return [...declared].sort(compareContributions);
+}
