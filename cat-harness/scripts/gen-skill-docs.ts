@@ -15,7 +15,7 @@
  * present in the source body is stripped first), so they render with navigation
  * and link back to the source + the skill's typed schema. Regenerate with:
  *
- *     bun run scripts/gen-skill-docs.ts
+ *     bun run cat-harness/scripts/gen-skill-docs.ts
  *
  * Dependency-free (bun + fs only). Never hand-edit the output.
  *

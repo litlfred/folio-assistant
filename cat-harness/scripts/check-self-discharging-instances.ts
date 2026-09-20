@@ -52,7 +52,7 @@
  * the house pattern.
  *
  * Usage:
- *   bun run scripts/check-self-discharging-instances.ts --package qou
+ *   bun run cat-harness/scripts/check-self-discharging-instances.ts --package qou
  *   … --baseline N   growth-only ratchet (exit 3 when the count exceeds N)
  *   … --warn-only    always exit 0
  *   … --json         machine-readable

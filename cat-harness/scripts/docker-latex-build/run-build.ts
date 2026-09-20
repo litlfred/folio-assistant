@@ -1,6 +1,6 @@
 // Node.js-compatible wrapper for content/pipeline/build.ts
 // Works around Bun-specific import.meta.dir/main used in the pipeline.
-// Usage: npx tsx scripts/docker-latex-build/run-build.ts [same args as pipeline/build.ts]
+// Usage: npx tsx cat-harness/scripts/docker-latex-build/run-build.ts [same args as pipeline/build.ts]
 
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";

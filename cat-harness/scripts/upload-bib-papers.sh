@@ -10,14 +10,14 @@
 # `gh pr create` once at the end (one PR, N commits).
 #
 # Usage:
-#   bash scripts/upload-bib-papers.sh           # download + commit + push
-#   bash scripts/upload-bib-papers.sh --dry-run # show what would be done
-#   bash scripts/upload-bib-papers.sh --pr      # also open PR via gh CLI
+#   bash cat-harness/scripts/upload-bib-papers.sh           # download + commit + push
+#   bash cat-harness/scripts/upload-bib-papers.sh --dry-run # show what would be done
+#   bash cat-harness/scripts/upload-bib-papers.sh --pr      # also open PR via gh CLI
 #
 # Paper list is loaded from scripts/bib-papers-list.txt (one entry per
 # non-comment line, format `<url>|<target-filename>|<description>`).
 # Regenerate the list from content/schema/references.ts via:
-#   python3 scripts/gen-bib-papers-list.py
+#   python3 cat-harness/scripts/gen-bib-papers-list.py
 
 # ── Re-exec under bash if invoked via sh (POSIX shell lacks pipefail) ─
 if [ -z "${BASH_VERSION:-}" ]; then
@@ -67,7 +67,7 @@ mkdir -p "$UPLOADS_DIR"
 
 if [[ ! -f "$PAPERS_LIST" ]]; then
   echo "ERROR: paper list not found at $PAPERS_LIST" >&2
-  echo "       Generate it via:  python3 scripts/gen-bib-papers-list.py" >&2
+  echo "       Generate it via:  python3 cat-harness/scripts/gen-bib-papers-list.py" >&2
   exit 2
 fi
 

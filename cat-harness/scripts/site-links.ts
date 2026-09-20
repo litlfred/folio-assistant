@@ -49,9 +49,9 @@
  *
  * Usage:
  * ```sh
- * bun run scripts/site-links.ts                 # print the resolved targets
- * bun run scripts/site-links.ts --site _site    # ...and verify them against a build
- * bun run scripts/site-links.ts --json
+ * bun run cat-harness/scripts/site-links.ts                 # print the resolved targets
+ * bun run cat-harness/scripts/site-links.ts --site _site    # ...and verify them against a build
+ * bun run cat-harness/scripts/site-links.ts --json
  * ```
  *
  * @module scripts/site-links

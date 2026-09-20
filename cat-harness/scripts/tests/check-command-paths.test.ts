@@ -17,7 +17,9 @@ import { join } from "node:path";
 import {
   aboutThisTree,
   checkCommandPaths,
+  FOLIO_OWNED,
   instanceRoots,
+  sourceFiles,
   shellBlocks,
   shellWords,
   skipCommand,
@@ -148,7 +150,7 @@ describe("the defect it was written for", () => {
 });
 
 describe("the printed-command reader — bean `b963`'s third class", () => {
-  test("a runner verb before a path that resolves only under an instance is HELD", () => {
+  test("a runner verb before a path that resolves only under an instance is FOUND, with its fix", () => {
     const root = fixture(
       {
         "cat-harness/harness.json": "{}",
@@ -157,9 +159,12 @@ describe("the printed-command reader — bean `b963`'s third class", () => {
       ["cat-harness/scripts"],
     );
     const r = checkCommandPaths(root);
-    expect(r.held.map((h) => h.token)).toEqual(["scripts/lean-audit.ts  →  cat-harness/scripts/lean-audit.ts"]);
-    // HELD is a third state: it does not fail, and it is not a pass either.
-    expect(r.dead).toEqual([]);
+    // Was asserted as `held` when the verdict was still open. The owner settled
+    // it 2026-09-20 — fail on scripts/, count content/ — so a command naming
+    // this repository's own tooling is now a failure, and the token carries
+    // the repointing rather than merely reporting the miss.
+    expect(r.dead.map((h) => h.token)).toEqual(["scripts/lean-audit.ts  →  cat-harness/scripts/lean-audit.ts"]);
+    expect(r.held).toEqual([]);
   });
 
   test("a cross-reference with NO runner verb is not a finding", () => {
@@ -200,5 +205,74 @@ describe("the printed-command reader — bean `b963`'s third class", () => {
   test("instance roots are DISCOVERED, so a split cannot silently blind the check", () => {
     const root = fixture({ "cat-harness/harness.json": "{}", "other/harness.json": "{}" }, ["cat-harness", "other"]);
     expect(instanceRoots(root)).toEqual(["cat-harness", "other"]);
+  });
+});
+
+describe("the owner's verdict on the 237 — fail on scripts/, count content/", () => {
+  /**
+   * The target must EXIST under the instance, or there is nothing to find.
+   * The rule is "resolves under an instance but not from the root" — a path
+   * that resolves nowhere is a folio's and is counted, which is what the first
+   * draft of these fixtures accidentally exercised.
+   */
+  const fixtureWith = (comment: string, target: string) =>
+    fixture(
+      { "cat-harness/harness.json": "{}", "cat-harness/scripts/a.ts": comment, [`cat-harness/${target}`]: "" },
+      ["cat-harness/scripts"],
+    );
+
+  test("a command naming this repository's tooling FAILS, and the finding carries its fix", () => {
+    const r = checkCommandPaths(fixtureWith("// bun run scripts/lean-audit.ts\n", "scripts/lean-audit.ts"));
+    expect(r.dead).toHaveLength(1);
+    expect(r.dead[0]!.token).toBe("scripts/lean-audit.ts  →  cat-harness/scripts/lean-audit.ts");
+    expect(r.held).toEqual([]);
+  });
+
+  test("a command addressed to a FOLIO is counted, never failed", () => {
+    const r = checkCommandPaths(fixtureWith("// bun run content/pipeline/qa-sweep.ts\n", "content/pipeline/qa-sweep.ts"));
+    expect(r.dead).toEqual([]);
+    expect(r.held).toHaveLength(1);
+  });
+
+  test.each([...FOLIO_OWNED])("`%s/` is a folio's, so it is counted", (seg) => {
+    const r = checkCommandPaths(fixtureWith(`// bun run ${seg}/x.ts\n`, `${seg}/x.ts`));
+    expect(r.dead).toEqual([]);
+  });
+
+  test.each(["scripts", "src", "docs"])("`%s/` is this repository's, so it fails", (seg) => {
+    const r = checkCommandPaths(fixtureWith(`// bun run ${seg}/x.ts\n`, `${seg}/x.ts`));
+    expect(r.dead).toHaveLength(1);
+  });
+
+  test("FOLIO_OWNED is a LAYOUT and not a declaration — the weakness is on the constant", () => {
+    // Guards the disclosure itself: the set was chosen by the owner over a
+    // layout, no harness.json separates `scripts/` from `content/`, and bean
+    // `b963` carries an open Done-when to tighten it. A later session that
+    // silently derives this from somewhere should update that note too.
+    expect(FOLIO_OWNED.has("content")).toBe(true);
+    expect(FOLIO_OWNED.has("scripts")).toBe(false);
+  });
+});
+
+describe("the corpus is DISCOVERED, not listed", () => {
+  test("a new instance's scripts/ is scanned without anyone editing this check", () => {
+    // The first draft listed `cat-harness/{scripts,src,...}`. A merge from
+    // `main` brought a `who-iris/` instance whose scripts/ the check then
+    // walked straight past — a hardcoded list going stale INSIDE the check
+    // whose whole subject is hardcoded paths going stale.
+    const root = fixture(
+      {
+        "cat-harness/harness.json": "{}",
+        "who-iris/harness.json": "{}",
+        "who-iris/scripts/a.ts": "// bun run scripts/gen-iris-pages.ts\n",
+        "who-iris/scripts/gen-iris-pages.ts": "",
+      },
+      ["cat-harness", "who-iris/scripts"],
+    );
+    const r = checkCommandPaths(root);
+    expect(sourceFiles(root)).toContain("who-iris/scripts/a.ts");
+    expect(r.dead.map((d) => d.token)).toEqual([
+      "scripts/gen-iris-pages.ts  →  who-iris/scripts/gen-iris-pages.ts",
+    ]);
   });
 });

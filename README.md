@@ -177,7 +177,7 @@ git submodule add https://github.com/litlfred/folio-assistant.git folio-assistan
 (cd folio-assistant && bun install)
 
 # Scaffold. --type document for prose; --type paper to add Lean + LaTeX.
-bun run folio-assistant/scripts/init-folio.ts \
+bun run folio-assistant/cat-harness/scripts/init-folio.ts \
     --type document \
     --title "My Guidance Note" \
     --author "Your Name"
