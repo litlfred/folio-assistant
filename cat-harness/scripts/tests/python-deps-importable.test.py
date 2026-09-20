@@ -27,7 +27,21 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(os.path.dirname(HERE))  # scripts/tests -> scripts -> repo root
+# scripts/tests -> scripts -> INSTANCE -> REPOSITORY. Four levels, not two.
+#
+# `requirements.txt` sits beside `package.json` at the top of the checkout,
+# because CI installs it as `pip install -r requirements.txt` from there. This
+# comment said "-> repo root" after two levels, which was true while the
+# instance and the repository were one directory; after the move (bean `wggr`)
+# two levels reaches `cat-harness/` and the file is one further up.
+#
+# It failed LOUDLY — "requirements.txt does not exist; nothing to check" is the
+# refusal this test was written with, so the wrong root could not read as a
+# clean run. Worth recording because the TypeScript half of this same fix was
+# found by a vacuity guard too, and because no scan in this repository reaches
+# a path spelled in Python.
+INSTANCE = os.path.dirname(os.path.dirname(HERE))
+ROOT = os.path.dirname(INSTANCE)
 REQ = os.path.join(ROOT, "requirements.txt")
 
 

@@ -27,8 +27,19 @@ import json
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-WITNESS_DIR = REPO_ROOT / "folio-assistant" / "computations"
+# TWO ROOTS, because the two directories below belong to different ones.
+#
+# `computations/` is the INSTANCE's; `todos/` is the REPOSITORY's — one of the
+# four stores that stay at the top of the checkout because they are the
+# instance's memory (bean `wggr`). They were one directory until the move, so
+# a single `parent.parent` answered both and this file could not tell them
+# apart. `REPO_ROOT` kept the right NAME and the wrong VALUE.
+#
+# `folio-assistant` is dropped from the witness path deliberately: the stub
+# level inside the instance directory was the redundancy the inversion removed.
+INSTANCE_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = INSTANCE_ROOT.parent
+WITNESS_DIR = INSTANCE_ROOT / "computations"
 TODOS_DIR = REPO_ROOT / "todos"
 OUT_PATH = TODOS_DIR / "compute-integration-watcher-queue.json"
 
