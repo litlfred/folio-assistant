@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Render order
+title: 'Render order'
 parent: Skill instructions
 ---
 
