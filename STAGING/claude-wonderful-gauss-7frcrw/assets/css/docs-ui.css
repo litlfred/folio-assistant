@@ -2574,6 +2574,19 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
  *
  * `aspect-ratio` has no fallback value on purpose: a sticky with no art has no
  * ratio to take, and `auto` leaves it exactly as it was. */
+/* THE TODO BOARD, MOUNTED INSIDE THE LANDING BOARD.
+ *
+ * The owner: "i want todo board inside of the landing folio/board." The landing
+ * board is a grid of harness cards, so the todo board arrives as one more grid
+ * item — and it must span the whole row rather than sit in a single column,
+ * because it is a board in its own right with its own grid inside it.
+ *
+ * `--inline` rather than restyling `.fa-sticky-board`: everywhere else that
+ * board is an overlay opened by a launcher, and this must not change it there. */
+.fa-landing-board > .fa-sticky-board--inline {
+  grid-column: 1 / -1;
+}
+
 .fa-landing-sticky--fixed {
   aspect-ratio: var(--fa-sticky-aspect, auto);
   /* The padding moves to the text box, which positions itself against the art.
