@@ -251,13 +251,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T08:53:37.356Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c18964f7d1b8eaa02dba302a977af1008e49075a",
-  "sourceCommitSha": "c18964f7d1b8eaa02dba302a977af1008e49075a",
-  "sourceCommitAt": "2026-09-20T08:51:48Z",
+  "generatedAt": "2026-09-20T09:02:57.842Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/590bf83a844ed39ebcfeed933b47cd1c148761d6",
+  "sourceCommitSha": "590bf83a844ed39ebcfeed933b47cd1c148761d6",
+  "sourceCommitAt": "2026-09-20T09:01:26Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 173,
+    "Skill": 174,
     "Actor": 27,
     "Capability": 24,
     "Role": 111,
@@ -267,7 +267,7 @@
     "SequenceFlow": 518,
     "ProcessNode": 484,
     "Tool": 31,
-    "Schema": 61,
+    "Schema": 62,
     "GraphKind": 16,
     "Directory": 14
   },
@@ -2065,6 +2065,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "theme-art-intake",
+      "title": "Theme art intake",
+      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/theme-art-intake.md",
+      "instructionLines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/integration-backlog",
@@ -4201,6 +4217,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/test-engineer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/theme-art-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#skill/todo-review",
@@ -21615,6 +21632,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/test-run"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#schema/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "theme-art-intake",
+      "title": "Theme art arriving as three files — accepted, or refused with a reason.",
+      "module": "schemas/theme-art-intake.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme-art-intake"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/folio-assistant.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "theme",
@@ -22780,8 +22805,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-gauss-7frcrw",
-    "sha": "43216e4c8fc20bcd503b9ee4bb8b1f6fa7c66c5d",
+    "sha": "dfe1ecbfd81805770f8cc780211400b2c24d19a6",
     "pr": "481/merge",
-    "run": "35500746804"
+    "run": "35501158886"
   }
 }
