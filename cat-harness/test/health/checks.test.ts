@@ -555,6 +555,77 @@ describe("bean-store", () => {
     expect(r.findings[0].action).toContain("Never `beans delete`");
   });
 
+  it("fires on a decision record listing ONE option — MADR's refusal, made checkable", () => {
+    // `madr.md`: "never fewer than two considered options — one option is not a
+    // choice". THE FALSIFIER FOR THE WHOLE CRITERION: over the real store this
+    // fires on nothing (2 records, both with 3 options), so without this the
+    // detector could have been broken in either direction and still looked clean.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Pick a serialisation", consideredOptions: 1 }),
+          bean({ id: "bbbb", title: "Ordinary work, no decision" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-thin-decision-records"]);
+    expect(r.findings[0].severity).toBe("minor");
+    expect(r.findings[0].summary).toContain("one option");
+    // The action must offer the methodology's OWN escape — say why no
+    // alternative existed — and must refuse the shortcut, or an agent reading it
+    // will pad the list to two and the check will have made the record worse.
+    expect(r.findings[0].action).toContain("WHY NO ALTERNATIVE EXISTED");
+    expect(r.findings[0].action).toContain("Never invent a straw option");
+  });
+
+  it("an options section with NO items reads differently from one with a single option", () => {
+    // Zero is not a smaller version of one. An empty section claims an analysis
+    // that did not happen, and the remedy is the opposite — drop the section, or
+    // fill it — so the two cannot share an action.
+    const r = beanStoreCheck(healthyContext({
+      beans: { state: "ok", value: [bean({ id: "aaaa", consideredOptions: 0 })] },
+    }));
+    expect(r.findings[0].summary).toContain("no options");
+    expect(r.findings[0].action).toContain("or drop the section");
+  });
+
+  it("a bean with no options section is NOT a malformed decision record", () => {
+    // The third state, and the one the check is likeliest to get wrong: most
+    // beans record WORK, and `madr.md` says a work bean needs no such section.
+    // Reading `undefined` as 0 would make all 172 of them findings.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [bean({ id: "aaaa" }), bean({ id: "bbbb", consideredOptions: undefined })],
+      },
+    }));
+    expect(metrics(r)).toEqual([]);
+    const m = r.measurements.find((x) => x.metric === "bean-decision-records");
+    expect(m?.value).toBe(0);
+  });
+
+  it("the SUBJECT COUNT is reported, so a detector that stops matching is not green", () => {
+    // Nothing thresholds `bean-decision-records`, and it is emitted anyway. The
+    // finding above can only fire on a bean this counts, so if the heading regex
+    // is narrowed or a heading respelled, this drops to 0 rather than the check
+    // passing over an empty walk — the trap `NoCheckScriptsFound` refuses one
+    // layer along. Measured on the real store 2026-09-20: 2 subjects, 0 thin.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", consideredOptions: 3 }),
+          bean({ id: "bbbb", consideredOptions: 2 }),
+          bean({ id: "cccc" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual([]);
+    expect(r.measurements.find((x) => x.metric === "bean-decision-records")?.value).toBe(2);
+    expect(r.measurements.find((x) => x.metric === "bean-thin-decision-records")?.value).toBe(0);
+  });
+
   it("fires `minor` on a claim nobody has honoured for a fortnight", () => {
     const r = beanStoreCheck(healthyContext({
       beans: {

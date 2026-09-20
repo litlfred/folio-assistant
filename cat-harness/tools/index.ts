@@ -1124,6 +1124,308 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { network: false },
     }),
 
+    // ── Task_Validate, served by TWO Tools that are not alternatives ──────
+    //
+    // Groups 6 (`oait`) and 10 (`9x17`) of `d308` both bind `authoring-a-paper ·
+    // Task_Validate` and both satisfy `content-validate`. Both beans asked for
+    // `alternativeTo` / `selection` between them "since they share a task", and
+    // **that is the inference `ToolDefinitionSchema` refutes in as many words**:
+    // sharing a skill does not make two Tools substitutable, measured across 12
+    // of this instance's 25 multi-Tool skills.
+    //
+    // These two are the ordinary case, not the exception. One asks whether the
+    // content GRAPH is well-formed and well-ordered; the other asks whether a
+    // block is valid against its schema. A folio runs both, in that order, and
+    // neither answer substitutes for the other — so an `alternativeTo` edge here
+    // would oblige `selection` prose comparing two things that do not compete,
+    // and an author made to write it writes noise. Left unset deliberately, and
+    // both beans corrected rather than satisfied.
+    defineTool({
+      id: "content-graph-build",
+      title: "Content graph",
+      description:
+        "Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/content-graph.ts" },
+      io: {
+        inputs: [
+          // Optional, because the script defaults to `<repo>/content` — and
+          // `check-tools` matches a contract by PORT NAME rather than by
+          // required-ness, so declaring it optional still satisfies
+          // `content-validate` honestly instead of overstating the argument.
+          { name: "targetPath", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "Content root to walk; defaults to the folio's `content/`." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+        ],
+        outputs: [
+          // STILL one `Text` port, and `Count` existing does not change that —
+          // which is worth saying, because the obvious move once the type landed
+          // would be to split this into two numbers.
+          //
+          // The reason was never only the missing type. A SHELL arm returns a
+          // printed report, so `editorialEdges: Count` would overstate what the
+          // invoke arm hands a caller: it would promise a parsed number where the
+          // mechanism emits text. A node whose ports describe an API it does not
+          // have is the same defect as a `satisfies` edge whose contract it
+          // cannot receive.
+          //
+          // The EDITORIAL / FORMAL split survives in the description instead,
+          // and it is the fact that matters: `uses[]` and `interprets` are what
+          // a READER must have read, while the formal graph is machine-derived
+          // from `lean.ref`. A single combined edge count would invite exactly
+          // the "sync uses from the formal graph" operation that destroys the
+          // signal every ordering metric is computed from — `oait` names that as
+          // the one rule this group must not break.
+          { name: "report", schema: t("Text"), description: "Block count, then edge counts reported separately and never summed: EDITORIAL (`uses[]`, `interprets` — author-maintained) and FORMAL (derived from `lean.ref`). The formal line distinguishes `0` from `cache ABSENT`, so an unavailable formal graph cannot be read as a graph with no formal edges." },
+        ],
+      },
+      // NO input or output offering to populate `uses[]` from the formal graph,
+      // and that absence is the point rather than an omission — `oait` names it
+      // as the one rule the group must not break.
+      satisfies: ["content-validate"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "content-manifest-validate",
+      title: "Content manifest validation",
+      description:
+        "Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/validate.ts" },
+      io: {
+        inputs: [
+          { name: "targetPath", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "A paper or chapter directory; absent, every paper the folio declares." },
+          { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Treat warnings as errors." },
+        ],
+        outputs: [
+          { name: "issues", schema: t("Text"), description: "One line per issue, with its block and file. Exit 2 means NO FOLIO WAS FOUND — could-not-determine, never valid." },
+        ],
+      },
+      satisfies: ["content-validate"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The evidence path, and the check that is NOT a computation ────────
+    //
+    // Group 11 of `d308` (`1oqu`). The bean's constraint was that a Tool here
+    // must return "could not determine" distinctly from "verified", because
+    // `evidence-retrieval · Task_RecordUnverified` exists for the case where the
+    // authority check fails, and collapsing them would launder an unverified
+    // citation into an authoritative one.
+    //
+    // **That constraint is already met, and not by a Tool.** Measured
+    // 2026-09-20: nothing in the corpus WRITES a `VerificationEntry`.
+    // `schemas/bib-verification.ts` carries seven `VerificationStatus` values —
+    // `unfetchable` ("URL/DOI did not resolve") and `partial` ("awaiting PDF")
+    // are the could-not-determine cases — and a `Verifier` discriminated union
+    // whose own comment states the point: *"`kind: "agent"` is a
+    // machine-generated claim awaiting human review; `kind: "human"` is a human
+    // adjudication."* Verification is a judgement RECORDED in a curated file, so
+    // the guarantee lives in that file's schema, where a boolean cannot reach it.
+    //
+    // The laundering risk is therefore sharper than the bean assumed: it is not
+    // only unknown→verified, it is **agent-claim→verified**. A node emitting
+    // `verified: true` would collapse both distinctions at once, which is why
+    // this node declares neither — it builds the glossary and says so. The bib
+    // verification path is reached through `qa-sweep` instead (`bib-qa.ts` has no
+    // `import.meta.main` and produces the report `qa-checkers-extended` reads).
+    defineTool({
+      id: "glossary-build",
+      title: "Glossary build",
+      description:
+        "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/build-glossary.ts" },
+      io: {
+        inputs: [
+          { name: "targetPath", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Report drift and write nothing." },
+        ],
+        outputs: [
+          { name: "glossary", schema: t("RepoPath"), description: "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root." },
+        ],
+      },
+      // `document-intake`, which is what `Task_L1Sources` refs. It carries NO
+      // input contract, so `check-tools` cannot verify this edge against one —
+      // worth saying plainly rather than letting a clean run imply agreement
+      // that was never tested.
+      satisfies: ["document-intake"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The FSH cone, and TWO of three declared contracts refused ─────────
+    //
+    // Group 12 of `d308` (`h588`). `ig-incremental-build · Task_Cone` names
+    // `fsh-cone --changed` in its own task label, so this binding is read off the
+    // diagram rather than inferred.
+    //
+    // **The bean asked for one node satisfying three skills; two are refused, on
+    // their own contracts.** Measured 2026-09-20 against
+    // `schemas/skills/*/input.schema.json`:
+    //
+    //   fhir-validation     requires igRoot                      → SATISFIABLE
+    //   ig-publication      requires igRoot + versionIncrement    → refused
+    //   l3-fhir-authoring   requires artifactType + l2Source      → refused
+    //
+    // The refusals are not a gap to close later. `fsh-cone` computes a dependency
+    // cone over a FSH graph: it publishes nothing and authors nothing, so it has
+    // no version to increment and no L2 source to render from. Declaring those
+    // edges would put this node forward as the mechanism for two jobs it does not
+    // do — the `covered-is-not-reachable` shape, manufactured on purpose.
+    //
+    // **Its verification happens downstream, and that is recorded rather than
+    // implied.** The platform carries no folio, so this cannot be exercised here:
+    // `d308`'s correction established the same for six of thirteen groups, so the
+    // posture is the general case, not this group's quirk. What IS checked here is
+    // the one thing that does not need a folio — a missing `<ig-root>` exits 2
+    // with usage, measured, not assumed.
+    defineTool({
+      id: "fsh-cone",
+      title: "FSH dependency cone",
+      description:
+        "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/fsh-cone.ts" },
+      io: {
+        inputs: [
+          { name: "igRoot", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone." },
+          { name: "csv", schema: t("RepoPath"), required: false, arg: { flag: "--csv" }, description: "Write the report as CSV to this path instead of printing it." },
+          // `--top` and `--history` are now DECLARED: `Count` was added to the
+          // vocabulary on 2026-09-20, once this node and `content-graph-build`
+          // had met the same gap from two directions. Two independent needs is
+          // the bar; one flag wanting a bespoke type is not.
+          { name: "top", schema: t("Count"), required: false, arg: { flag: "--top" }, description: "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero." },
+          { name: "history", schema: t("Count"), required: false, arg: { flag: "--history" }, description: "Report the blast radius over the last N commits instead of a static cone." },
+          // `--changed f1,f2,…` stays UNDECLARED, and for a reason the new type
+          // does not touch: it is a comma-separated list inside ONE argv word.
+          // `Slug` forbids the comma, `repeated` would claim the flag may be
+          // given more than once when the script parses a single list, and `Text`
+          // is refused on argv by the injection rule. That gap is about
+          // list-in-one-word, not about numbers.
+        ],
+        outputs: [
+          { name: "cone", schema: t("Text"), description: "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead." },
+        ],
+      },
+      // ONE skill, not the three the bean listed — see the header for why the
+      // other two contracts refuse this mechanism rather than merely lacking it.
+      satisfies: ["fhir-validation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The round-trip RECORDER, and the two dispatch points it did not need ─
+    //
+    // Bean `vo9d`, and the owner's answer to it: "1 2 3 are all triggers", then
+    // "all for triggers or tools as appropriate". One mechanism, several dispatch
+    // points, each a trigger or a Tool. Reading the mechanism then showed which
+    // of the three was actually missing — and it was this one.
+    //
+    // **It does not perform the round trip; it RECORDS one.** `--payload
+    // <file.json>` carries a verdict a pair of translation agents produced, and
+    // `recordRoundTrip` writes it into the block's existing
+    // `<block>.<locale>.translation-qa.json` under the criterion
+    // `translation-semantic-roundtrip`. It REFUSES when no sidecar is there, and
+    // the refusal states the principle: *"a round trip cannot be the thing that
+    // decides this block is translated"* — `translation-block-qa.ts` decides that,
+    // and this adds a judgement on top of it.
+    //
+    // So of the three dispatch points the bean proposed:
+    //
+    //   · the BPMN trigger ALREADY EXISTS — `Task_RoundTripQA` carries
+    //     `<folio:skill ref="translation-manager"/>`, so `workflow_next` already
+    //     hands an agent the skill. (A `folio:skill` names a SKILL, never a
+    //     script; the mechanism is what this node is for.)
+    //   · a `qa-sweep` axis would be WRONG, not merely awkward: the sweep cannot
+    //     back-translate, and the verdict originates outside it. A sweep-side
+    //     criterion would be a different question — "does this block HAVE a
+    //     round-trip verdict" — not this mechanism under another trigger.
+    //   · the Tool node is the one that was missing, and it is this.
+    //
+    // Which is why the node exists and the other two are recorded as done and as
+    // refused. `alternativeTo` stays empty: a recorder and a decider are not two
+    // ways to do one thing.
+    defineTool({
+      id: "translation-roundtrip-record",
+      title: "Record a round-trip translation verdict",
+      description:
+        "Write a back-translation verdict, produced by a pair of translation agents, into a block's existing translation-QA sidecar. It records a judgement rather than making one, and refuses where no sidecar exists — a round trip cannot be what decides a block is translated.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/translation-roundtrip.ts" },
+      io: {
+        inputs: [
+          { name: "payload", schema: t("RepoPath"), required: true, arg: { flag: "--payload" }, description: "JSON carrying the block, locale, verdict and the agent pair. Absent, the command exits 2 with its usage — measured, not assumed." },
+        ],
+        outputs: [
+          { name: "sidecar", schema: t("RepoPath"), description: "The `<block>.<locale>.translation-qa.json` written, under criterion `translation-semantic-roundtrip`. An AGENT entry replaces a previous agent entry — a re-run is a re-measurement of the same pair on the same text, not another line in a log — while a human ruling already recorded is kept, because this process does not supersede one." },
+        ],
+      },
+      // `translation-manager`, which is what `Task_RoundTripQA` itself refs. That
+      // skill carries NO input contract, so `check-tools` cannot verify this edge
+      // against one: the clean run does not mean the edge was tested, and saying
+      // so here is cheaper than somebody later reading agreement into silence.
+      satisfies: ["translation-manager"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The L1 completeness gate, reachable at last ───────────────────────
+    //
+    // Bean `vo9d`, and the owner's answer: a **Tool node**, no npm script. This
+    // is the dispatch-points rule applied — `covered-is-not-reachable`
+    // §"Reachability is PLURAL": the question is not which caller a mechanism
+    // should have but what should be able to start it, and each of those is a
+    // trigger or a Tool.
+    //
+    // A Tool and NOT a script here, because the thing it reads is a FOLIO's
+    // `library/` tree and this repository carries no folio. A `check:l1-complete`
+    // script would land in `SCRIPT_EXEMPTIONS` as `no-folio` and never run — an
+    // entry point added and still unexercised, which is the cost I argued against
+    // for `0bzg`'s first option. A Tool node reaches downstream, where the tree
+    // exists.
+    //
+    // It had NO caller at all before this: an `import.meta.main`, and its only
+    // occurrence outside itself was a string literal in `repo-partition.ts`'s
+    // classification table.
+      //
+      // **Verified by running it, and one claim had to be walked back.** The first
+      // draft of the output description below said exit 2 was what a folio-less
+      // run gives. It is not: `instanceRootFor` tries the cwd's instance and then
+      // FALLS BACK to the script's own, and `cat-harness` declares a `library`
+      // graph of its own — so invoked from `/tmp` it still finds this instance's
+      // one entry and exits 0. The exit-2 path is real and correctly written
+      // (`checkAll` returns `undefined` for "no declaration anywhere", distinct
+      // from `[]` for "declared and empty"), but it cannot be reached while the
+      // script lives beside a declared library. What was measured here is the
+      // exit-0 path over one real entry — 11 requirements, all met.
+    defineTool({
+      id: "l1-complete-check",
+      title: "L1 source completeness",
+      description:
+        "Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/check-l1-complete.ts" },
+      io: {
+        inputs: [
+          // Optional: with no argument it walks every entry in the declared
+          // `library` graph, which is the sweep a folio wants. Naming one entry
+          // is the narrow case, not the default.
+          { name: "targetPath", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "One `library/<bib-slug>/` entry. Absent, every entry the declared `library` graph holds." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Per requirement: met, unmet, or `not-derivable` — the third distinguishes a document that CANNOT yield an artefact from one that simply has not. Exit 2 means no `library` graph is declared anywhere, which the script states as \"This is NOT a pass. Treat it as unknown.\"" },
+        ],
+      },
+      // `library-ingestion`, whose other two Tools INGEST. This one gates what
+      // they produced, so `alternativeTo` stays EMPTY: `ingest-stdlib` and
+      // `ingest-extended` are substitutable with each other — the one genuinely
+      // substitutable pair in this instance alongside `beans-cli`/`beans-manual` —
+      // and a completeness check is not a third way to ingest.
+      //
+      // The skill carries no input contract, so `check-tools` cannot verify this
+      // edge against one. The clean run does not mean the edge was tested.
+      satisfies: ["library-ingestion"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     // ── Tabular extraction: DECLARED, and deliberately not built ─────────
     //
     // Bean `eief`, the owner: "no tooling needed, stub out, make QA to catch
