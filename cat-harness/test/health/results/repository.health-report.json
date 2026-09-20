@@ -2,13 +2,13 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "cf3bad13861f"
+    "script_hash": "98a2087b18ef"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T08:38:07.646Z",
+  "updated_at": "2026-09-20T10:39:17.448Z",
   "verdict": "clean",
   "checks": [
     {
@@ -34,13 +34,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 283378491,
+          "value": 289992743,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 6,
+          "value": 5,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
@@ -75,7 +75,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 6,
+          "value": 5,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -119,31 +119,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 67137324,
+          "value": 85875256,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 145172627,
+          "value": 536957440,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 116746240,
+          "value": 503562240,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 35,
+          "value": 63,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 2.16,
+          "value": 6.25,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
@@ -153,7 +153,7 @@
     {
       "id": "bean-store",
       "state": "ok",
-      "summary": "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, and the size of the open backlog.",
+      "summary": "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, the size of the open backlog, and decision records that list fewer than two real options.",
       "thresholds": [
         {
           "metric": "bean-duplicate-title-groups",
@@ -161,6 +161,13 @@
           "unit": "count",
           "basis": "Zero, and the zero is the point. `beans create` is not idempotent and dedupes on nothing (AGENTS.md); an unguarded re-run in the `qou` folio on 2026-08-04 produced 14,688 duplicates — 92% of every open bean — which starved the idle-backlog policy of signal and collided with 15 real ids. Any duplicate at all is the leading edge of that, so there is no tolerance band.",
           "severity": "major"
+        },
+        {
+          "metric": "bean-thin-decision-records",
+          "value": 0,
+          "unit": "count",
+          "basis": "MADR's own refusal, adopted whole 2026-09-20: \"never fewer than two considered options — one option is not a choice; a straw option is worse than a short list\" (`cat-harness/methodologies/madr.md`). Zero rather than a tolerance band because the rule has no tolerant form: a record listing one option has not compared anything, and the methodology says what to write instead — why no alternative existed, which is a finding about the constraint rather than a decision. MINOR, not major, because this maps analytical debt rather than corpus integrity; a thin record misleads a future reader, it does not break a consumer. Measured 2026-09-20: 2 decision records in the store, 0 of them thin — so this locks in a property the store already has rather than demanding work.",
+          "severity": "minor"
         },
         {
           "metric": "bean-stale-in-progress",
@@ -187,19 +194,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 120,
+          "value": 174,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 116,
+          "value": 140,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 4,
+          "value": 34,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -214,6 +221,18 @@
           "value": 0,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
+        },
+        {
+          "metric": "bean-decision-records",
+          "value": 2,
+          "unit": "count",
+          "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
+        },
+        {
+          "metric": "bean-thin-decision-records",
+          "value": 0,
+          "unit": "count",
+          "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         }
       ],
       "findings": []

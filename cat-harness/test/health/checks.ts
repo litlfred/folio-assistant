@@ -133,6 +133,21 @@ export interface BeanEvidence {
   status: string;
   /** ISO 8601, or `undefined` when the front matter carries none. */
   updatedAt?: string;
+  /**
+   * How many options the bean's own options section lists, or `undefined` when
+   * it has no such section.
+   *
+   * **`undefined` is the third state and the check must not read it as zero.** A
+   * bean that records WORK rather than a decision has no options to list, and
+   * `madr.md` says so in as many words: "a bean that records a decision carries
+   * these sections; a bean that records work does not need them." Collapsing
+   * absent into 0 would make every work bean a malformed decision record.
+   *
+   * Computed in the probe rather than here so the check stays a pure function
+   * over evidence and a fixture stays a literal — the reason `HealthContext` is
+   * a record of probes at all.
+   */
+  consideredOptions?: number;
 }
 
 export interface TodoEvidence {
@@ -886,6 +901,22 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "real ids. Any duplicate at all is the leading edge of that, so there is no tolerance band.",
   },
   {
+    metric: "bean-thin-decision-records",
+    value: 0,
+    unit: "count",
+    severity: "minor",
+    basis:
+      "MADR's own refusal, adopted whole 2026-09-20: \"never fewer than two considered options — one " +
+      "option is not a choice; a straw option is worse than a short list\" " +
+      "(`cat-harness/methodologies/madr.md`). Zero rather than a tolerance band because the rule has no " +
+      "tolerant form: a record listing one option has not compared anything, and the methodology says " +
+      "what to write instead — why no alternative existed, which is a finding about the constraint " +
+      "rather than a decision. MINOR, not major, because this maps analytical debt rather than corpus " +
+      "integrity; a thin record misleads a future reader, it does not break a consumer. Measured " +
+      "2026-09-20: 2 decision records in the store, 0 of them thin — so this locks in a property the " +
+      "store already has rather than demanding work.",
+  },
+  {
     metric: "bean-stale-in-progress",
     value: BEAN_STALE_DAYS,
     unit: "days",
@@ -932,7 +963,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const id = "bean-store";
   const summary =
     "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, " +
-    "and the size of the open backlog.";
+    "the size of the open backlog, and decision records that list fewer than two real options.";
   if (ctx.beans.state === "unknown") return unknownResult(id, summary, BEAN_THRESHOLDS, ctx.beans.reason);
   const beans = ctx.beans.value;
 
@@ -946,18 +977,35 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const dupGroups = [...byTitle.values()].filter((g) => g.length > 1);
   const open = beans.filter((b) => OPEN_BEAN_STATUSES.has(b.status));
   const resolved = beans.filter((b) => RESOLVED_BEAN_STATUSES.has(b.status));
+  // `undefined` means NO options section, which is a bean recording work rather
+  // than a decision — not a decision record with nothing in it. `!== undefined`
+  // rather than a truthiness test, because 0 is a real and reportable count.
+  const decisionRecords = beans.filter((b) => b.consideredOptions !== undefined);
+  const thin = decisionRecords.filter((b) => (b.consideredOptions ?? 0) < 2);
   const stale = beans
     .filter((b) => b.status === "in-progress" || b.status === "in_progress")
     .map((b) => ({ bean: b, age: daysBetween(ctx.now, b.updatedAt) }))
     .filter((x): x is { bean: BeanEvidence; age: number } => x.age !== undefined && x.age > BEAN_STALE_DAYS);
 
   const cmd = "beans/defs/*.md front matter";
+  const bodyCmd = "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading";
   const measurements: HealthMeasurement[] = [
     { metric: "bean-total", value: beans.length, unit: "count", command: cmd },
     { metric: "bean-open", value: open.length, unit: "count", command: cmd },
     { metric: "bean-resolved-inline", value: resolved.length, unit: "count", command: cmd },
     { metric: "bean-duplicate-title-groups", value: dupGroups.length, unit: "count", command: cmd },
     { metric: "bean-stale-in-progress", value: stale.length, unit: "count", command: cmd },
+    // REPORTED EVEN THOUGH NOTHING THRESHOLDS IT, and that is the point. The
+    // finding below can only fire on a bean this count includes, so a detector
+    // that stops matching — a heading respelled, the regex narrowed — shows up
+    // here as 0 subjects instead of as a green tick over an empty walk. A check
+    // with no subjects is not a check that passed.
+    // A DIFFERENT provenance from the four above, and it has to say so: those
+    // read front matter, these read the BODY's options section. A measurement
+    // that misreports where it came from sends whoever re-derives it to the
+    // wrong place, which is the whole reason `command` is on the record.
+    { metric: "bean-decision-records", value: decisionRecords.length, unit: "count", command: bodyCmd },
+    { metric: "bean-thin-decision-records", value: thin.length, unit: "count", command: bodyCmd },
   ];
   const findings: HealthFinding[] = [];
   for (const g of dupGroups) {
@@ -969,6 +1017,24 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
         "Keep the earliest, and set each of the others to `scrapped` with a note naming the one that " +
         "survives. Never `beans delete` — a scrapped bean records a considered rejection, a deleted one " +
         "leaves a sibling unable to tell abandonment from accident.",
+    });
+  }
+  for (const b of thin) {
+    const n = b.consideredOptions ?? 0;
+    findings.push({
+      metric: "bean-thin-decision-records",
+      severity: "minor",
+      summary:
+        `\`${b.id}\` records a decision and lists ${n === 0 ? "no options" : "one option"} ` +
+        `("${b.title}").`,
+      action:
+        n === 0
+          ? "Either list the options that were weighed, or drop the section — an empty options section " +
+            "claims an analysis that did not happen, which is worse than not claiming one."
+          : "Add the alternatives that were actually considered, with why each lost. If there genuinely " +
+            "was only one, say WHY NO ALTERNATIVE EXISTED and make that the record: per `madr.md` that " +
+            "is a finding about the constraint, not a decision. Never invent a straw option to reach " +
+            "two — the methodology refuses that more firmly than it refuses a short list.",
     });
   }
   for (const s of stale) {
@@ -1113,7 +1179,9 @@ export const HEALTH_CHECKS: readonly {
   },
   {
     id: "bean-store",
-    summary: "Duplicate titles, unhonoured claims, resolved items still inline, and the open backlog.",
+    summary:
+      "Duplicate titles, unhonoured claims, resolved items still inline, the open backlog, and " +
+      "decision records with fewer than two options.",
     run: beanStoreCheck,
   },
   {
