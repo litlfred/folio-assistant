@@ -94,3 +94,73 @@ designing them separately is how they end up disagreeing:
 ## Not started
 
 Queued per the owner's standing instruction to queue rather than pivot.
+
+---
+
+_2026-09-20, the owner, extending this:_
+
+> after bootsrap, (put in docs) think of each harnmess as add schematics to KG,
+> buidling visualtions for it, describeing tools to use/manage it. so each
+> harness needs docs/ library/ uploads/ and folio/
+>
+> with folio/ being your active workspace. you can do things like publish,
+> manage process etc from there. each harness has its functions, they defint and
+> manage themselves as part of rendering pipeline, etc.
+>
+> the folio page may have its own theme. but default to dynamic choose layout
+> based on display /usability using three mobile/laptop/square as "best" fit.
+
+## What this adds to the epic
+
+**A harness has a JOB, stated in three verbs:** it adds schematics to the KG,
+builds visualisations for them, and describes the tools to use and manage them.
+That is what makes the four directories a *model* rather than a convention:
+
+| directory | its part of the job |
+|---|---|
+| `uploads/` | what arrives |
+| `library/` | what has been ingested — L1, the thing references resolve through |
+| `folio/` | **the active workspace** — publish and manage process from here |
+| `docs/` | what is published about it |
+
+**`folio/` as a workspace is the load-bearing change.** It is currently
+"authored content of this instance, rendered to a website". Making it the place
+you *act* from — publish, manage process — is a different thing from a place you
+author, and it is what connects this epic to `v49e` (the workflow view) and
+`6lb8` (the board).
+
+**And `qmjh` already encodes half of it.** All four are classified `reproduce`,
+so a dependent instance materialises its own — the four-directory model is
+already what a new folio gets. `folio-assist-core` declares none of them today,
+which the navbar stub shows as three "NOT DECLARED" rows.
+
+## Layout: dynamic by default, a declared theme as the override
+
+> the folio page may have its own theme. but default to dynamic choose layout
+> based on display /usability using three mobile/laptop/square as "best" fit.
+
+This is the sticky `shape` rule promoted to the page. It already exists in
+embryo and its shortcomings are measured: `shapeFor` picks from content weight
+against a threshold of 450, and all three current cards exceed it, so the
+"square by default" rule never fires. Rendering at thresholds 450 / 600 / 1600
+and measuring clipped text gave 0/32/0, 0/32/57 and 96/127/57 — squaring CLIPS
+content.
+
+So "best fit" must be measured against **legibility**, not just aspect: the
+existing chooser reads content weight and ignores whether the result overflows.
+A page-level version that repeats that would look responsive and cut text off.
+
+## Also from this message, beaned separately
+
+- `2krx` — every declared subgraph needs a visualiser, a documentation entry
+  and a governing skill; **19 of this instance's 22 have none**.
+- `jbx2` — `library/` visualisation.
+- `v49e` — the workflow view, where todos and beans sit in the BPMN/DMN.
+
+## A navbar stub exists
+
+Built over the real declarations and themes, with `who-iris` stubbed as a
+declared-but-not-materialised instance, `bootstrap` as the footer, and
+local-vs-remote shown per directory. It is a picture to react to, wired to
+nothing — the epic's open questions are unanswered and building against a guess
+would be the expensive kind of progress.
