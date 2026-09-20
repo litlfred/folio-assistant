@@ -134,12 +134,12 @@ materially bigger scope than the title suggests.
 | document | pages | placed images | coverage | verdict |
 |---|---|---|---|---|
 | `WHO_PUB_TPS_93.1` | 121 | 121 | 0.998 each, one per page | page scans |
-| `milnorlink` | 20 | 20 | 19 full-bleed | **page scans** |
+| `milnorlink` | 20 | 20 | 19 full-bleed + 1 at 0.008 | 19 scans, 1 figure |
 | `9789241548960_eng` | 179 | 2 | ~0.50 | figures |
 | `WPR-RDO-2020-003-eng` | 33 | 21 on 7 pages | median 0.013 | figures |
 
-**141 page scans against 23 candidate figures.** Describing every extracted
-image would produce 141 narratives of "a scanned page" — six times as many as
+**140 page scans against 24 candidate figures.** Describing every extracted
+image would produce 140 narratives of "a scanned page" — six times as many as
 there are real figures.
 
 The separation has no overlap, so no content heuristic is needed: a page scan
