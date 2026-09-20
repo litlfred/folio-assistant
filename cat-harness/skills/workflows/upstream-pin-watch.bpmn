@@ -39,6 +39,9 @@ The adoption itself is a call activity, so the judgement half lives in its own r
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Sweep" name="Weekly,&#10;or on dispatch">
+      <bpmn:extensionElements>
+        <folio:job name="report"/>
+      </bpmn:extensionElements>
       <bpmn:documentation>Weekly and not daily, for the same reason `ci-health.yml` is weekly: the defect being guarded against is "nobody noticed for months", not "nobody noticed for a day", and a daily run turns the tracking issue into a feed.</bpmn:documentation>
       <bpmn:timerEventDefinition id="Timer_Sweep"/>
     </bpmn:startEvent>
