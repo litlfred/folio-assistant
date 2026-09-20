@@ -1,4 +1,53 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>CategoryGlossaryEntry | folio-assistant API (staging: claude-peaceful-heisenberg-dzgsf1)</title><meta name="description" content="Documentation for folio-assistant API (staging: claude-peaceful-heisenberg-dzgsf1)"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/peaceful-heisenberg-dzgsf1" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/peaceful-heisenberg-dzgsf1</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">33ff346</span> · built 2026-09-20T18:18:29Z · <a href="https://github.com/litlfred/folio-assistant/pull/581" style="color:#fff;text-decoration:underline">PR #581</a> · <a href="https://github.com/litlfred/folio-assistant/issues/580" style="color:#fff;text-decoration:underline">issue #580</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35528558721" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>CategoryGlossaryEntry | folio-assistant API (staging: claude-peaceful-heisenberg-dzgsf1)</title><meta name="description" content="Documentation for folio-assistant API (staging: claude-peaceful-heisenberg-dzgsf1)"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container"><a href="../index.html" class="title">folio-assistant API (staging: claude-peaceful-heisenberg-dzgsf1)</a>
 <div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
 <ul role="listbox" id="tsd-search-results"></ul>
@@ -22,7 +71,7 @@
 <ul class="tsd-hierarchy">
 <li class="tsd-hierarchy-item"><span class="tsd-hierarchy-target">CategoryGlossaryEntry</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L312">formalization-types.ts:312</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L312">formalization-types.ts:312</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -57,14 +106,14 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#ambiguity">ambiguity</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L199">formalization-types.ts:199</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L199">formalization-types.ts:199</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="category_level"><code class="tsd-tag">Optional</code><span>category_<wbr/>level</span><a href="#category_level" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">category_level</span><span class="tsd-signature-symbol">?:</span> <a href="../types/schemas_formalization-types.CategoryLevel.html" class="tsd-signature-type tsd-kind-type-alias">CategoryLevel</a></div>
 <div class="tsd-comment tsd-typography"><p>Category-theoretic classification.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L314">formalization-types.ts:314</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L314">formalization-types.ts:314</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="chapter"><code class="tsd-tag">Optional</code><span>chapter</span><a href="#chapter" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">chapter</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div>
@@ -72,7 +121,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#chapter">chapter</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L189">formalization-types.ts:189</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L189">formalization-types.ts:189</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="depends_on"><code class="tsd-tag">Optional</code><span>depends_<wbr/>on</span><a href="#depends_on" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">depends_on</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -80,7 +129,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#depends_on">depends_on</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L197">formalization-types.ts:197</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L197">formalization-types.ts:197</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="functor_data"><code class="tsd-tag">Optional</code><span>functor_<wbr/>data</span><a href="#functor_data" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">functor_data</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">is_monoidal</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">source</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">target</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span></div>
@@ -102,14 +151,14 @@
 <div class="tsd-comment tsd-typography"><p>Target category.</p>
 </div></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L320">formalization-types.ts:320</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L320">formalization-types.ts:320</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="is_functorial"><code class="tsd-tag">Optional</code><span>is_<wbr/>functorial</span><a href="#is_functorial" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">is_functorial</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
 <div class="tsd-comment tsd-typography"><p>Whether this type involves functorial operations.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L318">formalization-types.ts:318</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L318">formalization-types.ts:318</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="kind"><span>kind</span><a href="#kind" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">kind</span><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_formalization-types.LeanDeclKind.html" class="tsd-signature-type tsd-kind-type-alias">LeanDeclKind</a></div>
@@ -117,7 +166,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#kind">kind</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L181">formalization-types.ts:181</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L181">formalization-types.ts:181</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="latex_label"><code class="tsd-tag">Optional</code><span>latex_<wbr/>label</span><a href="#latex_label" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">latex_label</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -125,7 +174,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#latex_label">latex_label</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L187">formalization-types.ts:187</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L187">formalization-types.ts:187</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="lean_name"><span>lean_<wbr/>name</span><a href="#lean_name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">lean_name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -133,7 +182,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#lean_name">lean_name</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L179">formalization-types.ts:179</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L179">formalization-types.ts:179</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="lean_type"><code class="tsd-tag">Optional</code><span>lean_<wbr/>type</span><a href="#lean_type" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">lean_type</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -141,7 +190,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#lean_type">lean_type</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L183">formalization-types.ts:183</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L183">formalization-types.ts:183</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="mathlib_import"><code class="tsd-tag">Optional</code><span>mathlib_<wbr/>import</span><a href="#mathlib_import" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">mathlib_import</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -149,7 +198,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#mathlib_import">mathlib_import</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L193">formalization-types.ts:193</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L193">formalization-types.ts:193</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="mathlib_type"><code class="tsd-tag">Optional</code><span>mathlib_<wbr/>type</span><a href="#mathlib_type" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">mathlib_type</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -157,7 +206,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#mathlib_type">mathlib_type</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L191">formalization-types.ts:191</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L191">formalization-types.ts:191</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="narrative_definition"><code class="tsd-tag">Optional</code><span>narrative_<wbr/>definition</span><a href="#narrative_definition" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">narrative_definition</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -165,7 +214,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#narrative_definition">narrative_definition</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L185">formalization-types.ts:185</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L185">formalization-types.ts:185</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="narrative_term"><span>narrative_<wbr/>term</span><a href="#narrative_term" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">narrative_term</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -173,14 +222,14 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#narrative_term">narrative_term</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L177">formalization-types.ts:177</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L177">formalization-types.ts:177</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="required_instances"><code class="tsd-tag">Optional</code><span>required_<wbr/>instances</span><a href="#required_instances" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">required_instances</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Required Lean typeclasses.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L316">formalization-types.ts:316</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L316">formalization-types.ts:316</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="universes"><code class="tsd-tag">Optional</code><span>universes</span><a href="#universes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">universes</span><span class="tsd-signature-symbol">?:</span> <a href="schemas_formalization-types.UniverseLevel.html" class="tsd-signature-type tsd-kind-interface">UniverseLevel</a></div>
@@ -188,7 +237,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_formalization-types.GlossaryEntry.html">GlossaryEntry</a>.<a href="schemas_formalization-types.GlossaryEntry.html#universes">universes</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/2b3e67fc4e6c07194cb895ebbb3f5b43fdd0da4c/cat-harness/schemas/formalization-types.ts#L195">formalization-types.ts:195</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/peaceful-heisenberg-dzgsf1/cat-harness/schemas/formalization-types.ts#L195">formalization-types.ts:195</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

@@ -277,6 +277,45 @@
           },
           "default": []
         },
+        "remoteGraphs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "graphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "url",
+              "graphs"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
         "stickies": {
           "type": "array",
           "items": {
@@ -425,8 +464,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "33ff3466684d5b0e514d5c021bef07bf10300d97",
+    "sha": "399ad6f6ca1303c4888d9435719172874fd87e03",
     "pr": "581/merge",
-    "run": "35528558721"
+    "run": "35530310181"
   }
 }
