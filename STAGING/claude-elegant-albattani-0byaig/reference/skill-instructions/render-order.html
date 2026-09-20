@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(7)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(150)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(7) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(150) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(14) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(14) > ul > li:nth-child(7) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(150) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(14) > ul.nav-list > li.nav-list-item:nth-child(7) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(150) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Reseeding the Lean cache | folio-assistant</title>
+<title>Render order | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Reseeding the Lean cache" />
+<meta property="og:title" content="Render order" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Reseeding the Lean cache" />
+<meta property="twitter:title" content="Render order" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -668,8 +668,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/guides/">Authoring guides</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Reseeding the Lean cache</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-elegant-albattani-0byaig/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Render order</span></li>
   </ol>
 </nav>
 
@@ -677,438 +677,212 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="reseeding-the-lean-cache">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/render-order.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/render-order.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/render-order.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="render-order--flattening-a-dependency-hierarchy-and-the-two-stages">
   
   
-    <a href="#reseeding-the-lean-cache" class="anchor-heading" aria-labelledby="reseeding-the-lean-cache"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reseeding the Lean cache
+    <a href="#render-order--flattening-a-dependency-hierarchy-and-the-two-stages" class="anchor-heading" aria-labelledby="render-order--flattening-a-dependency-hierarchy-and-the-two-stages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Render order — flattening a dependency hierarchy, and the two stages
   
   
 </h1>
     
 
-<p>The cache branches are currently unusable for builds. This is the exact
-procedure to rebuild them.</p>
+<p>Two things live here, and they are deliberately one skill: <strong>the general
+subprocess</strong> (flatten a hierarchy into one order) and <strong>the one pipeline this
+repository runs with it</strong>. The owner asked for the second and then generalised
+it in the same breath:</p>
 
 <blockquote>
-  <p><strong>Step 1 no longer needs elan, or unrestricted network.</strong> elan’s hosts
-(<code class="language-plaintext highlighter-rouge">elan.lean-lang.org</code>, <code class="language-plaintext highlighter-rouge">release.lean-lang.org</code>) are unreachable from
-the cloud authoring container, but elan is only a fetcher and the same
-toolchain is a GitHub release asset, which <em>is</em> reachable.
-<code class="language-plaintext highlighter-rouge">lake-cache.sh install-toolchain</code> fetches it directly — verified
-in-container, static libs and all, with <code class="language-plaintext highlighter-rouge">lake exe</code> linking and running
-(mathlib’s <code class="language-plaintext highlighter-rouge">cache:exe</code> builds and links there).</p>
-
-  <p><strong>Step 2 still does.</strong> Mathlib’s cache CDN
-(<code class="language-plaintext highlighter-rouge">mathlib4.lean-cache.cloud</code>, <code class="language-plaintext highlighter-rouge">lakecache.blob.core.windows.net</code>) is
-blocked from that same container, and there is no GitHub-hosted mirror
-of Mathlib’s oleans to fall back on. These are two independent egress
-restrictions — a working toolchain does <strong>not</strong> imply a reachable
-cache. Step 2 onward still needs CI or a local machine.</p>
+  <p>readme epid need to flattening of depndency hieracy, rulles + tools. as do
+other skills. this is a repeable subprocess</p>
 </blockquote>
 
-<ol id="markdown-toc">
-  <li><a href="#what-is-wrong-today" id="markdown-toc-what-is-wrong-today">What is wrong today</a></li>
-  <li><a href="#just-run-the-script" id="markdown-toc-just-run-the-script">Just run the script</a></li>
-  <li><a href="#a-from-source-build-seeds-a-narrower-cache-than-the-cdn" id="markdown-toc-a-from-source-build-seeds-a-narrower-cache-than-the-cdn">A from-source build seeds a NARROWER cache than the CDN</a></li>
-  <li><a href="#prerequisites" id="markdown-toc-prerequisites">Prerequisites</a></li>
-  <li><a href="#step-0--branches" id="markdown-toc-step-0--branches">Step 0 — branches</a></li>
-  <li><a href="#step-1--a-real-toolchain" id="markdown-toc-step-1--a-real-toolchain">Step 1 — a real toolchain</a></li>
-  <li><a href="#step-2--a-traced-mathlib-the-fast-way" id="markdown-toc-step-2--a-traced-mathlib-the-fast-way">Step 2 — a traced Mathlib, the fast way</a></li>
-  <li><a href="#step-3--build-the-papers-own-modules" id="markdown-toc-step-3--build-the-papers-own-modules">Step 3 — build the paper’s own modules</a>    <ol>
-      <li><a href="#chipping-at-it-across-sessions" id="markdown-toc-chipping-at-it-across-sessions">Chipping at it across sessions</a></li>
-    </ol>
-  </li>
-  <li><a href="#step-4--seed-safely" id="markdown-toc-step-4--seed-safely">Step 4 — seed safely</a></li>
-  <li><a href="#step-5--the-other-packages" id="markdown-toc-step-5--the-other-packages">Step 5 — the other packages</a></li>
-  <li><a href="#step-6--the-toolchain-branch" id="markdown-toc-step-6--the-toolchain-branch">Step 6 — the toolchain branch</a></li>
-  <li><a href="#afterwards" id="markdown-toc-afterwards">Afterwards</a></li>
-  <li><a href="#related-beans" id="markdown-toc-related-beans">Related beans</a></li>
-</ol><hr />
-<h2 id="what-is-wrong-today">
-  
-  
-    <a href="#what-is-wrong-today" class="anchor-heading" aria-labelledby="what-is-wrong-today"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is wrong today
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">lake-cache/qou-v4-24-0</code> carries <strong>7268 oleans, 0 traces, 0 own-package
-modules</strong>. Three independent defects:</p>
+<p><strong>A repeatable subprocess has one implementation.</strong> Four callers each wanting
+“run these in dependency order” is four topological sorts, three of them
+subtly different and none tested.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Defect</th>
-      <th>Effect</th>
+      <th> </th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>No <code class="language-plaintext highlighter-rouge">.trace</code> files</td>
-      <td>Lake reads <code class="language-plaintext highlighter-rouge">.trace</code>, not <code class="language-plaintext highlighter-rouge">.olean</code>, to decide staleness. Untraced modules are “out of date”, so a build rebuilds them — and <strong>evicts</strong> them. Measured: building one module ran 823 targets and cut 7268 oleans to 772.</td>
+      <td>the rules + the flattener</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/scripts/dependency-order.ts</code></td>
     </tr>
     <tr>
-      <td>No own-package oleans</td>
-      <td>Every build recompiles the paper; sibling <code class="language-plaintext highlighter-rouge">.lean</code> files cannot elaborate standalone.</td>
+      <td>the pipeline that uses it</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/scripts/render-pipeline.ts</code></td>
     </tr>
     <tr>
-      <td>Toolchain branch has no <code class="language-plaintext highlighter-rouge">.a</code> files</td>
-      <td><code class="language-plaintext highlighter-rouge">lean</code> elaborates but nothing <strong>links</strong>, so <code class="language-plaintext highlighter-rouge">lake exe …</code> fails — including <code class="language-plaintext highlighter-rouge">lake exe cache get</code>.</td>
+      <td>see the order without running it</td>
+      <td><code class="language-plaintext highlighter-rouge">bun run render:order</code></td>
+    </tr>
+    <tr>
+      <td>run it</td>
+      <td><code class="language-plaintext highlighter-rouge">bun run render</code></td>
     </tr>
   </tbody>
 </table></div>
-
-<p>The cache has only ever worked for direct <code class="language-plaintext highlighter-rouge">lean</code> + <code class="language-plaintext highlighter-rouge">LEAN_PATH</code>. That is
-the whole “olean cache restore doesn’t help” complaint.</p>
-<h2 id="just-run-the-script">
+<h2 id="the-four-rules-and-each-is-a-decision-rather-than-a-default">
   
   
-    <a href="#just-run-the-script" class="anchor-heading" aria-labelledby="just-run-the-script"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Just run the script
+    <a href="#the-four-rules-and-each-is-a-decision-rather-than-a-default" class="anchor-heading" aria-labelledby="the-four-rules-and-each-is-a-decision-rather-than-a-default"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four rules, and each is a decision rather than a default
   
   
 </h2>
     
 
-<p>Everything below is automated:</p>
+<ol>
+  <li><strong>A node runs after everything it declares <code class="language-plaintext highlighter-rouge">needs</code>.</strong> Nothing else implies
+order — not position in the list, not the id.</li>
+  <li><strong>Ties break on declaration order.</strong> Sorting ties alphabetically makes the
+flattened order churn when a node is renamed, turning a no-op rename into a
+pipeline diff nobody can read.</li>
+  <li><strong>A cycle is reported, never broken.</strong> Breaking one picks a winner silently
+and the pipeline then runs in an order nobody chose. <strong>Every</strong> node in the
+cycle is named — naming one sends the reader to fix the wrong edge.</li>
+  <li><strong>A missing dependency is reported, never dropped.</strong> <code class="language-plaintext highlighter-rouge">needs: ["x"]</code> with no
+<code class="language-plaintext highlighter-rouge">x</code> is a claim that failed. Running the node anyway reports a clean pass
+over a broken graph, which is the <code class="language-plaintext highlighter-rouge">dh4f</code> defect in ordering form.</li>
+</ol>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Dry run first — shows every command, changes nothing</span>
-folio-assistant/scripts/reseed-lean-cache.sh <span class="nt">--repo</span> ~/src/qou <span class="nt">--dry-run</span>
-
-<span class="c"># Real run: stops after seeding to a -test branch and verifying it</span>
-folio-assistant/scripts/reseed-lean-cache.sh <span class="nt">--repo</span> ~/src/qou
-
-<span class="c"># Publish, once you have read the verify output</span>
-folio-assistant/scripts/reseed-lean-cache.sh <span class="nt">--repo</span> ~/src/qou <span class="nt">--promote</span>
-</code></pre></div></div>
-
-<p>Runs from any branch, never switches your working tree, and refuses to
-proceed on a dirty tree or a local branch collision. Chip across
-sessions with <code class="language-plaintext highlighter-rouge">--target QOU.SubTree</code>, resume with <code class="language-plaintext highlighter-rouge">--phase &lt;name&gt;</code>.</p>
-
-<p>The manual steps below are the same procedure, for when you want to
-drive it yourself or something goes wrong.</p>
-<h2 id="a-from-source-build-seeds-a-narrower-cache-than-the-cdn">
+<p>Rules 3 and 4 share a consequence worth stating on its own: <strong>a broken graph
+yields NO order at all</strong>, not a partial one. A partial order over a broken
+graph is the thing that gets run.</p>
+<h2 id="fatal-is-per-step-and-it-is-required">
   
   
-    <a href="#a-from-source-build-seeds-a-narrower-cache-than-the-cdn" class="anchor-heading" aria-labelledby="a-from-source-build-seeds-a-narrower-cache-than-the-cdn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A from-source build seeds a NARROWER cache than the CDN
-  
-  
-</h2>
-    
-
-<p>The two routes to a traced Mathlib do not produce the same tree, and the
-seed guards cannot tell them apart:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>route</th>
-      <th>what lands</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">lake exe cache get</code></td>
-      <td>Mathlib’s full published set (~7300 modules)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">lake build</code> from source</td>
-      <td>only the modules this package’s imports reach</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>Both are correctly traced, both satisfy <code class="language-plaintext highlighter-rouge">seed</code>’s guards — which check
-that the package’s own oleans exist and that the oleans present carry
-their traces. Neither guard measures <strong>breadth</strong>, because there is no
-baseline to measure against.</p>
-
-<p>So a cache seeded from a source build makes <em>this</em> package build fast,
-while anything reaching a Mathlib module outside its import closure still
-rebuilds. That is fine for a single package’s branch and is worth saying
-out loud before publishing to a <strong>shared</strong> one, since the branch outlives
-the session that seeded it.</p>
-
-<p>If you have the CDN, prefer it: it is both faster and wider. Use the
-source build when the CDN is unreachable, and say which route produced a
-branch when you promote it.</p>
-<h2 id="prerequisites">
-  
-  
-    <a href="#prerequisites" class="anchor-heading" aria-labelledby="prerequisites"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prerequisites
+    <a href="#fatal-is-per-step-and-it-is-required" class="anchor-heading" aria-labelledby="fatal-is-per-step-and-it-is-required"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">fatal</code> is per STEP, and it is required
   
   
 </h2>
     
 
-<ul>
-  <li>Network access to <code class="language-plaintext highlighter-rouge">github.com</code> release assets and Mathlib’s cache host.
-elan’s own hosts are <strong>not</strong> required — see step 1.</li>
-  <li><code class="language-plaintext highlighter-rouge">zstd</code> on PATH (release assets are <code class="language-plaintext highlighter-rouge">.tar.zst</code>; there is no <code class="language-plaintext highlighter-rouge">.tar.gz</code>).</li>
-  <li>~15 GB free disk, and hours for the first build.</li>
-  <li>Both repos checked out.</li>
-</ul>
-<h2 id="step-0--branches">
+<p>The owner’s design, on the render pipeline:</p>
+
+<blockquote>
+  <p>current state of KG renderered as json/jsonld failuer = fatal, readme updated
+faliure = fatal , dynamic parts (kg vierwe, visaluzers, etc) render in
+flattened depndency order, failures = skip/log/qa or so</p>
+</blockquote>
+
+<p>So the runner cannot own one policy — two steps must stop the build and the
+rest must not. The field is <strong>required rather than defaulted</strong>, for the same
+reason a graph kind must state <code class="language-plaintext highlighter-rouge">holds</code>: a default lets a step ship without
+anybody deciding, and the two policies are not interchangeable.</p>
+
+<p><strong>A failure skips what NEEDED it</strong>, computed transitively from <code class="language-plaintext highlighter-rouge">needs</code> — not
+what merely follows it in the list. Two steps can be adjacent and unrelated,
+and skipping an unrelated one loses a rendering for no reason. A skipped step
+names the step that <strong>broke</strong>, not the nearest blocked neighbour.</p>
+<h3 id="three-outcomes-and-pending-is-the-third">
   
   
-    <a href="#step-0--branches" class="anchor-heading" aria-labelledby="step-0--branches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 0 — branches
-  
-  
-</h2>
-    
-
-<p>Nothing here requires you to check out a <code class="language-plaintext highlighter-rouge">lake-cache/*</code> branch by hand.
-<code class="language-plaintext highlighter-rouge">seed --push</code> creates the orphan branch inside a <strong>detached worktree</strong>,
-so your working tree never leaves <code class="language-plaintext highlighter-rouge">main</code>. (Do not <code class="language-plaintext highlighter-rouge">git switch --orphan</code>
-in the main tree — it leaves every file untracked and strands you.)</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Content repo — has the workflows, roster, and Lean packages</span>
-git <span class="nt">-C</span> ~/src/qou fetch origin
-git <span class="nt">-C</span> ~/src/qou checkout main
-git <span class="nt">-C</span> ~/src/qou pull <span class="nt">--ff-only</span>
-
-<span class="c"># Platform — has the cache service</span>
-git <span class="nt">-C</span> ~/src/folio-assistant fetch origin
-git <span class="nt">-C</span> ~/src/folio-assistant checkout main
-git <span class="nt">-C</span> ~/src/folio-assistant pull <span class="nt">--ff-only</span>
-</code></pre></div></div>
-
-<p>Set one variable — everything below uses it:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">FA</span><span class="o">=</span>~/src/folio-assistant          <span class="c"># or ~/src/qou/folio-assistant</span>
-<span class="nb">export </span><span class="nv">CACHE</span><span class="o">=</span><span class="s2">"</span><span class="nv">$FA</span><span class="s2">/scripts/lake-cache.sh"</span>
-<span class="nb">cd</span> ~/src/qou
-</code></pre></div></div>
-<h2 id="step-1--a-real-toolchain">
-  
-  
-    <a href="#step-1--a-real-toolchain" class="anchor-heading" aria-labelledby="step-1--a-real-toolchain"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1 — a real toolchain
-  
-  
-</h2>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash <span class="s2">"</span><span class="nv">$CACHE</span><span class="s2">"</span> install-toolchain          <span class="c"># reads ./lean-toolchain</span>
-
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.elan/toolchains/leanprover--lean4---v4.24.0/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
-
-<span class="c"># MUST show static libs, or `lake exe` will fail later:</span>
-find ~/.elan/toolchains <span class="nt">-name</span> <span class="s1">'libleancpp.a'</span> | <span class="nb">head</span> <span class="nt">-1</span>
-</code></pre></div></div>
-
-<p>If that <code class="language-plaintext highlighter-rouge">find</code> prints nothing, stop — the rest cannot work.</p>
-
-<p><code class="language-plaintext highlighter-rouge">install-toolchain</code> downloads straight from
-<code class="language-plaintext highlighter-rouge">github.com/leanprover/lean4/releases</code>, so it works where elan’s hosts
-are blocked. It also handles the trap that costs the most time here: an
-<strong>incomplete</strong> toolchain tree (what <code class="language-plaintext highlighter-rouge">restore-toolchain</code> leaves behind)
-sits at exactly the path elan expects, so elan concludes the toolchain is
-installed, skips the download, and leaves you with a <code class="language-plaintext highlighter-rouge">lean</code> that
-elaborates but cannot link. The command detects that by looking for the
-static libs rather than the directory, and replaces it.</p>
-
-<p>It verifies in a staging directory and only then publishes, so a
-truncated download never lands at the installed path. Re-running is a
-no-op; <code class="language-plaintext highlighter-rouge">--force</code> reinstalls. For a mirror or an air-gapped tree, set
-<code class="language-plaintext highlighter-rouge">LEAN_RELEASE_BASE</code>.</p>
-
-<p>Still prefer elan? It remains the right tool for <strong>nightlies</strong>, which are
-not published as <code class="language-plaintext highlighter-rouge">lean4</code> release assets — <code class="language-plaintext highlighter-rouge">install-toolchain</code> declines
-those and tells you so.</p>
-<h2 id="step-2--a-traced-mathlib-the-fast-way">
-  
-  
-    <a href="#step-2--a-traced-mathlib-the-fast-way" class="anchor-heading" aria-labelledby="step-2--a-traced-mathlib-the-fast-way"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 2 — a traced Mathlib, the fast way
-  
-  
-</h2>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content/quantum-observable-universe/lean
-lake exe cache get
-</code></pre></div></div>
-
-<p>This is the step the broken toolchain made impossible. Mathlib’s upstream
-cache ships oleans <strong>with</strong> their traces, which is exactly what is
-missing. It takes minutes, versus hours to build Mathlib from source.</p>
-
-<p>Check it landed traced:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash <span class="s2">"</span><span class="nv">$CACHE</span><span class="s2">"</span> status <span class="nt">--package</span> qou
-</code></pre></div></div>
-
-<p>Look for <code class="language-plaintext highlighter-rouge">traces: … (≥90% coverage)</code>. If coverage is low, do not
-continue — seeding would reproduce the current defect, and <code class="language-plaintext highlighter-rouge">seed</code>
-will refuse anyway.</p>
-<h2 id="step-3--build-the-papers-own-modules">
-  
-  
-    <a href="#step-3--build-the-papers-own-modules" class="anchor-heading" aria-labelledby="step-3--build-the-papers-own-modules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3 — build the paper’s own modules
-  
-  
-</h2>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lake build            <span class="c"># ~1582 modules; hours on first run</span>
-</code></pre></div></div>
-
-<p>This is the expensive step, and it is <strong>one-time</strong>. Once traces exist,
-later builds are genuinely incremental.</p>
-<h3 id="chipping-at-it-across-sessions">
-  
-  
-    <a href="#chipping-at-it-across-sessions" class="anchor-heading" aria-labelledby="chipping-at-it-across-sessions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Chipping at it across sessions
+    <a href="#three-outcomes-and-pending-is-the-third" class="anchor-heading" aria-labelledby="three-outcomes-and-pending-is-the-third"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three outcomes, and <code class="language-plaintext highlighter-rouge">pending</code> is the third
   
   
 </h3>
     
 
-<p>You do not have to finish in one sitting. Build a subtree, seed, and
-resume later — each seed accumulates:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lake build QOU.BraidKnot          <span class="c"># a subtree, not everything</span>
-bash <span class="s2">"</span><span class="nv">$CACHE</span><span class="s2">"</span> status <span class="nt">--package</span> qou   <span class="c"># own pkg: should now be &gt; 0</span>
-</code></pre></div></div>
-
-<p>Then seed (Step 4), and next session <code class="language-plaintext highlighter-rouge">restore</code> picks up where you left
-off. Because <code class="language-plaintext highlighter-rouge">lake build</code> is incremental once traced, the next chip only
-compiles what is new.</p>
-<h2 id="step-4--seed-safely">
+<p><code class="language-plaintext highlighter-rouge">ran</code>, <code class="language-plaintext highlighter-rouge">failed</code>, <code class="language-plaintext highlighter-rouge">skipped</code> — plus a step that is <strong>declared but not yet
+performable</strong>, which the report marks <code class="language-plaintext highlighter-rouge">◻</code> and never a tick. It exists because
+the first draft did not have it: the bootstrap step was written as
+<code class="language-plaintext highlighter-rouge">kg-export --root cat-bootstrap</code>, and <code class="language-plaintext highlighter-rouge">kg-export</code> has no <code class="language-plaintext highlighter-rouge">--root</code> flag. The
+argument would have been ignored and the whole graph exported under
+bootstrap’s name — <strong>a step reporting success while doing something else.</strong>
+Naming the gap costs a line; finding it from a wrong artefact costs a release.</p>
+<h2 id="the-two-stages">
   
   
-    <a href="#step-4--seed-safely" class="anchor-heading" aria-labelledby="step-4--seed-safely"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 4 — seed safely
+    <a href="#the-two-stages" class="anchor-heading" aria-labelledby="the-two-stages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two stages
   
   
 </h2>
     
-
-<p><strong>Seed to a <code class="language-plaintext highlighter-rouge">-test</code> branch first and verify a restore from it.</strong> A bad
-force-push to the production branch breaks it for everyone, and the
-branch carries no history to recover from.</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SLUG</span><span class="o">=</span><span class="si">$(</span><span class="nb">cut</span> <span class="nt">-d</span>: <span class="nt">-f2</span> lean-toolchain | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'[:space:]'</span> | <span class="nb">tr</span> <span class="nb">.</span> -<span class="si">)</span>
-
-<span class="c"># 1. Seed to a test branch</span>
-bash <span class="s2">"</span><span class="nv">$CACHE</span><span class="s2">"</span> seed <span class="nt">--package</span> qou <span class="nt">--branch</span> <span class="s2">"lake-cache/qou-</span><span class="nv">$SLUG</span><span class="s2">-test"</span> <span class="nt">--push</span>
-
-<span class="c"># 2. Verify it restores into a clean tree</span>
-<span class="nb">cd</span> /tmp <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> verify <span class="o">&amp;&amp;</span> git clone <span class="nt">--depth</span> 1 &lt;qou-url&gt; verify
-<span class="nb">cd </span>verify/content/quantum-observable-universe/lean
-bash <span class="s2">"</span><span class="nv">$CACHE</span><span class="s2">"</span> restore <span class="nt">--package</span> qou <span class="nt">--branch</span> <span class="s2">"lake-cache/qou-</span><span class="nv">$SLUG</span><span class="s2">-test"</span>
-bash <span class="s2">"</span><span class="nv">$CACHE</span><span class="s2">"</span> status  <span class="nt">--package</span> qou
-</code></pre></div></div>
-
-<p>The verify run must show <strong>all three</strong> healthy:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oleans:     &lt;big&gt;
-own pkg:    &lt;non-zero&gt;          &lt;- not the current defect
-traces:     &lt;big&gt; (100% coverage)
-</code></pre></div></div>
-
-<ol>
-  <li>Only then cut over to production:</li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/src/qou/content/quantum-observable-universe/lean
-bash <span class="s2">"</span><span class="nv">$CACHE</span><span class="s2">"</span> seed <span class="nt">--package</span> qou <span class="nt">--branch</span> <span class="s2">"lake-cache/qou-</span><span class="nv">$SLUG</span><span class="s2">"</span> <span class="nt">--push</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">seed</code> refuses to publish if own-package oleans are zero or trace
-coverage is under 90%, so a bad seed fails loudly rather than silently
-replacing a good branch with a useless one.</p>
-<h2 id="step-5--the-other-packages">
-  
-  
-    <a href="#step-5--the-other-packages" class="anchor-heading" aria-labelledby="step-5--the-other-packages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 5 — the other packages
-  
-  
-</h2>
-    
-
-<p>The roster (<code class="language-plaintext highlighter-rouge">.github/lake-packages.json</code>) lists four:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Package</th>
-      <th>Lake root</th>
+      <th>stage</th>
+      <th>renders</th>
+      <th>on failure</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">mathlib</code></td>
-      <td><code class="language-plaintext highlighter-rouge">.</code></td>
+      <td>1</td>
+      <td>the CURRENT declared state as json/jsonld, then the README from it</td>
+      <td><strong>fatal</strong></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">qou</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content/quantum-observable-universe/lean</code></td>
+      <td>2</td>
+      <td>the dynamic parts — viewers, visualisers, doc pages, diagrams</td>
+      <td>skip + log + QA</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">ugb</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content/unital-groebner-bases/lean</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">fred2005</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content/fred2005-formal-groups/lean</code></td>
+      <td>3</td>
+      <td>the DYNAMIC state, exported once stage 2 has contributed</td>
+      <td><strong>fatal</strong></td>
     </tr>
   </tbody>
 </table></div>
 
-<p>Repeat Steps 2–4 per package, changing <code class="language-plaintext highlighter-rouge">--package</code> and the directory.
-<code class="language-plaintext highlighter-rouge">mathlib</code> is exempt from the own-package guard — for that entry the
-dependencies <em>are</em> the payload.</p>
-<h2 id="step-6--the-toolchain-branch">
+<p><strong>Two exports, not one</strong>, and that is what resolves what reads as a
+contradiction — <em>“json/jsonld rendered last as intermeridaay renderes may add
+to dynamic KG”</em> against <em>“current state of KG renderered as json/jsonld …
+fatal”</em>. They are different documents. The first is what the declarations say
+now; the second is what the graph became after the renderers ran.</p>
+
+<p><strong>Stage 1 is fatal because everything below is derived from it.</strong> A knowledge
+graph that does not render is not a degraded build, it is an unknown one, and
+a README generated from a half-read graph states a wrong fact in the file a
+reader opens first. <strong>Stage 2 is not</strong>, because a missing visualiser costs one
+rendering and nothing else.</p>
+
+<p><strong>Bootstrap is the exception, and it is declared as one.</strong> It depends on
+nothing and nothing depends on it — that is what “as an exception” means here:
+cat-bootstrap is read when no harness is installed, so it cannot wait on the
+graph and the graph must not wait on it. Same shape as its exemption from the
+<code class="language-plaintext highlighter-rouge">visualiser</code> criterion in <code class="language-plaintext highlighter-rouge">check:subgraph-coverage</code>, and a <strong>second criterion
+rather than a hole</strong>: it owes its own <code class="language-plaintext highlighter-rouge">.json</code>/<code class="language-plaintext highlighter-rouge">.jsonld</code> instead (bean <code class="language-plaintext highlighter-rouge">hfkl</code>).</p>
+<h2 id="what-stage-3-writes-is-not-settled-and-is-not-guessed">
   
   
-    <a href="#step-6--the-toolchain-branch" class="anchor-heading" aria-labelledby="step-6--the-toolchain-branch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 6 — the toolchain branch
+    <a href="#what-stage-3-writes-is-not-settled-and-is-not-guessed" class="anchor-heading" aria-labelledby="what-stage-3-writes-is-not-settled-and-is-not-guessed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What stage 3 writes is not settled, and is not guessed
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">lake-cache/toolchain-&lt;slug&gt;</code> is missing its static libraries. Reseed it
-from a real elan install:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/.elan/toolchains
-<span class="nb">tar </span>czf - <span class="s2">"leanprover--lean4---</span><span class="si">$(</span><span class="nb">cat</span> ~/src/qou/lean-toolchain | <span class="nb">cut</span> <span class="nt">-d</span>: <span class="nt">-f2</span> | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'[:space:]'</span> | <span class="nb">sed</span> <span class="s1">'s/^/leanprover--lean4---/;s/$//'</span><span class="si">)</span><span class="s2">"</span> <span class="se">\</span>
-  | <span class="nb">split</span> <span class="nt">-d</span> <span class="nt">-a</span> 3 <span class="nt">-b</span> 90m - /tmp/lean-toolchain.tgz.part
-</code></pre></div></div>
-
-<p>Then push those parts to the branch the same way <code class="language-plaintext highlighter-rouge">seed --push</code> does.
-Verify with <code class="language-plaintext highlighter-rouge">restore-toolchain</code>, which now exits 3 if the <code class="language-plaintext highlighter-rouge">.a</code> files are
-absent.</p>
-<h2 id="afterwards">
+<p>The owner named it <em>“cat-harness/state.jsonld or so (whatever matches the
+dyanmic state vsualizesrs)”</em> — an explicit uncertainty. <strong>The step’s position
+is fixed; its output filename is not.</strong> It is settled when the dynamic-state
+visualisers say what they read, and until then the step re-exports the graph
+the stage-2 renderers contributed to, which is the part of the description
+that was never in question. Do not mint a published artefact name to close a
+gap the author left open.</p>
+<h2 id="this-declares-the-order-docs-siteyml-still-publishes">
   
   
-    <a href="#afterwards" class="anchor-heading" aria-labelledby="afterwards"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Afterwards
+    <a href="#this-declares-the-order-docs-siteyml-still-publishes" class="anchor-heading" aria-labelledby="this-declares-the-order-docs-siteyml-still-publishes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> This declares the order; <code class="language-plaintext highlighter-rouge">docs-site.yml</code> still publishes
   
   
 </h2>
     
 
-<p>Once a good branch exists, CI can keep it fresh: <code class="language-plaintext highlighter-rouge">lake-cache-refresh.yml</code>
-(in the content repo) delegates to this same script, so the format cannot
-drift and the guards apply there too.</p>
-
-<p>Then the blocked work becomes possible:</p>
-
-<ul>
-  <li>re-run <code class="language-plaintext highlighter-rouge">content/pipeline/lean-triviality-probe.ts</code> over the whole
-corpus rather than the 43% that currently elaborate standalone;</li>
-  <li><code class="language-plaintext highlighter-rouge">lake build</code> in CI stops being a from-scratch Mathlib compile.</li>
-</ul>
-<h2 id="related-beans">
-  
-  
-    <a href="#related-beans" class="anchor-heading" aria-labelledby="related-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related beans
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">02kc</code> (missing traces), <code class="language-plaintext highlighter-rouge">ga7e</code> (toolchain static libs), <code class="language-plaintext highlighter-rouge">5d7z</code> (own
-oleans), <code class="language-plaintext highlighter-rouge">nimj</code> (blocked on all three).</p>
+<p><code class="language-plaintext highlighter-rouge">render-pipeline.ts</code> is not a second CI workflow. It holds the order and the
+policy in one readable, testable place and gives CI one thing to call. <strong>A
+pipeline order that exists only as the sequence of steps in a YAML file is an
+order nobody can test</strong> — bean <code class="language-plaintext highlighter-rouge">xom7</code> is what a workflow’s behaviour costs when
+the repository holds no statement of it.</p>
 
           
 

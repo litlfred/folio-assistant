@@ -50,6 +50,15 @@ a:hover { text-decoration-thickness: 2px; }
    answer about the graph, and painting it amber would rank it as a fault. */
 .sv-tag.is-declared { color: #898781; }
 .sv-tag.is-live { color: #0ca30c; }
+/* Rendered, just not by this generator — so it ranks with live rather than
+   with the greyed-out declared, and is distinguished from it by hue only
+   alongside the word itself, never by hue alone. NO BACKTICKS: this block is
+   inside a template literal, and one here ends the string. */
+.sv-tag.is-elsewhere { color: #3987e5; }
+/* The one state that IS a fault: a declaration pointing at a page that is not
+   there. The dataviz palette's serious, not its critical — nothing is broken
+   for a reader, a claim is unbacked. */
+.sv-tag.is-unresolved { color: #ec835a; }
 /*
  * The work-plan dashboard's styles.
  *
@@ -402,7 +411,7 @@ if(document.readyState!=='loading')go();else document.addEventListener('DOMConte
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
 })();</script>
 <main>
-<h1>uploads</h1><p class="sv-sub">uploads/ · uploads</p><p class="sv-sub">This graph is <strong>declared</strong> and nothing publishes a projection for it yet, so there is nothing to draw. That is bean <code>2krx</code>: a declared subgraph with no visualiser is unreachable, and 19 of this instance's 22 were in that state when this was written. The directory is <code>uploads/</code>.</p><h2 class="sv-h2">State graphs this harness declares</h2>
+<h1>uploads</h1><p class="sv-sub">uploads/ · uploads</p><p class="sv-sub">This graph is <strong>rendered elsewhere</strong>. Nothing publishes a projection at this generator's own path, but the declaration names a visualiser for it: <a href="../cat-harness/library/cat-harness/">/cat-harness/library/cat-harness/</a>. The directory is <code>uploads/</code>.</p><h2 class="sv-h2">State graphs this harness declares</h2>
 <ul class="sv-list">
   <li class="sv-item">
     <h2><a href="../beans/">beans</a><span class="sv-tag is-live">live</span></h2>
@@ -425,7 +434,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <p>A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management.</p>
   </li>
   <li class="sv-item is-here">
-    <h2><span class="sv-here">uploads</span><span class="sv-tag is-declared">declared</span></h2>
+    <h2><span class="sv-here">uploads</span><span class="sv-tag is-elsewhere">elsewhere</span></h2>
     <p>The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion.</p>
   </li>
 </ul>
