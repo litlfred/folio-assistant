@@ -107,7 +107,7 @@ describe("what was not looked for is not reported as clean", () => {
       join(root, "harness.json"),
       JSON.stringify({
         name: "noflows",
-        directories: [{ id: "cat-harness", path: "skills/", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
     );
     const problems: string[] = [];
@@ -142,7 +142,7 @@ describe("what was not looked for is not reported as clean", () => {
       join(root, "harness.json"),
       JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "skills/", graphs: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", dependents: "reproduce", graphs: ["cat-harness"] }],
       }),
     );
     const problems: string[] = [];

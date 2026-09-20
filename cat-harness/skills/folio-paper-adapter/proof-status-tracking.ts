@@ -4,7 +4,6 @@ export const proofStatusTracking: SkillDefinition = {
   id: "proof-status-tracking",
   name: "Proof Status Tracking",
   description: "Management of proof-objects.json manifest and formalization status reporting.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

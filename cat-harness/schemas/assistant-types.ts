@@ -418,8 +418,27 @@ export interface SkillDefinition {
   name: string;
   /** What this skill does. */
   description: string;
-  /** Actor IDs (roles) that may invoke this skill. */
-  roles: string[];
+  /**
+   * @deprecated RETIRED 2026-09-20 (bean `y1w9`) — declared by nothing, read
+   * by nothing. Kept optional so a downstream instance still validates.
+   *
+   * Its doc line was *"Actor IDs (roles) that may invoke this skill"*, which
+   * names THREE vocabularies in seven words — and the 54 values on disk used
+   * two of them: 51 were the HTTP access tier from `src/types.ts`
+   * (`UserRole`), 3 were BPMN roles. Eight of the 51 were `reader`, which is
+   * not a `UserRole` either; that tier is spelled `viewer`.
+   *
+   * And nothing enforced any of it. `src/core/rbac.ts` is header-driven and
+   * every route hardcodes its own minimum, so a skill declaring
+   * `roles: ["reader", "collaborator", "owner"]` beside a working RBAC module
+   * read as gated and was not. That is why it was removed rather than left:
+   * dead weight is cheap, but a false claim of enforcement is not.
+   *
+   * Full record: `fsh-guts/retired/skill-definition-roles.md`.
+   * **Reinstating it means writing the consumer first** — the same rule
+   * {@link SchemaRef} was retired under hours earlier.
+   */
+  roles?: string[];
   /** Capabilities this skill needs to function. */
   requiredCapabilities: SkillCapabilityRef[];
   /** Dependencies on other skills or requirements. */

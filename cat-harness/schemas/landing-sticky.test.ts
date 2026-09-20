@@ -20,6 +20,7 @@ import {
   isExternalLink,
   isLandingSticky,
   stickyFromContribution,
+  sourceLinks,
   type LandingSticky,
 } from "./landing-sticky.js";
 import {
@@ -52,6 +53,7 @@ function contributionsOf(rel: string): DeclaredContribution[] {
   return (d.stickies ?? []).map((c) => ({
     contribution: c,
     declaredBy: d.name,
+    declaredIn: `${rel}/harness.json`.replace(/^\//, ""),
     ...(d.description === undefined ? {} : { description: d.description }),
   }));
 }
@@ -184,6 +186,7 @@ describe("order is DECLARED, not inherited from dependency resolution", () => {
     const tie = (declaredBy: string, id: string): DeclaredContribution => ({
       contribution: StickyContributionSchema.parse({ id, order: 50, theme: "pale-sage", body: "w" }),
       declaredBy,
+      declaredIn: `${declaredBy}/harness.json`,
     });
     const a = [tie("b-layer", "zebra"), tie("a-layer", "yak"), tie("a-layer", "ant")];
     expect(composeContributions(a).map((d) => `${d.declaredBy}/${d.contribution.id}`)).toEqual([
@@ -211,6 +214,7 @@ describe("two layers cannot claim one sticky id", () => {
         body: "w",
       }),
       declaredBy,
+      declaredIn: `${declaredBy}/harness.json`,
     });
     expect(() => composeContributions([dup("one"), dup("two")])).toThrow(StickyIdConflictError);
   });
@@ -224,6 +228,7 @@ describe("two layers cannot claim one sticky id", () => {
         body: "w",
       }),
       declaredBy,
+      declaredIn: `${declaredBy}/harness.json`,
     });
     try {
       composeContributions([dup("alpha"), dup("beta")]);
@@ -312,6 +317,7 @@ describe("`bodyFrom: description` reads the DECLARING layer's description", () =
           bodyFrom: "description",
         }),
         declaredBy: "some-instance",
+        declaredIn: "some-instance/harness.json",
       },
       { createdAt: NOW },
     );
@@ -328,6 +334,7 @@ describe("`bodyFrom: description` reads the DECLARING layer's description", () =
           bodyFrom: "description",
         }),
         declaredBy: "some-instance",
+        declaredIn: "some-instance/harness.json",
         description: "   \n  ",
       },
       { createdAt: NOW },
@@ -644,3 +651,51 @@ function existsSyncSafe(p: string): boolean {
     return false;
   }
 }
+
+describe("sourceLinks — where a card's declaration can be read and edited", () => {
+  const REPO = "https://github.com/litlfred/folio-assistant";
+
+  test("both forms, because reading and editing are different acts", () => {
+    // The owner: "edit tool = link to github pages edit directrly ... rendeding
+    // shows edit src icon (and also need view icon)". `/blob/` reads and
+    // `/edit/` opens the editor; a reader checking what a card says should not
+    // land in a text box.
+    expect(sourceLinks(REPO, "bootstrap/harness.json", "main")).toEqual({
+      viewHref: `${REPO}/blob/main/bootstrap/harness.json`,
+      editHref: `${REPO}/edit/main/bootstrap/harness.json`,
+    });
+  });
+
+  test("with NO forge, it is ABSENT rather than broken", () => {
+    // "if github tools avaialable in rendering pipeline". A link that 404s is
+    // worse than no link: it invites a click, and on a private repository it
+    // 404s for exactly the reader who cannot edit — which reads as "this page
+    // is broken" rather than "you cannot do this".
+    expect(sourceLinks(undefined, "bootstrap/harness.json", "main")).toBeUndefined();
+  });
+
+  test("the path is the CONTRIBUTING instance's, not a default", () => {
+    // The falsifier that matters. Three instances contribute today, so a
+    // resolver that always answered `cat-harness/harness.json` would be
+    // silently right one time in three.
+    const a = sourceLinks(REPO, "cat-harness/harness.json", "main")!;
+    const b = sourceLinks(REPO, "folio-assist-core/harness.json", "main")!;
+    expect(a.editHref).not.toEqual(b.editHref);
+    expect(b.editHref).toContain("folio-assist-core/harness.json");
+  });
+
+  test("a branch other than main is honoured", () => {
+    expect(sourceLinks(REPO, "harness.json", "claude/x")!.editHref).toBe(
+      `${REPO}/edit/claude/x/harness.json`,
+    );
+  });
+
+  test("a path segment with a space survives as an escape, not as a break", () => {
+    // Declarations do not have spaces today, but the queue this repository
+    // ingests from is full of them, and a URL that breaks at the first space
+    // is a link that silently points somewhere else.
+    expect(sourceLinks(REPO, "some dir/harness.json", "main")!.viewHref).toBe(
+      `${REPO}/blob/main/some%20dir/harness.json`,
+    );
+  });
+});

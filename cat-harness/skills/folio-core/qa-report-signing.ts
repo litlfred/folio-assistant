@@ -5,7 +5,6 @@ export const qaReportSigning: SkillDefinition = {
   name: "QA report signing",
   description:
     "Attest a QA report's run hashes by one of two routes — an API signer, or a human release authority when the performing actor cannot reach out.",
-  roles: ["validation-pipeline", "attestation-service", "publication-manager"],
   requiredCapabilities: [
     // `fallback` with NO `fallbackCapabilityId`, and that is the whole case:
     // there is no second tool on an air-gapped host. The role that takes

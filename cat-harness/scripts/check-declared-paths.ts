@@ -44,6 +44,67 @@
  * a template is not a path a declaration could have answered without also
  * answering the placeholder.
  *
+ * ## Tests ARE scanned, and were not until 2026-09-20
+ *
+ * `*.test.ts` was skipped from this module's first commit. Read the history
+ * and there is no reason recorded anywhere: not a comment on the clause, not
+ * a line in a 71-line commit message that argues every other scoping decision
+ * with measurements, not a mention in the section above that exists to list
+ * exclusions. **It was written, never argued** — so it cost three breakages
+ * (bean `dhol`) before anyone asked.
+ *
+ * The worst was not a test failing. `scripts/tests/log-writer.test.ts`
+ * composed a path to a diagram that had moved, went ENOENT, and reported
+ * *"the process does not declare folio:log"* — **a false finding about the
+ * corpus**, from a test that was itself broken. A gate that reads the
+ * declaration is the thing that catches that, and it was looking away.
+ *
+ * ### Why the obvious fix was wrong, and what replaced it
+ *
+ * Scanning tests adds **407** literals to 18. So the bean proposed narrowing
+ * the exemption to FIXTURES — a literal inside a `mkdtemp` tree names nothing
+ * in this repository and must not be resolved against the declaration.
+ *
+ * Measured 2026-09-20, that is under-resolved. The 443 test literals are four
+ * populations, not two: fixture trees; **test VECTORS** (`check(["folio/paper/
+ * ch/x.qa.json"])` — path-shaped data passed to the function under test, and
+ * `"@id": "library/who-anc-2016/nodes/rec-007"`, which is an identifier and
+ * not a path at all); layout ASSERTIONS pinning that the declaration yields
+ * `src/skills`; and real corpus references. A line-local fixture heuristic
+ * scored 161 of 407 and misfiled the rest.
+ *
+ * **No heuristic was needed, and neither did the count work.** The first
+ * attempt put all 407 into the per-file baseline and relied on the ratchet:
+ * a corpus literal that stops resolving raises its file above baseline. That
+ * catches relocation, and it was still wrong, for a reason that showed up
+ * within the hour — a sibling's `schemas/folio-dir.test.ts`, merged from main,
+ * tripped the gate with **two literals that were both entirely correct**. A
+ * test that builds a fixture tree names declared directories by necessity, so
+ * counting tests fires on every new test. That is the *"a check that cries
+ * wolf is a check somebody switches off"* failure this file names twice, and
+ * arriving at it by a different route does not make it a different failure.
+ *
+ * So tests leave the count ratchet entirely — for a test, naming nothing is
+ * the normal case and counting it is noise — and what governs them instead is
+ * the **witness list** (`witnessesOf`, `resolves` in the baseline): the
+ * literals that resolve TODAY, committed. The gate fires when a recorded
+ * witness stops resolving, which is relocation and nothing else.
+ *
+ * That also closes the case a fixture heuristic provably cannot catch: a
+ * literal that LOOKS like a fixture path today because the file it named was
+ * moved yesterday. **96 literals are witnessed, 23 of them in tests** — among
+ * them the CRDM diagrams in `bpmn-translate.test.ts` and
+ * `editing-hci-validation.bpmn` in `corpus-gate.test.ts`.
+ *
+ * Falsified in both directions rather than assumed: renamed
+ * `crdm-deliver.bpmn` and the gate named the lost witness and exited 1;
+ * restored it and the gate went quiet; added a new test building a fixture
+ * tree under `mkdtemp` and the gate stayed silent, which the count could not
+ * do.
+ *
+ * **The source baseline did not move** — still 18 across 11 files. Scanning
+ * tests cost no recorded debt at all; it bought 23 witnesses.
+ *
  * ## Why it ships as a ratchet and not as a wall
  *
  * First run, 2026-09-19: **152** unaccounted literals across 40 files. That
@@ -369,7 +430,7 @@ export function scanDeclaredPaths(root: string): Scan {
       if (e.name === "node_modules" || e.name.startsWith(".")) continue;
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".ts") && !e.name.endsWith(".test.ts")) scan(p);
+      else if (e.name.endsWith(".ts")) scan(p);
     }
   };
 
@@ -377,17 +438,61 @@ export function scanDeclaredPaths(root: string): Scan {
   return { prefixes, artefacts, marked, refused };
 }
 
+/** A test file's literals are governed by the witness list, not by the count. */
+export function isTestFile(file: string): boolean {
+  return file.endsWith(".test.ts");
+}
+
+/**
+ * The literals that RESOLVE today, as a committed positive list.
+ *
+ * ## Why a witness list and not a count
+ *
+ * The per-file count is a ratchet over what is WRONG. It cannot express the
+ * thing this check is ultimately for — *this literal names a real artefact,
+ * and must go on naming one*. Two defects followed from that, both found
+ * 2026-09-20 (bean `dhol`):
+ *
+ *  - `declared-paths.test.ts` asserted "every artefact dereferences" over a
+ *    list whose membership test IS `existsSync`. **Structurally vacuous** —
+ *    it could never fail. Relocate an artefact and the literal silently
+ *    leaves `artefacts` for `refused`; the assertion goes on passing over a
+ *    shorter list.
+ *  - Counting test files would have fired on every NEW test that builds a
+ *    fixture tree, because a fixture literal correctly names nothing. A gate
+ *    that routinely fires for a non-defect is the one this module's header
+ *    twice says somebody switches off. Measured immediately: a sibling's
+ *    `schemas/folio-dir.test.ts`, merged from main the same hour, tripped it
+ *    with two literals that were both entirely correct.
+ *
+ * A witness inverts both. It fires when a recorded literal STOPS resolving —
+ * which is relocation, the actual defect — and stays silent for a new fixture
+ * literal, which was never a witness. So test files leave the count ratchet
+ * entirely: for a test, naming nothing is the normal case and counting it is
+ * noise.
+ */
+export function witnessesOf(scan: Scan): string[] {
+  return [...new Set(scan.artefacts.map((a) => `${a.file}::${a.literal}`))].sort();
+}
+
 if (import.meta.main) {
   const { prefixes, artefacts, marked, refused } = scanDeclaredPaths(root);
 
-  interface Baseline { _comment: string; files: Record<string, number> }
+  interface Baseline { _comment: string; files: Record<string, number>; resolves: string[] }
 
   const prior: Baseline = existsSync(BASELINE)
     ? (JSON.parse(readFileSync(BASELINE, "utf-8")) as Baseline)
-    : { _comment: "", files: {} };
+    : { _comment: "", files: {}, resolves: [] };
 
+  // Test files are governed by the witness list below, not by this count:
+  // for a test, a literal naming nothing is a fixture or a test vector, which
+  // is the normal case. See `witnessesOf`.
   const current: Record<string, number> = {};
-  for (const r of refused) current[r.file] = (current[r.file] ?? 0) + 1;
+  for (const r of refused) if (!isTestFile(r.file)) current[r.file] = (current[r.file] ?? 0) + 1;
+
+  const witnesses = witnessesOf({ prefixes, artefacts, marked, refused });
+  const held = new Set(witnesses);
+  const lost = (prior.resolves ?? []).filter((w) => !held.has(w));
 
   const over: Array<{ file: string; was: number; now: number }> = [];
   for (const [file, n] of Object.entries(current)) {
@@ -407,7 +512,10 @@ if (import.meta.main) {
       `${artefacts.length + marked.length + refused.length} literals found)\n`,
   );
 
-  console.log(`  ✓ ${String(artefacts.length).padStart(3)}  name a file that exists — checked to resolve`);
+  console.log(
+    `  ${lost.length ? "✗" : "✓"} ${String(artefacts.length).padStart(3)}  ` +
+      `name a file that exists — ${witnesses.length} witnessed, ${lost.length} lost`,
+  );
   console.log(`  · ${String(marked.length).padStart(3)}  declared base cases, each with a reason`);
   console.log(
     `  ${over.length ? "✗" : "·"} ${String(refused.length).padStart(3)}  ` +
@@ -424,6 +532,23 @@ if (import.meta.main) {
     for (const i of improved) console.log(`  ✓ ${i.file.padEnd(46)} ${i.was} → ${i.now}`);
   }
 
+  if (lost.length) {
+    console.log(
+      "\nA WITNESSED LITERAL STOPPED RESOLVING — the artefact moved, or was deleted,\n" +
+        "and the code naming it was not updated. This is the defect the witness list\n" +
+        "exists for; `log-writer.test.ts` went ENOENT this way and then reported a\n" +
+        "false finding about the corpus (bean `dhol`).",
+    );
+    for (const w of lost) {
+      const [file, literal] = w.split("::");
+      console.log(`  ✗ ${file}  →  "${literal}"`);
+    }
+    console.log(
+      "\nPoint it at where the artefact went. If it was deliberately deleted, re-run\n" +
+        "with --update: dropping a witness is a diff somebody reviews.",
+    );
+  }
+
   if (over.length) {
     console.log("\nABOVE BASELINE — a declaration answers this, or nothing does:");
     for (const o of over) {
@@ -438,19 +563,48 @@ if (import.meta.main) {
 
   if (update) {
     const next: Baseline = {
+      // The text the committed baseline already carried. It described only
+      // `files` here while the JSON described BOTH records, because the better
+      // sentence was written INTO the artefact and never into the writer —
+      // so every `--update` silently reverted it, and the next reader learnt
+      // nothing about `resolves` from the file `resolves` lives in. Found
+      // 2026-09-20 by running `--update` for an unrelated relocation.
+      //
+      // A generated file's own header is generated; editing it in place is the
+      // same defect as hand-editing any other generated output, and it is
+      // invisible until somebody regenerates.
       _comment:
-        "Per-file counts of declared-path literals that neither resolve to a file " +
-        "nor carry a `declared-path-literal: <reason>` marker. WRITTEN by " +
-        "`bun run check:declared-paths --update`; a count may only go DOWN. This is " +
-        "recorded debt, not a list of exemptions: each entry is a place where code " +
-        "hardcodes a path `harness.json` already declares. See the module header of " +
-        "scripts/check-declared-paths.ts for why it ships as a ratchet.",
+        "TWO records, with different jobs. `files`: per-file counts of " +
+        "declared-path literals that neither resolve nor carry a " +
+        "`declared-path-literal: <reason>` marker — recorded debt for SOURCE " +
+        "files, which may only go DOWN. `resolves`: the WITNESS list — every " +
+        "literal that resolves to a real artefact today, as `<file>::<literal>`. " +
+        "A witness that stops resolving means the artefact moved and the code " +
+        "naming it did not follow; that fails the gate. *.test.ts files appear " +
+        "ONLY in `resolves`, never in `files`: a test that builds a mkdtemp " +
+        "fixture names declared directories by necessity, so counting its " +
+        "unresolved literals would fire on every new test (measured 2026-09-20 " +
+        "— a sibling's schemas/folio-dir.test.ts tripped it with two correct " +
+        "literals). Both are WRITTEN by `bun run check:declared-paths --update`; " +
+        "raising a count or dropping a witness is a diff somebody reviews. See " +
+        "the module header of scripts/check-declared-paths.ts.",
       files: Object.fromEntries(Object.entries(current).sort(([a], [b]) => a.localeCompare(b))),
+      resolves: witnesses,
     };
     writeFileSync(BASELINE, `${JSON.stringify(next, null, 2)}\n`);
-    console.log(`\nBaseline written: ${relative(root, BASELINE)} (${refused.length} across ${Object.keys(current).length} files)`);
+    const counted = Object.values(current).reduce((a, b) => a + b, 0);
+    console.log(
+      `\nBaseline written: ${relative(root, BASELINE)} — ${counted} counted across ` +
+        `${Object.keys(current).length} source file(s), ${witnesses.length} witnessed literal(s). ` +
+        `${refused.length - counted} literal(s) in tests are governed by the witnesses, not counted.`,
+    );
     if (over.length) console.log("RAISED for the files above — that belongs in the diff somebody reviews.");
     process.exit(0);
+  }
+
+  if (lost.length) {
+    console.log(`\n${lost.length} witnessed literal(s) no longer resolve.`);
+    process.exit(1);
   }
 
   if (over.length) {

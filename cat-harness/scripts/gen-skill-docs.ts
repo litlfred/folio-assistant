@@ -64,6 +64,30 @@ const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skill-instr
 const CHECK_ONLY = process.argv.includes("--check");
 const drifted: string[] = [];
 
+/**
+ * Published names two groups both claimed, with no `publishPrefix` between
+ * them and no entry in {@link SAME_BASENAME_DIFFERENT_DOCUMENT}.
+ *
+ * Bean `v3se`. This was a `↪` line in a list of 173 successes, and the
+ * consequence was the one bootstrap exists to prevent: `kg-navigation` existed
+ * twice — bootstrap's assuming NOTHING, folio-core's assuming the harness is
+ * installed — and the generator kept folio-core's. Bootstrap's README sends a
+ * cold agent to read that name *before anything else is known*, so the reader
+ * least able to notice was served the body written for a repository it was not
+ * in.
+ *
+ * A DECLARED pair is not this: it carries a prefix, publishes under two names
+ * and gets a directional banner on each. What this catches is one name, two
+ * documents, and nobody having decided which governs — which is a judgement
+ * somebody has to make, not something a generator may settle by running order.
+ *
+ * Promoted to a hard failure while the count is ZERO (measured 2026-09-20,
+ * after `3jj9` renamed bootstrap's copy). That is this repository's rule for
+ * every ratchet — an error only once the backlog is drained — and it is also
+ * the only moment the promotion is free.
+ */
+const collisions: Array<{ published: string; kept: string; from: string }> = [];
+
 function emit(path: string, content: string): void {
   if (CHECK_ONLY) {
     const current = existsSync(path) ? readFileSync(path, "utf-8") : null;
@@ -71,6 +95,33 @@ function emit(path: string, content: string): void {
     return;
   }
   writeFileSync(path, content);
+}
+
+/**
+ * An undeclared collision fails the run — writing mode too, not just `--check`.
+ *
+ * Dropping a document is not a staleness problem that a re-run fixes; it is a
+ * document that never reaches the site at all. Reporting it only under
+ * `--check` would leave the writer cheerfully publishing 173 pages and one
+ * silence.
+ */
+function reportCollisions(): void {
+  if (collisions.length === 0) return;
+  console.error(
+    `\n✗ ${collisions.length} published name(s) claimed by two groups, with no ` +
+      `prefix between them and no SAME_BASENAME_DIFFERENT_DOCUMENT entry.\n` +
+      `  One name, two documents: the later one was DROPPED and is not on the site.\n`,
+  );
+  for (const c of collisions) {
+    console.error(`  ${c.published}: kept ${c.kept}, dropped the copy from ${c.from}`);
+  }
+  console.error(
+    `\n  Resolve it deliberately rather than by running order — give the group a ` +
+      `\`publishPrefix\`, or\n  declare the pair in SAME_BASENAME_DIFFERENT_DOCUMENT ` +
+      `so both publish with a directional banner.\n  Bean \`v3se\`: the collision this ` +
+      `guards served a cold bootstrap agent the body for a\n  repository it was not in.`,
+  );
+  process.exit(1);
 }
 
 function reportDrift(): void {
@@ -189,6 +240,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "content-lifecycle": "Lifecycle skills",
   "folio-core": "Platform core (folio-core)",
   workflow: "Workflow & process (workflow)",
+  "graph-management": "Graph management (graph-management)",
   "folio-document-adapter": "Document adapter (folio-document-adapter)",
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
@@ -463,6 +515,11 @@ function main(): void {
           `| [${name}](${published}.html) | \`${name}\` | — | _also in ${written.get(published)} (same page)_ |`,
         );
         console.log(`  ↪ ${published} (dup — kept ${written.get(published)})`);
+        collisions.push({
+          published,
+          kept: written.get(published) ?? "(unknown)",
+          from: group.category,
+        });
         continue;
       }
       // Where another group holds the same basename, say so on both pages: a
@@ -583,6 +640,9 @@ function main(): void {
   emit(join(OUT_DIR, "index.md"), idx.join("\n"));
   const total = Object.values(indexRows).reduce((n, r) => n + r.length, 0);
   console.log(`  ✓ index.md (${total} instruction bodies)`);
+  // BEFORE the drift report: a dropped document is not staleness, and a run
+  // that exits 0 on "up to date" would bury it.
+  reportCollisions();
   reportDrift();
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }

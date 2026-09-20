@@ -360,6 +360,50 @@ export const TranslationLevelSchema = z
   .enum(["block", "section", "chapter", "folio"])
   .describe("What a translation sign-off covers.");
 
+/**
+ * A plain non-negative count — how many of something, or how many to show.
+ *
+ * ## Why this exists, and why it did not until 2026-09-20
+ *
+ * This vocabulary had **no general numeric type**. `Dpi` and `Port` are both
+ * numbers and both mean something specific, so neither can stand in for "a
+ * number of things", and the honest move at each call site was to leave the
+ * input undeclared and say so in a comment. Two nodes did exactly that:
+ * `content-graph-build`, whose edge counts became one `Text` report, and
+ * `fsh-cone`, whose `--top N` and `--history N` are still not declared.
+ *
+ * **Two independent needs is the bar.** The rule this repository keeps is that
+ * adding a type to fit ONE flag is how a vocabulary stops meaning anything —
+ * and that rule was applied, twice, by refusing to invent `Count` for a single
+ * node. It is a different judgement once the same gap has been met from two
+ * directions by two different mechanisms.
+ *
+ * ## The bounds, and what each is for
+ *
+ * `min(0)` because a count of zero is a real answer and the commonest one worth
+ * reporting: zero findings, zero blocks, zero edges. Excluding it would push
+ * every such case into a sentinel or an absent field, which is the third-state
+ * confusion this vocabulary exists to prevent.
+ *
+ * `int()` and a finite `max` because that is what makes it **injection-safe by
+ * construction**, the same argument `Dpi` and `Port` carry: a value bearing a
+ * shell metacharacter does not parse, so it can reach argv. An unbounded number
+ * would admit `Infinity` and `1e21`, which stringify into argv as words no
+ * consumer expects. The ceiling is deliberately far above any real corpus —
+ * it bounds the TYPE, not the domain, and a node needing a tighter limit says so
+ * in its port description rather than by minting a narrower type.
+ *
+ * NOT for a limit that must be positive. `--top 0` is a legitimate request for
+ * nothing, and a type that forbade it would be asserting a policy that belongs
+ * to the flag.
+ */
+export const CountSchema = z
+  .number()
+  .int()
+  .min(0)
+  .max(1_000_000_000)
+  .describe("A non-negative count — how many of something, or how many to show. Zero is a real answer.");
+
 /** Resolution for rendered formulae. */
 export const DpiSchema = z.number().int().min(24).max(1200).describe("Dots per inch for rendered formulae.");
 
@@ -432,6 +476,7 @@ export const TOOL_TYPES = {
   LinkStyle: LinkStyleSchema,
   ReadmeSection: ReadmeSectionSchema,
   TranslationLevel: TranslationLevelSchema,
+  Count: CountSchema,
   Dpi: DpiSchema,
   Port: PortSchema,
   DecisionFacts: DecisionFactsSchema,
@@ -526,6 +571,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "LinkStyle",
   "ReadmeSection",
   "TranslationLevel",
+  "Count",
   "Dpi",
   "Port",
   // Deliberately absent: `Text`, `FilesystemPath`, `DecisionFacts`. Each is

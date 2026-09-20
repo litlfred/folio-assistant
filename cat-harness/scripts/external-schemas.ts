@@ -29,6 +29,8 @@ import {
   type ExternalSchema,
 } from "../../folio-assistant-core/schemas/external-schema.js";
 
+import { FOLIO_BPMN_NS, OWN_XML_NAMESPACES } from "../schemas/namespaces.js";
+
 const ROOT = resolve(import.meta.dir, "..");
 const REGISTRY = join(ROOT, "external-schemas");
 
@@ -110,9 +112,30 @@ function run(argv: string[]): number {
     return 2;
   }
 
+  // ── OURS is not a specification we conform to ────────────────────────
+  //
+  // `namespacesInUse` reads every `xmlns` a diagram binds, and some of them
+  // are namespaces this project MINTS. Asking the external registry about
+  // those is a category error, and it was not a harmless one: the two
+  // spellings of our own BPMN extension namespace (bean `0d99`) were reported
+  // as two undeclared SPECIFICATIONS, so the finding told the reader to go and
+  // write registry records for an IRI this project owns. A gate whose remedy
+  // is wrong is worse than one that says nothing — somebody follows it.
+  //
+  // So the two questions are asked separately, because they have different
+  // answers. An EXTERNAL namespace must have a record naming its edition. An
+  // OWN namespace must be spelt exactly ONE way; there is no edition to pin,
+  // and nothing external to conform to.
   const inUse = namespacesInUse();
-  const undeclared = undeclaredNamespaces(inUse, specs);
-  const unused = unusedNamespaces(inUse, specs);
+  const own = inUse.filter((ns) => (OWN_XML_NAMESPACES as readonly string[]).includes(ns));
+  const external = inUse.filter((ns) => !(OWN_XML_NAMESPACES as readonly string[]).includes(ns));
+  const undeclared = undeclaredNamespaces(external, specs);
+  const unused = unusedNamespaces(external, specs);
+
+  // Drift, not absence: an XML namespace is compared by STRING, so a second
+  // spelling means a consumer matching on the first skips every element in the
+  // second — silently, and while parsing without error.
+  const drifted = own.filter((ns) => ns !== FOLIO_BPMN_NS);
 
   let stale = 0;
   for (const s of specs) {
@@ -155,12 +178,24 @@ function run(argv: string[]): number {
     for (const ns of unused) console.log(`    ${ns}`);
   }
 
-  if (check && (undeclared.length > 0 || stale > 0)) {
+  if (drifted.length > 0) {
+    console.error(`\n✗ our OWN namespace is spelt ${drifted.length + 1} ways, not one:`);
+    console.error(`    ${FOLIO_BPMN_NS}   (canonical — schemas/namespaces.ts)`);
+    for (const ns of drifted) console.error(`    ${ns}   ✗`);
+    console.error("  Rebind every `xmlns:folio` to the canonical IRI. This is not cosmetic:");
+    console.error("  an extension element under the other IRI is invisible to a consumer");
+    console.error("  matching on this one, and the file still parses.");
+  }
+
+  if (check && (undeclared.length > 0 || drifted.length > 0 || stale > 0)) {
     if (stale > 0) console.error(`\n✗ ${stale} record(s) have stale operative terms. Run with --write and commit.`);
     return 1;
   }
-  if (undeclared.length > 0) return 1;
-  console.log("\n✓ every namespace in use is declared, with its edition");
+  if (undeclared.length > 0 || drifted.length > 0) return 1;
+  console.log(
+    `\n✓ ${external.length} external namespace(s) declared with their edition; ` +
+      `${own.length} own namespace(s), one spelling each`,
+  );
   return 0;
 }
 

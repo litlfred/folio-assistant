@@ -166,6 +166,56 @@ const RAW = [
   },
   {
     $schema: THEME_SCHEMA_TAG,
+    id: "operations",
+    name: "Grumpy cat, operations",
+    description: "Steel and blueprint blue — building the thing, and running it.",
+    palette: {
+      surface: "#edf0f3", ink: "#1a2129", edge: "#ccd4db",
+      // Blueprint blue rather than the hi-vis yellow, for the reason `engineer`
+      // gives below about its own signature colour: `accent` is the priority
+      // stripe's hue, so a theme whose accent is a safety yellow makes `medium`
+      // read as a warning on that board alone. The scene supplies a second
+      // honest colour — the blueprint screen and the sky — and that is this one.
+      accent: "#3f6d9e",
+    },
+    // THE OWNER'S CLUSTER, 2026-09-20: "avatar/theme for engineering/test
+    // harness/deploment/operations". A grumpy cat in a hard hat and hi-vis with
+    // a clipboard, on a site where a space elevator is going up: cranes,
+    // robotic assembly lines, a blueprint on a screen, a planet overhead.
+    // Building infrastructure and then operating it, which is what that cluster
+    // is about.
+    //
+    // ADDED BESIDE `engineer` RATHER THAN REPLACING IT. The two overlap — the
+    // owner's cluster names "engineering" and `engineer` exists — but `engineer`
+    // is referenced only from tests, and replacing its art would discard work
+    // nobody asked to remove. Collapsing them is a judgement for the owner, and
+    // it is cheap to do later and not cheap to undo.
+    //
+    // Which cards wear this is a JUDGEMENT, not a lookup: the owner's standing
+    // ruling is "no formal role/theme mapping per se. that is authoring
+    // (human/agentic) decision/judgement", and they framed this one the same way
+    // — "as jsugementcall in narratives and on test plans, and related
+    // (sub)graphs".
+    //
+    // All three crops are one scene, and each declares its OWN `textRegion`,
+    // measured by opening it. The @ mark sits in the cloud's upper centre in
+    // every crop, so the words go BELOW it — and the cloud is WIDE AND SHORT in
+    // the square and tall crops, which leaves genuinely little room. That is a
+    // property of the composition rather than a mistake, and it makes this
+    // theme suit SHORT cards; a long one should either declare its own
+    // `text.box` or wear a roomier theme.
+    backdrop: {
+      imageRole: "landing-operations",
+      // Measured the way every sibling's is: `ink` over this scrim laid on PURE
+      // BLACK — the darkest art any instance could declare, and therefore the
+      // binding case — is 9.36:1, clear of the AAA 7:1 floor. 14.57:1 on pure
+      // white.
+      scrim: "rgba(237, 240, 243, 0.82)",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
     id: "engineer",
     name: "Grumpy cat, engineering",
     description: "The cloud cream and a working green, behind the cat in a hi-vis vest.",

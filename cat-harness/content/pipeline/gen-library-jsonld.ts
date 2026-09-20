@@ -18,6 +18,23 @@
  *   blocks/<bid>.md         ← an extracted claim's text
  * ```
  *
+ * ## A tabular entry is a second rung, not the same one with holes
+ *
+ * `tabular-records.py` writes `tabular.jsonld` and no Stage A output at all.
+ * It gets its own branch (`content/pipeline/tabular-nodes.ts`, bean `p67i`)
+ * rather than a parameterised `buildDocumentNodes`, because the shapes differ
+ * where it matters: a workbook's grouping node is a *sheet*, and a CSV has no
+ * grouping node whatsoever — its tables hang off the manifest, because the
+ * source genuinely has no sheets (`jg8s`).
+ *
+ * ```
+ * library/<doc-id>/
+ *   tabular.jsonld          (input — or tabular.csvw.jsonld, once eief lands)
+ *   manifest.jsonld         ← contains → sheets, OR → blocks for a CSV
+ *   sheets/<key>.jsonld     ← grouping node, workbook only
+ *   blocks/table-NNN.jsonld ← one per sheet, carrying the header vocabulary
+ * ```
+ *
  * ## Blocks own the files; a section is a manifest
  *
  * A section node carries no text. Its `contains` is an **ordered** list of
@@ -56,6 +73,7 @@ import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
 import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
+import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 // The `folio` graph kind is registered by CORE on import
 // (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
 // exists. This module resolves this instance's directories, and the instance
@@ -316,6 +334,59 @@ function readJson<T>(path: string): T | undefined {
   }
 }
 
+/** Which ingest rung an entry is on — bean `p67i`. */
+export type IngestRung = "paged" | "tabular" | "none";
+
+/**
+ * The input file that puts an entry on each rung, in precedence order.
+ *
+ * A table rather than a chain of `existsSync` in the walk: the decision is
+ * then something a test can hold, and a rung added here cannot be one the
+ * walk silently ignores. `check-l1-complete.ts` settled the same question the
+ * same way with `KIND_SIDECAR`.
+ */
+export const RUNG_INPUT: ReadonlyArray<readonly [IngestRung, readonly string[]]> = [
+  ["paged", ["structure.json"]],
+  ["tabular", ["tabular.jsonld", "tabular.csvw.jsonld"]],
+];
+
+/**
+ * `none` is a DETERMINED answer — the entry has no ingest input at all, which
+ * is different from having one this could not read. The walk keeps those two
+ * apart and reports them differently, because "never processed" and "present
+ * but unreadable" point at different fixes.
+ */
+export function ingestRungOf(has: (file: string) => boolean): IngestRung {
+  for (const [rung, inputs] of RUNG_INPUT) {
+    if (inputs.some((f) => has(f))) return rung;
+  }
+  return "none";
+}
+
+/**
+ * Directories that may sit between a manifest and a block.
+ *
+ * `sections/` for a paged document, `sheets/` for a workbook. A CSV uses
+ * neither — its tables hang off the manifest, because the source has no
+ * sheets to model (`jg8s`).
+ */
+export const GROUPING_DIRS: readonly string[] = ["sections", "sheets"];
+
+/**
+ * `library/<id>/blocks/<bid>` → `<bid>`; anything else → `undefined`.
+ *
+ * Narrow on purpose. A manifest's `contains` points at *sections* for a paged
+ * document and at *blocks* for a CSV, so the same scan now sees both kinds of
+ * reference — and taking the last path segment of either would enter
+ * `page-001` into the block reference set, where it could mask an orphan of
+ * that name. Only a reference that actually names a block counts as one.
+ */
+export function blockRefIn(ref: string): string | undefined {
+  const parts = ref.split("/");
+  const id = parts.pop();
+  return id && parts.pop() === "blocks" ? id : undefined;
+}
+
 /**
  * Generated block files that nothing references any more — bean `d5f1`.
  *
@@ -338,19 +409,37 @@ export function orphanedBlocks(
   readText: (p: string) => string | undefined,
 ): string[] {
   const referenced = new Set<string>();
-  for (const f of listFiles(join(dir, "sections"))) {
-    if (!f.endsWith(".jsonld")) continue;
-    const body = readText(join(dir, "sections", f));
+  // Everything that may point at a block. A paged document goes
+  // manifest → section → block; a tabular one goes manifest → sheet → block,
+  // or, for a CSV, manifest → block with NOTHING between, because a CSV has
+  // no sheets. Scanning `sections/` alone made every table block of a tabular
+  // entry look orphaned — and `--prune` deletes what this reports.
+  const pointers: string[] = [join(dir, "manifest.jsonld")];
+  for (const g of GROUPING_DIRS) {
+    for (const f of listFiles(join(dir, g))) {
+      if (f.endsWith(".jsonld")) pointers.push(join(dir, g, f));
+    }
+  }
+  for (const p of pointers) {
+    const body = readText(p);
+    // ABSENT contributes nothing and is a determined empty: the manifest of an
+    // entry that has not been generated names no blocks, and neither does a
+    // grouping directory that is not there.
     if (body === undefined) continue;
+    let contains: unknown;
     try {
-      for (const c of (JSON.parse(body).contains ?? []) as string[]) {
-        referenced.add(c.split("/").pop() ?? c);
-      }
+      contains = (JSON.parse(body) as { contains?: unknown }).contains ?? [];
     } catch {
-      // An unreadable section means we cannot know what it references, and an
-      // unknown reference set would make every block look orphaned. Refuse to
-      // judge this directory rather than report a deletable list from it.
+      // UNREADABLE is the other case: we cannot know what it references, and
+      // an unknown reference set would make every block look orphaned. Refuse
+      // to judge this directory rather than report a deletable list from it.
       return [];
+    }
+    if (!Array.isArray(contains)) return [];
+    for (const c of contains as string[]) {
+      if (typeof c !== "string") continue;
+      const id = blockRefIn(c);
+      if (id !== undefined) referenced.add(id);
     }
   }
   return listFiles(join(dir, "blocks"))
@@ -360,16 +449,88 @@ export function orphanedBlocks(
     .sort();
 }
 
+/**
+ * What one library entry becomes — three outcomes, and they are three facts.
+ *
+ * Extracted from the walk so the BRANCH is testable, not only the emitters it
+ * calls (bean `p67i`). While this lived inline, the only way to exercise the
+ * tabular rung was to put a dataset in `library/` — and a dataset in this
+ * repository is content in the platform, so there was none, so the branch was
+ * unreachable from CI. A tested function nothing calls and an untestable
+ * caller are the same defect from two sides.
+ */
+export type EntryOutcome =
+  | { state: "built"; rung: IngestRung; files: Array<{ path: string; content: string }> }
+  /** No ingest input at all. A DETERMINED "not processed", and it passes. */
+  | { state: "no-input" }
+  /** An input is there and did not parse. Undetermined, and it fails. */
+  | { state: "unreadable"; rung: IngestRung };
+
+export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
+  // Two ingest rungs reach this walk, and a tabular entry has no Stage A
+  // output at all — no `structure.json`, no `sections/*.md` — so it is not a
+  // `buildDocumentNodes` with different arguments. Its own branch, which is
+  // `jg8s`'s rule one level up: model reality, do not force conformance.
+  const rung = ingestRungOf((f) => existsSync(join(dir, f)));
+
+  if (rung === "paged") {
+    const structure = readJson<Structure>(join(dir, "structure.json"));
+    if (!structure) return { state: "unreadable", rung };
+    const candidates = readJson<Candidates>(join(dir, "candidates.json"));
+    const images = readJson<ImagesSidecar>(join(dir, "images.json"));
+    return {
+      state: "built",
+      rung,
+      files: buildDocumentNodes(
+        docId,
+        structure,
+        candidates,
+        (sid) => existsSync(join(dir, "sections", `${sid}.md`)),
+        images,
+      ),
+    };
+  }
+
+  if (rung === "tabular") {
+    const record =
+      readJson<Record<string, unknown>>(join(dir, "tabular.jsonld")) ??
+      readJson<Record<string, unknown>>(join(dir, "tabular.csvw.jsonld"));
+    const shape = record ? tabularShapeOf(record) : undefined;
+    // The record is there and we could not read it. Reporting an empty
+    // document here would assert the dataset has no sheets, which is a claim
+    // nobody made.
+    if (!shape) return { state: "unreadable", rung };
+    return {
+      state: "built",
+      rung,
+      files: buildTabularNodes(shape, {
+        title: shape.title ?? docId,
+        iri: (rest) => docIri(docId, rest),
+        // Where the headers and shape came from. The manifest points at
+        // sheets and blocks; without this nothing in the graph says which
+        // record produced them.
+        meta: { tabular_record: record?.$schema },
+      }),
+    };
+  }
+
+  // Not a parse failure to hide: an entry with no ingest input simply has not
+  // been processed, and saying so is the point.
+  return { state: "no-input" };
+}
+
 async function run(): Promise<number> {
   const argv = process.argv.slice(2);
   const check = argv.includes("--check");
   const only = argv.includes("--doc") ? argv[argv.indexOf("--doc") + 1] : undefined;
 
   const root = findContentRepoRoot();
-  // EVERY declared library, not the first — this GENERATES the JSON-LD the
-  // whole corpus is read through, so a library it skips is a set of documents
-  // that exist on disk and nowhere in the graph, with a clean exit code over
-  // them. `directoriesForGraph(...)[0]` until bean `a02m`.
+  // EVERY declared library, not the one. This GENERATES the JSON-LD the whole
+  // corpus is read through, so a library it skips is a set of documents that
+  // exist on disk and nowhere in the graph, with a clean exit code over them.
+  //
+  // `directoryForGraph` REFUSES here — `library` has three homes since bean
+  // `frs5` — which is the accessor doing its job rather than picking one.
   //
   // declared-path-literal: the convention fallback, at the call site so the
   // choice is visible. An absent directory is handled below as "nothing to
@@ -383,8 +544,10 @@ async function run(): Promise<number> {
     return 0;
   }
 
-  // A document is now (id, WHICH library it is in), because there may be
-  // several and an id alone no longer locates one.
+  // A document is (id, WHICH library), because an id alone no longer locates
+  // one. A slug in two libraries is REFUSED rather than merged: node ids are
+  // composed from the slug, so ingesting both would overwrite one and the next
+  // run would look idempotent.
   const docs: Array<{ docId: string; dir: string }> = [];
   const seen = new Map<string, string>();
   for (const libraryDir of libraryDirs) {
@@ -397,11 +560,6 @@ async function run(): Promise<number> {
       } catch {
         continue;
       }
-      // A slug in two libraries is REPORTED, never merged and never silently
-      // last-wins. The node ids are composed from the slug, so two documents
-      // sharing one would write over each other's blocks and the second run
-      // would look idempotent. Refusing here is the only place that can tell
-      // them apart.
       const prior = seen.get(d);
       if (prior !== undefined) {
         console.error(
@@ -425,24 +583,22 @@ async function run(): Promise<number> {
   let blocks = 0;
   const stale: string[] = [];
   const skipped: string[] = [];
+  // An input that is THERE and did not parse is NOT the same fact as an entry
+  // with no input at all, and collapsing them would report an ingest failure
+  // as "never ingested" — naming the wrong cause and the wrong fix.
+  const unreadable: string[] = [];
 
   for (const { docId, dir } of docs) {
-    const structure = readJson<Structure>(join(dir, "structure.json"));
-    if (!structure) {
-      // Not a parse failure to hide: a document with no Stage A output simply
-      // has not been processed, and saying so is the point.
+    const outcome = buildEntryNodes(docId, dir);
+    if (outcome.state === "unreadable") {
+      unreadable.push(docId);
+      continue;
+    }
+    if (outcome.state === "no-input") {
       skipped.push(docId);
       continue;
     }
-    const candidates = readJson<Candidates>(join(dir, "candidates.json"));
-    const images = readJson<ImagesSidecar>(join(dir, "images.json"));
-    const files = buildDocumentNodes(
-      docId,
-      structure,
-      candidates,
-      (sid) => existsSync(join(dir, "sections", `${sid}.md`)),
-      images,
-    );
+    const files = outcome.files;
 
     for (const f of files) {
       const abs = join(dir, f.path);
@@ -482,10 +638,22 @@ async function run(): Promise<number> {
     }
   }
 
+  if (unreadable.length) {
+    // Not a warning. `skipped` is a DETERMINED "not ingested" and passes; this
+    // is the undetermined one — a record is there and its shape is unknown —
+    // and a run that could not determine something has not cleared it.
+    console.error(
+      `\n${unreadable.length} document(s) carry an ingest input this could ` +
+        `not read — present, but not reduced: ${unreadable.join(", ")}\n` +
+        `Neither "not ingested" nor "empty" is true of them.`,
+    );
+  }
+
   if (skipped.length) {
     console.warn(
-      `${skipped.length} document(s) have no structure.json — not ingested, ` +
-        `not silently counted as empty: ${skipped.slice(0, 5).join(", ")}` +
+      `${skipped.length} document(s) have neither structure.json nor a ` +
+        `tabular record — not ingested, not silently counted as empty: ` +
+        `${skipped.slice(0, 5).join(", ")}` +
         (skipped.length > 5 ? ` …` : ""),
     );
   }
@@ -500,6 +668,7 @@ async function run(): Promise<number> {
       );
       return 1;
     }
+    if (unreadable.length) return 1;
     console.log(`gen-library-jsonld --check: ${unchanged} node(s) up to date.`);
     return 0;
   }
@@ -518,7 +687,7 @@ async function run(): Promise<number> {
     if (orphans.length > 10) console.log(`      … and ${orphans.length - 10} more`);
     console.log(`  These are stale generator output. Remove with --prune, once you have looked.`);
   }
-  return 0;
+  return unreadable.length ? 1 : 0;
 }
 
 if (import.meta.main) {
