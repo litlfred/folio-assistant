@@ -426,9 +426,18 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "a scheduled report written to the runner's temp dir and posted to an issue; the script runs locally, the reporting does not",
   },
   {
-    match: "bun pack",
+    // `bun pm pack`, renamed from `bun pack` 2026-09-20 (bean `frq2`) — the
+    // latter is not a bun subcommand and so never ran. It sat as the dead
+    // first branch of a `|| npm pack || tar … || true` chain, which is why
+    // the release tarball could contain four files and no code without
+    // anything failing.
+    //
+    // The old reason said "only a tagged release run has anything to pack".
+    // That workflow has no tag trigger and never has; it is
+    // `workflow_dispatch` only, and there are zero tags in this repository.
+    match: "bun pm pack",
     kind: "ci-only",
-    reason: "builds a release tarball; only a tagged release run has anything to pack",
+    reason: "builds a release tarball; only a release run, dispatched by hand, has anything to pack",
   },
   {
     match: "run render:bpmn",

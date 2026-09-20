@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pb4n
 title: 'STAGING: the gh-pages retry handles a rejection but not a CONFLICT — the daily render log collides by construction'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-20T20:32:53Z
-updated_at: 2026-09-20T20:33:25Z
+updated_at: 2026-09-20T22:19:30Z
 parent: folio-assistant-1xhc
 ---
 
@@ -78,12 +78,32 @@ absorb it.
 
 ## Done when
 
-- [ ] `gh-pages` carries a `.gitattributes` scoping `merge=union` to
-      `_render-log/*.jsonl`, and nothing wider.
-- [ ] Falsified: two interleaved staging pushes on one day both land, with
-      both lines present in the log.
-- [ ] The ordering question above is answered — either no reader depends on
-      line order, or the reader sorts by the entry's own timestamp.
+- [x] `merge=union` is scoped to `_render-log/*.jsonl`, and nothing wider.
+
+      **Done differently than proposed, deliberately.** This bean said "a
+      `.gitattributes` on gh-pages". It is set in `.git/info/attributes`
+      instead, by `cat-harness/scripts/render-log-union-attr.sh`, called
+      before each of the FOUR rebases in `feature-staging.yml`. Two reasons:
+      a committed file only works from the run AFTER the one that seeds it,
+      while `info/attributes` works on the first; and gh-pages IS the
+      published site, so a `.gitattributes` at its root would be served as
+      part of it.
+- [x] Falsified in BOTH directions, by
+      `cat-harness/scripts/tests/render-log-union-attr.test.ts`:
+
+          WITHOUT  ->  UU _render-log/2026-09-20.jsonl   (the CI failure)
+          WITH     ->  rebase succeeds, 3 lines, A and B both present
+
+      The second assertion is the one that matters: a fix resolving the
+      conflict by taking one side would pass a "did it rebase" check while
+      silently losing a deploy record.
+- [x] Ordering answered by looking, not assuming: **nothing in this repository
+      parses the log.** The only reader is `readRenderLogEntry`, which
+      validates a single entry; the four `_render-log` sites in
+      `feature-staging.yml` are all writers. Every entry carries `at` as an
+      RFC3339 timestamp (`RenderLogEntrySchema`), so a future reader sorts by
+      the entry rather than trusting file order — which is the resolution
+      this bean asked for.
 
 
 
@@ -109,3 +129,17 @@ on the one file guaranteed to conflict.
 **Fixing `yzsj` alone would make this rarer and not gone**; fixing this alone
 would leave the contention `yzsj` names. Whoever takes either should read the
 other first.
+
+## Summary of Changes
+
+`cat-harness/scripts/render-log-union-attr.sh` sets `_render-log/*.jsonl
+merge=union` in a checkout's `.git/info/attributes`, and is called before each
+of the four gh-pages rebases in `feature-staging.yml`. Five tests in
+`cat-harness/scripts/tests/render-log-union-attr.test.ts`, including a
+structural one asserting that every `pull --rebase origin gh-pages` in that
+workflow is preceded by the call — so a fifth push loop cannot be added
+silently without it.
+
+Scope unchanged from the proposal: this makes the retry SURVIVE the race. It
+does not prevent it. That remains `yzsj` (#605), and the two do not close each
+other.
