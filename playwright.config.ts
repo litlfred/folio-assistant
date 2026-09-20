@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { resolveChromium } from './scripts/playwright-chromium';
+import { resolveChromium } from './cat-harness/scripts/playwright-chromium';
 
 // Which Chromium to launch, decided once and REPORTED. A prebuilt image pins
 // a browser build that the installed @playwright/test may not be the one that
@@ -18,7 +18,12 @@ export default defineConfig({
   // `test/results/`, `tests/` because this one line pointed here. An id in a
   // declaration is the expensive thing to move, a `testDir` is one line, so
   // the specs came to the declaration rather than the other way round.
-  testDir: './test',
+  // `cat-harness/test`: the specs moved with the instance (bean `wggr`) while
+  // this config stays at the REPOSITORY root, beside `package.json`, because
+  // `playwright test` is run from there. A stale `testDir` does not error — it
+  // collects ZERO specs and reports a clean run, which is the `dh4f` shape and
+  // exactly what a green e2e job over nothing would have looked like.
+  testDir: './cat-harness/test',
   // `*.e2e.ts`, not `*.spec.ts`: `bun test` collects `*.spec.*` anywhere in
   // the tree and chokes on Playwright's `test.describe()`. Keeping the two
   // runners on separate conventions is what stops an e2e spec reddening the

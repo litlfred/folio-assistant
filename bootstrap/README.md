@@ -64,3 +64,14 @@ reporting, and none is a gap to work around.
 A wrong harness does not fail. It *succeeds at being the wrong thing*, and
 every artefact written afterwards inherits it. A repository left
 un-initialised is recoverable; one declaring the wrong upstream is not.
+
+---
+
+**Terms, if you want the precise definitions:**
+[harness declaration](../cat-harness/schemas/cat-harness.ts) ·
+[skill](../cat-harness/schemas/skill-package.ts) ·
+[role](../cat-harness/schemas/role-graph.ts) ·
+[process](../cat-harness/skills/workflows) ·
+[tool](../cat-harness/schemas/tool.ts).
+Why bootstrapping is built this way:
+[the proposal](../fsh-guts/proposals/bootstrap.md).
