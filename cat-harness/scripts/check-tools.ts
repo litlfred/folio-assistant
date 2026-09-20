@@ -70,7 +70,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  *    {@link isSkillMd} excludes them by their `$schema:` line; a directory
  *    scan cannot. So `satisfies: ["the-complement"]` would have RESOLVED —
  *    a Tool claiming to implement a memory entry, checked and passed.
- *  - **2 real skills missed.** `bootstrap/skills/` holds its skills DIRECTLY
+ *  - **2 real skills missed.** `cat-bootstrap/skills/` holds its skills DIRECTLY
  *    rather than in packages, and a scan of one root's subdirectories never
  *    looks at the root itself. `confirm-harness` and `log-message` read as
  *    dangling — which is how this was found: a Tool naming a skill that is

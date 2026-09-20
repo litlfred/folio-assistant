@@ -1174,12 +1174,12 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * declare, so a new layer adds its card by declaring one rather than by
    * editing a constant in the layer above. See
    * {@link StickyContribution} for why this is a declaration rather than a
-   * code registry — bootstrap holds no TypeScript and may not import the
+   * code registry — cat-bootstrap holds no TypeScript and may not import the
    * layer composed on top of it, so a registry is a seam it cannot reach.
    *
    * Optional, and absent means **this layer contributes none** rather than
    * "unmigrated". That is the honest reading and the useful one: a bare
-   * bootstrap instance with no cat is the owner's ruling, and a default here
+   * cat-bootstrap instance with no cat is the owner's ruling, and a default here
    * would hand one back.
    */
   stickies?: StickyContribution[];
@@ -1314,7 +1314,7 @@ export const ContentDirectorySchema = GraphNodeDirectorySchema.extend({
  *
  * `folio` — the one renderable kind — is registered by CORE, not the harness,
  * and the harness cannot default a directory to a kind it does not know. Any
- * topical directory (`bootstrap/`, `crdm/`, …) is declared, one line each: the
+ * topical directory (`cat-bootstrap/`, `crdm/`, …) is declared, one line each: the
  * platform cannot guess names it has never met, and guessing would re-create
  * the `dh4f` shape for every name it guessed wrong.
  */
@@ -1699,7 +1699,7 @@ export function siteDir(_d: Pick<CatHarnessDeclaration, "name" | "stub">): strin
  * The repository root holds what belongs to the REPOSITORY rather than to any
  * instance in it: the CI configuration that builds it, the package manifest
  * and lockfile that install it, `.gitignore`, and the stores that are never
- * overlaid — `beans/`, `todos/`, `fsh-guts/`, `bootstrap/`. That set is closed
+ * overlaid — `beans/`, `todos/`, `fsh-guts/`, `cat-bootstrap/`. That set is closed
  * by a test rather than by this comment; a repository holding two instances
  * has one of each of those and two of everything else, which is the property
  * that decides membership.
@@ -1786,7 +1786,7 @@ export function findInstanceRoot(start: string): string | undefined {
  * `wggr`).
  *
  * **Two gates were each carrying their own literal `["cat-harness",
- * "bootstrap"]` instead** (`check-declared-assets`, `check-instance-render`),
+ * "cat-bootstrap"]` instead** (`check-declared-assets`, `check-instance-render`),
  * and by 2026-09-20 there were FOUR instances: those two, `folio-assist-core`,
  * and the repository root. So both gates reported clean runs over sets that
  * excluded half the subject — `dh4f` again, in the two checks whose whole job
@@ -1861,7 +1861,7 @@ export function instanceRootFor(start: string): string {
  *
  * ## Why a fixed convention rather than a lookup
  *
- * §5 of the bootstrap proposal has the agent obtain exactly ONE reference —
+ * §5 of the cat-bootstrap proposal has the agent obtain exactly ONE reference —
  * `litlfred/f-a-sci` — and read everything else from that instance's own
  * declaration. That answers *which* instance. It does not answer *where in it*
  * the initialization steps are, and without a fixed answer the agent needs
@@ -1869,24 +1869,24 @@ export function instanceRootFor(start: string): string {
  * precisely what one reference was meant to remove.
  *
  * So every cat-harness instance, and every instance that depends on one,
- * publishes them at the SAME place. Bootstrap then needs no special case per
+ * publishes them at the SAME place. CatBootstrap then needs no special case per
  * target: `f-a-sci`, `smart-base` and a specialised harness nobody has written
- * yet are all read the same way. That is what lets bootstrap initialise into a
+ * yet are all read the same way. That is what lets cat-bootstrap initialise into a
  * *specialised* kind rather than only into the one it was written against.
  *
  * ## Composed, never spelled
  *
- * Built from {@link siteDir} rather than written as `docs/bootstrap/...`,
+ * Built from {@link siteDir} rather than written as `docs/cat-bootstrap/...`,
  * because the stub pattern INVERTED on 2026-09-19 — `docs/<stub>` became
  * `<stub>/docs` (bean `wggr`) — and every literal spelling of the old layout
  * had to be found and changed. A convention composed from the one function
  * that knows the site root survives the next relocation; a literal does not.
  */
-export const BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
+export const CAT_BOOTSTRAP_INIT_DOC = "cat-bootstrap/initialization.md";
 
 /**
  * The path to an instance's initialization instructions, relative to that
- * INSTANCE's root — `docs/bootstrap/initialization.md`.
+ * INSTANCE's root — `docs/cat-bootstrap/initialization.md`.
  *
  * THE one answer, so the README that tells an agent where to look and the
  * check that verifies the file is there cannot disagree about the spelling.
@@ -1899,11 +1899,11 @@ export const BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
  * directory of its own and the stub level inside it would repeat the name.
  *
  * So the suffix is IDENTICAL for every instance, which is a stronger version
- * of the property bootstrap relies on than "differs only by site root".
+ * of the property cat-bootstrap relies on than "differs only by site root".
  *
  * ## The open half, stated rather than papered over
  *
- * Bootstrap is handed ONE reference and must reach this file, so it needs the
+ * CatBootstrap is handed ONE reference and must reach this file, so it needs the
  * instance's DIRECTORY, and this function no longer supplies it. On this
  * repository the directory is `cat-harness/` while the stub is
  * `folio-assistant` — deliberately different, since the stub names published
@@ -1913,11 +1913,11 @@ export const BOOTSTRAP_INIT_DOC = "bootstrap/initialization.md";
  * Resolving it by scanning the top level for a `harness.json` is the
  * declaration-driven answer and is what {@link findInstanceRoot} already does
  * in the other direction, but it is NOT implemented and is not assumed here.
- * Recorded on bean `wggr`; until then bootstrap can compose this suffix and
+ * Recorded on bean `wggr`; until then cat-bootstrap can compose this suffix and
  * still needs told which directory to hang it off.
  */
 export function initializationDoc(d: Pick<CatHarnessDeclaration, "name" | "stub">): string {
-  return `${siteDir(d)}/${BOOTSTRAP_INIT_DOC}`;
+  return `${siteDir(d)}/${CAT_BOOTSTRAP_INIT_DOC}`;
 }
 
 export function siteDirFor(root: string): string {
@@ -2673,13 +2673,13 @@ export function ownDirectories(
       // here") false from the day this was written.
       //
       // The consequence was silent and it was `dh4f`. `cat-harness/harness.json`
-      // declares `bootstrap/skills/` at `scope: "repository"`; resolving it
-      // against the INSTANCE gave `cat-harness/bootstrap/skills`, which is not
+      // declares `cat-bootstrap/skills/` at `scope: "repository"`; resolving it
+      // against the INSTANCE gave `cat-harness/cat-bootstrap/skills`, which is not
       // there, and `resolveSkillDirs` drops a directory that does not exist.
-      // So `skill_fetch` answered "package not found" for every bootstrap
+      // So `skill_fetch` answered "package not found" for every cat-bootstrap
       // skill while the declaration naming them was correct and present, and
       // nothing reported a problem: a clean pass over an empty set. Eight
-      // entries here carry `scope: "repository"`; `bootstrap` is the one that
+      // entries here carry `scope: "repository"`; `cat-bootstrap` is the one that
       // was harmed, because it is the only kg-only one among them.
       absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
       own: link.own === true,
@@ -2938,7 +2938,7 @@ export function renderableDirectories(
  * ## Ambiguity REFUSES rather than picking, and that is the point
  *
  * A graph declared by two directories is legal — `cat-harness` is declared by
- * four (`schemas/`, `skills/`, `bootstrap/skills/`, `src/skills/`) and
+ * four (`schemas/`, `skills/`, `cat-bootstrap/skills/`, `src/skills/`) and
  * `methodology` by two. This used to return the FIRST of them, under a comment
  * saying it was "the accessor for the single-home case". That precondition was
  * stated and enforced by nothing, which is this repository's own rule broken
@@ -3161,7 +3161,7 @@ export function toJsonLd(
  *
  * Moved here from `scripts/check-instance-render.ts` (bean `3jj9`) so the two
  * exporters can read one fact. `kg-export` needs it to stop emitting every
- * kind any layer defines into every instance's graph: `bootstrap` published
+ * kind any layer defines into every instance's graph: `cat-bootstrap` published
  * 16 GraphKind nodes while declaring exactly one. The render check already
  * imports `kg-export`, so importing back would have been a cycle — and a
  * declaration's own contents belong beside the declaration reader anyway.

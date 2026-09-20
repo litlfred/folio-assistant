@@ -174,7 +174,7 @@ describe("tools", () => {
     // apart; `isSkillMd` does, by their `$schema:` line. Under the old scan a
     // Tool could have satisfied a memory entry and passed.
     expect(s.has("the-complement")).toBe(false);
-    // Missed 2 real ones: `bootstrap/skills/` holds skills DIRECTLY rather
+    // Missed 2 real ones: `cat-bootstrap/skills/` holds skills DIRECTLY rather
     // than in packages, and a scan of a root's subdirectories never looks at
     // the root. Both read as dangling, which is how this was found.
     expect(s.has("confirm-harness")).toBe(true);

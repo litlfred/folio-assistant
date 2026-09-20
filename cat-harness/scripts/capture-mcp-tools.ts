@@ -132,6 +132,14 @@ if (import.meta.main) {
   if (problems.length > 0) {
     console.error(`\n${problems.length} module(s) could not be read:`);
     for (const p of problems) console.error(`  ✗ ${p}`);
-    process.exit(1);
+    // EXIT 2, not 1 — this is could-not-determine, and here it is load-bearing
+    // rather than pedantic. The list above is what `mcp-contract` compares Tool
+    // nodes AGAINST, so an incomplete capture makes every unread module look
+    // like a tool the server does not serve. A short list passing for a complete
+    // one is the failure this repository names everywhere else, and exit 1 would
+    // have put it in the same bucket as a real disagreement.
+    console.error("\n  The captured surface is INCOMPLETE, so no equivalence verdict may");
+    console.error("  be drawn from it. That is exit 2, not a failure and not a pass.");
+    process.exit(2);
   }
 }

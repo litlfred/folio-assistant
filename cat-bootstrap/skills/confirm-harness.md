@@ -25,7 +25,7 @@ Zero is a real outcome, not a failure to try again: it ends the process, logged.
 
 ## Building the list you go in with
 
-**Harnesses.** The default is **bootstrap itself**. Add any the context
+**Harnesses.** The default is **cat-bootstrap itself**. Add any the context
 already names — *"please initialize litlfred/folio-assistant"* in a discussion
 is one; a derivative such as `cat-harness`, `folio-assistant` or
 `smart-guidelines` is another. Adding a candidate costs nothing; inventing one

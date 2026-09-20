@@ -133,7 +133,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // the earlier package is found and then silently dropped. No collision is
     // reported, nothing throws, and `skill_fetch` answers "package not found"
     // for a package discovery had in hand. `dh4f` one layer up from the scope
-    // defect that hid `bootstrap/skills/` in the first place.
+    // defect that hid `cat-bootstrap/skills/` in the first place.
     const repo = mkdtempSync(join(tmpdir(), "held-"));
 
     // The sibling, with its OWN declaration — this is what makes it nameable.
@@ -148,7 +148,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     writeFileSync(join(repo, "sibling", "skills", "s.md"), SKILL);
 
     // The instance, declaring its own kg directory AND the sibling's, the
-    // second at repository scope — the `bootstrap/skills/` shape.
+    // second at repository scope — the `cat-bootstrap/skills/` shape.
     const inst = join(repo, "inst");
     mkdirSync(join(inst, "kg"), { recursive: true });
     writeFileSync(join(inst, "kg", "i.md"), SKILL);

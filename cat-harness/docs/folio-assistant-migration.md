@@ -179,7 +179,7 @@ script already `source`s `lib/lean-env.sh`, which provides the `has` helper:
 
 ```bash
 # The dir-emptiness check above only catches a *missing* toolchain. But
-# `setup-lean-toolchain` can bootstrap an elan shim whose toolchains/ dir
+# `setup-lean-toolchain` can cat-bootstrap an elan shim whose toolchains/ dir
 # exists yet cannot resolve a usable toolchain — the dir is non-empty, so the
 # guard is bypassed, and every following `lake` call tries to fetch from
 # release.lean-lang.org. In restricted-egress sandboxes that fails with a

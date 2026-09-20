@@ -1,9 +1,9 @@
 /**
  * Every instance keeps its initialization instructions in the same place.
  *
- * @module scripts/tests/bootstrap-initialization-convention.test
+ * @module scripts/tests/cat-bootstrap-initialization-convention.test
  *
- * Bootstrap is handed ONE reference and reads everything else. That works only
+ * CatBootstrap is handed ONE reference and reads everything else. That works only
  * while the place to read is the same for every target — otherwise the agent
  * needs per-instance knowledge of every harness it might be pointed at, which
  * is exactly what one reference was meant to remove.
@@ -13,7 +13,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import {
-  BOOTSTRAP_INIT_DOC,
+  CAT_BOOTSTRAP_INIT_DOC,
   initializationDoc,
   readDeclaration,
   repoRootFor,
@@ -21,11 +21,11 @@ import {
 } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
-// `bootstrap/` is the REPOSITORY's — it sits at the top of the checkout, beside
+// `cat-bootstrap/` is the REPOSITORY's — it sits at the top of the checkout, beside
 // the instance rather than inside it, because it must be readable before any
-// stub is resolved. Arrived from main as `join(ROOT, "bootstrap", …)`, correct
+// stub is resolved. Arrived from main as `join(ROOT, "cat-bootstrap", …)`, correct
 // there because the instance and the repository were one directory; here it
-// named `cat-harness/bootstrap/`, which does not exist.
+// named `cat-harness/cat-bootstrap/`, which does not exist.
 const REPO_ROOT = repoRootFor(ROOT);
 
 describe("the convention is composed, not spelled", () => {
@@ -35,12 +35,12 @@ describe("the convention is composed, not spelled", () => {
     // found and changed. Composing from the one function that knows the site
     // root survives the next relocation.
     for (const name of ["f-a-sci", "smart-base", "anything-at-all"]) {
-      expect(initializationDoc({ name })).toBe(`${siteDir({ name })}/${BOOTSTRAP_INIT_DOC}`);
+      expect(initializationDoc({ name })).toBe(`${siteDir({ name })}/${CAT_BOOTSTRAP_INIT_DOC}`);
     }
   });
 
   test("it is the SAME suffix for every instance", () => {
-    // The property bootstrap depends on: differing only by the instance's own
+    // The property cat-bootstrap depends on: differing only by the instance's own
     // site root, never by which harness it is.
     const suffixes = new Set(
       ["a", "b", "c"].map((n) => initializationDoc({ name: n }).split("/").slice(1).join("/")),
@@ -62,7 +62,7 @@ describe("the convention is composed, not spelled", () => {
     expect(a).toBe(initializationDoc({ name: "anything-at-all" }));
 
     // WHAT THIS DELIBERATELY NO LONGER PROVES, so the gap is not mistaken for
-    // a pass: bootstrap needs the instance's DIRECTORY to use this suffix, and
+    // a pass: cat-bootstrap needs the instance's DIRECTORY to use this suffix, and
     // nothing here supplies it. Directory and stub are allowed to differ (here
     // `cat-harness/` against stub `folio-assistant`), so composing `<stub>/`
     // would name nothing. See `initializationDoc`'s docstring and bean `wggr`.
@@ -77,17 +77,17 @@ describe("this instance honours the convention it publishes", () => {
   });
 
   test("and it is DECLARED, so the asset gate checks its links too", () => {
-    // Conventional AND declared: the convention means bootstrap can find it
+    // Conventional AND declared: the convention means cat-bootstrap can find it
     // without reading a declaration; the declaration means
     // `check:declared-assets` verifies it exists and that its links resolve.
     const decl = readDeclaration(ROOT)!;
-    const asset = (decl.assets ?? []).find((a) => a.role === "bootstrap-initialization");
+    const asset = (decl.assets ?? []).find((a) => a.role === "cat-bootstrap-initialization");
     expect(asset?.src).toBe(initializationDoc(decl));
   });
 });
 
 describe("the README tells an agent the same path the code computes", () => {
-  test("bootstrap's README states the convention in its fenced block", () => {
+  test("cat-bootstrap's README states the convention in its fenced block", () => {
     // The two could disagree, and a README that sends an agent to the wrong
     // place is worse than one that says nothing — it will be believed.
     //
@@ -97,9 +97,9 @@ describe("the README tells an agent the same path the code computes", () => {
     // because the old path still appeared in a worked example further down.
     // A presence check over prose is satisfied incidentally; this reads the
     // one place the README actually makes the claim.
-    const readme = readFileSync(join(REPO_ROOT, "bootstrap", "README.md"), "utf-8");
+    const readme = readFileSync(join(REPO_ROOT, "cat-bootstrap", "README.md"), "utf-8");
     const fenced = [...readme.matchAll(/```\n([^`]*)\n```/g)].map((m) => m[1]!.trim());
-    expect(fenced).toContain(`<name>/docs/${BOOTSTRAP_INIT_DOC}`);
+    expect(fenced).toContain(`<name>/docs/${CAT_BOOTSTRAP_INIT_DOC}`);
   });
 
   test("the convention is stated in ONE place, not echoed into the skill", () => {
@@ -108,7 +108,7 @@ describe("the README tells an agent the same path the code computes", () => {
     // things to keep in step, and the README is where an Initiator is sent.
     // What the skill owns is the CONTRACT (at most one harness); what the
     // README owns is WHERE that harness keeps its instructions.
-    const skill = readFileSync(join(REPO_ROOT, "bootstrap", "skills", "confirm-harness.md"), "utf-8");
-    expect(skill).not.toContain(BOOTSTRAP_INIT_DOC);
+    const skill = readFileSync(join(REPO_ROOT, "cat-bootstrap", "skills", "confirm-harness.md"), "utf-8");
+    expect(skill).not.toContain(CAT_BOOTSTRAP_INIT_DOC);
   });
 });
