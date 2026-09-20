@@ -34,7 +34,12 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { Glob } from "bun";
 
-import { owningDirectory, resolveDirectories, subgraphTree } from "../schemas/cat-harness.js";
+import {
+  isPublishedGraphKind,
+  owningDirectory,
+  resolveDirectories,
+  subgraphTree,
+} from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -68,6 +73,23 @@ export interface SubgraphReport {
    * prevent.
    */
   dangling: Array<{ from: string; fromDir: string; target: string }>;
+  /**
+   * Directories skipped BY DECLARATION — they hold only unpublished graph
+   * kinds, so their links are not held to resolution.
+   *
+   * `fsh-guts/` is the standing case, and the distinction matters: it was
+   * already skipped before 2026-09-20, but by ACCIDENT — a repository-scoped
+   * path fell out of attribution, and the right outcome arrived for the wrong
+   * reason (bean `3ye4`). A thing in the trashcan is there because it was
+   * superseded, and its links pointing at what moved is EXPECTED; that is a
+   * decision, and a decision should be readable.
+   *
+   * Keyed on the declared graph kind rather than a new field, because
+   * `isPublishedGraphKind` already answers exactly this question and the
+   * directory already declares `graphs: ["fsh-guts"]`. Same shape as the
+   * `published: false` a skill now carries: the thing says what it is.
+   */
+  exempt: string[];
   /** Files that could not be read — the third state. */
   unreadable: string[];
   /**
@@ -150,15 +172,32 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   const dangling: SubgraphReport["dangling"] = [];
   const unreadable: string[] = [];
   const notExamined: string[] = [];
+  const exempt: string[] = [];
   let scanned = 0;
 
   for (const dir of dirs) {
     const abs = dir.absPath ?? join(root, dir.path);
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
+    // Retired content is not held to link resolution — see `exempt`.
+    if (dir.graphs.length > 0 && dir.graphs.every((g) => !isPublishedGraphKind(g))) {
+      exempt.push(`${dir.id} (${dir.path})`);
+      continue;
+    }
     let attributed = 0;
     for (const rel of new Glob("**/*.md").scanSync({ cwd: abs })) {
       const file = join(abs, rel);
-      const owner = owningDirectory(dirs, relative(root, file));
+      // ABSOLUTE, not instance-relative. A `scope: "repository"` directory
+      // resolves OUTSIDE this instance, so `relative(root, …)` yields a
+      // `../…` path that matches no declared prefix and the file is
+      // attributed to nothing — silently. Six declared directories were
+      // swept past that way (bean `3ye4`), and the symptom was a sweep
+      // reporting ZERO dangling links over a corpus that had some.
+      //
+      // `owningDirectory` compares in the space of the path it is given, and
+      // every resolved directory carries `absPath`, so absolute is the space
+      // in which instance-relative and repository-scoped entries are
+      // commensurable at all.
+      const owner = owningDirectory(dirs, file);
       // Attribute the file to its DEEPEST owner, not to the directory whose
       // sweep happened to reach it — that attribution IS the `x4v4` defect.
       if (owner === undefined || owner.id !== dir.id) continue;
@@ -189,7 +228,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
           dangling.push({ from: relative(root, file), fromDir: owner.id, target });
           continue;
         }
-        const to = owningDirectory(dirs, relative(root, resolved));
+        const to = owningDirectory(dirs, resolved);
         if (to === undefined || to.id === owner.id) continue;
         edges.push({
           from: relative(root, file),
@@ -203,12 +242,12 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       notExamined.push(`${dir.id} (${dir.path})`);
     }
   }
-  return { tree, edges, dangling, unreadable, notExamined, scanned };
+  return { tree, edges, dangling, exempt, unreadable, notExamined, scanned };
 }
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const { tree, edges, dangling, unreadable, notExamined, scanned } = scanSubgraphs(ROOT);
+  const { tree, edges, dangling, exempt, unreadable, notExamined, scanned } = scanSubgraphs(ROOT);
 
   console.log(`Subgraphs  (${scanned} markdown node(s) attributed to a declared directory)\n`);
 
@@ -258,6 +297,18 @@ if (import.meta.main) {
     }
   }
 
+  if (exempt.length > 0) {
+    console.log(`\nEXEMPT BY DECLARATION — ${exempt.length} directory(ies) hold only`);
+    console.log("unpublished graph kinds, so their links are not held to resolution:\n");
+    for (const d of exempt) console.log(`  · ${d}`);
+    console.log(
+      "\nRetired content is superseded by definition, so a link of its pointing at\n" +
+        "what moved is expected. Stated here rather than inferred, because this WAS\n" +
+        "skipped accidentally until 2026-09-20 and a right answer for the wrong\n" +
+        "reason is one nobody can rely on.",
+    );
+  }
+
   if (notExamined.length > 0) {
     console.log(
       `\nNOT EXAMINED — ${notExamined.length} declared directory(ies) hold markdown but`,
@@ -270,6 +321,24 @@ if (import.meta.main) {
         "fall out. Retired content under `fsh-guts/` is deliberately not held to\n" +
         "link resolution; the others are a gap, not a decision.",
     );
+  }
+
+  // GATED, as of 2026-09-20 — and only now, because only now is the number
+  // trustworthy. It read 0 while six declared directories went unattributed
+  // (bean `3ye4`), so gating it then would have enforced a statement about
+  // what the sweep happened to look at. With attribution fixed the corpus
+  // stands at 0 with every directory either examined or exempt by
+  // declaration, and a new broken link is a regression somebody introduced.
+  //
+  // The ENTANGLEMENT report above stays ungated, deliberately: disentangling
+  // is work the owner has said is in progress, and a gate on known-
+  // outstanding work is one somebody switches off (bean `x4v4`).
+  if (check && dangling.length > 0) {
+    console.error(
+      `\n✗ ${dangling.length} link(s) point at nothing. Repoint them, or remove the\n` +
+        "link and keep the text — a reader cannot tell a stale link from a wrong one.",
+    );
+    process.exit(1);
   }
 
   if (unreadable.length > 0) {

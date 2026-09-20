@@ -100,3 +100,53 @@ describe("the entanglement report", () => {
     expect(report.dangling.filter((d) => /^[….]+$/.test(d.target))).toEqual([]);
   });
 });
+
+/**
+ * Attribution spans the whole repository, not just this instance.
+ *
+ * Bean `3ye4`. `owningDirectory` compares in the space of the path it is
+ * given, and `scanSubgraphs` handed it INSTANCE-RELATIVE paths — so a
+ * `scope: "repository"` directory yielded `../…`, matched no declared
+ * prefix, and every file in it was attributed to nothing. Six declared
+ * directories were swept past in silence.
+ *
+ * The symptom was the dangerous kind: the sweep reported **0 dangling
+ * links** over a corpus that had 26. It looked like success. It was
+ * discovered only because moving one file made the number drop
+ * implausibly.
+ */
+describe("repository-scoped directories are attributed", () => {
+  const report = scanSubgraphs(ROOT);
+
+  test("attribution reaches well past this instance's own tree", () => {
+    // 636 before the fix, ~1139 after. A floor rather than the number,
+    // because the corpus grows — but far enough above 636 that a regression
+    // to instance-only attribution cannot pass.
+    expect(report.scanned).toBeGreaterThan(900);
+  });
+
+  test("nothing declared is left unexamined without a reason", () => {
+    // The whole point: a directory is either examined, or exempt BY
+    // DECLARATION. "Skipped because a path comparison failed" is neither.
+    expect(report.notExamined).toEqual([]);
+  });
+
+  test("fsh-guts is exempt because it DECLARES an unpublished kind", () => {
+    // It was already skipped before this bean — by accident, via the path
+    // bug. Right answer, wrong reason, and therefore not one to rely on.
+    expect(report.exempt.some((d) => d.startsWith("fsh-guts"))).toBe(true);
+    // And the exemption is narrow: it must not swallow ordinary directories.
+    expect(report.exempt.length).toBeLessThan(3);
+  });
+
+  test("the x4v4 separation survives the change", () => {
+    // Making scoped paths attributable must NOT make `smart-kg/methodologies/`
+    // read as a child of `methodologies/` — that separation is deliberate and
+    // was settled in bean `x4v4`. This is the trap the bean named in advance.
+    for (const r of report.tree) {
+      expect(r.children).not.toContain("smart-kg-methodologies");
+    }
+    const m = report.tree.find((r) => r.parent === "methodologies");
+    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci"]);
+  });
+});

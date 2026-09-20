@@ -58,7 +58,7 @@ case, which is an absence of block rather than a special block). Operations:
 loses by re-creating rather than re-anchoring.
 
 **Phase 2 — process recovery and audit.** Skills for transfer/move, wired into
-[`process-state`](../../skills/folio-core/process-state.md), whose five
+[`process-state`](../../../cat-harness/skills/workflow/process-state.md), whose five
 detectors for "you are out of process" and whose recovery already stop at
 *"say what you concluded, and confirm it with the user before resuming"*. The
 owner's point is that **a bean is the audit log of that movement** — where the
