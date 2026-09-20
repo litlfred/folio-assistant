@@ -43,6 +43,30 @@
  * second is noticed. Same reason `resolveGraphKind` refuses an unknown kind
  * rather than guessing.
  *
+ * ## One EXCEPTION, and it is a convention rather than a derivation
+ *
+ * The owner, 2026-09-20: *"each harness hould have its own unique theme (by
+ * convention)"*, and then the assignment itself: *"cat-harness=gumpy hoddie.
+ * test=engineer. bootstrap coming."*
+ *
+ * That does not reopen what the section below closes, and the difference is
+ * exact:
+ *
+ * | | |
+ * |---|---|
+ * | **refused** | deriving a theme from a ROLE, process, skill or graph kind — a note's appearance would depend on which lane happened to be reading it |
+ * | **this** | a HARNESS picking one theme and keeping it, written in that harness's own declaration |
+ *
+ * A harness is a fixed thing that owns its declaration, not a lane an actor
+ * steps into, so "this harness looks like this" is a choice made once by an
+ * author and recorded — which is what the rule below asks for. **Nothing
+ * computes it**: `harness.json` still names an id, and no code maps a harness to
+ * a theme. The convention lives in the declarations and in this comment.
+ *
+ * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `engineer` is reserved
+ * for testing surfaces, and bootstrap's is still to come — which is why its
+ * sticky is palette-only rather than borrowing somebody else's cat.
+ *
  * ## Choosing a theme is an AUTHORING judgement — there is no mapping
  *
  * The owner, 2026-09-20: *"no formal role/theme mapping per se. that is

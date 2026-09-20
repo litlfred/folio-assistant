@@ -539,10 +539,22 @@ describe("the cat's introduction keeps the owner's own words", () => {
     );
   });
 
-  test("it takes plain grumpy cat while the description card takes the engineer", () => {
-    // The two differing is the point, and the owner said so directly.
-    expect(sticky(CAT, "cat-harness").theme).toBe("grumpy-cat");
-    expect(sticky(CAT, "landing").theme).toBe("engineer");
+  test("every card of this harness takes ONE theme — the convention", () => {
+    // SUPERSEDES the earlier expectation that the description card took the
+    // engineer theme while this one took plain grumpy cat. The owner set a
+    // convention over that: "each harness hould have its own unique theme (by
+    // convention)", and assigned it — "cat-harness=gumpy hoddie. test=engineer."
+    //
+    // So the two differing is no longer the point; the harness having one look
+    // is. `engineer` is reserved for testing surfaces and is deliberately used
+    // by nothing here.
+    const themes = new Set(CAT.map((c) => c.contribution.theme));
+    expect([...themes]).toEqual(["grumpy-cat"]);
+  });
+
+  test("bootstrap does NOT share it, which is what makes the theme the harness's own", () => {
+    const boot = new Set(BOOT.map((c) => c.contribution.theme));
+    for (const t of boot) expect(t).not.toBe("grumpy-cat");
   });
 
   test("its source link is absolute and does not point at this site", () => {

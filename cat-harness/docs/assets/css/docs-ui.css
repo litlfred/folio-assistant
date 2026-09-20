@@ -2539,18 +2539,25 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   padding: 1.1em 1.2em;
 }
 
-/* CENTRED, AND HELD TO THE TOP. The owner, looking at the first render: "text
- * centered around cloud towards top." The cloud occupies the upper portion of
- * every crop — that is what the three declared `textRegion`s were describing
- * back when the text was composited into it — so text at the top of the card
- * sits over the cloud rather than over the cat.
+/* START-ALIGNED, NOT CENTRED. The owner, 2026-09-20: "do not auto-cener
+ * markdown. assume left justified (or right if RHS lang)."
  *
- * This is NOT textRegion returning. A region is an absolute box in a fixed
- * crop, which is what stopped the card growing with its content. Top-aligned
- * and centred is a FLOW rule: the card still sizes to its text, and long text
- * runs down past the cloud instead of being clipped by it. */
+ * `start` rather than `left`, and that is the whole of the right-to-left half:
+ * it resolves to left under `dir="ltr"` and right under `dir="rtl"`, from the
+ * document's own direction. Writing `left` and adding an RTL override would be
+ * two rules that can disagree, and this site is translated into six UN
+ * languages — Arabic among them — so the RTL case is real rather than
+ * hypothetical.
+ *
+ * This replaces `text-align: center`, which came from an earlier reading of
+ * "text centered around cloud towards top". That instruction was about WHERE
+ * THE BLOCK SITS — in the cloud, near the top — and the block is now positioned
+ * there by `--fa-tx/ty/tw/th`. Centring the prose as well was reading a layout
+ * instruction as a typographic one, and centred markdown is hard to read: every
+ * line starts in a different place, which is exactly what a ragged left edge
+ * costs a reader. */
 .fa-landing-sticky__body {
-  text-align: center;
+  text-align: start;
 }
 
 /* ── A STICKY IS A FIXED SHAPE, AND THE SHAPE IS ITS CROP'S ──────────────────
@@ -2682,7 +2689,10 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   list-style: none;
   display: grid;
   gap: 0.5em;
-  text-align: center;
+  /* `start`, matching the body above: a centred list of links has the same
+   * ragged-edge problem, and the label and its note would centre independently
+   * of each other. */
+  text-align: start;
 }
 
 /* The link inherits the theme's ink rather than the site's link colour: on a

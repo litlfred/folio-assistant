@@ -219,11 +219,19 @@
   },
   "stickies": [
     {
-      "_comment": "THE DESCRIPTION, and it comes first: a reader needs to know what this instance IS before an orientation paragraph about the graph's shape means anything. `bodyFrom: description` rather than a copy of it, so the landing page cannot drift from the declaration one line above. The ENGINEER theme, not the plain cat \u2014 the owner: \"thats what the themne of the current landing page sticky should be, the engineer\".  The cloud is the DEFAULT, not a rule, and this card is the case that shows why. It carries the instance description and four onboarding links, which do not fit a thought cloud at 53% x 28% \u2014 measured, it overflowed by 81px on a laptop and 312px on a phone. So it declares its own box. That is the control the owner asked for (\"placemetn of markdown and scaling/size can be adjusted (in schema)\"), and using it is the intended outcome rather than a workaround: a sticky whose words do not fit its cloud says so in its declaration, where a reader can see it, instead of overflowing where nobody can.",
+      "_comment": "THE DESCRIPTION, and it comes first: a reader needs to know what this instance IS before an orientation paragraph about the graph's shape means anything. `bodyFrom: description` rather than a copy of it, so the landing page cannot drift from the declaration one line above. The ENGINEER theme, not the plain cat — the owner: \"thats what the themne of the current landing page sticky should be, the engineer\".  The cloud is the DEFAULT, not a rule, and this card is the case that shows why. It carries the instance description and four onboarding links, which do not fit a thought cloud at 53% x 28% — measured, it overflowed by 81px on a laptop and 312px on a phone. So it declares its own box. That is the control the owner asked for (\"placemetn of markdown and scaling/size can be adjusted (in schema)\"), and using it is the intended outcome rather than a workaround: a sticky whose words do not fit its cloud says so in its declaration, where a reader can see it, instead of overflowing where nobody can.  THEME CHANGED engineer -> grumpy-cat, 2026-09-20, and it SUPERSEDES an earlier ruling rather than contradicting one by accident. The owner first said of this card \"thats what the themne of the current landing page sticky should be, the engineer\"; then, setting a convention: \"each harness should have its own unique theme\", and \"cat-harness=gumpy hoddie. test=engineer.\" So grumpy-cat — the cat in the sage hoodie, image role `landing` — is THIS harness's theme, and `engineer` is reserved for testing surfaces. The later instruction wins; the earlier one is recorded here so the change does not read as drift.",
       "id": "landing",
-      "text": {"box": {"x": 0.07, "y": 0.06, "w": 0.86, "h": 0.88}, "scale": 0.85},
+      "text": {
+        "box": {
+          "x": 0.07,
+          "y": 0.06,
+          "w": 0.86,
+          "h": 0.88
+        },
+        "scale": 0.85
+      },
       "order": 10,
-      "theme": "engineer",
+      "theme": "grumpy-cat",
       "bodyFrom": "description",
       "onboardingLinks": true
     },
@@ -250,7 +258,7 @@
       }
     },
     {
-      "_comment": "Two sentences, not three, because that is what was asked for. Three of the four named map onto a declared graph kind — `folio` is content, `tools` is tools, `cat-harness` is skills — and ACQUISITION DOES NOT. The text is careful not to imply it does: what exists is `uploads/` and `library/`. `readDeclaration` throws on an unknown kind, so prose naming a fifth one would send the next agent looking for something the registry would reject. NO LINKS, deliberately: the four are graph kinds rather than pages, there is no single URL for \"tools\" to point at, and inventing four would be four more link-shaped values for bean blv9 to collect.  EXPANDED on the owner's instruction, 2026-09-20: \"knwoedege graph (content, skills, process, tools) could be a but more informative. needs links.\" It was two sentences and no links, which named the four and helped nobody reach them. Every link points at a page that EXISTS — checked, not composed — and `acquisition` is described as a step rather than a fifth graph kind, because `readDeclaration` throws on an unknown kind and prose naming one would send the next agent looking for a directory that is not there.",
+      "_comment": "Two sentences, not three, because that is what was asked for. Three of the four named map onto a declared graph kind — `folio` is content, `tools` is tools, `cat-harness` is skills — and ACQUISITION DOES NOT. The text is careful not to imply it does: what exists is `uploads/` and `library/`. `readDeclaration` throws on an unknown kind, so prose naming a fifth one would send the next agent looking for something the registry would reject. NO LINKS, deliberately: the four are graph kinds rather than pages, there is no single URL for \"tools\" to point at, and inventing four would be four more link-shaped values for bean blv9 to collect.  EXPANDED on the owner's instruction, 2026-09-20: \"knwoedege graph (content, skills, process, tools) could be a but more informative. needs links.\" It was two sentences and no links, which named the four and helped nobody reach them. Every link points at a page that EXISTS — checked, not composed — and `acquisition` is described as a step rather than a fifth graph kind, because `readDeclaration` throws on an unknown kind and prose naming one would send the next agent looking for a directory that is not there.  THEME CHANGED engineer -> grumpy-cat, 2026-09-20, and it SUPERSEDES an earlier ruling rather than contradicting one by accident. The owner first said of this card \"thats what the themne of the current landing page sticky should be, the engineer\"; then, setting a convention: \"each harness should have its own unique theme\", and \"cat-harness=gumpy hoddie. test=engineer.\" So grumpy-cat — the cat in the sage hoodie, image role `landing` — is THIS harness's theme, and `engineer` is reserved for testing surfaces. The later instruction wins; the earlier one is recorded here so the change does not read as drift.",
       "id": "subgraphs",
       "text": {
         "box": {
@@ -262,7 +270,7 @@
         "scale": 0.76
       },
       "order": 30,
-      "theme": "engineer",
+      "theme": "grumpy-cat",
       "summary": "The knowledge sub-graphs",
       "body": "The knowledge graph is four sub-graphs, and an instance declares which of them it holds.\n\n**Content** is what somebody authors and a reader reads. **Skills** are the instructions an agent follows to do the work. **Processes** are the BPMN diagrams that say who does what, in which order, and where the gates are — they are executable, not illustrations. **Tools** are what an agent can call.\n\nGetting anything in is **acquisition**: unstructured and semi-structured sources arrive through `uploads/` or through the conversation, and are ingested into `library/`. It is a step rather than a graph kind of its own — there is no fifth directory to look for.",
       "links": [
