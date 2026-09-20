@@ -20,7 +20,14 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { autoTriggered, declaredWorkflows, surveyWorkflows } from "../check-workflow-coverage.js";
+import {
+  autoTriggered,
+  compareJobs,
+  declaredJobs,
+  declaredWorkflows,
+  surveyWorkflows,
+  workflowJobs,
+} from "../check-workflow-coverage.js";
 
 describe("a diagram DECLARES its subject", () => {
   test("the declaration is read", () => {
@@ -190,5 +197,160 @@ describe("this repository, right now", () => {
 
   test("there are workflows to survey — a green run over zero files is not coverage", () => {
     expect(surveyWorkflows().rows.length).toBeGreaterThan(0);
+  });
+});
+
+describe("drift — the diagram still matches the workflow it documents", () => {
+  /**
+   * The half the bean cared about most. `feature-staging.bpmn` had three
+   * start events for the workflow's three jobs and NOTHING saying which node
+   * was which, so adding a fourth job left every check green — and the bean's
+   * own words are that a diagram which drifts is worse than none, because it
+   * is consulted.
+   */
+  const node = (id: string, job?: string): string =>
+    job === undefined
+      ? `<bpmn:startEvent id="${id}" name="x"><bpmn:outgoing>f</bpmn:outgoing></bpmn:startEvent>`
+      : `<bpmn:startEvent id="${id}" name="x"><bpmn:extensionElements>` +
+        `<folio:job name="${job}"/></bpmn:extensionElements></bpmn:startEvent>`;
+
+  describe("reading the declaration", () => {
+    test("a job is attributed to the element that CONTAINS it", () => {
+      expect(declaredJobs(node("Start_A", "stage"))).toEqual([{ node: "Start_A", job: "stage" }]);
+    });
+
+    test("a SELF-CLOSING node declares nothing, and does not steal the next job", () => {
+      // The near-miss a proximity match makes: walking back to the nearest
+      // preceding `id="…"` attributes a job to whatever was typed above it,
+      // which reads correct in every example somebody tries.
+      const xml = `<bpmn:endEvent id="End_X" name="x"/>` + node("Start_A", "stage");
+      expect(declaredJobs(xml)).toEqual([{ node: "Start_A", job: "stage" }]);
+    });
+
+    test("several nodes each declaring a job are all read", () => {
+      const xml = node("S1", "a") + node("S2", "b");
+      expect(declaredJobs(xml).map((j) => j.job)).toEqual(["a", "b"]);
+    });
+
+    test("a node with extension elements but no `folio:job` declares nothing", () => {
+      const xml = `<bpmn:task id="T" name="x"><bpmn:extensionElements>` +
+        `<folio:skill ref="s"/></bpmn:extensionElements></bpmn:task>`;
+      expect(declaredJobs(xml)).toEqual([]);
+    });
+  });
+
+  describe("reading the workflow's real jobs", () => {
+    test("the job names come back in order", () => {
+      expect(workflowJobs("on:\n  push:\njobs:\n  stage:\n    runs-on: x\n  cleanup:\n    runs-on: x\n"))
+        .toEqual(["stage", "cleanup"]);
+    });
+
+    test("UNPARSEABLE yaml is a REASON, not an empty list", () => {
+      // An empty list would make every declared job look like an `extra`,
+      // turning a parse failure into a wall of false findings pointing at a
+      // diagram that is fine.
+      const r = workflowJobs("jobs:\n  - [unbalanced\n");
+      expect(typeof r === "object" && "reason" in r).toBe(true);
+    });
+
+    test("no `jobs:` key at all is a reason too", () => {
+      const r = workflowJobs("on:\n  push:\n");
+      expect(r).toEqual({ reason: "declares no `jobs:`" });
+    });
+
+    test("`jobs:` that is a LIST is a reason — it is not a mapping of names", () => {
+      const r = workflowJobs("jobs:\n  - a\n  - b\n");
+      expect(r).toEqual({ reason: "`jobs:` is not a mapping" });
+    });
+  });
+
+  describe("comparing them, in BOTH directions", () => {
+    test("matching sets drift in neither direction", () => {
+      expect(compareJobs(["a", "b"], ["b", "a"])).toEqual({
+        declared: true, missing: [], extra: [], duplicated: [],
+      });
+    });
+
+    test("a job with NO node is missing — the workflow gained one", () => {
+      expect(compareJobs(["a", "b"], ["a"]).missing).toEqual(["b"]);
+    });
+
+    test("a node naming a job the workflow does NOT have is extra — it lost one", () => {
+      expect(compareJobs(["a"], ["a", "gone"]).extra).toEqual(["gone"]);
+    });
+
+    test("two nodes claiming ONE job is reported rather than silently deduped", () => {
+      // Deduping would let a diagram claim complete coverage of two jobs with
+      // one of them named twice and the other not at all — and `missing`
+      // alone would still catch that, but the duplicate is the actual mistake
+      // and naming it is what tells somebody where to look.
+      expect(compareJobs(["a", "b"], ["a", "a", "b"]).duplicated).toEqual(["a"]);
+    });
+
+    test("NOTHING declared is `declared: false`, not fully drifted", () => {
+      // "Nobody has said yet" and "said, and wrong" are different answers,
+      // and only the second is a finding.
+      const d = compareJobs(["a", "b"], []);
+      expect([d.declared, d.missing]).toEqual([false, ["a", "b"]]);
+    });
+  });
+
+  describe("over the whole survey", () => {
+    function repo(workflow: string, diagram: string): string {
+      const root = mkdtempSync(join(tmpdir(), "wfdrift-"));
+      mkdirSync(join(root, ".github", "workflows"), { recursive: true });
+      writeFileSync(join(root, ".github/workflows/a.yml"), workflow);
+      mkdirSync(join(root, "skills", "workflows"), { recursive: true });
+      writeFileSync(join(root, "skills/workflows/a.bpmn"), diagram);
+      return root;
+    }
+    const diagram = (body: string): string =>
+      `<?xml version="1.0"?><bpmn:definitions><bpmn:process id="p"><bpmn:extensionElements>` +
+      `<folio:implements workflow=".github/workflows/a.yml"/></bpmn:extensionElements>` +
+      `${body}</bpmn:process></bpmn:definitions>`;
+    const twoJobs = "on:\n  push:\njobs:\n  stage:\n    runs-on: x\n  cleanup:\n    runs-on: x\n";
+
+    test("a covered workflow whose jobs all have nodes reports no drift", () => {
+      const root = repo(twoJobs, diagram(node("S1", "stage") + node("S2", "cleanup")));
+      const j = surveyWorkflows(root, root).rows[0]!.jobs!;
+      expect([j.declared, j.missing, j.extra]).toEqual([true, [], []]);
+    });
+
+    test("a job added to the workflow shows up as missing", () => {
+      const root = repo(twoJobs, diagram(node("S1", "stage")));
+      expect(surveyWorkflows(root, root).rows[0]!.jobs!.missing).toEqual(["cleanup"]);
+    });
+
+    test("an UNCOVERED workflow has no drift result — there is nothing to compare", () => {
+      const root = repo(twoJobs, "");
+      writeFileSync(join(root, "skills/workflows/a.bpmn"), "<bpmn:definitions/>");
+      expect(surveyWorkflows(root, root).rows[0]!.jobs).toBeUndefined();
+    });
+
+    test("a covered workflow whose `jobs:` cannot be read goes UNKNOWN, not drift-free", () => {
+      // The pass-shaped blindness this whole file is against: reporting a
+      // covered workflow as having nothing to say about its jobs.
+      const root = repo("on:\n  push:\njobs:\n  - a\n", diagram(node("S1", "stage")));
+      const row = surveyWorkflows(root, root).rows[0]!;
+      expect(row.coverage).toBe("unknown");
+      expect(row.jobs).toBeUndefined();
+    });
+  });
+
+  describe("this repository, right now", () => {
+    test("no documented workflow has drifted", () => {
+      const drifted = surveyWorkflows().rows.filter(
+        (r) => r.jobs?.declared && r.jobs.missing.length + r.jobs.extra.length + r.jobs.duplicated.length > 0,
+      );
+      expect(drifted.map((r) => r.path)).toEqual([]);
+    });
+
+    test("every documented workflow DECLARES its jobs — coverage without it is unchecked", () => {
+      // A diagram that names no job is one the drift check cannot see. That
+      // is honest in the report, but it must not become the norm: a covered
+      // workflow with no declaration is coverage nobody is verifying.
+      const undeclared = surveyWorkflows().rows.filter((r) => r.jobs && !r.jobs.declared);
+      expect(undeclared.map((r) => r.path)).toEqual([]);
+    });
   });
 });
