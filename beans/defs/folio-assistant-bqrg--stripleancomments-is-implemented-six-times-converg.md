@@ -142,3 +142,79 @@ The bean also noted `qa-checkers-q-usage` carries its own declaration splitter
 beside `lean-lexer`'s `splitDeclarations`. Untouched here — a span splitter's
 output feeds offsets rather than a token set, so the same differential method
 needs a different comparison, and bundling it would have made one change two.
+
+## 2026-09-20 — the stripper half is DONE; the splitter half is measured and pinned
+
+### `stripLeanComments`: converged and gated
+
+All six call sites import from `content/pipeline/lean-lexer.js`. Nothing else
+defines one. `scripts/tests/lean-lexer-is-the-only-stripper.test.ts` is the
+ratchet — it scans for a second definition and fails on one — and it asserts
+the two invariants the bean said a reimplementation was unlikely to reproduce:
+byte offsets preserved (comment bodies become equal-length whitespace), and
+`/-- … -/` doc comments treated as comments. 7 tests, passing.
+
+### The splitter is NOT one duplicate, and that changes the task
+
+`leanDeclSpans` (qa-checkers-q-usage) and `splitDeclarations` (lean-lexer)
+answer **different questions**:
+
+| | returns | for |
+|---|---|---|
+| `splitDeclarations` | `{name, signature, body, bodyAt}` — byte offsets | splitting a declaration into type and value |
+| `leanDeclSpans` | `{name, start, end}` — 1-indexed inclusive LINE range | blanking everything outside a declaration while preserving line numbers |
+
+Neither replaces the other and converging them would lose a projection. The
+bean listed this as a second duplicate; it is not one.
+
+### What IS duplicated: the pattern, and it has drifted four ways
+
+`DECL_RE` (lean-lexer) vs `LEAN_DECL_RE` (q-usage), measured by running both
+over named cases:
+
+```
+   axiom                lexer=[]           q-usage=["choice"]
+   opaque               lexer=[]           q-usage=["secret"]
+   unsafe def           lexer=[]           q-usage=["loop"]
+   dotted name          lexer=["Foo.bar"]  q-usage=["Foo"]
+   theorem/def/lemma/noncomputable/private/@[simp]/structure — AGREE
+```
+
+**Three are defects in `lean-lexer`**, and `axiom` is the sharp one:
+`splitDeclarations` feeds `lean-signature.ts` and `lean-triviality-probe.ts`,
+and in a formal corpus an axiom is the declaration whose presence most changes
+what a proof is worth. A triviality probe that cannot see one is blind to
+exactly what it exists to find. `unsafe` is worse than it looks — the modifier
+list is `*`-repeated, so an unrecognised modifier makes the keyword fail to
+match and the declaration is not seen at all.
+
+**The fourth is a defect in q-usage**: its name class omits `.`, so
+`theorem Foo.bar` yields a span named `Foo`. Its callers look a declaration up
+by name and fall back to scanning the whole file when absent — so the truncation
+silently triggers the fallback those callers exist to avoid.
+
+### Why it is pinned rather than converged, and this is a hard blocker
+
+The bean's own warning is right — every copy feeds a QA checker, so widening
+either is a corpus-wide re-sweep and a changed verdict on merged content.
+
+**And the sweep cannot be run here: this repository holds 0 `.lean` files.**
+The platform carries no folio. So "just take the union" is not a judgement
+call, it is an unmeasurable one, and shipping it would be precisely the silent
+re-scoring the bean was opened to prevent.
+
+`scripts/tests/lean-decl-regex-divergence.test.ts` pins all four differences by
+name, importing both patterns rather than restating them — a test that re-types
+the regex it tests stops testing it the first time either is edited, which is
+the failure this whole bean is made of. It also asserts the seven cases where
+they AGREE, so the table cannot be produced by one pattern matching nothing;
+and it asserts this repo still has no `.lean` files, so the day a corpus lands
+here the pinning fails and the sweep becomes possible.
+
+## Done when
+
+- [x] `stripLeanComments`: one implementation, gated.
+- [x] The splitter's real duplication located: the pattern, not the functions.
+- [x] The divergence measured, named, and pinned against silent drift.
+- [ ] One union pattern, with before/after verdicts on a real Lean corpus —
+      **needs a folio**, and `litlfred/qou` is the corpus that has one.

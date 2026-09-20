@@ -1,0 +1,85 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/18892cf3-5a4f-42a4-923c-a93f4a594dec",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Publication and information products style guide",
+  "parents": [
+    [
+      "community/ebd3b191-c322-4754-9415-469a1a0eb0c3",
+      "collection/wpro-information-products"
+    ]
+  ],
+  "libraryId": "wpr-rdo-2020-003-eng",
+  "metadataRef": "catalogue/records/wpr-rdo-2020-003-eng.dc.json",
+  "bitstreams": [
+    {
+      "name": "WPR-RDO-2020-003-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2810648,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "materialized",
+        "of": "https://iris.who.int/handle/10665/332098",
+        "localPath": "uploads/WPR-RDO-2020-003-eng.pdf",
+        "purpose": "both",
+        "bytes": 2810648,
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "5021518ccd91e26a9533edd8efc643bc24ab7bf2d4eb425c9644967e0bf72842"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "2,810,648 bytes of a 361.55 GB catalogue (0.001%)"
+          },
+          "restrictions": {
+            "verdict": "unknown",
+            "basis": "no restriction stated on the captured item page"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "archival: kept indefinitely, by design"
+          },
+          "sourceLoss": {
+            "verdict": "permitted",
+            "basis": "original bytes held locally with a recorded sha256"
+          },
+          "copyright": {
+            "verdict": "unknown",
+            "basis": "no dc.rights field in the captured record"
+          }
+        }
+      }
+    }
+  ],
+  "materialization": {
+    "state": "materialized",
+    "of": "https://iris.who.int/handle/10665/332098",
+    "localPath": "library/wpr-rdo-2020-003-eng",
+    "purpose": "working",
+    "note": "Fully worked. Every identifier here was read off the full item record captured in 9a60f6f, extracted with `pdftotext -layout`: the DSpace UUID from the item URL, both handles from the two `dc.identifier.uri` values, and the bitstream name and size from the Files section. ALTERNATE IDENTIFIER KEPT, NOT DEDUPLICATED: http://iris.wpro.who.int/handle/10665.1/14518 is a handle on iris.wpro.who.int, a regional instance merged into the global one. It is the only evidence this repository holds of a source host disappearing.",
+    "gates": {
+      "size": {
+        "verdict": "permitted",
+        "basis": "one item of 1,057,223 files"
+      },
+      "restrictions": {
+        "verdict": "unknown",
+        "basis": "no restriction stated"
+      },
+      "retention": {
+        "verdict": "unknown",
+        "basis": "no lifetime agreed for the derived sections"
+      },
+      "sourceLoss": {
+        "verdict": "unknown",
+        "basis": "derived sections are not the publication; the archival bitstream answers this, not this node"
+      },
+      "copyright": {
+        "verdict": "unknown",
+        "basis": "no dc.rights field in the captured record"
+      }
+    }
+  }
+}

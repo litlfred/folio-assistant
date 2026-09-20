@@ -41,11 +41,18 @@ This bean is the rest of it, not the start of it.
 
 ## MEASURED 2026-09-20 — the ingest pipeline has a MISSING MIDDLE
 
+> **⚠ BOTH FINDINGS BELOW ARE SETTLED — see the CORRECTION at the end of this
+> bean before acting on either.** Finding 1 ("Stage B has no caller") is
+> **withdrawn**: `candidates.json` is optional by design. Finding 2
+> (`extract-lean-blocks.py`) is **decided**: retired to `fsh-guts/`. Neither is
+> an open question for the owner. Kept in place because a withdrawn finding
+> stops the next agent re-deriving it.
+
 Two findings, and neither is "add a Tool node to the remaining entry points" as
 this bean framed it. A third — nine broken `invoke.shell` paths, including this
 bean's own two nodes — became `jqv4` and is done.
 
-### 1 — Stage B has no caller, and Stage C requires its output  ⟵ BLOCKER
+### 1 — Stage B has no caller, and Stage C requires its output  ⟵ ~~BLOCKER~~ WITHDRAWN
 
 The pipeline as `gen-library-jsonld.ts` documents it, in its own words:
 
@@ -75,7 +82,7 @@ Not decided here. What is certain is that the pipeline as declared cannot
 complete in this repository without someone running Stage B by hand, and nothing
 records that as the intent.
 
-### 2 — `extract-lean-blocks.py` is a folio's content living in the platform
+### 2 — `extract-lean-blocks.py` is a folio's content living in the platform  ⟵ DECIDED
 
 20,662 bytes, born 2026-09-17 in the bulk import, referenced by **nothing** — not
 a caller, not a test, not a workflow. And its own docstring says what it reads:
@@ -113,3 +120,73 @@ node of their own.
       — the owner's call
 - [x] `requires.runtime` honest about Python deps, per bean `68dt` — the two ingest
       nodes already declare it
+
+
+---
+
+## CORRECTION 2026-09-20 — the Stage B blocker was WRONG, and is withdrawn
+
+The section above calls Stage B *"a consumer declares an input whose only producer
+is reachable from nothing"* and hands it to the owner as a design question. **It is
+not a defect and there is no question.** `candidates.json` is **optional by
+design**, and both the code and the skill say so. I asserted the opposite from the
+pipeline comment's `Stage B (input)` label without reading how the input is
+consumed.
+
+Measured, in `cat-harness/content/pipeline/gen-library-jsonld.ts`:
+
+| line | what it says |
+|---|---|
+| 328 | `function readJson<T>(path: string): T \| undefined` — absence returns `undefined`, it does not throw |
+| 479 | `const candidates = readJson<Candidates>(join(dir, "candidates.json"));` |
+| 119 | `candidates?: Candidate[]` — optional in the type itself |
+| 163, 304, 305, 308 | every read is `candidates?.… ?? null` / `?? []` |
+
+And the one artefact that *is* required fails loudly when missing —
+`if (!structure) return { state: "unreadable", rung }` — which is the contrast
+that settles it: a required input is guarded, an optional one is coalesced. Stage
+C runs without Stage B and emits `null` for the fields Stage B would have filled.
+
+`library-ingestion`'s complete-L1 list **omits `candidates.json`**. Skill and code
+agree with each other; only this bean disagreed with both.
+
+So `extract-candidates.py` being called by nothing is a **tier-C reachability
+observation**, the same shape as the fifteen can't-tell files — not a broken
+pipeline and not an owner's call. It stays uncovered until someone wants it
+operator-invoked, and no Tool node is owed.
+
+**Why this is recorded rather than deleted:** a withdrawn finding left in place
+stops the next agent re-deriving it, and the failure mode is the one this session
+hit eight times — *reasoning from a mechanism's name or label instead of its
+body*. The label `Stage B (input)` was accurate prose about data flow and said
+nothing about requiredness.
+
+## `extract-lean-blocks.py` — DECIDED under the owner's standing rule
+
+No question here either. The owner's rule from earlier this session —
+
+> if one shot migration useful as examples keep for didactic, otherwise fsh-guts
+
+— decides it, and the answer is `fsh-guts`: ~90 % of its 20,662 bytes is one
+folio's data (the block→declaration mapping table at line 206, `CH1_IMPORTS` at
+line 21, `namespace='QOU'` at line 295, and a *"Blocks NOT in
+QuantumObservableUniverse.lean"* list at line 277), so it teaches nothing
+transferable. `git mv` to `fsh-guts/scripts/`, with
+`fsh-guts/scripts/extract-lean-blocks.md` (`folio-fsh-guts/v1`) keeping the one
+lesson: **a declaration's helpers travel with it** — a declaration lifted out of
+a monolithic Lean file without the `private` lemmas it depends on does not
+compile, and that dependency is invisible from the declaration's own text.
+
+**Not moved to `litlfred/qou`** — that is a cross-repository act nobody asked
+for, and it costs nothing to defer: the body sits beside its record, `git log
+--follow` reaches the 2026-09-17 import, and a copy into the folio is one
+`git show` away.
+
+### Done when — REPLACES both lists above
+
+- [x] the nine broken `invoke.shell` paths fixed and gated — `jqv4`
+- [x] ~~Stage B: operator-invoked, or run by `ingest-document.ts`?~~ **withdrawn**
+      — optional by design; no question, no node owed
+- [x] `extract-lean-blocks.py` retired to `fsh-guts/` under the owner's one-shot rule
+- [x] `requires.runtime` honest about Python deps, per bean `68dt`
+- [ ] `extract-candidates.py` stays a tier-C reachability observation, not a blocker

@@ -19,6 +19,42 @@ best practice."**
 `waitFor`. Use it rather than writing a loop; a retry policy invented per
 call site is a policy nobody can change in one place.
 
+## From a shell script or a workflow, call `backoff-sleep.ts`
+
+**"Use `retry.ts`" does not cover a `run:` body**, which cannot import
+TypeScript — and reading it as though it did is how this rule was broken
+everywhere it applied while its test suite stayed green.
+
+Measured 2026-09-20, bean `06kg`: **all four** retry loops in
+`.github/workflows/feature-staging.yml` slept `$((attempt * 5))` — 5 s then
+10 s, linear and unjittered. That is the schedule §"Jitter is not decoration
+here" below names as the thundering herd, on `gh-pages`, the ref it cites as
+the contended one, written by the same concurrent sessions it says contend on
+it. Nothing noticed, because the rule had an implementation and a test **in
+TypeScript** and four call sites **in bash that no check read**. It was found
+by somebody reading a sibling's open PR, which is not a mechanism.
+
+So, from shell:
+
+```sh
+bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+```
+
+It calls `waitFor` directly, so a workflow and `withBackoff` compute the same
+number from the same code. Do **not** write a shell function instead: copied
+into four `run:` bodies it is four implementations again, which is how six
+copies of `stripLeanComments` ended up with three broken and nothing saying so
+(bean `bqrg`).
+
+`retry-backoff-in-workflows.test.ts` is the enforcement, and it pins the
+*property* — a loop that retries does not compute its own wait — rather than
+any spelling. A loop reaching the shared implementation some other way passes.
+
+One number to read correctly: the cap applies to the **ideal** wait, before
+jitter. `waitFor` caps `baseMs * 2 ** (attempt - 1)` and then multiplies by
+`[0.5, 1.5)`, so an actual wait runs to 1.5x the cap — 24 s against a 16 s
+cap, which is not a bug in the cap.
+
 ## Retrying a definitive answer is not caution
 
 This is the half that gets skipped, and it is the half that matters. A retry

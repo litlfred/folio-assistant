@@ -49,7 +49,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
-from _pdf_doc_id import slugify as _slugify  # noqa: E402
+from _pdf_doc_id import derive_doc_id_from_pdf as _doc_id  # noqa: E402
 
 # Kept in step with PAGE_COVERAGE_THRESHOLD in schemas/document-image.ts by
 # scripts/tests/pdf-images.test.py, which reads both rather than restating either.
@@ -72,7 +72,7 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
     except ImportError:
         return {
             "$schema": SCHEMA,
-            "doc_id": _slugify(pdf.stem),
+            "doc_id": _doc_id(str(pdf)),
             "images": None,
             "undetermined_reason": (
                 "pymupdf is not installed, so no page geometry could be read. "
@@ -81,7 +81,7 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
             ),
         }
 
-    doc_id = _slugify(pdf.stem)
+    doc_id = _doc_id(str(pdf))
     try:
         doc = pymupdf.open(pdf)
     except Exception as exc:  # noqa: BLE001 -- any open failure is undetermined

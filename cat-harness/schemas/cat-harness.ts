@@ -131,7 +131,7 @@ export const DECLARATION_FILENAME = "harness.json";
  *
  * See `skills/folio-core/content-context-and-state-graphs.md`.
  */
-export type GraphLayer = "content" | "context" | "state";
+export type GraphLayer = "content" | "context" | "state" | "derived";
 
 /** What a declared directory's graph kind means. */
 export interface GraphKindDef {
@@ -418,6 +418,53 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
   },
+  // THE ONE RENDERABLE KIND THE HARNESS OWNS, added 2026-09-20.
+  //
+  // This table carried no renderable kind until now, on the reasoning in
+  // `folio-graph-kind.ts`: "a layer that cannot render must not own the
+  // renderable kind." The owner's instruction changed the premise, not the
+  // principle — cat-harness now ships a renderer:
+  //
+  //   "docs/ is about documentation about the KG itself ... docs/ in
+  //    cat-harness ... only the most basic tooling and process ... builds off
+  //    generic process and single justthedocs tool. no extensions. no fancy.
+  //    no js (if possible)."
+  //
+  // So the rule reads, in its true form: A LAYER OWNS THE KINDS IT CAN RENDER.
+  // The harness can render plain documentation about itself, and does. `folio`
+  // stays core's because the harness cannot serve it — block viewers, LaTeX,
+  // QA badges, translation overlays — and that is the same rule, not an
+  // exception to it.
+  //
+  // A first attempt registered this on import, mirroring `folio`, so the
+  // assertion "the harness's own vocabulary contains no renderable kind" could
+  // stay literally true. That preserved a sentence at the cost of the design:
+  // `folio` pays the side-effect-import price because it is CONTRIBUTED by a
+  // dependency and may legitimately be absent, whereas `docs` ships with the
+  // harness and can never be absent. Twenty consumers would have needed an
+  // import for a kind that is always there. The test was updated instead,
+  // which is what it means for a premise to have changed.
+  //
+  // THE BOUNDARY THIS MUST NOT CROSS: the subject, not the feature list. The
+  // moment a `docs` page needs a block viewer, a LaTeX pass, a QA badge or a
+  // translation overlay, it is describing authored CONTENT and is a `folio`.
+  docs: {
+    type: termIri("DocsGraph"),
+    renderable: true,
+    // `content`, by the one question: a running process PRODUCES documentation,
+    // and it is the subject rather than something read or written in passing.
+    // Both supporting questions agree — detach a docs page and it still
+    // explains, and you would RE-AUTHOR it rather than arrive at it by
+    // re-running anything. Same layer as `cat-harness`, `schemas` and `voices`.
+    holds: "content",
+    summary:
+      "Documentation ABOUT the knowledge graph — how the harness works, what its " +
+      "directories hold, how a process runs. Rendered by the plain just-the-docs " +
+      "pipeline. Distinct from `folio`, which is content an author CREATES using " +
+      "the graph; the difference is the SUBJECT, not the format. The who-iris " +
+      "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
+      "how ingestion works is `docs`.",
+  },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,
@@ -590,14 +637,61 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   library: {
     type: termIri("LibraryGraph"),
     renderable: false,
-    // L1 source content. Every knowledge-graph reference to a source resolves
-    // through here, which is only possible because it stands on its own.
-    holds: "content",
+    // DERIVED, not content — bean `hqku`, and the owner's ruling of
+    // 2026-09-20: *"library is static (only if we materialize assets or
+    // not)"*, *"can duplicate asset into a folio and work there"*.
+    //
+    // It still stands on its own — a library section reads without anything
+    // else, which is why this was `content` until now and why the skill used
+    // it as the example. What changed is the OTHER question: a section is
+    // produced from an ingested source and regenerated, never re-authored in
+    // place, so a QA finding against one is a finding against the ingestion
+    // that made it. `qa-sweep` skips it for exactly that reason.
+    //
+    // NOT `context`, and that was ruled out by a rule rather than by taste:
+    // `context` means a step writing to it is a defect, and
+    // `document-ingestion.bpmn` writes `library/`.
+    holds: "derived",
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
       "`structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every " +
       "knowledge-graph reference to a source resolves through here, never to a loose path " +
       "or a bare URL.",
+  },
+  // A REMOTE catalogue modelled in the graph without being held. Distinct from
+  // `library`, and the distinction is the whole point: `library` is L1 content
+  // that IS here, `catalogue` is the shape of a collection of which almost
+  // nothing is. A who-iris node says 1,057,223 files exist and that three of
+  // them are materialized; folding that into `library` would make a consumer
+  // asking "what have we got" receive an answer about what EXISTS.
+  //
+  // Every node declares a materialization state and there is no default — see
+  // folio-assistant-core/schemas/materialization.ts.
+  catalogue: {
+    type: termIri("CatalogueGraph"),
+    renderable: false,
+    // `content`, on the same reasoning that makes `library` content: it is
+    // DERIVED from an external source by an import process, and being derived
+    // rather than typed is not what the axis asks about. Detach a catalogue
+    // node and it still says something standing on its own — this item exists,
+    // at this handle, in this collection — so it is not the empty-when-detached
+    // shape that marks state. Contrast `uploads`, which is `state`: a queue
+    // says nothing once the thing has moved through it.
+    //
+    // THE TENSION, stated rather than hidden, per the skill's own rule: one
+    // FIELD of a catalogue node — `materialization.state` — genuinely is
+    // written by a running process, when `materialize-remote` moves a node from
+    // `referenced` to `materialized`. That does not make the graph state, for
+    // the same reason re-ingesting a PDF does not make `library` state: the
+    // axis classifies the KIND, not every field on it. If a consumer ever needs
+    // to ask "may a process write this field", that is a question about the
+    // field and belongs on `materialization.ts`, not a reclassification here.
+    holds: "content",
+    summary:
+      "A remote catalogue modelled by reference — communities, collections and items " +
+      "of a corpus the instance does not hold. Every node declares whether its bytes " +
+      "are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), " +
+      "with no default. Distinct from `library`, which is content that IS here.",
   },
   // Named editorial voice profiles, overlaid on the base house voice. A
   // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
@@ -986,6 +1080,35 @@ export function isStateGraph(kind: string, registry: GraphKindRegistry = default
 }
 
 /**
+ * Is this DERIVED material — produced from a source, regenerable, and not the
+ * working corpus?
+ *
+ * Owner, 2026-09-20: *"library is static (only if we materialize assets or
+ * not)"* and *"can duplicate asset into a folio and work there"*. Bean `hqku`.
+ *
+ * **Why `context` was the wrong answer, and it was ruled out by a rule rather
+ * than by taste.** `library/` is static for authoring — nobody edits a section
+ * in place; the asset is duplicated into the folio and worked on there. That
+ * sounds exactly like `context`. But `context` carries *"a step that writes to
+ * it is a defect, not an update"*, and `document-ingestion.bpmn` WRITES
+ * `library/`. Declaring it `context` would have made a declared process a
+ * defect by the axis's own rule.
+ *
+ * **And `content` was wrong in the other direction.** The sweep rule is *"only
+ * on active/working content"* (owner, 2026-09-20): a QA finding against a
+ * derived section is a finding against its GENERATOR, not against the corpus,
+ * and it sends a reviewer to fix the wrong file.
+ *
+ * The skill's two supporting questions disagree here — *"does it stand on its
+ * own?"* says content (a library section still reads), *"would you regenerate
+ * it or re-author it?"* says regenerate — and the skill's instruction for that
+ * case is to **say so rather than picking**. This layer is saying so.
+ */
+export function isDerivedGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+  return graphLayer(kind, registry) === "derived";
+}
+
+/**
  * May a running process WRITE to a graph of this kind?
  *
  * The question `isStateGraph` is usually being asked in service of, named so a
@@ -1165,6 +1288,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   topology?: Topology;
   /** Directories this instance scans, before inheritance. */
   directories: ContentDirectory[];
+  /** Graphs known but not held — {@link RemoteGraph}. */
+  remoteGraphs?: RemoteGraph[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -1581,6 +1706,77 @@ export class TopologyConflictError extends Error {
   }
 }
 
+/**
+ * A graph this instance KNOWS ABOUT but does not hold.
+ *
+ * The owner, 2026-09-20: *"any top level repos or KGs in the repo, or
+ * navigable if external/remote pointed to in the core harness schema (need to
+ * extend so graphs can be url of remote graph)"*.
+ *
+ * ## A remote graph is NOT a directory, and that is the whole modelling
+ *
+ * The first cut made `ContentDirectory.path` optional and added a `url` beside
+ * it. That is wrong twice over. `bean-graph.ts` and `todo-graph.ts` REUSE
+ * `ContentDirectorySchema` for their own nodes — AGENTS.md says so outright,
+ * *"a bean-graph entry IS a ContentDirectory"* — and a bean store is never
+ * remote, so relaxing the shared schema weakened two graphs that had nothing
+ * to do with the change. And a field that is sometimes a path and sometimes an
+ * address is one field with two meanings, which every consumer then has to
+ * guess between.
+ *
+ * So this is its own node kind. It has an `id` and `graphs` like a directory,
+ * because those are what make it addressable and filterable; it has no `path`,
+ * because there is nothing here.
+ *
+ * ## It is `materialization` at the graph level
+ *
+ * `folio-assistant-core/schemas/materialization.ts` already names the states a
+ * body of content is in, and a declared graph is in the same ones: a
+ * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
+ * **referenced** (we know it exists and where, we hold none of it).
+ *
+ * A reader may FOLLOW a remote graph — the KG viewer does, to keep a hierarchy
+ * of named subgraphs navigable across instances that are not in this checkout.
+ * Anything that wants the CONTENTS goes through `materialize-remote`: the five
+ * gates and a declared purpose, rather than fetching it merely because it has
+ * an address.
+ */
+export interface RemoteGraph extends KgNodeLabels {
+  /** Stable identifier, unique within an instance — as on a directory, and for the same reason. */
+  id: string;
+  /** Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates. */
+  url: string;
+  /** Which parts of the knowledge graph live there. */
+  graphs: GraphKind[];
+}
+
+export const RemoteGraphSchema = z
+  .object({
+    id: z.string().min(1),
+    url: z.string().url(),
+    graphs: z.array(z.string().min(1)).min(1),
+    ...kgNodeLabelShape,
+  })
+  // STRICT, and that is the point rather than tidiness: without it a stray
+  // `path` on a remote graph is silently accepted, and the declaration then
+  // carries two answers to where the graph is — the exact confusion this node
+  // kind exists to prevent. Caught by its own test on the hour it was written.
+  .strict();
+
+/**
+ * The local path of a declared directory, or `undefined` when the graph is
+ * REMOTE.
+ *
+ * Every consumer that needs bytes on disk goes through this, so "this graph is
+ * not in this checkout" is a case each one has to answer rather than a
+ * `string` it can assume. When `url` landed on 2026-09-20 the compiler named
+ * the whole set in nine errors across six files — which is the set that had
+ * been assuming a local path all along, and the reason `path` was made
+ * optional rather than widened to hold a URL. A field that is sometimes a path
+ * and sometimes an address is one field with two meanings, and every consumer
+ * then has to guess which it got.
+ */
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -1600,6 +1796,12 @@ export const CatHarnessDeclarationSchema = z.object({
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),
   directories: z.array(ContentDirectorySchema).default([]),
+  /**
+   * Graphs this instance knows about and does not hold — see {@link RemoteGraph}.
+   * A SEPARATE array from `directories`, not a variant of one, because a remote
+   * graph has no directory.
+   */
+  remoteGraphs: z.array(RemoteGraphSchema).default([]),
   stickies: z.array(StickyContributionSchema).optional(),
 });
 
@@ -2954,10 +3156,26 @@ export function renderableDirectories(
  *
  * So an ambiguous kind now throws, naming every candidate. Measured before the
  * change: **none of the 34 call sites in this repository asks for either
- * ambiguous kind** — every one passes `library`, `translation-sources`,
- * `uploads`, `schemas`, `fsh-guts`, `todos` or `memory`, all single-homed. The
- * throw is therefore unreachable today and exists for the caller who has not
- * been written yet, which is the one `wggr` was.
+ * ambiguous kind** — every one passed `library`, `translation-sources`,
+ * `uploads`, `schemas`, `fsh-guts`, `todos` or `memory`, all single-homed at
+ * the time. The throw was therefore unreachable, and existed for the caller
+ * who had not been written yet, which is the one `wggr` was.
+ *
+ * **That caller arrived the same day.** Bean `frs5` moved the corpus out of
+ * the platform into `who-iris/library/` and `folio-assist-sci/library/`, so
+ * `library` has TWO homes and `schemas` has FOUR (`cat-harness/`,
+ * `folio-assistant-core/`, `large-datasets/`, `detangle/`). The paragraph
+ * above is kept as written and corrected here rather than edited, because
+ * what it records — a throw added for a caller nobody had written — is worth
+ * more beside the date it stopped being true than it is silently updated.
+ *
+ * Every site that wanted one was migrated: scanners fan out through
+ * {@link directoriesForGraph}, write targets refuse through this, and the four
+ * that wanted THEIR OWN instance's directory ask
+ * {@link instanceDirectoryForGraph}, which is a third question neither of the
+ * other two answers. `scripts/tests/no-silent-first-directory.test.ts` fails
+ * on a new `directoriesForGraph(…)[0]`, since the last fix of this shape was
+ * one site at a time and left thirty-one.
  *
  * {@link directoriesForGraph} is the honest accessor when several homes are
  * what you want; a by-ID lookup through {@link resolveDirectories} is the
@@ -3088,6 +3306,120 @@ export function folioDir(root: string): string {
     }
     throw e;
   }
+}
+
+/**
+ * The directory a graph has AT THIS INSTANCE'S OWN ROOT — repository-scoped
+ * entries pointing at sibling instances excluded.
+ *
+ * ## A third question, found by reading the callers rather than by design
+ *
+ * `a02m` began with two shapes in mind: scan every home, or expect exactly
+ * one (`directoryForGraph`, reinstated on `main` the same day with the
+ * refusing semantics this branch had built separately as
+ * `directoryForGraph` — two names for one question, resolved in favour of
+ * main's). Both were wrong for the four `schemas` call sites, which is how this
+ * one was found. `check-tools`, `harness-schema-export`, `gen-schema-docs` and
+ * `fsh-guts/generate-docs` all compose `join(schemasRoot(root), "skills")` or
+ * `"generated"` — a path INSIDE the directory. They are not asking "who
+ * declares schemas", they are asking "where is MY schemas directory".
+ *
+ * ## `own` is NOT the discriminator, and assuming it was is a correction
+ *
+ * The first version of this filtered on `ResolvedDirectory.own`. Measured:
+ * from the `cat-harness` root all FOUR `schemas` directories are `own` —
+ * `cat-harness/schemas` plus `folio-assistant-core/`, `large-datasets/` and
+ * `detangle/`, each declared by cat-harness's own `harness.json` with
+ * `scope: "repository"` because this repository stages three future instances
+ * as sibling top-level directories. `own` distinguishes the root from a
+ * DEPENDENCY, which is a different question and not the one being asked.
+ *
+ * The discriminator is `scope`, and `rootForScope` above is where it already
+ * means exactly this: a repository-scoped entry resolves against the
+ * REPOSITORY root, everything else against the instance root. So this asks for
+ * the entries that resolve against `root` itself — the directory that is
+ * genuinely this instance's, not one it points at from across the repository.
+ *
+ * ## Why `[0]` was not already wrong here
+ *
+ * `resolveDirectories` happens to order the root's instance-scoped
+ * declarations first, so `[0]` landed on the intended one. A reordering, or a
+ * staged sibling declared earlier, would have moved it silently — and the
+ * symptom would be a generator writing its output into another instance's
+ * tree, with a clean exit code.
+ */
+export function instanceDirectoryForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string | undefined {
+  const here = matchingDirectories(root, graph, registry).filter(
+    (d) => d.own && d.scope !== "repository",
+  );
+  if (here.length > 1) {
+    throw new Error(
+      `instance at ${root} declares ${here.length} directories for graph "${graph}" at its own root, ` +
+        `and this call site expects one: ${here.map((d) => `${d.id} → ${d.absPath}`).join("; ")}.`,
+    );
+  }
+  return here[0]?.absPath;
+}
+
+/**
+ * EVERY declared directory, remote entries included — the navigable set.
+ *
+ * The complement of {@link resolveDirectories}, which answers "where do I
+ * scan" and therefore drops remote graphs because there is nothing on disk to
+ * walk. This one answers **"what is declared"**, which is the question the KG
+ * viewer asks: the owner, 2026-09-20, wants the hierarchy of named subgraphs
+ * filterable *"or navigable if external/remote pointed to in the core harness
+ * schema"*, and a graph whose bytes are elsewhere is still a node in that
+ * hierarchy.
+ *
+ * Two functions rather than a flag, because the two questions have different
+ * right answers and a caller that passed the wrong flag would get a plausible
+ * list either way.
+ */
+export interface DeclaredGraph extends KgNodeLabels {
+  id: string;
+  graphs: GraphKind[];
+  declaredBy: string;
+  /** Set iff the graph is HERE. */
+  absPath?: string;
+  /** Set iff the graph is elsewhere. Exactly one of the two, always. */
+  url?: string;
+}
+
+export function declaredGraphs(
+  root: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): DeclaredGraph[] {
+  const decl = readDeclaration(root, registry);
+  if (!decl) return [];
+  return [
+    ...decl.directories.map((d) => ({
+      ...d,
+      declaredBy: decl.name,
+      absPath: resolve(rootForScope(root, d.scope), d.path),
+    })),
+    ...(decl.remoteGraphs ?? []).map((g) => ({ ...g, declaredBy: decl.name })),
+  ];
+}
+/**
+ * The local path of a declared directory, or `undefined` when the graph is
+ * REMOTE.
+ *
+ * Every consumer that needs bytes on disk goes through this, so "this graph is
+ * not in this checkout" is a case each one has to answer rather than a
+ * `string` it can assume. When `url` landed on 2026-09-20 the compiler named
+ * the whole set in nine errors across six files — which is the set that had
+ * been assuming a local path all along, and the reason `path` was made
+ * optional rather than widened to hold a URL. A field that is sometimes a path
+ * and sometimes an address is one field with two meanings, and every consumer
+ * then has to guess which it got.
+ */
+export function localPathOf(d: { path?: string; url?: string }): string | undefined {
+  return d.path;
 }
 
 // ── Graph projection ────────────────────────────────────────────
