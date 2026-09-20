@@ -77,6 +77,38 @@
                 ],
                 "additionalProperties": false
               },
+              "avatarRegion": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "w",
+                  "h"
+                ],
+                "additionalProperties": false
+              },
               "title": {
                 "type": "string",
                 "minLength": 1
@@ -489,6 +521,36 @@
             ],
             "additionalProperties": false
           }
+        },
+        "renderExemption": {
+          "type": "object",
+          "properties": {
+            "of": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "visualiser",
+                  "workflow-visualiser"
+                ]
+              },
+              "minItems": 1
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owes": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "of",
+            "reason",
+            "owes"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -504,8 +566,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "561fba3e4588f577aeb3ac6db19863ad207b65d4",
+    "sha": "389c5226647a7ac109c0260e2ec9089fdf5043b2",
     "pr": "584/merge",
-    "run": "35533513452"
+    "run": "35535252641"
   }
 }
