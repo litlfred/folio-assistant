@@ -312,9 +312,15 @@ QUOTE a command while stating its capability generically.
 The corpus carries a better signal — **BPMN task type**. A process step is a
 `serviceTask` (runs without a person) or a `userTask` (performed by one), and
 the diagrams already say which. Triaged on that, plus an I/O contract under
-`schemas/skills/`: **16** skills have strong automation evidence, **3** are
-userTask-only, **52** are genuinely ambiguous, **47** show nothing. The read
-shrinks from 118 files to 52.
+`schemas/skills/`, the tiers are **A** (automation evidence), **B**
+(userTask-only), **C** (ambiguous) and **D** (nothing), and only C needs a human
+read.
+
+**Run it for the numbers; do not read them here.** The figures that stood in this
+paragraph until 2026-09-20 — 16 / 3 / 52 / 47 over 118 uncovered — had drifted to
+28 / 4 / 53 / 59 over 144 without anybody noticing, because a count in prose is a
+claim that nothing re-checks. The tiers are the durable part; the tallies belong
+to whichever run you are looking at.
 
 **The reframing matters more than the numbers.** `interaction-modality` was the
 standing example of a pure-judgement skill, and two activities name it: a
@@ -338,4 +344,14 @@ the carrier decision applied to instances as well as to the schema. `io` ports
 reference the shared vocabulary in `schemas/tool-types.ts` by absolute IRI —
 never a hand-written string, because a reference nothing checks is a reference
 that is eventually wrong.
+
+## Covered is not reachable — see its own skill
+
+A skill can be satisfied by the **neighbours** of its mechanism while the
+mechanism itself is reachable from nothing, and `check:tools` reports it as
+covered and is right to. Three instances were found in one session.
+
+That discipline, the two questions it keeps apart, what to do when you meet one,
+and the two reasons *not* to write `maintains`:
+[`covered-is-not-reachable`](covered-is-not-reachable.md).
 {% endraw %}

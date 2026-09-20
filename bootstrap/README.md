@@ -37,7 +37,7 @@ where saying so is required. Its skill is
 [`skills/log-message.md`](skills/log-message.md).
 
 To read it, and anything else here, use
-[`skills/kg-navigation.md`](skills/kg-navigation.md). It assumes nothing but
+[`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md). It assumes nothing but
 the ability to open a file.
 
 The process ends one of two ways: a harness installed, or a failure logged.

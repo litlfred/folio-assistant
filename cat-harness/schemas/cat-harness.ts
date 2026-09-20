@@ -63,7 +63,7 @@ import {
   readdirSync,
   writeFileSync,
 } from "node:fs";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 
 import {
@@ -341,6 +341,52 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // (beans `mhh9`, `07xs`).
     holds: "content",
     summary: "Skills, workflows, roles — the harness layer's own knowledge graph.",
+  },
+  // ── Judgement methodologies, one sub-graph each ───────────────────────
+  //
+  // A methodology is a NAMED, EXTERNAL way of reaching a judgement — Kepner-Tregoe
+  // for a decision, MADR for its record, DMN for the computable case, GRADE for
+  // certainty of evidence. They are **parallel, not composable**: which one applies
+  // is contextual, and blending them produces a house method that cites nobody.
+  //
+  // ## Why its own kind rather than skills
+  //
+  // Three properties a skill does not have:
+  //
+  // 1. **Extractable.** A methodology is somebody else's work, adopted. If the
+  //    field moves on, or an instance needs a different one, the directory lifts
+  //    out and its declaration goes with it. A skill that had inlined the method
+  //    could not be lifted — it would have to be rewritten.
+  // 2. **Referenced, never inlined.** A skill names the methodology it follows;
+  //    the method's own text lives here once. Two skills quoting the same method
+  //    is two copies free to drift, which is the duplicate `directory-conventions`
+  //    calls unchecked.
+  // 3. **Not subject to skill criteria.** `skill-is-brief` caps a skill near 280
+  //    lines because a skill is an instruction. A methodology is a FAITHFUL
+  //    RENDERING of an external standard, and truncating it to fit a house limit
+  //    would misrepresent the standard.
+  //
+  // Any layer may declare a directory of this kind: the harness carries the
+  // domain-neutral ones, `smart-kg` carries GRADE, because certainty-of-evidence
+  // grading belongs to WHO L1 guideline development rather than to the harness.
+  methodology: {
+    type: termIri("MethodologyGraph"),
+    renderable: false,
+    // `context`, by the axis's own criterion and not by resemblance: read
+    // during a process, never written by one. A methodology here is somebody
+    // else's standard ADOPTED — Kepner-Tregoe, MADR, DMN, GRADE — so a step
+    // that decided to amend one would be rewriting the standard rather than
+    // recording anything, and the ingestion that brings a new one in is a
+    // human-directed act (`methodology-adoption`), exactly as relocating
+    // something into `fsh-guts` is.
+    //
+    // NOT `content`, though the files are prose a reader can follow: what
+    // makes `content` is being the folio's SUBJECT MATTER, and a methodology is
+    // how a decision about the subject gets made. `renderable: false` above
+    // follows from the same fact — nothing here is published as a page.
+    holds: "context",
+    summary:
+      "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
   },
   schemas: {
     type: termIri("SchemaGraph"),
@@ -2786,4 +2832,57 @@ export function toJsonLd(
       };
     }),
   };
+}
+
+/**
+ * The graph kinds an instance DECLARES — its own, not the universal registry's.
+ *
+ * Moved here from `scripts/check-instance-render.ts` (bean `3jj9`) so the two
+ * exporters can read one fact. `kg-export` needs it to stop emitting every
+ * kind any layer defines into every instance's graph: `bootstrap` published
+ * 16 GraphKind nodes while declaring exactly one. The render check already
+ * imports `kg-export`, so importing back would have been a cycle — and a
+ * declaration's own contents belong beside the declaration reader anyway.
+ *
+ * Follows NESTED declarations, which is the part a plain read of
+ * `directories[].graphs` misses: `beans/beans.json` is what says `bean-defs`
+ * and `workflow-state` exist, and an instance that owns them would otherwise
+ * be reported as not owning them.
+ */
+export function declaredKinds(root: string, decl: CatHarnessDeclaration): Set<string> {
+  const kinds = new Set<string>();
+  for (const d of decl.directories ?? []) {
+    for (const g of d.graphs ?? []) kinds.add(g);
+    // The nested declaration, if the directory carries one. Its filename is
+    // the directory's own name by convention (`beans/beans.json`), which is
+    // how `beans/` says what its inner nodes are without `harness.json`
+    // restating them.
+    const dirName = basename(d.path.replace(/\/+$/, ""));
+    for (const candidate of [`${dirName}.json`, "graph.json"]) {
+      const p = join(declaredKindsEntryRoot(root, d), candidate);
+      if (!existsSync(p)) continue;
+      try {
+        const nested = JSON.parse(readFileSync(p, "utf-8")) as {
+          directories?: Array<{ graphs?: string[]; kinds?: string[] }>;
+        };
+        for (const nd of nested.directories ?? []) {
+          for (const g of [...(nd.graphs ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
+        }
+      } catch {
+        // A nested file that will not parse is not this check's finding to
+        // make — `check:harness-dirs` owns that and says so loudly. Skipping
+        // here would understate `declared` and manufacture an `undeclared`,
+        // so the kinds it would have contributed are simply not added and the
+        // reason is recorded by the caller if it matters.
+      }
+    }
+  }
+  return kinds;
+}
+
+
+/** Where a declared directory actually is, honouring `scope`. */
+function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
+  const base = d.scope === "repository" ? repoRootFor(root) : root;
+  return resolve(base, d.path);
 }

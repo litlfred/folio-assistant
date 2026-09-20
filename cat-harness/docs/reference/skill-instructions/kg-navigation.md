@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Reading a knowledge graph before you have anything
+title: Reading the knowledge graph
 parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../bootstrap/skills/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/../bootstrap/skills/kg-navigation.md) — do not edit here.
+> Generated from [`../kg-navigation/skills/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/../kg-navigation/skills/kg-navigation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../bootstrap/skills/kg-navigation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../kg-navigation/skills/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -15,153 +15,133 @@ parent: Skill instructions
 > [Reading a knowledge graph before you have anything (bootstrap)](local-kg-navigation.html); it only points here.
 > Edit this page's source, never the stub.
 
-# Reading a knowledge graph before you have anything
+# Reading the knowledge graph — how to find the skill you need
 
-**This skill assumes a text editor and nothing else.** No MCP server, no
-`skill_fetch`, no `beans`, no build. If those exist they are not yours to rely
-on yet — see [`AGENTS.md`](AGENTS.md).
+You are in a fresh container. You have a task, a filesystem, and no memory of
+how this repository is laid out. **This is the route.**
 
-That constraint is the reason this skill exists rather than a pointer to the
-harness's own navigation tooling: an agent here may have no connected server,
-and a bootstrap that required one would fail in exactly the cold-start case it
-exists for.
+It exists because the instruction to take it was written down and the route
+itself was not. `AGENTS.md` says *"ask for a skill rather than opening a file"*
+and names three tools; the onboarding guide it sends you to answered the same
+question with three hardcoded directory paths, which is the practice `AGENTS.md`
+opens by warning against — *"hardcoding a path is how a skill goes missing the
+moment the layout moves."* One of them had already moved.
 
-## You probably do not need most of this yet
+## The one fact everything else follows from
 
-**On the bootstrap path you are pointed at READMEs.** `bootstrap/README.md`
-names the process; the process names a harness; that harness keeps its own
-instructions at one fixed path. Every one of those is a file you open and read
-in order, and **reading a README needs none of the graph machinery below**.
+**Skills are content in a declared graph, not files in a directory you
+memorise.** An instance says where its graph is, in `harness.json` at its
+repository root. It may put it anywhere. In *this* instance the entry reads:
 
-So take the rest of this page as the reference it is. The sections on
-declarations, on git as a data store and on what "could not determine" means are
-here because this is the only skill an Initiator has, and the moment it needs
-one of them there is nowhere else to look. Needing one is not a sign you are
-behind; needing all of them before you have read a README is a sign you are
-reading ahead.
+```json
+{ "id": "cat-harness", "path": "skills/", "graphs": ["cat-harness"] }
+```
 
-## A graph is files that declare what they are
+Read that as three separate things, because they change independently:
 
-Three facts carry the whole model, and every one of them is checkable by
-reading:
-
-1. **An instance declares the directories it scans**, in `harness.json` at its
-   root. Each entry is an id, a path, and the **kinds of graph** found there.
-2. **A directory is a place to look, not a type.** One may hold more than one
-   part of a graph, so the directory does not say what its files are —
-   **the files do**, in their own front matter or `$schema`.
-3. **Ids are stable across a relocation; paths are not.** An override matches
-   on an entry's `id`, never its `path`. Matching on path turns one relocated
-   graph into two, and every consumer then scans a directory that is not there.
-
-## Do this, in order
-
-1. **Read the root `harness.json`.** If there is none, this repository is not
-   an instance yet, and that is the case bootstrap exists for.
-2. **Find the entry whose `graphs` name the kind you want.** For skills,
-   workflows and roles that kind is `cat-harness`. The entry's `path` is
-   relative to the instance root.
-3. **Read the files in that directory.** A markdown file declaring `name:` and
-   `description:` in front matter is a **skill** — its body is the instruction
-   you were looking for. A file declaring `$schema:` is stating that it is
-   **something else**, and is not a skill however it is named.
-4. **Follow a reference by id, not by path.** A node that names another names
-   it by id; resolve it through the declaration rather than guessing a filename.
-
-## What "I could not determine" means here
-
-**An absent declaration and an unreadable one are different**, and collapsing
-them is the mistake this section exists to prevent:
-
-| what you found | what it means | what to do |
+| | what it is | stable? |
 |---|---|---|
-| no `harness.json` | not an instance yet | this is bootstrap's case — continue |
-| a `harness.json` that parses, **at a location you were about to initialize** | it is ALREADY an instance | **stop**; `initialize-harness` logs it and ends. Re-initialising over content, history and dependents is not undone by running anything again |
-| `harness.json` that will not parse | an instance asserting something broken | **stop and say so**; do not fall back |
-| a declared directory that is not there | the declaration is wrong | **stop and say so** — scanning nothing and reporting a clean run is the defect |
-| no declaration for a kind you want | this instance has none of it | that is an answer, not a failure |
+| `id` | this instance's name for the directory | stable across a relocation — that is its job |
+| `path` | where it happens to be **here** | not stable, and not yours to assume |
+| `graphs` | what kind of graph lives there | the vocabulary, shared across instances |
 
-A declared-but-absent directory is the one to be loudest about. Every consumer
-that scans it finds nothing and reports success, so the failure is silent and
-looks exactly like a clean result.
+An agent that learned `skills/` learned the one column that is allowed to
+change. Ask for the graph; do not navigate to the path.
 
-## Git is the data store, and it is a role rather than a technology
+> **`kg` is the old name for the kind and still reads.** It was renamed to
+> `cat-harness` on 2026-09-19 so the kind is named for the layer that defines
+> it, like `harness.json` and `CatHarness` itself. `GRAPH_KIND_ALIASES` in
+> `schemas/cat-harness.ts` maps `kg` → `cat-harness`, so a declaration or a
+> query using `kg` resolves and is marked deprecated. **Do not read `kg` as a
+> directory `id`** — in this instance the id is `cat-harness`, and text that
+> tells you otherwise predates the rename.
 
-A **Knowledge Graph Data Store** is the thing a graph is read from and written
-to. In practice it is a git repository. It is `actedUpon`: it holds and serves,
-and takes no part in deciding what should happen, which is why it carries no
-skills of its own and why *this* skill — the reader's — is where its use is
-described.
+## Tool 1 — the MCP pair
 
-Two mechanisms reach the same store, and **which one you have is a fact about
-your environment, not a preference**. Establish it before you plan around it.
+When an MCP server is attached, two calls answer the whole question.
 
-### Through the git CLI — a working tree you can read
+1. **`skill_list`** — every servable skill **with its one-line summary**,
+   grouped by package. The summary is the point: it is what lets you pick
+   without fetching. (It emitted bare identifiers until 2026-09-19, which is
+   why this sentence is emphatic rather than obvious.)
+2. **`skill_fetch skill="<id>" package_name="<package>"`** — the instruction
+   body, to follow.
 
-You have this when `git` runs and a checkout exists. It is the one to prefer,
-for a reason that is about correctness rather than convenience: a checkout gives
-you the **whole tree at one commit**, so a declaration and the directories it
-names are consistent with each other. Fetching files one at a time from an API
-can mix revisions, and a declaration read at one commit against a directory read
-at another is exactly the "declared but absent" report this skill tells you to
-be loudest about — arrived at without anything being wrong.
+For the work plan rather than a skill, **`work_plan_prime`** returns the beans
+and each running process's position beside its bean.
 
-| you want | the CLI answer |
-|---|---|
-| a store you do not have | `git clone <url> <dir>` — add `--depth 1` when history is not the point |
-| to know where you are | `git rev-parse --show-toplevel`, and `git rev-parse HEAD` for the commit |
-| the current state of a file | read it from the working tree; it is an ordinary file |
-| a file at a known revision | `git show <rev>:<path>` |
-| what is actually there | `git ls-files <dir>` — **what is tracked**, which is the graph, rather than whatever else is on disk |
-| whether you are looking at a stale copy | `git fetch && git status -sb` |
+**What `skill_list` serves is a registry, not the declaration.** `LOCAL_PACKAGES`
+in `src/tools/skill-fetch.ts` maps seven package names to seven paths, resolved
+against the server's own location. It is accurate today and it is a second
+answer to a question `harness.json` already answers — so a directory the
+instance declares and the registry omits is invisible to `skill_fetch`. That
+has bitten: `content-lifecycle` was absent from the table until 2026-09-18
+while **52** `<folio:skill ref>` activities across the workflow diagrams named
+its skills, so `workflow_next` handed an agent `content-validate` and
+`skill_fetch` answered *"package not found"* — for every step of every content
+process. `kg:audit`'s `skill-servable` criterion exists to keep that shut.
 
-Prefer `git ls-files` to a directory listing when you are enumerating a declared
-directory. An untracked scratch file is on disk and is **not** part of the
-graph, and a listing cannot tell you which is which.
+**Known gap, so you are not surprised.** `resolveSkillDirs` in
+`schemas/harness-config.ts` computes the cross-instance overlay from the
+declarations — the thing that would make the registry unnecessary — and **has
+no caller** outside its own test. Skill discovery is therefore root-only in
+practice, and a dependency's skills are not yet reachable. Outstanding Phase 0.1
+work; do not design around it being fixed, and do not "fix" it as a side effect
+of something else.
 
-**Writing is the same store and a different posture.** Reading a store you were
-pointed at is always in order. Writing to one is not: commit and push only to a
-location that was confirmed, and never invent a branch, a remote or a repository
-because one was missing. A missing location is something to report, per
-§"What 'I could not determine' means here".
+## Tool 2 — the filesystem, when there is no MCP
 
-### Through a forge's API — addresses, not a tree
+**The harness is designed to work with nothing but files.** Same graph, same
+content, no server:
 
-You have this when there is no checkout but there is network and a token: a
-GitHub or GitLab API, an MCP server wrapping one, or a raw-content URL. It is
-the fallback, and it is a real one — an Initiator asked about a repository it
-has not cloned has no other way in.
+1. Read `harness.json` at the repository root.
+2. Take every `directories[]` entry whose `graphs` includes `cat-harness`
+   (accepting `kg` as the deprecated spelling).
+3. Read the `.md` files under each — one skill per file, the id being the
+   basename.
 
-| you want | the API answer |
-|---|---|
-| one file | the contents endpoint for `<owner>/<repo>` at `<path>`, or a raw-content URL |
-| what is in a directory | the same endpoint pointed at the directory |
-| which revision you got | the commit sha the response carries — **record it** |
+Both Tools serve the same nodes. Neither is the skill: *knowing that a fallback
+exists* is the capability, and an agent that only knows the MCP route is an
+agent that stops when the server is absent. See
+[`skills-and-tools`](skills-and-tools.md) for why that distinction is enforced
+rather than merely preferred, and [`directory-conventions`](directory-conventions.md)
+for the declaration's schema and the full list of graph kinds.
 
-Three things it does **not** give you, and each has bitten somebody:
+## Not everything under the path is a skill
 
-- **No atomic view.** Every request may land on a different commit. Pin the
-  revision if the API lets you, and say which one you read if it does not.
-- **A 404 is ambiguous.** Absent, private, or renamed all look identical from
-  outside. It is never on its own evidence that a declared directory is missing.
-- **Rate limits and truncation are silent-ish.** A truncated listing looks like
-  a short one. A short listing of a directory a declaration named is worth a
-  second look before you report on it.
+Three rules, each of which has been got wrong here, and each of which is a
+**declaration** rather than a guess about a filename. `scripts/known-skills.ts`
+is the single implementation; `kg-audit` and `check-workflow-refs` both read it
+so they cannot disagree.
 
-### If you have neither
+- **`.claude/skills/` is not uniformly skills.** `actors/`, `capabilities/`,
+  `roles/`, `hooks/` and `requirements/` are other node kinds that live there.
+  Reading the tree as skills put 46 non-skills into the set, at which point
+  `<folio:skill ref="viewer"/>` resolved — to a capability probe.
+- **A `.md` under the skills path that declares its own `$schema` is not a
+  skill.** The agent-memory nodes under `memory/` declare
+  `folio-memory/v1`. Without this rule the audit treated all 25 as skills and
+  wrote 25 bogus QA sidecars beside them. Declaration over location.
+- **Some skills exist in three copies and only two are checked.**
+  `skills/folio-core/<name>.md` is hand-authored;
+  `docs/reference/skill-instructions/<name>.md` is **generated** from it and
+  CI-gated, so editing the source without running
+  `bun run scripts/gen-skill-docs.ts` takes `main` red — it has;
+  `.claude/skills/local/<name>.md` is hand-authored and gated by **nothing**,
+  while carrying the most inbound references. **Read the `skills/` copy. Edit
+  the `skills/` copy. Regenerate the mirror in the same commit.**
 
-**Say so and stop.** An Initiator with no checkout, no network and a repository
-to read has not failed at a step — it is missing a precondition, and that is a
-thing to report rather than to work around. Guessing at a store's contents
-produces a harness configured against a repository nobody looked at.
+## When the skill you want does not exist
 
-## What this skill is NOT
+Say so; do not improvise one silently. Coverage is a measured property here and
+a gap is information: `skill-in-role-or-process` reports how many skills no role
+carries and no activity names, and that number is **not** a defect list — a
+skill invoked directly by name is doing its job without appearing in any
+diagram. The same applies in reverse. A procedure you had to invent is worth one
+sentence in your turn report and, if it will be needed again, a bean.
 
-It is not the content model. A folio, a block, a voice, a profile and a QA
-verdict are all concepts of the harness you have not loaded yet, and a
-description of them here would be a second one, free to disagree with the first.
+## How you know you did this right
 
-If you find yourself needing one of them to finish bootstrap, **that is a sign
-the boundary is in the wrong place** — say so rather than importing the
-definition.
+You can name the graph you read, the Tool you read it with, and the skill you
+are following — without having typed a path you learned somewhere else.
 {% endraw %}

@@ -61,3 +61,49 @@ total is NEVER zero and that is the honest reading. The tempting design counts o
 Staleness compares everything except updated_at, which churns per run. Verified by perturbing a committed file: --check exits 1 naming the entry, and 0 once rewritten. Note the consequence: editing this checker changes script_hash and invalidates all four verdicts, so a change to it must rewrite them — same property kg-audit has.
 
 Still NOT done on this bean: opening a bean on failure, and holding the document in uploads/. Both unchanged from the previous note. Recording the verdict INSIDE the asset (manifest.jsonld) remains 2634's territory and is deliberately untouched.
+
+*2026-09-20* — The third state stopped expiring, and had already expired.
+
+`image-descriptions` sat in NOT_DERIVABLE naming `d5f1` while all four library
+entries carried a complete `images.json` — 2 / 20 / 121 / 21 images, every one
+with a role and a basis, 24 of them describable and described. The gate
+reported "no arm builds this yet" and checked none of it.
+
+The entry above read *"this list shrinks by work rather than by editing"*. It
+does not: nothing forced the edit. So each remaining entry now carries a
+`probe` — the artefact whose EXISTENCE means the arm runs — and
+`expiredExceptions` fails the gate when one is found. The probe is the CORPUS,
+not the bean's status: `d5f1` is still `in-progress` while its output is
+committed and complete, so a status field would have reported this as
+correctly not-derivable. A human-maintained flag is the weak signal.
+
+That is the third time this session one repository has paid for the same
+shape: a reason in a YAML comment that nothing compared and had become false
+(`ot9a`), a drift backlog that exempted a whole page so it could drift further
+in silence (`07p7`), and this. Each was a declared exception that outlived its
+premise because nothing re-derived it.
+
+`image-descriptions` is now CHECKED, with three states of its own: `images:
+null` is the sidecar's could-not-determine and carries its reason; an image
+with an `undetermined` ROLE is unmet, because whether it needs describing is
+unknown; a page scan needs no narrative, which matters when 140 of 164 images
+are page scans.
+
+Also fixed here, and it is bean `04vl` a second time: `narrative-review`
+RESTATED the review queue's bearing list — the same three files, the same
+`doc.narrative` single-narrative read — and went stale at the same moment and
+for the same reason, reporting "no narrative-bearing file in this entry" over
+four entries holding 24 drafts. It imports `NARRATIVE_BEARING` and
+`narrativesIn` from `scripts/narratives.ts` now. One rule in two places is two
+rules.
+
+Ten mutations, each caught by a NAMED test. Three were first caught only by
+the sidecar-staleness test, which fires on any edit to this file and so proves
+nothing about the branch; targeted tests were added and the three re-run.
+
+The four committed verdicts were rewritten, as this bean's own note requires:
+editing the checker changes `script_hash`.
+
+STILL NOT DONE, unchanged and deliberate: opening a bean on failure, and
+holding the document in uploads/. Both are blocked on standing rules rather
+than on effort — see below.

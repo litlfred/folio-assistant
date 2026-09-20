@@ -39,7 +39,6 @@ import {
   DECLARATION_FILENAME,
   directoriesForGraph,
   repoRootFor,
-  rootForScope,
 } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 
@@ -144,7 +143,22 @@ function sweepRoots(instance: string, repo: string): string[] {
     };
     for (const d of decl.directories ?? []) {
       if (typeof d.path !== "string") continue;
-      dirs.push(resolve(rootForScope(instance, d.scope), d.path));
+      // `repo` AS GIVEN, not recomputed. `rootForScope` derives the
+      // repository root from the instance, which is right in production and
+      // wrong for any caller that passes one — `scan(root, root)` in the
+      // tests means "this fixture IS its own repository", and recomputing
+      // resolved a `scope: "repository"` entry to the tmpdir's PARENT.
+      //
+      // Measured 2026-09-20: the fixture swept `/tmp/fsh-guts`, a directory
+      // an unrelated test left behind on 2026-09-19, and counted its two
+      // files. The test passes on a clean runner and fails on a machine that
+      // has run the suite before — a failure that is real, order-dependent,
+      // and points nowhere near its cause.
+      //
+      // A parameter a function accepts and then ignores is worse than one it
+      // does not take: the caller has said something and been overruled
+      // silently.
+      dirs.push(resolve(d.scope === "repository" ? repo : instance, d.path));
     }
   } else {
     // No declaration is not a reason to sweep nothing: an unmigrated

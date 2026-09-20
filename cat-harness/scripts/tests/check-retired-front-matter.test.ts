@@ -121,7 +121,16 @@ describe("the guards", () => {
     });
     try {
       const { findings, scanned } = scan(root, root);
-      expect(scanned).toBe(3);
+      // 3 fixture skills PLUS one record per retirement: `fixture()` writes a
+      // `fsh-guts/` record for every RETIRED entry, and those are swept too —
+      // scanned, but never findings, which the fsh-guts test above asserts
+      // separately.
+      //
+      // Derived, not pinned. The literal `3` was written while a
+      // `scope: "repository"` entry resolved to the tmpdir's PARENT and so
+      // swept nothing of the fixture's own; it also grows by one every time a
+      // field is retired, failing on the change that was correct.
+      expect(scanned).toBe(3 + RETIRED.length);
       expect(findings.map((f) => f.file).sort()).toEqual([
         "skills/folio-core/a.md",
         "skills/folio-core/b.md",
@@ -186,7 +195,7 @@ describe("the graph-kind exemption", () => {
     });
     try {
       const { findings, scanned } = scan(root, root);
-      expect(scanned).toBe(2);
+      expect(scanned).toBe(2 + RETIRED.length);
       // Exactly one: the skill, not the memory entry.
       expect(findings.map((f) => f.file)).toEqual(["skills/folio-core/s.md"]);
     } finally {

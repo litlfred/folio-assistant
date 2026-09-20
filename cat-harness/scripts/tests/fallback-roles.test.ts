@@ -145,24 +145,42 @@ describe("the capability-level fallback, and the contradiction it exposed", () =
     }
   });
 
-  test("the declared fallback CANNOT FIRE, and the check says so", () => {
-    // Not a hypothetical. `lean-mcp` declares `requires: ["lean-toolchain"]`
-    // and `probeAll` computes `present = requiresMet && probe(…)`, so when
-    // `lean-toolchain` is absent `lean-mcp` is absent too — the substitute
-    // is unavailable in exactly the case it exists for.
+  test("the fallback CAN fire — inverted 2026-09-20, and that is the point", () => {
+    // This test asserted the DEFECT for a few hours: `lean-mcp` declared
+    // `requires: ["lean-toolchain"]`, so `probeAll`'s
+    // `present = requiresMet && probe(…)` made it absent in exactly the case
+    // the fallback existed for.
     //
-    // This test asserts the DEFECT, deliberately. It is reported rather than
-    // gated while the owner decides which side is wrong, and when that is
-    // fixed this test must be inverted rather than deleted — otherwise the
-    // finding disappears with no record that it was ever real.
-    expect(facts.get("lean-mcp")?.requires).toContain("lean-toolchain");
-    expect(transitivelyRequires(facts, "lean-mcp", "lean-toolchain")).toBe(true);
+    // The owner resolved it — `lean-mcp`'s Lean runs server-side, detection
+    // is an `mcp-probe`, so the requirement was wrong — and the test is
+    // INVERTED rather than deleted. Deleting it would leave no evidence the
+    // finding was ever real, and the next person to add that `requires` back
+    // would get a green suite and a dead fallback.
+    expect(facts.get("lean-mcp")?.requires ?? []).not.toContain("lean-toolchain");
+    expect(transitivelyRequires(facts, "lean-mcp", "lean-toolchain")).toBe(false);
   });
 
-  test("a substitute that does NOT need the missing thing is fine", () => {
-    // The negative case, or the assertion above would pass for a predicate
-    // that always returns true.
-    expect(transitivelyRequires(facts, "lean-toolchain", "lean-mcp")).toBe(false);
+  test("no declared fallback anywhere needs the thing it replaces", () => {
+    // The general form, now that the corpus is clean and the check gates on
+    // it. Written over every capability rather than the one pair, so a new
+    // `fallbackTo` cannot reintroduce the shape without failing here first.
+    for (const [id, c] of facts) {
+      if (!c.fallbackTo) continue;
+      expect(`${id} → ${c.fallbackTo}: ${transitivelyRequires(facts, c.fallbackTo, id)}`).toBe(
+        `${id} → ${c.fallbackTo}: false`,
+      );
+    }
+  });
+
+  test("the predicate is not vacuously false — it fires on a real chain", () => {
+    // With the corpus clean, every assertion above expects `false`, which a
+    // predicate that ALWAYS returns false would satisfy. This is the guard
+    // against that, on a constructed chain rather than the corpus.
+    const m = new Map([
+      ["missing", { id: "missing", requires: [] }],
+      ["substitute", { id: "substitute", requires: ["missing"] }],
+    ]);
+    expect(transitivelyRequires(m, "substitute", "missing")).toBe(true);
   });
 
   test("transitivity is followed, and a cycle terminates", () => {
