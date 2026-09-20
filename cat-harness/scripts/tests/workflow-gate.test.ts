@@ -28,7 +28,7 @@ import {
  */
 
 const WF = resolve(import.meta.dir, "../../skills/workflows");
-const REPO = resolve(import.meta.dir, "../..");
+const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
 const editing = () => loadProcessModel(join(WF, "editing-hci-validation.bpmn"));
 
 const relax = (over: Partial<Relaxation> = {}): Relaxation => ({
@@ -178,7 +178,7 @@ describe("the relaxations this repo actually ships", () => {
         loadProcessModel(join(WF, `${f}.bpmn`)),
       ),
     );
-    const relaxations = loadRelaxations(REPO);
+    const relaxations = loadRelaxations(INSTANCE_ROOT);
     expect(() => validateRelaxations(relaxations, models)).not.toThrow();
     // Every one is attributed and explained — the file is the record.
     for (const r of relaxations) {

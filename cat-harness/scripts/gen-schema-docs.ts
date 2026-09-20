@@ -57,13 +57,13 @@ function schemasRoot(root: string): string {
 }
 
 
-const REPO_ROOT = resolve(import.meta.dir, "..");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 // Same pencil as gen-skill-docs.ts, and for the same reason: a text glyph
 // rather than an inline SVG repeated once per generated page.
 const EDIT_GLYPH = "\u270E";
 
-const SKILLS_DIR = join(schemasRoot(REPO_ROOT), "skills");
-const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT), "reference", "skills");
+const SKILLS_DIR = join(schemasRoot(INSTANCE_ROOT), "skills");
+const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "reference", "skills");
 
 /**
  * `--check`: verify the generated tree is current without writing to it.

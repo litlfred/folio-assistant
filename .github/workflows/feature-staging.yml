@@ -653,6 +653,17 @@ jobs:
           path: pages
           persist-credentials: true
 
+      # The retry below loses the `gh-pages` race by design and rebases. Two
+      # sessions deploying on the same day both append at EOF of
+      # `_render-log/<day>.jsonl`, and a rebase cannot merge that — measured
+      # failing on PR #612 (`stage`, 0da595551b), where the loop died on
+      # attempt 1. `union` keeps both sides' lines. It lives in
+      # `$GIT_DIR/info/` rather than a committed `.gitattributes` because a
+      # `peaceiris` full replace deletes files on this branch, and a fix that
+      # disappears is worse than none. Bean `yzsj`, issue #605.
+      - name: Let a same-day render-log append merge instead of conflicting
+        run: bash cat-harness/scripts/git-union-attr.sh pages
+
       - name: Deploy the preview and log the render, in one commit
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
@@ -877,6 +888,17 @@ jobs:
           ref: gh-pages
           path: pages
 
+      # The retry below loses the `gh-pages` race by design and rebases. Two
+      # sessions deploying on the same day both append at EOF of
+      # `_render-log/<day>.jsonl`, and a rebase cannot merge that — measured
+      # failing on PR #612 (`stage`, 0da595551b), where the loop died on
+      # attempt 1. `union` keeps both sides' lines. It lives in
+      # `$GIT_DIR/info/` rather than a committed `.gitattributes` because a
+      # `peaceiris` full replace deletes files on this branch, and a fix that
+      # disappears is worse than none. Bean `yzsj`, issue #605.
+      - name: Let a same-day render-log append merge instead of conflicting
+        run: bash source/cat-harness/scripts/git-union-attr.sh pages
+
       - name: Determine staging slug
         id: slug
         # THE SERIOUS ONE. This job runs on `pull_request_target`, which carries
@@ -996,7 +1018,7 @@ jobs:
               # unjittered, which is the thundering herd `retry-backoff.md`
               # names, on the ref it cites as contended, written by the very
               # sessions it says contend on it.
-              bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+              bun run source/cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
             done
             echo "Cleaned up STAGING/$SLUG"
           else
@@ -1061,7 +1083,7 @@ jobs:
             # unjittered, which is the thundering herd `retry-backoff.md`
             # names, on the ref it cites as contended, written by the very
             # sessions it says contend on it.
-            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+            bun run source/cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
           done
 
       - name: Post retention notice (not confirmed)
@@ -1198,6 +1220,17 @@ jobs:
           ref: gh-pages
           path: pages
 
+      # The retry below loses the `gh-pages` race by design and rebases. Two
+      # sessions deploying on the same day both append at EOF of
+      # `_render-log/<day>.jsonl`, and a rebase cannot merge that — measured
+      # failing on PR #612 (`stage`, 0da595551b), where the loop died on
+      # attempt 1. `union` keeps both sides' lines. It lives in
+      # `$GIT_DIR/info/` rather than a committed `.gitattributes` because a
+      # `peaceiris` full replace deletes files on this branch, and a fix that
+      # disappears is worse than none. Bean `yzsj`, issue #605.
+      - name: Let a same-day render-log append merge instead of conflicting
+        run: bash source/cat-harness/scripts/git-union-attr.sh pages
+
       - name: Remove the preview
         working-directory: pages
         env:
@@ -1267,6 +1300,6 @@ jobs:
             # unjittered, which is the thundering herd `retry-backoff.md`
             # names, on the ref it cites as contended, written by the very
             # sessions it says contend on it.
-            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+            bun run ../source/cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
           done
           echo "Removed STAGING/$CLEANUP_SLUG"

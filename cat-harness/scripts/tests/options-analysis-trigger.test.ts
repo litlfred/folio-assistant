@@ -34,8 +34,8 @@ import { join, resolve } from "node:path";
 import { loadProcessModel } from "../../src/workflow/process-model";
 import { complete, enabled, startInstance } from "../../src/workflow/instance";
 
-const PLATFORM = resolve(import.meta.dir, "../..");
-const DIAGRAM = join(PLATFORM, "skills/workflows/options-analysis.bpmn");
+const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
+const DIAGRAM = join(INSTANCE_ROOT, "skills/workflows/options-analysis.bpmn");
 
 const names = (ids: string[]): string[] => [...ids].sort();
 

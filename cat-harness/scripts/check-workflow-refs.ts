@@ -38,7 +38,7 @@ import { knownSkills } from "./known-skills.js";
 interface Dangling { file: string; node: string; ref: string }
 interface Coverage { file: string; covered: number; total: number; uncovered: string[] }
 
-const REPO = resolve(import.meta.dir, "..");
+const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const strict = process.argv.includes("--strict");
 
 /**
@@ -56,7 +56,7 @@ const strict = process.argv.includes("--strict");
  * cat-bootstrap diagram naming a harness skill is a real dangling ref, because
  * cat-bootstrap runs before the harness exists.
  */
-const INSTANCES = [REPO, join(REPO, "cat-bootstrap")];
+const INSTANCES = [INSTANCE_ROOT, join(INSTANCE_ROOT, "cat-bootstrap")];
 
 const dangling: Dangling[] = [];
 const coverage: Coverage[] = [];
@@ -100,7 +100,7 @@ const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
 fileCount += files.length;
 // The sections after this loop are about the ROOT instance only — its
 // content-type translation declarations and its publication index.
-if (root === REPO) rootFiles = files;
+if (root === INSTANCE_ROOT) rootFiles = files;
 
 
 for (const file of files) {
@@ -112,11 +112,11 @@ for (const file of files) {
     const refs = node.skills ?? [];
     if (refs.length === 0) uncovered.push(node.id);
     for (const ref of refs) {
-      if (!skills.has(ref)) dangling.push({ file: relative(REPO, file), node: node.id, ref });
+      if (!skills.has(ref)) dangling.push({ file: relative(INSTANCE_ROOT, file), node: node.id, ref });
     }
   }
   coverage.push({
-    file: relative(REPO, file),
+    file: relative(INSTANCE_ROOT, file),
     covered: activities.length - uncovered.length,
     total: activities.length,
     uncovered,
@@ -127,7 +127,7 @@ for (const file of files) {
   // loader is a second answer to which diagrams exist.
   for (const node of model.nodes.values()) {
     if (node.kind !== "exclusive") continue;
-    const where = { file: relative(REPO, file), node: node.id };
+    const where = { file: relative(INSTANCE_ROOT, file), node: node.id };
     if (node.decisionRef) branches.computed.push(where);
     else if (node.judgementReason) branches.judgement.push(where);
     else branches.undeclared.push(where);
@@ -179,7 +179,7 @@ const { CONTENT_TYPE_TRANSLATIONS } = await import("../schemas/translation-tools
 const missingDeclared: string[] = [];
 for (const ct of CONTENT_TYPE_TRANSLATIONS) {
   for (const rel of ct.bpmnDiagrams ?? []) {
-    if (!existsSync(join(REPO, rel))) missingDeclared.push(`${ct.contentType} → ${rel}`);
+    if (!existsSync(join(INSTANCE_ROOT, rel))) missingDeclared.push(`${ct.contentType} → ${rel}`);
   }
 }
 // Same class again: a format may declare the modules that implement its
@@ -188,7 +188,7 @@ for (const ct of CONTENT_TYPE_TRANSLATIONS) {
 for (const ct of CONTENT_TYPE_TRANSLATIONS) {
   for (const f of ct.formats) {
     for (const rel of [f.extractModule, f.injectModule]) {
-      if (rel && !existsSync(join(REPO, rel))) {
+      if (rel && !existsSync(join(INSTANCE_ROOT, rel))) {
         missingDeclared.push(`${ct.contentType}/${f.id} → ${rel}`);
       }
     }
@@ -208,7 +208,7 @@ if (missingDeclared.length) {
  * exist, and the miscount proves the list was not maintained alongside the
  * directory.
  */
-const INDEX_DIR = join(REPO, "content/docs/publication-workflow");
+const INDEX_DIR = join(INSTANCE_ROOT, "content/docs/publication-workflow");
 const unindexed: string[] = [];
 if (existsSync(INDEX_DIR)) {
   const indexText = readdirSync(INDEX_DIR)
@@ -230,7 +230,7 @@ if (existsSync(INDEX_DIR)) {
   const byBase = new Map<string, number>();
   for (const f of rootFiles) byBase.set(basename(f), (byBase.get(basename(f)) ?? 0) + 1);
   for (const f of rootFiles) {
-    const rel = relative(REPO, f);
+    const rel = relative(INSTANCE_ROOT, f);
     const base = basename(f);
     const named = indexText.includes(rel) || (byBase.get(base) === 1 && indexText.includes(base));
     if (!named) unindexed.push(rel);
