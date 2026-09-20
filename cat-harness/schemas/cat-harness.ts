@@ -2557,19 +2557,79 @@ export function renderableDirectories(
  * convention as a fallback say so at their own call site, where the choice
  * is visible.
  *
- * Returns the FIRST declaration carrying the graph. A graph declared by two
- * directories is legal — `cat-harness` is, by `schemas/` and `skills/` — so a
- * caller wanting all of them resolves the list itself; this is the accessor
- * for the single-home case, which is every other graph kind here.
+ * ## Ambiguity REFUSES rather than picking, and that is the point
+ *
+ * A graph declared by two directories is legal — `cat-harness` is declared by
+ * four (`schemas/`, `skills/`, `bootstrap/skills/`, `src/skills/`) and
+ * `methodology` by two. This used to return the FIRST of them, under a comment
+ * saying it was "the accessor for the single-home case". That precondition was
+ * stated and enforced by nothing, which is this repository's own rule broken
+ * in one line: an unavoidable duplicate is fine, an UNCHECKED one is not.
+ *
+ * The cost is on the record. Bean `wggr`: a by-graph lookup for `cat-harness`
+ * resolves to `schemas/`, not `skills/`, because `schemas/` declares
+ * `["schemas", "cat-harness"]` and comes first. An audit walked `schemas/`,
+ * wrote **37** sidecars against the wrong subjects, and exited **0**. Nothing
+ * threw, because the wrong answer is indistinguishable from the right one at
+ * the call site — *"a by-graph lookup is not a weaker version of a by-id
+ * lookup; for `cat-harness` it resolves to a DIFFERENT DIRECTORY."*
+ *
+ * So an ambiguous kind now throws, naming every candidate. Measured before the
+ * change: **none of the 34 call sites in this repository asks for either
+ * ambiguous kind** — every one passes `library`, `translation-sources`,
+ * `uploads`, `schemas`, `fsh-guts`, `todos` or `memory`, all single-homed. The
+ * throw is therefore unreachable today and exists for the caller who has not
+ * been written yet, which is the one `wggr` was.
+ *
+ * {@link directoriesForGraph} is the honest accessor when several homes are
+ * what you want; a by-ID lookup through {@link resolveDirectories} is the
+ * answer when you want a particular one.
  */
 export function directoryForGraph(
   root: string,
   graph: string,
   registry: GraphKindRegistry = defaultGraphKinds,
 ): string | undefined {
-  return resolveDirectories([{ name: "(local)", root, own: true }], registry).find((d) =>
+  const all = matchingDirectories(root, graph, registry);
+  if (all.length > 1) {
+    throw new Error(
+      `graph "${graph}" is declared by ${all.length} directories, so there is no single ` +
+        `directory for it: ${all.map((d) => `${d.id} (${d.path})`).join(", ")}. ` +
+        `Returning the first silently is bean \`wggr\` — it resolved \`cat-harness\` to ` +
+        `\`schemas/\` and wrote 37 sidecars against the wrong subjects on a run that exited 0. ` +
+        `Use \`directoriesForGraph\` if you want all of them, or look the directory up by its ` +
+        `\`id\` through \`resolveDirectories\` if you want a particular one.`,
+    );
+  }
+  return all[0]?.absPath;
+}
+
+/** Every directory this instance declares as holding `graph`, in declaration order. */
+function matchingDirectories(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry,
+): ResolvedDirectory[] {
+  return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
     d.graphs.includes(graph as GraphKind),
-  )?.absPath;
+  );
+}
+
+/**
+ * Every directory holding `graph`, for the callers {@link directoryForGraph}
+ * now refuses.
+ *
+ * Empty means the instance declares the graph nowhere — the same third state
+ * its sibling documents, and for the same reason: a caller that wants the
+ * convention as a fallback says so at its own call site, where the choice is
+ * visible, rather than being handed a path to a directory that is not there.
+ */
+export function directoriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string[] {
+  return matchingDirectories(root, graph, registry).map((d) => d.absPath);
 }
 
 // ── Graph projection ────────────────────────────────────────────

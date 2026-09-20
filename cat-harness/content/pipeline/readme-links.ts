@@ -125,6 +125,21 @@ export function parseLinks(src: string): LinkRef[] {
     const def = line.match(/^\s{0,3}\[([^\]]+)\]:\s*(\S+)/);
     if (def) out.push({ line: i + 1, text: def[1], target: def[2] });
 
+    // `@path` on a line of its own — the CLI IMPORT directive, and the only
+    // reference a thin stub carries. `CLAUDE.md` and `GEMINI.md` here are
+    // four lines each whose whole content is `@AGENTS.md`; before this, the
+    // audit read them as "0 links checked, 0 dead", which is a clean result
+    // over a file it had not checked at all. Rename `AGENTS.md` and both
+    // stubs point at nothing while the gate stays green — a determined empty
+    // and a could-not-determine wearing the same face, which is the failure
+    // this repository names everywhere else.
+    //
+    // WHOLE-LINE and extension-bearing, deliberately narrow: `@handle` in
+    // prose, an email, and a decorator are all `@`-prefixed, and a checker
+    // that reported those as dead links would be switched off within a day.
+    const inc = line.match(/^\s*@([^\s@]+\.[A-Za-z0-9]+)\s*$/);
+    if (inc) out.push({ line: i + 1, text: "@import", target: inc[1] });
+
     // HTML `<img src>` and `<a href>`, single- or double-quoted. Attribute
     // order varies (`<img width="700" src="…">` is the README's own form), so
     // the attribute is matched wherever it sits in the tag rather than

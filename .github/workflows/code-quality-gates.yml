@@ -287,6 +287,15 @@ jobs:
       - name: workflow skill refs
         run: bun run check:workflow-refs
 
+      # Every link OUT of the files an agent reads first — bean `v8gh`.
+      # `AGENTS.md` carried seven dead links, five broken by one directory
+      # move, including the onboarding guide its own banner calls the place to
+      # start. `readme:audit` covers README.md only and `check:agents-xref`
+      # covers citations INTO AGENTS.md, so a directory move could silently
+      # break the one file every agent opens first.
+      - name: agent entry links
+        run: bun run check:agent-entry-links
+
       # Which `.github/workflows/*.yml` are documented as BPMN — bean `7yvd`,
       # owner: "make sure all workflows documented as bpmn".
       #
