@@ -24,6 +24,8 @@
  */
 import { z } from "zod";
 
+import type { TermLayer } from "./vocabulary.js";
+
 import { renderingPath } from "./cat-harness.js";
 
 /** A bean's identifier, e.g. `folio-assistant-1dfh`. */
@@ -264,6 +266,42 @@ export const ReadmeSectionSchema = z
   .enum(["folio:toc", "folio:lean-coverage", "folio:lean-modules", "folio:simulators", "folio:workflows"])
   .describe("A generated README section, named by its marker.");
 
+/**
+ * One namespace layer, as a command-line word.
+ *
+ * ## Why this exists rather than `Text`
+ *
+ * `check:tools` refuses free text on a flag, because an argv word that can hold
+ * arbitrary characters can hold a shell payload. It caught `ns-vocabulary`'s
+ * `--layer` on exactly that rule. The fix for an enumerable input is the enum,
+ * never a looser type that happens to pass.
+ *
+ * ## Why it is guarded rather than merely copied
+ *
+ * The members duplicate `TermLayer` in `schemas/vocabulary.ts`, and zod needs a
+ * literal tuple so the duplication cannot be avoided. What CAN be avoided is the
+ * duplication going stale silently, which is the only reason a duplicate is
+ * dangerous — `directory-conventions` puts it as: an unavoidable duplicate is
+ * fine while an unchecked one is not.
+ *
+ * `satisfies` catches a member that stops being a layer. `NamespaceLayerCovers`
+ * catches the other direction — a layer added to `TermLayer` and not added here
+ * fails `tsc`, rather than producing a Tool contract that quietly refuses a
+ * value the script accepts.
+ */
+const NAMESPACE_LAYERS = ["bootstrap", "harness", "core"] as const satisfies readonly TermLayer[];
+
+/** Fails to compile if `TermLayer` gains a member this tuple does not list. */
+type NamespaceLayerCovers = Exclude<TermLayer, (typeof NAMESPACE_LAYERS)[number]> extends never
+  ? true
+  : never;
+const _namespaceLayersAreExhaustive: NamespaceLayerCovers = true;
+void _namespaceLayersAreExhaustive;
+
+export const NamespaceLayerSchema = z
+  .enum(NAMESPACE_LAYERS)
+  .describe("A namespace layer: bootstrap resolves before anything else, then harness, then core.");
+
 /** The granularity a translation sign-off covers. */
 export const TranslationLevelSchema = z
   .enum(["block", "section", "chapter", "folio"])
@@ -328,6 +366,7 @@ export const TOOL_TYPES = {
   Slug: SlugSchema,
   ContentType: ContentTypeSchema,
   LinkMode: LinkModeSchema,
+  NamespaceLayer: NamespaceLayerSchema,
   PreferenceAction: PreferenceActionSchema,
   RenderFormat: RenderFormatSchema,
   PreviewFormat: PreviewFormatSchema,
@@ -419,6 +458,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   // rejected, it is unrepresentable.
   "ContentType",
   "LinkMode",
+  "NamespaceLayer",
   "PreferenceAction",
   "RenderFormat",
   "PreviewFormat",
