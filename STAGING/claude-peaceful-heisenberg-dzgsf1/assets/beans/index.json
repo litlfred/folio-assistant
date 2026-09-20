@@ -2285,14 +2285,14 @@
     {
       "id": "folio-assistant-huiu",
       "title": "DUBLIN CORE: a .ts record type in cat-harness, fully worked for the three IRIS examples",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:01:40Z",
-      "updatedAt": "2026-09-20T08:01:40Z",
+      "updatedAt": "2026-09-20T18:24:21Z",
       "preview": "Owner: 'break up working bits (like .ts record for dublin core) etc. fully worked for the three examples.'\n\nWHERE IT LIVES IS THE DECISION, and it is not who-iris. Dublin Core is an ISO standard (15836) and DSpace is a platform; neither is WHO-specific. Owner, same message: 'mionimal tools in who specific stuff.' So `schemas/dublin-core.ts` is a cat-harness node and `who-iris/` holds the three REC",
       "file": "beans/defs/folio-assistant-huiu--dublin-core-a-ts-record-type-in-cat-harness-fully.md"
     },
@@ -2695,14 +2695,14 @@
     {
       "id": "folio-assistant-lzbw",
       "title": "IRIS/DSPACE skill: how IRIS uses DSpace and Dublin Core, and what later tools need from it",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:01:40Z",
-      "updatedAt": "2026-09-20T08:01:40Z",
+      "updatedAt": "2026-09-20T18:24:21Z",
       "preview": "Owner: 'should be part of skills of iris, how it uses dspace, dublin core, document need for later tools.'\n\nWHAT THE RECORD SHOWS AND A GENERIC DC SCHEMA CANNOT SAY:\n- THREE identifier systems, not one. A DSpace UUID (`18892cf3-5a4f-42a4-923c-a93f4a594dec`, in the item URL), a Handle (`10665/332098`), and a WHO govdoc number (`WPR/RDO/2020/003`). The library slug in this repo (`wpr-rdo-2020-003-en",
       "file": "beans/defs/folio-assistant-lzbw--irisdspace-skill-how-iris-uses-dspace-and-dublin-c.md"
     },
@@ -4187,6 +4187,20 @@
       "file": "beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"
     },
     {
+      "id": "folio-assistant-yl5w",
+      "title": "CATALOGUE: localPath is an unchecked edge, and all three point at nothing",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T18:49:27Z",
+      "updatedAt": "2026-09-20T18:49:27Z",
+      "preview": "MEASURED 2026-09-20, on `main` after #477 merged. Every `bitstreams[].materialization.localPath` in `who-iris/catalogue/nodes/` names a file that does not exist:\n\n| node | localPath | resolves to | state |\n|---|---|---|---|\n| `item/18892cf3-…` | `uploads/WPR-RDO-2020-003-eng.pdf` | `who-iris/uploads/WPR-RDO-2020-003-eng.pdf` | **MISSING** |\n| `item/local:9789241548960-eng` | `uploads/9789241548960",
+      "file": "beans/defs/folio-assistant-yl5w--catalogue-localpath-is-an-unchecked-edge-and-all-t.md"
+    },
+    {
       "id": "folio-assistant-yv4z",
       "title": "3pqn cause: why does a PR sometimes get NO pull_request-event run at all?",
       "status": "todo",
@@ -4231,14 +4245,14 @@
     {
       "id": "folio-assistant-z7ev",
       "title": "CROSS-INSTANCE LIBRARY REFERENCE: a voice in who-style-guide citing a source in who-iris",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:02:10Z",
-      "updatedAt": "2026-09-20T08:02:10Z",
+      "updatedAt": "2026-09-20T18:24:21Z",
       "preview": "THE BLOCKER, and it is measured, not anticipated. `scripts/check-voices.ts:35` resolves `libraryId` as `library/<id>/sections/<sec>.md` against the VOICE'S OWN instance root. Move `voices/who-*.json` to `who-style-guide/` and every citation in all three stops resolving.\n\nBean `r1lz` predicted this on 2026-09-19 and named it in general: 'a skill derived from a source text in another repo would cite",
       "file": "beans/defs/folio-assistant-z7ev--cross-instance-library-reference-a-voice-in-who-st.md"
     },

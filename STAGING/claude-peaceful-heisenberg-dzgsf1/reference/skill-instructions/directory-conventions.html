@@ -936,6 +936,12 @@ decides it.</p>
       <td>no</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">themes</code></td>
+      <td><strong>harness</strong></td>
+      <td>themes an instance DERIVED from a source it holds — a served stylesheet, or a style guide’s stated rules. One Theme node each, carrying <code class="language-plaintext highlighter-rouge">kind: sticky \| webpage \| publication</code>; the palette vocabulary is shared across every kind and only the geometry varies. Every value cites where it was measured. NOT the platform’s own twelve themes, which are furniture in <code class="language-plaintext highlighter-rouge">cat-harness/schemas/themes.ts</code> — a palette read off a WHO style guide is subject matter.</td>
+      <td>no</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">translation-sources</code></td>
       <td><strong>harness</strong></td>
       <td>the gettext side of translation — <code class="language-plaintext highlighter-rouge">.pot</code> templates, <code class="language-plaintext highlighter-rouge">.po</code> catalogues and their <code class="language-plaintext highlighter-rouge">TranslationNode</code> manifests, one directory per target locale. The INPUT to injection; there is deliberately <strong>no kind for the rendered output</strong>. Read with the <a href="/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a> skill; shape in <code class="language-plaintext highlighter-rouge">schemas/translation.ts</code>.</td>
