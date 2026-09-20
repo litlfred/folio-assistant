@@ -291,6 +291,40 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 .empty { color: var(--muted); padding: 24px 16px; }
 .note { background: var(--warn-soft); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: .85rem; margin: 8px 0; }
 .note code { word-break: break-all; }
+/* The overview panel. Collapsible and CLOSED by default: the questions people
+   arrive with are local, so the list is what should meet them. The overview
+   answers a different one — how connected is this, and where are the hubs —
+   and that is worth a deliberate click rather than a scroll past. */
+#overview { border-bottom: 1px solid var(--line); background: var(--panel); }
+#overview > summary { cursor: pointer; padding: 10px 16px; font-weight: 600; font-size: .9rem; list-style: revert; }
+#overview > summary:hover { color: var(--accent); }
+#overview > summary::marker { color: var(--muted); }
+.ov-body { padding: 0 16px 14px; }
+.ov-cap { color: var(--muted); font-size: .8rem; margin: 0 0 8px; }
+#ov-svg { width: 100%; height: auto; display: block; max-height: 78vh; }
+.dia-e { fill: none; stroke-width: 1.6; }
+.dia-field { stroke: var(--accent); }
+.dia-gen { stroke: var(--fg); }
+/* Dashed, and a different colour, because an id-ref is DECLARED rather than
+   found in the source. Drawing it like a field reference would claim the
+   reader saw something it structurally cannot see. */
+.dia-idref { stroke: var(--warn); }
+.dia-genhead { fill: var(--bg); stroke: var(--fg); stroke-width: 1.4; }
+.dia-refhead { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+.dia-l { fill: var(--fg); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.dia-lb { fill: var(--panel); stroke: var(--line); stroke-width: .8; }
+.dia-n { cursor: pointer; }
+.dia-n:hover .uml-box { stroke: var(--accent); stroke-width: 2; }
+/* Context boxes are faded, never hidden: they are real declarations the page
+   is not about, and a link into one is the edge a strict filter would cut. */
+.dia-ctx { opacity: .55; }
+.dia-ctx .uml-box { stroke-dasharray: 4 3; }
+.ov-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; font-size: .78rem; color: var(--muted); }
+.ov-key span { display: inline-flex; align-items: center; gap: 6px; }
+.ov-key i { display: inline-block; }
+.ov-key i.k-gen { width: 16px; height: 0; border-top: 2px solid var(--fg); border-radius: 0; }
+.ov-key i.k-field { width: 16px; height: 0; border-top: 2px solid var(--accent); border-radius: 0; }
+.ov-key i.k-idref { width: 16px; height: 0; border-top: 2px dashed var(--warn); border-radius: 0; }
 </style>
 </head>
 <body>
@@ -301,6 +335,14 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
     <strong>generalisation</strong>. A reference carried as a string id is not drawn &mdash; it is
     invisible to a syntactic reader, not absent from the model.</p>
 </header>
+<details id="overview">
+  <summary>Relationship diagram &mdash; what is defined here, and how it is linked</summary>
+  <div class="ov-body">
+    <p class="ov-cap" id="ov-cap">loading&hellip;</p>
+    <svg id="ov-svg" role="img" aria-labelledby="ov-cap"></svg>
+    <div class="ov-key" id="ov-key"></div>
+  </div>
+</details>
 <main>
   <section id="list" aria-label="Declarations">
     <div class="controls">
@@ -479,6 +521,252 @@ function detail(d) {
   $("detail").innerHTML = h;
 }
 
+/* ---- Relationship diagram -------------------------------------------------
+   UML class boxes wired by their edges, so a reader can see that Role is
+   linked to Skill AND HOW — the label on the edge is the field it goes
+   through. This is the panel's whole reason to exist; a picture that shows
+   connection without naming the relation answers half the question.
+
+   SCOPED, NEVER THE WHOLE CORPUS. Owner, 2026-09-20: "not the WHOLE thing"
+   and "what's defined in that KG harness". 812 labelled boxes is the hairball
+   kg-viewer measured at 1111 nodes, so the diagram draws what the page is
+   scoped to, narrowed further by the module filter when one is set — which is
+   how a 754-declaration instance still has a readable picture.
+
+   The layout is STATIC: computed once, deterministically, no simulation.
+   Dragging and alternate arrangements are bean whbf. */
+var DIA_MAX = 40;
+
+/** Edge styling per kind — and an id-ref is deliberately not drawn like the rest. */
+function diaEdgeStyle(kind) {
+  if (kind === "extends") return { dash: "", head: "gen", cls: "dia-gen", label: "" };
+  /* DECLARED, not proven. A field reference is in the source; an id-ref is an
+     author's assertion via @ref over a plain string. Drawing them alike would
+     claim the reader found something it cannot see. */
+  if (kind === "id-ref") return { dash: "5 4", head: "ref", cls: "dia-idref", label: "" };
+  return { dash: "", head: "ref", cls: "dia-field", label: "" };
+}
+
+var DIA_CONTEXT_MAX = 12;
+
+function diaModel() {
+  var mod = $("mod") ? $("mod").value : "";
+  var core = G.decls.filter(function (d) { return inScope(d) && (!mod || d.module === mod); });
+  var index = {}, decls = [];
+  core.forEach(function (d) { index[d.id] = decls.length; decls.push(d); d.__ctx = false; });
+
+  /* ONE HOP OF CONTEXT, and it is not a nicety.
+     The relationship worth seeing is usually the one that LEAVES the module:
+     RoleDefSchema --skills--> SkillDefinitionSchema lives in two files, so a
+     strict module filter draws Role with its most interesting edge cut and
+     reports the loss as a number. Counting an edge is not showing it. So a
+     declaration just outside the filter that a drawn one touches is drawn
+     too, marked as context rather than as part of the set. */
+  var ctxIds = {};
+  G.edges.forEach(function (e) {
+    var fi = index[e.from], ti = index[e.to];
+    if (fi !== undefined && ti === undefined) ctxIds[e.to] = true;
+    else if (ti !== undefined && fi === undefined) ctxIds[e.from] = true;
+  });
+  var ctx = Object.keys(ctxIds)
+    .map(function (id) { return G.declIndex[id]; })
+    .filter(Boolean)
+    .sort(function (a, b) { return a.name < b.name ? -1 : 1; });
+  var ctxShown = ctx.slice(0, DIA_CONTEXT_MAX);
+  ctxShown.forEach(function (d) { index[d.id] = decls.length; decls.push(d); d.__ctx = true; });
+
+  var edges = [];
+  G.edges.forEach(function (e) {
+    var a = index[e.from], b = index[e.to];
+    if (a === undefined || b === undefined || a === b) return;
+    /* Context-to-context would draw a graph the page is not about. */
+    if (decls[a].__ctx && decls[b].__ctx) return;
+    edges.push({ a: a, b: b, via: e.via, kind: e.kind, array: e.array, optional: e.optional });
+  });
+  return {
+    decls: decls,
+    edges: edges,
+    index: index,
+    mod: mod,
+    coreCount: core.length,
+    ctxShown: ctxShown.length,
+    ctxHidden: ctx.length - ctxShown.length,
+  };
+}
+
+/** Longest-path layering, then one barycentre pass to reduce crossings. */
+function diaLayout(m) {
+  var n = m.decls.length;
+  var out = [], inc = [];
+  for (var i = 0; i < n; i++) { out.push([]); inc.push([]); }
+  m.edges.forEach(function (e) { out[e.a].push(e.b); inc[e.b].push(e.a); });
+
+  /* A generalisation should read DOWNWARD from its parent, so layer by
+     longest path over incoming edges. Cycles are real in a schema graph
+     (mutually recursive types), so the walk is depth-capped rather than
+     assuming a DAG — a cycle settles instead of hanging. */
+  var layer = new Array(n).fill(0);
+  for (var pass = 0; pass < Math.min(n, 12); pass++) {
+    var moved = false;
+    for (var v = 0; v < n; v++) {
+      inc[v].forEach(function (u) {
+        if (layer[u] + 1 > layer[v]) { layer[v] = layer[u] + 1; moved = true; }
+      });
+    }
+    if (!moved) break;
+  }
+
+  var rows = {};
+  for (var k = 0; k < n; k++) { (rows[layer[k]] = rows[layer[k]] || []).push(k); }
+  var keys = Object.keys(rows).map(Number).sort(function (x, y) { return x - y; });
+  /* Stable within a layer: barycentre of the layer above, ties by name, so the
+     picture is reproducible rather than merely deterministic-looking. */
+  keys.forEach(function (ky) {
+    rows[ky].sort(function (x, y) {
+      var bx = inc[x].length ? inc[x].reduce(function (s, u) { return s + u; }, 0) / inc[x].length : 1e9;
+      var by = inc[y].length ? inc[y].reduce(function (s, u) { return s + u; }, 0) / inc[y].length : 1e9;
+      return bx - by || (m.decls[x].name < m.decls[y].name ? -1 : 1);
+    });
+  });
+  return { rows: rows, keys: keys, layer: layer };
+}
+
+function diagram() {
+  var svg = $("ov-svg"), cap = $("ov-cap"), key = $("ov-key");
+  var m = diaModel();
+
+  if (!m.decls.length) {
+    cap.textContent = "Nothing in scope to draw.";
+    svg.innerHTML = ""; key.innerHTML = "";
+    return;
+  }
+  if (m.coreCount > DIA_MAX) {
+    /* Refusing is the honest answer, and it says how to get a picture rather
+       than just declining. Drawing 754 labelled boxes is the hairball. */
+    svg.innerHTML = ""; key.innerHTML = "";
+    cap.innerHTML = "<b>" + m.decls.length + "</b> declarations in scope — too many to draw as a relationship diagram " +
+      "(the limit is <b>" + DIA_MAX + "</b>, above which labelled boxes stop being readable). " +
+      "Pick a <b>module</b> in the filter above and the diagram for it appears here.";
+    return;
+  }
+
+  var L = diaLayout(m);
+  var CH = 7.0, PAD = 10, LH = 15, HEAD = 22, GAPX = 46, GAPY = 96;
+
+  /* Boxes first, to know their sizes before placing anything. */
+  var boxes = m.decls.map(function (d) {
+    var fields = (d.fields || []).map(function (f) {
+      return f.name + (f.optional ? "?" : "") + ": " + f.type.replace(/^z\./, "").slice(0, 24);
+    });
+    var rows = fields.slice(0, 6);
+    if (fields.length > rows.length) rows = rows.concat(["… " + (fields.length - rows.length) + " more"]);
+    var w = Math.max(d.name.length, 10);
+    rows.forEach(function (r) { w = Math.max(w, r.length); });
+    w = Math.min(w, 34) * CH + PAD * 2;
+    return { d: d, rows: rows, w: w, h: HEAD + (rows.length ? rows.length * LH + 6 : 0) };
+  });
+
+  var y = 20, W = 0;
+  L.keys.forEach(function (ky) {
+    var row = L.rows[ky];
+    var rw = row.reduce(function (s, i) { return s + boxes[i].w; }, 0) + GAPX * (row.length - 1);
+    var x = 20, hmax = 0;
+    row.forEach(function (i) {
+      boxes[i].x = x; boxes[i].y = y;
+      x += boxes[i].w + GAPX;
+      if (boxes[i].h > hmax) hmax = boxes[i].h;
+    });
+    W = Math.max(W, rw + 40);
+    y += hmax + GAPY;
+  });
+  var H = y;
+
+  /* Centre each row, now that the widest is known. */
+  L.keys.forEach(function (ky) {
+    var row = L.rows[ky];
+    var rw = row.reduce(function (s, i) { return s + boxes[i].w; }, 0) + GAPX * (row.length - 1);
+    var off = (W - rw) / 2 - 20;
+    row.forEach(function (i) { boxes[i].x += off; });
+  });
+
+  var parts = [
+    '<defs>' +
+    '<marker id="dia-gen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">' +
+    '<path d="M0 0 L12 6 L0 12 z" class="dia-genhead"/></marker>' +
+    '<marker id="dia-ref" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">' +
+    '<path d="M0 0 L10 5 L0 10" class="dia-refhead"/></marker>' +
+    "</defs>",
+  ];
+
+  m.edges.forEach(function (e, ei) {
+    var a = boxes[e.a], b = boxes[e.b];
+    var ax = a.x + a.w / 2, bx = b.x + b.w / 2;
+    var ay, by;
+    if (b.y >= a.y + a.h) { ay = a.y + a.h; by = b.y; }
+    else if (a.y >= b.y + b.h) { ay = a.y; by = b.y + b.h; }
+    else { ay = a.y + a.h / 2; by = b.y + b.h / 2; }
+    var my = (ay + by) / 2;
+    var st = diaEdgeStyle(e.kind);
+    parts.push('<path class="dia-e ' + st.cls + '" d="M' + ax.toFixed(1) + " " + ay.toFixed(1) +
+      "C" + ax.toFixed(1) + " " + my.toFixed(1) + " " + bx.toFixed(1) + " " + my.toFixed(1) + " " +
+      bx.toFixed(1) + " " + by.toFixed(1) + '"' + (st.dash ? ' stroke-dasharray="' + st.dash + '"' : "") +
+      ' marker-end="url(#dia-' + st.head + ')"/>');
+    /* THE LABEL IS THE POINT. "Role is linked to Skill" is half an answer;
+       "via skills, many" is the whole one. */
+    if (e.via) {
+      /* Two edges whose midpoints land in the same band overplot their
+         labels, which is how "permissions * 0..1" and "actors * 0..1" came
+         out on top of each other. Stagger by index: deterministic, and it
+         only has to separate neighbours rather than be optimal. */
+      var lx = (ax + bx) / 2, ly = my + ((ei % 3) - 1) * 13;
+      var txt = e.via + (e.array ? " *" : "") + (e.optional ? " 0..1" : "");
+      parts.push('<rect class="dia-lb" x="' + (lx - (txt.length * 3.3 + 5)).toFixed(1) + '" y="' + (ly - 8).toFixed(1) +
+        '" width="' + (txt.length * 6.6 + 10).toFixed(1) + '" height="15" rx="3"/>');
+      parts.push('<text class="dia-l" x="' + lx.toFixed(1) + '" y="' + (ly + 3).toFixed(1) +
+        '" text-anchor="middle">' + esc(txt) + "</text>");
+    }
+  });
+
+  boxes.forEach(function (bx) {
+    var d = bx.d;
+    var g = '<g class="dia-n' + (d.__ctx ? " dia-ctx" : "") + '" data-ov="' + esc(d.id) + '"><title>' +
+      esc(d.name) + " — " + esc(d.kind) +
+      (d.__ctx ? ". OUTSIDE this filter — drawn because something here links to it." : "") +
+      ". Click to open its definition.</title>" +
+      '<rect class="uml-box' + (SEL === d.id ? " sel" : "") + '" x="' + bx.x.toFixed(1) + '" y="' + bx.y.toFixed(1) +
+      '" width="' + bx.w.toFixed(1) + '" height="' + bx.h.toFixed(1) + '" rx="4"/>' +
+      '<text class="uml-t" x="' + (bx.x + PAD).toFixed(1) + '" y="' + (bx.y + 15).toFixed(1) + '">' +
+      esc(d.name.slice(0, 34)) + "</text>";
+    if (bx.rows.length) {
+      g += '<line class="uml-e" x1="' + bx.x.toFixed(1) + '" y1="' + (bx.y + HEAD).toFixed(1) +
+        '" x2="' + (bx.x + bx.w).toFixed(1) + '" y2="' + (bx.y + HEAD).toFixed(1) + '"/>';
+      bx.rows.forEach(function (r, i) {
+        g += '<text class="uml-f" x="' + (bx.x + PAD).toFixed(1) + '" y="' +
+          (bx.y + HEAD + 14 + i * LH).toFixed(1) + '">' + esc(r.slice(0, 34)) + "</text>";
+      });
+    }
+    parts.push(g + "</g>");
+  });
+
+  svg.setAttribute("viewBox", "0 0 " + Math.max(W, 320) + " " + H);
+  svg.innerHTML = parts.join("");
+
+  var kinds = {};
+  m.edges.forEach(function (e) { kinds[e.kind] = (kinds[e.kind] || 0) + 1; });
+  cap.innerHTML = "<b>" + m.coreCount + "</b> declaration(s)" +
+    (m.mod ? " in <b>" + esc(m.mod.split("/").pop()) + "</b>" : SCOPE ? " in <b>" + esc(SCOPE) + "</b>" : "") +
+    ", <b>" + m.edges.length + "</b> relationship(s). Each edge is labelled with the FIELD it goes " +
+    "through; <b>*</b> is a list. Click a box to open its definition." +
+    (m.ctxShown ? " <b>" + m.ctxShown + "</b> faded box(es) sit OUTSIDE this filter and are drawn because " +
+      "something here links to them \u2014 a cut edge is the one most worth seeing." : "") +
+    (m.ctxHidden ? " <b>" + m.ctxHidden + "</b> further neighbour(s) not drawn." : "");
+
+  key.innerHTML =
+    '<span><i class="k-gen"></i>generalisation (extends)</span>' +
+    '<span><i class="k-field"></i>field reference — in the source</span>' +
+    '<span><i class="k-idref"></i>id reference — DECLARED with @ref, because a string id is invisible to a syntactic reader</span>';
+}
+
 function render() {
   var q = $("q").value.trim().toLowerCase();
   var k = $("kind").value, m = $("mod").value;
@@ -557,10 +845,33 @@ fetch(DATA_HREF).then(function (r) {
   });
   $("q").addEventListener("input", render);
   $("kind").addEventListener("change", render);
-  $("mod").addEventListener("change", render);
+  $("mod").addEventListener("change", function () {
+    render();
+    /* The diagram narrows with the module filter — that is how a
+       754-declaration instance still has a readable picture. Redrawn only
+       when the panel is open; a closed one costs nothing. */
+    if ($("overview").open) diagram();
+  });
   $("items").addEventListener("click", function (e) {
     var b = e.target.closest("button[data-id]");
     if (b) select(b.getAttribute("data-id"));
+  });
+  /* A node navigates; it does not move. In declaration mode it selects, in
+     module mode it filters the list to that module — the overview hands you
+     off to the panel that answers the local question. */
+  $("ov-svg").addEventListener("click", function (e) {
+    var c = e.target.closest("[data-ov]");
+    if (!c) return;
+    var id = c.getAttribute("data-ov");
+    if (byId(id)) { select(id); return; }
+    $("mod").value = id;
+    render();
+    $("list").scrollIntoView({ block: "start" });
+  });
+  $("overview").addEventListener("toggle", function () {
+    /* Drawn on first open rather than at load: a reader who never opens the
+       panel should not pay for a layout over 812 declarations. */
+    if ($("overview").open && !$("ov-svg").childNodes.length) diagram();
   });
   $("detail").addEventListener("click", function (e) {
     var a = e.target.closest('a[href^="#"]');

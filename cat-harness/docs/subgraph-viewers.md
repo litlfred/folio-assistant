@@ -48,42 +48,50 @@ every declared `schemas` directory, with the edges between them.
   generalisations above it and its field references below, each labelled with
   the field it goes through.
 
-There is deliberately **no whole-corpus class diagram**. Hundreds of
-declarations and hundreds of edges render as a wall that looks like a data
-model and answers no question about one — the same argument the knowledge-graph
-viewer already made and won. The diagram is a *view over the projection*, so
-the projection carries every edge and another view costs nothing to add.
+- A **relationship diagram** at the top, collapsible and closed by default:
+  the declarations this page is scoped to, as UML boxes wired by labelled
+  edges — *what is defined here, and how it is linked?*
 
-### Reading it
+There is still **no whole-corpus class diagram.** Hundreds of labelled
+declaration boxes render as a wall that looks like a data model and answers no
+question about one — the same argument the knowledge-graph viewer made and won.
+The diagram obeys it by staying **scoped**, and by declining when the scope is
+too big rather than drawing it anyway.
 
-Three of the states it shows are easy to mistake for noise:
+### The relationship diagram
 
-- **`undetermined`** — the reader saw an expression it does not model, and
-  **says what it saw**. This is never rendered as a type with no fields,
-  because "no fields" and "could not be read" are different answers.
-- **`unresolved`** — a name the module binds, from a module inside this graph,
-  that resolves to no declaration. A real finding, usually a vocabulary
-  constant.
-- **`external`** — bound to something outside this graph. Resolved correctly;
-  nothing to do.
+A collapsible panel at the top draws the declarations the page is scoped to as
+**UML class boxes wired by their edges, each edge labelled with the field it
+goes through** — so you can read not just that `Role` is linked to `Skill`, but
+that it goes through `skills`, and that it is a list.
 
-### What the diagram cannot show
+**It is scoped, and refusing is an answer.** The diagram draws the page's scope
+narrowed by the module filter; above 40 declarations it declines and says to
+pick a module. Drawing 812 labelled boxes is the hairball the knowledge-graph
+viewer measured at 1111 nodes.
 
-A reference carried as a **string id** is not drawn, and this is a structural
-limit rather than a gap: a field declared as a plain string holds no link to
-the schema it names, so nothing syntactic — and nothing in JSON Schema or the
-type checker either — can recover it.
+**One hop of context is drawn, faded.** A strict module filter cuts the edge
+most worth seeing — `RoleDefSchema --skills--> SkillDefinitionSchema` spans two
+files — so a declaration just outside the filter that a drawn one touches is
+drawn too, dashed and dimmed. Counting a cut edge is not showing it.
 
-Measured against `schemas/assistant-schema.puml`, a hand-drawn UML diagram
-used as a control: **14 of 15** compositions reproduced, **0 of 9** id
-associations. The page says so permanently, and again on any type carrying
-id-style fields, because an undrawn association is **invisible, not absent**.
+Three edge kinds, and the third is drawn differently on purpose:
 
-The same comparison found the hand-drawn diagram wrong in one place, which is
-what a control is for.
+| kind | drawn | means |
+|---|---|---|
+| generalisation | solid, hollow triangle | `extends` |
+| field reference | solid, open arrow | a reference **in the source** |
+| id reference | **dashed** | an association **declared** with `@ref` |
 
-The data is at `assets/schemas/index.json` and is the same file the page
-reads; anything else may draw it.
+A field reference is something the reader *found*; an id reference is something
+an author *asserted*, because the target is a string id no syntactic reader can
+see. Drawing them alike would claim the reader saw something it did not.
+
+Clicking a box opens that declaration's definition, which is what makes the
+panel navigation rather than a poster.
+
+The layout is **static**: computed once, deterministically, no simulation.
+Dragging and alternate arrangements are tracked separately.
 
 ## The library — the L1 corpus
 
