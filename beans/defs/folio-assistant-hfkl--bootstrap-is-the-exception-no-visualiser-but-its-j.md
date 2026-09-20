@@ -71,6 +71,30 @@ rule rather than a new one, and the two should be written down once.
 - [x] The exemption is written where the QA axis will read it, so `2krx` does
       not raise a finding against bootstrap for having no visualiser
 - [x] The `_kg/` vs `cat-bootstrap/cat-bootstrap.jsonld` contradiction above is
+      resolved, one way stated — **done 2026-09-20, and it was a stale
+      comment rather than a design question.** Both generators exist and
+      neither commits anything: `kg-export.ts` writes `_kg/<stub>.jsonld`
+      (gitignored, `.gitignore:98`) or wherever `--out` says, and
+      `gen-bootstrap-graph.ts` writes `cat-bootstrap/cat-bootstrap.jsonld`, which
+      `.gitignore:108` ignores **deliberately** — it was committed once on a
+      rationale citing a README step no prose file under `cat-bootstrap/`
+      contains, at 52 % of `cat-bootstrap/` by line count. `docs-site.yml:274`
+      builds it into the published site instead.
+
+      So `kg-export.ts`'s comment calling it "a COMMITTED artefact ... so its
+      staleness gate would fail" was wrong on both halves. The CHOICE it
+      defended (a repo-relative path) is right, for a reason that does not
+      depend on storage: an absolute path leaks a runner's filesystem layout
+      into a **published** document and changes every build. Comment
+      corrected. A right choice with a false reason is the worse failure —
+      a reader checks the claim, finds no gate, and concludes the constraint
+      is imaginary.
+
+      **And the real defect is underneath it: `35kc`.** Bootstrap's graph is
+      published to the live site and to NO staging preview, along with every
+      namespace document. So on staging, the layer whose existence IS its
+      `.json`/`.jsonld` has neither.
+- [ ] The docs page's "conflict" section is rewritten as the resolved rule
       resolved, one way stated
 - [x] The docs page's "conflict" section is rewritten as the resolved rule
 

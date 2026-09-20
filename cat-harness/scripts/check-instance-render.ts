@@ -110,6 +110,19 @@ export interface InstanceRender {
   totalNodes: number;
   /** Collectors deliberately not run, so "has none" is distinct from "never looked". */
   omitted: readonly string[];
+  /**
+   * Determined empties — things this instance was looked for and has none of.
+   *
+   * Reported, never fatal, and that is the distinction it exists to carry.
+   * "No workflow diagrams under a declared knowledge-graph directory" is a
+   * fact worth printing and not a reason to fail an instance: a skills
+   * package with no process is ordinary. Before this, it was a `problem`, and
+   * three instances holding one skill each failed on it alone.
+   *
+   * Different from `omitted`, which is "never looked for". This one IS the
+   * result of looking.
+   */
+  notes?: readonly string[];
   /** Why, when the verdict is not `rendered`. */
   reasons: string[];
 }
@@ -205,6 +218,7 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
     nodeCount: ownNodes,
     totalNodes: nodes.nodes.length,
     omitted: nodes.omitted,
+    notes: nodes.notes,
     reasons,
   };
 }
@@ -243,6 +257,9 @@ export function formatReport(rs: InstanceRender[]): string {
       );
     }
     if (r.omitted.length) out.push(`      not looked for: ${r.omitted.join(", ")}`);
+    // Printed for a RENDERED instance too — a determined empty that only
+    // shows up on failures is a determined empty nobody reads.
+    for (const n of r.notes ?? []) out.push(`      looked, found none: ${n}`);
   }
   const failed = rs.filter((r) => r.verdict === "failed").length;
   const undet = rs.filter((r) => r.verdict === "undetermined").length;

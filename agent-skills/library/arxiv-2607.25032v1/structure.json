@@ -1,0 +1,263 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2607.25032v1",
+ "source": {
+  "file": "2607.25032v1.pdf",
+  "sha256": "449a2e29e68b0916101c9dba3e1f738b73c17a55635c32b62446ed83aed3cdb3",
+  "bytes": 370414,
+  "pages": 9,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-20T15:00:53Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2607.25032",
+   "version": "1",
+   "primary_class": "cs.SE",
+   "stamp_date": "27 Jul 2026"
+  },
+  "doi": null,
+  "title": "Authoring Agent Skills: A Software-Engineering Approach",
+  "authors_raw": "Giuseppe Destefanis",
+  "title_lines": [
+   "Authoring Agent Skills: A Software-Engineering",
+   "Approach"
+  ],
+  "abstract": "Agent Skills are an emerging way to extend large language model agents with reusable procedural knowledge that the agent loads on demand. Anthropic introduced Agent Skills and published the format as an open specification supported across several agent tools. This note argues that a skill is a software artefact and that its construction should follow software-engineering principles, with qualifications: single responsibility, separation of interface from implementation, low coupling, and economy in a shared token budget, together with behavioural evaluation in place of deterministic testing. Using Claude Code as the reference implementation, it describes how a skill is structured, how its contents are loaded in stages, and how to write the description on which selection depends. It places skills against the other mechanisms a developer can use to shape agent behaviour, like project memory files, slash commands, subagents, external tool connections, and hooks, and gives a rule for choosing between them based on who decides that a mechanism runs and what guarantee it provides. It then sets out an evaluation-driven authoring process, a set of patterns and faults commonly encountered in authoring, and the trust question raised by using skills from third parties. We illustrate the comparison drawn in UML class style, the loading model, the anatomy of a skill, the relative position of each mechanism, and the points at which skills and hooks act during a session. Note on sources This note draws on Anthropic\u2019s official documentation1 for Agent Skills, Claude Code skills, hooks, and skill authoring best practices, together with the open Agent Skills specification.",
+  "docinfo": {
+   "Title": "Authoring Agent Skills: A Software-Engineering Approach",
+   "Author": "Giuseppe Destefanis",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:8def8d8)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Skills as software artefacts",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "The skill as a unit",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Staged loading",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Writing the description",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Anatomy of a well-formed skill",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Skills within the agent tool surface",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Skills and hooks",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "An evaluation-driven authoring process",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Patterns and faults",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Trust and third-party skills",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Summary of guidance",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1851,
+   "n_words": 274
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 3331,
+   "n_words": 544
+  },
+  {
+   "id": "sec-001-skills-as-software-artefacts",
+   "number": null,
+   "title": "Skills as software artefacts",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 5564,
+   "n_words": 932
+  },
+  {
+   "id": "sec-002-the-skill-as-a-unit",
+   "number": null,
+   "title": "The skill as a unit",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 977,
+   "n_words": 156
+  },
+  {
+   "id": "sec-003-staged-loading",
+   "number": null,
+   "title": "Staged loading",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 2305,
+   "n_words": 403
+  },
+  {
+   "id": "sec-004-writing-the-description",
+   "number": null,
+   "title": "Writing the description",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 997,
+   "n_words": 174
+  },
+  {
+   "id": "sec-005-anatomy-of-a-well-formed-skill",
+   "number": null,
+   "title": "Anatomy of a well-formed skill",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 2578,
+   "n_words": 428
+  },
+  {
+   "id": "sec-006-skills-within-the-agent-tool-surface",
+   "number": null,
+   "title": "Skills within the agent tool surface",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 2955,
+   "n_words": 495
+  },
+  {
+   "id": "sec-007-skills-and-hooks",
+   "number": null,
+   "title": "Skills and hooks",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 8,
+   "n_chars": 3319,
+   "n_words": 554
+  },
+  {
+   "id": "sec-008-an-evaluation-driven-authoring-process",
+   "number": null,
+   "title": "An evaluation-driven authoring process",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 1410,
+   "n_words": 245
+  },
+  {
+   "id": "sec-009-patterns-and-faults",
+   "number": null,
+   "title": "Patterns and faults",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 1241,
+   "n_words": 198
+  },
+  {
+   "id": "sec-010-trust-and-third-party-skills",
+   "number": null,
+   "title": "Trust and third-party skills",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 705,
+   "n_words": 116
+  },
+  {
+   "id": "sec-011-summary-of-guidance",
+   "number": null,
+   "title": "Summary of guidance",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 1783,
+   "n_words": 247
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 12,
+  "sections": 13,
+  "chars_total": 29016
+ }
+}

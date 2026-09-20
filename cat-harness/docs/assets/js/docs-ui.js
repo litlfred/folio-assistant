@@ -1909,7 +1909,7 @@
    * says everything. A description of the cat would be read out before every
    * todo on the board.
    */
-  function buildBackdrop(art, summary) {
+  function buildBackdrop(art) {
     var pic = el("picture", { "aria-hidden": "true" });
     if (art.mobile) {
       var src = el("source", { media: "(max-width: 30rem)", srcset: art.mobile });
@@ -1960,7 +1960,7 @@
     var art = todo.theme && todoState.themeArt[todo.theme];
     if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
-    if (art) card.appendChild(buildBackdrop(art, todo.summary));
+    if (art) card.appendChild(buildBackdrop(art));
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {

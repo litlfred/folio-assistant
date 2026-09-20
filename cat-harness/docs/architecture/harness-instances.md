@@ -151,7 +151,7 @@ bare minimum, `cat-harness/workflows` elaborates — so it is a second instance
 of one rule rather than a new one.
 
 *Tracked: `hfkl` (cat-bootstrap's exemption and its `render/` subgraph — **done**), `ohx6`
-(`cat-harness/folio/`), `1hvo` (`cat-harness/theming/`), `7po1` (the workflow
+(`cat-harness/folio/`), `1hvo` (`cat-harness/skills/theming/`), `7po1` (the workflow
 split this parallels).*
 
 ## Open, and named rather than guessed

@@ -69,6 +69,20 @@ no Pin and no Close"*.
 
 - [x] Unpinning preserves the sticky's theme (art is `5y4b`)
 - [ ] An unpinned sticky is visible and movable within the board frame
+- [ ] The keyboard path survives — no drag-only affordance
+- [ ] The inline-sticky case and its e2e test still hold
+
+---
+
+## Issue opened 2026-09-20
+
+Author authorised it. <https://github.com/litlfred/folio-assistant/issues/558>,
+carrying the verbatim report, both defects, the `docs-ui.js` locations, the
+button-over-drag reasoning that must survive, and the `6lb8` / `5y4b`
+dependencies. Nothing implemented — this waits on `5y4b` (a sticky with no
+theme makes "loses its theme" half-moot) and must agree with `6lb8` on what
+"position on the board" means.
+
 - [x] The keyboard path survives — no drag-only affordance
 - [x] The inline-sticky case and its e2e test still hold
 

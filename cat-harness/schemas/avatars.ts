@@ -169,6 +169,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 200,
     reads: "an arrow onto a line — something arriving",
   },
+  catalogue: {
+    // A card index: drawers of cards standing for things that are elsewhere.
+    // Deliberately NOT books on a shelf — that is `library`, and the difference
+    // between "we have it" and "we know of it" is the point of the kind.
+    glyph: "M4 6h16v12H4zM4 10h16M10 6v12M13 13h4M13 15h3",
+    tone: 258,
+    reads: "a card index — what is known to exist, mostly not held",
+  },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
     tone: 36,
@@ -183,6 +191,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h7M7 6v2c0 3-1 5-3 6M6 10c1 3 3 4 5 5M13 19l4-10 4 10M15 16h5",
     tone: 176,
     reads: "a glyph and an A — one language against another",
+  },
+  docs: {
+    // The one renderable kind the harness owns. Distinct from `folio`, which is
+    // core's: the difference is the SUBJECT, not the format, so the glyph is a
+    // page WITH a magnifier over it — documentation ABOUT something — rather
+    // than a plain page, which would read as "any content".
+    glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4",
+    tone: 212,
+    reads: "a page with a folded corner — documentation about the graph itself",
   },
   interaction: {
     // A speech bubble with a tick inside — a preference that has been STATED,

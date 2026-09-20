@@ -177,6 +177,15 @@ change being pushed, and its "60 of 60" was quoted as though it did.
 > **A verification names a TREE, not a branch.** Anything edited after the run
 > started is unverified, however green the run was.
 
+**`bun run gates` reads the WORKING TREE, not the commit**, which is the
+mechanism behind that sentence and worth knowing on its own. A third instance,
+2026-09-20: a splice script corrupted `harness.json` while a run was in
+flight, and **40 of 61 gates failed reading a file that was invalid for about
+a minute**. Every one of the five failures the summary named passed when
+re-run by hand. So a mid-run edit does not merely leave the change unverified
+— it can make the run report failures that were never in any commit, which
+costs more time than the run saved.
+
 This is the harder half to notice, because nothing looks wrong: the command
 really did pass, the output really does say 60 of 60, and the number is simply
 about a different tree than the one that got pushed. **Run the gates after the

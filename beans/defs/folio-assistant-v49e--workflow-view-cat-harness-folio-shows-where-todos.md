@@ -76,3 +76,11 @@ bolted on — the owner asked for both in the same breath.
 ## Not started
 
 Explicitly per the owner: *"do not do this, just bean up"*.
+
+## `aazi` asks for an adjacent rendering — design them together
+
+The owner beaned this one explicitly rather than starting it ("do not do this,
+just bean up"). `aazi` then asked for beans and todos **mapped to their BPMNs,
+rendered for project management**, published at a `workflow-statemgmt` path.
+That is the same data this bean wants to show "where process is breaking
+down". One renderer with two readings, not two renderers.

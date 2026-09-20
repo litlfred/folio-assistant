@@ -10,6 +10,7 @@
  */
 import { describe, expect, test } from "bun:test";
 
+import { TodoItemSchema } from "./constraints";
 import {
   TodoTagsSchema,
   TodoNodeSchema,
@@ -273,5 +274,46 @@ describe("a todo's theme — declared, defaulted, and never guessed", () => {
       $schema: "folio-todo/v1",
     });
     expect(bad.success).toBe(false);
+  });
+});
+
+describe("a todo declares its theme rather than having one inferred (bean `5y4b`)", () => {
+  const base = {
+    id: "t1",
+    summary: "s",
+    comment: "",
+    status: "open" as const,
+    priority: "medium" as const,
+    origin: "agent" as const,
+    createdAt: "2026-09-20T00:00:00Z",
+  };
+
+  test("the field is OPTIONAL — absent means the instance's own theme", () => {
+    // The default is inherited, not guessed. A wrong theme is worse than no
+    // theme: a plain card says nothing, while a card themed `operations`
+    // asserts the todo is operations work.
+    const r = TodoItemSchema.safeParse(base);
+    expect(r.success).toBe(true);
+    if (r.success) expect(r.data.theme).toBeUndefined();
+  });
+
+  test("a declared theme survives the parse", () => {
+    const r = TodoItemSchema.safeParse({ ...base, theme: "library" });
+    expect(r.success).toBe(true);
+    if (r.success) expect(r.data.theme).toBe("library");
+  });
+
+  test("an unknown theme PARSES — it is a rendering finding, not a parse error", () => {
+    // Deliberately an open string, like `GraphNodeDirectorySchema.graphs`.
+    // Closing the enum would mean building it at module load and importing the
+    // theme table into the CONTENT model, giving every consumer of a todo a
+    // dependency on the palette.
+    expect(TodoItemSchema.safeParse({ ...base, theme: "no-such-theme" }).success).toBe(true);
+  });
+
+  test("an empty theme is refused — absent and blank are different claims", () => {
+    // Absent means "inherit"; empty string would mean "a theme was chosen and
+    // it is nothing", which no renderer can act on.
+    expect(TodoItemSchema.safeParse({ ...base, theme: "" }).success).toBe(false);
   });
 });

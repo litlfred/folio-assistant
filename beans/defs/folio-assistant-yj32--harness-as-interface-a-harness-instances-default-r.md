@@ -3,8 +3,10 @@
 title: 'HARNESS AS INTERFACE: a harness instance''s default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system'
 status: todo
 type: epic
+priority: normal
 created_at: 2026-09-20T13:47:14Z
-updated_at: 2026-09-20T13:47:14Z
+updated_at: 2026-09-20T18:48:38Z
+parent: folio-assistant-p5wm
 ---
 
 
@@ -72,10 +74,36 @@ designing them separately is how they end up disagreeing:
   sticky-scoped concept. Making it the page ground is a different CSS surface
   (`body`, or a board element) and possibly a different crop set — a sticky's
   crop is chosen for a CARD, and a page is a different aspect entirely.
-- **"perhaps writable if writable datastore"** — what IS the writable store?
-  gh-pages is static. The artifact database, a local server, or a GitHub write
-  path through the editor links are three different answers with three
-  different security postures.
+- ~~**"perhaps writable if writable datastore"** — what IS the writable store?~~
+  **ANSWERED 2026-09-20, and the question was malformed.** The owner:
+
+  > when agentic harness has access to githbu repo, that is onen write
+  > path/tool. or it could use github api/oauth as another tool, or github
+  > connector (e.g. on claude). depends on agent capavbilities and permissions.
+
+  **There is no "the" write path.** There are several TOOLS, and which one a
+  session may use is decided by its **capabilities** and its **permissions** —
+  which is machinery this repository already has, rather than a new design:
+
+  | tool | capability | what distinguishes it |
+  |---|---|---|
+  | commit from a checkout | `git-push` | holds a working tree; reach is what the filesystem allows |
+  | forge HTTP API | `github-api` *(declared this session)* | no working tree; reach is what the credential was granted |
+  | host connector | `github-connector` *(declared this session)* | no credential of its own; reach is what the connector was granted, knowable only by trying |
+
+  `git-push` and `git-read` were already declared. The other two were not, and
+  are now — with the detection method each can honestly support: `env-var` for
+  the credential, `mcp-probe` for the connector. **Neither probe answers "may I
+  write"**; that is a permission on the actor, and a session can hold the
+  capability and still be refused. Conflating the two is the mistake the
+  role-model skill already warns about — a capability is what the ENVIRONMENT
+  provides, a permission is what the ACTOR may do.
+
+  **What this unblocks:** `v1hw`, `jbx2`, `ivfw` and `5y4b`'s render half were
+  all waiting on "which write path". They should not choose one. They should
+  ask which write tool is available and degrade when none is — which is what
+  `CapabilityRef`'s degradation strategies are for. A read-only surface is the
+  floor, exactly as the epic's own "*readable, and perhaps writable*" says.
 - **Which subgraphs are "display" subgraphs?** Every declared `graphs` entry,
   or an opt-in subset? `uploads` and `library` are declared and have no
   renderer today.

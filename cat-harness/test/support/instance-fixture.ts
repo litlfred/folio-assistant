@@ -86,6 +86,13 @@ export function declareInstance(dir: string, name?: string): string {
  * list: a declared-but-absent directory is the `dh4f` defect, where every
  * consumer scans nothing and reports a clean run over it.
  *
+ * REDUNDANT as of bean `rday`, and kept anyway. `ownDirectories` now seeds the
+ * conventional set unconditionally, so a declaration no longer withdraws it and
+ * this function compensates for nothing. It stays because it costs a walk of
+ * eight paths and keeps a fixture's declaration explicit about what that
+ * fixture owns — and because removing it belonged in neither of the two
+ * commits whose measurements are about something else.
+ *
  * This is a fixture convenience, and it is NOT what `folio_init` does — a
  * real instance declares what it owns, deliberately, once.
  */

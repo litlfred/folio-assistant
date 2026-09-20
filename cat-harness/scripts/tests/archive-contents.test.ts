@@ -129,7 +129,12 @@ describe("routing happens on CONTENT, with no PDF backend needed", () => {
     const f = fixtures();
     const p = planFor(f.zip, undefined, "library");
     expect(p.rung).toBe("archive");
-    expect(p.steps[0]).toContain("scripts/archive-contents.py");
+    // The step is an ABSOLUTE path since 2026-09-20 — `"scripts/<name>.py"`
+    // was resolved against the CWD and `bun run` puts you at the repository
+    // root, one level above where the helpers live, so every rung died with
+    // `can't open file`. Asserting the BASENAME rather than a spelling of the
+    // location is what stops this test re-pinning the next relocation.
+    expect(p.steps[0]!.some((a) => a.endsWith("/archive-contents.py"))).toBe(true);
     expect(p.why).toContain("application/zip");
   });
 

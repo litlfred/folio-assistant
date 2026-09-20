@@ -15,7 +15,7 @@ nav_order: 7
 
 > **The documentation entry for the `theming` subgraph.** Bean `2krx`: every
 > time an instance names a directory as a subgraph it owes a **visualiser** and
-> a **documentation entry**. `cat-harness/theming/` arrives owing both, and
+> a **documentation entry**. `cat-harness/skills/theming/` arrives owing both, and
 > shipping it without them would manufacture the finding rather than clear it.
 > This is the entry; `bun run theme:sheet` is the visualiser.
 
@@ -51,7 +51,7 @@ missing rule is where it goes wrong.
 
 ## One flat directory, not one per stage
 
-`cat-harness/theming/` is a single declared directory whose *files* carry the
+`cat-harness/skills/theming/` is a single declared directory whose *files* carry the
 split. Five declarations would owe five visualisers and five documentation
 entries under `2krx`, which manufactures findings on a repository that is
 trying to clear nineteen. *"Broken up thematically"* is satisfied by the files.

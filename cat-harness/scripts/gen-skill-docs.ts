@@ -200,6 +200,19 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
   // Collided exactly as `todo-manager` did and carried NO banner, so a reader
   // landing on either page could not tell the other existed. Added with the
   // `tdmg` resolution.
+  "kg-navigation": [
+    {
+      published: "kg-navigation",
+      label: "Reading the knowledge graph (tooled)",
+      repoPrefix: "kg-navigation/skills",
+      canonical: true,
+    },
+    {
+      published: "local-kg-navigation",
+      label: "Reading a knowledge graph before you have anything (bootstrap)",
+      repoPrefix: "bootstrap/skills",
+    },
+  ],
   "bean-coordination": [
     {
       published: "bean-coordination",
@@ -228,6 +241,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-core": "Platform core (folio-core)",
   workflow: "Workflow & process (workflow)",
   "graph-management": "Graph management (graph-management)",
+  theming: "Theming (theming)",
   "folio-document-adapter": "Document adapter (folio-document-adapter)",
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
@@ -248,13 +262,14 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // holds its skills directly, so `discoverGroups` takes the
   // `SKILLS_CATEGORIES[decl.id]` branch — the same one `cat-bootstrap` uses
   // below. Keyed on `crdm` it threw, naming the id it actually wanted.
-  // Keyed on the DECLARED ID for the same reason as the entries below: this
-  // directory holds its skills DIRECTLY rather than in package subdirectories,
-  // so `discoverGroups` takes the `SKILLS_CATEGORIES[decl.id]` branch. Bean
-  // `1hvo`: it is one flat directory whose FILES carry the stage split, not
-  // one declared subgraph per stage — five declarations would owe five
-  // visualisers and five documentation entries under `2krx`.
-  theming: "Theming (theming)",
+  // `theming` is above, keyed by its package-subdirectory name. Two sessions
+  // built that package independently on 2026-09-20 and this entry was the
+  // duplicate: one put it at `skills/theming/` (a subdirectory, keyed by
+  // basename) and the other at a top-level `cat-harness/theming/` (a declared
+  // directory, keyed by id). Same key either way, so the object literal had
+  // it twice. The subdirectory won on evidence — bean `lps0` measured that
+  // `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so the top-level
+  // placement silently dropped its skills out of skill QA.
   "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
   "methodology-raci": "RACI involvement model (methodologies/raci)",
   "remote-stubs": "Declared but not implemented here (stubs)",
@@ -279,6 +294,20 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // known" would reasonably conclude they have to read it first. Bean `hfkl`.
   "cat-bootstrap-render": "CatBootstrap rendering (cat-bootstrap/render)",
   "cat-harness-src": "Agent skills",
+  // Two top-level named subgraphs, staged ahead of the split (#223) and both
+  // keyed by DECLARED ID for the reason the comment above gives: their paths
+  // will change at the `cat-harness/` move and their ids will not.
+  //
+  // `kg-navigation` shares its name with `bootstrap/skills/kg-navigation.md`
+  // and the two are DIFFERENT DOCUMENTS — the tooled route and the zero-install
+  // floor. Measured 2026-09-20, before this entry existed: the published page
+  // carried bootstrap's body under the tooled one's name, so a reader landing
+  // there got the wrong skill with nothing saying so. That is the same
+  // collision `todo-manager` and `bean-coordination` are listed for below, and
+  // it is resolved the same way.
+  "kg-navigation": "Knowledge-graph navigation (tooled)",
+  "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
+  "who-iris-skills": "WHO IRIS (catalogue instance)",
 };
 
 /**

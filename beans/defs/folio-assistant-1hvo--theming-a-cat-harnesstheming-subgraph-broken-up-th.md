@@ -1,6 +1,6 @@
 ---
 # folio-assistant-1hvo
-title: 'THEMING: a cat-harness/theming/ subgraph, broken up thematically'
+title: 'THEMING: a cat-harness theming subgraph, broken up thematically'
 status: completed
 type: task
 priority: normal
@@ -83,6 +83,53 @@ stages and declares only its difference.
 
 ## Done when
 
+- [x] The theming skills live in their own package, on the axis the owner
+      chose — `cat-harness/skills/theming/`, shipped 2026-09-20.
+- [x] Documented: the three-level structure is recorded in
+      `theme-art-intake.md`, the skill an agent reads first here.
+- [x] No visualiser/doc exemption needed: as a package under the already
+      declared `skills/` graph it is not a separate declared subgraph, so
+      `2krx` does not ask it for one.
+
+## Shipped 2026-09-20 — and the path was NOT `cat-harness/theming/`
+
+The owner's words were *"themeing skills under cat-harness/thermeing/"*, and
+that literal path was tried first and is **wrong for this repository**. Worth
+recording, because the failure was silent in the way this repo keeps paying for:
+
+A kg directory that holds skills DIRECTLY is folded into the instance's own
+package (`discoverLocalPackages`, `skill-fetch.ts:132`) — the name is taken
+from the enclosing instance, not the directory. So `cat-harness/theming/` with
+a `package-manifest.json` produced a package that `LOCAL_PACKAGES` did not
+list, and **`kg:audit` wrote no sidecars for the three skills at all**. They
+were still served, still published, still in `knownSkills` — and silently
+unaudited. Nothing failed; the only symptom was three sidecars that did not
+appear.
+
+A **package is a subdirectory of a declared kg directory** — `skills/folio-core`,
+`skills/workflow`, `skills/graph-management`, `methodologies/crdm`. So
+`cat-harness/skills/theming/` is the shape, and with it `LOCAL_PACKAGES` finds
+the package and sidecars land at `kg-qa/skills/theming/`.
+
+## Measured before splitting, and it changed the plan
+
+**The corpus is three skills** — `theme-art-intake`,
+`site-presentation-assets`, `create-sticky-note`. Everything else that greps
+for "theme" merely mentions the word.
+
+So the four stage packages the chosen axis implies are **not** created: four
+directories over three skills would declare trees with nothing in them, which
+is `dh4f`, against this repository's own rule to declare only what exists. One
+package now; the axis is written down so the order is already decided when the
+content reaches it. What the move DID buy is findability — a theming skill was
+one of 107 in `folio-core` and is now one of three.
+
+Three ratchets caught mistakes on the way, which is them working:
+`gen-skill-docs` refused a package with no `SKILLS_CATEGORIES` heading ("a
+package is not published under a guessed heading"), the manifest-coverage test
+refused a `README.md` no other package carries (its substance moved into the
+skill), and `kg:audit:check` refused to delete the three dead sidecars itself —
+the owner authorised that.
 - [ ] `cat-harness/theming/` is declared, with its graph kind and `dependents`
 - [ ] The theming skills live there, split on an axis the owner chose
 - [ ] It has the visualiser and documentation entry `2krx` requires, or an

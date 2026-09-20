@@ -5,7 +5,7 @@
  *
  * Bean `2krx`: every time an instance names a directory as a subgraph, that
  * subgraph owes a **visualiser** and a **documentation entry**. `1hvo` adds
- * `cat-harness/theming/`, so it arrives owing both, and *shipping it without
+ * `cat-harness/skills/theming/`, so it arrives owing both, and *shipping it without
  * them manufactures the finding rather than clearing it*. This is the
  * visualiser; `docs/architecture/theming.md` is the entry.
  *

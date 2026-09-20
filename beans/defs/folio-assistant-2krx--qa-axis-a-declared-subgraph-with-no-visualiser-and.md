@@ -1,10 +1,11 @@
 ---
 # folio-assistant-2krx
 title: 'QA AXIS: a declared subgraph with no visualiser and no documentation entry is unreachable — and no skill means no tools'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-20T14:01:05Z
-updated_at: 2026-09-20T14:01:05Z
+updated_at: 2026-09-20T15:50:56Z
 parent: folio-assistant-yj32
 ---
 
@@ -60,12 +61,47 @@ findings rather than one:
 
 ## Done when
 
-- [ ] An axis reports, per declared subgraph, whether it has a visualiser, a
+- [x] An axis reports, per declared subgraph, whether it has a visualiser, a
       documentation entry, and a governing skill — three findings, not one.
-- [ ] Opt-out carries a reason per entry and is tested.
-- [ ] `library/` and `uploads/` are either covered or opted out with reasons.
-- [ ] Falsified in both directions: a subgraph WITH all three is not reported,
-      and removing any one of them makes it appear.
+      `scripts/check-subgraph-coverage.ts`, `bun run check:subgraph-coverage`.
+- [x] Opt-out carries a reason per entry and is tested. `coverage.exempt` maps
+      a criterion to its REASON — never a bare `true` — and the report prints
+      it, because a waiver nobody sees is a silence list.
+- [x] `library/` and `uploads/` are either covered or opted out with reasons.
+      Both now declare `docs` and `skill` (the ingestion page and
+      `library-ingestion`), which took the count 73 -> 69. Neither is opted
+      out of `visualiser`: that gap is REAL and is `jbx2` and `v1hw`.
+- [x] Falsified in both directions. Four mutations, each caught: reporting
+      regardless of declaration fails 7 tests, ignoring an exemption fails 2,
+      dropping bootstrap's layer exemption fails 2, and accepting a missing
+      target fails 1.
+
+## Shipped 2026-09-20
+
+**Declaration-first, never inference.** Coverage is read from the entry's
+`coverage` field rather than guessed by scanning for a page that mentions the
+path. Fuzzy matching invents both false positives and negatives, and — the
+reason that matters — **an absent declaration IS the finding**. Inferring one
+would paper over the thing being measured.
+
+**Two severities, because they are two problems.** A declared target that does
+not resolve is `major` (somebody claimed a renderer that is not there); an
+undeclared one is `minor` (nobody has said yet). Merging them would rank a typo
+alongside twenty unwritten viewers.
+
+**Every field is OPTIONAL.** `dependents` was made required four hours earlier
+and the bill landed on a sibling branch within the hour — 166 failures on the
+merged tree, nothing wrong with either side. This field does not need to be
+required to do its job.
+
+**Baseline: 69 findings, 0 major, across 4 instances** — cat-harness 62,
+bootstrap 4, the root 3. Advisory (exit 0) exactly as the bean asked, with
+`--strict` for the day the number is low enough to hold. Wired into
+`code-quality-gates.yml` so the count is visible every run and cannot drift.
+
+A bare id with no path separator is not checked against the filesystem:
+resolving a skill or tool id is the KG audit's job, and reporting "missing"
+about something never looked for would be the axis lying about its own scope.
 
 ## BOOTSTRAP IS EXEMPT — owner, 2026-09-20
 

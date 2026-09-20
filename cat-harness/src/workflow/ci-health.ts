@@ -853,3 +853,288 @@ export function render(
   lines.push("");
   return lines.join("\n");
 }
+
+// ── Pages deployments — bean `3yi4` ──────────────────────────────────────
+//
+// **A Pages build outcome is not repository state.** It is a fact an external
+// service holds, which *changes the status of the repo* — the owner's
+// correction, 2026-09-20: *"they are not. changes status of repo. tools need
+// to look external."* So nothing here caches it; these are pure reducers over
+// what the caller fetched, and the caller asks the API.
+//
+// The gap they close: `bm6d` measured **6 of the last 10 `pages build and
+// deployment` runs cancelled**, in an exact pattern, with nothing anywhere
+// saying so. Three properties hid it — the runs are on `gh-pages` rather than
+// the default branch, they are bot-triggered (`github-pages[bot]`, event
+// `dynamic`), and the query above asks `?branch=<default>`. The reader was
+// never missing; the question was too narrow.
+
+/** The workflow GitHub runs for Pages. Not a file in `.github/workflows/`. */
+export const PAGES_WORKFLOW = "pages build and deployment";
+
+export interface PagesHealth {
+  total: number;
+  success: number;
+  /**
+   * THE THIRD STATE, and the reason this exists. A cancelled deployment is
+   * neither success nor failure: nothing broke, and nothing shipped. Folding
+   * it into either is the lie — into success because the preview is stale,
+   * into failure because nobody needs to fix a build that was superseded.
+   */
+  cancelled: number;
+  failure: number;
+  /** Queued, in flight, skipped, neutral — not yet a verdict of any kind. */
+  unsettled: number;
+  latest?: RunSummary;
+}
+
+/** Reduce the Pages runs the caller fetched. Pure; asks nothing. */
+export function pagesHealth(runs: readonly RunSummary[]): PagesHealth {
+  const pages = runs.filter((r) => r.name.toLowerCase() === PAGES_WORKFLOW);
+  const h: PagesHealth = {
+    total: pages.length,
+    success: 0,
+    cancelled: 0,
+    failure: 0,
+    unsettled: 0,
+    latest: pages[0],
+  };
+  for (const r of pages) {
+    if (r.status !== "completed") h.unsettled++;
+    else if (r.conclusion === "success") h.success++;
+    else if (r.conclusion === "cancelled") h.cancelled++;
+    else if (NOT_A_VERDICT.has(r.conclusion ?? "")) h.unsettled++;
+    else h.failure++;
+  }
+  return h;
+}
+
+/** One commit on the publish branch, as the commits API returns it. */
+export interface DeployCommit {
+  sha: string;
+  message: string;
+  /** ISO-8601. */
+  date: string;
+}
+
+/**
+ * The staging slug a publish-branch commit is about, or `undefined`.
+ *
+ * Three spellings, and **the order between them is load-bearing** — which a
+ * mutation established rather than a reading. The first version tried the
+ * `staging(<slug>):` subject first and a `render-log: … STAGING/<slug>`
+ * trailer second, on the rationale that the subject is authoritative. Stubbing
+ * the order gave a SURVIVING mutation, so the rationale was checked against
+ * `feature-staging.yml` and was wrong twice over.
+ *
+ * It was vacuous where it was right: a deploy commit writes `$STAGING_SLUG`
+ * into both spellings from one variable, so on that commit the two branches
+ * cannot disagree and the order decides nothing.
+ *
+ * And it was wrong where it mattered: the cleanup commits spell the subject
+ * `staging(cleanup): remove STAGING/<slug>`, where `cleanup` is the OPERATION
+ * and the slug is in the path. Subject-first read every removal as a deploy of
+ * a branch called `cleanup` — so two removals for two unrelated PRs became one
+ * slug, and {@link selfSupersedes} reported them as this repository contending
+ * with itself. A false finding in exactly the direction `3yi4` exists to
+ * remove.
+ *
+ * So a `STAGING/<slug>` path wins wherever it appears, and the bare subject is
+ * the fallback for a deploy commit that carries no path. Order alone carries
+ * it — the first fix also excluded the literal `cleanup` from the subject
+ * branch, and a test written for the cost of the fix rather than its benefit
+ * caught that this breaks a branch genuinely NAMED `cleanup`, whose deploy
+ * commit has no `remove STAGING/` for the first branch to find. A blanket
+ * exclusion would have made one real branch permanently invisible to the
+ * report, to guard a case the ordering already handles.
+ */
+export function slugOfDeployCommit(message: string): string | undefined {
+  const removed = /^staging\(cleanup\): \w+ STAGING\/(\S+)/m.exec(message);
+  if (removed) return removed[1];
+  const logged = /^render-log: \w+ STAGING\/(\S+)/m.exec(message);
+  if (logged) return logged[1];
+  const staged = /^staging\(([^)]+)\):/m.exec(message);
+  if (staged) return staged[1];
+  return undefined;
+}
+
+export interface SelfSupersede {
+  slug: string;
+  /** The commit that cancelled the build of `superseded`. */
+  by: string;
+  superseded: string;
+  secondsApart: number;
+}
+
+/**
+ * Consecutive publish-branch commits from ONE deploy — `bm6d`'s signature.
+ *
+ * **This is what separates self-cancellation from cross-session contention**,
+ * which `3yi4` asks for and `bm6d` needs: that bean fixed one workflow pushing
+ * twice and did nothing about four sessions contending for one ref, so a
+ * merged cancellation count cannot show whether it worked.
+ *
+ * Two commits naming the SAME slug within `withinSeconds` are one deploy
+ * writing twice; the second cancels the first's Pages build. Different slugs
+ * are two sessions, which is `6pfo`'s ground and not counted here.
+ *
+ * `commits` is newest-first, as the API returns it.
+ */
+export function selfSupersedes(
+  commits: readonly DeployCommit[],
+  withinSeconds = 120,
+): SelfSupersede[] {
+  const out: SelfSupersede[] = [];
+  for (let i = 0; i + 1 < commits.length; i++) {
+    const newer = commits[i];
+    const older = commits[i + 1];
+    const a = slugOfDeployCommit(newer.message);
+    const b = slugOfDeployCommit(older.message);
+    if (!a || a !== b) continue;
+    const gap = (Date.parse(newer.date) - Date.parse(older.date)) / 1000;
+    // A negative gap means the caller did not hand them over newest-first.
+    // Refuse rather than report a pair from an ordering we cannot trust.
+    if (!Number.isFinite(gap) || gap < 0 || gap > withinSeconds) continue;
+    out.push({ slug: a, by: newer.sha, superseded: older.sha, secondsApart: gap });
+  }
+  return out;
+}
+
+/**
+ * Everything the caller managed to learn about the Pages deployments.
+ *
+ * Two independent questions, so two independent "could not look" fields. The
+ * runs and the publish-branch commits come from different endpoints and either
+ * can fail alone; one reason field would make a failure of one silence the
+ * other, which is the `xom7` shape at the level of the report itself.
+ */
+export interface PagesReport {
+  /** Absent when {@link PagesReport.unreachable} says why. */
+  health?: PagesHealth;
+  /** Why the deployment runs could not be read. Never rendered as green. */
+  unreachable?: string;
+  /**
+   * The branch the deployments actually ran against — **measured** from the
+   * runs, never assumed. `/repos/{slug}/pages` would say it outright and
+   * answers 403 without admin (checked 2026-09-20), so the publish branch is
+   * read off `head_branch`. A repository publishing from `main` or from a
+   * `docs/` folder therefore reports its own branch rather than a guess.
+   */
+  publishBranch?: string;
+  supersedes?: SelfSupersede[];
+  /** Why the publish-branch commits could not be read. */
+  commitsUnreachable?: string;
+  /** The span the commits covered, for the same reason the CI window exists. */
+  window?: Window;
+}
+
+/**
+ * The Pages section, rendered separately from {@link render} **on purpose**.
+ *
+ * `render` returns early when the default-branch API was unreachable and again
+ * when that branch had no runs. Folding this in would let a failure to read
+ * `main` silence a question about `gh-pages` — two independent facts collapsed
+ * into one verdict, which is the defect the whole module exists to prevent.
+ * Separate functions make that structurally impossible rather than carefully
+ * avoided.
+ *
+ * ## It reports; it does not grade a share
+ *
+ * Measured 2026-09-20 on this repository: **52 of the last 100** deployments
+ * cancelled, 48 succeeded, none failed. That is bad, and no number here says
+ * how bad, because no basis for a threshold exists — the same argument that
+ * stopped `6xaz` inventing one. The counts are stated and the reader judges.
+ *
+ * The one graded statement is a FLOOR rather than a threshold: deployments
+ * happened and **not one of them succeeded**. That is answerable without
+ * calibration, exactly as `-z` on `ls -A` is in `oisv`.
+ */
+export function renderPages(r: PagesReport): string {
+  const lines = ["## Pages deployments", ""];
+  lines.push(
+    "_A Pages build outcome is not repository state — it is a fact GitHub holds_",
+    "_about this repository, asked fresh every run and cached nowhere._",
+    "",
+  );
+  if (r.unreachable || !r.health) {
+    lines.push(
+      `**Not checked — treat as unknown, not as green.** ${r.unreachable ?? "no deployment runs were fetched."}`,
+      "",
+      "The previews may or may not be building. Nothing here can tell you which.",
+      "",
+    );
+    return lines.join("\n");
+  }
+  const h = r.health;
+  const on = r.publishBranch ? ` on \`${r.publishBranch}\`` : "";
+  if (h.total === 0) {
+    // NOT a green. A repository with no Pages, and a repository whose
+    // deployments this failed to see, look identical from here.
+    lines.push(
+      `_No \`${PAGES_WORKFLOW}\` runs in the window${on}._ Unjudged, not green —`,
+      "a repository that publishes nothing and one whose deployments went",
+      "unseen read the same from here.",
+      "",
+    );
+    return lines.join("\n");
+  }
+  lines.push(
+    `_Window: ${r.window ? describeWindow(r.window) : `${h.total} recent deployments`}${on}._`,
+    "",
+  );
+  lines.push(
+    `- ✓ **${h.success}** succeeded`,
+    `- ❔ **${h.cancelled}** cancelled — *neither shipped nor broken*: a superseded`,
+    "  build leaves the previous preview in place, so the site is stale rather",
+    "  than down, and nobody is sent to fix anything.",
+    `- ✗ **${h.failure}** failed`,
+    `- ⏳ **${h.unsettled}** not settled`,
+    "",
+  );
+  if (h.success === 0) {
+    // The floor. No calibration needed to say that nothing got through.
+    lines.push(
+      `**Not one of ${h.total} deployments succeeded.** The published site is`,
+      "whatever the last successful build left, and that is older than this window.",
+      "",
+    );
+  }
+  if (r.commitsUnreachable) {
+    lines.push(
+      `_Could not read the publish branch's commits (${r.commitsUnreachable}), so_`,
+      "_the cancellations below are uncategorised — not absent._",
+      "",
+    );
+    return lines.join("\n");
+  }
+  const self = r.supersedes ?? [];
+  if (self.length === 0) {
+    lines.push(
+      "No deployment superseded its own slug in the window — whatever cancelled",
+      "these builds, it was not one workflow pushing twice (`bm6d`).",
+      "",
+    );
+    return lines.join("\n");
+  }
+  // WHOSE contention. `bm6d` fixed one workflow pushing twice; `6pfo` is
+  // several sessions racing for one ref, and is not fixed. A merged count
+  // cannot show whether the first fix held, which is why these are named.
+  const bySlug = new Map<string, number>();
+  for (const s of self) bySlug.set(s.slug, (bySlug.get(s.slug) ?? 0) + 1);
+  lines.push(
+    `**${self.length}** cancellation(s) were self-inflicted: one deploy pushed`,
+    "twice and cancelled its own build. That is `bm6d`'s signature, and a slug",
+    "still showing it is running a workflow from before that fix.",
+    "",
+  );
+  for (const [slug, n] of [...bySlug.entries()].sort((a, b) => b[1] - a[1])) {
+    lines.push(`- \`${slug}\` — ${n}`);
+  }
+  lines.push(
+    "",
+    "Cancellations NOT listed here are several sessions racing for the publish",
+    "ref (`6pfo`), which is a different fix and is not done.",
+    "",
+  );
+  return lines.join("\n");
+}

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`theming/theming.md`](https://github.com/litlfred/folio-assistant/blob/main/theming/theming.md) — do not edit here.
+> Generated from [`skills/theming/theming.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/theming/theming.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/theming/theming.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/theming/theming.md){: .fa-edit-source }
 
 {% raw %}
 # Theming, split on the stage it fails at
@@ -22,10 +22,21 @@ instead of for their skill.
 
 **Authored as a skill rather than as a `README.md`, and that is not a
 formality.** `isSkillMd` is declaration-over-location: a markdown file in a
-declared `cat-harness` directory that does not declare `$schema:` **is** a
-skill, so a README here would enter the graph as one with no `name` to be
-fetched by. It would also be the one orientation file an agent could not reach
-through `skill_fetch`, which is the route `AGENTS.md` tells it to use.
+`cat-harness` directory that does not declare `$schema:` **is** a skill, so a
+README here would enter the graph as one with no `name` to be fetched by. It
+would also be the one orientation file an agent could not reach through
+`skill_fetch`, which is the route `AGENTS.md` tells it to use.
+
+**This is a PACKAGE under `skills/`, not a top-level declared directory**, and
+the difference was paid for. Two sessions built this package independently on
+2026-09-20: one relocated `theme-art-intake`, `create-sticky-note` and
+`site-presentation-assets` out of folio-core into `skills/theming/`; the other
+wrote the stage split, the visualiser and the documentation entry into a
+top-level `cat-harness/theming/`. The merge kept both halves and took THIS
+location on evidence — bean `lps0` measured that `kg-audit`'s `skillFiles()`
+walks a hardcoded `skills/`, so a top-level topical directory silently drops
+its skills out of skill QA, and `theme-art-intake` would have lost the sidecar
+it has here.
 
 ## The axis, and the ordering matters more than the names
 

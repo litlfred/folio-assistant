@@ -599,6 +599,19 @@ test("content reaches the DOM as TEXT, never as markup", async ({ page }) => {
   // A todo is authored — by a person, or by an agent on their behalf — and
   // travels through JSON to this page. The string that closes a tag is exactly
   // the string somebody eventually writes.
+  //
+  // AND THE DEPLOY TARGET IS WHY THIS IS THE ONLY LINE OF DEFENCE. This board
+  // ships to gh-pages, a STATIC host: there is no request-time anything — no
+  // sanitiser, no template filter, no server to reject a payload before it
+  // reaches a browser. Escaping at render is not defence in depth here, it is
+  // the whole depth. On a local-server topology the same page would have a
+  // second chance; it must never come to rely on one, because the same code
+  // serves both (bean `81vy`, under the deployment epic `5a3l`).
+  //
+  // Recorded because a rule enforced without its reason is one somebody
+  // eventually "simplifies": a reader who finds no stated justification
+  // concludes the constraint is imaginary. That exact failure is written up
+  // in `platform-gates` and cost a CI round today.
   await page.route("http://todo.test/assets/todos/index.json", (route) =>
     route.fulfill({
       contentType: "application/json",

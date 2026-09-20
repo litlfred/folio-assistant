@@ -158,3 +158,105 @@ morning. **One commit, after #567 merges.**
       written into that commit message, per `.folio-assistant-pin`'s own rule.
 - [ ] The archimedean-wall criteria are confirmed RUNNING after the bump —
       the whole point, and the thing a green sweep would otherwise hide.
+
+## 2026-09-20 — MEASURED END TO END, and the pin bump is not what this bean says
+
+Owner: *"skip qou"* — stopped before pushing anything. qou's working tree is
+clean; the work sits on an unpushed local branch
+`claude/instance-config-and-split-pin` in a container that will be reclaimed,
+so everything worth keeping is below.
+
+**The config rename is a footnote. The split is the blocker.**
+
+At `df28d02` the platform exposed `content/pipeline/`, `schemas/`, `adapters/`,
+`viewer/`, `ui/`, `computations/` and `scripts/` **at its repo root**. At
+`2133f72` **not one of them is there** — all seven moved under `cat-harness/`.
+qou reaches the platform through an in-repo symlink
+`qou/folio-assistant -> ../folio-assistant`, and **33 qou files** import through
+it:
+
+```
+20  ../folio-assistant/content/…
+18  ../folio-assistant/schemas/…
+ 1  ../folio-assistant/scripts/…
+```
+
+plus `deploy/provision.sh` (`viewer`, `ui`), `.github/workflows/build-lean-mcp.yml`
+(`adapters/mcp-server/Dockerfile`) and `content/schema/types.ts`.
+
+**It is a one-line fix, not a 33-file sweep.** Point the symlink at
+`cat-harness/` instead of the repo root, in `scripts/setup-folio-assistant.sh`.
+Verified by doing it: every import target resolved
+(`content/pipeline/value-registry-di`, `references-registry-di`, `validate`,
+`schemas/lean-packages`, `schemas/types`), and `run-validate` ran to completion.
+`setup-folio-assistant.sh` already anticipated this in prose — *"if the
+folio-assistant repo lays those out differently, fix the subpaths in those
+consumers"* — and the symlink turns out to be the one consumer.
+
+**A third thing is required and this bean did not know about it.**
+`dependents` became a REQUIRED field on every declared directory. qou's
+`harness.json` declares one entry (`folio` → `content/`) without it, so
+`readDeclaration` THROWS and nothing runs at all:
+
+```
+error: /home/user/qou/harness.json: 1 directory entry is missing the required
+`dependents` field: folio.
+```
+
+`"dependents": "reproduce"` is the right value — `content/` is qou's folio root,
+and the error message's own example list names `folio/` under `reproduce`.
+
+### The before/after `.folio-assistant-pin` asks for
+
+Same corpus throughout: qou `0e1b226df`, `content/quantum-observable-universe`.
+
+| platform | issues | what changed |
+|---|---|---|
+| `df28d02` (current pin) | **2** | bibliography info line; one lemma with no Lean declaration |
+| `a92d880` (#567 head) *before* the config rename | **5** | +1 `no qou.config.json` third-state warning, +2 simulator-asset |
+| `a92d880` *after* the rename + `qaAxes` | **4** | the config warning clears |
+
+**2 → 4 is not a regression, and the difference is worth stating precisely.**
+The two added are `descent-rate-probe-sim` and `multi-level-jet-sum-sim`, both
+reporting `simulators/*.html` absent on disk. That check did not exist at
+`df28d02` — it is bean `023p`, merged as folio-assistant#560, *"a simulator
+block's html: target is never checked"*. So the new platform finds two genuinely
+missing files that the old one could not see. Both blocks are tagged
+`todo-html`, so the absence is intended; the check says so and still reports it.
+
+**The rename is confirmed working, by the warning that clears.** Before it, the
+new platform said:
+
+> *Render/AST validation not performed: the folio declares no content profile …
+> (undetermined (no qou.config.json))*
+
+which is #567's third state naming the exact file. After `git mv
+folio.config.json qou.config.json` the warning is gone AND the run takes ~3
+minutes instead of seconds — because render/AST validation actually runs now.
+That timing change is the strongest evidence the config is being read: an
+unread config skipped a whole validation phase silently.
+
+### What the one commit has to contain
+
+1. `scripts/setup-folio-assistant.sh` — symlink target `../folio-assistant` →
+   `../folio-assistant/cat-harness`.
+2. `harness.json` — `"dependents": "reproduce"` on the `folio` entry.
+3. `git mv folio.config.json qou.config.json`.
+4. `"qaAxes": ["archimedean-wall"]` in it.
+5. `.folio-assistant-pin` → `2133f720eb32bbf3ae76da407fb1c3e27e48e4c4`, with the
+   table above in the message.
+
+### Still unverified, and it is the point of the bean
+
+**Whether the archimedean-wall criteria actually RUN after the opt-in.**
+`run-validate` is not the sweep; confirming the axis needs `qa-sweep` against a
+wall-side block, and that was not reached before the stop. Until somebody runs
+it, `qaAxes` is a line in a file rather than a measured behaviour — which is
+exactly the silent-off failure this bean exists to prevent.
+
+## Done when
+
+- [ ] All five changes above land in ONE commit on a `claude/` branch in qou.
+- [ ] `qa-sweep` confirms an archimedean-wall criterion RUNS, on a named block.
+- [ ] The before/after table is in that commit's message, per
+      `.folio-assistant-pin`'s own rule.

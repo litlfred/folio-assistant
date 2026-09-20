@@ -28,7 +28,7 @@ import { join, resolve } from "node:path";
 // `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
 // and the corpus test below resolves a DECLARED directory.
 import "../../schemas/folio-graph-kind.ts";
-import { directoryForGraph } from "../../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../../schemas/cat-harness.ts";
 import {
   NARRATIVE_STATES,
   NOT_AUTHORED,
@@ -279,7 +279,14 @@ describe("the queue shows exactly what is waiting on a person", () => {
     // A count the queue produces cannot check the queue, so the second one is
     // taken by walking the JSON (`draftsOnDisk`), sharing no code with it.
     const q = queue(ROOT);
-    const onDisk = draftsOnDisk(directoryForGraph(ROOT, "library") ?? join(ROOT, "library"));
+    // Summed over EVERY declared library, because `queue` is. Counting one of
+    // them against a queue that spans all of them would make this assertion
+    // fail for a correct queue — and, worse, pass for a broken one the day
+    // both counts were narrowed together. Bean `a02m`.
+    const libs = directoriesForGraph(ROOT, "library");
+    const onDisk = (libs.length > 0 ? libs : [join(ROOT, "library")])
+      .map((d) => draftsOnDisk(d))
+      .reduce((a, b) => a + b, 0);
     expect(q.length).toBe(onDisk);
     // And a floor, so this cannot lapse back into an assertion about nothing.
     // Not the number: a count in a test is a claim that goes stale, and 24 is
