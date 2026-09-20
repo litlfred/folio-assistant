@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T19:08:18.122Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/81e88a2f623c267ade9abd6c30b6da1d5c54eed4",
-  "sourceCommitSha": "81e88a2f623c267ade9abd6c30b6da1d5c54eed4",
-  "sourceCommitAt": "2026-09-20T19:06:29Z",
+  "generatedAt": "2026-09-20T19:17:41.321Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e2c62fb4d34667d3523502153feb7310022c8074",
+  "sourceCommitSha": "e2c62fb4d34667d3523502153feb7310022c8074",
+  "sourceCommitAt": "2026-09-20T19:15:58Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 206,
@@ -271,7 +271,7 @@
     "Capability": 28,
     "Role": 124,
     "Convention": 2,
-    "SkillPackage": 13,
+    "SkillPackage": 17,
     "Process": 53,
     "SequenceFlow": 687,
     "ProcessNode": 652,
@@ -3585,7 +3585,7 @@
       "name": "discussion",
       "title": "discussion — settling what an agent cannot read off disk",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/discussion.md",
       "instructionLines": 107,
@@ -3602,7 +3602,7 @@
       "title": "Reading a knowledge graph before you have anything",
       "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill cat-bootstrap hands you, because the second step of the handoff cannot be followed without it.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/cat-bootstrap-kg-navigation.md",
       "instructionLines": 83,
@@ -3619,7 +3619,7 @@
       "title": "Which harness, and where",
       "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/confirm-harness.md",
       "instructionLines": 59,
@@ -3636,7 +3636,7 @@
       "title": "Logging what you are doing",
       "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/log-message.md",
       "instructionLines": 93,
@@ -3737,7 +3737,7 @@
       "title": "Reading the knowledge graph — how to find the skill you need",
       "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/kg-navigation"
       ],
       "instructionsPath": "../kg-navigation/skills/kg-navigation.md",
       "instructionLines": 141,
@@ -3754,7 +3754,7 @@
       "title": "Materializing remote content",
       "description": "Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/large-datasets"
       ],
       "instructionsPath": "../large-datasets/skills/materialize-remote.md",
       "instructionLines": 91,
@@ -3771,7 +3771,7 @@
       "title": "IRIS, DSpace and Dublin Core",
       "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
       "instructionLines": 151,
@@ -4784,13 +4784,13 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#convention/comment-why-not-what"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/cat-bootstrap",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "skills",
+      "name": "cat-bootstrap",
       "path": "../cat-bootstrap/skills",
       "hasManifest": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-bootstrap",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/raci",
@@ -4809,6 +4809,42 @@
       "hasManifest": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/methodology-crdm",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/crdm"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/skills",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "skills",
+      "path": "src/skills",
+      "hasManifest": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/cat-harness-src",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "kg-navigation",
+      "path": "../kg-navigation/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/kg-navigation",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/kg-navigation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/large-datasets",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "large-datasets",
+      "path": "../large-datasets/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/large-datasets-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/large-datasets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/who-iris",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "who-iris",
+      "path": "../who-iris/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/who-iris"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/folio-assistant.jsonld#package/authoring-who-smart-guidelines",
@@ -32634,8 +32670,8 @@
   ],
   "staging": {
     "branch": "claude/elegant-albattani-0byaig",
-    "sha": "588370b41a2de8193c742d2a8b5ef32a329c9d07",
+    "sha": "68080db32c64d66da01ed0c431f26795cca2e399",
     "pr": "583/merge",
-    "run": "35531220244"
+    "run": "35531741525"
   }
 }

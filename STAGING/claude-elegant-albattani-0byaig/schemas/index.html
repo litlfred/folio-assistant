@@ -256,7 +256,7 @@ function uml(d) {
 
 function detail(d) {
   var referrers = (G.edges || []).filter(function (e) { return e.to === d.id; });
-  var h = '<h2>' + esc(d.name) + '</h2><p class="sub">' + esc(d.module) + ":" + d.line +
+  var h = '<h2>' + esc(d.name) + '</h2><p class="sub">' + esc(d.module) +
     ' &middot; ' + esc(d.kind) + (d.exported ? "" : " &middot; not exported") + "</p>";
   if (d.doc) h += "<p>" + esc(d.doc) + "</p>";
   if (d.kind === "undetermined") {
