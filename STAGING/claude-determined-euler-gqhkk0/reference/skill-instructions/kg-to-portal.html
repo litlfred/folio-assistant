@@ -871,89 +871,131 @@ here. A figure taken from a vendor’s documentation is a <em>quoted</em> figure
 says so; one taken from a chat message is neither, and the who-iris catalogue
 carries the worked example — every note in a branch said “0.7 TB”, sourced from
 a chat message, and the measured figure was about half.</p>
-<h2 id="signing-the-trust-anchor-is-gdhcn-and-that-moves-the-boundary">
+<h2 id="trust-gdhcn-distributed-as-who-smart-trust-did-trustlists">
   
   
-    <a href="#signing-the-trust-anchor-is-gdhcn-and-that-moves-the-boundary" class="anchor-heading" aria-labelledby="signing-the-trust-anchor-is-gdhcn-and-that-moves-the-boundary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Signing: the trust anchor is GDHCN, and that moves the boundary
+    <a href="#trust-gdhcn-distributed-as-who-smart-trust-did-trustlists" class="anchor-heading" aria-labelledby="trust-gdhcn-distributed-as-who-smart-trust-did-trustlists"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Trust: GDHCN, distributed as WHO SMART Trust DID trustlists
   
   
 </h2>
     
 
-<p>Owner, 2026-09-20, answering the open question: <strong><code class="language-plaintext highlighter-rouge">propsal signing = GDHCN</code></strong>
-— the WHO <strong>Global Digital Health Certification Network</strong>.</p>
+<p>Owner, 2026-09-20, in two messages: <strong><code class="language-plaintext highlighter-rouge">propsal signing = GDHCN</code></strong>, then
+<strong><code class="language-plaintext highlighter-rouge">smart-trust</code></strong>. The second names where the first is specified — the
+<a href="https://smart.who.int/trust">WHO SMART Trust Implementation Guide</a>
+(<code class="language-plaintext highlighter-rouge">smart.who.int.trust</code>, FHIR R5, v1.8.0 at the time of reading, support address
+<code class="language-plaintext highlighter-rouge">gdhcn-support@who.int</code>).</p>
 
-<p><strong>What this settles is not the algorithm; it is where trust comes from.</strong> A
-self-contained signature ships the key, or its certificate, inside the package,
-and a verifier decides whether to believe it. A trust-network signature does
-not: the verifier resolves the signer’s key <strong>from the network</strong>, and the
-package carries only enough to say which key it wants. The consequence is
-architectural rather than cryptographic:</p>
-
-<ul>
-  <li><strong>The publisher signs as a participant</strong>, not as itself. Signing capability
-becomes something a deployment is granted and can lose, so key rotation and
-revocation are operations the pipeline has to survive — a package signed with
-a key later withdrawn must be re-signed, not merely re-served.</li>
-  <li><strong>The verifier needs the network, not just the bytes.</strong> A portal that can
-fetch the package but not reach the trust list cannot verify, and that is
-<code class="language-plaintext highlighter-rouge">unknown</code> rather than a failure. An offline portal is a real deployment —
-<code class="language-plaintext highlighter-rouge">network: air-gapped</code> is a declared value — so this is a case the design has
-to answer rather than assume away.</li>
-  <li><strong>The trust anchor is outside all three zones</strong> in the architecture drawing,
-and that is deliberate: it belongs to neither the publisher nor the consumer,
-which is the whole reason it is worth having.</li>
-</ul>
-<h3 id="what-is-not-established-here-and-must-be-before-anything-is-built">
+<p><strong>Everything in this section is read off that IG</strong>, from <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>
+and <code class="language-plaintext highlighter-rouge">input/pagecontent/concepts_did_gdhcn.md</code> on <code class="language-plaintext highlighter-rouge">main</code>, 2026-09-20. The live
+endpoints below are <strong>transcribed, not fetched</strong> — <code class="language-plaintext highlighter-rouge">tng-cdn.who.int</code> returns
+<code class="language-plaintext highlighter-rouge">000</code> from this container, the same block <code class="language-plaintext highlighter-rouge">iris.who.int</code> and
+<code class="language-plaintext highlighter-rouge">cdn.jsdelivr.net</code> return.</p>
+<h3 id="the-correction-this-made-to-an-earlier-draft-of-this-skill">
   
   
-    <a href="#what-is-not-established-here-and-must-be-before-anything-is-built" class="anchor-heading" aria-labelledby="what-is-not-established-here-and-must-be-before-anything-is-built"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is NOT established here, and must be before anything is built
+    <a href="#the-correction-this-made-to-an-earlier-draft-of-this-skill" class="anchor-heading" aria-labelledby="the-correction-this-made-to-an-earlier-draft-of-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The correction this made to an earlier draft of this skill
   
   
 </h3>
     
 
-<p>GDHCN is named in this repository for the first time on 2026-09-20, and the
-network that would fetch its specification is blocked from this container — a
-request to <code class="language-plaintext highlighter-rouge">worldhealthorganization.github.io</code> returns <code class="language-plaintext highlighter-rouge">000</code>. So the following
-are <strong>open questions to put to the specification</strong>, not facts:</p>
+<p>This section previously said the publisher <em>“signs as a participant”</em> and left
+the impression that GDHCN supplies the signing envelope. <strong>It supplies the key
+distribution.</strong> A GDHCN trustlist carries <em>trust anchors</em> — which keys belong
+to which participant, for which domain and which usage — and says nothing about
+what you wrap your bytes in. The health-certificate envelope is a separate
+specification in the same IG (<code class="language-plaintext highlighter-rouge">hcert_spec.md</code>).</p>
+
+<p>That distinction matters here because a <strong>document package is not a health
+certificate.</strong> Whether a manifest signature can be expressed in a form GDHCN
+verifiers recognise is a real open question; what is settled is where a
+verifier gets the key.</p>
+<h3 id="the-trustlist-is-a-did-document-served-from-a-cdn">
+  
+  
+    <a href="#the-trustlist-is-a-did-document-served-from-a-cdn" class="anchor-heading" aria-labelledby="the-trustlist-is-a-did-document-served-from-a-cdn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The trustlist is a DID document, served from a CDN
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">concepts_did_gdhcn.md</code>, verbatim in substance:</p>
+
+<ul>
+  <li>Key material is published as <strong>DID documents</strong> (<a href="https://www.w3.org/TR/did-core/">W3C DID Core</a>), as <code class="language-plaintext highlighter-rouge">did.json</code>.</li>
+  <li><strong>Two variants.</strong> <em>Embedded</em> carries the keys inline in <code class="language-plaintext highlighter-rouge">verificationMethod</code>
+and supports immediate verification. <em>By reference</em> carries only DID ids to
+resolve, which keeps the root document concise and supports dynamic
+discovery.</li>
+  <li><strong>Three environments</strong> — DEV, UAT, PROD — each with both variants. PROD:
+<code class="language-plaintext highlighter-rouge">https://tng-cdn.who.int/v2/trustlist/did.json</code> and
+<code class="language-plaintext highlighter-rouge">…/v2/trustlist-ref/did.json</code>.</li>
+  <li><strong>The path is a hierarchical filter</strong>:
+<code class="language-plaintext highlighter-rouge">…/v2/trustlist/$domain/$participant/$usage/did.json</code>, the levels ANDed, with
+<code class="language-plaintext highlighter-rouge">-</code> as a wildcard at any level. A verifier fetches exactly the slice it
+needs rather than the whole list.</li>
+  <li><code class="language-plaintext highlighter-rouge">$domain</code>, <code class="language-plaintext highlighter-rouge">$participant</code> and <code class="language-plaintext highlighter-rouge">$usage</code> are <strong>FHIR ValueSets in the IG</strong>, not
+free text.</li>
+</ul>
+<h3 id="what-that-settles-and-it-is-the-designs-own-argument-back-at-it">
+  
+  
+    <a href="#what-that-settles-and-it-is-the-designs-own-argument-back-at-it" class="anchor-heading" aria-labelledby="what-that-settles-and-it-is-the-designs-own-argument-back-at-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What that settles, and it is the design’s own argument back at it
+  
+  
+</h3>
+    
+
+<p><strong>WHO’s trust network distributes its trust anchors as static JSON from a
+CDN</strong> — the host is literally named <code class="language-plaintext highlighter-rouge">tng-cdn</code>. So the pattern this skill
+describes is not an analogy to how GDHCN works; it <em>is</em> how GDHCN works, one
+layer down. A portal that can fetch a package from a cache can fetch its trust
+anchors from a cache by the same means, and the hierarchical path is the
+mechanism that keeps that cheap.</p>
+
+<p>It also answers the caching question outright: the <em>by reference</em> variant
+exists because resolving a slice is expected to be the normal case.</p>
+
+<p><strong>Three of the four questions this section used to carry are now answered</strong> —
+onboarding (a documented process, <code class="language-plaintext highlighter-rouge">concepts_onboarding.md</code>, with its own
+<a href="https://smart.who.int/trust/concepts_onboarding_checklist.html">checklist</a>),
+caching (native to the design), and the envelope (a trustlist is keys; the
+envelope is elsewhere, and for a document package is unsettled). What remains
+open and unread:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>question</th>
-      <th>why it decides the design</th>
+      <th>still open</th>
+      <th>where it is specified</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>what envelope does GDHCN sign, and does it admit a <strong>file manifest</strong> at all?</td>
-      <td>it was built for health certificates; a package of documents may or may not fit the same envelope</td>
+      <td>key rotation and revocation, and what a published package must do when a key is withdrawn</td>
+      <td><code class="language-plaintext highlighter-rouge">concepts_certificate_governance.md</code></td>
     </tr>
     <tr>
-      <td>how is a participant onboarded, and by whom?</td>
-      <td>this is an institutional process with a lead time, not a configuration flag</td>
+      <td>whether a document-package signature can be expressed for GDHCN verifiers at all</td>
+      <td><code class="language-plaintext highlighter-rouge">hcert_spec.md</code> is for health certificates; nothing here covers arbitrary files</td>
     </tr>
     <tr>
-      <td>what is the key rotation and revocation model?</td>
-      <td>it sets whether a published package can ever be left alone after publishing</td>
-    </tr>
-    <tr>
-      <td>can a verifier cache the trust list, and for how long?</td>
-      <td>it decides whether an intermittently-connected portal can verify at all</td>
+      <td>how the gateway relates to the CDN, and who publishes to it</td>
+      <td><code class="language-plaintext highlighter-rouge">trust_network_gateway_architecture.md</code></td>
     </tr>
   </tbody>
 </table></div>
 
-<p><strong>Nothing about GDHCN’s mechanism is asserted above from general knowledge.</strong>
-That is the <code class="language-plaintext highlighter-rouge">r1lz</code> rule — <em>a voice with no provenance is the same class of
-defect as a measurement with no date</em> — and this is exactly the situation it
-exists for: the name is the owner’s, the consequences follow from what a trust
-network <em>is</em>, and the specifics wait for the document.</p>
-<h2 id="package-or-per-asset-still-a-choice-and-gdhcn-does-not-make-it">
+<p>Read those before designing stage 4, not after. <strong>Nothing about GDHCN is
+written here from general knowledge</strong> — that is the <code class="language-plaintext highlighter-rouge">r1lz</code> rule, and the first
+draft of this section broke it in exactly the way the rule predicts: it was
+plausible, it was confident, and the part it got wrong (envelope versus key
+distribution) was the part that decides what stage 4 is.</p>
+<h2 id="package-or-per-asset-still-a-choice-and-the-trustlist-does-not-make-it">
   
   
-    <a href="#package-or-per-asset-still-a-choice-and-gdhcn-does-not-make-it" class="anchor-heading" aria-labelledby="package-or-per-asset-still-a-choice-and-gdhcn-does-not-make-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Package or per-asset: still a choice, and GDHCN does not make it
+    <a href="#package-or-per-asset-still-a-choice-and-the-trustlist-does-not-make-it" class="anchor-heading" aria-labelledby="package-or-per-asset-still-a-choice-and-the-trustlist-does-not-make-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Package or per-asset: still a choice, and the trustlist does not make it
   
   
 </h2>
@@ -994,10 +1036,11 @@ because there is nothing left to verify.</p>
 both properties. That is the safer default and the more expensive one, and it
 is a deployment decision rather than a pipeline one.</p>
 
-<p>Choosing GDHCN as the trust anchor leaves this open, and may constrain it: if
-the envelope admits only one payload shape, the manifest-versus-asset question
-is answered by what can be put in it. Another reason the specification has to
-be read before this is designed rather than after.</p>
+<p>Choosing GDHCN as the trust anchor leaves this open. A trustlist distributes
+keys and does not constrain what is signed with them — so the choice is still
+the deployment’s, and the constraint, if there is one, comes from whatever
+envelope a GDHCN-aware verifier is built to read. That is the unread question
+above, and it is the one that decides stage 4.</p>
 <h2 id="related">
   
   

@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T21:47:39.880Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4472c64ebb5322de68e8f5817ff67f6b4177e643",
-  "sourceCommitSha": "4472c64ebb5322de68e8f5817ff67f6b4177e643",
-  "sourceCommitAt": "2026-09-20T21:44:29Z",
+  "generatedAt": "2026-09-20T21:56:05.882Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e5ae8aecd445b5b7b77265795168efdfb9deb8ba",
+  "sourceCommitSha": "e5ae8aecd445b5b7b77265795168efdfb9deb8ba",
+  "sourceCommitAt": "2026-09-20T21:52:37Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 217,
@@ -1227,7 +1227,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-to-portal.md",
-      "instructionLines": 205,
+      "instructionLines": 239,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -15844,11 +15844,11 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Build%20pipeline"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Attestation%20(GDHCN%20trust%20network)",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Attestation%20(GDHCN%20/%20WHO%20SMART%20Trust)",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Role",
-      "name": "Attestation (GDHCN trust network)",
+      "name": "Attestation (GDHCN / WHO SMART Trust)",
       "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20(GDHCN%20trust%20network)"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Attestation%20(GDHCN%20/%20WHO%20SMART%20Trust)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Publish%20target",
@@ -16038,7 +16038,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#process/Process_KgToPortal",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Attestation%20(GDHCN%20trust%20network)",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#role/Attestation%20(GDHCN%20/%20WHO%20SMART%20Trust)",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/folio-assistant.jsonld#skill/kg-to-portal"
       ],
@@ -33951,8 +33951,8 @@
   ],
   "staging": {
     "branch": "claude/determined-euler-gqhkk0",
-    "sha": "c3518589463a5c678b8ed263d975d339beab37f7",
+    "sha": "e1508f21e2a87b10c0be3fee1b0840c64138e9b4",
     "pr": "607/merge",
-    "run": "35539691984"
+    "run": "35540081023"
   }
 }
