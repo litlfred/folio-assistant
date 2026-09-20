@@ -442,3 +442,60 @@ one genuinely new mechanism.
 Posted to [#602](https://github.com/litlfred/folio-assistant/issues/602).
 **Phases 3–4 NOT run** — the requestor scoped this to Phase 2, and the
 requirement sketch is an input to Phase 3 rather than its output.
+
+## Phase 3 posted — seven requirements, and one is a defect already shipped
+
+Posted to [#602](https://github.com/litlfred/folio-assistant/issues/602).
+`A_DefineReqs` is **deliberately NOT completed**: the diagram folds Phases 3
+and 4 into that one step, the requestor scoped this to 3, and completing it
+would record an impact analysis that does not exist.
+
+| | requirement | new mechanism? |
+|---|---|---|
+| R1 | the board renders content, not only notes | no — a second rendering of an existing relation |
+| R2 | semantic zoom, threshold DECLARED not literal | **yes — the only one** |
+| R3 | `targetLabel` publishes its parts | no — a bug fix |
+| R4 | linear collapse, reachable without JS | no, but it constrains R1 |
+| R5 | badge counts only when > 1 | no — two lines |
+| R6 | badge and panel stay ONE query | no — a regression test for something already true |
+| R7 | badges on avatars | no — R2 plus R6 |
+
+**One genuinely new mechanism out of seven**, which is Phase 2's finding
+carried forward.
+
+### R3 is the find, and it came out of the consumer-burden rule
+
+The phase makes consumer burden STRICT — *"a downstream consumer must never
+have to string-manipulate, re-derive, or assume a rule in order to use what we
+publish"* — and applying it to the published artefact turned up a defect rather
+than a design question.
+
+Each item in `assets/todos/index.json` carries `targetLabel` and nothing else
+locating it. The value is `sec:<page>-<node>`, page-qualified for a good reason
+(the bare node id `what-is-not-built-yet` exists on two pages). **But any
+consumer asking which page a note is on must string-manipulate**: know the
+`sec:` prefix, know the separator is `-`, and know node ids themselves contain
+`-`, so the split is not unambiguous without already holding the page list.
+
+**Our own client escapes it by accident** — `mountPageStickies` matches on the
+whole string and never parses — which is precisely why it went unnoticed. It
+fails all three of the phase's checks: a consumer in another language needs our
+source, the convention is prose-only, and the artefact cannot answer "what am
+I?" from itself.
+
+Fix: emit `target: {page, node, label}`, keeping `label` so nothing matching on
+it breaks. The generator holds both halves before it composes them, so it is
+cheap. Asserted over the EMITTED JSON, not over the function that built it.
+
+### R4 carries the accessibility floor forward
+
+Linear collapse is specified as a requirement rather than inherited, and the
+keyboard constraint rides with it: movement SHALL be keyboard-operable, drag
+MAY be an accelerator and SHALL NOT be the only way in — the reasoning
+`docs-ui.js` ~2006 already records, not re-litigated.
+
+### R5 and R6 are the measured divergences from Phase 2
+
+R5 is the `> 1` threshold the badge does not honour. R6 is the badge/panel
+identity, which is ALREADY TRUE and currently unguarded — so it is a
+regression requirement needing a test rather than an implementation.
