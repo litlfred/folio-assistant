@@ -169,8 +169,14 @@ duplicate is fine while an unchecked one is not. In this instance
 
 These were `.beans/` and `.harness/workflow/` until 2026-09-18 (beans `8xzw`,
 `x89g`) — the two artefacts a person looks for first were the two hardest to
-find. `.harness/` still holds `interaction.json` and `issue-comments/`; only the
-workflow state moved. Option A of
+find. **`.harness/` is now empty and gone** — 2026-09-20 finished the job:
+`interaction.json` moved to the declared `interaction/` (`context`: read at
+session start, never written by a process) and `issue-comments/` to
+`issue-marks/` (`state`, and named for what it holds — an id and two
+timestamps, never a comment body). Leaving them behind a dot was never
+defensible: this repository's own dot-prefix guard rejects a dot-prefixed
+segment, so the file read at the start of every session sat in the one place
+the conventions forbid. Option A of
 [`fsh-guts/proposals/workflow-state-in-beans.md`](fsh-guts/proposals/workflow-state-in-beans.md):
 the criticism it carried there ("two places to look") was never about two
 stores, but about two *hidden* ones.

@@ -194,7 +194,7 @@ export const TranslationConfigSchema = z.object({
  */
 export const HarnessDirsSchema = z.object({
   /** Per-user interaction preferences, read at session start. */
-  interaction: z.string().default(".harness/interaction.json"),
+  interaction: z.string().default("interaction/interaction.json"),
 });
 
 export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;

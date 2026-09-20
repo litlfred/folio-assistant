@@ -176,6 +176,24 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 176,
     reads: "a glyph and an A — one language against another",
   },
+  interaction: {
+    // A speech bubble with a tick inside — a preference that has been STATED,
+    // so nobody has to ask again. The tick is the point: this file exists so
+    // that re-asking is a defect (WCAG 2.2 SC 3.3.7, Redundant Entry), not a
+    // courtesy skipped.
+    glyph: "M4 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H9l-4 4v-4a2 2 0 01-1-2zM8.5 10l2 2 4-4",
+    tone: 224,
+    reads: "a spoken preference, already recorded — do not ask again",
+  },
+  "issue-marks": {
+    // A bookmark at a place in a list — how far this agent has read, and
+    // nothing about what it read. Deliberately not a speech bubble: these
+    // files hold an id and two timestamps, never a comment body, and a
+    // comment glyph would promise a reader something the store does not have.
+    glyph: "M7 4h10v16l-5-4-5 4zM4 8h2M4 12h2",
+    tone: 28,
+    reads: "a bookmark beside a list — how far an agent has read",
+  },
   "session-state": {
     // A marker on a line, with the line continuing past it — where one actor
     // is RIGHT NOW, and still moving. Deliberately not a clock: a session is

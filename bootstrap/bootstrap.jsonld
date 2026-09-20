@@ -253,7 +253,7 @@
     "SequenceFlow": 20,
     "Role": 9,
     "ProcessNode": 20,
-    "GraphKind": 18,
+    "GraphKind": 20,
     "Directory": 2
   },
   "problems": [],
@@ -1004,6 +1004,22 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SessionStateGraph",
       "renderable": false,
       "summary": "A session's context — the acting actor, the instances it has open, and what it waits on."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "interaction",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#InteractionGraph",
+      "renderable": false,
+      "summary": "How a person wants to be asked — read at session start, never written by a process."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/issue-marks",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "issue-marks",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#IssueMarkGraph",
+      "renderable": false,
+      "summary": "How far an agent has read an issue — the comment id and the edit time it accounted for."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory",

@@ -611,6 +611,44 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: "A session's context — the acting actor, the instances it has open, and what it waits on.",
   },
 
+  // Interaction preferences — how a PERSON wants to be asked.
+  //
+  // `context`, by the same test as `memory`: an agent READS it at session
+  // start and no step writes it; it changes when a person states a
+  // preference, which is a human-directed act outside any instance. The two
+  // are the same shape at different subjects — what the agent knows, and what
+  // the person needs.
+  //
+  // It lived in `.harness/` until 2026-09-20, undeclared, which was not a
+  // choice anyone could have defended: this repository's own dot-prefix guard
+  // REJECTS a dot-prefixed segment, so the file was in the one place the
+  // conventions forbid while being read at the start of every session.
+  interaction: {
+    type: termIri("InteractionGraph"),
+    renderable: false,
+    holds: "context",
+    schema: "schemas/harness-config.ts",
+    summary: "How a person wants to be asked — read at session start, never written by a process.",
+  },
+  // The marks an agent leaves on an issue it has read.
+  //
+  // `state`: a running process writes one each time it checks an issue. NOT
+  // the comments — the files carry `lastCommentId`, `lastUpdatedAt` and
+  // `checkedAt`, and one of the two in this repository says so in its own
+  // note: "the mark records only that the newest was seen". A kind named for
+  // the comments would promise a reader the bodies.
+  //
+  // Two marks rather than one, because a comment EDITED after being read
+  // keeps its id: the id alone would call it seen, and an edited requirement
+  // is a changed requirement (`issue-working`).
+  "issue-marks": {
+    type: termIri("IssueMarkGraph"),
+    renderable: false,
+    holds: "state",
+    schema: "src/issue-watch/seen-comments.ts",
+    summary: "How far an agent has read an issue — the comment id and the edit time it accounted for.",
+  },
+
   memory: {
     type: termIri("MemoryGraph"),
     renderable: false,

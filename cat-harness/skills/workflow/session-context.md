@@ -117,7 +117,7 @@ records what an actor DID at a moment, append-only. This is the current
 position, overwritten as it moves. A log tells you how you got here; this tells
 you where you are.
 
-**Not interaction preferences.** `.harness/interaction.json` holds how a person
+**Not interaction preferences.** `interaction/interaction.json` holds how a person
 wants to be asked — durable, read at session start, never written by a process.
 That is `context`, and this is `state`: the two are on opposite sides of the
 layer line and must not be merged, however adjacent they look.

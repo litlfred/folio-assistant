@@ -1,0 +1,17 @@
+# do not delete me
+#
+# Git tracks files, not directories, so this directory would vanish from
+# the next clone without a file in it. This is that file. It ignores
+# nothing on purpose — see `keepMarker` in schemas/cat-harness.ts.
+#
+# interaction/
+# How a PERSON wants to be asked — committed, read at session start by every
+# agent. `context` by the same test as agent memory: read during a process,
+# never written by one, changed when a person states a preference. It sat in
+# `.harness/`, undeclared, until 2026-09-20, which this repository's own
+# dot-prefix guard forbids: a dot-prefixed directory is absent from a plain
+# `ls`, from most file browsers and from a forge's web tree, and the file
+# read at the start of every session was in the one place the conventions
+# reject. The path is also `harness.config.json`'s `interaction` key, which
+# defaults here — the declaration and the config now name the same place
+# instead of one of them being a literal nobody checks.
