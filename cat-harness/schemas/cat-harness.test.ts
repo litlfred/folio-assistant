@@ -207,7 +207,7 @@ describe("layering", () => {
 });
 
 describe("graph kinds — the harness declares its own, core adds folio", () => {
-  it("the harness's own vocabulary contains no renderable kind", () => {
+  it("the harness owns exactly one renderable kind — the one it can serve", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
     expect(Object.keys(BASE_GRAPH_KINDS).sort()).toEqual([
@@ -217,6 +217,11 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       // like every other harness concept. `kg` still READS, as a deprecated
       // alias — see the alias test below.
       "cat-harness",
+      // Documentation ABOUT the graph, and the one renderable kind the harness
+      // owns — because it is the one the harness can serve. See the renderable
+      // test below, and BASE_GRAPH_KINDS for why the premise changed rather
+      // than the principle.
+      "docs",
       // The trashcan that is kept: `renderable: false` ON PURPOSE rather
       // than because there was never a page to make of it. It belongs to
       // the harness for the same reason `beans` does — an instance can
@@ -255,9 +260,18 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       "voices",
       "workflow-state",
     ]);
-    for (const def of Object.values(BASE_GRAPH_KINDS)) {
-      expect(def.renderable).toBe(false);
-    }
+    // Until 2026-09-20 this asserted that EVERY base kind is non-renderable,
+    // on the reasoning "a layer that cannot render must not own the renderable
+    // kind". The harness now ships a plain just-the-docs renderer for `docs`,
+    // so the rule reads in its true form: a layer owns the kinds it CAN render.
+    // `folio` is still absent here — it needs block viewers, LaTeX, QA badges
+    // and translation overlays, which the harness cannot serve — and that is
+    // the same rule applied, not an exception to it.
+    const renderable = Object.entries(BASE_GRAPH_KINDS)
+      .filter(([, def]) => def.renderable)
+      .map(([k]) => k);
+    expect(renderable).toEqual(["docs"]);
+    expect(BASE_GRAPH_KINDS.folio).toBeUndefined();
   });
 
   it("a bare harness registry does not know `folio` at all", () => {
@@ -266,7 +280,8 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     const bare = new GraphKindRegistry();
     expect(bare.has("folio")).toBe(false);
     expect(bare.names().sort()).toEqual([
-      "bean-defs", "beans", "cat-harness", "fsh-guts", "health", "library", "qa", "schemas",
+      "bean-defs", "beans", "cat-harness",
+      "docs", "fsh-guts", "health", "library", "qa", "schemas",
       "todo-feedback", "todo-items", "todos",
       "tools", "translation-sources", "uploads", "voices", "workflow-state",
     ]);

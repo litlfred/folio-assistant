@@ -69,10 +69,69 @@
  *   - **copyright** — what the licence permits, per bitstream, and whether it
  *     permits the derived work. `LICENSE-CONTENT.md` exists in this repository
  *     and the ingestion pipeline does not read it.
+ *
+ * ## Two purposes, and they want opposite things
+ *
+ * The owner, 2026-09-20: *"someone may want the blob/binary/pdf for archival
+ * purposes (like a KG version of internet archive/wayback)."*
+ *
+ * That is not a variant of working materialisation, it is its opposite, and
+ * three of the five gates change meaning under it:
+ *
+ * | | `working` | `archival` |
+ * |---|---|---|
+ * | what is kept | the DERIVED content — sections, OCR, structure | the ORIGINAL BYTES, unchanged |
+ * | retention | expires; the original can be re-fetched | **no expiry, by design** |
+ * | `sourceLoss` | unanswered — the derivation is not the source | **discharged** — this copy IS the answer |
+ * | fixity | not needed; the derivation is the artefact | **required** — an archive that cannot prove it is unchanged is a copy |
+ *
+ * So {@link freshness} must not report an archival copy as `no-expiry`, which
+ * reads as a finding; for an archive it is the specification. And an archival
+ * copy with no {@link Fixity} is not an archive — it is a file somebody kept.
+ *
+ * **The fixity data already exists.** Every ingested entry's `structure.json`
+ * carries `sha256` and `bytes` — `wpr-rdo-2020-003-eng` records
+ * `5021518ccd91e26a9533edd8efc643bc24ab7bf2d4eb425c9644967e0bf72842` and
+ * 2 810 648 bytes. Nothing reads them as fixity today.
+ *
+ * **Archival is also the only honest answer to `sourceLoss`.** The one IRIS
+ * record this repository holds carries a handle on `iris.wpro.who.int`, a
+ * regional instance merged into the global one. A `working` materialisation
+ * cannot discharge that gate — the derived sections are not the publication —
+ * and saying otherwise is how a repository believes it has a copy it does not.
  */
 import { z } from "zod";
 
 export const MATERIALIZATION_SCHEMA_TAG = "folio-materialization/v1";
+
+/**
+ * Why the bytes were taken. See the module doc — `working` and `archival` want
+ * opposite things from retention, fixity and the source-loss gate.
+ *
+ * `both` is a real state and not a hedge: the same PDF can be the archival
+ * master AND the input a derivation was run over. It carries archival's
+ * obligations (fixity required, no expiry expected).
+ */
+export const MATERIALIZATION_PURPOSES = ["working", "archival", "both"] as const;
+export type MaterializationPurpose = (typeof MATERIALIZATION_PURPOSES)[number];
+
+/**
+ * Proof that an archived blob is the blob that was archived.
+ *
+ * Required on anything `archival`. An archive that cannot demonstrate it is
+ * unchanged is a copy, and the distinction is the whole point of the purpose:
+ * a working copy may be re-fetched if it rots, an archival one cannot, because
+ * the thing it would be re-fetched from is what it exists to survive.
+ */
+export const FixitySchema = z
+  .object({
+    algorithm: z.literal("sha256"),
+    digest: z.string().regex(/^[0-9a-f]{64}$/, "a sha256 digest is 64 lowercase hex characters"),
+    /** When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages. */
+    verifiedAt: z.string().min(1).optional(),
+  })
+  .strict();
+export type Fixity = z.infer<typeof FixitySchema>;
 
 /**
  * Whether the bytes are here.
@@ -145,10 +204,18 @@ export const MaterializationSchema = z
      */
     collectionBytes: z.number().int().nonnegative().optional(),
     gates: GatesSchema.optional(),
+    /** Why the bytes were taken. Required on anything materialized — the gates mean different things under each. */
+    purpose: z.enum(MATERIALIZATION_PURPOSES).optional(),
+    /** Required when `purpose` is `archival` or `both`. */
+    fixity: FixitySchema.optional(),
     /** When the local copy was taken, and against what upstream version. */
     materializedAt: z.string().min(1).optional(),
     upstreamVersion: z.string().min(1).optional(),
-    /** When this copy expires. Absent on a materialised node is a `retention` gate finding, not a default of "forever". */
+    /**
+     * When this copy expires. Absent on a `working` copy is a `retention`
+     * finding, not a default of "forever". Absent on an `archival` one is the
+     * SPECIFICATION — see {@link freshness}, which reports the two differently.
+     */
     expiresAt: z.string().min(1).optional(),
     /** Why the state is `unknown`, where it is. An unexplained `unknown` is indistinguishable from an unfilled field. */
     note: z.string().min(1).optional(),
@@ -160,6 +227,32 @@ export const MaterializationSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "state `materialized` requires `localPath`: bytes that are here are somewhere",
+        });
+      }
+      if (!m.purpose) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message:
+            "state `materialized` requires a `purpose`. `working` and `archival` want opposite " +
+            "things from retention, fixity and the source-loss gate, so a copy that has not said " +
+            "which it is cannot have any of the three judged",
+        });
+      }
+      if ((m.purpose === "archival" || m.purpose === "both") && !m.fixity) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message:
+            "an archival copy requires `fixity`. An archive that cannot demonstrate it is " +
+            "unchanged is a copy — and it cannot be re-fetched to check, because the thing it " +
+            "would be re-fetched from is what it exists to survive",
+        });
+      }
+      if (m.purpose === "working" && m.gates?.sourceLoss.verdict === "permitted") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message:
+            "a `working` materialization cannot discharge `sourceLoss`: the derived content is " +
+            "not the source. Only an archival copy of the original bytes answers that gate",
         });
       }
       if (!m.gates) {
@@ -189,11 +282,25 @@ export type Materialization = z.infer<typeof MaterializationSchema>;
  * materialised at all" are three different situations calling for three
  * different actions, and a boolean would send all three down one branch.
  */
-export type FreshnessVerdict = "fresh" | "expired" | "no-expiry" | "not-materialized";
+export type FreshnessVerdict =
+  | "fresh"
+  | "expired"
+  | "no-expiry"
+  | "permanent"
+  | "not-materialized";
 
+/**
+ * `permanent` is NOT a kind of `no-expiry`, and that is the point of having
+ * both. `no-expiry` is a finding — a working copy nobody gave a lifetime, which
+ * cannot be told from abandoned work. `permanent` is a specification: an
+ * archive is supposed to outlive its source, so reporting it as a finding would
+ * put every archived blob on a list of things to chase.
+ */
 export function freshness(m: Materialization, now: Date = new Date()): FreshnessVerdict {
   if (m.state !== "materialized") return "not-materialized";
-  if (!m.expiresAt) return "no-expiry";
+  if (!m.expiresAt) {
+    return m.purpose === "archival" || m.purpose === "both" ? "permanent" : "no-expiry";
+  }
   return new Date(m.expiresAt).getTime() > now.getTime() ? "fresh" : "expired";
 }
 

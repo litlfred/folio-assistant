@@ -12,6 +12,14 @@
         "schemas",
         "cat-harness"
       ]
+    },
+    {
+      "id": "folios",
+      "path": "folios/",
+      "description": "What an AUTHOR creates using the graph -- a note, a visualization, a paper. Owner, 2026-09-20: 'folios/ would be a note, visualization, paper etc that user/author is creating referencing the KG... folios in f-a-core as it is about KG management workflows built on cat-harness document rendering justthedocs simple rendering.' It declares the EXISTING `folio` kind rather than a new one: `folio` is already 'authored content, rendered to a website', registered by core because only core can render it, and a second kind for the same thing would be two spellings of one concept. The contrast is with `docs` in cat-harness, whose subject is the harness itself. Worked example of the distinction: the who-iris catalogue goes in `library/` or is referenced remotely; a note ABOUT it is a folio; the page explaining how ingestion works is docs.",
+      "graphs": [
+        "folio"
+      ]
     }
   ]
 }

@@ -105,6 +105,14 @@
   },
   "directories": [
     {
+      "id": "docs",
+      "path": "docs/",
+      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`.",
+      "graphs": [
+        "docs"
+      ]
+    },
+    {
       "id": "tools",
       "path": "tools/",
       "description": "Tool definitions, one subdirectory per contributing instance (tools/<stub>/) so a composed instance adds its own without colliding on a filename. tools/index.ts merges them and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",

@@ -105,6 +105,7 @@ const AUTHORITY: Record<string, "enforced" | "recorded"> = {
   "bpmn-skill": "recorded",
   "json-skill": "recorded",
   "md-link": "recorded",
+  "prose-mention": "prose",
 };
 
 function link(from: string, toId: string | undefined, ref: string, via: string) {
@@ -141,6 +142,20 @@ for (const n of nodes) {
   if (n.id.endsWith(".md")) {
     for (const m of text.matchAll(/\]\((\.\.?\/[^)\s#]+\.md)[^)]*\)/g)) {
       link(n.id, relative(ROOT, resolve(dirname(abs), m[1])), m[1], "md-link");
+    }
+    // PROSE MENTIONS. Link targets are stripped first, so an edge here is a
+    // name appearing in running text with no link and no declaration behind it
+    // — the weakest evidence in the graph, and the owner's "maybe the prose is
+    // in the wrong place" made countable. Never weighed into a verdict.
+    const prose = text.replace(/\]\([^)]*\)/g, "").replace(/^---\n[\s\S]*?\n---/, "");
+    const self = n.id.split("/").pop()!.replace(/\.md$/, "");
+    for (const [nm, tgts] of byName) {
+      if (nm === self || nm.length < 5) continue;
+      const t = tgts.find((x) => x.endsWith(".md"));
+      if (!t || t === n.id) continue;
+      if (new RegExp(`\\b${nm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).test(prose)) {
+        edges.push({ from: n.id, to: t, via: "prose-mention", authority: "prose" });
+      }
     }
   }
   if (n.id.endsWith(".bpmn") || n.id.endsWith(".dmn")) {
@@ -201,9 +216,9 @@ if (process.argv.includes("--json")) {
   console.log(`\nDetangle — ${nodes.length} nodes, ${edges.length} edges, ${dangling.length} dangling\n`);
   console.log(
     "  " +
-      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "enf".padStart(4), "role".padEnd(13), "verdict"].join(" "),
+      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "enf".padStart(4), "prose".padStart(6), "role".padEnd(13), "verdict"].join(" "),
   );
-  console.log("  " + "-".repeat(112));
+  console.log("  " + "-".repeat(122));
   for (const r of results) {
     if (only && r.group !== only) continue;
     const v = r.clauses.length === 0 ? "CANDIDATE" : `${r.clauses.length} clause(s) fail`;
@@ -218,6 +233,7 @@ if (process.argv.includes("--json")) {
           String(r.distinctTargetGroups).padStart(5),
           r.directionality.toFixed(2).padStart(6),
           String(r.enforcedBoundary).padStart(4),
+          String(r.proseMentions).padStart(6),
           r.role.padEnd(13),
           v,
         ].join(" "),

@@ -52,11 +52,22 @@ const RECORD = {
   },
 } as const;
 
+const FIXITY = {
+  algorithm: "sha256",
+  // The real digest from library/wpr-rdo-2020-003-eng/structure.json — fixity
+  // data this repository has carried since ingestion and has never read as fixity.
+  digest: "5021518ccd91e26a9533edd8efc643bc24ab7bf2d4eb425c9644967e0bf72842",
+} as const;
+
 const GATES_OK = {
   size: { verdict: "permitted", basis: "2.68 MB of a ~0.7 TB catalogue" },
   restrictions: { verdict: "unknown", basis: "no restrictions stated on the item page" },
   retention: { verdict: "permitted", basis: "kept until the next refresh" },
-  sourceLoss: { verdict: "permitted", basis: "bitstream held locally" },
+  // `unknown`, and the first draft of this fixture had it `permitted` with the
+  // basis "bitstream held locally" — which is ARCHIVAL reasoning attached to a
+  // working copy. The rule added the same day caught it. A working copy holds
+  // derived sections, and the sections are not the publication.
+  sourceLoss: { verdict: "unknown", basis: "no archival copy of the original bytes" },
   copyright: { verdict: "unknown", basis: "no licence field in the record" },
 } as const;
 
@@ -117,14 +128,14 @@ describe("materialization — the states and the gates", () => {
   it("separates `unknown` from `permitted`", () => {
     // The whole reason GateVerdict is three-valued: "no restrictions known in
     // context" is a state, not a green light.
-    expect(unansweredGates(GATES_OK as never).sort()).toEqual(["copyright", "restrictions"]);
+    expect(unansweredGates(GATES_OK as never).sort()).toEqual(["copyright", "restrictions", "sourceLoss"]);
     expect(refusedGates(GATES_OK as never)).toEqual([]);
   });
 
   it("reports four freshness verdicts, not a boolean", () => {
-    const base = { of: "https://x", localPath: "library/x", gates: GATES_OK };
+    const base = { of: "https://x", localPath: "library/x", gates: GATES_OK, purpose: "working" as const };
     expect(freshness(MaterializationSchema.parse({ state: "referenced", of: "https://x" }))).toBe("not-materialized");
-    expect(freshness(MaterializationSchema.parse({ state: "materialized", ...base }))).toBe("no-expiry");
+    expect(freshness(MaterializationSchema.parse({ state: "materialized", ...base, purpose: "working" }))).toBe("no-expiry");
     expect(
       freshness(MaterializationSchema.parse({ state: "materialized", ...base, expiresAt: "2020-01-01" })),
     ).toBe("expired");
@@ -135,6 +146,59 @@ describe("materialization — the states and the gates", () => {
 
   it("has no default state — a node that does not say is invalid", () => {
     expect(MaterializationSchema.safeParse({ of: "https://x" }).success).toBe(false);
+  });
+
+  it("refuses a materialized copy that has not said WHY it was taken", () => {
+    const r = MaterializationSchema.safeParse({
+      state: "materialized", of: "https://x", localPath: "library/x", gates: GATES_OK,
+    });
+    expect(r.success).toBe(false);
+  });
+
+  it("refuses an archival copy with no fixity", () => {
+    // An archive that cannot demonstrate it is unchanged is a copy, and it
+    // cannot be re-fetched to check — the thing it would be re-fetched from is
+    // what it exists to survive.
+    const r = MaterializationSchema.safeParse({
+      state: "materialized", of: "https://x", localPath: "u/x.pdf",
+      gates: GATES_OK, purpose: "archival",
+    });
+    expect(r.success).toBe(false);
+  });
+
+  it("refuses a WORKING copy that claims to have discharged sourceLoss", () => {
+    // The derived sections are not the publication.
+    const r = MaterializationSchema.safeParse({
+      state: "materialized", of: "https://x", localPath: "library/x", purpose: "working",
+      gates: { ...GATES_OK, sourceLoss: { verdict: "permitted", basis: "we have the sections" } },
+    });
+    expect(r.success).toBe(false);
+  });
+
+  it("reports an archive as `permanent`, not as the `no-expiry` finding", () => {
+    // no-expiry is a finding: a working copy nobody gave a lifetime cannot be
+    // told from abandoned work. permanent is a specification: an archive is
+    // SUPPOSED to outlive its source.
+    expect(
+      freshness(
+        MaterializationSchema.parse({
+          state: "materialized",
+          of: "https://x",
+          localPath: "u/x.pdf",
+          purpose: "archival",
+          fixity: FIXITY,
+          gates: { ...GATES_OK, sourceLoss: { verdict: "permitted", basis: "original bytes held, sha256 recorded" } },
+        }),
+      ),
+    ).toBe("permanent");
+    expect(
+      freshness(
+        MaterializationSchema.parse({
+          state: "materialized", of: "https://x", localPath: "library/x",
+          purpose: "working", gates: GATES_OK,
+        }),
+      ),
+    ).toBe("no-expiry");
   });
 });
 

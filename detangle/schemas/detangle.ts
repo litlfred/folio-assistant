@@ -149,6 +149,18 @@ export type BoundaryRole = "sink" | "source" | "tangled" | "isolated" | "undeter
  * works but no lane can reach one. Both break — so the coupling is SYMMETRIC
  * and merely written down once, on one side.
  *
+ * A third level sits below both. A `prose` edge is a MENTION — one skill naming
+ * another in running text, with no link and no declaration. The owner,
+ * 2026-09-20: *"if prose is issue, means maybe prose is in wrong place. some
+ * needs to be moved (e.g. no forward referencing examples?)."* So a prose
+ * mention is not evidence of dependency at all; it is evidence that a sentence
+ * may be sitting in the wrong file. Measured here: **315 prose-only cross-group
+ * mentions**, 144 out of `folio-core` and 90 out of `folio-paper-adapter`.
+ *
+ * It is counted and reported, and it enters NEITHER `role` nor the boundary
+ * ratios. Letting the weakest evidence move a verdict is how a suspicion
+ * becomes a finding.
+ *
  * This repository already names the same failure one graph over. `AGENTS.md`:
  * *"Never populate `uses[]` from Lean — it destroys the signal every ordering
  * metric is computed from."* `uses[]` is the editorial relation and the Lean
@@ -156,7 +168,7 @@ export type BoundaryRole = "sink" | "source" | "tangled" | "isolated" | "undeter
  * rule exists because where a fact is recorded determines what a metric over it
  * means. `bpmn-skill` and `ts-import` are that pair again.
  */
-export type EdgeAuthority = "enforced" | "recorded";
+export type EdgeAuthority = "enforced" | "recorded" | "prose";
 
 /** A directed edge. `from` depends on / references `to`. */
 export interface DetangleEdge {
@@ -220,6 +232,12 @@ export interface DetangleMetrics {
    * directed dependency.
    */
   recordedBoundary: number;
+  /**
+   * Cross-group PROSE MENTIONS. Not a dependency and not a coupling: a count of
+   * sentences that name something living elsewhere. High means "look at whether
+   * this prose is in the right file", not "this group is entangled".
+   */
+  proseMentions: number;
   /** Distinct nodes outside the group that are referenced. The DEPENDENCY count, as against the reference count. */
   distinctTargets: number;
   /** Distinct groups outside that are referenced. What a declared dependency list would actually hold. */
@@ -237,12 +255,19 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
   const worklist: DetangleEdge[] = [];
   /** Every boundary edge, either direction — needed to weigh enforced against recorded. */
   const boundary: DetangleEdge[] = [];
+  let prose = 0;
   for (const e of edges) {
     // An edge to a node we do not know about is not an edge out of the group —
     // it is an unresolved reference, and counting it as outbound would make
     // every group with a broken link look tangled. It is reported by the
     // scanner as a dangling reference instead, which is a different finding.
     if (!known.has(e.from) || !known.has(e.to)) continue;
+    if (e.authority === "prose") {
+      // Counted, never weighed. See EdgeAuthority: the weakest evidence in the
+      // graph must not be able to move a verdict.
+      if (inGroup.has(e.from) && !inGroup.has(e.to)) prose += 1;
+      continue;
+    }
     const f = inGroup.has(e.from);
     const t = inGroup.has(e.to);
     if (f && t) internal += 1;
@@ -286,6 +311,7 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
     role,
     enforcedBoundary,
     recordedBoundary,
+    proseMentions: prose,
     distinctTargets: targets.size,
     distinctTargetGroups: targetGroups.size,
     worklist,

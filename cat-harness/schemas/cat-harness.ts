@@ -249,6 +249,47 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     summary: "Schema definitions, self-declared in the smart-base manner.",
   },
+  // THE ONE RENDERABLE KIND THE HARNESS OWNS, added 2026-09-20.
+  //
+  // This table carried no renderable kind until now, on the reasoning in
+  // `folio-graph-kind.ts`: "a layer that cannot render must not own the
+  // renderable kind." The owner's instruction changed the premise, not the
+  // principle — cat-harness now ships a renderer:
+  //
+  //   "docs/ is about documentation about the KG itself ... docs/ in
+  //    cat-harness ... only the most basic tooling and process ... builds off
+  //    generic process and single justthedocs tool. no extensions. no fancy.
+  //    no js (if possible)."
+  //
+  // So the rule reads, in its true form: A LAYER OWNS THE KINDS IT CAN RENDER.
+  // The harness can render plain documentation about itself, and does. `folio`
+  // stays core's because the harness cannot serve it — block viewers, LaTeX,
+  // QA badges, translation overlays — and that is the same rule, not an
+  // exception to it.
+  //
+  // A first attempt registered this on import, mirroring `folio`, so the
+  // assertion "the harness's own vocabulary contains no renderable kind" could
+  // stay literally true. That preserved a sentence at the cost of the design:
+  // `folio` pays the side-effect-import price because it is CONTRIBUTED by a
+  // dependency and may legitimately be absent, whereas `docs` ships with the
+  // harness and can never be absent. Twenty consumers would have needed an
+  // import for a kind that is always there. The test was updated instead,
+  // which is what it means for a premise to have changed.
+  //
+  // THE BOUNDARY THIS MUST NOT CROSS: the subject, not the feature list. The
+  // moment a `docs` page needs a block viewer, a LaTeX pass, a QA badge or a
+  // translation overlay, it is describing authored CONTENT and is a `folio`.
+  docs: {
+    type: termIri("DocsGraph"),
+    renderable: true,
+    summary:
+      "Documentation ABOUT the knowledge graph — how the harness works, what its " +
+      "directories hold, how a process runs. Rendered by the plain just-the-docs " +
+      "pipeline. Distinct from `folio`, which is content an author CREATES using " +
+      "the graph; the difference is the SUBJECT, not the format. The who-iris " +
+      "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
+      "how ingestion works is `docs`.",
+  },
   // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
   //
   // Declared as its own kind rather than folded into `kg` because the two are
