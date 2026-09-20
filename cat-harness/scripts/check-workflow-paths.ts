@@ -224,6 +224,44 @@ export const FOLIO_PATHS: FolioPath[] = [
     match: "pipeline/codemod-leanval.ts",
     reason: "reads blocks under the retired `content/` root",
   },
+
+  // ── Found by widening the extractor to `bash` (bean `7iog`) ────────
+  //
+  // Five shell scripts that were invisible to this check until the verb was
+  // added. None is platform rot; all five are FOLIO-facing, and each would
+  // be made worse by the obvious fix.
+  {
+    match: "scripts/lean-build-all.sh",
+    reason:
+      "`lean-build-sidecar.yml` builds a FOLIO's papers — the same job names " +
+      "`content/unital-groebner-bases/lean/lakefile.toml`, which is `qou`'s " +
+      "tree — so `scripts/` is the folio's root. `cat-harness/scripts/" +
+      "lean-build-all.sh` DOES exist here, a different file sharing the " +
+      "basename, so repointing it would be the wrong fix that looks right — " +
+      "the same trap `pipeline/build.ts` above records",
+  },
+  {
+    match: "scripts/build-gmp.sh",
+    reason:
+      "`snappea_wasm.yml` runs entirely under workflow-level " +
+      "`working-directory: folio-assistant/snappea-wasm`, a directory that " +
+      "exists in NO checkout of this repository — the layout from before the " +
+      "#223 split, when a folio carried the platform as `folio-assistant/`. " +
+      "The workflow is `workflow_dispatch`-only and has never been able to " +
+      "run; that is `52dz`'s documented class, not a path to repoint",
+  },
+  {
+    match: "scripts/build-pari.sh",
+    reason: "same dead `folio-assistant/snappea-wasm` root as build-gmp.sh",
+  },
+  {
+    match: "scripts/build-snappea.sh",
+    reason: "same dead `folio-assistant/snappea-wasm` root as build-gmp.sh",
+  },
+  {
+    match: "scripts/link.sh",
+    reason: "same dead `folio-assistant/snappea-wasm` root as build-gmp.sh",
+  },
 ];
 
 /** One script invocation found in a workflow. */
@@ -243,18 +281,43 @@ export interface Invocation {
 /**
  * Pull the invoked script path out of one shell line.
  *
+ * Two verbs, for two reasons.
+ *
  * `bun run <path>` and `bun <path>`, where the path looks like a file rather
  * than an npm script name. `bun run check:ci-health` is a script NAME and is
  * deliberately not a path — which is also the fix this check recommends,
  * since it puts the path in `package.json` once instead of in every caller.
+ *
+ * `bash <path>` and `sh <path>`, added 2026-09-20 because **the class
+ * recurred in the same file within the hour, from a different session**.
+ * `feature-staging.yml`'s `cleanup` job ran
+ * `bash cat-harness/scripts/render-log-union-attr.sh` at the workspace root
+ * while the platform is checked out at `source/` — twice — and both calls
+ * died `rc=127` under `bash -e`, taking the retry they were added to protect
+ * with them. A shell script has no `package.json` indirection to escape
+ * into, so the path in the workflow is the only spelling there is and the
+ * verb was the only reason this reader could not see it.
+ *
+ * A `-c` or a flag is not a path and is declined by the extension test: a
+ * shell script here ends `.sh`.
  */
 export function invokedPath(line: string): string | undefined {
-  const m = /^(?:bun|bunx)\s+(?:run\s+)?(?:--cwd\s+\S+\s+)?(\S+)/.exec(line.trim());
-  if (!m) return undefined;
-  const candidate = m[1];
-  if (!/\.(ts|js|mjs)$/.test(candidate)) return undefined; // an npm script name
-  if (candidate.startsWith("-")) return undefined;
-  return candidate;
+  const t = line.trim();
+  const bun = /^(?:bun|bunx)\s+(?:run\s+)?(?:--cwd\s+\S+\s+)?(\S+)/.exec(t);
+  if (bun) {
+    const candidate = bun[1];
+    if (!/\.(ts|js|mjs)$/.test(candidate)) return undefined; // an npm script name
+    if (candidate.startsWith("-")) return undefined;
+    return candidate;
+  }
+  const sh = /^(?:bash|sh)\s+(\S+)/.exec(t);
+  if (sh) {
+    const candidate = sh[1];
+    if (!/\.sh$/.test(candidate)) return undefined; // `-c`, a flag, a heredoc
+    if (candidate.startsWith("-")) return undefined;
+    return candidate;
+  }
+  return undefined;
 }
 
 /**
@@ -291,6 +354,13 @@ function applyCd(cwd: string, target: string): string {
 }
 
 interface WorkflowDoc {
+  /**
+   * Workflow-level `defaults:`. Read because `snappea_wasm.yml` sets its cwd
+   * HERE and not per job, so every path in it was being measured from the
+   * repository root — the same "wrong frame" error this module exists to
+   * catch, inside the module that catches it.
+   */
+  defaults?: { run?: { "working-directory"?: string } };
   jobs?: Record<
     string,
     {
@@ -420,7 +490,12 @@ export function invocationsFrom(file: string, text: string): Invocation[] {
   const doc = parse(text) as WorkflowDoc;
   const out: Invocation[] = [];
   for (const [job, def] of Object.entries(doc.jobs ?? {})) {
-    const jobCwd = def.defaults?.run?.["working-directory"] ?? "";
+    // Precedence is GitHub's: step, then job defaults, then workflow
+    // defaults, then the workspace root.
+    const jobCwd =
+      def.defaults?.run?.["working-directory"] ??
+      doc.defaults?.run?.["working-directory"] ??
+      "";
     const layout = checkoutLayout(def.steps);
     for (const step of def.steps ?? []) {
       if (!step.run) continue;

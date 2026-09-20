@@ -179,7 +179,7 @@ cause, different victim, `critical`), `06kg` (the sweep that introduced it),
 `yzsj` / #605 (the work that surfaced it), `dh4f` (a clean run reported over
 nothing).
 
-- [ ] A `bash <path>` step is outside the frame this fixed. `invokedPath`
+- [x] A `bash <path>` step is outside the frame this fixed. `invokedPath`
       takes `bun`/`bunx` only, so `bash source/cat-harness/scripts/
       git-union-attr.sh pages` — a real path in a real execution context,
       arriving on `main` 2026-09-20 with a sibling `render-log-union-attr.sh`
@@ -188,3 +188,50 @@ nothing).
       same defect class one verb over. Not done here because the PR's
       subject is the layout input, and widening the extractor in the same
       change would mix a fix with a scope increase.
+
+
+## The deferred item came back within the hour — done after all
+
+*2026-09-20T23:0xZ.* I left `bash <path>` as an open item on the reasoning
+that widening the extractor in the same change would mix a fix with a scope
+increase. Twenty minutes later PR #626 landed the evidence that changes it,
+from the session that filed this bean:
+
+> Both read `bash cat-harness/scripts/render-log-union-attr.sh` inside the
+> cleanup job, which checks the platform out at source/. Measured, not
+> inferred: broken literal -> rc=127 … That is **7iog for the second time in
+> one evening, in the same file, from a different session**.
+
+So the class recurred, in the same file, while this PR was open — and they
+compensated by building **"a miniature 7iog scoped to this one script"**: a
+per-script test that resolves calls against the job's checkout layout and
+working-directory. That is a second implementation of what this bean
+generalises, which is the one outcome worth avoiding. Widening the verb is
+what makes their scoped copy redundant.
+
+**Two live defects on `main` were caught by it immediately** — lines 1019 and
+1087, both in `cleanup`. Their fix is ported here rather than waited for: it
+no-ops once #626 merges, and waiting on a PR to merge is still waiting.
+
+### Two more findings the verb revealed, neither of them platform rot
+
+**A bug in the cwd model itself.** `snappea_wasm.yml` sets
+`defaults.run.working-directory` at the **workflow** level, not per job, and
+the reader only read job defaults — so every path in that file was measured
+from the repository root. That is this module's own subject, inside the
+module: the wrong frame, reported confidently. Now workflow defaults are read,
+with job defaults taking precedence, and both directions are tested.
+
+**Five folio-facing shell scripts, each of which the obvious fix makes
+worse.** `scripts/lean-build-all.sh` is a FOLIO's root path — the same job
+names `content/unital-groebner-bases/lean/lakefile.toml`, which is `qou`'s
+tree — and `cat-harness/scripts/lean-build-all.sh` exists here as a different
+file with the same basename, so repointing it is the wrong-fix-that-looks-
+right this table already records for `pipeline/build.ts`. The four
+`snappea_wasm.yml` scripts sit under `folio-assistant/snappea-wasm`, the
+pre-split layout, which exists in no checkout of this repository; the workflow
+is `workflow_dispatch`-only and has never been able to run. That is `52dz`'s
+documented class. All five are declared with those reasons rather than fixed
+or hidden.
+
+Corpus 61 -> 73 invocations, 0 missing, 0 undetermined. 34 tests.

@@ -57,6 +57,81 @@ describe("invokedPath", () => {
   });
 });
 
+describe("invokedPath — the `bash` verb", () => {
+  // Added after the class recurred in the same file within the hour, from a
+  // different session: `bash cat-harness/scripts/render-log-union-attr.sh`
+  // at the workspace root while the platform is at `source/`, twice, both
+  // dying rc=127 under `bash -e`.
+  test("takes a shell script", () => {
+    expect(invokedPath("bash cat-harness/scripts/x.sh pages")).toBe("cat-harness/scripts/x.sh");
+    expect(invokedPath("sh scripts/y.sh")).toBe("scripts/y.sh");
+  });
+
+  test("a flag or a `-c` string is not a path", () => {
+    expect(invokedPath("bash -c 'echo hi'")).toBeUndefined();
+    expect(invokedPath("bash -euo pipefail")).toBeUndefined();
+  });
+
+  test("a bare `bash` with no script is not a path", () => {
+    expect(invokedPath("bash")).toBeUndefined();
+  });
+
+  test("it is the VERB that was missing, not the machinery", () => {
+    // Same job shape as the bun case above; only the verb differs.
+    const text = `
+jobs:
+  j:
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: source
+      - name: s
+        run: bash cat-harness/scripts/x.sh pages
+`;
+    const [inv] = invocationsFrom("f.yml", text);
+    expect(inv.verdict).toBe(Verdict.Missing);
+  });
+});
+
+describe("workflow-level defaults", () => {
+  test("a workflow-level `defaults.run.working-directory` applies", () => {
+    // `snappea_wasm.yml` sets its cwd here and not per job, so every path in
+    // it was measured from the repository root — the wrong-frame error this
+    // module exists to catch, inside the module that catches it.
+    const text = `
+defaults:
+  run:
+    working-directory: cat-harness
+jobs:
+  j:
+    steps:
+      - name: s
+        run: bun run scripts/gates.ts
+`;
+    const [inv] = invocationsFrom("f.yml", text);
+    expect(inv.cwd).toBe("cat-harness");
+    expect(inv.verdict).toBe(Verdict.Resolves);
+  });
+
+  test("a JOB default overrides the workflow default", () => {
+    const text = `
+defaults:
+  run:
+    working-directory: nowhere
+jobs:
+  j:
+    defaults:
+      run:
+        working-directory: cat-harness
+    steps:
+      - name: s
+        run: bun run scripts/gates.ts
+`;
+    const [inv] = invocationsFrom("f.yml", text);
+    expect(inv.cwd).toBe("cat-harness");
+  });
+});
+
 describe("cdTarget", () => {
   test("a plain cd is followed", () => {
     expect(cdTarget("cd content")).toBe("content");
