@@ -255,13 +255,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T12:36:17.496Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0cf1817892684a3bbad114b6c88ac602fd51cb54",
-  "sourceCommitSha": "0cf1817892684a3bbad114b6c88ac602fd51cb54",
-  "sourceCommitAt": "2026-09-20T12:34:15Z",
+  "generatedAt": "2026-09-20T12:54:41.855Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/55f542af233a0ecb6ef8732516beca4fddd7737c",
+  "sourceCommitSha": "55f542af233a0ecb6ef8732516beca4fddd7737c",
+  "sourceCommitAt": "2026-09-20T12:52:32Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 195,
+    "Skill": 197,
     "Actor": 27,
     "Capability": 26,
     "Role": 116,
@@ -271,7 +271,7 @@
     "SequenceFlow": 582,
     "ProcessNode": 547,
     "Tool": 53,
-    "Schema": 64,
+    "Schema": 65,
     "GraphKind": 20,
     "Directory": 19
   },
@@ -1395,6 +1395,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/diff"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/create-sticky-note",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note",
+      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/create-sticky-note.md",
+      "instructionLines": 154,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/continual-progress",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "continual-progress",
@@ -1404,7 +1420,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 151,
+      "instructionLines": 200,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1500,7 +1516,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 148,
+      "instructionLines": 187,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1515,7 +1531,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 560,
+      "instructionLines": 600,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2083,7 +2099,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/github-state-inspection.md",
-      "instructionLines": 128,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2340,6 +2356,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "theme-art-intake",
+      "title": "Theme art intake",
+      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/theme-art-intake.md",
+      "instructionLines": 131,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/integration-backlog",
@@ -4555,6 +4587,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/crdm-data-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/create-sticky-note",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/decision-comparison",
@@ -4623,6 +4656,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/test-engineer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/theme-art-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#skill/todo-review",
@@ -25128,6 +25162,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/test-run"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "theme-art-intake",
+      "title": "Theme art arriving as three files — accepted, or refused with a reason.",
+      "module": "schemas/theme-art-intake.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/theme-art-intake"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/folio-assistant.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "theme",
@@ -26431,8 +26473,8 @@
   ],
   "staging": {
     "branch": "claude/ecstatic-goldberg-eroyaz",
-    "sha": "85f88a857b4805d2c070259f66ac2d3cc9f1f6af",
+    "sha": "c6dce29da65f105c1667651a54b9d528821f8955",
     "pr": "510/merge",
-    "run": "35511017234"
+    "run": "35511873717"
   }
 }
