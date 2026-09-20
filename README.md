@@ -1,7 +1,7 @@
 # folio-assistant
 
 🤖 **Agent cold start — run this before any durable work:**
-`scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH" && beans prime`,
+`cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH" && beans prime`,
 then [`AGENTS.md` §"At session start"](AGENTS.md#at-session-start) for the rest.
 
 **A content-agnostic agent skills framework.** Author rigorous content with an
@@ -278,7 +278,7 @@ bun test               # unit tests
 bun run test:e2e       # Playwright end-to-end tests
 bun run lint           # eslint
 
-bun run scripts/gen-schema-docs.ts   # regenerate the skill schema reference
+bun run cat-harness/scripts/gen-schema-docs.ts   # regenerate the skill schema reference
 bun run init-folio --help            # scaffold a new folio
 ```
 
@@ -368,7 +368,7 @@ work-plan / todo mechanism (durable, cross-session, cross-agent). See
 [`AGENTS.md`](./AGENTS.md).
 
 ```sh
-scripts/install-beans.sh
+cat-harness/scripts/install-beans.sh
 beans list
 beans create "<title>"
 beans <id> --status in-progress

@@ -1,6 +1,6 @@
 # AGENTS.md — folio-assistant
 
-**Cold start — run this before any durable work:** `scripts/install-beans.sh &&
+**Cold start — run this before any durable work:** `cat-harness/scripts/install-beans.sh &&
 export PATH="$HOME/.local/bin:$PATH" && beans prime`, then
 [§"At session start"](#at-session-start) for the rest; the session-start hook
 does it for you only where a hook runs.
@@ -189,7 +189,7 @@ stand up a separate todo store; `beans/` is committed, so the plan survives a
 resume in a fresh container.
 
 ```sh
-scripts/install-beans.sh                 # install the CLI if missing
+cat-harness/scripts/install-beans.sh                 # install the CLI if missing
 beans prime                              # emit work-plan priming for agents
 beans list                               # current open items
 beans create "<title>"                   # open a work-plan item
@@ -348,10 +348,10 @@ it cannot tell you what an item is or what it waits on, and you cannot claim or
 create anything with it.
 
 ```sh
-scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
 ```
 
-**If it will not install you are still not read-only** — `scripts/beans-fallback.ts`
+**If it will not install you are still not read-only** — `cat-harness/scripts/beans-fallback.ts`
 writes the same store in the same layout, so the CLI reads everything it wrote
 once it is available. Run the pieces by hand with `beans prime`, `beans list`,
 `beans roadmap`.
