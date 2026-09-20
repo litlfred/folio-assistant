@@ -1,10 +1,11 @@
 ---
 # folio-assistant-bp4x
 title: 'STICKIES: each initiator contributes its own sticky, rather than one list owning them all'
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-20T06:23:14Z
-updated_at: 2026-09-20T06:23:14Z
+updated_at: 2026-09-20T08:27:01Z
 parent: folio-assistant-o3xy
 ---
 
