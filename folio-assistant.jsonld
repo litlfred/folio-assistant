@@ -243,16 +243,16 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T04:02:13.826Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/260e7988f63802c55d3fb54ee90f3d3d07199068",
-  "sourceCommitSha": "260e7988f63802c55d3fb54ee90f3d3d07199068",
-  "sourceCommitAt": "2026-09-20T06:00:51+02:00",
+  "generatedAt": "2026-09-20T04:12:09.502Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4657c43e7324a01c9c387e4667e51860d4f223a3",
+  "sourceCommitSha": "4657c43e7324a01c9c387e4667e51860d4f223a3",
+  "sourceCommitAt": "2026-09-20T06:10:46+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
     "Actor": 26,
     "Capability": 23,
-    "Role": 100,
+    "Role": 103,
     "SkillPackage": 8,
     "Process": 34,
     "SequenceFlow": 475,
@@ -2755,16 +2755,16 @@
       "ambiguous": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/determine-intent",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/confirm-harness",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "determine-intent",
-      "title": "What is this repository supposed to be?",
-      "description": "Turn what a person wants this repository to become into ONE instance reference. The only step of bootstrap that requires user input, and it asks a single question rather than three.",
+      "name": "confirm-harness",
+      "title": "Which harness, and where",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
       ],
-      "instructionsPath": "bootstrap/skills/determine-intent.md",
-      "instructionLines": 89,
+      "instructionsPath": "bootstrap/skills/confirm-harness.md",
+      "instructionLines": 59,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -19676,6 +19676,50 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/initiator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "initiator",
+      "title": "Initiator",
+      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond the two bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/kg-navigation",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/confirm-harness"
+      ],
+      "bindsLane": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/knowledge-graph-data-store",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "knowledge-graph-data-store",
+      "title": "Knowledge Graph Data Store",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [],
+      "bindsLane": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "requestor",
+      "title": "Requestor",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "bindsLane": []
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/tools",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "tools",
@@ -19809,8 +19853,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "260e7988f63802c55d3fb54ee90f3d3d07199068",
+    "sha": "4657c43e7324a01c9c387e4667e51860d4f223a3",
     "pr": "main",
-    "run": "35488047803"
+    "run": "35488483256"
   }
 }
