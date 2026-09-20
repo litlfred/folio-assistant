@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-albattani-0byaig/skills/fhir-validation/input.schema.json",
+  "title": "FHIR Validation Input",
+  "description": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.",
+  "type": "object",
+  "required": [
+    "igRoot"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "validationLevel": {
+      "type": "string",
+      "enum": [
+        "sushi-only",
+        "publisher-qa",
+        "full"
+      ],
+      "default": "full",
+      "description": "Level of validation to perform."
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable)."
+    }
+  },
+  "staging": {
+    "branch": "claude/elegant-albattani-0byaig",
+    "sha": "dda88c89ad4341e4c2712cb1c765ddb3a0269b17",
+    "pr": "625/merge",
+    "run": "35541448552"
+  }
+}
