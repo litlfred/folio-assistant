@@ -29,12 +29,12 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - 'folio-assistant/docs/**'
-      - 'schemas/**'
-      - 'content/**'
-      - 'skills/**'
-      - 'scripts/gen-schema-docs.ts'
-      - 'scripts/gen-docs-pages.ts'
+      - 'cat-harness/docs/**'
+      - 'cat-harness/schemas/**'
+      - 'cat-harness/content/**'
+      - 'cat-harness/skills/**'
+      - 'cat-harness/scripts/gen-schema-docs.ts'
+      - 'cat-harness/scripts/gen-docs-pages.ts'
       - '.github/workflows/feature-staging.yml'
   pull_request_target:
     types: [closed]
@@ -150,9 +150,9 @@ jobs:
 
       - name: Regenerate generated docs
         run: |
-          bun run scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
-          bun run scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
-          bun run scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
+          bun run cat-harness/scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
+          bun run cat-harness/scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
+          bun run cat-harness/scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
 
       - name: Render BPMN workflow diagrams
         run: |
@@ -168,7 +168,7 @@ jobs:
         env:
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
         run: |
-          mkdir -p folio-assistant/docs/_data
+          mkdir -p cat-harness/docs/_data
           {
             echo "sha: \"${GITHUB_SHA}\""
             echo "short_sha: \"${GITHUB_SHA:0:7}\""
@@ -178,8 +178,8 @@ jobs:
             echo "staging_slug: \"${{ steps.slug.outputs.slug }}\""
             echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
             echo "pr_number: \"${{ github.event.pull_request.number || '' }}\""
-          } > folio-assistant/docs/_data/build.yml
-          cat folio-assistant/docs/_data/build.yml
+          } > cat-harness/docs/_data/build.yml
+          cat cat-harness/docs/_data/build.yml
 
       # Set baseurl so Jekyll generates links relative to the STAGING subdir.
       #
@@ -205,14 +205,14 @@ jobs:
         run: |
           SLUG="${{ steps.slug.outputs.slug }}"
           REPO="${{ github.event.repository.name }}"
-          echo "" >> folio-assistant/docs/_config.yml
-          echo "# Auto-appended by feature-staging.yml" >> folio-assistant/docs/_config.yml
-          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> folio-assistant/docs/_config.yml
+          echo "" >> cat-harness/docs/_config.yml
+          echo "# Auto-appended by feature-staging.yml" >> cat-harness/docs/_config.yml
+          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./folio-assistant/docs
+          source: ./cat-harness/docs
           destination: ./_site
 
       - name: Take ownership of Jekyll output
@@ -251,7 +251,7 @@ jobs:
       # couples to nothing, is a no-op on a second run, and FAILS rather than
       # reporting a clean pass when it cannot read the tree.
       - name: Strip SEO identity claims from the preview
-        run: bun run scripts/strip-preview-seo.ts --site ./_site
+        run: bun run cat-harness/scripts/strip-preview-seo.ts --site ./_site
 
       - name: Generate TypeDoc API reference
         run: |
@@ -262,10 +262,10 @@ jobs:
             --hideGenerator \
             --skipErrorChecking \
             --name "folio-assistant API (staging: ${{ steps.slug.outputs.slug }})" \
-            schemas/types.ts schemas/constraints.ts schemas/builders.ts \
-            schemas/assistant-types.ts schemas/assistant-package.ts \
-            schemas/assistant-workflow.ts schemas/formalization-types.ts \
-            schemas/lean-packages.ts 2>&1 | tail -10
+            cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
+            cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
+            cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \
+            cat-harness/schemas/lean-packages.ts 2>&1 | tail -10
 
       # Add a staging banner to every HTML page so a reviewer never
       # mistakes staged content for the published site.
@@ -296,8 +296,8 @@ jobs:
       # is free, and this is the useful end of it.
       - name: Emit the knowledge-graph viewer
         run: |
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
-          bun run scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
+          bun run cat-harness/scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
 
       - name: Inject staging banner
         # PR title and body come through `env`, NOT `${{ }}` interpolation.
@@ -435,7 +435,7 @@ jobs:
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
           BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./schemas/cat-harness.ts");console.log(artefactStub(readDeclaration(".")))')
+          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
           # Both exporters stamp their own output with the build identity, from
           # the one `stagingStamp()` in scripts/staging-stamp.ts. It was an
           # inline `bun -e` here that rewrote the JSON-LD after the fact and
@@ -443,8 +443,8 @@ jobs:
           # command writes went out with no build identity at all (bean `lx2s`).
           # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
           # sets for every step.
-          bun run scripts/kg-export.ts             --base-url "$BASE" --out "./_site/${STUB}.jsonld"
-          bun run scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
+          bun run cat-harness/scripts/kg-export.ts             --base-url "$BASE" --out "./_site/${STUB}.jsonld"
+          bun run cat-harness/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json" 
@@ -467,13 +467,13 @@ jobs:
       - name: Publish the QA witnesses and results
         run: |
           mkdir -p ./_site/assets
-          cp -rT test/results/witnesses ./_site/assets/qa
+          cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
-          find test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
           echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
@@ -486,7 +486,7 @@ jobs:
       #
       # A test asserts both workflows carry this step.
       - name: Check the navbar tiles resolve against the built site
-        run: bun run scripts/site-links.ts --site ./_site
+        run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
@@ -769,7 +769,7 @@ jobs:
         env:
           CLEANUP_SLUG: ${{ steps.guard.outputs.slug }}
           GITHUB_TOKEN: ${{ github.token }}
-        run: bun run scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
+        run: bun run cat-harness/scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
 
       - name: Check out the publish branch
         uses: actions/checkout@v4
@@ -801,7 +801,7 @@ jobs:
           git add -A "STAGING/$CLEANUP_SLUG"
           git commit \
             -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
-            -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in scripts/staging-cleanup-preflight.ts." \
+            -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness/scripts/staging-cleanup-preflight.ts." \
             -m "$RUN_URL" || true
           # Same race as every other writer of this ref, and the same reason a
           # queue is not enough: a PENDING job is cancelled by the next

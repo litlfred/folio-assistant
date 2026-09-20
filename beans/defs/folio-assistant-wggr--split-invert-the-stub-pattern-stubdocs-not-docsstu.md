@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T11:51:29Z
-updated_at: 2026-09-19T15:44:31Z
+updated_at: 2026-09-19T18:04:06Z
 parent: folio-assistant-vke6
 ---
 
@@ -290,3 +290,248 @@ landed. Everything left is named in at least one, and a stale trigger is silent:
 
 `schemas/` is the genuinely hard one and should go last: 93 imports is the
 "rewrites every relative import" step #413 deferred.
+
+## Progress — PR #437
+
+<https://github.com/litlfred/folio-assistant/pull/437>. Unit suite **106 → 0**
+failures; all **35 CI gates** green (`render:bpmn:check` needs a browser and
+passes with `--with-browser`).
+
+**The declaration gained `scope: "repository"`** — on a directory entry and on
+an asset. Four directories (`beans/`, `todos/`, `fsh-guts/`, `bootstrap/skills/`)
+and both assets (`AGENTS.md`, `README.md`) belong to the CHECKOUT rather than to
+any instance in it. `rootForScope` is the one place it becomes a directory, so
+**no consumer changed**. Two alternatives were rejected and why matters:
+`"../beans/"` spells the mechanism, states no fact, and is refused by
+`check-harness-dirs`, which rejects every dot-prefixed segment; a second
+`harness.json` at the repository root would have made every consumer of those
+four directories look in two places, which is the criticism `.beans/` already
+paid. A repository-scoped entry is **not inherited** — the never-overlaid
+property of `beans/` and `todos/` is now held by the resolver rather than
+remembered.
+
+**`findInstanceRoot` / `instanceRootFor`.** Nine scripts read this instance's
+declaration from `process.cwd()`, which was a claim about the working directory
+rather than about the instance. Each passes `import.meta.dir` now, and the
+helper walks up to the nearest `harness.json` rather than counting `..`.
+
+**Five checks were reporting clean runs over empty sets**, each found by fixing
+the roots rather than by the check itself: `check-declared-assets` (45 dead
+links in `AGENTS.md` / `README.md` it had never opened — bean `v8gh`'s shape in
+the check written for it), `check-agents-xref` (a census of **0** where it had
+been 8, at exit 0), `bean-store-hygiene`, `fsh-guts-not-rendered`,
+`harness:dirs:check`.
+
+**Held back deliberately: `stub` stays `folio-assistant`.** An earlier commit on
+this branch set it to `cat-harness`, which renames every published `@id` while
+the site still builds green. Verified on the publish ref afterwards: 1349 nodes,
+**0** minted against `cat-harness`. The directory is a filesystem fact; the stub
+is a published name, and they are now allowed to differ.
+
+## Owner rulings, 2026-09-20 — two corrections to what this bean records
+
+### 1. The exception list is THREE, and `fsh-guts/` is not one of them
+
+Owner: *"intent is to have, with exception of bootstrap/ beans/ and todos/, all
+other directories are to be the contents of repos"*.
+
+This bean's §"What this settles" puts `fsh-guts/` in category 2 — "NON-INSTANCE
+STORES that are never overlaid: `beans/`, `todos/`, and `fsh-guts/`". **That is
+wrong.** The exceptions are `bootstrap/`, `beans/`, `todos/`. Everything else at
+the top level is the contents of a repository, `fsh-guts/` included, so it
+belongs at `cat-harness/fsh-guts/`.
+
+Recorded as a correction rather than edited away, because a sibling reading the
+old category 2 would leave it where it is and believe that settled.
+
+**It sharpens `scope: "repository"` rather than complicating it.** That field
+(PR #437) was written to mean "never overlaid", which is a judgement. Under this
+ruling it means exactly the three exceptions — `bootstrap/skills/`, `beans/`,
+`todos/` — and `fsh-guts/` stops carrying it. A closed list beats a criterion
+each reader applies for themselves.
+
+Measured 2026-09-20 against the rule, counting tracked directories only:
+
+| tree | non-conforming top-level dirs |
+|---|---|
+| `origin/main` | **22** — adapters, blueprint, computations, content, deploy, home_page, latex, library, ns, schemas, scripts, skills, src, test, types, ui, uploads, viewer, tools, fsh-guts, test-results, + `folio-assistant/` |
+| PR #437 | **3** — `fsh-guts/` (7 files), `tools/` (1 file), `test-results/` (1 file, build residue) |
+
+Still unruled, and inferred rather than stated: the dot-directories
+(`.github/`, `.claude/`, `.gemini/`, `.harness/`) and the root files
+(`package.json`, `tsconfig.json`, `AGENTS.md`, licences). `.github/` must be at
+the repository root because GitHub requires it there, so the rule is read as
+covering content directories, not repository infrastructure. Asked, not assumed.
+
+### 2. Beans and todos are introduced by cat-harness, NOT by bootstrap
+
+Owner: *"beans and todos as tools only introduced in cat-harness, not in
+bootstrap"*.
+
+**Bootstrap violates this today, and by more than beans and todos.** Measured on
+`77bb22d697`:
+
+- `bootstrap/harness.json` declares **two** directories, `skills/` and
+  `workflows/`, both holding one graph kind: `cat-harness`.
+- `bootstrap/bootstrap.jsonld` publishes **18** `graphKind` nodes — `beans`,
+  `bean-defs`, `workflow-state`, `todos`, `todo-items`, `todo-feedback`,
+  `folio`, `library`, `qa`, `health`, `voices`, `uploads`, `tools`, `schemas`,
+  `translation-sources`, `cat-harness` and the rest.
+
+So bootstrap introduces **17 kinds it does not declare**, including every
+bean/todo kind — while `bootstrap/AGENTS.md`, `bootstrap/harness.json` and
+`bootstrap/skills/kg-navigation.md` all state in prose that bootstrap has *"no
+`beans`"*. The prose is right and the generated graph contradicts it.
+
+**Root cause, and it is a classification rather than a bug.** `COLLECTOR_SCOPE`
+in `scripts/kg-export.ts` files `graphKinds` as **`universal`** — "Reads nothing
+instance-specific at all — the global graph-kind registry" — so
+`collectGraphKinds()` emits every registered kind into whichever instance is
+exporting. That classification is what needs revisiting: a graph kind is
+CONTRIBUTED BY A LAYER, so the registry is global in storage and not in
+ownership.
+
+`collectGraphKinds`' own comment already says as much — *"`cat-harness` and
+`schemas` are bootstrap's kinds, `voices` and `library` are core's"* — but
+`graphKindNamespace()` currently resolves **all 16** registered kinds to the
+cat-harness namespace, so the comment describes an intent the code does not
+implement. Either the namespaces are wrong or the comment is; they disagree
+today and nothing checks it.
+
+Shape of the fix, not yet implemented and not yet authorised: an instance's
+export carries the kinds that instance INTRODUCES, so bootstrap's document
+carries `cat-harness` alone. That is one node where there are now 18, and it
+makes `bootstrap/AGENTS.md`'s "no beans" true of the graph and not only of the
+prose.
+
+Related: `z4mq` item 3 (session todo #8) — the conformance check that any
+instance can render its JSON-LD. A check that bootstrap publishes only what it
+declares belongs with it.
+
+### Correction to ruling 1 — `fsh-guts/` STAYS, and the original category 2 was right
+
+Owner, 2026-09-20: *"fsh-guts/ is created in tooling of cat-harness. keep it
+here (like beans and todos/) as this instance's own working memory."*
+
+**Ruling 1 above is wrong and this supersedes it.** I read "with exception of
+bootstrap/ beans/ and todos/" as an exhaustive list and concluded `fsh-guts/`
+must move. It does not. The exceptions are **four**: `bootstrap/`, `beans/`,
+`todos/`, `fsh-guts/` — which is exactly what this bean's §"What this settles"
+said before I "corrected" it. Left in place rather than deleted so the next
+reader sees the loose reading tried and rejected, twice now in this bean.
+
+**MEMORY is the reason, and it is a better rule than the one it replaces.**
+Category 2 justified these as "never overlaid", which is a criterion each
+reader applies — and two readers applied it to opposite answers. They are the
+instance's MEMORY: `beans/` the agent's work plan, `todos/` the person's
+outstanding items, `fsh-guts/` what was discarded and kept so the next agent
+cannot re-enter a dead end. **A repository has one memory, so it cannot be
+composed from per-instance parts.** "Never overlaid" is the consequence; being
+memory is the rule. `bootstrap/` is the fourth for a different reason entirely
+— resolution, not memory — which is why it is the one exception to "a
+top-level directory's name is a repository name" and these three are not
+exceptions to that rule at all: they are not instance-shaped in the first
+place.
+
+**Ruling 2 stands and now reads coherently with this.** The TOOLING and graph
+kinds for beans, todos and fsh-guts are introduced by cat-harness; the STORES
+stay at the top level. "beans is a cat-harness concept" and "`beans/` is not
+inside `cat-harness/`" are both true. `bootstrap/` must introduce none of the
+three, which is the violation ruling 2 measured (18 published graph kinds
+against 1 declared).
+
+**Net effect on PR #437: none — its `scope: "repository"` set was already
+correct.** `bootstrap/skills/`, `beans/`, `todos/`, `fsh-guts/` carry it and
+nothing else does. The field's MEANING improves: it is now a closed list of
+four rather than a judgement about overlaying.
+
+Re-measured under the corrected rule, tracked directories only:
+
+| tree | non-conforming top-level dirs |
+|---|---|
+| `origin/main` | **21** |
+| PR #437 | **2** — `tools/` (1 file) and `test-results/` (1 file) |
+
+`test-results/.last-run.json` is Playwright residue that is tracked and should
+not be; it is not a layout question. `tools/index.ts` is the real one, and it
+is NOT obviously a mover: its own header says the barrel stays at the top
+deliberately, because five modules import `../tools/index.js` and moving it
+would bake this instance's stub into five platform import paths — "the exact
+defect the stub pattern exists to remove, reintroduced one directory along".
+So it is either a fifth exception with a stated reason, or the five importers
+resolve through the declaration instead. Not decided here.
+
+Recorded in agent memory as `the-top-level-is-four-things-and-three-are-memory`
+(`platform-boundary-guard`), since "where does this belong" is that agent's
+lane and this rule has now been got wrong twice.
+
+## Merging main into PR #437 — what the two-root split found, 2026-09-20
+
+70 commits of main merged in two passes. **208 rename/rename conflicts**, all
+`X -> cat-harness/X` here against `X -> folio-assistant/X` on main, resolved
+toward `cat-harness/` after comparing every pair byte-for-byte: **208
+identical, 0 differing**. Main relocated and did not edit, so nothing of theirs
+was lost to the choice. Both sides were already heading here — this bean's own
+section is titled "What this means for the `cat-harness` rename, which is the
+next step".
+
+**Three silent drops, each this branch's layout meeting code that was correct
+while the two roots were one directory.** None would fail on main, and none
+was found by the check that owns the area:
+
+1. **Bootstrap's skills left the published graph.** `skillMdDirs` builds from
+   the DECLARED `path` — relative to whatever root the entry's *scope* names,
+   and `bootstrap/skills/` is repository-scoped — then returns it as if it were
+   instance-relative. `collectSkills` joins that to the instance root, finds
+   nothing, and `continue`s under the comment *"a package this instance does
+   not carry"*. `confirm-harness` became a dangling `hasSkill`; `kg-navigation`
+   only LOOKED fine because a second copy exists under `skills/`, which is bean
+   `v3se` exactly. Fixed by composing from the `absPath` the resolver already
+   produced. Note the first fix returned one joined string, which corrected the
+   root and broke the segment shape callers index (`p[0] === "skills"`);
+   `skill-coverage.test.ts` caught it by asserting set equality against the
+   filesystem.
+
+2. **`check-actor-reach` examined nothing over 27 actors.** `.claude/` is the
+   repository's; `root = process.cwd()` named `cat-harness/.claude/`. Its own
+   vacuity guard printed "EXAMINED NOTHING" and the test asserting that guard
+   fires was the only thing that noticed. Its test then passed ONE root for two
+   questions — the actor registry is the repository's, the declaration the
+   instance's.
+
+3. **`requirements.txt` and the Python import scan want DIFFERENT roots.**
+   `requirements.txt` sits beside `package.json` and CI installs it from the
+   checkout root, so it is the repository's; the `.py` files that import those
+   packages are the instance's. A single `ROOT` breaks one half whichever way
+   it points — at the instance `requirements.txt` is ENOENT, at the repository
+   the `scripts/**/*.py` glob matches nothing and the scan reports 0 imports.
+   Both named now.
+
+**The pattern worth carrying**: every one of these is a directory resolved
+against the wrong root, and every one FAILED SILENTLY in the same direction —
+an empty scan reported as a clean one. Where a guard existed it fired; where it
+did not, the graph simply lost nodes. That is the argument for the vacuity
+guards this repo keeps writing, stated as a measurement rather than a
+preference.
+
+**`initializationDoc` narrowed, and the open half is recorded not papered
+over.** It composed `<stub>/docs/...` and its docstring claimed a "full
+repo-relative path"; `siteDir` returns plain `docs` here because the instance
+has a directory of its own. The suffix is now IDENTICAL for every instance,
+stronger than "differs only by site root" — **but bootstrap needs the
+instance's DIRECTORY to use it**, and with the directory (`cat-harness/`)
+deliberately unequal to the stub (`folio-assistant`), `<stub>/` names nothing.
+Scanning the top level for a `harness.json` is the declaration-driven answer
+and is what `findInstanceRoot` already does in the other direction. **Not
+implemented, not assumed.** The test asserting `toContain("base/")` is inverted
+rather than deleted and says in place what it no longer proves.
+
+Accepted from main without argument: 11 simulators DELETED (moved to the `qou`
+folio that owns them, sha256-verified identical there — the platform/folio
+boundary, and main is right), the `determine-intent` -> `confirm-harness` and
+`bootstrap.bpmn` -> `initialize-harness.bpmn` renames, and 34 new files git had
+already placed. Also relocated 11 files main added under `folio-assistant/`
+with no counterpart here, which the rename pass structurally could not see.
+
+Verified: 3078 tests 0 fail, `bun run gates --all` the whole set, tsc and
+eslint clean.
