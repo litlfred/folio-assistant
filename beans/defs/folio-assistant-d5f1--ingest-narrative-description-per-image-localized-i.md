@@ -225,8 +225,8 @@ Read as one contact sheet rather than 24 files. The classification is
 | what it is | placements |
 |---|---|
 | **real data figures** (both tables, `9789241548960-eng` p126, p154) | **2** |
-| organisation logos — JSTOR, MSF ×2, FAO ×2, UNDP ×2, ILO, WHO ×4 (incl. 世界卫生组织 西太平洋区域) | **13** |
-| the SAME photograph of children on a dirt road, at seven sizes | **7** |
+| organisation logos — JSTOR, MSF ×2, FAO ×2, UNDP ×2, ILO, WHO ×4 (incl. 世界卫生组织 西太平洋区域) | **12** |
+| photographs — 7 of them the same children-on-a-road picture, plus one of a health worker | **8** |
 | unreplaced template text: "WPRO PUBLICATION / **SAMPLE TITLE** IN THE WESTERN PACIFIC" | **2** |
 
 Describing "every figure" would therefore produce **13 logo descriptions and

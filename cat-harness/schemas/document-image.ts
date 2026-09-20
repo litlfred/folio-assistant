@@ -36,22 +36,61 @@
  */
 import { z } from "zod";
 
+import { AttributionSchema } from "./attribution.ts";
 import { NarrativeSchema, NOT_AUTHORED, type Narrative } from "./narrative.ts";
 
 /**
  * What an image IS, as distinct from what it depicts.
  *
  * - `page-scan` — the rendered page. Describing it produces "a scanned page".
- * - `figure` — something placed *within* a page. This is what `d5f1` is about.
- * - `undetermined` — the geometry could not be read. Never rendered as either.
+ * - `figure` — content of the document: a chart, a table, a diagram.
+ * - `logo` — an organisational or publisher mark. Furniture, not content.
+ * - `decorative` — a photograph or ornament carrying no information the prose
+ *   does not. Describable for accessibility, but not a figure of the document.
+ * - `undetermined` — nothing could be determined. Never rendered as any other.
+ *
+ * ## Why `figure` alone was not enough
+ *
+ * Geometry gives exactly one bit: is this image the whole page, or something
+ * on it. Measured 2026-09-20, the 24 images the geometric rule called
+ * `figure` across this corpus were:
+ *
+ * | | |
+ * |---|---|
+ * | real data figures | **2** |
+ * | organisation logos (JSTOR, MSF ×2, FAO ×2, UNDP ×2, ILO, WHO ×4) | **12** |
+ * | photographs — 7 of them the same picture at seven sizes | **8** |
+ * | unreplaced template text reading "SAMPLE TITLE" | **2** |
+ *
+ * Describing "every figure" would have produced thirteen logo captions and
+ * seven descriptions of one picture, against two about the document. No
+ * measurement of the placed rectangle can tell a WHO emblem from a chart —
+ * only looking can, which is why {@link InspectionBasisSchema} exists.
  */
-export const IMAGE_ROLES = ["page-scan", "figure", "undetermined"] as const;
+export const IMAGE_ROLES = [
+  "page-scan",
+  "figure",
+  "logo",
+  "decorative",
+  "undetermined",
+] as const;
 export type ImageRole = (typeof IMAGE_ROLES)[number];
 
-/** Roles a description is worth generating for. `undetermined` is not one. */
+/**
+ * Roles worth a description, and why each.
+ *
+ * A `logo` earns one because a reader using a screen reader still needs to
+ * know whose mark is on the page; it is short and factual, not a narrative.
+ * `decorative` earns one for the same reason. `page-scan` earns none — the
+ * page's own text is already extracted — and `undetermined` earns none
+ * because nothing is known about it yet.
+ */
 export const DESCRIBABLE_ROLES: readonly ImageRole[] = IMAGE_ROLES.filter(
-  (r): r is ImageRole => r === "figure",
+  (r): r is ImageRole => r === "figure" || r === "logo" || r === "decorative",
 );
+
+/** Roles only reachable by LOOKING. Geometry cannot produce these. */
+export const INSPECTION_ONLY_ROLES: readonly ImageRole[] = ["logo", "decorative"];
 
 /**
  * Fraction of the page a placed image covers, at or above which it is the page
@@ -64,7 +103,12 @@ export const DESCRIBABLE_ROLES: readonly ImageRole[] = IMAGE_ROLES.filter(
  */
 export const PAGE_COVERAGE_THRESHOLD = 0.8;
 
-export const ImageBasisSchema = z.object({
+/**
+ * A role computed from the placed rectangle. Cheap, total, and blind: it
+ * separates the page from things on the page and nothing finer.
+ */
+export const GeometryBasisSchema = z.object({
+  method: z.literal("geometry"),
   /** Placed area over page area. The number the role was computed from. */
   coverage: z.number().min(0),
   /** How many images share this page. A scan is alone on its page. */
@@ -72,7 +116,36 @@ export const ImageBasisSchema = z.object({
   /** The page it sits on, 1-based as a reader counts. */
   page: z.number().int().min(1),
 });
+
+/**
+ * A role assigned by SOMEBODY LOOKING at the image.
+ *
+ * A different kind of claim from geometry, so it is a different shape. The
+ * two were one type until 2026-09-20, and merging them would have let
+ * "a WHO emblem, because an agent recognised it" be read as "furniture,
+ * because it covers 0.4 % of the page" — which the numbers cannot support.
+ *
+ * Carries `by` for the same reason every other judgement here does: an agent
+ * attribution must name its model, so a verdict can be re-examined against
+ * the thing that made it.
+ */
+export const InspectionBasisSchema = z.object({
+  method: z.literal("inspection"),
+  /** Who looked. An `agent` must name its model — see `attribution.ts`. */
+  by: AttributionSchema,
+  /** ISO date of the look. A verdict ages; this says how much. */
+  at: z.string().min(1),
+  /** What was seen, in a few words. NOT the description — the reason. */
+  saw: z.string().min(1),
+  page: z.number().int().min(1),
+});
+
+export const ImageBasisSchema = z.discriminatedUnion("method", [
+  GeometryBasisSchema,
+  InspectionBasisSchema,
+]);
 export type ImageBasis = z.infer<typeof ImageBasisSchema>;
+export type GeometryBasis = z.infer<typeof GeometryBasisSchema>;
 
 export const DocumentImageSchema = z
   .object({
@@ -93,6 +166,15 @@ export const DocumentImageSchema = z
       "a decided role must carry its basis, and `undetermined` must not — " +
       "a verdict with no working is indistinguishable from a guess",
     path: ["basis"],
+  })
+  // `logo` and `decorative` are unreachable from a rectangle. Claiming one on
+  // a geometry basis would dress a judgement up as a measurement.
+  .refine((i) => !requiresInspection(i.role) || i.basis?.method === "inspection", {
+    message:
+      "`logo` and `decorative` can only be assigned by looking — a geometry " +
+      "basis cannot support either, since no measurement of a placed " +
+      "rectangle distinguishes a WHO emblem from a chart",
+    path: ["basis", "method"],
   })
   // The whole point of the measurement: no narrative slot on the 140 scans.
   .refine((i) => i.narrative === undefined || DESCRIBABLE_ROLES.includes(i.role), {
@@ -124,14 +206,26 @@ export const ImagesSidecarSchema = z.object({
 export type ImagesSidecar = z.infer<typeof ImagesSidecarSchema>;
 
 /**
- * The role implied by geometry. One definition, so the extractor and every
+ * The role implied by GEOMETRY. One definition, so the extractor and every
  * consumer cannot disagree about where the line is.
+ *
+ * Takes a {@link GeometryBasisSchema} specifically, not any basis. An
+ * inspection basis carries a role the inspector ASSIGNED by looking, and
+ * there is nothing here to recompute it from — `logo` and `decorative` are
+ * unreachable from a rectangle. Accepting the union and quietly returning
+ * `figure` for an inspected image would silently overwrite a judgement with
+ * a measurement that cannot support it.
  */
-export function roleFor(basis: ImageBasis | undefined): ImageRole {
+export function roleFor(basis: GeometryBasis | undefined): ImageRole {
   if (basis === undefined) return "undetermined";
   return basis.coverage >= PAGE_COVERAGE_THRESHOLD && basis.imagesOnPage === 1
     ? "page-scan"
     : "figure";
+}
+
+/** True when this role could only have come from somebody looking. */
+export function requiresInspection(role: ImageRole): boolean {
+  return INSPECTION_ONLY_ROLES.includes(role);
 }
 
 /** A fresh entry for a figure: describable, and not yet described. */
