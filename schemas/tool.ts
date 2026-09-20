@@ -250,6 +250,43 @@ export const ToolMaintainsSchema = z.object({
 
 export type ToolMaintains = z.infer<typeof ToolMaintainsSchema>;
 
+/**
+ * Why an agent would reach for THIS Tool rather than a substitutable sibling.
+ *
+ * ## Why this is not `description`
+ *
+ * `description` is projected VERBATIM as the MCP tool description
+ * (`src/mcp/project.ts`) and into the exported graph (`kg-export.ts`). It
+ * answers "what does this do", which is what a caller needs at the moment of
+ * calling. Comparative prose — what it costs to have installed, what it cannot
+ * do, which sibling covers the rest — is noise there, and putting it there
+ * would degrade the surface an LLM reads when choosing among tools.
+ *
+ * ## Why all three fields are required together
+ *
+ * A selection record with only `when` is half an answer: it tells an agent to
+ * reach for this tool without telling it where the tool stops, so the agent
+ * discovers the boundary by failing. `limits` is where a sibling gets named,
+ * and it must be STATED even when it is "none" — the same reason
+ * `install.none` exists, so "no limits" is distinguishable from an unfinished
+ * record.
+ *
+ * `cost` is not `install`. `install` says how to obtain the tool; `cost` says
+ * what having it costs — CI minutes, a wheel that needs a C toolchain, a
+ * network round trip. Two tools can be equally easy to install and very
+ * differently expensive to keep.
+ */
+export const ToolSelectionSchema = z.object({
+  /** The case this Tool is the right answer to. */
+  when: z.string().min(1),
+  /** Where it stops, and which sibling picks up — "none" is a real value, stated. */
+  limits: z.string().min(1),
+  /** What having it available costs. Distinct from `install`; see above. */
+  cost: z.string().min(1),
+});
+
+export type ToolSelection = z.infer<typeof ToolSelectionSchema>;
+
 export const ToolDefinitionSchema = z
   .object({
     id: ToolId,
@@ -263,6 +300,37 @@ export const ToolDefinitionSchema = z
     }),
     /** Skills this Tool can satisfy. One skill may have several Tools. */
     satisfies: z.array(z.string().min(1)).min(1, "a Tool must satisfy at least one skill"),
+    /**
+     * Other Tools that do the SAME job by a different mechanism.
+     *
+     * ## Why this is declared and not derived from `satisfies`
+     *
+     * Deriving it was the first design, and measurement refuted it. Sharing a
+     * skill does NOT make two Tools substitutable: measured 2026-09-20, 12 of
+     * this instance's 25 skills carry more than one Tool, and nearly all are
+     * COMPLEMENTARY — `workflow-list`, `-start`, `-next`, `-gate` and
+     * `-complete` are five steps of `process-state`, not five ways to perform
+     * it, and the five translation tools are the same shape. Exactly one pair,
+     * `beans-cli` / `beans-manual`, is genuinely substitutable.
+     *
+     * So a rule keyed on "shares a skill" would demand comparative prose on
+     * twelve skills with nothing to compare, and an author obliged to write it
+     * would write noise. Substitutability is a judgement about mechanism, and
+     * judgements get declared.
+     *
+     * ## Symmetric, and checked
+     *
+     * If A names B and B does not name A, a reader arriving at B never learns
+     * a choice exists — which is the whole failure this field prevents, half
+     * the time. `scripts/check-tools.ts` verifies both that each id resolves
+     * and that the relation is mutual.
+     */
+    alternativeTo: z.array(ToolId).optional(),
+    /**
+     * Why to reach for this one. REQUIRED once `alternativeTo` is non-empty —
+     * see {@link ToolSelectionSchema}, and the refinement below.
+     */
+    selection: ToolSelectionSchema.optional(),
     requires: ToolRequiresSchema.optional(),
     /**
      * Published artefacts this Tool is authoritative for. See
@@ -288,7 +356,23 @@ export const ToolDefinitionSchema = z
         "is not that case: the harness calls it directly, and it is the projection source.",
       path: ["invoke"],
     },
-  );
+  )
+  // A declared alternative without a reason to choose between them is the
+  // defect this pair of fields exists to remove, half-fixed: the reader now
+  // knows a choice exists and still cannot make it. Enforced here rather than
+  // in `check-tools` because it needs nothing outside the node.
+  .refine((t) => (t.alternativeTo?.length ?? 0) === 0 || t.selection !== undefined, {
+    message:
+      "a Tool that names an alternative must carry `selection` — otherwise a reader " +
+      "learns a choice exists without learning how to make it",
+    path: ["selection"],
+  })
+  // Self-reference would satisfy the symmetry check trivially and tell a
+  // reader nothing.
+  .refine((t) => !(t.alternativeTo ?? []).includes(t.id), {
+    message: "a Tool cannot be an alternative to itself",
+    path: ["alternativeTo"],
+  });
 
 export type ToolDefinition = z.infer<typeof ToolDefinitionSchema>;
 export type ToolInput = z.infer<typeof ToolInputSchema>;

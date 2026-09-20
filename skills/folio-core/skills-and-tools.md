@@ -61,6 +61,72 @@ session completed two merged PRs' worth of durable work **unclaimed**. The
 fallback is not a degraded mode to mention in passing; it is a second Tool with
 equal standing, and the skill must present it that way.
 
+## Substitutable Tools declare it, and each says how to choose
+
+A pair like that is **substitutable**: same job, different mechanism, pick one.
+That is declared with `alternativeTo`, and each end then carries `selection` —
+three fields, all required together:
+
+| field | answers |
+|---|---|
+| `when` | the case this Tool is the right answer to |
+| `limits` | where it stops, and which sibling picks up |
+| `cost` | what having it available costs |
+
+**`limits` is the one an author is tempted to skip**, and it is the one that
+matters most: without it an agent reaches for the tool and discovers the
+boundary by failing. State it even when it is "none", for the same reason
+`install.none` exists — so "no limits" is distinguishable from an unfinished
+record.
+
+**`cost` is not `install`.** `install` says how to obtain the tool; `cost` says
+what having it costs — CI minutes, a wheel needing a C toolchain, a network
+round trip. Two Tools can be equally easy to install and very differently
+expensive to keep.
+
+**Why not `description`?** It is projected verbatim as the MCP tool description
+and into the exported graph. It answers "what does this do", which is what a
+caller needs at the moment of calling; comparative prose about installation
+cost is noise there, and would degrade the surface an agent reads when choosing
+among tools.
+
+### Sharing a skill does NOT make two Tools alternatives
+
+Deriving substitutability from `satisfies` was the first design, and
+measurement refuted it. **Measured 2026-09-20: 12 of this instance's 25 skills
+carry more than one Tool, and nearly all are complementary** — `workflow-list`,
+`-start`, `-next`, `-gate` and `-complete` are five *steps* of `process-state`,
+not five ways to perform it; the five translation tools are the same shape.
+Exactly one pair, `beans-cli` / `beans-manual`, was genuinely substitutable.
+
+A rule keyed on "shares a skill" would therefore have demanded comparative
+prose on twelve skills with nothing to compare, and an author obliged to write
+it writes noise. Substitutability is a judgement about mechanism, so it is
+declared — and `scripts/check-tools.ts` checks that each id resolves and that
+the relation is **mutual**, because a one-sided declaration means an agent
+arriving at the silent end never learns a choice exists.
+
+### The worked pair: stdlib vs extensions
+
+`ingest-stdlib` and `ingest-extended` both satisfy `library-ingestion`, and the
+split falls where the dependency boundary actually is rather than on principle:
+
+| | `ingest-stdlib` | `ingest-extended` |
+|---|---|---|
+| install | nothing (`install.none`) | PyMuPDF, pypdf + Pillow, tesseract |
+| covers | archives, CSV/spreadsheets, technical metadata, content routing | PDF outline, page text, OCR, images |
+| runs in CI here | **yes** | no — CI installs `ruff` and nothing else |
+
+Reading a zip's central directory, sniffing magic bytes and parsing an xlsx's
+XML are all in the Python standard library; rendering a PDF's text layer is not
+and never will be. An agent picks by **what the machine has**, not by what the
+document is — and the stdlib arm refuses a PDF outright rather than
+half-ingesting one, so the choice is never made silently.
+
+This is also the shape to reach for whenever a capability has a heavyweight
+backend: two Tools, one skill, the dependency posture legible on each node,
+instead of a repository-wide yes/no that no reader of a skill can see.
+
 ## The harness assumes no MCP — and knows how to emit one
 
 **`agentic-harness` must work with no MCP server running.** Everything it needs
