@@ -454,6 +454,10 @@ const RULES: Rule[] = [
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
       "scripts/check-declared-paths.ts",
+      // Which `.github/workflows/*.yml` carry a BPMN diagram — bean `7yvd`.
+      // Harness by its subject: it reads THIS REPOSITORY's CI processes and
+      // its knowledge graph, and a folio has neither of those as content.
+      "scripts/check-workflow-coverage.ts",
       "scripts/claim-bean.ts",
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
