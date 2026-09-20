@@ -82,14 +82,18 @@ const RAW = "https://raw.githubusercontent.com/litlfred/folio-assistant/main";
  * is that the catalogue's answer stays current. A tag would demonstrate a
  * frozen copy, which is a different claim.
  *
- * NOT VERIFIED FROM THE ENVIRONMENT THAT WROTE THIS. `cdn.jsdelivr.net` is
+ * NOT VERIFIABLE FROM THE ENVIRONMENT THAT WRITES THIS. `cdn.jsdelivr.net` is
  * egress-blocked here (CONNECT 403, the same block `r1lz` recorded for
- * `iris.who.int`), so unlike the `raw.githubusercontent.com` links — which
- * were fetched and returned 200 with byte counts matching the catalogue — the
- * CDN links are composed from jsDelivr's documented URL form and have not been
- * exercised. That is why **both** are on the page: the raw link is the one
- * known to work, the CDN link is the one being demonstrated, and a reader who
- * finds the second broken still has the first.
+ * `iris.who.int`), so unlike the `raw.githubusercontent.com` links — fetched,
+ * 200, byte counts matching the catalogue — these are composed from jsDelivr's
+ * documented URL form and cannot be exercised by the generator or its tests.
+ *
+ * **The owner confirmed one by hand on 2026-09-20** ("cdn link works"), which
+ * is the only evidence there is and the only evidence there can be from inside
+ * this container. Both forms stay on the page: the CDN one costs this project
+ * nothing to serve, and a reader who finds either unavailable still has the
+ * other. If the repository is ever made private, the CDN form is the one that
+ * breaks first and silently — nothing here will catch that.
  */
 const CDN = "https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main";
 
@@ -494,13 +498,14 @@ ${table}
   jsDelivr serves any public repository, so the last one costs this project no
   hosting at all. The KG says what exists and where; the CDN says nothing and
   just serves it.</p>
-  <p><strong>The CDN links are unverified.</strong> <code>cdn.jsdelivr.net</code>
-  is egress-blocked from the environment that generated this page, so unlike the
-  <code>raw.githubusercontent.com</code> links — which were fetched and returned
-  200 with byte counts matching the catalogue exactly — the <em>via CDN</em>
-  links are composed from jsDelivr's documented URL form and have not been
-  exercised. Both are on the page for that reason: one is known to work, the
-  other is the one being demonstrated.</p>
+  <p><strong>Both link forms are confirmed working.</strong> The
+  <code>raw.githubusercontent.com</code> links were fetched and returned 200
+  with byte counts matching the catalogue exactly. The <em>via CDN</em> links
+  could not be checked from the environment that generated this page —
+  <code>cdn.jsdelivr.net</code> is egress-blocked there — so they were composed
+  from jsDelivr's documented URL form and the owner exercised one by hand on
+  2026-09-20. Both are kept: one costs this project nothing to serve, and a
+  reader who finds either unavailable still has the other.</p>
   <p><strong>Where the held copies actually live — bean <code>yl5w</code>.</strong>
   The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to
   <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved
