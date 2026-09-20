@@ -334,6 +334,22 @@
       ]
     },
     {
+      "id": "methodology-raci",
+      "path": "methodologies/raci/",
+      "description": "RACI as its own subgraph beside CRDM. Three declared edge kinds \u2014 accountable, consulted, informed \u2014 over the BPMN activities and `roles.json` entries that already exist, NOT a new party registry: a second table of names would be a second answer to `who is the reviewer`, free to disagree with the registry, which is the drift the retired skill `roles:` field cost 260 dangling values (bean qif9). R is deliberately absent because a lane already declares it. Owner, 2026-09-20, bean 7o7i: exactly one Accountable per activity, ENFORCED by `check:raci`.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "methodology-crdm",
+      "path": "methodologies/crdm/",
+      "description": "CRDM as its OWN topical subgraph \u2014 its skills and its eight diagrams together, rather than three skills in folio-core and eight .bpmn in skills/workflows/ with nothing but a filename prefix relating them. Owner, 2026-09-20: CRDM, RACI, SDLC and MADR all live under `methodologies/`, each its own subgraph. I proposed a separate `workflow-methodologies/` on the reading that PROCESS methods (how a process runs) and JUDGEMENT methods (how to decide \u2014 Kepner-Tregoe, MADR, DMN) are different axes; the owner settled it as ONE tree, which is the better answer for the reason this repository keeps relearning: two directories whose boundary needs a paragraph to explain are two answers to `where do methodologies live`, and the next author picks the wrong one. This is the layout `skillMdDirs` was built for: its own comment names `crdm` as the example of a topical directory that should cost a declaration line and no code change, and `bootstrap/skills/` was the first such root. Each methodology is declared SEPARATELY rather than declaring the parent, because `workflowDirs` resolves `<kgdir>/workflows` \u2014 declaring only the parent would leave every diagram undiscovered. SDLC and RACI are deliberately NOT declared until they have content: a declared-but-absent directory is the `dh4f` defect.",
+      "graphs": [
+        "cat-harness"
+      ]
+    },
+    {
       "id": "methodologies",
       "path": "methodologies/",
       "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here — see smart-kg-methodologies.",

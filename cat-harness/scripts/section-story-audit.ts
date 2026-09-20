@@ -63,6 +63,7 @@
  * wired into CI as a quality gate.
  */
 
+import { folioDir } from "../schemas/cat-harness.js";
 import { readFileSync, existsSync, writeFileSync } from "fs";
 import { join } from "path";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
@@ -73,8 +74,7 @@ import { requirePaper } from "../content/pipeline/repo-root";
 // for those globs. `findContentRepoRoot()` walks up from the real cwd;
 // `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
 const REPO_ROOT = findContentRepoRoot();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const CONTENT = join(REPO_ROOT, "folio");
+const CONTENT = folioDir(REPO_ROOT);
 
 const GENERIC_NAME_RE = /^sec:.*-(part-\d+|extras|misc-\d+)$/;
 const BLOCK_TITLE_LIST_TELL =

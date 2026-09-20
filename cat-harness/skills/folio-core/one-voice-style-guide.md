@@ -7,6 +7,7 @@ triggers:
   - "author voice"
   - "narrative style"
   - "before committing narrative"
+consulted: true
 ---
 
 

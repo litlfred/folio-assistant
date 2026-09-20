@@ -20,6 +20,7 @@
  * @module content/pipeline/generate-main-tex
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 import type { Paper } from "../../schemas/types";
@@ -327,8 +328,7 @@ if (import.meta.main) {
     args[0] ||
       (() => {
         const p = requirePaper(undefined, contentRoot);
-        // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-        return join(contentRoot, "folio", p, `${p}.ts`);
+        return join(folioDir(contentRoot),  p, `${p}.ts`);
       })(),
   );
 

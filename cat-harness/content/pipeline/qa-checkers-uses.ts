@@ -17,9 +17,10 @@
  * @module content/pipeline/qa-checkers-uses
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync } from "fs";
 import type { CheckerResult } from "../../schemas/block-qa";
-import { join } from "path";
+
 
 import {
   buildContentGraph,
@@ -46,10 +47,9 @@ function graph(): ContentGraph | null {
   _graphTried = true;
   try {
     const repoRoot = findContentRepoRoot();
-    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-    const contentDir = join(repoRoot, "folio");
-    if (!existsSync(contentDir)) return null;
-    _graph = buildContentGraph(contentDir, repoRoot);
+    const folioRoot = folioDir(repoRoot);
+    if (!existsSync(folioRoot)) return null;
+    _graph = buildContentGraph(folioRoot, repoRoot);
     _graphLoaded = _graph.nodes.size > 0;
     return _graphLoaded ? _graph : null;
   } catch {

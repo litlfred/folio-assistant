@@ -22,6 +22,7 @@
  * @module content/pipeline/validate-references-human-review
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import { createHash } from "crypto";
@@ -57,8 +58,7 @@ interface ReviewSidecar {
 // `import.meta.dir` pointed at `<folio-assistant>/schemas/` — a path that does
 // not exist, and one the folio's symlinked embedding resolves to even when the
 // pipeline is run from the content repo.
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const SIDECAR_PATH = join(findContentRepoRoot(), "folio", "schema", "references.review.json");
+const SIDECAR_PATH = join(folioDir(findContentRepoRoot()),  "schema", "references.review.json");
 
 /** Recursively key-sorted JSON, so the hash is independent of source key order.
  *  Mimics `JSON.stringify` semantics for the non-JSON values that can appear in a

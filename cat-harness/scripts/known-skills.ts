@@ -16,6 +16,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, join as joinPath, relative } from "node:path";
 
 import { resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
+import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
 // exists. This module resolves this instance's directories and the instance now
@@ -420,6 +421,68 @@ export function remotePackageDeclarations(root: string): RemoteDeclaration[] {
  */
 export function manifestResolvableSkills(root: string): Set<string> {
   return new Set([...knownSkills(root), ...remotePackageSkills(root)]);
+}
+
+/**
+ * The skills that declare `consulted: true` — reference material nobody
+ * PERFORMS.
+ *
+ * ## The distinction, and why it had to be declared
+ *
+ * `kg-audit`'s `skill-in-role-or-process` reported **110 skills bound to no
+ * role and no activity**, graded `major`, and the number was not one
+ * population. `build-pdf`, `lean-generation` and `proof-triage` are tasks
+ * somebody performs; `directory-conventions`, `opening-brief` and
+ * `untrusted-input` are what the performer READS. A consulted skill belongs
+ * in no lane **by its nature**, so counting it as unbound measures the
+ * criterion rather than the corpus.
+ *
+ * It is not derivable. Two discriminators were tested over the 110 (bean
+ * `y1w9`): a sibling `.ts` `SkillDefinition` covers 20 and misses
+ * `glossary-build` and `editor`; an `allowed-tools:` line covers 58 and
+ * splits the same families arbitrarily. Both cut across the distinction
+ * rather than along it. So the axis is real, load-bearing for an audit
+ * criterion, and was declared nowhere — the mirror of this repository's
+ * usual defect, which is a field declared and read by nothing.
+ *
+ * ## Why `consulted` is the EXCEPTION rather than the default
+ *
+ * Absent means performed. Annotating the smaller set is the difference
+ * between marking dozens of files and marking every one of them, and an
+ * axis whose default costs 180 edits does not get adopted.
+ *
+ * ## Why this ships with its reader in the same change
+ *
+ * Bean `qif9` removed a front-matter field that carried 288 annotations and
+ * was consumed by nothing, for three months. `kg-audit` reads this one from
+ * the commit it lands in, in BOTH directions: the criterion skips a
+ * consulted skill, and a separate criterion reports a consulted skill that
+ * a lane or a role claims — so a wrong annotation is a finding rather than
+ * a quiet exemption.
+ */
+export function consultedSkills(root: string): Set<string> {
+  const out = new Set<string>();
+  for (const parts of skillMdDirs(root)) {
+    const dir = join(root, ...parts);
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith(".md") || !isSkillMd(join(dir, f))) continue;
+      let fm: FrontMatter;
+      try {
+        fm = parseFrontMatter(readFileSync(join(dir, f), "utf-8")).fm;
+      } catch {
+        // Unreadable is not "not consulted", by the same reasoning
+        // `isSkillMd` gives for the opposite default: there, undercounting
+        // the skill set produces a clean run over nothing. Here the risk
+        // runs the other way — treating an unreadable file as consulted
+        // would EXEMPT it from the criterion — so it stays performed and
+        // gets reported.
+        continue;
+      }
+      if (scalar(fm, "consulted") === "true") out.add(f.slice(0, -3));
+    }
+  }
+  return out;
 }
 
 /** Every skill name this instance can resolve. */

@@ -15,6 +15,7 @@ import { join, resolve } from "node:path";
 import {
   ROOT_INFRASTRUCTURE,
   accountedRootPaths,
+  holdsOnlyIgnored,
   humanBytes,
   undeclaredAtRoot,
 } from "../check-undeclared-files.js";
@@ -332,5 +333,52 @@ describe("an instance's own declaration outranks another instance naming it", ()
     // scope, so this is the pair above, with real names.
     const REPO = resolve(import.meta.dir, "..", "..", "..");
     expect(accountedRootPaths(REPO).get("bootstrap")).toContain("declares itself");
+  });
+});
+
+describe("a directory that only HOLDS ignored files", () => {
+  // `scripts/` with nothing but a `__pycache__` in it. `gitIgnored` says no —
+  // `.gitignore` names `__pycache__/`, not `scripts/` — so the husk was
+  // reported. CI stayed green (a clean checkout has no bytecode) while every
+  // contributor who ran the Python tests went red locally: the gate failing
+  // for the people doing the work and passing for the machine that was not.
+  function repoWithCacheHusk(): string {
+    const root = repo();
+    spawnSync("git", ["init", "-q"], { cwd: root });
+    writeFileSync(join(root, ".gitignore"), "__pycache__/\n");
+    mkdirSync(join(root, "scripts", "__pycache__"), { recursive: true });
+    writeFileSync(join(root, "scripts", "__pycache__", "x.pyc"), "x");
+    return root;
+  }
+
+  test("is not reported — it is git's business, not a finding", () => {
+    expect(undeclaredAtRoot(repoWithCacheHusk()).map((e) => e.path)).not.toContain("scripts");
+  });
+
+  test("...and the skip is NARROW: one real file in it and it IS reported", () => {
+    // The falsifier that matters. A skip wide enough to hide a genuine
+    // undeclared file would be worse than the false positive it replaced,
+    // because this sweep exists to catch exactly that.
+    const root = repoWithCacheHusk();
+    writeFileSync(join(root, "scripts", "genuinely-undeclared.ts"), "export {};");
+    expect(undeclaredAtRoot(root).map((e) => e.path)).toContain("scripts");
+  });
+
+  test("a directory of TRACKED files is not mistaken for empty", () => {
+    // `git status` alone reports nothing for tracked, unmodified files, so a
+    // status-only check would call this directory empty and skip it.
+    const root = repo();
+    spawnSync("git", ["init", "-q"], { cwd: root });
+    mkdirSync(join(root, "kept"), { recursive: true });
+    writeFileSync(join(root, "kept", "a.ts"), "export {};");
+    spawnSync("git", ["add", "-A"], { cwd: root });
+    spawnSync("git", ["-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "x"], { cwd: root });
+    expect(holdsOnlyIgnored(root, "kept")).toBe(false);
+  });
+
+  test("git unavailable means REPORT, never skip", () => {
+    // Over-reporting is the safe direction: the failure guarded against is a
+    // file going unseen. Same stance as `gitIgnored`.
+    expect(holdsOnlyIgnored("/tmp", "no-such-directory-anywhere")).toBe(false);
   });
 });

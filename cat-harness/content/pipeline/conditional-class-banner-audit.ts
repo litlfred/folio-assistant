@@ -26,6 +26,7 @@
  * conditional-on-class block missing either component (when run
  * with `--strict`).
  */
+import { folioDir } from "../../schemas/cat-harness.js";
 import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { leanPackageByName } from "../../schemas/lean-packages.ts";
@@ -45,8 +46,7 @@ const REPO_ROOT = findContentRepoRoot();
 // use argv[2] for an output path or a `--strict` flag, so a positional
 // would collide. Matches `extract-status-sections.ts`.
 const _paperArg = paperArg();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const ROOT = join(REPO_ROOT, "folio", requirePaper(_paperArg));
+const ROOT = join(folioDir(REPO_ROOT),  requirePaper(_paperArg));
 const STRICT = process.argv.includes("--strict");
 
 // Optional baseline-allowlist file (declared before WITNESS_OUT so its

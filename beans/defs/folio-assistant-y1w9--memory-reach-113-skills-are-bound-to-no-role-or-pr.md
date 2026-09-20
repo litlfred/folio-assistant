@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T18:34:19Z
-updated_at: 2026-09-19T19:14:06Z
+updated_at: 2026-09-20T11:42:22Z
 parent: folio-assistant-8jt6
 ---
 
@@ -238,3 +238,84 @@ values in the first place.
       match whichever way it goes
 - [ ] `SkillDefinition.roles` decided
 - [ ] only then: triage the remainder, in batches small enough to argue with
+
+---
+
+## 2026-09-20 — the axis is declared, and the count means something now
+
+Owner: *"1"* — declare it, and have the audit read it.
+
+### What landed
+
+`consulted: true` in a skill's front matter says it is **reference
+material nobody performs**. Absent means performed: the exception is
+annotated, not the rule, because an axis whose default costs an edit in
+every skill file does not get adopted.
+
+| | |
+|---|---|
+| reader | `consultedSkills()` in `scripts/known-skills.ts` |
+| exemption | `skill-in-role-or-process` skips a consulted skill |
+| **guard** | `consulted-skill-not-performed`, `major` |
+| annotated | **23** skills |
+| criterion | **117 → 94** |
+
+### A correction to this bean's own framing
+
+Earlier entries here said the criterion grades these `major` and that the
+110 dominates the audit. **Both wrong.** It is `severity: "minor"` and its
+comment says *"NEVER gate on this, and it is `minor` so that it cannot"*.
+
+More than that, the criterion's author had already reached the same
+conclusion: *"A skill invoked directly by name — `corpus-grep`, `diff`,
+`kg-export`, `mcp-contract`, the watcher family — is doing its job without
+appearing in any diagram."* The gap was never that nobody knew; it is that
+there was **no way to say so per skill**, so the knowledge lived in a
+comment about the whole criterion and the count stayed uninterpretable.
+
+That changes what this bean achieved. Not "a noisy gate quietened" — the
+gate was never loud. It is that a number a reader could only take on faith
+is now one they can check, and the 23 exemptions are individually
+arguable rather than one blanket caveat.
+
+### Why the guard is the load-bearing half
+
+An exemption nobody can falsify is worse than the over-reporting it
+replaces — it is `qif9`'s field with extra steps, since a wrong
+`consulted: true` would silently remove a skill from the only criterion
+watching it.
+
+So a skill cannot be reference material AND a step somebody performs: if a
+lane or a role claims one, `consulted-skill-not-performed` reports it.
+Which of the two declarations is wrong takes a person, so it reports both
+rather than choosing. Verified by annotating `todo-manager` — which IS
+bound — and watching the guard fire, then restoring it.
+
+### The 23, and how they were judged
+
+One at a time, from each skill's own **description**, never its name: does
+it state a rule, a model, a convention or a standard that a performer
+reads? `rendering-fixes` calls itself *"quick-fix reference"*;
+`one-voice-style-guide` says *"Reference when authoring"*;
+`content-profiles` is *"Adapters and profiles are different axes"*.
+
+**Borderline cases were deliberately left out** — `process-state`,
+`log-message`, `corpus-grep`, `diff`, `coordinate`, `session-intent`,
+`pickup`. An over-broad annotation is the unfalsifiable exemption above;
+leaving one out costs a line in a report.
+
+Four tests hold the axis non-vacuous from both ends: the set is non-empty
+and contains known reference skills; known performed skills are NOT in it;
+it stays a minority of the corpus; and every annotation resolves to a
+skill this instance knows. A fifth pins the spelling, because the reader
+matches `"true"` exactly and `yes` would read as absent.
+
+### Done when — revised
+
+- [x] the performed/consulted question answered, and the criterion made to
+      match
+- [ ] `SkillDefinition.roles` decided — the `.ts` half of the retired
+      field, 94 % dangling, still open
+- [ ] the remainder triaged, in batches small enough to argue with. Now
+      **possible**: 94 skills, each of which is either performed-and-unbound
+      (a real finding) or a missed annotation (one line).
