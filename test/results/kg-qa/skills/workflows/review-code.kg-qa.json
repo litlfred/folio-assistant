@@ -5,7 +5,7 @@
     "id": "Process_CodeReview",
     "path": "skills/workflows/review-code.bpmn"
   },
-  "source_hash": "sha256:5675173b45f101ca7a1447c5e5ed0e3bd477012101cfe583cbd7bf36f309a03f",
+  "source_hash": "sha256:f228fefddaaac0a4fd5368b5363c54cb0b66376d0ab339cd2d66e1c8bb4392cf",
   "criteria": {
     "skill-ref-resolves": {
       "result": "pass",
@@ -32,8 +32,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_ReviewTool",
+          "detail": "needs skill \"covered-is-not-reachable\", but its lane's role \"code-reviewer\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -49,8 +54,8 @@
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 6,
+    "fail": 1,
     "n/a": 3,
     "unknown": 0
   }

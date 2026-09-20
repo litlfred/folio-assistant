@@ -58,8 +58,13 @@
       <bpmn:documentation>
         Does it name skills, and do they resolve? Is the mechanism it advertises
         the one that actually runs? Are its IRIs minted rather than written out?
+
+        And the question a covered skill hides: is the COMMAND reachable, or only
+        the skill satisfied? A skill can be served by the neighbours of its
+        mechanism while the mechanism itself is reachable from no node, and
+        check:tools reports it as covered and is right to.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="skills-and-tools"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="skills-and-tools"/><folio:skill ref="covered-is-not-reachable"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_ReviewSchema" name="Review the schema definition node">

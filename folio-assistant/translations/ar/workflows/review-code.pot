@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: review-code\n"
-"POT-Creation-Date: 2026-09-19T11:52:32.856Z\n"
+"POT-Creation-Date: 2026-09-20T05:08:06.005Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Code nodes changed"
 msgstr ""
 
-#: skills/workflows/review-code.bpmn:84
+#: skills/workflows/review-code.bpmn:89
 #. Diagram label
 msgid "Code nodes reviewed"
 msgstr ""
@@ -41,25 +41,25 @@ msgstr ""
 
 #: skills/workflows/review-code.bpmn:58
 #. Diagram element documentation
-msgid "Does it name skills, and do they resolve? Is the mechanism it advertises the one that actually runs? Are its IRIs minted rather than written out?"
+msgid "Does it name skills, and do they resolve? Is the mechanism it advertises the one that actually runs? Are its IRIs minted rather than written out? And the question a covered skill hides: is the COMMAND reachable, or only the skill satisfied? A skill can be served by the neighbours of its mechanism while the mechanism itself is reachable from no node, and check:tools reports it as covered and is right to."
 msgstr ""
 
-#: skills/workflows/review-code.bpmn:66
+#: skills/workflows/review-code.bpmn:71
 #. Diagram element documentation
 msgid "Does the node declare what KIND of node it is? Does a widened type carry its mirrors? Does a removed field leave a reason behind, so the next author does not re-add it in good faith?"
 msgstr ""
 
-#: skills/workflows/review-code.bpmn:77
+#: skills/workflows/review-code.bpmn:82
 #. Diagram element documentation
 msgid "Findings are advice, not commits — the same separation the generic reviewer lane keeps. Record them where the next reader meets the node."
 msgstr ""
 
-#: skills/workflows/review-code.bpmn:76
+#: skills/workflows/review-code.bpmn:81
 #. Diagram label
 msgid "Record the verdict on the node"
 msgstr ""
 
-#: skills/workflows/review-code.bpmn:65
+#: skills/workflows/review-code.bpmn:70
 #. Diagram label
 msgid "Review the schema definition node"
 msgstr ""
@@ -74,12 +74,12 @@ msgstr ""
 msgid "Run the node audits"
 msgstr ""
 
-#: skills/workflows/review-code.bpmn:89
+#: skills/workflows/review-code.bpmn:94
 #. Diagram label
 msgid "schema"
 msgstr ""
 
-#: skills/workflows/review-code.bpmn:88
+#: skills/workflows/review-code.bpmn:93
 #. Diagram label
 msgid "Tool"
 msgstr ""
