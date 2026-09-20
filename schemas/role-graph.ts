@@ -384,7 +384,28 @@ export const RoleDefSchema = z.object({
   inherits: z.array(z.string()).optional(),
   actedUpon: z.boolean().optional(),
   judgementOnly: z.boolean().optional(),
-});
+  // STRICT: an unknown key is an ERROR, not something to drop quietly.
+  //
+  // `readRoleGraph` already refuses a bad `actorKinds` and a dangling
+  // `inherits` — rejected at read, not accepted and reported later — and this
+  // is the case it was missing. A plain `z.object` STRIPS what it does not
+  // recognise, so a field an author wrote parses, type-checks, and reaches no
+  // graph. That is bean `zdrf`'s failure class, and the comment above is the
+  // half of it that was already known; this is the other half.
+  //
+  // It is not hypothetical. `role-model.md` §"Adding a role" said to write a
+  // `summary` — not a field: `title`/`description` are the two labels every
+  // kg node carries. PR #453 followed the instruction, and all three
+  // bootstrap roles carried a `summary` that reached nothing. Measured
+  // 2026-09-20: 0 of 33 root roles, 3 of 3 bootstrap roles. The instruction
+  // was corrected in #452; this is what stops the next one.
+  //
+  // `_`-prefixed documentation keys stay legal — see `withoutComments`. A
+  // downstream instance carrying some OTHER extra key will now fail at read
+  // where it used to load, and that is the trade taken deliberately: a
+  // declaration that silently means less than it says is worse than one that
+  // refuses to load and names the key.
+}).strict();
 
 export const RoleGraphSchema = z.object({
   name: z.string().min(1),
@@ -403,6 +424,34 @@ export const RoleGraphSchema = z.object({
  * otherwise silently return a short skill set, and a *quietly* incomplete
  * answer is the failure mode this repository keeps paying for.
  */
+/**
+ * Strip `_`-prefixed documentation keys, at the graph level and on each role.
+ *
+ * This instance writes rationale into the JSON it declares — `_comment` here,
+ * `_comment`/`_title` in `harness.json`, `_lanes_comment` in bootstrap's
+ * graph — so the convention is established rather than invented here. It is
+ * what makes {@link RoleDefSchema}'s `.strict()` affordable: an unknown key
+ * can be an error precisely because there is a spelling for a key that is
+ * MEANT not to be read.
+ *
+ * Generalised from a hardcoded `delete raw._comment`, which honoured the
+ * convention for exactly one name — `_lanes_comment` was already being
+ * stripped by the schema instead, which is the silence this change exists to
+ * remove.
+ */
+function withoutComments(raw: unknown): unknown {
+  if (typeof raw !== "object" || raw === null) return raw;
+  const drop = (o: Record<string, unknown>): Record<string, unknown> =>
+    Object.fromEntries(Object.entries(o).filter(([k]) => !k.startsWith("_")));
+  const top = drop(raw as Record<string, unknown>);
+  if (Array.isArray(top.roles)) {
+    top.roles = top.roles.map((r) =>
+      typeof r === "object" && r !== null ? drop(r as Record<string, unknown>) : r,
+    );
+  }
+  return top;
+}
+
 export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
   const p = join(kgRoot, ROLE_GRAPH_DIR, ROLE_GRAPH_FILENAME);
   if (!existsSync(p)) return undefined;
@@ -412,8 +461,7 @@ export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
-  if (typeof raw === "object" && raw !== null) delete (raw as Record<string, unknown>)._comment;
-  const parsed = RoleGraphSchema.safeParse(raw);
+  const parsed = RoleGraphSchema.safeParse(withoutComments(raw));
   if (!parsed.success) throw new Error(`${p} is not a valid role graph: ${parsed.error.message}`);
 
   const graph = parsed.data as RoleGraph;
