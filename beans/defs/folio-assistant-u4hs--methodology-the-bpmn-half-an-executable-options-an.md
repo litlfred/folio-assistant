@@ -114,3 +114,78 @@ options — MADR's own refusal made checkable.
 
 Verified: `check:workflow-refs` 0, `check:workflow-policy` 0, SVG renders, 3311
 tests with 0 failures, 46 gates — the whole set.
+
+---
+
+## 2026-09-20: wired into one caller, chosen by Kepner-Tregoe over the four
+
+The owner asked for the analysis on the four candidate callers and chose **only
+`upstream-version-adoption` first**. Applying the methodology to the choice of
+where to put the methodology is the honest test of it, so this was worked as a
+KT MUST/WANT split rather than a preference.
+
+### The three MUSTs, and what they eliminated
+
+| MUST | what it rules out |
+|---|---|
+| M1 — real alternatives exist at the call site | a site with one path has nothing to analyse |
+| M2 — not re-entered on a loop where the decision is already made | re-running an analysis after the decision is ceremony |
+| M3 — the actor at the call site can descend into `Business analyst` | a lane the caller cannot enter is an unreachable subprocess |
+
+`crdm-deliver` **eliminated on M2**: both `GW_IncrementOK` and `GW_MVPReady`
+flow back into `A_Implement`, so the call would re-fire after the increment
+decision was taken. `editing-hci-validation` is **weak on M3**. That leaves
+`upstream-version-adoption`, where the alternatives are named in the diagram
+itself — adopt, hold, decline.
+
+### Where it sits, and why not where the bean first proposed
+
+The bean above proposed `A_Impact → A_RecordOutcome`. That is **wrong**, and the
+diagram says why: the MVP build and its gates are HOW the options' costs are
+measured. An analysis before `Task_Mvp` would weigh alternatives against no
+evidence, and one after `A_RecordOutcome` would analyse a decision already made.
+
+It goes on the **single edge into `PM_Decide`** — `SF_UA_9`, the "no findings we
+can fix" branch out of `GW_Findings`:
+
+```
+GW_Findings --no--> Call_OptionsAnalysis --> PM_Decide --> GW_Adopt
+```
+
+In `Lane_Agent`, not `Lane_Publication`. `PM_Decide` is a `userTask` whose lane
+admits `person` only and which `folio:policy relaxable="false"` locks, so
+putting the analysis in the agent's lane is what keeps "produces the options"
+and "makes the decision" visibly separate rather than implied. A subprocess in
+the deciding lane would be a second accepting party.
+
+### The loop re-entry, checked rather than assumed
+
+`SF_UA_8` loops back to `A_Impact`, so a run where the reviewer found something
+fixable reaches the call activity a **second** time. I read
+`bean-link.ts:147` before wiring it: `op="note"` does `--body-append` with no
+dedupe, while `claim` and `resolve` are idempotent at `:163`. I had predicted
+that was a defect and it is **not** — a second note is correct here, because the
+analysis genuinely ran again against changed evidence, and deduping would hide
+the re-analysis.
+
+### A pre-existing defect the regeneration exposed
+
+`processHierarchy()` in `gen-docs-pages.ts` reads `calledElement` with a regex
+over the whole XML, and this diagram's `<bpmn:documentation>` says *"Callers
+invoke it with `calledElement="Process_UpstreamAdoption"`"*. So the published
+hierarchy has always carried `Process_UpstreamAdoption → itself`, a phantom
+self-call read out of prose. Visible only because my change put that object in a
+diff. The function's own comment worries about the regex matching **nothing**;
+nobody considered it matching **too much**, and `todos.test.ts` pins real edges
+without ever asserting a phantom one is absent. Fixed in the next commit.
+
+### Still not done
+
+The QA criterion for a decision recorded with fewer than two real options, and
+the other three callers — `content-change-review` survives M1–M3 and is the
+next candidate if the owner wants a second.
+
+Verified: `check:workflow-refs` 0 with 10/10 coverage on the diagram,
+`check:workflow-policy` 0, `render:bpmn:check` clean, `translate-bpmn:check`
+clean across 5 locales, `gen-docs-pages --check` clean, `kg:audit:check` no
+critical, 3311 tests 0 failures.
