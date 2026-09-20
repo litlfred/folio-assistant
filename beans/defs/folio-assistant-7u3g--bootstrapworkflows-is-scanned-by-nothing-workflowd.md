@@ -88,3 +88,18 @@ picking the cheaper one.**
 
 The other 98 unbound skills. Those are the `y1w9` triage proper; these three
 are a tooling blind spot wearing the same costume.
+
+## x-ref — `b5f0`, 2026-09-20: this is now a PREREQUISITE, not an adjacent defect
+
+The owner asked that harness initialization *"be part of ALL harness
+initializations"*. The process that does it is
+`bootstrap/workflows/initialize-harness.bpmn` — the one this bean shows is
+invisible to `workflowDirs`, and therefore to `workflow_list` / `workflow_start`.
+
+**So the step cannot be made mandatory until this is fixed**: nothing can list
+it, and `folio_init` installs no workflow either (`grep -c '\.github/workflows'
+init-folio.ts` → 0, measured for `52dz`). A mandate on an unlistable process is
+decorative.
+
+This bean was "found while sampling for `y1w9`" — incidental. It is now on the
+critical path for `b5f0`.
