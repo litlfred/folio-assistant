@@ -26,6 +26,10 @@ import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import type { CheckerPaths, CheckerHit, CheckerResult } from "../../schemas/block-qa";
 import { resolve, dirname, join, relative } from "path";
+// The conformance check itself, plus its result type. Imported here rather than
+// given its own module because a checker belongs in the registry's file, and the
+// mechanism it wraps is one function.
+import { checkFolioProfile, readDeclaredFolioProfile, type ProfileCheckResult } from "./profile-check";
 import { fileURLToPath } from "url";
 import { Q_USAGE_AUTOMATED_CHECKERS } from "./qa-checkers-q-usage";
 import { hashFile } from "./qa-utils";
@@ -69,6 +73,101 @@ function loadBibQaReport(): Record<string, unknown> | null {
     bibQaReportCache = {};
   }
   return bibQaReportCache;
+}
+
+// ── Profile conformance — the check that was reachable only over MCP ─
+//
+// `checkFolioProfile` catches what schema validation STRUCTURALLY cannot: a
+// block valid against its own schema but wrong for the folio's content profile,
+// because adapters partition disjointly while profiles NEST. Until this axis it
+// had no shell entry point at all — its only caller registered MCP tools — so CI
+// could never ask the question. Bean `0bzg`, and the owner chose this axis over a
+// `check:profile` script precisely because a sweep verdict is durable where a
+// printed one is not.
+//
+// CACHED PER PROCESS, and that is not an optimisation. `checkFolioProfile` walks
+// the whole folio; calling it per block would re-walk once per block, which is
+// bean `4n37`'s defect (`probeAll` re-spawning 25 subprocesses per call) in a
+// different costume. The profile and the manifests cannot change mid-sweep, so
+// one walk is not a cache of something volatile — it is not repeating work.
+let profileCheckCache: ProfileCheckResult | null | undefined;
+function loadProfileCheck(): ProfileCheckResult | null {
+  if (profileCheckCache !== undefined) return profileCheckCache;
+  try {
+    profileCheckCache = checkFolioProfile(REPO_ROOT, FOLIO_DIR);
+  } catch {
+    // A throw is COULD-NOT-DETERMINE, never conformance. Swallowing it into a
+    // pass is how `qa-checkers-extended`'s detangler axis once reported n/a on
+    // every folio while looking healthy — see the `FOLIO_DIR` note above.
+    profileCheckCache = null;
+  }
+  return profileCheckCache;
+}
+
+/**
+ * Does this block conform to the folio's declared content profile?
+ *
+ * Its own criterion, NEVER folded into the schema verdict. `0bzg`'s argument is
+ * that this check answers a question schema validation cannot reach, so a
+ * combined verdict would report one judgement where there are two — and the one
+ * it would hide is the one with no other source.
+ *
+ * Three results, and the `n/a` cases are the point:
+ *
+ *   · **no manifest** — nothing to place in a profile.
+ *   · **the folio declares no profile** — `profile-check.ts` is explicit that
+ *     this is distinct from declaring `paper`, and that a consumer which skips
+ *     work on the strength of a profile must not skip it on the strength of a
+ *     guess. So: not a pass.
+ *   · **the check threw** — could-not-determine.
+ *
+ * Only a folio that declares a profile AND has no violation for this block
+ * passes.
+ */
+export function checkProfileConformance(ts: string | undefined): CheckerResult {
+  if (ts === undefined) {
+    return { result: "n/a", hits: [], notes: "no `.ts` manifest for this block, so it sits in no profile" };
+  }
+  const r = loadProfileCheck();
+  if (r === null) {
+    return { result: "n/a", hits: [], notes: "the profile check could not run — could not determine, not conformant" };
+  }
+  // ASKED OF `readDeclaredFolioProfile`, not of `r.profile`, and finding that out
+  // took running it. `checkFolioProfile` resolves through `readFolioProfile`,
+  // which turns an undeclared profile into `"paper"` — the right default for a
+  // VALIDATOR, since the wider vocabulary is the safe one to validate against —
+  // so `r.profile` is never `undefined` and a guard on it never fires. The first
+  // version of this axis therefore reported `pass` on a folio that declares
+  // nothing, which is exactly the laundering it exists to prevent.
+  //
+  // Not inferred from `declaredBy`'s wording either: that is prose, and matching
+  // on "default (…)" would break the moment the sentence is reworded. The
+  // declared/undeclared question has its own function, and that function's whole
+  // documented purpose is keeping the two apart.
+  const declared = readDeclaredFolioProfile(REPO_ROOT);
+  if (declared.profile === undefined) {
+    return {
+      result: "n/a",
+      hits: [],
+      notes: `the folio declares no content profile (${declared.declaredBy}) — could not determine, not conformant`,
+    };
+  }
+  // Compared by RESOLVED path. `ProfileViolation.ts` is absolute and the sweep's
+  // companion path may be relative, so a string compare would silently match
+  // nothing and report every block conformant.
+  const mine = r.violations.filter((v) => resolve(v.ts) === resolve(ts));
+  if (mine.length === 0) {
+    return {
+      result: "pass",
+      hits: [],
+      notes: `conforms to the declared \`${r.profile}\` profile (${r.declaredBy})`,
+    };
+  }
+  return {
+    result: "fail",
+    hits: mine.map((v) => ({ file: v.ts, line: 1, text: `${v.reason}: ${v.detail}` })),
+    notes: `${mine.length} profile violation(s) against the declared \`${r.profile}\` profile`,
+  };
 }
 
 // Extract `\cite{key1, key2}` + `-- Ref: [key]` from .md / .lean.
@@ -3173,6 +3272,9 @@ export const EXTENDED_AUTOMATED_CHECKERS: Record<
   string,
   (paths: CheckerPaths) => CheckerResult
 > = {
+  // profile conformance — bean `0bzg`; its own criterion, never folded into
+  // the schema verdict, because it answers what schema validation cannot reach.
+  "profile-conformance": (p) => checkProfileConformance(p.ts),
   // bibliography
   "bib-cite-resolves": (p) => checkBibCiteResolves(p.md, p.lean),
   "bib-cited-ref-has-url": (p) => checkBibCitedRefHasUrl(p.md, p.lean),
