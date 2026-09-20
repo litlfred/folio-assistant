@@ -247,23 +247,23 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T09:30:30.098Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8852b2f3f6f3065119ad328bd939e7941eece4f2",
-  "sourceCommitSha": "8852b2f3f6f3065119ad328bd939e7941eece4f2",
-  "sourceCommitAt": "2026-09-20T11:29:06+02:00",
+  "generatedAt": "2026-09-20T09:53:28.504Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0720657c795bb607b0c2ac4e5672f8e24e8dc4f3",
+  "sourceCommitSha": "0720657c795bb607b0c2ac4e5672f8e24e8dc4f3",
+  "sourceCommitAt": "2026-09-20T11:52:13+02:00",
   "sourceTreeDirty": false,
   "counts": {
-    "Skill": 179,
+    "Skill": 180,
     "Actor": 27,
     "Capability": 24,
     "Role": 116,
     "Convention": 2,
     "SkillPackage": 8,
-    "Process": 39,
-    "SequenceFlow": 531,
-    "ProcessNode": 495,
+    "Process": 40,
+    "SequenceFlow": 543,
+    "ProcessNode": 505,
     "Tool": 33,
-    "Schema": 62,
+    "Schema": 63,
     "GraphKind": 20,
     "Directory": 17
   },
@@ -1328,6 +1328,21 @@
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
       "instructionLines": 555,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "render-logging",
+      "title": "Render logging — the publish branch keeps its own history",
+      "description": "Log every render to the publish branch — what was published, removed, restored or deliberately retained — to an append-only log that lives beside what it describes. Use when adding or removing anything on `gh-pages`, when asking \"what happened to this preview\", or before writing a workflow step that deletes a published artefact.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/render-logging.md",
+      "instructionLines": 219,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -4063,6 +4078,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/readme-sections",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/scientific-accuracy",
@@ -11747,6 +11763,301 @@
       "incoming": [
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_8",
         "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ThemeUIReview/flow/SF_TUR_9"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Render log — the publish branch keeps its own history",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/staging-render-log.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/Start_Process_RenderLog"
+      ],
+      "nodeCount": 10,
+      "flowCount": 12
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/Start_Process_RenderLog",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_What"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "deploy",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_What",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRendered"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "takedown",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_What",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_Preflight"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "full-replace deploy",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_What",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRestored"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_Preflight",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_Live"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes — refuse",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_Live",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRetained"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_Live",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRemoved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRemoved",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_Remove"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRendered",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/End_Process_RenderLog"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRetained",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/End_Process_RenderLog"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_Remove",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/End_Process_RenderLog"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRestored",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/End_Process_RenderLog"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/Start_Process_RenderLog",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Publish branch is about to change",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_What",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "What is happening?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_2",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_3",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRendered",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Append `rendered`",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_9"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_Preflight",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Preflight: is the preview live?",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/GW_Live",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Any liveness signal fired?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_6",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_7"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRetained",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Append `retained` with the reason",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_10"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRemoved",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Append `removed` with the reason",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_8"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_Remove",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Remove the artefact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_11"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/A_LogRestored",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Append `restored`",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/render-logging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_12"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/node/End_Process_RenderLog",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Entry appended; history intact",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_9",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_10",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_11",
+        "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_RenderLog/flow/SF_Process_RenderLog_12"
       ],
       "outgoing": []
     },
@@ -20679,6 +20990,13 @@
       "module": "schemas/refactor-strategy.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/render-log",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "render-log",
+      "title": "The render log — what was published to the publish branch, when, and why.",
+      "module": "schemas/render-log.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/render-targets",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "render-targets",
@@ -21958,8 +22276,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "8852b2f3f6f3065119ad328bd939e7941eece4f2",
+    "sha": "0720657c795bb607b0c2ac4e5672f8e24e8dc4f3",
     "pr": "main",
-    "run": "35502432965"
+    "run": "35503494949"
   }
 }
