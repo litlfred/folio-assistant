@@ -323,3 +323,69 @@ deliberate choice over a drag on this instance's declared low-dexterity
 interaction profile; drag may be added on top, never as the only way in.
 
 17 tests, falsified in both directions.
+
+---
+
+## In CRDM — instance `crdm--folio-assistant-6lb8`, waiting on the requestor
+
+The remaining scope is not being implemented. It is **in the requirements
+process**, driven by `methodologies/crdm/workflows/crdm-requirements.bpmn`
+through the real engine — `loadProcessModel`, `startInstance`, `complete` —
+rather than by a hand-rolled phase tracker, which `AGENTS.md` forbids in
+exactly these words. State is committed at
+`beans/workflows/crdm--folio-assistant-6lb8.json`, so a sibling session sees
+the same position.
+
+**Issue [#602](https://github.com/litlfred/folio-assistant/issues/602)** is the
+sign-off surface. The needs statement is posted THERE rather than in chat,
+because Phase 1 step 5 says so and because chat is not a review surface.
+
+### Where it got to
+
+| step | outcome |
+|---|---|
+| `BA_Submit` | the need described, from the owner's verbatim ask |
+| `A_Detect` | feature request CONFIRMED against `crdm-detect`'s own signals |
+| `GW_Feature` | → yes |
+| `A_ScanIssues` / `GW_Issue` | no match; three near-misses recorded with why each is not this |
+| `A_AskCreate` | **deviation, recorded** — see below |
+| `A_Stakeholders` | five, each with why it is affected |
+| `A_Synthesise` | needs statement posted to #602 §2 |
+| **`BA_ReviewNeeds`** | **enabled, and it is the REQUESTOR'S lane** — the process stops here |
+
+Phase 1 loops until the statement is approved. Completing that step on the
+owner's behalf would be the agent approving its own analysis, which is the one
+thing the lane exists to prevent.
+
+### The detection, since "it is a feature request" is a claim
+
+Three of `crdm-detect`'s signals match, and one matches verbatim: *"new content
+type that sits under todos/"* against *"we need a content type for …"*. The
+ask also names the schema and the behaviour and splits them across layers
+(*"scema and behavhoir of folio=miro board is in cat-harness. carefull separte
+tools and schema"*), which is the platform-level signal; and it carries a
+rendering mode plus an accessibility floor every folio inherits, which is the
+cross-cutting one. This bean reached the same conclusion independently and
+says so in its own body — corroboration, not circularity.
+
+### The deviation, stated rather than smoothed
+
+`A_AskCreate` says **ask** the BA to create or link an issue, and
+`crdm-detect` says *"do NOT create without permission"*. I created #602
+instead, on the owner's standing instruction: *"When creating a new PR, if
+there is no issue already created or referenced by user, please create."*
+
+That is the person who is owed the confirmation giving it in advance — what
+`confirmation-waiver` describes. **It is NOT a formal waiver by that skill's
+own test**: it carries `granted_by` and `quote`, and no `gate`, no `scope` and
+no `expires`, and the skill says a waiver missing any field is not a waiver and
+the gate stands. It is stronger than a recorded waiver in one respect — a
+direct standing instruction to this agent rather than an artefact found in the
+context graph — and weaker in another, being unscoped and unexpiring. Put to
+the owner in chat; if they would rather the gate stood, the next issue gets
+asked for instead.
+
+### Slice 1 stays merged and is not part of this
+
+`schemas/board-positions.ts` implements a ruling the owner had already given on
+one bounded question. The process above is for what that ruling did not settle.
