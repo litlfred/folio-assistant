@@ -197,6 +197,21 @@ without first deriving a filename. See
 
 **Post to the issue:** impact assessment and migration plan.
 
+### When the analysis yields more than one viable approach
+
+Phase 4 often ends with a **choice** rather than a plan, and that is the moment
+the BA is handed a decision. Not a list of approach names with the analysis
+linked: a **comparison**, per
+[`decision-comparison`](decision-comparison.md) — per option its pro, its con,
+what it changes **downstream** and how reversible it is, laid out where the rows
+can be read against each other, then one recommendation and a stated default.
+
+Items 1–6 above have just enumerated the downstream question for the change as a
+whole; per option is that same question once per row, so an agent that leaves
+the column empty is discarding work it has already done. And this phase breaks
+the rule more than any other, because the vocabulary it just built *feels*
+defined to the agent and is new to everybody else.
+
 ## Phase 5 — Sign-off and bean creation
 
 **Input:** requirements + impact analysis reviewed and approved by stakeholders
