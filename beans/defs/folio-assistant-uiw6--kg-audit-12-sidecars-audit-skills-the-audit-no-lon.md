@@ -5,7 +5,8 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-20T10:58:07Z
-updated_at: 2026-09-20T10:58:34Z
+updated_at: 2026-09-20T11:00:24Z
+parent: folio-assistant-d308
 ---
 
 
