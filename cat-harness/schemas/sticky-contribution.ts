@@ -40,6 +40,35 @@
  * the folio as data."* A sticky's text is subject matter, and it was living in
  * `schemas/`.
  *
+ * ## WHEN a sticky is minted, and the RTFM link it must carry
+ *
+ * The owner, 2026-09-20: *"all sticky notes should be at end of initiation
+ * process for that harnes and provife links to that harness's docs
+ * (RTFM=...)"*.
+ *
+ * Two rules, and only one of them is fully structural today:
+ *
+ * 1. **A harness's sticky is its initiation's last act.** That is already true
+ *    of the contribution — each layer declares its own card in its own
+ *    `harness.json`, so nothing above it decides what it says. What is NOT yet
+ *    split is the MINTING: `scripts/ensure-landing-sticky.ts` runs at the end of
+ *    cat-harness's initiation and writes every layer's card, because pre-split
+ *    (issue #223) cat-harness's initiation is the one that runs last and the
+ *    only one with TypeScript to run. After the split each harness mints its own
+ *    at the end of its own initiation, and `contributingRoots` already takes a
+ *    LIST of roots rather than walking one, so that change is a caller change
+ *    rather than a rewrite.
+ *
+ *    Stated rather than left to be inferred, because "bootstrap's card is
+ *    written by cat-harness" looks like a layering violation until you know it
+ *    is a pre-split accommodation with a named end.
+ *
+ * 2. **Every sticky links to ITS OWN harness's docs.** Not to the composing
+ *    instance's — bootstrap's card points at `bootstrap/README.md` on the forge,
+ *    because this site is cat-harness's and bootstrap has no site of its own
+ *    yet. A card that sent a reader to the wrong layer's documentation would be
+ *    worse than one with no link, since it looks like it worked.
+ *
  * ## Why this module is HARNESS and not CORE
  *
  * `schemas/cat-harness.ts` is classified `agentic-harness` and
