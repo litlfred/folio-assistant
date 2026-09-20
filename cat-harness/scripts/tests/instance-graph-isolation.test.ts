@@ -4,10 +4,10 @@
  * @module scripts/tests/instance-graph-isolation.test
  *
  * The defect these guard was LIVE on `main` on 2026-09-19, not hypothetical:
- * `findBpmnDirs` walked the filesystem, so `bootstrap/workflows/bootstrap.bpmn`
- * was discovered from the repository root as well as from bootstrap, and
+ * `findBpmnDirs` walked the filesystem, so `cat-bootstrap/workflows/cat-bootstrap.bpmn`
+ * was discovered from the repository root as well as from cat-bootstrap, and
  * `_kg/folio-assistant.jsonld` carried **88** references to `Process_InitializeHarness`.
- * Bootstrap's process was published as part of folio-assistant's graph.
+ * CatBootstrap's process was published as part of folio-assistant's graph.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -18,18 +18,18 @@ import { collectInstanceNodes } from "../kg-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
-const BOOT = join(repoRootFor(ROOT), "bootstrap");
+const BOOT = join(repoRootFor(ROOT), "cat-bootstrap");
 const DOC = "https://example.org/x.jsonld";
 
 const ids = (nodes: Array<Record<string, unknown>>): string[] => nodes.map((n) => String(n["@id"]));
 
 describe("a second instance in the tree stays out of the first's graph", () => {
-  test("the root instance's nodes include none of bootstrap's process", async () => {
+  test("the root instance's nodes include none of cat-bootstrap's process", async () => {
     const { nodes } = await collectInstanceNodes(ROOT, DOC, "", []);
     expect(ids(nodes).filter((i) => i.includes("Process_InitializeHarness"))).toEqual([]);
   });
 
-  test("and bootstrap's own graph DOES carry it", async () => {
+  test("and cat-bootstrap's own graph DOES carry it", async () => {
     // Isolation that achieved itself by losing the node would be worse than
     // the leak: the process would simply be gone.
     const { nodes } = await collectInstanceNodes(BOOT, DOC, "", []);
@@ -77,7 +77,7 @@ describe("discovery reads the declaration rather than the tree", () => {
   });
 
   test("a DECLARED directory holding a .bpmn directly is collected", async () => {
-    // Bootstrap's shape: `workflows/` declared as its own entry, holding the
+    // CatBootstrap's shape: `workflows/` declared as its own entry, holding the
     // diagram at its root rather than in a `workflows/` subdirectory.
     const root = mkdtempSync(join(tmpdir(), "iso2-"));
     mkdirSync(join(root, "wf"), { recursive: true });

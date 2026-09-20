@@ -146,17 +146,17 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // `readDeclaration(root)` gave the ROOT's name to every directly-held set
     // regardless of which instance contributed it, which is correct only while
     // exactly one such directory is ever discovered. The moment a second one
-    // is — `bootstrap/skills/`, once `ownDirectories` resolved its declared
+    // is — `cat-bootstrap/skills/`, once `ownDirectories` resolved its declared
     // repository scope — both are assigned the same key and the later wins.
-    // Not an error, not a collision report: bootstrap's four skills would have
+    // Not an error, not a collision report: cat-bootstrap's four skills would have
     // been found and then silently dropped, which is the same `dh4f` shape one
     // layer up from the one that hid them in the first place.
     //
     // `findInstanceRoot` walks to the nearest enclosing declaration, so the
     // name is a property of where the skills live rather than of who asked:
     // `src/skills/` → `cat-harness/harness.json` → `folio-assistant`,
-    // unchanged and measured; `bootstrap/skills/` → `bootstrap/harness.json`
-    // → `bootstrap`. A directory under no declaration at all is skipped rather
+    // unchanged and measured; `cat-bootstrap/skills/` → `cat-bootstrap/harness.json`
+    // → `cat-bootstrap`. A directory under no declaration at all is skipped rather
     // than guessed at.
     if (holdsSkill(kgDir)) {
       const instanceRoot = findInstanceRoot(kgDir);

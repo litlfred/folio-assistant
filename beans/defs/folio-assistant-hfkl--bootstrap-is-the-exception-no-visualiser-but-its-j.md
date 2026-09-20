@@ -46,7 +46,7 @@ rule rather than a new one, and the two should be written down once.
 
 ## Measured, 2026-09-20, before claiming anything
 
-- **`bootstrap/skills/` holds `bootstrap-kg-navigation.md`**, and it is about
+- **`cat-bootstrap/skills/` holds `bootstrap-kg-navigation.md`**, and it is about
   **reading** a knowledge graph cold ("assumes a text editor and nothing
   else"). That is the neighbour of what the owner asked for, not the thing:
   the ask is the skills for **rendering** `.jsonld`/`.json`. So "maybe in wrong
@@ -56,7 +56,7 @@ rule rather than a new one, and the two should be written down once.
   the `cat-harness` graph kind. There is no `render/`.
 - **The artefact is built, not committed.** `kg-export` writes
   `_kg/<stub>.jsonld` (`kg-export.ts:1777`), and `kg-export.ts:1005` already
-  names `bootstrap/bootstrap.jsonld` as "a COMMITTED artefact" in a comment.
+  names `cat-bootstrap/cat-bootstrap.jsonld` as "a COMMITTED artefact" in a comment.
   Those two disagree, and which one is true decides whether bootstrap's
   existence is checkable from a checkout or only after a build. **Check this
   before building anything** — it may be the whole bean.
@@ -70,6 +70,6 @@ rule rather than a new one, and the two should be written down once.
       holding the skills for rendering `.jsonld`/`.json`
 - [ ] The exemption is written where the QA axis will read it, so `2krx` does
       not raise a finding against bootstrap for having no visualiser
-- [ ] The `_kg/` vs `bootstrap/bootstrap.jsonld` contradiction above is
+- [ ] The `_kg/` vs `cat-bootstrap/cat-bootstrap.jsonld` contradiction above is
       resolved, one way stated
 - [ ] The docs page's "conflict" section is rewritten as the resolved rule

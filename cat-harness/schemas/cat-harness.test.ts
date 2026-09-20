@@ -1076,7 +1076,7 @@ describe("instanceRootsIn — discovered, never listed", () => {
     expect(found).toEqual([
       ".",
       "agent-skills",
-      "bootstrap",
+      "cat-bootstrap",
       "cat-harness",
       "detangle",
       "folio-assist-sci",

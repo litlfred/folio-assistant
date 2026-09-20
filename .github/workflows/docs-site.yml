@@ -216,7 +216,7 @@ jobs:
           # THE VOCABULARY — one document per namespace, plus the union.
           #
           # Every term now hangs off its declaring layer's namespace: bs: for
-          # bootstrap, cat: for the harness, fac: for core. Each of those is an
+          # cat-bootstrap, cat: for the harness, fac: for core. Each of those is an
           # IRI stem, so each needs a document or `bs:Actor` dereferences to
           # nothing — the very defect this work exists to fix, and splitting
           # one namespace into three created three fresh instances of it. The
@@ -247,7 +247,7 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
+          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assist-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
@@ -255,24 +255,24 @@ jobs:
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
-          # THE BOOTSTRAP GRAPH, and this is the first build that publishes it.
+          # THE CAT_BOOTSTRAP GRAPH, and this is the first build that publishes it.
           #
-          # It was COMMITTED to `bootstrap/bootstrap.jsonld` instead, on a
+          # It was COMMITTED to `cat-bootstrap/cat-bootstrap.jsonld` instead, on a
           # rationale that said a cold reader with nothing installed could not
           # build it — which was true — and cited a README step telling that
           # reader to load it, which does not exist: no prose file under
-          # `bootstrap/` mentions this document at all. Meanwhile the loop
-          # above published `bootstrap/ns.jsonld`, the NAMESPACE document, and
+          # `cat-bootstrap/` mentions this document at all. Meanwhile the loop
+          # above published `cat-bootstrap/ns.jsonld`, the NAMESPACE document, and
           # nothing published the GRAPH, so the `@id` it names itself by —
-          # `<base>/bootstrap/bootstrap.jsonld` — resolved to nothing. Bean
+          # `<base>/cat-bootstrap/cat-bootstrap.jsonld` — resolved to nothing. Bean
           # `blv9`, in the artefact whose entire purpose is being resolved.
           #
           # `.json` alongside for the reason every other rendering here has
           # one: Pages has no media type for `.jsonld` and serves it as
           # octet-stream. The `.jsonld` stays canonical — it is what the `@id`
           # names — so this is an alias, not a rename.
-          bun run cat-harness/scripts/gen-bootstrap-graph.ts --out "./_site/bootstrap/bootstrap.jsonld"
-          cp "./_site/bootstrap/bootstrap.jsonld" "./_site/bootstrap/bootstrap.json"
+          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
+          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
 
       # Every `maintains` claim, checked where the answer exists.
       #

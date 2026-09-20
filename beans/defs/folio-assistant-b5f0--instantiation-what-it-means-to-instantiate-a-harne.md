@@ -35,7 +35,7 @@ reader can re-run it rather than trust it.
 |---|---|---|
 | `cat-harness.config.json` at root | **`zkgs`**, and it is RULED | ruling recorded, blocked on #477 |
 | a slot on instantiation | **`nvbr`**, **`603s`**; seam built in `sticky-contribution.ts` | seam exists, navbar does not |
-| the initialization process | `bootstrap/workflows/initialize-harness.bpmn` | **exists and is unreachable** — `7u3g` |
+| the initialization process | `cat-bootstrap/workflows/initialize-harness.bpmn` | **exists and is unreachable** — `7u3g` |
 | `bootstrap.config.json` | nothing | **new**, and see the roast below |
 | Working/Dynamic vs static KG | `holds: content \| context \| state` | **already an axis**, under another name |
 
@@ -73,7 +73,7 @@ was made.
 
 ## 2. `bootstrap.config.json` is mostly `zkgs`'s convention, plus one real problem
 
-Bootstrap is **already an instance**: `bootstrap/harness.json` declares
+Bootstrap is **already an instance**: `cat-bootstrap/harness.json` declares
 `name: "bootstrap"`, two directories, two assets and a sticky. Under `zkgs`'s
 convention its root file is `bootstrap.config.json` **by derivation** — nothing
 new needs inventing, which is the consolidation this bean exists to record.
@@ -99,10 +99,10 @@ process-written — which contradicts what `.config` means everywhere else here.
 
 This is the one that decides sequencing, and it is measured, not argued.
 
-`bootstrap/workflows/initialize-harness.bpmn` exists and is declared the single
+`cat-bootstrap/workflows/initialize-harness.bpmn` exists and is declared the single
 entry point. It is also invisible to the engine — bean **`7u3g`**: `workflowDirs`
-composes `<kgdir>/workflows`, i.e. `bootstrap/skills/workflows/`, which does not
-exist; the diagrams sit at `bootstrap/workflows/`, a **sibling**. So
+composes `<kgdir>/workflows`, i.e. `cat-bootstrap/skills/workflows/`, which does not
+exist; the diagrams sit at `cat-bootstrap/workflows/`, a **sibling**. So
 `workflow_list` and `workflow_start` cannot see it, and `kg:audit` has never
 written a sidecar for it.
 
@@ -160,7 +160,7 @@ drift."*
 
 `schemas/sticky-contribution.ts` already inverts ownership exactly as asked —
 *"a layer owns what it can serve, and the layer above does not enumerate it"* —
-and `bootstrap/harness.json` declares its own card. So *"instantiating gives you
+and `cat-bootstrap/harness.json` declares its own card. So *"instantiating gives you
 a slot"* is **already true for stickies**.
 
 Two gaps, both measured:
@@ -190,7 +190,7 @@ Two gaps, both measured:
 ## Cross-references
 
 - **`zkgs`** — the ruling and the `<name>.config.json` convention; blocked on #477
-- **`7u3g`** — bootstrap/workflows scanned by nothing. **Prerequisite.**
+- **`7u3g`** — cat-bootstrap/workflows scanned by nothing. **Prerequisite.**
 - **`nvbr`**, **`603s`** — the LHS navbar
 - **`52dz`** — `folio_init` writes no workflows (measured there)
 - **`zzmr`** — parent epic, the KG's own structure
@@ -211,7 +211,7 @@ direction of "the thing you assume is already half-built". So the order was:
    consolidation. Had the roast been written first, it would have argued
    against a decision already made.
 2. **Read the artefact, not its name.** `bootstrap/` was assumed to be a
-   directory of skills. `find bootstrap -type f` showed `bootstrap/harness.json`
+   directory of skills. `find bootstrap -type f` showed `cat-bootstrap/harness.json`
    — bootstrap is *already an instance*, which is what makes
    `bootstrap.config.json` a derivation rather than an invention.
 3. **Count, do not characterise.** "Is the process documented?" became
@@ -262,7 +262,7 @@ diagrams from cat-harness's root is **correct behaviour**, and
 
 ### I implemented the scrapped fix before reading the scrap, and it failed the way the scrap says
 
-Declared `bootstrap/workflows/` in `cat-harness/harness.json`; every measure I
+Declared `cat-bootstrap/workflows/` in `cat-harness/harness.json`; every measure I
 chose said it worked — `workflowFiles` 58 → 61, the three diagrams visible,
 four roles bound, **0 dangling `bindsLane` edges**. Then
 `a second instance in the tree stays out of the first's graph` **failed**.
@@ -285,16 +285,60 @@ bootstrap.
 
 ## What DID survive, and it is small
 
-`bootstrap/workflows/log-message.bpmn` had **no `BPMNDiagram` element at all** —
+`cat-bootstrap/workflows/log-message.bpmn` had **no `BPMNDiagram` element at all** —
 zero shapes, zero edges. A BPMN file with no diagram interchange cannot be drawn
 by any tool, whoever scans it, so this is a defect of the file and not of the
 declaration. DI authored: pool, two lanes, six nodes, five edges with the yes/no
 labels.
 
 Verified to be independent of the reverted change: with the DI in place and
-`bootstrap/workflows/` **not** declared, `instance-graph-isolation` passes 5/5
+`cat-bootstrap/workflows/` **not** declared, `instance-graph-isolation` passes 5/5
 and `render:bpmn:check` passes — the root correctly does not want an SVG for a
 file it does not scan. **No SVG was committed**, for that reason.
 
 > **Do not "fix" the missing SVG by declaring the directory.** That is the dead
 > end three sessions have now walked into.
+
+## RULED, owner, 2026-09-20 — §1: REPLACE
+
+> "1 REPLACE"
+
+`cat-harness.config.json` **replaces** `harness.json`. One file per instance at
+the instantiation root, carrying both what the instance IS and where its
+directories are — not two files side by side.
+
+That settles the question `zkgs`'s ruling did not reach. `zkgs` named the
+convention `<declared instance name>.config.json` while ruling on the CONFIG
+(`harness.config.json`); this says the DECLARATION (`harness.json`) folds into
+the same file rather than sitting beside it.
+
+### What this costs, so the implementer is not surprised
+
+The two files have different schemas and different readers:
+
+    harness.json          schemas/cat-harness.ts      directories, graphs,
+                          readDeclaration()           dependents, assets, stickies
+    harness.config.json   schemas/harness-config.ts   contentType, adapter,
+                          readHarnessConfig()         feedbackDir, viewer, readme
+
+Merging them means one schema and one reader, and every consumer of either
+moves. Measured constraints already known:
+
+* **`dependents` is REQUIRED on every directory entry** and `readDeclaration`
+  THROWS without it — not a warning. qou hit this on 2026-09-20: every pipeline
+  entry point died at module load and `run-validate` reported nothing rather
+  than a problem. A merged schema must keep that loudness.
+* **Both halves are load-bearing at once.** qou needs the declaration to say
+  its folio tree is at `content/` AND the config to say the folio is a `paper`.
+  A merge must not make either optional.
+* **`zkgs` blocks on #477**, which renames the instance to `cat-harness` — the
+  filename derives from the declared `name`, so this lands after it.
+* Bootstrap's file becomes `bootstrap.config.json` by the same derivation. It
+  already declares itself in `cat-bootstrap/harness.json`, so this is a rename
+  plus a merge, not new content.
+
+### Still open under this ruling
+
+Whether the merged file is process-WRITTEN at initialization (§2). If it is, a
+`.config.json` is `state` wearing a config's name, and the convention spreads
+that naming to every instance at once. The ruling does not decide it.

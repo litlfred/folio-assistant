@@ -150,7 +150,7 @@ describe("this repository's own instances", () => {
     expect(found).toEqual([
       "folio-assistant",
       "agent-skills",
-      "bootstrap",
+      "cat-bootstrap",
       "cat-harness",
       "detangle",
       "folio-assist-sci",
