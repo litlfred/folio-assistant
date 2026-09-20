@@ -129,7 +129,7 @@
   --fa-sticky-ink: #221f1b;
   --fa-sticky-edge: #cbc5bb;
   --fa-sticky-accent: #7d8a6e;
-  --fa-sticky-scrim: rgba(237, 234, 228, 0.86);
+  --fa-sticky-scrim: rgba(237, 234, 228, 0.90);
   --fa-sticky-min-width: 17rem;
   --fa-sticky-padding: 0.7em 0.8em;
   --fa-sticky-font-scale: 1;
@@ -146,6 +146,62 @@
 
 /* Grumpy cat — card layout, for a dense board. */
 [data-fa-sticky-theme="grumpy-cat"][data-fa-sticky-layout="card"] {
+  --fa-sticky-min-width: 13rem;
+  --fa-sticky-padding: 0.6em 0.7em;
+  --fa-sticky-font-scale: 0.95;
+}
+
+/* Grumpy cat, engineering — The cloud cream and a working green, behind the cat in a hi-vis vest. */
+[data-fa-sticky-theme="engineer"] {
+  --fa-sticky-surface: #fdfbef;
+  --fa-sticky-ink: #1f2a24;
+  --fa-sticky-edge: #c9cfc4;
+  --fa-sticky-accent: #5a6b5c;
+  --fa-sticky-scrim: rgba(253, 251, 239, 0.90);
+  --fa-sticky-min-width: 17rem;
+  --fa-sticky-padding: 0.7em 0.8em;
+  --fa-sticky-font-scale: 1;
+}
+
+/* Grumpy cat, engineering — mobile layout. A phone sticky is not a laptop one scaled down. */
+@media (max-width: 40rem) {
+  [data-fa-sticky-theme="engineer"] {
+    --fa-sticky-min-width: 100%;
+    --fa-sticky-padding: 0.8em 0.9em;
+    --fa-sticky-font-scale: 1.05;
+  }
+}
+
+/* Grumpy cat, engineering — card layout, for a dense board. */
+[data-fa-sticky-theme="engineer"][data-fa-sticky-layout="card"] {
+  --fa-sticky-min-width: 13rem;
+  --fa-sticky-padding: 0.6em 0.7em;
+  --fa-sticky-font-scale: 0.95;
+}
+
+/* Grumpy cat, librarian — Storm slate and a cool cream, behind the cat with the books. */
+[data-fa-sticky-theme="library"] {
+  --fa-sticky-surface: #e8e8e0;
+  --fa-sticky-ink: #1c2630;
+  --fa-sticky-edge: #c2ccd4;
+  --fa-sticky-accent: #5c7484;
+  --fa-sticky-scrim: rgba(232, 232, 224, 0.90);
+  --fa-sticky-min-width: 17rem;
+  --fa-sticky-padding: 0.7em 0.8em;
+  --fa-sticky-font-scale: 1;
+}
+
+/* Grumpy cat, librarian — mobile layout. A phone sticky is not a laptop one scaled down. */
+@media (max-width: 40rem) {
+  [data-fa-sticky-theme="library"] {
+    --fa-sticky-min-width: 100%;
+    --fa-sticky-padding: 0.8em 0.9em;
+    --fa-sticky-font-scale: 1.05;
+  }
+}
+
+/* Grumpy cat, librarian — card layout, for a dense board. */
+[data-fa-sticky-theme="library"][data-fa-sticky-layout="card"] {
   --fa-sticky-min-width: 13rem;
   --fa-sticky-padding: 0.6em 0.7em;
   --fa-sticky-font-scale: 0.95;
