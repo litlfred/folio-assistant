@@ -460,6 +460,9 @@ jobs:
           # main for an unknown stretch while CI stayed green -- a gate no
           # workflow runs cannot fail, which is bean `xom7` one level down.
           bun run translate-kg-viewer:check
+          # Bean `07p7`: a published translation that has drifted from its
+          # source is a section a reader cannot reach in their language.
+          bun run translation:drift:check
           bun run translate-bpmn:check
           bun run landing:sticky:check
           bun run landing:data:check

@@ -18,6 +18,7 @@ import { TODO_GRAPH_FILE, parseTodoGraph } from "../../schemas/todo-graph.js";
 import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../todos.js";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { workflowFiles } from "../known-skills.js";
+import { loadProcessModel } from "../../src/workflow/process-model.js";
 
 describe("the declaration and the directory agree", () => {
   test("`harness.json` declares a `todos` graph", () => {
@@ -88,7 +89,38 @@ describe("the published process hierarchy", () => {
     expect(Object.values(h).filter((v) => v.length > 0).length).toBeGreaterThan(5);
   });
 
-  test("the key order is the diagrams' sorted FILENAMES, not the directory's own order", () => {
+  test("no PHANTOM edge — the real parser is the oracle for the generator's regex", async () => {
+    // The reverse of the test above, and it was failing silently.
+    // `processHierarchy()` matched `/calledElement="([^"]+)"/g` over the WHOLE
+    // XML, so `upstream-version-adoption.bpmn` — which documents itself with
+    // *"Callers invoke it with `calledElement="Process_UpstreamAdoption"`"* —
+    // published `Process_UpstreamAdoption → itself`. A self-call that
+    // `loadProcessModel` REFUSES outright: "A process cannot contain itself",
+    // because an interpreter entering A → A settles forever. The published
+    // hierarchy asserted an edge the engine rejects.
+    //
+    // The test above pins edges that must be PRESENT, so it could never have
+    // caught this: a phantom edge is an addition, and every assertion there is
+    // a `toContain`. Naming the one known phantom would pin the past — the
+    // generator reads a regex and the next diagram to describe its own id in
+    // prose would mint a new one. So the oracle is `loadProcessModel`, the
+    // real parser: it is async and pulls in bpmn-moddle, which is exactly why
+    // the GENERATOR does not use it and why a test can.
+    const expected: Record<string, string[]> = {};
+    for (const f of workflowFiles(ROOT).filter((x) => x.endsWith(".bpmn"))) {
+      const m = await loadProcessModel(f);
+      const calls = new Set<string>();
+      for (const n of m.nodes.values()) if (n.calledElement) calls.add(n.calledElement);
+      expected[m.id] = [...calls].sort();
+    }
+    const published = index().processes;
+    // Compared as whole objects rather than key by key: a diff naming the
+    // process and both edge lists is what makes a failure here readable, and
+    // the direction (phantom vs missing) is then obvious from the diff itself.
+    expect(published).toEqual(expected);
+  });
+
+  test("the key order is the diagrams' sorted FILENAMES, not the directory's own order", async () => {
     // Reproducibility, and it is not theoretical. `processHierarchy` builds
     // this object by walking `skills/workflows/`, and `readdirSync` under Bun
     // returns RAW directory order — on ext4, a hash of each filename against
@@ -112,10 +144,17 @@ describe("the published process hierarchy", () => {
     // Note `check:declared-paths` cannot catch this: it skips `*.test.ts`.
     // That exemption is worth revisiting — this is the second hardcoded path
     // in a test to break today.
+    //
+    // Ids come from `loadProcessModel`, NOT from a copy of the generator's
+    // regex. Replicating it made this test agree with the generator's blind
+    // spot: `/<bpmn:process id="…"/` misses `translation-workflow.bpmn`, which
+    // binds the BPMN namespace as its default and writes a bare `<process>`,
+    // so `Process_Translation` was missing from BOTH sides and the assertion
+    // passed over a hole. Deriving from the same SOURCE is the rule; deriving
+    // from the same IMPLEMENTATION is how a test blesses a bug.
     const bpmn = workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn"));
-    const idOf = (f: string) =>
-      /<bpmn:process id="([^"]+)"/.exec(readFileSync(f, "utf8"))?.[1];
-    const expected = bpmn.map(idOf).filter((x): x is string => Boolean(x));
+    const expected: string[] = [];
+    for (const f of bpmn) expected.push((await loadProcessModel(f)).id);
     expect(expected.length).toBeGreaterThan(5);
     expect(Object.keys(index().processes)).toEqual(expected);
   });

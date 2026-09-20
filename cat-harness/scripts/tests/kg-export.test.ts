@@ -452,6 +452,17 @@ describe("every self-URL the export publishes resolves to something published", 
       "ns/vocabulary.jsonld",
       "ns/vocabulary.json",
       "ns/content/v1.jsonld",
+      // The generated stylesheets, reached because `themes-css` and
+      // `avatars-css` DECLARE them through `maintains` and the export publishes
+      // that relation. Jekyll copies `assets/` from the site directory, so these
+      // are served wherever the site is.
+      //
+      // Listed as literals like everything else here on purpose: a `maintains`
+      // claim asserts the artefact is published, and this set is what turns that
+      // assertion into a test. Deriving it from the declarations would make the
+      // check tautological — every claim would confirm itself.
+      "assets/css/themes.css",
+      "assets/css/avatars.css",
     ]);
     // One document per NAMESPACE. Splitting `folio:` into three made three
     // new stems, and a stem nothing serves is the defect this whole check

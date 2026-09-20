@@ -725,10 +725,42 @@ function processHierarchy(): Record<string, string[]> {
   for (const f of workflowFiles(REPO_ROOT)) {
     if (!f.endsWith(".bpmn")) continue;
     const xml = readFileSync(f, "utf-8");
-    const id = /<bpmn:process id="([^"]+)"/.exec(xml)?.[1];
+    // PREFIX-AGNOSTIC, and that is a live fix rather than defensiveness.
+    // `translation-workflow.bpmn` binds the BPMN MODEL namespace as its
+    // DEFAULT (`xmlns="…/MODEL"`) and writes `<process id="Process_Trans-
+    // lation">`, which is valid BPMN. A `/<bpmn:process id="…"/` matched
+    // nothing there, so that process was absent from the published hierarchy
+    // altogether — a todo tagged `Process_Translation` would have read as
+    // naming a process no diagram declares.
+    //
+    // `\bid=` rather than a fixed position, because attribute order is the
+    // author's choice: this file writes `id` first and `isExecutable` last,
+    // another may not.
+    const id = /<(?:\w+:)?process\b[^>]*\bid="([^"]+)"/.exec(xml)?.[1];
     if (!id) continue;
     const calls = new Set<string>();
-    for (const m of xml.matchAll(/calledElement="([^"]+)"/g)) calls.add(m[1]!);
+    // Scoped to `<bpmn:callActivity …>` OPENING TAGS, not to the whole file.
+    // A bare `/calledElement="([^"]+)"/g` over the XML reads PROSE as
+    // structure, and that was live: `upstream-version-adoption.bpmn` documents
+    // itself with *"Callers invoke it with `calledElement="Process_Upstream-
+    // Adoption"`"*, so the published hierarchy carried
+    // `Process_UpstreamAdoption → itself` — an edge `loadProcessModel` REFUSES
+    // outright ("A process cannot contain itself", process-model.ts), because
+    // an interpreter entering A → A settles forever.
+    //
+    // The comment above worries about this regex matching NOTHING and the
+    // board coming out flat. Matching TOO MUCH is the same class reversed and
+    // is worse: a flat board is visibly empty, whereas a phantom edge renders
+    // as a real one and stacks a process under itself. Documentation that
+    // names an id is the normal way to describe a reusable subprocess, so this
+    // was not a typo waiting to be found — the pattern invited it.
+    //
+    // Attribute order is not assumed: the tag is matched first, then the
+    // attribute within it.
+    for (const tag of xml.matchAll(/<(?:\w+:)?callActivity\b[^>]*>/g)) {
+      const ref = /calledElement="([^"]+)"/.exec(tag[0]!)?.[1];
+      if (ref) calls.add(ref);
+    }
     out[id] = [...calls].sort();
   }
   return out;

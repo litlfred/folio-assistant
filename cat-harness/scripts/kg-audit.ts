@@ -42,7 +42,7 @@
  */
 
 import { createHash } from "node:crypto";
-import { workflowDirs, workflowFiles } from "./known-skills.js";
+import { kgDirectories, workflowDirs, workflowFiles } from "./known-skills.js";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
@@ -574,6 +574,22 @@ function auditSkills(): KgQaReport[] {
       }
     }
 
+    // `stub:` in the front matter, if any. Read positionally rather than with a
+    // YAML parser because the front matter here is already walked line-by-line
+    // above, and a stub's reason is a single scalar.
+    let stubReason: string | undefined;
+    if (lines[0]?.trim() === "---") {
+      for (let i = 1; i < lines.length; i += 1) {
+        const l = lines[i]!;
+        if (l.trim() === "---") break;
+        const m = /^stub:\s*(.+?)\s*$/.exec(l);
+        if (m) {
+          stubReason = m[1]!.replace(/^["']|["']$/g, "");
+          break;
+        }
+      }
+    }
+
     out.push(
       report(
         "skill",
@@ -581,6 +597,19 @@ function auditSkills(): KgQaReport[] {
         rel,
         createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 12),
         {
+          // A stub declares itself in front matter, and the DECLARATION is the
+          // contract — not a filename convention, not a line count. Same rule
+          // as every other node kind here: extension is a coincidence, a
+          // declaration inside the file is binding.
+          //
+          // The reason is carried into the finding rather than summarised,
+          // because "this is a stub" without "and here is what would finish it"
+          // is a note nobody can act on.
+          "skill-is-a-stub": entry(
+            stubReason === undefined
+              ? []
+              : [{ where: rel, detail: stubReason }],
+          ),
           "skill-is-brief": entry(
             n > 280 ? [{ where: rel, detail: `${n} lines; p75 of the skill corpus is 279.` }] : [],
           ),
@@ -820,24 +849,58 @@ function auditRequirements(
 
 // ── Graph roll-up ───────────────────────────────────────────────
 
-function manifestSkills(): Set<string> {
-  const out = new Set<string>();
-  const skillsRoot = join(root, "skills");
-  if (!existsSync(skillsRoot)) return out;
-  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const mp = join(skillsRoot, d.name, "package-manifest.json");
-    if (!existsSync(mp)) continue;
+/**
+ * Every package manifest this instance declares, with the package it names.
+ *
+ * ## Two defects this replaces, and both were the same shape
+ *
+ * `manifestSkills` and `manifestEntries` each walked `join(root, "skills")` and
+ * each scanned exactly one level of subdirectories. So:
+ *
+ * 1. **The path was hardcoded**, not read from the declaration. That is the
+ *    defect `harness.json` exists to remove, and the third instance of it found
+ *    in two days — `KG_ROOT` here and `SKILLS_CATEGORIES` in `gen-skill-docs`
+ *    were the others. A hardcoded root scans the wrong tree the moment the
+ *    layout moves, which it did on 2026-09-20.
+ * 2. **A manifest AT a declared directory was invisible**, because the walk only
+ *    looked inside subdirectories. `gen-skill-docs` already documents that two
+ *    declared directories — `bootstrap` and `cat-harness-src` — "hold their
+ *    skills DIRECTLY rather than in package subdirectories". So a manifest for
+ *    those could not be found however correctly it was written, which is why
+ *    `confirm-harness` reported as listed by no package manifest while being
+ *    perfectly declarable.
+ *
+ * One walk now, returning both shapes the callers wanted, so the two cannot
+ * drift apart again.
+ */
+function manifestPackages(): { pkg: string; skill: string }[] {
+  const out: { pkg: string; skill: string }[] = [];
+  const read = (mp: string, pkg: string): void => {
+    if (!existsSync(mp)) return;
     try {
       const m = JSON.parse(readFileSync(mp, "utf-8")) as { skills?: string[] };
-      for (const s of m.skills ?? []) out.add(s);
+      for (const s of m.skills ?? []) out.push({ pkg, skill: s });
     } catch {
       // A manifest that will not parse is `validate-skills.ts`'s finding, not
       // this one's. Treating it as "declares nothing" here would turn one
       // defect into a hundred unrelated orphan reports.
     }
+  };
+  for (const d of kgDirectories(root)) {
+    // A manifest at the declared directory itself: the shape `bootstrap` and
+    // `cat-harness-src` use.
+    read(join(d.absPath, "package-manifest.json"), d.id);
+    if (!existsSync(d.absPath)) continue;
+    // ...and one per package subdirectory: the shape `skills/` uses.
+    for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
+      if (e.isDirectory()) read(join(d.absPath, e.name, "package-manifest.json"), e.name);
+    }
   }
   return out;
+}
+
+function manifestSkills(): Set<string> {
+  return new Set(manifestPackages().map((m) => m.skill));
 }
 
 /**
@@ -877,21 +940,110 @@ function localHarnessSkills(): Set<string> {
 
 /** Manifest entries, with the package each came from, for the reverse check. */
 function manifestEntries(): { pkg: string; skill: string }[] {
-  const out: { pkg: string; skill: string }[] = [];
-  const skillsRoot = join(root, "skills");
-  if (!existsSync(skillsRoot)) return out;
-  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const mp = join(skillsRoot, d.name, "package-manifest.json");
-    if (!existsSync(mp)) continue;
+  return manifestPackages();
+}
+
+/**
+ * Nested instances in this tree whose graph this audit does not read.
+ *
+ * ## Why this is reported rather than fixed
+ *
+ * Reading them would be the defect. `instance-graph-isolation.test.ts` guards a
+ * leak that was LIVE on 2026-09-19: a filesystem walk discovered
+ * `bootstrap/workflows/` from the repository root and put 88 references to a
+ * bootstrap process into folio-assistant's published graph. One instance's graph
+ * must not carry another's nodes, and this audit is right not to.
+ *
+ * What was wrong is that nothing said so. The silence was read as a blind spot on
+ * 2026-09-20 and "fixed" by declaring the nested directory at the root, which
+ * re-introduced that leak until the test stopped it. So the unread corpus is
+ * counted here: a reported number is not deducible-and-mis-deducible.
+ *
+ * A declaration counts as an instance when it names `directories`. That excludes
+ * `docs/_data/harness.json`, which `sync-docs-harness` writes with the
+ * reader-facing fields only — a Jekyll data file, not an instance.
+ */
+function unreadNestedInstances(): KgFinding[] {
+  const repo = repoRootFor(root);
+  const out: KgFinding[] = [];
+  const walk = (dir: string, depth: number): void => {
+    if (depth > 3) return;
+    let entries;
     try {
-      const m = JSON.parse(readFileSync(mp, "utf-8")) as { skills?: string[] };
-      for (const s of m.skills ?? []) out.push({ pkg: d.name, skill: s });
+      entries = readdirSync(dir, { withFileTypes: true });
     } catch {
-      // `validate-skills.ts`'s finding, not this one's.
+      return;
     }
-  }
-  return out;
+    for (const e of entries) {
+      if (e.name.startsWith(".") || e.name === "node_modules") continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) {
+        walk(p, depth + 1);
+        continue;
+      }
+      if (e.name !== "harness.json") continue;
+      // Not this audit's own instance, whichever directory that is.
+      if (resolve(dir) === resolve(root)) continue;
+      let decl: { directories?: unknown[]; name?: string };
+      try {
+        decl = JSON.parse(readFileSync(p, "utf-8")) as typeof decl;
+      } catch {
+        continue;
+      }
+      if (!Array.isArray(decl.directories) || decl.directories.length === 0) continue;
+      const diagrams = workflowFiles(dir).filter((f) => f.endsWith(".bpmn")).length;
+      out.push({
+        where: relative(repo, p),
+        detail:
+          `nested instance "${decl.name ?? relative(repo, dir)}" declares its own graph, and this audit ` +
+          `does not read it — ${diagrams} diagram(s) there are unaudited by this run. That is correct: ` +
+          `one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT ` +
+          `declare its directories here — that re-introduces the leak ` +
+          `instance-graph-isolation.test.ts guards.`,
+      });
+    }
+  };
+  walk(repo, 0);
+  return out.sort((a, b) => a.where.localeCompare(b.where));
+}
+
+/**
+ * The graph directories this audit actually read, as a phrase for a finding.
+ *
+ * ## Why every graph-ranging finding has to carry this
+ *
+ * A finding that says a skill is "named by no activity" is true OF THE GRAPH IT
+ * RANGED OVER and says nothing about any other. Worded absolutely it reads as a
+ * fact about the repository, and on 2026-09-20 a session read it that way:
+ * `confirm-harness` is named three times by `bootstrap/workflows/`, which this
+ * audit does not read, so the absolute wording looked like a blind spot. The
+ * session "fixed" it by declaring that directory at the root and re-introduced a
+ * defect `instance-graph-isolation.test.ts` had been written the day before to
+ * prevent — one instance's graph carrying another's nodes, which had put 88
+ * references to a bootstrap process into folio-assistant's published graph.
+ *
+ * The isolation is correct and the scoping is correct. **Only the sentence was
+ * wrong**, and it cost a change a test had to stop. Bean `sa8y`.
+ */
+function graphScope(): string {
+  // No filter: `kgDirectories` already returns only the declared
+  // knowledge-graph directories, which is exactly the set this audit walks.
+  //
+  // The DECLARED path string, not a computed relative one. Computing it against
+  // this script's root printed `../bootstrap/skills` once the tree moved into
+  // `cat-harness/`, which is accurate and reads like a bug — and it is the
+  // declaration that a reader would go and edit. "Resolve, do not compose",
+  // applied to a diagnostic rather than to a link.
+  const dirs = kgDirectories(root).map((d) => `\`${d.id}\` at \`${d.path}\``);
+  return dirs.length > 0 ? dirs.join(", ") : "no knowledge-graph directory declared";
+}
+
+/** Appended to any finding whose range is this instance's graph and not the tree. */
+function scopedToThisGraph(): string {
+  return (
+    ` In this instance's graph only (read: ${graphScope()}) —` +
+    " a nested instance may name it, and this audit does not read one."
+  );
 }
 
 function auditGraph(
@@ -910,7 +1062,12 @@ function auditGraph(
   const orphans = [...skills]
     .filter((s) => !reachable.has(s))
     .sort()
-    .map((s) => ({ where: s, detail: `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` }));
+    .map((s) => ({
+      where: s,
+      detail:
+        `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` +
+        scopedToThisGraph(),
+    }));
 
   // The OTHER question, asked separately because the answers differ by two
   // orders of magnitude: what does the actor → role → task model actually
@@ -927,7 +1084,9 @@ function auditGraph(
     .sort()
     .map((s) => ({
       where: s,
-      detail: `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.`,
+      detail:
+        `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.` +
+        scopedToThisGraph(),
     }));
 
   const declaredRoles = new Set((graph?.roles ?? []).map((r) => r.id));
@@ -1064,6 +1223,7 @@ function auditGraph(
       "actor-capabilities-resolve": entry(badCaps),
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
+      "nested-instance-audited": entry(unreadNestedInstances()),
     },
   );
 }

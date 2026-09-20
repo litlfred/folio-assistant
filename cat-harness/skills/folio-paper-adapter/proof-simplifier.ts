@@ -6,7 +6,7 @@ export const proofSimplifier: SkillDefinition = {
   description: "Post-proof streamlining: tactic compression, redundancy elimination, style normalization.",
   roles: ["collaborator", "owner"],
   requiredCapabilities: [
-    { capabilityId: "lean-toolchain", degradation: "fallback", fallbackCapabilityId: "lean-mcp" },
+    { capabilityId: "lean-toolchain", degradation: "fallback" },
   ],
   mcpServices: ["lean-lsp"],
   routingPatterns: ["simplify.*proof", "streamline", "compress.*tactic"],
