@@ -117,6 +117,22 @@ export interface ToolCheck {
   unmetContracts: Array<{ tool: string; skill: string; missing: string[]; has: string[] }>;
   /** Skills whose contract could not be read — never counted as agreement. */
   unreadableContracts: string[];
+  /**
+   * An `alternativeTo` naming a Tool that does not exist.
+   *
+   * Same class as a dangling `satisfies`: an edge to nothing, which reads as a
+   * choice the agent cannot find.
+   */
+  danglingAlternatives: Array<{ tool: string; names: string }>;
+  /**
+   * A declared alternative the other end does not return.
+   *
+   * If A names B and B is silent, a reader arriving at B never learns a choice
+   * exists — the failure this relation exists to prevent, occurring exactly
+   * half the time, which is worse than not declaring it because the half that
+   * works makes it look maintained.
+   */
+  asymmetricAlternatives: Array<{ tool: string; names: string }>;
   skillsWithTools: number;
   skillsWithoutTools: number;
 }
@@ -130,6 +146,8 @@ export function checkTools(): ToolCheck {
   const unmetContracts: ToolCheck["unmetContracts"] = [];
   const unreadable = new Set<string>();
   const covered = new Set<string>();
+  const danglingAlternatives: ToolCheck["danglingAlternatives"] = [];
+  const asymmetricAlternatives: ToolCheck["asymmetricAlternatives"] = [];
 
   for (const t of tools()) {
     const portNames = new Set(t.io.inputs.map((i) => i.name));
@@ -181,12 +199,34 @@ export function checkTools(): ToolCheck {
     }
   }
 
+  // The alternative relation, checked in a second pass because it is about
+  // pairs: the first pass cannot know whether a Tool later in the list returns
+  // the edge. Built from the same `tools()` call, so a Tool that fails to
+  // parse never reaches here.
+  {
+    const byId = new Map(tools().map((t) => [t.id, t]));
+    for (const t of tools()) {
+      for (const other of t.alternativeTo ?? []) {
+        const peer = byId.get(other);
+        if (peer === undefined) {
+          danglingAlternatives.push({ tool: t.id, names: other });
+          continue;
+        }
+        if (!(peer.alternativeTo ?? []).includes(t.id)) {
+          asymmetricAlternatives.push({ tool: t.id, names: other });
+        }
+      }
+    }
+  }
+
   return {
     danglingSatisfies: dangling,
     unknownTypes,
     unsafeArgs,
     unmetContracts,
     unreadableContracts: [...unreadable].sort(),
+    danglingAlternatives,
+    asymmetricAlternatives,
     skillsWithTools: covered.size,
     skillsWithoutTools: skills.size - covered.size,
   };
@@ -217,6 +257,22 @@ if (import.meta.main) {
     bad = true;
     console.error(`\n✗ ${r.unknownTypes.length} port(s) referencing an unknown type:`);
     for (const u of r.unknownTypes) console.error(`    ${u.tool}.${u.port} → ${u.ref}`);
+  }
+  if (r.danglingAlternatives.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${r.danglingAlternatives.length} alternativeTo naming no Tool:`);
+    for (const d of r.danglingAlternatives) console.error(`    ${d.tool} → ${d.names}`);
+  }
+  if (r.asymmetricAlternatives.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${r.asymmetricAlternatives.length} one-sided alternative(s):`);
+    for (const d of r.asymmetricAlternatives) {
+      console.error(`    ${d.tool} names ${d.names}, but ${d.names} does not name ${d.tool}`);
+    }
+    console.error(
+      "    An agent arriving at the silent end never learns a choice exists.\n" +
+        "    Add the return edge, and give both ends a `selection`.",
+    );
   }
   if (r.unmetContracts.length > 0) {
     bad = true;
