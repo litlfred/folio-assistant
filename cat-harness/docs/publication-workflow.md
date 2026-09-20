@@ -108,6 +108,7 @@ call path only, where `inherits` would carry both specialisms everywhere.
 | `review-task.bpmn` | What kind of thing changed, and which review does it descend into? |
 | `review-narrative.bpmn` | Prose: register and voice, the editorial dependencies a reader needs, translation |
 | `review-code.bpmn` | The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs? |
+| `options-analysis.bpmn` | A decision with alternatives: which adopted methodology applies here, what were the options, and why did the rejected ones lose? Called as a subprocess, and its trigger is `opening-brief`'s — **irreversibility and surprise, not size** — so a reversible choice leaves at the first task and an irreversible one cannot skip it. It does not decide: it produces the options and a recommendation, and the authorisation belongs to the calling step. |
 | `voice-review.bpmn` | Which named editorial voices has this folio ACTIVATED, and does each rule's own citation support the finding it raised? Called from `review-narrative.bpmn`, and it leaves immediately when no voice is active — the default, and this instance's case. |
 
 **Acquisition** — how a resource reaches the queue at all. `document-ingestion`
