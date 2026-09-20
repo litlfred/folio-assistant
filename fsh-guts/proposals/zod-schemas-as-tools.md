@@ -5,7 +5,7 @@ kind: proposal
 issue: 223
 bean: folio-assistant-3lbz
 summary: >-
-  Is Zod usage reachable through skills and Tools? No. 199 exported schemas, 3 named by a Tool node, 0 Tools that validate, 0 Tools bound to kg-navigation. The requirement already exists in #223 and is unmet. Analyses three routes; recommends one parameterised pattern keyed on graph kind, because the parameter the repo is missing is a single field on GraphKindRegistry.
+  Is Zod usage reachable through skills and Tools? No. 199 exported schemas, 3 named by a Tool node, 0 Tools that validate, 0 Tools bound to kg-navigation. The requirement already exists in #223 and is unmet. Analyses three routes; recommends one parameterised pattern keyed on graph kind, because the parameter is the graph kind. Corrected in place while implementing: the reference field already existed as GraphKindDef.schema, and it is not a validator — qa's declared module exports interfaces only — so a second field, validator, was added beside it.
 ---
 
 # Zod schemas as Tools — audit and analysis
@@ -118,12 +118,30 @@ What makes it possible is that two of the three declarations already exist:
 |---|---|
 | which directory holds which **graph kind** | ✅ `harness.json`, per `ContentDirectory.graphs` |
 | a module declaring itself a schema node | ✅ the `@graphNode schema` tag, checked by `check:schema-nodes` |
-| **graph kind → the schema that validates its nodes** | ❌ **missing** |
+| **graph kind → the schema that validates its nodes** | ⚠️ **this row was wrong — see below** |
 
-`GraphKindRegistry` in `cat-harness/schemas/cat-harness.ts` declares each kind and whether
-it is `renderable`. It carries no schema reference. **That one field is the
-parameter**, and adding it turns "validate a node" from 198 special cases into
-one lookup.
+> **Corrected 2026-09-20 while implementing this (bean `folio-assistant-i31r`).**
+> The row above said the reference was missing. It is not:
+> **`GraphKindDef.schema` has existed all along.** Three of sixteen kinds
+> declare one, **nothing reads it**, and since `#437` all three resolve only
+> relative to the *instance* root while their own doc comment calls them
+> repo-relative — undetected precisely because nothing read them.
+>
+> And it is **not a validator**, which the corpus settled the moment anyone
+> looked: `qa` declares `content/pipeline/qa-witness.ts`, and that module
+> exports **TypeScript interfaces only**. No Zod schema for `qa-witness/v1`
+> exists anywhere. Overloading `schema` would have made its one substantial
+> use a lie — a consumer importing it expecting something parseable gets a
+> module with nothing to call.
+>
+> So what shipped is `GraphKindDef.validator` (`module#Export`) **beside**
+> `schema`, not instead of it: two fields, because a case where they diverge
+> is already committed. The `#` form is the spelling
+> `<folio:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN
+> gateway here.
+
+**That one field is the parameter**, and adding it turns "validate a node"
+from 199 special cases into one lookup.
 
 The shape then falls out: `io.inputs` = the path plus an optional explicit
 kind; `io.outputs` = a QA sidecar, which is the form every other verdict in
