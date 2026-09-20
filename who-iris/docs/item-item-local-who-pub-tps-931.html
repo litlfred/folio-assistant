@@ -58,6 +58,8 @@
   .wordmark .iris .dot { color: var(--iris-current); }
   .wordmark .sub { font-size: 0.78rem; color: var(--iris-accent); line-height: 1.2; }
   .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo {
     margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: right; max-width: 16rem;
@@ -128,6 +130,8 @@
   @media (max-width: 640px) {
     h1 { font-size: 1.9rem; }
     .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo { display: none; }
     .wordmark .iris { font-size: 1.7rem; }
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
@@ -193,11 +197,13 @@
 <tbody>
 <tr><td>Upstream, at WHO</td><td>none recorded</td></tr>
 <tr><td>Held here, in folio-assistant</td>
-    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WHO_PUB_TPS_93.1.pdf">WHO_PUB_TPS_93.1.pdf</a></td></tr>
+    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WHO_PUB_TPS_93.1.pdf">WHO_PUB_TPS_93.1.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/cat-harness/uploads/WHO_PUB_TPS_93.1.pdf">via CDN</a></td></tr>
 <tr><td>In collection</td><td><span class="none">no collection recorded</span></td></tr>
 <tr><td>Ingested text (L1)</td>
     <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/who-pub-tps-931/sections">who-iris/library/who-pub-tps-931/sections/</a></td></tr>
-<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/who-pub-tps-931.dc.json">Download who-pub-tps-931.dc.json</a><br><code>qualified Dublin Core · 1.9 KB</code></td></tr>
+<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/who-pub-tps-931.dc.json">Download who-pub-tps-931.dc.json</a>
+      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/who-pub-tps-931.dc.json">via CDN</a>
+      <br><code>qualified Dublin Core · 1.9 KB</code></td></tr>
 </tbody>
 </table>
 

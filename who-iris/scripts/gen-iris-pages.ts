@@ -66,6 +66,38 @@ const OUT = join(INSTANCE, "docs");
  */
 const RAW = "https://raw.githubusercontent.com/litlfred/folio-assistant/main";
 
+/**
+ * The same bytes, through a CDN.
+ *
+ * Owner, 2026-09-20: *"there is iris-source, shold also be local repllca page
+ * that loads from CDN. both links there -> show power of CDN + KG."*
+ *
+ * jsDelivr serves any public GitHub repository at
+ * `cdn.jsdelivr.net/gh/<owner>/<repo>@<ref>/<path>`, so an item the catalogue
+ * knows about is fetchable from an edge cache **without this repository
+ * serving anything** — which is the point being demonstrated: the KG says what
+ * exists and where, and the bytes come from wherever is nearest.
+ *
+ * **Pinned to `main` rather than to a tag, deliberately**, because the point
+ * is that the catalogue's answer stays current. A tag would demonstrate a
+ * frozen copy, which is a different claim.
+ *
+ * NOT VERIFIED FROM THE ENVIRONMENT THAT WROTE THIS. `cdn.jsdelivr.net` is
+ * egress-blocked here (CONNECT 403, the same block `r1lz` recorded for
+ * `iris.who.int`), so unlike the `raw.githubusercontent.com` links — which
+ * were fetched and returned 200 with byte counts matching the catalogue — the
+ * CDN links are composed from jsDelivr's documented URL form and have not been
+ * exercised. That is why **both** are on the page: the raw link is the one
+ * known to work, the CDN link is the one being demonstrated, and a reader who
+ * finds the second broken still has the first.
+ */
+const CDN = "https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main";
+
+/** A repo-relative path, encoded once, for either host. */
+function encPath(rel: string): string {
+  return rel.split("/").map(encodeURIComponent).join("/");
+}
+
 type Node = {
   id: string;
   kind: string;
@@ -125,7 +157,7 @@ function gb(bytes: number): string {
 }
 
 /** The bytes actually on disk for an item, or undefined when there are none. */
-function assetHref(n: Node): { href: string; name: string; bytes: number } | undefined {
+function assetHref(n: Node): { href: string; cdn: string; name: string; bytes: number } | undefined {
   const b = n.bitstreams?.find((x) => x.materialization?.state === "materialized");
   if (!b) return undefined;
   // Resolved against the repository, not against the (broken) declared path —
@@ -136,7 +168,8 @@ function assetHref(n: Node): { href: string; name: string; bytes: number } | und
   ];
   const found = candidates.find((p) => existsSync(p));
   if (!found) return undefined;
-  return { href: `${RAW}/${found.slice(REPO.length + 1).split("/").map(encodeURIComponent).join("/")}`, name: b.name, bytes: b.bytes };
+  const rel = encPath(found.slice(REPO.length + 1));
+  return { href: `${RAW}/${rel}`, cdn: `${CDN}/${rel}`, name: b.name, bytes: b.bytes };
 }
 
 const THEME = whoThemeById("iris-web")!;
@@ -217,6 +250,8 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   .wordmark .iris .dot { color: var(--iris-current); }
   .wordmark .sub { font-size: 0.78rem; color: var(--iris-accent); line-height: 1.2; }
   .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo {
     margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: right; max-width: 16rem;
@@ -287,6 +322,8 @@ function page(title: string, crumbs: { label: string; href?: string }[], body: s
   @media (max-width: 640px) {
     h1 { font-size: 1.9rem; }
     .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo { display: none; }
     .wordmark .iris { font-size: 1.7rem; }
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
@@ -400,8 +437,9 @@ function communityList(all: Node[]): string {
   <td>${collectionCell(n, all)}</td>
   <td>${stateBadge("materialized")}</td>
   <td class="dl">${upstreamCell(n)}</td>
-  <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a><br>
-      <code>${(a!.bytes / 1048576).toFixed(2)} MB</code></td>
+  <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a>
+      <br><a class="cdn" href="${esc(a!.cdn)}">via CDN</a>
+      <br><code>${(a!.bytes / 1048576).toFixed(2)} MB</code></td>
   <td class="dl">${metadataCell(n)}</td>
 </tr>`,
     )
@@ -419,8 +457,10 @@ ${rows}
 </ul>
 
 <h2>Held here — ${held.length} materialized item(s)</h2>
-<p>Each carries both links the owner asked for: the <strong>IRIS source</strong>, and the
-<strong>asset as this repository holds it</strong>.</p>
+<p>Each row carries <strong>three routes to the same item</strong>: the
+<strong>IRIS source</strong> upstream at WHO, this repository's own
+<strong>local replica</strong> page, and the <strong>asset itself</strong> —
+downloadable from the repository and, separately, from a CDN edge.</p>
 
 <table class="items">
 <thead><tr><th>Item</th><th>Collection</th><th>State</th><th>Upstream</th><th>Held copy</th><th>Metadata record</th></tr></thead>
@@ -430,6 +470,19 @@ ${table}
 </table>
 
 <div class="caveat">
+  <p><strong>Three routes to one item, which is the point.</strong> The
+  catalogue knows this item once; the bytes are reachable <em>upstream at
+  WHO</em>, <em>here as a replica page</em>, and <em>from a CDN edge</em> —
+  jsDelivr serves any public repository, so the last one costs this project no
+  hosting at all. The KG says what exists and where; the CDN says nothing and
+  just serves it.</p>
+  <p><strong>The CDN links are unverified.</strong> <code>cdn.jsdelivr.net</code>
+  is egress-blocked from the environment that generated this page, so unlike the
+  <code>raw.githubusercontent.com</code> links — which were fetched and returned
+  200 with byte counts matching the catalogue exactly — the <em>via CDN</em>
+  links are composed from jsDelivr's documented URL form and have not been
+  exercised. Both are on the page for that reason: one is known to work, the
+  other is the one being demonstrated.</p>
   <p><strong>Where the held copies actually live — bean <code>yl5w</code>.</strong>
   The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to
   <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved
@@ -510,20 +563,29 @@ function metadataCell(n: Node): string {
   if (!n.metadataRef) return `<span class="none">none captured</span>`;
   const abs = join(INSTANCE, n.metadataRef);
   if (!existsSync(abs)) return `<span class="none">declared, but missing on disk</span>`;
-  const rel = `who-iris/${n.metadataRef}`;
-  const href = `${RAW}/${rel.split("/").map(encodeURIComponent).join("/")}`;
+  const rel = encPath(`who-iris/${n.metadataRef}`);
   const bytes = readFileSync(abs, "utf-8").length;
-  return `<a href="${esc(href)}">Download ${esc(n.metadataRef.split("/").pop()!)}</a><br><code>qualified Dublin Core · ${(bytes / 1024).toFixed(1)} KB</code>`;
+  return `<a href="${esc(`${RAW}/${rel}`)}">Download ${esc(n.metadataRef.split("/").pop()!)}</a>
+      <br><a class="cdn" href="${esc(`${CDN}/${rel}`)}">via CDN</a>
+      <br><code>qualified Dublin Core · ${(bytes / 1024).toFixed(1)} KB</code>`;
 }
 
-/** The upstream cell: a real link, or a plain statement that there is none. */
+/**
+ * Where this item can be read FROM — upstream and here, side by side.
+ *
+ * The owner's *"both links there"*: the IRIS source, and this repository's own
+ * replica page for the same item. Putting them in one cell is the whole
+ * demonstration — the catalogue knows one item, and it is reachable at WHO and
+ * reachable here, with the second not depending on the first being up.
+ */
 function upstreamCell(n: Node): string {
   const u = sourceOf(n);
-  if (u) return `<a href="${esc(u)}">IRIS source &rarr;</a>`;
+  const replica = `<a href="item-${esc(slug(n.id))}.html">Local replica &rarr;</a>`;
+  if (u) return `<a href="${esc(u)}">IRIS source &rarr;</a><br>${replica}`;
   const local = n.bitstreams?.find((b) => b.materialization?.of)?.materialization?.of;
   return `<span class="none">no upstream URI recorded</span>${
     local ? `<br><code>${esc(local)}</code>` : ""
-  }`;
+  }<br>${replica}`;
 }
 
 /** A collection page — the drill-down the owner's second screenshot shows. */
@@ -536,7 +598,7 @@ function collectionPage(c: Node, all: Node[]): string {
   <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br><code>${esc(n.libraryId ?? n.id)}</code></td>
   <td>${stateBadge(a ? "materialized" : (n.materialization?.state ?? "unknown"))}</td>
   <td class="dl">${upstreamCell(n)}</td>
-  <td class="dl">${a ? `<a href="${esc(a.href)}">Download ${esc(a.name)}</a><br><code>${(a.bytes / 1048576).toFixed(2)} MB</code>` : "not held here"}</td>
+  <td class="dl">${a ? `<a href="${esc(a.href)}">Download ${esc(a.name)}</a><br><a class="cdn" href="${esc(a.cdn)}">via CDN</a><br><code>${(a.bytes / 1048576).toFixed(2)} MB</code>` : "not held here"}</td>
   <td class="dl">${metadataCell(n)}</td>
 </tr>`;
     })
@@ -604,7 +666,7 @@ ${bits}
 <tbody>
 <tr><td>Upstream, at WHO</td><td>${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : "none recorded"}</td></tr>
 <tr><td>Held here, in folio-assistant</td>
-    <td>${a ? `<a href="${esc(a.href)}">${esc(a.name)}</a>` : "not held"}</td></tr>
+    <td>${a ? `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">via CDN</a>` : "not held"}</td></tr>
 <tr><td>In collection</td><td>${collectionCell(n, all)}</td></tr>
 <tr><td>Ingested text (L1)</td>
     <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
@@ -654,8 +716,9 @@ function landingPage(all: Node[]): string {
   <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br>
       <code>${esc(n.libraryId ?? n.id)}</code></td>
   <td>${collectionCell(n, all)}</td>
-  <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a><br>
-      <code>${(a!.bytes / 1048576).toFixed(2)} MB</code></td>
+  <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a>
+      <br><a class="cdn" href="${esc(a!.cdn)}">via CDN</a>
+      <br><code>${(a!.bytes / 1048576).toFixed(2)} MB</code></td>
   <td class="dl">${metadataCell(n)}</td>
 </tr>`,
     )

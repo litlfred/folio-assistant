@@ -58,6 +58,8 @@
   .wordmark .iris .dot { color: var(--iris-current); }
   .wordmark .sub { font-size: 0.78rem; color: var(--iris-accent); line-height: 1.2; }
   .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo {
     margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: right; max-width: 16rem;
@@ -128,6 +130,8 @@
   @media (max-width: 640px) {
     h1 { font-size: 1.9rem; }
     .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo { display: none; }
     .wordmark .iris { font-size: 1.7rem; }
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
@@ -193,11 +197,13 @@
 <tbody>
 <tr><td>Upstream, at WHO</td><td>none recorded</td></tr>
 <tr><td>Held here, in folio-assistant</td>
-    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/9789241548960_eng.pdf">9789241548960_eng.pdf</a></td></tr>
+    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/9789241548960_eng.pdf">9789241548960_eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/cat-harness/uploads/9789241548960_eng.pdf">via CDN</a></td></tr>
 <tr><td>In collection</td><td><span class="none">no collection recorded</span></td></tr>
 <tr><td>Ingested text (L1)</td>
     <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections">who-iris/library/9789241548960-eng/sections/</a></td></tr>
-<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Download 9789241548960-eng.dc.json</a><br><code>qualified Dublin Core · 1.9 KB</code></td></tr>
+<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Download 9789241548960-eng.dc.json</a>
+      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/9789241548960-eng.dc.json">via CDN</a>
+      <br><code>qualified Dublin Core · 1.9 KB</code></td></tr>
 </tbody>
 </table>
 

@@ -58,6 +58,8 @@
   .wordmark .iris .dot { color: var(--iris-current); }
   .wordmark .sub { font-size: 0.78rem; color: var(--iris-accent); line-height: 1.2; }
   .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo {
     margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: right; max-width: 16rem;
@@ -128,6 +130,8 @@
   @media (max-width: 640px) {
     h1 { font-size: 1.9rem; }
     .none { color: var(--iris-muted); font-style: italic; }
+  /* The CDN link is secondary to the one that is known to work. */
+  .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo { display: none; }
     .wordmark .iris { font-size: 1.7rem; }
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
@@ -193,11 +197,13 @@
 <tbody>
 <tr><td>Upstream, at WHO</td><td><a href="https://iris.who.int/handle/10665/332098">https://iris.who.int/handle/10665/332098</a></td></tr>
 <tr><td>Held here, in folio-assistant</td>
-    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a></td></tr>
+    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/cat-harness/uploads/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/cat-harness/uploads/WPR-RDO-2020-003-eng.pdf">via CDN</a></td></tr>
 <tr><td>In collection</td><td><a href="collection-collection-wpro-information-products.html">Information products</a><br><code>in 7. Regional Office for the Western Pacific</code></td></tr>
 <tr><td>Ingested text (L1)</td>
     <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections">who-iris/library/wpr-rdo-2020-003-eng/sections/</a></td></tr>
-<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download wpr-rdo-2020-003-eng.dc.json</a><br><code>qualified Dublin Core · 4.0 KB</code></td></tr>
+<tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download wpr-rdo-2020-003-eng.dc.json</a>
+      <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">via CDN</a>
+      <br><code>qualified Dublin Core · 4.0 KB</code></td></tr>
 </tbody>
 </table>
 
