@@ -218,6 +218,13 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // would assert that a lane open to both a person and an agent is itself
   // some third kind of actor.
   actorKinds: { gloss: "Which kinds of actor a role admits." },
+  reach: {
+    gloss:
+      "What this actor can reach off its own machine — internet, " +
+      "egress-restricted or air-gapped. The same vocabulary the deployment " +
+      "declares, at the level of one participant; absent means undeclared, " +
+      "which is not `internet`.",
+  },
   hasSkill: { gloss: "A skill this role carries." },
   // The two declared exemptions, and they are NOT one flag under two names.
   // `actedUpon` says the role never acts, so `role-has-actor` is `n/a`;

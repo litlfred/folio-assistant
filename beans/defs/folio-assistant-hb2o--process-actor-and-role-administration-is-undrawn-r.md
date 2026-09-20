@@ -1,10 +1,11 @@
 ---
 # folio-assistant-hb2o
 title: 'PROCESS: actor and role administration is undrawn — role-management is exercised by nothing'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-20T03:12:36Z
-updated_at: 2026-09-20T03:12:36Z
+updated_at: 2026-09-20T04:08:49Z
 parent: folio-assistant-ahvw
 ---
 

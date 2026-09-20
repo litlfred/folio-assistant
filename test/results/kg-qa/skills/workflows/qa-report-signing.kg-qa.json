@@ -1,0 +1,70 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_QaReportSigning",
+    "path": "skills/workflows/qa-report-signing.bpmn"
+  },
+  "source_hash": "sha256:2601de1bfec474a0470110664496e949d48dc0f02c8ecff6b42c1261c50438e2",
+  "criteria": {
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_BuildRun",
+          "detail": "needs skill \"qa-report-signing\", but its lane's role \"validation-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_ResolveReach",
+          "detail": "needs skill \"qa-report-signing\", but its lane's role \"validation-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_RecordAttestation",
+          "detail": "needs skill \"qa-report-signing\", but its lane's role \"validation-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 8,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  }
+}
