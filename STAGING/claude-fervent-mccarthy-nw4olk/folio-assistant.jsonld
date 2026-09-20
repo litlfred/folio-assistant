@@ -255,10 +255,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T11:13:46.861Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/83bd2088e1b3e02b35086adbcfca108a7f4436ea",
-  "sourceCommitSha": "83bd2088e1b3e02b35086adbcfca108a7f4436ea",
-  "sourceCommitAt": "2026-09-20T11:12:04Z",
+  "generatedAt": "2026-09-20T11:22:51.720Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c65dd5de0fa1d7724e6b7c8ce2c7fbc93156a269",
+  "sourceCommitSha": "c65dd5de0fa1d7724e6b7c8ce2c7fbc93156a269",
+  "sourceCommitAt": "2026-09-20T11:21:16Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 192,
@@ -270,7 +270,7 @@
     "Process": 42,
     "SequenceFlow": 558,
     "ProcessNode": 521,
-    "Tool": 53,
+    "Tool": 54,
     "Schema": 63,
     "GraphKind": 20,
     "Directory": 19
@@ -22758,6 +22758,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/content-manifest-validate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/glossary-build",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "glossary-build",
+      "title": "Glossary build",
+      "description": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/build-glossary.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "targetPath",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Report drift and write nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "glossary",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/document-intake"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/glossary-build"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/check-dependencies",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-dependencies",
@@ -25675,8 +25727,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "ffb10a39ac6de43cbe87afa4a2130b9606a10721",
+    "sha": "27cc27369321bfaa72f60b2eca65061ebf74b58f",
     "pr": "494/merge",
-    "run": "35507168943"
+    "run": "35507599167"
   }
 }
