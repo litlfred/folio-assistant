@@ -323,3 +323,43 @@ assertion naming what two things share rather than what distinguishes them**:
 
 All four were found by **ratcheting**, none by review. A test written and not
 falsified is a test whose failure mode is unknown.
+
+## The confirming measurement is still outstanding, and why
+
+Two attempts at it, neither decisive, both worth recording so the next agent
+does not repeat them:
+
+| deploy | from | verdict |
+|---|---|---|
+| `6335c20` 17:11:28 | 06kg commit | last deploy with the stamped footer |
+| *(the footer-fix commit's own run)* | `d64e14dc8` | **never deployed** — superseded |
+| `63a8016` 17:21:47 | merged head | transition, and contaminated |
+
+**The footer fix's own deploy never happened.** Its run was cancelled when the
+next push queued behind it — the concurrency behaviour this repository already
+measured and recorded (three runs, three different branches, seventeen
+seconds, two cancelled). Pushing twice in quick succession costs the first
+deploy, which is worth knowing when a deploy IS the measurement.
+
+**And `63a8016` cannot settle it.** It is the transition (stamped footer →
+constant footer), so every page legitimately changes once; and the same push
+merged `main`, which had taken three PRs, so the pages gained markup from
+elsewhere. Measured **+9 / −1 per page** — the `−1` is consistent with the
+footer line going, the `+9` is main's, and neither is evidence about
+deduplication.
+
+### What would settle it
+
+Two consecutive deploys of one branch **with no intervening change to rendered
+content**. A bean-only commit is exactly that: the sticky board fetches
+`docs/assets/todos/index.json` at runtime, so a bean edit reaches no HTML page.
+If the banner and footer are both constant, such a deploy must touch **no
+`.html` file at all** — only `staging.json`, the todo index and the render log.
+
+That is a sharper test than the ~77 MB projection, and it fails loudly: one
+changed HTML page means something per-build is still baked in, and the diff
+names the line.
+
+**Until that number exists, this bean claims nothing about deduplication.**
+The banner and footer are each pinned constant by tests; whether the PAGE is
+constant has been asserted twice in this bean and measured false once.
