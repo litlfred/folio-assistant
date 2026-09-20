@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0pes
 title: bean-coordination forbids resolving a sibling's bean and gives no discharge path, so verified-done beans accumulate
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T14:31:04Z
-updated_at: 2026-09-20T14:31:04Z
+updated_at: 2026-09-20T14:37:30Z
 parent: folio-assistant-8jt6
 ---
 
@@ -70,3 +70,36 @@ it.
       and an expiry, like `bean-blocking` already requires of a block — an
       exception that nothing re-derives is this session's recurring defect
 - [ ] the six above are discharged, or each says why not
+
+
+## 2026-09-20 — resolved: the rule is amended and six are discharged
+
+`bean-coordination.md` §"Closing a bean whose work has already landed (STRICT)"
+now states it: **a bean closes on evidence, not on authorship.** Anyone may
+close any bean whose measurement they have re-run themselves; nobody may close
+one because a note says somebody else measured it. Three obligations come with
+it — re-derive rather than quote, a Done-when only a person can satisfy is not
+yours, and mid-flight work stays off limits.
+
+**Six discharged, each on a re-run measurement recorded in the bean:** `dzl3`,
+`ckpe`, `1dfh`, `g4dv`, `xd1s`, and `uhzh` (which had all six boxes ticked and
+no *"not my bean"* note — the same end state by a different route).
+
+**Two of seven candidates failed re-verification, which is the finding that
+justifies the obligations rather than a lighter rule:**
+
+- **`lx2s`** — its own later correction walks the resolution back, and its
+  Done-when is *"Issue #215 can be closed by its author"*. Left `in-progress`
+  with the three open items named. Cited in the skill as the worked example.
+- **`xd1s`** — its note claimed *"all seven gh-pages-touching workflows"* and
+  named six; **four** files carry the group. Not a regression: the invariant
+  holds by *group or retry*, which `check:workflows` asserts. Discharged on the
+  gate, not the count — and a bean discharged on a stale number would have been
+  a wrong close dressed as diligence.
+
+The sweep's other half is worth recording because it points AWAY from a
+general problem: of 48 non-epic `in-progress` beans, 17 carry checkbox
+Done-whens and only `uhzh` was fully ticked. `6xaz` was checked directly and is
+genuinely open — `pdf-structure.py` still has no not-determined handling for a
+TOC that collapses onto one or two source pages. **This was six beans stuck on
+one rule, not a work plan that had drifted.**
