@@ -1508,8 +1508,33 @@ export const GraphNodeDirectorySchema = z.object({
  * waiver from a shrug. So the value is the reason, and the axis prints it.
  */
 export const SubgraphCoverageSchema = z.object({
+  /**
+   * The page that renders this subgraph, **relative to the REPOSITORY root**
+   * — not to the instance, which is what the sibling `path` on
+   * {@link ContentDirectorySchema} is relative to.
+   *
+   * The two bases differ and nothing said so until 2026-09-20. Measured then
+   * across both declarations in this repository: of 27 coverage paths, **25
+   * resolve only from the repo root**, 2 from both (the root declaration's
+   * own, where the two roots coincide) and **none** from the instance root
+   * alone.
+   *
+   * It is worth stating here rather than leaving to be rediscovered, because
+   * a consumer whose instance root is a subdirectory gets a plausible wrong
+   * answer rather than an error: `state-visualizer.ts` runs with
+   * `ROOT = cat-harness/`, so `join(ROOT, cov)` finds nothing and reports
+   * every declared visualiser as absent. That very nearly shipped as a page
+   * of false "the declared visualiser is not there" findings (bean `flh4`),
+   * and it was caught only because the corpus was measured first.
+   *
+   * Whether the asymmetry should stay is bean `yt7j` and is the owner's call:
+   * 27 declared paths resolve against it today, so this comment records the
+   * behaviour rather than changing it.
+   */
   visualiser: z.string().min(1).optional(),
+  /** The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}. */
   docs: z.string().min(1).optional(),
+  /** The skill that governs it, by NAME rather than by path, so no base applies. */
   skill: z.string().min(1).optional(),
   /**
    * What produces this directory's SERIALISATIONS — `json`, `jsonld` and

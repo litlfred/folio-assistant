@@ -10,9 +10,13 @@
 # command, on the release page itself, pointing at a repository that does not
 # host the package. Bean `folio-assistant-frq2`.
 #
-# Triggers on:
-#   - Tag push matching folio-assistant-v*
-#   - Manual dispatch
+# Triggers on: `workflow_dispatch` ONLY.
+#
+# This block said "Tag push matching folio-assistant-v*" until 2026-09-20 and
+# the `on:` below has never carried one — text inherited at the split. The
+# version step still reads `GITHUB_REF_NAME` for that case, which is harmless
+# and is why the claim survived unchallenged: the code looks like it supports
+# a tag push. Bean `folio-assistant-frq2`.
 
 name: Release Folio Assistant
 
@@ -28,7 +32,12 @@ permissions:
   packages: write
 
 env:
-  PKG_DIR: folio-assistant
+  # THE REPOSITORY ROOT, because that is where the one `package.json` is.
+  # This said `folio-assistant` until 2026-09-20 — the pre-split package
+  # directory — so `cd $PKG_DIR` failed and the workflow died at its first
+  # real step. Nobody saw it: there are zero tags, so no release has ever
+  # been cut. Bean `folio-assistant-frq2`.
+  PKG_DIR: .
 
 jobs:
   release:
@@ -69,12 +78,15 @@ jobs:
       - name: Pack tarball (generic core only)
         run: |
           cd $PKG_DIR
-          # bun pack creates a tarball from package.json "files" field
-          bun pack 2>/dev/null || npm pack 2>/dev/null || tar czf \
-            "folio-assistant-${{ steps.version.outputs.version }}.tgz" \
-            --transform 's,^,package/,' \
-            src/ ui/ viewer/sw-pyodide-cache.js viewer/register-sw.js \
-            harness.config.example.json package.json tsconfig.json README.md 2>/dev/null || true
+          # `bun pm pack` — NOT `bun pack`, which is not a subcommand and so
+          # was always the dead first branch of a three-way fallback whose
+          # other two arms were `2>/dev/null` and `|| true`. A chain that
+          # cannot fail cannot report, which is how a tarball of FOUR FILES
+          # AND NO CODE went unnoticed: `files[]` had rotted at the split and
+          # every path that would have said so was silenced.
+          #
+          # One command, errors visible, exit code honoured.
+          bun pm pack
           ls -la *.tgz
 
       - name: Create GitHub Release

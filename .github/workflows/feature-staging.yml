@@ -653,17 +653,6 @@ jobs:
           path: pages
           persist-credentials: true
 
-      # The retry below loses the `gh-pages` race by design and rebases. Two
-      # sessions deploying on the same day both append at EOF of
-      # `_render-log/<day>.jsonl`, and a rebase cannot merge that — measured
-      # failing on PR #612 (`stage`, 0da595551b), where the loop died on
-      # attempt 1. `union` keeps both sides' lines. It lives in
-      # `$GIT_DIR/info/` rather than a committed `.gitattributes` because a
-      # `peaceiris` full replace deletes files on this branch, and a fix that
-      # disappears is worse than none. Bean `yzsj`, issue #605.
-      - name: Let a same-day render-log append merge instead of conflicting
-        run: bash cat-harness/scripts/git-union-attr.sh pages
-
       - name: Deploy the preview and log the render, in one commit
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
@@ -788,6 +777,9 @@ jobs:
               exit 1
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            # `merge=union` before the rebase, or this retry aborts on the
+            # render log every time two runs land on one day (`pb4n`).
+            bash cat-harness/scripts/render-log-union-attr.sh pages
             git -C pages pull --rebase origin gh-pages
             # Doubling with jitter, via the ONE implementation the repo has
             # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -887,17 +879,6 @@ jobs:
         with:
           ref: gh-pages
           path: pages
-
-      # The retry below loses the `gh-pages` race by design and rebases. Two
-      # sessions deploying on the same day both append at EOF of
-      # `_render-log/<day>.jsonl`, and a rebase cannot merge that — measured
-      # failing on PR #612 (`stage`, 0da595551b), where the loop died on
-      # attempt 1. `union` keeps both sides' lines. It lives in
-      # `$GIT_DIR/info/` rather than a committed `.gitattributes` because a
-      # `peaceiris` full replace deletes files on this branch, and a fix that
-      # disappears is worse than none. Bean `yzsj`, issue #605.
-      - name: Let a same-day render-log append merge instead of conflicting
-        run: bash source/cat-harness/scripts/git-union-attr.sh pages
 
       - name: Determine staging slug
         id: slug
@@ -1011,6 +992,9 @@ jobs:
                 exit 1
               fi
               echo "push rejected; rebasing onto origin/gh-pages and retrying"
+              # `merge=union` before the rebase, or this retry aborts on the
+              # render log every time two runs land on one day (`pb4n`).
+              bash source/cat-harness/scripts/render-log-union-attr.sh pages
               git -C pages pull --rebase origin gh-pages
               # Doubling with jitter, via the ONE implementation the repo has
               # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -1076,6 +1060,9 @@ jobs:
               exit 1
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            # `merge=union` before the rebase, or this retry aborts on the
+            # render log every time two runs land on one day (`pb4n`).
+            bash source/cat-harness/scripts/render-log-union-attr.sh pages
             git -C pages pull --rebase origin gh-pages
             # Doubling with jitter, via the ONE implementation the repo has
             # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -1220,17 +1207,6 @@ jobs:
           ref: gh-pages
           path: pages
 
-      # The retry below loses the `gh-pages` race by design and rebases. Two
-      # sessions deploying on the same day both append at EOF of
-      # `_render-log/<day>.jsonl`, and a rebase cannot merge that — measured
-      # failing on PR #612 (`stage`, 0da595551b), where the loop died on
-      # attempt 1. `union` keeps both sides' lines. It lives in
-      # `$GIT_DIR/info/` rather than a committed `.gitattributes` because a
-      # `peaceiris` full replace deletes files on this branch, and a fix that
-      # disappears is worse than none. Bean `yzsj`, issue #605.
-      - name: Let a same-day render-log append merge instead of conflicting
-        run: bash source/cat-harness/scripts/git-union-attr.sh pages
-
       - name: Remove the preview
         working-directory: pages
         env:
@@ -1293,6 +1269,9 @@ jobs:
               exit 1
             fi
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
+            # `merge=union` before the rebase, or this retry aborts on the
+            # render log every time two runs land on one day (`pb4n`).
+            bash ../source/cat-harness/scripts/render-log-union-attr.sh .
             git pull --rebase origin gh-pages
             # Doubling with jitter, via the ONE implementation the repo has
             # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was

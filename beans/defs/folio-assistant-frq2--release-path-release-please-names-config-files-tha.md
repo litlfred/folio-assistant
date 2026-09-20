@@ -1,10 +1,11 @@
 ---
 # folio-assistant-frq2
 title: 'RELEASE PATH: release-please names config files that do not exist, and both release workflows document another repository''s behaviour'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T20:46:25Z
-updated_at: 2026-09-20T20:46:25Z
+updated_at: 2026-09-20T22:49:46Z
 parent: folio-assistant-vke6
 ---
 
@@ -123,20 +124,69 @@ release-please config now answers it by accident.
     defaults it will also not find. What it removes is the assertion that a
     config lives somewhere it does not. A config was not written instead,
     for §5's reason.
-[ ] `release-folio-assistant.yml`'s `PKG_DIR` names a directory that exists,
-    and `package.json`'s `files[]` resolves — 2 of 6 do today
+[x] `release-folio-assistant.yml`'s `PKG_DIR` names a directory that exists,
+    and `package.json`'s `files[]` resolves. **Done 2026-09-20** (PR #623,
+    merged as `5e6e40a5`) — and it was worse than this line: `main` and all
+    17 `exports` targets were pre-split too, and running the pack for the
+    first time showed the tarball held 4 files and NO CODE. Now 69 files with
+    the entry point present. The pack step could not fail, either; that is
+    fixed and its exit code is honoured.
 [x] The install URL in `release-folio-assistant.yml` names this repository.
     **Done 2026-09-20** (`90ebd7c5`): the release body now interpolates
     `${{ github.repository }}` rather than a corrected literal — the workflow
     creates the release in the repository it runs in, so deriving it cannot
     drift, whereas hardcoding `litlfred/folio-assistant` would reproduce this
     exact defect one rename later. The header comment's copy is fixed too.
-[~] Each header describes THIS repository, with the corrections moved above
-    the prose they correct rather than below it. **Partly done**:
-    `release-please.yml` now carries an EVERYTHING ABOVE THIS LINE DESCRIBES
-    THE OTHER REPOSITORY marker at the first correction point, naming the
-    measured cost of the old ordering. `release-folio-assistant.yml`'s header
-    still claims a tag-push trigger it does not have.
+[x] Each header describes THIS repository, with the corrections moved above
+    the prose they correct rather than below it. **Done**:
+    `release-please.yml` carries an EVERYTHING ABOVE THIS LINE DESCRIBES THE
+    OTHER REPOSITORY marker at the first correction point, and
+    `release-folio-assistant.yml`'s false tag-push claim is corrected (PR
+    #623) — it survived because the version step still reads
+    `GITHUB_REF_NAME`, so the code LOOKS like it supports a trigger the
+    workflow does not have.
 [ ] One release cut end to end, or a recorded decision that neither path is
     used — zero tags and a documented release process is a claim nothing has
     tested
+
+
+## Still open: the package NAME, and no release has been cut
+
+Two of the four `Done when` boxes are ticked. What remains is one decision and
+one consequence of it.
+
+**The package is named `@anthropic-ai/folio-assistant`** — an npm scope this
+repository does not appear to own, on `litlfred/folio-assistant`. Every fix in
+PR #623 is correct under any name, so this was raised rather than decided, and
+merging #623 does not settle it. It is not a path defect: it is an identity
+question, and it belongs with `instance-versioning.md` §3.1's first open
+question about which instances are publishable and under what id.
+
+**And the last box stays open on purpose**: zero tags, no release ever cut.
+The path is now honest — it does what it says or fails loudly — but honest is
+not exercised. Cutting one is what would prove it, and that waits on the name.
+
+## NOT completed, and the open box is the point
+
+Four of five boxes are ticked. The fifth — **one release cut end to end, or a
+recorded decision that neither path is used** — is open, and this bean stays
+`in-progress` because of it.
+
+It was briefly marked `completed` on 2026-09-20 and corrected within the
+minute. Worth recording rather than quietly fixing: every defect this bean
+found was a claim that outran what had been verified, and closing it on four
+of five boxes would have been the same move one level up. The path is now
+honest; honest is not the same as exercised, and only a cut release shows
+which.
+
+## Summary of Changes so far
+
+Four defects fixed across two PRs. #593: the GitHub Release body published an
+install command naming a repository that does not host the package, and
+`release-please` stopped naming two config files that have never existed.
+#623: the package manifest's paths were comprehensively pre-split, `PKG_DIR`
+named a missing directory, the pack step could not fail, and a header claimed
+a trigger the workflow has never had.
+
+The finding that mattered was a measurement, not a reading: running the pack
+for the first time showed a tarball of four files and no code.
