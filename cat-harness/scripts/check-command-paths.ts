@@ -293,7 +293,7 @@ export function checkCommandPaths(repo: string = repoRootFor(INSTANCE_ROOT)): Co
  * `docs:harness:check` printed **while failing** read:
  *
  * ```
- * Run `bun run scripts/sync-docs-harness.ts` and commit the result.
+ * Run `bun run cat-harness/scripts/sync-docs-harness.ts` and commit the result.
  * ```
  *
  * There is no root `scripts/`. The instruction telling a reader how to fix the
@@ -313,7 +313,7 @@ export function checkCommandPaths(repo: string = repoRootFor(INSTANCE_ROOT)): Co
  * | | example | correct relative to |
  * |---|---|---|
  * | a cross-reference in prose | ``see `scripts/known-skills.ts` `` | the INSTANCE — and it resolves |
- * | a command in a header or a message | `bun run scripts/lean-audit.ts` | the REPOSITORY — where a person stands |
+ * | a command in a header or a message | `bun run cat-harness/scripts/lean-audit.ts` | the REPOSITORY — where a person stands |
  *
  * Only the second is wrong. `bun run`, `bunx`, `bash`, `npx`, `python3`,
  * `deno run` say a human is about to execute this, and nothing else does.
@@ -395,15 +395,17 @@ export function checkPrintedCommands(repo: string, report: CommandPathReport): v
           continue;
         }
         report.checked++;
-        // HELD, not failed — see CommandPathReport.held. The `scripts/` group
-        // and the `content/` group may not be the same defect and the
-        // declarations do not settle it, so the verdict is the owner's.
-        report.held.push({
+        const finding = {
           file,
           line: i + 1,
           token: `${tok}  →  ${under}/${tok}`,
           command: cmd.trim(),
-        });
+        };
+        // The owner's verdict, 2026-09-20: a command addressed to a FOLIO is
+        // counted; anything else naming this repository's own tooling is a
+        // defect, and the finding already carries its fix.
+        if (FOLIO_OWNED.has(tok.split("/")[0]!)) report.held.push(finding);
+        else report.dead.push(finding);
       }
     }
   }
@@ -417,6 +419,37 @@ export function checkPrintedCommands(repo: string, report: CommandPathReport): v
  * split — which is the exact defect this check exists to catch, and writing it
  * into the check would be a poor joke.
  */
+/**
+ * Directories a FOLIO owns, whose commands are counted rather than failed.
+ *
+ * **The owner's verdict on the 237, 2026-09-20: fail on `scripts/`, count
+ * `content/`.** The two groups were not the same defect. A command naming
+ * `scripts/x.ts` can only mean this repository's tooling — a folio has no
+ * `scripts/` at all — so from the repository root it is simply broken. A
+ * command naming `content/pipeline/x.ts` is written for somebody standing in a
+ * FOLIO, where it is correct; the onboarding guide already carries three such
+ * blocks marked *"run IN A FOLIO"*.
+ *
+ * ## The basis, stated rather than dressed up
+ *
+ * `init-folio` writes `folio/`, `uploads/` and `library/` — that much is read
+ * from the scaffolder, not from prose. `content/` is here because a folio may
+ * declare its content root there and `litlfred/qou` does; `lean/` and `.lake/`
+ * because the paper adapter puts a folio's proofs and build output there.
+ *
+ * **This is a LAYOUT, not a declaration, and that is weaker than this
+ * repository's usual standard.** No `harness.json` names either `scripts/` or
+ * `content/`, so nothing mechanical separates them — which is exactly why the
+ * question went to the owner rather than being decided here. The weakness is
+ * carried as an open Done-when on bean `b963` so a later session can tighten
+ * it against a declaration instead.
+ *
+ * Note what this list is NOT: it is not "directories that exist in a folio",
+ * which would be unbounded. It is the set whose appearance at the head of a
+ * command means *this command is addressed to a folio*.
+ */
+export const FOLIO_OWNED = new Set(["folio", "content", "uploads", "library", "lean", ".lake"]);
+
 export function instanceRoots(repo: string): string[] {
   const out: string[] = [];
   for (const name of readdirSync(repo)) {
@@ -580,13 +613,13 @@ function formatReport(r: CommandPathReport): string {
       byFirst.set(seg, (byFirst.get(seg) ?? 0) + 1);
     }
     out.push(
-      `  ⏸ ${r.held.length} printed command(s) name a path that resolves only under an instance ` +
-        `— HELD, not failed, pending a decision (bean \`b963\`):`,
+      `  · ${r.held.length} printed command(s) addressed to a FOLIO — counted, not failed ` +
+        `(the owner's verdict on bean \`b963\`, 2026-09-20):`,
     );
     for (const [seg, n] of [...byFirst].sort((a, b) => b[1] - a[1])) {
       out.push(`      ${String(n).padStart(4)}  ${seg}/…`);
     }
-    out.push("      This is a THIRD STATE: found, verdict not yet taken. `--held` lists them.");
+    out.push("      `--held` lists them. The basis is a LAYOUT, not a declaration — see FOLIO_OWNED.");
   }
   if (r.dead.length === 0) {
     out.push("  ✓ every repository-relative path inside a fenced command resolves");

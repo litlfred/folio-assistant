@@ -26,8 +26,8 @@
  *      hand-edited; a link inviting someone to do so would be worse than none.
  *
  * Usage:
- *   bun run scripts/gen-docs-pages.ts            # write
- *   bun run scripts/gen-docs-pages.ts --check    # fail if any page is stale
+ *   bun run cat-harness/scripts/gen-docs-pages.ts            # write
+ *   bun run cat-harness/scripts/gen-docs-pages.ts --check    # fail if any page is stale
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
@@ -984,7 +984,7 @@ if (check && refreshed > 0) {
   );
 }
 if (check && stale > 0) {
-  console.error(`\n${stale} generated file(s) stale or missing — run: bun run scripts/gen-docs-pages.ts`);
+  console.error(`\n${stale} generated file(s) stale or missing — run: bun run cat-harness/scripts/gen-docs-pages.ts`);
   process.exit(1);
 }
 console.log(

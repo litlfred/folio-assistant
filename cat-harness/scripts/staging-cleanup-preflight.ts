@@ -3,7 +3,7 @@
  * Is it safe to remove one `STAGING/<slug>/` review preview, RIGHT NOW?
  *
  * ```sh
- * bun run scripts/staging-cleanup-preflight.ts --slug claude-health-checks
+ * bun run cat-harness/scripts/staging-cleanup-preflight.ts --slug claude-health-checks
  * ```
  *
  * ## Why this exists at all
@@ -113,7 +113,7 @@ if (import.meta.main) {
   const idx = argv.findIndex((a) => a === "--slug" || a.startsWith("--slug="));
   const slug = idx === -1 ? "" : argv[idx].startsWith("--slug=") ? argv[idx].slice("--slug=".length) : (argv[idx + 1] ?? "");
   if (slug === "") {
-    console.error("usage: bun run scripts/staging-cleanup-preflight.ts --slug <staging-slug>");
+    console.error("usage: bun run cat-harness/scripts/staging-cleanup-preflight.ts --slug <staging-slug>");
     process.exit(2);
   }
   const root = new URL("..", import.meta.url).pathname;

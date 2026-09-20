@@ -7,7 +7,7 @@ priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T20:20:00Z
+updated_at: 2026-09-20T20:45:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -146,5 +146,80 @@ would be deciding the question by default.
 - [x] A check reads every fenced command in the entry documents and fails when a path in it does not resolve
 - [x] A reader covers `command` fields in `.claude/settings.json`
 - [x] A reader covers printed commands and module-header usage lines
-- [ ] The 237 held findings get their verdict, and the `scripts/` group is repointed if that is the answer
+- [x] The 237 held findings get their verdict, and the `scripts/` group is repointed
 - [ ] **The basis is tightened.** The `scripts/`-versus-`content/` distinction rests on the folio LAYOUT rather than on a declaration, which is weaker than this repository's usual standard. Stated rather than dressed up.
+
+_2026-09-20T20:45Z_ — **Verdict: fail on `scripts/`, count `content/`** (the
+owner, 2026-09-20). The 237 split 127 / 110 under it.
+
+**127 repointed** across 52 files — 123 `scripts/`, 3 `src/`, 1 `docs/`. Applied
+from the check's own findings, each of which already carried its fix, with a
+negative-lookbehind guard so an already-correct `cat-harness/scripts/…` could
+not become `cat-harness/cat-harness/…`. **110 counted**: 109 `content/`, 1
+`library/`.
+
+`FOLIO_OWNED` encodes the verdict: `folio`, `content`, `uploads`, `library`,
+`lean`, `.lake`. `init-folio` writes the first, third and fourth — read from
+the scaffolder, not from prose. `content/` because a folio may declare its
+content root there and `qou` does; `lean/` and `.lake/` because the paper
+adapter puts proofs and build output there.
+
+## And the scaffolder was handing the defect to every new folio
+
+Found while establishing that basis. `init-folio` wrote `${assistant}/src/index.ts`,
+`${assistant}/scripts/session-start-coord-sweep.sh` and `${assistant}/viewer` —
+**nine sites**, every one correct before the split and none after it, because
+the code moved under `cat-harness/` while `assistant` still names the CHECKOUT
+root.
+
+**Two of the nine are the new folio's `.mcp.json` and its `SessionStart` hook.**
+So every folio scaffolded since the split got an MCP server that cannot start
+and a hook that silently does nothing — the same defect that had killed this
+repository's own session-start sweep, reproduced in the one place that hands it
+to every downstream repository at once.
+
+Fixed through a single `HARNESS_SUBDIR` constant and a `platformDir()` helper,
+for the reason `AGENTS.md` gives for the builder shim: the path to the platform
+is a fact with one home, so the next relocation is a one-line edit rather than
+a nine-site sweep that misses two.
+
+**Count so far: nine, plus thirteen, plus 127, plus nine.**
+
+## Still open
+
+- [ ] **The basis is a LAYOUT, not a declaration.** No `harness.json` separates
+      `scripts/` from `content/`, which is why the question went to the owner
+      rather than being decided here. Disclosed on `FOLIO_OWNED` and guarded by
+      a test that asserts the disclosure itself, so a later session that derives
+      the set from a declaration has to update the note too.
+
+_2026-09-20T20:50Z_ — **A fourth class, and the test fixture was hiding it.**
+
+Fixing `init-folio` turned two of its tests red, and the tests were wrong
+rather than the fix. `PLATFORM` read `resolve(import.meta.dir, "../..")`, which
+was the REPOSITORY root while those tests lived at `scripts/tests/` and
+silently became the `cat-harness/` directory when they moved to
+`cat-harness/scripts/tests/`. The suite went on passing — **by modelling a
+layout that no longer exists**, and so asserting that the scaffolder should
+keep emitting the pre-split paths.
+
+That is the same rot in its most dangerous form: **a path inside a test
+fixture**, where a green suite is the evidence everybody trusts. A fenced-block
+reader cannot see it, a printed-string reader cannot see it, and the test that
+would notice is the one that broke.
+
+Also found: `README.md`'s scaffold command, `bun run
+folio-assistant/scripts/init-folio.ts`. A folio runs `git submodule add
+…/folio-assistant.git folio-assistant`, so the linked directory is the
+repository root and the script is at `folio-assistant/cat-harness/scripts/`.
+**It was inside a `command-path-ok:` exemption this session added earlier** —
+the exemption was correct that the block runs in a folio, and wrong to imply
+the path was therefore fine. An exemption suppresses the check, not the defect.
+
+**Running total: nine, plus thirteen, plus 127, plus nine, plus two.**
+
+- [ ] A reader for paths inside TEST FIXTURES that silently re-root on a move.
+      `resolve(import.meta.dir, "../..")` is the shape; what makes it hard is
+      that the correct depth is a fact about where the test file sits, so the
+      check has to compare the resolved directory against what the fixture then
+      assumes of it rather than against a literal.

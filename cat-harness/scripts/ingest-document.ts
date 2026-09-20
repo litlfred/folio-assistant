@@ -722,7 +722,7 @@ if (import.meta.main) {
       for (const r of pending) console.log(`    ${r.name.padEnd(22)} ${r.detail}`);
     }
     console.log(`\nNext: run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), staging)},`);
-    console.log(`then: bun run scripts/ingest-document.ts ${relative(resolve(INSTANCE_ROOT), pdf)} --promote`);
+    console.log(`then: bun run cat-harness/scripts/ingest-document.ts ${relative(resolve(INSTANCE_ROOT), pdf)} --promote`);
     process.exit(0);
   }
 

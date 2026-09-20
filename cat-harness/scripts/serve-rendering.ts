@@ -41,7 +41,7 @@
  *   the third state, kept as one.
  *
  * ```sh
- * bun run scripts/serve-rendering.ts --dir <site> --port 4000
+ * bun run cat-harness/scripts/serve-rendering.ts --dir <site> --port 4000
  * ```
  *
  * @module scripts/serve-rendering
@@ -196,7 +196,7 @@ if (import.meta.main) {
   if (argv.includes("--help") || argv.includes("-h")) {
     console.log(
       `Serve an instance's renderings with their declared media types.\n\n` +
-        `  bun run scripts/serve-rendering.ts [--dir <path>] [--port <n>] [--host <iface>]\n\n` +
+        `  bun run cat-harness/scripts/serve-rendering.ts [--dir <path>] [--port <n>] [--host <iface>]\n\n` +
         `  --dir   directory to serve (default: the declared site root, else .)\n` +
         `  --port  port to bind (default 4000)\n` +
         `  --host  interface (default 127.0.0.1 — loopback, deliberately)\n`,

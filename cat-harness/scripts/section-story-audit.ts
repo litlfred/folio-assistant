@@ -52,12 +52,12 @@
  * the findings to the author, the author picks which to fix.
  *
  * Usage:
- *   bun run scripts/section-story-audit.ts                        # default paper
- *   bun run scripts/section-story-audit.ts --paper <dir>          # explicit
- *   bun run scripts/section-story-audit.ts --json                 # JSON output
- *   bun run scripts/section-story-audit.ts --severity major       # major findings only
- *   bun run scripts/section-story-audit.ts --out report.json      # write JSON
- *   bun run scripts/section-story-audit.ts --ref <sha-or-branch>  # blob-URL ref
+ *   bun run cat-harness/scripts/section-story-audit.ts                        # default paper
+ *   bun run cat-harness/scripts/section-story-audit.ts --paper <dir>          # explicit
+ *   bun run cat-harness/scripts/section-story-audit.ts --json                 # JSON output
+ *   bun run cat-harness/scripts/section-story-audit.ts --severity major       # major findings only
+ *   bun run cat-harness/scripts/section-story-audit.ts --out report.json      # write JSON
+ *   bun run cat-harness/scripts/section-story-audit.ts --ref <sha-or-branch>  # blob-URL ref
  *
  * Exit code is the count of MAJOR findings (capped at 255), so this can be
  * wired into CI as a quality gate.

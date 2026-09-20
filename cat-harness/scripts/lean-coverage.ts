@@ -26,11 +26,11 @@
  *   - definitions with .lean siblings.
  *
  * Usage:
- *   bun run scripts/lean-coverage.ts                       # default paper (qou)
- *   bun run scripts/lean-coverage.ts --paper qou           # explicit paper
- *   bun run scripts/lean-coverage.ts --content-root ../qou/content
- *   bun run scripts/lean-coverage.ts --json                # JSON only
- *   bun run scripts/lean-coverage.ts --out path.json       # write JSON to path
+ *   bun run cat-harness/scripts/lean-coverage.ts                       # default paper (qou)
+ *   bun run cat-harness/scripts/lean-coverage.ts --paper qou           # explicit paper
+ *   bun run cat-harness/scripts/lean-coverage.ts --content-root ../qou/content
+ *   bun run cat-harness/scripts/lean-coverage.ts --json                # JSON only
+ *   bun run cat-harness/scripts/lean-coverage.ts --out path.json       # write JSON to path
  *
  * `--content-root` is required in the two-repo split (folio-assistant holds
  * no paper content); it points at the paper repo's `content/` directory.

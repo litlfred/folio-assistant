@@ -16,7 +16,7 @@
  * `skills/folio-core/translation-manager.md`.
  *
  * Usage:
- *   bun run scripts/translation/simulate-translation.ts [path-to-md]
+ *   bun run cat-harness/scripts/translation/simulate-translation.ts [path-to-md]
  *
  * Default test page: docs/guides/agent-onboarding.md
  */
