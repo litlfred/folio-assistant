@@ -1,10 +1,11 @@
 ---
 # folio-assistant-35kc
 title: 'STAGING PARITY: a preview serves none of the namespace documents or the bootstrap graph its own graph points at'
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-20T15:40:27Z
-updated_at: 2026-09-20T15:40:27Z
+updated_at: 2026-09-20T16:13:11Z
 parent: folio-assistant-5a3l
 ---
 
@@ -75,7 +76,27 @@ guessed.
 
 ## Done when
 
-- [ ] Staging publishes the namespace documents for all three layers
-- [ ] The bootstrap graph is published at staging, with its `@id` question
-      settled and written down
-- [ ] A staged graph's vocabulary references resolve within the staged tree
+- [x] Staging publishes the namespace documents for all three layers
+- [x] The bootstrap graph is published at staging, with its `@id` question
+      settled: `gen-bootstrap-graph.ts` gained `--base-url`, matching
+      `kg-export.ts`, so the staged copy names ITSELF. Owner chose this over
+      the namespace-only half.
+- [x] A staged graph's vocabulary references resolve within the staged tree
+
+## Shipped 2026-09-20
+
+The asymmetry that made this more than a copy: `kg-export.ts` already took
+`--base-url` and `gen-bootstrap-graph.ts` did not, so a staged bootstrap graph
+would have minted its `@id` from the canonical URL and **asserted it lives on
+the live site**. That is worse than the 404 it replaces — a reader following
+the `@id` lands on a different document that looks correct. The flag was added
+rather than the problem accepted.
+
+**Rehearsed end-to-end locally**, which is what the earlier "not fixed in the
+same pass" note said could not be done. It was half right: the GitHub runner
+cannot be driven from here, but the shell block can. Running the exact
+sequence against a throwaway directory produced all 14 files — `ns/vocabulary`
+(+`.json`), `ns/content/v1`, three per-layer `ns` triples, and the bootstrap
+graph (+`.json`) — and the staged graph's `@id` came out as
+`.../STAGING/rehearsal/bootstrap.jsonld`. `check:workflows` confirms the YAML
+still parses.
