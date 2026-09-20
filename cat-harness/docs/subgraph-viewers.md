@@ -67,6 +67,21 @@ Three of the states it shows are easy to mistake for noise:
 - **`external`** — bound to something outside this graph. Resolved correctly;
   nothing to do.
 
+### What the diagram cannot show
+
+A reference carried as a **string id** is not drawn, and this is a structural
+limit rather than a gap: a field declared as a plain string holds no link to
+the schema it names, so nothing syntactic — and nothing in JSON Schema or the
+type checker either — can recover it.
+
+Measured against `schemas/assistant-schema.puml`, a hand-drawn UML diagram
+used as a control: **14 of 15** compositions reproduced, **0 of 9** id
+associations. The page says so permanently, and again on any type carrying
+id-style fields, because an undrawn association is **invisible, not absent**.
+
+The same comparison found the hand-drawn diagram wrong in one place, which is
+what a control is for.
+
 The data is at `assets/schemas/index.json` and is the same file the page
 reads; anything else may draw it.
 

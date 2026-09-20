@@ -155,6 +155,14 @@ function projection(g: SchemaGraph): unknown {
  * rather than of the host.
  */
 export function viewerHtml(): string {
+  // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
+  //
+  // The whole page is one template literal, so a backtick anywhere inside it
+  // terminates the string and the rest becomes TypeScript. It fails at a line
+  // number far from the mistake, and it has happened twice: once in a comment
+  // reading "the intake's own files[]", once in one quoting a field
+  // declaration. `viz-generators.test.ts` imports this module, so a stray one
+  // reddens the suite rather than only the generator.
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -242,6 +250,9 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 <header>
   <h1>Schema graph</h1>
   <p class="counts" id="counts">loading…</p>
+  <p class="counts" style="margin-top:4px">Diagrams show <strong>containment</strong> and
+    <strong>generalisation</strong>. A reference carried as a string id is not drawn &mdash; it is
+    invisible to a syntactic reader, not absent from the model.</p>
 </header>
 <main>
   <section id="list" aria-label="Declarations">
@@ -373,6 +384,20 @@ function detail(d) {
       esc(d.note || "") + "</code></p>";
   }
   h += uml(d);
+  /* The diagram shows CONTAINMENT and generalisation. It cannot show a
+     reference carried as a string id: a field declared as a plain string holds
+     no syntactic link to the schema it names, and a diagram that omitted a
+     whole class of relation silently would be the "rendered as nothing"
+     failure this repository works to avoid. Measured against the hand-drawn
+     UML: 14 of 15 compositions reproduced, 0 of 9 id associations.
+     NOTE: no backticks in this file's embedded script — they terminate the
+     template literal that carries the whole page. */
+  if ((d.fields || []).some(function (f) { return /(^|[a-z])Id$|(^|[a-z])Ids$|(^|_)ref$/.test(f.name); })) {
+    h += '<p class="note"><strong>This type carries id-style fields.</strong> ' +
+      "The diagram draws containment and generalisation only: a reference held as a string id " +
+      "(<code>actorId: z.string()</code>) carries no syntactic link to the schema it names, so it is " +
+      "<em>not</em> an absent relation \u2014 it is one this view structurally cannot see.</p>";
+  }
   if (d.fields && d.fields.length) {
     h += "<table><caption class=\\"sub\\" style=\\"text-align:left;padding:0 0 4px\\">Fields</caption><thead><tr><th>name</th><th>type</th><th>notes</th></tr></thead><tbody>";
     d.fields.forEach(function (f) {

@@ -63,6 +63,14 @@ function projection(g: LibraryGraph): unknown {
 }
 
 export function viewerHtml(): string {
+  // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
+  //
+  // The whole page is one template literal, so a backtick anywhere inside it
+  // terminates the string and the rest becomes TypeScript. It fails at a line
+  // number far from the mistake, and it has happened twice: once in a comment
+  // reading "the intake's own files[]", once in one quoting a field
+  // declaration. `viz-generators.test.ts` imports this module, so a stray one
+  // reddens the suite rather than only the generator.
   return `<!doctype html>
 <html lang="en">
 <head>

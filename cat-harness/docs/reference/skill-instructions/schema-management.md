@@ -90,6 +90,43 @@ the module BINDS: `z` is bound, to `zod`, which is not a relative import and
 therefore not part of this graph. Distinct unresolved names fell from 150 to 6,
 and the 6 are real.
 
+## What the graph structurally CANNOT see — measured, not guessed
+
+The reader sees a reference when one schema names another. It sees nothing when
+a reference is carried as a **string id**, because `actorId: z.string()` holds
+no syntactic link to the schema it names. Neither would JSON Schema, and
+neither would the type checker: the information is not in the types at all.
+
+**Measured against `schemas/assistant-schema.puml`**, 266 lines of UML a person
+drew by hand, used as a control:
+
+| relation the diagram draws | reproduced by the reader |
+|---|---|
+| composition (`*--`) — a nested schema | **14 of 15** |
+| association (`-->`) — a foreign key by id | **0 of 9** |
+
+A clean split, and it names the limit exactly. So the viewer states it —
+permanently in the header, and again on any type carrying id-style fields —
+because a diagram that omitted a whole class of relation *silently* would be
+the "rendered as nothing" failure this repository works to avoid. An
+undrawn association is **invisible, not absent**.
+
+If you want those edges drawn, they have to be **declared**: the id field must
+say what it points at. That is a modelling change, not a reader change, and it
+belongs to [`data-modelling`](data-modelling.md).
+
+### The control worked in both directions
+
+The same run found the hand-drawn diagram wrong: it draws
+`SkillDefinition *-- SkillSchemaRef : schemas`, and `SkillDefinitionSchema`
+has no `schemas` field at all. That corroborates bean `3lbz`, which found
+`SkillDefinition.schemas` had no readers and its only referencing code was a
+script nothing invokes.
+
+**That is why the `.puml` is kept rather than retired.** A hand-drawn model is
+a cheap control for a generated one, and in one run it found a blind spot in
+the reader *and* a stale relation in itself.
+
 ## Adding or changing a schema — the loop
 
 1. **Model first** — [`data-modelling`](data-modelling.md). A field on the
@@ -127,6 +164,17 @@ applying to any generated artefact you gate:
 
 The same reasoning removed the per-module declaration list: a declaration
 already names its module, so the list was one fact written twice.
+
+## Editing a viewer — no backticks
+
+Both viewers are a whole HTML document inside one TypeScript template literal.
+A backtick **anywhere** inside it — including in a JavaScript comment in the
+embedded script — terminates the string, and the failure surfaces as a parse
+error a couple of hundred lines from the mistake. It has happened twice.
+
+`schemas/viz-generators.test.ts` imports both generators, so a stray backtick
+reddens the suite rather than only the next person's generator run. Run it
+before assuming a generator change is fine.
 
 ## Where the boundaries are
 

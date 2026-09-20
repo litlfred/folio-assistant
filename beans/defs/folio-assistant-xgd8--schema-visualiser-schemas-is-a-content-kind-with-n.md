@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T18:21:04Z
-updated_at: 2026-09-20T19:21:31Z
+updated_at: 2026-09-20T19:29:13Z
 parent: folio-assistant-yj32
 ---
 
@@ -386,3 +386,81 @@ projection and kept on the reader. Generalised in the skill as:
 - [x] The schema-management skill exists
 - [ ] The ingestion skill — deferred to `slw1` with the reason above
 - [ ] `assistant-schema.puml` is retired or made the validation target — owner's call
+
+
+---
+
+## THE `.puml` IS A WORKING CONTROL — measured 2026-09-20, and it found a blind spot
+
+This bean proposed `schemas/assistant-schema.puml` as a validation target
+rather than a deletion. **It was used as one, and it earned its keep in a
+single run — in both directions.**
+
+### Direction 1: it found what the reader structurally cannot see
+
+Every relation the hand-drawn diagram draws, checked against the generated
+edges:
+
+| relation | reproduced |
+|---|---|
+| composition (`*--`) — a nested schema | **14 of 15** |
+| association (`-->`) — a foreign key by string id | **0 of 9** |
+
+A clean split, and it names the limit exactly. `RoleAssignmentSchema` declares
+`actorId: z.string()` — a plain string, holding **no syntactic link** to
+`ActorDefinitionSchema`. Nothing syntactic can recover that edge, and neither
+can JSON Schema nor the type checker: **the information is not in the types at
+all.**
+
+All 21 types the diagram names are present in the generated graph, so this is
+not a coverage gap. It is one class of relation, invisible for a stateable
+reason.
+
+**What was done about it.** The viewer now says so — permanently in the header,
+and again on any type carrying id-style fields:
+
+> A reference carried as a string id is not drawn — it is invisible to a
+> syntactic reader, not absent from the model.
+
+That matters because a diagram that omitted a whole class of relation
+*silently* would be exactly the "rendered as nothing" failure this repository
+works against. An undrawn association is **invisible, not absent**, and the two
+are different answers.
+
+Drawing them would need the id field to **declare what it points at**. That is
+a modelling change, not a reader change, and it belongs to `data-modelling`.
+
+### Direction 2: the reader found the diagram wrong
+
+The one composition it did not reproduce is
+`SkillDefinition *-- SkillSchemaRef : schemas` — and `SkillDefinitionSchema`
+has **no `schemas` field at all**. Verified directly in the source.
+
+That corroborates bean `3lbz` from a completely different angle: `3lbz` found
+`SkillDefinition.schemas` had no readers and its only referencing code was
+`scripts/generate-docs.ts`, which nothing invokes. The hand-drawn diagram
+records a relation the code does not have.
+
+### So the recommendation is now evidenced rather than proposed
+
+**Keep it.** A hand-drawn model is a cheap control for a generated one, and one
+run of it found a blind spot in the reader *and* a stale relation in itself.
+Deleting it would have destroyed the only independent statement of this
+model that exists.
+
+It is still referenced by no script and still not gated — turning this
+comparison into a repeatable check is worth doing, and is NOT done here
+because a gate over a hand-maintained artefact needs the owner to decide
+whether the artefact is maintained. Recorded, not assumed.
+
+## Also, twice-paid: no backticks in a viewer
+
+Both viewers are a whole HTML document inside one TypeScript template literal.
+A backtick anywhere inside it — **including in a JavaScript comment** —
+terminates the string, and the parse error surfaces a couple of hundred lines
+from the mistake. It happened twice in one session: once in a comment reading
+*"the intake's own files[]"*, once in one quoting a field declaration.
+
+Both generators now carry an explicit `NO BACKTICKS BELOW THIS LINE` marker at
+the top of the template, and `viz-generators.test.ts` imports both modules so a
+stray one reddens the suite rather than only the next person's generator run.
