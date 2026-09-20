@@ -9,8 +9,5 @@ export const proofTriage: SkillDefinition = {
     { capabilityId: "git-read", degradation: "fail" },
   ],
   routingPatterns: ["what\\s+next", "priority", "triage", "sorry.*inventory"],
-  schemas: [
-    { module: "schemas/formalization-types", types: ["ProofObject", "ProofObjectsManifest", "CoverageEntry"], access: "read" },
-  ],
   tags: ["triage", "proof", "planning"],
 };

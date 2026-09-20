@@ -10,8 +10,5 @@ export const leanProofReview: SkillDefinition = {
   ],
   mcpServices: ["lean-lsp"],
   routingPatterns: ["review.*lean", "check.*proof", "audit.*lean"],
-  schemas: [
-    { module: "schemas/types", types: ["ReviewRecord", "ReviewIssue"], access: "read-write" },
-  ],
   tags: ["lean", "review", "proof"],
 };
