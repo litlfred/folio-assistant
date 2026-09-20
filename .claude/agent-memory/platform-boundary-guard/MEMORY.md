@@ -1,11 +1,9 @@
 # platform-boundary-guard — memory
 
-**Edit `memory/*.md`, not this file.** The region below is assembled by
-`bun run agent-memory` and anything written into it by hand is overwritten;
-everything outside it — the session log — is yours and is never touched.
-Entry types: **STABLE** · **TRAP** · **BASELINE** (re-measure, never quote).
-
----
+**Edit `memory/*.md`, not this file** — `bun run agent-memory` overwrites the
+region below; outside it is yours. Types: **STABLE** · **TRAP** · **BASELINE**
+(re-measure, never quote). Compact on purpose: every line here is a line of
+the 200-line injection budget the entries need.
 
 <!-- folio:memory:begin -->
 
@@ -198,9 +196,7 @@ Each shipped once:
 
 <!-- folio:memory:end -->
 
----
-
 ## Session log
 
-One line per review: what you checked, any literal you caught, any TRAP you
-added. Keep under ~200 lines — prune the log, never the TRAPs.
+One line per review: what you checked, any literal caught, any TRAP added.
+Prune the log, never the TRAPs.

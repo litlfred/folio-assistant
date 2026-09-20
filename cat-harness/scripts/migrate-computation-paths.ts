@@ -69,10 +69,14 @@ type MoveEntry = [oldPath: string, newPath: string];
 type MoveTable = MoveEntry[];
 
 const SCAN_GLOBS = [
-  "content/**/*.ts",
-  "content/**/*.md",
-  "content/**/*.qa.json",
-  "content/**/*.lean",
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "folio/**/*.ts",
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "folio/**/*.md",
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "folio/**/*.qa.json",
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  "folio/**/*.lean",
   "scripts/**/*.ts",
   "scripts/**/*.sh",
   "scripts/**/*.py",

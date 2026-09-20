@@ -92,12 +92,12 @@ describe("what gets written", () => {
       HARNESS_CONFIG,
       ".mcp.json",
       ".beans.yml",
-      "content/schema/builders.ts",
-      "content/schema/types.ts",
-      "content/cold-chain-guidance/cold-chain-guidance.ts",
-      "content/cold-chain-guidance/introduction/introduction.ts",
-      "content/cold-chain-guidance/introduction/overview.ts",
-      "content/cold-chain-guidance/introduction/overview.md",
+      "folio/schema/builders.ts",
+      "folio/schema/types.ts",
+      "folio/cold-chain-guidance/cold-chain-guidance.ts",
+      "folio/cold-chain-guidance/introduction/introduction.ts",
+      "folio/cold-chain-guidance/introduction/overview.ts",
+      "folio/cold-chain-guidance/introduction/overview.md",
       "uploads/README.md",
       "library/README.md",
       "AGENTS.md",
@@ -126,10 +126,10 @@ describe("what gets written", () => {
   test("the builder shim is the only place the platform path is written", () => {
     const d = tmp();
     initFolio(opts(d, { assistantPath: "vendor/fa" }));
-    expect(readFileSync(join(d, "content/schema/builders.ts"), "utf-8")).toContain("../../vendor/fa/schemas/builders");
+    expect(readFileSync(join(d, "folio/schema/builders.ts"), "utf-8")).toContain("../../vendor/fa/schemas/builders");
     // Manifests reach the platform only through the shim, so re-linking the
     // platform is a two-file edit rather than a sweep over the corpus.
-    const manifest = readFileSync(join(d, "content/cold-chain-guidance/cold-chain-guidance.ts"), "utf-8");
+    const manifest = readFileSync(join(d, "folio/cold-chain-guidance/cold-chain-guidance.ts"), "utf-8");
     expect(manifest).toContain("../schema/builders");
     expect(manifest).not.toContain("vendor/fa");
   });
@@ -190,7 +190,7 @@ describe("re-running is safe", () => {
     const r = initFolio(opts(d, { dryRun: true }));
     expect(r.created.length).toBeGreaterThan(10);
     expect(existsSync(join(d, HARNESS_CONFIG))).toBe(false);
-    expect(existsSync(join(d, "content"))).toBe(false);
+    expect(existsSync(join(d, "folio"))).toBe(false);
   });
 
   test("a missing platform is reported, not left to fail at import time", () => {
@@ -210,7 +210,7 @@ describe("the scaffolded folio actually builds", () => {
 
     const { buildDocumentMarkdown } = await import("../../content/pipeline/render-markdown");
     const result = await buildDocumentMarkdown(
-      join(d, "content/cold-chain-guidance/cold-chain-guidance.ts"),
+      join(d, "folio/cold-chain-guidance/cold-chain-guidance.ts"),
     );
 
     expect(result.issues).toEqual([]);

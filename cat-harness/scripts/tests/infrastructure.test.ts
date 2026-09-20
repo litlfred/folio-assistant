@@ -246,8 +246,8 @@ describe.skipIf(!folio)(".gitignore", () => {
     expect(gitignore).toContain("deploy/.env");
   });
 
-  test("blocks content/quantum-observable-universe/lean/.lake/", () => {
-    expect(gitignore).toContain("content/quantum-observable-universe/lean/.lake/");
+  test("blocks folio/quantum-observable-universe/lean/.lake/", () => {
+    expect(gitignore).toContain("folio/quantum-observable-universe/lean/.lake/");
   });
 });
 

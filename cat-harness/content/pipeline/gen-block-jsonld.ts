@@ -207,7 +207,7 @@ async function run(): Promise<number> {
 
   if (papers.length === 0) {
     console.log(
-      "gen-block-jsonld: no papers under content/ — nothing to generate.\n" +
+      "gen-block-jsonld: no papers under folio/ — nothing to generate.\n" +
         "  (folio-assistant is the platform; papers live in the folio repo.)",
     );
     return 0;
@@ -221,7 +221,8 @@ async function run(): Promise<number> {
   let anyLoadFailure = false;
 
   for (const paper of papers) {
-    const paperDir = join(root, "content", paper);
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const paperDir = join(root, "folio", paper);
     if (!existsSync(paperDir)) {
       console.error(`gen-block-jsonld: no such paper directory: ${paperDir}`);
       return 2;

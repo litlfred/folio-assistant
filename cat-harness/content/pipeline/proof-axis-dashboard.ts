@@ -97,12 +97,14 @@ function main() {
   // criterion scored 0/0. Accept a path when one is given, like `qa-sweep.ts`
   // already does.
   const asPath = resolve(process.cwd(), args.root);
-  const rootPath = existsSync(asPath) ? asPath : resolve(REPO_ROOT, "content", args.root);
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const rootPath = existsSync(asPath) ? asPath : resolve(REPO_ROOT, "folio", args.root);
   if (!existsSync(rootPath)) {
     console.error(
       `proof-axis-dashboard: no such content root: ${args.root}\n` +
         `  tried (as path):  ${asPath}\n` +
-        `  tried (as paper): ${resolve(REPO_ROOT, "content", args.root)}\n` +
+        // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+        `  tried (as paper): ${resolve(REPO_ROOT, "folio", args.root)}\n` +
         `Pass the path to the folio's content root, e.g.\n` +
         `  bun run <platform>/content/pipeline/proof-axis-dashboard.ts content/<paper>`,
     );
@@ -123,10 +125,12 @@ function main() {
 
   for (const block of walkBlocks(rootPath)) {
     totalBlocks++;
-    const qaPath = block.qa ? resolve(REPO_ROOT, "content", block.qa) : undefined;
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const qaPath = block.qa ? resolve(REPO_ROOT, "folio", block.qa) : undefined;
     const report = qaPath ? loadQaReport(qaPath) : undefined;
 
-    const hasLean = block.lean && existsSync(resolve(REPO_ROOT, "content", block.lean));
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    const hasLean = block.lean && existsSync(resolve(REPO_ROOT, "folio", block.lean));
     if (hasLean) blocksWithLean++;
 
     for (const cid of proofCriteria) {

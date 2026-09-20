@@ -56,7 +56,7 @@ jobs:
         id: check
         run: |
           set +e
-          bun run scripts/check-upstream-pins.ts --out "$RUNNER_TEMP/upstream-pins.md"
+          bun run check:upstream-pins --out "$RUNNER_TEMP/upstream-pins.md"
           status=$?
           set -e
           echo "status=$status" >> "$GITHUB_OUTPUT"

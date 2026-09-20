@@ -73,7 +73,8 @@ import { requirePaper } from "../content/pipeline/repo-root";
 // for those globs. `findContentRepoRoot()` walks up from the real cwd;
 // `import.meta.dir` resolves back through a folio's `folio-assistant/` symlink.
 const REPO_ROOT = findContentRepoRoot();
-const CONTENT = join(REPO_ROOT, "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT = join(REPO_ROOT, "folio");
 
 const GENERIC_NAME_RE = /^sec:.*-(part-\d+|extras|misc-\d+)$/;
 const BLOCK_TITLE_LIST_TELL =
@@ -253,7 +254,7 @@ function auditPaper(paper: string): Finding[] {
         kind: "missing-chapter-manifest",
         severity: "major",
         chapter: dir,
-        detail: `Chapter manifest not found at content/${paper}/${dir}/${dir}.ts`,
+        detail: `Chapter manifest not found at folio/${paper}/${dir}/${dir}.ts`,
         link: blobUrl(paper, dir),
       });
       continue;

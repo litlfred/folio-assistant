@@ -42,14 +42,14 @@ function comp(name: string): string {
 }
 
 function tsFile(name: string, body: string): string {
-  const p = join(root, "content", "p", "ch", name);
+  const p = join(root, "folio", "p", "ch", name);
   writeFileSync(p, body);
   return p;
 }
 
 beforeAll(() => {
   root = mkdtempSync(join(tmpdir(), "evidence-"));
-  mkdirSync(join(root, "content", "p", "ch"), { recursive: true });
+  mkdirSync(join(root, "folio", "p", "ch"), { recursive: true });
   mkdirSync(join(root, "computations"), { recursive: true });
 });
 

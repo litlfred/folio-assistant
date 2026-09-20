@@ -332,15 +332,17 @@ if (import.meta.main) {
   const contentRoot = findContentRepoRoot();
   const paperPath = resolve(firstPositional ?? (() => {
     const papers = findPapers(contentRoot);
-    if (papers.length === 1) return join(contentRoot, "content", papers[0], `${papers[0]}.ts`);
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    if (papers.length === 1) return join(contentRoot, "folio", papers[0], `${papers[0]}.ts`);
     if (papers.length === 0) {
-      console.error(`No paper found under ${join(contentRoot, "content")}.`);
+      // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+      console.error(`No paper found under ${join(contentRoot, "folio")}.`);
       console.error("folio-assistant is the PLATFORM; papers live in a folio. Run this from the folio,");
       console.error("or pass a paper manifest explicitly: bun run pipeline/build.ts <paper>/<paper>.ts");
       process.exit(1);
     }
     console.error(`${papers.length} papers found (${papers.join(", ")}) — name one:`);
-    console.error("  bun run pipeline/build.ts content/<paper>/<paper>.ts");
+    console.error("  bun run pipeline/build.ts folio/<paper>/<paper>.ts");
     process.exit(1);
   })());
   const outDirIdx = args.indexOf("--out-dir");

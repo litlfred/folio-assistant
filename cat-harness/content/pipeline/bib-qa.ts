@@ -30,7 +30,8 @@ import type { Data as CSLData, Person as CSLPerson } from "csl-json";
 // folio-assistant and made every content path below miss).
 const REPO_ROOT = findContentRepoRoot();
 // Content repo's content/, not folio-assistant's — see qa-checkers-extended.
-const CONTENT_DIR = join(findContentRepoRoot(), "content");
+// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+const CONTENT_DIR = join(findContentRepoRoot(), "folio");
 const IMAGES_DIR = join(CONTENT_DIR, "bib-qa-images");
 
 const args = process.argv.slice(2);
@@ -146,7 +147,8 @@ function collectCitations(): Map<string, string[]> {
   // Lean: -- Ref: [key]
   const leanFiles = [
     ...scanFilesRecursive(join(REPO_ROOT, "lean"), ".lean"),
-    ...scanFilesRecursive(join(REPO_ROOT, "content"), ".lean"),
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    ...scanFilesRecursive(join(REPO_ROOT, "folio"), ".lean"),
   ];
   const REF_PAT = /(?:--\s*)?Ref:\s*\[([^\]]+)\]/g;
   for (const file of leanFiles) {
@@ -163,7 +165,8 @@ function collectCitations(): Map<string, string[]> {
   // LaTeX/Markdown: \cite{key1, key2}
   const texFiles = [
     ...scanFilesRecursive(join(REPO_ROOT, "chapters"), ".tex"),
-    ...scanFilesRecursive(join(REPO_ROOT, "content"), ".md"),
+    // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+    ...scanFilesRecursive(join(REPO_ROOT, "folio"), ".md"),
     ...[join(REPO_ROOT, "main.tex"), join(REPO_ROOT, "blueprint/src/content.tex")].filter(existsSync),
   ];
   const CITE_PAT = /\\cite(?:\[[^\]]*\])?\{([^}]+)\}/g;
@@ -224,7 +227,8 @@ function collectCitations(): Map<string, string[]> {
   // reference style. Added 2026-05-19 after the bib audit found
   // 6 papers wrongly flagged as `uncited` because the inventory
   // missed this source.
-  const tsFiles = scanFilesRecursive(join(REPO_ROOT, "content"), ".ts");
+  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
+  const tsFiles = scanFilesRecursive(join(REPO_ROOT, "folio"), ".ts");
   // Match: cites: [ "key1", "key2", ... ]  (handles single + multi-line)
   const TS_CITES_PAT = /\bcites\s*:\s*\[([^\]]*?)\]/gs;
   const TS_CITES_KEY = /["'`]([a-z][a-z0-9_-]*\d{4}[a-z]*)["'`]/gi;
