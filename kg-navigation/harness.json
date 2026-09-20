@@ -4,6 +4,13 @@
   "description": "How an agent finds the knowledge graph, and the skill that governs its task, before it knows the layout.",
   "assets": [
     {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — kg-navigation",
+      "description": "Cold start for the agent who does not yet know the layout. Carries the instruction the README states as a description: ask for the skill rather than opening a path, and do NOT delete either kg-navigation body as a duplicate — they answer one question under different preconditions, so merging them leaves one caller unable to run what it was given."
+    },
+    {
       "id": "readme",
       "src": "README.md",
       "role": "instance-readme",

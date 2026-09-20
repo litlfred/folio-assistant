@@ -1,0 +1,299 @@
+#!/usr/bin/env bun
+/**
+ * check-published-refs.ts — a SHA may stage; only a version may publish.
+ *
+ * The owner, 2026-09-20, settling how instance dependencies are pinned:
+ *
+ * > sha is for staging, regernecing in published SEMVER
+ *
+ * and, immediately before it, the constraint that makes it binding:
+ *
+ * > downstream we need to align to fhir, sushi. hard constraint.
+ *
+ * **A SHA is an excellent pin and a useless published reference.** It names a
+ * commit in a repository the downstream consumer may not have and may not be
+ * able to fetch — and in FHIR's vocabulary cannot state at all: `dependsOn`
+ * carries `packageId` and `version`, and there is no field a SHA belongs in. A
+ * published artefact carrying one is not a stricter pin, it is an unresolvable
+ * one.
+ *
+ * Scheme: `fsh-guts/proposals/instance-versioning.md`. This is its §3.3 gate,
+ * built first on purpose — it is the one that can be written against today's
+ * data, before `id`, `version` or `publishable` exist anywhere.
+ *
+ * ## A REFERENCE is not PROVENANCE, and the difference is the whole gate
+ *
+ * Both look identical — a hex string in a published document. They are
+ * opposite things:
+ *
+ * | | what it is | example | in scope? |
+ * |---|---|---|---|
+ * | **reference** | a consumer must RESOLVE it to obtain another artefact | a dependency's `ref`, an asset's `source` | **yes** |
+ * | **provenance** | a record of where THIS artefact came from | `staging.sha`, `sourceCommitSha` | no |
+ *
+ * A build stamp saying "produced from commit `abc123`" is not asking anybody
+ * to fetch `abc123`; it is stating a fact about the document in hand. Failing
+ * it would be a bug, and it is the failure a shape-based check
+ * (`/[0-9a-f]{40}/` over the published JSON) walks straight into — the
+ * exported graph carries exactly one 40-hex string today and it is the stamp.
+ *
+ * So **classification is by KEY, declared in {@link PROVENANCE_KEYS}, never by
+ * the look of the value.** A new provenance key is a deliberate addition to
+ * that list with a reason, which is the property a regex cannot have.
+ *
+ * ## Previews are STAGING
+ *
+ * Settled by the owner in the same exchange. This repository builds an
+ * externally reachable preview per open PR, which would otherwise sit
+ * ambiguously between the tiers — it is reachable like a publication and
+ * provisional like a checkout. It is staging, so a SHA in one is correct and
+ * this gate does not look at `/STAGING/`.
+ *
+ * ## Zero references is REPORTED, never rendered as a pass
+ *
+ * The reference carriers are enumerated and each prints its count even when
+ * that count is nought. A gate that silently covers nothing and exits 0 is
+ * this repository's most expensive recurring defect (`xom7`, `dh4f`,
+ * `a6kl` — an L1 gate that was a no-op in CI). Today two of the three
+ * carriers are genuinely empty, and the report says so in the same breath as
+ * it says the third is clean.
+ *
+ * @module scripts/check-published-refs
+ */
+
+import { existsSync, readFileSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
+
+import { instanceRootFor, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+
+/**
+ * Keys whose value records where THIS artefact came from.
+ *
+ * Listed rather than pattern-matched: see the module header. Every entry is a
+ * key the exporter actually emits — `scripts/staging-stamp.ts` for the first
+ * group, `kg-export.ts`'s identity block for the second.
+ */
+export const PROVENANCE_KEYS: readonly string[] = [
+  "staging",
+  "stagingSha",
+  "sha",
+  "sourceCommit",
+  "sourceCommitSha",
+  "sourceCommitAt",
+  "sourceCommitUnavailable",
+  "sourceTreeDirty",
+  "identitySource",
+];
+
+export type RefKind = "semver" | "sha" | "moving" | "prerelease" | "unpinned";
+
+/**
+ * What kind of reference this is.
+ *
+ * `moving` rather than "branch": a tag is re-pointable too, and the property
+ * that matters is whether the same string can resolve to different content
+ * later — not what git calls it.
+ */
+export function classifyRef(ref: string | undefined): RefKind {
+  if (ref === undefined || ref.trim() === "") return "unpinned";
+  const r = ref.trim();
+  // A leading `v` is the tag spelling of the same version; `upstream-pins.json`
+  // already matches `^v\d+\.\d+\.\d+$`, so accepting it here keeps one answer.
+  if (/^v?\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(r)) return "semver";
+  if (/^[0-9a-f]{7,40}$/i.test(r)) return "sha";
+  // FHIR's pseudo-versions. Named rather than folded into `moving` because
+  // they are a DELIBERATE pre-release choice, and the remedy differs: a branch
+  // name is usually an accident, `current` usually is not.
+  if (r === "current" || r === "dev") return "prerelease";
+  return "moving";
+}
+
+export interface RefFinding {
+  carrier: string;
+  where: string;
+  ref: string | undefined;
+  kind: RefKind;
+  severity: "major" | "minor";
+  detail: string;
+}
+
+export interface CarrierReport {
+  carrier: string;
+  examined: number;
+  findings: RefFinding[];
+  /** Why nothing was examined, when nothing was — never left to be inferred. */
+  note?: string;
+}
+
+const REMEDY: Record<Exclude<RefKind, "semver">, string> = {
+  sha: "a SHA is for staging; a published reference resolves only for a consumer holding this repository, and FHIR `dependsOn` has no field for it",
+  moving: "resolves to different content later, so two consumers reading the same published document can get different artefacts",
+  prerelease: "a pre-release pseudo-version is staging-tier; publishing one asks a downstream to depend on whatever CI last built",
+  unpinned: "no ref at all — `current` by omission, which is the same defect arrived at by default rather than chosen",
+};
+
+function finding(
+  carrier: string,
+  where: string,
+  ref: string | undefined,
+  severity: "major" | "minor",
+): RefFinding | undefined {
+  const kind = classifyRef(ref);
+  if (kind === "semver") return undefined;
+  return { carrier, where, ref, kind, severity, detail: REMEDY[kind] };
+}
+
+/**
+ * Carrier 1 — instance dependencies in `harness.config.json`.
+ *
+ * `major`: this is the reference a consumer resolves to obtain another whole
+ * instance. It is the one the FHIR alignment is actually about.
+ */
+export function dependencyRefs(repoRoot: string): CarrierReport {
+  const findings: RefFinding[] = [];
+  let examined = 0;
+  const seen: string[] = [];
+
+  for (const root of instanceRootsIn(repoRoot)) {
+    const cfg = join(root, "harness.config.json");
+    if (!existsSync(cfg)) continue;
+    seen.push(relative(repoRoot, cfg) || "harness.config.json");
+    let parsed: { dependencies?: { folioAssistant?: Array<{ name?: string; ref?: string; version?: string }> } };
+    try {
+      parsed = JSON.parse(readFileSync(cfg, "utf-8"));
+    } catch {
+      findings.push({
+        carrier: "dependencies",
+        where: cfg,
+        ref: undefined,
+        kind: "unpinned",
+        severity: "major",
+        detail: "harness.config.json is unreadable — not a clean run, and not an empty dependency set",
+      });
+      continue;
+    }
+    for (const dep of parsed.dependencies?.folioAssistant ?? []) {
+      examined += 1;
+      // `version` is the scheme's field and does not exist yet; when it does it
+      // wins, because `ref` is demoted to "how to fetch while staging".
+      const f = finding("dependencies", `${relative(repoRoot, root) || "."} → ${dep.name ?? "(unnamed)"}`, dep.version ?? dep.ref, "major");
+      if (f) findings.push(f);
+    }
+  }
+
+  return {
+    carrier: "dependencies",
+    examined,
+    findings,
+    note:
+      examined === 0
+        ? seen.length === 0
+          ? "no instance carries a harness.config.json — there are no declared instance dependencies in this repository to check"
+          : `${seen.length} harness.config.json file(s) found, none declaring dependencies.folioAssistant`
+        : undefined,
+  };
+}
+
+/**
+ * Carrier 2 — the `source` on a declared asset.
+ *
+ * A reference rather than provenance, and the line is fine enough to be worth
+ * stating: `source` exists so "is this still what it was copied from" can be
+ * ASKED, which means resolving it and comparing. A build stamp asks nothing.
+ *
+ * `minor` rather than `major`: resolving it obtains one file for a comparison,
+ * not an instance a build depends on. It is the carrier that has entries
+ * today, so it is what keeps this gate from being a check over nothing.
+ */
+export function assetSourceRefs(repoRoot: string): CarrierReport {
+  const findings: RefFinding[] = [];
+  let examined = 0;
+
+  for (const root of instanceRootsIn(repoRoot)) {
+    let decl;
+    try {
+      decl = readDeclaration(root);
+    } catch {
+      continue;
+    }
+    for (const asset of decl?.assets ?? []) {
+      if (asset.source === undefined) continue; // authored here — a third state, not a gap
+      examined += 1;
+      const f = finding(
+        "asset-source",
+        `${relative(repoRoot, root) || "."} → ${asset.id} (${asset.source.instance}/${asset.source.path})`,
+        asset.source.ref,
+        "minor",
+      );
+      if (f) findings.push(f);
+    }
+  }
+
+  return {
+    carrier: "asset-source",
+    examined,
+    findings,
+    note: examined === 0 ? "no declared asset names a `source` — every one is authored in place" : undefined,
+  };
+}
+
+/**
+ * Carrier 3 — `dependsOn` records in the exported graph.
+ *
+ * Not emitted yet; §3.4 of the proposal is what adds them. Declared here with
+ * its count at nought so the report states the gap rather than leaving a
+ * reader to assume the published graph was checked and found clean.
+ */
+export function publishedGraphRefs(_repoRoot: string): CarrierReport {
+  return {
+    carrier: "published-graph",
+    examined: 0,
+    findings: [],
+    note:
+      "the exported graph carries no `dependsOn` records yet — §3.4 of `fsh-guts/proposals/instance-versioning.md` adds them. " +
+      "Its one 40-hex string is the build stamp, which is PROVENANCE and deliberately out of scope",
+  };
+}
+
+export function auditPublishedRefs(repoRoot: string): CarrierReport[] {
+  return [dependencyRefs(repoRoot), assetSourceRefs(repoRoot), publishedGraphRefs(repoRoot)];
+}
+
+export function formatReport(reports: readonly CarrierReport[]): string {
+  const out: string[] = ["Published references — a SHA may stage; only a version may publish", ""];
+  for (const r of reports) {
+    out.push(`  · ${r.carrier.padEnd(16)} ${String(r.examined).padStart(3)} reference(s) examined, ${r.findings.length} finding(s)`);
+    if (r.note !== undefined) out.push(`      – ${r.note}`);
+    for (const f of r.findings) {
+      out.push(`      ✗ ${f.where}`);
+      out.push(`        ${f.kind}${f.ref === undefined ? "" : ` \`${f.ref}\``} — ${f.detail}`);
+    }
+  }
+
+  const examined = reports.reduce((n, r) => n + r.examined, 0);
+  const findings = reports.flatMap((r) => r.findings);
+  const major = findings.filter((f) => f.severity === "major").length;
+  out.push("");
+  out.push(`${examined} reference(s) examined across ${reports.length} carrier(s) — ${findings.length} finding(s), ${major} major.`);
+  if (examined === 0) {
+    // The loudest line in the report, because it is the state most easily
+    // mistaken for success.
+    out.push("NOTHING WAS EXAMINED. That is not a pass — see each carrier's note above for why it was empty.");
+  }
+  out.push("Previews are STAGING (owner, 2026-09-20), so `/STAGING/` is out of scope by design, not by omission.");
+  return out.join("\n");
+}
+
+if (import.meta.main) {
+  const repoRoot = repoRootFor(instanceRootFor(import.meta.dir));
+  const reports = auditPublishedRefs(resolve(repoRoot));
+  console.log(process.argv.includes("--json") ? JSON.stringify(reports, null, 2) : formatReport(reports));
+
+  // ADVISORY by default, `--strict` to fail, matching `check:subgraph-coverage`
+  // — and for the same reason: the scheme this enforces is a proposal, so the
+  // findings are a worklist before they are a contract. `--strict` is what CI
+  // pins once the worklist is empty.
+  const findings = reports.flatMap((r) => r.findings);
+  if (process.argv.includes("--strict") && findings.length > 0) process.exit(1);
+  process.exit(0);
+}

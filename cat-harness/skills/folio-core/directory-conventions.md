@@ -668,3 +668,62 @@ Note the declaration's `graphs` field is validated **against the registry at
 read time**, not by a closed Zod enum. An enum would be built at module load —
 before core has registered `folio` — so it would reject the one kind the entire
 rendering pipeline depends on.
+
+## Pinning a reference — a SHA may stage, only a version may publish
+
+Owner, 2026-09-20, on how an instance's dependencies are pinned:
+
+> downstream we need to align to fhir, sushi. **hard constraint.**
+>
+> sha is for staging, regernecing in published SEMVER
+>
+> preview is staging, not published
+
+**Two tiers, and the tier is decided by whether a consumer may DEPEND on the
+artefact — not by whether they can reach it.** That is why an externally
+reachable PR preview is staging: it is provisional, and nothing should pin to
+it.
+
+| tier | a reference may be |
+|---|---|
+| **staging** — working checkout, PR preview, branch under review | a submodule SHA, a git `ref`, a pre-release, or a version |
+| **published** — anything an external consumer may depend on | **semver only** |
+
+**A SHA is an excellent pin and a useless published reference.** It names a
+commit in a repository the downstream consumer may not have and may not be
+able to fetch — and in FHIR's vocabulary cannot be stated at all:
+`dependsOn` carries `packageId` and `version`, and there is no field a SHA
+belongs in. A published artefact carrying one is not a stricter pin, it is an
+unresolvable one.
+
+**Exact versions, never ranges.** This is the FHIR rule, not the npm one, and
+it follows directly from the alignment constraint: a downstream that must
+resolve like SUSHI cannot be handed a range.
+
+**No ref at all is the same defect, reached by default.** An unpinned
+reference is `current` by omission — the pre-release choice made by nobody.
+`current` and `dev` are FHIR's real pseudo-versions and belong in the staging
+tier with a SHA, deliberately chosen and written down.
+
+### A REFERENCE is not PROVENANCE
+
+The distinction is what makes this checkable, and both look identical in a
+published document — a hex string.
+
+| | what it is | example |
+|---|---|---|
+| **reference** | a consumer must RESOLVE it to obtain another artefact | a dependency's `ref`/`version`, an asset's `source` |
+| **provenance** | a record of where THIS artefact came from | the build stamp's `sha`, `sourceCommitSha` |
+
+A stamp saying "produced from commit `abc123`" asks nobody to fetch
+`abc123`. **So classification is by KEY, declared in `PROVENANCE_KEYS`, never
+by the look of the value** — a regex over the published JSON fails on the
+build stamp, which is the exported graph's only 40-hex string.
+
+`bun run check:published-refs` enforces this; advisory, `--strict` to fail. It
+reports each carrier's count **even when that count is nought**, because a
+gate that silently covers nothing and exits 0 is this repository's most
+expensive recurring defect (`xom7`, `dh4f`, `a6kl`).
+
+Full scheme, including what an instance's version means and what makes it go
+up: [`fsh-guts/proposals/instance-versioning.md`](../../../fsh-guts/proposals/instance-versioning.md).

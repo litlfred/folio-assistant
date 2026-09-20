@@ -787,8 +787,11 @@ export const RULES: Rule[] = [
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
+      "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
+      "scripts/dependency-order.ts",        // flatten a hierarchy into one order — the harness's, not a folio's
+      "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-cat-bootstrap-graph.ts", // writes cat-bootstrap/cat-bootstrap.jsonld
@@ -981,7 +984,7 @@ export const RULES: Rule[] = [
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: [
-      "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/translation.ts",
+      "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
       // The voice-graph validator. It resolves each rule's citation into
       // `library/` — a FOLIO's reference library — and `schemas/voices.ts`,
