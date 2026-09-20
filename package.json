@@ -109,6 +109,8 @@
     "deps:python": "bun run cat-harness/scripts/gen-python-deps.ts",
     "deps:python:check": "bun run cat-harness/scripts/gen-python-deps.ts --check",
     "docs:harness": "bun run cat-harness/scripts/sync-docs-harness.ts",
+    "docs:auto": "bun run cat-harness/scripts/gen-docs-auto.ts",
+    "docs:auto:check": "bun run cat-harness/scripts/gen-docs-auto.ts --check",
     "docs:harness:check": "bun run cat-harness/scripts/sync-docs-harness.ts --check",
     "eval:crdm-detect": "bun run cat-harness/scripts/eval-crdm-detect.ts",
     "external-schemas": "bun run cat-harness/scripts/external-schemas.ts",

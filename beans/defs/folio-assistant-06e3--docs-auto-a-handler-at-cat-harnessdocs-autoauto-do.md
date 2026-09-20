@@ -1,11 +1,11 @@
 ---
 # folio-assistant-06e3
 title: 'docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-20T21:12:03Z
+updated_at: 2026-09-20T22:58:07Z
 parent: folio-assistant-0lmb
 ---
 
@@ -209,3 +209,85 @@ What is NOT covered by it, and is still this bean's:
 - the **non-empty filter** (§4c) — a dashboard per declared graph does not by
   itself skip a graph that is declared and empty, which is the `dh4f` defect
   as a nav entry.
+
+## Summary of Changes — first increment, 2026-09-20
+
+**The handler exists and is exercised.** `cat-harness/scripts/gen-docs-auto.ts`
+publishes at `<base>/<handler>/docs-auto/<auto-doc-type>/<sub-graph>/`, with
+two real types: `index/skills` (220 items across 9 sub-graphs) and
+`index/processes` (55 across 2). Registered in `package.json`
+(`docs:auto`, `docs:auto:check`), in the render pipeline
+(`needs: ["skill-docs", "bpmn"]`, non-fatal), and gated in CI.
+
+### §6's guess was wrong, and here is the correction
+
+The note added after merging main said docs-auto was *"probably a `kind`
+handled by the generator that now exists, not a second one."* Reading the code
+says otherwise, and the reason is structural rather than a matter of taste:
+**every existing generator is one-axis** — one graph kind to one viewer at a
+fixed route, plus subject pages. docs-auto is **two-axis**, type × sub-graph,
+and there is nowhere in a one-axis generator to put the second axis.
+
+What the guess got right is that no new ROUTING was needed.
+`viewerPlacement(site, "<handler>/docs-auto/<type>", …)` is the owner's
+`<base>/<handler>/<kind>/<subject>` rule with the type as a segment, and
+`ankg`'s `orphanSubjectPages()` prunes it unchanged — no fourth pruner.
+
+### The segment is the declared `id`, not `<path>`
+
+The owner wrote `<path>`. This publishes under the declared entry's **id**,
+for `state-visualizer`'s own reasons: `id` is what `harness.json` declares and
+what an override matches on, so an id-derived URL survives the directory
+moving. It also stays ONE segment, which is what lets the ankg pruner's
+ownership test stay exact. Every page states its declared path, so the mapping
+is on the artefact rather than only in the URL. **Flagged for the owner rather
+than buried** — it is a deviation from the literal ask.
+
+### Two defects the build found in itself
+
+1. **1,522 skills against `knownSkills()`'s 219.** The first draft walked every
+   declared directory, and `docs/` is declared — it holds a generated markdown
+   rendering of every skill, so each was counted again. *A rendering of an
+   artefact is not the artefact.* A type now names the graph kind its
+   artefacts live in.
+2. **227 against 219.** The second draft walked skill directories recursively,
+   so `skills/<package>/<skill>/<page>.md` — a supporting page *inside* a
+   skill — counted as a skill. `skillMdDirs()` already encodes that
+   distinction, so the generator calls it. Two answers to "what is a skill" is
+   one too many.
+
+### §2 and §3 demonstrated rather than asserted
+
+`every-workflow-in-the-repo.md` opened with a hand-maintained count that its
+own text admitted had been wrong five times. **It was wrong again by sixteen** —
+"thirty-nine" against fifty-five. The count is gone; the page now points at the
+derived index and keeps the half that cannot be generated. That is
+*"reuse assets in explain"* on the page that most needed it, and the historical
+lesson is kept rather than deleted.
+
+Bootstrap's three diagrams are correctly OUTSIDE the index —
+`cat-bootstrap/workflows/` is declared by `cat-bootstrap/harness.json` and not
+by the root, deliberately (bean `pve3`). Stated on the page so the absence
+reads as a fact rather than a gap.
+
+### Verified
+
+76 gates (with a stubbed `python3` lacking pymupdf, which is what CI has);
+`bun test` 4612 pass / 0 fail; 20 tests on the generator including both
+historical counts as ratchets, the most-specific attribution rule, the
+shared-prefix trap, and that `who-iris-skills` — the sparse case the owner
+asked for — IS rendered while `who-iris` gets no *processes* page, because it
+has none.
+
+## Still open on this bean
+
+- **§2's authored summary as a general obligation** — the rule is in the
+  `docs-auto` skill and demonstrated once. It is not enforced.
+- **§4(b) the "meaningfully populated" QA check** — not built. It is about
+  content, not routing, and needs its own thinking.
+- **§4(a) the per-harness docs landing page**, **§4(c) the navbar over
+  harnesses with populated `docs/`**, and **§5 the KG viewer** — not built;
+  see §6 on how much `state-visualizer` already answers.
+- **Types declared and not built**: `glossary` (gated by `lqo9`'s roast),
+  `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles`. Absent
+  rather than stubbed, on purpose.

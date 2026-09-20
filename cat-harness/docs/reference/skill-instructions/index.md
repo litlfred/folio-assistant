@@ -86,6 +86,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
 | [Directory conventions](directory-conventions.html) | `directory-conventions` | — | Every instance carries an **`harness.json`** at its repository root. It declares the directories the |
 | [/dispatch-agent](dispatch-agent.html) | `dispatch-agent` | — | The expensive failure mode of multi-agent dispatch is **going dark**: you |
+| [docs-auto](docs-auto.html) | `docs-auto` | — | `<base>/<handler>/docs-auto/<auto-doc-type>/<sub-graph>/` is an index of what |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [Editor](editor.html) | `editor` | — |  |
 | [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |

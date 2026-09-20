@@ -651,6 +651,13 @@ jobs:
           # the `xom7` shape one level along.
           bun run external-schemas:check
           bun run docs:harness:check
+          # The derived sub-graph indexes (bean `06e3`). Gated for the same
+          # reason every other generated artefact here is: an index that has
+          # drifted from the graph it claims to index is worse than none,
+          # because it reads as current. It also reports an ORPHAN -- a
+          # sub-graph page whose sub-graph now contributes nothing -- which is
+          # `ankg`'s helper doing its job in a third generator.
+          bun run docs:auto:check
           bun run gen:jsonld:check
           bun run readme:sync:check
           bun run avatars:css:check

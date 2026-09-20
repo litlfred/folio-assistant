@@ -33,6 +33,20 @@
       "file": "beans/defs/folio-assistant-04vl--the-narrative-review-queue-could-not-see-24-of-the.md"
     },
     {
+      "id": "folio-assistant-06e3",
+      "title": "docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T20:54:07Z",
+      "updatedAt": "2026-09-20T22:58:07Z",
+      "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD), in three messages.\n\n## 1. The handler\n\n> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`\n> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.\n> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could\n> clarify it lives at `cat-harness/docs-auto",
+      "file": "beans/defs/folio-assistant-06e3--docs-auto-a-handler-at-cat-harnessdocs-autoauto-do.md"
+    },
+    {
       "id": "folio-assistant-06kg",
       "title": "RETRY: retry-backoff.md is an owner rule with a TS implementation and FOUR shell loops nothing checks",
       "status": "in-progress",
@@ -1029,6 +1043,20 @@
       "file": "beans/defs/folio-assistant-7deg--librarian-an-avatar-for-knowledge-content-and-dubl.md"
     },
     {
+      "id": "folio-assistant-7iog",
+      "title": "COMMAND PATHS ARE CHECKED AGAINST THE REPO, NOT THE RUN: three of four backoff calls in feature-staging resolved at check time and not at run time",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:55:16Z",
+      "updatedAt": "2026-09-20T21:55:16Z",
+      "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) while implementing #605's\n`merge=union` half, in the very loops that fix was going into.\n\n## The defect, measured\n\n`feature-staging.yml` has four retry loops. Each calls `backoff-sleep.ts` —\nthe ONE shared implementation bean `06kg` established. **Three of the four\nname a path that does not exist at run time:**\n\n| loop | job | `working-directory`",
+      "file": "beans/defs/folio-assistant-7iog--command-paths-are-checked-against-the-repo-not-the.md"
+    },
+    {
       "id": "folio-assistant-7o7i",
       "title": "RACI: declare involvement (A, C, I) over the roles and activities that already exist",
       "status": "completed",
@@ -1295,6 +1323,20 @@
       "file": "beans/defs/folio-assistant-95ir--library-scanners-filter-out-a-declared-but-absent.md"
     },
     {
+      "id": "folio-assistant-9c34",
+      "title": "STAGING: incremental render — seed from main's render as cache, re-render only changed assets and their downstream indexes",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:11:39Z",
+      "updatedAt": "2026-09-20T21:12:03Z",
+      "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD):\n\n> new skill for staging rendernig.... dont rerender the whole thing... if main\n> render is not stale, copy that to staging render pipleine as cahche. trigger\n> rerender only on assets that have changed and downstream depndent index.\n\n## The shape\n\nThree steps, and the third is the one that is easy to get wrong.\n\n1. **Seed from main** — if main",
+      "file": "beans/defs/folio-assistant-9c34--staging-incremental-render-seed-from-mains-render.md"
+    },
+    {
       "id": "folio-assistant-9gyz",
       "title": "QA-review schemas: Finding, Decision and AuditNote are three entities, not one",
       "status": "in-progress",
@@ -1463,6 +1505,20 @@
       "file": "beans/defs/folio-assistant-amom--mode-testswarm-a-stack-of-models-over-shared-or-in.md"
     },
     {
+      "id": "folio-assistant-ankg",
+      "title": "Subgraph viewer generators write but never prune — an orphan page answers to no declaration",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:02:36Z",
+      "updatedAt": "2026-09-20T22:49:45Z",
+      "preview": "Found live during #603's merge of main, not hypothesised.\n\n## What happened\n\n#604 renamed `folio-assist-sci/` to `folio-assistant-sci/`. Subject slugs in\nthe schema and library viewers are derived from the entry's PATH, so\nregeneration correctly produced the new page:\n\n    /cat-harness/library/folio-assistant-sci/\n\nIt did NOT remove the page it replaced. `folio-assist-sci/index.html` survived\nas a",
+      "file": "beans/defs/folio-assistant-ankg--subgraph-viewer-generators-write-but-never-prune-a.md"
+    },
+    {
       "id": "folio-assistant-apui",
       "title": "INGEST: one pipeline entry point — uploads/ to library/ through a single documented path",
       "status": "in-progress",
@@ -1528,7 +1584,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-20T21:00:00Z",
+      "updatedAt": "2026-09-20T21:55:00Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n`AGENTS.md` line 3 (the cold-start line every agent runs first), lines 192 and 351, `README.md` lines 4 and 371, and `cat-harness/docs/guides/",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
@@ -3947,6 +4003,20 @@
       "file": "beans/defs/folio-assistant-wggr--split-invert-the-stub-pattern-stubdocs-not-docsstu.md"
     },
     {
+      "id": "folio-assistant-whbf",
+      "title": "Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T21:10:28Z",
+      "updatedAt": "2026-09-20T21:10:28Z",
+      "preview": "Owner, 2026-09-20, splitting the work explicitly:\n\n| dynamic stuff is bean for later.  but static visualiztion overview is needed.\n| panel at top (colassibkle)\n\nThe static half shipped: a collapsible `<details>` panel at the top of the\nschema viewer holding a deterministic SVG of the whole graph. See\n`schema-management` §\"The overview panel\".\n\n## What is NOT there, and is this bean\n\n- Dragging a n",
+      "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
+    },
+    {
       "id": "folio-assistant-wlqd",
       "title": "skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package",
       "status": "in-progress",
@@ -4189,14 +4259,14 @@
     {
       "id": "folio-assistant-xies",
       "title": "PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T09:01:32Z",
-      "updatedAt": "2026-09-20T09:01:32Z",
+      "updatedAt": "2026-09-20T21:23:04Z",
       "preview": "Owner, 2026-09-20, naming the pipeline verbatim:\n\n> 'using ghpages as CDN is a tool choice, other tools possible like cloudflare, doucment that in process/BPMNS/skills, part of publication piepleine, internal publication mamgement: (chief) editor signoff -> merge to main -> huamn eyes review last check -> publish to CDN (requires EXTREME care in URL handling) and make accessible from CDN'\n\nFOUR GA",
       "file": "beans/defs/folio-assistant-xies--publish-to-cdn-editor-signoff-merge-human-eyes-cdn.md"
     },
@@ -4241,6 +4311,20 @@
       "updatedAt": "2026-09-20T20:00:00Z",
       "preview": "Owner, 2026-09-19: *\"all simulators/ need to go into qou\"*.\n\nQueued, not started — raised mid-turn, and the standing instruction is to\nqueue rather than pivot.\n\n## The defect, measured on `main` at `b833d8f92`\n\n`simulators/` in this repository holds **11 HTML files, 456 KB**, and they are\nnot ambiguous about whose they are:\n\n    beta_decay_braid.html        knot_atom_diagrams.html\n    beta_decay_h",
       "file": "beans/defs/folio-assistant-y8as--simulators-is-qou-s-content-sitting-in-the-platfor.md"
+    },
+    {
+      "id": "folio-assistant-y90d",
+      "title": "state-visualizer has ankg's defect too, and cannot take ankg's fix — its dashboards carry no self-identifying marker and it publishes at the SITE ROOT",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:49:13Z",
+      "updatedAt": "2026-09-20T22:49:31Z",
+      "preview": "Found while fixing `ankg`, by checking the third generator rather than\nassuming it was covered.\n\n## It has the same defect\n\n`cat-harness/scripts/state-visualizer.ts` writes one dashboard per declared\nstate graph:\n\n```ts\nfor (const g of graphs) emit(join(SITE, g.id, \"index.html\"), dashboardPage(g, graphs));\n```\n\n`emit()` compares only the files it is about to write — the same structural\nblindness `",
+      "file": "beans/defs/folio-assistant-y90d--state-visualizer-has-ankgs-defect-too-and-cannot-t.md"
     },
     {
       "id": "folio-assistant-yean",
@@ -4315,14 +4399,14 @@
     {
       "id": "folio-assistant-yzsj",
       "title": "gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:02:00Z",
-      "updatedAt": "2026-09-20T20:33:25Z",
+      "updatedAt": "2026-09-20T21:48:19Z",
       "preview": "Found 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus) after merging #589, whose\n`Docs site (GitHub Pages)` run **failed on `main`**. The failure is not #589's\ncontent — it is the publish-ref race, and it is the one `xd1s` closed.\n\n## What actually failed\n\nRun 308, `4af80f84cf`, 19:53:01Z:\n\n```\n[command]/usr/bin/git push origin gh-pages\n ! [rejected]        gh-pages -> gh-pages (fetch first)\nerror: f",
       "file": "beans/defs/folio-assistant-yzsj--gh-pages-race-is-back-xd1s-closed-with-nine-push-s.md"
     },

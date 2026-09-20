@@ -30,18 +30,36 @@ validation gate, the skills, and the shared work plan all named.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/every-workflow-in-the-repo.md){: .fa-node-edit title="Edit content/docs/publication-workflow/every-workflow-in-the-repo.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="every-workflow-in-the-repo.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/every-workflow-in-the-repo.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-Thirty-nine BPMN 2.0 files, and **no longer all in one directory**: thirty-eight
-under [`skills/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/skills/workflows)
-and one under [`cat-bootstrap/workflows/`](https://github.com/litlfred/folio-assistant/tree/main/cat-bootstrap/workflows)
-(`bun -e 'console.log((await import("./scripts/known-skills.ts")).workflowFiles(process.cwd()).filter(f=>f.endsWith(".bpmn")).length)'`
-on 2026-09-20 — this line said "six", then "nineteen", then "thirty", then
-"thirty-two, all under `skills/workflows/`", each for long enough to be wrong.
-**It was wrong again when this was written:** it claimed thirty-three when
-`ls` counted thirty-six, so it had drifted by four with nobody noticing,
-which is why it now carries the command as well as the date. **The command
-changed too, and that is the point:** `ls skills/workflows/*.bpmn` counts one
-directory, so it would have gone on reporting thirty-two while a diagram sat
-outside it — a literal path answering a question the declaration owns).
+**How many BPMN 2.0 files are there? This page no longer says, and that is the
+fix rather than an evasion.**
+
+The sentence that used to open here carried a count, and it was wrong five
+times in a row — "six", then "nineteen", then "thirty", then "thirty-two, all
+under `skills/workflows/`", then "thirty-nine" — each for long enough to be
+wrong, and each time discovered by somebody who happened to run `ls`. The last
+of those was wrong by **sixteen** when it was finally checked: it claimed
+thirty-nine against fifty-five.
+
+A count in prose is a claim; a derived index is evidence. So the number lives
+in [the derived process index](../cat-harness/docs-auto/index/processes/),
+which is generated from the declaration by `bun run docs:auto`, gated in CI,
+and cannot drift from the diagrams it counts. **This page's job is the half
+that cannot be generated** — what each process is *for*, when you would be in
+it, and which neighbouring one you actually want.
+
+That division is the `docs-auto` skill's rule, and this page is the worked
+example of it: the index says what exists and what each diagram declares about
+itself; everything below says what the index structurally cannot.
+
+**Bootstrap's diagrams are deliberately outside that index**, and their absence
+is a fact rather than a gap. `cat-bootstrap/workflows/` is declared by
+`cat-bootstrap/harness.json` and *not* by the root, because declaring it there
+re-carries bootstrap's process into the root's published graph — which `#432`
+removed on purpose and a test still guards. Bean `pve3` holds that choice:
+**both halves of bootstrap, or neither.** So the derived index covers what the
+root declares, and the three bootstrap diagrams are named in the table below
+instead.
+
 Each is a real BPMN 2.0 document with diagram interchange — open it in
 [bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN tool. The SVGs
 throughout the docs are generated from these files by `bun run render:bpmn`;
