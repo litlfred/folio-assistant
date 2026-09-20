@@ -61,6 +61,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#requiresCapability",
       "@type": "@id"
     },
+    "fallbackToCapability": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#fallbackToCapability",
+      "@type": "@id"
+    },
     "satisfies": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfies",
       "@type": "@id"
@@ -251,10 +255,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T10:17:58.170Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2476df1e00705e4a247706505fdd0a1c7953e1d1",
-  "sourceCommitSha": "2476df1e00705e4a247706505fdd0a1c7953e1d1",
-  "sourceCommitAt": "2026-09-20T10:16:23Z",
+  "generatedAt": "2026-09-20T10:26:18.814Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c31fcdd270ae0411430bd771300422de5395f0fc",
+  "sourceCommitSha": "c31fcdd270ae0411430bd771300422de5395f0fc",
+  "sourceCommitAt": "2026-09-20T10:20:32Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 188,
@@ -4014,6 +4018,7 @@
         "method": "command",
         "command": "lean --version"
       },
+      "fallbackToCapability": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#capability/lean-mcp",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/lean-toolchain"
     },
     {
@@ -25180,8 +25185,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "9354c7ec796fcd035287805636c52a5414c2b67e",
+    "sha": "2fa0df0a8063cd6b7ee01f80d2c827e0c68d96c0",
     "pr": "454/merge",
-    "run": "35504601515"
+    "run": "35504999392"
   }
 }
