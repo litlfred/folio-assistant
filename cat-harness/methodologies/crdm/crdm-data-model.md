@@ -11,7 +11,7 @@ allowed-tools: Read Grep Glob Bash
 # CRDM — the data-modelling phase
 
 **This skill says WHEN and WITH WHOM. It does not say how to model.** That is
-[`data-modelling`](data-modelling.md), and it is deliberately free of CRDM so
+[`data-modelling`](../../skills/folio-core/data-modelling.md), and it is deliberately free of CRDM so
 a folio modelling data outside a requirements process can read it without
 inheriting a methodology it is not running.
 

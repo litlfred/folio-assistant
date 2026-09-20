@@ -123,4 +123,128 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
     <bpmn:sequenceFlow id="SF_IH_11" sourceRef="A_Install" targetRef="End_Installed"/>
     <bpmn:sequenceFlow id="SF_IH_12" sourceRef="A_LogFailure" targetRef="End_Failed"/>
   </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_InitializeHarness">
+    <bpmndi:BPMNPlane id="Plane_Process_InitializeHarness" bpmnElement="Collaboration_Process_InitializeHarness">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_InitializeHarness" bpmnElement="Participant_Process_InitializeHarness" isHorizontal="true">
+        <dc:Bounds x="140" y="80" width="2860" height="720"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Initiator" bpmnElement="Lane_Initiator" isHorizontal="true">
+        <dc:Bounds x="170" y="80" width="2830" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Requestor" bpmnElement="Lane_Requestor" isHorizontal="true">
+        <dc:Bounds x="170" y="320" width="2830" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_DataStore" bpmnElement="Lane_DataStore" isHorizontal="true">
+        <dc:Bounds x="170" y="560" width="2830" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_InitializeHarness" bpmnElement="Start_InitializeHarness">
+        <dc:Bounds x="182" y="182" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_ListHarnesses" bpmnElement="A_ListHarnesses">
+        <dc:Bounds x="315" y="160" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_ListLocations" bpmnElement="A_ListLocations">
+        <dc:Bounds x="505" y="160" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_ConfirmHarness" bpmnElement="A_ConfirmHarness">
+        <dc:Bounds x="695" y="400" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_HarnessChosen" bpmnElement="GW_HarnessChosen">
+        <dc:Bounds x="935" y="175" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_ReadLocation" bpmnElement="A_ReadLocation">
+        <dc:Bounds x="1075" y="640" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_AlreadyInitialized" bpmnElement="GW_AlreadyInitialized">
+        <dc:Bounds x="1315" y="175" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_ReadDeclaration" bpmnElement="A_ReadDeclaration">
+        <dc:Bounds x="1455" y="640" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_InstructionsFound" bpmnElement="GW_InstructionsFound">
+        <dc:Bounds x="1695" y="175" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_LogInstallStart" bpmnElement="A_LogInstallStart">
+        <dc:Bounds x="1835" y="160" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_Install" bpmnElement="A_Install">
+        <dc:Bounds x="2025" y="160" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Installed" bpmnElement="End_Installed">
+        <dc:Bounds x="2272" y="182" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_LogFailure" bpmnElement="A_LogFailure">
+        <dc:Bounds x="2405" y="160" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Failed" bpmnElement="End_Failed">
+        <dc:Bounds x="2652" y="182" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_1" bpmnElement="SF_IH_1">
+        <di:waypoint x="218" y="200"/>
+        <di:waypoint x="315" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_2" bpmnElement="SF_IH_2">
+        <di:waypoint x="465" y="200"/>
+        <di:waypoint x="505" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_3" bpmnElement="SF_IH_3">
+        <di:waypoint x="580" y="240"/>
+        <di:waypoint x="770" y="240"/>
+        <di:waypoint x="770" y="400"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_4" bpmnElement="SF_IH_4">
+        <di:waypoint x="770" y="400"/>
+        <di:waypoint x="960" y="400"/>
+        <di:waypoint x="960" y="225"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_5" bpmnElement="SF_IH_5">
+        <di:waypoint x="985" y="200"/>
+        <di:waypoint x="2405" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_6" bpmnElement="SF_IH_6">
+        <di:waypoint x="960" y="225"/>
+        <di:waypoint x="1150" y="225"/>
+        <di:waypoint x="1150" y="640"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_13" bpmnElement="SF_IH_13">
+        <di:waypoint x="1150" y="640"/>
+        <di:waypoint x="1340" y="640"/>
+        <di:waypoint x="1340" y="225"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_14" bpmnElement="SF_IH_14">
+        <di:waypoint x="1365" y="200"/>
+        <di:waypoint x="2405" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_15" bpmnElement="SF_IH_15">
+        <di:waypoint x="1340" y="225"/>
+        <di:waypoint x="1530" y="225"/>
+        <di:waypoint x="1530" y="640"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_7" bpmnElement="SF_IH_7">
+        <di:waypoint x="1530" y="640"/>
+        <di:waypoint x="1720" y="640"/>
+        <di:waypoint x="1720" y="225"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_8" bpmnElement="SF_IH_8">
+        <di:waypoint x="1745" y="200"/>
+        <di:waypoint x="2405" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_9" bpmnElement="SF_IH_9">
+        <di:waypoint x="1745" y="200"/>
+        <di:waypoint x="1835" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_10" bpmnElement="SF_IH_10">
+        <di:waypoint x="1985" y="200"/>
+        <di:waypoint x="2025" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_11" bpmnElement="SF_IH_11">
+        <di:waypoint x="2175" y="200"/>
+        <di:waypoint x="2272" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_IH_12" bpmnElement="SF_IH_12">
+        <di:waypoint x="2555" y="200"/>
+        <di:waypoint x="2652" y="200"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </bpmn:definitions>
