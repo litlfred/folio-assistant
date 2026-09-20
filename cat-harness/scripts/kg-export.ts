@@ -47,7 +47,14 @@ import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
-import { BASE_GRAPH_KINDS, declaredGraphs, declaredKinds, repoRootFor } from "../schemas/cat-harness.js";
+import {
+  BASE_GRAPH_KINDS,
+  declaredAssets,
+  declaredGraphs,
+  declaredKinds,
+  repoRootFor,
+  resolveDirectories,
+} from "../schemas/cat-harness.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
@@ -61,7 +68,13 @@ import {
   renderingPath,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
-import { isSkillMd, kgRoots, skillMdDirs as knownSkillDirs, workflowDirs } from "./known-skills.js";
+import {
+  isSkillMd,
+  kgDirectories,
+  kgRoots,
+  skillMdDirs as knownSkillDirs,
+  workflowDirs,
+} from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
 import { tools } from "../tools/index.js";
@@ -394,6 +407,22 @@ export function buildContext(): Record<string, unknown> {
     // because it is one relation in both places -- unlike `source` above, which
     // was one name over two relations.
     path: termIri("path"),
+    // A declared ASSET's role, and a LITERAL rather than a link.
+    //
+    // `assetRole` and not `role`, which is the one decision in this term. An
+    // asset's role is a free string naming what the FILE is for —
+    // `agent-instructions`, `instance-readme`, `landing-operations` — and it is
+    // a different vocabulary from the actor/swimlane Role, which is a node
+    // with an id, skills and `actedUpon`. Spelling both `role` would make a
+    // consumer that resolves the term get a bare string where it expects a
+    // Role node, and the two would be indistinguishable in the graph.
+    //
+    // A literal because `KgAssetSchema.role` is `z.string().min(1)` with no
+    // enum behind it, so there is no node set for a value to name. Coercing it
+    // to `@id` would resolve each bare name against the document base and mint
+    // an IRI nobody chose — which is the failure the export's own undeclared
+    // -term report warns about by name.
+    assetRole: termIri("assetRole"),
     // `schema:` is declared as a prefix above and this is its first use: a
     // package version is a software version and schema.org already has the
     // predicate. Minting `folio:version` beside it would be a second name for
@@ -1096,19 +1125,112 @@ function stampSubgraph(graph: Node[], doc: string): void {
   }
 }
 
-async function collectProcesses(doc: string, problems: string[], root: string = ROOT): Promise<Node[]> {
+async function collectProcesses(
+  doc: string,
+  problems: string[],
+  root: string = ROOT,
+  /**
+   * Determined empties. SEPARATE from `problems` because they are different
+   * facts with different consequences: a problem means this instance's graph
+   * could not be exported correctly, a note means it was exported correctly
+   * and something it might have had, it has none of.
+   *
+   * Optional so the two existing callers keep compiling; a caller that does
+   * not pass one still gets the finding, in `problems`, which is the old
+   * behaviour and the safe default for a sink nobody is reading.
+   */
+  notes?: string[],
+): Promise<Node[]> {
   const nodes: Node[] = [];
   const lanes = new Set<string>();
   const dirs = findBpmnDirs(root);
-  if (dirs.length === 0) {
-    // Zero diagrams is a determined empty ONLY if we looked. Say which.
-    // REPO-RELATIVE, not absolute: this string is written into a COMMITTED
-    // artefact (`bootstrap/bootstrap.jsonld`), and an absolute path differs
-    // between a developer's machine and CI, so its staleness gate would fail
-    // on a tree nobody touched.
-    problems.push(
+  // Zero diagrams is a determined empty ONLY if we looked. Say which.
+  //
+  // AND AN INSTANCE THAT DECLARES NO `kg` DIRECTORY HAS NOTHING TO LOOK IN.
+  // `workflowDirs` searches the instance's declared `kg` directories, so for
+  // an instance declaring none it returns `[]` for a reason that is not
+  // "nothing was found" but "there was nowhere to look, by the instance's own
+  // declaration". Reporting the first as the second turned a determined empty
+  // into a FAILURE: measured 2026-09-20, the repository root — which declares
+  // `uploads/` and nothing else — failed `check:instance-render` on this
+  // message alone, with 1 node of its own rendered and published and no other
+  // complaint. A gate that fails an instance for not having a kind of graph it
+  // never claimed is asking it to declare something to stay green, which is
+  // how a declaration stops meaning anything.
+  //
+  // REPO-RELATIVE, not absolute: this string is written into a COMMITTED
+  // artefact (`bootstrap/bootstrap.jsonld`), and an absolute path differs
+  // between a developer's machine and CI, so its staleness gate would fail
+  // on a tree nobody touched.
+  //
+  // A DECLARED DIRECTORY HOLDING NO DIAGRAMS IS A NOTE, NOT A PROBLEM, and
+  // until 2026-09-20 it was a problem. It has to be SAID either way —
+  // `instance-graph-isolation.test.ts` puts it exactly right, "it says it
+  // found none, rather than passing over in silence" — but saying it and
+  // FAILING the instance for it are different things, and only the first was
+  // ever wanted. Three instances arrived at once (`kg-navigation`,
+  // `large-datasets`, `who-iris`), each holding one skill and no workflow,
+  // each rendering its nodes, each failed on this message alone. A skills
+  // package with no process is an ordinary thing; requiring a diagram to stay
+  // green is asking an instance to carry something it never claimed.
+  //
+  // AND THE SAME DISTINCTION ONE LEVEL DOWN, which is what this asked for
+  // until 2026-09-20: a declared `kg` directory that HOLDS NO DIAGRAMS is a
+  // determined empty, not a failure. The condition above read
+  // `dirs.length === 0 && kgDirectories(root).length > 0` — "declares a
+  // knowledge graph and no .bpmn was found" — which is only a defect if
+  // declaring a knowledge graph meant declaring PROCESSES. It does not. An
+  // instance declaring `skills/` claims skills; a skills package with no
+  // workflow is an ordinary thing and three arrived at once
+  // (`kg-navigation`, `large-datasets`, `who-iris`), each holding one skill,
+  // each rendering its nodes, each failed on this message alone.
+  //
+  // That is the same shape the paragraph above rejects, one level in: asking
+  // an instance to carry a diagram it never claimed in order to stay green.
+  // The `dh4f` case it was reaching for — a declared directory nothing scans
+  // — is real and is caught by the ABSENCE check, which now runs over the
+  // DECLARED directories rather than only over the ones already known to hold
+  // a diagram. Before this it could not fire for a diagramless directory at
+  // all: `findBpmnDirs` never returned one, so the loop below never saw it.
+  // NOT `kgDirectories`, and that distinction is the whole check.
+  //
+  // `kgDirectories` ends with `.filter((d) => existsSync(d.absPath))`, so an
+  // absent directory is gone from its result and an absence check written
+  // over it can never fire. I wrote exactly that first, and it reported a
+  // clean run while `kg-navigation/skills/` was moved out from under it —
+  // a vacuous guard offered as the replacement for the one being removed,
+  // which is worse than removing it with nothing in its place.
+  //
+  // Reading the DECLARATION is the only way to compare what was claimed
+  // against what is there, because the filtered view has already thrown the
+  // discrepancy away.
+  if (dirs.length === 0 && kgDirectories(root).length > 0) {
+    (notes ?? problems).push(
       `no directory containing .bpmn files was found under ${relative(ROOT, root) || "."}`,
     );
+  }
+
+  // NOT `kgDirectories`, and that distinction is the whole check.
+  //
+  // `kgDirectories` ends with `.filter((d) => existsSync(d.absPath))`, so an
+  // absent directory is gone from its result and an absence check written
+  // over it can never fire. I wrote exactly that first, and it reported a
+  // clean run while `kg-navigation/skills/` was moved out from under it —
+  // a vacuous guard offered as the replacement for the one being softened,
+  // which is worse than softening it with nothing in its place.
+  //
+  // Reading the DECLARATION is the only way to compare what was claimed
+  // against what is there, because the filtered view has already thrown the
+  // discrepancy away. This is the `dh4f` case the old condition was reaching
+  // for and could not reach: before this, a declared-but-absent directory and
+  // a declared-but-diagramless one produced the SAME message, so the test
+  // named "a declared-but-ABSENT directory is reported" passed while its
+  // fixture created the directory.
+  for (const d of resolveDirectories([{ name: "(local)", root, own: true }])) {
+    if (!d.graphs.includes("cat-harness")) continue;
+    if (!existsSync(d.absPath)) {
+      problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
+    }
   }
   for (const rel of dirs) {
   const dir = join(root, rel);
@@ -1427,6 +1549,54 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   });
 }
 
+/**
+ * An instance's DECLARED ASSETS, as nodes.
+ *
+ * ## They were declared and then dropped
+ *
+ * `harness.json` gives each asset an id, a `src`, a `role`, a title and a
+ * description, and `declaredAssets` reads and validates them — but no
+ * collector emitted them, so that data reached `check-declared-assets` and
+ * nothing else. An instance could declare what its files ARE and have none of
+ * it appear in its own graph.
+ *
+ * ## Measured: it was the difference between rendering and failing
+ *
+ * 2026-09-20, `folio-assist-core` is a stub — a `README.md` and a declaration
+ * naming it, `directories: []`. It rendered **zero** nodes and
+ * `check:instance-render` failed it on "an empty graph is a failure, not an
+ * empty success". That verdict was right about the graph and wrong about the
+ * instance: core had declared exactly one thing about itself, and the exporter
+ * discarded it. The empty graph was manufactured here.
+ *
+ * This is also what makes the harness layer's floor checkable. Bootstrap owes
+ * its `.json`/`.jsonld` — *"that is its existence"* — and an existence claim
+ * whose declared assets are dropped is thinner than the declaration that
+ * produced it.
+ *
+ * `exists` is carried through rather than filtered on: a declared asset whose
+ * file is absent is a FINDING that `check-declared-assets` already raises, and
+ * silently omitting it here would hide the node whose absence is the point.
+ */
+function collectDeclaredAssets(doc: string, problems: string[], root: string = ROOT): Node[] {
+  let assets: ReturnType<typeof declaredAssets>;
+  try {
+    assets = declaredAssets(root);
+  } catch (e) {
+    problems.push(`unreadable declaration for assets: ${e instanceof Error ? e.message : String(e)}`);
+    return [];
+  }
+  return assets.map((a) => ({
+    "@id": makeIri(doc, "asset", a.id),
+    "@type": termIri("Asset"),
+    name: a.id,
+    path: a.src,
+    assetRole: a.role,
+    title: a.title,
+    description: a.description,
+  }));
+}
+
 function collectDeclaration(doc: string, problems: string[], root: string = ROOT): Node[] {
   const f = join(root, "harness.json");
   if (!existsSync(f)) return [];
@@ -1539,15 +1709,17 @@ export async function collectInstanceNodes(
   doc: string,
   base: string,
   problems: string[],
-): Promise<{ nodes: Node[]; omitted: readonly string[] }> {
+): Promise<{ nodes: Node[]; omitted: readonly string[]; notes: string[] }> {
+  const notes: string[] = [];
   const nodes = [
     ...collectSkills(doc, base, problems, root),
-    ...(await collectProcesses(doc, problems, root)),
+    ...(await collectProcesses(doc, problems, root, notes)),
     ...collectGraphKinds(root),
     ...collectDeclaredRoles(doc, root),
     ...collectDeclaration(doc, problems, root),
+    ...collectDeclaredAssets(doc, problems, root),
   ];
-  return { nodes, omitted: COLLECTOR_SCOPE.instanceBound };
+  return { nodes, omitted: COLLECTOR_SCOPE.instanceBound, notes };
 }
 
 function undeclaredTerms(
@@ -1799,6 +1971,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...collectGraphKinds(),
     ...collectDeclaredRoles(docIri),
     ...collectDeclaration(docIri, problems),
+    ...collectDeclaredAssets(docIri, problems),
   ].map(compact);
 
   stampSubgraph(graph, docIri);

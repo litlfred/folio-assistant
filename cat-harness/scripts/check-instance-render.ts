@@ -54,11 +54,11 @@
  * @module scripts/check-instance-render
  */
 
-import { existsSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, resolve } from "node:path";
 
 import {
   instanceRootFor,
+  instanceRootsIn,
   declaredKinds,
   readDeclaration,
   repoRootFor,
@@ -109,6 +109,19 @@ export interface InstanceRender {
   totalNodes: number;
   /** Collectors deliberately not run, so "has none" is distinct from "never looked". */
   omitted: readonly string[];
+  /**
+   * Determined empties — things this instance was looked for and has none of.
+   *
+   * Reported, never fatal, and that is the distinction it exists to carry.
+   * "No workflow diagrams under a declared knowledge-graph directory" is a
+   * fact worth printing and not a reason to fail an instance: a skills
+   * package with no process is ordinary. Before this, it was a `problem`, and
+   * three instances holding one skill each failed on it alone.
+   *
+   * Different from `omitted`, which is "never looked for". This one IS the
+   * result of looking.
+   */
+  notes?: readonly string[];
   /** Why, when the verdict is not `rendered`. */
   reasons: string[];
 }
@@ -204,18 +217,27 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
     nodeCount: ownNodes,
     totalNodes: nodes.nodes.length,
     omitted: nodes.omitted,
+    notes: nodes.notes,
     reasons,
   };
 }
 
-/** Every instance this repository owns — the root, and any beside it. */
+/**
+ * Every instance this repository owns — the root, and any beside it.
+ *
+ * The docstring above is unchanged and was FALSE in both halves until
+ * 2026-09-20: this listed `["cat-harness", "bootstrap"]`, so the root was not
+ * in it and two instances beside it were missing. There are four —
+ * `folio-assist-core` and the repository root are the two that were going
+ * unchecked, and `check-declared-assets` carried the same literal and the same
+ * blind spot (bean `6tkl`).
+ *
+ * Now it asks the filesystem. A list that must be edited when a directory is
+ * added is a list that will be wrong, and this one had already been wrong once
+ * before — the sibling gate's own docstring recorded that.
+ */
 export function instancesIn(repoRoot: string): string[] {
-  const out: string[] = [];
-  for (const d of ["cat-harness", "bootstrap"]) {
-    const p = join(repoRoot, d);
-    if (existsSync(join(p, "harness.json"))) out.push(p);
-  }
-  return out;
+  return instanceRootsIn(repoRoot);
 }
 
 export function formatReport(rs: InstanceRender[]): string {
@@ -234,6 +256,9 @@ export function formatReport(rs: InstanceRender[]): string {
       );
     }
     if (r.omitted.length) out.push(`      not looked for: ${r.omitted.join(", ")}`);
+    // Printed for a RENDERED instance too — a determined empty that only
+    // shows up on failures is a determined empty nobody reads.
+    for (const n of r.notes ?? []) out.push(`      looked, found none: ${n}`);
   }
   const failed = rs.filter((r) => r.verdict === "failed").length;
   const undet = rs.filter((r) => r.verdict === "undetermined").length;

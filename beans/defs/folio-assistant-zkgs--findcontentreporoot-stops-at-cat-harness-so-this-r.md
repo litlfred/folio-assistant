@@ -87,3 +87,76 @@ folio root instead (`scripts/tests/folio-optional-axes.test.ts`, subprocess,
 OFF 8 detangler criteria / ON 9), and the finding was recorded rather than
 acted on — which is `graph-detanglement`'s own residue rule applied to the
 session that found it.
+
+## RULED, owner, 2026-09-20 — and it is none of A/B/C
+
+> "mv to root at `cat-harness.config.json` as will all instantiated instances
+> (not just materialized KGs). `root/` is where instantiation is tracked.
+> check siblings. coordinate"
+
+So the file **stays at the repository root** and takes the instance's name.
+Neither the content root nor a per-instance subdirectory: the root is the
+**instantiation registry**, and each instantiated instance is tracked there by
+its own `<instance>.config.json`.
+
+That reframes the defect. I had it as "the config is in the wrong place". It is
+not — `findContentRepoRoot()` is simply the wrong resolver to reach it with.
+**Two different roots, and they were never the same question:**
+
+| question | root |
+|---|---|
+| where is the folio's content | the nearest declared folio directory — `findContentRepoRoot()` |
+| where is this instance instantiated | the checkout root, holding `<instance>.config.json` |
+
+Option A would have moved the file to the content root and locked the two
+together permanently; B answers both with one walk, which is how the defect
+arose; C is the right shape but the ruling names the naming convention C left
+unspecified. **The ruling is C with its filename decided**, so C is what gets
+built.
+
+It also settles the question the owner raised earlier in the session and left
+hanging — *"`harness.config.json` --> `cat-harness.config.json`, no?"* — as a
+decision rather than a musing, and generalises it: not a rename of one file but
+a **convention**, `<declared instance name>.config.json`, at the root.
+
+## Coordination — checked, and one dependency found
+
+Surveyed the eight open PRs for collisions on this work (2026-09-20). Only
+**#477** touches any of it, and what it touches is the premise:
+
+```
+cat-harness/schemas/harness-config.test.ts
+-      expect(dir!.declaredBy).toBe("folio-assistant");
++      expect(dir!.declaredBy).toBe("cat-harness");
+```
+
+**The instance rename to `cat-harness` is already in flight there.** So
+`cat-harness.config.json` is not a new name to invent — it is the name the
+declaration will already be carrying. This bean's work should land **after**
+#477, or it renames the file to match a declared name that has not landed yet.
+
+#477 also imports `../../folio-assistant-core/schemas/library-ref.js`, a sibling
+instance directory not in this checkout, which is more of the same split
+arriving. Nothing else among #525, #526, #530, #531 touches `harness-config.ts`,
+`voices.ts` or the filename.
+
+## Done when
+
+- The config filename is **derived from the declaration's `name`**, not a
+  constant: `<name>.config.json` at the instantiation root. A constant is what
+  made `HARNESS_CONFIG` a single global name in the first place, and the whole
+  point of the ruling is that there is one per instance.
+- A **separate resolver** for the instantiation root, distinct from
+  `findContentRepoRoot()`. The two answer different questions and one walk
+  answering both is the defect.
+- `readDeclaredFolioProfile()` on this repository returns `document` rather than
+  the third state, and a test fails if it regresses.
+- The affected `test/results/block-qa/` sidecars are re-swept: paper-profile
+  verdicts on document prose are STALE RESULTS, not findings.
+- `9ici` lands too, or the old name keeps half-working through `voices.ts`.
+
+## Not in scope
+
+Migrating downstream folios. qou is pinned at `df28d02` (2026-09-07) and cannot
+see any of this until its pin is bumped — see `5xfr`, which carries the recipe
+and must be updated with THIS name once it lands.

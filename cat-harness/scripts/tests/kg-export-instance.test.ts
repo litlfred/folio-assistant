@@ -84,7 +84,7 @@ describe("what was not looked for is not reported as clean", () => {
     expect([...omitted].sort()).toEqual(["packages", "registry", "schemas", "tools"]);
   });
 
-  test("an absent workflow directory is a problem, not a crash", async () => {
+  test("a declared directory holding no diagrams is a NOTE, not a crash and not a problem", async () => {
     // It threw ENOENT while this was being written: a directory found under
     // one root and joined against another.
     //
@@ -111,7 +111,7 @@ describe("what was not looked for is not reported as clean", () => {
       }),
     );
     const problems: string[] = [];
-    await collectInstanceNodes(root, DOC, BASE, problems);
+    const { notes } = await collectInstanceNodes(root, DOC, BASE, problems);
     rmSync(root, { recursive: true, force: true });
     // Matched on the WHOLE message, not on the substring "bpmn". Probed
     // 2026-09-19: a `.includes("bpmn")` passes for an absent directory, for an
@@ -119,8 +119,16 @@ describe("what was not looked for is not reported as clean", () => {
     // three different outcomes, one of them not a problem this test is about.
     // The loose form was green against all three, so it asserted only that
     // SOMETHING mentioned bpmn.
-    expect(problems.filter((p) => /no directory containing \.bpmn files was found/.test(p)))
+    //
+    // It is a NOTE since 2026-09-20. The fixture here is a declared `skills/`
+    // that EXISTS and holds a skill and no diagram, which is a determined
+    // empty: looked, found none. The ENOENT-safety this test was written for
+    // (a directory found under one root and joined against another) is still
+    // what it guards — nothing throws — and the finding is still emitted; it
+    // simply no longer fails the instance.
+    expect(notes.filter((n) => /no directory containing \.bpmn files was found/.test(n)))
       .toHaveLength(1);
+    expect(problems).toEqual([]);
   });
 
   test("an instance with no declaration at all does not throw", async () => {
@@ -136,8 +144,18 @@ describe("what was not looked for is not reported as clean", () => {
   test("a declared-but-ABSENT directory is reported", async () => {
     // `AGENTS.md`: a declared-but-absent directory is the `dh4f` defect,
     // where a consumer scans nothing and reports a clean run over it.
+    //
+    // THE FIXTURE DID NOT MATCH THE NAME, and that is why this is rewritten
+    // rather than adjusted. It called `mkdirSync(join(root, "skills"))` — so
+    // the declared directory was THERE, empty — and then asserted a problem.
+    // It passed because the old condition emitted one message for two
+    // different states: declared-and-absent, and declared-and-diagramless.
+    // The test named the first and exercised the second, and the first was
+    // never covered at all.
+    //
+    // So: NO `mkdirSync`. The declaration names `skills/` and the tree does
+    // not carry it, which is the `dh4f` defect this test claims to be about.
     const root = mkdtempSync(join(tmpdir(), "kgx-absent-"));
-    mkdirSync(join(root, "skills"), { recursive: true });
     writeFileSync(
       join(root, "harness.json"),
       JSON.stringify({
@@ -148,7 +166,11 @@ describe("what was not looked for is not reported as clean", () => {
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, BASE, problems);
     rmSync(root, { recursive: true, force: true });
-    expect(problems.length).toBeGreaterThan(0);
+    // On the WHOLE message: "absent" and "holds no diagrams" are now two
+    // findings in two channels, and a substring match would not tell them
+    // apart — which is exactly how this test came to assert the wrong one.
+    expect(problems.filter((p) => /declared knowledge-graph directory is absent/.test(p)))
+      .toHaveLength(1);
   });
 });
 

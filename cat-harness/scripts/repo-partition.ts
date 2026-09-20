@@ -501,6 +501,11 @@ const RULES: Rule[] = [
       // edge from the generic link auditor (bean `cp3l`). Harness by subject
       // as well as by dependency: it reads THIS repository's `AGENTS.md`
       // against THIS repository's source, and a folio has neither as content.
+      // Reads GitHub's view of THIS repository's commits, and imports only
+      // `src/core/git-refs.ts` and `schemas/cat-harness.ts` — both harness.
+      // Harness by subject too: whether a commit got a CI run is a fact about
+      // the forge and the pipeline, and a folio has neither as content.
+      "scripts/check-head-has-run.ts",
       "scripts/check-agents-claims.ts",
       "scripts/check-agent-entry-links.ts",
       "scripts/check-agents-xref.ts",

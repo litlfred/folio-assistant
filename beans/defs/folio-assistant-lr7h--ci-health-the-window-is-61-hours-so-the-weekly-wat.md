@@ -140,3 +140,47 @@ run of probe A appended the line as a `#` comment, which the test skips **by
 design** (comments explain history and necessarily name old paths). Both
 checks reported clean and the conclusion "neither catches it" was one keystroke
 from being recorded as fact.
+
+## 2026-09-20, follow-up: the finding this shipped was not one
+
+`lr7h`'s own owner item — *"upstream-pins.yml has never run on main. Its cron
+is `43 9 * * 2`. Is it expected to run, or is it another 5rfy neutering?"* —
+**answered, and the answer is neither.**
+
+    git log --diff-filter=A .github/workflows/upstream-pins.yml
+      added 2026-09-19T08:37:20Z   (5284028c6, "1rlj: a reusable subprocess…")
+    cron: 43 9 * * 2               (Tuesday)
+    today: 2026-09-20, Sunday
+
+The file was **one day old** and its first scheduled fire was **two days
+away**. It had never run because it had never had the chance. Nothing was
+wrong with it, and the report raised it as a finding on its first outing.
+
+**That is the defect, not upstream-pins.** A workflow neutered for months and
+one added yesterday rendered identically — the report could see that nothing
+HAD run, and not that nothing COULD have. `5rfy`'s ambiguity one level in, and
+it would have been noise from day one, which is how a health report earns the
+inattention it exists to fix.
+
+### Fixed
+
+`cronPeriodDays(cron)` — the LONGEST gap a 5-field cron can leave, in days;
+`undefined` for anything it cannot read. Compared against the file's age on
+the default branch (`git log --diff-filter=A`, oldest entry). When the
+schedule demonstrably has not come round, the row reads
+
+    🌱 Upstream pin watchdog   not yet run — file is 1d old and its schedule
+                               has not come round. Nothing to do.
+
+and does **not** withhold the green tick, because there is no finding to stop
+on. An OLD workflow that has never run still reads as a finding, and every
+unknown — unreadable age, unreadable cron, a cron shape `cronPeriodDays`
+refuses — leaves it a finding. Not knowing must never explain a silent
+workflow away.
+
+An approximation is the right tool here because it answers one yes/no. Both
+day fields restricted (`30 2 1 * 3`) returns `undefined` rather than a guess:
+GitHub ORs them, and a guess would be indistinguishable from a measurement.
+
+Ratchet falsified both directions: forcing `tooYoung` true fails 1, collapsing
+the weekly period to 1 day fails 3.

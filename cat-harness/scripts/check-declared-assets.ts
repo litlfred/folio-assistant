@@ -31,10 +31,10 @@
  *
  * Exit codes: 0 clean · 1 any missing asset or dead link.
  */
-import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { basename, dirname, resolve } from "node:path";
 
-import { DECLARATION_FILENAME, declaredAssets } from "../schemas/cat-harness.js";
+import { declaredAssets, instanceRootsIn } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
 // renderable kind"), so the harness alone does not know it exists. This module
@@ -48,41 +48,31 @@ import { DECLARATION_FILENAME, declaredAssets } from "../schemas/cat-harness.js"
 import "../schemas/folio-graph-kind.js";
 
 /**
- * Instances whose declarations this repository owns — FOUND, not listed.
+ * Instances whose declarations this repository owns — **discovered, not
+ * listed**, via {@link instanceRootsIn}.
  *
- * ## Twice now, and the second time the comment was already here
+ * This was a literal `["cat-harness", "bootstrap"]`, and the docstring on it
+ * recorded the list being wrong ONCE already: the first entry was `"."`, which
+ * named the instance while the instance was the repository, and after the move
+ * (bean `wggr`) it named a root carrying no `harness.json`, so `declaredAssets`
+ * returned `[]` and this gate reported *"1 declared asset across 2 instances,
+ * 0 findings"* over a file it had never opened.
  *
- * The first entry was `"."`, which named the instance while the instance was
- * the repository. After the move (bean `wggr`) it named the repository root,
- * which carries no `harness.json`, so `declaredAssets` returned `[]` and this
- * gate reported "1 declared asset across 2 instances, 0 findings" over a file
- * it had not opened — a clean run across an empty set, which is `dh4f` in the
- * one check whose whole subject is a file nobody was looking at.
+ * The list was then wrong a SECOND time, the same way. Recording that a
+ * hardcoded list went stale, and then fixing it by correcting the hardcoded
+ * list, buys one release. Asking the filesystem is what stops the third time
+ * (bean `6tkl`).
  *
- * That was fixed by writing down a list of two. The list then stayed at two
- * while the repository grew to SEVEN declarations — `folio-assist-core`,
- * `who-iris`, `detangle`, `kg-navigation` and `large-datasets` all arrived and
- * none was added — and the gate went on reporting a clean run, in the same
- * words, over five instances it had never opened. Measured 2026-09-20, adding
- * the sixth (`folio-assist-sci`, bean `frs5`): the README declared by its
- * brand-new `harness.json` would not have been checked either.
- *
- * A hardcoded list is a declaration nobody declared. Enumerating is the only
- * form that cannot drift, because the thing being counted is the thing being
- * looked for.
+ * **How far it had drifted, measured 2026-09-20 while adding the sixth
+ * instance** (`folio-assist-sci`, bean `frs5`): the list still said two while
+ * `folio-assist-core`, `who-iris`, `detangle`, `kg-navigation` and
+ * `large-datasets` had all arrived. Five instances the gate had never opened,
+ * reported in the same words as a clean run — and the README declared by
+ * `folio-assist-sci`'s brand-new `harness.json` would have been the sixth.
+ * Widening it immediately found a dead link the list had been hiding.
  */
-export function declaredInstances(root: string): string[] {
-  const out: string[] = [];
-  // One level down plus the root itself. Deeper is deliberately NOT walked: a
-  // `harness.json` inside `node_modules/` or a vendored checkout belongs to
-  // somebody else, and auditing another project's declared assets would report
-  // findings nobody here can act on.
-  if (existsSync(join(root, DECLARATION_FILENAME))) out.push(".");
-  for (const e of readdirSync(root, { withFileTypes: true })) {
-    if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
-    if (existsSync(join(root, e.name, DECLARATION_FILENAME))) out.push(e.name);
-  }
-  return out.sort();
+export function declaredInstances(repoRoot: string): string[] {
+  return instanceRootsIn(repoRoot);
 }
 
 export interface AssetFinding {
@@ -140,8 +130,7 @@ if (import.meta.main) {
   let declared = 0;
 
   const instances = declaredInstances(root);
-  for (const inst of instances) {
-    const abs = join(root, inst);
+  for (const abs of instances) {
     declared += declaredAssets(abs).length;
     const r = auditInstance(abs);
     findings = findings.concat(r.findings);
@@ -152,8 +141,12 @@ if (import.meta.main) {
     console.error(`  ✗ ${f.instance}/${f.asset}: ${f.kind} — ${f.detail}`);
   }
   console.log(
+    // NAMED, not just counted. This gate twice reported a clean run over
+    // instances it had never opened, and a bare count is exactly what made
+    // that readable as success — "2 instances" looks fine until you know there
+    // were seven. The names are what a reader checks against the repository.
     `${declared} declared asset(s) across ${instances.length} instance(s) ` +
-      `(${instances.join(", ")}); ` +
+      `(${instances.map((p) => basename(p) || p).sort().join(", ")}); ` +
       `${findings.length} finding(s), ${notChecked} not checked (external or non-markdown)`,
   );
   process.exit(findings.length > 0 ? 1 : 0);

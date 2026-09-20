@@ -127,10 +127,44 @@ describe("declared means TRANSITIVELY declared", () => {
 describe("this repository's own instances", () => {
   const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
 
-  test("both instances are found — otherwise everything below is vacuous", () => {
-    const found = instancesIn(REPO);
-    expect(found.length).toBeGreaterThan(1);
-    expect(found.map((p) => p.split("/").pop())).toEqual(["cat-harness", "bootstrap"]);
+  test("every instance is found — otherwise everything below is vacuous", () => {
+    // This asserted exactly `["cat-harness", "bootstrap"]`, and it PASSED for
+    // the whole period that list was wrong: `instancesIn` returned a literal
+    // and this test pinned the same literal, so the two agreed with each other
+    // and neither looked at the repository. `folio-assist-core` and the root
+    // were instances the gate never rendered (bean `6tkl`).
+    //
+    // The order is root-first then sorted, which is what `instanceRootsIn`
+    // promises so that a report is stable.
+    //
+    // Updated 2026-09-20 when it fired as designed: seven instances arrived on
+    // one branch and `folio-assist-core` became `folio-assistant-core`. This
+    // list is the new truth, and it is the SECOND place that truth is written
+    // — `schemas/cat-harness.test.ts` holds the other. Two copies is a real
+    // cost and it is taken deliberately: they assert different things (that
+    // discovery finds them, and that each one RENDERS), and deriving either
+    // from `instanceRootsIn` would make the test agree with the function by
+    // construction, which is exactly how the `["cat-harness", "bootstrap"]`
+    // literal passed for the whole period it was wrong.
+    const found = instancesIn(REPO).map((p) => p.split("/").pop());
+    expect(found).toEqual([
+      "folio-assistant",
+      "agent-skills",
+      "bootstrap",
+      "cat-harness",
+      "detangle",
+      "folio-assist-sci",
+      "folio-assistant-core",
+      "kg-navigation",
+      "large-datasets",
+      "who-iris",
+      "who-style-guide",
+    ]);
+    // Named individually rather than only as a list: these two are the ones
+    // the old literal omitted, so if a future edit narrows the set again, the
+    // failure should say which instance stopped being checked.
+    expect(found).toContain("folio-assistant-core");
+    expect(found).toContain("folio-assistant");
   });
 
   test("every instance renders, and none renders nothing", async () => {

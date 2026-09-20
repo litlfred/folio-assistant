@@ -176,6 +176,13 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: "A declared place to look, naming the kinds of graph found in it.",
     seeAlso: "/architecture.html",
   },
+  Asset: {
+    layer: "bootstrap",
+    gloss:
+      "A file an instance declares as its own, with the role that file plays for it — the instance " +
+      "saying what something IS rather than a scan inferring it.",
+    seeAlso: "/architecture/harness-instances.html",
+  },
   GraphKind: {
     layer: "bootstrap",
     gloss: "What a declared directory holds — the vocabulary a consumer matches on to decide whether to scan it.",
@@ -241,6 +248,15 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
   path: { gloss: "A declared directory's path, relative to the instance root." },
+  // `assetRole` and not `role`: an asset's role is a free string naming what
+  // the FILE is for, while a Role is a node an actor takes on in a swimlane.
+  // One spelling for both would give a consumer a literal where it expects a
+  // node, and the two would be indistinguishable in the graph.
+  assetRole: {
+    gloss:
+      "What a declared asset is FOR, as the instance names it — `instance-readme`, " +
+      "`agent-instructions`. A literal, and not the swimlane Role, which is a node with skills.",
+  },
   typeIri: { gloss: "The IRI of a node's type, so a consumer need not parse the `@type` string." },
   // Convention terms (bean `3190`). Three separate glosses rather than one,
   // because they are three separate claims and a reader deciding whether a

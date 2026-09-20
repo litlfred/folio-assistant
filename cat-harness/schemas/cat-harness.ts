@@ -57,6 +57,7 @@
  */
 
 import {
+  type Dirent,
   existsSync,
   mkdirSync,
   readFileSync,
@@ -1933,6 +1934,59 @@ export function findInstanceRoot(start: string): string | undefined {
     if (up === dir) return undefined;
     dir = up;
   }
+}
+
+/**
+ * Every instance in `repoRoot` — the repository root itself when it declares,
+ * plus each immediate subdirectory that does.
+ *
+ * {@link findInstanceRoot} walks UP from a path to the instance owning it;
+ * this is the same fact in the other direction, and until now it was the
+ * direction nobody had implemented — the note on {@link initializationDoc}
+ * said so explicitly ("*NOT implemented and is not assumed here*", bean
+ * `wggr`).
+ *
+ * **Two gates were each carrying their own literal `["cat-harness",
+ * "bootstrap"]` instead** (`check-declared-assets`, `check-instance-render`),
+ * and by 2026-09-20 there were FOUR instances: those two, `folio-assist-core`,
+ * and the repository root. So both gates reported clean runs over sets that
+ * excluded half the subject — `dh4f` again, in the two checks whose whole job
+ * is to look at instances.
+ *
+ * `check-instance-render`'s literal even sat under the docstring "*Every
+ * instance this repository owns — the root, and any beside it*", which was
+ * false in both halves: the root was not in the list and two instances beside
+ * it were missing. **A list that has to be edited when a directory is added is
+ * a list that will be wrong**, and the fix is to ask the filesystem rather
+ * than to lengthen it (bean `6tkl`).
+ *
+ * Scanning is deliberately ONE level deep and skips dot-prefixed segments,
+ * matching the dot-prefix guard the directory conventions already apply
+ * everywhere else. Results are sorted so a caller's report is stable, with the
+ * repository root first when it declares.
+ */
+export function instanceRootsIn(repoRoot: string): string[] {
+  const root = resolve(repoRoot);
+  const out: string[] = [];
+  if (existsSync(join(root, DECLARATION_FILENAME))) out.push(root);
+
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(root, { withFileTypes: true });
+  } catch {
+    // Unreadable root is "could not determine", and a caller that treats an
+    // empty list as "no instances" is the very failure this function exists
+    // to end — so say nothing rather than claim an empty set.
+    return out;
+  }
+
+  const subs = entries
+    .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+    .map((e) => join(root, e.name))
+    .filter((p) => existsSync(join(p, DECLARATION_FILENAME)))
+    .sort();
+
+  return out.concat(subs);
 }
 
 /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */

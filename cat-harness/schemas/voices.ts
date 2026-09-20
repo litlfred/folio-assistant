@@ -57,7 +57,7 @@
  */
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { HARNESS_CONFIG } from "./harness-config";
+import { resolveHarnessConfigPath } from "./harness-config";
 import { join, resolve } from "node:path";
 import { z } from "zod";
 
@@ -333,7 +333,8 @@ export function unionRules(
 }
 
 /**
- * The voice ids a folio has activated, read from its `harness.config.json`.
+ * The voice ids a folio has activated, read from its harness config —
+ * resolved by `resolveHarnessConfigPath`, never by a filename spelled here.
  *
  * THREE-VALUED, and the distinction is what the QA voice gate turns on:
  *
@@ -351,21 +352,39 @@ export function unionRules(
  * lose every voice check while reporting a clean run.
  */
 export function readActiveVoices(repoRoot: string): string[] | undefined {
-  for (const name of [HARNESS_CONFIG, "folio.config.json"]) {
-    const p = resolve(repoRoot, name);
-    if (!existsSync(p)) continue;
-    try {
-      const raw = JSON.parse(readFileSync(p, "utf-8")) as {
-        voices?: unknown;
-      };
-      const parsed = VoiceConfigSchema.safeParse(raw.voices ?? {});
-      // A `voices` key that will not parse is not "no voices": the author meant
-      // something, and guessing which voices they meant is worse than running
-      // every check.
-      return parsed.success ? parsed.data.active : undefined;
-    } catch {
-      return undefined; // unparseable config — third state
-    }
+  // ONE name, through the one resolver, like every other reader (bean `9ici`).
+  //
+  // This looped over `[HARNESS_CONFIG, "folio.config.json"]` until 2026-09-20,
+  // which is a LEFTOVER rather than a decision. Bean `6nfy` renamed the file
+  // and shipped a legacy fallback, then took a HARD BREAK on the owner's
+  // instruction — "folio.config.json is no longer read at all" — and this one
+  // of its eleven consolidated sites kept the loop.
+  //
+  // Which is `6nfy`'s own prediction landing on `6nfy`: *"a legacy fallback
+  // written eleven times diverges at ten of them, and the one that forgets is
+  // the one a folio silently stops being configured by."* It diverged at one,
+  // in the direction that keeps a dead name alive.
+  //
+  // The cost was worse than a missed rename, because it defeated the three
+  // states below. `resolveHarnessConfigPath`'s doc says an old-name folio "is
+  // NOT configured, rather than quietly half-configured by a path nothing else
+  // agrees about" — and this function was the path nothing else agreed about.
+  // Such a folio got a DETERMINED voice list here while losing every other
+  // setting silently, so the one signal that could have said "your config is
+  // not being read" instead said "no voices are active", which is a legitimate
+  // answer. Reaching the third state is the point: it makes the criteria RUN.
+  const found = resolveHarnessConfigPath(repoRoot);
+  if (!found) return undefined; // no config at all — third state
+  try {
+    const raw = JSON.parse(readFileSync(found.path, "utf-8")) as {
+      voices?: unknown;
+    };
+    const parsed = VoiceConfigSchema.safeParse(raw.voices ?? {});
+    // A `voices` key that will not parse is not "no voices": the author meant
+    // something, and guessing which voices they meant is worse than running
+    // every check.
+    return parsed.success ? parsed.data.active : undefined;
+  } catch {
+    return undefined; // unparseable config — third state
   }
-  return undefined; // no config at all — third state
 }
