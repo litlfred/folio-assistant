@@ -2,10 +2,10 @@
 # folio-assistant-d308
 title: 'CODE DISPENSATION: 868 code files → 13 Tool nodes, each bound to a BPMN task'
 status: in-progress
-type: task
+type: epic
 priority: normal
 created_at: 2026-09-20T04:08:50Z
-updated_at: 2026-09-20T04:09:32Z
+updated_at: 2026-09-20T04:33:51Z
 parent: folio-assistant-zzmr
 ---
 
