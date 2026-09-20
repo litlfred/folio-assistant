@@ -1,10 +1,11 @@
 ---
 # folio-assistant-frq2
 title: 'RELEASE PATH: release-please names config files that do not exist, and both release workflows document another repository''s behaviour'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T20:46:25Z
-updated_at: 2026-09-20T20:46:25Z
+updated_at: 2026-09-20T21:46:52Z
 parent: folio-assistant-vke6
 ---
 
