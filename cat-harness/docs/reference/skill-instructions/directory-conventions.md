@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Directory conventions
+title: 'Directory conventions'
 parent: Skill instructions
 ---
 

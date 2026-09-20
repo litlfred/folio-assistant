@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Flushable containers
+title: 'Flushable containers'
 parent: Skill instructions
 ---
 

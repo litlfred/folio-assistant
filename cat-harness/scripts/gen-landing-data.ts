@@ -35,7 +35,14 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { instanceRootFor, readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.js";
+import {
+  instanceRootFor,
+  publishedAssetPath,
+  readDeclaration,
+  repoRootFor,
+  siteDirFor,
+  sourceLinks,
+} from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 // `folio` is registered by CORE on import, and this instance declares a folio
 // graph; without it `readDeclaration` throws on a valid declaration.
@@ -43,7 +50,7 @@ import "../schemas/folio-graph-kind.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { themeById } from "../schemas/themes.js";
 import { readLandingStickies } from "./ensure-landing-sticky.js";
-import { isExternalLink, sourceLinks } from "../schemas/landing-sticky.js";
+import { isExternalLink } from "../schemas/landing-sticky.js";
 
 const ROOT = instanceRootFor(import.meta.dir);
 
@@ -64,9 +71,18 @@ const OUT = join(ROOT, siteDirFor(ROOT), "_data/stickies.json");
 const check = process.argv.includes("--check");
 const decl = readDeclaration(ROOT);
 
-/** `docs/assets/x.png` → `/assets/x.png`; anything else is passed through. */
+/**
+ * `docs/assets/x.png` → `/assets/x.png`; anything else is passed through.
+ *
+ * A one-line wrapper, kept so the call sites below read as they did. The
+ * IMPLEMENTATION moved to `publishedAssetPath` in `schemas/cat-harness.ts`
+ * when the todo board needed the same transform (bean `5y4b`): this copy
+ * hardcoded `docs/` where the site directory has a single answer already, and
+ * a second hardcoded copy is how an instance that moves its site directory
+ * ends up serving one correct path and one 404.
+ */
 function siteRelative(src: string): string {
-  return src.startsWith("docs/") ? `/${src.slice("docs/".length)}` : src;
+  return publishedAssetPath(ROOT, src);
 }
 
 /**

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: MCP projection
+title: 'MCP projection'
 parent: Skill instructions
 ---
 

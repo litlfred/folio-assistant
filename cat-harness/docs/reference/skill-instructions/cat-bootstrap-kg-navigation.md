@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Reading a knowledge graph before you have anything
+title: 'Reading a knowledge graph before you have anything'
 parent: Skill instructions
 ---
 

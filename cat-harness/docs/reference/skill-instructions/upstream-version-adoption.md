@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Adopting an upstream version bump
+title: 'Adopting an upstream version bump'
 parent: Skill instructions
 ---
 

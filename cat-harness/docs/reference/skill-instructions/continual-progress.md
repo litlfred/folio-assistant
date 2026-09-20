@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /continual-progress
+title: '/continual-progress'
 parent: Skill instructions
 ---
 

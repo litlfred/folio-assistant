@@ -1,6 +1,6 @@
 ---
 layout: default
-title: terminology-management
+title: 'terminology-management'
 parent: Skill instructions
 ---
 

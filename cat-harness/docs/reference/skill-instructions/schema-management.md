@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Managing a schema
+title: 'Managing a schema'
 parent: Skill instructions
 ---
 
@@ -140,13 +140,20 @@ the reader *and* a stale relation in itself.
 4. `bun run schema:viz` and look at your declaration in the viewer. Its kind,
    its fields, its generalisation, and what it references — and the three
    answers above.
-5. Run the gates: `check:schema-nodes`, `schema:viz:check`, `typecheck`,
-   `bun test`.
+5. Run `check:schema-nodes`, `typecheck` and `bun test`.
+
+`schema:viz:check` is worth running locally and is deliberately **not** a CI
+gate (owner, 2026-09-20). The projection derives from the WHOLE repository, so
+on a fast-moving repo the check reddens when somebody else merges rather than
+when you forget — which is not an omission, and not what a gate is for. The
+site build runs the writer at deploy, so nothing PUBLISHED goes stale; what can
+lag is the committed copy, which exists to be browsable.
 
 ## Keeping the projection's gate honest
 
-The projection is committed, so it has a staleness gate — and **a staleness
-gate is only worth having if its red means an omission.**
+The projection is committed. It HAD a staleness gate, and the gate came out —
+because **a staleness gate is only worth having if its red means an
+omission**, and this one's did not.
 
 This one nearly failed that test. The projection carried each declaration's
 line number, so any edit *above* a declaration made it stale: a merge that
@@ -164,6 +171,26 @@ applying to any generated artefact you gate:
 
 The same reasoning removed the per-module declaration list: a declaration
 already names its module, so the list was one fact written twice.
+
+## Where a viewer publishes
+
+**The URL is the handled directory's repo-relative path**, and a subject
+segment is optional (owner, 2026-09-20: *"`<baseurl>/<path to kind in
+knowledge graph>` or `<path to dir handled>/<optional subject>`"*). A viewer
+with no subject is the view over all of them.
+
+`viewerPlacement` in `gen-schema-viz.ts` is the single implementation, shared
+with the library viewer rather than restated — two statements of one placement
+rule are two answers the moment either moves. It also computes the page's link
+back to its projection from the page's own depth, because a literal
+`../assets/...` kept parsing and fetched nothing the first time a page moved a
+level down.
+
+**Resolve, never compose.** An earlier draft built the address from the
+rendering instance's name plus the graph kind. That is right for
+`cat-harness/schemas/` by coincidence and wrong for anything not sitting at
+owner/kind — `who-iris/library/` would have been addressed as
+`cat-harness/library`, naming the machinery where the rule names the data.
 
 ## Editing a viewer — no backticks
 

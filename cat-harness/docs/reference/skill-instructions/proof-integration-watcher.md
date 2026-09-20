@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /proof-integration-watcher
+title: '/proof-integration-watcher'
 parent: Skill instructions
 ---
 

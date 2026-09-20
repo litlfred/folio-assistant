@@ -5,6 +5,9 @@ summary: "Decide which roles content-pipeline-navigator and platform-boundary-gu
 status: blocked
 priority: medium
 origin: agent
+# THEME, chosen by judgement from this todo's content (bean `5y4b`).
+# Deciding which ROLES two agents take on is a modelling decision about the role graph, not an implementation task. `analyst` is the SDLC / CRDM / business-analysis theme.
+theme: analyst
 createdAt: 2026-09-19
 targetLabel: sec:publication-workflow-agents-and-system-actors
 identities:

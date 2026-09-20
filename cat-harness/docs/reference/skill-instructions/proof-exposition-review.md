@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Proof Exposition Review
+title: 'Proof Exposition Review'
 parent: Skill instructions
 ---
 

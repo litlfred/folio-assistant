@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Compute Integration Watcher
+title: 'Compute Integration Watcher'
 parent: Skill instructions
 ---
 

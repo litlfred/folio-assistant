@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Materializing remote content
+title: 'Materializing remote content'
 parent: Skill instructions
 ---
 

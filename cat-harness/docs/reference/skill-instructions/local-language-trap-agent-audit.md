@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /language-trap-agent-audit
+title: '/language-trap-agent-audit'
 parent: Skill instructions
 ---
 

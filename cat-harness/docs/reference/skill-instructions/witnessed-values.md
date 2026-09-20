@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Witnessed Values
+title: 'Witnessed Values'
 parent: Skill instructions
 ---
 

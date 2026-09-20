@@ -40,6 +40,7 @@ const ITEMS = [
       // Deliberately unresolvable: a bean nothing on disk carries.
       { axis: "bean", label: "folio-assistant-gone" },
     ],
+    viewHref: "https://github.com/litlfred/folio-assistant/blob/main/todos/items/first-todo.md",
     editHref: "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
   },
   {
@@ -51,11 +52,50 @@ const ITEMS = [
     origin: "human",
     createdAt: "2026-09-19",
     tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+    viewHref: "https://github.com/litlfred/folio-assistant/blob/main/todos/items/second-todo.md",
     editHref: "https://github.com/litlfred/folio-assistant/edit/main/todos/items/second-todo.md",
   },
 ];
 
 const PAGE_URL = "http://todo.test/page.html";
+
+/**
+ * A SECOND fixture, for the themed sticky, on its own page and its own index.
+ *
+ * Not a third entry in `ITEMS`, and the reason is this file's own `d1r6`
+ * lesson one step earlier: the count assertions above are load-bearing — the
+ * discard test proves a slot disappeared by counting 2 then 1 — so widening
+ * the shared fixture would have rewritten six unrelated assertions to keep a
+ * new one passing. A separate page costs one route and touches nothing.
+ *
+ * `theme` is already on `ThemedTodoFieldsSchema`. What does not exist yet is
+ * the generator emitting it and the art behind it, which is `5y4b`. So this
+ * fixture is ahead of the pipeline by exactly one field, deliberately: the
+ * board's handling of a themed todo is testable now, and it is what `5y4b`
+ * will land on.
+ */
+const THEMED_PAGE_URL = "http://todo.test/themed.html";
+const THEMED_ART = {
+  library: {
+    laptop: "/assets/img/harness/landing-library-laptop.webp",
+    mobile: "/assets/img/harness/landing-library-mobile.webp",
+    card: "/assets/img/harness/landing-library-card.webp",
+  },
+};
+const THEMED_ITEMS = [
+  {
+    id: "themed-todo",
+    summary: "Ingest the sources",
+    comment: "A todo that has chosen a theme.",
+    status: "open",
+    priority: "medium",
+    origin: "agent",
+    createdAt: "2026-09-20",
+    theme: "library",
+    tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+    relations: [],
+  },
+];
 
 const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="fa-todo-src" content="/assets/todos/index.json">
@@ -72,6 +112,22 @@ test.beforeEach(async ({ page }) => {
     const url = route.request().url();
     if (url.endsWith("/page.html")) {
       return route.fulfill({ contentType: "text/html", body: HARNESS });
+    }
+    if (url.endsWith("/themed.html")) {
+      return route.fulfill({
+        contentType: "text/html",
+        body: HARNESS.replace("/assets/todos/index.json", "/assets/todos/themed.json"),
+      });
+    }
+    if (url.endsWith("/assets/todos/themed.json")) {
+      return route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          $schema: "folio-todo-index/v1",
+          items: THEMED_ITEMS,
+          themeArt: THEMED_ART,
+        }),
+      });
     }
     if (url.endsWith("/assets/todos/index.json")) {
       return route.fulfill({
@@ -175,13 +231,89 @@ test("an edge that resolves to nothing is SHOWN, not dropped", async ({ page }) 
   expect(await page.locator(".fa-sticky").first().locator("a[href='']").count()).toBe(0);
 });
 
+test("a sticky carries VIEW and EDIT, two controls for two acts", async ({ page }) => {
+  // Bean `pb04`, the owner: "rendeding shows edit src icon (and also need view
+  // icon)". `/blob/` is reading and `/edit/` opens GitHub's editor — a reader
+  // checking what a card says should not land in a text box.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const tools = page.locator(".fa-sticky").first().locator(".fa-sticky-tools");
+  await expect(tools.locator(".fa-sticky-view")).toHaveAttribute(
+    "href",
+    "https://github.com/litlfred/folio-assistant/blob/main/todos/items/first-todo.md",
+  );
+  await expect(tools.locator(".fa-sticky-edit")).toHaveAttribute(
+    "href",
+    "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
+  );
+  // Two DIFFERENT URLs. One control pointing at one of them would satisfy any
+  // assertion that only checked presence.
+  const hrefs = await tools
+    .locator("a.fa-node-edit")
+    .evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).getAttribute("href")));
+  expect(new Set(hrefs).size).toBe(hrefs.length);
+});
+
+test("both controls are ABSENT, not broken, when the pipeline has no forge", async ({ page }) => {
+  // The other direction, and the one that matters. `sourceLinks` returns
+  // undefined for anything that is not a github.com `origin`, and the
+  // generator SPREADS the result, so the keys are missing rather than empty. A
+  // test that only checked the present case would pass equally for a control
+  // that is always shown.
+  //
+  // A dead edit link is worse than no link: it invites a click, and on a
+  // private repository it 404s for exactly the reader who cannot edit, which
+  // reads as "this page is broken" rather than "you cannot do this".
+  await page.route("http://todo.test/assets/todos/index.json", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        $schema: "folio-todo-index/v1",
+        items: ITEMS.map((t) => {
+          const copy: Record<string, unknown> = { ...t };
+          delete copy["viewHref"];
+          delete copy["editHref"];
+          return copy;
+        }),
+      }),
+    }),
+  );
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await expect(page.locator(".fa-sticky")).not.toHaveCount(0); // the board did mount
+  await expect(page.locator(".fa-sticky-view")).toHaveCount(0);
+  await expect(page.locator(".fa-sticky-edit")).toHaveCount(0);
+  // ...and nothing disabled or greyed in their place.
+  await expect(page.locator(".fa-sticky-tools a")).toHaveCount(0);
+});
+
+test("neither link carries a `..` — the old one resolved to a dead path", () => {
+  // The path `readTodoFiles` reports is relative to the cat-harness INSTANCE
+  // while todos/ sits at the repository root, so it read `../todos/items/x.md`
+  // and the old link shipped that verbatim. A browser normalises the `..`
+  // before the request is sent, so GitHub received `/edit/todos/items/x.md` —
+  // the branch segment eaten, a path that has never existed. Every pencil on
+  // the board was dead, and the generated JSON looked entirely correct.
+  for (const t of ITEMS) {
+    expect(t.editHref).not.toContain("..");
+    expect(t.viewHref).not.toContain("..");
+  }
+});
+
 test("the pencil is `.fa-node-edit` pointing at the todo's own file", async ({ page }) => {
   // The owner's rule: the edit affordance is the class-level pattern every
   // content object on this site already has, not a bespoke editor.
   await page.goto(PAGE_URL);
   await page.locator(".fa-qr-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  const edit = page.locator(".fa-sticky").first().locator("a.fa-node-edit");
+  // `.fa-sticky-edit`, not the bare `a.fa-node-edit` this used: bean `pb04`
+  // put a `⎘ View` beside the pencil, so the class-level selector now matches
+  // two links and the assertion would be order-dependent. Naming the control
+  // is what the two classes exist for.
+  const edit = page.locator(".fa-sticky").first().locator("a.fa-sticky-edit");
   await expect(edit).toHaveAttribute(
     "href",
     "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
@@ -203,6 +335,132 @@ test("pin lifts a sticky onto the page and greys its board slot", async ({ page 
   const recall = slot.locator(".fa-sticky-recall");
   await expect(recall).toBeVisible();
   await expect(recall).not.toBeDisabled();
+});
+
+/**
+ * Bean `ivfw`, the owner: *"when you unpin, sticky, it loses its theme and you
+ * cant move around dispaly."*
+ *
+ * This is the THEME half. The move half is `6lb8`'s board model and is not
+ * here.
+ *
+ * Two things had to be true and neither was. The card is REBUILT on the float
+ * layer and DESTROYED on dock, so a theme carried on the DOM node is dropped by
+ * construction — `buildSticky` now reads it from the todo, which is the only
+ * place that survives both transitions. And `.fa-sticky-floating` set a flat
+ * `background` and `color` unconditionally, after `.fa-sticky` at equal
+ * specificity, so it painted over whatever the theme had chosen.
+ *
+ * Asserted against the ATTRIBUTE rather than the computed colour on purpose:
+ * `themes.css` is not loaded in this harness, so a colour assertion here would
+ * be testing the fixture. What the attribute cannot answer — that the override
+ * no longer wins — the CSS assertion below does, and
+ * `schemas/themes.test.ts` carries the premise that every theme surface is
+ * opaque.
+ */
+test("a themed sticky keeps its theme across pin AND dock", async ({ page }) => {
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const onBoard = page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"]');
+  await expect(onBoard).toHaveAttribute("data-fa-sticky-theme", "library");
+
+  await onBoard.locator(".fa-sticky-pin").click();
+  const floating = page.locator(".fa-sticky-layer .fa-sticky");
+  await expect(floating).toHaveCount(1);
+  await expect(floating).toHaveAttribute("data-fa-sticky-theme", "library");
+
+  // ...and back down. This is the direction the owner reported.
+  await page.locator(".fa-sticky-slot .fa-sticky-recall").click();
+  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
+  await expect(onBoard).toHaveAttribute("data-fa-sticky-theme", "library");
+});
+
+test("a themed todo renders its backdrop art, the way every other sticky does", async ({ page }) => {
+  // Bean `5y4b`, the owner: "todos need grump cat themeing based on content
+  // too." Until this, the landing board carried two kinds of sticky side by
+  // side — a harness card with per-theme art, a measured text region and a
+  // scrim, and a todo that was a flat card with a coloured border. On one page
+  // they read as two systems.
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const card = page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"]');
+  await expect(card).toHaveClass(/fa-sticky--backdrop/);
+
+  // THE PICTURE IS THE POSITIONED LAYER, and the `<img>` is its child. The
+  // stylesheet records that `.fa-sticky--backdrop > .fa-sticky-art` matched
+  // NOTHING once — the img is a grandchild — and the art laid out at its
+  // intrinsic 1672px across the whole viewport with the markup entirely
+  // correct. So the STRUCTURE is what is asserted here, not just presence.
+  const img = card.locator("picture > img.fa-sticky-art");
+  await expect(img).toHaveCount(1);
+  await expect(img).toHaveAttribute("src", "/assets/img/harness/landing-library-card.webp");
+
+  // The CARD crop by default, with mobile below 30rem. The laptop crop is
+  // deliberately unused: it is composed for a page-width surface.
+  const source = card.locator("picture > source");
+  await expect(source).toHaveCount(1);
+  await expect(source).toHaveAttribute("srcset", "/assets/img/harness/landing-library-mobile.webp");
+
+  // Decoration behind text that already says everything. A description of the
+  // cat would be read out before every todo on the board.
+  await expect(img).toHaveAttribute("alt", "");
+  await expect(card.locator("picture")).toHaveAttribute("aria-hidden", "true");
+});
+
+test("the art survives a pin, because the card is rebuilt from the todo", async ({ page }) => {
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"] .fa-sticky-pin').click();
+
+  const floating = page.locator(".fa-sticky-layer .fa-sticky");
+  await expect(floating).toHaveClass(/fa-sticky--backdrop/);
+  await expect(floating.locator("picture > img.fa-sticky-art")).toHaveCount(1);
+});
+
+test("an UNTHEMED todo gets no backdrop — the check can fire", async ({ page }) => {
+  // Every assertion above passes equally for code that adds a backdrop to
+  // everything. The shared fixture's todos carry no theme, so this is the
+  // other direction against the same build.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await expect(page.locator(".fa-sticky--backdrop")).toHaveCount(0);
+  await expect(page.locator(".fa-sticky picture")).toHaveCount(0);
+});
+
+test("a theme with no published art renders a flat THEMED card, not a broken one", async ({ page }) => {
+  // The third state. `resolveThemeBackdrop` refuses a partial set, and a theme
+  // that declares no backdrop at all — `pale-sage`, the high-contrast pair —
+  // is simply absent from `themeArt`. The sticky must still take its palette.
+  await page.route("http://todo.test/assets/todos/themed.json", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({ $schema: "folio-todo-index/v1", items: THEMED_ITEMS, themeArt: {} }),
+    }),
+  );
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-qr-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+
+  const card = page.locator('.fa-sticky[data-todo-id="themed-todo"]');
+  await expect(card).toHaveAttribute("data-fa-sticky-theme", "library");
+  await expect(card).not.toHaveClass(/fa-sticky--backdrop/);
+  await expect(card.locator("picture")).toHaveCount(0);
+});
+
+test("a todo with NO theme still gets the opaque floating treatment", () => {
+  // The other direction, and the reason the override was written: an unthemed
+  // sticky's surface is `rgba(128, 128, 128, 0.08)`, so lifted over page text
+  // it is see-through. Narrowing the rule must not have removed it.
+  expect(CSS).toContain(".fa-sticky-floating:not([data-fa-sticky-theme])");
+  // And it must no longer apply to a themed one — the bug, stated as the
+  // absence of the rule that caused it.
+  expect(CSS).not.toMatch(/^\.fa-sticky-floating \{[^}]*background:/m);
 });
 
 /**
@@ -469,8 +727,13 @@ test.describe("todos attached to a block", () => {
     await expect(first.locator(".fa-sticky-pin")).toHaveCount(0);
     await expect(first.locator(".fa-sticky-close")).toHaveCount(0);
     await expect(first.locator(".fa-sticky-discard")).toHaveCount(0);
-    // But it keeps the edit affordance, which is the point of the pencil.
-    await expect(first.locator("a.fa-node-edit")).toHaveCount(1);
+    // But it keeps BOTH source affordances, which is the point: an inline
+    // sticky loses the board's controls and keeps the content object's. Two
+    // now rather than one — bean `pb04` added `⎘ View` beside `✎ Edit` — and
+    // asserted by name, because a count over the shared `.fa-node-edit` class
+    // would silently accept two pencils.
+    await expect(first.locator("a.fa-sticky-view")).toHaveCount(1);
+    await expect(first.locator("a.fa-sticky-edit")).toHaveCount(1);
   });
 
   test("a todo targeting a block this page lacks still reaches the board", async ({ page }) => {

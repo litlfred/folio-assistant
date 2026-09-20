@@ -1,6 +1,6 @@
 ---
 layout: default
-title: KG export
+title: 'KG export'
 parent: Skill instructions
 ---
 

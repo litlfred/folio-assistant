@@ -32,7 +32,7 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
 import { workflowFiles } from "./known-skills.js";
-import { join, dirname, relative } from "node:path";
+import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { availableLocales } from "../content/pipeline/po-resolve.ts";
@@ -43,10 +43,18 @@ import {
   type QaFamily,
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
-import { readTodoFiles } from "./todos.js";
+import { readTodoFiles, todoDefaultTheme } from "./todos.js";
 import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
-import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
-import { detectRepoUrl } from "../src/core/git-refs.ts";
+import { detectRepoUrl } from "../src/core/git-refs.js";
+import { resolveThemeBackdrop } from "../schemas/theme.js";
+import { THEMES, themeById } from "../schemas/themes.js";
+import {
+  publishedAssetPath,
+  readDeclaration,
+  siteDirFor,
+  sourceLinks,
+  repoRootFor,
+} from "../schemas/cat-harness.ts";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Platform documentation lives under `content/docs/`. It is NOT folio content
@@ -79,6 +87,40 @@ const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
  */
 const REPO_WEB = detectRepoUrl(repoRootFor(REPO_ROOT)) ?? "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
+
+/**
+ * The forge this checkout actually has, and the branch its links point at.
+ *
+ * RESOLVED from `origin`, never composed from a literal — bean `pb04`. The
+ * `REPO_WEB` constant above still serves the page-node links that predate
+ * this; the todo board's own controls go through `sourceLinks`, which returns
+ * `undefined` for a non-github.com remote and so makes the control absent
+ * rather than dead.
+ *
+ * `main` rather than the checked-out branch, for the reason
+ * `gen-landing-data.ts` gives: this data is generated into a PUBLISHED site,
+ * and a link to a feature branch dies when that branch does.
+ */
+/**
+ * A path `readTodoFiles` reports, as the REPOSITORY sees it.
+ *
+ * `todos/` sits at the repository root while this generator's `REPO_ROOT` is
+ * the cat-harness instance, so `readTodoFiles` returns `../todos/items/x.md`.
+ *
+ * **The old edit link shipped that verbatim**, as
+ * `https://github.com/.../edit/main/../todos/items/x.md`. A browser normalises
+ * the `..` away before the request is sent, so what GitHub received was
+ * `/edit/todos/items/x.md` — the branch segment eaten, a path that has never
+ * existed. Every todo sticky's pencil was dead, and it looked entirely correct
+ * in the generated JSON. Bean `pb04`; found by resolving the link rather than
+ * by reading it.
+ */
+function repoRelative(p: string): string {
+  return relative(repoRootFor(REPO_ROOT), resolve(REPO_ROOT, p));
+}
+
+const REPO_URL = detectRepoUrl(repoRootFor(REPO_ROOT));
+const SOURCE_BRANCH = "main";
 /** Matches gen-skill-docs.ts / gen-schema-docs.ts — one glyph, no inline SVG. */
 const EDIT_GLYPH = "✎";
 
@@ -826,6 +868,21 @@ function processHierarchy(): Record<string, string[]> {
 // is: the client would otherwise need the repo's web URL, and a literal in
 // `docs-ui.js` is a folio's own address inside shared client code.
 {
+  // THE THEME, resolved HERE rather than in the client or at parse time.
+  //
+  // Bean `5y4b`, the owner: "todos need grump cat themeing based on content
+  // too. used jugement". Three things follow, and this line is where the first
+  // two meet:
+  //
+  //  - the theme is DATA on the todo, never a keyword match on the summary in
+  //    `docs-ui.js` — a rule nobody can see, review or override, which changes
+  //    silently when somebody rewords a todo;
+  //  - the DEFAULT is the graph's (`todos.json`), so a folio chooses its own
+  //    and a literal here is not this repository's answer imposed downstream;
+  //  - the todo's OWN value is preserved unresolved upstream of this, so
+  //    "the author chose grumpy-cat" and "nobody chose" stay distinguishable
+  //    to a reviewer reading the file.
+  const fallbackTheme = todoDefaultTheme();
   const items = readTodoFiles().map(({ todo, path }) => ({
     id: todo.id,
     summary: todo.summary,
@@ -835,13 +892,34 @@ function processHierarchy(): Record<string, string[]> {
     origin: todo.origin,
     createdAt: todo.createdAt,
     targetLabel: todo.targetLabel,
+    theme: todo.theme ?? fallbackTheme,
     tags: todo.tags,
     // The edges, already resolved. A sticky that showed only status and
     // priority would waste a six-axis relationship model on two enums.
     relations: todoRelations(todo.tags),
-    // The SAME affordance every node already gets, pointed at this todo's own
-    // file. A sticky is a content object; it does not need an editor of its own.
-    editHref: `${EDIT_BASE}/${path}`,
+    // VIEW *AND* EDIT, both resolved through the same seam the landing
+    // stickies use, and both ABSENT when there is no github.com `origin`.
+    //
+    // Bean `pb04`, the owner: *"rendeding shows edit src icon (and also need
+    // view icon) if github tools avaialable in rendering pipeline"*. Three
+    // things were wrong here and each is a different failure:
+    //
+    //  - only EDIT existed. `/blob/` is reading and `/edit/` opens the editor:
+    //    a reader checking what a card says should not land in a text box, and
+    //    one who wants to fix it should not have to find the button;
+    //  - the address was a LITERAL (`EDIT_BASE`), so a fork or a rename
+    //    published links to this repository — and the comment beside it
+    //    already argued that a folio's own address does not belong in shared
+    //    code, then wrote one down one layer up;
+    //  - there was NO CAPABILITY GATE, so the icon appeared whether or not the
+    //    pipeline had a forge behind it. A dead edit link is worse than no
+    //    link: it invites a click, and on a private repository it 404s for
+    //    exactly the reader who cannot edit, which reads as "this page is
+    //    broken" rather than "you cannot do this".
+    //
+    // Spread, so an absent link is an ABSENT KEY rather than `null` — a
+    // consumer testing truthiness and one testing presence should agree.
+    ...(sourceLinks(REPO_URL, repoRelative(path), SOURCE_BRANCH) ?? {}),
   }));
   mkdirSync(dirname(TODO_ASSET), { recursive: true });
   const processes = processHierarchy();
@@ -878,16 +956,61 @@ function processHierarchy(): Record<string, string[]> {
   //
   // The cost is 11,963 -> 14,144 bytes on a static asset gzip mostly removes.
   // `docs-ui.js` calls `JSON.parse`; it never sees the whitespace.
+  // THE ART, per theme, published beside the items rather than on each of them.
+  //
+  // One entry per theme actually used, not per todo: fifty todos sharing a
+  // theme would otherwise carry fifty copies of the same three paths. The
+  // client joins on the theme id it already has.
+  //
+  // `resolveThemeBackdrop` is what decides, so this cannot ship a partial set:
+  // it returns art or NOTHING, never some layouts, because a phone handed the
+  // laptop crop shows the art's quiet area in the wrong place and nothing
+  // reports it. A theme with no backdrop — `pale-sage`, the high-contrast pair
+  // — is simply absent here, and the client renders a flat themed card, which
+  // is correct rather than degraded.
+  //
+  // THE SCRIM IS NOT HERE, deliberately: `themes.css` already emits
+  // `--fa-sticky-scrim` per theme, so a copy in this file would be a second
+  // answer free to disagree with the stylesheet that actually paints it. The
+  // contrast guarantee — AAA over pure black — is a property of that value and
+  // travels with it.
+  const declaration = readDeclaration(REPO_ROOT);
+  const themeArt: Record<string, Record<string, string>> = {};
+  for (const id of new Set(items.map((i) => i.theme).filter((t): t is string => t !== undefined))) {
+    const theme = themeById(id);
+    if (theme === undefined) {
+      // A todo naming a theme nothing declares is a FINDING, not a silent flat
+      // card: the author asked for something and got nothing, and the failure
+      // is invisible on the page.
+      throw new Error(
+        `a todo declares theme "${id}", which no theme in schemas/themes.ts defines. ` +
+          `Declared themes: ${THEMES.map((t) => t.id).join(", ")}`,
+      );
+    }
+    const art = resolveThemeBackdrop(theme, declaration?.images);
+    if (art.art.size === 0) continue;
+    // PUBLISHED paths, not declared ones: the client fetches this file from the
+    // site, where the site directory's contents sit at the root. A declared
+    // `docs/assets/...` would 404 for every reader and look like missing art.
+    themeArt[id] = Object.fromEntries(
+      [...art.art].map(([layout, img]) => [layout, publishedAssetPath(REPO_ROOT, img.src)]),
+    );
+  }
+
   emit(
     TODO_ASSET,
     JSON.stringify(
-      { $schema: "folio-todo-index/v1", repoWeb: REPO_WEB, items, processes },
+      { $schema: "folio-todo-index/v1", repoWeb: REPO_WEB, items, processes, themeArt },
       null,
       2,
     ) + "\n",
     "data",
   );
-  console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
+  const themed = items.filter((i) => i.theme !== undefined).length;
+  console.log(
+    `  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s), ` +
+      `${themed} themed, ${Object.keys(themeArt).length} theme(s) with art)`,
+  );
 }
 
 // The bean board's data. Sibling of the todo block above, and deliberately the

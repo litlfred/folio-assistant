@@ -1,6 +1,6 @@
 ---
 layout: default
-title: document-authoring
+title: 'document-authoring'
 parent: Skill instructions
 ---
 

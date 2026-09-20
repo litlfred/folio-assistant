@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Post-MVP, because there is nothing to check before there is a render
+title: 'Post-MVP, because there is nothing to check before there is a render'
 parent: Skill instructions
 ---
 

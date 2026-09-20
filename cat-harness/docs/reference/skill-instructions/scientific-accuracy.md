@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Scientific Accuracy
+title: 'Scientific Accuracy'
 parent: Skill instructions
 ---
 

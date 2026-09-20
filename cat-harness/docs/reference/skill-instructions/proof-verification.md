@@ -1,6 +1,6 @@
 ---
 layout: default
-title: proof-verification
+title: 'proof-verification'
 parent: Skill instructions
 ---
 

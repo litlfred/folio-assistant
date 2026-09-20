@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Gröbner Basis
+title: 'Gröbner Basis'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The comparison goes BEFORE the question, not inside the options
+title: 'The comparison goes BEFORE the question, not inside the options'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /one-voice-integration-watcher
+title: '/one-voice-integration-watcher'
 parent: Skill instructions
 ---
 

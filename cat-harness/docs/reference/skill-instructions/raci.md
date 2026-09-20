@@ -1,6 +1,6 @@
 ---
 layout: default
-title: RACI
+title: 'RACI'
 parent: Skill instructions
 ---
 

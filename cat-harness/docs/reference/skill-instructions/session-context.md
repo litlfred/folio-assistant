@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Session context
+title: 'Session context'
 parent: Skill instructions
 ---
 

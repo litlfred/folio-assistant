@@ -1,6 +1,6 @@
 ---
 layout: default
-title: symbiotic-interaction
+title: 'symbiotic-interaction'
 parent: Skill instructions
 ---
 

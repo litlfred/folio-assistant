@@ -1,6 +1,6 @@
 ---
 layout: default
-title: MCP assembly
+title: 'MCP assembly'
 parent: Skill instructions
 ---
 

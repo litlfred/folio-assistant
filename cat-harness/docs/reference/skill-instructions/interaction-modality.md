@@ -1,6 +1,6 @@
 ---
 layout: default
-title: /interaction-modality
+title: '/interaction-modality'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Data modelling
+title: 'Data modelling'
 parent: Skill instructions
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Block Density
+title: 'Block Density'
 parent: Skill instructions
 ---
 

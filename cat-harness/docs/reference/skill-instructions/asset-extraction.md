@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Asset extraction
+title: 'Asset extraction'
 parent: Skill instructions
 ---
 

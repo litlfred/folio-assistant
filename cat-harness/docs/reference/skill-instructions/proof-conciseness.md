@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Proof Conciseness
+title: 'Proof Conciseness'
 parent: Skill instructions
 ---
 
