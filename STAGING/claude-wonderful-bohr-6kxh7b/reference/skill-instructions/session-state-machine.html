@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(2)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(100)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(2) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(100) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(2) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(100) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(100) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Current state | folio-assistant</title>
+<title>Playing a state machine | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Current state" />
+<meta property="og:title" content="Playing a state machine" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Current state" />
+<meta property="twitter:title" content="Playing a state machine" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -266,7 +266,7 @@
   those are opposite facts.
 
   `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
-  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">9710484</span> · built 2026-09-20T07:23:31Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/223" style="color:#fff;text-decoration:underline">issue #223</a> · <a href="https://litlfred.github.io/folio-assistant/architecture/current-state.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35496684109" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
+  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">9710484</span> · built 2026-09-20T07:23:31Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/223" style="color:#fff;text-decoration:underline">issue #223</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35496684109" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/todos/index.json">
@@ -469,7 +469,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">9710484</span> · built 2026-09-20T07:23:31Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/223" style="color:#fff;text-decoration:underline">issue #223</a> · <a href="https://litlfred.github.io/folio-assistant/architecture/current-state.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35496684109" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">9710484</span> · built 2026-09-20T07:23:31Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/223" style="color:#fff;text-decoration:underline">issue #223</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35496684109" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -595,8 +595,8 @@
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/architecture.html">Architecture</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Current state</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Playing a state machine</span></li>
   </ol>
 </nav>
 
@@ -604,556 +604,180 @@
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="current-state--what-this-repo-actually-is">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/session-state-machine.md"><code class="language-plaintext highlighter-rouge">skills/workflow/session-state-machine.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/session-state-machine.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="playing-a-state-machine">
   
   
-    <a href="#current-state--what-this-repo-actually-is" class="anchor-heading" aria-labelledby="current-state--what-this-repo-actually-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Current state — what this repo actually is
+    <a href="#playing-a-state-machine" class="anchor-heading" aria-labelledby="playing-a-state-machine"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Playing a state machine
   
   
 </h1>
     
 
-<ol id="markdown-toc">
-  <li><a href="#the-one-sentence-summary" id="markdown-toc-the-one-sentence-summary">The one-sentence summary</a></li>
-  <li><a href="#size-and-shape" id="markdown-toc-size-and-shape">Size and shape</a></li>
-  <li><a href="#where-the-domains-already-separate--and-where-they-do-not" id="markdown-toc-where-the-domains-already-separate--and-where-they-do-not">Where the domains already separate — and where they do not</a>    <ol>
-      <li><a href="#the-partition" id="markdown-toc-the-partition">The partition</a></li>
-      <li><a href="#the-wrong-direction-edges--phase-is-worklist" id="markdown-toc-the-wrong-direction-edges--phase-is-worklist">The wrong-direction edges — Phase I’s worklist</a></li>
-    </ol>
-  </li>
-  <li><a href="#the-mechanism-the-split-already-has" id="markdown-toc-the-mechanism-the-split-already-has">The mechanism the split already has</a>    <ol>
-      <li><a href="#what-is-not-wired" id="markdown-toc-what-is-not-wired">What is not wired</a></li>
-      <li><a href="#what-the-model-used-to-rule-out--resolved-2026-09-18" id="markdown-toc-what-the-model-used-to-rule-out--resolved-2026-09-18">What the model used to rule out — resolved 2026-09-18</a></li>
-    </ol>
-  </li>
-  <li><a href="#the-failure-mode-this-repo-has-already-paid-for" id="markdown-toc-the-failure-mode-this-repo-has-already-paid-for">The failure mode this repo has already paid for</a></li>
-  <li><a href="#what-this-repo-is-authoritative-for-today" id="markdown-toc-what-this-repo-is-authoritative-for-today">What this repo is authoritative for today</a></li>
-</ol><hr />
-
 <blockquote>
-  <p><strong>All figures on this page were measured on <code class="language-plaintext highlighter-rouge">main</code> at <code class="language-plaintext highlighter-rouge">369d89e</code>, 2026-09-18</strong>,
-with the commands shown. They are a snapshot, not a contract: re-run the
-command before quoting a number, per the <code class="language-plaintext highlighter-rouge">AGENTS.md</code> rule on BASELINE facts.</p>
+  <p><strong>An agent could also play a (non-deterministic) state machine as a tool.
+Managing state (kinda) during human/agentic discussion.</strong> — the owner,
+2026-09-20</p>
 </blockquote>
-<h2 id="the-one-sentence-summary">
-  
-  
-    <a href="#the-one-sentence-summary" class="anchor-heading" aria-labelledby="the-one-sentence-summary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The one-sentence summary
-  
-  
-</h2>
-    
 
-<p><code class="language-plaintext highlighter-rouge">folio-assistant</code> is a <strong>Tool repo and a Content repo in one checkout</strong>, with a
-Test repo’s worth of fixtures distributed through both, and no boundary that
-anything enforces except review.</p>
-
-<p>That is the mixture <a href="https://github.com/litlfred/folio-assistant/issues/223">issue #223</a>
-names. This page makes it specific enough to plan against.</p>
-<h2 id="size-and-shape">
+<p>The diagram is <code class="language-plaintext highlighter-rouge">skills/workflows/session-state-machine.bpmn</code>. It keeps a
+session’s context current across a discussion: establish who is acting, open
+the record, and on each turn decide whether anything changed.</p>
+<h2 id="the-non-determinism-is-in-the-transitions-not-the-shape">
   
   
-    <a href="#size-and-shape" class="anchor-heading" aria-labelledby="size-and-shape"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Size and shape
+    <a href="#the-non-determinism-is-in-the-transitions-not-the-shape" class="anchor-heading" aria-labelledby="the-non-determinism-is-in-the-transitions-not-the-shape"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The non-determinism is in the TRANSITIONS, not the shape
   
   
 </h2>
     
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>d <span class="k">in </span>src schemas skills content adapters scripts docs<span class="p">;</span> <span class="k">do
-  </span><span class="nv">n</span><span class="o">=</span><span class="si">$(</span>find <span class="nv">$d</span> <span class="nt">-type</span> f <span class="se">\(</span> <span class="nt">-name</span> <span class="s1">'*.ts'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.py'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.sh'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.md'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.json'</span> <span class="se">\)</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span>
-  <span class="nv">l</span><span class="o">=</span><span class="si">$(</span>find <span class="nv">$d</span> <span class="nt">-type</span> f <span class="se">\(</span> <span class="nt">-name</span> <span class="s1">'*.ts'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.py'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.sh'</span> <span class="se">\)</span> <span class="nt">-exec</span> <span class="nb">cat</span> <span class="o">{}</span> + | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span>
-  <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$d</span><span class="s2">: </span><span class="nv">$n</span><span class="s2"> files, </span><span class="nv">$l</span><span class="s2"> code lines"</span>
-<span class="k">done</span>
-</code></pre></div></div>
+<p>This is the whole design, and getting it backwards makes the thing
+unbuildable.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>directory</th>
-      <th style="text-align: right">files</th>
-      <th style="text-align: right">code lines</th>
-      <th>what it is authoritative for</th>
-      <th>kind</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">scripts/</code></td>
-      <td style="text-align: right">232</td>
-      <td style="text-align: right">49,348</td>
-      <td>build, QA, Lean, LaTeX, translation, CI helpers</td>
-      <td><strong>Tool</strong>, mostly</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/</code></td>
-      <td style="text-align: right">431</td>
-      <td style="text-align: right">46,401</td>
-      <td>the <strong>pipeline</strong> — validators, QA, render, graph</td>
-      <td><strong>Tool</strong> (despite the name)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">adapters/</code></td>
-      <td style="text-align: right">27</td>
-      <td style="text-align: right">10,205</td>
-      <td>per-content-type tools (<code class="language-plaintext highlighter-rouge">document</code>, <code class="language-plaintext highlighter-rouge">paper</code>, <code class="language-plaintext highlighter-rouge">mcp-server</code>)</td>
-      <td><strong>Tool</strong></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/</code></td>
-      <td style="text-align: right">77</td>
-      <td style="text-align: right">9,707</td>
-      <td>the content-object model + per-skill JSON Schemas</td>
-      <td><strong>Content</strong> (schema half)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">src/</code></td>
-      <td style="text-align: right">41</td>
-      <td style="text-align: right">8,120</td>
-      <td>the MCP server, core, and 11 generic tools</td>
-      <td><strong>Tool</strong></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/</code></td>
-      <td style="text-align: right">144</td>
-      <td style="text-align: right">435</td>
-      <td>9 skill packages — almost entirely prose</td>
-      <td><strong>Content</strong> (skill definitions)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">docs/</code></td>
-      <td style="text-align: right">165</td>
-      <td style="text-align: right">—</td>
-      <td>this site</td>
-      <td>self-documentation</td>
-    </tr>
-  </tbody>
-</table></div>
+<p>A machine whose <strong>shape</strong> were non-deterministic could not be drawn here. The
+interpreter supports nine BPMN element types and <strong>throws</strong> on the rest, on
+purpose: skipping an unrecognised element yields a process that runs, reports
+progress, and is silently not the process on the diagram.</p>
 
-<p>Two things fall out of that table immediately.</p>
+<p>So the shape is strict and enumerable. What varies is <strong>which enabled branch
+the agent takes</strong>, and what it writes.</p>
 
-<p><strong><code class="language-plaintext highlighter-rouge">content/</code> contains no content.</strong> It holds <code class="language-plaintext highlighter-rouge">content/pipeline/</code> (110 files) and
-<code class="language-plaintext highlighter-rouge">content/docs/</code>. Actual folio content lives in a <em>separate</em> repository. The
-directory is named for what it operates on, not what it holds — which is the
-direct motivation for the <code class="language-plaintext highlighter-rouge">content/</code> → <code class="language-plaintext highlighter-rouge">folio/</code> rename in
-<a href="https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913">the issue’s comment</a>.</p>
-
-<p><strong><code class="language-plaintext highlighter-rouge">skills/</code> is 144 files and 435 lines of code.</strong> Skill packages are
-overwhelmingly Markdown instructions plus a <code class="language-plaintext highlighter-rouge">package-manifest.json</code>. That is the
-taxonomy working as intended: a Skill is a <em>described</em> unit of work, and the
-Tools that satisfy it live elsewhere. It is also why <code class="language-plaintext highlighter-rouge">skills/</code> is the cheapest
-thing in the repo to split out.</p>
-<h2 id="where-the-domains-already-separate--and-where-they-do-not">
+<p><strong>That needed no change to the engine.</strong> An exclusive gateway carrying
+<code class="language-plaintext highlighter-rouge">&lt;folio:decision&gt;</code> is computed and <code class="language-plaintext highlighter-rouge">workflow_complete</code> <em>refuses</em> a
+hand-supplied outcome; one without it already meant the caller supplies the
+answer. The mechanism for a non-deterministic transition was there before
+anybody asked for one.</p>
+<h2 id="what-did-need-adding-saying-that-a-judgement-is-deliberate">
   
   
-    <a href="#where-the-domains-already-separate--and-where-they-do-not" class="anchor-heading" aria-labelledby="where-the-domains-already-separate--and-where-they-do-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the domains already separate — and where they do not
+    <a href="#what-did-need-adding-saying-that-a-judgement-is-deliberate" class="anchor-heading" aria-labelledby="what-did-need-adding-saying-that-a-judgement-is-deliberate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What did need adding: saying that a judgement is deliberate
   
   
 </h2>
     
 
-<p>An early version of this page answered by matching filenames. That is a lower
-bound by construction — it finds <code class="language-plaintext highlighter-rouge">lean-build-bg.sh</code> and misses a Lean special
-case inside a generic validator — so it has been replaced by a real import-graph
-partition, <code class="language-plaintext highlighter-rouge">bun run check:partition</code>
-(<code class="language-plaintext highlighter-rouge">scripts/repo-partition.ts</code>).</p>
-
-<p>The tool walks every <code class="language-plaintext highlighter-rouge">.ts</code> module under <code class="language-plaintext highlighter-rouge">src/</code>, <code class="language-plaintext highlighter-rouge">schemas/</code>, <code class="language-plaintext highlighter-rouge">adapters/</code>,
-<code class="language-plaintext highlighter-rouge">content/</code>, <code class="language-plaintext highlighter-rouge">scripts/</code>, <code class="language-plaintext highlighter-rouge">test/</code> and <code class="language-plaintext highlighter-rouge">types/</code>, resolves each relative import
-(the codebase writes bare, <code class="language-plaintext highlighter-rouge">.js</code>-for-<code class="language-plaintext highlighter-rouge">.ts</code>, and directory forms, so all three
-are tried), assigns each module to one of the five proposed repositories, and
-reports the edges that cross a boundary <strong>in the wrong direction</strong>.</p>
-<h3 id="the-partition">
-  
-  
-    <a href="#the-partition" class="anchor-heading" aria-labelledby="the-partition"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The partition
-  
-  
-</h3>
-    
-
-<p><strong>341 modules, 670 internal import edges</strong> (2026-09-18):</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>proposed repo</th>
-      <th style="text-align: right">modules</th>
-      <th style="text-align: right">by rule</th>
-      <th style="text-align: right">hand-triaged</th>
-      <th style="text-align: right">by keyword</th>
-      <th style="text-align: right">fell through</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">agentic-harness</code></td>
-      <td style="text-align: right">58</td>
-      <td style="text-align: right">43</td>
-      <td style="text-align: right">15</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assist-core</code></td>
-      <td style="text-align: right"><strong>129</strong></td>
-      <td style="text-align: right">120</td>
-      <td style="text-align: right">9</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-asst-sci</code></td>
-      <td style="text-align: right">36</td>
-      <td style="text-align: right">8</td>
-      <td style="text-align: right">8</td>
-      <td style="text-align: right">20</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">smart-kg</code></td>
-      <td style="text-align: right"><strong>0</strong></td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-      <td style="text-align: right">4</td>
-      <td style="text-align: right">1</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">3</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td><em>(test material)</em></td>
-      <td style="text-align: right">114</td>
-      <td style="text-align: right">110</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">4</td>
-      <td style="text-align: right">0</td>
-    </tr>
-    <tr>
-      <td><strong>unassigned</strong></td>
-      <td style="text-align: right"><strong>0</strong></td>
-      <td style="text-align: right">—</td>
-      <td style="text-align: right">—</td>
-      <td style="text-align: right">—</td>
-      <td style="text-align: right">0</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><code class="language-plaintext highlighter-rouge">hand-triaged</code> is its own column on purpose. Thirty-two platform
-meta-scripts — <code class="language-plaintext highlighter-rouge">gen-*</code>, <code class="language-plaintext highlighter-rouge">check-*</code>, <code class="language-plaintext highlighter-rouge">render-*</code> — were reported unassigned by the
-structural rules and then read one at a time, by the bean <code class="language-plaintext highlighter-rouge">dh4f</code> question:
-<em>does this read or write <strong>platform</strong>, or <strong>content</strong>?</em> The answer genuinely
-differs per file and no path pattern separates them —
-<code class="language-plaintext highlighter-rouge">scripts/gen-skill-docs.ts</code> is harness because Skills are a harness concept,
-while <code class="language-plaintext highlighter-rouge">scripts/gen-schema-docs.ts</code> is core because the content-object model is
-core’s. Recording those as <code class="language-plaintext highlighter-rouge">triage</code> rather than folding them into <code class="language-plaintext highlighter-rouge">rule</code> keeps a
-decision visible as a decision, so it can be revisited without first working out
-which entries were judgements.</p>
-
-<p>Two things in that table are worth reading carefully.</p>
-
-<p><strong><code class="language-plaintext highlighter-rouge">smart-kg</code> is zero.</strong> Not small — zero. Nothing in this repo is WHO L1
-material today, which confirms from the code what
-<a href="future-state.html#smart-kg">the future state</a> says from the prose: the L1/L2
-line has to be drawn by someone with the domain context, because there is no
-existing code to infer it from. It makes <code class="language-plaintext highlighter-rouge">smart-kg</code> <strong>new construction, like the
-Test repos</strong> — not an extraction.</p>
-
-<p><strong><code class="language-plaintext highlighter-rouge">smart-base</code> is four modules.</strong> The WHO material here is overwhelmingly prose,
-BPMN and schemas rather than TypeScript, so a module-count partition understates
-it badly. Do not read 4 as “nearly done”.</p>
-<h3 id="the-wrong-direction-edges--phase-is-worklist">
-  
-  
-    <a href="#the-wrong-direction-edges--phase-is-worklist" class="anchor-heading" aria-labelledby="the-wrong-direction-edges--phase-is-worklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The wrong-direction edges — Phase I’s worklist
-  
-  
-</h3>
-    
-
-<p><strong>46 edges</strong> import across a proposed boundary in a direction the dependency
-DAG forbids. Every module is classified, so this is a complete count rather
-than a floor:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>importer</th>
-      <th>imports from</th>
-      <th style="text-align: right">edges</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">agentic-harness</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assist-core</code></td>
-      <td style="text-align: right"><strong>21</strong></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assist-core</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-asst-sci</code></td>
-      <td style="text-align: right"><strong>20</strong></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">agentic-harness</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-asst-sci</code></td>
-      <td style="text-align: right">3</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assist-core</code></td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-      <td style="text-align: right">2</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><code class="language-plaintext highlighter-rouge">bun run check:partition:edges</code> prints all 46 by name. The two large groups have
-different causes and different fixes.</p>
-
-<p><strong>core → sci (20)</strong> is Lean and LaTeX reaching into generic code.
-<code class="language-plaintext highlighter-rouge">content/pipeline/build.ts</code> imports <code class="language-plaintext highlighter-rouge">render-latex</code>, <code class="language-plaintext highlighter-rouge">generate-main-tex</code>,
-<code class="language-plaintext highlighter-rouge">latex-preflight</code> and <code class="language-plaintext highlighter-rouge">lean-coverage</code>; <code class="language-plaintext highlighter-rouge">qa-utils.ts</code> imports <code class="language-plaintext highlighter-rouge">lean-signature</code>;
-<code class="language-plaintext highlighter-rouge">schemas/constraints.ts</code> imports <code class="language-plaintext highlighter-rouge">lean-packages</code>. This is the seven math block
-kinds’ machinery embedded in the document pipeline — the profile split
-<code class="language-plaintext highlighter-rouge">AGENTS.md</code> describes at the <em>schema</em> level, not yet carried through to imports.
-It is the expected shape of the problem, and the most mechanical to fix.</p>
-
-<p><strong>harness → core (21)</strong> is the more serious one. <code class="language-plaintext highlighter-rouge">src/core/feedback.ts</code>,
-<code class="language-plaintext highlighter-rouge">src/routes/feedback.ts</code>, <code class="language-plaintext highlighter-rouge">src/types.ts</code> and <code class="language-plaintext highlighter-rouge">schemas/assistant-types.ts</code> all
-import <code class="language-plaintext highlighter-rouge">schemas/types.ts</code> — the content-object model. That is the harness’s
-defining constraint, <a href="future-state.html#agentic-harness">that it does not “do” anything</a>,
-failing in practice: <strong>a harness that imports the content model cannot be
-extracted from underneath core.</strong> It makes <code class="language-plaintext highlighter-rouge">agentic-harness</code> harder to extract
-than <code class="language-plaintext highlighter-rouge">folio-asst-sci</code>, not easier, which is the opposite of the intuition that
-the most-depended-upon repo comes out first.</p>
-
-<p><strong>On the count’s history.</strong> The first run reported 33 cross-edges with 135
-modules unassigned; classifying the test material and the standalone MCP server
-took it to 41; triaging the last 27 took it to 45. <strong>Classifying more modules
-finds more violations, not fewer.</strong> The number only stopped moving because the
-unassigned column reached zero — which is why that column, not the edge count,
-is the one to check first when re-running this.</p>
-
-<p><strong>It then went to 46 without anyone touching a boundary.</strong> Merging ten commits
-from <code class="language-plaintext highlighter-rouge">main</code> brought five new modules — the CRDM stakeholder-map tooling and the
-BPMN reference check, all harness — and one of them imports the content model.
-So the harness → core violation is not a fixed debt being paid down; <strong>it grows
-as ordinary work lands</strong>, because nothing today stops a new harness module
-importing <code class="language-plaintext highlighter-rouge">schemas/types.ts</code>. That is an argument for a CI gate
-(<code class="language-plaintext highlighter-rouge">check:partition --strict</code>) once the count is driven down, not for treating 46
-as a number that will sit still.</p>
-<h2 id="the-mechanism-the-split-already-has">
-  
-  
-    <a href="#the-mechanism-the-split-already-has" class="anchor-heading" aria-labelledby="the-mechanism-the-split-already-has"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The mechanism the split already has
-  
-  
-</h2>
-    
-
-<p>This is the most important finding on the page, and it cuts both ways.</p>
-
-<p><code class="language-plaintext highlighter-rouge">harness.config.json</code> already declares cross-instance dependencies:</p>
-
-<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="nl">"folioAssistant"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"smart-base"</span><span class="p">,</span><span class="w"> </span><span class="nl">"git"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">,</span><span class="w"> </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"provides"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"skills"</span><span class="p">,</span><span class="w"> </span><span class="s2">"content"</span><span class="p">,</span><span class="w"> </span><span class="s2">"translations"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> implements a <strong>depth-first, listed-order, later-
-overlays-earlier</strong> resolution with cycle detection — explicitly the FHIR/SUSHI
-dependency methodology, applied upstream of it. <code class="language-plaintext highlighter-rouge">resolveDependencyTree</code>
-(<code class="language-plaintext highlighter-rouge">schemas/harness-config.ts:239</code>) and <code class="language-plaintext highlighter-rouge">flattenDependencies</code> are real, tested code.</p>
-
-<p><strong>That is exactly the mechanism a five-repo future state needs.</strong> The split does
-not require inventing composition; it requires finishing it.</p>
-<h3 id="what-is-not-wired">
-  
-  
-    <a href="#what-is-not-wired" class="anchor-heading" aria-labelledby="what-is-not-wired"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not wired
-  
-  
-</h3>
-    
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>f <span class="k">in </span>resolveSkillDirs resolveTranslationDirs resolveContentDirs<span class="p">;</span> <span class="k">do
-  </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">: </span><span class="si">$(</span><span class="nb">grep</span> <span class="nt">-rn</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span> <span class="nt">--include</span><span class="o">=</span><span class="s1">'*.ts'</span> <span class="nb">.</span> <span class="nt">--exclude-dir</span><span class="o">=</span>node_modules <span class="se">\</span>
-    | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'schemas/harness-config'</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span><span class="s2"> external refs"</span>
-<span class="k">done</span>
-</code></pre></div></div>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>exported resolver</th>
-      <th style="text-align: right">external callers</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">resolveSkillDirs</code></td>
-      <td style="text-align: right"><strong>0</strong></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">resolveTranslationDirs</code></td>
-      <td style="text-align: right"><strong>0</strong></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">resolveContentDirs</code></td>
-      <td style="text-align: right"><em>does not exist</em></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>The only non-test consumer of the entire module is
-<code class="language-plaintext highlighter-rouge">content/pipeline/po-resolve.ts</code> — the <strong>translation</strong> fallback chain. So of the
-three resolution paths the dependency model promises, one is wired, one is
-declared-but-uncalled, and one was never written.</p>
-
-<p>The module’s own docstring overstates this. Its table reads:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Resource</th>
-      <th>Resolved?</th>
-      <th>How</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Skills</td>
-      <td>✅</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/</code> directory, overlaid depth-first</td>
-    </tr>
-    <tr>
-      <td>Content blocks</td>
-      <td>✅</td>
-      <td><code class="language-plaintext highlighter-rouge">content/</code> directory, overlaid depth-first</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>Skills resolve only in the sense that a function exists which nobody calls.
-Content blocks have no function at all. <strong>Fixing that table — or the code under
-it — is Phase I work, not a documentation nit</strong>, because every later phase
-assumes a dependency can contribute skills and content.</p>
-<h3 id="what-the-model-used-to-rule-out--resolved-2026-09-18">
-  
-  
-    <a href="#what-the-model-used-to-rule-out--resolved-2026-09-18" class="anchor-heading" aria-labelledby="what-the-model-used-to-rule-out--resolved-2026-09-18"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the model used to rule out — resolved 2026-09-18
-  
-  
-</h3>
-    
-
-<p>The docstring was, until this change, explicit that two things are <strong>never</strong>
-resolved from a dependency: schemas, and MCP tools — “always from the root
-folio-assistant”. For a single-platform world that was a reasonable
-simplification. For the proposed split it was a blocker: <code class="language-plaintext highlighter-rouge">folio-asst-sci</code> exists
-to own the math block kinds, the paper adapter and <code class="language-plaintext highlighter-rouge">lean_build</code>, and a
-dependency able to contribute none of them can only ship prose.</p>
-
-<p>That is now <a href="migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built">Phase 0.1</a>,
-decided and built: <code class="language-plaintext highlighter-rouge">schemas/contributions.ts</code> plus <code class="language-plaintext highlighter-rouge">loadContributions()</code>. A
-dependency declares <code class="language-plaintext highlighter-rouge">"contributes": "./contributions.ts"</code> and adds block kinds,
-an adapter and MCP tools at load time. Collisions throw rather than resolving by
-load order; a diamond dependency graph is explicitly not a collision.</p>
-
-<p><strong>The same docstring was also optimistic in the other direction</strong>, and that
-half is not fixed, only correctly reported. It claimed content blocks resolve
-across dependencies (✅) when no such function has ever existed, and that skills
-resolve when <code class="language-plaintext highlighter-rouge">resolveSkillDirs</code> has no caller. The table now distinguishes
-wired (✅), written-but-uncalled (⚠️) and absent (❌), so it states what the code
-does rather than what it intends. <strong>Two resolution paths remain genuinely
-unbuilt</strong> — content-directory overlay, and QA criteria from a dependency.</p>
-<h2 id="the-failure-mode-this-repo-has-already-paid-for">
-  
-  
-    <a href="#the-failure-mode-this-repo-has-already-paid-for" class="anchor-heading" aria-labelledby="the-failure-mode-this-repo-has-already-paid-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The failure mode this repo has already paid for
-  
-  
-</h2>
-    
-
-<p>Bean <code class="language-plaintext highlighter-rouge">dh4f</code> (completed 2026-08-08) triaged <strong>30 pipeline scripts</strong> that computed
-paths from their own location — correct before the platform/folio split, wrong
-after — and/or named a specific folio paper in platform code. 23 were fixed.</p>
-
-<p>Three of them had been <em>reporting success over a corpus they had never read</em>:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>script</th>
-      <th>before</th>
-      <th>after</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">validate-tex</code></td>
-      <td>“No errors found”, exit 0, over 0 files</td>
-      <td>1 file, 2 snippets, both valid</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">conditional-class-banner-audit</code></td>
-      <td>✓ over 0 blocks, exit 0 — <strong>a CI gate</strong></td>
-      <td>refuses, exit 1</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">audit-tex-source</code></td>
-      <td>“✓ No TeX-source hazards detected” over 0 files</td>
-      <td>scans the real corpus</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Every repo boundary the migration creates can reproduce this defect</strong>, and a
-green check is its symptom. The plan’s per-phase gate is written accordingly:
-an empty corpus must exit non-zero, and each extraction is verified by running
-the moved tool against a synthetic folio, not by observing that CI is still
-green.</p>
-<h2 id="what-this-repo-is-authoritative-for-today">
-  
-  
-    <a href="#what-this-repo-is-authoritative-for-today" class="anchor-heading" aria-labelledby="what-this-repo-is-authoritative-for-today"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this repo is authoritative for today
-  
-  
-</h2>
-    
-
-<p>Reading the taxonomy against the measurements:</p>
+<p>A gateway with no decision table was two different things wearing one
+appearance:</p>
 
 <ul>
-  <li><strong>Tool</strong> — the MCP server (<code class="language-plaintext highlighter-rouge">src/server.ts</code>, 11 generic tools), the content
-pipeline, the adapters, the build/QA/render scripts. This is the bulk.</li>
-  <li><strong>Content</strong> — the content-object model (<code class="language-plaintext highlighter-rouge">schemas/types.ts</code>,
-<code class="language-plaintext highlighter-rouge">constraints.ts</code>, <code class="language-plaintext highlighter-rouge">builders.ts</code>), the block kinds, the 9 skill packages, and
-the BPMN processes under <code class="language-plaintext highlighter-rouge">skills/workflows/</code>. These are schemas and Skill
-definitions: Content-repo material by the taxonomy, even though no subject
-matter lives here.</li>
-  <li><strong>Test</strong> — no Test repo exists. Fixtures are distributed: <code class="language-plaintext highlighter-rouge">test/</code>,
-<code class="language-plaintext highlighter-rouge">scripts/tests/</code>, and the synthetic-folio helpers bean <code class="language-plaintext highlighter-rouge">dh4f</code> describes. There
-are no Test Plans and no Gherkin. Test data is <strong>not</strong> a folio content type,
-which the taxonomy says it should be.</li>
-  <li><strong>Consumer</strong> — <code class="language-plaintext highlighter-rouge">ui/</code>, <code class="language-plaintext highlighter-rouge">viewer/</code>, <code class="language-plaintext highlighter-rouge">home_page/</code> and <code class="language-plaintext highlighter-rouge">blueprint/</code> are in-repo
-clients of the model.</li>
+  <li><strong>somebody’s call</strong>, which no table can make, and</li>
+  <li><strong>a table nobody has written yet.</strong></li>
 </ul>
 
-<p>The Test gap is worth stating plainly because it is the one kind the issue
-describes that this repo has <strong>not</strong> begun: everything else exists in some form
-and needs sorting, whereas the Test repo needs building.</p><hr />
+<p>Indistinguishable from the outside — the gap <code class="language-plaintext highlighter-rouge">folio:no-skill</code> closed for
+activities, one element type along. So <code class="language-plaintext highlighter-rouge">&lt;folio:judgement reason="…"/&gt;</code>, with
+the same three rules: the reason is <strong>required</strong> and a declaration without one
+does not load; it is refused on anything but an exclusive gateway; and it is
+refused <strong>alongside</strong> <code class="language-plaintext highlighter-rouge">folio:decision</code>, because a gateway claiming both that a
+table decides it and that a person does leaves a reader unable to tell which
+the author meant.</p>
 
-<p>Next: <a href="future-state.html">Future state</a> — the five target repositories.</p>
+<p><strong>Why this matters more than the activity case.</strong> A step with no skill is a
+documentation gap. A gateway with no table is a point where an LLM decides the
+branch — and <em>how many of those there are, and which</em>, is exactly the question
+the deterministic-to-agentic spectrum is about (bean <code class="language-plaintext highlighter-rouge">q0tc</code>). <strong>A mechanism
+that cannot enumerate its own judgement points cannot answer it.</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">check:workflow-refs</code> now prints the three-way split. Issue #200 §6 classified
+this repository’s decision points in prose, in an issue, where nothing reads
+it; the count is now printed from the models. <strong>Ask the checker, not this
+page</strong> — and note that an undeclared gateway is a backlog entry rather than a
+defect: every one that predates the marker lands there, and a gate that failed
+on an un-annotated corpus is a gate somebody turns off.</p>
+<h2 id="what-the-machine-must-never-do">
+  
+  
+    <a href="#what-the-machine-must-never-do" class="anchor-heading" aria-labelledby="what-the-machine-must-never-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the machine must never do
+  
+  
+</h2>
+    
+
+<p><strong>It claims nothing.</strong> No <code class="language-plaintext highlighter-rouge">folio:bean</code> appears anywhere in the diagram. The
+process RECORDS that an actor claimed a bean; it does not claim one. A machine
+that claimed on the actor’s behalf would make the claim’s owner unrecoverable
+— and a claim <em>announces rather than reserves</em> precisely so a reader can tell
+who announced it.</p>
+
+<p><strong>It closes nothing but itself.</strong> <code class="language-plaintext highlighter-rouge">A_CloseSession</code> records that the actor
+stopped. It does not resolve beans or complete instances: those outlive the
+session by design, and a machine that tidied them away on exit would be
+asserting that work finished because somebody went away.</p>
+
+<p><strong>It is advisory, not strict.</strong> An agent keeping its own session record must
+never be refused. A missing update is a gap in a record, not an unauthorised
+write — and the base content processes are the ones that gate.</p>
+<h2 id="the-two-judgement-points-and-why-each-is-safe-to-be-one">
+  
+  
+    <a href="#the-two-judgement-points-and-why-each-is-safe-to-be-one" class="anchor-heading" aria-labelledby="the-two-judgement-points-and-why-each-is-safe-to-be-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two judgement points, and why each is safe to be one
+  
+  
+</h2>
+    
+
+<p><strong><code class="language-plaintext highlighter-rouge">Gateway_ActorKnown</code></strong> — only the discussion says who is acting, and it
+rarely says so in a field. A table would need a name to read; this branch <em>is</em>
+the reading.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Gateway_TurnEffect</code></strong> — whether a turn changed the session’s state is a
+reading of intent. <em>“I might look at X later”</em> and <em>“start X”</em> differ by
+nothing a table can key on.</p>
+
+<p>Both are safe to be judgement for the same reason, and it is worth stating
+because it will not hold everywhere: <strong>getting one wrong is recoverable.</strong> The
+next turn corrects it, and nothing downstream has been authorised in the
+meantime. Contrast the five steps the base processes mark <code class="language-plaintext highlighter-rouge">relaxable="false"</code>
+— the editor seeing the findings, the decision, the write, the release
+authorisation — where a wrong branch authorises something that cannot be
+un-authorised.</p>
+
+<p><strong>That contrast is the shape of the answer <code class="language-plaintext highlighter-rouge">q0tc</code> is looking for</strong>, and this
+skill deliberately does not pre-empt it: <em>recoverability</em> is one candidate
+criterion for where judgement is admissible, tested on two gateways. Whether
+it is the right one, and what else belongs beside it, is research rather than
+assertion.</p>
+<h2 id="writing-state-a-non-deterministic-machine-produced">
+  
+  
+    <a href="#writing-state-a-non-deterministic-machine-produced" class="anchor-heading" aria-labelledby="writing-state-a-non-deterministic-machine-produced"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Writing state a non-deterministic machine produced
+  
+  
+</h2>
+    
+
+<p>The record’s shape cannot be assumed from the writer’s care, because the
+writer is an LLM playing a part. <code class="language-plaintext highlighter-rouge">parseSessionContext()</code> parses at the
+boundary.</p>
+
+<p><strong>The general rule, of which this is the first case: where a machine may be
+PLAYED rather than executed, the schema is the contract and the parse is where
+it is enforced.</strong> Not the writer’s discipline, not a review, not a convention
+— a parse, at the point the value crosses in.</p>
+<h2 id="see-also">
+  
+  
+    <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
+  
+  
+</h2>
+    
+
+<ul>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/session-context.html"><code class="language-plaintext highlighter-rouge">session-context</code></a> — the record this machine keeps, and
+why <code class="language-plaintext highlighter-rouge">actor</code> is its required field.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/workflow-state.html"><code class="language-plaintext highlighter-rouge">workflow-state</code></a> — which store answers which question,
+and why an instance and a bean must be one answer.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/bpmn-processes.html"><code class="language-plaintext highlighter-rouge">bpmn-processes</code></a> — authoring an activity, strict vs
+advisory, and DMN-backed gateways.</li>
+  <li><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/process-state.html"><code class="language-plaintext highlighter-rouge">process-state</code></a> — the five detectors for being out of
+process. A session whose view has drifted from its instances is one of them.</li>
+</ul>
 
           
 

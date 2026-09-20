@@ -251,21 +251,21 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T06:57:45.804Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/604b9be2a7ffdb2366fde03eaa4894426e67dbce",
-  "sourceCommitSha": "604b9be2a7ffdb2366fde03eaa4894426e67dbce",
-  "sourceCommitAt": "2026-09-20T06:56:11Z",
+  "generatedAt": "2026-09-20T07:23:39.311Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c4ed79ad46ee8c1da995eebbdeed1e44ebad80a",
+  "sourceCommitSha": "3c4ed79ad46ee8c1da995eebbdeed1e44ebad80a",
+  "sourceCommitAt": "2026-09-20T07:22:10Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 173,
+    "Skill": 174,
     "Actor": 27,
     "Capability": 24,
-    "Role": 110,
+    "Role": 114,
     "Convention": 2,
     "SkillPackage": 8,
-    "Process": 36,
-    "SequenceFlow": 498,
-    "ProcessNode": 464,
+    "Process": 37,
+    "SequenceFlow": 511,
+    "ProcessNode": 475,
     "Tool": 32,
     "Schema": 59,
     "GraphKind": 20,
@@ -672,6 +672,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-state-machine",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "session-state-machine",
+      "title": "Playing a state machine",
+      "description": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `folio:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/session-state-machine.md",
+      "instructionLines": 130,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-state-machine"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/workflow-state",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "workflow-state",
@@ -1034,7 +1050,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/crdm-requirements-workflow.md",
-      "instructionLines": 266,
+      "instructionLines": 269,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1746,7 +1762,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 189,
+      "instructionLines": 214,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2076,7 +2092,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 223,
+      "instructionLines": 232,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4094,6 +4110,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-state-machine",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/workflow-state"
       ],
       "providesCapability": [],
@@ -16357,6 +16374,372 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Review/node/End_Reviewed"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Session state machine",
+      "enforcement": "advisory",
+      "sourcePath": "skills/workflows/session-state-machine.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Start_Session"
+      ],
+      "nodeCount": 11,
+      "flowCount": 13,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Start_Session",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_AskWhoIsActing",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_AskWhoIsActing",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_OpenSession",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_OpenSession",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "nothing changed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_Touch",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_Touch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "state changed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_UpdateSession",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_UpdateSession",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the session is ending",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_CloseSession",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_CloseSession",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/End_Session",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Agent (playing the machine)",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Human%20actor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Human actor",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Human%20actor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Session%20record",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Session record",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/Session%20record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Start_Session",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "An actor picks up",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Start_Session"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Establish who is acting",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_2"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_IdentifyActor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Actor established?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_ActorKnown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_AskWhoIsActing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Ask who is acting",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Human%20actor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_4"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_AskWhoIsActing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_OpenSession",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Open the session record",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_6"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_OpenSession"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Take in the turn",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_6",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_9",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_7"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "What did the turn change?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_12"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/Gateway_TurnEffect"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_Touch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Refresh `updatedAt` only",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_9"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_Touch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_UpdateSession",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Write what changed",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_11"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_UpdateSession"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_CloseSession",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Close the session",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_13"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/A_CloseSession"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/node/End_Session",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Session closed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_SessionStateMachine/flow/F_13"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_SessionStateMachine/node/End_Session"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#process/Process_DocumentAuthoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Authoring a document",
@@ -21364,7 +21747,8 @@
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/User%20(person)",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Contributor%20(human%20or%20agent)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Log%20operator%20(human)"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Log%20operator%20(human)",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Human%20actor"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/user"
     },
@@ -21766,18 +22150,22 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/semantic-review-scoping",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-state-machine",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/voice-authoring-guidance",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/watch"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/workflow-state"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Authoring%20agent%20(system)",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Folio-Assistant%20Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(this%20session)",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20/%20platform%20(automated)"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20/%20platform%20(automated)",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Agent%20(playing%20the%20machine)"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/authoring-agent"
     },
@@ -22069,6 +22457,25 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/log"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/session-record",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "session-record",
+      "title": "Session record",
+      "description": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context"
+      ],
+      "bindsLane": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/Session%20record"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/session-record"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#role/initiator",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "initiator",
@@ -22300,8 +22707,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "51e55f4db4a5015d681e8d732c4502382790c7ce",
+    "sha": "97104845fbcac522c9c97fab89690186a2bfcbf4",
     "pr": "458/merge",
-    "run": "35495530816"
+    "run": "35496684109"
   }
 }
