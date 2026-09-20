@@ -138,8 +138,31 @@ export interface DublinCoreRef {
 
 /** L2 — a generic persona the guideline is written for. */
 export interface PersonaBlock extends DakBlockBase { kind: "persona" }
-/** L2 — a user scenario / narrative walkthrough. */
-export interface UserScenarioBlock extends DakBlockBase { kind: "user-scenario" }
+/**
+ * L2 — a user scenario / narrative walkthrough.
+ *
+ * Carries the personas it involves, because that is the DAK relation a user
+ * scenario IS: WHO writes one as a named persona moving through a business
+ * process, and a walkthrough with nobody in it is a description of a system
+ * rather than a scenario.
+ *
+ * It is NOT `uses[]`. That is the EDITORIAL relation — what a reader must have
+ * read to follow the block — and overloading it with persona bindings would
+ * destroy the signal every ordering metric is computed from.
+ */
+export interface UserScenarioBlock extends DakBlockBase {
+  kind: "user-scenario";
+  /**
+   * Ids of the personas this scenario involves, at least one.
+   *
+   * A persona here is a ROLE — the BPMN swimlane an actor acts in — so this
+   * is the edge that lets "which scenarios involve the Requestor?" be a graph
+   * query rather than a grep.
+   *
+   * @ref RoleDef
+   */
+  personas: string[];
+}
 /** L2 — a business process, authored as BPMN 2.0 in the `.bpmn` companion. */
 export interface BusinessProcessBlock extends DakBlockBase { kind: "business-process" }
 /** L2 — one core data element of the data dictionary. */
@@ -262,6 +285,20 @@ const DAK_SCHEMA_EXTENSIONS: Partial<Record<DakBlockKind, z.ZodRawShape>> = {
   "health-intervention": {
     references: z.array(DublinCoreRefSchema).min(1, {
       message: "A health intervention needs at least one reference (WHO models it 1..*)",
+    }),
+  },
+  "user-scenario": {
+    /**
+     * The personas the scenario involves — role ids, at least one.
+     *
+     * Required for the same reason `health-intervention.references` is: a
+     * scenario with no persona is invalid at CONSTRUCTION rather than at
+     * review, because the persona binding is what makes it a scenario.
+     *
+     * @ref RoleDefSchema
+     */
+    personas: z.array(z.string().min(1)).min(1, {
+      message: "A user scenario needs at least one persona — it is the relation that makes it a scenario",
     }),
   },
 };

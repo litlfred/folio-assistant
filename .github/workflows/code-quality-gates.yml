@@ -563,6 +563,12 @@ jobs:
           # neighbouring checks miss it by design. The cold-start line every
           # agent runs first rotted in exactly that gap.
           bun run check:command-paths
+          # Bean `b963` fourth class. It does NOT catch a re-rooted ascent —
+          # three designs for that were measured and failed. It makes a name
+          # that claims an anchor land on it, which removes the ambiguity the
+          # defect hid behind: PLATFORM meant the repo root in one test and
+          # cat-harness/ in five siblings, in one directory.
+          bun run check:anchor-names
           bun run check:bean-parents
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`

@@ -23,8 +23,8 @@ import { join, relative, basename } from "node:path";
 import { availableLocales } from "./po-resolve";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
-const REPO_ROOT = join(import.meta.dir, "..", "..");
-const DOCS_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
+const INSTANCE_ROOT = join(import.meta.dir, "..", "..");
+const DOCS_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
 const DATA_DIR = join(DOCS_DIR, "_data");
 const OUTPUT_FILE = join(DATA_DIR, "translation-qa.json");
 
@@ -126,7 +126,7 @@ export function runTranslationQaSweep(): TranslationQaSweepResult {
 
     // Derive stem for translation lookup
     const stem = basename(relPath, ".md");
-    const locales = availableLocales(REPO_ROOT, stem);
+    const locales = availableLocales(INSTANCE_ROOT, stem);
     const hasLangField = "lang" in fm;
 
     const status: PageTranslationStatus = {

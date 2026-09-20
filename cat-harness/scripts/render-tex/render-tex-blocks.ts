@@ -31,8 +31,8 @@ import { Glob } from "bun";
 
 // ── Config ───────────────────────────────────────────────────────
 
-const REPO_ROOT = join(import.meta.dir, "../..");
-const FOLIO_ROOT = folioDir(REPO_ROOT);
+const INSTANCE_ROOT = join(import.meta.dir, "../..");
+const FOLIO_ROOT = folioDir(INSTANCE_ROOT);
 const PREAMBLE_PATH = join(import.meta.dir, "preamble.tex");
 
 const args = process.argv.slice(2);
@@ -112,7 +112,7 @@ async function renderToSvg(
   texSource: string,
   outputPath: string,
 ): Promise<{ ok: boolean; error?: string }> {
-  const tmpDir = join(REPO_ROOT, "build", "tex-tmp", `render-${Date.now()}`);
+  const tmpDir = join(INSTANCE_ROOT, "build", "tex-tmp", `render-${Date.now()}`);
   mkdirSync(tmpDir, { recursive: true });
 
   // Wrap in standalone document
