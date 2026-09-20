@@ -628,6 +628,47 @@ best practice.”</strong></p>
 <p><code class="language-plaintext highlighter-rouge">src/core/retry.ts</code> is that rule as code — <code class="language-plaintext highlighter-rouge">withBackoff</code>, <code class="language-plaintext highlighter-rouge">classifyResponse</code>,
 <code class="language-plaintext highlighter-rouge">waitFor</code>. Use it rather than writing a loop; a retry policy invented per
 call site is a policy nobody can change in one place.</p>
+<h2 id="from-a-shell-script-or-a-workflow-call-backoff-sleepts">
+  
+  
+    <a href="#from-a-shell-script-or-a-workflow-call-backoff-sleepts" class="anchor-heading" aria-labelledby="from-a-shell-script-or-a-workflow-call-backoff-sleepts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> From a shell script or a workflow, call <code class="language-plaintext highlighter-rouge">backoff-sleep.ts</code>
+  
+  
+</h2>
+    
+
+<p><strong>“Use <code class="language-plaintext highlighter-rouge">retry.ts</code>” does not cover a <code class="language-plaintext highlighter-rouge">run:</code> body</strong>, which cannot import
+TypeScript — and reading it as though it did is how this rule was broken
+everywhere it applied while its test suite stayed green.</p>
+
+<p>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">06kg</code>: <strong>all four</strong> retry loops in
+<code class="language-plaintext highlighter-rouge">.github/workflows/feature-staging.yml</code> slept <code class="language-plaintext highlighter-rouge">$((attempt * 5))</code> — 5 s then
+10 s, linear and unjittered. That is the schedule §”Jitter is not decoration
+here” below names as the thundering herd, on <code class="language-plaintext highlighter-rouge">gh-pages</code>, the ref it cites as
+the contended one, written by the same concurrent sessions it says contend on
+it. Nothing noticed, because the rule had an implementation and a test <strong>in
+TypeScript</strong> and four call sites <strong>in bash that no check read</strong>. It was found
+by somebody reading a sibling’s open PR, which is not a mechanism.</p>
+
+<p>So, from shell:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness/scripts/backoff-sleep.ts <span class="nt">--attempt</span> <span class="s2">"</span><span class="nv">$attempt</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>It calls <code class="language-plaintext highlighter-rouge">waitFor</code> directly, so a workflow and <code class="language-plaintext highlighter-rouge">withBackoff</code> compute the same
+number from the same code. Do <strong>not</strong> write a shell function instead: copied
+into four <code class="language-plaintext highlighter-rouge">run:</code> bodies it is four implementations again, which is how six
+copies of <code class="language-plaintext highlighter-rouge">stripLeanComments</code> ended up with three broken and nothing saying so
+(bean <code class="language-plaintext highlighter-rouge">bqrg</code>).</p>
+
+<p><code class="language-plaintext highlighter-rouge">retry-backoff-in-workflows.test.ts</code> is the enforcement, and it pins the
+<em>property</em> — a loop that retries does not compute its own wait — rather than
+any spelling. A loop reaching the shared implementation some other way passes.</p>
+
+<p>One number to read correctly: the cap applies to the <strong>ideal</strong> wait, before
+jitter. <code class="language-plaintext highlighter-rouge">waitFor</code> caps <code class="language-plaintext highlighter-rouge">baseMs * 2 ** (attempt - 1)</code> and then multiplies by
+<code class="language-plaintext highlighter-rouge">[0.5, 1.5)</code>, so an actual wait runs to 1.5x the cap — 24 s against a 16 s
+cap, which is not a bug in the cap.</p>
 <h2 id="retrying-a-definitive-answer-is-not-caution">
   
   
@@ -771,7 +812,7 @@ rejected push.
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35528648711"><code>4cdd77d</code></a> &middot; 2026-09-20T18:19:37Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35528810971"><code>a9ca094</code></a> &middot; 2026-09-20T18:22:35Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

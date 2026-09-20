@@ -651,7 +651,7 @@ about it, or a record it may write from one it may not.</p>
     <tr>
       <td><strong><code class="language-plaintext highlighter-rouge">content</code></strong></td>
       <td>produces it — that is usually the point</td>
-      <td>a skill, a schema, a library section</td>
+      <td>a skill, a schema, a folio chapter</td>
     </tr>
     <tr>
       <td><strong><code class="language-plaintext highlighter-rouge">context</code></strong></td>
@@ -663,8 +663,16 @@ about it, or a record it may write from one it may not.</p>
       <td><strong>writes it as it runs</strong> — a bean’s status changes because a step completed</td>
       <td>a bean, a workflow instance, a QA verdict</td>
     </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">derived</code></strong></td>
+      <td>produces it <strong>from a source</strong>, and would regenerate it rather than re-author it. Not the working corpus</td>
+      <td>a <code class="language-plaintext highlighter-rouge">library/</code> section</td>
+    </tr>
   </tbody>
 </table></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">content</code>’s example used to be “a library section” and that was wrong</strong> —
+see §”The case that added <code class="language-plaintext highlighter-rouge">derived</code>” below. It is a folio chapter now.</p>
 
 <p>It is <code class="language-plaintext highlighter-rouge">holds</code> on <code class="language-plaintext highlighter-rouge">GraphKindDef</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>, and it is
 <strong>required</strong>: <code class="language-plaintext highlighter-rouge">tsc</code> refuses a kind that has not said.</p>
@@ -688,6 +696,9 @@ they have agreed with each other in every case here.</p>
 instructs, a schema still constrains, a library section still reads. A bean
 names work on something that is no longer there; a QA verdict judges an absent
 subject. <strong>If detaching it empties it, it is not content.</strong></p>
+
+<p>(A library section passes this and is still not <code class="language-plaintext highlighter-rouge">content</code> — standing on its own
+rules out <code class="language-plaintext highlighter-rouge">state</code>, not <code class="language-plaintext highlighter-rouge">derived</code>. The section below is that case.)</p>
 
 <p><strong>Would you regenerate it or re-author it?</strong> Content and context are <em>written</em>
 by somebody with an intention. Live state is <em>arrived at</em> — re-running is how
@@ -837,6 +848,68 @@ is the position this axis exists to end.</p>
 <code class="language-plaintext highlighter-rouge">renderable</code> and <code class="language-plaintext highlighter-rouge">holds</code>, so two layers registering one name on different
 layers is a conflict that throws rather than a diamond where the first silently
 wins. <code class="language-plaintext highlighter-rouge">summary</code>, <code class="language-plaintext highlighter-rouge">skill</code> and <code class="language-plaintext highlighter-rouge">schema</code> are descriptive and are not compared.</p>
+<h2 id="the-case-that-added-derived--library-2026-09-20">
+  
+  
+    <a href="#the-case-that-added-derived--library-2026-09-20" class="anchor-heading" aria-labelledby="the-case-that-added-derived--library-2026-09-20"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The case that added <code class="language-plaintext highlighter-rouge">derived</code> — <code class="language-plaintext highlighter-rouge">library/</code>, 2026-09-20
+  
+  
+</h2>
+    
+
+<p>The fourth layer exists because the two supporting questions <strong>disagreed</strong>, and
+the instruction above is to say so rather than pick. This is what saying so
+looked like.</p>
+
+<p>Owner, 2026-09-20: <em>“library is static (only if we materialize assets or
+not)”</em> and <em>“can duplicate asset into a folio and work there.”</em> Bean <code class="language-plaintext highlighter-rouge">hqku</code>.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>question</th>
+      <th>answer for a <code class="language-plaintext highlighter-rouge">library/</code> section</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>does a process write it?</td>
+      <td><strong>yes</strong> — <code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></td>
+    </tr>
+    <tr>
+      <td>does it stand on its own?</td>
+      <td><strong>yes</strong> — a section still reads. Says <code class="language-plaintext highlighter-rouge">content</code></td>
+    </tr>
+    <tr>
+      <td>regenerate, or re-author?</td>
+      <td><strong>regenerate</strong>, from the ingested source. Says not-content</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Both candidate answers were wrong, and each was ruled out by a rule rather
+than by taste:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">context</code> is ruled out</strong> because it carries <em>“a step that writes to it is a
+defect, not an update”</em> — and a declared process writes <code class="language-plaintext highlighter-rouge">library/</code>. Choosing
+it would have made <code class="language-plaintext highlighter-rouge">document-ingestion</code> a defect by this axis’s own rule.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">content</code> is ruled out</strong> by the sweep rule, <em>“qa-sweep is only on
+active/working content”</em> (owner, same day). A QA finding against a derived
+section is a finding against its <strong>generator</strong>, so a sweep that judges
+<code class="language-plaintext highlighter-rouge">library/</code> sends a reviewer to fix the wrong file.</li>
+</ul>
+
+<p>What <code class="language-plaintext highlighter-rouge">derived</code> buys, concretely: <code class="language-plaintext highlighter-rouge">walkBlocks</code> skips a directory whose declared
+graphs are all non-<code class="language-plaintext highlighter-rouge">content</code>, so <code class="language-plaintext highlighter-rouge">library/</code> leaves the sweep <strong>with no
+directory name written down anywhere</strong> — the same way <code class="language-plaintext highlighter-rouge">fsh-guts/</code> did. A
+hardcoded skip would have been the alternative, and a hardcoded path is what
+this declaration exists to remove.</p>
+
+<p><strong>What it does NOT mean.</strong> <code class="language-plaintext highlighter-rouge">derived</code> is not “unimportant” and not “not
+committed”. <code class="language-plaintext highlighter-rouge">library/</code> is L1 corpus, committed and greppable, and every
+knowledge-graph reference to a source still resolves through it. The layer says
+where a <em>finding</em> belongs, not what the material is worth.</p>
 <h2 id="classifying-a-kind-is-not-a-ruling-on-a-directorys-contents">
   
   
@@ -894,7 +967,7 @@ vanishes leaves a sibling unable to tell abandonment from accident.</li>
 
   <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35528648711"><code>4cdd77d</code></a> &middot; 2026-09-20T18:19:37Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35528810971"><code>a9ca094</code></a> &middot; 2026-09-20T18:22:35Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
