@@ -31,6 +31,24 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:Convention",
+      "@type": "rdfs:Class",
+      "label": "Convention",
+      "comment": "A standing rule an actor must hold while performing a task, bound to a process, a lane or an activity rather than loaded unconditionally. Resolution is first-binding-wins along that order, not a merge, so a reader asking why a rule applies here gets one answer.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness",
+      "seeAlso": "https://litlfred.github.io/agentic-harness.html"
+    },
+    {
+      "@id": "cat:Requirement",
+      "@type": "rdfs:Class",
+      "label": "Requirement",
+      "comment": "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness",
+      "seeAlso": "https://litlfred.github.io/crdm-methodology.html"
+    },
+    {
       "@id": "cat:SkillPackage",
       "@type": "rdfs:Class",
       "label": "SkillPackage",
@@ -190,6 +208,30 @@
       "@type": "rdf:Property",
       "label": "typeIri",
       "comment": "The IRI of a node's type, so a consumer need not parse the `@type` string.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:statement",
+      "@type": "rdf:Property",
+      "label": "statement",
+      "comment": "What a convention REQUIRES, in one line. Distinct from rdfs:comment, which is prose about the node: this is the rule itself, and a consumer filtering for enforceable text needs the two apart.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:rationale",
+      "@type": "rdf:Property",
+      "label": "rationale",
+      "comment": "Why a convention holds, so a reader can tell whether it still does. Kept separate from the statement deliberately — a rule and its justification collapsed into one field is a rule nobody can retire, because nothing is left that says what would falsify it.",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:applies",
+      "@type": "rdf:Property",
+      "label": "applies",
+      "comment": "The surfaces a convention governs — `typescript`, `bpmn`, `commit-message`. A filter, not prose, and open rather than enumerated: a closed set would have to be edited before a convention about a new surface could exist.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
     },
