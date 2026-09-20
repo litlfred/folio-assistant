@@ -25,6 +25,7 @@ import {
   flattenDependencies,
   type HarnessConfig,
 } from "../../schemas/harness-config";
+import { directoryForGraph } from "../../schemas/cat-harness.js";
 
 // ── Types ───────────────────────────────────────────────────────
 
@@ -54,9 +55,37 @@ export interface PoResolveOptions {
 
 // ── Helpers ─────────────────────────────────────────────────────
 
+/**
+ * Where a folio keeps its `.po` and `.pot` files.
+ *
+ * THREE SOURCES, in this order, and the order is the whole point:
+ *
+ * 1. `harness.config.json`'s `translation.translationDir`, if set. An explicit
+ *    per-folio override stays authoritative — a folio that named a directory
+ *    meant it, and changing that silently would be worse than any tidiness.
+ * 2. the **declaration** — `harness.json`'s `translation-sources` graph. This
+ *    is what the rest of the pipeline reads, including
+ *    `translationSourcesDir` in `src/tools/translation.ts`.
+ * 3. the convention, `translations/`, for an instance that declares neither.
+ *
+ * Step 2 was MISSING and it cost a red build. The directory was declared in TWO
+ * places — here by convention and in `harness.json` as a graph — and `wggr`
+ * moved the declared one to `folio-assistant/translations/`. This function went
+ * on composing `folioRoot/translations`, so every PO lookup resolved to a path
+ * that no longer existed and `translation:block-qa:check` reported a sidecar
+ * with "no PO source any more". The same fact in two places, free to drift,
+ * exactly as `AGENTS.md` warns.
+ *
+ * Reading the declaration here removes the second place rather than adding a
+ * third: this instance sets no `translationDir` and now needs none.
+ */
 function translationDir(folioRoot: string, config?: HarnessConfig | null): string {
-  const dir = config?.translation?.translationDir ?? "translations";
-  return join(folioRoot, dir);
+  const explicit = config?.translation?.translationDir;
+  if (explicit) return join(folioRoot, explicit);
+  const declared = directoryForGraph(folioRoot, "translation-sources");
+  // declared-path-literal: the convention fallback for a folio that declares
+  // neither, matching `translationSourcesDir` in src/tools/translation.ts.
+  return declared ?? join(folioRoot, "translations");
 }
 
 // ── Resolution ──────────────────────────────────────────────────

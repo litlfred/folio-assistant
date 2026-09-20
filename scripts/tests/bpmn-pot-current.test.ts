@@ -31,6 +31,8 @@ import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { directoryForGraph } from "../../schemas/cat-harness.js";
+
 const root = resolve(import.meta.dir, "../..");
 
 describe("BPMN translation templates", () => {
@@ -38,7 +40,16 @@ describe("BPMN translation templates", () => {
     // Without this, deleting `translations/fr/workflows/` makes the checker
     // report every locale as "not a target" and exit 0, which is a vacuous
     // pass over the exact defect being guarded against.
-    const dir = join(root, "translations");
+    // RESOLVED from the declaration, not composed. This read
+    // `join(root, "translations")`, and `wggr` moved that directory under the
+    // instance stub — which made this very guard vacuous in the way its own
+    // comment above warns about, except by RELOCATION rather than deletion.
+    // A guard against a vacuous pass that is itself addressed by convention
+    // can be silenced by a `git mv`.
+    // declared-path-literal: the convention fallback for an instance that
+    // declares nothing, matching `translationSourcesDir` in
+    // src/tools/translation.ts.
+    const dir = directoryForGraph(root, "translation-sources") ?? join(root, "translations");
     const gating = existsSync(dir)
       ? readdirSync(dir, { withFileTypes: true }).filter(
           (e) => e.isDirectory() && existsSync(join(dir, e.name, "workflows")),
