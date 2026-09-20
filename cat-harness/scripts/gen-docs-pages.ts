@@ -761,9 +761,42 @@ function processHierarchy(): Record<string, string[]> {
   }));
   mkdirSync(dirname(TODO_ASSET), { recursive: true });
   const processes = processHierarchy();
+  // INDENTED, and it is about merging rather than about reading.
+  //
+  // Minified, this file is ONE LINE of ~12 KB. Git merges text by line, so a
+  // single line means any change on both sides of a merge is a whole-file
+  // conflict — two branches adding two different todos cannot both win. That
+  // is not hypothetical: it conflicted on three consecutive merges of one
+  // branch on 2026-09-20, every time, while `repo-partition.ts`,
+  // `package-manifest.json` and `AGENTS.md` all auto-merged cleanly despite
+  // being edited on both sides.
+  //
+  // Indented, each todo occupies its own lines, so two branches whose new
+  // todos land in DIFFERENT parts of the sorted list merge untouched.
+  //
+  // **It is a partial fix, and the limit is worth knowing**: two todos that
+  // sort ADJACENT still conflict, because the inserted lines overlap. Measured
+  // on a scratch repository rather than reasoned about — five base items, one
+  // branch inserting at the front and one at the back:
+  //
+  //   minified   CONFLICT
+  //   indented   clean, both todos present, 7 items
+  //
+  // and with both branches appending at the same position, BOTH formats
+  // conflict. So this removes the guaranteed conflict, not every conflict.
+  //
+  // It works at all only because the order is already deterministic —
+  // `readTodoFiles` sorts, `processHierarchy` reads the sorted
+  // `workflowFiles` — which the comment above that function had to establish
+  // for a different reason: an artefact reproducible only where it was
+  // generated is a snapshot, not a generated file. A mergeable one needs the
+  // same guarantee, or every regeneration reshuffles and conflicts anyway.
+  //
+  // The cost is 11,963 -> 14,144 bytes on a static asset gzip mostly removes.
+  // `docs-ui.js` calls `JSON.parse`; it never sees the whitespace.
   emit(
     TODO_ASSET,
-    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }) + "\n",
+    JSON.stringify({ $schema: "folio-todo-index/v1", items, processes }, null, 2) + "\n",
     "data",
   );
   console.log(`  ${check ? "·" : "✓"} assets/todos/index.json (${items.length} todo(s))`);
