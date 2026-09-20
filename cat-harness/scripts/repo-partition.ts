@@ -320,6 +320,21 @@ const RULES: Rule[] = [
       // inversion alone just relocated them here, measured.
       "scripts/check-corpus-gate.ts",        // runs in the folio repo, over its content
       "scripts/gen-schema-docs.ts",          // content-object model → reference
+      // CORE, not harness, and the test is the one this table uses elsewhere:
+      // does it need a folio to have anything to do? This one CREATES the
+      // folio graph and writes content nodes into it — the landing stickies —
+      // so it does not merely need a folio, it is where one comes from. It also
+      // imports `schemas/landing-sticky.ts` (a content node) and
+      // `schemas/folio-graph-kind.ts`, which is core's by the argument written
+      // on that module: a layer that cannot render must not own the renderable
+      // kind. Classifying it harness would put core's own kind registration
+      // behind a harness module.
+      "scripts/ensure-landing-sticky.ts",    // creates folio/ and mints its landing stickies
+      // Same repo and the same reason: it reads the folio graph's sticky nodes
+      // and writes the data file the landing page renders from. It was part of
+      // `sync-docs-harness.ts` (agentic-harness) until `--edges` reported that
+      // as two wrong-direction edges — the harness reaching up into core.
+      "scripts/gen-landing-data.ts",         // folio stickies -> docs/_data/stickies.json
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
@@ -443,6 +458,17 @@ const RULES: Rule[] = [
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",
+      // Both read the DECLARATION and write a string; neither needs a folio to
+      // have anything to do, which is the same test `sync-docs-harness.ts` and
+      // `harness-schema-export.ts` pass above.
+      //
+      // `upload-url.ts` sits here rather than with content tooling for a reason
+      // worth keeping: it is the acquisition QUEUE's address, and the address is
+      // a fact about the instance's layout — an instance-scoped declared path
+      // resolved against the REPOSITORY root. What eventually lands in that
+      // queue is content; where the queue IS, is not.
+      "scripts/print-stub.ts",
+      "scripts/upload-url.ts",
       // The staging-preview record and the script that writes it — bean `6pfo`,
       // arrived from `main` (#466) AFTER this pass began and was caught by the
       // unassigned gate added in the same change, on its first real encounter.
@@ -786,6 +812,12 @@ const RULES: Rule[] = [
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/narratives.ts",              // the narrative review queue
+      // Same test, same answer: it reads `library/<bib-slug>/images.json`,
+      // which is a folio's own material, and imports `schemas/attribution.ts`
+      // and `schemas/document-image.ts` — the latter reaching `narrative.ts`
+      // in turn. Every one of those is core, so classifying it harness would
+      // buy three wrong-direction edges for the tidiness of one list.
+      "scripts/apply-image-verdicts.ts",    // agent verdicts → images.json
     ],
   },
 ];

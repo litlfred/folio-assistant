@@ -209,6 +209,21 @@ without first deriving a filename. See
 
 **Post to the issue:** impact assessment and migration plan.
 
+### When the analysis yields more than one viable approach
+
+Phase 4 often ends with a **choice** rather than a plan, and that is the moment
+the BA is handed a decision. Not a list of approach names with the analysis
+linked: a **comparison**, per
+[`decision-comparison`](decision-comparison.md) — per option its pro, its con,
+what it changes **downstream** and how reversible it is, laid out where the rows
+can be read against each other, then one recommendation and a stated default.
+
+Items 1–6 above have just enumerated the downstream question for the change as a
+whole; per option is that same question once per row, so an agent that leaves
+the column empty is discarding work it has already done. And this phase breaks
+the rule more than any other, because the vocabulary it just built *feels*
+defined to the agent and is new to everybody else.
+
 ## Phase 5 — Sign-off and bean creation
 
 **Input:** requirements + impact analysis reviewed and approved by stakeholders
@@ -254,6 +269,15 @@ For each bean:
    matching `cleanup_confirm` (see [`staging-review`](staging-review.md)).
    **Never remove a staging preview any other way, and never on your own
    initiative.**
+
+### After the MVP is accepted — review what it RENDERS
+
+Acceptance is not the last step for anything with a UI.
+[`theme-ui-review`](theme-ui-review.md) sits on the single edge out of it in
+`crdm-deliver.bpmn`: accessibility **measured** rather than asserted, branding
+against the instance's own declaration, every declared locale. Post-MVP because
+nothing could have been checked earlier — theme choice is an authoring judgement
+per note, so there was never a mapping for an earlier gate to audit.
 
 When a round of implementation is complete (one or more beans resolved):
 1. **Post a round summary comment on the issue** — addressed to the BA and

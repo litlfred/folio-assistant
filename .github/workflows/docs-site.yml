@@ -187,7 +187,7 @@ jobs:
       # No --base-url: the declaration's canonicalUrl is correct for main.
       - name: Export the knowledge graph and its schema
         run: |
-          STUB=$(bun -e 'const {readDeclaration,artefactStub}=await import("./cat-harness/schemas/cat-harness.ts");console.log(artefactStub(readDeclaration("./cat-harness")))')
+          STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
           bun run cat-harness/scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"
           bun run cat-harness/scripts/harness-schema-export.ts --out-dir ./_site
           bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"

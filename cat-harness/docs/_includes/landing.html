@@ -1,93 +1,137 @@
 {%- comment -%}
-  The instance's own landing panel: its declared description, drawn inside the
-  quiet part of its declared backdrop.
+  The landing page, as a board of sticky notes.
 
-  Everything here comes from `harness.json` via `_data/harness.json`
-  (written by `scripts/sync-docs-harness.ts`). NOTHING about this repo is
-  written in — an instance overrides the picture and the words by editing its
-  own declaration, which is the point: a downstream folio should not inherit a
-  grumpy cat it did not choose.
+  Everything here comes from `harness.json` via `_data/harness.json` (written by
+  `scripts/sync-docs-harness.ts`, which in turn reads the sticky NODES that
+  `scripts/ensure-landing-sticky.ts` wrote into the instance's `folio/` graph).
+  NOTHING about this repo is written in: an instance overrides the words, the
+  links and the art by editing its own declaration and its own stickies.
 
-  Three states, and the third is why this is a template rather than a div:
+  ## What changed, and why the old geometry is gone
 
-    1. A backdrop for this viewport, with a declared text region → overlay.
-    2. A backdrop whose region is NOT declared → show the picture, put the
-       words BELOW it. Text positioned by guesswork lands on the cat.
-    3. No backdrop at all → the words alone. An instance with no art is
-       ordinary, not broken.
+  This file used to composite `h.description` INTO the quiet interior of the
+  backdrop, positioned by each layout's declared `textRegion` — 53% x 28% of the
+  laptop crop, a few lines, with overflow rendered rather than clipped.
 
-  ## The region travels WITH the variant
+  That constraint does not survive the change, and it dissolves rather than
+  being violated:
 
-  `<picture>` swaps the file at a breakpoint, so the region has to change at
-  the same breakpoint or the words stay where the WIDE crop was quiet. That
-  bug shipped in the first version of this file: the mobile image loaded and
-  the laptop's box stayed, which on a portrait crop is the middle of the cat.
+    A sticky note is not a thought cloud.
 
-  So the custom properties are re-declared per breakpoint, from each variant's
-  own numbers. They are emitted here rather than in the stylesheet because they
-  are per-INSTANCE data; the stylesheet knows only that the properties exist.
+  `textRegion` existed because text was being fitted into a fixed interior of a
+  fixed crop. Now the STICKY is the container and the art is its background, so
+  it sizes to its content. **Nothing here reads `textRegion`** — carrying it
+  over would reimpose exactly the geometry this removes, and the failure would
+  be quiet: words clipping or spilling against a box nobody meant to keep. The
+  field stays declared for any instance still compositing.
 
-  `<source>` order is narrowest-first, because a `<picture>` takes the FIRST
-  matching source and `max-width: 48rem` matches a 20rem phone too. The CSS
-  below is the opposite order — widest first — because there the LAST matching
-  rule wins. Two orders, one outcome; getting either backwards silently serves
-  the wrong crop.
+  ## Three states, and the third is why this is a template rather than a div
+
+    1. Stickies, each with its theme's art resolved  -> the board below.
+    2. Stickies whose theme has no art (or none installed) -> the same board,
+       flat-coloured. `.fa-sticky--backdrop` is only added when art exists, so
+       the scrim never sits over nothing.
+    3. No stickies at all -> the instance's description, plainly. An instance
+       whose initiation has not run is ordinary, not broken.
+
+  ## The art is `<picture>`, not a CSS background
+
+  A background can only name one crop. `<picture>` swaps the FILE at a
+  breakpoint, which is the whole reason three crops are declared — a portrait
+  crop is not a landscape crop scaled down. `<source>` order is narrowest-first,
+  because a `<picture>` takes the FIRST matching source and `max-width: 48rem`
+  matches a 20rem phone too.
+
+  `alt=""` deliberately: the backdrop is decorative, and every word it carries
+  is in the sticky's own markdown as real text. Announcing a paragraph about
+  composition to somebody who already has the content is the mistake
+  `title.html` shipped once.
 {%- endcomment -%}
 
+{%- comment -%}
+  TWO data files, and the split is a layering one rather than a convenience.
+  `harness` is the INSTANCE's own declaration, written by the harness layer;
+  `stickies` is folio CONTENT, written by core. They were one file until
+  `repo-partition --edges` reported the harness reaching up into core's content
+  nodes to build it.
+{%- endcomment -%}
 {%- assign h = site.data.harness -%}
-{%- assign laptop = h.landing.laptop -%}
-{%- assign mobile = h.landing.mobile -%}
-{%- assign card = h.landing.card -%}
-{%- assign backdrop = laptop | default: mobile | default: card -%}
+{%- assign stickies = site.data.stickies.stickies -%}
 
-{%- if backdrop -%}
-<div class="folio-landing{% unless backdrop.region %} folio-landing--no-region{% endunless %}">
-  <picture class="folio-landing__art">
-    {%- if card %}<source media="(max-width: 30rem)" srcset="{{ card.src | relative_url }}" width="{{ card.width }}" height="{{ card.height }}">{% endif -%}
-    {%- if mobile %}<source media="(max-width: 48rem)" srcset="{{ mobile.src | relative_url }}" width="{{ mobile.width }}" height="{{ mobile.height }}">{% endif -%}
+{%- if stickies and stickies.size > 0 -%}
+<div class="fa-sticky-board fa-landing-board">
+  {%- for st in stickies -%}
+  {%- assign has_art = false -%}
+  {%- if st.art.laptop -%}{%- assign has_art = true -%}{%- endif -%}
+  <article class="fa-sticky fa-landing-sticky{% if has_art %} fa-sticky--backdrop{% endif %}"
+           data-fa-sticky-theme="{{ st.theme }}"
+           aria-labelledby="fa-sticky-{{ st.id }}-summary">
+    {%- if has_art -%}
     {%- comment -%}
-      `alt=""` deliberately. The backdrop is decorative: every word it carries
-      is in the overlay below, as real text. Announcing the image's
-      `description` here would read a paragraph about composition to somebody
-      who has already been given the content — the mistake `title.html`
-      shipped once and this file must not repeat.
+      The DEFAULT crop is the one this sticky's CONTENT wants — `st.shape`,
+      computed in the generator from how much text and how many links the card
+      carries. Until now the choice was viewport-only, so a two-line sticky and a
+      twelve-line one got the same landscape crop and neither fitted.
+
+      The narrow-viewport `<source>`s stay on top of it: a phone should not be
+      handed a landscape crop just because the text happened to be short. So
+      content decides the default and the viewport still overrides, which is the
+      right precedence — the viewport is a hard constraint and the content shape
+      is a preference.
+
+      `<source>` order is narrowest-first, because a `<picture>` takes the FIRST
+      matching source and `max-width: 48rem` matches a 20rem phone too.
     {%- endcomment -%}
-    <img src="{{ backdrop.src | relative_url }}" alt="" aria-hidden="true"
-         {% if backdrop.width %}width="{{ backdrop.width }}"{% endif %}
-         {% if backdrop.height %}height="{{ backdrop.height }}"{% endif %}
-         decoding="async">
-  </picture>
+    {%- assign chosen = st.art[st.shape] | default: st.art.laptop | default: st.art.mobile | default: st.art.card -%}
+    <picture>
+      {%- if st.art.card %}<source media="(max-width: 30rem)" srcset="{{ st.art.card.src | relative_url }}"{% if st.art.card.width %} width="{{ st.art.card.width }}" height="{{ st.art.card.height }}"{% endif %}>{% endif -%}
+      {%- if st.art.mobile %}<source media="(max-width: 48rem)" srcset="{{ st.art.mobile.src | relative_url }}"{% if st.art.mobile.width %} width="{{ st.art.mobile.width }}" height="{{ st.art.mobile.height }}"{% endif %}>{% endif -%}
+      <img class="fa-sticky-art" src="{{ chosen.src | relative_url }}" alt="" aria-hidden="true"
+           {% if chosen.width %}width="{{ chosen.width }}" height="{{ chosen.height }}"{% endif %}
+           decoding="async" loading="lazy">
+    </picture>
+    {%- endif -%}
 
-  <div class="folio-landing__text">
-    {{ h.description | markdownify }}
-  </div>
+    {%- comment -%}
+      Visually hidden rather than absent. The summary is what names this card for
+      a screen reader via `aria-labelledby`, and a board of three `<article>`s
+      with no accessible names is three anonymous regions. Sighted readers get
+      the heading from the markdown below it, so showing both would be the same
+      words twice.
+    {%- endcomment -%}
+    <h2 id="fa-sticky-{{ st.id }}-summary" class="fa-sr-only">{{ st.summary }}</h2>
+
+    <div class="fa-landing-sticky__body">
+      {{ st.comment | markdownify }}
+    </div>
+
+    {%- if st.links and st.links.size > 0 -%}
+    <ul class="fa-landing-sticky__links">
+      {%- for l in st.links -%}
+      {%- comment -%}
+        `relative_url` on a site path and NOT on an absolute one. Applying it to
+        an absolute URL breaks it; omitting it on a site path drops the
+        `/folio-assistant` baseurl. `external` was decided in the generator by
+        reading the URL scheme, so the template does not guess — bean `blv9` is
+        exactly the class of bug where a link-shaped value resolves by luck.
+      {%- endcomment -%}
+      <li>
+        <a href="{% if l.external %}{{ l.href }}{% else %}{{ l.href | relative_url }}{% endif %}"
+           {% if l.external %}rel="noopener"{% endif %}>{{ l.label }}</a>
+        {%- if l.note != "" %} <span class="fa-landing-sticky__note">{{ l.note }}</span>{% endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+    {%- endif -%}
+  </article>
+  {%- endfor -%}
 </div>
-
-<style>
-  {%- if backdrop.region %}
-  .folio-landing {
-    --fl-x: {{ backdrop.region.x }}%; --fl-y: {{ backdrop.region.y }}%;
-    --fl-w: {{ backdrop.region.w }}%; --fl-h: {{ backdrop.region.h }}%;
-  }
-  {%- endif %}
-  {%- if mobile and mobile.region %}
-  @media (max-width: 48rem) {
-    .folio-landing {
-      --fl-x: {{ mobile.region.x }}%; --fl-y: {{ mobile.region.y }}%;
-      --fl-w: {{ mobile.region.w }}%; --fl-h: {{ mobile.region.h }}%;
-    }
-  }
-  {%- endif %}
-  {%- if card and card.region %}
-  @media (max-width: 30rem) {
-    .folio-landing {
-      --fl-x: {{ card.region.x }}%; --fl-y: {{ card.region.y }}%;
-      --fl-w: {{ card.region.w }}%; --fl-h: {{ card.region.h }}%;
-    }
-  }
-  {%- endif %}
-</style>
 {%- else -%}
+{%- comment -%}
+  No stickies: initiation has not run here, or this instance keeps none. The
+  description alone is the honest fallback, and it is the same markdown the
+  `landing` sticky would have carried.
+{%- endcomment -%}
 <div class="folio-landing folio-landing--plain">
   {{ h.description | markdownify }}
 </div>
