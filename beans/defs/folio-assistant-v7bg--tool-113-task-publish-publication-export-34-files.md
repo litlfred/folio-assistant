@@ -73,9 +73,52 @@ Measure it; do not assume it, which is the mistake this bean already made once.
 ## Done when — REPLACES the list above
 
 - [x] `kg-graph-export` node, verified, with its finding recorded
-- [ ] `ns-export`, `gen:jsonld`, `kg-viewer` reachable — one node or shown to be
-      behind `kg-graph-export`
+- [x] `ns-export` reachable — `ns-vocabulary`, maintaining `ns/vocabulary.jsonld`
+- [x] `gen-jsonld-context` reachable — `content-context`, maintaining
+      `ns/content/v1.jsonld`
+- [ ] `gen-block-jsonld` / `gen-library-jsonld` — deliberately NOT nodes yet:
+      they write one `.jsonld` per block and per library item, so `maintains`
+      (one artefact string) does not fit. They belong with the content pipeline,
+      invoked from a folio, and forcing them here would mint a declaration that
+      names one file out of hundreds
+- [ ] `kg-viewer` — needs a skill decided first. It generates a page that makes
+      the graph legible, which is neither `kg-export` (data) nor
+      `serving-renderings` (serving). Do not pick one to make the node validate
 - [ ] which skill the site half actually serves, established from the diagrams
       and the covered list rather than assumed
 - [ ] a node for the site half once that is known
 - [ ] the 15 can't-tell files confirmed as folio-invoked, not unused
+
+
+---
+
+## 2026-09-20, second unit: two more nodes, and both gates that refused them were right
+
+**`ns-vocabulary`** maintains `ns/vocabulary.jsonld`; **`content-context`**
+maintains `ns/content/v1.jsonld`. Both published by
+`.github/workflows/docs-site.yml`, verified by reading it rather than assuming.
+`kg:schema:check` now reports **5 maintained**.
+
+Two gates refused the work, and neither was wrong:
+
+- **`check:tools`** refused `--layer` as `Text`: an argv word that can hold
+  arbitrary characters can hold a shell payload. The fix for an enumerable input
+  is the enum, so `NamespaceLayer` joined `tool-types`, guarded in both
+  directions. Worth noting the default for a new type is **unsafe** — fail-closed,
+  and correct.
+- **`kg:schema:check`** refused both `maintains` declarations. It had encoded
+  *"an artefact a Tool maintains is produced by the schema exporter"*, true of
+  the three original carriers and nothing else. These two are the first
+  counterexample. Scoped, tested, and the cost of the scoping opened as `6f1x`
+  rather than absorbed.
+
+## What this unit actually demonstrated, beyond two nodes
+
+`d308`'s premise is that code with no node is invisible even when its skill looks
+served. Both refusals are the same premise seen from the other side: **the
+existing checks encoded assumptions that were true only of the graph's current
+shape.** Adding a node is not just filling a gap — it is the first load the
+assumptions have taken.
+
+That is an argument for continuing one node at a time with the full gate set
+between, rather than batching the remaining eleven. Each node is a probe.
