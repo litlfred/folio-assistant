@@ -541,3 +541,45 @@ one, or split. Answer that and the 41 are mechanical.
 - [ ] the six clusters are bound to roles
 - [ ] `skill-in-role-or-process` reports only skills that are genuinely
       reference, each carrying `consulted: true` with its reason
+
+---
+
+## 101 → 9, and every one of the 9 is unbound for a STATED reason
+
+The residue is now fully explained, which is the state this bean was actually
+after. Nobody should try to "fix" these:
+
+| skill | why it is unbound, and correctly so |
+|---|---|
+| `confirm-harness`, `discussion`, `log-message` | bootstrap's, and the audit does not read a nested instance's graph **by design** — `instance-graph-isolation.test.ts` guards an 88-reference leak. Declaring `bootstrap/workflows/` at the root re-introduces it; that is bean `7u3g`, **scrapped** for exactly that |
+| `fhir-client-operations`, `hypothesis-generation`, `scientific-critical-thinking`, `scientific-visualization`, `smart-launch` | `remote-stubs`, whose manifest says the quiet part outright: *"every one is reported by kg:audit under `skill-is-a-stub` so filling the gap does not hide it"*. The remedy is upstream (bean `wlqd`) |
+| `fsh-guts` | **structurally unbindable.** `isPublishedSkill` strips any skill NAMED `fsh-guts`, so a published role carrying it emits a dangling `hasSkill` edge — the leak the owner's "never let fsh-guts reach the KG" rule exists to prevent |
+
+### The five stubs are the case I nearly got wrong
+
+They look like obvious `consulted: true` candidates — declared, not
+implemented, nobody performs them. **That would have been a silent
+exemption of the worst kind:** `consulted` means reference material nobody
+performs, while a stub is a skill that *would* be performed once vendored.
+Marking them would have hidden a gap the package deliberately keeps visible,
+and the package manifest says so in its own description. I read it before
+acting, and did nothing, which was the work.
+
+### `fsh-guts` is a real structural question, not a defect
+
+The strip is name-based, so this skill can never be carried by a published
+role. That is right for the KG and means `skill-in-role-or-process` will
+report it forever. Worth deciding whether the criterion should exempt a skill
+`isPublishedSkill` excludes — **but that is a change to what the criterion
+MEANS**, not a cleanup, so it is left for the owner.
+
+### The last five bound
+
+`corpus-grep` and `process-state` → `session-coordinator`; `domain-fencing` →
+`platform-authoring-agent`; `smart-base-tools` → `build-pipeline` (which
+already carries four WHO-guideline skills); and
+`edge-kinds-and-blast-radius` declared `consulted: true` — zero imperative
+markers and every heading a claim.
+
+Verification: `bun run gates` **58/58**; `bun test` **4033 pass, 0 fail**;
+`consulted-skill-not-performed` pass, 0 findings.

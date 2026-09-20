@@ -650,7 +650,8 @@
         "build-docs",
         "build-pdf",
         "latex-build-cache",
-        "latex-validation"
+        "latex-validation",
+        "smart-base-tools"
       ]
     },
     {
@@ -881,7 +882,8 @@
         "mcp-contract",
         "serving-renderings",
         "kg-export",
-        "kg-viewer"
+        "kg-viewer",
+        "domain-fencing"
       ],
       "persona": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two.",
       "voice": "Precise about what is guaranteed and what is merely usual. Name the state a consumer gets when the answer is unknown.",
@@ -907,7 +909,9 @@
         "session-intent",
         "pending-show",
         "idle-backlog",
-        "diff"
+        "diff",
+        "corpus-grep",
+        "process-state"
       ],
       "persona": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this.",
       "voice": "Situational. State what is in flight, what this session is taking, and what it is explicitly not.",
