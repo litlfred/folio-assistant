@@ -248,10 +248,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T05:16:09.472Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/82d72b717b3269b1a9b57cc3dc48e8de4b5714f8",
-  "sourceCommitSha": "82d72b717b3269b1a9b57cc3dc48e8de4b5714f8",
-  "sourceCommitAt": "2026-09-20T05:14:33Z",
+  "generatedAt": "2026-09-20T05:17:52.556Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/79a4f59c02bcda28474ac0d55dc144c407e58f5e",
+  "sourceCommitSha": "79a4f59c02bcda28474ac0d55dc144c407e58f5e",
+  "sourceCommitAt": "2026-09-20T05:14:43Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 172,
@@ -263,7 +263,7 @@
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 31,
-    "Schema": 54,
+    "Schema": 55,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -18984,7 +18984,7 @@
       "title": "Ingest, with PDF and image extensions",
       "description": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
       "install": {
-        "cli": "pip install pymupdf pypdf pillow && apt-get install -y tesseract-ocr poppler-utils"
+        "cli": "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils"
       },
       "invoke": {
         "shell": "bun run scripts/ingest-document.ts"
@@ -20849,6 +20849,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/precision-scalar"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/python-deps",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "python-deps",
+      "title": "The Python packages this repository's scripts need — declared once.",
+      "module": "schemas/python-deps.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/python-deps"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/qa-review",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "qa-review",
@@ -22099,8 +22107,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "5408b41be30d022282f148b1f0d42dc32dfe0f63",
+    "sha": "39dd5f10403f4907f370d27453ca1097cf2d3369",
     "pr": "458/merge",
-    "run": "35491177241"
+    "run": "35491247707"
   }
 }
