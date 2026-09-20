@@ -54,7 +54,7 @@ import {
   type ReadmeTocConfig,
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 import { INSTANCE_README_ROLE, declaredAssetPath } from "../../schemas/cat-harness";
 
 // ── Section contract ────────────────────────────────────────────────────────
@@ -309,8 +309,9 @@ const simulatorsSection: ReadmeSection = {
     // default naming the platform is how they came to live in the platform in
     // the first place.
     let dir = "simulators";
-    const configPath = resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG);
-    if (existsSync(configPath)) {
+    const configPath = expectedInstanceConfigPath(root);
+    // `undefined` = nothing declares an instance here; nothing to read.
+    if (configPath !== undefined && existsSync(configPath)) {
       try {
         const parsed = JSON.parse(readFileSync(configPath, "utf-8")) as {
           simulators?: { dir?: string };
@@ -328,7 +329,8 @@ const simulatorsSection: ReadmeSection = {
       // partial checkout, or a folio that has not declared its directory.
       return undetermined(
         `simulators directory '${dir}' is not present in this checkout ` +
-          `(is it declared in ${HARNESS_CONFIG}, and is the checkout complete?)`,
+          `(is it declared in ${configPath === undefined ? "this instance's config" : basename(configPath)}, ` +
+          "and is the checkout complete?)",
       );
     }
     const files = readdirSync(abs)

@@ -9,12 +9,12 @@
  * profiles.
  */
 import { describe, test, expect, afterEach } from "bun:test";
-import { HARNESS_CONFIG } from "../../schemas/harness-config";
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 
 import { checkFolioProfile, readFolioProfile, formatProfileCheck } from "../../content/pipeline/profile-check";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const dirs: string[] = [];
 
@@ -23,7 +23,7 @@ function folio(contentType?: string): string {
   dirs.push(d);
   mkdirSync(join(d, "folio", "doc", "ch"), { recursive: true });
   if (contentType !== undefined) {
-    writeFileSync(join(d, HARNESS_CONFIG), JSON.stringify({ contentType }), "utf-8");
+    writeInstanceConfig(d, JSON.stringify({ contentType }));
   }
   return d;
 }
@@ -57,7 +57,7 @@ describe("readFolioProfile", () => {
     // Every other tool reading harness.config.json is equally in the dark here;
     // a report that says "paper" with no explanation hides that.
     const d = folio("document");
-    writeFileSync(join(d, HARNESS_CONFIG), "{ not json", "utf-8");
+    writeInstanceConfig(d, "{ not json");
     const r = readFolioProfile(d);
     expect(r.profile).toBe("paper");
     expect(r.declaredBy).toContain("unreadable");
@@ -153,7 +153,7 @@ describe("an absent corpus", () => {
   test("no folio/ is zero blocks, not an error", () => {
     const d = mkdtempSync(join(tmpdir(), "folio-empty-"));
     dirs.push(d);
-    writeFileSync(join(d, HARNESS_CONFIG), JSON.stringify({ contentType: "document" }), "utf-8");
+    writeInstanceConfig(d, JSON.stringify({ contentType: "document" }));
     const r = checkFolioProfile(d);
     expect(r.blocksChecked).toBe(0);
     expect(r.violations).toEqual([]);

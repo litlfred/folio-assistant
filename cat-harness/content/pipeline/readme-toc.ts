@@ -48,7 +48,7 @@ import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
 import { findPapers } from "./repo-root";
-import { HARNESS_CONFIG, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 // The git facts and the publish targets are generic and live in harness
 // (bean `cp3l`). Re-exported because this module's callers have always got
 // them from here, and moving a file should not break a folio's tooling.
@@ -123,9 +123,10 @@ const DEFAULT_CONFIG: ReadmeTocConfig = {
  * whether or not the repository is public.
  */
 export function loadReadmeConfig(root: string): ReadmeTocConfig {
-  const configPath = resolveHarnessConfigPath(root)?.path ?? join(root, HARNESS_CONFIG);
+  const configPath = expectedInstanceConfigPath(root);
   let fromFile: Partial<ReadmeTocConfig> = {};
-  if (existsSync(configPath)) {
+  // `undefined` = nothing declares an instance here; nothing to read.
+  if (configPath !== undefined && existsSync(configPath)) {
     try {
       const parsed = JSON.parse(readFileSync(configPath, "utf-8")) as {
         readme?: Partial<ReadmeTocConfig>;

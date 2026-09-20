@@ -552,6 +552,11 @@ jobs:
           bun run check:kind-validators
           bun run check:actor-reach
           bun run check:harness-dirs
+          # One config per instance: `<name>.config.json` at the
+          # instantiation root. This repository instantiates more than
+          # one harness, so a single `harness.config.json` at the repo
+          # root had become an answer to a question with two answers.
+          bun run check:instance-config
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render

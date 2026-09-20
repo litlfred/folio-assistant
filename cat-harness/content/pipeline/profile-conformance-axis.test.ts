@@ -33,6 +33,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { checkFolioProfile, readDeclaredFolioProfile } from "./profile-check.ts";
+import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
 const made: string[] = [];
 afterAll(() => {
@@ -51,7 +52,7 @@ function folio(contentType: string | undefined): string {
   const root = mkdtempSync(join(tmpdir(), "profile-axis-"));
   made.push(root);
   if (contentType !== undefined) {
-    writeFileSync(join(root, "harness.config.json"), JSON.stringify({ contentType }));
+    writeInstanceConfig(root, JSON.stringify({ contentType }));
   }
   const ch = join(root, "content", "ch");
   mkdirSync(ch, { recursive: true });
