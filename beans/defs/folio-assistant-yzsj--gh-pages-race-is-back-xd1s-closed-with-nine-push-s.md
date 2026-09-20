@@ -359,6 +359,59 @@ reverted it still reports *"✓ every repository-relative path inside a fenced
 command resolves"* and exits 0. The path does resolve — from the repository
 root, which is not where it runs. That reader gap is `7iog`'s subject.
 
+## SHIPPED, half (a) — `docs-site`'s publish, on the owner's "go all"
+
+`peaceiris/actions-gh-pages@v4` is gone from `docs-site.yml`, replaced by
+`scripts/publish-gh-pages.sh`. The action clones, replaces and pushes in ONE
+step, so the race window was inside it and there was nothing to wrap — which is
+why this workflow had no retry at all.
+
+### A REBASE would have been the wrong retry, and that is the finding
+
+The obvious fix was to give `docs-site` the loop `feature-staging` has. That is
+wrong, and the reason is worth keeping.
+
+`feature-staging` rebases correctly because its commit adds or removes **one**
+`STAGING/<slug>/` directory — replaying it onto whoever won touches nothing
+else. **This commit replaces the WHOLE TREE.** Rebasing it onto a newer
+`gh-pages` would re-apply that replacement over whatever landed in between,
+deleting a preview a sibling had just deployed. That is bean `plj1` exactly,
+re-created by the mechanism meant to make the deploy safer.
+
+So each attempt **re-reads and rebuilds** rather than replaying: fetch, reset,
+re-run the restore against the branch's CURRENT contents, lay `_site` down,
+commit, push.
+
+**That makes the retry strictly better than one attempt rather than merely
+luckier.** `docs-site.yml` already named the flaw it closes — the restore runs,
+then the action re-clones, and *"everything between this read and that clone is
+a window in which a `feature-staging` deploy could land a preview this push then
+removes"*. Re-restoring per attempt shrinks that window to the last attempt's
+instead of carrying a stale read into a push minutes later.
+
+### Verified end to end on a scratch remote
+
+- **Uncontended**: full replace (a seeded `STAGING/foo/` removed, as the restore
+  is what preserves previews), `.nojekyll` carried, commit message exactly
+  `docs(gh-pages): site from <sha>`, "published on attempt 1".
+- **Contended**, with a `git` shim failing the first push and landing a rival
+  commit first: *"push rejected; re-reading gh-pages and rebuilding"*, then
+  attempt 2 reset to the rival's commit and pushed. **The final commit's parent
+  was the rival's commit** — the proof that a re-read happened rather than a
+  replay over a stale base.
+
+### Two tests were passing VACUOUSLY, and my own change is what exposed it
+
+The three workflow-wiring tests in `restore-staging.test.ts` all keyed on
+`peaceiris/actions-gh-pages@`. Removing the action made **one** fail loudly and
+**two pass over nothing**: `indexOf` returned `-1`, and both `verify > publish`
+and the `keep_files` slice are satisfied by `-1`.
+
+That is the `6tkl` shape, introduced by the change the tests exist to guard. All
+three are rewritten to assert a `-1` as a failure before any ordering is
+compared, plus a new one pinning the re-read invariant — falsified by swapping
+`reset --hard` for `pull --rebase`, which fails it.
+
 ## Done when
 
 - [ ] A ruling on ONE shared publishing step vs four copies (see the
@@ -367,9 +420,10 @@ root, which is not where it runs. That reader gap is `7iog`'s subject.
       checkout — NOT a committed `.gitattributes`, which a full replace
       deletes. **Done 2026-09-20** (`git-union-attr.sh`, three call sites),
       with the three broken `backoff-sleep` paths fixed alongside (`7iog`)
-- [ ] `docs-site.yml`'s publish survives a losing race, with the failure
-      reproduced before the fix and the fix shown to pass — **and the same for
-      `blueprint.yml` and `lean_ci.yml`, which are equally exposed**
+- [x] `docs-site.yml`'s publish survives a losing race. **Done 2026-09-20**
+      (`publish-gh-pages.sh`, rebuild-per-attempt). `blueprint.yml` and
+      `lean_ci.yml` are NOT done and do not need to be: both have **0 runs**
+      ever here, so neither can lose a race
 - [ ] `discoverability-docs.yml` and `deploy-folio.yml` either name the group
       or carry a stated reason, the way `feature-staging.yml:94` does
 - [ ] `check-workflows`' `gh-pages-ungrouped` finding is re-checked — `xd1s`
