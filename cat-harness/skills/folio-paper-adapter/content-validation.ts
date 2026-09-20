@@ -6,7 +6,6 @@ export const contentValidation: SkillDefinition = {
   description:
     "Three-level validation pipeline: Zod schema, constraint rules, " +
     "and LaTeX AST checking for content objects.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

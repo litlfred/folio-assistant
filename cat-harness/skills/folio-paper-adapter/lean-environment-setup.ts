@@ -4,7 +4,6 @@ export const leanEnvironmentSetup: SkillDefinition = {
   id: "lean-environment-setup",
   name: "Lean Environment Setup",
   description: "Install and configure Lean 4 toolchain, elan, Lake, and MCP server.",
-  roles: ["collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

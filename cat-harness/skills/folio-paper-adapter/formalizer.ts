@@ -6,7 +6,6 @@ export const formalizer: SkillDefinition = {
   description:
     "Lean proof generation, library synthesis, tactic translation, " +
     "and sorry-removal workflows.",
-  roles: ["collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "lean-toolchain", degradation: "fallback" },
     { capabilityId: "lean-mcp", degradation: "warn" },

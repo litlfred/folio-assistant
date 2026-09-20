@@ -5,7 +5,6 @@ export const corpusGrep: SkillDefinition = {
   name: "Corpus Grep",
   description:
     "Pre-declaration corpus check — run the four-path grep checklist (docs/audits, content, folio-assistant/computations, docs/coordination) before declaring any item open / gap / TODO. The corpus, not a source file's status note, is the source of truth.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],

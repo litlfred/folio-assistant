@@ -319,3 +319,88 @@ matches `"true"` exactly and `yes` would read as absent.
 - [ ] the remainder triaged, in batches small enough to argue with. Now
       **possible**: 94 skills, each of which is either performed-and-unbound
       (a real finding) or a missed annotation (one line).
+
+---
+
+## `SkillDefinition.roles` excised 2026-09-20 — and my own measurement of it was wrong
+
+### The correction first
+
+I reported this field earlier as **"51 of 54 values dangling (94 %)"**. The
+arithmetic is right and **the diagnosis is wrong**: that number comes from
+resolving every value against `skills/roles/roles.json`, and 51 of them were
+never role-graph references. Measuring against the wrong registry made a
+vocabulary collision look like a pile of broken links.
+
+### What the 54 values actually are
+
+| value | uses | what it is |
+|---|---:|---|
+| `owner` | 22 | an HTTP access tier (`UserRole` in `src/types.ts`) |
+| `collaborator` | 21 | the same tier |
+| `reader` | 8 | **nothing** — that tier is spelled `viewer` |
+| `validation-pipeline`, `attestation-service`, `publication-manager` | 3 | declared BPMN roles |
+
+So the field mixed **two vocabularies**, and its doc line — *"Actor IDs
+(roles) that may invoke this skill"* — named a **third**, actors, as though
+all three were one thing.
+
+### The real defect is worse than dead weight
+
+`src/core/rbac.ts` is entirely header-driven, and every route hardcodes its
+own minimum (`hasRole(req, "collaborator")` in `relevance.ts`, `glossary.ts`,
+`feedback.ts`). **Nothing reads `SkillDefinition.roles`** — searched `src/`,
+`schemas/`, `scripts/`, `adapters/`, the MCP tool layer, `skill-fetch` and
+`skill-list`.
+
+A field spelled `roles: ["reader", "collaborator", "owner"]` sitting next to a
+working RBAC module **reads as an access control that is enforced**. It is
+not. That is why leaving it was the worst of the three options: dead weight is
+cheap, a false claim of enforcement is not.
+
+### Removed rather than wired up, on a precedent set hours earlier
+
+`SkillDefinition.schemaRefs` was retired the same day (beans `3w0i`, `t2yg`)
+on the identical finding, and its note states the rule: **reinstating means
+writing the consumer first.** Skill-level RBAC may well be worth having;
+building it is a FEATURE and goes through CRDM, not in as a side effect of a
+cleanup.
+
+### What changed
+
+- 23 declarations removed across 23 files.
+- `roles` made **optional** in `SkillDefinitionSchema` — it was required, so
+  removing the declarations without that makes `skill()` throw on every
+  definition. That ordering is the whole reason the schema edit is part of
+  this and not a separate tidy.
+- Property kept, optional and `@deprecated`, exactly as `schemaRefs` was: a
+  downstream instance may hold one, and removing an exported property is a
+  breaking change for something that costs nothing to leave declarable.
+- Record: `fsh-guts/retired/skill-definition-roles.md`.
+- Origin, from archaeology rather than assumption: commit `2734a70f21`,
+  2026-06-15, the bulk *"migrate MCP core and adapters from qou"*. It was
+  never designed in this repository — no commit here argues for it.
+
+### The guard, and a defect in its first draft
+
+`scripts/tests/retired-skill-fields.test.ts` pins that no `SkillDefinition`
+declares either retired field. An optional property re-declared typechecks
+cleanly, so without this the field returns with nothing failing — which is
+the `dhol` lesson (an unargued decision survives because there is nothing to
+disagree with) applied at the cheapest possible price.
+
+Its first draft pointed `schemaRefs` at `fsh-guts/retired/schema-refs.md`,
+**which was never written** — the sibling documented that retirement inline on
+the `SchemaRef` type instead. A dangling link in a retirement note is the
+`blv9` class at its most costly, because the reader who needs it is the one
+about to reinstate the field. The test now **asserts every record it names
+dereferences**, so this cannot recur in the registry itself.
+
+Verification: `bun run gates` **56/56**; `bun test` **3801 pass, 0 fail**;
+`tsc` and `eslint` clean.
+
+### Still open on this bean
+
+The ~94 skills bound to no role or process. Now separable: `consulted: true`
+marks reference material nobody performs, so each remaining one is either a
+missed annotation or a genuine gap.

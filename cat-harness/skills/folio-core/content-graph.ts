@@ -8,7 +8,6 @@ export const contentGraph: SkillDefinition = {
     "and examples relationships. Applies heuristics to detect forward references, " +
     "cross-chapter/cross-section coupling, sparse/dense sections, and isolated blocks. " +
     "Produces ranked reorganisation suggestions and implements approved moves.",
-  roles: ["reader", "collaborator", "owner"],
   requiredCapabilities: [
     { capabilityId: "git-read", degradation: "fail" },
   ],
