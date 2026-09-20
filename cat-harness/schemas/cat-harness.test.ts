@@ -217,6 +217,9 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
       // like every other harness concept. `kg` still READS, as a deprecated
       // alias — see the alias test below.
       "cat-harness",
+      // A remote catalogue modelled by reference — distinct from `library`,
+      // which is content that IS here. See the renderable test below.
+      "catalogue",
       // Documentation ABOUT the graph, and the one renderable kind the harness
       // owns — because it is the one the harness can serve. See the renderable
       // test below, and BASE_GRAPH_KINDS for why the premise changed rather
@@ -281,6 +284,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     expect(bare.has("folio")).toBe(false);
     expect(bare.names().sort()).toEqual([
       "bean-defs", "beans", "cat-harness",
+      "catalogue",
       "docs", "fsh-guts", "health", "library", "qa", "schemas",
       "todo-feedback", "todo-items", "todos",
       "tools", "translation-sources", "uploads", "voices", "workflow-state",

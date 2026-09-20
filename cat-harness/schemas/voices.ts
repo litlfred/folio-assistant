@@ -95,6 +95,26 @@ export type VoiceRuleCategory = (typeof VOICE_RULE_CATEGORIES)[number];
  */
 export const VoiceRuleSourceSchema = z
   .object({
+    /**
+     * The DECLARED NAME of the instance holding the corpus, when it is not this
+     * one. Absent means this instance, so every existing citation keeps its
+     * meaning unchanged.
+     *
+     * Bean `r1lz` predicted why this is needed, on 2026-09-19, while deciding
+     * the WHO documents would leave for a repository of their own: *"a skill
+     * derived from a source text in another repo would cite evidence its own
+     * instance cannot resolve."* Moving `voices/who-*.json` out without this
+     * breaks all 25 cited rules at once — and provenance was the entire reason
+     * those rules were rewritten.
+     *
+     * A NAME, never a path. `../who-iris/library/...` would work today and
+     * hardcode a checkout layout into content, which is the practice
+     * `AGENTS.md` opens by warning against and which this repository paid for
+     * twice in one week. Resolution is `folio-assist-core`'s
+     * `resolveLibraryRef`, which reports an unknown instance as its own
+     * finding and NEVER falls back to local.
+     */
+    instance: z.string().min(1).optional(),
     /** `doc_id` under `library/`, e.g. `who-pub-tps-931`. */
     libraryId: z.string().min(1).optional(),
     /** `section_id` within that document, e.g. `page-014` or `sec-180-106-…`. */
@@ -190,6 +210,8 @@ export const VoiceProfileSchema = z.object({
     .array(
       z.object({
         title: z.string().min(1),
+        /** The instance holding it, when not this one. See `VoiceRuleSourceSchema.instance`. */
+        instance: z.string().min(1).optional(),
         /** Absent for a house standard — see `VoiceRuleSourceSchema.kgRef`. */
         libraryId: z.string().min(1).optional(),
         /** The KG node stating the standard, for a voice with no ingested source. */

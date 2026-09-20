@@ -161,6 +161,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 200,
     reads: "an arrow onto a line — something arriving",
   },
+  catalogue: {
+    // A card index: drawers of cards standing for things that are elsewhere.
+    // Deliberately NOT books on a shelf — that is `library`, and the difference
+    // between "we have it" and "we know of it" is the point of the kind.
+    glyph: "M4 6h16v12H4zM4 10h16M10 6v12M13 13h4M13 15h3",
+    tone: 258,
+    reads: "a card index — what is known to exist, mostly not held",
+  },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
     tone: 36,

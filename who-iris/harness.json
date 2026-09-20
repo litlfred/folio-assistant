@@ -1,0 +1,29 @@
+{
+  "_comment": "The WHO IRIS catalogue instance, staged as a top-level directory ahead of becoming its own repository. Owner, 2026-09-20: 'there needs to be a new repo (staged here as a new top-level dir -> repo later) which is an instance of fa-core, and is for the who-iris cataloge and this is an example artefact (the style guide is part of the library itself)', and later 'in future who-iris iwll be own repo. will have specialized tools/themes.' DECLARE ONLY WHAT EXISTS, per the dh4f rule: there is NO `library` entry yet, because the three WHO documents are still under cat-harness/library/ (bean frs5). That absence is load-bearing rather than an oversight -- `resolveLibraryRef` reports `no-library-graph` for a citation naming this instance, which is a DIFFERENT and more useful answer than 'that section is missing'. The entry lands in the same change as the git mv.",
+  "name": "who-iris",
+  "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
+  "assets": [
+    { "id": "readme", "src": "README.md", "role": "instance-readme", "title": "who-iris",
+      "description": "What is here, what is only referenced, and how to tell." }
+  ],
+  "directories": [
+    {
+      "id": "who-iris-catalogue",
+      "path": "catalogue/",
+      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today — 9 referenced, 3 materialized, 0 unknown — against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
+      "graphs": ["catalogue"]
+    },
+    {
+      "id": "who-iris-uploads",
+      "path": "uploads/",
+      "description": "The incoming queue — raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF — the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
+      "graphs": ["uploads"]
+    },
+    {
+      "id": "who-iris-skills",
+      "path": "skills/",
+      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool.",
+      "graphs": ["cat-harness"]
+    }
+  ]
+}

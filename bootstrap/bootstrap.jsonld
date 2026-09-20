@@ -253,7 +253,7 @@
     "SequenceFlow": 11,
     "Role": 6,
     "ProcessNode": 11,
-    "GraphKind": 17,
+    "GraphKind": 18,
     "Directory": 2
   },
   "problems": [],
@@ -707,6 +707,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#UploadsGraph",
       "renderable": false,
       "summary": "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus: a document here reads as absent to every consumer."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/catalogue",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "catalogue",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#CatalogueGraph",
+      "renderable": false,
+      "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library",

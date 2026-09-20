@@ -411,6 +411,24 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
       "greppable as corpus: a document here reads as absent to every consumer.",
   },
+  // A REMOTE catalogue modelled in the graph without being held. Distinct from
+  // `library`, and the distinction is the whole point: `library` is L1 content
+  // that IS here, `catalogue` is the shape of a collection of which almost
+  // nothing is. A who-iris node says 1,057,223 files exist and that three of
+  // them are materialized; folding that into `library` would make a consumer
+  // asking "what have we got" receive an answer about what EXISTS.
+  //
+  // Every node declares a materialization state and there is no default — see
+  // folio-assistant-core/schemas/materialization.ts.
+  catalogue: {
+    type: termIri("CatalogueGraph"),
+    renderable: false,
+    summary:
+      "A remote catalogue modelled by reference — communities, collections and items " +
+      "of a corpus the instance does not hold. Every node declares whether its bytes " +
+      "are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), " +
+      "with no default. Distinct from `library`, which is content that IS here.",
+  },
   library: {
     type: termIri("LibraryGraph"),
     renderable: false,

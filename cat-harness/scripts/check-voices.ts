@@ -18,22 +18,44 @@
  */
 
 import { existsSync } from "node:fs";
+import { explainFailure, resolveLibraryRef } from "../../folio-assistant-core/schemas/library-ref.js";
 import { join, resolve } from "node:path";
 
 import { loadVoices, unionRules, voicesPresent } from "../schemas/voices";
-import { directoryForGraph } from "../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..");
+/** The checkout, one level out: a cross-instance citation is resolved against sibling instances. */
+const REPO_ROOT = resolve(ROOT, "..");
 
-// The declared `library` graph. No fallback: this module only READS L1
-// sources, and a checker that resolves a directory the instance does not have
-// would report a clean run over nothing — the `dh4f` defect.
-// declared-path-literal: the convention fallback, at the call site so the choice is visible.
-const LIBRARY = directoryForGraph(ROOT, "library") ?? join(ROOT, "library");
+// No `LIBRARY` constant any more, and that is the change rather than a tidy-up.
+// This module composed `join(LIBRARY, libraryId, "sections", …)` against the
+// VOICE'S OWN instance root, which made a cross-instance citation
+// unrepresentable — the blocker on moving the three WHO voices out (beans
+// `z7ev`, `w095`), predicted by bean `r1lz` the day before the move was
+// decided. `resolveLibraryRef` reads the target instance's own declaration, so
+// where a corpus lives is answered once, by the instance that owns it.
 const MIN_QUOTE = 24;
 
-function sectionPath(libraryId: string, sectionId: string): string {
-  return join(LIBRARY, libraryId, "sections", `${sectionId}.md`);
+/**
+ * Resolve a citation, in this instance or another.
+ *
+ * Delegates to `folio-assist-core`'s `resolveLibraryRef` rather than composing
+ * a path. Composing one is what this file did until 2026-09-20 — `join(LIBRARY,
+ * …)` against the VOICE'S OWN instance root — which made a cross-instance
+ * citation unrepresentable and was the blocker on moving the three WHO voices
+ * out (beans `z7ev`, `w095`). Bean `r1lz` predicted it the day before the move
+ * was decided.
+ *
+ * The resolver's four failure kinds are reported as they come back, unmerged:
+ * "that instance is not in this checkout", "that instance holds no corpus",
+ * "that document was never ingested" and "that section is missing" need four
+ * different fixes, and collapsing them sends a reader to the wrong one.
+ */
+function resolveCitation(
+  src: { instance?: string; libraryId: string; sectionId?: string },
+): { ok: true; path: string } | { ok: false; why: string } {
+  const r = resolveLibraryRef(src, ROOT, REPO_ROOT);
+  return r.ok ? { ok: true, path: r.path } : { ok: false, why: explainFailure(r.failure) };
 }
 
 function main(): number {
@@ -55,12 +77,13 @@ function main(): number {
       problems.push(`${where}: quote is ${src.quote.trim().length} chars — a citation that short cannot be checked`);
     }
     if (src.libraryId && src.sectionId) {
-      const p = sectionPath(src.libraryId, src.sectionId);
-      if (!existsSync(p)) {
-        problems.push(
-          `${where}: cites library/${src.libraryId}/sections/${src.sectionId}.md, which does not exist. ` +
-            `Every KG reference to a source resolves THROUGH library/ (library-is-l1.md).`,
-        );
+      // The resolver's own explanation is used verbatim: it distinguishes four
+      // failures this check cannot, and restating them here would make a fifth
+      // wording of the same facts, free to drift from the four.
+      const res = resolveCitation({ instance: src.instance, libraryId: src.libraryId, sectionId: src.sectionId });
+      if (!res.ok) {
+        const from = src.instance ? `${src.instance}:` : "";
+        problems.push(`${where}: cites ${from}${src.libraryId}/${src.sectionId} — ${res.why}`);
       }
     } else if (src.kgRef) {
       // A `#anchor` is a section within the file; check the file.
@@ -75,8 +98,12 @@ function main(): number {
   // library id nobody ingested is the `source: null` defect wearing an id.
   for (const v of voices) {
     for (const s of v.sources) {
-      if (s.libraryId && !existsSync(join(LIBRARY, s.libraryId, "structure.json"))) {
-        problems.push(`${v.id}: names source library/${s.libraryId}, which is not ingested`);
+      if (s.libraryId) {
+        // Document-level: no sectionId, so the resolver checks `structure.json`
+        // — "was this ingested at all", which is a different question from
+        // "does this section exist" and gets its own finding.
+        const res = resolveCitation({ instance: s.instance, libraryId: s.libraryId });
+        if (!res.ok) problems.push(`${v.id}: names source ${s.libraryId} — ${res.why}`);
       }
       if (s.kgRef && !existsSync(join(ROOT, s.kgRef.split("#")[0]!))) {
         problems.push(`${v.id}: names source ${s.kgRef}, which does not exist`);
