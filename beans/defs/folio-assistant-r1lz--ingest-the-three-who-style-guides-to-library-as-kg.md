@@ -133,3 +133,20 @@ history follows. Its share of `image-verdicts.json` went with it.
 This bean's status is NOT changed here — the derived `milnor` skill and its
 citations are a separate question, and resolving somebody else's bean because
 one clause of it came true is exactly what `bean-coordination` forbids.
+
+
+## 2026-09-20, later — the `milnor` voice now has somewhere to go
+
+`w095` moved the three WHO voices into `who-style-guide/` and left `milnor` in
+`cat-harness/voices/`, correctly: it is read from a mathematics paper, not a
+WHO publication.
+
+What changed is that its destination is no longer hypothetical.
+`folio-assist-sci/` exists (bean `frs5`) and holds `library/milnorlink/`, and
+`milnor.json` already cites `{ instance: "folio-assist-sci" }` and resolves.
+So the remaining move is a `git mv` of one file into a
+`folio-assist-sci/voices/` that does not exist yet, plus the declaration.
+
+`check-voices` will follow it without changes — it enumerates the instances
+shipping a `voices/` directory since `w095`. Status untouched: this is a note,
+not a resolution.

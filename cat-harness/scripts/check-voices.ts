@@ -17,7 +17,7 @@
  * @module scripts/check-voices
  */
 
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { explainFailure, resolveLibraryRef } from "../../folio-assistant-core/schemas/library-ref.js";
 import { join, resolve } from "node:path";
 
@@ -26,6 +26,45 @@ import { loadVoices, unionRules, voicesPresent } from "../schemas/voices";
 const ROOT = resolve(import.meta.dir, "..");
 /** The checkout, one level out: a cross-instance citation is resolved against sibling instances. */
 const REPO_ROOT = resolve(ROOT, "..");
+
+/**
+ * Every instance in this checkout that ships a `voices/` directory — FOUND,
+ * not assumed to be this one.
+ *
+ * ## Measured, on the change that needed it
+ *
+ * This module read `ROOT` and nothing else. Bean `w095` moved the three WHO
+ * voices into `who-style-guide/`, and the very next run reported
+ *
+ *     Voice graph  (1 voices, 12 rules)
+ *     ✓ every rule cites a source that resolves
+ *
+ * and exited 0. **Twenty-five rules across three voices went unchecked and
+ * nothing said so** — the `dh4f` defect in the gate whose entire subject is
+ * citations that do not resolve. Predicted before the move and confirmed by
+ * making it, which is the only way to tell a guess from a finding.
+ *
+ * It is the same shape as `check-declared-assets`, fixed hours earlier the
+ * same day: a checker pinned to one instance in a repository that has eight.
+ * The remedy is the same and it is not "add who-style-guide to a list" — a
+ * hardcoded list is a declaration nobody declared, and the next instance
+ * would be invisible in exactly this way.
+ *
+ * One level down plus the root itself. Deeper is deliberately NOT walked: a
+ * `voices/` inside `node_modules/` or a vendored checkout belongs to somebody
+ * else, and auditing another project's citations reports findings nobody here
+ * can act on.
+ */
+function instancesWithVoices(repoRoot: string): string[] {
+  const out: string[] = [];
+  if (voicesPresent(repoRoot)) out.push(repoRoot);
+  for (const e of readdirSync(repoRoot, { withFileTypes: true })) {
+    if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
+    const dir = join(repoRoot, e.name);
+    if (voicesPresent(dir)) out.push(dir);
+  }
+  return out.sort();
+}
 
 // No `LIBRARY` constant any more, and that is the change rather than a tidy-up.
 // This module composed `join(LIBRARY, libraryId, "sections", …)` against the
@@ -53,20 +92,35 @@ const MIN_QUOTE = 24;
  */
 function resolveCitation(
   src: { instance?: string; libraryId: string; sectionId?: string },
+  citingRoot: string,
 ): { ok: true; path: string } | { ok: false; why: string } {
-  const r = resolveLibraryRef(src, ROOT, REPO_ROOT);
+  // The CITING instance, not always `cat-harness`. A BARE citation resolves
+  // against whoever wrote it, so hardcoding one root would have answered a
+  // who-style-guide voice's bare reference out of the platform's library —
+  // the wrong corpus, reported as a confident resolution.
+  const r = resolveLibraryRef(src, citingRoot, REPO_ROOT);
   return r.ok ? { ok: true, path: r.path } : { ok: false, why: explainFailure(r.failure) };
 }
 
 function main(): number {
-  if (!voicesPresent(ROOT)) {
-    // Third state. A folio with no voice graph is legitimate; saying "0 problems"
-    // over a directory that is not there would be a clean run across nothing.
-    console.log("check:voices — this instance ships no voices/ directory. Nothing checked.");
+  const instances = instancesWithVoices(REPO_ROOT);
+  if (instances.length === 0) {
+    // Third state. A checkout with no voice graph anywhere is legitimate;
+    // saying "0 problems" over a directory that is not there would be a clean
+    // run across nothing.
+    console.log("check:voices — no instance in this checkout ships a voices/ directory. Nothing checked.");
     return 0;
   }
 
-  const voices = loadVoices(ROOT);
+  // Each voice keeps the root it was LOADED from, because that is the instance
+  // a bare citation resolves against. Flattening them into one list and
+  // resolving everything against `ROOT` is the bug this enumeration exists to
+  // avoid, one step in.
+  const loaded = instances.flatMap((root) =>
+    loadVoices(root).map((voice) => ({ voice, root })),
+  );
+  const voices = loaded.map((l) => l.voice);
+  const rootOf = new Map(loaded.map((l) => [l.voice.id, l.root]));
   const rules = unionRules(voices);
   const problems: string[] = [];
 
@@ -114,11 +168,10 @@ function main(): number {
       // The resolver's own explanation is used verbatim: it distinguishes four
       // failures this check cannot, and restating them here would make a fifth
       // wording of the same facts, free to drift from the four.
-      const res = resolveCitation({
-        instance: citedInstance,
-        libraryId: src.libraryId,
-        sectionId: src.sectionId,
-      });
+      const res = resolveCitation(
+        { instance: citedInstance, libraryId: src.libraryId, sectionId: src.sectionId },
+        rootOf.get(voice)!,
+      );
       if (!res.ok) {
         const from = citedInstance ? `${citedInstance}:` : "";
         problems.push(`${where}: cites ${from}${src.libraryId}/${src.sectionId} — ${res.why}`);
@@ -126,7 +179,7 @@ function main(): number {
     } else if (src.kgRef) {
       // A `#anchor` is a section within the file; check the file.
       const file = src.kgRef.split("#")[0]!;
-      if (!existsSync(join(ROOT, file))) {
+      if (!existsSync(join(rootOf.get(voice)!, file))) {
         problems.push(`${where}: cites kgRef ${file}, which does not exist in this instance`);
       }
     }
@@ -140,10 +193,13 @@ function main(): number {
         // Document-level: no sectionId, so the resolver checks `structure.json`
         // — "was this ingested at all", which is a different question from
         // "does this section exist" and gets its own finding.
-        const res = resolveCitation({ instance: s.instance, libraryId: s.libraryId });
+        const res = resolveCitation({ instance: s.instance, libraryId: s.libraryId }, rootOf.get(v.id)!);
         if (!res.ok) problems.push(`${v.id}: names source ${s.libraryId} — ${res.why}`);
       }
-      if (s.kgRef && !existsSync(join(ROOT, s.kgRef.split("#")[0]!))) {
+      // Against the DECLARING instance: a `kgRef` is a node of the voice's own
+      // knowledge graph, so looking for it under the platform would report a
+      // who-style-guide voice's own node as missing.
+      if (s.kgRef && !existsSync(join(rootOf.get(v.id)!, s.kgRef.split("#")[0]!))) {
         problems.push(`${v.id}: names source ${s.kgRef}, which does not exist`);
       }
     }
