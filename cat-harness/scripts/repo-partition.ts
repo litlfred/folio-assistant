@@ -212,6 +212,14 @@ const RULES: Rule[] = [
       // `zod`, so it carries nothing of the content model with it. Its one
       // production consumer, `src/mcp/project.ts`, is the harness's too.
       "schemas/tool-invocation.ts",
+      // A standing rule an actor holds while performing a task, bound to a
+      // process, a lane or an activity. That is the HARNESS's vocabulary —
+      // conventions are carried on BPMN nodes and resolved by
+      // `src/workflow/process-model.ts`; no folio's content model mentions
+      // them. Omitting it cost 3 wrong-direction edges out of the harness the
+      // day `folio-assistant#468` merged, and the gate did not catch it
+      // because `check:partition` reports without `--strict` and exits 0.
+      "schemas/convention.ts",
       // The composition root's own inventory of which content adapters this
       // instance ships. `src/` is claimed by subdirectory, so a new file at
       // its top level falls through — reported `unassigned`, which is the
@@ -431,6 +439,18 @@ const RULES: Rule[] = [
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",
+      // The staging-preview record and the script that writes it — bean `6pfo`,
+      // arrived from `main` (#466) AFTER this pass began and was caught by the
+      // unassigned gate added in the same change, on its first real encounter.
+      // Before that gate it would have joined the 19 silently.
+      //
+      // Its two siblings `restore-staging.ts` and `staging-cleanup-preflight.ts`
+      // were already harness; the schema moves WITH the script for the reason
+      // the four shared targets above did, or classifying the script alone
+      // mints the edge it was meant to retire. `staging-preview.ts` imports
+      // only zod and `fsh-guts.ts` (harness), so it carries no content model.
+      "schemas/staging-preview.ts",
+      "scripts/staging-record.ts",
       "scripts/restore-staging.ts",
       "scripts/serve-rendering.ts",
       "scripts/staging-cleanup-preflight.ts",
@@ -519,6 +539,69 @@ const RULES: Rule[] = [
       // ── The modules that fell through every rule and were reported
       //    `unassigned`. All are scripts or `src/` machinery, and with the
       //    six above moved, none of them reaches into core any more.
+      // ── The SHARED TARGETS those scripts reach, moved FIRST and for the
+      //    reason the seven-module batch above records: classifying the
+      //    scripts alone took wrong-direction edges from 5 to 12, because
+      //    each reached into one of these four and the `schemas/` prefix had
+      //    claimed all four for core. The classification was wrong, not the
+      //    tool — the falsifier this batch was measured against.
+      //
+      //    Every one is harness vocabulary by the owner's test, and every one
+      //    imports only zod, node builtins or `cat-harness.ts` (already
+      //    harness), so none carries the content model with it. Same argument
+      //    as `role-graph.ts` and `kg-qa.ts` above, at four more sites.
+      // Four more of the same shape, found by draining the batch above and
+      // re-reading what each remaining edge actually reached. Each imports
+      // only zod or node builtins, and each one's consumers are harness.
+      //
+      // `fsh-guts.ts` is the notable one: it is the TRASHCAN — "a node of the
+      // trashcan, what `fsh-guts/` holds" — and it was `smart-base` because
+      // the keyword rule `/(dak|fhir|fsh|ocl|l2|l3|smart|who|ig)/` matched
+      // `fsh` in a name that has nothing to do with FHIR Shorthand. A keyword
+      // rule cannot tell a homograph from a hit, which is why every keyword
+      // assignment in this file is provisional against a read of the module.
+      // It was the single `folio-assist-core -> smart-base` edge.
+      "schemas/front-matter.ts",    // "this repository's self-declaring files"
+      "schemas/test-run.ts",        // what was measured, with what; only eval-crdm-detect reads it
+      "schemas/note-anchor.ts",     // read only by `carried-note.ts`, already harness
+      "schemas/fsh-guts.ts",        // the trashcan, not FHIR Shorthand
+      "schemas/python-deps.ts",     // the repository's own Python toolchain
+      "schemas/avatars.ts",         // an avatar for every declared kind
+      "schemas/kind-validator.ts",  // a graph kind's validator
+      "schemas/actor-reach.ts",     // which actors a declaration can reach
+
+      // ── The 19 modules still reported `unassigned` on 2026-09-20, at
+      //    `5b8277ea9b`. `scripts/` is in no prefix rule, so a top-level
+      //    script falls through to `unassigned` — which the tool's own report
+      //    refuses to call clean ("edges this tool declined to judge").
+      //
+      //    Sixteen of them are harness machinery by the owner's test — needed
+      //    to RUN a process is tooling, DESCRIBES one is core. Each reads a
+      //    declaration, a role, a graph kind or the gate set; none reads a
+      //    folio's content model.
+      "scripts/check-actor-reach.ts",       // reads role-graph
+      "scripts/check-avatar-coverage.ts",   // avatars belong to roles
+      "scripts/check-declared-assets.ts",   // the instance declaration
+      "scripts/check-fallback-roles.ts",    // reads role-graph
+      "scripts/check-instance-render.ts",   // can an instance render its own graph
+      "scripts/check-kind-validators.ts",   // graph kinds and their validators
+      "scripts/check-python-deps.ts",       // the repo's own toolchain
+      "scripts/gates.ts",                   // the gate runner itself
+      "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
+      "scripts/gen-bootstrap-graph.ts",     // writes bootstrap/bootstrap.jsonld
+      "scripts/gen-python-deps.ts",         // writes requirements.txt
+      "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
+      "scripts/repo-files.ts",              // enumerates files the way a GATE needs
+      "scripts/strip-preview-seo.ts",       // the preview site build
+      "src/logging/log-writer.ts",
+      "src/logging/log-sweep.ts",
+      // The activity log's vocabulary: "what an agent did, when, and in which
+      // process". Its only consumers are the two modules above and
+      // `schemas/cat-harness.ts`, which is already harness. Left to the
+      // `schemas/` prefix it lands in core, and classifying the pair above
+      // would then MINT two wrong-direction edges rather than retire two —
+      // which is why it moves in the same change and not after.
+      "schemas/log-entry.ts",
       "scripts/agent-memory.ts",
       "scripts/check-upstream-pins.ts",
       "scripts/kg-viewer-strings.ts",
@@ -689,6 +772,16 @@ const RULES: Rule[] = [
       // exclusively on core data for a core caller, and calling it harness
       // bought two wrong-direction edges for nothing.
       "scripts/todos.ts",
+      // Three of the 19 unassigned that are CONTENT-side, by the same test
+      // read the other way: each operates on a folio's own material, not on
+      // the machinery that runs a process. Classifying them harness alongside
+      // their sixteen siblings would have reached into `schemas/narrative.ts`,
+      // `schemas/attribution.ts`, `schemas/archive-contents.ts` and
+      // `schemas/tabular-records.ts` — all core — and bought four
+      // wrong-direction edges for the tidiness of one homogeneous list.
+      "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
+      "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
+      "scripts/narratives.ts",              // the narrative review queue
     ],
   },
 ];
@@ -915,6 +1008,41 @@ function main(): void {
   console.log("These are not cross-edges — they are edges this tool declined to judge.");
   console.log("Classify the endpoints, then re-run; do not read them as clean.");
 
+  // ── What this gate ENFORCES, against what it merely reports.
+  //
+  // `check:partition` runs in CI without `--strict`, so until 2026-09-20 the
+  // only failing path was one nothing invoked: it reported 8 wrong-direction
+  // edges and exited 0, and three of those edges had been introduced that
+  // morning by a PR whose board was green 43/43. A gate that CANNOT fail is
+  // indistinguishable, from the outside, from one that passed — bean `xom7`,
+  // one level up from the workflow it was written about.
+  //
+  // The repository's own precedent for switching a reporter into an enforcer
+  // is the ruff comment in `code-quality-gates.yml`: **a check is an error
+  // only once its count is zero.** Turning a red gate on just teaches the
+  // next agent to append `|| true`.
+  //
+  // So it is applied PER AXIS, because the axes reached zero at different
+  // times. An UNASSIGNED module is now always an error: the count is 0, and
+  // the report already refuses to call the edges touching one clean ("edges
+  // this tool declined to judge"). A module that falls through every rule is
+  // a module nobody has decided about, and it is cheap to decide — this is
+  // the one failure mode a contributor adding a file can cause by accident.
+  //
+  // Wrong-direction edges stay REPORTED, because the count is 1, not 0. The
+  // residue is `src/types.ts -> schemas/types.ts`, analysed in this file
+  // above and deliberately left: `ContentAdapter` is defined entirely in
+  // content terms, so splitting it moves the edge rather than removing it.
+  // That is an adapter-contract redesign, and it wants deciding, not
+  // smuggling into a partition pass. When it reaches 0, delete the
+  // distinction below and let `strict` govern both.
+  const unassigned = [...modules].filter(([, a]) => a.repo === "unassigned").map(([m]) => m);
+  if (unassigned.length > 0) {
+    console.error(`\n\u2717 ${unassigned.length} module(s) fell through every rule:`);
+    for (const m of unassigned.sort()) console.error(`    ${m}`);
+    console.error("    Classify each in REPO_RULES. An unassigned module is not a clean result.");
+    process.exit(1);
+  }
   if (strict && crossEdges.length > 0) process.exit(1);
 }
 
