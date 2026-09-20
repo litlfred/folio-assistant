@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jbx2
 title: 'VISUALISER: library/ — the L1 corpus as something you can look at'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:01:05Z
-updated_at: 2026-09-20T18:21:35Z
+updated_at: 2026-09-20T18:50:45Z
 parent: folio-assistant-yj32
 ---
 
@@ -173,3 +173,75 @@ constraint (reuse), the scope cut (no asset editing) and one new action
 ---
 
 Tracked on [issue #582](https://github.com/litlfred/folio-assistant/issues/582).
+
+
+---
+
+## Sortable listing + folio/desktop view — owner, 2026-09-20
+
+> work on library visualation too. need (srotable) lisiting (w/ metadata) and
+> folio/desktop view
+
+Two views, and the reason there are two rather than one is that they answer
+different questions:
+
+- **Listing** — every column sortable, every metadatum visible. This is what
+  answers *"which is biggest"*, *"which has no OCR"*, *"which came from which
+  upload"*. Sorted state is a reader's question, so it is interaction and not
+  a stored preference.
+- **Desktop** — the corpus as tiles, the folio/Miro-board metaphor `yj32`
+  describes. This is what answers *"what is in here"* before you know what you
+  are looking for.
+
+**They are two renderings of ONE projection, not two pages.** A reader who
+filters in the listing and switches to the desktop is looking at the same set.
+Two pages would be two answers to "what is in the corpus", free to disagree.
+
+## BUILT — 2026-09-20
+
+`scripts/library-graph.ts` (reader) + `scripts/gen-library-viz.ts`
+(projection + viewer), the same three-piece shape `xgd8` used for `schemas/`
+and `km90` used for `beans/`: one reader, one published projection under the
+instance's rendered-content root, one zero-dependency viewer that fetches it
+relative to its own location. The published segment is the DECLARED
+directory's own name, so a rename moves the source and the URL together.
+
+Gated by `library:viz:check`, falsified both directions.
+
+### The three-state ingestion display, which was this bean's requirement
+
+OCR is the case that forces it, and the viewer renders three different things,
+**none styled as an error**:
+
+| state | meaning |
+|---|---|
+| `not scanned` | no `ocr/` at all — a DETERMINED answer, not a failure |
+| `N OCR pages` | scanned |
+| `ocr/ present, empty` | a third answer again, and the one worth looking at |
+
+Measured: `who-pub-tps-931` has 121 OCR pages; the other three have no `ocr/`
+directory. Rendering those three as "0" would have said OCR failed on them.
+
+### Resolving through a slug is demonstrated, not asserted
+
+The third "done when" item asked for at least one real reference resolved
+through a slug. The viewer does better: **every** entry's source is resolved
+back to the `uploads/` file it was ingested from, by name AND by recomputed
+sha256 — four of four match. That refutes `v1hw`'s stated blocker, and the
+detail is recorded there.
+
+### What is deliberately absent
+
+No affordance edits a library asset — the owner's *"w/o edit functionality"*,
+and it is what let this ship before `yj32`'s write-path question is answered.
+The upload+process trigger and materialise-into-a-folio are writes and are
+not in this code.
+
+## Done when — revised
+
+- [x] `library/` renders per slug, with ingestion state as THREE states
+- [x] `uploads/` entries that have not become slugs are visible as such
+- [x] At least one real reference resolved through a slug — four of four, hash-verified
+- [x] Sortable listing with metadata, and a folio/desktop view, over one projection
+- [ ] Materialise/duplicate into a chosen folio (a WRITE — `yj32`)
+- [ ] Quick upload+process trigger (a WRITE — `yj32`, shared with `v1hw`)

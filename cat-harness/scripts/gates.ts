@@ -220,6 +220,11 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "`schema:viz:check` is in the gate set; the site build runs the writer",
   },
   {
+    match: "run library:viz",
+    kind: "covered-by",
+    reason: "`library:viz:check` is in the gate set; the site build runs the writer",
+  },
+  {
     match: "run translation:index",
     kind: "covered-by",
     reason: "`translation:index:check` is in the gate set; the site build runs the writer",

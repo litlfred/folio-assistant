@@ -35,6 +35,14 @@ on:
       # under `docs/` — without these paths the site would serve a stale one.
       - 'cat-harness/scripts/gen-schema-viz.ts'
       - 'cat-harness/scripts/schema-graph.ts'
+      # Same reasoning for the library viewer, plus the corpus itself: an
+      # entry added to `library/` or a file dropped in `uploads/` changes the
+      # published counts while touching nothing under `docs/`.
+      - 'cat-harness/scripts/gen-library-viz.ts'
+      - 'cat-harness/scripts/library-graph.ts'
+      - 'cat-harness/library/**'
+      - 'cat-harness/uploads/**'
+      - 'uploads/**'
       - 'cat-harness/content/docs/**'
       - 'cat-harness/scripts/render-bpmn.ts'
       # The navbar's locale filter reads `docs/_data/translations.json`, built
@@ -105,6 +113,15 @@ jobs:
       # (bean `xgd8`).
       - name: Regenerate the schema graph projection and viewer
         run: bun run schema:viz
+
+      # The L1 corpus — `library/` entries and the `uploads/` queues feeding
+      # them. Same contract as the schema viewer above: the committed copy is
+      # browsable on GitHub and the published one must never be its stale
+      # half. `library/` is the subgraph every knowledge-graph reference to a
+      # source resolves THROUGH, and until this step nobody could look at it
+      # (bean `jbx2`).
+      - name: Regenerate the library projection and viewer
+        run: bun run library:viz
 
       # Same reasoning as the three regenerations above: the committed copy is
       # browsable on GitHub and the PUBLISHED one must never be the stale half

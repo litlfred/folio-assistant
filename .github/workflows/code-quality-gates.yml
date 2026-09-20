@@ -627,6 +627,14 @@ jobs:
       - name: schema graph projection and viewer are current
         run: bun run schema:viz:check
 
+      # The library projection carries the UNINGESTED COUNT, which is a claim
+      # about the corpus rather than a rendering detail. A stale one tells a
+      # reader that a document is still queued after it was ingested, or the
+      # reverse — and neither is distinguishable from the truth by looking at
+      # the page.
+      - name: library projection and viewer are current
+        run: bun run library:viz:check
+
       # The translation index is what the navbar's locale filter reads. It is
       # derived from what each page DECLARES — `lang`, and `translation_source`
       # naming what it expresses — never from a directory whose name looks like
