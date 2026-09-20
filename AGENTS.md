@@ -387,18 +387,27 @@ built: a second set of tools over the same diagram is a second answer to
 "where are we", free to disagree with the first, and workflow state under
 `beans/workflows/` is committed so a sibling session sees the same position.
 
-Key rules:
-- Feature work must be linked to a GitHub issue (scan before creating; do not
-  create without user permission)
-- Always use a feature branch and PR for feature work
-- Always ask for explicit user confirmation before merging feature PRs to main
-- Post implementation summaries to the issue, not just the PR
-- Issues are for stakeholder sign-off; PRs are for code review; beans are for
-  work-plan tracking — they are not synonymous
-- Never close an issue without explicit authorization from the BA or
-  stakeholder — an agent must never assume completion
-- After each round of implementation, post a summary comment on the issue:
-  what was accomplished, what remains, links to updated content for review
+**The rules are in the skills, not here.** This section listed seven of them
+until 2026-09-20, which is the migration debt the banner at the top of this
+file describes: a rule stated in two places is a rule free to drift, and the
+copy a reader finds first is the one with no test, no generated reference and
+no skill to govern it. Each was checked against its home before the list came
+out — **by reading it, not by matching the words** — and each rule below is
+the *pointer*, with the skill as the text:
+
+| rule | where it lives |
+|---|---|
+| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](skills/folio-core/crdm-detect.md) §"Issue association" |
+| branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](skills/folio-core/continual-progress.md) invariant 1 |
+| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](skills/folio-core/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
+| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](skills/folio-core/issue-working.md), [`crdm-requirements-workflow`](skills/folio-core/crdm-requirements-workflow.md) |
+| issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](skills/folio-core/issue-working.md) §"What an issue is *for*, against its neighbours" |
+| an agent never closes an issue on its own say-so | [`issue-working`](skills/folio-core/issue-working.md), and `crdm-close.bpmn` executes it |
+
+Six rows for seven bullets: *"use a feature branch"* and *"always PR"* were
+two statements of one invariant, and `continual-progress` already states it as
+one. Splitting it here made the branch sound optional to an agent that had
+already opened a PR.
 
 ## Say which process you are in — every turn
 
