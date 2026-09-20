@@ -31,7 +31,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { directoriesForGraph } from "../../schemas/cat-harness.js";
+import { soleDirectoryForGraph } from "../../schemas/cat-harness.js";
 
 const root = resolve(import.meta.dir, "../..");
 
@@ -49,7 +49,7 @@ describe("BPMN translation templates", () => {
     // declared-path-literal: the convention fallback for an instance that
     // declares nothing, matching `translationSourcesDir` in
     // src/tools/translation.ts.
-    const dir = directoriesForGraph(root, "translation-sources")[0] ?? join(root, "translations");
+    const dir = soleDirectoryForGraph(root, "translation-sources") ?? join(root, "translations");
     const gating = existsSync(dir)
       ? readdirSync(dir, { withFileTypes: true }).filter(
           (e) => e.isDirectory() && existsSync(join(dir, e.name, "workflows")),

@@ -50,7 +50,7 @@ import type {
 // `skills/*/package-manifest.json` are the other thing of that name, matching
 // `SkillPackageManifestSchema` exactly on all nine keys.
 import type { SkillPackageManifest } from "../schemas/types.ts";
-import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { instanceDirectoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 
 /**
@@ -67,15 +67,25 @@ function kgRoot(root: string): string {
 
 
 /**
- * The declared `schemas` graph, or the convention.
+ * THIS INSTANCE'S OWN `schemas` directory, or the convention.
  *
  * declared-path-literal: the fallback is at the call site so the choice is
  * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why `directoriesForGraph` is asked for the
- * `schemas` one by name rather than being handed a single-home guess.
+ * the schema definitions — which is why the `schemas` one is asked for by name
+ * rather than being handed a single-home guess.
+ *
+ * `instanceDirectoryForGraph`, not `directoriesForGraph(...)[0]`, because every use
+ * below composes a path INSIDE this directory. The question is "where is MY
+ * schemas directory", not "who declares schemas" — and from the `cat-harness`
+ * root those have different answers: measured 2026-09-20, `schemas` resolves
+ * to FOUR homes (`cat-harness/`, `folio-assistant-core/`, `large-datasets/`,
+ * `detangle/`), three of them arriving through the dependency overlay and
+ * belonging to somebody else. `[0]` was right only because the resolver
+ * happens to order the root's own declarations first; a reordering would have
+ * sent this generator's output into another checkout, silently. Bean `a02m`.
  */
 function schemasRoot(root: string): string {
-  return directoriesForGraph(root, "schemas")[0] ?? join(root, "schemas");
+  return instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas");
 }
 
 

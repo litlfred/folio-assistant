@@ -62,7 +62,7 @@ import { fileURLToPath } from "node:url";
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
+import { soleDirectoryForGraph } from "../schemas/cat-harness.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -106,7 +106,15 @@ function pyHelper(name: string): string {
  * in the first draft, as it did for the bean store an hour earlier.
  */
 export function libraryRoot(root = INSTANCE_ROOT): string {
-  const abs = directoriesForGraph(root, "library")[0];
+  // A WRITE target, so this is the one place `[0]` was never defensible: with
+  // several declared libraries, the first is not an answer to "where does this
+  // document go", it is a coin toss that files it somewhere plausible.
+  //
+  // `soleDirectoryForGraph` refuses and NAMES the candidates, which is the
+  // same discipline as the throw below — one guards "declared nowhere", the
+  // other "declared in several", and both beat writing into a directory the
+  // caller did not choose. Bean `a02m`.
+  const abs = soleDirectoryForGraph(root, "library");
   if (!abs) {
     throw new Error(
       "this instance declares no `library` graph in harness.json — " +

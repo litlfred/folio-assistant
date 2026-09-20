@@ -7,7 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { directoriesForGraph } from "../../schemas/cat-harness.js";
+import { directoriesForGraph, soleDirectoryForGraph } from "../../schemas/cat-harness.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -47,10 +47,24 @@ export const CONTENT_DIR = resolve(REPO_ROOT, "content");
 // yet, and the ingestion queue must be creatable before anything is in it.
 // The declared `uploads` graph — the ingestion queue, before anything is L1.
 // Write-target fallback, as above.
-export const UPLOADS_DIR = directoriesForGraph(REPO_ROOT, "uploads")[0] ?? resolve(REPO_ROOT, "uploads");
+export const UPLOADS_DIR = soleDirectoryForGraph(REPO_ROOT, "uploads") ?? resolve(REPO_ROOT, "uploads");
 
-// declared-path-literal: the convention fallback, at the call site so the choice is visible — ingestion CREATES library/ on its first run.
-export const LIBRARY_DIR = directoriesForGraph(REPO_ROOT, "library")[0] ?? resolve(REPO_ROOT, "library");
+// EVERY declared library, not the first — the graph tools read all of them.
+//
+// Singular until bean `a02m`. One name for a list of one was fine while
+// `library` had one home; the moment a second is declared, a server exporting
+// LIBRARY_DIR serves half the corpus and reports success. Plural here rather
+// than at each consumer so the shape of the answer is the shape of the
+// question.
+//
+// declared-path-literal: the convention fallback, at the call site so the
+// choice is visible — ingestion CREATES library/ on its first run, so
+// resolving to nothing before then would make the first ingest impossible
+// rather than merely empty.
+export const LIBRARY_DIRS: string[] = (() => {
+  const declared = directoriesForGraph(REPO_ROOT, "library");
+  return declared.length > 0 ? declared : [resolve(REPO_ROOT, "library")];
+})();
 
 /** LaTeX chapters output directory. */
 export const CHAPTERS_DIR = resolve(REPO_ROOT, "chapters");
@@ -80,7 +94,7 @@ export const PREFS_FILE = resolve(REPO_ROOT, ".folio-assistant-prefs.json");
 // `beans/`. Same write-target fallback as above.
 // `REPO_ROOT` is `findContentRepoRoot()` — a FOLIO's root, not this instance's.
 // The `repoRootFor` sweep sent the fallback to that folio's PARENT.
-export const TODOS_DIR = directoriesForGraph(REPO_ROOT, "todos")[0] ?? resolve(REPO_ROOT, "todos");
+export const TODOS_DIR = soleDirectoryForGraph(REPO_ROOT, "todos") ?? resolve(REPO_ROOT, "todos");
 
 /** Feedback directory — committed to main via worktree.
  *  Structure: feedback/<paper-dir>/<rootName>.ts */

@@ -366,26 +366,55 @@ async function run(): Promise<number> {
   const only = argv.includes("--doc") ? argv[argv.indexOf("--doc") + 1] : undefined;
 
   const root = findContentRepoRoot();
+  // EVERY declared library, not the first — this GENERATES the JSON-LD the
+  // whole corpus is read through, so a library it skips is a set of documents
+  // that exist on disk and nowhere in the graph, with a clean exit code over
+  // them. `directoriesForGraph(...)[0]` until bean `a02m`.
+  //
   // declared-path-literal: the convention fallback, at the call site so the
-  // choice is visible. An absent directory is already handled below as
-  // "nothing to ingest", which is the determined-empty third state.
-  const libraryDir = directoriesForGraph(root, "library")[0] ?? join(root, "library");
-  if (!existsSync(libraryDir)) {
+  // choice is visible. An absent directory is handled below as "nothing to
+  // ingest", which is the determined-empty third state.
+  const declaredLibraries = directoriesForGraph(root, "library");
+  const libraryDirs = (declaredLibraries.length > 0 ? declaredLibraries : [join(root, "library")]).filter(
+    (d) => existsSync(d),
+  );
+  if (libraryDirs.length === 0) {
     console.log(`gen-library-jsonld: no library/ under ${root} — nothing to ingest.`);
     return 0;
   }
 
-  const docs = readdirSync(libraryDir)
-    .filter((d) => !d.startsWith("."))
-    .filter((d) => (only ? d === only : true))
-    .filter((d) => {
+  // A document is now (id, WHICH library it is in), because there may be
+  // several and an id alone no longer locates one.
+  const docs: Array<{ docId: string; dir: string }> = [];
+  const seen = new Map<string, string>();
+  for (const libraryDir of libraryDirs) {
+    for (const d of readdirSync(libraryDir).sort()) {
+      if (d.startsWith(".")) continue;
+      if (only && d !== only) continue;
+      const dir = join(libraryDir, d);
       try {
-        return statSync(join(libraryDir, d)).isDirectory();
+        if (!statSync(dir).isDirectory()) continue;
       } catch {
-        return false;
+        continue;
       }
-    })
-    .sort();
+      // A slug in two libraries is REPORTED, never merged and never silently
+      // last-wins. The node ids are composed from the slug, so two documents
+      // sharing one would write over each other's blocks and the second run
+      // would look idempotent. Refusing here is the only place that can tell
+      // them apart.
+      const prior = seen.get(d);
+      if (prior !== undefined) {
+        console.error(
+          `gen-library-jsonld: slug "${d}" is declared in two libraries — ` +
+            `${prior} and ${dir}. Node ids are composed from the slug, so ingesting ` +
+            `both would silently overwrite one. Rename one, or declare only one library.`,
+        );
+        return 1;
+      }
+      seen.set(d, dir);
+      docs.push({ docId: d, dir });
+    }
+  }
 
   const prune = argv.includes("--prune");
   const orphans: string[] = [];
@@ -397,8 +426,7 @@ async function run(): Promise<number> {
   const stale: string[] = [];
   const skipped: string[] = [];
 
-  for (const docId of docs) {
-    const dir = join(libraryDir, docId);
+  for (const { docId, dir } of docs) {
     const structure = readJson<Structure>(join(dir, "structure.json"));
     if (!structure) {
       // Not a parse failure to hide: a document with no Stage A output simply

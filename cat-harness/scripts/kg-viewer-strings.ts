@@ -59,10 +59,10 @@ import type { PotEntry } from "../content/pipeline/pot-extract.js";
  * rather than inside `directoriesForGraph` so the choice is visible.
  */
 function translationsRoot(repoRoot: string): string {
-  return directoriesForGraph(repoRoot, "translation-sources")[0] ?? join(repoRoot, "translations");
+  return soleDirectoryForGraph(repoRoot, "translation-sources") ?? join(repoRoot, "translations");
 }
 
-import { directoriesForGraph } from "../schemas/cat-harness.js";
+import { soleDirectoryForGraph } from "../schemas/cat-harness.js";
 
 /** This file's own path, for the POT's `#:` source references. */
 export const STRINGS_SOURCE = "scripts/kg-viewer-strings.ts";

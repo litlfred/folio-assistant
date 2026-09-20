@@ -612,9 +612,13 @@ export function checkEntry(dir: string): EntryReport {
  * falls back to the directory this module lives in.
  */
 export function instanceRootFor(cwd: string): string | undefined {
-  if (directoriesForGraph(cwd, "library")[0]) return cwd;
+  // `.length > 0`, not `[0]`. The question here is PRESENCE — does this root
+  // declare a library at all — and asking it by indexing reads as though the
+  // first one mattered. It never did here, and after bean `a02m` a root may
+  // declare several.
+  if (directoriesForGraph(cwd, "library").length > 0) return cwd;
   const own = resolve(import.meta.dir, "..");
-  return directoriesForGraph(own, "library")[0] ? own : undefined;
+  return directoriesForGraph(own, "library").length > 0 ? own : undefined;
 }
 
 /**
@@ -627,13 +631,24 @@ export function instanceRootFor(cwd: string): string | undefined {
  */
 export function checkAll(root: string): EntryReport[] | undefined {
   // Declared, not composed — see `libraryRoot` in `ingest-document.ts` for why.
-  const lib = directoriesForGraph(root, "library")[0];
-  if (!lib) return undefined;
-  if (!existsSync(lib)) return [];
-  return readdirSync(lib)
-    .filter((d) => statSync(join(lib, d)).isDirectory())
-    .sort()
-    .map((d) => checkEntry(join(lib, d)));
+  //
+  // EVERY declared library. This is the L1 COMPLETENESS gate, and the one
+  // failure it must never have is reporting a complete pass over part of the
+  // corpus — which is exactly what it did when it ran from the repository
+  // root and checked nothing (the comment on `instanceRootFor` above). Half
+  // is the same bug as none, with better camouflage: none at least yields the
+  // `undefined` third state. `directoriesForGraph(...)[0]` until bean `a02m`.
+  const libs = directoriesForGraph(root, "library");
+  if (libs.length === 0) return undefined;
+  const out: EntryReport[] = [];
+  for (const lib of libs) {
+    if (!existsSync(lib)) continue;
+    for (const d of readdirSync(lib).sort()) {
+      if (!statSync(join(lib, d)).isDirectory()) continue;
+      out.push(checkEntry(join(lib, d)));
+    }
+  }
+  return out;
 }
 
 /**
@@ -788,11 +803,16 @@ if (import.meta.main) {
   // `images.json`.
   if (!target) {
     const libRoot = instanceRootFor(resolve("."));
-    const lib = libRoot ? directoriesForGraph(libRoot, "library")[0] : undefined;
-    if (lib && existsSync(lib)) {
-      const dirs = readdirSync(lib)
-        .map((d) => join(lib, d))
-        .filter((d) => statSync(d).isDirectory());
+    // Across EVERY declared library: an exception that has expired in the
+    // second one is a gate lying about its coverage just as much as one that
+    // expired in the first. Bean `a02m`.
+    const libs = libRoot ? directoriesForGraph(libRoot, "library").filter((d) => existsSync(d)) : [];
+    if (libs.length > 0) {
+      const dirs = libs.flatMap((lib) =>
+        readdirSync(lib)
+          .map((d) => join(lib, d))
+          .filter((d) => statSync(d).isDirectory()),
+      );
       const expired = expiredExceptions(dirs, (d, f) => existsSync(join(d, f)));
       if (expired.length) {
         console.error("A `not-derivable` claim has EXPIRED — the arm now runs:");

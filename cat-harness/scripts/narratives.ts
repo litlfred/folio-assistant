@@ -143,10 +143,14 @@ function setAtPath(doc: Record<string, unknown>, path: NarrativePath, value: Nar
  * `not-authored` slot has nothing to look at.
  */
 export function queue(root = ROOT): QueueItem[] {
-  const lib = directoriesForGraph(root, "library")[0];
-  if (!lib || !existsSync(lib)) return [];
+  // EVERY declared library. This is a REVIEW QUEUE, and a queue that omits one
+  // library shows a person a shorter list and no sign that it is short —
+  // `04vl` is the bean for the last time this queue could not see 24% of what
+  // it was for. `directoriesForGraph(...)[0]` until bean `a02m`.
+  const libs = directoriesForGraph(root, "library").filter((d) => existsSync(d));
+  if (libs.length === 0) return [];
   const out: QueueItem[] = [];
-  for (const slug of readdirSync(lib).sort()) {
+  for (const lib of libs) for (const slug of readdirSync(lib).sort()) {
     for (const name of NARRATIVE_BEARING) {
       const f = join(lib, slug, name);
       if (!existsSync(f)) continue;

@@ -56,7 +56,13 @@ function modulesResolvingADirectory(): string[] {
         continue;
       }
       if (!e.endsWith(".ts") || e.includes(".test.")) continue;
-      if (readFileSync(p, "utf-8").includes("directoriesForGraph(")) {
+      // Any of the three accessors — they share a registry, so a module that
+      // reaches it through `soleDirectoryForGraph` can throw `unknown graph
+      // kind` exactly as one calling the plural form can. Scanning for the
+      // plural name alone would have quietly dropped every module bean `a02m`
+      // migrated, which is the whole population this test exists to cover.
+      const src = readFileSync(p, "utf-8");
+      if (/\b(directoriesForGraph|soleDirectoryForGraph|instanceDirectoryForGraph)\(/.test(src)) {
         out.push(relative(ROOT, p));
       }
     }
@@ -110,8 +116,14 @@ describe("a module that resolves a declared directory can resolve one", () => {
           "bun",
           "-e",
           `import "./${m}";` +
-            `import { directoriesForGraph } from "./schemas/cat-harness.js";` +
-            `directoriesForGraph(".", "library")[0];`,
+            `import { directoriesForGraph, soleDirectoryForGraph, instanceDirectoryForGraph }` +
+            ` from "./schemas/cat-harness.js";` +
+            // All THREE accessors, because all three go through the same
+            // registry and any of them can be the first call a module makes.
+            // Testing only the plural one would leave the two added by bean
+            // `a02m` un-probed in exactly the modules that now use them.
+            `directoriesForGraph(".", "library"); soleDirectoryForGraph(".", "library");` +
+            ` instanceDirectoryForGraph(".", "library");`,
         ],
         { cwd: ROOT },
       );

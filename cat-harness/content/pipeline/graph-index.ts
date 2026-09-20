@@ -463,12 +463,29 @@ export function graphStats(index: GraphIndex): Record<string, unknown> {
 
 /** The standard roots: authored blocks and ingested documents. */
 export function defaultRoots(repoRoot: string): Array<{ name: string; dir: string }> {
+  // EVERY declared library, not the first.
+  //
+  // This is an INDEX. Indexing one of several libraries and reporting a clean
+  // build is the `dh4f` defect — a consumer scanning nothing and saying so is
+  // recoverable; a consumer scanning half and saying nothing is not. It read
+  // `directoriesForGraph(...)[0]` until bean `a02m`, which was correct only
+  // while `library` had one home.
+  //
+  // Named per directory rather than all called "library", because a node's
+  // root name is how a message says WHERE it came from, and two roots with one
+  // name make the answer useless exactly when there is something to tell apart.
+  const libraries = directoriesForGraph(repoRoot, "library");
   return [
     { name: "content", dir: join(repoRoot, "content") },
     // declared-path-literal: the convention fallback, at the call site so the
     // choice is visible. The index is built over whatever is there; a root
     // that resolves to nothing yields fewer nodes rather than an error.
-    { name: "library", dir: directoriesForGraph(repoRoot, "library")[0] ?? join(repoRoot, "library") },
+    ...(libraries.length === 0
+      ? [{ name: "library", dir: join(repoRoot, "library") }]
+      : libraries.map((dir, i) => ({
+          name: libraries.length === 1 ? "library" : `library:${relative(repoRoot, dir) || String(i)}`,
+          dir,
+        }))),
   ];
 }
 

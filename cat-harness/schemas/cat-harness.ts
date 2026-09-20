@@ -2807,6 +2807,132 @@ export function directoriesForGraph(
     .map((d) => d.absPath);
 }
 
+/**
+ * The resolved records, not just their paths — for the two accessors below.
+ *
+ * Separate from `directoriesForGraph` rather than replacing it: a caller that
+ * wants paths should not have to know what a `ResolvedDirectory` is, and the
+ * two questions below need the `declaredBy` and `own` fields to answer
+ * usefully when they refuse.
+ */
+function resolvedForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): ResolvedDirectory[] {
+  return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
+    d.graphs.includes(graph as GraphKind),
+  );
+}
+
+/**
+ * The ONE directory carrying a graph — REFUSING when there is more than one.
+ *
+ * ## What this fixes, and what it does not undo
+ *
+ * `directoriesForGraph` exists because `directoryForGraph` returned the first
+ * declaration silently and cost three bugs in a day. Its doc comment above
+ * settles where the singular assumption belongs, and that decision stands:
+ *
+ * > *A caller that genuinely wants one writes `directoriesForGraph(...)[0]`,
+ * > so the assumption is visible where it is made and greppable across the
+ * > repo.*
+ *
+ * Making the assumption VISIBLE was the improvement. What `[0]` still does not
+ * do is CHECK it: the call site says "I expect one home" and then quietly
+ * takes the first when there are four. Greppable is not checked, and an
+ * assumption nothing tests is visible only to somebody already looking.
+ *
+ * So this is not a reinstatement of `directoryForGraph`. That one was silent,
+ * and silence is the property that got it excised — not its arity. This one
+ * keeps the assumption exactly where the design put it, at the call site, and
+ * turns it from hoped into enforced. A graph with several homes is a caller
+ * asking the wrong question, and it says so by name rather than by returning a
+ * plausible path to half the answer.
+ *
+ * ## It was already wrong, not merely about to be
+ *
+ * Measured 2026-09-20 from the `cat-harness` root: `schemas` resolves to FOUR
+ * directories — `cat-harness/`, `folio-assistant-core/`, `large-datasets/` and
+ * `detangle/` — and four call sites took `[0]` over it. Bean `a02m`.
+ *
+ * ## Absent is not the same as several
+ *
+ * Returns `undefined` for a graph with no home, so `?? join(root, "…")` at the
+ * call site keeps working and the `declared-path-literal` discipline is
+ * unchanged. It throws ONLY for the ambiguous case, which no fallback can
+ * paper over: there is no sensible default for "which of these four".
+ */
+export function soleDirectoryForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string | undefined {
+  const found = resolvedForGraph(root, graph, registry);
+  if (found.length > 1) {
+    throw new Error(
+      `graph "${graph}" has ${found.length} declared directories, and this call site expects one: ` +
+        found.map((d) => `${d.id} (${d.declaredBy}) → ${d.absPath}`).join("; ") +
+        ". Use directoriesForGraph to scan all of them, or instanceDirectoryForGraph for the one at this instance's own root.",
+    );
+  }
+  return found[0]?.absPath;
+}
+
+/**
+ * The directory a graph has AT THIS INSTANCE'S OWN ROOT — repository-scoped
+ * entries pointing at sibling instances excluded.
+ *
+ * ## A third question, found by reading the callers rather than by design
+ *
+ * `a02m` began with two shapes in mind: scan every home, or expect exactly
+ * one. Both were wrong for the four `schemas` call sites, which is how this
+ * one was found. `check-tools`, `harness-schema-export`, `gen-schema-docs` and
+ * `fsh-guts/generate-docs` all compose `join(schemasRoot(root), "skills")` or
+ * `"generated"` — a path INSIDE the directory. They are not asking "who
+ * declares schemas", they are asking "where is MY schemas directory".
+ *
+ * ## `own` is NOT the discriminator, and assuming it was is a correction
+ *
+ * The first version of this filtered on `ResolvedDirectory.own`. Measured:
+ * from the `cat-harness` root all FOUR `schemas` directories are `own` —
+ * `cat-harness/schemas` plus `folio-assistant-core/`, `large-datasets/` and
+ * `detangle/`, each declared by cat-harness's own `harness.json` with
+ * `scope: "repository"` because this repository stages three future instances
+ * as sibling top-level directories. `own` distinguishes the root from a
+ * DEPENDENCY, which is a different question and not the one being asked.
+ *
+ * The discriminator is `scope`, and `rootForScope` above is where it already
+ * means exactly this: a repository-scoped entry resolves against the
+ * REPOSITORY root, everything else against the instance root. So this asks for
+ * the entries that resolve against `root` itself — the directory that is
+ * genuinely this instance's, not one it points at from across the repository.
+ *
+ * ## Why `[0]` was not already wrong here
+ *
+ * `resolveDirectories` happens to order the root's instance-scoped
+ * declarations first, so `[0]` landed on the intended one. A reordering, or a
+ * staged sibling declared earlier, would have moved it silently — and the
+ * symptom would be a generator writing its output into another instance's
+ * tree, with a clean exit code.
+ */
+export function instanceDirectoryForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string | undefined {
+  const here = resolvedForGraph(root, graph, registry).filter(
+    (d) => d.own && d.scope !== "repository",
+  );
+  if (here.length > 1) {
+    throw new Error(
+      `instance at ${root} declares ${here.length} directories for graph "${graph}" at its own root, ` +
+        `and this call site expects one: ${here.map((d) => `${d.id} → ${d.absPath}`).join("; ")}.`,
+    );
+  }
+  return here[0]?.absPath;
+}
+
 // ── Graph projection ────────────────────────────────────────────
 
 /**

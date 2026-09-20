@@ -40,7 +40,7 @@ import { registerMcpToolGroups } from "./tool-groups.js";
 import { leanStatusBucket } from "../../schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIR, UPLOADS_DIR } from "./paths.js";
+import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIRS, UPLOADS_DIR } from "./paths.js";
 import { executeGraphTool } from "./tools/graph.js";
 import {
   currentBranch, listBranches, fetchOrigin, isCurrentBranch,
@@ -48,7 +48,7 @@ import {
   mergeBase, gitLogFiles, gitShowBinaryAt, gitShowAt,
 } from "./git.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
-import { join, resolve, extname } from "path";
+import { join, relative, resolve, extname } from "path";
 import Anthropic from "@anthropic-ai/sdk";
 
 // ── Role-based access control ────────────────────────────────────
@@ -276,10 +276,24 @@ function listAllFeedback(status?: string): { paperId: string; rootName: string; 
 
 const CONTENT_DIR = resolve(REPO_ROOT, "content");
 
-/** The two node populations the graph tools read. */
+/**
+ * The node populations the graph tools read: `content`, plus EVERY declared
+ * library.
+ *
+ * "The two" until bean `a02m`. The count was in the sentence and in the code,
+ * and both were assumptions about a declaration that may name several — a
+ * server answering graph queries over the first library and reporting nothing
+ * amiss is the failure mode that costs the most to notice.
+ *
+ * Named per directory when there is more than one, because a result says which
+ * root it came from and two roots called `library` make that answer useless.
+ */
 const GRAPH_ROOTS = [
   { name: "content", dir: CONTENT_DIR },
-  { name: "library", dir: LIBRARY_DIR },
+  ...LIBRARY_DIRS.map((dir, i) => ({
+    name: LIBRARY_DIRS.length === 1 ? "library" : `library:${relative(REPO_ROOT, dir) || String(i)}`,
+    dir,
+  })),
 ];
 import { leanPackageByName } from "../../schemas/lean-packages.js";
 import {

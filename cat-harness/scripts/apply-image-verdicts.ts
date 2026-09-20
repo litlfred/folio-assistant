@@ -44,7 +44,7 @@
 // harness alone never sees it (schemas/folio-graph-kind.ts says so).
 import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 
 import { AttributionSchema } from "../schemas/attribution.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
@@ -64,9 +64,16 @@ const ROOT = resolve(import.meta.dir, "..");
  * which this repository has already done once, moving the whole instance
  * under `cat-harness/`.
  */
+// EVERY declared library, not the first — a verdict names a document, and
+// looking for it in one of several libraries would report "no such document"
+// about one that is right there. `directoriesForGraph(...)[0]` until `a02m`.
+//
 // declared-path-literal: the convention fallback, at the call site so the
 // choice is visible. An absent directory is reported below, not assumed empty.
-const LIBRARY = directoriesForGraph(ROOT, "library")[0] ?? join(ROOT, "library");
+const LIBRARIES: string[] = (() => {
+  const declared = directoriesForGraph(ROOT, "library");
+  return declared.length > 0 ? declared : [join(ROOT, "library")];
+})();
 
 interface Verdict {
   role: ImageRole;
@@ -149,33 +156,53 @@ export function applyTo(
 
 function run(): number {
   const check = process.argv.includes("--check");
-  const vf = join(LIBRARY, "image-verdicts.json");
-  if (!existsSync(vf)) {
-    console.error(`✗ ${vf} does not exist — nothing to apply`);
+  // The verdict file sits BESIDE the documents, so with several libraries
+  // there may be several — each judging its own. Every one is applied; a
+  // missing one in a library that has no verdicts yet is not an error, but
+  // finding NONE anywhere is, because then there is nothing to apply and
+  // exiting 0 would report a completed pass over no work.
+  const verdictFiles = LIBRARIES.map((d) => join(d, "image-verdicts.json")).filter((f) => existsSync(f));
+  if (verdictFiles.length === 0) {
+    console.error(
+      `✗ no image-verdicts.json in any declared library (${LIBRARIES.join(", ")}) — nothing to apply`,
+    );
     return 1;
   }
-  const verdicts = JSON.parse(readFileSync(vf, "utf-8")) as VerdictFile;
-
   // Every inspection-only role in the file must really need inspection; a
   // verdict assigning `figure` adds nothing geometry did not already say, and
   // silently accepting one would let this file overwrite a measurement.
   let bad = 0;
+  // Accumulated across the verdict FILES rather than read back off one of them
+  // afterwards: with several libraries there is no single `verdicts` left in
+  // scope at the end, and picking the last one would report a count for one
+  // library beside a total for all of them.
+  let inspected = 0;
   const results: ApplyResult[] = [];
-  for (const [docId, docVerdicts] of Object.entries(verdicts.verdicts)) {
-    const path = join(LIBRARY, docId, "images.json");
-    if (!existsSync(path)) {
-      console.error(`✗ ${docId}: no images.json — run scripts/pdf-images.py first`);
-      bad++;
-      continue;
+  for (const vf of verdictFiles) {
+    const libDir = dirname(vf);
+    const verdicts = JSON.parse(readFileSync(vf, "utf-8")) as VerdictFile;
+    inspected += Object.values(verdicts.verdicts)
+      .flatMap((d) => Object.values(d))
+      .filter((v) => requiresInspection(v.role)).length;
+    for (const [docId, docVerdicts] of Object.entries(verdicts.verdicts)) {
+      // Resolved against the library the verdict file is IN, not searched
+      // across all of them: a verdict belongs to its own library, and looking
+      // elsewhere would let one library's judgement rewrite another's sidecar.
+      const path = join(libDir, docId, "images.json");
+      if (!existsSync(path)) {
+        console.error(`✗ ${docId}: no images.json — run scripts/pdf-images.py first`);
+        bad++;
+        continue;
+      }
+      const { text, result } = applyTo(
+        readFileSync(path, "utf-8"),
+        docVerdicts,
+        verdicts.inspected_by,
+        verdicts.inspected_at,
+      );
+      if (!check) writeFileSync(path, text, "utf-8");
+      results.push({ docId, ...result });
     }
-    const { text, result } = applyTo(
-      readFileSync(path, "utf-8"),
-      docVerdicts,
-      verdicts.inspected_by,
-      verdicts.inspected_at,
-    );
-    if (!check) writeFileSync(path, text, "utf-8");
-    results.push({ docId, ...result });
   }
 
   let unjudged = 0;
@@ -191,9 +218,6 @@ function run(): number {
   }
 
   const total = results.reduce((n, r) => n + r.applied, 0);
-  const inspected = Object.values(verdicts.verdicts)
-    .flatMap((d) => Object.values(d))
-    .filter((v) => requiresInspection(v.role)).length;
   console.log();
   console.log(`  ${total} verdict(s) applied, ${inspected} of them inspection-only roles`);
   if (unjudged || orphaned) {

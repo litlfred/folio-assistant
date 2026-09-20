@@ -17,7 +17,7 @@ import { describe, expect, test } from "bun:test";
 
 import { RETIRED, scan } from "../check-retired-front-matter.ts";
 import { parseFrontMatter } from "../../schemas/front-matter.ts";
-import { directoriesForGraph, repoRootFor } from "../../schemas/cat-harness.ts";
+import { soleDirectoryForGraph, repoRootFor } from "../../schemas/cat-harness.ts";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const REPO = repoRootFor(INSTANCE);
@@ -72,7 +72,7 @@ describe("the registry", () => {
     // record deleted in the same commit that deletes a file would otherwise
     // only surface in CI, and the message it produces — a refusal with no
     // reasons — is the thing most likely to get the field re-added.
-    const guts = directoriesForGraph(INSTANCE, "fsh-guts")[0];
+    const guts = soleDirectoryForGraph(INSTANCE, "fsh-guts");
     expect(guts).toBeDefined();
     for (const r of RETIRED) {
       expect(`${r.key}: ${r.record}`).toBe(
@@ -104,7 +104,7 @@ describe("the sweep over the real tree", () => {
     // would flag its own archaeology; reading parsed front matter does not.
     const record = RETIRED.find((r) => r.key === "roles")?.record;
     expect(record).toBeDefined();
-    const abs = resolve(directoriesForGraph(INSTANCE, "fsh-guts")[0]!, record!);
+    const abs = resolve(soleDirectoryForGraph(INSTANCE, "fsh-guts")!, record!);
     return Bun.file(abs).text().then((t) => {
       expect(t).toContain("roles: string[];");
       expect(findings.some((f) => resolve(REPO, f.file) === abs)).toBe(false);

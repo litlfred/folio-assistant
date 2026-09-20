@@ -39,7 +39,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { directoriesForGraph } from "../../schemas/cat-harness.ts";
+import { soleDirectoryForGraph } from "../../schemas/cat-harness.ts";
 import { buildTranslationIndex, siteRoot } from "./translation-index.ts";
 
 /** One heading, reduced to what can be compared ACROSS a translation. */
@@ -212,7 +212,7 @@ export interface DriftResult {
 export function catalogueFor(instanceRoot: string, locale: string, page: string): string {
   // declared-path-literal: the convention fallback, at the call site so the
   // choice is visible — same shape as `po-resolve.ts` and `translate-bpmn.ts`.
-  const dir = directoriesForGraph(instanceRoot, "translation-sources")[0] ?? join(instanceRoot, "translations");
+  const dir = soleDirectoryForGraph(instanceRoot, "translation-sources") ?? join(instanceRoot, "translations");
   return join(dir, locale, `${page}.po`);
 }
 

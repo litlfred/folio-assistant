@@ -66,7 +66,7 @@ import {
   type MemoryLabel,
   type MemoryNode,
 } from "../schemas/memory.js";
-import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { soleDirectoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
 // renderable kind"), and `directoriesForGraph` reads the WHOLE declaration,
@@ -95,7 +95,7 @@ export const ROOT = resolve(import.meta.dir, "..");
  * instance keep its memory graph" — and it survives the next relocation
  * without an edit, which composing a path does not.
  */
-export const MEMORY_DIRS = [directoriesForGraph(ROOT, "memory")[0]].filter(
+export const MEMORY_DIRS = [soleDirectoryForGraph(ROOT, "memory")].filter(
   (d): d is string => d !== undefined && existsSync(d),
 );
 // declared-path-literal: the convention fallback, so a generator in an

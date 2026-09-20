@@ -21,7 +21,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve } from "path";
 import { siteDirFor } from "../schemas/cat-harness.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.js";
+import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE on import
 // (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
 // exists. This module resolves this instance's directories and the instance
@@ -35,15 +35,25 @@ import { directoriesForGraph } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 
 /**
- * The declared `schemas` graph, or the convention.
+ * THIS INSTANCE'S OWN `schemas` directory, or the convention.
  *
  * declared-path-literal: the fallback is at the call site so the choice is
  * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why `directoriesForGraph` is asked for the
- * `schemas` one by name rather than being handed a single-home guess.
+ * the schema definitions — which is why the `schemas` one is asked for by name
+ * rather than being handed a single-home guess.
+ *
+ * `instanceDirectoryForGraph`, not `directoriesForGraph(...)[0]`, because every use
+ * below composes a path INSIDE this directory. The question is "where is MY
+ * schemas directory", not "who declares schemas" — and from the `cat-harness`
+ * root those have different answers: measured 2026-09-20, `schemas` resolves
+ * to FOUR homes (`cat-harness/`, `folio-assistant-core/`, `large-datasets/`,
+ * `detangle/`), three of them arriving through the dependency overlay and
+ * belonging to somebody else. `[0]` was right only because the resolver
+ * happens to order the root's own declarations first; a reordering would have
+ * sent this generator's output into another checkout, silently. Bean `a02m`.
  */
 function schemasRoot(root: string): string {
-  return directoriesForGraph(root, "schemas")[0] ?? join(root, "schemas");
+  return instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas");
 }
 
 

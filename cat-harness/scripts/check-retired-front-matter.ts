@@ -37,8 +37,8 @@ import { Glob } from "bun";
 import { parseFrontMatter } from "../schemas/front-matter.ts";
 import {
   DECLARATION_FILENAME,
-  directoriesForGraph,
   repoRootFor,
+  soleDirectoryForGraph,
 } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 
@@ -71,7 +71,7 @@ interface Retired {
    * `fsh-guts` directory the instance DECLARES.
    *
    * Relative rather than repo-relative because `fsh-guts/` is declared, not
-   * conventional: `directoriesForGraph(…, "fsh-guts")[0]` is what resolves it,
+   * conventional: `soleDirectoryForGraph(…, "fsh-guts")` is what resolves it,
    * and writing the prefix here would be a second answer to where the
    * trashcan is — free to disagree with the declaration the moment it moves.
    *
@@ -183,7 +183,7 @@ export function scan(
   instance = INSTANCE,
   repo = repoRootFor(instance),
 ): { findings: Finding[]; scanned: number; missingRecords: Retired[]; roots: string[] } {
-  const guts = directoriesForGraph(instance, "fsh-guts")[0];
+  const guts = soleDirectoryForGraph(instance, "fsh-guts");
   // No declared trashcan means the records are UNREACHABLE, not absent. Both
   // report here, because a rule whose reasons cannot be located is in the
   // same state either way from the reader's side.
@@ -239,7 +239,7 @@ function main(): void {
     console.error(`    ${f.entry.because}`);
     console.error(
       `    The full record, with every value it ever held: ` +
-        `${relative(REPO, join(directoriesForGraph(INSTANCE, "fsh-guts")[0] ?? "", f.entry.record))}`,
+        `${relative(REPO, join(soleDirectoryForGraph(INSTANCE, "fsh-guts") ?? "", f.entry.record))}`,
     );
   }
 
