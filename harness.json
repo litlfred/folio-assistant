@@ -86,6 +86,13 @@
       "role": "instance-readme",
       "title": "folio-assistant",
       "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
+    },
+    {
+      "id": "bootstrap-initialization",
+      "src": "folio-assistant/docs/bootstrap/initialization.md",
+      "role": "bootstrap-initialization",
+      "title": "Initializing into folio-assistant",
+      "description": "What bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours — `<stub>/docs/bootstrap/initialization.md`, composed by `initializationDoc()` — so bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not."
     }
   ],
   "stub": "folio-assistant",
@@ -115,7 +122,7 @@
     {
       "id": "bootstrap",
       "path": "bootstrap/skills/",
-      "description": "The bootstrap graph's SKILLS \u2014 what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `bootstrap/skills/`, NOT `bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `bootstrap/README.md` and `bootstrap/AGENTS.md` declare neither, and they are the bootstrap instance's two DECLARED ASSETS \u2014 so a graph rooted at `bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `bootstrap/harness.json`; this entry is the same fact at the root, and it has to be stated twice only because `resolveSkillDirs` has no caller, so a nested instance's directories are not yet reachable from here. When that is wired, THIS entry is the one to delete.",
+      "description": "The bootstrap graph's SKILLS — what an agent reads before it knows whether this repository is an instance, what kind, or what for. A SECOND `cat-harness` directory beside `skills/`, and the first real use of the topical layout the declaration was built for: `kgRoots()` returns two, and every consumer reading the declaration rather than the literal `skills/` finds both with no code change. IT POINTS AT `bootstrap/skills/`, NOT `bootstrap/`, and the one level matters. `isSkillMd` is declaration-over-location: a markdown file that does not declare `$schema:` IS a skill. `bootstrap/README.md` and `bootstrap/AGENTS.md` declare neither, and they are the bootstrap instance's two DECLARED ASSETS — so a graph rooted at `bootstrap/` counts them as skill nodes and the scan contradicts a declaration that has already answered the question. Measured on this branch before the fix: `skill/AGENTS` was in the export. #422 found this from the other side and declared `skills/` inside `bootstrap/harness.json`; this entry is the same fact at the root, and it has to be stated twice only because `resolveSkillDirs` has no caller, so a nested instance's directories are not yet reachable from here. When that is wired, THIS entry is the one to delete.",
       "graphs": [
         "cat-harness"
       ]

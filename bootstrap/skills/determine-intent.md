@@ -49,6 +49,24 @@ harness type is written down.
    it to a URL yet. Step 4 of the flow reads that instance's declaration; until
    then the reference is a string a person supplied.
 
+## What the reference buys you, exactly
+
+Once you have it, **nothing further is asked of anybody.** The instance's own
+`harness.json` gives its `name`, and its initialization instructions are then
+at a fixed, conventional place:
+
+> `<name>/docs/bootstrap/initialization.md`
+
+That path is the same for every cat-harness instance and every instance
+depending on one. It is what makes a single reference sufficient: you do not
+need to know what the named harness IS — only where it keeps its instructions,
+and that is the same everywhere.
+
+**So you can be pointed at a specialised harness nobody has written yet.** A
+per-instance lookup would have needed a rule for each; a fixed convention needs
+none, and an instance that does not honour it cannot be bootstrapped into by
+anyone who was not separately told where to look.
+
 ## Do NOT write a declaration before reading theirs
 
 The order is load-bearing and it is the whole reason this skill stops where it

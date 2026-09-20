@@ -46,9 +46,38 @@ them to pick one.
 3. **Open that file and follow it.** It is a short diagram with two branches:
    if this repository is already set up, load what it says and stop; if it is
    not, get the repository name from the person, read *that* repository's
-   setup file, and write this one's from it.
+   setup file — the next section says exactly where it is — and write this
+   one's from it.
 
 That is all of it. Step 3 ends with this repository set up.
+
+## Where the other repository's setup file is
+
+**Always the same place:**
+
+```
+<name>/docs/bootstrap/initialization.md
+```
+
+`<name>` is the `name` in that repository's `harness.json`. So if you were
+pointed at `litlfred/f-a-sci`, and its `harness.json` says `name: f-a-sci`,
+you open `f-a-sci/docs/bootstrap/initialization.md` inside it.
+
+**It is always there, so you never have to search and never have to ask.**
+That is the point of fixing it: you are given one repository name, and
+everything after that is read rather than negotiated. A repository that keeps
+its setup instructions somewhere else cannot be bootstrapped into by anyone who
+was not already told where to look — which defeats being given a name.
+
+It also means you can be pointed at a **kind of harness nobody has written
+yet**. You do not need to know what `f-a-sci` or `smart-base` is, or how they
+differ; each keeps its own instructions at that path, in its own words, and you
+read whichever one you were sent to.
+
+If the file is not there, that is the "something does not resolve" case below.
+Do not guess, and do not fall back to another repository's instructions — they
+would set this repository up as the wrong thing, which is worse than not
+setting it up at all.
 
 ## If something does not resolve
 
