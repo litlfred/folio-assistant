@@ -185,6 +185,12 @@ const RULES: Rule[] = [
       // claim is in the published tree. Harness-level for the same reason — a
       // Tool node and a built site, no folio needed to have anything to do.
       "scripts/check-maintained-artefacts.ts", // every `maintains` claim is actually published
+      // Third question about the same built tree, and harness-level for the same
+      // reason: it asks whether the markdown converter refused a block of HTML
+      // and escaped it, which is a property of the RENDER PIPELINE, not of any
+      // folio's subject matter. It imports nothing but `node:fs` — a folio could
+      // not make it answer differently.
+      "scripts/check-escaped-markup.ts",     // no page publishes a block tag as visible text
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
       "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
@@ -345,6 +351,22 @@ const RULES: Rule[] = [
       // `sync-docs-harness.ts` (agentic-harness) until `--edges` reported that
       // as two wrong-direction edges — the harness reaching up into core.
       "scripts/gen-landing-data.ts",         // folio stickies -> docs/_data/stickies.json
+      // Same reason as the two above, and it is the import that decides rather
+      // than the subject. Its subject is theme art, which is harness
+      // (`schemas/theme.ts` is classified so, nine entries down: site
+      // presentation belongs to the platform that publishes the site). But it
+      // reads THIS INSTANCE'S declaration, and this instance declares a `folio`
+      // graph — so it must import `schemas/folio-graph-kind.ts` for the kind to
+      // be registered, and that module is core's by the argument written on it.
+      // Classifying it harness would put core's own kind registration behind a
+      // harness module. The pure check it drives, `schemas/theme-art-intake.ts`,
+      // needs none of that and is left to the `schemas/` prefix.
+      "scripts/check-theme-art.ts",          // theme/avatar art intake, run over what shipped
+      // The reverse of `check-declared-assets` (declared -> disk): this walks
+      // disk -> declared. Same reason it is core rather than harness — it reads
+      // an instance's declaration, and this instance declares a `folio` graph,
+      // so it imports core's kind registration.
+      "scripts/check-undeclared-files.ts",   // present-but-undeclared, the dh4f shape inverted
       "scripts/generate-schemas.ts",         // Zod → JSON Schema
       "scripts/generate-schema-manifest.ts", // schemas/types.ts → viewer manifest
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
@@ -467,6 +489,7 @@ const RULES: Rule[] = [
       // as well as by dependency: it reads THIS repository's `AGENTS.md`
       // against THIS repository's source, and a folio has neither as content.
       "scripts/check-agents-claims.ts",
+      "scripts/check-agent-entry-links.ts",
       "scripts/check-agents-xref.ts",
       "scripts/check-bean-parents.ts",
       "scripts/check-declared-paths.ts",
@@ -707,16 +730,6 @@ const RULES: Rule[] = [
     repo: "core",
     triaged: true,
     exact: [
-      // A thin wrapper over `content/pipeline/readme-links.ts`, and classified
-      // WITH IT rather than by its own subject — which is `AGENTS.md`, and so
-      // harness. The edge the partition caught is real and is not this
-      // script's: a generic markdown-link auditor lives wholly in core, so ANY
-      // harness-level link check inherits a wrong-direction edge from it.
-      // Lifting the generic half of that auditor is a re-layering of somebody
-      // else's module and a larger change than the bean that found it
-      // (`v8gh`); recorded as bean `cp3l`. Until then this ships where its
-      // dependency ships.
-      "scripts/check-agent-entry-links.ts",
       "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
       // Statement-level hashing for `.lean` files, by the same test: the
       // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in

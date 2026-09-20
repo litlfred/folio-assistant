@@ -599,6 +599,11 @@ to spend the words: **do not start the topic.**
 - User-facing docs site (README + install + guides + generated schema/API
   reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/>
   by `.github/workflows/docs-site.yml`. Regenerate the generated references with
-  `bun run scripts/gen-schema-docs.ts` (schema reference → `docs/reference/skills/*`)
-  and `bun run scripts/gen-skill-docs.ts` (instruction bodies →
-  `docs/reference/skill-instructions/*`). Never hand-edit either generated dir.
+  `bun run cat-harness/scripts/gen-schema-docs.ts` (schema reference →
+  `cat-harness/docs/reference/skills/*`) and
+  `bun run cat-harness/scripts/gen-skill-docs.ts` (instruction bodies →
+  `cat-harness/docs/reference/skill-instructions/*`). Never hand-edit either
+  generated dir. Both paths carried the pre-split `scripts/` prefix until
+  2026-09-20, so the two commands in the file a newcomer reads first both exited
+  1 — and an agent that reads a non-zero exit as "the generator is broken" either
+  hand-edits the generated directory this line forbids, or commits a stale one.

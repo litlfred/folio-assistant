@@ -18,13 +18,19 @@
  * | `check:agents-xref` | section citations **into** `AGENTS.md` |
  * | *this* | links **out of** every agent entry file |
  *
- * ## It reuses the README auditor rather than growing a second one
+ * ## It reuses the generic auditor rather than growing a second one
  *
- * `readme-links.ts` already does relative-path-against-working-tree,
+ * `src/core/markdown-links.ts` already does relative-path-against-working-tree,
  * ref-aware and Pages-aware checking, and already reports a third state for
  * what it could not check. The bean guessed it would generalise and said to
- * confirm rather than assume — confirmed: `runReadmeAudit` already takes a
- * `file`, and it ran clean over `AGENTS.md` unmodified.
+ * confirm rather than assume — confirmed: it ran clean over `AGENTS.md`
+ * unmodified.
+ *
+ * That auditor was inside `content/pipeline/readme-links.ts` when this check
+ * was written, which made this file import core from harness and forced it to
+ * be CLASSIFIED core — honest about shipping, dishonest about subject, since
+ * `AGENTS.md` is harness through and through. Bean `cp3l` lifted the generic
+ * half out, so this now sits where its subject says it belongs.
  *
  * ## Discovery, not a list
  *
@@ -36,7 +42,8 @@
 import { existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { runReadmeAudit } from "../content/pipeline/readme-links.js";
+import { auditMarkdownFile } from "../src/core/markdown-links.js";
+import { publishTargets } from "../src/core/git-refs.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
 /**
@@ -87,12 +94,18 @@ if (import.meta.main) {
     process.exit(2);
   }
 
+  // Asked once, not per file: the publish targets are a property of the
+  // repository, and resolving a Pages URL needs them. Without them every
+  // `github.io` link in `AGENTS.md` would come back UNCHECKED — which is the
+  // clean-looking blindness bean `v8gh` existed to remove, not a pass.
+  const targets = publishTargets(repo);
+
   console.log(`Agent entry links — ${files.length} file(s)\n`);
   let dead = 0;
   let unreadable = 0;
   for (const f of files) {
     const rel = relative(repo, f);
-    const r = runReadmeAudit({ file: f });
+    const r = auditMarkdownFile({ root: repo, file: f, ...targets });
     // exit 2 from the auditor is "could not read it", which is neither a pass
     // nor a dead link and must not be folded into either.
     if (r.exitCode === 2) {

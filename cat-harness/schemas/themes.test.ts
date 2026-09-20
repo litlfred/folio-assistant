@@ -102,6 +102,30 @@ describe("the high-contrast pair really is high contrast", () => {
   });
 });
 
+describe("a sticky's inline-code chip is legible in every theme", () => {
+  // `.fa-landing-sticky__text code` paints the chip with the CARD's palette —
+  // `--fa-sticky-surface` behind `--fa-sticky-ink` — after the site-wide chip
+  // (light text on `#0d1117`) had its foreground overridden by the sticky ink
+  // and went to **1.23:1**, invisible, on the published landing page.
+  //
+  // The first fix used `--fa-sticky-edge` as the background. Nine themes came
+  // back 9.33-10.14:1 and it looked done; the two high-contrast themes have
+  // **ink == edge**, so they were 1.00:1 — the same defect, moved. Hence this
+  // pair and this test.
+  test.each(THEMES.map((t) => t.id))("%s clears AAA (7:1) for ink on surface", (id) => {
+    const t = themeById(id)!;
+    expect(contrast(t.palette.ink, t.palette.surface)).toBeGreaterThanOrEqual(7);
+  });
+
+  test("`edge` is NOT a safe chip background, which is why the rule does not use it", () => {
+    // Guards the simplification, not the palette: if somebody rewrites the CSS
+    // to `background: var(--fa-sticky-edge)` because it looks tidier, this says
+    // why that is wrong — at least one shipped theme cannot survive it.
+    const worst = Math.min(...THEMES.map((t) => contrast(t.palette.ink, t.palette.edge)));
+    expect(worst).toBeLessThan(4.5);
+  });
+});
+
 describe("every theme is readable, not just the ones that advertise it", () => {
   test.each(THEMES.map((t) => t.id))("%s clears WCAG AA body text (4.5:1)", (id) => {
     // The decorative themes are the ones where this slips: a pale surface and a
