@@ -1,10 +1,11 @@
 ---
 # folio-assistant-5tul
 title: 'CRDM: data-modelling phase — guidance skill plus the subprocess to hand it out'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-20T09:39:59Z
-updated_at: 2026-09-20T09:39:59Z
+updated_at: 2026-09-20T10:59:55Z
 parent: folio-assistant-ahvw
 ---
 
@@ -80,3 +81,75 @@ the two would disagree, the technique wins and the phase entry is wrong —
 - [ ] `crdm-data-model.bpmn`, called from `crdm-requirements.bpmn`, every
       activity carrying `<folio:skill ref>` and `<folio:role ref>`
 - [ ] `render:bpmn` regenerated; `check:workflow-refs` and `kg:audit` clean
+
+---
+
+## Built 2026-09-20 — two skills and a fifth call activity
+
+### What landed
+
+| artefact | what it carries |
+|---|---|
+| `skills/folio-core/data-modelling.md` | the **technique**, with no CRDM in it |
+| `skills/folio-core/crdm-data-model.md` | the **phase** — when, with whom, what it consumes and hands on |
+| `skills/workflows/crdm-data-model.bpmn` | 5 activities, 3 lanes, `<folio:policy enforcement="strict">` |
+| `crdm-requirements.bpmn` | `Call_DataModel`, the fifth `callActivity` |
+
+### The technique skill argues from this repository's own failures
+
+Rather than restating textbook modelling, it opens with the three defects
+this session unwound — all the same shape, **a fact on the wrong entity**:
+
+- `fallbackCapabilityId` on five skills, when it is a property of
+  `lean-toolchain` (`sym3`)
+- `fallbackRole` on a skill, when the BPMN already said it executably
+  (`85e8`)
+- `roles:` in 114 files, in a vocabulary resolving to nothing (`qif9`)
+
+Its decisive question — *"if this entity disappeared, would the fact still
+be true of anything?"* — is the one that separates all three. Step 5 says
+never store a derived fact, citing `85e8`; step 6 says ship a reader in the
+same change, because everything here that was only documentation went inert
+within weeks.
+
+### Why the phase sits between requirements and sign-off
+
+Requirements are statements about things; the model says what the things
+ARE. Earlier and it is invented from nothing — the entities come from the
+phase-2 BPA. Later and phase 5 signs off requirements whose nouns were
+never pinned, which is how two stakeholders approve one sentence meaning
+different things.
+
+**A requirement the model cannot express is a finding, not a modelling
+failure.** It means the requirement is about something nobody has named,
+and that is the phase's most valuable output.
+
+### Two lanes confirm, and they are asked different questions
+
+- **BA** — *are these the things?* A naming question; they own the domain
+  vocabulary.
+- **Stakeholders** — *is it really one per?* An operational question the
+  people running the process can answer and the BA often cannot.
+
+Collapsing them is how a wrong cardinality ships: it is invisible until the
+data arrives. `strict` is declared rather than defaulted for the same
+reason — the cardinality confirmation is the step an agent skips under time
+pressure, because it is slow, needs people, and the model looks finished
+without it.
+
+### What the corpus's own gates required
+
+Three, each caught rather than remembered: the skills had to be added to
+`folio-core/package-manifest.json`; the diagram had to be indexed, and the
+index is a **content block** (`content/docs/publication-workflow/`), not
+the generated page — editing the generated copy would have been overwritten
+on the next run; and the `.pot` had to be re-extracted.
+
+### Done when
+
+- [x] the one-or-two question answered — **two**
+- [x] both skills authored under `folio-core`, platform-generic; the phase
+      references the technique rather than restating it
+- [x] `crdm-data-model.bpmn`, called from `crdm-requirements.bpmn`, every
+      activity carrying `<folio:skill ref>`
+- [x] `render:bpmn` regenerated; `check:workflow-refs` and `kg:audit` clean
