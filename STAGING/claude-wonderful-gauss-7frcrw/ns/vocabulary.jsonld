@@ -3,7 +3,7 @@
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "owl": "http://www.w3.org/2002/07/owl#",
-    "bs": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
+    "bs": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#",
     "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
     "fac": "https://litlfred.github.io/folio-assistant/folio-assist-core/ns#",
     "label": "rdfs:label",
@@ -62,7 +62,7 @@
       "label": "Actor",
       "comment": "A concrete participant — human, agentic or mechanical — that persists across processes and takes on a role in each.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/agentic-harness.html"
     },
     {
@@ -89,7 +89,7 @@
       "label": "Role",
       "comment": "A BPMN swimlane: the persona an actor takes on because of the lane it is acting in, carrying that lane's skills.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/agentic-harness.html"
     },
     {
@@ -98,7 +98,7 @@
       "label": "Skill",
       "comment": "The instruction body an actor needs to perform a task.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/skills.html"
     },
     {
@@ -116,7 +116,7 @@
       "label": "Process",
       "comment": "A BPMN process: lanes that bind roles, activities that name skills, and the flow between them.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/publication-workflow.html"
     },
     {
@@ -125,7 +125,7 @@
       "label": "ProcessNode",
       "comment": "One element of a process — an activity, a gateway, a start or end event.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/publication-workflow.html"
     },
     {
@@ -134,7 +134,7 @@
       "label": "SequenceFlow",
       "comment": "A directed edge between two process nodes.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/publication-workflow.html"
     },
     {
@@ -168,7 +168,7 @@
       "label": "Directory",
       "comment": "A declared place to look, naming the kinds of graph found in it.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/architecture.html"
     },
     {
@@ -177,7 +177,7 @@
       "label": "Asset",
       "comment": "A file an instance declares as its own, with the role that file plays for it — the instance saying what something IS rather than a scan inferring it.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/architecture/harness-instances.html"
     },
     {
@@ -186,7 +186,7 @@
       "label": "GraphKind",
       "comment": "What a declared directory holds — the vocabulary a consumer matches on to decide whether to scan it.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap",
+      "layer": "cat-bootstrap",
       "seeAlso": "https://litlfred.github.io/architecture.html"
     },
     {
@@ -293,7 +293,7 @@
       "label": "KnowledgeGraph",
       "comment": "Skills, workflows, roles — the harness layer's own knowledge graph.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap"
+      "layer": "cat-bootstrap"
     },
     {
       "@id": "fac:LibraryGraph",
@@ -333,7 +333,7 @@
       "label": "SchemaGraph",
       "comment": "Schema definitions, self-declared in the smart-base manner.",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "bootstrap"
+      "layer": "cat-bootstrap"
     },
     {
       "@id": "cat:SessionStateGraph",
