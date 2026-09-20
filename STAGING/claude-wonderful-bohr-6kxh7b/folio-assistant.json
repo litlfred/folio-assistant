@@ -251,13 +251,13 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T06:36:04.707Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/baec25679fe1af159d19d351cd8478192ff3774b",
-  "sourceCommitSha": "baec25679fe1af159d19d351cd8478192ff3774b",
-  "sourceCommitAt": "2026-09-20T06:34:29Z",
+  "generatedAt": "2026-09-20T06:51:08.888Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3fda9bac4039cec27f129e7a1188d42c8bc8cc5a",
+  "sourceCommitSha": "3fda9bac4039cec27f129e7a1188d42c8bc8cc5a",
+  "sourceCommitAt": "2026-09-20T06:48:47Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 172,
+    "Skill": 173,
     "Actor": 27,
     "Capability": 24,
     "Role": 110,
@@ -267,8 +267,8 @@
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 32,
-    "Schema": 58,
-    "GraphKind": 17,
+    "Schema": 59,
+    "GraphKind": 18,
     "Directory": 13
   },
   "@graph": [
@@ -654,6 +654,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/bpmn-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "session-context",
+      "title": "Session context",
+      "description": "What a state machine tracks across a session, as against one process instance. The six fields, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/session-context.md",
+      "instructionLines": 129,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/session-context"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/workflow-state",
@@ -1271,7 +1287,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 556,
+      "instructionLines": 557,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4077,6 +4093,7 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/bpmn-processes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#skill/workflow-state"
       ],
       "providesCapability": [],
@@ -21011,6 +21028,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/script-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/session-context",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "session-context",
+      "title": "What a state machine tracks across a SESSION, as opposed to an instance.",
+      "module": "schemas/session-context.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/session-context"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/folio-assistant.jsonld#schema/skill-package",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "skill-package",
@@ -21271,6 +21296,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TodoFeedbackGraph",
       "renderable": false,
       "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/session-state",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "session-state",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SessionStateGraph",
+      "renderable": false,
+      "summary": "A session's context — the acting actor, the instances it has open, and what it waits on."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/memory",
@@ -22229,8 +22262,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "8b476312a4fbddf02e17fb647ee126608614e67a",
+    "sha": "e9b233e8d380f3768ef33834df12640e58b76cde",
     "pr": "458/merge",
-    "run": "35494585585"
+    "run": "35495237417"
   }
 }

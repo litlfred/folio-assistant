@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(174)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(127)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(174) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(127) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(174) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(127) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(174) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(127) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>todo-manager | folio-assistant</title>
+<title>Session context | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="todo-manager" />
+<meta property="og:title" content="Session context" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="todo-manager" />
+<meta property="twitter:title" content="Session context" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -266,7 +266,7 @@
   those are opposite facts.
 
   `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
-  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e9b233e</span> · built 2026-09-20T06:51:00Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/223" style="color:#fff;text-decoration:underline">issue #223</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/local-todo-manager.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35495237417" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
+  permitted. A browser hoists a stray `<div>` into `<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e9b233e</span> · built 2026-09-20T06:51:00Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/223" style="color:#fff;text-decoration:underline">issue #223</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35495237417" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
 <meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/todos/index.json">
@@ -469,7 +469,7 @@
 
 </head>
 
-<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e9b233e</span> · built 2026-09-20T06:51:00Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/223" style="color:#fff;text-decoration:underline">issue #223</a> · <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/local-todo-manager.html" style="color:#fff;text-decoration:underline">compare with main ↗</a> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35495237417" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> — <a href="https://github.com/litlfred/folio-assistant/tree/claude/wonderful-bohr-6kxh7b" style="color:#fff;text-decoration:underline"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">claude/wonderful-bohr-6kxh7b</span></a> · commit <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px">e9b233e</span> · built 2026-09-20T06:51:00Z · <a href="https://github.com/litlfred/folio-assistant/pull/458" style="color:#fff;text-decoration:underline">PR #458</a> · <a href="https://github.com/litlfred/folio-assistant/issues/223" style="color:#fff;text-decoration:underline">issue #223</a> · <a href="https://litlfred.github.io/folio-assistant/" style="color:#fff;text-decoration:underline">main ↗</a> <span style="opacity:.85">(new page)</span> · <a href="https://github.com/litlfred/folio-assistant/actions/runs/35495237417" style="color:#fff;text-decoration:underline">build log</a></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){function s(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}if(document.readyState!=='loading')s();else document.addEventListener('DOMContentLoaded',s);window.addEventListener('resize',s);window.addEventListener('load',s);})();</script>
   <a class="skip-to-main" href="#main-content">Skip to main content</a>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="svg-link" viewBox="0 0 24 24">
@@ -596,7 +596,7 @@
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>todo-manager</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Session context</span></li>
   </ol>
 </nav>
 
@@ -605,70 +605,197 @@
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/.claude/skills/local/todo-manager.md"><code class="language-plaintext highlighter-rouge">.claude/skills/local/todo-manager.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/session-context.md"><code class="language-plaintext highlighter-rouge">skills/workflow/session-context.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/.claude/skills/local/todo-manager.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/session-context.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-
-<blockquote>
-  <p><strong>This is a stub, not the skill.</strong> The skill is
-<a href="todo-manager.html">Session Task Manager (folio-core)</a>, from <code class="language-plaintext highlighter-rouge">skills/folio-core</code>,
-which is what <code class="language-plaintext highlighter-rouge">skill_fetch</code> serves. Read that one; this page exists
-only so an old link still lands somewhere truthful.</p>
-</blockquote>
-<h1 id="todo-manager--see-skillsfolio-core">
+<h1 id="session-context">
   
   
-    <a href="#todo-manager--see-skillsfolio-core" class="anchor-heading" aria-labelledby="todo-manager--see-skillsfolio-core"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> todo-manager — see <code class="language-plaintext highlighter-rouge">skills/folio-core/</code>
+    <a href="#session-context" class="anchor-heading" aria-labelledby="session-context"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Session context
   
   
 </h1>
     
 
-<p><strong>This is a stub. The skill lives in the <code class="language-plaintext highlighter-rouge">kg</code> graph, not here.</strong></p>
+<p>A <strong>session</strong> is one actor working, from the moment it picks up until it stops.
+A <strong>process instance</strong> is a token’s position in one diagram. They are not the
+same object and the difference is load-bearing:</p>
 
-<p><code class="language-plaintext highlighter-rouge">skill_fetch("todo-manager")</code> serves
-<a href="../../../skills/folio-core/todo-manager.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/todo-manager.md</code></a>
-— <code class="language-plaintext highlighter-rouge">LOCAL_PACKAGES</code> in <code class="language-plaintext highlighter-rouge">src/tools/skill-fetch.ts</code> holds <code class="language-plaintext highlighter-rouge">skills/folio-core</code> and
-no <code class="language-plaintext highlighter-rouge">.claude/skills/local</code> entry — so that file is what an agent asking for this
-skill by name has always received.</p>
+<blockquote>
+  <p>A session <strong>starts before</strong> any instance, may open <strong>several</strong>, switches
+between them, and <strong>outlives</strong> each. A session with nothing open is the
+commonest state there is.</p>
+</blockquote>
 
-<p>A 369-line hand-authored copy sat here until 2026-09-19 and diverged from the
-servable one by 261 diff lines. It was <strong>not</strong> servable, carried no front
-matter, and lacked <code class="language-plaintext highlighter-rouge">## Check before you create</code> — the STRICT rule that exists
-because an unguarded <code class="language-plaintext highlighter-rouge">beans create</code> produced 14,688 duplicate beans. Meanwhile
-the onboarding guide, in five languages, pointed here as the “full discipline”.
-Four rules it carried and the servable copy did not were ported across first;
-nothing was dropped. Bean <code class="language-plaintext highlighter-rouge">tdmg</code>.</p>
+<p>Model the session as a field on an instance and the first process opened owns
+facts that belong to the actor — and the idle session, which is most of them,
+becomes unrepresentable. So it is its own record, <strong>referencing</strong> instances
+rather than containing them.</p>
 
-<p>The skill is now three, because the one file had grown to 396 lines against a
-400-line ceiling while carrying three separable disciplines:</p>
+<p>Shape: <code class="language-plaintext highlighter-rouge">schemas/session-context.ts</code>. Graph kind: <code class="language-plaintext highlighter-rouge">session-state</code>, layer
+<code class="language-plaintext highlighter-rouge">state</code> — a session writes its own record as it goes, which is exactly what
+<a href="../folio-core/content-context-and-state-graphs.md"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a>
+means by live state.</p>
+<h2 id="actor-is-required-and-it-is-the-point-of-the-record">
+  
+  
+    <a href="#actor-is-required-and-it-is-the-point-of-the-record" class="anchor-heading" aria-labelledby="actor-is-required-and-it-is-the-point-of-the-record"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">actor</code> is required, and it is the point of the record
+  
+  
+</h2>
+    
+
+<p>Every other field can be recovered by looking at the repository. Open
+instances are in the bean graph; claimed beans carry their own status;
+timestamps can be reconstructed from commits. <strong>WHO is acting cannot be
+derived from anything.</strong></p>
+
+<p>The machine keeping the session cannot infer it — the same reason the Logger
+cannot infer who wrote a log line, which is why
+<a href="../../../bootstrap/skills/log-message.md"><code class="language-plaintext highlighter-rouge">log-message</code></a> takes <code class="language-plaintext highlighter-rouge">actor</code> too. A
+session record that cannot name its actor records that something is happening
+and nothing about <strong>who is answerable for it</strong>, which is the first question a
+sibling session needs answered before it touches the same bean.</p>
+
+<p><strong>It is a reference with a <code class="language-plaintext highlighter-rouge">declared</code> flag, not an <code class="language-plaintext highlighter-rouge">ActorDefinition</code>.</strong> An
+agent may act without a node under the actors graph, and requiring one would
+make the field unfillable in exactly the cold-start case the record is most
+useful for. The two facts — <em>an id that resolves</em> and <em>a name nobody declared</em>
+— are kept apart because a consumer acts differently on each: an audit can
+follow the first to a role and a permission set, and can only quote the second.</p>
+
+<p>And <code class="language-plaintext highlighter-rouge">declared</code> is <strong>written, not inferred at read time</strong>. A reader resolving it
+themselves gets a different answer than the writer did if the node was added or
+removed in between, and the record says what was true when the session acted.</p>
+<h2 id="the-rest-of-the-fields-and-what-each-is-for">
+  
+  
+    <a href="#the-rest-of-the-fields-and-what-each-is-for" class="anchor-heading" aria-labelledby="the-rest-of-the-fields-and-what-each-is-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rest of the fields, and what each is for
+  
+  
+</h2>
+    
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>skill</th>
-      <th>what it governs</th>
+      <th>field</th>
+      <th>for</th>
+      <th>notes</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><a href="../../../skills/folio-core/todo-manager.md"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>bean mechanics: the CLI, the STRICT check before <code class="language-plaintext highlighter-rouge">beans create</code>, the fallback when the CLI is absent, the status vocabulary, coordination</td>
+      <td><code class="language-plaintext highlighter-rouge">id</code></td>
+      <td>naming this session</td>
+      <td>stable for its life</td>
     </tr>
     <tr>
-      <td><a href="../../../skills/folio-core/opening-brief.md"><code class="language-plaintext highlighter-rouge">opening-brief</code></a></td>
-      <td>what you say <strong>before</strong> starting a bean or a topic</td>
+      <td><code class="language-plaintext highlighter-rouge">startedAt</code> / <code class="language-plaintext highlighter-rouge">updatedAt</code></td>
+      <td>telling a live session from an abandoned one</td>
+      <td>ISO-8601 UTC</td>
     </tr>
     <tr>
-      <td><a href="../../../skills/folio-core/turn-reporting.md"><code class="language-plaintext highlighter-rouge">turn-reporting</code></a></td>
-      <td>what you say <strong>during and after</strong> each turn, including the STRICT “next”-line rule</td>
+      <td><code class="language-plaintext highlighter-rouge">open[]</code></td>
+      <td>which instances this session is inside</td>
+      <td><strong>empty is normal</strong>, not a gap</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">claimed[]</code></td>
+      <td>which beans this session announced</td>
+      <td>by reference, never copied</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">waitingOn</code></td>
+      <td>why nothing is moving</td>
+      <td><code class="language-plaintext highlighter-rouge">what</code> + <code class="language-plaintext highlighter-rouge">since</code>, together</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>Same discipline as <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> and <code class="language-plaintext highlighter-rouge">GEMINI.md</code>: one source of truth, thin
-pointers to it. Do not re-add content here — edit the skill.</p>
+<p><strong><code class="language-plaintext highlighter-rouge">open</code> empty is the normal state.</strong> An agent answering a question, reading, or
+deciding what to do next is in no process at all, and
+<a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/process-state.html"><code class="language-plaintext highlighter-rouge">process-state</code></a> calls that idle rather than broken. A
+record that treated empty as a defect would report every reading session as
+one.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">claimed</code> is by reference because a claim announces rather than reserves.</strong>
+The bean is the authority on its own status
+(<a href="../folio-core/bean-coordination.md"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a>); a status copied
+here would be free to contradict it, and a sibling reading the copy would act
+on a claim that had already been released.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">waitingOn</code> carries <code class="language-plaintext highlighter-rouge">since</code> or it carries nothing.</strong> A wait with no start
+cannot be told from abandoned work — the same argument
+<a href="../folio-core/bean-blocking.md"><code class="language-plaintext highlighter-rouge">bean-blocking</code></a> makes for requiring an
+expiry. <code class="language-plaintext highlighter-rouge">what</code> is free text on purpose: a human answer, a CI run, a sibling’s
+PR is an open set no enum would survive.</p>
+<h2 id="the-sessions-view-of-a-node-is-advisory">
+  
+  
+    <a href="#the-sessions-view-of-a-node-is-advisory" class="anchor-heading" aria-labelledby="the-sessions-view-of-a-node-is-advisory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The session’s view of a node is ADVISORY
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">open[].atNode</code> is what the session <em>believes</em>. <strong>The instance wins.</strong> The
+instance is the authority on its own token; this can be stale by exactly one
+step — the gap between a step completing and the session noticing.</p>
+
+<p>It is recorded anyway for two reasons. The commonest question about a session
+(“what is it doing”) should not need a second file read. And a <strong>disagreement</strong>
+between the two is itself worth seeing: a session whose view has drifted from
+the instance is a session that lost track, which is one of the detectors
+<a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/process-state.html"><code class="language-plaintext highlighter-rouge">process-state</code></a> names for being out of process.</p>
+<h2 id="who-reads-it-and-why-it-is-parsed-rather-than-trusted">
+  
+  
+    <a href="#who-reads-it-and-why-it-is-parsed-rather-than-trusted" class="anchor-heading" aria-labelledby="who-reads-it-and-why-it-is-parsed-rather-than-trusted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who reads it, and why it is parsed rather than trusted
+  
+  
+</h2>
+    
+
+<p><strong>A sibling session</strong>, deciding whether a bean is genuinely being worked or was
+claimed by someone who stopped. <strong>A person</strong>, asking what is in flight.
+<strong>The session itself</strong> on resume, in a fresh container, where the alternative
+is starting a second session beside the one that already exists.</p>
+
+<p>The writer may be an LLM playing the part of a state machine (bean <code class="language-plaintext highlighter-rouge">3nfv</code>), so
+the shape cannot be assumed from the writer’s care. <code class="language-plaintext highlighter-rouge">parseSessionContext()</code>
+parses at the boundary, which is what makes a <strong>non-deterministic writer safe
+to read from</strong> — and that is the general rule this record is the first case of:
+where a machine may be played rather than executed, the schema is the contract
+and the parse is where it is enforced.</p>
+<h2 id="what-this-is-not">
+  
+  
+    <a href="#what-this-is-not" class="anchor-heading" aria-labelledby="what-this-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this is NOT
+  
+  
+</h2>
+    
+
+<p><strong>Not the work plan.</strong> A bean says what is being worked on and survives the
+session; this says who is working and where they are right now. Delete every
+session record and the plan is intact.</p>
+
+<p><strong>Not a log.</strong> <a href="../../../bootstrap/skills/log-message.md"><code class="language-plaintext highlighter-rouge">log-message</code></a>
+records what an actor DID at a moment, append-only. This is the current
+position, overwritten as it moves. A log tells you how you got here; this tells
+you where you are.</p>
+
+<p><strong>Not interaction preferences.</strong> <code class="language-plaintext highlighter-rouge">.harness/interaction.json</code> holds how a person
+wants to be asked — durable, read at session start, never written by a process.
+That is <code class="language-plaintext highlighter-rouge">context</code>, and this is <code class="language-plaintext highlighter-rouge">state</code>: the two are on opposite sides of the
+layer line and must not be merged, however adjacent they look.</p>
+
+<p><strong>Not a store yet.</strong> The kind is registered and the shape is defined; nothing
+writes one. The state machine is bean <code class="language-plaintext highlighter-rouge">3nfv</code>, and declaring a directory before
+anything fills it is the defect where a consumer scans nothing and reports a
+clean run.</p>
 
           
 
