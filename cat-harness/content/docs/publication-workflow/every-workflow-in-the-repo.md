@@ -115,6 +115,14 @@ new tenant is a row in `upstream-pins.json` rather than a third diagram:
 | `upstream-pin-watch.bpmn` | Has a pinned dependency fallen behind a release, and what happens when the check cannot tell? Mechanical throughout, and it maintains ONE tracking issue rather than sending mail nobody reads |
 | `upstream-version-adoption.bpmn` | A candidate version exists. What of ours binds it, what does the MVP build prove, and who is allowed to say yes? The accept is a `userTask` in a person-only lane, and no package may relax it |
 
+**The publish branch** — what is on `gh-pages`, and what happened to it. The
+branch has six publishers and one of them is a full replace, so "the preview
+is gone" has never had an answer a reader could look up:
+
+| Diagram | Answers |
+|---------|---------|
+| `staging-render-log.bpmn` | A preview was published, removed, carried across a full-replace deploy, or **considered for removal and kept** — which of those happened, and why? Append-only: a `removed` entry never erases the `rendered` one before it, and `retained` exists so a preview still standing because a liveness signal fired leaves a trace. Bean `plj1` is the case it answers — every open PR's preview deleted by an unrelated merge, silently, for months |
+
 **Translation and evidence**:
 
 | Diagram | Answers |

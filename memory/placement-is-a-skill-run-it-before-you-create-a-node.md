@@ -19,7 +19,7 @@ before writing any literal that names one folio.
 Four entries that restated parts of it are archived rather than kept here
 (`the-shape-of-every-defect-here`, `adapter-vs-profile`,
 `compose-nothing-resolve-everything`,
-`the-readme-generator-that-replaced-the-whole-file`) — still nodes under
-`skills/memory/`, in no prompt. **The skill governs; this is a pointer, not
+`the-readme-generator-that-replaced-the-whole-file`) — still nodes in the
+declared `memory` graph, in no prompt. **The skill governs; this is a pointer, not
 a summary of it.** Where they would disagree, the skill wins — so read it,
 and fix it there rather than restating it back into this file.
