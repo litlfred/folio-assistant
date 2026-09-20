@@ -162,7 +162,7 @@ nothing and reports clean. Nothing scans a kind.
   and how a path resolves. This page is the axis; that one is the mechanism.
 - [`agent-memory`](agent-memory.md) — what a memory entry promises, and the
   injection budget. This page says what layer it is on.
-- [`process-state`](process-state.md), [`bpmn-processes`](bpmn-processes.md) —
+- [`process-state`](../workflow/process-state.md), [`bpmn-processes`](../workflow/bpmn-processes.md) —
   the largest writer of a live-state graph: a workflow instance is a token's
   position in a diagram that lives in a content graph.
 - [`todo-manager`](todo-manager.md), [`bean-coordination`](bean-coordination.md)

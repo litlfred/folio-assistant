@@ -395,6 +395,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // the `cat-harness` graph. It cannot be read at all without the diagram it
     // references.
     holds: "state",
+    // The kind's own reader, wired 2026-09-20. `skill` is a property of the
+    // KIND rather than of a directory because a `workflow-state` graph is read
+    // the same way wherever it sits — and it was absent while the skill it
+    // names did not exist. A consumer arriving at this kind had the shape and
+    // no account of what a token position MEANS, which stores sit beside it,
+    // or why a step may write here and not to `memory`.
+    skill: "workflow-state",
     summary:
       "Running BPMN instances — one JSON file each, carrying " +
       "`\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",

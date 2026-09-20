@@ -29,10 +29,10 @@ Every activity carries **`<folio:skill ref="…">`** naming the skill that
 implements it, and **`<folio:bean …>`** where it touches the work plan. Add both
 when you add an activity; the audit reports an activity that names no skill, and
 the exemptions for the legitimate cases are *declarations*, not silence — see
-[`role-model`](role-model.md).
+[`role-model`](../folio-core/role-model.md).
 
 Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
-the duration. [`role-model`](role-model.md) carries that model.
+the duration. [`role-model`](../folio-core/role-model.md) carries that model.
 
 ## Running one: the engine refuses work claimed out of order
 
