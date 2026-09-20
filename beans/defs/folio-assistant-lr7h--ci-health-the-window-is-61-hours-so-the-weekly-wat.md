@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lr7h
 title: 'CI HEALTH: the window is 6.1 hours, so the weekly watchdog cannot appear in its own report'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:28:52Z
-updated_at: 2026-09-20T14:29:26Z
+updated_at: 2026-09-20T16:46:25Z
 parent: folio-assistant-1xhc
 ---
 
@@ -103,8 +103,22 @@ this module documents as costing a report its credibility.
 - [x] never-ran, could-not-ask and topped-up stay three different answers
 - [x] ratchet falsified in both directions (11 tests; removing the file list
       fails 5, collapsing the probe states fails 1)
-- [ ] **owner:** `upstream-pins.yml` has never run on `main`. Its cron is
-      `43 9 * * 2`. Is it expected to run, or is it another `5rfy` neutering?
+- [x] **owner question — withdrawn, answered by measurement rather than by
+      the owner.** *"`upstream-pins.yml` has never run on `main`. Its cron is
+      `43 9 * * 2`. Is it expected to run, or is it another `5rfy`
+      neutering?"* — **neither.** `git log --diff-filter=A` puts the file at
+      **one day old** (added 2026-09-19T08:37:20Z, `5284028c6`) and its first
+      Tuesday fire **two days away**. It had never run because it had never
+      had the chance, and asking the owner would have spent their attention
+      on a non-event.
+
+      The follow-up section below carries the fix this produced —
+      `cronPeriodDays()` plus the file's age on the default branch, so a
+      workflow whose schedule has not come round reads *"not yet run …
+      Nothing to do"* instead of as a finding. **Raising this to the owner
+      was itself the defect**: a report that cannot tell "nothing HAS run"
+      from "nothing COULD have" manufactures a question per young workflow,
+      which is how a health report earns the inattention it exists to fix.
 
 ## Addendum, same session: the workflow-path checks are NOT duplicates
 
