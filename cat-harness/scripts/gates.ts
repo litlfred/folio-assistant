@@ -153,6 +153,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason: "installing dependencies is not a check; every workflow opens with it",
   },
+  {
+    // One entry, four call sites — `stage`, both `cleanup` paths and
+    // `cleanup-dispatch` — because `match` is a substring and the script is
+    // the same in all of them, reached by three different relative paths.
+    match: "scripts/render-log.ts",
+    kind: "ci-only",
+    reason:
+      "APPENDS to the render log in a `gh-pages` working tree, using a slug off the event " +
+      "payload — it writes what happened rather than checking anything, and there is nothing " +
+      "for a contributor to run locally. Its refusals (a reasonless removal, an unsafe path) " +
+      "are covered by `render-log.test.ts` in `bun test`, and the WIRING by " +
+      "`workflow-yaml.test.ts`, both of which are in the gate set",
+  },
   // ── Generators whose `--check` twin is gated ────────────────────────
   {
     match: "scripts/gen-schema-docs.ts",
