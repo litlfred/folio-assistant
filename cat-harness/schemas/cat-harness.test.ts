@@ -11,6 +11,8 @@ import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
 import { registerFolioGraphKind } from "./folio-graph-kind";
+import { BEAN_GRAPH_FILE } from "./bean-graph";
+import { TODO_GRAPH_FILE } from "./todo-graph";
 import {
   defaultGraphKinds,
   GraphKindRegistry,
@@ -29,6 +31,7 @@ import {
   materialiseDirectories,
   renderableDirectories,
   DEFAULT_DIRECTORIES,
+  declaredKinds,
   directoryForGraph,
   directoriesForGraph,
   resolveDirectories,
@@ -759,5 +762,105 @@ describe("directoryForGraph refuses an ambiguous kind rather than picking one", 
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
+  });
+});
+
+describe("a nested declaration is named by its KIND, not by its directory", () => {
+  /**
+   * The disagreement this closes was live and silent.
+   *
+   * `declaredKinds` computed the nested filename as `${basename(path)}.json`.
+   * `bean-graph.ts` holds the opposite, and holds it as a design property:
+   * *"moving `beans/` to `work/` requires editing nothing inside it."* Both
+   * statements were true of today's layout and contradict each other on the
+   * first relocation — the walk looks for `work/work.json`, the file is still
+   * `work/beans.json`, and the nested kinds drop out of `declared` with
+   * nothing said. An under-count, which then manufactures an `undeclared`
+   * finding somewhere else.
+   *
+   * The owner settled the general rule on 2026-09-20 — each type declares its
+   * own filename — and `GraphKindDef.declarationFile` is that rule at the
+   * graph-kind level.
+   */
+  function withNested(dirPath: string, fileName: string): string {
+    const root = mkdtempSync(join(tmpdir(), "nested-"));
+    const dir = join(root, dirPath);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(
+      join(dir, fileName),
+      JSON.stringify({
+        name: "n",
+        directories: [{ id: "defs", path: "defs", graphs: ["bean-defs"] }],
+      }),
+    );
+    writeFileSync(
+      join(root, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "n",
+        directories: [{ id: "beans", path: `${dirPath}/`, graphs: ["beans"] }],
+      }),
+    );
+    return root;
+  }
+
+  test("at the conventional path, the nested kinds are found", () => {
+    const root = withNested("beans", "beans.json");
+    try {
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["bean-defs", "beans"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("RELOCATED to `work/`, the file keeps its name and the kinds are STILL found", () => {
+    // The case the two readers disagreed about, and the reason for the field.
+    // Before this, `declaredKinds` looked for `work/work.json`, found nothing,
+    // and returned `beans` alone — silently dropping `bean-defs`.
+    const root = withNested("work", "beans.json");
+    try {
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["bean-defs", "beans"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the directory-name convention still works for a kind declaring no filename", () => {
+    // Unmigrated is not broken. A graph whose kind names no declaration file
+    // falls back to `${dirName}.json`, so an instance that never relocates
+    // behaves exactly as it did.
+    const root = mkdtempSync(join(tmpdir(), "nested-conv-"));
+    try {
+      mkdirSync(join(root, "qa"), { recursive: true });
+      writeFileSync(
+        join(root, "qa", "qa.json"),
+        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", graphs: ["health"] }] }),
+      );
+      writeFileSync(
+        join(root, DECLARATION_FILENAME),
+        JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", graphs: ["qa"] }] }),
+      );
+      const decl = readDeclaration(root)!;
+      expect([...declaredKinds(root, decl)].sort()).toEqual(["health", "qa"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the two modules' constants agree with the kinds, because they are derived", () => {
+    // The duplicate is removed rather than merely checked — but assert it, so
+    // reintroducing a literal in either module fails here rather than on
+    // somebody's relocation.
+    // Compared as a pair rather than with `?.` on each side: an accessor that
+    // returned `undefined` for both would otherwise make this pass over
+    // nothing, which is the vacuous-assertion shape this repository keeps
+    // paying for.
+    expect({
+      beans: defaultGraphKinds.get("beans")?.declarationFile,
+      todos: defaultGraphKinds.get("todos")?.declarationFile,
+    }).toEqual({ beans: BEAN_GRAPH_FILE, todos: TODO_GRAPH_FILE });
+    expect(BEAN_GRAPH_FILE).toBe("beans.json");
+    expect(TODO_GRAPH_FILE).toBe("todos.json");
   });
 });

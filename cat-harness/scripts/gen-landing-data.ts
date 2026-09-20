@@ -99,9 +99,57 @@ function shapeFor(comment: string, links: readonly { label: string; note?: strin
   const weight =
     comment.length +
     links.reduce((n, l) => n + l.label.length + (l.note?.length ?? 0) + 40, 0);
-  if (weight < 250) return "card";
-  if (weight < 450) return "laptop";
-  return "mobile";
+  // SQUARE IS THE DEFAULT, and the other two are deviations a content shape has
+  // to earn. The owner: *"stickc notes ddefault to squares unless content shape
+  // indicates otherwise (then stack)."*
+  //
+  // The old thresholds made `laptop` the middle band, so a card of ordinary
+  // length became landscape by default and the board was three different shapes
+  // for no reason a reader could see. Now: square until the words will not fit
+  // one, and then the PORTRAIT crop — which is what "stack" means here, a
+  // taller card in the same column rather than a wider one.
+  //
+  // `laptop` is still reachable, by a sticky declaring `shape: "laptop"`. It is
+  // no longer something a paragraph falls into.
+  return weight < 450 ? "card" : "mobile";
+}
+
+/**
+ * The role whose clouds are the DEFAULT, per layout.
+ *
+ * The owner, 2026-09-20: *"default is centered in the various clouds positions
+ * of the **default grump cloud** (across three layouts)."*
+ *
+ * `grumpy-cat`'s backdrop is the `landing` image role, and its three images are
+ * the only ones in this instance that declare a `textRegion` — 0.33/0.25 on the
+ * laptop crop, 0.13/0.225 on the mobile, 0.30/0.255 on the card. Every other
+ * backdrop role (engineer, library, analyst) declares none, so without a
+ * fallback their words sit in a generic inset box and the cloud above them is
+ * left empty, which is what the first render of this showed.
+ */
+const DEFAULT_CLOUD_ROLE = "landing";
+
+/**
+ * The default cloud for a layout, or `undefined` when even that is unmeasured.
+ *
+ * **`undefined` rather than a guessed box.** A role nobody measured has no
+ * quiet interior to aim at, and inventing one puts the words over the cat's
+ * face. The stylesheet's generic inset box is the honest answer in that case,
+ * and it is one place rather than one per role.
+ *
+ * Worth knowing why the borrow is sound HERE and might not be elsewhere: the
+ * engineer crops are the same composition as the default one, 1672x941 against
+ * 1671x941 and 1254x1254 against 1254x1254 — the same cat in a different
+ * costume, so the cloud is in the same place. `library` and `analyst` are
+ * different compositions (1669x942, 1024x1536, 1536x1024) and borrow the
+ * default only until somebody measures them. That is a fallback, not a claim
+ * about those images, and it degrades toward a readable box rather than toward
+ * a wrong one.
+ */
+function defaultCloud(layout: string): unknown {
+  return (decl?.images ?? []).find(
+    (i) => i.role === DEFAULT_CLOUD_ROLE && i.layout === layout && i.textRegion,
+  )?.textRegion;
 }
 
 const stickies = readLandingStickies(ROOT).map((st) => {
@@ -114,6 +162,15 @@ const stickies = readLandingStickies(ROOT).map((st) => {
         src: siteRelative(img.src),
         width: img.width ?? null,
         height: img.height ?? null,
+        // The crop's own aspect, so the card can BE that shape rather than
+        // letterbox the art inside a shape its text happened to produce. The
+        // owner: *"i want stickys to be the same fixd size ... dispalyed
+        // content matches layout ratios."*
+        aspect: img.width && img.height ? Number((img.width / img.height).toFixed(4)) : null,
+        // The cloud, per layout. `null` rather than a guessed box: a role whose
+        // art declares no region has no cloud to centre in, and inventing one
+        // would put the words over the cat's face on art nobody measured.
+        textRegion: img.textRegion ?? defaultCloud(layout) ?? null,
       };
     }
   }
@@ -142,7 +199,14 @@ const stickies = readLandingStickies(ROOT).map((st) => {
     // wants. The template uses it as the default and still lets a narrow screen
     // override — a tall phone should not be handed a landscape crop just
     // because the text is short.
-    shape: shapeFor(st.comment, st.links),
+    // The sticky's own choice wins over the derivation. The derivation guessed
+    // `card` for a note the owner wanted landscape, which is what a heuristic
+    // over three examples is worth: a starting point, not an answer.
+    shape: st.shape ?? shapeFor(st.comment, st.links),
+    // Emitted so the template can place the words without re-deriving anything.
+    // Absent fields stay absent rather than becoming defaults here — the
+    // stylesheet holds the defaults, in one place.
+    text: st.text ?? null,
     // Emitted even when there is no art: the stylesheet composites it over
     // whatever is behind, and a sticky whose theme did not load still wants a
     // readable ground. Degrade toward legible.

@@ -297,6 +297,24 @@ jobs:
       - name: Every maintained artefact is in the published tree
         run: bun run check:maintained-artefacts ./_site
 
+      # No page carries a block-level tag as escaped TEXT.
+      #
+      # Here for the same reason as the step above — it needs the assembled tree —
+      # and by the same convention, invoked by its DECLARED SCRIPT NAME so
+      # `unrunScripts` can see it running.
+      #
+      # It exists because the whole source-level gate wall passed over a published
+      # landing page whose stickies were not elements. `landing.html` built its
+      # `<article>` tag across several lines and one `{% endif -%}` right-stripped
+      # the newline before the next attribute, so the tag emitted as
+      # `…--fa-text-scale:0.74;"aria-labelledby=…`. That is unparseable, `index.md`
+      # is markdown, and Kramdown escaped the entire block: 3 escaped `<article>`
+      # tags, 0 real. The template was valid HTML the whole time, which is exactly
+      # why nothing readable from a checkout could catch it — only the built page
+      # shows what the markdown converter did.
+      - name: No escaped block-level markup in the published tree
+        run: bun run check:escaped-markup ./_site
+
       # The QA witnesses, published at the path the badges already point at.
       #
       # They are COMMITTED under `test/results/witnesses/` — placement follows
