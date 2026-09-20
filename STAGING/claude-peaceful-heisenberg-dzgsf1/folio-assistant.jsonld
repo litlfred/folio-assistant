@@ -260,18 +260,18 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T18:53:15.951Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f86bfd332ea50d8db497b3c33da9f7e11a307657",
-  "sourceCommitSha": "f86bfd332ea50d8db497b3c33da9f7e11a307657",
-  "sourceCommitAt": "2026-09-20T18:51:28Z",
+  "generatedAt": "2026-09-20T19:54:11.127Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c2f518201dc208ffd78848a0983bc9b02c715adc",
+  "sourceCommitSha": "c2f518201dc208ffd78848a0983bc9b02c715adc",
+  "sourceCommitAt": "2026-09-20T19:52:37Z",
   "sourceTreeDirty": true,
   "counts": {
-    "Skill": 206,
+    "Skill": 207,
     "Actor": 27,
-    "Capability": 26,
+    "Capability": 28,
     "Role": 124,
     "Convention": 2,
-    "SkillPackage": 12,
+    "SkillPackage": 17,
     "Process": 53,
     "SequenceFlow": 687,
     "ProcessNode": 652,
@@ -880,6 +880,57 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/domain-fencing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/site-presentation-assets",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "site-presentation-assets",
+      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering",
+      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/site-presentation-assets.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/create-sticky-note",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note",
+      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/create-sticky-note.md",
+      "instructionLines": 154,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/theme-art-intake",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "theme-art-intake",
+      "title": "Theme art intake",
+      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/theming"
+      ],
+      "instructionsPath": "skills/theming/theme-art-intake.md",
+      "instructionLines": 176,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/scientific-visualization",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "scientific-visualization",
@@ -1354,23 +1405,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/uses-editorial-review"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/site-presentation-assets",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "site-presentation-assets",
-      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering",
-      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/site-presentation-assets.md",
-      "instructionLines": 109,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/site-presentation-assets"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/where-a-proposal-goes",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "where-a-proposal-goes",
@@ -1506,23 +1540,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/diff"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/create-sticky-note",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "create-sticky-note",
-      "title": "Create a sticky note",
-      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/create-sticky-note.md",
-      "instructionLines": 154,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/create-sticky-note"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/continual-progress",
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "continual-progress",
@@ -1634,7 +1651,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 272,
+      "instructionLines": 281,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1791,6 +1808,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/delivery-summary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/harness-requirements",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
+      "name": "harness-requirements",
+      "title": "Harness requirements — what an instance owes for what it declares",
+      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, and why the discriminator is \"is this the static knowledge graph\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/harness-requirements.md",
+      "instructionLines": 178,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/harness-requirements"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/bean-coordination",
@@ -2332,12 +2366,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
       "name": "ci-health",
       "title": "CI health — a red workflow looks exactly like a green one from in here",
-      "description": "A red workflow looks exactly like a green one from inside a checkout. How to read a default-branch health report, the three verdicts that keep it honest, and why a watchdog needs both a session-start print and an unattended run.",
+      "description": "A red workflow looks exactly like a green one from inside a checkout. How to read a default-branch health report, the three verdicts that keep it honest, why a watchdog needs both a session-start print and an unattended run, and the separate external question the Pages deployments need.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/ci-health.md",
-      "instructionLines": 87,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2511,23 +2545,6 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/prepare-merge-auto"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/theme-art-intake",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#Skill",
-      "name": "theme-art-intake",
-      "title": "Theme art intake",
-      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/theme-art-intake.md",
-      "instructionLines": 131,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#skill/theme-art-intake"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/integration-backlog",
@@ -3585,7 +3602,7 @@
       "name": "discussion",
       "title": "discussion — settling what an agent cannot read off disk",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/discussion.md",
       "instructionLines": 107,
@@ -3602,7 +3619,7 @@
       "title": "Reading a knowledge graph before you have anything",
       "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill cat-bootstrap hands you, because the second step of the handoff cannot be followed without it.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/cat-bootstrap-kg-navigation.md",
       "instructionLines": 83,
@@ -3619,7 +3636,7 @@
       "title": "Which harness, and where",
       "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/confirm-harness.md",
       "instructionLines": 59,
@@ -3636,7 +3653,7 @@
       "title": "Logging what you are doing",
       "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/cat-bootstrap"
       ],
       "instructionsPath": "../cat-bootstrap/skills/log-message.md",
       "instructionLines": 93,
@@ -3737,7 +3754,7 @@
       "title": "Reading the knowledge graph — how to find the skill you need",
       "description": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/kg-navigation"
       ],
       "instructionsPath": "../kg-navigation/skills/kg-navigation.md",
       "instructionLines": 141,
@@ -3754,7 +3771,7 @@
       "title": "Materializing remote content",
       "description": "Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/large-datasets"
       ],
       "instructionsPath": "../large-datasets/skills/materialize-remote.md",
       "instructionLines": 91,
@@ -3771,7 +3788,7 @@
       "title": "IRIS, DSpace and Dublin Core",
       "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
       "instructionLines": 151,
@@ -4592,6 +4609,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/plantuml"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#capability/github-connector",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "github-connector",
+      "name": "GitHub connector (host-provided)",
+      "description": "Ability to reach the forge through a connector the HOST supplies — an MCP server the agent did not configure and cannot inspect. DISTINCT FROM github-api: the agent holds no credential of its own, so what it may do is whatever the connector was granted, and that is knowable only by trying. An mcp-probe against the server is therefore the honest detection: it answers 'is the connector reachable', which is the only question this capability can settle. It does NOT answer 'may I write' — that is a permission on the actor, and a session can hold this capability and still be refused. Declared 2026-09-20 alongside github-api, on the owner's answer that the write path is several tools chosen by capability and permission.",
+      "detection": {
+        "method": "mcp-probe",
+        "endpoint": "github"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/github-connector"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#capability/bun-runtime",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
       "localId": "bun-runtime",
@@ -4650,6 +4679,18 @@
         "variable": "FOLIO_SIGNING_ENDPOINT"
       },
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/signing-api"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#capability/github-api",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Capability",
+      "localId": "github-api",
+      "name": "GitHub API (token or OAuth)",
+      "description": "Ability to write to the forge over its HTTP API — create or update a file, open a pull request, comment — authenticated by a token or an OAuth grant rather than by holding a checkout. DISTINCT FROM git-push: this writes with no working tree, so it is the path available to a process that has a credential and no clone, and its reach is whatever the credential was granted rather than whatever the filesystem allows. Probed by CONFIGURATION, not by calling the API: a probe that issued a request would be indistinguishable from an outage or a rate limit, and would touch an external host to answer a question about local setup — the same reading deploy-access and signing-api take. Declared 2026-09-20 on the owner's answer that the write path is several tools chosen by capability and permission, not one design.",
+      "detection": {
+        "method": "env-var",
+        "variable": "GITHUB_TOKEN"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#capability/github-api"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#capability/html-pdf-engine",
@@ -4760,13 +4801,13 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#convention/comment-why-not-what"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/cat-bootstrap",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "skills",
+      "name": "cat-bootstrap",
       "path": "../cat-bootstrap/skills",
       "hasManifest": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-bootstrap",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/cat-bootstrap"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/raci",
@@ -4785,6 +4826,42 @@
       "hasManifest": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/methodology-crdm",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/crdm"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/skills",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "skills",
+      "path": "src/skills",
+      "hasManifest": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness-src",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "kg-navigation",
+      "path": "../kg-navigation/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/kg-navigation",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/kg-navigation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/large-datasets",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "large-datasets",
+      "path": "../large-datasets/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/large-datasets-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/large-datasets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/who-iris",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "who-iris",
+      "path": "../who-iris/skills",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/who-iris"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/authoring-who-smart-guidelines",
@@ -4943,6 +5020,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/graph-management"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/theming",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "theming",
+      "version": "0.1.0",
+      "description": "How a theme is made, declared, generated and checked for contrast. Split out of folio-core, where three theming skills sat among 107 and were found by knowing they existed rather than by looking.",
+      "path": "skills/theming",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/site-presentation-assets",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/theme-art-intake"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#package/theming"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#package/remote-stubs",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "remote-stubs",
@@ -4992,7 +5087,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/covered-is-not-reachable",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/create-sticky-note",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/decision-comparison",
@@ -5013,6 +5107,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/goal-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/harness-requirements",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/integration-audit",
@@ -5055,14 +5150,12 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/session-intent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/test-engineer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/theme-art-intake",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-peaceful-heisenberg-dzgsf1/folio-assistant.jsonld#skill/todo-review",
@@ -32595,8 +32688,8 @@
   ],
   "staging": {
     "branch": "claude/peaceful-heisenberg-dzgsf1",
-    "sha": "a9084c9720f8cc7eea9185ca8f98658b6156c41a",
+    "sha": "f798e89fa709ae4a256e7efc1a2f21d73562eba8",
     "pr": "581/merge",
-    "run": "35530408185"
+    "run": "35533727940"
   }
 }

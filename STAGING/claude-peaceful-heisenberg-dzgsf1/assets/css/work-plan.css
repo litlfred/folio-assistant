@@ -235,8 +235,48 @@
 /* The sentence stays in text ink. A finding's words are read; its colour is
    glanced at, and a paragraph in status colour is neither. */
 .fa-workplan-finding-text { color: var(--fa-wp-ink-2); }
-a.fa-workplan-finding-text { color: var(--fa-wp-ink-2); text-decoration: underline; }
-a.fa-workplan-finding-text:hover { color: var(--fa-wp-ink); }
+
+/* ── Links ──────────────────────────────────────────────────────────────
+   Identity by UNDERLINE, in text ink, never by hue.
+
+   A link colour here would be a sixth colour to validate against this
+   surface, and it would sit inside sentences whose only other colour is a
+   RESERVED status hue — so a blue bean id beside an amber NO EXPIRY badge
+   would read as a fourth severity. Underline also survives forced-colors,
+   greyscale print and a colour-blind reader, which a hue does not.
+
+   A reference that could not be resolved renders as plain text with no
+   underline, which is the visible difference between "follow this" and "this
+   points somewhere I could not reach". */
+.fa-workplan-ref {
+  color: var(--fa-wp-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+}
+.fa-workplan-ref:hover { text-decoration-thickness: 2px; }
+
+/* The pencil. A published page cannot write back to the repository, so the
+   honest control is the one that takes you where writing happens — the same
+   argument `.fa-node-edit` makes on every other content object here. */
+.fa-workplan-edit {
+  display: inline-flex;
+  vertical-align: -0.15em;
+  color: var(--fa-wp-muted);
+  text-decoration: none;
+}
+.fa-workplan-edit:hover { color: var(--fa-wp-ink); }
+.fa-workplan-edit .fa-workplan-icon { width: 0.85rem; height: 0.85rem; }
+
+/* An epic's bar label is a link to the epic. Kept visually identical to the
+   non-link case until hover: 14 underlined rows stacked in a chart is a
+   texture, not a set of affordances. */
+a.fa-workplan-bar-label { color: var(--fa-wp-ink-2); text-decoration: none; }
+a.fa-workplan-bar-label:hover {
+  color: var(--fa-wp-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
 
 .fa-workplan-empty,
 .fa-workplan-fallback {
