@@ -124,6 +124,10 @@ const REGISTRY_GROUPS: Record<string, string> = {
   capabilities: "Capability",
   roles: "Role",
   requirements: "Requirement",
+  // Bean `3190`. A convention is context attached to a PROCESS, so it is a
+  // node like the others rather than prose in AGENTS.md — which that file
+  // itself calls a rule with no home.
+  conventions: "Convention",
 };
 
 /**
@@ -336,6 +340,19 @@ export function buildContext(): Record<string, unknown> {
     // document already uses in another sense -- a GraphKind is a "kind" too --
     // so the term now says which one it is.
     bpmnType: termIri("bpmnType"),
+    // Convention terms (bean `3190`). All LITERALS — none is a link, so none
+    // gets `{"@type": "@id"}`: a bare name under `@id` resolves against the
+    // document base and mints an IRI nobody chose.
+    //
+    // `statement` is NOT a synonym of `rdfs:comment`. The comment is prose
+    // ABOUT the node; the statement is the rule ITSELF, and a consumer
+    // filtering for enforceable text needs them apart. `rationale` is
+    // separate again for a reason worth stating: a rule and its justification
+    // collapsed into one field is a rule nobody can retire, because there is
+    // nothing left that says what would falsify it.
+    statement: termIri("statement"),
+    rationale: termIri("rationale"),
+    applies: termIri("applies"),
     nodeKind: termIri("nodeKind"),
     enforcement: termIri("enforcement"),
     workPlanOp: termIri("workPlanOp"),
