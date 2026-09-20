@@ -1,11 +1,11 @@
 ---
 # folio-assistant-07xs
 title: 'MOVE: skills/memory/ out to a declared memory/ directory'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T05:35:24Z
-updated_at: 2026-09-20T05:35:35Z
+updated_at: 2026-09-20T08:02:20Z
 parent: folio-assistant-zzmr
 ---
 

@@ -609,3 +609,50 @@ describe("default directories — inherit the convention, declare only the devia
     }
   });
 });
+
+describe("the scope trap", () => {
+  it("refuses to materialise an empty twin beside a directory that has content", () => {
+    // REGRESSION, 2026-09-20, and the defect was mine. `scope` is optional and
+    // its ABSENCE is meaningful — the path resolves against the instance
+    // rather than the repository. Omitting it on an entry that meant
+    // `repository` made the declaration name a different directory, and
+    // `materialiseDirectories` then CREATED that directory with a keep
+    // marker: declared-but-absent became declared-and-empty, which is the
+    // `dh4f` false pass manufactured by the tool written to prevent it. It
+    // stood for about an hour with every gate green.
+    const repo = mkdtempSync(join(tmpdir(), "scope-trap-"));
+    const instance = join(repo, "inst");
+    mkdirSync(join(repo, "shared"), { recursive: true });
+    writeFileSync(join(repo, "shared", "real.json"), "{}", "utf-8");
+    mkdirSync(instance, { recursive: true });
+    try {
+      // The content is at the REPOSITORY root; the entry omits `scope`.
+      const dirs = [
+        { id: "shared", path: "shared/", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+      ] as unknown as Parameters<typeof materialiseDirectories>[0];
+      expect(() => materialiseDirectories(dirs, instance)).toThrow(/scope/);
+      // ...and it did not create the twin on the way to throwing.
+      expect(existsSync(join(instance, "shared"))).toBe(false);
+    } finally {
+      rmSync(repo, { recursive: true, force: true });
+    }
+  });
+
+  it("materialises normally when there is no twin to be confused with", () => {
+    // The guard must not fire on the ordinary case, or it becomes the thing
+    // somebody turns off.
+    const repo = mkdtempSync(join(tmpdir(), "scope-ok-"));
+    const instance = join(repo, "inst");
+    mkdirSync(instance, { recursive: true });
+    try {
+      const dirs = [
+        { id: "own", path: "own/", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+      ] as unknown as Parameters<typeof materialiseDirectories>[0];
+      const out = materialiseDirectories(dirs, instance);
+      expect(out[0]?.created).toBe(true);
+      expect(existsSync(join(instance, "own"))).toBe(true);
+    } finally {
+      rmSync(repo, { recursive: true, force: true });
+    }
+  });
+});

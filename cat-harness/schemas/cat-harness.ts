@@ -2363,6 +2363,45 @@ export function materialiseDirectories(
           `(${dir.path} -> ${abs}); a directory outside the ${where} is not a directory of it`,
       );
     }
+    // ── The scope trap ────────────────────────────────────────────────
+    //
+    // `scope` is optional and its ABSENCE is meaningful: the path resolves
+    // against the instance rather than the repository. Omit it on an entry
+    // that meant `repository` and the declaration silently names a different
+    // directory — and this function then CREATES that directory, with a keep
+    // marker, turning declared-but-absent into declared-and-empty. The
+    // `dh4f` false pass, wearing a tidier face, manufactured by the tool
+    // written to prevent it.
+    //
+    // That is not hypothetical: it happened here on 2026-09-20, to the two
+    // entries (`interaction`, `issue-marks`) added the same day, and stood
+    // for about an hour with every gate green.
+    //
+    // So: before creating anything, look at the OTHER root. A directory of
+    // this name already sitting there, with content, is overwhelmingly a
+    // missing or wrong `scope` rather than a coincidence — and creating an
+    // empty twin beside it is the one outcome that helps nobody.
+    const otherBase = rootForScope(rootAbs, dir.scope === "repository" ? undefined : "repository");
+    if (otherBase !== base) {
+      const twin = resolve(otherBase, dir.path);
+      // The condition is "this one is EMPTY and the twin has content", not
+      // "this one is absent" — so it DETECTS the mistake already standing as
+      // well as preventing a new one. A first draft tested absence only, and
+      // would have refused to create the empty twin while saying nothing
+      // about the empty twin already sitting there from an hour earlier.
+      // A guard that cannot see the case that motivated it is half a guard.
+      const emptyish = !existsSync(abs) || readdirSync(abs).every((f) => f === ".gitignore");
+      if (emptyish && existsSync(twin) && readdirSync(twin).length > 0) {
+        throw new Error(
+          `declared directory "${dir.id}" is empty at ${abs}, ` +
+            `while ${twin} already holds content. That is what a missing or wrong ` +
+            `\`scope\` looks like: ${dir.scope === "repository" ? "the entry says `repository` and the content is in the instance" : "the entry omits `scope`, so it resolves against the instance, and the content is at the repository root"}. ` +
+            `A consumer following the declaration scans the empty one and reports a clean run. ` +
+            `Fix \`scope\` on the declaration rather than materialising both.`,
+        );
+      }
+    }
+
     const existed = existsSync(abs);
     const markerPath = join(abs, ".gitignore");
     const markerExisted = existed && existsSync(markerPath);
