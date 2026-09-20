@@ -1,11 +1,11 @@
 ---
 # folio-assistant-zoif
 title: AGENTS.md for the 8 instances that have none — check:subgraph-coverage names them
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T19:59:52Z
-updated_at: 2026-09-20T20:25:12Z
+updated_at: 2026-09-20T20:31:29Z
 parent: folio-assistant-zzmr
 ---
 
