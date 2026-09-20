@@ -1,78 +1,96 @@
 ---
-# folio-assistant-xffc
-title: 'TOOLS THEME: the second theme from 0301fbd2 becomes a KG node, and tools in the KG use it'
+# folio-assistant-d3yq
+title: 'TESTING THEME: an engineering grumpy-cat theme and an avatar for testing surfaces'
 status: todo
 type: feature
 priority: normal
-created_at: 2026-09-20T06:05:13Z
+created_at: 2026-09-20T06:09:59Z
 updated_at: 2026-09-20T06:11:39Z
 parent: folio-assistant-o3xy
+blocked_by:
+    - folio-assistant-xffc
 ---
 
 ## The ask, owner 2026-09-20 (verbatim)
 
-> there are exssting 3 layouts for grumpy cat. that is defailt cat-harness
-> theme. there are now new theme when talking abuot tools in the KG
-> https://github.com/litlfred/folio-assistant/commit/0301fbd24c107d1987d1a15d148fb50242c96217.
-> these need to moved into KG appropraitely as a theme. and in on tools in kg
-> use this theme.
+> also when talking about testing specifically, we need avatar and then cats =
+> computable adjudication and agentic test harness.       caaat-harness
+>     ca&at-harness
+>  _c&t-harness
+>  c@t-harness
+> cat-harness
+> cat-harness
+>
+> this time grumpy cat will be engineering themed.  i will provide 3 layouts in
+> a moment
 
-## What this says, as I read it
+## What it asks for
 
-Three claims and one instruction:
+1. An **avatar** for the testing context, plus the derivation chain.
+2. A **third grumpy-cat theme, engineering-themed**, distinct from the default
+   `grumpy-cat` and from the tools theme (`xffc`).
+3. Applied **when talking about testing specifically** — so theme selection by
+   subject/context, the same new capability `xffc` needs for tools.
 
-1. **`grumpy-cat` is the DEFAULT cat-harness theme.** Today
-   `schemas/themes.ts` sets `DEFAULT_THEME_ID = "pale-sage"`, described in its
-   own docs as *"Provisional against the staging bar … which sage is a question
-   only the deployed staging site can settle."* This ruling looks like it
-   settles that question differently — grumpy-cat, not a sage. **To confirm
-   before changing**, because `iurf` chose a sage deliberately to match the
-   staging bar and the owner's earlier ask said *"default is one of the sages
-   (to match the staging bar)"*. Two owner statements point opposite ways; the
-   later one normally wins, but a default is cheap to get wrong quietly.
-2. **The three layouts already exist for grumpy-cat** — confirmed:
-   `schemas/themes.ts` gives every shipped theme the shared `LAYOUTS` constant
-   (laptop / mobile / card), and `theme.ts` enforces all three or invalid.
-3. **A second theme exists in commit `0301fbd2`** and is not yet a KG node.
-4. **Tools in the KG should use that second theme** — so a theme becomes
-   selectable per *node kind* (or per graph kind), which is new.
+**BLOCKED, and the block is clean**: the owner says *"i will provide 3 layouts
+in a moment."* A theme is invalid without all three (`theme.ts` enforces it and
+refuses rather than degrading), so there is nothing to build until the art
+arrives. Waiting on: the three layouts. No expiry set — the owner is supplying
+them in this session.
 
-## What this bean must NOT assume
+## A DIFFERENCE worth resolving before anything is written
 
-Whether the commit's assets are colours, images, CSS, or all three — and
-whether anything already lets a node kind pick a theme. `avatars` may be the
-existing precedent for "a per-kind visual" (`schemas/avatars.ts`,
-`scripts/gen-avatars-css.ts`, `scripts/check-avatar-coverage.ts`), and `5oai`'s
-closing note left *"avatars on content nodes reusing `images[].role`"* open as
-its other deferred half. If a per-kind visual mechanism exists, this rides it
-rather than minting a second vocabulary.
+The chain in this ask is **not** the chain committed in `cat-harness/harness.json`.
 
-A read-only investigation of the commit was launched 2026-09-20 to answer
-exactly those questions before anything is designed.
+| rung | committed today | in this ask |
+|---|---|---|
+| 1 | `computable adjudication and agentic test harness` | same, with a trailing `.` |
+| 2 | `caaat-harness` | `caaat-harness` |
+| 3 | `ca&at-harness` | `ca&at-harness` |
+| 4 | **`.c&at-harness`** | **`_c&t-harness`** |
+| 5 | ` c@t-harness` (leading NO-BREAK SPACE) | ` c@t-harness` |
+| 6 | — | `cat-harness` |
+| 7 | — | `cat-harness` |
 
-## Relation to `mggs`
+So rung 4 changes `.c&at-` to `_c&t-` (a different leading character AND a
+dropped `a`), and two `cat-harness` rungs are added at the end.
 
-`mggs` (the landing sticky) gave `Theme` a **backdrop** field, named by image
-`role` and resolved against the instance's own `images[]`, with a required
-`scrim` because ink over art has no computable contrast. If the tools theme
-carries imagery, that field is probably the hook it needs and this bean should
-not add a second one. `mggs` is in PR #465.
+**Not applied, deliberately.** The committed chain is load-bearing in ways a
+retype would not show: `kg-node.test.ts` has a test named *"the last rung's
+leading character is U+00A0, not a space"*, so the NO-BREAK SPACE is asserted,
+and another requires the rungs be separated by BLANK lines rather than single
+newlines because that is what survives Jekyll's markdown renderer. A chain typed
+into a chat message loses exactly those two properties, and the ask is about a
+THEME rather than about editing the description.
 
-Queued rather than pivoted to, per the owner's standing preference: *"in chats
-if I discuss a new task I want you to queue/run in parallel, do not pivot unless
-explicitly told so."*
+**Question for the owner** (asked rather than assumed): is the derivation chain
+being revised to the seven-rung form, or was it retyped from memory as context
+for the theme? If revised, `harness.json`'s `description` changes and the two
+tests above need updating with it — and the landing sticky picks it up for free,
+since it reads the description rather than restating it (`mggs`).
+
+## Depends on
+
+- **`mggs`** (PR #465) — gave `Theme` a `backdrop` named by image `role` with a
+  required `scrim`. Three layouts of engineering art declared as `images[]` with
+  a shared role is exactly that field's shape, so this should need no new one.
+- **`xffc`** — the tools theme. Both this and that need *theme selection by
+  context*, which does not exist yet. Whichever is built first should introduce
+  the mechanism and the other should use it, not a second one.
+- **Avatars** — `schemas/avatars.ts`, `scripts/gen-avatars-css.ts`,
+  `scripts/check-avatar-coverage.ts` exist. "we need avatar" probably rides
+  those rather than being new; `5oai` left *"avatars on content nodes reusing
+  `images[].role`"* open as its other deferred half.
 
 ## Done when
 
-- [ ] the commit's contents are reported, with exact paths and colour values
-- [ ] the `grumpy-cat`-as-default reading is confirmed or corrected against
-      `iurf`'s deliberate sage
-- [ ] the second theme exists as a KG node, validated by `ThemeSchema` with all
-      three layouts
-- [ ] tools in the KG render with it, through whatever per-kind mechanism
-      already exists rather than a new one
-- [ ] `themes.css` regenerated; `themes:css:check` not left stale
-- [ ] contrast measured rather than asserted, as `mggs` did for the scrim
+- [ ] the three layouts have arrived
+- [ ] the derivation-chain question is answered
+- [ ] an `engineering` grumpy-cat theme exists as a KG node, all three layouts,
+      contrast measured rather than asserted (as `mggs` did for the scrim)
+- [ ] an avatar for the testing context, through the existing avatar mechanism
+- [ ] testing surfaces select it, through the same mechanism `xffc` uses
+- [ ] `themes.css` and the avatars CSS regenerated; neither `:check` left stale
 
 
 _2026-09-20_ — COMMIT `0301fbd2` INVESTIGATED, and the headline is that it contains **no theme code at all**. It is three raw PNGs uploaded through the GitHub web UI, at the **repository root**, with spaces and commas in their names:

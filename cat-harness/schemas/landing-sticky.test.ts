@@ -18,9 +18,14 @@ import {
   LANDING_STICKY_THEME,
   LandingLinkSchema,
   LandingStickySchema,
+  LANDING_STICKY_IDS,
+  SUBGRAPHS_OVERVIEW,
+  SUBGRAPHS_STICKY_ID,
   isExternalLink,
   isLandingSticky,
   landingSticky,
+  landingStickies,
+  subgraphsSticky,
 } from "./landing-sticky.js";
 
 const CREATED = "2026-09-20T00:00:00Z";
@@ -224,5 +229,91 @@ describe("the description stays markdown, and drives the summary", () => {
     expect(
       landingSticky({ description: DESCRIPTION, createdAt: CREATED, theme: "pale-sage" }).theme,
     ).toBe("pale-sage");
+  });
+});
+
+describe("the second sticky: the knowledge sub-graphs, in two sentences", () => {
+  test("it is two sentences, because that is what was asked for", () => {
+    // Counted on sentence-ending punctuation outside the markdown emphasis.
+    const sentences = SUBGRAPHS_OVERVIEW.split(/(?<=\.)\s/).filter((s) => s.trim().length > 0);
+    expect(sentences).toHaveLength(2);
+  });
+
+  test("it names all four sub-graphs the owner listed", () => {
+    for (const name of ["Content", "acquisition", "tools", "skills"]) {
+      expect(SUBGRAPHS_OVERVIEW.toLowerCase()).toContain(name.toLowerCase());
+    }
+  });
+
+  test("it does NOT claim `acquisition` is a graph kind", () => {
+    // Three of the four map onto a registered kind; acquisition does not — what
+    // exists is `uploads/` and `library/`. Prose naming a fifth kind would send
+    // the next agent looking for one, and `readDeclaration` throws on an
+    // unknown kind, so the error would surface far from the sentence.
+    expect(SUBGRAPHS_OVERVIEW).not.toContain("graph kind");
+    expect(SUBGRAPHS_OVERVIEW).toContain("declared directories");
+  });
+
+  test("it takes the same theme as the description sticky", () => {
+    // The owner: "regullar grump cat theme". One constant, so changing it moves
+    // both and the two read as one board.
+    expect(subgraphsSticky({ createdAt: CREATED }).theme).toBe(
+      landingSticky({ description: DESCRIPTION, createdAt: CREATED }).theme,
+    );
+  });
+
+  test("it is page-global on the same page", () => {
+    expect(subgraphsSticky({ createdAt: CREATED }).anchor).toEqual({
+      kind: "page",
+      page: LANDING_STICKY_PAGE,
+    });
+  });
+
+  test("it carries no links, deliberately", () => {
+    // A graph KIND has no single URL to point at, and inventing four would be
+    // four more link-shaped values for bean blv9 to collect.
+    expect(subgraphsSticky({ createdAt: CREATED }).links).toEqual([]);
+  });
+
+  test("its id is fixed and distinct from the description sticky's", () => {
+    expect(subgraphsSticky({ createdAt: CREATED }).id).toBe(SUBGRAPHS_STICKY_ID);
+    expect(SUBGRAPHS_STICKY_ID).not.toBe(LANDING_STICKY_ID);
+  });
+
+  test("building it twice is identical", () => {
+    expect(subgraphsSticky({ createdAt: CREATED })).toEqual(subgraphsSticky({ createdAt: CREATED }));
+  });
+});
+
+describe("the page's stickies as a set", () => {
+  test("the description comes FIRST, then the overview", () => {
+    // A reader needs to know what this instance IS before an orientation
+    // paragraph about the graph's shape means anything.
+    const ids = landingStickies({ description: DESCRIPTION, createdAt: CREATED }).map((s) => s.id);
+    expect(ids).toEqual([LANDING_STICKY_ID, SUBGRAPHS_STICKY_ID]);
+  });
+
+  test("the id list and the built set agree", () => {
+    // The failure shape BLOCK_KINDS exists to prevent: an enumeration kept in
+    // two places, one of which is short.
+    expect(landingStickies({ description: DESCRIPTION, createdAt: CREATED }).map((s) => s.id)).toEqual([
+      ...LANDING_STICKY_IDS,
+    ]);
+  });
+
+  test("every sticky in the set is recognised by its tag", () => {
+    for (const s of landingStickies({ description: DESCRIPTION, createdAt: CREATED })) {
+      expect(isLandingSticky(s)).toBe(true);
+    }
+  });
+
+  test("ids are unique, or one would overwrite the other's file", () => {
+    const ids = landingStickies({ description: DESCRIPTION, createdAt: CREATED }).map((s) => s.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  test("a theme override applies to the whole board", () => {
+    const all = landingStickies({ description: DESCRIPTION, createdAt: CREATED, theme: "pale-sage" });
+    expect(all.map((s) => s.theme)).toEqual(["pale-sage", "pale-sage"]);
   });
 });

@@ -61,7 +61,7 @@
  * Exit codes: 0 up to date or written · 1 stale/absent under `--check`.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 
 import { instanceRootFor, readDeclaration, type ContentDirectory } from "../schemas/cat-harness.js";
 // REQUIRED, and not merely tidy: `folio` is registered by CORE as a load-time
@@ -74,9 +74,8 @@ import { instanceRootFor, readDeclaration, type ContentDirectory } from "../sche
 // registration to have happened.
 import "../schemas/folio-graph-kind.js";
 import {
-  LANDING_STICKY_ID,
   LandingStickySchema,
-  landingSticky,
+  landingStickies,
   type LandingSticky,
 } from "../schemas/landing-sticky.js";
 
@@ -93,8 +92,16 @@ export const FOLIO_DIR_ID = "folio";
 // declaration and never reaches this.
 export const FOLIO_DIR_PATH = "folio/";
 
-/** The sticky's file within the folio graph. */
-export const LANDING_STICKY_FILE = `${LANDING_STICKY_ID}.json`;
+/**
+ * A sticky's file within the folio graph.
+ *
+ * Named from the sticky's own id, so the set of files IS the set of stickies.
+ * A hand-kept list beside them would be the shape `BLOCK_KINDS` exists to
+ * prevent — an enumeration maintained in two places, one of which is short.
+ */
+export function stickyFile(id: string): string {
+  return `${id}.json`;
+}
 
 /**
  * The declaration entry a folio graph gets.
@@ -209,13 +216,20 @@ export function insertDirectoryEntry(raw: string, entry: ContentDirectory): stri
   return `${raw.slice(0, open + 1)}${trimmed}${sep}\n${itemIndent}${entryText}\n${closeIndent}${raw.slice(close)}`;
 }
 
+/** What one sticky's file needed. */
+export interface StickyReport {
+  id: string;
+  path: string;
+  state: "already" | "written" | "updated";
+}
+
 /** Everything a run did or found, so the caller reports rather than guesses. */
 export interface EnsureReport {
   declaredFolio: "already" | "added";
   folioDir: string;
   createdDir: boolean;
-  sticky: "already" | "written" | "updated";
-  stickyPath: string;
+  /** One per sticky, in render order. */
+  stickies: StickyReport[];
 }
 
 /**
@@ -237,20 +251,24 @@ export function readExistingSticky(path: string): LandingSticky | undefined {
 }
 
 /**
- * The sticky this instance should have, reusing an existing `createdAt`.
+ * The stickies this instance should have, each reusing its own `createdAt`.
  *
- * The reuse is what makes a re-run a no-op — see the module docs. `now` is only
- * reached when there is nothing on disk.
+ * **Per-sticky reuse, not one timestamp for the set.** Reading the first
+ * sticky's `createdAt` and applying it to all of them would rewrite the second
+ * every time a new one was added, which is the no-op property this exists to
+ * protect. Each file answers for itself.
  */
-export function stickyFor(root: string, path: string, now: string): LandingSticky {
+export function stickiesFor(root: string, dir: string, now: string): LandingSticky[] {
   const decl = readDeclaration(root);
-  const existing = readExistingSticky(path);
-  return landingSticky({
+  return landingStickies({
     // An instance with no description still gets a sticky: its `name` is what
     // `displayTitle` already falls back to, and a landing page with no words is
     // worse than one naming the instance.
     description: decl?.description ?? decl?.name ?? "",
-    createdAt: existing?.createdAt ?? now,
+    createdAt: now,
+  }).map((wanted) => {
+    const existing = readExistingSticky(join(dir, stickyFile(wanted.id)));
+    return existing ? { ...wanted, createdAt: existing.createdAt } : wanted;
   });
 }
 
@@ -264,25 +282,28 @@ export function ensureLandingSticky(
   const already = declaresFolio(decl);
   const folioDir = folioDirPath(decl);
   const absDir = join(root, folioDir);
-  const stickyPath = join(absDir, LANDING_STICKY_FILE);
 
-  const existing = readExistingSticky(stickyPath);
-  const wanted = stickyFor(root, stickyPath, now);
-  const wantedText = `${JSON.stringify(wanted, null, 2)}\n`;
-  const currentText = existsSync(stickyPath) ? readFileSync(stickyPath, "utf8") : undefined;
+  const wanted = stickiesFor(root, absDir, now);
+  const planned = wanted.map((w) => {
+    const abs = join(absDir, stickyFile(w.id));
+    const wantedText = `${JSON.stringify(w, null, 2)}\n`;
+    const currentText = existsSync(abs) ? readFileSync(abs, "utf8") : undefined;
+    const state: StickyReport["state"] =
+      currentText === wantedText ? "already" : currentText === undefined ? "written" : "updated";
+    return { abs, wantedText, currentText, report: { id: w.id, path: join(folioDir, stickyFile(w.id)), state } };
+  });
 
   const report: EnsureReport = {
     declaredFolio: already ? "already" : "added",
     folioDir,
     createdDir: !existsSync(absDir),
-    sticky: currentText === wantedText ? "already" : existing ? "updated" : "written",
-    stickyPath: join(folioDir, LANDING_STICKY_FILE),
+    stickies: planned.map((p) => p.report),
   };
   if (opts.check) return report;
 
   if (!already) writeFileSync(join(root, "harness.json"), insertDirectoryEntry(raw, FOLIO_DIRECTORY_ENTRY));
-  mkdirSync(dirname(stickyPath), { recursive: true });
-  if (currentText !== wantedText) writeFileSync(stickyPath, wantedText);
+  mkdirSync(absDir, { recursive: true });
+  for (const p of planned) if (p.currentText !== p.wantedText) writeFileSync(p.abs, p.wantedText);
   return report;
 }
 
@@ -298,10 +319,12 @@ if (import.meta.main) {
     const problems = [
       report.declaredFolio === "added" ? "no folio graph is declared" : undefined,
       report.createdDir ? `${report.folioDir} does not exist` : undefined,
-      report.sticky !== "already" ? `${report.stickyPath} is ${report.sticky === "written" ? "missing" : "stale"}` : undefined,
+      ...report.stickies
+        .filter((st) => st.state !== "already")
+        .map((st) => `${st.path} is ${st.state === "written" ? "missing" : "stale"}`),
     ].filter((p): p is string => p !== undefined);
     if (problems.length === 0) {
-      console.log(`✓ folio declared at ${report.folioDir}, landing sticky up to date`);
+      console.log(`✓ folio declared at ${report.folioDir}, ${report.stickies.length} sticky/ies up to date`);
       process.exit(0);
     }
     console.error(`landing sticky is not in order:\n${problems.map((p) => `  · ${p}`).join("\n")}`);
@@ -311,6 +334,6 @@ if (import.meta.main) {
 
   console.log(
     `folio graph ${report.declaredFolio === "added" ? "DECLARED" : "already declared"} at ${report.folioDir}; ` +
-      `sticky ${report.sticky} (${report.stickyPath})`,
+      report.stickies.map((st) => `${st.id} ${st.state}`).join(", "),
   );
 }

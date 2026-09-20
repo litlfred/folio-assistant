@@ -11,14 +11,15 @@ import { join } from "node:path";
 
 import {
   FOLIO_DIRECTORY_ENTRY,
-  LANDING_STICKY_FILE,
   declaresFolio,
   ensureLandingSticky,
   folioDirPath,
   insertDirectoryEntry,
-  stickyFor,
+  stickiesFor,
+  stickyFile,
   toAsciiJson,
 } from "../ensure-landing-sticky.js";
+import { LANDING_STICKY_ID, SUBGRAPHS_STICKY_ID } from "../../schemas/landing-sticky.js";
 import { LandingStickySchema } from "../../schemas/landing-sticky.js";
 
 /** A declaration in the committed style: ASCII-escaped, 2-space, prose comments. */
@@ -79,7 +80,7 @@ describe("the declaration is edited surgically, not re-serialised", () => {
 
   test("the result is still valid JSON, with the entry present", () => {
     const parsed = JSON.parse(insertDirectoryEntry(DECL, FOLIO_DIRECTORY_ENTRY)) as {
-      directories: Array<{ id: string; graphs: string[] }>;
+      directories: Array<{ id: string; path: string; graphs: string[] }>;
     };
     expect(parsed.directories).toHaveLength(2);
     expect(declaresFolio(parsed)).toBe(true);
@@ -134,13 +135,14 @@ describe("running it twice changes nothing", () => {
     const root = instance();
     const first = ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     expect(first.declaredFolio).toBe("added");
-    expect(first.sticky).toBe("written");
+    expect(first.stickies.map((s) => s.state)).toEqual(["written", "written"]);
+    expect(first.stickies.map((s) => s.id)).toEqual([LANDING_STICKY_ID, SUBGRAPHS_STICKY_ID]);
 
     // A LATER clock, deliberately: if `createdAt` were read from the clock
     // rather than from the file, this is the run that would show a diff.
     const second = ensureLandingSticky(root, "2027-01-01T00:00:00Z");
     expect(second.declaredFolio).toBe("already");
-    expect(second.sticky).toBe("already");
+    expect(second.stickies.map((s) => s.state)).toEqual(["already", "already"]);
   });
 
   test("the sticky's createdAt is the FIRST run's, not the second's", () => {
@@ -148,7 +150,7 @@ describe("running it twice changes nothing", () => {
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     ensureLandingSticky(root, "2027-01-01T00:00:00Z");
     const written = JSON.parse(
-      readFileSync(join(root, folioDirPath(JSON.parse(readFileSync(join(root, "harness.json"), "utf8"))), LANDING_STICKY_FILE), "utf8"),
+      readFileSync(join(root, folioDirPath(JSON.parse(readFileSync(join(root, "harness.json"), "utf8"))), stickyFile(LANDING_STICKY_ID)), "utf8"),
     ) as { createdAt: string };
     expect(written.createdAt).toBe("2026-09-20T00:00:00Z");
   });
@@ -165,7 +167,7 @@ describe("running it twice changes nothing", () => {
     const root = instance();
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     const decl = JSON.parse(readFileSync(join(root, "harness.json"), "utf8")) as object;
-    const raw = readFileSync(join(root, folioDirPath(decl), LANDING_STICKY_FILE), "utf8");
+    const raw = readFileSync(join(root, folioDirPath(decl), stickyFile(LANDING_STICKY_ID)), "utf8");
     expect(() => LandingStickySchema.parse(JSON.parse(raw))).not.toThrow();
   });
 
@@ -174,7 +176,7 @@ describe("running it twice changes nothing", () => {
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     const decl = JSON.parse(readFileSync(join(root, "harness.json"), "utf8")) as object;
     const s = LandingStickySchema.parse(
-      JSON.parse(readFileSync(join(root, folioDirPath(decl), LANDING_STICKY_FILE), "utf8")),
+      JSON.parse(readFileSync(join(root, folioDirPath(decl), stickyFile(LANDING_STICKY_ID)), "utf8")),
     );
     // Including the NO-BREAK SPACE, which is part of the derivation chain rather
     // than incidental whitespace.
@@ -197,10 +199,15 @@ describe("a malformed sticky is repaired, not fatal", () => {
     const root = instance();
     ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     const decl = JSON.parse(readFileSync(join(root, "harness.json"), "utf8")) as object;
-    const path = join(root, folioDirPath(decl), LANDING_STICKY_FILE);
+    const path = join(root, folioDirPath(decl), stickyFile(LANDING_STICKY_ID));
     writeFileSync(path, "{ not json");
     const report = ensureLandingSticky(root, "2027-01-01T00:00:00Z");
-    expect(report.sticky).toBe("written");
+    // `updated` rather than `written`: the file was THERE, it was just garbage.
+    // The state is read off file presence, not off whether the content parsed —
+    // which is the honest distinction, since `--check` reports a present-but-
+    // broken sticky as stale and a missing one as missing, and those want
+    // different things from a reader.
+    expect(report.stickies.find((s) => s.id === LANDING_STICKY_ID)?.state).toBe("updated");
     expect(() => LandingStickySchema.parse(JSON.parse(readFileSync(path, "utf8")))).not.toThrow();
   });
 
@@ -209,7 +216,7 @@ describe("a malformed sticky is repaired, not fatal", () => {
     // `summary` is `min(1)` so an empty description would refuse the node.
     const root = instance(DECL.replace(/  "description": "[^"]*",\n/, ""));
     const path = join(root, "harness.json");
-    const s = stickyFor(root, join(root, "nothing-here.json"), "2026-09-20T00:00:00Z");
+    const s = stickiesFor(root, join(root, "nowhere"), "2026-09-20T00:00:00Z")[0]!;
     expect(s.comment).toBe("a-folio");
     expect(readFileSync(path, "utf8")).toContain('"name": "a-folio"');
   });

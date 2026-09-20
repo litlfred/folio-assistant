@@ -87,6 +87,30 @@ export const LANDING_STICKY_SCHEMA_TAG = "folio-landing-sticky/v1";
 export const LANDING_STICKY_ID = "landing";
 
 /**
+ * The second sticky's id: the knowledge sub-graphs, in two sentences.
+ *
+ * The owner, 2026-09-20: *"add a second sticky note to the main page, regullar
+ * grump cat theme that is 2 sentence overview of knoweldfe sub-graphs, content,
+ * acquistion, tools, and skills."*
+ *
+ * A **second fixed id rather than a generated one**, for the same reason
+ * {@link LANDING_STICKY_ID} is fixed: each sticky is its own upsert. Two stickies
+ * on one page with generated ids would produce four after the second run, and a
+ * board with two copies of one overview is indistinguishable from a board with
+ * two different overviews until somebody reads both.
+ */
+export const SUBGRAPHS_STICKY_ID = "subgraphs";
+
+/**
+ * Every sticky this instance's landing page carries, in render order.
+ *
+ * Exported as a list so a consumer iterates rather than naming each — the
+ * failure shape `BLOCK_KINDS` exists to prevent, where seven hand-maintained
+ * lists of one enumeration were all short and 461 blocks went unswept.
+ */
+export const LANDING_STICKY_IDS = [LANDING_STICKY_ID, SUBGRAPHS_STICKY_ID] as const;
+
+/**
  * The page a landing sticky is global to.
  *
  * `index` rather than `/` because this is an identifier compared against another
@@ -237,6 +261,41 @@ export const DEFAULT_ONBOARDING_LINKS: readonly LandingLink[] = [
   },
 ] as const;
 
+/**
+ * The knowledge sub-graphs, in the two sentences the owner asked for.
+ *
+ * ## Why these four, and why `acquisition` is not a graph kind
+ *
+ * The owner named **content, acquisition, tools, skills**, and glossed the third
+ * of those: *"acquistion = acquistion of new (un,semi-)structued
+ * content/data-source/information into KG."*
+ *
+ * Three of the four map onto a declared graph kind — `folio` is content, `tools`
+ * is tools, `cat-harness` is skills. **`acquisition` does not**, and the text
+ * below is careful not to imply it does: what exists is `uploads/` (the
+ * ingestion queue an adapter creates on first ingest) and `library/`. So this
+ * describes a *grouping a reader needs* rather than asserting a kind the
+ * registry would reject — the distinction matters because `readDeclaration`
+ * throws on an unknown kind, and prose that names a fifth one would send the
+ * next agent looking for it.
+ *
+ * Two sentences, not three, because that is what was asked for. The second
+ * carries the fact that makes the first usable: these are **declared
+ * directories, not conventions**, so a consumer reads the declaration rather
+ * than walking the tree — which is the defect `findBpmnDirs` was repaired for
+ * (it published bootstrap's process as folio-assistant's, 88 references).
+ */
+export const SUBGRAPHS_OVERVIEW = [
+  "**Content** is what somebody authors and a reader reads; **acquisition** is how",
+  "unstructured and semi-structured sources — documents, data, loose information —",
+  "get into the graph in the first place; **tools** are what an agent can call; and",
+  "**skills** are the instructions for doing the work.",
+  "",
+  "All four are **declared directories** rather than conventions, so an instance",
+  "says which of them it holds and a consumer reads that declaration instead of",
+  "walking the tree.",
+].join("\n");
+
 /** What {@link landingSticky} needs to build one. */
 export interface LandingStickyInput {
   /**
@@ -289,6 +348,51 @@ export function landingSticky(input: LandingStickyInput): LandingSticky {
     theme: input.theme ?? LANDING_STICKY_THEME,
     links: [...(input.links ?? DEFAULT_ONBOARDING_LINKS)],
   });
+}
+
+/**
+ * The knowledge-sub-graphs sticky.
+ *
+ * Carries **no links**, deliberately. It is an orientation paragraph, and the
+ * four things it names are graph *kinds* rather than pages — there is no single
+ * URL for "tools" to point at, and inventing four would be four more
+ * link-shaped values for bean `blv9` to collect. The sticky beside it is where
+ * the links live.
+ */
+export function subgraphsSticky(input: { createdAt: string; page?: string; theme?: string }): LandingSticky {
+  return LandingStickySchema.parse({
+    $schema: LANDING_STICKY_SCHEMA_TAG,
+    id: SUBGRAPHS_STICKY_ID,
+    summary: "The knowledge sub-graphs",
+    comment: SUBGRAPHS_OVERVIEW,
+    createdAt: input.createdAt,
+    anchor: { kind: "page", page: input.page ?? LANDING_STICKY_PAGE },
+    // The owner asked for "regullar grump cat theme" — the same theme as the
+    // description sticky, so the two read as one board rather than as two
+    // unrelated cards. Not a separate default: `LANDING_STICKY_THEME` is the
+    // one value, so changing it moves both.
+    theme: input.theme ?? LANDING_STICKY_THEME,
+    links: [],
+  });
+}
+
+/**
+ * Every sticky an instance's landing page should carry, in render order.
+ *
+ * **The description comes first.** A reader needs to know what this instance IS
+ * before an orientation paragraph about the graph's shape means anything — the
+ * same ordering `carried-note.ts` records for tags before narrative, and the
+ * same reason `alox` gives for "Four things, in order".
+ */
+export function landingStickies(input: LandingStickyInput): LandingSticky[] {
+  return [
+    landingSticky(input),
+    subgraphsSticky({
+      createdAt: input.createdAt,
+      ...(input.page === undefined ? {} : { page: input.page }),
+      ...(input.theme === undefined ? {} : { theme: input.theme }),
+    }),
+  ];
 }
 
 /**
