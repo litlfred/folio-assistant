@@ -31,10 +31,10 @@
  *
  * Exit codes: 0 clean · 1 any missing asset or dead link.
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-import { declaredAssets } from "../schemas/cat-harness.js";
+import { DECLARATION_FILENAME, declaredAssets } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect
 // (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
 // renderable kind"), so the harness alone does not know it exists. This module
@@ -48,8 +48,9 @@ import { declaredAssets } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 
 /**
- * Instances whose declarations this repository owns, as REPOSITORY-relative
- * paths — `import.meta.main` resolves them against the repository root.
+ * Instances whose declarations this repository owns — FOUND, not listed.
+ *
+ * ## Twice now, and the second time the comment was already here
  *
  * The first entry was `"."`, which named the instance while the instance was
  * the repository. After the move (bean `wggr`) it named the repository root,
@@ -57,8 +58,32 @@ import "../schemas/folio-graph-kind.js";
  * gate reported "1 declared asset across 2 instances, 0 findings" over a file
  * it had not opened — a clean run across an empty set, which is `dh4f` in the
  * one check whose whole subject is a file nobody was looking at.
+ *
+ * That was fixed by writing down a list of two. The list then stayed at two
+ * while the repository grew to SEVEN declarations — `folio-assistant-core`,
+ * `who-iris`, `detangle`, `kg-navigation` and `large-datasets` all arrived and
+ * none was added — and the gate went on reporting a clean run, in the same
+ * words, over five instances it had never opened. Measured 2026-09-20, adding
+ * the sixth (`folio-assist-sci`, bean `frs5`): the README declared by its
+ * brand-new `harness.json` would not have been checked either.
+ *
+ * A hardcoded list is a declaration nobody declared. Enumerating is the only
+ * form that cannot drift, because the thing being counted is the thing being
+ * looked for.
  */
-export const DECLARED_INSTANCES = ["cat-harness", "bootstrap"] as const;
+export function declaredInstances(root: string): string[] {
+  const out: string[] = [];
+  // One level down plus the root itself. Deeper is deliberately NOT walked: a
+  // `harness.json` inside `node_modules/` or a vendored checkout belongs to
+  // somebody else, and auditing another project's declared assets would report
+  // findings nobody here can act on.
+  if (existsSync(join(root, DECLARATION_FILENAME))) out.push(".");
+  for (const e of readdirSync(root, { withFileTypes: true })) {
+    if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
+    if (existsSync(join(root, e.name, DECLARATION_FILENAME))) out.push(e.name);
+  }
+  return out.sort();
+}
 
 export interface AssetFinding {
   instance: string;
@@ -114,7 +139,8 @@ if (import.meta.main) {
   let notChecked = 0;
   let declared = 0;
 
-  for (const inst of DECLARED_INSTANCES) {
+  const instances = declaredInstances(root);
+  for (const inst of instances) {
     const abs = join(root, inst);
     declared += declaredAssets(abs).length;
     const r = auditInstance(abs);
@@ -126,7 +152,8 @@ if (import.meta.main) {
     console.error(`  ✗ ${f.instance}/${f.asset}: ${f.kind} — ${f.detail}`);
   }
   console.log(
-    `${declared} declared asset(s) across ${DECLARED_INSTANCES.length} instance(s); ` +
+    `${declared} declared asset(s) across ${instances.length} instance(s) ` +
+      `(${instances.join(", ")}); ` +
       `${findings.length} finding(s), ${notChecked} not checked (external or non-markdown)`,
   );
   process.exit(findings.length > 0 ? 1 : 0);

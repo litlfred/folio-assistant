@@ -29,15 +29,28 @@ import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 import { CatalogueNodeSchema, CatalogueSchema, materializationCensus, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { DublinCoreRecordSchema } from "../../folio-assistant-core/schemas/dublin-core.js";
+import { instanceDirectoryForGraph } from "../../cat-harness/schemas/cat-harness.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
-const REPO = resolve(INSTANCE, "..");
 /**
- * Where ingested content lives TODAY — still `cat-harness/library/`, because
- * the three WHO entries have not moved yet (bean `frs5`). Named here rather
- * than assumed so the move is a one-line change and a visible one.
+ * Where ingested content lives — READ from this instance's declaration.
+ *
+ * It was `join(REPO, "cat-harness", "library")`, with a comment promising the
+ * move would be "a one-line change and a visible one". It was one line. But a
+ * literal is only visible to whoever greps for it, and the point of
+ * `harness.json` is that nobody has to: bean `frs5` moved the three entries
+ * here and this is now read rather than written down.
+ *
+ * `instanceDirectoryForGraph`, not `soleDirectoryForGraph`: this script checks
+ * THIS instance's catalogue against THIS instance's library, and a sibling
+ * declaring one of its own is not an ambiguity to refuse over. Bean `a02m`.
  */
-const LIBRARY = join(REPO, "cat-harness", "library");
+const LIBRARY =
+  instanceDirectoryForGraph(INSTANCE, "library") ??
+  // declared-path-literal: the convention fallback, at the call site so the
+  // choice is visible. Absent means the declaration was lost, which the
+  // libraryId check below then reports per node rather than crashing here.
+  join(INSTANCE, "library");
 
 const problems: string[] = [];
 const cat = CatalogueSchema.parse(JSON.parse(readFileSync(join(INSTANCE, "catalogue", "catalogue.json"), "utf8")));

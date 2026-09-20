@@ -39,6 +39,12 @@
  *   bun run ingest uploads/FILE.pdf
  *   bun run ingest uploads/FILE.pdf --dry-run
  *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
+ *   bun run ingest uploads/FILE.pdf --library who-iris
+ *
+ * `--library` is required only when the repository declares more than one, and
+ * then it is REQUIRED rather than defaulted: since bean `frs5` there are two,
+ * and a WHO publication filed into the science library reads as ingested while
+ * sitting in the wrong corpus.
  *
  * Exit: 0 ingested (or dry-run reported), 1 ingestion failed, 2 could not probe.
  *
@@ -62,7 +68,7 @@ import { fileURLToPath } from "node:url";
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
-import { soleDirectoryForGraph } from "../schemas/cat-harness.ts";
+import { directoriesForGraph } from "../schemas/cat-harness.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -105,23 +111,58 @@ function pyHelper(name: string): string {
  * times in this file alone -- and `check:declared-paths` caught exactly that
  * in the first draft, as it did for the bean store an hour earlier.
  */
-export function libraryRoot(root = INSTANCE_ROOT): string {
-  // A WRITE target, so this is the one place `[0]` was never defensible: with
-  // several declared libraries, the first is not an answer to "where does this
-  // document go", it is a coin toss that files it somewhere plausible.
+export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
+  // A WRITE target, and the one place picking the first was never defensible:
+  // with several declared libraries the first is not an answer to "where does
+  // this document go", it is a coin toss that files it somewhere plausible.
   //
-  // `soleDirectoryForGraph` refuses and NAMES the candidates, which is the
-  // same discipline as the throw below — one guards "declared nowhere", the
-  // other "declared in several", and both beat writing into a directory the
-  // caller did not choose. Bean `a02m`.
-  const abs = soleDirectoryForGraph(root, "library");
-  if (!abs) {
+  // THREE states, and the middle one arrived with bean `frs5`, which moved the
+  // corpus into `who-iris/` and `folio-assist-sci/`:
+  //
+  //   none declared   -> throw: ingesting into a guessed directory files the
+  //                     document where nothing scans it
+  //   exactly one     -> that one, and `--library` is not needed
+  //   several         -> the CALLER must say, by name. Not a default, not the
+  //                     first: a WHO publication landing in the science
+  //                     library reads as ingested and is in the wrong corpus,
+  //                     and nothing downstream can tell.
+  const declared = directoriesForGraph(root, "library");
+  if (declared.length === 0) {
     throw new Error(
       "this instance declares no `library` graph in harness.json — " +
         "ingesting into a guessed directory would file the document where nothing scans it",
     );
   }
-  return relative(root, abs) || abs;
+
+  const named = (abs: string): string => relative(root, abs) || abs;
+
+  if (declared.length === 1) return named(declared[0]!);
+
+  if (choice === undefined) {
+    throw new Error(
+      `this repository declares ${declared.length} libraries, so the destination must be said ` +
+        `rather than guessed. Pass --library <name>, one of: ` +
+        declared.map((d) => named(d)).join(", "),
+    );
+  }
+
+  // Matched on the PATH the declaration resolves to, so `--library who-iris`
+  // and `--library ../who-iris/library` both work and neither is a second
+  // vocabulary to learn. Ambiguity refuses rather than taking the first — the
+  // whole point of this function.
+  const hits = declared.filter((d) => named(d).includes(choice) || d.includes(`/${choice}/`));
+  if (hits.length === 1) return named(hits[0]!);
+  throw new Error(
+    hits.length === 0
+      ? `--library ${choice} matches none of: ${declared.map((d) => named(d)).join(", ")}`
+      : `--library ${choice} is ambiguous between: ${hits.map((d) => named(d)).join(", ")}`,
+  );
+}
+
+/** `--library <name>` from argv, or undefined. */
+export function libraryChoice(argv: string[]): string | undefined {
+  const i = argv.indexOf("--library");
+  return i >= 0 ? argv[i + 1] : undefined;
 }
 
 /** Which rung a document needs, and the evidence that chose it. */
@@ -528,9 +569,25 @@ export function mayPromote(requirements: readonly Requirement[]): boolean {
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const dry = argv.includes("--dry-run");
-  const pdf = argv.find((a) => !a.startsWith("--"));
+  const chosenLibrary = libraryChoice(argv);
+  // The positional is the first argument that is neither a flag NOR a flag's
+  // VALUE. `argv.find((a) => !a.startsWith("--"))` was enough while every flag
+  // was boolean; `--library who-iris` breaks it, because `who-iris` does not
+  // start with `--` and would be ingested as a filename — producing "who-iris:
+  // not there" while the real argument sat untouched two places along.
+  const takesValue = new Set(["--library"]);
+  let pdf: string | undefined;
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]!;
+    if (a.startsWith("--")) {
+      if (takesValue.has(a)) i++;
+      continue;
+    }
+    pdf = a;
+    break;
+  }
   if (!pdf) {
-    console.error("usage: bun run ingest <uploads/FILE.pdf> [--dry-run]");
+    console.error("usage: bun run ingest <uploads/FILE.pdf> [--dry-run] [--library <name>]");
     process.exit(1);
   }
   if (!existsSync(pdf)) {
@@ -564,7 +621,12 @@ if (import.meta.main) {
   // precisely something somebody will come looking for.
   const staging = join(resolve(INSTANCE_ROOT), "ingest-staging", slug);
   const plan = planFor(pdf, undefined, staging);
-  console.log(`${basename(pdf)} -> ${libraryRoot()}/${slug}/`);
+  // Resolved ONCE, before anything is written: `libraryRoot()` refuses when
+  // several libraries are declared and none was chosen, and that refusal
+  // belongs before the arms run rather than after they have produced a staging
+  // tree nobody can file.
+  const destination = libraryRoot(INSTANCE_ROOT, chosenLibrary);
+  console.log(`${basename(pdf)} -> ${destination}/${slug}/`);
   console.log(`  rung: ${plan.rung}`);
   console.log(`  why:  ${plan.why}`);
   if (plan.rung === "undetermined") {
@@ -618,7 +680,7 @@ if (import.meta.main) {
     for (const r of unmet) console.error(`    ${r.name.padEnd(22)} ${r.detail}`);
     console.error(`\nStaged output is at ${relative(resolve(INSTANCE_ROOT), staging)}/ and was`);
     console.error("left in place. Fix the cause and re-run; nothing was filed under");
-    console.error(`${libraryRoot()}/, so nothing reads as ingested.`);
+    console.error(`${destination}/, so nothing reads as ingested.`);
     // Reported, never acted on: the owner chose reporting-only over opening a
     // bean here (2026-09-20). `beans create` dedupes on nothing and once
     // produced 14,688 duplicates, so a gate that mints one per run against
@@ -627,14 +689,14 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const out = join(resolve(libraryRoot()), slug);
+  const out = join(resolve(destination), slug);
   mkdirSync(dirname(out), { recursive: true });
   // Only ever INTO the library. `renameSync` would fail across a filesystem
   // boundary, and a staged tree the arms just wrote is small enough that the
   // copy is not worth a fallback path nobody tests.
   cpSync(staging, out, { recursive: true });
   rmSync(staging, { recursive: true, force: true });
-  console.log(`\n${existsSync(out) ? "✓" : "✗"} ${libraryRoot()}/${slug}/  (L1 complete, promoted)`);
+  console.log(`\n${existsSync(out) ? "✓" : "✗"} ${destination}/${slug}/  (L1 complete, promoted)`);
   for (const r of verdict.requirements.filter((r) => r.state === "not-derivable")) {
     console.log(`  · ${r.name}: ${r.detail}`);
   }

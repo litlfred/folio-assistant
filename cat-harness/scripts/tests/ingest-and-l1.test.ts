@@ -10,9 +10,10 @@
  * @module scripts/tests/ingest-and-l1
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { libraryEntries } from "./library-dirs.ts";
 
 import {
   NOT_DERIVABLE,
@@ -82,9 +83,21 @@ describe("what makes an outline entry capable of being a chapter", () => {
   });
 });
 
+/**
+ * A destination for the rung tests, stated rather than resolved.
+ *
+ * `planFor`'s third parameter defaults to `libraryRoot()`, which since bean
+ * `frs5` REFUSES when the repository declares several libraries and none was
+ * chosen — correctly, because filing a WHO publication into the science
+ * library reads as ingested and is in the wrong corpus. These tests are about
+ * WHICH RUNG a document needs and never about where its output lands, so they
+ * say so instead of depending on a default that was only ever incidental.
+ */
+const LIB = "library";
+
 describe("which rung a document needs", () => {
   test("an embedded outline selects pdf-structure — the structure is READ", () => {
-    const p = planFor("x.pdf", { outline: 258, outlineUsable: 257, chars: 90_000 });
+    const p = planFor("x.pdf", { outline: 258, outlineUsable: 257, chars: 90_000 }, LIB);
     expect(p.rung).toBe("pdf-structure");
     expect(p.steps[0]).toContain("scripts/pdf-structure.py");
     expect(p.why).toContain("258");
@@ -103,7 +116,7 @@ describe("which rung a document needs", () => {
     // produced a section tree of page numbers plus thirteen phantom chapters.
     // The committed entry is at `pdf-pages`, and it was RIGHT: this bean was
     // opened believing the opposite.
-    const p = planFor("x.pdf", { outline: 35, outlineUsable: 0, chars: 47_871 });
+    const p = planFor("x.pdf", { outline: 35, outlineUsable: 0, chars: 47_871 }, LIB);
     expect(p.rung).toBe("pdf-pages");
     // Present but unusable is a THIRD fact. Reporting it as "no outline" is a
     // different lie, and is how the committed structure_note came to say so.
@@ -112,7 +125,7 @@ describe("which rung a document needs", () => {
   });
 
   test("a junk outline still falls through to OCR when there is no text either", () => {
-    const p = planFor("x.pdf", { outline: 35, outlineUsable: 0, chars: 0 });
+    const p = planFor("x.pdf", { outline: 35, outlineUsable: 0, chars: 0 }, LIB);
     expect(p.rung).toBe("pdf-ocr+pdf-pages");
     expect(p.why).toContain("35");
   });
@@ -125,14 +138,14 @@ describe("which rung a document needs", () => {
       { outline: 35, chars: 47_871 },
       { outline: 35, outlineUsable: null, chars: 47_871 },
     ]) {
-      const p = planFor("x.pdf", probe);
+      const p = planFor("x.pdf", probe, LIB);
       expect({ rung: p.rung, steps: p.steps.length }).toEqual({ rung: "undetermined", steps: 0 });
       expect(p.why).toContain("unknown");
     }
   });
 
   test("no outline but a text layer selects pdf-pages, and says it infers nothing", () => {
-    const p = planFor("x.pdf", { outline: 0, chars: 50_000 });
+    const p = planFor("x.pdf", { outline: 0, chars: 50_000 }, LIB);
     expect(p.rung).toBe("pdf-pages");
     expect(p.steps).toHaveLength(1);
     // The whole point of bean 6xaz: absence of an outline selects PAGE
@@ -141,15 +154,15 @@ describe("which rung a document needs", () => {
   });
 
   test("no outline and almost no text selects OCR FIRST, then pages", () => {
-    const p = planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS - 1 });
+    const p = planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS - 1 }, LIB);
     expect(p.rung).toBe("pdf-ocr+pdf-pages");
     expect(p.steps.map((s) => s[1])).toEqual(["scripts/pdf-ocr.py", "scripts/pdf-pages.py"]);
     expect(p.steps[1]).toContain("--from-ocr");
   });
 
   test("the OCR threshold is a boundary, not a vibe", () => {
-    expect(planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS }).rung).toBe("pdf-pages");
-    expect(planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS - 1 }).rung).toBe("pdf-ocr+pdf-pages");
+    expect(planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS }, LIB).rung).toBe("pdf-pages");
+    expect(planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS - 1 }, LIB).rung).toBe("pdf-ocr+pdf-pages");
   });
 
   test("a PDF that cannot be probed is UNDETERMINED and runs nothing", () => {
@@ -160,7 +173,7 @@ describe("which rung a document needs", () => {
       { outline: null, chars: 10 },
       { outline: 3, outlineUsable: 3, chars: null },
     ]) {
-      const p = planFor("x.pdf", probe);
+      const p = planFor("x.pdf", probe, LIB);
       expect({ rung: p.rung, steps: p.steps.length }).toEqual({ rung: "undetermined", steps: 0 });
     }
   });
@@ -403,10 +416,15 @@ describe("the third state has to EXPIRE — bean `pn6j`", () => {
     // THE RATCHET. When an arm lands, this fails until its requirement moves
     // into the checked set — which is what "shrinks by work rather than by
     // editing" was always supposed to mean.
-    const root = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
-    const lib = join(root, "library");
-    const dirs = readdirSync(lib).map((d) => join(lib, d)).filter((d) => statSync(d).isDirectory());
-    expect(dirs.length).toBeGreaterThan(0);
+    // Every declared library, READ. This composed `<instance>/library` and
+    // threw ENOENT the moment bean `frs5` moved the corpus out of it — which
+    // at least failed loudly. The version of this that would have been worse
+    // is the one that returns an empty list: `expiredExceptions([])` is `[]`,
+    // so a ratchet asserting "no expired claim" would have passed over nothing
+    // at all. The `dirs.length` floor below is there for exactly that, and it
+    // is kept.
+    const dirs = libraryEntries().map((e) => e.dir);
+    expect(dirs.length, "no library entries found — this ratchet would be vacuous").toBeGreaterThan(0);
     expect(expiredExceptions(dirs, (d, f) => existsSync(join(d, f)))).toEqual([]);
   });
 

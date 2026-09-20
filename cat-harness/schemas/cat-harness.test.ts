@@ -480,15 +480,29 @@ describe("materialiseDirectories", () => {
     expect(existsSync(join(root, "library"))).toBe(false);
   });
 
-  test("this instance declares uploads and library", () => {
-    // The declaration half of the bean: without these two entries the
+  test("this instance declares uploads, and reaches a library", () => {
+    // The declaration half of the bean: without an entry at each end the
     // materialiser has nothing to create, and the ingestion pipeline's two
     // stages stay described in prose and declared nowhere.
-    const ids = resolveDirectories([
-      { name: "folio-assistant", root: REPO_ROOT, own: true },
-    ]).map((d) => d.id);
-    expect(ids).toContain("uploads");
-    expect(ids).toContain("library");
+    //
+    // The two ends are no longer symmetric. `uploads` is still the platform's
+    // own — the queue is where a file arrives before anything knows what it
+    // is, and that is a platform concern. `library` is NOT: bean `frs5` moved
+    // the corpus into `who-iris/` and `folio-assist-sci/`, and the platform's
+    // own `library` entry was REMOVED rather than left pointing at an emptied
+    // directory, which is the `dh4f` defect.
+    //
+    // So this asserts on the GRAPH rather than on an id. An id is a name
+    // somebody chose; the graph is what the pipeline needs to find, and it
+    // keeps being found however many instances declare one or whatever they
+    // call their entries.
+    const dirs = resolveDirectories([{ name: "folio-assistant", root: REPO_ROOT, own: true }]);
+    expect(dirs.map((d) => d.id)).toContain("uploads");
+    const libraries = dirs.filter((d) => d.graphs.includes("library"));
+    expect(libraries.length, "no library graph reachable from the platform root").toBeGreaterThan(0);
+    // And none of them is the platform's own, which is the rule AGENTS.md
+    // states as "folio-assistant is the platform, not the content".
+    expect(libraries.map((d) => d.id)).not.toContain("library");
   });
 });
 

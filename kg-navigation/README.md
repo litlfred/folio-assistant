@@ -8,15 +8,20 @@ Staged as a top-level named subgraph ahead of the repository split
 owner's direction (2026-09-20), alongside
 [`folio-assistant-core/`](../folio-assistant-core/README.md).
 
-## Two bodies, one name — and that is not a bug to delete
+## Two bodies, one subject — and that is not a bug to delete
 
-The name `kg-navigation` was already carried by **two different skills in two
-instances** when this directory was made:
+The name `kg-navigation` was carried by **two different skills in two
+instances** when this directory was made. Bootstrap's has since been renamed
+`bootstrap-kg-navigation`, so the collision is gone; the reason for two bodies
+is not:
 
-| where | lines | precondition |
-|---|---|---|
-| [`bootstrap/skills/kg-navigation.md`](../bootstrap/skills/kg-navigation.md) | 72 | **nothing installed** — no MCP server, no `skill_fetch`, no `beans`, no build |
-| [`skills/kg-navigation.md`](skills/kg-navigation.md) | 139 | the tooling is reachable — the MCP pair, and the filesystem fallback |
+| where | precondition |
+|---|---|
+| [`bootstrap/skills/bootstrap-kg-navigation.md`](../bootstrap/skills/bootstrap-kg-navigation.md) | **nothing installed** — no MCP server, no `skill_fetch`, no `beans`, no build |
+| [`skills/kg-navigation.md`](skills/kg-navigation.md) | the tooling is reachable — the MCP pair, and the filesystem fallback |
+
+The line counts that used to be in this table are gone: a count in prose is a
+claim nothing checks, and both had already drifted.
 
 They answer the same question under different preconditions, so neither is a
 copy of the other and deleting either would leave a real case uncovered.

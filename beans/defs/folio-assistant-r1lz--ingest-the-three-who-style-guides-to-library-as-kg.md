@@ -121,3 +121,15 @@ declaration in full.
 
 #210 is the owner's own PR. Closing it is theirs to do; nothing in it is
 unported except the bean above, which is deliberate.
+
+
+## 2026-09-20 — the destination this bean named now exists
+
+`folio-assist-sci/` was created as a staged top-level instance and
+`library/milnorlink/` moved into it (bean `frs5`, owner: *"milnor goes in
+f-a-sci library/, move all 4 and fix fallout"*). 64 tracked files, `git mv`, so
+history follows. Its share of `image-verdicts.json` went with it.
+
+This bean's status is NOT changed here — the derived `milnor` skill and its
+citations are a separate question, and resolving somebody else's bean because
+one clause of it came true is exactly what `bean-coordination` forbids.

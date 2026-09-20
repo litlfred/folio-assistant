@@ -10,9 +10,10 @@
  * @module scripts/tests/attribution
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { libraryEntries } from "./library-dirs.ts";
 
 import { QA_REVIEWER_KINDS } from "../../schemas/block-qa.ts";
 import {
@@ -100,10 +101,19 @@ describe("the origin registry is total over what actually exists", () => {
     // block kind at all. A regex over JSON cannot tell depth, and the thing
     // being asserted here is specifically about the TOP-LEVEL kind.
     const kinds = new Set<string>();
-    for (const f of new TextDecoder()
-      .decode(Bun.spawnSync(["sh", "-c", `ls ${ROOT}/library/*/blocks/*.jsonld`]).stdout)
-      .split("\n")
-      .filter(Boolean)) {
+    // Every declared library, READ rather than composed. This globbed
+    // `${ROOT}/library/*/blocks/*.jsonld`, which named one directory and went
+    // silent when bean `frs5` moved the corpus out of it — and a glob that
+    // matches nothing produces an empty set, so the assertion below would have
+    // passed over zero blocks.
+    const blockFiles: string[] = [];
+    for (const { dir } of libraryEntries()) {
+      const blocks = join(dir, "blocks");
+      if (!existsSync(blocks)) continue;
+      for (const b of readdirSync(blocks)) if (b.endsWith(".jsonld")) blockFiles.push(join(blocks, b));
+    }
+    expect(blockFiles.length, "no blocks found — this test would be vacuous").toBeGreaterThan(0);
+    for (const f of blockFiles) {
       // Read and parse SEPARATELY, and let anything that is not a parse
       // failure through untouched. A single try/catch around both reported a
       // missing import as "could not parse" — a code defect dressed as a data

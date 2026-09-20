@@ -70,9 +70,43 @@ function main(): number {
   const rules = unionRules(voices);
   const problems: string[] = [];
 
+  /**
+   * Which instance holds each declared source, from the VOICE that declares
+   * it — so a rule citing that source need not repeat the answer.
+   *
+   * A voice's `sources[]` is where it says what it was derived from. A rule's
+   * `source` says which of those, and where in it. Making every rule restate
+   * the instance would put one fact in two places and let them disagree: a
+   * voice pointing at `who-iris` with a rule pointing at `folio-assist-sci` is
+   * representable, meaningless, and nothing would catch it.
+   *
+   * This became load-bearing with bean `frs5`, which moved the corpus out of
+   * the platform. Before it every citation resolved locally and the instance
+   * was never written down at all; after it, the four voices in `cat-harness/`
+   * cite documents in two other instances across dozens of rules.
+   *
+   * Keyed per VOICE, not globally: two voices may legitimately derive
+   * same-named documents from different instances, and a global map would
+   * silently pick one.
+   */
+  const instanceOfSource = new Map<string, Map<string, string>>();
+  for (const v of voices) {
+    const m = new Map<string, string>();
+    for (const srcDecl of v.sources) {
+      if (srcDecl.libraryId && srcDecl.instance) m.set(srcDecl.libraryId, srcDecl.instance);
+    }
+    instanceOfSource.set(v.id, m);
+  }
+
   for (const { voice, rule } of rules) {
     const src = rule.source;
     const where = `${voice}/${rule.id}`;
+    // An explicit `instance` on the rule always wins: inheritance is a default,
+    // not an override, so a rule citing a document its voice does not declare
+    // can still say where it is.
+    const citedInstance =
+      src.instance ??
+      (src.libraryId ? instanceOfSource.get(voice)?.get(src.libraryId) : undefined);
     if (src.quote.trim().length < MIN_QUOTE) {
       problems.push(`${where}: quote is ${src.quote.trim().length} chars — a citation that short cannot be checked`);
     }
@@ -80,9 +114,13 @@ function main(): number {
       // The resolver's own explanation is used verbatim: it distinguishes four
       // failures this check cannot, and restating them here would make a fifth
       // wording of the same facts, free to drift from the four.
-      const res = resolveCitation({ instance: src.instance, libraryId: src.libraryId, sectionId: src.sectionId });
+      const res = resolveCitation({
+        instance: citedInstance,
+        libraryId: src.libraryId,
+        sectionId: src.sectionId,
+      });
       if (!res.ok) {
-        const from = src.instance ? `${src.instance}:` : "";
+        const from = citedInstance ? `${citedInstance}:` : "";
         problems.push(`${where}: cites ${from}${src.libraryId}/${src.sectionId} — ${res.why}`);
       }
     } else if (src.kgRef) {

@@ -46,13 +46,27 @@ placeholders, not records. See
 [`skills/iris-dspace.md`](skills/iris-dspace.md) §R8 for why that distinction
 earns a requirement of its own — the derived title for one of them is `Abies`.
 
-## Not declared yet, on purpose
+## The library, now that it is here
 
-There is **no `library` entry** in `harness.json`. The three documents are still
-under `cat-harness/library/` (bean `frs5`), and declaring a directory that is
-not there is the `dh4f` defect — every consumer scans nothing and reports a
-clean run over it.
+`harness.json` declares **`library/`**, and the three documents are in it. They
+arrived by `git mv` from `cat-harness/library/` (bean `frs5`), so history
+follows each file rather than showing 1,367 additions and as many deletions.
 
-The absence is useful rather than merely honest: `resolveLibraryRef` answers a
-citation naming this instance with **`no-library-graph`**, which is a different
-and more actionable finding than "that section is missing".
+Until that move the entry was deliberately **absent**, and the absence did
+work: `resolveLibraryRef` answered a citation naming this instance with
+`no-library-graph`, which is a different and more actionable finding than "that
+section is missing". Declaring a directory that is not there is the `dh4f`
+defect — every consumer scans nothing and reports a clean run over it — so the
+declaration waited for the content. Both of those are now real answers rather
+than one standing in for the other.
+
+**`milnorlink` did not come here.** It was the fourth entry under
+`cat-harness/library/` and it is not an IRIS item; it went to
+`folio-assist-sci/library/` instead (bean `r1lz`). A repository named for one
+catalogue is not a place to put things that belong to another.
+
+**`image-verdicts.json` was split rather than moved.** It judged documents that
+now live in two libraries, and a verdict belongs beside the documents it judges
+— `apply-image-verdicts` resolves each document against the library its verdict
+file is in, which it could not do from one shared file. Nothing was re-judged:
+every verdict is byte-identical to the one it was split from.

@@ -54,7 +54,7 @@
 // harness alone never sees it (schemas/folio-graph-kind.ts says so).
 import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import {
   ARCHIVE_CONTENTS_SCHEMA_ID,
@@ -83,6 +83,18 @@ export interface Requirement {
 
 export interface EntryReport {
   slug: string;
+  /**
+   * The library this entry is in, repo-relative — present only when there is
+   * more than one, so a single-library instance's output is unchanged.
+   *
+   * A slug alone stopped locating an entry when `library` gained a second home
+   * (bean `frs5`): the report printed `library/milnorlink/` and
+   * `library/who-pub-tps-931/` identically while they sat in different
+   * instances. Same reasoning as the per-directory root names in
+   * `graph-index.ts` and the MCP server's GRAPH_ROOTS — a line that says where
+   * something came from is useless the moment two sources share a name.
+   */
+  library?: string;
   requirements: Requirement[];
 }
 
@@ -641,11 +653,30 @@ export function checkAll(root: string): EntryReport[] | undefined {
   const libs = directoriesForGraph(root, "library");
   if (libs.length === 0) return undefined;
   const out: EntryReport[] = [];
+  // A slug in two libraries is REFUSED, not merged. The committed sidecar is
+  // `library-qa/<slug>.qa-results.json` — keyed on the slug alone — so two
+  // entries sharing one would write over each other's verdict and the second
+  // run would look idempotent. `gen-library-jsonld` refuses the same collision
+  // for the same reason, and this does not delegate to it: a gate that relies
+  // on a DIFFERENT tool having run is a gate with a hole in it.
+  const seen = new Map<string, string>();
   for (const lib of libs) {
     if (!existsSync(lib)) continue;
     for (const d of readdirSync(lib).sort()) {
       if (!statSync(join(lib, d)).isDirectory()) continue;
-      out.push(checkEntry(join(lib, d)));
+      const prior = seen.get(d);
+      if (prior !== undefined) {
+        throw new Error(
+          `slug "${d}" appears in two libraries — ${prior} and ${join(lib, d)}. ` +
+            `The committed verdict is keyed on the slug alone, so one would silently ` +
+            `overwrite the other. Rename one.`,
+        );
+      }
+      seen.set(d, join(lib, d));
+      out.push({
+        ...checkEntry(join(lib, d)),
+        library: libs.length > 1 ? relative(root, lib) : undefined,
+      });
     }
   }
   return out;
@@ -752,7 +783,10 @@ function format(reports: EntryReport[]): string {
   const out: string[] = [];
   for (const r of reports) {
     const unmet = r.requirements.filter((q) => q.state === "unmet");
-    out.push(`${unmet.length ? "✗" : "✓"} library/${r.slug}/`);
+    // `<library>/<slug>/` when several libraries are in play, `library/<slug>/`
+    // when there is only one — an instance with a single library reads exactly
+    // as it always did.
+    out.push(`${unmet.length ? "✗" : "✓"} ${r.library ?? "library"}/${r.slug}/`);
     for (const q of r.requirements) {
       if (q.state === "not-derivable") continue;
       out.push(`    ${mark[q.state]} ${q.name.padEnd(16)} ${q.detail}`);
