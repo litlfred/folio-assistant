@@ -115,9 +115,14 @@ release-please config now answers it by accident.
 
 ## Done when
 
-[ ] `release-please` either has its two config files or stops naming them —
-    **blocked on §5**: neither is right while the package it would release
-    cannot be built. Fix the package first, or decide the path is unused.
+[x] `release-please` either has its two config files or stops naming them.
+    **Done 2026-09-20** — owner chose STOPS NAMING THEM, of four options.
+    The step no longer passes `config-file`/`manifest-file`, and the header's
+    `Config:` block no longer advertises them. **This does not make the
+    workflow work and does not claim to**: release-please now falls back to
+    defaults it will also not find. What it removes is the assertion that a
+    config lives somewhere it does not. A config was not written instead,
+    for §5's reason.
 [ ] `release-folio-assistant.yml`'s `PKG_DIR` names a directory that exists,
     and `package.json`'s `files[]` resolves — 2 of 6 do today
 [x] The install URL in `release-folio-assistant.yml` names this repository.
@@ -126,8 +131,12 @@ release-please config now answers it by accident.
     creates the release in the repository it runs in, so deriving it cannot
     drift, whereas hardcoding `litlfred/folio-assistant` would reproduce this
     exact defect one rename later. The header comment's copy is fixed too.
-[ ] Each header describes THIS repository, with the corrections moved above
-    the prose they correct rather than below it
+[~] Each header describes THIS repository, with the corrections moved above
+    the prose they correct rather than below it. **Partly done**:
+    `release-please.yml` now carries an EVERYTHING ABOVE THIS LINE DESCRIBES
+    THE OTHER REPOSITORY marker at the first correction point, naming the
+    measured cost of the old ordering. `release-folio-assistant.yml`'s header
+    still claims a tag-push trigger it does not have.
 [ ] One release cut end to end, or a recorded decision that neither path is
     used — zero tags and a documented release process is a claim nothing has
     tested
