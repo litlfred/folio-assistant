@@ -1072,6 +1072,84 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { network: false },
     }),
 
+    // ── Task_Validate, served by TWO Tools that are not alternatives ──────
+    //
+    // Groups 6 (`oait`) and 10 (`9x17`) of `d308` both bind `authoring-a-paper ·
+    // Task_Validate` and both satisfy `content-validate`. Both beans asked for
+    // `alternativeTo` / `selection` between them "since they share a task", and
+    // **that is the inference `ToolDefinitionSchema` refutes in as many words**:
+    // sharing a skill does not make two Tools substitutable, measured across 12
+    // of this instance's 25 multi-Tool skills.
+    //
+    // These two are the ordinary case, not the exception. One asks whether the
+    // content GRAPH is well-formed and well-ordered; the other asks whether a
+    // block is valid against its schema. A folio runs both, in that order, and
+    // neither answer substitutes for the other — so an `alternativeTo` edge here
+    // would oblige `selection` prose comparing two things that do not compete,
+    // and an author made to write it writes noise. Left unset deliberately, and
+    // both beans corrected rather than satisfied.
+    defineTool({
+      id: "content-graph-build",
+      title: "Content graph",
+      description:
+        "Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/content-graph.ts" },
+      io: {
+        inputs: [
+          // Optional, because the script defaults to `<repo>/content` — and
+          // `check-tools` matches a contract by PORT NAME rather than by
+          // required-ness, so declaring it optional still satisfies
+          // `content-validate` honestly instead of overstating the argument.
+          { name: "targetPath", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "Content root to walk; defaults to the folio's `content/`." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+        ],
+        outputs: [
+          // ONE `Text` port, not two typed counts, and the reason is the type
+          // vocabulary rather than the script: `tool-types.ts` publishes no
+          // numeric type at all, and a shell arm returns a printed report — so
+          // declaring `editorialEdges: Count` would both invent a type to fit
+          // this node and overstate what the invoke arm hands back. The gap is
+          // real and deliberately not filled here; adding a published type to
+          // suit one output is how the vocabulary stops meaning anything.
+          //
+          // The EDITORIAL / FORMAL split survives in the description instead,
+          // and it is the fact that matters: `uses[]` and `interprets` are what
+          // a READER must have read, while the formal graph is machine-derived
+          // from `lean.ref`. A single combined edge count would invite exactly
+          // the "sync uses from the formal graph" operation that destroys the
+          // signal every ordering metric is computed from — `oait` names that as
+          // the one rule this group must not break.
+          { name: "report", schema: t("Text"), description: "Block count, then edge counts reported separately and never summed: EDITORIAL (`uses[]`, `interprets` — author-maintained) and FORMAL (derived from `lean.ref`). The formal line distinguishes `0` from `cache ABSENT`, so an unavailable formal graph cannot be read as a graph with no formal edges." },
+        ],
+      },
+      // NO input or output offering to populate `uses[]` from the formal graph,
+      // and that absence is the point rather than an omission — `oait` names it
+      // as the one rule the group must not break.
+      satisfies: ["content-validate"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "content-manifest-validate",
+      title: "Content manifest validation",
+      description:
+        "Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/validate.ts" },
+      io: {
+        inputs: [
+          { name: "targetPath", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "A paper or chapter directory; absent, every paper the folio declares." },
+          { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Treat warnings as errors." },
+        ],
+        outputs: [
+          { name: "issues", schema: t("Text"), description: "One line per issue, with its block and file. Exit 2 means NO FOLIO WAS FOUND — could-not-determine, never valid." },
+        ],
+      },
+      satisfies: ["content-validate"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     // The twenty tools this instance already serves over MCP. Kept in a sibling
     // module because they are a MIGRATION of an existing surface rather than
     // hand-authored nodes: they are regenerable from `bun run mcp:capture`, and
