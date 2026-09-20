@@ -140,6 +140,9 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "bpmnType": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bpmnType",
+    "statement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#statement",
+    "rationale": "https://litlfred.github.io/folio-assistant/cat-harness/ns#rationale",
+    "applies": "https://litlfred.github.io/folio-assistant/cat-harness/ns#applies",
     "nodeKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeKind",
     "enforcement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#enforcement",
     "workPlanOp": "https://litlfred.github.io/folio-assistant/cat-harness/ns#workPlanOp",
@@ -248,22 +251,23 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T05:25:05.663Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cc1d3ee6b09dfc0c62b155f1827722f4f1e7a83f",
-  "sourceCommitSha": "cc1d3ee6b09dfc0c62b155f1827722f4f1e7a83f",
-  "sourceCommitAt": "2026-09-20T05:23:30Z",
+  "generatedAt": "2026-09-20T06:04:28.455Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9cb6af95a029f0432ab26d22c3b8452a26009409",
+  "sourceCommitSha": "9cb6af95a029f0432ab26d22c3b8452a26009409",
+  "sourceCommitAt": "2026-09-20T06:02:55Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
     "Actor": 27,
     "Capability": 24,
     "Role": 109,
+    "Convention": 2,
     "SkillPackage": 7,
     "Process": 36,
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 30,
-    "Schema": 55,
+    "Schema": 56,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -1678,7 +1682,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/qa-report-signing.md",
-      "instructionLines": 105,
+      "instructionLines": 110,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3889,6 +3893,35 @@
         }
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#role/role-assignments"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#convention/no-clean-run-over-an-empty-set",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Convention",
+      "localId": "no-clean-run-over-an-empty-set",
+      "title": "A check that examined nothing does not report a pass",
+      "description": "Every scan, filter or audit states what it looked at, so an empty result can be told from an empty subject.",
+      "statement": "A check that found no files, no nodes or no candidates must say so and exit non-zero or `undetermined` — never 0 with a clean report. Assert a non-vacuity floor alongside the property itself.",
+      "rationale": "Measured repeatedly in this repository: `check-declared-assets` reported 0 findings over 45 dead links; `check-agents-xref` printed a census of 0 where it had been 8, at exit 0; `bean-store-hygiene` asserted over an empty list; ruff reported a clean baseline over missing paths. The verified count of this defect in one session was eight.",
+      "applies": [
+        "typescript",
+        "python",
+        "workflow-yaml"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#convention/no-clean-run-over-an-empty-set"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#convention/comment-why-not-what",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Convention",
+      "localId": "comment-why-not-what",
+      "title": "A comment says WHY, and names the measurement",
+      "description": "The convention this repository actually follows in code it keeps: a comment records the defect the line prevents and what was measured, not a restatement of the line.",
+      "statement": "A comment explains why the code is as it is — the defect it prevents, the alternative that was tried, the number that was measured. Never a paraphrase of what the line already says.",
+      "rationale": "This repository's own modules are unusually heavily commented and the comments earn it: `ci-gates.ts` records the 27-of-33 miscount that produced it, `known-skills.ts` records the silent drop. A comment restating the code goes stale invisibly, because nothing contradicts it; a comment naming a measurement can be checked and can be wrong out loud.",
+      "applies": [
+        "typescript",
+        "python"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#convention/comment-why-not-what"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#package/skills",
@@ -20595,6 +20628,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/contributions"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/convention",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "convention",
+      "title": "A coding convention — context attached to a PROCESS, not loaded everywhere.",
+      "module": "schemas/convention.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/convention"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/folio-assistant.jsonld#schema/dak-blocks",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "dak-blocks",
@@ -21965,8 +22006,8 @@
   ],
   "staging": {
     "branch": "claude/festive-galileo-s7ibx0",
-    "sha": "c84a542697931dd1dcfbd6085fcc612c07eaa626",
-    "pr": "437/merge",
-    "run": "35491557210"
+    "sha": "17f73be42dfff19f6c890d8850c376d4cf53d391",
+    "pr": "468/merge",
+    "run": "35493214810"
   }
 }
