@@ -31,11 +31,24 @@ ROOT = os.path.dirname(os.path.dirname(HERE))  # scripts/tests -> scripts -> rep
 REQ = os.path.join(ROOT, "requirements.txt")
 
 
+class Undeclared(Exception):
+    """A package line with no `# imports:` above it."""
+
+
 def parse(path: str) -> list[tuple[str, str]]:
     """(distribution, import name) pairs, from the generated `# imports:` lines.
 
-    Structure, not prose. The generator emits the line for every package, so a
-    missing one is a defect rather than a default to fill in silently.
+    STRICT: a package line with no `# imports:` above it RAISES. Falling back to
+    the distribution name would be a default path, and a parser with one cannot
+    tell a missing line from an unremarkable one — it would quietly downgrade
+    `pillow -> PIL` to `pillow -> pillow`, which fails for the right reason only
+    by luck, and `lxml -> lxml` to the same thing, which fails not at all. The
+    pair COUNT is unchanged either way, so the vacuity guard below cannot see it.
+
+    This is bean `ghx3`'s lesson, arrived at there for `roles.json`: a plain
+    `z.object` strips an unknown key, so a field an author wrote parses,
+    type-checks and reaches no graph. Strict is affordable here for the same
+    reason it is there — the file is GENERATED, so every package always has one.
     """
     pairs: list[tuple[str, str]] = []
     pending: str | None = None
@@ -47,7 +60,12 @@ def parse(path: str) -> list[tuple[str, str]]:
             continue
         if not line or line.startswith("#"):
             continue
-        pairs.append((line, pending if pending else line))
+        if pending is None:
+            raise Undeclared(
+                f"{line}: no `# imports:` line above it. "
+                "Regenerate with `bun run deps:python`; do not hand-edit."
+            )
+        pairs.append((line, pending))
         pending = None
     return pairs
 
@@ -57,7 +75,11 @@ def main() -> int:
         print(f"FAIL — {REQ} does not exist; nothing to check")
         return 1
 
-    pairs = parse(REQ)
+    try:
+        pairs = parse(REQ)
+    except Undeclared as exc:
+        print(f"FAIL — {REQ} is malformed: {exc}")
+        return 1
 
     # Vacuity guard. A parser that silently matched nothing would report a clean
     # run over an empty list, which is indistinguishable from every package
