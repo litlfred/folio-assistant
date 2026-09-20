@@ -260,10 +260,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T17:10:56.498Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/abcf5eacc760aca7beac28d641faeec5f168a0de",
-  "sourceCommitSha": "abcf5eacc760aca7beac28d641faeec5f168a0de",
-  "sourceCommitAt": "2026-09-20T17:09:14Z",
+  "generatedAt": "2026-09-20T17:28:53.250Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8a22ed05f386de4713b071a001b69500febf269e",
+  "sourceCommitSha": "8a22ed05f386de4713b071a001b69500febf269e",
+  "sourceCommitAt": "2026-09-20T17:27:16Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 205,
@@ -275,7 +275,7 @@
     "Process": 53,
     "SequenceFlow": 687,
     "ProcessNode": 652,
-    "Tool": 65,
+    "Tool": 66,
     "Schema": 77,
     "GraphKind": 21,
     "Directory": 31,
@@ -28119,6 +28119,39 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/gates"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/narrative-queue",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "narrative-queue",
+      "title": "What narratives are waiting on a person",
+      "description": "List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run narratives"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "queue",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/tool-types.schema.json#/$defs/Text",
+            "description": "Every narrative awaiting a person, NUMBERED, with its subject, its text and its file — then the two commands that act on a number, then the rejection reasons, also numbered. Numbered throughout because the person this is for has very limited hand function and every action must be a selection rather than a typed sentence; `interaction-modality`'s `low-dexterity` profile is the general rule."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#skill/library-ingestion"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/narrative-queue"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/folio-assistant.jsonld#tool/check-tools",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-tools",
@@ -32543,8 +32576,8 @@
   ],
   "staging": {
     "branch": "claude/sleepy-rubin-mr6kdu",
-    "sha": "b9069130044d4132429ac1cae4a7d2a26441e5b4",
+    "sha": "07fbb4f5032b39f0c5281f64a3d3c2ad28ee7091",
     "pr": "477/merge",
-    "run": "35524953781"
+    "run": "35525917564"
   }
 }
