@@ -621,8 +621,25 @@ jobs:
             }
 
   # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
-  # REQUIRES explicit user confirmation via the 'staging:cleanup' label.
-  # Without that label, staging persists so reviewers can still compare.
+  # MERGED closes the question; CLOSED-UNMERGED does not.
+  #
+  # Owner, 2026-09-20: "change policy, if merged to main, then staging goes
+  # away". The distinction is the whole rule, and it is about where the
+  # content lives rather than about how sure anyone is:
+  #
+  #   merged            the diff is on `main`, so the preview shows what the
+  #                     MAIN SITE now shows. It is redundant the moment the
+  #                     merge lands, and keeping it costs ~40 MB of a Pages
+  #                     site that shares a 1 GB budget with the real one.
+  #   closed, unmerged  the preview is the ONLY rendering of that work. It is
+  #                     not redundant, it is the last copy — so the
+  #                     'staging:cleanup' label is still required.
+  #
+  # This is NOT a relaxation of `deletion-requires-confirmation`. The merge is
+  # the confirmation: a person decided this content belongs on `main`, which
+  # is a stronger statement about the preview than a label would be. What the
+  # label still guards is the case where nobody decided anything — a PR closed
+  # without merging.
   cleanup:
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
@@ -672,15 +689,25 @@ jobs:
         id: check
         env:
           LABELS_JSON: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          MERGED: ${{ github.event.pull_request.merged }}
         run: |
-          # Only remove staging if the PR has the 'staging:cleanup' label.
-          # Via env: a label containing a single quote would otherwise close the
-          # quoting and run as a command.
+          # MERGED removes without a label — the merge IS the confirmation.
+          # Closed-unmerged still requires 'staging:cleanup', because there the
+          # preview is the only rendering of the work that exists.
+          #
+          # Both via env: `merged` is a boolean from the event payload, and a
+          # label containing a single quote would otherwise close the quoting
+          # and run as a command.
           LABELS="$LABELS_JSON"
-          if echo "$LABELS" | grep -q 'staging:cleanup'; then
+          if [ "$MERGED" = "true" ]; then
             echo "confirmed=true" >> "$GITHUB_OUTPUT"
+            echo "reason=merged" >> "$GITHUB_OUTPUT"
+          elif echo "$LABELS" | grep -q 'staging:cleanup'; then
+            echo "confirmed=true" >> "$GITHUB_OUTPUT"
+            echo "reason=labelled" >> "$GITHUB_OUTPUT"
           else
             echo "confirmed=false" >> "$GITHUB_OUTPUT"
+            echo "reason=closed-unmerged-and-unlabelled" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Remove staging directory (confirmed)
@@ -691,6 +718,7 @@ jobs:
         # shape in this workflow that a reader should be able to copy.
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          CLEANUP_REASON: ${{ steps.check.outputs.reason }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           SLUG="$STAGING_SLUG"
@@ -705,11 +733,17 @@ jobs:
             # `--reason` is not optional: `render-log.ts` refuses a `removed`
             # entry without one, so this step fails loudly rather than writing
             # a record that says an artefact went and not why.
+            #
+            # The reason is the GATE'S OWN — `merged` | `labelled` — never a
+            # restatement of one branch of it. Bean `1feu` gave the merge the
+            # standing a label used to have, so a record hardcoding "carried
+            # the staging:cleanup label" would name the wrong rule on every
+            # merged PR, which is worse than no reason: it reads as evidence.
             bun run source/cat-harness/scripts/render-log.ts --dir pages \
               --event removed --kind staging-preview \
               --path "STAGING/$SLUG" --slug "$SLUG" \
               --summary "staging preview removed on PR close" \
-              --reason "PR #${{ github.event.pull_request.number }} closed and carried the staging:cleanup label" \
+              --reason "PR #${{ github.event.pull_request.number }} closed; removal confirmed by: $CLEANUP_REASON" \
               --run "$RUN_URL"
             git -C pages config user.name 'github-actions[bot]'
             git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -750,6 +784,7 @@ jobs:
         continue-on-error: true
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          CLEANUP_REASON: ${{ steps.check.outputs.reason }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -eu
@@ -762,7 +797,7 @@ jobs:
             --event retained --kind staging-preview \
             --path "STAGING/$SLUG" --slug "$SLUG" \
             --summary "staging preview retained after PR close" \
-            --reason "PR #${{ github.event.pull_request.number }} closed WITHOUT the staging:cleanup label, so removal was refused" \
+            --reason "PR #${{ github.event.pull_request.number }} closed; removal refused because: $CLEANUP_REASON" \
             --run "$RUN_URL"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'

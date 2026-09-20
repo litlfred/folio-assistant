@@ -261,6 +261,25 @@ describe("every path that publishes or removes a preview also LOGS it", () => {
     expect(runsOf("cleanup")).toContain("--event retained");
   });
 
+  test("`cleanup` logs the GATE'S OWN reason, never a restatement of one branch", () => {
+    // Bean `1feu` gave the merge the standing a label used to have, so a
+    // record hardcoding "carried the staging:cleanup label" would name the
+    // wrong rule on every merged PR — worse than no reason, because it reads
+    // as evidence. The gate emits `merged | labelled |
+    // closed-unmerged-and-unlabelled`; the entry carries that value.
+    const steps = jobs["cleanup"]?.steps ?? [];
+    const logging = steps.filter((st) => (st.run ?? "").includes("render-log.ts"));
+    expect(logging.length).toBeGreaterThan(0);
+    for (const st of logging) {
+      expect(String((st as { env?: Record<string, string> }).env?.CLEANUP_REASON ?? "")).toContain(
+        "steps.check.outputs.reason",
+      );
+      expect(st.run).toContain("$CLEANUP_REASON");
+      // The label is not named as THE reason anywhere a record is written.
+      expect(st.run).not.toContain("--reason \"PR #${{ github.event.pull_request.number }} closed and carried");
+    }
+  });
+
   test("every job that writes the log checks out the publish branch AND the platform", () => {
     // The tool lives in the platform checkout and writes into the publish
     // branch's. A job holding only one of the two cannot log anything, and

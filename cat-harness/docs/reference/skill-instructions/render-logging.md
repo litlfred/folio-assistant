@@ -114,9 +114,16 @@ it to be remembered:
 |---|---|---|
 | `feature-staging.yml` → `stage` | `rendered` | its **own commit**, after the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/<slug>/_render-log/` — inside the directory a cleanup removes |
 | `feature-staging.yml` → `cleanup`, confirmed | `removed` | the **same commit as the removal** |
-| `feature-staging.yml` → `cleanup`, unconfirmed | `retained` | its own commit |
+| `feature-staging.yml` → `cleanup`, refused | `retained` | its own commit |
 | `feature-staging.yml` → `cleanup-dispatch` | `removed` | the **same commit as the removal** |
 | `docs-site.yml` → restore | carried, not written | `restore-staging.ts` |
+
+**The reason is the gate's own, never a restatement of one branch of it.**
+`cleanup` emits `merged | labelled | closed-unmerged-and-unlabelled` and the
+entry carries that value. Bean `1feu` gave the merge the standing a label used
+to have; a record hardcoding *"carried the `staging:cleanup` label"* would name
+the wrong rule on every merged PR — which is worse than no reason at all,
+because a wrong reason reads as evidence.
 
 **A removal and its record are one commit.** A separate log push can fail on
 its own and leave a preview that vanished with nothing saying why, which is
