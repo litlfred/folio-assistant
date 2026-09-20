@@ -182,9 +182,21 @@ last edit, not alongside it** — and if you must edit while they run, the run i
 spent and needs doing again.
 
 Editing a SKILL is the case most likely to produce this, because a skill body
-has a committed QA sidecar that goes stale the moment the body changes. So a
-skill edit is always at least two files: the body, and `bun run kg:audit`'s
-regenerated output.
+has **two** committed artefacts generated from it, and both go stale the moment
+the body changes. **A skill edit is three files:**
+
+| file | regenerate with |
+|---|---|
+| the body, `skills/<pkg>/<name>.md` | — you edit it |
+| `test/results/kg-qa/.../<name>.kg-qa.json` | `bun run kg:audit` |
+| `docs/reference/skill-instructions/<name>.md` | `bun run cat-harness/scripts/gen-skill-docs.ts` |
+
+**This paragraph said "at least two files" and was wrong on its first
+commit** — it named the sidecar and missed the generated docs, and
+`gen-skill-docs --check` duly failed, 1 of 60. Which is the lesson about
+incomplete regeneration being itself incompletely regenerated, so it is left
+recorded rather than tidied away: **"at least"** is what a writer reaches for
+when they have not counted, and a gate counts.
 
 ### The specific rule that was missed
 
