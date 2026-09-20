@@ -29,6 +29,8 @@ import {
   materialiseDirectories,
   renderableDirectories,
   DEFAULT_DIRECTORIES,
+  directoryForGraph,
+  directoriesForGraph,
   resolveDirectories,
   resolveGraphKind,
   toJsonLd,
@@ -653,6 +655,109 @@ describe("the scope trap", () => {
       expect(existsSync(join(instance, "own"))).toBe(true);
     } finally {
       rmSync(repo, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("directoryForGraph refuses an ambiguous kind rather than picking one", () => {
+  /**
+   * Bean `wggr`, as a guard rather than as a story.
+   *
+   * `directoryForGraph` returned the FIRST directory declaring a kind, under a
+   * doc comment calling itself "the accessor for the single-home case". The
+   * precondition was stated and enforced by nothing — this repository's own
+   * rule broken in one line: an unavoidable duplicate is fine, an UNCHECKED
+   * one is not.
+   *
+   * What it cost: a by-graph lookup for `cat-harness` resolves to `schemas/`
+   * rather than `skills/`, because `schemas/` declares
+   * `["schemas", "cat-harness"]` and comes first. An audit walked `schemas/`,
+   * wrote 37 sidecars against the wrong subjects, and exited 0.
+   *
+   * Fixtures rather than the real tree, deliberately. Asserting that THIS
+   * repository has an ambiguous `cat-harness` pins today's declaration: the
+   * test would go green the day somebody removed `cat-harness` from
+   * `schemas/`, which is a change to the subject rather than to the code.
+   */
+  function twoHomes(): string {
+    const root = mkdtempSync(join(tmpdir(), "amb-"));
+    mkdirSync(join(root, "a"), { recursive: true });
+    mkdirSync(join(root, "b"), { recursive: true });
+    writeFileSync(
+      join(root, DECLARATION_FILENAME),
+      JSON.stringify({
+        name: "amb",
+        directories: [
+          { id: "first", path: "a/", graphs: ["schemas", "cat-harness"] },
+          { id: "second", path: "b/", graphs: ["cat-harness"] },
+        ],
+      }),
+    );
+    return root;
+  }
+
+  test("two homes → it throws, and the message names both", () => {
+    const root = twoHomes();
+    try {
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/declared by 2 directories/);
+      // Naming the candidates is what makes the throw actionable rather than
+      // merely loud: the caller has to pick one, and cannot without knowing
+      // what there is to pick from.
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/first \(a\/\)/);
+      expect(() => directoryForGraph(root, "cat-harness")).toThrow(/second \(b\/\)/);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("...and it does NOT silently return the first, which is the whole defect", () => {
+    // Stated as its own assertion because a throw and a wrong answer are the
+    // same shape to a caller that does not check: the old behaviour returned
+    // `a/` here and nothing anywhere said so.
+    const root = twoHomes();
+    try {
+      let returned: string | undefined | symbol = Symbol("not reached");
+      try {
+        returned = directoryForGraph(root, "cat-harness");
+      } catch {
+        returned = Symbol("threw");
+      }
+      expect(returned).not.toBe(join(root, "a"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a single-homed kind in the SAME declaration still resolves", () => {
+    // The throw must be scoped to the ambiguous kind, not to a declaration
+    // that happens to contain one. `schemas` lives only in `a/` here.
+    const root = twoHomes();
+    try {
+      expect(directoryForGraph(root, "schemas")).toBe(join(root, "a"));
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("directoriesForGraph returns every home, in declaration order", () => {
+    const root = twoHomes();
+    try {
+      expect(directoriesForGraph(root, "cat-harness")).toEqual([join(root, "a"), join(root, "b")]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a kind the instance declares nowhere is empty, not a throw", () => {
+    // The third state its sibling already documents: undeclared is not the
+    // same as declared-at-the-convention, and defaulting here would hand a
+    // caller a path to a directory that is not there.
+    const root = twoHomes();
+    try {
+      expect(directoriesForGraph(root, "voices")).toEqual([]);
+      expect(directoryForGraph(root, "voices")).toBeUndefined();
+    } finally {
+      rmSync(root, { recursive: true, force: true });
     }
   });
 });
