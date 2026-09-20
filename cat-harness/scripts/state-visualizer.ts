@@ -123,13 +123,14 @@
  * Exit: 0 written or up to date, 1 stale under `--check`.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { dirname, join, relative, sep } from "node:path";
 
 import {
   graphKindsOfLayer,
   instanceRootFor,
   isStateGraph,
   readDeclaration,
+  repoRootFor,
   siteDirFor,
   type CatHarnessDeclaration,
 } from "../schemas/cat-harness.js";
@@ -140,6 +141,16 @@ import "../schemas/folio-graph-kind.js";
 
 const ROOT = instanceRootFor(import.meta.dir);
 const SITE = join(ROOT, siteDirFor(ROOT));
+/**
+ * `coverage.*` is REPO-root relative, while a directory's `path` is relative
+ * to the INSTANCE. Measured across both declarations 2026-09-20: of 27
+ * coverage paths, 25 resolve only from the repo root, 2 from both (the root
+ * declaration's own, where the two roots coincide) and **none** from the
+ * instance root alone. Resolving these against `ROOT` would therefore mark
+ * every one of them missing — which is the failure this whole change exists
+ * to prevent, one level down.
+ */
+const REPO_ROOT = repoRootFor(ROOT);
 
 const check = process.argv.slice(2).includes("--check");
 
@@ -165,13 +176,36 @@ const RESERVED_IDS = new Set(["assets"]);
 /**
  * What a graph's dashboard can show.
  *
- * `live` graphs have a published projection; `declared` ones are in the
- * declaration with nothing able to read them yet. The value a reader might
- * expect third — "not declared" — is absent on purpose: an undeclared graph
- * does not reach this generator, and inventing a row for it would be this
- * page asserting something the declaration does not say.
+ * Four states, because there are four facts and the first version of this
+ * file collapsed two of them.
+ *
+ * | state | projection here | declaration names a visualiser |
+ * |---|---|---|
+ * | `live` | yes | — |
+ * | `elsewhere` | no | yes, and it is there |
+ * | `declared` | no | no |
+ * | `unresolved` | no | yes, and it is NOT there |
+ *
+ * `elsewhere` is the one that was missing. `projectionFor` asks *"is there a
+ * projection at MY path?"*, and the answer `no` was rendered as *"nothing
+ * renders this graph"*. Those are different questions, and `uploads` is where
+ * they diverge: its queue block is published inside `assets/library/index.json`
+ * — one dataset with `library/`, since two projections over it would be two
+ * answers to "how many are queued" — so this generator found nothing and said
+ * so about a graph that has a working badge. Bean `flh4`, issue #618.
+ *
+ * `unresolved` exists so that fixing the above cannot introduce its own
+ * defect: a declaration naming a page somebody has since deleted would
+ * otherwise read as `elsewhere` and link to a 404. No entry is in this state
+ * today — 27 of 27 coverage paths resolve — so it is falsified in the tests
+ * synthetically rather than against the corpus.
+ *
+ * The value a reader might expect fifth — "not declared" — is absent on
+ * purpose: an undeclared graph does not reach this generator, and inventing a
+ * row for it would be this page asserting something the declaration does not
+ * say.
  */
-type GraphState = "live" | "declared";
+type GraphState = "live" | "elsewhere" | "declared" | "unresolved";
 
 interface StateGraph {
   /** The declared entry's id — the URL segment. See the module note. */
@@ -182,6 +216,19 @@ interface StateGraph {
   kinds: string[];
   state: GraphState;
   description: string;
+  /**
+   * `coverage.visualiser` exactly as declared, repo-root relative. Carried on
+   * `elsewhere` and `unresolved` so each page can NAME what it is pointing at
+   * (or failing to), rather than reporting a state with no subject.
+   */
+  declaredVisualiser?: string;
+  /**
+   * A link from this graph's own page to that visualiser — set only when the
+   * target is a published page under this site. A declared visualiser that
+   * exists OUTSIDE the site is real but has no URL, so it is named without
+   * being linked; fabricating an href for it would publish a dead control.
+   */
+  href?: string;
 }
 
 /** HTML-escape. Every interpolation below goes through it. */
@@ -208,6 +255,50 @@ function projectionFor(id: string): string | null {
 }
 
 /**
+ * What the DECLARATION says renders this graph, resolved against the disk.
+ *
+ * The declaration is the authority on this, not a scan: a page that renders a
+ * graph is not detectable by looking at it, and asking the filesystem "does
+ * anything read `uploads`?" has no answer. So the question asked here is the
+ * narrow one the declaration can actually answer — `coverage.visualiser` —
+ * and the three outcomes are kept apart rather than reduced to a boolean.
+ *
+ * Takes its roots as an argument so the four outcomes can be exercised
+ * against fixtures. `unresolved` fires on nothing in this corpus, so without
+ * that it would be a branch no test could reach — and a branch no test can
+ * reach is a branch that is wrong the first time it matters.
+ *
+ * @param id     the declared entry's id, which is also its page's URL segment
+ * @param cov    `coverage.visualiser` as declared, or undefined
+ * @param roots  the published site and the repo root; defaults to this
+ *               instance's, which is what the generator itself passes
+ * @returns the state this graph is in once `projectionFor` has said `null`,
+ *          with the declared path and an href where one is publishable
+ */
+export function declaredVisualiserFor(
+  id: string,
+  cov: string | undefined,
+  roots: { site: string; repoRoot: string } = { site: SITE, repoRoot: REPO_ROOT },
+): Pick<StateGraph, "state" | "declaredVisualiser" | "href"> {
+  const { site: SITE, repoRoot: REPO_ROOT } = roots;
+  if (!cov) return { state: "declared" };
+  // REPO-root relative — see `REPO_ROOT`. This is the line that would silently
+  // report all 27 as missing if it used `ROOT`.
+  const target = join(REPO_ROOT, cov);
+  if (!existsSync(target)) return { state: "unresolved", declaredVisualiser: cov };
+  // Linkable only if the target is published BY THIS SITE. Asked of the site
+  // directly rather than by inspecting the relative path for leading `..`,
+  // which answers the same question by a proxy that a sibling directory named
+  // `docs-old` would break.
+  const inSite = !relative(SITE, target).startsWith("..");
+  return {
+    state: "elsewhere",
+    declaredVisualiser: cov,
+    ...(inSite ? { href: relative(join(SITE, id), target) } : {}),
+  };
+}
+
+/**
  * The state graphs this instance declares.
  *
  * Its OWN declaration, not a dependency's: a dependency's directory must not
@@ -223,7 +314,9 @@ function stateGraphsOf(decl: CatHarnessDeclaration): StateGraph[] {
       id: d.id,
       path: d.path,
       kinds,
-      state: projectionFor(d.id) === null ? "declared" : "live",
+      ...(projectionFor(d.id) === null
+        ? declaredVisualiserFor(d.id, d.coverage?.visualiser)
+        : { state: "live" as const }),
       // The declaration's own words, clipped to its first sentence. Restating
       // what a directory is for, here, would be a second description free to
       // contradict the first.
@@ -315,6 +408,15 @@ a:hover { text-decoration-thickness: 2px; }
    answer about the graph, and painting it amber would rank it as a fault. */
 .sv-tag.is-declared { color: #898781; }
 .sv-tag.is-live { color: #0ca30c; }
+/* Rendered, just not by this generator — so it ranks with live rather than
+   with the greyed-out declared, and is distinguished from it by hue only
+   alongside the word itself, never by hue alone. NO BACKTICKS: this block is
+   inside a template literal, and one here ends the string. */
+.sv-tag.is-elsewhere { color: #3987e5; }
+/* The one state that IS a fault: a declaration pointing at a page that is not
+   there. The dataviz palette's serious, not its critical — nothing is broken
+   for a reader, a claim is unbacked. */
+.sv-tag.is-unresolved { color: #ec835a; }
 ${WORK_PLAN_CSS}
 </style>
 </head>
@@ -355,25 +457,79 @@ ${rows}
 </ul>`;
 }
 
+/**
+ * A page-relative href, as the site-absolute URL a reader sees.
+ *
+ * `../cat-harness/library/…` from `<base>/uploads/` is `/cat-harness/library/…`
+ * — resolved rather than string-trimmed, so it stays correct if a dashboard
+ * ever sits at a depth other than one.
+ */
+function siteUrlOf(href: string, fromId: string): string {
+  const abs = relative(SITE, join(SITE, fromId, href));
+  return `/${abs.split(sep).join("/")}`;
+}
+
+/**
+ * What a page says when this generator has no projection to draw.
+ *
+ * Three different sentences for three different facts. The `declared` one is
+ * unchanged and still correct for `qa`, `health` and `issue-marks`, which
+ * declare no visualiser; the other two exist because `uploads` does, and was
+ * being told it did not.
+ */
+function notDrawnHere(g: StateGraph): string {
+  if (g.state === "elsewhere") {
+    // Linked as a DIRECTORY and labelled with the URL a reader would see in
+    // the address bar — the same shape as the registry's own links. The
+    // declared value is a repo path, which is the right thing to resolve
+    // against the disk and the wrong thing to show somebody in a browser.
+    const dir = (h: string) => h.replace(/(^|\/)index\.html$/, "$1");
+    const where = g.href
+      ? `<a href="${esc(dir(g.href))}">${esc(dir(siteUrlOf(g.href, g.id)))}</a>`
+      : `<code>${esc(g.declaredVisualiser ?? "")}</code> (not published by this site)`;
+    return (
+      `<p class="sv-sub">This graph is <strong>rendered elsewhere</strong>. Nothing ` +
+      `publishes a projection at this generator's own path, but the declaration names ` +
+      `a visualiser for it: ${where}. The directory is <code>${esc(g.path)}</code>.</p>`
+    );
+  }
+  if (g.state === "unresolved") {
+    // NOT rendered as either neighbouring state. A declaration pointing at a
+    // page that is not there is a defect in the declaration, and calling it
+    // "rendered elsewhere" would publish a link to a 404 while calling it
+    // "nothing renders it" would hide a claim somebody made.
+    return (
+      `<p class="sv-sub">This graph's declaration names a visualiser that is ` +
+      `<strong>not there</strong>: <code>${esc(g.declaredVisualiser ?? "")}</code>. That is a ` +
+      `defect in the declaration, not an answer about the graph — so this page reports it ` +
+      `rather than claiming either that the graph is rendered or that nothing renders it. ` +
+      `The directory is <code>${esc(g.path)}</code>.</p>`
+    );
+  }
+  return (
+    `<p class="sv-sub">This graph is <strong>declared</strong> and nothing publishes a ` +
+    `projection for it yet, so there is nothing to draw. That is bean <code>2krx</code>: ` +
+    `a declared subgraph with no visualiser is unreachable, and 19 of this instance's 22 ` +
+    `were in that state when this was written. The directory is <code>${esc(g.path)}</code>.</p>`
+  );
+}
+
 /** `<base>/<graph>/` — the visualiser for one declared state graph. */
 function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
   const head =
     `<h1>${esc(g.id)}</h1>` +
     `<p class="sv-sub">${esc(g.path)} · ${esc(g.kinds.join(", "))}</p>`;
 
-  if (g.state === "declared") {
-    // No projection, so no dashboard — and the page says which of the two it
-    // is rather than rendering zeros for a graph nothing read.
+  if (g.state !== "live") {
+    // No projection AT THIS PATH — which is not the same as nothing rendering
+    // the graph, and saying so was this generator's defect (bean `flh4`).
+    // Each of the three answers is written out separately; none renders zeros
+    // for a store nobody read, because a dashboard opening at zero is
+    // indistinguishable from a store with nothing in it.
     return page({
       title: `${g.id} — state`,
       metas: [],
-      body:
-        head +
-        `<p class="sv-sub">This graph is <strong>declared</strong> and nothing publishes a ` +
-        `projection for it yet, so there is nothing to draw. That is bean <code>2krx</code>: ` +
-        `a declared subgraph with no visualiser is unreachable, and 19 of this instance's 22 ` +
-        `were in that state when this was written. The directory is <code>${esc(g.path)}</code>.</p>` +
-        registry(graphs, g.id),
+      body: head + notDrawnHere(g) + registry(graphs, g.id),
     });
   }
 
@@ -399,6 +555,16 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
   });
 }
 
+if (import.meta.main) main();
+
+/**
+ * Generate every dashboard, or check them.
+ *
+ * Behind `import.meta.main` — the house pattern here, and 97 of 135 scripts
+ * already use it — so that a test can import the pure resolver above without
+ * this writing into the real site directory as a side effect of the import.
+ */
+function main(): void {
 const decl = readDeclaration(ROOT);
 if (!decl) {
   // "Could not determine", and this generator does not get to decide it means
@@ -432,4 +598,5 @@ if (check) {
 } else {
   console.log(`\nWrote ${wrote} dashboard(s) under ${relative(ROOT, SITE)}/`);
   if (taken.length > 0) process.exit(1);
+}
 }
