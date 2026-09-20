@@ -9,7 +9,7 @@
  */
 
 import { resolve } from "path";
-import { directoryForGraph } from "../../schemas/cat-harness.js";
+import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
 
 // Default: assume folio-assistant/adapters/paper/ is inside the repo
 let _repoRoot = resolve(import.meta.dir, "../../..");
@@ -28,8 +28,7 @@ export function getRepoRoot(): string {
 
 export const get = {
   REPO_ROOT: () => _repoRoot,
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  CONTENT_DIR: () => resolve(_repoRoot, "folio"),
+  FOLIO_DIR: () => folioDir(_repoRoot),
   CHAPTERS_DIR: () => resolve(_repoRoot, "chapters"),
   MAIN_TEX: () => resolve(_repoRoot, "main.tex"),
   /**
@@ -55,8 +54,7 @@ export const get = {
 // tools should import `get` above.
 
 export const REPO_ROOT = _repoRoot;
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-export const CONTENT_DIR = resolve(_repoRoot, "folio");
+export const FOLIO_DIR = folioDir(_repoRoot);
 export const CHAPTERS_DIR = resolve(_repoRoot, "chapters");
 export const MAIN_TEX = resolve(_repoRoot, "main.tex");
 export const LEAN_DIR = _repoRoot;

@@ -29,6 +29,7 @@
  * @module folio-assistant/routes/relevance
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
@@ -57,8 +58,7 @@ interface RefFacts {
 }
 
 function ledgerPath(repoRoot: string): string {
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  return join(repoRoot, "folio", "bib-qa-verifications.json");
+  return join(folioDir(repoRoot),  "bib-qa-verifications.json");
 }
 
 function readLedger(repoRoot: string): SourceLedger {
@@ -75,8 +75,7 @@ function readLedger(repoRoot: string): SourceLedger {
  * validated CSL objects.  It is also never executed this way.
  */
 function readRefFacts(repoRoot: string): Map<string, RefFacts> {
-  // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  const p = join(repoRoot, "folio", "schema", "references.ts");
+  const p = join(folioDir(repoRoot),  "schema", "references.ts");
   const out = new Map<string, RefFacts>();
   if (!existsSync(p)) return out;
   const src = readFileSync(p, "utf-8");

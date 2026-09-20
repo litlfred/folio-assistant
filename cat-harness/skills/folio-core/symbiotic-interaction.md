@@ -8,6 +8,7 @@ description: >
   (per-arc correction quality and turns-to-convergence) and the
   prompt-lexicon convention. Generic folio-assistant platform skill.
 user_invocable: true
+consulted: true
 ---
 
 # symbiotic-interaction — the three registers of author input

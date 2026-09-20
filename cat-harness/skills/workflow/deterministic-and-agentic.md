@@ -4,6 +4,7 @@ description: >
   Workflow processing is a SPECTRUM, not a switch. The four mechanisms this
   repository already uses to sit at different points on it, what is measured
   today, and the three research questions — which are open, and marked as open.
+consulted: true
 ---
 
 # The deterministic-to-agentic spectrum

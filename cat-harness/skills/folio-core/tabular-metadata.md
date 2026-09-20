@@ -87,6 +87,45 @@ established that it must not become an extension guess either. The content
 question is the only one available — do the first rows split into the same
 number of fields, more than one?
 
+## What a sheet IS in the graph — model reality, do not force conformance
+
+The owner, 2026-09-20, asked to choose between *sheet as a `table` block* and
+*sheet as a grouping node*: **"both, sheet in grouping and single sheet. should
+model reality. not force conformance."**
+
+So the shape follows the SOURCE:
+
+| source | graph |
+|---|---|
+| multi-sheet workbook | `manifest.contains → sheet → table block(s)` |
+| single-sheet CSV | `manifest.contains → table block` |
+
+**This was already decided one level down.** `fac:anchor.sheet` is `null` for a
+CSV because *a CSV genuinely has no sheet, and writing `"Sheet1"` would invent
+one*. Wrapping a CSV in a sheet node invents the same sheet; flattening a
+workbook discards a real one. Both uniform options were a choice of which lie
+to tell consistently.
+
+It is also why `fac:anchor` exists: a table may not start at A1 and a sheet may
+hold more than one. A graph that cannot express *sheet contains tables*
+contradicts a constraint the schema already carries.
+
+**Special-casing common scenarios is explicitly fine** (the owner, same turn).
+The instinct when two shapes exist is to find the abstraction covering both — a
+`depth` parameter, a container that is sometimes elided, a walker that handles
+N levels. That instinct produces a model nobody can read. Two legible branches
+beat one clever one, and a third source type gets a third branch; unifying them
+is a measurement to take later, not a prediction to make now.
+
+The limit: **a special case must still be a special case of something TRUE.**
+Flattening a workbook because single-sheet is the common case would not be
+special-casing, it would be forced conformance wearing the licence as cover.
+
+> The same reflex, gone wrong, is what made `check:l1-complete` demand
+> `structure.json`, `sections/` and `images.json` of a CSV — and `pn6j`'s
+> promotion gate turned that wrong report into a permanent blocker (#499). One
+> shape for everything is not simplicity; it is a wrong answer applied evenly.
+
 ## A stub must be impossible to mistake for a result
 
 No extractor ships today (the owner: *"no tooling needed, stub out, make QA to
@@ -119,6 +158,5 @@ exception must carry something a test can re-derive.**
   `p67i` stopped there deliberately, and the headers being right there is
   exactly why assembling one from them would be fabrication.
 - **Migrating `folio-tabular-records/v1`.** Bean `eief` carries it.
-- **What a sheet IS in the document graph** — whether a sheet is a grouping
-  node or a `table` block. That is `0lmb` territory and blocks `p67i`'s
-  manifest.
+- **Emitting the manifest.** The SHAPE is settled above; `gen-library-jsonld.ts`
+  growing the tabular branch is `p67i`'s remaining Done-when.

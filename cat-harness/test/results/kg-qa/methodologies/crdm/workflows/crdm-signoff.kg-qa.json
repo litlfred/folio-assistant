@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_CRDM_Requirements",
-    "path": "skills/workflows/crdm-requirements-definition.bpmn"
+    "id": "Process_CRDM_Signoff",
+    "path": "methodologies/crdm/workflows/crdm-signoff.bpmn"
   },
-  "source_hash": "sha256:63aecb78b72c28588c7d9994396c7aaf61a35aba9c5fe193f5c8e4242b5ecea2",
+  "source_hash": "sha256:d4d561b83c30ae0ac4a0237a622e54c8343a0740ce70a29fd8add041e7bb2e18",
   "criteria": {
     "convention-ref-resolves": {
       "result": "n/a",
@@ -16,8 +16,13 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_AnnounceBranch",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -39,8 +44,12 @@
       "result": "fail",
       "findings": [
         {
-          "where": "A_CompareOptions",
-          "detail": "needs skill \"decision-comparison\", but its lane's role \"authoring-agent\" does not carry it."
+          "where": "A_OfferKg",
+          "detail": "needs skill \"kg-contribution-offer\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "BA_ChooseKg",
+          "detail": "needs skill \"kg-contribution-offer\", but its lane's role \"business-analyst\" does not carry it."
         }
       ]
     },
@@ -49,7 +58,7 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "call-activity-resolves": {
@@ -59,8 +68,8 @@
   },
   "totals": {
     "pass": 6,
-    "fail": 1,
-    "n/a": 4,
+    "fail": 2,
+    "n/a": 3,
     "unknown": 0
   }
 }

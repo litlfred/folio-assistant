@@ -6,6 +6,7 @@ description: >
   generator it replaced could not, and the third state both tools must report.
 adapters: [document, paper, dak]
 profiles: [document, paper]
+consulted: true
 ---
 
 # A folio's README — the folio owns the file, the platform owns the markers

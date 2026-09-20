@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-deliver\n"
-"POT-Creation-Date: 2026-09-20T07:57:32.210Z\n"
+"POT-Creation-Date: 2026-09-20T12:20:30.390Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,167 +14,167 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: skills/workflows/crdm-deliver.bpmn:120
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:120
 #. Diagram label
 msgid "accepted"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:94
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:94
 #. Diagram label
 msgid "Accepted?"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:23
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:23
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:58
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:58
 #. Diagram element documentation
 msgid "An MVP is shared AS A STAGING DEPLOY, not as a description of one. `feature-staging.yml` publishes the branch under `STAGING/<branch-slug>/` on gh-pages and comments the URL on the PR, so the stakeholder who tests it is looking at the built artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work. Measured in this repo on 2026-09-16: holding a rendered change back for assessment made assessment harder, not safer."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:46
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:46
 #. Diagram label
 msgid "Audit the code nodes the increment adds"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:15
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:15
 #. Diagram label
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:10
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:10
 #. Diagram label
 msgid "CRDM Phase 6 — implement, MVP, acceptance"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:57
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:57
 #. Diagram label
 msgid "Deploy the MVP to staging"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:47
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:47
 #. Diagram element documentation
 msgid "Descend into the review task for what this increment CHANGED IN THE GRAPH — Tool definitions in `tools/` and schema definition nodes under `schemas/`. It runs before the summary, and therefore before an MVP can be shared: a Tool or schema node shipped in an MVP is the version stakeholders start building expectations on, and a node that names a skill nobody wrote is cheaper to catch here than after sign-off. Called, not inherited: the agent keeps its implementing role and takes on the `code-reviewer` lane inside Process_CodeReview for that call path only."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:118
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:118
 #. Diagram label
 msgid "findings"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:39
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:39
 #. Diagram element documentation
 msgid "Inner loop: agent claims a bean, implements on feature branch, opens PR, posts summary to the issue."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:76
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:76
 #. Diagram element documentation
 msgid "Inner loop: the BA tests each delivered increment against the acceptance criteria. They do not review code — they test behaviour."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:80
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:80
 #. Diagram label
 msgid "Meets criteria?"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:81
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:81
 #. Diagram label
 msgid "MVP ready for stakeholders?"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:111
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:111
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:113
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:113
 #. Diagram label
 msgid "not yet"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:102
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:102
 #. Diagram element documentation
 msgid "On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:13
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:13
 #. Diagram element documentation
 msgid "One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:85
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:85
 #. Diagram element documentation
 msgid "Outer loop: the BA presents the accumulated increments to stakeholders as a testable MVP. Staging URL, demo, or walkthrough."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:37
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:37
 #. Diagram label
 msgid "Phase 6: Implement (feature branch + PR)"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:36
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:36
 #. Diagram label
 msgid "Phase begins"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:105
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:105
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:68
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:68
 #. Diagram label
 msgid "Post summary to issue"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:101
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:101
 #. Diagram label
 msgid "Post-MVP theme + UI review"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:74
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:74
 #. Diagram label
 msgid "Review increment (test behaviour)"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:83
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:83
 #. Diagram label
 msgid "Share MVP with stakeholders"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:31
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:31
 #. Diagram label
 msgid "Stakeholders"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:91
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:91
 #. Diagram element documentation
 msgid "Stakeholders test the delivered feature in their own workflow, with their own data. They report what works and what does not."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:89
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:89
 #. Diagram label
 msgid "Test MVP in own context"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:97
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:97
 #. Diagram element documentation
 msgid "The BA translates stakeholder findings into actionable direction: new beans or bean updates for the agent."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:95
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:95
 #. Diagram label
 msgid "Translate feedback into agent direction"
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:70
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:70
 #. Diagram element documentation
 msgid "What was accomplished, what remains, and links to the updated content for review."
 msgstr ""
 
-#: skills/workflows/crdm-deliver.bpmn:112
+#: methodologies/crdm/workflows/crdm-deliver.bpmn:112
 #. Diagram label
 msgid "yes"
 msgstr ""

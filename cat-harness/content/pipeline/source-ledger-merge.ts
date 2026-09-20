@@ -41,6 +41,7 @@
  * @module content/pipeline/source-ledger-merge
  */
 
+import { folioDir } from "../../schemas/cat-harness.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -53,8 +54,7 @@ import type {
 } from "../../schemas/bib-verification";
 
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const LEDGER_PATH = join(REPO_ROOT, "folio", "bib-qa-verifications.json");
+const LEDGER_PATH = join(folioDir(REPO_ROOT),  "bib-qa-verifications.json");
 
 /** Model identifier recorded as the assessing agent. */
 const AGENT_MODEL = process.env.FOLIO_AGENT_MODEL ?? "unknown-agent";

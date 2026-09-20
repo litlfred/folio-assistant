@@ -5,6 +5,7 @@ description: >
   reads, or live state it writes. The one question that settles it, the
   classification of every kind with its reason, what a consumer may assume of
   each layer, and why agent memory is context rather than state.
+consulted: true
 ---
 
 # Content, context and state graphs

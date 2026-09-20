@@ -13,6 +13,7 @@ description: >
   prevent, arrived at by a name collision rather than a missing file. Bean
   `v3se`; measured 2026-09-20: `skill_fetch` resolves over PACKAGES and
   bootstrap is not one, so this body was reachable by neither route.
+consulted: true
 ---
 
 # Reading a knowledge graph before you have anything
