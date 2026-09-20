@@ -949,7 +949,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "all", schema: t("Flag"), required: false, arg: { flag: "--all" }, description: "Add the jobs that need a browser; the default is the fast set." },
           { name: "list", schema: t("Flag"), required: false, arg: { flag: "--list" }, description: "Print the derived gates and exit, running none." },
         ],
-        outputs: [{ name: "report", schema: t("Text"), description: "One line per gate, then a pass count or the failures. Exit non-zero on any failure." }],
+        outputs: [{ name: "report", schema: t("Text"), description: "One line per gate, then a pass count or the failures. Three exit codes, because two cannot carry the distinction: 0 every gate passed, 1 a gate failed, 2 the gate set could NOT BE DERIVED — the workflow it reads is absent or yields nothing. A caller must not read 2 as either verdict; it matters most downstream, where this Tool is inherited and `.github/workflows/` is not." }],
       },
       // ONE node, and that is the design rather than a shortcut — bean
       // `folio-assistant-ppkm`, route B of `folio-assistant-3lbz`.
