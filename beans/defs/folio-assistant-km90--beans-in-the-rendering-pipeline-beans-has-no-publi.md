@@ -1,11 +1,11 @@
 ---
 # folio-assistant-km90
 title: 'BEANS IN THE RENDERING PIPELINE: beans/ has no published projection and no visualiser, while todos/ has both'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T18:10:25Z
-updated_at: 2026-09-20T18:47:24Z
+updated_at: 2026-09-20T20:50:40Z
 parent: folio-assistant-yj32
 ---
 
@@ -47,3 +47,51 @@ The second was fixed by ownership rather than exemption.
       state to exist.
 - [ ] `qa`, `health`, `issue-marks` and `uploads` are declared state graphs
       with no reader. Their pages say so and name `2krx`.
+
+## Summary of Changes
+
+Merged in [#581](https://github.com/litlfred/folio-assistant/pull/581) as
+`c424e027`, closing [#580](https://github.com/litlfred/folio-assistant/issues/580).
+
+**One bean reader** — `cat-harness/scripts/beans.ts`. `check-bean-parents.ts`
+imports it, and `beanFile()` resolves the defs directory from
+`beans/beans.json` rather than composing `beans/defs`. It deliberately does
+not validate against a zod schema the way `scripts/todos.ts` does: we own the
+todo format and do not own the bean format, so a schema throwing on an
+unrecognised key would turn "beans shipped a new field" into "every gate here
+is red".
+
+**A published projection**, EXISTENCE-gated rather than content-gated. Every
+agent session writes to `beans/`, so a content gate could only ever fire on a
+graph that changed — the `d2kp` shape. Measured: 296 bean files on the branch
+against 522 on main, four hours apart, with CI testing the union.
+
+**A visualiser per declared state graph**, at the URL `harness-requirements`
+names. `<base>/beans/`, `<base>/todos/`, and four that say honestly that
+nothing projects them yet rather than rendering zeros.
+
+**`serialisations`** — a fifth harness obligation and the only one a harness
+may not waive. `tsc` enforces it: leaving `exempt` at three keys turned the
+checker's waiver lookup into a type error rather than a silent `undefined`.
+
+## Four defects this found, each by a different mechanism
+
+- `site-dir-single-answer` caught a hardcoded `docs` site root.
+- `adapter-layering` caught the harness reaching up into core.
+- **Rendering the page** caught YAML writing an apostrophe as two, so
+  *"the knowledge graph''s own structure"* was being published.
+- **Clicking a link** caught `repoRootFor` applied twice, prefixing every path
+  with the repository's own directory name.
+
+Separately, `gen-docs-pages.ts` hardcoded this repository's URL in a generator
+every instance runs. Now `detectRepoUrl`.
+
+## What is NOT done, and where it lives
+
+The BPMN-position half of `v49e` — where a bean sits in a running process.
+`beans/workflows/` is empty, so that join would report "nowhere" for every
+bean. `vlhk` now tracks that store being empty, so the gap is recorded rather
+than assumed.
+
+Four declared state graphs still have no projection: `qa`, `health`,
+`issue-marks`, `uploads`. Their pages say so and name `2krx`.
