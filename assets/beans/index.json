@@ -2681,7 +2681,7 @@
     {
       "id": "folio-assistant-lcwz",
       "title": "WORK-PLAN CHART: the epic bars are a picture, not a way in — 21 beans behind a bar with no route to them",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-o3xy",
@@ -4257,6 +4257,20 @@
       "file": "beans/defs/folio-assistant-xies--publish-to-cdn-editor-signoff-merge-human-eyes-cdn.md"
     },
     {
+      "id": "folio-assistant-xo3t",
+      "title": "STATE PAGES: a third of the registry descriptions render markdown backticks literally",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:53:52Z",
+      "updatedAt": "2026-09-20T22:53:52Z",
+      "preview": "`registry()` in `state-visualizer.ts` writes each graph's declared description through `esc()` only, so the markdown backticks in it reach the page as literal characters: \"what the daily sweep under \\`test/health/\\` wrote\".\n\nMeasured 2026-09-20 across both declarations: **12 of 34** declared descriptions carry a backtick in the first sentence — the part the registry shows — so this is a third of t",
+      "file": "beans/defs/folio-assistant-xo3t--state-pages-a-third-of-the-registry-descriptions-r.md"
+    },
+    {
       "id": "folio-assistant-xxku",
       "title": "Flushable containers: a named store with a buffer limit, an over-full badge, and three flush actions",
       "status": "todo",
@@ -4353,6 +4367,20 @@
       "updatedAt": "2026-09-20T18:49:27Z",
       "preview": "MEASURED 2026-09-20, on `main` after #477 merged. Every `bitstreams[].materialization.localPath` in `who-iris/catalogue/nodes/` names a file that does not exist:\n\n| node | localPath | resolves to | state |\n|---|---|---|---|\n| `item/18892cf3-…` | `uploads/WPR-RDO-2020-003-eng.pdf` | `who-iris/uploads/WPR-RDO-2020-003-eng.pdf` | **MISSING** |\n| `item/local:9789241548960-eng` | `uploads/9789241548960",
       "file": "beans/defs/folio-assistant-yl5w--catalogue-localpath-is-an-unchecked-edge-and-all-t.md"
+    },
+    {
+      "id": "folio-assistant-yt7j",
+      "title": "SCHEMA: coverage.* is repo-root relative while a directory's path is instance-relative, and nothing says so",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-20T22:53:52Z",
+      "updatedAt": "2026-09-20T22:53:52Z",
+      "preview": "Found while building the `elsewhere` state (bean `flh4`, PR #619). A `ContentDirectory`'s `path` resolves against the INSTANCE root; its `coverage.visualiser` / `coverage.docs` resolve against the REPO root. Nothing in `SubgraphCoverageSchema` or `ContentDirectorySchema` says so.\n\nMeasured 2026-09-20 across `harness.json` and `cat-harness/harness.json`: of 27 coverage paths, **25 resolve only from",
+      "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-dire.md"
     },
     {
       "id": "folio-assistant-yv4z",
