@@ -195,6 +195,7 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "path": "https://litlfred.github.io/folio-assistant/cat-harness/ns#path",
+    "assetRole": "https://litlfred.github.io/folio-assistant/cat-harness/ns#assetRole",
     "version": "https://schema.org/softwareVersion",
     "hasCapability": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasCapability",
@@ -255,10 +256,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T14:53:39.522Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d921428483d14a4563ddde3bdac3789e8160a9bc",
-  "sourceCommitSha": "d921428483d14a4563ddde3bdac3789e8160a9bc",
-  "sourceCommitAt": "2026-09-20T14:52:06Z",
+  "generatedAt": "2026-09-20T15:47:10.796Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/237c6bfb473d91ff49531054f66b2de692e2afef",
+  "sourceCommitSha": "237c6bfb473d91ff49531054f66b2de692e2afef",
+  "sourceCommitAt": "2026-09-20T15:45:31Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 201,
@@ -267,13 +268,14 @@
     "Role": 116,
     "Convention": 2,
     "SkillPackage": 12,
-    "Process": 49,
-    "SequenceFlow": 632,
-    "ProcessNode": 599,
-    "Tool": 59,
+    "Process": 50,
+    "SequenceFlow": 655,
+    "ProcessNode": 619,
+    "Tool": 61,
     "Schema": 68,
     "GraphKind": 20,
-    "Directory": 21
+    "Directory": 21,
+    "Asset": 3
   },
   "@graph": [
     {
@@ -833,7 +835,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/domain-fencing.md",
-      "instructionLines": 147,
+      "instructionLines": 187,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1534,7 +1536,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 187,
+      "instructionLines": 272,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1992,7 +1994,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 319,
+      "instructionLines": 423,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2321,7 +2323,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 176,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5186,8 +5188,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Reviewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Start_Pipeline"
       ],
-      "nodeCount": 33,
-      "flowCount": 35,
+      "nodeCount": 34,
+      "flowCount": 36,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview"
     },
     {
@@ -5251,8 +5253,16 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_AssessImpact",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_CommitPush",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Call_OptionsAnalysis",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Call_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_CommitPush",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a7",
@@ -5766,6 +5776,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_AssessImpact"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Call_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Options analysis how to absorb the impact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Folio-Assistant%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6b"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Call_OptionsAnalysis"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/node/Task_CommitPush",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Commit, push, update PR",
@@ -5779,7 +5810,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a6b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ContentChangeReview/flow/a7"
@@ -15349,8 +15380,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/node/StartEvent_EditRequested"
       ],
-      "nodeCount": 25,
-      "flowCount": 29,
+      "nodeCount": 26,
+      "flowCount": 30,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing"
     },
     {
@@ -15530,8 +15561,16 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/node/Task_ReviewFindings",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/node/Call_OptionsAnalysis",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21a",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/node/Call_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21b",
@@ -16004,6 +16043,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/Task_ReviewFindings"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/node/Call_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Options analysis accept · revise · discard",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent%20(system)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21a"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_Editing/node/Call_OptionsAnalysis"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/node/Task_RecordDecision",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Record the decision and its audit note",
@@ -16017,7 +16077,7 @@
       "touchesWorkPlan": false,
       "relaxable": false,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21a"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Editing/flow/Flow_21b"
@@ -17083,8 +17143,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis"
       ],
-      "nodeCount": 6,
-      "flowCount": 5,
+      "nodeCount": 8,
+      "flowCount": 7,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis"
     },
     {
@@ -17100,8 +17160,26 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Frame",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2c",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_TriggerNotMet",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2c"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_3",
@@ -17166,6 +17244,26 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Frame"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Irreversible or surprising?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2b",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2c"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/GW_Trigger"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/A_Select",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Select the methodology by context",
@@ -17179,7 +17277,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_3"
@@ -17245,6 +17343,23 @@
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_TriggerNotMet",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Trigger not met — the caller decides without an analysis",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Business%20analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_OptionsAnalysis/flow/SF_Process_OptionsAnalysis_2c"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_OptionsAnalysis/node/End_TriggerNotMet"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_Ingestion",
@@ -20192,6 +20307,482 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_JsonLdDrift/node/End_Drift"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "A sub-graph wants to leave",
+      "enforcement": "strict",
+      "sourcePath": "skills/workflows/graph-detanglement.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Start_Wants"
+      ],
+      "nodeCount": 15,
+      "flowCount": 18,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G0",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Start_Wants",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Brief",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Brief",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "unknown",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Unknown",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "declared",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "unknown",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Unknown",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "keep detangling",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Move",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Move",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "detangled",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "isolated",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Propose",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Propose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "authorised",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Extract",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "declined",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Declined",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G16",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Extract",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Extracted",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Start_Wants",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Size, or a semantic&#10;reason to separate",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G0"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Start_Wants"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Brief",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Brief the topic before&#10;touching anything",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/opening-brief"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G0"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G1"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Brief"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "1 &#183; Declare in place&#10;(nothing moves)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G2"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Declare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Declared&#10;in place?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Declared"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "2a &#183; Measure &#8212; unassigned&#10;column FIRST",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G6"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Measure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Detangled?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/detanglement-gate.dmn#Decision_DetanglementGate",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5b",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G9"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Detangled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Move",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G7"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Move"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G9",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G10"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Isolate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Stands&#10;alone?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/isolation-gate.dmn#Decision_IsolationGate",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G12"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/GW_Isolated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Propose",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Report what would move&#10;&#8212; sizes, and what breaks",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G13"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Propose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Authorise the extraction",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/deletion-requires-confirmation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G14",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G15"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Authorise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Declined",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Stays where it is&#10;&#8212; declared, detangled, isolated",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Administrator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G15"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Declined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Extract",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/graph-detanglement"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G16"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/Task_Extract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Extracted",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Extracted",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G16"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Extracted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Unknown",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "UNKNOWN &#8212; stop.&#10;Not &#8220;not yet&#8221;, not clean",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Authoring%20agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_GraphDetanglement/flow/G5b"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_GraphDetanglement/node/End_Unknown"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_ExtractStructure",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
       "name": "Ingestion subprocess — extract structure",
@@ -21427,8 +22018,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver"
       ],
-      "nodeCount": 14,
-      "flowCount": 16,
+      "nodeCount": 15,
+      "flowCount": 17,
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver"
     },
     {
@@ -21436,8 +22027,16 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/A_Implement",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_OptionsAnalysis",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1b",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/A_Implement",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_2",
@@ -21583,6 +22182,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_OptionsAnalysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Options analysis how to implement",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#role/Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1b"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/Call_OptionsAnalysis"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/node/A_Implement",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Phase 6: Implement (feature branch + PR)",
@@ -21597,7 +22217,7 @@
       "workPlanOp": "claim",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_1b",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_5",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_7",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_12"
@@ -23754,6 +24374,64 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/pages-publish"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/feature-staging",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "feature-staging",
+      "title": "Stage a branch's preview",
+      "description": "Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": ".github/workflows/feature-staging.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch to stage; blank stages the current one. On a pull request the workflow fires by itself and needs none of these.",
+            "required": false,
+            "arg": {
+              "flag": "--branch"
+            }
+          },
+          {
+            "name": "cleanup_slug",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Slug",
+            "description": "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. It exists because the label path cannot reach the previews the health sweep reports — being findable as an orphan REQUIRES the pull request to be closed, so the close event has already fired with no label (bean `w2g5`).",
+            "required": false,
+            "arg": {
+              "flag": "--cleanup-slug"
+            }
+          },
+          {
+            "name": "cleanup_confirm",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Slug",
+            "description": "The slug again, exactly. Anything else refuses. A confirmation therefore cannot be carried over from a previous run against a DIFFERENT preview, which a boolean would have allowed.",
+            "required": false,
+            "arg": {
+              "flag": "--cleanup-confirm"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "preview",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Url",
+            "description": "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/feature-staging"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/feature-staging"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/serve-rendering",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "serve-rendering",
@@ -24801,6 +25479,67 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/continual-progress"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/gates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/ci-health",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "ci-health",
+      "title": "Is CI passing on the default branch?",
+      "description": "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run check:ci-health"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "markdown",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Emit the block the session-start sweep prints. ALWAYS exits 0, deliberately: the sweep runs it as `if ! …; then` and would otherwise print the report AND declare it unchecked every time CI is red.",
+            "required": false,
+            "arg": {
+              "flag": "--markdown"
+            }
+          },
+          {
+            "name": "warn",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Flag",
+            "description": "Report only, never fail. For a caller that wants the state without a verdict.",
+            "required": false,
+            "arg": {
+              "flag": "--warn"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. The notifier gets its own flag rather than one API call being spent twice.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/tool-types.schema.json#/$defs/Markdown",
+            "description": "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/ci-health"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#tool/ci-health"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#tool/kg-validate",
@@ -27774,14 +28513,17 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/document-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/document-structure",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/github-state-inspection",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/graph-detanglement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/issue-working",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/normative-statements",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/placement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#skill/prepare-merge",
@@ -28407,12 +29149,42 @@
       ],
       "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#directory/smart-kg-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — folio-assistant",
+      "description": "The file every cold agent reads first, and until 2026-09-19 the ONLY root artefact this instance did not declare — `directories[]` and `images[]` carried everything else. Bean `v8gh` is what that cost: seven dead links, five broken by one directory move, including the one its own banner calls the place to start, so an agent following the banner hit a 404. Nothing caught them; `readme:audit` checks README.md alone and `check:agents-xref` checks citations INTO this file rather than links out of it. `source` names the bootstrap instance it descends from, so \"is this still what it was copied from\" is a question that can be ASKED — 'it was copied at init' is not an answer.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/agent-instructions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "folio-assistant",
+      "description": "The reader-facing entry point. Its generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/instance-readme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/folio-assistant.jsonld#asset/bootstrap-initialization",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "bootstrap-initialization",
+      "path": "docs/bootstrap/initialization.md",
+      "assetRole": "bootstrap-initialization",
+      "title": "Initializing into folio-assistant",
+      "description": "What bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours, composed by `initializationDoc()` rather than spelled, so bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not. The path is INSTANCE-relative here, not `<stub>/docs/...`: this instance has its own directory (`cat-harness/`), so `siteDir` is plain `docs`, and the stub names published artefacts rather than a directory. Whether bootstrap can still find it from one reference is open — see bean `wggr`.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#asset/bootstrap-initialization"
     }
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "fc9d73e84d3977c0d65cd62c9bcff108dee8c84e",
+    "sha": "2389aa86483b96d2381628c348babe0417a0401a",
     "pr": "525/merge",
-    "run": "35517804544"
+    "run": "35520582812"
   }
 }
