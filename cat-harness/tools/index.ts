@@ -1250,6 +1250,69 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── The FSH cone, and TWO of three declared contracts refused ─────────
+    //
+    // Group 12 of `d308` (`h588`). `ig-incremental-build · Task_Cone` names
+    // `fsh-cone --changed` in its own task label, so this binding is read off the
+    // diagram rather than inferred.
+    //
+    // **The bean asked for one node satisfying three skills; two are refused, on
+    // their own contracts.** Measured 2026-09-20 against
+    // `schemas/skills/*/input.schema.json`:
+    //
+    //   fhir-validation     requires igRoot                      → SATISFIABLE
+    //   ig-publication      requires igRoot + versionIncrement    → refused
+    //   l3-fhir-authoring   requires artifactType + l2Source      → refused
+    //
+    // The refusals are not a gap to close later. `fsh-cone` computes a dependency
+    // cone over a FSH graph: it publishes nothing and authors nothing, so it has
+    // no version to increment and no L2 source to render from. Declaring those
+    // edges would put this node forward as the mechanism for two jobs it does not
+    // do — the `covered-is-not-reachable` shape, manufactured on purpose.
+    //
+    // **Its verification happens downstream, and that is recorded rather than
+    // implied.** The platform carries no folio, so this cannot be exercised here:
+    // `d308`'s correction established the same for six of thirteen groups, so the
+    // posture is the general case, not this group's quirk. What IS checked here is
+    // the one thing that does not need a folio — a missing `<ig-root>` exits 2
+    // with usage, measured, not assumed.
+    defineTool({
+      id: "fsh-cone",
+      title: "FSH dependency cone",
+      description:
+        "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/fsh-cone.ts" },
+      io: {
+        inputs: [
+          { name: "igRoot", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone." },
+          { name: "csv", schema: t("RepoPath"), required: false, arg: { flag: "--csv" }, description: "Write the report as CSV to this path instead of printing it." },
+          // `--changed f1,f2,…`, `--top N` and `--history N` are DELIBERATELY not
+          // declared, for the two reasons already recorded on `qa-sweep` and
+          // `content-graph-build` rather than a new one:
+          //
+          //   · `--changed` is a comma-separated list inside ONE argv word, and
+          //     the vocabulary has no honest shape for that — `Slug` forbids the
+          //     comma, `repeated` would claim the flag may be given more than
+          //     once, and `Text` is refused on argv.
+          //   · `--top` and `--history` are COUNTS, and `tool-types.ts` publishes
+          //     no numeric type at all. `Dpi` and `Port` are the only numeric-ish
+          //     entries and both mean something specific.
+          //
+          // Second node to hit the numeric gap; it is a vocabulary question, not
+          // a per-node one, so it stays undeclared and documented rather than
+          // mistyped to fit.
+        ],
+        outputs: [
+          { name: "cone", schema: t("Text"), description: "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead." },
+        ],
+      },
+      // ONE skill, not the three the bean listed — see the header for why the
+      // other two contracts refuse this mechanism rather than merely lacking it.
+      satisfies: ["fhir-validation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     // The twenty tools this instance already serves over MCP. Kept in a sibling
     // module because they are a MIGRATION of an existing surface rather than
     // hand-authored nodes: they are regenerable from `bun run mcp:capture`, and
