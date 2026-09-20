@@ -1,13 +1,13 @@
 ---
 # folio-assistant-fgnw
 title: 'IN-PROGRESS CARRIES NO ACTIVITY: 43 of 60 claims untouched in 4h and no rule says what that means'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T19:45:00Z
+updated_at: 2026-09-20T21:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -20,8 +20,8 @@ Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS
 bean-coordination §"A claim is branch-local" says a claim announces rather than reserves; bean-blocking gives a *blocked* bean an expiry. An in-progress claim has none, so "in-progress" carries no information about activity, and a reviewer cannot tell a stalled agent from an abandoned claim.
 
 ## Done when
-- [ ] A rule states what an in-progress claim with no activity for N hours means, and who may act on it
-- [ ] `bun run health` (or the goal-review sweep) reports claims without activity in the window, as a finding a person acts on — it never changes a status itself
+- [x] A rule states what an in-progress claim with no activity for N hours means, and who may act on it
+- [x] `bun run health` (or the goal-review sweep) reports claims without activity in the window, as a finding a person acts on — it never changes a status itself
 
 ---
 
@@ -61,5 +61,13 @@ the same shape `check:bean-parents` documents. The 14-day finding's action text
 was corrected in passing: it said "do not resolve a sibling's bean", which
 contradicts the rule `0pes` settled.
 
-- [x] A rule states what an in-progress claim with no activity for N hours means, and who may act on it
-- [x] `bun run health` reports claims without activity in the window, as a finding a person acts on — it never changes a status itself
+_2026-09-20T21:15Z_ — **Closed.** Both Done-when boxes above are ticked against
+the work recorded in this bean, and the status now says so.
+
+**It should have said so an hour ago.** This bean was finished, its evidence
+written into its own body, and left `in-progress` — while the session that left
+it there was closing `bbbl`, whose entire subject is *a bean finished in its
+body and left open*. Worse, the ticks were appended as a SECOND copy of the
+checklist at the foot of the file, so the canonical `## Done when` still read
+0 of 2 and any reader or tool consulting it saw an untouched bean.
+
