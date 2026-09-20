@@ -196,7 +196,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // holds its skills directly, so `discoverGroups` takes the
   // `SKILLS_CATEGORIES[decl.id]` branch — the same one `bootstrap` uses
   // below. Keyed on `crdm` it threw, naming the id it actually wanted.
-  "workflow-methodology-crdm": "CRDM requirements methodology (workflow-methodologies/crdm)",
+  "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
   "remote-stubs": "Declared but not implemented here (stubs)",
   // The two entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the

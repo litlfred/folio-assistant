@@ -61,3 +61,47 @@ WHICH backend and what it costs, not a missing convention.
   that a 323 MB dependency for one script is declared `extended` and kept out
   of CI rather than dropped — a local Whisper model is likely that shape or
   larger, so measure before assuming CI can carry it.
+
+*2026-09-20* — Re-measured per this bean's own handoff. **`68dt` HAS landed,
+and the blocker MOVED rather than lifted.** Not unblocking.
+
+The handoff says: *"if 68dt has landed, this is ordinary work — unblock and
+proceed. If it has not, do NOT hand-roll a parser; say what is missing."*
+`68dt` landed — `requirements.txt` is generated from `schemas/python-deps.ts`
+and `code-quality-gates.yml:148` runs `pip install -r requirements.txt`. So
+the mechanism to declare a Python dependency and have CI install it now
+exists, which is exactly what this bean waited on.
+
+It is still not ordinary work, for two reasons neither of which `68dt` touches:
+
+1. **No transcription backend is declared.** The ten packages in
+   `requirements.txt` are PDF, XML, YAML and HTTP. No whisper, vosk, speech
+   or ffmpeg. Declaring one is a real decision — model size, CI install cost,
+   whether weights download at run time — and not a line to add quietly.
+2. **There is no audio in the corpus.** Measured across `uploads/` and
+   `library/`: zero `.mp3 .wav .m4a .ogg .flac .mp4`. An arm built now would
+   run on nothing, which is the same falsifier that stopped `p67i`'s
+   narrative half.
+
+So the block stands, with the reason REPLACED rather than repeated:
+- **waits on**: a declared transcription backend (a decision), and an audio
+  file to transcribe.
+- **since**: 2026-09-20, re-measured.
+- **expires**: 2026-10-19, unchanged.
+- **handoff**: 68dt is no longer the blocker and its name should not be
+  repeated. If audio arrives and a backend is chosen, this is ordinary work.
+
+## And the probe guarding this bean was WRONG
+
+`pn6j`'s `expiredExceptions` — added two PRs ago, by me, to fail the gate the
+moment an arm lands — probed for `transcript.json`. **This bean's own Done-when
+says `library/<slug>/transcript/`, a DIRECTORY.** So when `1r0p` shipped, the
+ratchet would never have fired: a gate that cannot fail, which is the precise
+class of defect the probe exists to prevent, reproduced two PRs later by the
+person who added it.
+
+Corrected to `transcript`, with two tests: one asserting the probe matches
+what THIS bean says its arm will write, and one proving a directory probe
+actually fires (`existsSync` is not file-only). A probe is a claim about
+another arm's output and has to be read from that arm's own statement, not
+from the shape a sidecar usually takes.

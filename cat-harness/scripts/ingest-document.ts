@@ -554,8 +554,18 @@ if (import.meta.main) {
   // person looks for first were the hardest to find — and its own dot-prefix
   // guard rejects such a segment. A staging tree holding a REFUSED document is
   // precisely something somebody will come looking for.
-  const staging = join(resolve(INSTANCE_ROOT), "ingest-staging", slug);
-  const plan = planFor(pdf, undefined, staging);
+  // The staging LIBRARY ROOT, not the entry directory. `planFor`'s third
+  // argument is what `libraryRoot()` returns, and every arm creates
+  // `<lib>/<slug>/` beneath it. Passing the entry directory produced
+  // `ingest-staging/<slug>/<slug>/`, so `checkEntry` read an empty parent and
+  // reported EVERY requirement unmet — a refusal that looked exactly like a
+  // correct one. Shipped in #495 and caught by running a CSV through the live
+  // pipeline; the milnorlink checks passed over it because the incomplete
+  // case is refused either way and the complete case was staged by hand,
+  // directly into the entry directory.
+  const stagingRoot = join(resolve(INSTANCE_ROOT), "ingest-staging");
+  const staging = join(stagingRoot, slug);
+  const plan = planFor(pdf, undefined, stagingRoot);
   console.log(`${basename(pdf)} -> ${libraryRoot()}/${slug}/`);
   console.log(`  rung: ${plan.rung}`);
   console.log(`  why:  ${plan.why}`);

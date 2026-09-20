@@ -8,7 +8,7 @@
  *
  * ## What this measures, and what it does not
  *
- * `workflow-methodologies/crdm/crdm-detect.md` is prose for a model to read. It lists
+ * `methodologies/crdm/crdm-detect.md` is prose for a model to read. It lists
  * five categories of phrasing plus an explicit "what is NOT a feature request"
  * list. This script implements the PHRASE SIGNALS mechanically. That makes it
  * a LOWER BOUND on an agent that also applies judgement — an agent can catch a
@@ -172,7 +172,7 @@ const run = buildTestRun({
   root,
   subject: "crdm-detect phrase signals against the issue corpus",
   dataInputs: ["scripts/eval/crdm-detect-corpus.json"],
-  processInputs: ["scripts/eval-crdm-detect.ts", "workflow-methodologies/crdm/crdm-detect.md"],
+  processInputs: ["scripts/eval-crdm-detect.ts", "methodologies/crdm/crdm-detect.md"],
   outcome: {
     population: corpus.length,
     truePositives: tp,

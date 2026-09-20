@@ -1,0 +1,98 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CRDM",
+    "path": "methodologies/crdm/workflows/crdm-requirements.bpmn"
+  },
+  "source_hash": "sha256:418e884ab08c9ad46fa914b2660fe3ac5c42d9282a322469fdcf45fef4865dcc",
+  "criteria": {
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "BA_Submit",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "A_Detect",
+          "detail": "names skill \"crdm-detect\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Call_Issue",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Call_Needs",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Call_Requirements",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Call_DataModel",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Call_Signoff",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Call_Deliver",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Call_Close",
+          "detail": "names skill \"crdm-requirements-workflow\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 7,
+    "fail": 1,
+    "n/a": 3,
+    "unknown": 0
+  }
+}

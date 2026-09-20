@@ -24,8 +24,8 @@ reviewable.
 
 | from | to |
 |---|---|
-| `skills/folio-core/crdm-{detect,requirements-workflow,data-model}.md` | `workflow-methodologies/crdm/` |
-| `skills/workflows/crdm-*.bpmn` (8) | `workflow-methodologies/crdm/workflows/` |
+| `skills/folio-core/crdm-{detect,requirements-workflow,data-model}.md` | `methodologies/crdm/` |
+| `skills/workflows/crdm-*.bpmn` (8) | `methodologies/crdm/workflows/` |
 
 A `package-manifest.json` for the package, and `folio-core`'s manifest
 drops the three: 106 → 103.
@@ -40,7 +40,7 @@ such root; this is the second. Nothing in the discovery path changed —
 
 **Each methodology is declared SEPARATELY, not the parent.**
 `workflowDirs` resolves `<kgdir>/workflows`, so declaring only
-`workflow-methodologies/` would leave every diagram undiscovered — it
+`methodologies/` would leave every diagram undiscovered — it
 would look for `workflow-methodologies/workflows/`, which does not exist.
 
 **SDLC and MADR are NOT declared yet.** They have no content, and a
@@ -80,10 +80,49 @@ work.
 
 ## Done when
 
-- [x] `workflow-methodologies/crdm/` declared and discovered with no code
+- [x] `methodologies/crdm/` declared and discovered with no code
       change to the discovery path
 - [x] skills and diagrams moved together; manifests updated both sides
 - [x] every reference rewritten; generated artefacts regenerated
 - [x] 52/52 gates
 - [ ] RACI built in the new home (bean `7o7i`)
 - [ ] SDLC, MADR — declared only when they have content
+
+
+---
+
+## Corrected mid-flight — ONE tree, not two
+
+I first built this as `workflow-methodologies/crdm/`, the path the owner
+named, having found that main had meanwhile grown
+`cat-harness/methodologies/` (Kepner-Tregoe, MADR, DMN) from a sibling
+session. I read the two as different axes — **process** methods, how a
+process runs, against **judgement** methods, how to decide — and flagged
+the boundary rather than assuming it, because MADR is on both lists.
+
+Owner: *"put CRDM and RACI under methodologies as well."*
+
+**One tree, and it is the better answer** for the reason this repository
+keeps relearning: two directories whose boundary needs a paragraph to
+explain are two answers to *where do methodologies live*, and the next
+author picks the wrong one. The axis I saw is real but it is a property of
+each methodology, not a reason to split the directory.
+
+So: `cat-harness/methodologies/crdm/`, and RACI joins it.
+
+### One thing this leaves open, flagged not assumed
+
+`methodologies/` is declared as the `methodology` graph kind and holds
+three flat `.md` files. `methodologies/crdm/` is declared separately as
+`cat-harness`, because it holds skills and diagrams — so a `cat-harness`
+graph now nests inside a `methodology` one.
+
+That is the shape `#263` warns about, and it is exactly what `07xs` moved
+`skills/memory/` out of. It is **not** obviously the same defect: there
+the containing kind and the contents were on opposite LAYERS
+(`content` holding `context`), whereas here both are things the harness
+owns and reads. But the question is real, and it is the sibling author's
+structure to settle rather than mine to restructure in passing.
+
+Carried to `7o7i`, since RACI lands in the same tree and will make it
+concrete.

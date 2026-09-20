@@ -148,6 +148,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
+| [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
 | [Watching the queue](uploads-watch.html) | `uploads-watch` | — | `uploads/` is the acquisition queue — |
 | [Adopting an upstream version bump](upstream-version-adoption.html) | `upstream-version-adoption` | — | An unpinned dependency is an unreviewed commit from a stranger, merged on every |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
@@ -250,7 +251,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [discussion](discussion.html) | `discussion` | — | An agent that has just read `bootstrap/README.md` knows the shape of a |
 | [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
 
-## CRDM requirements methodology (workflow-methodologies/crdm)
+## CRDM requirements methodology (methodologies/crdm)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
