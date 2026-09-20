@@ -265,6 +265,46 @@
                   "reproduce",
                   "skip"
                 ]
+              },
+              "coverage": {
+                "type": "object",
+                "properties": {
+                  "visualiser": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "docs": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "skill": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "exempt": {
+                    "type": "object",
+                    "properties": {
+                      "visualiser": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "docs": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "skill": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "theme": {
+                "type": "string",
+                "minLength": 1
               }
             },
             "required": [
@@ -272,6 +312,45 @@
               "path",
               "graphs",
               "dependents"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "remoteGraphs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "graphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "url",
+              "graphs"
             ],
             "additionalProperties": false
           },
@@ -425,8 +504,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-bean-roast-rday-r1vw/folio-assistant.jsonld",
   "staging": {
     "branch": "claude/bean-roast-rday-r1vw",
-    "sha": "0aba70a1cf2756addd581bc4359d488f19727ae9",
+    "sha": "6ff5177fae7f436be7af1deb6844f566c5b91141",
     "pr": "576/merge",
-    "run": "35526682462"
+    "run": "35530744579"
   }
 }
