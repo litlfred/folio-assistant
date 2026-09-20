@@ -59,13 +59,22 @@ it, and refuses rather than rendering an empty table when the source moves.
 
 - [ ] the handler exists and is declared, with the `auto-doc-type` set above and
       **no** `toc`
-- [ ] at least one real sub-graph is derived through it, not a fixture
+- [ ] **`who-iris/docs` is the first real exercise, end to end** — owner,
+      2026-09-20: *"try it out fully w/ who-iris docs, auto-docs."* Not a
+      fixture and not a smoke test: the instance that already has a hand-built
+      `docs/` is the one that will show whether a derived index and an authored
+      summary can sit in the same directory without fighting.
 - [ ] the authoring rule lives in a skill with the reuse-not-restate clause
 - [ ] `<harness>/docs` carries a per-process summary that references the derived
       index rather than duplicating it
 - [ ] a stale or moved source makes the derivation FAIL, never render empty
 
-## Not started
+## Not started — and the order is the owner's
+
+Owner, 2026-09-20: *"after the other issues doen"*. This runs **after** the
+three open who-iris items: the cover-image extraction, the IRIS-home mock
+validated against the capture, and the CRDM KG-to-CDN work. Stated here so a
+session picking this bean up does not start it early.
 
 Queued. Related: `lqo9` (the glossary content kind + defined-terms index) is
 pieces 2–4 of its own ask; piece 1 of it is one `auto-doc-type` served here.
