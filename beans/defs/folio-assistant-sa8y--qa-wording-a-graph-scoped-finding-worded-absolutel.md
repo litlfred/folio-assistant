@@ -89,7 +89,11 @@ directory to notice the subject is gone.
 
 ## Done when
 
-- [ ] graph-ranging findings name their graph
+- [x] graph-ranging findings name their graph — `skill-has-entry-point` and
+      `skill-in-role-or-process` now append the scope, built from the DECLARED
+      path strings rather than computed relative ones (computing them printed
+      `../bootstrap/skills` once the tree moved into `cat-harness/`, which is
+      accurate and reads like a bug)
 - [ ] a gate runs the audits per declared instance, or the root's silence about a
       nested one is itself reported
 - [ ] `bootstrap/skills/` gets a package manifest so `confirm-harness` is servable
@@ -97,3 +101,39 @@ directory to notice the subject is gone.
 - [ ] `initialize-harness.bpmn` gets a `BPMNDiagram`, or its absence is a recorded
       criterion rather than a hard renderer failure
 - [ ] the stale sidecar: owner decides
+
+---
+
+## Done 2026-09-20: the two graph-ranging findings now name their scope
+
+> skill "confirm-harness" is listed by no package manifest, carried by no role and
+> named by no activity. **In this instance's graph only** (read: `cat-harness` at
+> `skills/`, `bootstrap` at `bootstrap/skills/`, `cat-harness-src` at
+> `src/skills/`) — a nested instance may name it, and this audit does not read
+> one.
+
+The reading that produced the wrong change is now unavailable: the sentence says
+what it ranged over and says a nested instance is out of range.
+
+`graphScope()` carries the 2026-09-20 incident in its own doc comment — the
+absolute wording, the wrong fix, and the test that stopped it — so the next author
+meets the reason where they meet the code.
+
+### One thing the fix surfaced on the way
+
+Computing the paths relative to the audit's root printed
+`` `bootstrap` at `../bootstrap/skills` ``, because the script now runs from
+`cat-harness/` and `bootstrap/` is its sibling. Accurate, and it reads like a
+defect. Switched to the declared `path` string: it is what a reader would go and
+edit, and it cannot acquire a `../` when the tree moves again. "Resolve, do not
+compose", applied to a diagnostic rather than to a link.
+
+### Still open on this bean
+
+- [ ] a gate that runs the audits **per declared instance**, or the root's silence
+      about a nested one reported as its own finding. This is the real fix; the
+      wording change only stops the finding being MISread.
+- [ ] `bootstrap/skills/` package manifest, so `confirm-harness` is servable
+- [ ] the three unbound lanes in `initialize-harness.bpmn`
+- [ ] that diagram has no `BPMNDiagram`, so `render:bpmn` cannot draw it
+- [ ] the stale `bootstrap.bpmn` sidecar — owner's call, still untouched

@@ -42,7 +42,7 @@
  */
 
 import { createHash } from "node:crypto";
-import { workflowDirs, workflowFiles } from "./known-skills.js";
+import { kgDirectories, workflowDirs, workflowFiles } from "./known-skills.js";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
@@ -896,6 +896,45 @@ function manifestEntries(): { pkg: string; skill: string }[] {
   return out;
 }
 
+/**
+ * The graph directories this audit actually read, as a phrase for a finding.
+ *
+ * ## Why every graph-ranging finding has to carry this
+ *
+ * A finding that says a skill is "named by no activity" is true OF THE GRAPH IT
+ * RANGED OVER and says nothing about any other. Worded absolutely it reads as a
+ * fact about the repository, and on 2026-09-20 a session read it that way:
+ * `confirm-harness` is named three times by `bootstrap/workflows/`, which this
+ * audit does not read, so the absolute wording looked like a blind spot. The
+ * session "fixed" it by declaring that directory at the root and re-introduced a
+ * defect `instance-graph-isolation.test.ts` had been written the day before to
+ * prevent — one instance's graph carrying another's nodes, which had put 88
+ * references to a bootstrap process into folio-assistant's published graph.
+ *
+ * The isolation is correct and the scoping is correct. **Only the sentence was
+ * wrong**, and it cost a change a test had to stop. Bean `sa8y`.
+ */
+function graphScope(): string {
+  // No filter: `kgDirectories` already returns only the declared
+  // knowledge-graph directories, which is exactly the set this audit walks.
+  //
+  // The DECLARED path string, not a computed relative one. Computing it against
+  // this script's root printed `../bootstrap/skills` once the tree moved into
+  // `cat-harness/`, which is accurate and reads like a bug — and it is the
+  // declaration that a reader would go and edit. "Resolve, do not compose",
+  // applied to a diagnostic rather than to a link.
+  const dirs = kgDirectories(root).map((d) => `\`${d.id}\` at \`${d.path}\``);
+  return dirs.length > 0 ? dirs.join(", ") : "no knowledge-graph directory declared";
+}
+
+/** Appended to any finding whose range is this instance's graph and not the tree. */
+function scopedToThisGraph(): string {
+  return (
+    ` In this instance's graph only (read: ${graphScope()}) —` +
+    " a nested instance may name it, and this audit does not read one."
+  );
+}
+
 function auditGraph(
   graph: RoleGraph | undefined,
   processes: LoadedProcess[],
@@ -912,7 +951,12 @@ function auditGraph(
   const orphans = [...skills]
     .filter((s) => !reachable.has(s))
     .sort()
-    .map((s) => ({ where: s, detail: `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` }));
+    .map((s) => ({
+      where: s,
+      detail:
+        `skill "${s}" is listed by no package manifest, carried by no role and named by no activity.` +
+        scopedToThisGraph(),
+    }));
 
   // The OTHER question, asked separately because the answers differ by two
   // orders of magnitude: what does the actor → role → task model actually
@@ -929,7 +973,9 @@ function auditGraph(
     .sort()
     .map((s) => ({
       where: s,
-      detail: `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.`,
+      detail:
+        `no role carries "${s}" and no activity names it — reached, if at all, by direct invocation.` +
+        scopedToThisGraph(),
     }));
 
   const declaredRoles = new Set((graph?.roles ?? []).map((r) => r.id));
