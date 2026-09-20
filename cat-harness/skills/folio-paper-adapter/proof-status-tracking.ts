@@ -13,8 +13,5 @@ export const proofStatusTracking: SkillDefinition = {
     { path: ".github/scripts/extract_proof_objects.py", runtime: "python", phase: "execute" },
     { path: ".github/scripts/update_proof_status.py", runtime: "python", phase: "execute" },
   ],
-  schemas: [
-    { module: "schemas/formalization-types", types: ["ProofObject", "ProofObjectsManifest", "ReviewRecord", "CoverageEntry"], access: "read-write" },
-  ],
   tags: ["tracking", "manifest", "status"],
 };

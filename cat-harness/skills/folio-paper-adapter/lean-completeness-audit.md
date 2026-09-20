@@ -1,6 +1,5 @@
 ---
 name: lean-completeness-audit
-roles: [collaborator, owner]
 description: >
   Audit Lean formalization completeness across all papers: verify Lake
   project setup, check import coverage, identify missing .lean files for

@@ -1,7 +1,6 @@
 ---
 name: one-voice-style-guide
 description: Author voice profile and narrative style guide. Reference when authoring or editing prose. Pairs with `one-voice-audit` (mechanical sweep for status leaks, emoji, and Unicode crashes).
-roles: [reader, collaborator]
 triggers:
   - "one voice style"
   - "voice profile"

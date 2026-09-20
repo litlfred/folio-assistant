@@ -468,6 +468,7 @@ jobs:
           bun run check:instance-render
           bun run harness:dirs:check
           bun run check:schema-nodes
+          bun run check:retired-front-matter
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition

@@ -225,7 +225,11 @@ describe("what the gate refuses to wave through", () => {
 
 describe("the real corpus", () => {
   test("every block is extracted prose with a valid provenance", () => {
+    // `undefined` means no `library` graph was declared, which is NOT an
+    // empty corpus — a test computed over it has checked nothing.
     const reports = checkAll(ROOT);
+    expect(reports, "no `library` declared under ROOT — this test would be vacuous").toBeDefined();
+    if (reports === undefined) return;
     expect(reports.length).toBeGreaterThan(0);
     for (const r of reports) {
       const q = r.requirements.find((x) => x.name === "narrative-provenance");

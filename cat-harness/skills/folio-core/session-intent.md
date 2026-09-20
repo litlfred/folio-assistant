@@ -1,7 +1,6 @@
 ---
 name: session-intent
 description: Session-start intent declaration + session-end results recording, against the goal-scoped master ledger and queue file. Enforces the durable-handoff discipline so any agent can pick up another's thread.
-roles: [reader, collaborator, owner]
 user_invocable: true
 ---
 

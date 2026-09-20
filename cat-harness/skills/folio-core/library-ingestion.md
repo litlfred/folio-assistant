@@ -1,6 +1,5 @@
 ---
 name: library-ingestion
-roles: [ingestion-agent, authoring-agent, collaborator, owner]
 description: >
   Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach
   for and why, what a complete L1 entry holds, and why an inferred structure is

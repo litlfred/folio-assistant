@@ -6,7 +6,6 @@ description: >-
   order and work non-conflicting items instead of stalling. Generalises AGENTS.md's
   5-minute idle trigger into a reusable skill. Use whenever blocked on an async
   wait with no substantive output to produce.
-roles: [reader]
 ---
 
 # idle-backlog

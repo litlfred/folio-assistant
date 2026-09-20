@@ -246,14 +246,36 @@ describe("L1 completeness", () => {
     expect(nd.every((r) => /bean \w+/.test(r.detail))).toBe(true);
   });
 
-  test("no library/ is 'nothing to check', not 'complete'", () => {
+  test("NO DECLARATION is undetermined — never 'nothing to check'", () => {
+    // Three states, and this is the one that used to be missing. A root with
+    // no `harness.json` returned `[]`, indistinguishable from a declared
+    // library holding nothing, and the CLI printed "nothing to check" and
+    // exited 0. Measured 2026-09-20: `bun run check:l1-complete` runs from
+    // the REPOSITORY root while the instance lives under `cat-harness/`, so
+    // the gate found no declaration and passed over four real entries.
+    const root = mkdtempSync(join(tmpdir(), "l1-undeclared-"));
+    made.push(root);
+    expect(checkAll(root)).toBeUndefined();
+  });
+
+  test("...and a DECLARED library holding nothing is `[]`, a real finding", () => {
     const root = mkdtempSync(join(tmpdir(), "l1-empty-"));
     made.push(root);
+    mkdirSync(join(root, "library"), { recursive: true });
+    writeFileSync(
+      join(root, "harness.json"),
+      JSON.stringify({
+        name: "t",
+        directories: [{ id: "library", path: "library/", graphs: ["library"] }],
+      }),
+    );
     expect(checkAll(root)).toEqual([]);
   });
 
   test("the real corpus passes every derivable requirement", () => {
     const reports = checkAll(join(import.meta.dir, "../.."));
+    expect(reports, "no `library` declared — this test would be vacuous").toBeDefined();
+    if (reports === undefined) return;
     expect(reports.length).toBeGreaterThan(0);
     const bad = reports.flatMap((r) =>
       r.requirements.filter((q) => q.state === "unmet").map((q) => `${r.slug}: ${q.name} — ${q.detail}`),
@@ -315,6 +337,8 @@ describe("the verdict as a committed sidecar", () => {
 
   test("the committed verdicts for the real corpus are current", () => {
     const root = join(import.meta.dir, "../..");
-    expect(staleSidecars(root, checkAll(root))).toEqual([]);
+    const all = checkAll(root);
+    expect(all, "no `library` declared — staleness over nothing proves nothing").toBeDefined();
+    expect(staleSidecars(root, all ?? [])).toEqual([]);
   });
 });

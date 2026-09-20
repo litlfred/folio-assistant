@@ -16,9 +16,5 @@ export const criticalPathAnalysis: SkillDefinition = {
     "assumption.*need",
     "context.*separation",
   ],
-  schemas: [
-    { module: "schemas/types", types: ["Block", "Chapter"], access: "read" },
-    { module: "schemas/formalization-types", types: ["DependencyEdge", "ProofObjectsManifest"], access: "read" },
-  ],
   tags: ["analysis", "dependencies", "critical-path"],
 };
