@@ -316,10 +316,13 @@ export function declaredArtefacts(): Map<string, { tool: string; source: string;
  * whether the site build wrote a file into `_site/`, and a check that answers a
  * question it cannot see is worse than one that declines to.
  *
- * **Coverage of the others is therefore now absent, not merely narrower** — an
- * artefact maintained by some other producer can rot to a 404 and nothing here
- * notices. That is the honest cost of the narrowing and it wants its own check,
- * against the published tree rather than against this script's output.
+ * **Coverage of the others is therefore now absent HERE, not merely narrower** —
+ * an artefact maintained by some other producer can rot to a 404 and nothing in
+ * this script notices. That was the honest cost of the narrowing, and it is now
+ * paid: `scripts/check-maintained-artefacts.ts` asks the same question where the
+ * answer exists, against the assembled `_site/` rather than against this script's
+ * output, and treats an unbuilt tree as could-not-determine rather than as a pass.
+ * Bean `6f1x`.
  *
  * `undeclared` is unchanged and still runs over everything produced: a file this
  * command writes with no Tool declaring it is the drift that put this relation

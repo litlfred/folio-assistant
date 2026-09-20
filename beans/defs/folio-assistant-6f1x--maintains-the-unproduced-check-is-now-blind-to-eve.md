@@ -67,8 +67,55 @@ it does not clear the artefacts it did not reach.
 
 ## Done when
 
-- [ ] `_site/` assembly asserts every `maintains.artefact` is present
-- [ ] could-not-determine distinguished from present, and never rendered as clean
-- [ ] `kg:schema:check`'s narrowing note updated to point at the new check
-      instead of describing an open gap
-- [ ] the drift test extended to cover the restored direction
+- [x] `_site/` assembly asserts every `maintains.artefact` is present —
+      `scripts/check-maintained-artefacts.ts`, wired into `docs-site.yml` after
+      assembly
+- [x] could-not-determine distinguished from present, and never rendered as clean
+      — **exit 2** for no argument, a missing directory, or zero claims; **exit 1**
+      for a real absence; **exit 0** only on a populated tree. All four verified
+- [x] `kg:schema:check`'s narrowing note updated — it now says the cost "is now
+      paid" and names the check, rather than describing an open gap
+- [ ] the drift test extended to cover the restored direction. Five tests cover
+      the new check directly; the two are still separate suites
+
+---
+
+## Done 2026-09-20 — the question is asked where the answer exists
+
+`scripts/check-maintained-artefacts.ts`, run by `docs-site.yml` **after `_site/`
+is assembled**, because that is the only place the answer exists. It does not
+build the site: then it would be testing its own build rather than the one that
+ships — the same seam `strip-preview-seo` uses.
+
+### The third state is the whole design
+
+| exit | meaning |
+|--:|---|
+| **0** | every claim's artefact is a file in the tree |
+| **1** | a claim names a path the built site does not carry — a 404 waiting to be followed |
+| **2** | **could not determine** — no argument, no such directory, or no claims at all |
+
+Exit 2 is why this is a script rather than a test. A test on a developer's
+checkout has no `_site/`, and one that quietly passed there would be green in
+exactly the place nobody built the site. That is how `docs-site.yml` failed all 30
+runs over two months without anybody noticing (bean `xom7`), and the shape is
+worth refusing twice.
+
+Zero claims also exits 2, not 0: a green run over no rows reads as coverage that
+is not there.
+
+### A directory at the artefact's path counts as ABSENT
+
+`maintains.artefact` names a document a consumer dereferences. A directory there
+serves an index or a 404 depending on the host, so passing on it would be passing
+on a coincidence of the filesystem. Pinned by a test that creates the path first
+as a directory, then as a file, and asserts the verdict flips.
+
+### One mistake worth recording
+
+The workflow step first went in by string-anchoring on a line inside a `run: |`
+block — which spliced YAML keys into the middle of a shell script and broke the
+file. Caught by parsing the YAML rather than by eyeballing the diff, reverted, and
+re-inserted at the real step boundary found by walking up past the next step's own
+leading comments. **Anchor on structure, not on a line that happens to be
+unique.**

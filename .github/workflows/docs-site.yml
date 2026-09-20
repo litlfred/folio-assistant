@@ -255,6 +255,22 @@ jobs:
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
+      # Every `maintains` claim, checked where the answer exists.
+      #
+      # A Tool's `maintains` asserts it is authoritative for a PUBLISHED artefact.
+      # `kg:schema:check` reconciles only the claims whose Tool invokes the schema
+      # exporter — it cannot see inside `_site/`, and a check that answers a
+      # question it cannot see is worse than one that declines to. So the rest were
+      # unchecked, and an unchecked claim that rots is a 404 a reader follows.
+      # Bean `6f1x`.
+      #
+      # Here, after assembly, the tree exists. An unbuilt tree exits 2
+      # (could-not-determine) rather than passing, which is the state that matters:
+      # this workflow failed all 30 runs over two months once, and a check that is
+      # green where nobody built the site is how that stays invisible.
+      - name: Every maintained artefact is in the published tree
+        run: bun run cat-harness/scripts/check-maintained-artefacts.ts ./_site
+
       # The QA witnesses, published at the path the badges already point at.
       #
       # They are COMMITTED under `test/results/witnesses/` — placement follows
