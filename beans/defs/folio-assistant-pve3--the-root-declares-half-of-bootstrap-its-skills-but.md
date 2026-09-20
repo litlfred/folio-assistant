@@ -103,3 +103,31 @@ would then need auditing from bootstrap's own instance, which is the
 **The entry is written and held**, with its full rationale, in the commit
 message of the `7u3g` work. Ruling either way is a one-line change from here:
 "both" inserts it, "neither" removes the `bootstrap` entry beside it.
+
+
+## ANSWERED IN PRACTICE, 2026-09-20 — by a sibling, and it is "neither"
+
+A sibling session reached this independently and landed the answer on `main`:
+
+    ec680daf57  Revert 907cad61b — the bootstrap declaration re-introduces
+                the isolation leak
+    b94141f6ce  Restore only the log-message DI
+
+So the declaration was tried, the leak it causes was measured a second time by
+somebody who did not know this bean existed, and it was REVERTED. That is
+"neither" arrived at twice from two directions, which is stronger evidence than
+either pass alone — and it matches what the guard test has been saying all along.
+
+What the revert kept is the part that was never the decision: `log-message.bpmn`
+had no diagram interchange, which is a defect whichever way this bean goes.
+
+**This bean is not closed by that.** The revert settles "do not declare both
+halves"; it does not settle the OTHER half. The root still carries
+`bootstrap/skills/`, so the three dangling `bindsLane` links and the `v3se`
+name collision are still live, and the three diagrams are still reachable from
+no consumer. "Neither" means dropping the skills entry too, and nobody has done
+that.
+
+Remaining for the author: confirm that "neither" is the intent, which makes
+`v3se` fall out for free and moves bootstrap's skills out of folio-assistant's
+published docs.

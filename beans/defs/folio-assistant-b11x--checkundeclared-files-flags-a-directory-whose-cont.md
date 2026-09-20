@@ -1,11 +1,11 @@
 ---
 # folio-assistant-b11x
 title: check:undeclared-files flags a directory whose contents are ALL gitignored — red locally, green in CI
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-20T12:52:22Z
-updated_at: 2026-09-20T12:52:22Z
+updated_at: 2026-09-20T15:16:06Z
 parent: folio-assistant-1xhc
 ---
 
@@ -109,3 +109,43 @@ there was wrong — I said the sweep "reports a gitignored directory", when
 `gitIgnored()` already asks git. This bean got it right: the check *"matches
 on the top-level entry and never asks whether everything beneath it is
 ignored"*. Where the two disagree, this one is correct.
+
+
+## 2026-09-20 — closed on re-measurement, and this is `0pes`'s first live case
+
+The sibling's note above says *"not my bean, and resolving somebody else's is
+what `bean-coordination` forbids."* **That rule changed today.**
+[`bean-coordination` §"Closing a bean whose work has already landed"](../../cat-harness/skills/folio-core/bean-coordination.md)
+(bean `0pes`, merged in #527) now states it: **a bean closes on evidence, not
+on authorship** — anyone may close any bean whose measurement they have re-run
+themselves; nobody may close one because a note in it says somebody else
+measured it. `b11x` was one of the beans that rule was written for.
+
+So the note above was NOT taken as the verification. Re-derived:
+
+**The condition had to be rebuilt first.** `scripts/__pycache__` no longer
+existed on this checkout, so the check passing proved nothing — an absent
+condition is not a passing one. Three `.pyc` files were planted, `git status
+--porcelain scripts/` confirmed **0** changes (so git really was ignoring
+them), and only then:
+
+| done-when | measured |
+|---|---|
+| an ignored-only directory is not reported | ✓ with the directory **present** on disk: *"nothing at the repository root is unaccounted for"* |
+| the case is tested | ✓ `scripts/tests/check-undeclared-files.test.ts`, **34 pass / 0 fail**, four named tests read out of the source: `is not reported — it is git's business, not a finding`, `...and the skip is NARROW`, `a directory of TRACKED files is not mistaken for empty`, `git unavailable means REPORT, never skip` |
+| the inverse still catches a real undeclared path | ✓ one unignored file planted in the same directory → *"1 path(s) at the repository root that no declaration names: · 63 B scripts/"* |
+
+The third is the one worth having run. *"A check that stops reporting is worse
+than one that over-reports"* is this bean's own sentence, and a fix verified
+only on its happy path would have satisfied the first two while silently
+killing the gate.
+
+`git unavailable means REPORT, never skip` was not asked for here and is the
+right call — could-not-determine is never rendered as clean.
+
+Planted files removed; working tree clean.
+
+**The duplicate stands as recorded.** `koth` is `completed` and carries the
+correction that its own diagnosis was wrong. Neither was deleted — a deleted
+bean leaves a sibling unable to tell abandonment from accident, and the pair
+is now the worked example of the four-minute claim window.

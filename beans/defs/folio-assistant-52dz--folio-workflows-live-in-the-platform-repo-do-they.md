@@ -184,3 +184,83 @@ change.
       never been run once. A workflow with no runs is invisible to
       `check:ci-health` by construction, so "fixed" here is unobservable
       until something dispatches them
+
+## 2026-09-20: the per-workflow classification, measured
+
+This bean's first "Done when" — *"decide: shipped-for-a-folio, or dead since
+the split, per workflow"*. Here is the evidence. **The framing "vendored by
+folios" turns out to be false**, which changes the answer.
+
+### Which workflows even need a folio
+
+Six reference a folio tree (`cd content`). Not the eight this bean assumed,
+and `conditional-class-banner-audit` has no workflow file at all:
+
+| workflow | trigger | `cd content` | runs, ALL TIME | vendored by qou? |
+|---|---|---|---|---|
+| `publish.yml` | dispatch **+ workflow_call** | 7 | 1 (2026-06-24, failure) | no — **qou CALLS it** |
+| `qa-sweep.yml` | dispatch | 4 | 267 (last 2026-08-09, failure) | no |
+| `blueprint.yml` | dispatch | 1 | **0** | no |
+| `lean-build.yml` | dispatch | 1 | **0** | no |
+| `lean_ci.yml` | dispatch | 1 | **0** | no |
+| `section-title-audit.yml` | dispatch | 1 | **0** | no |
+
+### `publish.yml` is NOT in question, and that is settled
+
+It declares `workflow_call` and has a NAMED LIVE CALLER: qou's
+`.github/workflows/build.yml:10` does
+`uses: litlfred/folio-assistant/.github/workflows/publish.yml@main`. Its own
+header says so, and adds the reason its calls had never run — *"a reusable
+workflow must declare `workflow_call` to be callable at all"*, which it now
+does.
+
+So `publish.yml` is the platform's **published interface** to folios. It
+belongs here, it is not dead, and moving it would break qou. Remove it from
+this bean's scope.
+
+### The other five: nothing ships them
+
+Two independent measurements, and they agree:
+
+1. **qou vendors NONE of them.** The only real folio has 13 workflows of its
+   own — `lean-axiom-guard`, `lp-dual-gate`, `probe-float64-gate`,
+   `witness-staleness`, `word-provenance-gate`, … — every one folio-specific,
+   plus `build.yml` which calls the platform. Zero overlap with the six.
+2. **`folio_init` writes no workflows at all.** `grep -c '\.github/workflows'
+   cat-harness/scripts/init-folio.ts` → **0**.
+
+So *"the platform ships the workflow a folio will use"* — the reading
+`AGENTS.md` offers and this bean inherited — **is not the operative state**.
+Nothing ships them. There is no mechanism that would, and the one folio that
+exists grew its own instead.
+
+`workflow-paths-resolve.test.ts`'s header asserts *"Most workflows here are
+VENDORED BY FOLIOS"* and names `lean_ci.yml` as an example. That is **not true
+of qou**, which is the only folio to check it against. The claim may have been
+true of an earlier arrangement; it should not be quoted as current.
+
+### What is still the owner's, now better posed
+
+The question is no longer "platform or folio_init". It is:
+
+> Five workflow files sit in `.github/workflows/` where GitHub lists them,
+> offers a Run button, and counts them — four with **zero runs ever**. They
+> are not templates, because nothing copies them. Should they be
+> (a) made into templates `folio_init` actually writes, (b) moved to
+> `fsh-guts/` as superseded, or (c) left as reference material somewhere
+> that is not a live workflow directory?
+
+A template in `.github/workflows/` is indistinguishable from a workflow — it
+is dispatchable, it inflates every count, and `check:ci-health` carries
+exemptions for it. That is `5rfy`'s "29 of 32 never fire" as a standing cost.
+
+**Not acted on.** `deletion-requires-confirmation`: nothing moves to
+`fsh-guts/` on an agent's own initiative, and never `rm`.
+
+## Done when (revised)
+
+- [x] decide, per workflow, with evidence — table above
+- [x] `publish.yml` established as a live interface, out of scope
+- [x] the "vendored by folios" premise checked against the only folio: FALSE
+- [ ] **owner:** the five — templates `folio_init` writes, `fsh-guts/`, or
+      reference material outside `.github/workflows/`?

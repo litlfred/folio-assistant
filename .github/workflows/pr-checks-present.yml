@@ -1,0 +1,172 @@
+# Which open pull requests have NO CI run on their head?
+#
+# Bean `3pqn`. A pull request showing zero checks is indistinguishable from one
+# whose checks have not started, so "nothing red" is not "nothing wrong" — it is
+# *nothing was asked*. `check:head-has-run` answers this for one commit when
+# somebody remembers to look; this is the half that looks when nobody does,
+# which is the whole point, because a zero-check PR is invisible PRECISELY
+# because nobody is looking.
+#
+# Measured 2026-09-20 over the six open pull requests here: TWO had no run of
+# any kind on their head.
+#
+# HOURLY, and the cadence is an argument rather than a default: most pull
+# requests in this repository live less than a day, so a daily sweep would
+# notice after the merge. The owner chose hourly, a 15-minute age gate, and
+# both reporting channels on 2026-09-20.
+# TRIGGERS, ACTUAL: `schedule` (hourly) and `workflow_dispatch` only.
+# The prose above is about pull requests as the SUBJECT of the sweep, not as a
+# trigger for it — this workflow deliberately does NOT fire on `pull_request`.
+#
+# Firing per-PR would ask the question at the one moment it cannot be answered:
+# the instant of the push, before any run could exist. The point is to look
+# LATER, once a missing run has become a fact rather than a not-yet.
+#
+# The hourly cadence, the 15-minute age gate and the two reporting channels are
+# the owner's decision, 2026-09-20, taken against a measurement: two of the six
+# open pull requests had no run on their head at that moment.
+name: PRs without checks
+
+on:
+  schedule:
+    # :37 — off the hour deliberately. GitHub's scheduler queues heavily at :00,
+    # and a delayed run is a run whose report is stamped later than the state it
+    # describes. Same reasoning as `health-check.yml`.
+    - cron: '37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: pr-checks-present
+  cancel-in-progress: false
+
+jobs:
+  report:
+    name: Open PRs whose head has no run
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Sweep
+        id: check
+        run: |
+          set +e
+          bun run check:prs-have-runs --min-age-minutes 15 --out "$RUNNER_TEMP/pr-checks.md"
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          # 0 clean · 1 findings · 2 could not determine. Anything else is a
+          # crash in the sweep and is treated as could-not-determine — the
+          # report file separates them, because `--out` is written before any
+          # exit path, so a real finding always has one and a crash does not.
+          report="$RUNNER_TEMP/pr-checks.md"
+          if [ "$status" = "1" ] && [ ! -s "$report" ]; then
+            echo "::warning::sweep exited 1 without writing a report — treating as unchecked"
+            status=2
+          fi
+          case "$status" in
+            0) echo "verdict=clean" >> "$GITHUB_OUTPUT" ;;
+            1) echo "verdict=findings" >> "$GITHUB_OUTPUT" ;;
+            *) echo "verdict=unknown" >> "$GITHUB_OUTPUT" ;;
+          esac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Ensured for BOTH issue paths. The clean path filters on this label too,
+      # and on a repository where nothing has ever been found it would not
+      # otherwise exist. Skipped on `unknown`, where neither path runs and a
+      # label hiccup must not be what fails the job.
+      - name: Ensure the tracking label exists
+        if: steps.check.outputs.verdict != 'unknown'
+        run: gh label create pr-no-checks --color D93F0B --description "Open PRs whose head has no CI run" --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Open or EDIT the one tracking issue
+        if: steps.check.outputs.verdict == 'findings'
+        run: |
+          body="$(cat "$RUNNER_TEMP/pr-checks.md")"
+          existing="$(gh issue list --label pr-no-checks --state open --limit 1 --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            # EDITED IN PLACE, never commented on: an edit does not notify, and
+            # a watchdog that appends hourly becomes a feed nobody reads.
+            gh issue edit "$existing" --body "$body"
+          else
+            gh issue create --label pr-no-checks \
+              --title "Open pull requests with no CI run on their head" --body "$body"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ONE comment per (pull request, head sha) — never one per sweep. The
+      # owner asked for both channels; hourly comments without this marker
+      # would put twenty-four notifications a day on one unchanged PR, which is
+      # how a warning gets muted.
+      - name: Comment once on each affected pull request
+        if: steps.check.outputs.verdict == 'findings'
+        run: |
+          bun run check:prs-have-runs --min-age-minutes 15 2>/dev/null \
+            | awk '/^  ✗ #/ { gsub("#","",$3); print $3 }' > "$RUNNER_TEMP/affected.txt" || true
+          while read -r pr; do
+            [ -n "$pr" ] || continue
+            sha="$(gh pr view "$pr" --json headRefOid --jq .headRefOid)"
+            marker="<!-- pr-no-checks:$sha -->"
+            if gh pr view "$pr" --json comments --jq '.comments[].body' | grep -qF "$marker"; then
+              echo "already told #$pr about $sha"
+              continue
+            fi
+            # Indented to stay inside the YAML block scalar. Unindented, these
+            # lines end the scalar and the file will not parse — which
+            # `check:workflow-coverage` reports as COULD NOT DETERMINE rather
+            # than as an uncovered workflow, and is how this was caught.
+            body="$marker
+
+            **This pull request's head has no CI run of any kind.**
+
+            Zero checks looks exactly like checks-not-yet-started, so \"nothing
+            red\" here is not \"nothing wrong\" — it is *nothing was asked*.
+            Merging on it merges unverified.
+
+            Re-pushing may not produce a run: on 2026-09-20 two consecutive
+            pushes were both dropped, the second 26s after the first. Dispatch
+            the workflow against this ref and read that run instead.
+
+            Bean \`3pqn\`. Checked with \`bun run check:head-has-run\`."
+            gh pr comment "$pr" --body "$(echo "$body" | sed 's/^            //')"
+          done < "$RUNNER_TEMP/affected.txt"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Close the tracking issue when every head has a run
+        if: steps.check.outputs.verdict == 'clean'
+        run: |
+          existing="$(gh issue list --label pr-no-checks --state open --limit 1 --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Every open pull request's head now has a CI run."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Closing on `unknown` would be the precise failure the whole family is
+      # built to refuse: a sweep that could not read the pull request list has
+      # not established that every head has a run.
+      - name: Refuse to report success on an unchecked repository
+        if: steps.check.outputs.verdict == 'unknown'
+        run: |
+          echo "::error::Could not determine which PRs have runs (exit ${{ steps.check.outputs.status }})."
+          echo "::error::Treat this as unknown, not as clean. The tracking issue was left untouched."
+          exit 1

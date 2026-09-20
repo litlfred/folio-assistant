@@ -88,7 +88,6 @@ A `userTask`, and the lane admits `person` and `agent` — a review agent is a l
 In the Agent lane, because this step produces the analysis and does not make the decision — `PM_Decide` is a `userTask` whose lane admits `person` only, and putting the analysis in the agent's lane is what keeps that separation legible rather than implied. A subprocess that decided would be a second accepting party.
 
 Reached through the loop as well as straight through: `SF_UA_8` re-enters at `A_Impact`, so a run where the reviewer found something fixable arrives here a second time with different evidence. That is a genuine re-analysis and its `op="note"` appends rather than deduping, which is the behaviour wanted — a second note records that the options were weighed again against changed inputs.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:userTask id="PM_Decide" name="Adopt, hold&#10;or decline">
       <bpmn:documentation>A PERSON decides. The lane admits `person` only, so `activity-fulfilment-kind` fails the moment somebody makes an agent the accepting party, and `relaxable="false"` means no package may relax the step.
