@@ -148,6 +148,15 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // The unattended PR sweep and its `gh` plumbing. `ci-only` rather than a
+    // gate, for the same reason the script itself is exempt: a CI job asking
+    // whether a commit has a CI run has already answered it. Bean `3pqn`.
+    match: "check:prs-have-runs",
+    kind: "ci-only",
+    reason:
+      "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
+  },
+  {
     match: "bun install",
     kind: "ci-only",
     reason: "installing dependencies is not a check; every workflow opens with it",
