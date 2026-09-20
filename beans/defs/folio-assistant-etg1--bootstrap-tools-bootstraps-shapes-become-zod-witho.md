@@ -56,12 +56,12 @@ and, sharpening it:
 
 So: NO import, NO dependency, NO package.json entry, NO build step of its own.
 Generation is a PIPELINE concern running in main and gh-pages rendering, from
-`bootstrap-tools/schemas/*.ts`. Bootstrap is where the output LANDS. Read from
+`cat-bootstrap-tools/schemas/*.ts`. Bootstrap is where the output LANDS. Read from
 inside `cat-bootstrap/`, the two .json files are just files, as today.
 
 ## Done when
 
-- `bootstrap-tools/` exists as a SIBLING top-level instance (never nested under
+- `cat-bootstrap-tools/` exists as a SIBLING top-level instance (never nested under
   cat-bootstrap — that would put .ts inside the tree an Initiator is told has
   no tools), declaring a `schemas` graph.
 - The two schemas are Zod .ts there, and appear in the schema viewer.
@@ -76,7 +76,11 @@ inside `cat-bootstrap/`, the two .json files are just files, as today.
 
 ## Open
 
-1. Name: owner wrote `bootstrap-tools`; existing instances prefix `cat-`.
+1. ~~Name~~ SETTLED, owner 2026-09-20: **`cat-bootstrap-tools`**. It takes the
+   `cat-` prefix every other instance here uses, so its relation to
+   `cat-bootstrap` is legible from the name alone — which matters more than
+   usual, because the point of the split is that a reader can tell at a
+   glance which tree an Initiator may read and which it may not.
 2. Whether the generated .json carries a provenance header. It would not make
    bootstrap know zod, and it is what stops a hand-edit — but it is a line an
    Initiator reads and must not be confused by.
