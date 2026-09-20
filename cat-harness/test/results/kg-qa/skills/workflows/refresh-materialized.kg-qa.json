@@ -1,0 +1,82 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_RefreshMaterialized",
+    "path": "skills/workflows/refresh-materialized.bpmn"
+  },
+  "source_hash": "sha256:df97bb71707edbcd4475aaebff4fa8fc486770040ede8d432f6591da56e75aa7",
+  "criteria": {
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Fixity",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Upstream",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Local",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Adjudicate",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Apply",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 7,
+    "fail": 1,
+    "n/a": 3,
+    "unknown": 0
+  }
+}

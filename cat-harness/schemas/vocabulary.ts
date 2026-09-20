@@ -201,6 +201,16 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Structure ────────────────────────────────────────────────────────
   partOf: { gloss: "The node this one belongs to." },
   inPackage: { gloss: "The skill package a skill ships in." },
+  inSubgraph: {
+    gloss:
+      "The DECLARED DIRECTORY a node was projected from — the named subgraph it belongs to, as a " +
+      "link to that directory's own node rather than a bare id. Derived from the instance's " +
+      "declaration, longest path prefix winning, and INHERITED through `partOf` for nodes that " +
+      "have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no " +
+      "value belongs to no declared directory — vocabulary nodes are minted from the namespace " +
+      "rather than from any file — and that absence is reported as its own state rather than " +
+      "folded into a default.",
+  },
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
   path: { gloss: "A declared directory's path, relative to the instance root." },

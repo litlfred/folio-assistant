@@ -1,0 +1,115 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_MaterializeRemote",
+    "path": "skills/workflows/materialize-remote.bpmn"
+  },
+  "source_hash": "sha256:d4dcbb4933cd679668d955f0dc63b87520de90faefd063767326d666d282a0c8",
+  "criteria": {
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Purpose",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Size",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Restrictions",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Copyright",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Retention",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_SourceLoss",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Fetch",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_Declare",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        },
+        {
+          "where": "Task_StayRef",
+          "detail": "names skill \"materialize-remote\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Restrictions",
+          "detail": "\"RESTRICTIONS unknown is an answer, not a green light\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_Copyright",
+          "detail": "\"COPYRIGHT per bitstream, and for the derived work\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_Retention",
+          "detail": "\"RETENTION what expires this copy\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_SourceLoss",
+          "detail": "\"SOURCE LOSS what survives if the origin goes\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 2,
+    "n/a": 3,
+    "unknown": 0
+  }
+}
