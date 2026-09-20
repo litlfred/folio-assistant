@@ -109,3 +109,64 @@ Measured, so the requirements start from what is there:
 - [ ] a note carries a position and an attachment, both optional
 - [ ] the board collapses to a linear rendering that is complete, not degraded
 - [ ] a note attached to content renders as a badged icon on it, and opens
+
+---
+
+## RULED, 2026-09-20 — board positions are COMMITTED, in one file per board
+
+Put to the owner with four options and the merge hazard stated; they chose:
+
+> **Committed, one positions file per board.**
+
+So a note's position is **shared, publishable and survives a fresh clone** —
+not `localStorage`, which the discard control already demonstrates the limits
+of ("this browser only"), and not a field on each note, which would put a
+rendering coordinate into the work plan and make every move its own file's
+conflict.
+
+### Why one file rather than per-note, in the owner's own precedent
+
+The merge hazard is real and was not waved away — it is **contained**, using a
+fix this repository proved on 2026-09-20 in `gen-docs-pages.ts`:
+
+> Minified, this file is ONE LINE of ~12 KB. Git merges text by line, so a
+> single line means any change on both sides of a merge is a whole-file
+> conflict — two branches adding two different todos cannot both win. That is
+> not hypothetical: it conflicted on three consecutive merges of one branch on
+> 2026-09-20, every time.
+
+Indented, one note per line, sorted by id, two sessions moving **different**
+notes merge untouched. **It is a partial fix and the limit is known**: two
+notes that sort ADJACENT still conflict, because the inserted lines overlap.
+That was measured on a scratch repository rather than reasoned about, and the
+same limit applies here — so this removes the guaranteed conflict, not every
+conflict.
+
+### What follows, and none of it is optional
+
+- **The ordering must be deterministic**, or every save reshuffles and
+  conflicts anyway. The todo index earns its mergeability only because
+  `readTodoFiles` sorts; a positions file needs the same guarantee stated and
+  tested, not assumed.
+- **It is a new declared artefact**, so it owes a graph kind, a directory
+  declaration, and — under `2krx` — a visualiser and a documentation entry. The
+  kind's LAYER is the question to settle first: this is `state` (written by a
+  running process), which puts it beside `beans/workflows/` rather than beside
+  `folio/`. See `content-context-and-state-graphs`.
+- **Writing it needs a writable datastore**, which `harness-instances.md`
+  still lists as an open owner question — gh-pages is static. So the board is
+  READABLE everywhere and writable only where there is a git path, which is the
+  same conditional that page already states rather than a new one.
+- **A position for a note that no longer exists is an orphan**, and orphans are
+  reported rather than silently dropped. Same rule `gen-docs-pages` applies to
+  QA projections.
+
+### This unblocks `ivfw`'s move half
+
+`ivfw`'s theme half shipped 2026-09-20; its *"you cant move around dispaly"*
+half was left explicitly because the two must agree rather than ship two
+notions of position. They now can. The movement model must stay
+keyboard-driven — `docs-ui.js` ~2006 records the Pin button as a deliberate
+choice over a drag, and this instance's declared interaction profile is
+low-dexterity. **Drag may be added ON TOP as an accelerator; it must not be the
+only way in.**
