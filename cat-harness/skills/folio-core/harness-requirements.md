@@ -2,11 +2,13 @@
 name: harness-requirements
 description: >
   What an instance OWES for every directory it declares — a visualiser, a
-  documentation entry, a governing skill, and a starting README of its own.
-  Read before declaring a directory, before adding a graph kind, and when
-  reading `check:subgraph-coverage`. Carries which obligations are ranked as
-  unmet promises rather than unanswered questions, and why the discriminator
-  is "is this the static knowledge graph".
+  documentation entry, a governing skill, json/jsonld/schema.json
+  serialisations at the directory's URL and at every node beneath it, and a
+  starting README of its own. Read before declaring a directory, before adding
+  a graph kind, and when reading `check:subgraph-coverage`. Carries which
+  obligations are ranked as unmet promises rather than unanswered questions,
+  why the discriminator is "is this the static knowledge graph", and which
+  single obligation a harness may never waive.
 consulted: true
 allowed-tools: Read Grep Glob Bash
 ---
@@ -21,16 +23,17 @@ an agent is handed something that governs it.
 The axis that measures them is `bun run check:subgraph-coverage`. This skill is
 how to read it and what to do before adding to it.
 
-## The four obligations
+## The five obligations
 
 | obligation | declared as | the question it answers |
 |---|---|---|
 | **visualiser** | `coverage.visualiser` on the directory entry | can a person LOOK at this? |
 | **docs** | `coverage.docs` | can a person READ ABOUT this? |
 | **skill** | `coverage.skill` | is an agent handed something that GOVERNS this? |
+| **serialisations** | `coverage.serialisations` | is each node ADDRESSABLE as json, jsonld and schema.json? |
 | **README** | an `instance-readme` asset, inside the instance | can a reader ENTER this instance at all? |
 
-The first three are per declared directory. The fourth is per instance, and it
+The first four are per declared directory. The fifth is per instance, and it
 is ranked harder: an instance with no starting README of its own is not a gap
 somebody has not filled, it is an instance a reader cannot enter.
 
@@ -126,11 +129,80 @@ questions, and a visualiser's declaration answers the first. Do not compose the
 second by hand — that is what produced four incompatible URL shapes across four
 open branches on 2026-09-20.
 
+## Serialisations — the obligation that cannot be waived
+
+The owner, 2026-09-20, in two rulings that belong together:
+
+> all dir urls should have json, jsonld, schema.json like
+> `<base-url>/beans.jsonld`
+
+> also subpaths must remain addressable… like `<base-url>/beans/bean-id.jsonld`,
+> json and schema etc if there, harnesses cannot override there being in the KG
+
+So a declared directory owes **two levels** of addressability, and they are
+different promises:
+
+| level | URL | what it asserts |
+|---|---|---|
+| the directory | `<base>/beans.json`, `.jsonld`, `.schema.json` | this graph exists and here is its shape |
+| every node in it | `<base>/beans/<node-id>.json`, `.jsonld`, `.schema.json` | each node is individually in the graph |
+
+**"if there" is doing real work in that sentence.** A node that carries no
+schema does not acquire one by being published; the rule is that whatever the
+node HAS is reachable, not that a missing form is invented. A `.schema.json`
+that 404s where no schema exists is honest. A `.jsonld` that 404s where the
+node exists is the defect.
+
+### Why this one takes no `exempt`
+
+Every other obligation here is waivable with a reason, because rendering,
+documenting and governing are choices about **effort** and a considered
+exception is worth recording. This one is not waivable, and the wording of the
+ruling says why: *harnesses cannot override there being in the KG.*
+
+Addressability is not effort, it is the **existence claim**. A harness that
+could waive it could declare a directory into the knowledge graph and then make
+its contents unreachable — which is the `dh4f` defect with a signature on it, a
+consumer scanning nothing and reporting a clean run over it.
+
+**`hfkl` is the proof rather than the exception.** `cat-bootstrap` is excused a
+visualiser — *"it is exception to harness/layer not having visualtion/workflow
+visualizer. but it must have its json/jsonld… that is its existence."* The
+thing it is excused INTO is this obligation. A floor that the one exempt case
+is exempt *to* cannot itself be exempt from.
+
+So: **the visualiser is the courtesy, the serialisation is the existence
+claim.** `SubgraphCoverageSchema.exempt` carries three keys and not four, and
+`tsc` enforces it — adding `serialisations` to `CRITERIA` turned the checker's
+waiver lookup into a type error rather than a silent `undefined` that would
+have read as "not exempted" and worked by luck.
+
+### How it fits the render pipeline
+
+The pipeline the sibling branches are converging on is four parts per graph —
+**reader → projection → viewer → gate** (PR #583 for `schemas/` and `library/`,
+this branch for the state graphs). The serialisation obligation is a
+constraint on the **projection**, not a fifth part:
+
+- a projection already exists for every browsable graph, and it is already
+  published under the graph's own segment;
+- what this adds is that it must be reachable by the three content types at
+  the directory's URL, and per node beneath it;
+- so a graph that has done the pipeline work has mostly done this, and a graph
+  that has not cannot claim to be in the KG at all.
+
+**Do not compose these URLs by hand.** `o7eq` records that hand-composition
+produced four incompatible URL shapes across four open branches on a single
+day. The directory's declaration answers which directory holds the nodes; the
+published-URL resolver answers where they are served.
+
 ## Before you declare a directory
 
 1. **Say what renders it, documents it and governs it**, or say why it needs
    none — `coverage.exempt.<criterion>` takes a reason, and a waiver with no
    reason is a silence list.
+1. **Say what serialises it**, and do not look for a waiver: there is none.
+   A directory whose nodes are not addressable has not entered the graph.
 2. **Declare only what exists.** A declared-but-absent directory is the `dh4f`
    defect: a consumer scans nothing and reports a clean run over it.
 3. **Check the kind's layer.** If it is not `content`, you are promising a
@@ -174,4 +246,7 @@ Three rules for reading it, the same three every sweep here follows:
   what `holds` means, and the one question that settles a kind
 - [`kg-viewer`](kg-viewer.md) — the viewer this repository already ships
 - `bun run check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
-  `owesVisualiser()` — the obligation
+  `owesVisualiser()` — the visualiser obligation, and
+  `SubgraphCoverageSchema.serialisations` — the one that takes no waiver
+- [`url-space`](../../../beans/defs/) — bean `o7eq` for where a rendered
+  asset is addressed, and why not to compose that URL by hand

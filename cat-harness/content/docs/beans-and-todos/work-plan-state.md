@@ -25,15 +25,15 @@ and the page computes age when you open it. Age therefore moves without the
 file moving, which is the right way round.
 
 **There is a fuller view, and it is browsable.** Every declared state graph
-gets its own dashboard at the path this instance already uses for that graph —
-`/beans/dashboard/`, `/todos/dashboard/`, and one for each of the others. The
+gets its own visualiser at the path this instance already uses for that graph —
+`/beans/`, `/todos/`, and one for each of the others. The
 route is not this page's invention: bean `o7eq` carries the owner's ruling that
 a rendered asset is addressed by its instance's **name** with the **declared
 graph as a path segment**, and that this instance elides its own name because
-its `docs/` is what the site serves. There is no index above them, because
-`/` is the documentation site's — so each dashboard lists its siblings, which
-is what makes them registered sub-visualisations rather than six unrelated
-pages.
+its `docs/` is what the site serves, and the `harness-requirements` skill
+names that exact URL as the obligation — *"a requirement of them is to provide
+visualisers accessible at `<base-url>/beans`"*. There is no index above them,
+because `/` is the documentation site's, so each page lists its siblings.
 
 **A graph with no projection says so.** `qa`, `health`, `issue-marks` and
 `uploads` are declared state graphs that nothing publishes a projection for

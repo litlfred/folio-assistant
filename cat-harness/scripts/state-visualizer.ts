@@ -8,12 +8,26 @@
  *
  * > i think policy in `<base-url>/<cat-harness-path-to-kind>/dashboard`
  *
+ * and, settling it:
+ *
+ * > beans/ todos/ fsh-guts/ etc are all directories installed by a harness
+ * > kind. a requirement of them is to provide visualisers accessible at
+ * > `<base-url>/beans` `<base-url>/todos/` etc.
+ *
  * ## The route, and it is a POLICY rather than this generator's choice
  *
  * ```
- * <base>/<graph>/dashboard/   the dashboard for one declared state graph
+ * <base>/<graph>/          the visualiser for one declared state graph
  * <base>/assets/<graph>/index.json   its data, published by gen-docs-pages.ts
  * ```
+ *
+ * **At the directory's own URL, with no `/dashboard` beneath it.** That is the
+ * obligation `harness-requirements` states — *"a requirement of them is to
+ * provide visualisers accessible at `<base-url>/beans`"* — and it is the same
+ * address `gen-schema-viz.ts` publishes at, so the two agree by construction
+ * rather than by coincidence. An earlier draft put the page one segment
+ * deeper, which left `<base>/beans` a 404: the obligation names that URL, so
+ * a page beside it does not meet it.
  *
  * Bean `o7eq` carries the owner's three rulings on the published URL space,
  * and all three bind here:
@@ -302,7 +316,7 @@ function registry(graphs: StateGraph[], current: string): string {
     const here = g.id === current;
     const name = here
       ? `<span class="sv-here">${esc(g.id)}</span>`
-      : `<a href="../../${esc(g.id)}/dashboard/">${esc(g.id)}</a>`;
+      : `<a href="../${esc(g.id)}/">${esc(g.id)}</a>`;
     return `  <li class="sv-item${here ? " is-here" : ""}">
     <h2>${name}<span class="sv-tag is-${g.state}">${g.state}</span></h2>
     <p>${esc(g.description || g.path)}</p>
@@ -314,7 +328,7 @@ ${rows}
 </ul>`;
 }
 
-/** `<base>/<graph>/dashboard/` — one declared state graph. */
+/** `<base>/<graph>/` — the visualiser for one declared state graph. */
 function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
   const head =
     `<h1>${esc(g.id)}</h1>` +
@@ -342,7 +356,7 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
   //
   // `../../assets/<id>/index.json` — the projection `gen-docs-pages.ts`
   // already publishes, read relative to this page rather than composed.
-  const src = `../../assets/${esc(g.id)}/index.json`;
+  const src = `../assets/${esc(g.id)}/index.json`;
   const metas = [
     g.id === "beans"
       ? `<meta name="fa-beans-src" content="${src}">`
@@ -379,7 +393,7 @@ for (const g of taken) {
 const graphs = all.filter((g) => !taken.includes(g));
 
 for (const g of graphs) {
-  emit(join(SITE, g.id, "dashboard", "index.html"), dashboardPage(g, graphs));
+  emit(join(SITE, g.id, "index.html"), dashboardPage(g, graphs));
 }
 
 if (check) {

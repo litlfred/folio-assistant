@@ -22,11 +22,11 @@ const SITE = join(ROOT, siteDirFor(ROOT));
 
 /** A dashboard's committed page. */
 const read = (graph: string) =>
-  readFileSync(join(SITE, graph, "dashboard", "index.html"), "utf-8");
-const has = (graph: string) => existsSync(join(SITE, graph, "dashboard", "index.html"));
+  readFileSync(join(SITE, graph, "index.html"), "utf-8");
+const has = (graph: string) => existsSync(join(SITE, graph, "index.html"));
 
 describe("the route is the policy, not this generator's choice", () => {
-  test("a dashboard sits at <graph>/dashboard/, one per declared state graph", () => {
+  test("the visualiser is AT the directory's own URL, one per declared state graph", () => {
     for (const id of ["beans", "todos", "qa", "health", "issue-marks", "uploads"]) {
       expect(has(id)).toBe(true);
     }
@@ -40,6 +40,10 @@ describe("the route is the policy, not this generator's choice", () => {
     expect(existsSync(join(SITE, "folio-assistant"))).toBe(false);
     expect(existsSync(join(SITE, "state"))).toBe(false);
     expect(existsSync(join(SITE, "state-visualizer"))).toBe(false);
+    // And no segment BENEATH the directory either. `harness-requirements`
+    // names `<base-url>/beans` as the obligation, so a page one level deeper
+    // leaves that URL a 404 and does not meet it.
+    expect(existsSync(join(SITE, "beans", "dashboard"))).toBe(false);
   });
 
   test("the segment is the declared ID, because two paths basename alike", () => {
@@ -49,14 +53,14 @@ describe("the route is the policy, not this generator's choice", () => {
     // would silently overwrite the other.
     expect(has("qa")).toBe(true);
     expect(has("health")).toBe(true);
-    expect(existsSync(join(SITE, "results", "dashboard", "index.html"))).toBe(false);
+    expect(existsSync(join(SITE, "results", "index.html"))).toBe(false);
   });
 });
 
 describe("each page reads the projection that already exists", () => {
   test("relative to itself, at the depth its own route implies", () => {
-    expect(read("beans")).toContain('content="../../assets/beans/index.json"');
-    expect(read("todos")).toContain('content="../../assets/todos/index.json"');
+    expect(read("beans")).toContain('content="../assets/beans/index.json"');
+    expect(read("todos")).toContain('content="../assets/todos/index.json"');
   });
 
   test("and that projection is really there", () => {
@@ -101,15 +105,15 @@ describe("what a page may claim", () => {
     }
     // The link to beans is on every page EXCEPT the beans page, which is the
     // next assertion and the reason this one cannot simply check all three.
-    expect(read("todos")).toContain('href="../../beans/dashboard/"');
-    expect(read("qa")).toContain('href="../../beans/dashboard/"');
+    expect(read("todos")).toContain('href="../beans/"');
+    expect(read("qa")).toContain('href="../beans/"');
   });
 
   test("a page never links to itself", () => {
     // A link to here is a control that does nothing, and a reader who clicks
     // it learns only that it did nothing. The current row is plain text.
-    expect(read("beans")).not.toContain('href="../../beans/dashboard/"');
-    expect(read("todos")).not.toContain('href="../../todos/dashboard/"');
+    expect(read("beans")).not.toContain('href="../beans/"');
+    expect(read("todos")).not.toContain('href="../todos/"');
     expect(read("beans")).toContain('<span class="sv-here">beans</span>');
   });
 
