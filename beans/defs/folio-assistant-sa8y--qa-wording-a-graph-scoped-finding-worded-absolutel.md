@@ -130,9 +130,15 @@ compose", applied to a diagnostic rather than to a link.
 
 ### Still open on this bean
 
-- [ ] a gate that runs the audits **per declared instance**, or the root's silence
-      about a nested one reported as its own finding. This is the real fix; the
-      wording change only stops the finding being MISread.
+- [x] the root's silence about a nested one is now **reported**, as criterion
+      `nested-instance-audited` (`minor`). It names the instance, counts the
+      diagrams this run did not read, states that the silence is CORRECT, and
+      warns against the exact wrong fix — declaring its directories at the root,
+      which re-introduces the leak `instance-graph-isolation.test.ts` guards.
+      A reported number is not deducible-and-mis-deducible
+- [ ] running the audits per declared instance is still open, and is the half that
+      would actually AUDIT bootstrap rather than count it. The criterion makes the
+      gap visible; it does not close it
 - [x] `bootstrap/skills/` package manifest — **and the manifest was not the
       blocker.** `manifestSkills()` hardcoded `join(root, "skills")` and scanned
       only one level of subdirectories, so a manifest AT a declared directory was

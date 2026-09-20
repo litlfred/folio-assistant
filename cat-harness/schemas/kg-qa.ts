@@ -386,6 +386,26 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   // rather than instructions. `minor` at 280 is roughly p75. Neither is a
   // style opinion; both say "this is longer than three quarters of its peers".
   {
+    id: "nested-instance-audited",
+    applies: ["graph"],
+    // `minor`, because the SILENCE is correct and only its invisibility is the
+    // defect. One instance's graph must not carry another's nodes — that is
+    // `instance-graph-isolation.test.ts`, guarding a live 2026-09-19 leak of 88
+    // references. So this audit rightly does not read a nested instance, and
+    // rightly must not be made to.
+    //
+    // What was wrong is that nothing said so. On 2026-09-20 a session read
+    // "named by no activity" as absolute, concluded the audit had a blind spot,
+    // declared the nested directory at the root and re-introduced the leak the
+    // test exists to prevent. Scoping the wording stopped that MISreading; this
+    // criterion is the other half — it names the unread instance outright, so
+    // the gap is a reported number rather than something to be deduced and
+    // mis-deduced. Bean `sa8y`.
+    severity: "minor",
+    summary:
+      "This tree holds a nested instance whose graph this audit does not read — correctly, but the unread corpus should be counted rather than silent.",
+  },
+  {
     id: "skill-is-a-stub",
     applies: ["skill"],
     // `minor`, and the severity is the whole point. A stub is INTENDED

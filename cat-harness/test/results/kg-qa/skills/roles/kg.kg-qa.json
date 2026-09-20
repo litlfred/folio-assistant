@@ -487,11 +487,20 @@
     "actor-is-not-a-role": {
       "result": "pass",
       "findings": []
+    },
+    "nested-instance-audited": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "bootstrap/harness.json",
+          "detail": "nested instance \"bootstrap\" declares its own graph, and this audit does not read it — 1 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        }
+      ]
     }
   },
   "totals": {
     "pass": 7,
-    "fail": 1,
+    "fail": 2,
     "n/a": 0,
     "unknown": 0
   }

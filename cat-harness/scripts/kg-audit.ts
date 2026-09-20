@@ -917,6 +917,70 @@ function manifestEntries(): { pkg: string; skill: string }[] {
 }
 
 /**
+ * Nested instances in this tree whose graph this audit does not read.
+ *
+ * ## Why this is reported rather than fixed
+ *
+ * Reading them would be the defect. `instance-graph-isolation.test.ts` guards a
+ * leak that was LIVE on 2026-09-19: a filesystem walk discovered
+ * `bootstrap/workflows/` from the repository root and put 88 references to a
+ * bootstrap process into folio-assistant's published graph. One instance's graph
+ * must not carry another's nodes, and this audit is right not to.
+ *
+ * What was wrong is that nothing said so. The silence was read as a blind spot on
+ * 2026-09-20 and "fixed" by declaring the nested directory at the root, which
+ * re-introduced that leak until the test stopped it. So the unread corpus is
+ * counted here: a reported number is not deducible-and-mis-deducible.
+ *
+ * A declaration counts as an instance when it names `directories`. That excludes
+ * `docs/_data/harness.json`, which `sync-docs-harness` writes with the
+ * reader-facing fields only — a Jekyll data file, not an instance.
+ */
+function unreadNestedInstances(): KgFinding[] {
+  const repo = repoRootFor(root);
+  const out: KgFinding[] = [];
+  const walk = (dir: string, depth: number): void => {
+    if (depth > 3) return;
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      if (e.name.startsWith(".") || e.name === "node_modules") continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) {
+        walk(p, depth + 1);
+        continue;
+      }
+      if (e.name !== "harness.json") continue;
+      // Not this audit's own instance, whichever directory that is.
+      if (resolve(dir) === resolve(root)) continue;
+      let decl: { directories?: unknown[]; name?: string };
+      try {
+        decl = JSON.parse(readFileSync(p, "utf-8")) as typeof decl;
+      } catch {
+        continue;
+      }
+      if (!Array.isArray(decl.directories) || decl.directories.length === 0) continue;
+      const diagrams = workflowFiles(dir).filter((f) => f.endsWith(".bpmn")).length;
+      out.push({
+        where: relative(repo, p),
+        detail:
+          `nested instance "${decl.name ?? relative(repo, dir)}" declares its own graph, and this audit ` +
+          `does not read it — ${diagrams} diagram(s) there are unaudited by this run. That is correct: ` +
+          `one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT ` +
+          `declare its directories here — that re-introduces the leak ` +
+          `instance-graph-isolation.test.ts guards.`,
+      });
+    }
+  };
+  walk(repo, 0);
+  return out.sort((a, b) => a.where.localeCompare(b.where));
+}
+
+/**
  * The graph directories this audit actually read, as a phrase for a finding.
  *
  * ## Why every graph-ranging finding has to carry this
@@ -1129,6 +1193,7 @@ function auditGraph(
       "actor-capabilities-resolve": entry(badCaps),
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
+      "nested-instance-audited": entry(unreadNestedInstances()),
     },
   );
 }
