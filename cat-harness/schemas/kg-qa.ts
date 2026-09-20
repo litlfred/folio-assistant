@@ -50,7 +50,8 @@
  * @graphNode schema
  */
 
-import { join, relative } from "node:path";
+import { existsSync, readdirSync, readFileSync, type Dirent } from "node:fs";
+import { join, relative, resolve } from "node:path";
 
 import { z } from "zod";
 
@@ -129,6 +130,92 @@ export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: stri
   const rel = relative(repoRoot, subjectDir);
   return join(repoRoot, KG_QA_RESULTS_DIR, rel, `${stem}.kg-qa.json`);
 }
+
+/** An orphan sidecar, and what its own `subject.path` says about why. */
+export interface OrphanSidecar {
+  /** Repo-relative path of the sidecar itself. */
+  sidecar: string;
+  /** `subject.path` as the sidecar records it, or `undefined` if it records none. */
+  subject?: string;
+  /**
+   * Whether that subject is on disk. `undefined` means the sidecar could not
+   * be read or names no path — a THIRD state, kept because "could not tell"
+   * rendered as either answer is how the eight fragment sidecars below got
+   * the wrong diagnosis in the first place.
+   */
+  subjectExists?: boolean;
+}
+
+/**
+ * Sidecars under the results tree that this run did not write.
+ *
+ * ## Why it reads each sidecar rather than only its filename
+ *
+ * The first version asked one question — is this path in `written`? — and then
+ * handed the reader a GUESS between two causes: *"Either the subject moved and
+ * the sidecar should go, or it is no longer discovered from this root and the
+ * DECLARATION is what is wrong."*
+ *
+ * Both branches were wrong for eight of the twelve it found, and the guess was
+ * written into bean `3jj9` as a finding: *"their verdicts are real and the
+ * cause is discovery, not staleness."* It is neither. Those eight declare
+ * `part-of:` and are excluded by {@link isPartOfASkill}, deliberately and
+ * correctly — a fragment measured against thresholds meant for a whole skill
+ * produces findings about nothing, which is the defect that predicate was
+ * added to remove. They are sidecars written BEFORE the exclusion existed.
+ *
+ * The sidecar already records `subject.path`. Reading it splits "the file is
+ * gone" from "the file is there and was not audited" mechanically, which is
+ * the difference between a dead verdict and a stale one — and the two want
+ * opposite responses. One `existsSync` would have prevented the misdiagnosis.
+ *
+ * ## Still reports, still never deletes
+ *
+ * `deletion-requires-confirmation`: the agent reports what would go, with the
+ * reason; a person decides. Splitting the report makes that decision possible
+ * rather than making it automatic.
+ */
+export function sweepOrphans(root: string, written: ReadonlySet<string>): OrphanSidecar[] {
+  const found: OrphanSidecar[] = [];
+  const walk = (dir: string): void => {
+    let entries: Dirent[];
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return; // No sidecar tree yet is not a finding.
+    }
+    for (const e of entries) {
+      const full = join(dir, e.name);
+      if (e.isDirectory()) {
+        walk(full);
+        continue;
+      }
+      if (!e.name.endsWith(".kg-qa.json")) continue;
+      if (written.has(resolve(full))) continue;
+      const row: OrphanSidecar = { sidecar: relative(root, full) };
+      try {
+        const doc = JSON.parse(readFileSync(full, "utf-8")) as { subject?: { path?: unknown } };
+        const sp = doc.subject?.path;
+        if (typeof sp === "string" && sp.length > 0) {
+          row.subject = sp;
+          row.subjectExists = existsSync(join(root, sp));
+        }
+      } catch {
+        // Leave `subjectExists` undefined: unreadable is its own answer.
+      }
+      found.push(row);
+    }
+  };
+  // KG_QA_RESULTS_DIR, not KG_QA_DIRNAME. The first draft of this sweep used
+  // the dirname ("kg-qa") and so walked `cat-harness/kg-qa`, which does not
+  // exist — `readdirSync` threw, the catch returned, and the guard reported a
+  // clean sweep over nothing on every run. It was caught only because the
+  // orphan it was written for was put back and the guard stayed silent.
+  // A guard that cannot fire is the defect it was written to prevent.
+  walk(join(root, KG_QA_RESULTS_DIR));
+  return found;
+}
+
 
 /** What kind of node a sidecar audits. */
 export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "skill", "graph"] as const;

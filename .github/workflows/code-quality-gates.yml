@@ -262,17 +262,20 @@ jobs:
       - name: declared assets exist and resolve
         run: bun run check:declared-assets
 
-      # `bootstrap/bootstrap.jsonld` is COMMITTED, unlike `_kg/`, because its
-      # reader has nothing installed and cannot run a build — so a graph that
-      # only appears after one is a graph that reader never sees. Committed
-      # means it can drift, and this is what stops it.
+      # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
+      # committed. It no longer is — it is built at render time into the
+      # published site by `docs-site.yml` — so there is no committed copy to
+      # go stale and nothing for a byte gate to compare against.
       #
-      # The generator is deliberately a PURE function of its inputs: no
-      # timestamp (which would make every run a diff and get the check
-      # switched off) and no commit SHA (which a committed generated file
-      # cannot carry without naming the commit BEFORE the one containing it).
-      - name: bootstrap graph is current
-        run: bun run bootstrap:graph:check
+      # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
+      # assuming: the gate compared bytes, while every property it was
+      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
+      # against `buildBootstrapDocument()` — purity, id ordering, no absolute
+      # build paths, skills derived from disk, graph kinds a subset of the
+      # declaration, and the `omitted` list. Those run in `bun test`, which
+      # the TypeScript job above already runs. Removing a check whose
+      # coverage lives elsewhere is fine; removing one and saying so is what
+      # stops the next reader reinstating it.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
