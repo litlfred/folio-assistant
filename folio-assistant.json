@@ -247,10 +247,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "folio-assistant",
-  "generatedAt": "2026-09-20T06:32:51.051Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5b8277ea9bb1f91e69e4c3d2d887cf2ce6f4d241",
-  "sourceCommitSha": "5b8277ea9bb1f91e69e4c3d2d887cf2ce6f4d241",
-  "sourceCommitAt": "2026-09-20T08:31:37+02:00",
+  "generatedAt": "2026-09-20T06:34:37.175Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/845de5687186a2474758dc70e213ecf2d23d5070",
+  "sourceCommitSha": "845de5687186a2474758dc70e213ecf2d23d5070",
+  "sourceCommitAt": "2026-09-20T08:33:15+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 169,
@@ -263,7 +263,7 @@
     "SequenceFlow": 498,
     "ProcessNode": 464,
     "Tool": 31,
-    "Schema": 57,
+    "Schema": 58,
     "GraphKind": 16,
     "Directory": 13
   },
@@ -19351,6 +19351,13 @@
       "module": "schemas/dak.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/document-image",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "document-image",
+      "title": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "module": "schemas/document-image.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant.jsonld#schema/folio-graph-kind",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "folio-graph-kind",
@@ -20625,8 +20632,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "5b8277ea9bb1f91e69e4c3d2d887cf2ce6f4d241",
+    "sha": "845de5687186a2474758dc70e213ecf2d23d5070",
     "pr": "main",
-    "run": "35494459131"
+    "run": "35494530668"
   }
 }
