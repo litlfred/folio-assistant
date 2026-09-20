@@ -136,6 +136,16 @@ export interface CommandPathReport {
   folioRelative: number;
   /** Blocks carrying `command-path-ok:` with a reason. Counted, never hidden. */
   exempt: number;
+  /**
+   * Printed-command findings HELD pending the owner's decision.
+   *
+   * **Not a baseline and not a pass.** A baseline asserts "these are accepted";
+   * this asserts "these are found, and whether they fail is not yet decided" —
+   * a third state, and collapsing it into either of the other two would be
+   * deciding the question by default. They are printed in full every run and
+   * excluded from the exit code until the decision lands.
+   */
+  held: { file: string; line: number; token: string; command: string }[];
   dead: { file: string; line: number; token: string; command: string }[];
 }
 
@@ -269,10 +279,179 @@ export function checkFile(repo: string, rel: string, report: CommandPathReport, 
 }
 
 export function checkCommandPaths(repo: string = repoRootFor(INSTANCE_ROOT)): CommandPathReport {
-  const report: CommandPathReport = { filesRead: 0, checked: 0, declined: 0, folioRelative: 0, exempt: 0, dead: [] };
+  const report: CommandPathReport = { filesRead: 0, checked: 0, declined: 0, folioRelative: 0, exempt: 0, held: [], dead: [] };
   for (const { file, corpus: c } of corpus(repo)) checkFile(repo, file, report, c);
   checkHooks(repo, report);
+  checkPrintedCommands(repo, report);
   return report;
+}
+
+/**
+ * A command a program PRINTS, or tells a reader to run in its own header.
+ *
+ * Bean `b963`, third occurrence class, found by CI going red. The message
+ * `docs:harness:check` printed **while failing** read:
+ *
+ * ```
+ * Run `bun run scripts/sync-docs-harness.ts` and commit the result.
+ * ```
+ *
+ * There is no root `scripts/`. The instruction telling a reader how to fix the
+ * failure named a path that does not exist — and neither of the two readers
+ * above can see it: it is neither a fenced block nor a JSON `command` field,
+ * but a string literal in a `.ts` file.
+ *
+ * ## Two signals, and the second is what makes it decidable
+ *
+ * The corpus overlaps `check:declared-paths`, which walks every literal here.
+ * The question is what differs: not *does this path resolve* but **is this a
+ * command somebody will type, written from the wrong place**.
+ *
+ * **First, a RUNNER VERB.** `scripts/x.ts` appears in this source two ways
+ * that must not be confused, and both are the same string:
+ *
+ * | | example | correct relative to |
+ * |---|---|---|
+ * | a cross-reference in prose | ``see `scripts/known-skills.ts` `` | the INSTANCE — and it resolves |
+ * | a command in a header or a message | `bun run scripts/lean-audit.ts` | the REPOSITORY — where a person stands |
+ *
+ * Only the second is wrong. `bun run`, `bunx`, `bash`, `npx`, `python3`,
+ * `deno run` say a human is about to execute this, and nothing else does.
+ *
+ * **Second, the path must RESOLVE UNDER AN INSTANCE.** This is what the first
+ * draft got wrong and it gutted the check: it reused {@link aboutThisTree},
+ * which judges a path only when its first segment exists at the repository
+ * root — and `scripts/` does not exist there, *which is the entire defect*.
+ * The check declined the one case it was written for, and reported 43 paths
+ * checked where a hand grep found 370 candidates.
+ *
+ * So the rule is inverted, and the inversion is the design:
+ *
+ * > **The path does not resolve from the repository root, but
+ * > `<instance>/<path>` does.** That is not "a path that might be wrong" — it
+ * > is a path that is wrong *and whose fix is known*, so the finding names it.
+ *
+ * A path that resolves nowhere is a folio's (`content/pipeline/qa-sweep.ts` is
+ * correct in a folio and this repository carries none) and is COUNTED, never
+ * failed. Instance roots are discovered as the directories carrying their own
+ * `harness.json`, not listed here — a list would rot on the next split, which
+ * is the defect this whole check exists for.
+ *
+ * ## Two stated limits
+ *
+ * **`node` and `sh` are not in the verb list.** They are ordinary words in
+ * this codebase — "node" appears in nearly every graph module — and including
+ * them matched prose like *"node resolves to its `.md`"*. Measured: four
+ * findings, all four false. A verb that is also English is not a signal.
+ *
+ * **A bare invocation with no runner verb is not detected.**
+ * `scripts/install-beans.sh && export PATH=…` has no verb in front of it.
+ * Named rather than papered over: widening to "a line beginning with a path"
+ * would match the prose class above, which is the larger one. Where such a
+ * line is printed it usually sits in a fenced block or a hook command, which
+ * the other two readers cover.
+ */
+export function checkPrintedCommands(repo: string, report: CommandPathReport): void {
+  const RUNNER = /\b(?:bun run|bunx|bash|npx|python3|python|deno run)\s+(?=[A-Za-z0-9_.])/;
+  const instances = instanceRoots(repo);
+  for (const file of sourceFiles(repo)) {
+    let text: string;
+    try {
+      text = readFileSync(join(repo, file), "utf8");
+    } catch {
+      continue;
+    }
+    report.filesRead++;
+    const lines = text.split("\n");
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i]!;
+      const m = RUNNER.exec(line);
+      if (!m) continue;
+      // From the verb to the end of the line, with the syntax that carried it
+      // stripped: quotes and backticks, a closing JSDoc, a trailing comma.
+      const cmd = line
+        .slice(m.index)
+        .replace(/[`'"]/g, " ")
+        .replace(/\s*\*\/\s*$/, "")
+        .replace(/,\s*$/, "");
+      if (skipCommand(cmd) !== undefined) {
+        report.declined++;
+        continue;
+      }
+      for (const word of shellWords(cmd)) {
+        const tok = word.replace(/[.,:)\]}]+$/, "");
+        if (!tok || skipReason(tok) !== undefined) {
+          report.declined++;
+          continue;
+        }
+        if (existsSync(join(repo, tok))) {
+          report.checked++;
+          continue;
+        }
+        const under = instances.find((r) => existsSync(join(repo, r, tok)));
+        if (under === undefined) {
+          // Resolves nowhere: a folio's path, or something this cannot judge.
+          report.folioRelative++;
+          continue;
+        }
+        report.checked++;
+        // HELD, not failed — see CommandPathReport.held. The `scripts/` group
+        // and the `content/` group may not be the same defect and the
+        // declarations do not settle it, so the verdict is the owner's.
+        report.held.push({
+          file,
+          line: i + 1,
+          token: `${tok}  →  ${under}/${tok}`,
+          command: cmd.trim(),
+        });
+      }
+    }
+  }
+}
+
+/**
+ * The instance roots, DISCOVERED rather than listed.
+ *
+ * A directory carrying its own `harness.json` is an instance by this
+ * repository's own definition. Hardcoding the list would rot on the next
+ * split — which is the exact defect this check exists to catch, and writing it
+ * into the check would be a poor joke.
+ */
+export function instanceRoots(repo: string): string[] {
+  const out: string[] = [];
+  for (const name of readdirSync(repo)) {
+    if (name.startsWith(".") || name === "node_modules") continue;
+    try {
+      if (statSync(join(repo, name)).isDirectory() && existsSync(join(repo, name, "harness.json"))) {
+        out.push(name);
+      }
+    } catch {
+      /* unreadable entry: not an instance root as far as this can tell */
+    }
+  }
+  return out.sort();
+}
+
+/** Every `.ts` and `.sh` file whose printed commands are read. */
+export function sourceFiles(repo: string): string[] {
+  const roots = ["cat-harness/scripts", "cat-harness/src", "cat-harness/content", "cat-harness/schemas"];
+  const out: string[] = [];
+  for (const root of roots) {
+    if (!existsSync(join(repo, root))) continue;
+    for (const f of walkSource(join(repo, root))) out.push(f.slice(repo.length + 1));
+  }
+  return out;
+}
+
+function walkSource(dir: string): string[] {
+  const out: string[] = [];
+  for (const name of readdirSync(dir)) {
+    if (name.startsWith(".") || name === "node_modules") continue;
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) out.push(...walkSource(p));
+    else if (/\.(ts|sh)$/.test(name) && !/\.test\.ts$/.test(name)) out.push(p);
+  }
+  return out;
 }
 
 /**
@@ -394,6 +573,21 @@ function formatReport(r: CommandPathReport): string {
       `${r.exempt} exempt, ${r.declined} declined as templates, URLs, refs or non-paths)`,
   ];
   if (r.filesRead === 0) return "Command paths\n  ? EXAMINED NOTHING — no entry files or skills found. Not a pass.";
+  if (r.held.length) {
+    const byFirst = new Map<string, number>();
+    for (const h of r.held) {
+      const seg = h.token.split("/")[0]!;
+      byFirst.set(seg, (byFirst.get(seg) ?? 0) + 1);
+    }
+    out.push(
+      `  ⏸ ${r.held.length} printed command(s) name a path that resolves only under an instance ` +
+        `— HELD, not failed, pending a decision (bean \`b963\`):`,
+    );
+    for (const [seg, n] of [...byFirst].sort((a, b) => b[1] - a[1])) {
+      out.push(`      ${String(n).padStart(4)}  ${seg}/…`);
+    }
+    out.push("      This is a THIRD STATE: found, verdict not yet taken. `--held` lists them.");
+  }
   if (r.dead.length === 0) {
     out.push("  ✓ every repository-relative path inside a fenced command resolves");
     return out.join("\n");
@@ -415,6 +609,9 @@ if (import.meta.main) {
     console.error(`Could not check command paths: ${e instanceof Error ? e.message : e}`);
     console.error("This is NOT a pass. Treat it as unknown.");
     process.exit(2);
+  }
+  if (process.argv.includes("--held")) {
+    for (const h of report.held) console.log(`${h.file}:${h.line}  ${h.token}\n    in: ${h.command}`);
   }
   console.log(process.argv.includes("--json") ? JSON.stringify(report, null, 2) : formatReport(report));
   process.exit(report.dead.length || report.filesRead === 0 ? 1 : 0);
