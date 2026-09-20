@@ -2,25 +2,25 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "d657bf2bd2c3"
+    "script_hash": "cf3bad13861f"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-20T07:30:20.796Z",
-  "verdict": "findings",
+  "updated_at": "2026-09-20T08:23:48.631Z",
+  "verdict": "clean",
   "checks": [
     {
       "id": "staging-preview-size",
-      "state": "finding",
+      "state": "ok",
       "summary": "The review previews under `STAGING/` on the publish branch have grown past what a GitHub Pages site can carry alongside the main site.",
       "thresholds": [
         {
           "metric": "staging-total-bytes",
-          "value": 104857600,
+          "value": 524288000,
           "unit": "bytes",
-          "basis": "The owner's explicit instruction, 2026-09-19 (\"issue warning to user when exceeds > 100mb\"). It is also a tenth of GitHub's documented 1 GB limit for a published Pages site, which the previews share with the main site — an early-warning point that leaves room to act rather than a limit in itself. One preview measured 37.5–39.0 MB on 2026-09-19, so the third concurrent review breaches it. THE FLOOR IS ABOVE THE THRESHOLD AND THAT IS DELIBERATE: a live branch's preview must not be pruned, so N concurrent reviews floor the total at N x ~38 MB, and on 2026-09-19 only 2 of 9 previews were prunable orphans (76.7 MB, leaving 269 MB). The action this finding names is therefore never \"prune more\" but preview SIZE: 27.5 MB of each preview is HTML that shares ZERO blobs with any other preview, because the build timestamp and the slug appear on every page. See STAGING_WARN_BYTES for the four sources and bean `xxku` for the arithmetic.",
+          "basis": "The owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches merged\"), RAISED from the 100 MB they set on 2026-09-19 — and the raise went with a policy change that made the old number mean something different. Until `folio-assistant-1feu`, previews were retained on close AND on merge, so the total was monotonic: any threshold was breached eventually and stayed breached, and \"over\" carried no information after the first time. Now a merged pull request's preview is removed automatically, so the store DRAINS and what remains is bounded by concurrent reviews rather than by cumulative history. At the measured ~38 MB per preview, 500 MB is about thirteen concurrent reviews — above the most this repository has reached (eleven on 2026-09-20, three of them prunable) and half the documented 1 GB Pages ceiling, leaving the main site the other half. THE FLOOR IS STILL REAL AND STILL ABOVE PRUNING: a live branch's preview must not be removed, so N concurrent reviews floor the total at N x ~38 MB. What changed is that the floor now falls on its own as work merges. The action this finding names is therefore never \"prune more\" but preview SIZE: 27.5 MB of each preview is HTML that shares ZERO blobs with any other, because the build timestamp and the slug appear on every page. See STAGING_WARN_BYTES for the four sources and bean `xxku` for the arithmetic.",
           "severity": "major"
         },
         {
@@ -34,25 +34,18 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 304159961,
+          "value": 261343788,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 7,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
-      "findings": [
-        {
-          "summary": "7 staging preview(s) total 290.1 MB, over the 100 MB warning point.",
-          "metric": "staging-total-bytes",
-          "severity": "major",
-          "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "staging-preview-orphans",
@@ -82,7 +75,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 7,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -126,31 +119,31 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 60476621,
+          "value": 66573905,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 117918106,
+          "value": 137501209,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 96279552,
+          "value": 109533184,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 30,
+          "value": 34,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 1.95,
+          "value": 2.07,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
@@ -194,13 +187,13 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 108,
+          "value": 112,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 108,
+          "value": 112,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
