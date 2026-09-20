@@ -2720,6 +2720,52 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   font-weight: 600;
 }
 
+/* ── Inline code belongs to the CARD, not to the site's code chip ───────────
+ *
+ * The owner, 2026-09-20, looking at the rendered board: *"why blackout on
+ * middle image?"* — `uploads/` and `library/` in the folio-assist-core sticky
+ * were solid black slabs.
+ *
+ * Measured, not guessed. Site-wide, inline code is LIGHT TEXT ON A DARK CHIP —
+ * `#e6e1e8` on `#0d1117`, which is fine and deliberate. Inside a sticky the
+ * chip kept its dark background while `color` was overridden by the rule above
+ * it, so the text became the theme's `--fa-sticky-ink` — on `library` that is
+ * `#1c2630`. Dark ink on a near-black chip:
+ *
+ *     #1c2630 on #0d1117  =  1.23:1     (AA needs 4.5:1)
+ *     the body text beside it        =  14.42:1
+ *
+ * So the words were not merely low-contrast, they were invisible, and only in
+ * stickies — which is why nothing else on the site showed it.
+ *
+ * Restoring the light foreground would fix the contrast and keep a black slab
+ * on a light paper card, which is what the owner objected to. So the chip joins
+ * the CARD's palette instead — and WHICH pair matters, checked across all
+ * eleven themes rather than the one in front of me:
+ *
+ *     ink on EDGE     nine themes 9.33-10.14:1, but `high-contrast-light` and
+ *                     `high-contrast-dark` have ink == edge, so 1.00:1 — the
+ *                     very defect being fixed, moved to another theme
+ *     ink on SURFACE  12.45:1 (library) to 21:1 (both high-contrast). AAA
+ *                     everywhere, because a theme's ink is CHOSEN against its
+ *                     surface; that is what makes the card readable at all
+ *
+ * So: the card's own paper, its ink, and `edge` demoted to the border, where
+ * ink == edge is a visible outline rather than a vanishing act. `themes.test.ts`
+ * pins the surface/ink ratio for every theme, so a new one cannot reintroduce
+ * this.
+ *
+ * Scoped to `__text` rather than the article, so a code span in any future
+ * chrome outside the text region keeps the site chip. */
+.fa-landing-sticky__text code {
+  background: var(--fa-sticky-surface, transparent);
+  color: var(--fa-sticky-ink, inherit);
+  border: 1px solid var(--fa-sticky-edge, transparent);
+  border-radius: 0.25em;
+  padding: 0.05em 0.32em;
+  font-size: 0.92em;
+}
+
 .fa-landing-sticky__note {
   display: block;
   font-size: 0.88em;
